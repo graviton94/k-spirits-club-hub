@@ -1,93 +1,29 @@
-// Mock database for development
-// In production, this would connect to Cloudflare D1 or Turso
+// Database Adapter: Hybrid (D1 for Production / In-Memory JSON for Local)
 import type { Spirit, UserCabinet, Review, SpiritFilter, PaginatedResponse, PaginationParams, SpiritStatus } from './schema';
 
+// -----------------------------------------------------------------------------
+// [LOCAL MODE] In-Memory / File-based Logic (Legacy)
+// -----------------------------------------------------------------------------
 let allSpirits: Spirit[] = [];
 let initialized = false;
 
 function initializeData() {
   if (initialized) return;
 
-  // 1. Sample data definition
+  // 1. Sample data
   const sampleSpirits: Spirit[] = [
     {
-      id: '1',
-      name: 'Glenfiddich 12 Year Old',
-      distillery: 'Glenfiddich',
-      bottler: null,
-      abv: 40,
-      volume: 700,
-      category: 'whisky',
-      subcategory: '싱글 몰트',
-      country: '스코틀랜드',
-      region: '스페이사이드',
-      imageUrl: '/images/sample-whisky.jpg',
-      thumbnailUrl: '/images/sample-whisky-thumb.jpg',
-      source: 'whiskybase',
-      externalId: 'wb-1234',
-      status: 'PUBLISHED',
-      isPublished: true,
-      isReviewed: true,
-      reviewedBy: 'admin',
-      reviewedAt: new Date('2024-01-01'),
-      metadata: {},
-      createdAt: new Date('2024-01-01'),
-      updatedAt: new Date('2024-01-01'),
-    },
-    {
-      id: '2',
-      name: 'Chamisul Fresh Soju',
-      distillery: 'HiteJinro',
-      bottler: null,
-      abv: 16.9,
-      volume: 360,
-      category: 'soju',
-      subcategory: null,
-      country: '대한민국',
-      region: null,
-      imageUrl: '/images/sample-soju.jpg',
-      thumbnailUrl: '/images/sample-soju-thumb.jpg',
-      source: 'food_safety_korea',
-      externalId: 'fsk-5678',
-      status: 'PUBLISHED',
-      isPublished: true,
-      isReviewed: true,
-      reviewedBy: 'admin',
-      reviewedAt: new Date('2024-01-02'),
-      metadata: {},
-      createdAt: new Date('2024-01-02'),
-      updatedAt: new Date('2024-01-02'),
-    },
-    {
-      id: '3',
-      name: 'Macallan 18 Year Old Sherry Oak',
-      distillery: 'Macallan',
-      bottler: null,
-      abv: 43,
-      volume: 700,
-      category: 'whisky',
-      subcategory: '싱글 몰트',
-      country: '스코틀랜드',
-      region: '스페이사이드',
-      imageUrl: '/images/sample-macallan.jpg',
-      thumbnailUrl: '/images/sample-macallan-thumb.jpg',
-      source: 'whiskybase',
-      externalId: 'wb-9012',
-      status: 'RAW',
-      isPublished: false,
-      isReviewed: false,
-      reviewedBy: null,
-      reviewedAt: null,
-      metadata: {},
-      createdAt: new Date('2024-01-03'),
-      updatedAt: new Date('2024-01-03'),
-    },
+      id: '1', name: 'Glenfiddich 12 Year Old', distillery: 'Glenfiddich', bottler: null, abv: 40, volume: 700,
+      category: 'whisky', subcategory: '싱글 몰트', country: '스코틀랜드', region: '스페이사이드',
+      imageUrl: '/images/sample-whisky.jpg', thumbnailUrl: '/images/sample-whisky-thumb.jpg',
+      source: 'whiskybase', externalId: 'wb-1234', status: 'PUBLISHED', isPublished: true, isReviewed: true,
+      reviewedBy: 'admin', reviewedAt: new Date('2024-01-01'), metadata: {}, createdAt: new Date('2024-01-01'), updatedAt: new Date('2024-01-01'),
+    }
   ];
-
   allSpirits = [...sampleSpirits];
 
-  // 2. Load heavy ingested data from file (Server-side only)
-  if (typeof window === 'undefined') {
+  // 2. Load heavy ingested data from file (Node.js only)
+  if (typeof window === 'undefined' && !process.env.DB) {
     try {
       const fs = require('fs');
       const path = require('path');
@@ -97,9 +33,8 @@ function initializeData() {
         const raw = fs.readFileSync(filePath, 'utf-8');
         const parsed = JSON.parse(raw);
         if (Array.isArray(parsed)) {
-          console.log(`[DB] Loading ALL spirits (Total: ${parsed.length})...`);
-          const limited = parsed; // No limit
-          const transformed = limited.map(s => ({
+          console.log(`[DB:LOCAL] Loading ALL spirits (Total: ${parsed.length})...`);
+          const transformed = parsed.map(s => ({
             ...s,
             status: s.status || 'RAW',
             metadata: s.metadata || {},
@@ -108,82 +43,110 @@ function initializeData() {
             updatedAt: new Date(s.updatedAt)
           }));
           allSpirits = [...sampleSpirits, ...transformed];
-          console.log(`[DB] Successfully loaded ${transformed.length} spirits.`);
         }
       }
     } catch (error) {
-      console.warn('[DB] Failed to load ingested-data.json (expected during build or if missing):', error);
+      console.warn('[DB:LOCAL] Failed to load ingested-data.json:', error);
     }
   }
-
   initialized = true;
 }
 
-// Global initialization
-if (typeof window === 'undefined') {
+// Global initialization for Local Mode
+if (typeof window === 'undefined' && !process.env.DB) {
   initializeData();
 }
 
-const sampleReviews: Review[] = [
-  {
-    id: '1',
-    spiritId: '1',
-    userId: 'user1',
-    userName: '위스키러버',
-    rating: 4,
-    title: '입문용으로 좋습니다',
-    content: '부드럽고 마시기 편한 싱글몰트입니다. 위스키 입문자에게 추천합니다.',
-    nose: '사과, 배, 꿀향',
-    palate: '부드럽고 달콤함',
-    finish: '중간 정도의 피니시',
-    createdAt: new Date('2024-01-05'),
-    updatedAt: new Date('2024-01-05'),
-    isPublished: true,
-  },
-];
+// -----------------------------------------------------------------------------
+// [PRODUCTION MODE] Cloudflare D1 Logic
+// -----------------------------------------------------------------------------
+// Type definition for D1 Binding (implicitly available in Workers environment)
+declare global {
+  var DB: any; // D1Database
+}
 
-// Mock database operations
+function mapRowToSpirit(row: any): Spirit {
+  return {
+    id: row.id,
+    name: row.name,
+    distillery: row.distillery,
+    bottler: row.bottler,
+    abv: row.abv,
+    volume: row.volume,
+    category: row.category,
+    subcategory: row.subcategory,
+    country: row.country,
+    region: row.region,
+    imageUrl: row.image_url,
+    thumbnailUrl: row.thumbnail_url,
+    source: row.source as any,
+    externalId: row.external_id,
+    status: row.status as SpiritStatus,
+    isPublished: Boolean(row.is_published),
+    isReviewed: Boolean(row.is_reviewed),
+    reviewedBy: row.reviewed_by,
+    reviewedAt: row.reviewed_at ? new Date(row.reviewed_at) : null,
+    metadata: row.metadata ? JSON.parse(row.metadata) : {},
+    createdAt: new Date(row.created_at),
+    updatedAt: new Date(row.updated_at),
+  };
+}
+
+// -----------------------------------------------------------------------------
+// UNIFIED DB ADAPTER
+// -----------------------------------------------------------------------------
 export const db = {
   // Spirit operations
   async getSpirits(filter: SpiritFilter = {}, pagination: PaginationParams = { page: 1, pageSize: 20 }): Promise<PaginatedResponse<Spirit>> {
-    // Ensure we are initialized (though it should be called on module load)
+    // [PROD] Use D1 (Check if DB binding exists on process.env or global)
+    // In some Next.js adapters, bindings are on process.env
+    const dbBinding = (process.env as any).DB;
+
+    if (dbBinding) {
+      // console.log('[DB:D1] getSpirits query');
+      let query = 'SELECT * FROM spirits WHERE 1=1';
+      const params: any[] = [];
+
+      if (filter.status) { query += ' AND status = ?'; params.push(filter.status); }
+      if (filter.category) { query += ' AND category = ?'; params.push(filter.category); }
+      if (filter.subcategory) { query += ' AND subcategory = ?'; params.push(filter.subcategory); }
+      if (filter.country) { query += ' AND country = ?'; params.push(filter.country); }
+
+      // Count total
+      const countStmt = dbBinding.prepare(query.replace('SELECT *', 'SELECT count(*) as total'));
+      // @ts-ignore
+      const totalResult = await countStmt.bind(...params).first();
+      const total = totalResult.total as number;
+
+      // Fetch Data
+      query += ' LIMIT ? OFFSET ?';
+      const limit = pagination.pageSize;
+      const offset = (pagination.page - 1) * pagination.pageSize;
+      params.push(limit, offset);
+
+      const stmt = dbBinding.prepare(query);
+      // @ts-ignore
+      const { results } = await stmt.bind(...params).all();
+
+      return {
+        data: results.map(mapRowToSpirit),
+        total,
+        page: pagination.page,
+        pageSize: pagination.pageSize,
+        totalPages: Math.ceil(total / pagination.pageSize)
+      };
+    }
+
+    // [LOCAL] Use Memory
     initializeData();
     let filtered = allSpirits;
 
-    if (filter.searchTerm) {
-      const term = filter.searchTerm.toLowerCase();
-      filtered = filtered.filter(s =>
-        s.name.toLowerCase().includes(term) ||
-        s.distillery.toLowerCase().includes(term)
-      );
-    }
-
-    if (filter.category) {
-      filtered = filtered.filter(s => s.category === filter.category);
-    }
-
-    if (filter.subcategory) {
-      filtered = filtered.filter(s => s.subcategory === filter.subcategory);
-    }
-
-    if (filter.country) {
-      filtered = filtered.filter(s => s.country === filter.country);
-    }
-
-    if (filter.isPublished !== undefined) {
-      filtered = filtered.filter(s => s.isPublished === filter.isPublished);
-    }
-
-    if (filter.isReviewed !== undefined) {
-      filtered = filtered.filter(s => s.isReviewed === filter.isReviewed);
-    }
-
-    if (filter.status) {
-      filtered = filtered.filter(s => s.status === filter.status);
-    }
+    if (filter.status) filtered = filtered.filter(s => s.status === filter.status);
+    if (filter.category) filtered = filtered.filter(s => s.category === filter.category);
+    if (filter.subcategory) filtered = filtered.filter(s => s.subcategory === filter.subcategory);
+    if (filter.country) filtered = filtered.filter(s => s.country === filter.country);
 
     const total = filtered.length;
-    const totalPages = Math.ceil(total / pagination.pageSize);
     const start = (pagination.page - 1) * pagination.pageSize;
     const data = filtered.slice(start, start + pagination.pageSize);
 
@@ -192,105 +155,121 @@ export const db = {
       total,
       page: pagination.page,
       pageSize: pagination.pageSize,
-      totalPages,
+      totalPages: Math.ceil(total / pagination.pageSize),
     };
   },
 
   async getSpirit(id: string): Promise<Spirit | null> {
+    const dbBinding = (process.env as any).DB;
+    if (dbBinding) {
+      const stmt = dbBinding.prepare('SELECT * FROM spirits WHERE id = ?');
+      // @ts-ignore
+      const result = await stmt.bind(id).first();
+      return result ? mapRowToSpirit(result) : null;
+    }
+
     initializeData();
     return allSpirits.find(s => s.id === id) || null;
   },
 
   async updateSpirit(id: string, updates: Partial<Spirit>): Promise<Spirit | null> {
+    const dbBinding = (process.env as any).DB;
+    if (dbBinding) {
+      // Build dynamic update query
+      const fields: string[] = [];
+      const values: any[] = [];
+
+      const toSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
+
+      for (const [key, value] of Object.entries(updates)) {
+        if (key === 'id') continue; // Skip ID
+
+        let dbKey = toSnakeCase(key);
+        let dbValue = value;
+
+        if (key === 'metadata') {
+          dbValue = JSON.stringify(value);
+        } else if (value instanceof Date) {
+          dbValue = value.toISOString();
+        } else if (key === 'createdAt' || key === 'updatedAt' || key === 'reviewedAt') {
+          // Already handled date logic above if value is Date object
+        }
+
+        // Special Mapping for specific keys if needed
+        if (key === 'imageUrl') dbKey = 'image_url';
+        if (key === 'thumbnailUrl') dbKey = 'thumbnail_url';
+        if (key === 'externalId') dbKey = 'external_id';
+        if (key === 'isPublished') { dbKey = 'is_published'; dbValue = value ? 1 : 0; }
+        if (key === 'isReviewed') { dbKey = 'is_reviewed'; dbValue = value ? 1 : 0; }
+        if (key === 'reviewedBy') dbKey = 'reviewed_by';
+        if (key === 'reviewedAt') dbKey = 'reviewed_at';
+
+        fields.push(`${dbKey} = ?`);
+        values.push(dbValue);
+      }
+
+      // Always update 'updated_at'
+      fields.push(`updated_at = ?`);
+      values.push(new Date().toISOString());
+
+      const query = `UPDATE spirits SET ${fields.join(', ')} WHERE id = ? RETURNING *`;
+      values.push(id);
+
+      const stmt = dbBinding.prepare(query);
+      // @ts-ignore
+      const result = await stmt.bind(...values).first();
+      return result ? mapRowToSpirit(result) : null;
+    }
+
+    // [LOCAL]
     initializeData();
     const index = allSpirits.findIndex(s => s.id === id);
     if (index === -1) return null;
 
-    const updatedSpirit = {
-      ...allSpirits[index],
-      ...updates,
-      updatedAt: new Date()
-    } as Spirit;
-
+    const updatedSpirit = { ...allSpirits[index], ...updates, updatedAt: new Date() } as Spirit;
     allSpirits[index] = updatedSpirit;
 
-    // Persist to JSON file if in Node.js environment (Server Components / API Routes)
+    // Persist to local JSON
     if (typeof window === 'undefined') {
       try {
-        // Dynamic import to prevent client-side build errors
         const fs = require('fs');
         const path = require('path');
         const filePath = path.join(process.cwd(), 'lib/db/ingested-data.json');
-
         fs.writeFileSync(filePath, JSON.stringify(allSpirits, null, 2), 'utf-8');
-      } catch (error) {
-        console.error('Failed to persist spirit update:', error);
-      }
+      } catch (error) { console.error('Failed to persist spirit update:', error); }
     }
-
     return updatedSpirit;
   },
 
   async deleteSpirit(id: string): Promise<boolean> {
+    const dbBinding = (process.env as any).DB;
+    if (dbBinding) {
+      const stmt = dbBinding.prepare('DELETE FROM spirits WHERE id = ?');
+      // @ts-ignore
+      const info = await stmt.bind(id).run();
+      return info.success;
+    }
+
     initializeData();
     const index = allSpirits.findIndex(s => s.id === id);
     if (index === -1) return false;
-
     allSpirits.splice(index, 1);
 
-    // Persist to JSON file
     if (typeof window === 'undefined') {
       try {
         const fs = require('fs');
         const path = require('path');
         const filePath = path.join(process.cwd(), 'lib/db/ingested-data.json');
-
         fs.writeFileSync(filePath, JSON.stringify(allSpirits, null, 2), 'utf-8');
-      } catch (error) {
-        console.error('Failed to persist spirit deletion:', error);
-      }
+      } catch (error) { }
     }
-
     return true;
   },
 
-  // Review operations
-  async getReviews(spiritId: string): Promise<Review[]> {
-    return sampleReviews.filter(r => r.spiritId === spiritId && r.isPublished);
-  },
-
-  async createReview(review: Omit<Review, 'id' | 'createdAt' | 'updatedAt'>): Promise<Review> {
-    const newReview: Review = {
-      ...review,
-      id: Date.now().toString(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-    sampleReviews.push(newReview);
-    return newReview;
-  },
-
-  // Cabinet operations
-  async getCabinet(userId: string): Promise<UserCabinet[]> {
-    // Mock implementation
-    return [];
-  },
-
-  async addToCabinet(userId: string, spiritId: string): Promise<UserCabinet> {
-    // Mock implementation
-    return {
-      id: Date.now().toString(),
-      userId,
-      spiritId,
-      addedAt: new Date(),
-      notes: null,
-      rating: null,
-      isFavorite: false,
-    };
-  },
-
-  async removeFromCabinet(userId: string, spiritId: string): Promise<boolean> {
-    // Mock implementation
-    return true;
-  },
+  // Stubbed other methods
+  async getReviews(spiritId: string): Promise<Review[]> { return []; },
+  async createReview(review: any): Promise<Review> { return {} as any; },
+  async getCabinet(userId: string): Promise<UserCabinet[]> { return []; },
+  async addToCabinet(userId: string, spiritId: string): Promise<UserCabinet> { return {} as any; },
+  async removeFromCabinet(userId: string, spiritId: string): Promise<boolean> { return true; },
 };

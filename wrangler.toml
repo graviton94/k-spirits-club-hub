@@ -1,0 +1,11 @@
+name = "k-spirits-club-hub"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "k-spirits-db"
+database_id = "k-spirits-db-id" # Placeholder: User needs to create this via wrangler
+
+[site]
+bucket = ".next"

@@ -44,4 +44,7 @@ yarn-error.log*
 
 # Wrangler
 .wrangler
-wrangler.toml
+# wrangler.toml
+
+# Data
+data/
