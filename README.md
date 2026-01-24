@@ -1,2 +1,43 @@
-# k-spirits-club-hub
-A mobile-first global spirits platform that centralizes liquor data from food safety authorities, import portals, and global communities. It features a robust Hub-DB for managing 1M+ records, a user-curated digital liquor cabinet, and AI-driven recommendations. Built for scalability on Cloudflare with a roadmap for AdSense and B2B sponsorship.
+# 🥃 K-Spirits Club Hub
+
+**K-Spirits Club**은 전 세계의 방대한 주류 데이터를 집대성하고 관리하는 글로벌 주류 허브 플랫폼입니다. [cite_start]공공 데이터(식품안전나라, 수입식품정보마루)와 글로벌 커뮤니티(Whiskybase) 데이터를 결합하여 사용자에게 개인화된 '디지털 술장' 경험을 제공합니다. [cite: 17, 20, 58, 102]
+
+## 🌟 Project Vision & Strategy
+* [cite_start]**Mobile-First Approach**: 모든 UI/UX는 모바일 브라우저 환경을 최우선으로 설계하며, 향후 네이티브 앱(iOS/Android) 확장을 고려합니다. [cite: 103, 131]
+* [cite_start]**Hub-DB Architecture**: 실시간 크롤링 대신 100만 건 이상의 로우 데이터를 수집 및 필터링하여 중앙 허브 DB를 구축하고 관리자가 운영합니다. [cite: 19, 57, 100]
+* [cite_start]**Global Scalability**: Cloudflare 인프라를 활용하여 전 세계 어디서든 빠른 접속과 무제한 트래픽 대응이 가능하도록 배포합니다. [cite: 22, 137, 139]
+* [cite_start]**Vibe Coding**: 생성형 AI(Copilot, Gemini)를 적극 활용하여 복잡한 논리 설계보다 직관적이고 빠른 프로토타이핑과 배포를 지향합니다. [cite: 8, 52, 125]
+
+## 🛠 Tech Stack
+* [cite_start]**Frontend**: HTML5, CSS3 (Dark Mode), JavaScript. [cite: 104, 105, 106, 125]
+* [cite_start]**Backend/API**: Cloudflare Workers (Serverless). [cite: 23, 138]
+* [cite_start]**Database**: Central Hub DB (PostgreSQL or Supabase). [cite: 24, 30, 59]
+* [cite_start]**Deployment**: Cloudflare Pages. [cite: 49, 52, 138]
+* [cite_start]**Development Tools**: Antigravity, GitHub Copilot. [cite: 14, 28, 33]
+
+
+
+## 📁 Directory Skeleton
+```text
+k-spirits-club-hub/
+├── .github/                # Copilot 지침 및 워크플로우
+├── docs/                   # 상세 가이드 (PHASE_GUIDE, ADMIN_OPERATIONS 등)
+├── scripts/                # 데이터 수집 및 허브 DB 적재 스크립트 (Python/JS)
+├── src/
+│   ├── admin/              # 관리자 전용 데이터 검수 대시보드
+│   ├── components/         # 모바일 최적화 공통 컴포넌트 (BottomNav, Search)
+│   ├── js/                 # 서비스 로직 및 API 통신
+│   └── index.html          # 모바일 우선 랜딩 페이지
+├── public/                 # 주류 이미지 및 정적 자산
+└── ads.txt                 # 구글 애드센스 소유권 확인 [cite: 78]
+```
+## 📅 Roadmap (5-Week Plan)
+1. Phase 1 (1주차): 모바일 최적화 UI 구축 및 Cloudflare 전 세계 배포.
+2. .Phase 2 (2주차): 식품안전나라/수입식품정보마루 데이터 필터링 및 허브 DB 1차 구축. 
+3. Phase 3 (3~4주차): '나의 술장' 기능, 리뷰 시스템 및 글로벌 결제(Stripe/MOR) 연동. 
+4. Phase 4 (5주차): AI 기반 주류 추천 엔진 고도화 및 모바일 앱 패키징. 
+
+## 💰 Monetization
+- Ads: 구글 애드센스를 통한 트래픽 수익 창출. 
+- Sponsorship: 제조사 및 바 사장님 대상 제품 노출 스폰서십. 
+- Subscription: B2B 파트너를 위한 데이터 관리 및 구독 모델(SaaS).
