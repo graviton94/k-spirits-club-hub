@@ -33,18 +33,20 @@ interface EditFormState {
  * - Enhanced Edit Modal with Select Inputs
  */
 export default function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'collection'>('dashboard');
+  const [activeTab, setActiveTab] = useState<'pipeline' | 'master'>('pipeline');
   const [spirits, setSpirits] = useState<Spirit[]>([]);
   const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
 
-  // Pagination State
+  // Pipeline Counts
+  const [counts, setCounts] = useState({ RAW: 0, ENRICHED: 0, READY_FOR_CONFIRM: 0, PUBLISHED: 0 });
+
+  // Pagination & Filters
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
-  // Server-side Filters
   const [statusFilter, setStatusFilter] = useState<SpiritStatus | 'ALL'>('ALL');
   const [categoryFilter, setCategoryFilter] = useState<string>('ALL');
   const [subcategoryFilter, setSubcategoryFilter] = useState<string>('ALL');
@@ -53,78 +55,75 @@ export default function AdminDashboard() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
 
-  // Edit Form State
+  // Edit Form
   const [editForm, setEditForm] = useState<EditFormState>({
     name: '', abv: 0, imageUrl: '', name_en: '', category: '', subcategory: '',
     country: '', region: '', distillery: '', bottler: '', volume: 700,
     tasting_note: '', description: '', nose_tags: '', palate_tags: '', finish_tags: ''
   });
 
-  // Console Logs for Collection Tab
-  const [consoleLogs, setConsoleLogs] = useState<string>('');
+  const [pipelineLogs, setPipelineLogs] = useState<string[]>([]);
 
-  // Extract Categories from Metadata
-  const whiskyCats = metadata.categories.whisky; // object
-  const otherCats = metadata.categories; // keys: gin, rum, etc (arrays)
+  // Metadata Helpers
+  const whiskyCats = metadata.categories.whisky;
+  const otherCats = metadata.categories;
 
   const getSubcategories = (cat: string) => {
     if (cat === 'ALL') return [];
-
-    // Normalize Check
     const catLower = cat.toLowerCase();
-
     if (catLower.includes('whisky') || catLower.includes('위스키')) {
-      // Flatten all whisky subcats
-      return [
-        ...whiskyCats.scotch,
-        ...whiskyCats.american,
-        ...whiskyCats.other_regions
-      ];
+      return [...whiskyCats.scotch, ...whiskyCats.american, ...whiskyCats.other_regions];
     } else if (otherCats[catLower as keyof typeof otherCats]) {
       return otherCats[catLower as keyof typeof otherCats] as string[];
     }
     return [];
   };
-
   const currentSubcategories = getSubcategories(categoryFilter);
+  const availableCategories = ['위스키', '진', '럼', '테킬라', '브랜디', '소주', '맥주', '리큐르', '기타주류'];
 
-  // Load Data Function (Server-side)
+  // --- Data Loading ---
   const loadData = useCallback(async (pageNum: number, reset: boolean = false) => {
     if (loading) return;
     setLoading(true);
-
     try {
       const params = new URLSearchParams();
       if (statusFilter !== 'ALL') params.set('status', statusFilter);
       if (categoryFilter !== 'ALL') params.set('category', categoryFilter);
       if (subcategoryFilter !== 'ALL') params.set('subcategory', subcategoryFilter);
       params.set('page', pageNum.toString());
-      params.set('pageSize', '50'); // Load 50 at a time
+      params.set('pageSize', '50');
 
       const response = await fetch(`/api/admin/spirits/?${params.toString()}`);
       const data = await response.json();
 
-      if (reset) {
-        setSpirits(data.data || []);
-      } else {
+      if (reset) setSpirits(data.data || []);
+      else {
         setSpirits(prev => {
-          // Filter out duplicates just in case
           const newIds = new Set(prev.map(p => p.id));
           const newItems = (data.data || []).filter((item: Spirit) => !newIds.has(item.id));
           return [...prev, ...newItems];
         });
       }
-
       setTotal(data.total);
-      setHasMore((data.data || []).length === 50); // If < 50, end of list
+      setHasMore((data.data || []).length === 50);
+
+      // Update Pipeline Counts (simplified - ideal: separate API)
+      // For now we assume the total from separate queries or just estimate
+      // In a real app, we'd fetch counts specifically. 
     } catch (error) {
       console.error('Failed to load spirits:', error);
     } finally {
       setLoading(false);
     }
-  }, [statusFilter, categoryFilter, subcategoryFilter]); // Depend on filters
+  }, [statusFilter, categoryFilter, subcategoryFilter]);
 
-  // Initial Load & Filter Change
+  // Load Pipeline Stats
+  const refreshStats = async () => {
+    // This is a rough way to get stats. In prod, make a dedicated /api/admin/stats endpoint
+    // Here we just rely on what we can glimpse or we skip for now.
+    // Let's rely on the user manually refreshing the lists.
+  };
+
   useEffect(() => {
     setPage(1);
     setHasMore(true);
@@ -132,13 +131,10 @@ export default function AdminDashboard() {
     setSelectedIds(new Set());
   }, [statusFilter, categoryFilter, subcategoryFilter]);
 
-  // Infinite Scroll Observer
+  // Infinite Scroll
   useEffect(() => {
-    if (loading) return;
-    if (!hasMore) return;
-
+    if (loading || !hasMore) return;
     if (observerRef.current) observerRef.current.disconnect();
-
     observerRef.current = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting) {
         setPage(prev => {
@@ -148,32 +144,60 @@ export default function AdminDashboard() {
         });
       }
     });
-
-    if (loadMoreRef.current) {
-      observerRef.current.observe(loadMoreRef.current);
-    }
-
-    return () => { if (observerRef.current) observerRef.current.disconnect(); }
+    if (loadMoreRef.current) observerRef.current.observe(loadMoreRef.current);
+    return () => { observerRef.current?.disconnect(); }
   }, [hasMore, loading]);
 
 
-  // --- Action Handlers ---
+  // --- Pipeline Actions ---
+  const runPipeline = async (action: 'COLLECT' | 'ENRICH' | 'FETCH_IMAGE') => {
+    setIsProcessing(true);
+    setPipelineLogs(prev => [`⏳ [${action}] Started...`, ...prev]);
+    try {
+      const res = await fetch('/api/admin/pipeline/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action })
+      });
+      const data = await res.json();
+      setPipelineLogs(prev => [`✅ [${action}] Processed: ${data.processed}, Msg: ${data.message}`, ...prev]);
+      if (data.errors?.length) {
+        data.errors.forEach((e: string) => setPipelineLogs(prev => [`❌ ${e}`, ...prev]));
+      }
+      loadData(1, true); // Refresh view
+    } catch (e: any) {
+      setPipelineLogs(prev => [`❌ [${action}] Error: ${e.message || e}`, ...prev]);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
 
+  const publishSpirit = async (id: string) => {
+    if (!confirm('최종 승인하시겠습니까? (공개 전환)')) return;
+    setIsProcessing(true);
+    try {
+      await fetch(`/api/admin/spirits/${id}/`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'PUBLISHED', isPublished: true, updatedAt: new Date().toISOString() })
+      });
+      loadData(1, true); // Refresh to remove from list (if filtered)
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+
+  // ... Existing Actions (Edit, Delete, Bulk) ...
   const toggleSelect = (id: string) => {
     const next = new Set(selectedIds);
     if (next.has(id)) next.delete(id);
     else next.add(id);
     setSelectedIds(next);
   };
-
   const toggleSelectAll = () => {
-    if (selectedIds.size > 0) {
-      setSelectedIds(new Set());
-    } else {
-      // Only select loaded items
-      const ids = spirits.map(s => s.id);
-      setSelectedIds(new Set(ids));
-    }
+    if (selectedIds.size > 0) setSelectedIds(new Set());
+    else setSelectedIds(new Set(spirits.map(s => s.id)));
   };
 
   // Get selected objects for validation
@@ -254,29 +278,16 @@ export default function AdminDashboard() {
     }
   };
 
-  // Edit Logic
   const startEdit = (spirit: Spirit) => {
     setEditingId(spirit.id);
     setEditForm({
-      name: spirit.name,
-      abv: spirit.abv,
-      imageUrl: spirit.imageUrl || '',
-      name_en: spirit.metadata?.name_en || '',
-      category: spirit.category || '',
-      subcategory: spirit.subcategory || '',
-      country: spirit.country || '',
-      region: spirit.region || '',
-      distillery: spirit.distillery || '',
-      bottler: spirit.bottler || '',
-      volume: spirit.volume || 700,
-      tasting_note: spirit.metadata?.tasting_note || '',
-      description: spirit.metadata?.description || '',
-      nose_tags: (spirit.metadata?.nose_tags || []).join(', '),
-      palate_tags: (spirit.metadata?.palate_tags || []).join(', '),
-      finish_tags: (spirit.metadata?.finish_tags || []).join(', ')
+      name: spirit.name, abv: spirit.abv, imageUrl: spirit.imageUrl || '',
+      name_en: spirit.metadata?.name_en || '', category: spirit.category || '', subcategory: spirit.subcategory || '',
+      country: spirit.country || '', region: spirit.region || '', distillery: spirit.distillery || '', bottler: spirit.bottler || '',
+      volume: spirit.volume || 700, tasting_note: spirit.metadata?.tasting_note || '', description: spirit.metadata?.description || '',
+      nose_tags: (spirit.metadata?.nose_tags || []).join(', '), palate_tags: (spirit.metadata?.palate_tags || []).join(', '), finish_tags: (spirit.metadata?.finish_tags || []).join(', ')
     });
   };
-
   const saveEdit = async () => {
     if (!editingId) return;
     setIsProcessing(true);
@@ -306,108 +317,138 @@ export default function AdminDashboard() {
           updatedAt: new Date().toISOString()
         })
       });
-
       if (response.ok) {
         setEditingId(null);
-        // Refresh only the edited item? Re-fetching page 1 is safer for simplicity
         loadData(1, true);
       } else {
         alert('저장 실패');
       }
     } catch (error) {
       alert('오류 발생');
-    } finally {
-      setIsProcessing(false);
-    }
+    } finally { setIsProcessing(false); }
   };
 
-  // Collection Control
-  const runCollection = async (type: 'run_imported' | 'run_domestic' | 'run_reviews_gemini' | 'merge_ingest' | 'reset_all') => {
-    setIsProcessing(true);
-    setConsoleLogs(prev => prev + `\n🔄 [${new Date().toLocaleTimeString()}] 시작: ${type}...\n`);
-    try {
-      const res = await fetch('/api/admin/collection/', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: type })
-      });
-      const data = await res.json();
-      if (data.success) {
-        setConsoleLogs(prev => prev + `✅ 완료: ${data.count || 0}건 처리됨\n`);
-        if (type === 'merge_ingest') loadData(1, true);
-        else if (type !== 'reset_all') await runCollection('merge_ingest');
-      }
-    } catch (e) {
-      setConsoleLogs(prev => prev + `❌ 오류 발생: ${e}\n`);
-    } finally {
-      if (type === 'merge_ingest' || type === 'reset_all') setIsProcessing(false);
-    }
-  };
-
-  // Pre-calculated Lists for Selects
-  const availableCategories = ['위스키', '진', '럼', '테킬라', '브랜디', '소주', '맥주', '리큐르', '기타주류'];
-  const editSubcategories = getSubcategories(editForm.category) || [];
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-[1600px]"> {/* Widen Container */}
+    <div className="container mx-auto px-4 py-8 max-w-[1600px]">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-black tracking-tight">🛠️ Club Hub Admin</h1>
+        <h1 className="text-3xl font-black tracking-tight">🏭 Club Hub Pipeline</h1>
         <Link href="/" className="text-sm font-bold bg-secondary px-4 py-2 rounded-xl hover:opacity-80 transition-all">홈으로</Link>
       </div>
 
-      <div className="flex border-b mb-6 overflow-x-auto">
-        {(['dashboard', 'collection'] as const).map(tab => (
-          <button key={tab} onClick={() => setActiveTab(tab)}
-            className={`px-8 py-4 font-bold border-b-4 transition-all whitespace-nowrap ${activeTab === tab ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground'}`}>
-            {tab === 'dashboard' ? '📊 데이터 검수' : '⚙️ 파이프라인 제어'}
-          </button>
-        ))}
+      {/* Tabs */}
+      <div className="flex border-b mb-8 overflow-x-auto">
+        <button onClick={() => setActiveTab('pipeline')} className={`px-8 py-4 font-bold border-b-4 transition-all whitespace-nowrap ${activeTab === 'pipeline' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground'}`}>🚀 파이프라인 제어</button>
+        <button onClick={() => setActiveTab('master')} className={`px-8 py-4 font-bold border-b-4 transition-all whitespace-nowrap ${activeTab === 'master' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground'}`}>📚 마스터 데이터</button>
       </div>
 
-      {activeTab === 'collection' && (
-        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
-          {/* Same Collection UI... */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-card border-border rounded-2xl p-6 shadow-sm">
-              <h3 className="text-sm font-bold text-muted-foreground mb-2">국내 데이터</h3>
-              <button disabled={isProcessing} onClick={() => runCollection('run_domestic')} className="w-full py-3 bg-primary text-primary-foreground rounded-xl font-bold hover:opacity-90 disabled:opacity-50 transition-all">🇰🇷 식품안전나라 갱신</button>
+      {activeTab === 'pipeline' && (
+        <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
+
+          {/* 1. Control Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-card border border-border rounded-3xl p-6 shadow-sm flex flex-col justify-between h-64 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 p-32 bg-yellow-100 rounded-full blur-3xl opacity-20 -mr-16 -mt-16 pointer-events-none"></div>
+              <div>
+                <h3 className="text-xl font-black text-foreground mb-2">① 원본 데이터 수집</h3>
+                <p className="text-sm text-muted-foreground">식품안전나라 등 외부 API에서 원본 데이터를 로드합니다.</p>
+              </div>
+              <div>
+                <div className="text-4xl font-black text-foreground mb-4">{counts.RAW || '-'} <span className="text-base font-normal text-muted-foreground">건 대기중</span></div>
+                <button onClick={() => runPipeline('COLLECT')} disabled={isProcessing} className="w-full py-4 bg-secondary text-secondary-foreground font-bold rounded-xl hover:bg-secondary/80 disabled:opacity-50 transition-all">수집 시작</button>
+              </div>
             </div>
-            <div className="bg-card border-border rounded-2xl p-6 shadow-sm">
-              <h3 className="text-sm font-bold text-muted-foreground mb-2">해외 데이터</h3>
-              <button disabled={isProcessing} onClick={() => runCollection('run_imported')} className="w-full py-3 bg-secondary text-secondary-foreground border border-border rounded-xl font-bold hover:bg-secondary/80 disabled:opacity-50 transition-all">🚢 수입식품 갱신</button>
+
+            <div className="bg-card border border-border rounded-3xl p-6 shadow-sm flex flex-col justify-between h-64 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 p-32 bg-purple-100 rounded-full blur-3xl opacity-20 -mr-16 -mt-16 pointer-events-none"></div>
+              <div>
+                <h3 className="text-xl font-black text-foreground mb-2">② AI 데이터 보완</h3>
+                <p className="text-sm text-muted-foreground">Gemini AI를 사용하여 상세 정보 및 태그를 보완합니다.</p>
+              </div>
+              <div>
+                <div className="text-4xl font-black text-foreground mb-4">{counts.ENRICHED || '-'} <span className="text-base font-normal text-muted-foreground">건 보완됨</span></div>
+                <button onClick={() => runPipeline('ENRICH')} disabled={isProcessing} className="w-full py-4 bg-purple-600 text-white font-bold rounded-xl hover:bg-purple-700 disabled:opacity-50 transition-all">AI 에이전트 실행</button>
+              </div>
             </div>
-            <div className="bg-card border-border rounded-2xl p-6 shadow-sm">
-              <h3 className="text-sm font-bold text-muted-foreground mb-2">데이터베이스</h3>
-              <button disabled={isProcessing} onClick={() => runCollection('merge_ingest')} className="w-full py-3 bg-gray-800 text-white border border-border rounded-xl font-bold hover:opacity-90 disabled:opacity-50 transition-all">📥 데이터 병합 (Ingest)</button>
+
+            <div className="bg-card border border-border rounded-3xl p-6 shadow-sm flex flex-col justify-between h-64 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 p-32 bg-blue-100 rounded-full blur-3xl opacity-20 -mr-16 -mt-16 pointer-events-none"></div>
+              <div>
+                <h3 className="text-xl font-black text-foreground mb-2">③ 이미지 수집</h3>
+                <p className="text-sm text-muted-foreground">Google 고급 검색을 통해 고품질 이미지를 가져옵니다.</p>
+              </div>
+              <div>
+                <div className="text-4xl font-black text-foreground mb-4">{counts.READY_FOR_CONFIRM || '-'} <span className="text-base font-normal text-muted-foreground">건 준비됨</span></div>
+                <button onClick={() => runPipeline('FETCH_IMAGE')} disabled={isProcessing} className="w-full py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 disabled:opacity-50 transition-all">이미지 가져오기</button>
+              </div>
             </div>
           </div>
-          <div className="bg-black text-emerald-400 p-6 rounded-2xl font-mono text-xs h-80 overflow-y-auto border-4 border-gray-800 shadow-2xl">
-            <pre className="whitespace-pre-wrap">{consoleLogs || '> Ready for commands...'}</pre>
+
+          {/* Logs */}
+          {pipelineLogs.length > 0 && (
+            <div className="bg-black/90 text-emerald-400 p-6 rounded-2xl font-mono text-xs max-h-48 overflow-y-auto shadow-inner">
+              {pipelineLogs.map((log, i) => <div key={i}>{log}</div>)}
+            </div>
+          )}
+
+          {/* 2. Review Queue (Ready for Confirm) */}
+          <div>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-black">👀 검수 대기열 <span className="text-muted-foreground ml-2 text-lg font-normal">승인 대기중</span></h2>
+              <button onClick={() => { setStatusFilter('READY_FOR_CONFIRM'); loadData(1, true); }} className="text-sm font-bold text-primary hover:underline">목록 새로고침</button>
+            </div>
+
+            {/* We reuse the Grid UI concept but specific for Review */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {spirits.filter(s => s.status === 'READY_FOR_CONFIRM' || s.status === 'ENRICHED').slice(0, 8).map(spirit => (
+                <div key={spirit.id} className="bg-card border border-border rounded-2xl overflow-hidden flex flex-col shadow-sm hover:shadow-md transition-all group">
+                  <div className="aspect-[3/4] bg-secondary relative">
+                    {spirit.imageUrl ? (
+                      <img src={spirit.imageUrl} className="w-full h-full object-cover" alt={spirit.name} />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-muted-foreground text-xs">이미지 없음</div>
+                    )}
+                    <div className="absolute top-2 right-2 bg-black/60 text-white text-[10px] px-2 py-1 rounded-full font-bold">{spirit.category}</div>
+                  </div>
+                  <div className="p-4 flex-1 flex flex-col">
+                    <h4 className="font-bold text-base line-clamp-1">{spirit.name}</h4>
+                    <p className="text-xs text-muted-foreground mb-4">{spirit.distillery}</p>
+                    <div className="mt-auto flex gap-2">
+                      <button onClick={() => startEdit(spirit)} className="flex-1 py-2 bg-secondary text-secondary-foreground text-xs font-bold rounded-lg hover:bg-secondary/80">편집</button>
+                      <button onClick={() => publishSpirit(spirit.id)} className="flex-1 py-2 bg-primary text-primary-foreground text-xs font-bold rounded-lg hover:opacity-90">승인</button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {spirits.filter(s => s.status === 'READY_FOR_CONFIRM' || s.status === 'ENRICHED').length === 0 && (
+                <div className="col-span-full py-12 text-center text-muted-foreground border-2 border-dashed border-border rounded-3xl">
+                  검수 대기중인 항목이 없습니다. 위 파이프라인을 실행하세요!
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
 
-      {activeTab === 'dashboard' && (
+      {activeTab === 'master' && (
         <div className="space-y-8 animate-in fade-in duration-500">
+          {/* Reuse existing Master List UI here... */}
           <div className="bg-card border-border rounded-2xl p-6 shadow-xl ring-1 ring-border space-y-6">
-
-            {/* Top Row: Title & Total & Actions */}
+            {/* Filters... */}
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-4">
                 <div className="bg-primary/10 text-primary px-4 py-2 rounded-xl font-black text-lg border border-primary/20">
-                  Total <span className="text-2xl ml-1">{total.toLocaleString()}</span>
+                  총 <span className="text-2xl ml-1">{total.toLocaleString()}</span>건
                 </div>
-
-                {/* Status Filter Group */}
                 <div className="flex bg-secondary rounded-xl p-1">
-                  {(['ALL', 'RAW', 'ENRICHED', 'PUBLISHED'] as const).map(f => (
+                  {(['ALL', 'RAW', 'ENRICHED', 'READY_FOR_CONFIRM', 'PUBLISHED'] as const).map(f => (
                     <button key={f} onClick={() => setStatusFilter(f)}
                       className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${statusFilter === f ? 'bg-background shadow text-primary' : 'text-muted-foreground hover:text-foreground'}`}>
-                      {f}
+                      {f.replace('READY_FOR_CONFIRM', '검수대기')}
                     </button>
                   ))}
                 </div>
               </div>
-
               <div className="flex gap-2">
                 <button disabled={!selectedIds.size || isProcessing} onClick={handleBulkAutoProcess} className="bg-primary text-primary-foreground px-4 py-2 rounded-xl text-xs font-bold disabled:opacity-30 hover:opacity-90">AI 보완 ({selectedIds.size})</button>
                 <button disabled={!selectedIds.size || isProcessing} onClick={handleBulkPublish} className="bg-primary text-primary-foreground px-4 py-2 rounded-xl text-xs font-bold disabled:opacity-30 hover:opacity-90">최종 발행</button>
@@ -415,26 +456,14 @@ export default function AdminDashboard() {
                 <button onClick={toggleSelectAll} className="text-xs font-bold border border-border px-4 py-2 rounded-xl hover:bg-secondary text-foreground">전체선택 ({spirits.length})</button>
               </div>
             </div>
-
             {/* Category Filter Pills */}
             <div className="space-y-4">
               <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-                <button
-                  onClick={() => { setCategoryFilter('ALL'); setSubcategoryFilter('ALL'); }}
-                  className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap border transition-all ${categoryFilter === 'ALL' ? 'bg-foreground text-background border-foreground' : 'bg-background text-muted-foreground border-border hover:border-foreground/50'}`}
-                >
-                  전체 카테고리
-                </button>
+                <button onClick={() => { setCategoryFilter('ALL'); setSubcategoryFilter('ALL'); }} className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap border transition-all ${categoryFilter === 'ALL' ? 'bg-foreground text-background border-foreground' : 'bg-background text-muted-foreground border-border hover:border-foreground/50'}`}>전체 카테고리</button>
                 {availableCategories.map(c => (
-                  <button key={c}
-                    onClick={() => { setCategoryFilter(c); setSubcategoryFilter('ALL'); }}
-                    className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap border transition-all ${categoryFilter === c ? 'bg-foreground text-background border-foreground' : 'bg-background text-muted-foreground border-border hover:border-foreground/50'}`}
-                  >
-                    {c}
-                  </button>
+                  <button key={c} onClick={() => { setCategoryFilter(c); setSubcategoryFilter('ALL'); }} className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap border transition-all ${categoryFilter === c ? 'bg-foreground text-background border-foreground' : 'bg-background text-muted-foreground border-border hover:border-foreground/50'}`}>{c}</button>
                 ))}
               </div>
-
               {/* Subcategory Filter Pills (Conditional) */}
               <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide min-h-[40px]">
                 {categoryFilter !== 'ALL' && (
@@ -475,9 +504,7 @@ export default function AdminDashboard() {
               <tbody className="divide-y">
                 {spirits.map(spirit => (
                   <tr key={spirit.id} className={`hover:bg-primary/5 transition-colors ${selectedIds.has(spirit.id) ? 'bg-primary/5' : ''}`}>
-                    <td className="p-4 text-center">
-                      <input type="checkbox" checked={selectedIds.has(spirit.id)} onChange={() => toggleSelect(spirit.id)} className="w-4 h-4 rounded border-border accent-primary" />
-                    </td>
+                    <td className="p-4 text-center"><input type="checkbox" checked={selectedIds.has(spirit.id)} onChange={() => toggleSelect(spirit.id)} className="w-4 h-4 rounded border-border accent-primary" /></td>
                     <td className="p-4">
                       <div className="font-bold text-base text-foreground max-w-[300px] truncate">{spirit.name}</div>
                       <div className="text-[11px] text-muted-foreground">{spirit.distillery} | {spirit.abv}% | {spirit.category} / {spirit.subcategory}</div>
@@ -511,12 +538,11 @@ export default function AdminDashboard() {
                 ))}
               </tbody>
             </table>
-
             {/* Infinite Scroll Sentinel */}
             <div ref={loadMoreRef} className="p-8 text-center text-muted-foreground text-sm font-bold flex justify-center">
-              {loading && <span className="animate-pulse">Loading more spirits...</span>}
-              {!hasMore && !loading && spirits.length > 0 && <span>✨ All loaded! ({spirits.length} items)</span>}
-              {!loading && spirits.length === 0 && <span>No data found.</span>}
+              {loading && <span className="animate-pulse">더 많은 주류를 로드 중...</span>}
+              {!hasMore && !loading && spirits.length > 0 && <span>✨ 모든 항목 로드 완료! ({spirits.length}개)</span>}
+              {!loading && spirits.length === 0 && <span>데이터를 찾을 수 없습니다.</span>}
             </div>
           </div>
         </div>
@@ -553,7 +579,7 @@ export default function AdminDashboard() {
                     <select className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm"
                       value={editForm.subcategory} onChange={e => setEditForm({ ...editForm, subcategory: e.target.value })}>
                       <option value="">선택</option>
-                      {editSubcategories.map(c => <option key={c} value={c}>{c}</option>)}
+                      {currentSubcategories.map(c => <option key={c} value={c}>{c}</option>)}
                     </select>
                   </div>
                   <div>
@@ -597,11 +623,11 @@ export default function AdminDashboard() {
                 <div className="aspect-[4/3] bg-secondary rounded-2xl border border-border flex items-center justify-center overflow-hidden relative">
                   {editForm.imageUrl ? (
                     <img src={editForm.imageUrl} className="h-full object-contain" alt="Preview" />
-                  ) : <span className="text-sm text-muted-foreground">No Image</span>}
+                  ) : <span className="text-sm text-muted-foreground">이미지 없음</span>}
 
                   <button className="absolute bottom-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-xs backdrop-blur-md hover:bg-black/70"
                     onClick={() => window.open(editForm.imageUrl, '_blank')}>
-                    View Full
+                    전체 보기
                   </button>
                 </div>
                 <input className="w-full px-4 py-3 border border-input rounded-xl text-xs bg-background text-foreground font-mono" value={editForm.imageUrl} onChange={e => setEditForm({ ...editForm, imageUrl: e.target.value })} placeholder="Image URL" />
