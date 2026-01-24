@@ -22,6 +22,8 @@ const nextConfig = {
         fs: false,
         net: false,
         child_process: false,
+        tls: false,
+        http2: false,
       };
     }
     return config;
