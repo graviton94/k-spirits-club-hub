@@ -13,8 +13,8 @@ const nextConfig = {
     unoptimized: true, // Cloudflare Pages 이미지 최적화 제한 대응
   },
   // 빌드 시 타입 체크 및 린트 오류 무시 (배포를 우선하기 위함)
+  // 빌드 시 타입 체크 오류 무시 (배포를 우선하기 위함)
   typescript: { ignoreBuildErrors: true },
-  eslint: { ignoreDuringBuilds: true },
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback = {
