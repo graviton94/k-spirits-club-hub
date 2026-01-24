@@ -5,10 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && npx @cloudflare/next-on-pages --skip-build",
     "start": "next start",
-    "lint": "next lint",
-    "deploy": "node scripts/cloudflare-deploy.js"
+    "lint": "next lint"
   },
   "keywords": [],
   "author": "",
