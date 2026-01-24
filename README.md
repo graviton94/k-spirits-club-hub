@@ -1,5 +1,12 @@
 # 🥃 K-Spirits Club Hub
 
+![Status](https://img.shields.io/badge/Status-Active_Development-green)
+![Vibe Coding](https://img.shields.io/badge/Built_with-Vibe_Coding-purple)
+![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-yellow.svg)
+![Cloudflare](https://img.shields.io/badge/Deployment-Cloudflare_Pages-orange)
+![GitHub Copilot](https://img.shields.io/badge/AI_Pair_Programmer-Copilot-black)
+
 **K-Spirits Club**은 전 세계의 방대한 주류 데이터를 집대성하고 관리하는 글로벌 주류 허브 플랫폼입니다. [cite_start]공공 데이터(식품안전나라, 수입식품정보마루)와 글로벌 커뮤니티(Whiskybase) 데이터를 결합하여 사용자에게 개인화된 '디지털 술장' 경험을 제공합니다. [cite: 17, 20, 58, 102]
 
 ## 🌟 Project Vision & Strategy
