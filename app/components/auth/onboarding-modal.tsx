@@ -5,24 +5,69 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export default function OnboardingModal() {
     const [isOpen, setIsOpen] = useState(false);
+    const [birthYear, setBirthYear] = useState('');
+    const [birthMonth, setBirthMonth] = useState('');
+    const [birthDay, setBirthDay] = useState('');
 
     useEffect(() => {
         // Check if user has already verified their age
-        const ageVerified = localStorage.getItem('age_verified');
+        const ageVerified = localStorage.getItem('kspirits_age_verified');
         if (!ageVerified) {
             setIsOpen(true);
         }
     }, []);
 
-    const handleAgeVerification = () => {
-        // Set age verification in localStorage
-        localStorage.setItem('age_verified', 'true');
-        setIsOpen(false);
+    const handleEnter = () => {
+        // Validate inputs
+        if (!birthYear || !birthMonth || !birthDay) {
+            alert('생년월일을 모두 입력해주세요.');
+            return;
+        }
+
+        const year = parseInt(birthYear);
+        const month = parseInt(birthMonth);
+        const day = parseInt(birthDay);
+
+        // Basic validation
+        if (year < 1900 || year > new Date().getFullYear()) {
+            alert('올바른 연도를 입력해주세요.');
+            return;
+        }
+        if (month < 1 || month > 12) {
+            alert('올바른 월을 입력해주세요. (1-12)');
+            return;
+        }
+        if (day < 1 || day > 31) {
+            alert('올바른 일을 입력해주세요. (1-31)');
+            return;
+        }
+
+        // Calculate age with strict birth date comparison
+        const today = new Date();
+        const birthDate = new Date(year, month - 1, day);
+        
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        const dayDiff = today.getDate() - birthDate.getDate();
+        
+        // Adjust age if birthday hasn't occurred this year yet
+        if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+            age--;
+        }
+
+        const isAdult = age >= 19;
+
+        if (!isAdult) {
+            alert('19세 미만은 접속할 수 없습니다.');
+            window.location.href = 'https://google.com';
+        } else {
+            localStorage.setItem('kspirits_age_verified', 'true');
+            setIsOpen(false);
+        }
     };
 
     const handleExit = () => {
-        // Redirect to Google
-        window.location.href = 'https://www.google.com';
+        window.location.href = 'https://google.com';
     };
 
     return (
@@ -46,39 +91,71 @@ export default function OnboardingModal() {
                         <div className="absolute inset-0 bg-gradient-to-br from-amber-900/5 to-transparent pointer-events-none" />
                         
                         <div className="relative z-10">
-                            {/* Icon */}
-                            <div className="text-center mb-6">
+                            {/* Header */}
+                            <div className="text-center mb-8">
                                 <div className="inline-block p-4 bg-amber-900/20 rounded-full mb-4">
-                                    <span className="text-5xl">🚨</span>
+                                    <span className="text-5xl">🔞</span>
                                 </div>
-                                <h2 className="text-2xl font-black text-amber-100 mb-2">연령 확인</h2>
-                                <p className="text-sm text-slate-400">Age Verification Required</p>
+                                <h2 className="text-2xl font-black text-amber-100 mb-2">Age Verification</h2>
+                                <p className="text-sm text-slate-300 leading-relaxed">
+                                    You must be 19 years or older to enter.
+                                </p>
                             </div>
 
-                            {/* Legal warnings */}
-                            <div className="space-y-4 mb-8">
-                                <div className="bg-red-950/30 border border-red-900/50 rounded-xl p-4">
-                                    <p className="text-red-400 font-bold text-center text-base leading-relaxed">
-                                        ⚠️ 청소년에게 술을 판매하는 것은<br />법으로 금지되어 있습니다
-                                    </p>
-                                    <p className="text-red-300/80 text-xs text-center mt-2">
-                                        (청소년보호법 제2조, 제28조)
-                                    </p>
+                            {/* Birth Date Inputs */}
+                            <div className="space-y-4 mb-6">
+                                <div>
+                                    <label className="block text-xs font-bold text-slate-400 mb-2 ml-1">
+                                        생년월일 입력 (Birth Date)
+                                    </label>
+                                    <div className="grid grid-cols-3 gap-3">
+                                        {/* Year */}
+                                        <div>
+                                            <input
+                                                type="number"
+                                                placeholder="YYYY"
+                                                value={birthYear}
+                                                onChange={(e) => setBirthYear(e.target.value)}
+                                                maxLength={4}
+                                                className="w-full bg-slate-800/70 border border-slate-700 rounded-xl px-3 py-3 text-center font-bold text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent"
+                                            />
+                                            <p className="text-xs text-slate-500 text-center mt-1">년</p>
+                                        </div>
+                                        {/* Month */}
+                                        <div>
+                                            <input
+                                                type="number"
+                                                placeholder="MM"
+                                                value={birthMonth}
+                                                onChange={(e) => setBirthMonth(e.target.value)}
+                                                maxLength={2}
+                                                min="1"
+                                                max="12"
+                                                className="w-full bg-slate-800/70 border border-slate-700 rounded-xl px-3 py-3 text-center font-bold text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent"
+                                            />
+                                            <p className="text-xs text-slate-500 text-center mt-1">월</p>
+                                        </div>
+                                        {/* Day */}
+                                        <div>
+                                            <input
+                                                type="number"
+                                                placeholder="DD"
+                                                value={birthDay}
+                                                onChange={(e) => setBirthDay(e.target.value)}
+                                                maxLength={2}
+                                                min="1"
+                                                max="31"
+                                                className="w-full bg-slate-800/70 border border-slate-700 rounded-xl px-3 py-3 text-center font-bold text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent"
+                                            />
+                                            <p className="text-xs text-slate-500 text-center mt-1">일</p>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div className="bg-orange-950/20 border border-orange-900/30 rounded-xl p-4">
-                                    <p className="text-orange-200 text-sm text-center leading-relaxed">
-                                        ⚕️ 과도한 음주는 간경화나 간암을<br />유발할 수 있습니다
-                                    </p>
-                                    <p className="text-orange-300/60 text-xs text-center mt-2">
-                                        (국민건강증진법 시행규칙 제7조)
-                                    </p>
-                                </div>
-
-                                <div className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-4">
-                                    <p className="text-slate-300 text-xs text-center leading-relaxed">
-                                        본 사이트는 주류에 관한 정보를 제공하는 플랫폼입니다.<br />
-                                        만 19세 이상만 이용하실 수 있습니다.
+                                {/* Legal Notice */}
+                                <div className="bg-red-950/30 border border-red-900/50 rounded-xl p-3">
+                                    <p className="text-red-400 text-xs text-center leading-relaxed">
+                                        ⚠️ 19세 미만 청소년에게 주류를 판매하는 것은 법으로 금지되어 있습니다.
                                     </p>
                                 </div>
                             </div>
@@ -86,24 +163,23 @@ export default function OnboardingModal() {
                             {/* Action buttons */}
                             <div className="space-y-3">
                                 <button
-                                    onClick={handleAgeVerification}
+                                    onClick={handleEnter}
                                     className="w-full py-4 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-amber-900/50 active:scale-[0.98]"
                                 >
-                                    ✓ 만 19세 이상입니다
+                                    Enter
                                 </button>
                                 
                                 <button
                                     onClick={handleExit}
-                                    className="w-full py-4 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl transition-all border border-slate-700 active:scale-[0.98]"
+                                    className="w-full py-3 bg-transparent hover:bg-slate-800/50 text-slate-400 hover:text-slate-300 font-semibold rounded-xl transition-all border border-slate-700/50 active:scale-[0.98]"
                                 >
-                                    ← 나가기
+                                    Exit
                                 </button>
                             </div>
 
                             {/* Footer notice */}
                             <p className="text-xs text-slate-500 text-center mt-6 leading-relaxed">
-                                이 확인은 법적 요구사항을 준수하기 위한 것이며,<br />
-                                귀하의 정보는 저장되지 않습니다.
+                                귀하의 정보는 연령 확인 목적으로만 사용되며 저장되지 않습니다.
                             </p>
                         </div>
                     </motion.div>
