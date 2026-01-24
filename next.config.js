@@ -15,6 +15,8 @@ const nextConfig = {
   // 빌드 시 타입 체크 및 린트 오류 무시 (배포를 우선하기 위함)
   // 빌드 시 타입 체크 오류 무시 (배포를 우선하기 위함)
   typescript: { ignoreBuildErrors: true },
+  // Turbopack 설정 (Next.js 16 기본값, webpack과의 충돌 방지)
+  turbopack: {},
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback = {
