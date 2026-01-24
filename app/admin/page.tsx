@@ -64,21 +64,42 @@ export default function AdminDashboard() {
   const whiskyCats = metadata.categories['위스키'];
   const otherCats = metadata.categories;
 
-  const getSubcategories = (cat: string) => {
+  const getSubcategories = (cat: string): string[] => {
     if (cat === 'ALL') return [];
+
     const catLower = cat.toLowerCase();
+
+    // Handle whisky categories
     if (catLower.includes('whisky') || catLower.includes('위스키')) {
-      return [...whiskyCats.scotch, ...whiskyCats.american, ...whiskyCats.world_whisky];
-    } else if (otherCats[catLower as keyof typeof otherCats]) {
-      const catData = otherCats[catLower as keyof typeof otherCats];
-      // If it's a nested object (has main categories), flatten all subcategories
-      if (typeof catData === 'object' && !Array.isArray(catData)) {
-        return Object.values(catData).flat();
+      if (whiskyCats && typeof whiskyCats === 'object') {
+        return [...(whiskyCats.scotch || []), ...(whiskyCats.american || []), ...(whiskyCats.world_whisky || [])];
       }
       return [];
     }
+
+    // Handle other categories
+    const catData = otherCats[cat as keyof typeof otherCats];
+    if (!catData) return [];
+
+    // If it's an array, return it
+    if (Array.isArray(catData)) {
+      return catData;
+    }
+
+    // If it's a nested object, flatten all subcategories
+    if (typeof catData === 'object') {
+      const result: string[] = [];
+      Object.values(catData).forEach(val => {
+        if (Array.isArray(val)) {
+          result.push(...val);
+        }
+      });
+      return result;
+    }
+
     return [];
   };
+
   const currentSubcategories = getSubcategories(categoryFilter);
   const availableCategories = ['위스키', '진', '럼', '테킬라', '브랜디', '소주', '맥주', '리큐르', '기타주류'];
 
