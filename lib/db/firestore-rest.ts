@@ -53,7 +53,10 @@ function toFirestore(data: Partial<Spirit>): any {
         else if (Array.isArray(value)) {
             fields[key] = { arrayValue: { values: value.map(v => ({ stringValue: v })) } };
         }
-        else if (typeof value === 'object' && !(value instanceof Date)) {
+        if (value instanceof Date) {
+            fields[key] = { timestampValue: value.toISOString() };
+        }
+        else if (typeof value === 'object') {
             // Map (Metadata)
             const mapFields: any = {};
             for (const [mk, mv] of Object.entries(value)) {
@@ -148,13 +151,12 @@ export const spiritsDb = {
     async upsert(id: string, data: Partial<Spirit>) {
         const token = await getServiceAccountToken();
         const path = `artifacts/graviton94-k-spirits-club-hub/public/data/spirits/${id}`;
-        const url = `${BASE_URL}/${path}?updateMask.fieldPaths=status&updateMask.fieldPaths=updatedAt&updateMask.fieldPaths=imageUrl&updateMask.fieldPaths=thumbnailUrl&updateMask.fieldPaths=metadata`;
 
         // Construct Update Mask dynamically based on data keys
         const fieldPaths = Object.keys(data).filter(k => k !== 'id').map(k => `updateMask.fieldPaths=${k}`).join('&');
-        const patchUrl = `${BASE_URL}/${path}?${fieldPaths}`;
+        const patchUrl = `${BASE_URL}/${path}?${fieldPaths}&updateMask.fieldPaths=updatedAt`;
 
-        const body = toFirestore({ ...data, updatedAt: new Date().toISOString() });
+        const body = toFirestore({ ...data, updatedAt: new Date() });
 
         const res = await fetch(patchUrl, {
             method: 'PATCH',
