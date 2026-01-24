@@ -3,15 +3,8 @@ import { notFound } from "next/navigation";
 import SaveButton from "@/components/ui/SaveButton";
 import ReviewSection from "@/components/ui/ReviewSection";
 
-export async function generateStaticParams() {
-  // In production, this would fetch all spirit IDs from the database
-  // For now, return the sample spirit IDs
-  return [
-    { id: '1' },
-    { id: '2' },
-    { id: '3' },
-  ];
-}
+// Force dynamic rendering to prevent build-time Firestore access
+export const dynamic = 'force-dynamic';
 
 export default async function SpiritDetailPage({
   params,
@@ -25,7 +18,9 @@ export default async function SpiritDetailPage({
     notFound();
   }
 
-  const reviews = await db.getReviews(id);
+
+  // TODO: Implement reviews feature in Firestore
+  const reviews: any[] = [];
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
