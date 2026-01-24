@@ -94,34 +94,41 @@ export default function MyPage() {
                                 {roleBadge}
                             </div>
 
-                            {/* User Stats Summary */}
-                            <div className="grid grid-cols-3 gap-4 w-full mb-8">
-                                <div className="bg-secondary/30 p-4 rounded-2xl flex flex-col items-center">
-                                    <span className="text-2xl mb-1">📝</span>
-                                    <span className="text-lg font-black">0</span>
-                                    <span className="text-xs text-muted-foreground">내가 쓴 글</span>
+                            {/* User Stats Summary with Guest Overlay */}
+                            <div className="relative mb-8">
+                                <div className="grid grid-cols-3 gap-4 w-full">
+                                    <div className="bg-secondary/30 p-4 rounded-2xl flex flex-col items-center">
+                                        <span className="text-2xl mb-1">📝</span>
+                                        <span className="text-lg font-black">0</span>
+                                        <span className="text-xs text-muted-foreground">내가 쓴 글</span>
+                                    </div>
+                                    <div className="bg-secondary/30 p-4 rounded-2xl flex flex-col items-center">
+                                        <span className="text-2xl mb-1">❤️</span>
+                                        <span className="text-lg font-black">0</span>
+                                        <span className="text-xs text-muted-foreground">받은 추천</span>
+                                    </div>
+                                    <div className="bg-secondary/30 p-4 rounded-2xl flex flex-col items-center">
+                                        <span className="text-2xl mb-1">🥃</span>
+                                        <span className="text-lg font-black">0</span>
+                                        <span className="text-xs text-muted-foreground">내 술장</span>
+                                    </div>
                                 </div>
-                                <div className="bg-secondary/30 p-4 rounded-2xl flex flex-col items-center">
-                                    <span className="text-2xl mb-1">❤️</span>
-                                    <span className="text-lg font-black">0</span>
-                                    <span className="text-xs text-muted-foreground">받은 추천</span>
-                                </div>
-                                <div className="bg-secondary/30 p-4 rounded-2xl flex flex-col items-center">
-                                    <span className="text-2xl mb-1">🥃</span>
-                                    <span className="text-lg font-black">0</span>
-                                    <span className="text-xs text-muted-foreground">내 술장</span>
-                                </div>
+
+                                {/* Glassmorphism Overlay for Guests */}
+                                {!user && (
+                                    <div className="absolute inset-0 backdrop-blur-md bg-white/10 rounded-2xl flex items-center justify-center border border-white/20">
+                                        <Link
+                                            href="/login"
+                                            className="px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold rounded-full hover:shadow-2xl hover:scale-105 transition-all shadow-lg"
+                                        >
+                                            회원가입 하기 🚀
+                                        </Link>
+                                    </div>
+                                )}
                             </div>
 
                             <div className="w-full space-y-3">
-                                {!user ? (
-                                    <Link
-                                        href="/login"
-                                        className="block w-full py-4 bg-primary text-primary-foreground font-bold rounded-xl hover:bg-primary/90 transition-all shadow-md"
-                                    >
-                                        로그인 / 회원가입 하러가기
-                                    </Link>
-                                ) : (
+                                {user && (
                                     <>
                                         <button
                                             onClick={() => setIsEditing(true)}

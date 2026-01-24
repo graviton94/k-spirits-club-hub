@@ -15,10 +15,16 @@ import {
   getCategoryStructure,
   getSubCategoriesForMain
 } from "@/lib/constants/categories";
+import { useDragScroll } from "@/lib/hooks/useDragScroll";
 
 
 export default function ExploreContent() {
   const searchParams = useSearchParams();
+
+  // Drag scroll refs for category filters
+  const legalCategoryScrollRef = useDragScroll<HTMLDivElement>();
+  const mainCategoryScrollRef = useDragScroll<HTMLDivElement>();
+  const subCategoryScrollRef = useDragScroll<HTMLDivElement>();
   const searchTerm = searchParams.get('search') || undefined;
   const categoryParam = searchParams.get('category') || undefined;
 
@@ -165,7 +171,7 @@ export default function ExploreContent() {
             <span className="text-slate-400 text-2xl opacity-80">‹</span>
           </div>
 
-          <div className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide snap-x justify-start md:justify-center px-12">
+          <div ref={legalCategoryScrollRef} className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide snap-x justify-start md:justify-center px-12">
             <CategoryFilter
               label="ALL"
               value=""
@@ -200,7 +206,7 @@ export default function ExploreContent() {
               <span className="text-slate-400 text-xl opacity-70">‹</span>
             </div>
 
-            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide justify-start md:justify-center flex-wrap px-12">
+            <div ref={mainCategoryScrollRef} className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide snap-x justify-start md:justify-center px-12">
               <CategoryFilter
                 label="전체"
                 value=""
@@ -231,40 +237,52 @@ export default function ExploreContent() {
       {/* Level 3: Sub Categories */}
       {subOptions.length > 0 && (
         <div className="mb-10 animate-fade-in-down delay-100">
-          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide justify-start md:justify-center flex-wrap">
-            {!isNested && (
-              <CategoryFilter
-                label="전체"
-                value=""
-                isActive={!selectedSub}
-                href={`/explore?category=${selectedLegal}`}
-                isSub
-              />
-            )}
-            {isNested && selectedMain && (
-              <CategoryFilter
-                label="전체"
-                value=""
-                isActive={!selectedSub}
-                href={`/explore?category=${selectedLegal}&main=${selectedMain}`}
-                isSub
-              />
-            )}
+          <div className="relative">
+            {/* Left fade indicator */}
+            <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-slate-950 to-transparent z-10 pointer-events-none flex items-center justify-start pl-3">
+              <span className="text-slate-400 text-lg opacity-60">‹</span>
+            </div>
 
-            {subOptions.map(sub => (
-              <CategoryFilter
-                key={sub}
-                label={CATEGORY_NAME_MAP[sub] || sub}
-                value={sub}
-                isActive={selectedSub === sub}
-                href={
-                  isNested
-                    ? `/explore?category=${selectedLegal}&main=${selectedMain}&sub=${encodeURIComponent(sub)}`
-                    : `/explore?category=${selectedLegal}&sub=${encodeURIComponent(sub)}`
-                }
-                isSub
-              />
-            ))}
+            <div ref={subCategoryScrollRef} className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide snap-x justify-start md:justify-center px-12">
+              {!isNested && (
+                <CategoryFilter
+                  label="전체"
+                  value=""
+                  isActive={!selectedSub}
+                  href={`/explore?category=${selectedLegal}`}
+                  isSub
+                />
+              )}
+              {isNested && selectedMain && (
+                <CategoryFilter
+                  label="전체"
+                  value=""
+                  isActive={!selectedSub}
+                  href={`/explore?category=${selectedLegal}&main=${selectedMain}`}
+                  isSub
+                />
+              )}
+
+              {subOptions.map(sub => (
+                <CategoryFilter
+                  key={sub}
+                  label={CATEGORY_NAME_MAP[sub] || sub}
+                  value={sub}
+                  isActive={selectedSub === sub}
+                  href={
+                    isNested
+                      ? `/explore?category=${selectedLegal}&main=${selectedMain}&sub=${encodeURIComponent(sub)}`
+                      : `/explore?category=${selectedLegal}&sub=${encodeURIComponent(sub)}`
+                  }
+                  isSub
+                />
+              ))}
+            </div>
+
+            {/* Right fade indicator */}
+            <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-slate-950 to-transparent z-10 pointer-events-none flex items-center justify-end pr-3">
+              <span className="text-slate-400 text-lg opacity-60">›</span>
+            </div>
           </div>
         </div>
       )}
