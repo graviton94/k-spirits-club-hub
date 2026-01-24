@@ -1,44 +1,10 @@
 # Cloudflare Pages Configuration
+# This file tells Cloudflare Pages to ignore the deploy command and use automatic deployment
 
-## Deployment Settings
+# Build settings are configured in the Cloudflare dashboard:
+# - Framework preset: Next.js
+# - Build command: npm run build
+# - Build output directory: (auto-detected by Next.js)
 
-- **Framework preset**: Next.js (Static HTML Export)
-- **Build command**: `npm run build`
-- **Build output directory**: `out`
-- **Node version**: 18.x or higher
-
-## Environment Variables
-
-Set these in Cloudflare Pages dashboard:
-
-```
-FOOD_SAFETY_KOREA_API_KEY=your_key_here
-WHISKYBASE_API_KEY=your_key_here
-```
-
-## Custom Headers (Optional)
-
-Create `public/_headers` file for security headers:
-
-```
-/*
-  X-Frame-Options: DENY
-  X-Content-Type-Options: nosniff
-  Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: geolocation=(), microphone=(), camera=()
-```
-
-## Redirects (Optional)
-
-Create `public/_redirects` file:
-
-```
-/admin/* 200
-/spirits/* 200
-```
-
-## Notes
-
-- Next.js static export is used for Cloudflare Pages compatibility
-- Dynamic features require Cloudflare Workers or Pages Functions
-- Database integration recommended: Cloudflare D1 or Turso
+# The "Deploy command" in dashboard settings should be set to: exit 0
+# This README exists to document the deployment configuration
