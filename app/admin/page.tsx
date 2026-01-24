@@ -190,36 +190,68 @@ export default function AdminDashboard() {
 
   // ... Existing Actions (Edit, Delete, Bulk) ...
   const toggleSelect = (id: string) => {
-    const next = new Set(selectedIds);
-    if (next.has(id)) next.delete(id);
-    else next.add(id);
-    setSelectedIds(next);
+    const newSet = new Set(selectedIds);
+    if (newSet.has(id)) {
+      newSet.delete(id);
+    } else {
+      if (newSet.size >= 100) {
+        alert('⚠️ 최대 100개까지만 선택 가능합니다.');
+        return;
+      }
+      newSet.add(id);
+    }
+    setSelectedIds(newSet);
   };
+
   const toggleSelectAll = () => {
     if (selectedIds.size > 0) setSelectedIds(new Set());
-    else setSelectedIds(new Set(spirits.map(s => s.id)));
+    else {
+      // Select up to 100 items
+      const idsToSelect = spirits.slice(0, 100).map(s => s.id);
+      setSelectedIds(new Set(idsToSelect));
+      if (spirits.length > 100) {
+        alert(`처음 100개 항목만 선택되었습니다. (전체: ${spirits.length}개)`);
+      }
+    }
   };
 
   // Get selected objects for validation
   const getSelectedSpirits = () => spirits.filter(s => selectedIds.has(s.id));
 
-  // Bulk Auto Process (Enrich)
+  // Bulk Auto Process (AI Enrichment + Image Collection)
   const handleBulkAutoProcess = async () => {
     if (selectedIds.size === 0) return;
+
+    if (!confirm(`선택한 ${selectedIds.size}건에 대해 AI 보완 및 이미지 수집을 진행하시겠습니까?\n\n이 작업은 몇 분이 소요될 수 있습니다.`)) return;
+
     setIsProcessing(true);
+    setPipelineLogs([`🚀 ${selectedIds.size}건 자동 처리 시작...`]);
+
     try {
       const response = await fetch('/api/admin/pipeline/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ spiritIds: Array.from(selectedIds), action: 'ENRICH' })
+        body: JSON.stringify({ spiritIds: Array.from(selectedIds), action: 'AUTO_PROCESS' })
       });
+
+      const result = await response.json();
+
       if (response.ok) {
-        alert('AI 데이터 보완 요청이 완료되었습니다.');
+        setPipelineLogs(prev => [
+          ...prev,
+          `✅ 완료: ${result.processed}건 처리됨`,
+          ...(result.errors.length > 0 ? [`⚠️ 오류: ${result.errors.length}건`] : [])
+        ]);
+        alert(`처리 완료: ${result.processed}건 / ${selectedIds.size}건`);
         // Refresh Current View
         loadData(1, true);
         setSelectedIds(new Set());
+      } else {
+        setPipelineLogs(prev => [...prev, `❌ 오류: ${result.error}`]);
+        alert('처리 중 오류가 발생했습니다.');
       }
     } catch (error) {
+      setPipelineLogs(prev => [...prev, `❌ 네트워크 오류 발생`]);
       alert('처리 중 오류가 발생했습니다.');
     } finally {
       setIsProcessing(false);

@@ -7,11 +7,56 @@ export const runtime = 'edge';
 
 export async function POST(req: NextRequest) {
     try {
-        const { action } = await req.json();
+        const { action, spiritIds } = await req.json();
         let processedCount = 0;
         let errors: string[] = [];
 
-        if (action === 'ENRICH') {
+        if (action === 'AUTO_PROCESS') {
+            // Combined: ENRICH + FETCH_IMAGE for selected spirits
+            if (!spiritIds || spiritIds.length === 0) {
+                return NextResponse.json({ error: 'spiritIds required for AUTO_PROCESS' }, { status: 400 });
+            }
+
+            for (const spiritId of spiritIds) {
+                try {
+                    const spirit = await db.getSpirit(spiritId);
+                    if (!spirit) continue;
+
+                    // Step 1: AI Enrichment
+                    const enrichedData = await enrichSpiritMetadata(spirit);
+                    await db.updateSpirit(spirit.id, enrichedData);
+
+                    // Step 2: Image Search
+                    const nameEn = enrichedData.metadata?.name_en || spirit.metadata?.name_en || spirit.name;
+                    const imgUrl = await fetchSpiritImage(nameEn, spirit.distillery);
+
+                    await db.updateSpirit(spirit.id, {
+                        imageUrl: imgUrl,
+                        thumbnailUrl: imgUrl,
+                        status: 'READY_FOR_CONFIRM',
+                        updatedAt: new Date()
+                    });
+
+                    processedCount++;
+
+                    // Delay to avoid rate limits
+                    await new Promise(r => setTimeout(r, 1000 + Math.random() * 1000));
+
+                } catch (error: any) {
+                    console.error(`Auto-process failed for ${spiritId}:`, error);
+                    errors.push(`[${spiritId}] ${error.message}`);
+                }
+            }
+
+            return NextResponse.json({
+                success: true,
+                action: 'AUTO_PROCESS',
+                processed: processedCount,
+                errors,
+                message: `Successfully processed ${processedCount} / ${spiritIds.length} items.`
+            });
+
+        } else if (action === 'ENRICH') {
             // 1. Fetch RAW spirits (Batch 5 to avoid timeout)
             const { data: rawSpirits } = await db.getSpirits({ status: 'RAW' }, { page: 1, pageSize: 5 });
 
@@ -60,11 +105,6 @@ export async function POST(req: NextRequest) {
                 }
             }
 
-        } else if (action === 'COLLECT') {
-            // Placeholder for Collection Logic
-            // For now, we assume data is ingested via other means or we implement a simple mock
-            // In a real scenario, this would call 'fetchFromFoodSafety' and upsert DB
-            return NextResponse.json({ message: 'COLLECT action is not fully implemented yet in this demo.', count: 0 });
         } else {
             return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
         }

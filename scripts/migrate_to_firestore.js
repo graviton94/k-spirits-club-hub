@@ -29,16 +29,47 @@ const db = admin.firestore();
 const BATCH_SIZE = 400; // Firestore batch limit is 500
 
 async function migrate() {
-    const filePath = path.join(__dirname, '../lib/db/ingested-data.json');
-    if (!fs.existsSync(filePath)) {
-        console.error(`File not found: ${filePath}`);
-        return;
+    const dataDir = path.join(__dirname, '../data');
+    const rawImportedDir = path.join(dataDir, 'raw_imported');
+
+    let allSpirits = [];
+
+    // Read from data/*.json files (domestic spirits)
+    if (fs.existsSync(dataDir)) {
+        const files = fs.readdirSync(dataDir);
+        for (const file of files) {
+            if (file.startsWith('spirits_') && file.endsWith('.json')) {
+                const filePath = path.join(dataDir, file);
+                console.log(`Reading ${file}...`);
+                const content = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+                if (Array.isArray(content)) {
+                    allSpirits.push(...content);
+                }
+            }
+        }
     }
 
-    const raw = fs.readFileSync(filePath, 'utf-8');
-    const spirits = JSON.parse(raw);
+    // Read from data/raw_imported/*.json files (imported spirits)
+    if (fs.existsSync(rawImportedDir)) {
+        const files = fs.readdirSync(rawImportedDir);
+        for (const file of files) {
+            if (file.endsWith('.json')) {
+                const filePath = path.join(rawImportedDir, file);
+                console.log(`Reading ${file}...`);
+                const content = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+                if (Array.isArray(content)) {
+                    allSpirits.push(...content);
+                }
+            }
+        }
+    }
 
-    console.log(`Found ${spirits.length} spirits to migrate...`);
+    // Deduplicate by ID
+    const uniqueMap = new Map();
+    allSpirits.forEach(spirit => uniqueMap.set(spirit.id, spirit));
+    const spirits = Array.from(uniqueMap.values());
+
+    console.log(`Found ${spirits.length} unique spirits to migrate (from ${allSpirits.length} total)...`);
 
     let batch = db.batch();
     let count = 0;
