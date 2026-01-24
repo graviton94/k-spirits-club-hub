@@ -4,8 +4,6 @@ import fs from 'fs';
 import path from 'path';
 import { promisify } from 'util';
 
-export const runtime = 'edge';
-
 const execAsync = promisify(exec);
 
 const DATA_DIR = path.join(process.cwd(), 'data');
