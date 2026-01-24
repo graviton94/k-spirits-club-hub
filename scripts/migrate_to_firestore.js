@@ -73,13 +73,38 @@ async function migrate() {
     // Deduplicate by ID
     const uniqueMap = new Map();
     allSpirits.forEach(spirit => uniqueMap.set(spirit.id, spirit));
-    const spirits = Array.from(uniqueMap.values());
+    let spirits = Array.from(uniqueMap.values());
 
     console.log(`Found ${spirits.length} unique spirits to migrate (from ${allSpirits.length} total)...`);
+
+    // --- RESUME CAPABILITY ---
+    const logPath = path.join(__dirname, 'migration_success_log.json');
+    let processedIds = new Set();
+
+    if (fs.existsSync(logPath)) {
+        try {
+            const loggedData = JSON.parse(fs.readFileSync(logPath, 'utf-8'));
+            processedIds = new Set(loggedData);
+            console.log(`📜 Found migration log. Skipping ${processedIds.size} already uploaded items.`);
+        } catch (e) {
+            console.warn("⚠️ Failed to read migration log, starting fresh.");
+        }
+    }
+
+    // Filter out already processed items
+    const originalCount = spirits.length;
+    spirits = spirits.filter(s => !processedIds.has(s.id));
+    console.log(`⏭️  Skipping ${originalCount - spirits.length} items. Remaining to upload: ${spirits.length}`);
+
+    if (spirits.length === 0) {
+        console.log("✅ All items already uploaded!");
+        return;
+    }
 
     let batch = db.batch();
     let count = 0;
     let totalCommitted = 0;
+    let currentBatchIds = [];
 
     for (const spirit of spirits) {
         const docRef = db.collection('spirits').doc(spirit.id);
@@ -97,23 +122,47 @@ async function migrate() {
         Object.keys(prepareData).forEach(key => prepareData[key] === undefined && delete prepareData[key]);
 
         batch.set(docRef, prepareData);
+        currentBatchIds.push(spirit.id);
         count++;
 
         if (count >= BATCH_SIZE) {
             await batch.commit();
+
+            // Update Log
+            try {
+                const currentLog = fs.existsSync(logPath) ? JSON.parse(fs.readFileSync(logPath, 'utf-8')) : [];
+                const updatedLog = [...currentLog, ...currentBatchIds];
+                fs.writeFileSync(logPath, JSON.stringify(updatedLog, null, 2));
+            } catch (e) {
+                console.error("⚠️ Failed to update migration log:", e);
+            }
+
             totalCommitted += count;
             console.log(`Committed ${totalCommitted} / ${spirits.length} items...`);
+
             batch = db.batch();
             count = 0;
+            currentBatchIds = [];
+
+            // Optional: Small delay to be gentle on quota if needed
+            // await new Promise(r => setTimeout(r, 100));
         }
     }
 
     if (count > 0) {
         await batch.commit();
+        // Update Log for final batch
+        try {
+            const currentLog = fs.existsSync(logPath) ? JSON.parse(fs.readFileSync(logPath, 'utf-8')) : [];
+            const updatedLog = [...currentLog, ...currentBatchIds];
+            fs.writeFileSync(logPath, JSON.stringify(updatedLog, null, 2));
+        } catch (e) {
+            console.error("⚠️ Failed to update migration log:", e);
+        }
         totalCommitted += count;
     }
 
-    console.log('Migration Complete! Total items:', totalCommitted);
+    console.log('Migration Complete! Total items uploaded this run:', totalCommitted);
 }
 
 migrate().catch(console.error);

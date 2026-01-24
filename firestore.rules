@@ -1,0 +1,31 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if user is admin
+    function isAdmin() {
+      return request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'ADMIN';
+    }
+
+    // Users Collection
+    // User can read/write their OWN document.
+    match /users/{userId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Spirits Collection
+    // Public Read, Strict Admin Write
+    match /artifacts/{appId}/public/data/spirits/{spiritId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    
+    // Fallback for direct root access if migration didn't happen (legacy path)
+    match /spirits/{spiritId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}

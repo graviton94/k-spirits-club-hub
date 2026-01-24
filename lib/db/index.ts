@@ -1,81 +1,77 @@
-import {
-  collection,
-  query,
-  getDocs,
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc,
-  deleteDoc,
-  where,
-  orderBy
-} from 'firebase/firestore';
-import { db as firestoreDb, appId } from '../firebase';
+import { db as adminDb } from '../firebase-admin';
+import { appId } from '../firebase';
 import { Spirit, SpiritStatus, SpiritFilter, PaginationParams, PaginatedResponse } from './schema';
 
 /**
- * [빌드 에러 수정] firebase-admin 대신 클라이언트용 Firestore를 사용합니다.
- * 모든 경로는 RULE 1에 따라 /artifacts/{appId}/public/data/spirits 를 따릅니다.
+ * [Server-Side Database Adapter]
+ * Uses Firebase Admin SDK to bypass Security Rules for API Routes.
+ * Path: /artifacts/{appId}/public/data/spirits
  */
 
-const spiritsCollection = collection(firestoreDb, 'artifacts', appId, 'public', 'data', 'spirits');
+const COLLECTION_PATH = `artifacts/${appId}/public/data/spirits`;
 
 export const spiritsDb = {
-  // 모든 주류 가져오기 (필터링은 메모리에서 처리 - RULE 2 준수)
+  // Get All Spirits (Admin SDK)
   async getAll(status?: SpiritStatus | 'ALL'): Promise<Spirit[]> {
-    const q = query(spiritsCollection);
-    const snapshot = await getDocs(q);
-    const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Spirit));
+    let query: FirebaseFirestore.Query = adminDb.collection(COLLECTION_PATH);
 
-    if (!status || status === 'ALL') return data;
-    return data.filter(s => s.status === status);
+    if (status && status !== 'ALL') {
+      query = query.where('status', '==', status);
+    }
+
+    const snapshot = await query.get();
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Spirit));
   },
 
-  // 특정 주류 가져오기
+  // Get By ID
   async getById(id: string): Promise<Spirit | null> {
-    const docRef = doc(firestoreDb, 'artifacts', appId, 'public', 'data', 'spirits', id);
-    const snapshot = await getDoc(docRef);
-    if (snapshot.exists()) return { id: snapshot.id, ...snapshot.data() } as Spirit;
+    const docRef = adminDb.doc(`${COLLECTION_PATH}/${id}`);
+    const snapshot = await docRef.get();
+    if (snapshot.exists) return { id: snapshot.id, ...snapshot.data() } as Spirit;
     return null;
   },
 
-  // 주류 정보 생성/업데이트 (Upsert)
+  // Upsert (Set with merge)
   async upsert(id: string, data: Partial<Spirit>) {
-    const docRef = doc(firestoreDb, 'artifacts', appId, 'public', 'data', 'spirits', id);
-    // Ensure ID is part of data
+    const docRef = adminDb.doc(`${COLLECTION_PATH}/${id}`);
     const payload = { ...data, id, updatedAt: new Date().toISOString() };
-    return setDoc(docRef, payload, { merge: true });
+    await docRef.set(payload, { merge: true });
   },
 
-  // 일괄 업데이트
+  // Bulk Update
   async bulkUpdate(ids: string[], updates: Partial<Spirit>) {
-    const promises = ids.map(id => this.upsert(id, updates));
-    return Promise.all(promises);
+    const batch = adminDb.batch();
+    ids.forEach(id => {
+      const docRef = adminDb.doc(`${COLLECTION_PATH}/${id}`);
+      batch.set(docRef, { ...updates, updatedAt: new Date().toISOString() }, { merge: true });
+    });
+    await batch.commit();
   },
 
-  // 삭제
+  // Delete
   async delete(ids: string[]) {
-    const promises = ids.map(id => {
-      const docRef = doc(firestoreDb, 'artifacts', appId, 'public', 'data', 'spirits', id);
-      return deleteDoc(docRef);
+    const batch = adminDb.batch();
+    ids.forEach(id => {
+      const docRef = adminDb.doc(`${COLLECTION_PATH}/${id}`);
+      batch.delete(docRef);
     });
-    return Promise.all(promises);
+    await batch.commit();
   }
 };
 
 // -----------------------------------------------------------------------------
-// LEGACY ADAPTER (Maintains API Compatibility for existing routes)
-// Uses spiritsDb internally
+// LEGACY ADAPTER (Compatible Wrapper)
 // -----------------------------------------------------------------------------
 export const db = {
   async getSpirits(filter: SpiritFilter = {}, pagination: PaginationParams = { page: 1, pageSize: 20 }): Promise<PaginatedResponse<Spirit>> {
-    // Fetch ALL (Client SDK Limitation workaround: Fetch All -> Filter Memory)
-    // For 5000 items, this is acceptable for now. 
-    // In future, we should use 'where' clauses in getAll if possible.
-    let allItems = await spiritsDb.getAll('ALL');
+    // 1. Fetch filtered items from Firestore (Memory Filtering for specialized fields)
+    // Note: Admin SDK supports complex queries better, but we keep memory filter logic for consistency with previous behavior unless performance issues arise.
+    // For 42k items, fetching ALL and filtering in memory is NOT scalable permanently, but for now we stick to "fetch all by Status" and filter rest.
 
-    // Filter
-    if (filter.status) allItems = allItems.filter(s => s.status === filter.status);
+    // Improvement: Use Firestore Query for basic fields if possible.
+    let allItems = await spiritsDb.getAll(filter.status); // Pre-filter by status if present
+
+    // 2. Memory Filter
     if (filter.category) allItems = allItems.filter(s => s.category === filter.category);
     if (filter.subcategory) allItems = allItems.filter(s => s.subcategory === filter.subcategory);
     if (filter.country) allItems = allItems.filter(s => s.country === filter.country);
@@ -88,9 +84,10 @@ export const db = {
       );
     }
 
-    // Sort (Default: UpdatedAt Desc)
+    // 3. Sort (Default: UpdatedAt Desc)
     allItems.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
 
+    // 4. Pagination
     const total = allItems.length;
     const start = (pagination.page - 1) * pagination.pageSize;
     const data = allItems.slice(start, start + pagination.pageSize);

@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { generateRandomNickname } from '@/lib/utils/nickname-generator';
 
 export default function MyPage() {
-    const { user, role, profile, logout, loading, updateProfile } = useAuth();
+    const { user, role, profile, logout, loading, updateProfile, loginWithGoogle } = useAuth();
     const router = useRouter();
 
     const [isEditing, setIsEditing] = useState(false);
@@ -25,9 +25,46 @@ export default function MyPage() {
 
     if (loading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
 
+    // Guest View
     if (!user) {
-        router.replace('/login');
-        return null;
+        return (
+            <div className="container mx-auto px-4 py-12 max-w-sm min-h-[80vh] flex flex-col items-center justify-center">
+                <div className="text-center space-y-6">
+                    <div className="text-6xl mb-4">🥃</div>
+                    <h1 className="text-2xl font-bold">K-Spirits Club</h1>
+                    <p className="text-muted-foreground mb-8">
+                        로그인하고 나만의 주류 캐비닛을 관리하세요.<br />
+                        리뷰를 남기고 다른 애호가들과 소통해보세요!
+                    </p>
+
+                    <button
+                        onClick={loginWithGoogle}
+                        className="w-full py-4 bg-white text-black border border-gray-200 rounded-xl font-bold flex items-center justify-center gap-3 shadow-sm hover:bg-gray-50 transition-all"
+                    >
+                        <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5" />
+                        Google 계정으로 계속하기
+                    </button>
+
+                    <div className="relative">
+                        <div className="absolute inset-0 flex items-center">
+                            <span className="w-full border-t border-border" />
+                        </div>
+                        <div className="relative flex justify-center text-xs uppercase">
+                            <span className="bg-background px-2 text-muted-foreground">
+                                또는
+                            </span>
+                        </div>
+                    </div>
+
+                    <Link
+                        href="/login"
+                        className="block w-full py-4 bg-secondary text-secondary-foreground rounded-xl font-bold hover:opacity-80 transition-all"
+                    >
+                        이메일로 시작하기
+                    </Link>
+                </div>
+            </div>
+        );
     }
 
     const handleSave = async () => {
@@ -92,6 +129,25 @@ export default function MyPage() {
 
                             <div className="px-4 py-1 rounded-full bg-secondary text-xs font-bold mb-8">
                                 {role === 'ADMIN' ? '👑 관리자' : '🥂 클럽 멤버'}
+                            </div>
+
+                            {/* User Stats Summary (Placeholder) */}
+                            <div className="grid grid-cols-3 gap-4 w-full mb-8">
+                                <div className="bg-secondary/30 p-4 rounded-2xl flex flex-col items-center">
+                                    <span className="text-2xl mb-1">📝</span>
+                                    <span className="text-lg font-black">0</span>
+                                    <span className="text-xs text-muted-foreground">내가 쓴 글</span>
+                                </div>
+                                <div className="bg-secondary/30 p-4 rounded-2xl flex flex-col items-center">
+                                    <span className="text-2xl mb-1">❤️</span>
+                                    <span className="text-lg font-black">0</span>
+                                    <span className="text-xs text-muted-foreground">받은 추천</span>
+                                </div>
+                                <div className="bg-secondary/30 p-4 rounded-2xl flex flex-col items-center">
+                                    <span className="text-2xl mb-1">🥃</span>
+                                    <span className="text-lg font-black">0</span>
+                                    <span className="text-xs text-muted-foreground">내 술장</span>
+                                </div>
                             </div>
 
                             <div className="w-full space-y-3">
