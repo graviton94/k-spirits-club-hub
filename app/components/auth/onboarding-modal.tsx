@@ -76,8 +76,9 @@ export default function OnboardingModal() {
         if (!isAdult) {
             alert('19세 미만은 접속할 수 없습니다.');
             // Use setTimeout to ensure alert is dismissed before redirect
+            // Use replace() to prevent back button navigation
             setTimeout(() => {
-                window.location.href = 'https://google.com';
+                window.location.replace('https://google.com');
             }, 100);
         } else {
             localStorage.setItem('kspirits_age_verified', 'true');
@@ -86,7 +87,8 @@ export default function OnboardingModal() {
     };
 
     const handleExit = () => {
-        window.location.href = 'https://google.com';
+        // Use replace() to prevent back button navigation
+        window.location.replace('https://google.com');
     };
 
     return (
@@ -134,8 +136,12 @@ export default function OnboardingModal() {
                                                 type="number"
                                                 placeholder="YYYY"
                                                 value={birthYear}
-                                                onChange={(e) => setBirthYear(e.target.value)}
-                                                maxLength={4}
+                                                onChange={(e) => {
+                                                    const value = e.target.value;
+                                                    if (value.length <= 4) setBirthYear(value);
+                                                }}
+                                                min="1900"
+                                                max={new Date().getFullYear()}
                                                 className="w-full bg-slate-800/70 border border-slate-700 rounded-xl px-3 py-3 text-center font-bold text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent"
                                             />
                                             <p className="text-xs text-slate-500 text-center mt-1">년</p>
@@ -146,8 +152,10 @@ export default function OnboardingModal() {
                                                 type="number"
                                                 placeholder="MM"
                                                 value={birthMonth}
-                                                onChange={(e) => setBirthMonth(e.target.value)}
-                                                maxLength={2}
+                                                onChange={(e) => {
+                                                    const value = e.target.value;
+                                                    if (value.length <= 2) setBirthMonth(value);
+                                                }}
                                                 min="1"
                                                 max="12"
                                                 className="w-full bg-slate-800/70 border border-slate-700 rounded-xl px-3 py-3 text-center font-bold text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent"
@@ -160,8 +168,10 @@ export default function OnboardingModal() {
                                                 type="number"
                                                 placeholder="DD"
                                                 value={birthDay}
-                                                onChange={(e) => setBirthDay(e.target.value)}
-                                                maxLength={2}
+                                                onChange={(e) => {
+                                                    const value = e.target.value;
+                                                    if (value.length <= 2) setBirthDay(value);
+                                                }}
                                                 min="1"
                                                 max="31"
                                                 className="w-full bg-slate-800/70 border border-slate-700 rounded-xl px-3 py-3 text-center font-bold text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent"
