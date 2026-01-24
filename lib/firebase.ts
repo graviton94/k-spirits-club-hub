@@ -3,9 +3,13 @@ import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 // .env 파일의 설정을 가져옵니다.
-const firebaseConfig = JSON.parse(
-    process.env.NEXT_PUBLIC_FIREBASE_CONFIG || '{}'
-);
+let firebaseConfig;
+try {
+    firebaseConfig = JSON.parse(process.env.NEXT_PUBLIC_FIREBASE_CONFIG || '{}');
+} catch (error) {
+    console.warn('Firebase Config Parse Error:', error);
+    firebaseConfig = {};
+}
 
 // 앱 초기화 (중복 방지)
 const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);

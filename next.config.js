@@ -15,6 +15,17 @@ const nextConfig = {
   // 빌드 시 타입 체크 및 린트 오류 무시 (배포를 우선하기 위함)
   typescript: { ignoreBuildErrors: true },
   eslint: { ignoreDuringBuilds: true },
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        child_process: false,
+      };
+    }
+    return config;
+  },
 };
 
 module.exports = nextConfig;
