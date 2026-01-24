@@ -80,6 +80,13 @@ export const db = {
     if (filter.subcategory) allItems = allItems.filter(s => s.subcategory === filter.subcategory);
     if (filter.country) allItems = allItems.filter(s => s.country === filter.country);
     if (filter.isPublished !== undefined) allItems = allItems.filter(s => s.isPublished === filter.isPublished);
+    if (filter.searchTerm) {
+      const lowerTerm = filter.searchTerm.toLowerCase();
+      allItems = allItems.filter(s =>
+        s.name.toLowerCase().includes(lowerTerm) ||
+        (s.metadata?.name_en && s.metadata.name_en.toLowerCase().includes(lowerTerm))
+      );
+    }
 
     // Sort (Default: UpdatedAt Desc)
     allItems.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());

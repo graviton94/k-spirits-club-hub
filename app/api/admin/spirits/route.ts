@@ -19,7 +19,11 @@ export async function GET(req: NextRequest) {
         const filter: any = {};
         if (status && status !== 'ALL') filter.status = status as SpiritStatus;
         if (category && category !== 'ALL') filter.category = category;
+        if (category && category !== 'ALL') filter.category = category;
         if (subcategory && subcategory !== 'ALL') filter.subcategory = subcategory;
+
+        const search = searchParams.get('search');
+        if (search) filter.searchTerm = search;
 
         const spirits = await db.getSpirits(filter, { page, pageSize });
         console.log(`[API] Admin fetch returned ${spirits.data.length} spirits (Total: ${spirits.total})`);

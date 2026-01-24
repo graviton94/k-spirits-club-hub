@@ -50,6 +50,7 @@ export default function AdminDashboard() {
   const [statusFilter, setStatusFilter] = useState<SpiritStatus | 'ALL'>('ALL');
   const [categoryFilter, setCategoryFilter] = useState<string>('ALL');
   const [subcategoryFilter, setSubcategoryFilter] = useState<string>('ALL');
+  const [searchQuery, setSearchQuery] = useState(''); // Search State
 
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [isProcessing, setIsProcessing] = useState(false);
@@ -90,6 +91,7 @@ export default function AdminDashboard() {
       if (statusFilter !== 'ALL') params.set('status', statusFilter);
       if (categoryFilter !== 'ALL') params.set('category', categoryFilter);
       if (subcategoryFilter !== 'ALL') params.set('subcategory', subcategoryFilter);
+      if (searchQuery) params.set('search', searchQuery); // Pass search query
       params.set('page', pageNum.toString());
       params.set('pageSize', '50');
 
@@ -115,7 +117,7 @@ export default function AdminDashboard() {
     } finally {
       setLoading(false);
     }
-  }, [statusFilter, categoryFilter, subcategoryFilter]);
+  }, [statusFilter, categoryFilter, subcategoryFilter, searchQuery]);
 
   // Load Pipeline Stats
   const refreshStats = async () => {
@@ -127,9 +129,10 @@ export default function AdminDashboard() {
   useEffect(() => {
     setPage(1);
     setHasMore(true);
+    setHasMore(true);
     loadData(1, true);
     setSelectedIds(new Set());
-  }, [statusFilter, categoryFilter, subcategoryFilter]);
+  }, [statusFilter, categoryFilter, subcategoryFilter, searchQuery]); // Add searchQuery dependency
 
   // Infinite Scroll
   useEffect(() => {
@@ -292,6 +295,24 @@ export default function AdminDashboard() {
     }
   };
 
+  // Single Delete Action
+  const deleteSpirit = async (id: string) => {
+    if (!confirm('정말 삭제하시겠습니까?')) return;
+    setIsProcessing(true);
+    try {
+      await fetch('/api/admin/spirits/', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ spiritIds: [id] })
+      });
+      loadData(1, true);
+    } catch (error) {
+      alert('삭제 중 오류가 발생했습니다.');
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
   const handleBulkDelete = async () => {
     if (selectedIds.size === 0) return;
     if (!confirm(`선택한 ${selectedIds.size}건을 삭제하시겠습니까?`)) return;
@@ -320,38 +341,50 @@ export default function AdminDashboard() {
       nose_tags: (spirit.metadata?.nose_tags || []).join(', '), palate_tags: (spirit.metadata?.palate_tags || []).join(', '), finish_tags: (spirit.metadata?.finish_tags || []).join(', ')
     });
   };
-  const saveEdit = async () => {
+
+  const saveEdit = async (publish: boolean = false) => {
     if (!editingId) return;
+
+    if (publish && !confirm('수정 내용을 저장하고 최종 승인(공개) 하시겠습니까?')) return;
+
     setIsProcessing(true);
     try {
+      const payload: any = {
+        name: editForm.name,
+        abv: parseFloat(String(editForm.abv)),
+        imageUrl: editForm.imageUrl,
+        category: editForm.category,
+        subcategory: editForm.subcategory,
+        country: editForm.country,
+        region: editForm.region,
+        distillery: editForm.distillery,
+        bottler: editForm.bottler,
+        volume: Number(editForm.volume),
+        metadata: {
+          name_en: editForm.name_en,
+          tasting_note: editForm.tasting_note,
+          description: editForm.description,
+          nose_tags: editForm.nose_tags.split(',').map(t => t.trim()).filter(Boolean),
+          palate_tags: editForm.palate_tags.split(',').map(t => t.trim()).filter(Boolean),
+          finish_tags: editForm.finish_tags.split(',').map(t => t.trim()).filter(Boolean),
+        },
+        updatedAt: new Date().toISOString()
+      };
+
+      if (publish) {
+        payload.status = 'PUBLISHED';
+        payload.isPublished = true;
+      }
+
       const response = await fetch(`/api/admin/spirits/${editingId}/`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: editForm.name,
-          abv: parseFloat(String(editForm.abv)),
-          imageUrl: editForm.imageUrl,
-          category: editForm.category,
-          subcategory: editForm.subcategory,
-          country: editForm.country,
-          region: editForm.region,
-          distillery: editForm.distillery,
-          bottler: editForm.bottler,
-          volume: Number(editForm.volume),
-          metadata: {
-            name_en: editForm.name_en,
-            tasting_note: editForm.tasting_note,
-            description: editForm.description,
-            nose_tags: editForm.nose_tags.split(',').map(t => t.trim()).filter(Boolean),
-            palate_tags: editForm.palate_tags.split(',').map(t => t.trim()).filter(Boolean),
-            finish_tags: editForm.finish_tags.split(',').map(t => t.trim()).filter(Boolean),
-          },
-          updatedAt: new Date().toISOString()
-        })
+        body: JSON.stringify(payload)
       });
       if (response.ok) {
         setEditingId(null);
         loadData(1, true);
+        if (publish) alert('✅ 최종 승인되었습니다.');
       } else {
         alert('저장 실패');
       }
@@ -377,41 +410,25 @@ export default function AdminDashboard() {
       {activeTab === 'pipeline' && (
         <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
 
-          {/* 1. Control Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-card border border-border rounded-3xl p-6 shadow-sm flex flex-col justify-between h-64 relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-32 bg-yellow-100 rounded-full blur-3xl opacity-20 -mr-16 -mt-16 pointer-events-none"></div>
-              <div>
-                <h3 className="text-xl font-black text-foreground mb-2">① 원본 데이터 수집</h3>
-                <p className="text-sm text-muted-foreground">식품안전나라 등 외부 API에서 원본 데이터를 로드합니다.</p>
-              </div>
-              <div>
-                <div className="text-4xl font-black text-foreground mb-4">{counts.RAW || '-'} <span className="text-base font-normal text-muted-foreground">건 대기중</span></div>
-                <button onClick={() => runPipeline('COLLECT')} disabled={isProcessing} className="w-full py-4 bg-secondary text-secondary-foreground font-bold rounded-xl hover:bg-secondary/80 disabled:opacity-50 transition-all">수집 시작</button>
-              </div>
+          <div className="bg-card border border-border rounded-3xl p-6 shadow-sm flex flex-col justify-between h-64 relative overflow-hidden group col-span-1 md:col-span-3">
+            <div className="absolute top-0 right-0 p-64 bg-purple-100 rounded-full blur-3xl opacity-20 -mr-32 -mt-32 pointer-events-none"></div>
+            <div>
+              <h3 className="text-xl font-black text-foreground mb-2">⚡ Pipeline Auto Process</h3>
+              <p className="text-sm text-muted-foreground">AI 데이터 보완 및 이미지 수집을 원클릭으로 순차 실행합니다.</p>
             </div>
-
-            <div className="bg-card border border-border rounded-3xl p-6 shadow-sm flex flex-col justify-between h-64 relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-32 bg-purple-100 rounded-full blur-3xl opacity-20 -mr-16 -mt-16 pointer-events-none"></div>
-              <div>
-                <h3 className="text-xl font-black text-foreground mb-2">② AI 데이터 보완</h3>
-                <p className="text-sm text-muted-foreground">Gemini AI를 사용하여 상세 정보 및 태그를 보완합니다.</p>
+            <div className="flex items-center gap-4">
+              <div className="bg-background/50 rounded-xl p-4 flex-1">
+                <div className="text-sm font-bold text-muted-foreground">RAW (대기)</div>
+                <div className="text-2xl font-black text-foreground">{counts.RAW || 0}</div>
               </div>
-              <div>
-                <div className="text-4xl font-black text-foreground mb-4">{counts.ENRICHED || '-'} <span className="text-base font-normal text-muted-foreground">건 보완됨</span></div>
-                <button onClick={() => runPipeline('ENRICH')} disabled={isProcessing} className="w-full py-4 bg-purple-600 text-white font-bold rounded-xl hover:bg-purple-700 disabled:opacity-50 transition-all">AI 에이전트 실행</button>
+              <div className="bg-background/50 rounded-xl p-4 flex-1">
+                <div className="text-sm font-bold text-muted-foreground">검수 대기</div>
+                <div className="text-2xl font-black text-foreground">{counts.READY_FOR_CONFIRM || 0}</div>
               </div>
-            </div>
-
-            <div className="bg-card border border-border rounded-3xl p-6 shadow-sm flex flex-col justify-between h-64 relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-32 bg-blue-100 rounded-full blur-3xl opacity-20 -mr-16 -mt-16 pointer-events-none"></div>
-              <div>
-                <h3 className="text-xl font-black text-foreground mb-2">③ 이미지 수집</h3>
-                <p className="text-sm text-muted-foreground">Google 고급 검색을 통해 고품질 이미지를 가져옵니다.</p>
-              </div>
-              <div>
-                <div className="text-4xl font-black text-foreground mb-4">{counts.READY_FOR_CONFIRM || '-'} <span className="text-base font-normal text-muted-foreground">건 준비됨</span></div>
-                <button onClick={() => runPipeline('FETCH_IMAGE')} disabled={isProcessing} className="w-full py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 disabled:opacity-50 transition-all">이미지 가져오기</button>
+              <div className="flex-[2]">
+                <button onClick={handleBulkAutoProcess} disabled={!selectedIds.size || isProcessing} className="w-full py-4 bg-purple-600 text-white font-bold rounded-xl hover:bg-purple-700 disabled:opacity-50 transition-all shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95">
+                  {selectedIds.size > 0 ? `${selectedIds.size}건 자동 처리 시작` : '목록에서 항목을 선택해주세요'}
+                </button>
               </div>
             </div>
           </div>
@@ -441,6 +458,9 @@ export default function AdminDashboard() {
                       <div className="w-full h-full flex items-center justify-center text-muted-foreground text-xs">이미지 없음</div>
                     )}
                     <div className="absolute top-2 right-2 bg-black/60 text-white text-[10px] px-2 py-1 rounded-full font-bold">{spirit.category}</div>
+                    <button onClick={(e) => { e.stopPropagation(); deleteSpirit(spirit.id); }} className="absolute bottom-2 right-2 bg-destructive/80 text-white p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity hover:bg-destructive">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" /></svg>
+                    </button>
                   </div>
                   <div className="p-4 flex-1 flex flex-col">
                     <h4 className="font-bold text-base line-clamp-1">{spirit.name}</h4>
@@ -460,233 +480,246 @@ export default function AdminDashboard() {
             </div>
           </div>
         </div>
-      )}
+      )
+      }
 
-      {activeTab === 'master' && (
-        <div className="space-y-8 animate-in fade-in duration-500">
-          {/* Reuse existing Master List UI here... */}
-          <div className="bg-card border-border rounded-2xl p-6 shadow-xl ring-1 ring-border space-y-6">
-            {/* Filters... */}
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <div className="flex items-center gap-4">
-                <div className="bg-primary/10 text-primary px-4 py-2 rounded-xl font-black text-lg border border-primary/20">
-                  총 <span className="text-2xl ml-1">{total.toLocaleString()}</span>건
-                </div>
-                <div className="flex bg-secondary rounded-xl p-1">
-                  {(['ALL', 'RAW', 'ENRICHED', 'READY_FOR_CONFIRM', 'PUBLISHED'] as const).map(f => (
-                    <button key={f} onClick={() => setStatusFilter(f)}
-                      className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${statusFilter === f ? 'bg-background shadow text-primary' : 'text-muted-foreground hover:text-foreground'}`}>
-                      {f.replace('READY_FOR_CONFIRM', '검수대기')}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <button disabled={!selectedIds.size || isProcessing} onClick={handleBulkAutoProcess} className="bg-primary text-primary-foreground px-4 py-2 rounded-xl text-xs font-bold disabled:opacity-30 hover:opacity-90">AI 보완 ({selectedIds.size})</button>
-                <button disabled={!selectedIds.size || isProcessing} onClick={handleBulkPublish} className="bg-primary text-primary-foreground px-4 py-2 rounded-xl text-xs font-bold disabled:opacity-30 hover:opacity-90">최종 발행</button>
-                <button disabled={!selectedIds.size || isProcessing} onClick={handleBulkDelete} className="bg-destructive text-destructive-foreground px-4 py-2 rounded-xl text-xs font-bold disabled:opacity-30 hover:opacity-90">삭제</button>
-                <button onClick={toggleSelectAll} className="text-xs font-bold border border-border px-4 py-2 rounded-xl hover:bg-secondary text-foreground">전체선택 ({spirits.length})</button>
-              </div>
-            </div>
-            {/* Category Filter Pills */}
-            <div className="space-y-4">
-              <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-                <button onClick={() => { setCategoryFilter('ALL'); setSubcategoryFilter('ALL'); }} className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap border transition-all ${categoryFilter === 'ALL' ? 'bg-foreground text-background border-foreground' : 'bg-background text-muted-foreground border-border hover:border-foreground/50'}`}>전체 카테고리</button>
-                {availableCategories.map(c => (
-                  <button key={c} onClick={() => { setCategoryFilter(c); setSubcategoryFilter('ALL'); }} className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap border transition-all ${categoryFilter === c ? 'bg-foreground text-background border-foreground' : 'bg-background text-muted-foreground border-border hover:border-foreground/50'}`}>{c}</button>
-                ))}
-              </div>
-              {/* Subcategory Filter Pills (Conditional) */}
-              <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide min-h-[40px]">
-                {categoryFilter !== 'ALL' && (
-                  <>
-                    <button
-                      onClick={() => setSubcategoryFilter('ALL')}
-                      className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap border transition-all ${subcategoryFilter === 'ALL' ? 'bg-secondary text-secondary-foreground border-secondary-foreground' : 'bg-background text-muted-foreground border-border hover:bg-secondary/50'}`}
-                    >
-                      전체 세부종류
-                    </button>
-                    {currentSubcategories.map(c => (
-                      <button key={c}
-                        onClick={() => setSubcategoryFilter(c)}
-                        className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap border transition-all ${subcategoryFilter === c ? 'bg-secondary text-secondary-foreground border-secondary-foreground' : 'bg-background text-muted-foreground border-border hover:bg-secondary/50'}`}
-                      >
-                        {c}
+      {
+        activeTab === 'master' && (
+          <div className="space-y-8 animate-in fade-in duration-500">
+            {/* Reuse existing Master List UI here... */}
+            <div className="bg-card border-border rounded-2xl p-6 shadow-xl ring-1 ring-border space-y-6">
+              {/* Filters... */}
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <div className="bg-primary/10 text-primary px-4 py-2 rounded-xl font-black text-lg border border-primary/20">
+                    총 <span className="text-2xl ml-1">{total.toLocaleString()}</span>건
+                  </div>
+                  <div className="flex bg-secondary rounded-xl p-1">
+                    {(['ALL', 'RAW', 'ENRICHED', 'READY_FOR_CONFIRM', 'PUBLISHED'] as const).map(f => (
+                      <button key={f} onClick={() => setStatusFilter(f)}
+                        className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${statusFilter === f ? 'bg-background shadow text-primary' : 'text-muted-foreground hover:text-foreground'}`}>
+                        {f.replace('READY_FOR_CONFIRM', '검수대기')}
                       </button>
                     ))}
-                  </>
-                )}
-                {categoryFilter === 'ALL' && <span className="text-xs text-muted-foreground py-2 px-2">카테고리를 먼저 선택해주세요.</span>}
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <button disabled={!selectedIds.size || isProcessing} onClick={handleBulkAutoProcess} className="bg-primary text-primary-foreground px-4 py-2 rounded-xl text-xs font-bold disabled:opacity-30 hover:opacity-90">Auto Process ({selectedIds.size})</button>
+                  <button disabled={!selectedIds.size || isProcessing} onClick={handleBulkPublish} className="bg-primary text-primary-foreground px-4 py-2 rounded-xl text-xs font-bold disabled:opacity-30 hover:opacity-90">최종 발행</button>
+                  <button disabled={!selectedIds.size || isProcessing} onClick={handleBulkDelete} className="bg-destructive text-destructive-foreground px-4 py-2 rounded-xl text-xs font-bold disabled:opacity-30 hover:opacity-90">일괄 삭제</button>
+                  <div className="relative">
+                    <input placeholder="이름 검색..." className="bg-secondary px-4 py-2 rounded-xl text-xs font-bold w-48 border border-transparent focus:border-primary focus:outline-none"
+                      value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
+                  </div>
+                  <button onClick={toggleSelectAll} className="text-xs font-bold border border-border px-4 py-2 rounded-xl hover:bg-secondary text-foreground">전체선택 ({spirits.length})</button>
+                </div>
+              </div>
+              {/* Category Filter Pills */}
+              <div className="space-y-4">
+                <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+                  <button onClick={() => { setCategoryFilter('ALL'); setSubcategoryFilter('ALL'); }} className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap border transition-all ${categoryFilter === 'ALL' ? 'bg-foreground text-background border-foreground' : 'bg-background text-muted-foreground border-border hover:border-foreground/50'}`}>전체 카테고리</button>
+                  {availableCategories.map(c => (
+                    <button key={c} onClick={() => { setCategoryFilter(c); setSubcategoryFilter('ALL'); }} className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap border transition-all ${categoryFilter === c ? 'bg-foreground text-background border-foreground' : 'bg-background text-muted-foreground border-border hover:border-foreground/50'}`}>{c}</button>
+                  ))}
+                </div>
+                {/* Subcategory Filter Pills (Conditional) */}
+                <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide min-h-[40px]">
+                  {categoryFilter !== 'ALL' && (
+                    <>
+                      <button
+                        onClick={() => setSubcategoryFilter('ALL')}
+                        className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap border transition-all ${subcategoryFilter === 'ALL' ? 'bg-secondary text-secondary-foreground border-secondary-foreground' : 'bg-background text-muted-foreground border-border hover:bg-secondary/50'}`}
+                      >
+                        전체 세부종류
+                      </button>
+                      {currentSubcategories.map(c => (
+                        <button key={c}
+                          onClick={() => setSubcategoryFilter(c)}
+                          className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap border transition-all ${subcategoryFilter === c ? 'bg-secondary text-secondary-foreground border-secondary-foreground' : 'bg-background text-muted-foreground border-border hover:bg-secondary/50'}`}
+                        >
+                          {c}
+                        </button>
+                      ))}
+                    </>
+                  )}
+                  {categoryFilter === 'ALL' && <span className="text-xs text-muted-foreground py-2 px-2">카테고리를 먼저 선택해주세요.</span>}
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-card border-border rounded-2xl overflow-hidden shadow-sm">
+              <table className="w-full text-left text-sm border-collapse">
+                <thead className="bg-secondary/50 text-muted-foreground border-b border-border sticky top-0 z-20">
+                  <tr>
+                    <th className="p-4 w-12 text-center">선택</th>
+                    <th className="p-4">주류 정보</th>
+                    <th className="p-4">상태</th>
+                    <th className="p-4">AI 보완 내용</th>
+                    <th className="p-4">이미지</th>
+                    <th className="p-4">작업</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y">
+                  {spirits.map(spirit => (
+                    <tr key={spirit.id} className={`hover:bg-primary/5 transition-colors ${selectedIds.has(spirit.id) ? 'bg-primary/5' : ''}`}>
+                      <td className="p-4 text-center"><input type="checkbox" checked={selectedIds.has(spirit.id)} onChange={() => toggleSelect(spirit.id)} className="w-4 h-4 rounded border-border accent-primary" /></td>
+                      <td className="p-4">
+                        <div className="font-bold text-base text-foreground max-w-[300px] truncate">{spirit.name}</div>
+                        <div className="text-[11px] text-muted-foreground">{spirit.distillery} | {spirit.abv}% | {spirit.category} / {spirit.subcategory}</div>
+                      </td>
+                      <td className="p-4">
+                        <span className={`px-3 py-1 rounded-full text-[10px] font-black border ${spirit.status === 'PUBLISHED' ? 'bg-primary/10 text-primary border-primary/20' :
+                          spirit.status === 'ENRICHED' ? 'bg-secondary text-secondary-foreground border-secondary-foreground/20' :
+                            'bg-muted text-muted-foreground border-border'}`}>
+                          {spirit.status}
+                        </span>
+                      </td>
+                      <td className="p-4">
+                        <div className="max-w-[240px]">
+                          <div className="text-xs font-bold text-primary truncate">{spirit.metadata?.name_en || '-'}</div>
+                          <div className="text-[10px] text-muted-foreground line-clamp-1 mt-1">
+                            {spirit.metadata?.nose_tags?.join(', ') || '태그 없음'}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="p-4">
+                        {spirit.imageUrl ? (
+                          <img src={spirit.imageUrl} className="w-12 h-12 object-contain bg-background rounded-lg border border-border shadow-sm" alt="Bottle" />
+                        ) : (
+                          <div className="w-12 h-12 bg-secondary rounded-lg border border-border border-dashed flex items-center justify-center text-[10px] text-muted-foreground">Empty</div>
+                        )}
+                      </td>
+                      <td className="p-4">
+                        <div className="flex gap-2">
+                          <button onClick={() => startEdit(spirit)} className="px-3 py-1.5 bg-background border border-border text-xs font-bold rounded-lg hover:bg-secondary transition-all text-foreground">편집</button>
+                          <button onClick={() => deleteSpirit(spirit.id)} className="px-3 py-1.5 bg-destructive/10 border border-destructive/20 text-xs font-bold rounded-lg hover:bg-destructive/20 transition-all text-destructive">삭제</button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {/* Infinite Scroll Sentinel */}
+              <div ref={loadMoreRef} className="p-8 text-center text-muted-foreground text-sm font-bold flex justify-center">
+                {loading && <span className="animate-pulse">더 많은 주류를 로드 중...</span>}
+                {!hasMore && !loading && spirits.length > 0 && <span>✨ 모든 항목 로드 완료! ({spirits.length}개)</span>}
+                {!loading && spirits.length === 0 && <span>데이터를 찾을 수 없습니다.</span>}
               </div>
             </div>
           </div>
-
-          <div className="bg-card border-border rounded-2xl overflow-hidden shadow-sm">
-            <table className="w-full text-left text-sm border-collapse">
-              <thead className="bg-secondary/50 text-muted-foreground border-b border-border sticky top-0 z-20">
-                <tr>
-                  <th className="p-4 w-12 text-center">선택</th>
-                  <th className="p-4">주류 정보</th>
-                  <th className="p-4">상태</th>
-                  <th className="p-4">AI 보완 내용</th>
-                  <th className="p-4">이미지</th>
-                  <th className="p-4">작업</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y">
-                {spirits.map(spirit => (
-                  <tr key={spirit.id} className={`hover:bg-primary/5 transition-colors ${selectedIds.has(spirit.id) ? 'bg-primary/5' : ''}`}>
-                    <td className="p-4 text-center"><input type="checkbox" checked={selectedIds.has(spirit.id)} onChange={() => toggleSelect(spirit.id)} className="w-4 h-4 rounded border-border accent-primary" /></td>
-                    <td className="p-4">
-                      <div className="font-bold text-base text-foreground max-w-[300px] truncate">{spirit.name}</div>
-                      <div className="text-[11px] text-muted-foreground">{spirit.distillery} | {spirit.abv}% | {spirit.category} / {spirit.subcategory}</div>
-                    </td>
-                    <td className="p-4">
-                      <span className={`px-3 py-1 rounded-full text-[10px] font-black border ${spirit.status === 'PUBLISHED' ? 'bg-primary/10 text-primary border-primary/20' :
-                        spirit.status === 'ENRICHED' ? 'bg-secondary text-secondary-foreground border-secondary-foreground/20' :
-                          'bg-muted text-muted-foreground border-border'}`}>
-                        {spirit.status}
-                      </span>
-                    </td>
-                    <td className="p-4">
-                      <div className="max-w-[240px]">
-                        <div className="text-xs font-bold text-primary truncate">{spirit.metadata?.name_en || '-'}</div>
-                        <div className="text-[10px] text-muted-foreground line-clamp-1 mt-1">
-                          {spirit.metadata?.nose_tags?.join(', ') || '태그 없음'}
-                        </div>
-                      </div>
-                    </td>
-                    <td className="p-4">
-                      {spirit.imageUrl ? (
-                        <img src={spirit.imageUrl} className="w-12 h-12 object-contain bg-background rounded-lg border border-border shadow-sm" alt="Bottle" />
-                      ) : (
-                        <div className="w-12 h-12 bg-secondary rounded-lg border border-border border-dashed flex items-center justify-center text-[10px] text-muted-foreground">Empty</div>
-                      )}
-                    </td>
-                    <td className="p-4">
-                      <button onClick={() => startEdit(spirit)} className="px-3 py-1.5 bg-background border border-border text-xs font-bold rounded-lg hover:bg-secondary transition-all text-foreground">편집</button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            {/* Infinite Scroll Sentinel */}
-            <div ref={loadMoreRef} className="p-8 text-center text-muted-foreground text-sm font-bold flex justify-center">
-              {loading && <span className="animate-pulse">더 많은 주류를 로드 중...</span>}
-              {!hasMore && !loading && spirits.length > 0 && <span>✨ 모든 항목 로드 완료! ({spirits.length}개)</span>}
-              {!loading && spirits.length === 0 && <span>데이터를 찾을 수 없습니다.</span>}
-            </div>
-          </div>
-        </div>
-      )}
+        )
+      }
 
       {/* Expanded Edit Modal */}
-      {editingId && (
-        <div className="fixed inset-0 bg-background/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-          <div className="bg-card w-full max-w-6xl max-h-[95vh] overflow-y-auto rounded-3xl shadow-2xl border border-border p-10 animate-in zoom-in-95 duration-200">
-            <h2 className="text-2xl font-black mb-6 text-foreground">데이터 최종 검수</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-              <div className="space-y-6">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-[10px] font-black uppercase text-muted-foreground">제품명 (KO)</label>
-                    <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl bg-secondary/50 font-bold text-foreground text-sm" value={editForm.name} onChange={e => setEditForm({ ...editForm, name: e.target.value })} />
+      {
+        editingId && (
+          <div className="fixed inset-0 bg-background/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+            <div className="bg-card w-full max-w-6xl max-h-[95vh] overflow-y-auto rounded-3xl shadow-2xl border border-border p-10 animate-in zoom-in-95 duration-200">
+              <h2 className="text-2xl font-black mb-6 text-foreground">데이터 최종 검수</h2>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div className="space-y-6">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-[10px] font-black uppercase text-muted-foreground">제품명 (KO)</label>
+                      <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl bg-secondary/50 font-bold text-foreground text-sm" value={editForm.name} onChange={e => setEditForm({ ...editForm, name: e.target.value })} />
+                    </div>
+                    <div>
+                      <label className="text-[10px] font-black uppercase text-muted-foreground">영문 명칭</label>
+                      <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold text-primary bg-background text-sm" value={editForm.name_en} onChange={e => setEditForm({ ...editForm, name_en: e.target.value })} />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 gap-4">
+                    <div>
+                      <label className="text-[10px] font-black uppercase text-muted-foreground">카테고리</label>
+                      <select className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm"
+                        value={editForm.category} onChange={e => setEditForm({ ...editForm, category: e.target.value, subcategory: '' })}>
+                        <option value="">선택</option>
+                        {availableCategories.map(c => <option key={c} value={c}>{c}</option>)}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="text-[10px] font-black uppercase text-muted-foreground">세부종류</label>
+                      <select className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm"
+                        value={editForm.subcategory} onChange={e => setEditForm({ ...editForm, subcategory: e.target.value })}>
+                        <option value="">선택</option>
+                        {currentSubcategories.map(c => <option key={c} value={c}>{c}</option>)}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="text-[10px] font-black uppercase text-muted-foreground">도수 (%)</label>
+                      <input type="number" className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm" value={editForm.abv} onChange={e => setEditForm({ ...editForm, abv: e.target.value })} />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-[10px] font-black uppercase text-muted-foreground">제조국</label>
+                      <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm" value={editForm.country} onChange={e => setEditForm({ ...editForm, country: e.target.value })} />
+                    </div>
+                    <div>
+                      <label className="text-[10px] font-black uppercase text-muted-foreground">지역</label>
+                      <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm" value={editForm.region} onChange={e => setEditForm({ ...editForm, region: e.target.value })} />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-[10px] font-black uppercase text-muted-foreground">증류소</label>
+                      <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm" value={editForm.distillery} onChange={e => setEditForm({ ...editForm, distillery: e.target.value })} />
+                    </div>
+                    <div>
+                      <label className="text-[10px] font-black uppercase text-muted-foreground">병입자/브랜드</label>
+                      <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm" value={editForm.bottler} onChange={e => setEditForm({ ...editForm, bottler: e.target.value })} />
+                    </div>
                   </div>
                   <div>
-                    <label className="text-[10px] font-black uppercase text-muted-foreground">영문 명칭</label>
-                    <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold text-primary bg-background text-sm" value={editForm.name_en} onChange={e => setEditForm({ ...editForm, name_en: e.target.value })} />
+                    <label className="text-[10px] font-black uppercase text-muted-foreground">테이스팅 노트 (Review Summary)</label>
+                    <textarea rows={3} className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm" value={editForm.tasting_note} onChange={e => setEditForm({ ...editForm, tasting_note: e.target.value })} />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-black uppercase text-muted-foreground">소개/설명 (Description)</label>
+                    <textarea rows={4} className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm" value={editForm.description} onChange={e => setEditForm({ ...editForm, description: e.target.value })} />
                   </div>
                 </div>
-                <div className="grid grid-cols-3 gap-4">
-                  <div>
-                    <label className="text-[10px] font-black uppercase text-muted-foreground">카테고리</label>
-                    <select className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm"
-                      value={editForm.category} onChange={e => setEditForm({ ...editForm, category: e.target.value, subcategory: '' })}>
-                      <option value="">선택</option>
-                      {availableCategories.map(c => <option key={c} value={c}>{c}</option>)}
-                    </select>
+
+                {/* Right Side: Image & Tags */}
+                <div className="space-y-6">
+                  <label className="text-[10px] font-black uppercase text-muted-foreground">제품 이미지</label>
+                  <div className="aspect-[4/3] bg-secondary rounded-2xl border border-border flex items-center justify-center overflow-hidden relative">
+                    {editForm.imageUrl ? (
+                      <img src={editForm.imageUrl} className="h-full object-contain" alt="Preview" />
+                    ) : <span className="text-sm text-muted-foreground">이미지 없음</span>}
+
+                    <button className="absolute bottom-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-xs backdrop-blur-md hover:bg-black/70"
+                      onClick={() => window.open(editForm.imageUrl, '_blank')}>
+                      전체 보기
+                    </button>
                   </div>
-                  <div>
-                    <label className="text-[10px] font-black uppercase text-muted-foreground">세부종류</label>
-                    <select className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm"
-                      value={editForm.subcategory} onChange={e => setEditForm({ ...editForm, subcategory: e.target.value })}>
-                      <option value="">선택</option>
-                      {currentSubcategories.map(c => <option key={c} value={c}>{c}</option>)}
-                    </select>
+                  <input className="w-full px-4 py-3 border border-input rounded-xl text-xs bg-background text-foreground font-mono" value={editForm.imageUrl} onChange={e => setEditForm({ ...editForm, imageUrl: e.target.value })} placeholder="Image URL" />
+
+                  <div className="grid grid-cols-1 gap-4 mt-8">
+                    <div>
+                      <label className="block text-[10px] font-bold text-muted-foreground mb-1">Nose Tags</label>
+                      <input className="w-full border border-input rounded-xl px-4 py-3 text-sm bg-background text-foreground" value={editForm.nose_tags} onChange={e => setEditForm({ ...editForm, nose_tags: e.target.value })} />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold text-muted-foreground mb-1">Palate Tags</label>
+                      <input className="w-full border border-input rounded-xl px-4 py-3 text-sm bg-background text-foreground" value={editForm.palate_tags} onChange={e => setEditForm({ ...editForm, palate_tags: e.target.value })} />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold text-muted-foreground mb-1">Finish Tags</label>
+                      <input className="w-full border border-input rounded-xl px-4 py-3 text-sm bg-background text-foreground" value={editForm.finish_tags} onChange={e => setEditForm({ ...editForm, finish_tags: e.target.value })} />
+                    </div>
                   </div>
-                  <div>
-                    <label className="text-[10px] font-black uppercase text-muted-foreground">도수 (%)</label>
-                    <input type="number" className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm" value={editForm.abv} onChange={e => setEditForm({ ...editForm, abv: e.target.value })} />
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-[10px] font-black uppercase text-muted-foreground">제조국</label>
-                    <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm" value={editForm.country} onChange={e => setEditForm({ ...editForm, country: e.target.value })} />
-                  </div>
-                  <div>
-                    <label className="text-[10px] font-black uppercase text-muted-foreground">지역</label>
-                    <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm" value={editForm.region} onChange={e => setEditForm({ ...editForm, region: e.target.value })} />
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-[10px] font-black uppercase text-muted-foreground">증류소</label>
-                    <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm" value={editForm.distillery} onChange={e => setEditForm({ ...editForm, distillery: e.target.value })} />
-                  </div>
-                  <div>
-                    <label className="text-[10px] font-black uppercase text-muted-foreground">병입자/브랜드</label>
-                    <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm" value={editForm.bottler} onChange={e => setEditForm({ ...editForm, bottler: e.target.value })} />
-                  </div>
-                </div>
-                <div>
-                  <label className="text-[10px] font-black uppercase text-muted-foreground">테이스팅 노트 (Review Summary)</label>
-                  <textarea rows={3} className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm" value={editForm.tasting_note} onChange={e => setEditForm({ ...editForm, tasting_note: e.target.value })} />
-                </div>
-                <div>
-                  <label className="text-[10px] font-black uppercase text-muted-foreground">소개/설명 (Description)</label>
-                  <textarea rows={4} className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm" value={editForm.description} onChange={e => setEditForm({ ...editForm, description: e.target.value })} />
                 </div>
               </div>
-
-              {/* Right Side: Image & Tags */}
-              <div className="space-y-6">
-                <label className="text-[10px] font-black uppercase text-muted-foreground">제품 이미지</label>
-                <div className="aspect-[4/3] bg-secondary rounded-2xl border border-border flex items-center justify-center overflow-hidden relative">
-                  {editForm.imageUrl ? (
-                    <img src={editForm.imageUrl} className="h-full object-contain" alt="Preview" />
-                  ) : <span className="text-sm text-muted-foreground">이미지 없음</span>}
-
-                  <button className="absolute bottom-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-xs backdrop-blur-md hover:bg-black/70"
-                    onClick={() => window.open(editForm.imageUrl, '_blank')}>
-                    전체 보기
-                  </button>
-                </div>
-                <input className="w-full px-4 py-3 border border-input rounded-xl text-xs bg-background text-foreground font-mono" value={editForm.imageUrl} onChange={e => setEditForm({ ...editForm, imageUrl: e.target.value })} placeholder="Image URL" />
-
-                <div className="grid grid-cols-1 gap-4 mt-8">
-                  <div>
-                    <label className="block text-[10px] font-bold text-muted-foreground mb-1">Nose Tags</label>
-                    <input className="w-full border border-input rounded-xl px-4 py-3 text-sm bg-background text-foreground" value={editForm.nose_tags} onChange={e => setEditForm({ ...editForm, nose_tags: e.target.value })} />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-bold text-muted-foreground mb-1">Palate Tags</label>
-                    <input className="w-full border border-input rounded-xl px-4 py-3 text-sm bg-background text-foreground" value={editForm.palate_tags} onChange={e => setEditForm({ ...editForm, palate_tags: e.target.value })} />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-bold text-muted-foreground mb-1">Finish Tags</label>
-                    <input className="w-full border border-input rounded-xl px-4 py-3 text-sm bg-background text-foreground" value={editForm.finish_tags} onChange={e => setEditForm({ ...editForm, finish_tags: e.target.value })} />
-                  </div>
-                </div>
+              <div className="mt-8 pt-8 border-t border-border flex gap-4">
+                <button onClick={() => setEditingId(null)} className="flex-1 py-4 font-bold bg-secondary text-secondary-foreground rounded-2xl hover:bg-secondary/80">닫기 (저장 안함)</button>
+                <button disabled={isProcessing} onClick={() => saveEdit(false)} className="flex-1 py-4 font-bold bg-primary/10 text-primary border-2 border-primary/20 rounded-2xl hover:bg-primary/20">단순 저장 (승인 보류)</button>
+                <button disabled={isProcessing} onClick={() => saveEdit(true)} className="flex-[2] py-4 font-bold bg-primary text-primary-foreground rounded-2xl shadow-xl hover:scale-[1.02] active:scale-95 transition-all">수정 내용 저장 및 최종 승인 (공개)</button>
               </div>
-            </div>
-            <div className="mt-8 pt-8 border-t border-border flex gap-4">
-              <button onClick={() => setEditingId(null)} className="flex-1 py-4 font-bold bg-secondary text-secondary-foreground rounded-2xl hover:bg-secondary/80">닫기</button>
-              <button disabled={isProcessing} onClick={saveEdit} className="flex-[2] py-4 font-bold bg-primary text-primary-foreground rounded-2xl shadow-xl hover:scale-[1.02] active:scale-95 transition-all">수정 내용 저장 및 승인</button>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        )
+      }
+    </div >
   );
 }
