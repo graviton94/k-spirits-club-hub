@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from './context/auth-context';
+import OnboardingModal from './components/auth/onboarding-modal';
 import { BottomNav } from "@/components/layout/BottomNav";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -41,6 +42,7 @@ export default function RootLayout({
       <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`}>
         <main className="min-h-screen">
           <AuthProvider>
+            <OnboardingModal />
             {children}
           </AuthProvider>
         </main>

@@ -16,24 +16,35 @@ import { useRouter } from 'next/navigation';
 
 type UserRole = 'ADMIN' | 'USER' | null;
 
+interface UserProfile {
+    nickname: string;
+    profileImage: string | null;
+    isFirstLogin: boolean;
+}
+
 interface AuthContextType {
     user: User | null;
+    profile: UserProfile | null;
     role: UserRole;
     loading: boolean;
     loginWithGoogle: () => Promise<void>;
     logout: () => Promise<void>;
+    updateProfile: (data: Partial<UserProfile>) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
     user: null,
+    profile: null,
     role: null,
     loading: true,
     loginWithGoogle: async () => { },
     logout: async () => { },
+    updateProfile: async () => { },
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = useState<User | null>(null);
+    const [profile, setProfile] = useState<UserProfile | null>(null);
     const [role, setRole] = useState<UserRole>(null);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
@@ -43,27 +54,53 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             setLoading(true);
             if (currentUser) {
                 setUser(currentUser);
-                // Fetch Role from Firestore
-                const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
+                // Fetch Role & Profile from Firestore
+                const userDocRef = doc(db, 'users', currentUser.uid);
+                const userDoc = await getDoc(userDocRef);
+
                 if (userDoc.exists()) {
-                    setRole(userDoc.data().role as UserRole);
+                    const data = userDoc.data();
+                    setRole(data.role as UserRole);
+                    setProfile({
+                        nickname: data.nickname || currentUser.displayName || 'Anonymous',
+                        profileImage: data.profileImage || currentUser.photoURL,
+                        isFirstLogin: data.isFirstLogin ?? false
+                    });
                 } else {
-                    // Create new user doc with default role
-                    await setDoc(doc(db, 'users', currentUser.uid), {
+                    // Create new user doc with default role & profile
+                    // nickname and isFirstLogin will be handled by Onboarding
+                    const initialProfile = {
                         email: currentUser.email,
                         role: 'USER',
+                        nickname: currentUser.displayName || 'New User',
+                        profileImage: currentUser.photoURL,
+                        isFirstLogin: true, // Trigger Onboarding
                         createdAt: new Date().toISOString()
-                    });
+                    };
+                    await setDoc(userDocRef, initialProfile);
                     setRole('USER');
+                    setProfile({
+                        nickname: initialProfile.nickname,
+                        profileImage: initialProfile.profileImage,
+                        isFirstLogin: true
+                    });
                 }
             } else {
                 setUser(null);
                 setRole(null);
+                setProfile(null);
             }
             setLoading(false);
         });
         return () => unsubscribe();
     }, []);
+
+    const updateProfile = async (data: Partial<UserProfile>) => {
+        if (!user) return;
+        const userDocRef = doc(db, 'users', user.uid);
+        await setDoc(userDocRef, data, { merge: true });
+        setProfile(prev => prev ? { ...prev, ...data } : null);
+    };
 
     const loginWithGoogle = async () => {
         try {
@@ -82,7 +119,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, role, loading, loginWithGoogle, logout }}>
+        <AuthContext.Provider value={{ user, profile, role, loading, loginWithGoogle, logout, updateProfile }}>
             {children}
         </AuthContext.Provider>
     );
