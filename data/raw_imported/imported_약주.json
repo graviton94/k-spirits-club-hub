@@ -1,0 +1,25 @@
+[
+  {
+    "id": "mfds-202400532606",
+    "name": "서향우해황주 온프레쉬",
+    "distillery": "YANTAI HUMON WINE INDUSTRY CO; LTD",
+    "bottler": null,
+    "abv": 0,
+    "volume": null,
+    "category": "약주",
+    "country": "중국",
+    "source": "imported_food_maru",
+    "externalId": "202400532606",
+    "isPublished": false,
+    "isReviewed": false,
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "createdAt": "2024-08-16",
+    "updatedAt": "2026-01-24T20:58:35.239193",
+    "metadata": {
+      "name_en": "SHU XIANG NING HAI ONFRESH",
+      "raw_category": "약주",
+      "importer": "주식회사 라온주류"
+    }
+  }
+]

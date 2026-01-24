@@ -38,23 +38,23 @@ export default async function SpiritDetailPage({
         {/* Details */}
         <div>
           <h1 className="text-3xl font-bold mb-4">{spirit.name}</h1>
-          
+
           <div className="space-y-3 mb-6">
-            <DetailRow label="Distillery" value={spirit.distillery} />
-            {spirit.bottler && <DetailRow label="Bottler" value={spirit.bottler} />}
-            <DetailRow label="ABV" value={`${spirit.abv}%`} />
-            {spirit.volume && <DetailRow label="Volume" value={`${spirit.volume}ml`} />}
-            <DetailRow label="Category" value={spirit.category} />
-            {spirit.subcategory && <DetailRow label="Type" value={spirit.subcategory} />}
-            <DetailRow label="Country" value={spirit.country} />
-            {spirit.region && <DetailRow label="Region" value={spirit.region} />}
+            <DetailRow label="증류소" value={spirit.distillery} />
+            {spirit.bottler && <DetailRow label="박틀러" value={spirit.bottler} />}
+            <DetailRow label="도수" value={`${spirit.abv}%`} />
+            {spirit.volume && <DetailRow label="용량" value={`${spirit.volume}ml`} />}
+            <DetailRow label="카테고리" value={spirit.category} />
+            {spirit.subcategory && <DetailRow label="종류" value={spirit.subcategory} />}
+            <DetailRow label="원산지" value={spirit.country} />
+            {spirit.region && <DetailRow label="지역" value={spirit.region} />}
           </div>
 
           <SaveButton spiritId={spirit.id} />
 
           <div className="mt-6 p-4 bg-secondary rounded-lg">
             <p className="text-sm text-muted-foreground">
-              <strong>Data Source:</strong> {spirit.source}
+              <strong>데이터 소스:</strong> {spirit.source}
               {spirit.externalId && ` (${spirit.externalId})`}
             </p>
           </div>

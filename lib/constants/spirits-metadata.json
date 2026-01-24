@@ -1,0 +1,317 @@
+{
+    "project": "K-Spirits Club Hub Master DB",
+    "version": "1.0.0",
+    "last_updated": "2026-01-24",
+    "categories": {
+        "whisky": {
+            "scotch": [
+                "Single Malt Scotch",
+                "Blended Scotch",
+                "Single Grain Scotch",
+                "Blended Malt"
+            ],
+            "american": [
+                "Bourbon",
+                "Tennessee",
+                "Rye Whiskey",
+                "Corn Whiskey"
+            ],
+            "other_regions": [
+                "Irish Whiskey",
+                "Japanese Whisky",
+                "Canadian Whisky"
+            ]
+        },
+        "gin": [
+            "London Dry Gin",
+            "Plymouth Gin",
+            "Old Tom Gin",
+            "Navy Strength Gin",
+            "Genever",
+            "New Western / Contemporary"
+        ],
+        "rum": [
+            "Spanish Style (Ron)",
+            "English Style (Rum)",
+            "French Style (Rhum Agricole)",
+            "Overproof Rum"
+        ],
+        "tequila": [
+            "Blanco",
+            "Reposado",
+            "Añejo",
+            "Extra Añejo",
+            "Cristalino",
+            "Mezcal"
+        ],
+        "brandy": [
+            "Cognac",
+            "Armagnac",
+            "Pisco",
+            "Grappa",
+            "Calvados"
+        ],
+        "korean_spirits": [
+            "탁주 (막걸리)",
+            "약주 / 청주",
+            "증류식 소주",
+            "과실주",
+            "일반증류주 / 리큐르"
+        ]
+    },
+    "tag_index": {
+        "nose": {
+            "fruit_orchard_citrus": [
+                "#레몬제스트 (lemon zest)",
+                "#레몬믹스 (lemon)",
+                "#라임 (lime)",
+                "#자몽 (grapefruit)",
+                "#감귤 (tangerine)",
+                "#오렌지필 (orange peel)",
+                "#만다린 (mandarin)",
+                "#복숭아 (peach)",
+                "#청사과 (green apple)",
+                "#홍사과 (red apple)",
+                "#서양배 (pear)",
+                "#살구 (apricot)",
+                "#자두 (plum)",
+                "#멜론 (melon)",
+                "#청포도 (green grape)",
+                "#적포도 (red grape)",
+                "#참외 (oriental melon)",
+                "#감귤껍질 (citrus peel)",
+                "#과육 (citrus pulp)"
+            ],
+            "fruit_berry_tropical": [
+                "#딸기 (strawberry)",
+                "#라즈베리 (raspberry)",
+                "#블랙베리 (blackberry)",
+                "#체리 (cherry)",
+                "#아마레나 (amarena cherry)",
+                "#파인애플 (pineapple)",
+                "#망고 (mango)",
+                "#패션후르츠 (passionfruit)",
+                "#리치 (lychee)",
+                "#바나나 (banana)",
+                "#구아바 (guava)",
+                "#구즈베리 (gooseberry)"
+            ],
+            "fruit_dried_cooked": [
+                "#건포도 (raisin)",
+                "#무화과 (fig)",
+                "#푸룬 (prune)",
+                "#대추야자 (date)",
+                "#건살구 (dried apricot)",
+                "#과일잼 (fruit jam)",
+                "#마멀레이드 (marmalade)",
+                "#통조림황도 (canned peach)",
+                "#조린과일 (stewed fruit)",
+                "#카라멜라이즈드프룻 (caramelized fruit)"
+            ],
+            "floral": [
+                "#아카시아 (acacia)",
+                "#들꽃 (wildflower)",
+                "#장미 (rose)",
+                "#제비꽃 (violet)",
+                "#라벤더 (lavender)",
+                "#국화 (chrysanthemum)",
+                "#오렌지블라썸 (orange blossom)",
+                "#벚꽃 (sakura)",
+                "#히야신스 (hyacinth)",
+                "#플로랄헤이 (floral hay)"
+            ],
+            "herbal_botanical_vegetal": [
+                "#쥬니퍼베리 (juniper berry)",
+                "#민트 (mint)",
+                "#유칼립투스 (eucalyptus)",
+                "#로즈마리 (rosemary)",
+                "#타임 (thyme)",
+                "#세이지 (sage)",
+                "#솔잎 (pine needle)",
+                "#건초 (hay)",
+                "#고수씨앗 (coriander seed)",
+                "#당귀 (angelica)",
+                "#허브티 (herbal tea)",
+                "#허브잎 (fresh herb leaf)",
+                "#그린벨페퍼 (green bell pepper)",
+                "#풋고추 (green chili)",
+                "#토마토잎 (tomato leaf)",
+                "#풀향 (cut grass)",
+                "#청녹색채소 (green veg)",
+                "#아스파라거스 (asparagus)",
+                "#올리브 (green olive)",
+                "#시금치/케일 (spinach/kale)"
+            ],
+            "spice": [
+                "#시나몬 (cinnamon)",
+                "#정향 (clove)",
+                "#육두구 (nutmeg)",
+                "#고추 (chili)",
+                "#흑후추 (black pepper)",
+                "#백후추 (white pepper)",
+                "#감초 (licorice)",
+                "#팔각/아니스 (star anise)",
+                "#생강 (ginger)",
+                "#바닐라빈 (vanilla bean)",
+                "#고수 (coriander leaf)",
+                "#카다멈 (cardamom)"
+            ],
+            "sweet_confectionery_dairy": [
+                "#카라멜 (caramel)",
+                "#버터스카치 (butterscotch)",
+                "#꿀 (honey)",
+                "#메이플시럽 (maple syrup)",
+                "#밀크초콜릿 (milk chocolate)",
+                "#다크초콜릿 (dark chocolate)",
+                "#당밀 (molasses)",
+                "#마지팬 (marzipan)",
+                "#솜사탕 (cotton candy)",
+                "#쿠키 (cookie)",
+                "#빵 (bread)",
+                "#크림 (cream)",
+                "#버터 (butter)",
+                "#요거트/발효유 (yogurt)",
+                "#치즈 (cheese)",
+                "#연유/크림캐러멜 (condensed milk)"
+            ],
+            "nutty_grain_roasted": [
+                "#맥아향 (malty)",
+                "#보리 (barley)",
+                "#구운빵 (baked bread)",
+                "#비스킷 (biscuit)",
+                "#누룽지 (scorched rice)",
+                "#볶은쌀 (toasted rice)",
+                "#오트/시리얼 (oat/cereal)",
+                "#곡물의단맛 (grain sweetness)",
+                "#아몬드 (almond)",
+                "#호두 (walnut)",
+                "#헤이즐넛 (hazelnut)",
+                "#밤 (chestnut)",
+                "#커피 (coffee)",
+                "#에스프레소 (espresso)",
+                "#다크로스트 (dark roast)",
+                "#토스트 (toast)",
+                "#탄향 (charred)",
+                "#코코아 (cocoa)",
+                "#그릴드/바비큐 (grilled/barbecue)"
+            ],
+            "woody_earthy_oxidative": [
+                "#새오크통 (new oak)",
+                "#젖은나무 (wet wood)",
+                "#가죽 (leather)",
+                "#담배 (tobacco)",
+                "#흙내음 (earthy)",
+                "#샌달우드 (sandalwood)",
+                "#연필심 (pencil lead)",
+                "#버섯 (mushroom)",
+                "#트러플 (truffle)",
+                "#시더 (cedar)",
+                "#건조목 (seasoned wood)",
+                "#토피 (toffee)",
+                "#브라운슈가 (brown sugar)",
+                "#시럽화 (syrupy)",
+                "#산화향 (oxidative)",
+                "#말린견과 (dried nut)"
+            ],
+            "smoke_peat_mineral_coastal": [
+                "#스모키 (smoky)",
+                "#피트 (peat)",
+                "#토탄향 (turf peat)",
+                "#재 (ash)",
+                "#아이오딘 (iodine)",
+                "#해초 (seaweed)",
+                "#소금기 (saline)",
+                "#부싯돌 (flint)",
+                "#분필 (chalk)",
+                "#젖은돌 (wet stone)",
+                "#철분 (iron)",
+                "#페놀릭 (phenolic)"
+            ],
+            "chemical_defect": [
+                "#솔벤트 (solvent)",
+                "#플라스틱 (plastic)",
+                "#고무 (rubber)",
+                "#의약품 (medicinal)",
+                "#금속성 (metallic)",
+                "#세제/합성 (soapy)",
+                "#산화된기름 (rancid fat)"
+            ]
+        },
+        "palate": {
+            "sweetness_acid": [
+                "#본드라이",
+                "#드라이",
+                "#오프드라이",
+                "#미디엄스윗",
+                "#달콤한",
+                "#산미있는",
+                "#새콤달콤",
+                "#상큼한",
+                "#사워 (sour/acidic)"
+            ],
+            "body_texture": [
+                "#라이트바디",
+                "#미디엄바디",
+                "#풀바디",
+                "#워터리",
+                "#오일리",
+                "#왁시 (Waxy)",
+                "#실키",
+                "#크리미",
+                "#시럽같은",
+                "#탄발력있는",
+                "#벨벨같은"
+            ],
+            "mouthfeel_structure": [
+                "#부드러운",
+                "#라운드한",
+                "#까슬한",
+                "#수렴성 (떫은)",
+                "#탄닌",
+                "#날카로운",
+                "#작열감",
+                "#미네랄리티",
+                "#탄산감",
+                "#청량한",
+                "#밸런스 (balanced)",
+                "#복합성 (complex)",
+                "#단순 (simple)",
+                "#집중감 (intense)"
+            ],
+            "fermentation_umami": [
+                "#요거트",
+                "#치즈",
+                "#버터",
+                "#효모 (Lees)",
+                "#간장",
+                "#된장/미소",
+                "#곡물의단맛",
+                "#발효 (fermented)",
+                "#김치/절임",
+                "#요리된토마토",
+                "#우마미 (umami)"
+            ]
+        },
+        "finish": {
+            "length": [
+                "#짧은",
+                "#중간",
+                "#긴",
+                "#매우긴여운",
+                "#롱피니시",
+                "#짧은피니시"
+            ],
+            "nature": [
+                "#깔끔한",
+                "#드라이한마무리",
+                "#달콤한여운",
+                "#쌉쌀한",
+                "#스파이시한",
+                "#레이어가있는",
+                "#감칠맛 (Umami)",
+                "#여운이남는",
+                "#여운 (lingering)"
+            ]
+        }
+    }
+}

@@ -1,38 +1,50 @@
+import { db } from "@/lib/db";
+import { useEffect, useState } from "react";
+
 export default function AdminStats() {
-  // In production, these would be fetched from the database
-  const stats = {
-    totalSpirits: 1234567,
-    published: 950000,
-    pendingReview: 284567,
-    sources: {
-      foodSafetyKorea: 450000,
-      whiskybase: 500000,
-      manual: 284567,
-    },
-  };
+  const [stats, setStats] = useState({
+    totalSpirits: 0,
+    published: 0,
+    pendingReview: 0,
+  });
+
+  useEffect(() => {
+    async function loadStats() {
+      const { total } = await db.getSpirits({}, { page: 1, pageSize: 1 });
+      const { total: published } = await db.getSpirits({ isPublished: true }, { page: 1, pageSize: 1 });
+      const { total: pending } = await db.getSpirits({ isReviewed: false }, { page: 1, pageSize: 1 });
+
+      setStats({
+        totalSpirits: total,
+        published: published,
+        pendingReview: pending,
+      });
+    }
+    loadStats();
+  }, []);
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
       <StatCard
-        title="Total Spirits"
+        title="전체 주류"
         value={stats.totalSpirits.toLocaleString()}
         icon="🥃"
         color="bg-blue-50 dark:bg-blue-950"
       />
       <StatCard
-        title="Published"
+        title="발행됨"
         value={stats.published.toLocaleString()}
         icon="✓"
         color="bg-green-50 dark:bg-green-950"
       />
       <StatCard
-        title="Pending Review"
+        title="검수 대기"
         value={stats.pendingReview.toLocaleString()}
         icon="⏳"
         color="bg-yellow-50 dark:bg-yellow-950"
       />
       <StatCard
-        title="Data Sources"
+        title="데이터 소스"
         value="3"
         icon="📊"
         color="bg-purple-50 dark:bg-purple-950"

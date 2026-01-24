@@ -1,141 +1,129 @@
 /**
- * Data ingestion utility for Food Safety Korea API
- * 
- * This utility fetches liquor data from the Korean Food Safety Authority's open API
- * and transforms it into the K-Spirits Club database schema.
- * 
- * API Documentation: https://www.foodsafetykorea.go.kr/api/
+ * Food Safety Korea (식품안전나라) API Ingestion Utility
+ * Refer to: http://openapi.foodsafetykorea.go.kr/
  */
 
-import type { Spirit } from '../db/schema';
+const API_KEY = process.env.FOOD_SAFETY_KOREA_API_KEY;
+const BASE_URL = 'http://openapi.foodsafetykorea.go.kr/api';
 
-interface FoodSafetyKoreaRecord {
-  PRDLST_NM: string;        // Product name
-  BSSH_NM: string;          // Business/Manufacturer name
-  PRDT_SHAP_CD_NM: string;  // Product type
-  POG_DAYCNT: string;       // Alcohol content (ABV)
-  HIENG_LNTRT_DVS_NM: string; // High concentration division
-  // Add more fields as needed
+/**
+ * List of spirit categories to fetch from Food Safety Korea
+ */
+export const SPIRIT_TYPES = [
+  '소주',
+  '맥주',
+  '위스키',
+  '기타주류',
+  '청주',
+  '약주',
+  '탁주',
+  '과실주',
+  '리큐르',
+  '브랜디',
+  '일반증류주'
+];
+
+interface FoodSafetyRawData {
+  PRDLST_NM: string;    // 제품명
+  BSSH_NM: string;      // 제조사
+  PRDLST_DCNM: string;  // 유형
+  POG_DAYCNT: string;   // 유통/소비기한
+  [key: string]: any;
 }
 
-export class FoodSafetyKoreaIngestion {
-  private apiKey: string;
-  private baseUrl = 'https://openapi.foodsafetykorea.go.kr/api';
+export interface MappedSpiritData {
+  제품명: string;
+  제조사: string;
+  유형: string;
+  유통기한: string;
+  원본데이터: FoodSafetyRawData;
+}
 
-  constructor(apiKey: string) {
-    this.apiKey = apiKey;
+/**
+ * Fetches spirits data from Food Safety Korea API with pagination
+ */
+export async function ingestFoodSafetyData() {
+  if (!API_KEY) {
+    console.error('❌ 에러: FOOD_SAFETY_KOREA_API_KEY가 .env 파일에 설정되어 있지 않습니다.');
+    return;
   }
 
-  /**
-   * Fetch liquor records from Food Safety Korea API
-   * @param startIdx Start index for pagination
-   * @param endIdx End index for pagination
-   */
-  async fetchRecords(startIdx: number = 1, endIdx: number = 1000): Promise<FoodSafetyKoreaRecord[]> {
-    const endpoint = `${this.baseUrl}/${this.apiKey}/C005/json/${startIdx}/${endIdx}`;
-    
+  const results: MappedSpiritData[] = [];
+
+  for (const type of SPIRIT_TYPES) {
+    let startIdx = 1;
+    let endIdx = 1000;
+    let hasMore = true;
+    let totalCollectedForType = 0;
+
+    console.log(`\n🔍 [${type}] 데이터 수집 시작...`);
+
     try {
-      const response = await fetch(endpoint);
-      const data = await response.json();
-      
-      if (data.C005?.row) {
-        return data.C005.row;
-      }
-      
-      return [];
-    } catch (error) {
-      console.error('Error fetching from Food Safety Korea API:', error);
-      return [];
-    }
-  }
+      while (hasMore) {
+        // Build URL: http://openapi.foodsafetykorea.go.kr/api/{apiKey}/I1250/json/{startIdx}/{endIdx}/PRDLST_DCNM={주종}
+        const encodedType = encodeURIComponent(type);
+        const url = `${BASE_URL}/${API_KEY}/I1250/json/${startIdx}/${endIdx}/PRDLST_DCNM=${encodedType}`;
 
-  /**
-   * Transform Food Safety Korea record to Spirit schema
-   */
-  transformRecord(record: FoodSafetyKoreaRecord): Partial<Spirit> {
-    // Extract ABV from string (e.g., "40%" -> 40)
-    const abv = parseFloat(record.POG_DAYCNT?.replace('%', '') || '0');
+        const response = await fetch(url);
 
-    return {
-      name: record.PRDLST_NM || 'Unknown',
-      distillery: record.BSSH_NM || 'Unknown',
-      bottler: null,
-      abv: abv || 0,
-      volume: null, // Not provided in API
-      category: this.categorizeSpirit(record.PRDT_SHAP_CD_NM),
-      subcategory: record.PRDT_SHAP_CD_NM || null,
-      country: 'South Korea',
-      region: null,
-      imageUrl: null,
-      thumbnailUrl: null,
-      source: 'food_safety_korea',
-      externalId: `fsk-${record.PRDLST_NM}`, // Use product name as ID
-      isPublished: false,
-      isReviewed: false,
-      reviewedBy: null,
-      reviewedAt: null,
-    };
-  }
-
-  /**
-   * Categorize spirit based on Korean product type
-   */
-  private categorizeSpirit(productType: string): string {
-    const type = productType?.toLowerCase() || '';
-    
-    if (type.includes('소주') || type.includes('soju')) return 'soju';
-    if (type.includes('막걸리') || type.includes('makgeolli')) return 'makgeolli';
-    if (type.includes('위스키') || type.includes('whisky') || type.includes('whiskey')) return 'whisky';
-    if (type.includes('보드카') || type.includes('vodka')) return 'vodka';
-    if (type.includes('진') || type.includes('gin')) return 'gin';
-    if (type.includes('럼') || type.includes('rum')) return 'rum';
-    if (type.includes('브랜디') || type.includes('brandy')) return 'brandy';
-    if (type.includes('맥주') || type.includes('beer')) return 'beer';
-    if (type.includes('와인') || type.includes('wine')) return 'wine';
-    if (type.includes('청주') || type.includes('sake')) return 'sake';
-    
-    return 'other';
-  }
-
-  /**
-   * Batch import spirits from Food Safety Korea
-   */
-  async batchImport(batchSize: number = 1000, maxRecords: number = 10000): Promise<{
-    imported: number;
-    failed: number;
-    errors: string[];
-  }> {
-    let imported = 0;
-    let failed = 0;
-    const errors: string[] = [];
-
-    for (let i = 1; i <= maxRecords; i += batchSize) {
-      try {
-        const records = await this.fetchRecords(i, Math.min(i + batchSize - 1, maxRecords));
-        
-        for (const record of records) {
-          try {
-            const spirit = this.transformRecord(record);
-            // In production, save to database here
-            // await db.createSpirit(spirit);
-            imported++;
-          } catch (error) {
-            failed++;
-            errors.push(`Failed to import record: ${error}`);
-          }
+        if (!response.ok) {
+          throw new Error(`HTTP 에러! 상태 코드: ${response.status}`);
         }
 
-        // Rate limiting - wait 1 second between batches
-        await new Promise(resolve => setTimeout(resolve, 1000));
-      } catch (error) {
-        errors.push(`Failed to fetch batch ${i}-${i + batchSize}: ${error}`);
+        const json = await response.json();
+
+        // Check if API returned an error or empty result
+        const serviceResult = json.I1250;
+
+        if (!serviceResult || serviceResult.RESULT?.CODE !== 'INFO-000') {
+          if (serviceResult?.RESULT?.CODE === 'INFO-200') {
+            // No more data
+            hasMore = false;
+            continue;
+          }
+          throw new Error(`API 내부 에러: ${serviceResult?.RESULT?.MSG || '알 수 없는 에러'}`);
+        }
+
+        const rows: FoodSafetyRawData[] = serviceResult.row || [];
+
+        if (rows.length === 0) {
+          hasMore = false;
+          continue;
+        }
+
+        // Map data to Korean fields
+        const mappedRows: MappedSpiritData[] = rows.map(row => ({
+          제품명: row.PRDLST_NM,
+          제조사: row.BSSH_NM,
+          유형: row.PRDLST_DCNM,
+          유통기한: row.POG_DAYCNT,
+          원본데이터: row
+        }));
+
+        results.push(...mappedRows);
+        totalCollectedForType += rows.length;
+
+        // If we got fewer than 1000 items, it's the last page
+        if (rows.length < 1000) {
+          hasMore = false;
+        } else {
+          startIdx += 1000;
+          endIdx += 1000;
+
+          // Safety break to prevent infinite loops (max 100,000 records per type for now)
+          if (startIdx > 100000) {
+            console.warn(`⚠️ 경고: [${type}] 데이터가 너무 많아 10만 건에서 중단합니다.`);
+            hasMore = false;
+          }
+        }
       }
+
+      console.log(`✅ [${type}]: ${totalCollectedForType.toLocaleString()}건 수집 완료`);
+    } catch (error: any) {
+      console.error(`❌ [${type}] 데이터 수집 중 에러 발생: ${error.message}`);
     }
-
-    return { imported, failed, errors };
   }
-}
 
-// Usage example:
-// const ingestion = new FoodSafetyKoreaIngestion(process.env.FOOD_SAFETY_KOREA_API_KEY);
-// const result = await ingestion.batchImport(1000, 100000);
+  console.log(`\n🎉 모든 수집 작업 완료. 총 ${results.length.toLocaleString()}건의 데이터를 처리했습니다.`);
+  return results;
+}

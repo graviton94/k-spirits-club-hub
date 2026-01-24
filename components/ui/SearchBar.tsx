@@ -19,7 +19,7 @@ export default function SearchBar() {
       <div className="relative">
         <input
           type="text"
-          placeholder="Search spirits, distilleries..."
+          placeholder="술 이름, 증류소 검색..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="w-full px-4 py-3 pr-12 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"

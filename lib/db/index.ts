@@ -1,76 +1,128 @@
 // Mock database for development
 // In production, this would connect to Cloudflare D1 or Turso
-import type { Spirit, UserCabinet, Review, SpiritFilter, PaginatedResponse, PaginationParams } from './schema';
+import type { Spirit, UserCabinet, Review, SpiritFilter, PaginatedResponse, PaginationParams, SpiritStatus } from './schema';
 
-// Sample data
-const sampleSpirits: Spirit[] = [
-  {
-    id: '1',
-    name: 'Glenfiddich 12 Year Old',
-    distillery: 'Glenfiddich',
-    bottler: null,
-    abv: 40,
-    volume: 700,
-    category: 'whisky',
-    subcategory: 'single malt',
-    country: 'Scotland',
-    region: 'Speyside',
-    imageUrl: '/images/sample-whisky.jpg',
-    thumbnailUrl: '/images/sample-whisky-thumb.jpg',
-    source: 'whiskybase',
-    externalId: 'wb-1234',
-    isPublished: true,
-    isReviewed: true,
-    reviewedBy: 'admin',
-    reviewedAt: new Date('2024-01-01'),
-    createdAt: new Date('2024-01-01'),
-    updatedAt: new Date('2024-01-01'),
-  },
-  {
-    id: '2',
-    name: 'Chamisul Fresh Soju',
-    distillery: 'HiteJinro',
-    bottler: null,
-    abv: 16.9,
-    volume: 360,
-    category: 'soju',
-    subcategory: null,
-    country: 'South Korea',
-    region: null,
-    imageUrl: '/images/sample-soju.jpg',
-    thumbnailUrl: '/images/sample-soju-thumb.jpg',
-    source: 'food_safety_korea',
-    externalId: 'fsk-5678',
-    isPublished: true,
-    isReviewed: true,
-    reviewedBy: 'admin',
-    reviewedAt: new Date('2024-01-02'),
-    createdAt: new Date('2024-01-02'),
-    updatedAt: new Date('2024-01-02'),
-  },
-  {
-    id: '3',
-    name: 'Macallan 18 Year Old Sherry Oak',
-    distillery: 'Macallan',
-    bottler: null,
-    abv: 43,
-    volume: 700,
-    category: 'whisky',
-    subcategory: 'single malt',
-    country: 'Scotland',
-    region: 'Speyside',
-    imageUrl: '/images/sample-macallan.jpg',
-    thumbnailUrl: '/images/sample-macallan-thumb.jpg',
-    source: 'whiskybase',
-    externalId: 'wb-9012',
-    isPublished: false,
-    isReviewed: false,
-    reviewedBy: null,
-    reviewedAt: null,
-    createdAt: new Date('2024-01-03'),
-    updatedAt: new Date('2024-01-03'),
-  },
-];
+let allSpirits: Spirit[] = [];
+let initialized = false;
+
+function initializeData() {
+  if (initialized) return;
+
+  // 1. Sample data definition
+  const sampleSpirits: Spirit[] = [
+    {
+      id: '1',
+      name: 'Glenfiddich 12 Year Old',
+      distillery: 'Glenfiddich',
+      bottler: null,
+      abv: 40,
+      volume: 700,
+      category: 'whisky',
+      subcategory: '싱글 몰트',
+      country: '스코틀랜드',
+      region: '스페이사이드',
+      imageUrl: '/images/sample-whisky.jpg',
+      thumbnailUrl: '/images/sample-whisky-thumb.jpg',
+      source: 'whiskybase',
+      externalId: 'wb-1234',
+      status: 'PUBLISHED',
+      isPublished: true,
+      isReviewed: true,
+      reviewedBy: 'admin',
+      reviewedAt: new Date('2024-01-01'),
+      metadata: {},
+      createdAt: new Date('2024-01-01'),
+      updatedAt: new Date('2024-01-01'),
+    },
+    {
+      id: '2',
+      name: 'Chamisul Fresh Soju',
+      distillery: 'HiteJinro',
+      bottler: null,
+      abv: 16.9,
+      volume: 360,
+      category: 'soju',
+      subcategory: null,
+      country: '대한민국',
+      region: null,
+      imageUrl: '/images/sample-soju.jpg',
+      thumbnailUrl: '/images/sample-soju-thumb.jpg',
+      source: 'food_safety_korea',
+      externalId: 'fsk-5678',
+      status: 'PUBLISHED',
+      isPublished: true,
+      isReviewed: true,
+      reviewedBy: 'admin',
+      reviewedAt: new Date('2024-01-02'),
+      metadata: {},
+      createdAt: new Date('2024-01-02'),
+      updatedAt: new Date('2024-01-02'),
+    },
+    {
+      id: '3',
+      name: 'Macallan 18 Year Old Sherry Oak',
+      distillery: 'Macallan',
+      bottler: null,
+      abv: 43,
+      volume: 700,
+      category: 'whisky',
+      subcategory: '싱글 몰트',
+      country: '스코틀랜드',
+      region: '스페이사이드',
+      imageUrl: '/images/sample-macallan.jpg',
+      thumbnailUrl: '/images/sample-macallan-thumb.jpg',
+      source: 'whiskybase',
+      externalId: 'wb-9012',
+      status: 'RAW',
+      isPublished: false,
+      isReviewed: false,
+      reviewedBy: null,
+      reviewedAt: null,
+      metadata: {},
+      createdAt: new Date('2024-01-03'),
+      updatedAt: new Date('2024-01-03'),
+    },
+  ];
+
+  allSpirits = [...sampleSpirits];
+
+  // 2. Load heavy ingested data from file (Server-side only)
+  if (typeof window === 'undefined') {
+    try {
+      const fs = require('fs');
+      const path = require('path');
+      const filePath = path.join(process.cwd(), 'lib/db/ingested-data.json');
+
+      if (fs.existsSync(filePath)) {
+        const raw = fs.readFileSync(filePath, 'utf-8');
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) {
+          console.log(`[DB] Loading ALL spirits (Total: ${parsed.length})...`);
+          const limited = parsed; // No limit
+          const transformed = limited.map(s => ({
+            ...s,
+            status: s.status || 'RAW',
+            metadata: s.metadata || {},
+            reviewedAt: s.reviewedAt ? new Date(s.reviewedAt) : null,
+            createdAt: new Date(s.createdAt),
+            updatedAt: new Date(s.updatedAt)
+          }));
+          allSpirits = [...sampleSpirits, ...transformed];
+          console.log(`[DB] Successfully loaded ${transformed.length} spirits.`);
+        }
+      }
+    } catch (error) {
+      console.warn('[DB] Failed to load ingested-data.json (expected during build or if missing):', error);
+    }
+  }
+
+  initialized = true;
+}
+
+// Global initialization
+if (typeof window === 'undefined') {
+  initializeData();
+}
 
 const sampleReviews: Review[] = [
   {
@@ -94,11 +146,13 @@ const sampleReviews: Review[] = [
 export const db = {
   // Spirit operations
   async getSpirits(filter: SpiritFilter = {}, pagination: PaginationParams = { page: 1, pageSize: 20 }): Promise<PaginatedResponse<Spirit>> {
-    let filtered = sampleSpirits;
+    // Ensure we are initialized (though it should be called on module load)
+    initializeData();
+    let filtered = allSpirits;
 
     if (filter.searchTerm) {
       const term = filter.searchTerm.toLowerCase();
-      filtered = filtered.filter(s => 
+      filtered = filtered.filter(s =>
         s.name.toLowerCase().includes(term) ||
         s.distillery.toLowerCase().includes(term)
       );
@@ -106,6 +160,10 @@ export const db = {
 
     if (filter.category) {
       filtered = filtered.filter(s => s.category === filter.category);
+    }
+
+    if (filter.subcategory) {
+      filtered = filtered.filter(s => s.subcategory === filter.subcategory);
     }
 
     if (filter.country) {
@@ -118,6 +176,10 @@ export const db = {
 
     if (filter.isReviewed !== undefined) {
       filtered = filtered.filter(s => s.isReviewed === filter.isReviewed);
+    }
+
+    if (filter.status) {
+      filtered = filtered.filter(s => s.status === filter.status);
     }
 
     const total = filtered.length;
@@ -135,15 +197,61 @@ export const db = {
   },
 
   async getSpirit(id: string): Promise<Spirit | null> {
-    return sampleSpirits.find(s => s.id === id) || null;
+    initializeData();
+    return allSpirits.find(s => s.id === id) || null;
   },
 
   async updateSpirit(id: string, updates: Partial<Spirit>): Promise<Spirit | null> {
-    const index = sampleSpirits.findIndex(s => s.id === id);
+    initializeData();
+    const index = allSpirits.findIndex(s => s.id === id);
     if (index === -1) return null;
-    
-    sampleSpirits[index] = { ...sampleSpirits[index], ...updates, updatedAt: new Date() };
-    return sampleSpirits[index];
+
+    const updatedSpirit = {
+      ...allSpirits[index],
+      ...updates,
+      updatedAt: new Date()
+    } as Spirit;
+
+    allSpirits[index] = updatedSpirit;
+
+    // Persist to JSON file if in Node.js environment (Server Components / API Routes)
+    if (typeof window === 'undefined') {
+      try {
+        // Dynamic import to prevent client-side build errors
+        const fs = require('fs');
+        const path = require('path');
+        const filePath = path.join(process.cwd(), 'lib/db/ingested-data.json');
+
+        fs.writeFileSync(filePath, JSON.stringify(allSpirits, null, 2), 'utf-8');
+      } catch (error) {
+        console.error('Failed to persist spirit update:', error);
+      }
+    }
+
+    return updatedSpirit;
+  },
+
+  async deleteSpirit(id: string): Promise<boolean> {
+    initializeData();
+    const index = allSpirits.findIndex(s => s.id === id);
+    if (index === -1) return false;
+
+    allSpirits.splice(index, 1);
+
+    // Persist to JSON file
+    if (typeof window === 'undefined') {
+      try {
+        const fs = require('fs');
+        const path = require('path');
+        const filePath = path.join(process.cwd(), 'lib/db/ingested-data.json');
+
+        fs.writeFileSync(filePath, JSON.stringify(allSpirits, null, 2), 'utf-8');
+      } catch (error) {
+        console.error('Failed to persist spirit deletion:', error);
+      }
+    }
+
+    return true;
   },
 
   // Review operations

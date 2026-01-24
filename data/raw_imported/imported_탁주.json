@@ -1,0 +1,25 @@
+[
+  {
+    "id": "mfds-202500397737",
+    "name": "햇쌀처럼",
+    "distillery": "YANBIAN ENMA RICE WINE CO.,LTD.",
+    "bottler": null,
+    "abv": 0,
+    "volume": null,
+    "category": "탁주",
+    "country": "중국",
+    "source": "imported_food_maru",
+    "externalId": "202500397737",
+    "isPublished": false,
+    "isReviewed": false,
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "createdAt": "2025-06-18",
+    "updatedAt": "2026-01-24T20:58:34.590907",
+    "metadata": {
+      "name_en": "RICE WINE",
+      "raw_category": "탁주",
+      "importer": "마할로"
+    }
+  }
+]

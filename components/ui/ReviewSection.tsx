@@ -14,12 +14,12 @@ export default function ReviewSection({ spiritId, reviews }: ReviewSectionProps)
   return (
     <div className="mt-12">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">Reviews ({reviews.length})</h2>
+        <h2 className="text-2xl font-bold">리뷰 ({reviews.length})</h2>
         <button
           onClick={() => setShowForm(!showForm)}
           className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90"
         >
-          {showForm ? 'Cancel' : '+ Write Review'}
+          {showForm ? '취소' : '+ 리뷰 쓰기'}
         </button>
       </div>
 
@@ -31,7 +31,7 @@ export default function ReviewSection({ spiritId, reviews }: ReviewSectionProps)
         ))}
         {reviews.length === 0 && !showForm && (
           <p className="text-center text-muted-foreground py-8">
-            No reviews yet. Be the first to review!
+            아직 리뷰가 없습니다. 첫 번째 리뷰를 작성해보세요!
           </p>
         )}
       </div>
@@ -60,19 +60,19 @@ function ReviewCard({ review }: { review: Review }) {
         <div className="grid md:grid-cols-3 gap-4 mt-4 pt-4 border-t border-border">
           {review.nose && (
             <div>
-              <p className="text-sm font-semibold text-muted-foreground mb-1">Nose</p>
+              <p className="text-sm font-semibold text-muted-foreground mb-1">향 (Nose)</p>
               <p className="text-sm">{review.nose}</p>
             </div>
           )}
           {review.palate && (
             <div>
-              <p className="text-sm font-semibold text-muted-foreground mb-1">Palate</p>
+              <p className="text-sm font-semibold text-muted-foreground mb-1">맛 (Palate)</p>
               <p className="text-sm">{review.palate}</p>
             </div>
           )}
           {review.finish && (
             <div>
-              <p className="text-sm font-semibold text-muted-foreground mb-1">Finish</p>
+              <p className="text-sm font-semibold text-muted-foreground mb-1">여운 (Finish)</p>
               <p className="text-sm">{review.finish}</p>
             </div>
           )}
@@ -99,17 +99,17 @@ function ReviewForm({ spiritId, onCancel }: { spiritId: string; onCancel: () => 
     e.preventDefault();
     // In production, this would call an API endpoint
     console.log('Submitting review:', formData);
-    alert('Review submitted! (Demo mode)');
+    alert('리뷰가 제출되었습니다! (데모 모드)');
     onCancel();
   };
 
   return (
     <form onSubmit={handleSubmit} className="border border-border rounded-lg p-6 mb-6">
-      <h3 className="font-semibold text-lg mb-4">Write Your Review</h3>
-      
+      <h3 className="font-semibold text-lg mb-4">리뷰 작성하기</h3>
+
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium mb-2">Rating</label>
+          <label className="block text-sm font-medium mb-2">평점</label>
           <div className="flex gap-2">
             {[1, 2, 3, 4, 5].map((rating) => (
               <button
@@ -125,58 +125,58 @@ function ReviewForm({ spiritId, onCancel }: { spiritId: string; onCancel: () => 
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2">Title</label>
+          <label className="block text-sm font-medium mb-2">제목</label>
           <input
             type="text"
             required
             value={formData.title}
             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
             className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-background"
-            placeholder="Sum up your review"
+            placeholder="리뷰 제목을 입력하세요"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2">Review</label>
+          <label className="block text-sm font-medium mb-2">내용</label>
           <textarea
             required
             value={formData.content}
             onChange={(e) => setFormData({ ...formData, content: e.target.value })}
             className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-background"
             rows={4}
-            placeholder="Share your experience..."
+            placeholder="시음 경험을 공유해주세요..."
           />
         </div>
 
         <div className="grid md:grid-cols-3 gap-4">
           <div>
-            <label className="block text-sm font-medium mb-2">Nose (optional)</label>
+            <label className="block text-sm font-medium mb-2">향 (선택)</label>
             <input
               type="text"
               value={formData.nose}
               onChange={(e) => setFormData({ ...formData, nose: e.target.value })}
               className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-background"
-              placeholder="Aromas..."
+              placeholder="느껴지는 향..."
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2">Palate (optional)</label>
+            <label className="block text-sm font-medium mb-2">맛 (선택)</label>
             <input
               type="text"
               value={formData.palate}
               onChange={(e) => setFormData({ ...formData, palate: e.target.value })}
               className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-background"
-              placeholder="Taste..."
+              placeholder="입안에서의 맛..."
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2">Finish (optional)</label>
+            <label className="block text-sm font-medium mb-2">여운 (선택)</label>
             <input
               type="text"
               value={formData.finish}
               onChange={(e) => setFormData({ ...formData, finish: e.target.value })}
               className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-background"
-              placeholder="Aftertaste..."
+              placeholder="마시고 난 뒤의 여운..."
             />
           </div>
         </div>
@@ -186,14 +186,14 @@ function ReviewForm({ spiritId, onCancel }: { spiritId: string; onCancel: () => 
             type="submit"
             className="flex-1 py-2 px-4 bg-primary text-primary-foreground rounded-lg hover:opacity-90"
           >
-            Submit Review
+            리뷰 제출
           </button>
           <button
             type="button"
             onClick={onCancel}
             className="px-4 py-2 border border-border rounded-lg hover:bg-secondary"
           >
-            Cancel
+            취소
           </button>
         </div>
       </div>

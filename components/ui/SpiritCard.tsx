@@ -22,7 +22,7 @@ export default function SpiritCard({ spirit }: SpiritCardProps) {
           <h3 className="font-semibold text-lg mb-1 line-clamp-2">{spirit.name}</h3>
           <p className="text-sm text-muted-foreground mb-2">{spirit.distillery}</p>
           <div className="flex items-center justify-between text-sm">
-            <span className="text-primary font-semibold">{spirit.abv}% ABV</span>
+            <span className="text-primary font-semibold">도수 {spirit.abv}%</span>
             <span className="text-muted-foreground">{spirit.country}</span>
           </div>
           {spirit.category && (

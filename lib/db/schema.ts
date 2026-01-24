@@ -1,5 +1,7 @@
 // Database schema types for K-Spirits Club Hub
 
+export type SpiritStatus = 'RAW' | 'ENRICHED' | 'PUBLISHED' | 'ERROR';
+
 export interface Spirit {
   id: string;
   name: string;
@@ -13,18 +15,31 @@ export interface Spirit {
   region: string | null;
   imageUrl: string | null;
   thumbnailUrl: string | null;
-  
+
   // Data source tracking
-  source: 'food_safety_korea' | 'whiskybase' | 'manual' | 'other';
+  source: 'food_safety_korea' | 'imported_food_maru' | 'whiskybase' | 'manual' | 'other';
   externalId: string | null;
-  
+
   // Data quality & publishing
+  status: SpiritStatus;
   isPublished: boolean;
   isReviewed: boolean;
   reviewedBy: string | null;
   reviewedAt: Date | null;
-  
-  // Metadata
+
+  // Metadata (Enriched fields)
+  metadata: {
+    name_en?: string;
+    raw_category?: string;
+    importer?: string;
+    description?: string;
+    nose_tags?: string[];
+    palate_tags?: string[];
+    finish_tags?: string[];
+    tasting_note?: string;
+    [key: string]: any;
+  };
+
   createdAt: Date;
   updatedAt: Date;
 }
@@ -76,6 +91,8 @@ export interface SpiritFilter {
   searchTerm?: string;
   isPublished?: boolean;
   isReviewed?: boolean;
+  subcategory?: string;
+  status?: SpiritStatus;
 }
 
 export interface PaginationParams {
