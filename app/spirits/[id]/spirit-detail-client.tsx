@@ -3,6 +3,7 @@
 import { useState } from "react";
 import SaveButton from "@/components/ui/SaveButton";
 import ReviewSection from "@/components/ui/ReviewSection";
+import GoogleAd from "@/components/ui/GoogleAd";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 
@@ -79,6 +80,19 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
 
             {/* Reviews Section */}
             <ReviewSection spiritId={spirit.id} reviews={reviews} />
+
+            {/* Bottom Ad - After Tasting Notes */}
+            <div className="mt-8 mb-6">
+                <div className="text-xs text-gray-500 text-center mb-2">Advertisement</div>
+                <GoogleAd
+                    client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || "ca-pub-0000000000000000"}
+                    slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || "1111111111"}
+                    format="auto"
+                    responsive={true}
+                    style={{ display: 'block', minHeight: '100px' }}
+                    className="rounded-lg overflow-hidden"
+                />
+            </div>
 
             {/* Sticky Bottom CTA Buttons */}
             <div className="fixed bottom-0 left-0 right-0 bg-neutral-900/95 backdrop-blur-lg border-t border-white/10 p-4 z-50">
