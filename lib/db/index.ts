@@ -1,8 +1,9 @@
-// Database Adapter: Hybrid (D1 for Production / In-Memory JSON for Local)
+// Database Adapter: Hybrid (Firestore for Production / In-Memory JSON for Local)
 import type { Spirit, UserCabinet, Review, SpiritFilter, PaginatedResponse, PaginationParams, SpiritStatus } from './schema';
+import { firestore } from '../firebase-admin';
 
 // -----------------------------------------------------------------------------
-// [LOCAL MODE] In-Memory / File-based Logic (Legacy)
+// [LOCAL MODE] In-Memory / File-based Logic
 // -----------------------------------------------------------------------------
 let allSpirits: Spirit[] = [];
 let initialized = false;
@@ -23,7 +24,9 @@ function initializeData() {
   allSpirits = [...sampleSpirits];
 
   // 2. Load heavy ingested data from file (Node.js only)
-  if (typeof window === 'undefined' && !process.env.DB) {
+  // Only load if NOT in Production Mode (to save memory)
+  const isProd = !!process.env.FIREBASE_PROJECT_ID;
+  if (typeof window === 'undefined' && !isProd) {
     try {
       const fs = require('fs');
       const path = require('path');
@@ -53,42 +56,40 @@ function initializeData() {
 }
 
 // Global initialization for Local Mode
-if (typeof window === 'undefined' && !process.env.DB) {
+if (typeof window === 'undefined' && !process.env.FIREBASE_PROJECT_ID) {
   initializeData();
 }
 
 // -----------------------------------------------------------------------------
-// [PRODUCTION MODE] Cloudflare D1 Logic
+// [PRODUCTION MODE] Firestore Helpers
 // -----------------------------------------------------------------------------
-// Type definition for D1 Binding (implicitly available in Workers environment)
-declare global {
-  var DB: any; // D1Database
-}
+function mapDocToSpirit(doc: FirebaseFirestore.DocumentSnapshot): Spirit {
+  const data = doc.data() as any;
+  const toDate = (val: any) => val && val.toDate ? val.toDate() : (val ? new Date(val) : null);
 
-function mapRowToSpirit(row: any): Spirit {
   return {
-    id: row.id,
-    name: row.name,
-    distillery: row.distillery,
-    bottler: row.bottler,
-    abv: row.abv,
-    volume: row.volume,
-    category: row.category,
-    subcategory: row.subcategory,
-    country: row.country,
-    region: row.region,
-    imageUrl: row.image_url,
-    thumbnailUrl: row.thumbnail_url,
-    source: row.source as any,
-    externalId: row.external_id,
-    status: row.status as SpiritStatus,
-    isPublished: Boolean(row.is_published),
-    isReviewed: Boolean(row.is_reviewed),
-    reviewedBy: row.reviewed_by,
-    reviewedAt: row.reviewed_at ? new Date(row.reviewed_at) : null,
-    metadata: row.metadata ? JSON.parse(row.metadata) : {},
-    createdAt: new Date(row.created_at),
-    updatedAt: new Date(row.updated_at),
+    id: doc.id,
+    name: data.name,
+    distillery: data.distillery,
+    bottler: data.bottler,
+    abv: data.abv,
+    volume: data.volume,
+    category: data.category,
+    subcategory: data.subcategory,
+    country: data.country,
+    region: data.region,
+    imageUrl: data.imageUrl,
+    thumbnailUrl: data.thumbnailUrl,
+    source: data.source,
+    externalId: data.externalId,
+    status: data.status,
+    isPublished: data.isPublished,
+    isReviewed: data.isReviewed,
+    reviewedBy: data.reviewedBy,
+    reviewedAt: toDate(data.reviewedAt),
+    metadata: data.metadata || {},
+    createdAt: toDate(data.createdAt) || new Date(),
+    updatedAt: toDate(data.updatedAt) || new Date(),
   };
 }
 
@@ -98,38 +99,37 @@ function mapRowToSpirit(row: any): Spirit {
 export const db = {
   // Spirit operations
   async getSpirits(filter: SpiritFilter = {}, pagination: PaginationParams = { page: 1, pageSize: 20 }): Promise<PaginatedResponse<Spirit>> {
-    // [PROD] Use D1 (Check if DB binding exists on process.env or global)
-    // In some Next.js adapters, bindings are on process.env
-    const dbBinding = (process.env as any).DB;
+    // [PROD] Use Firestore
+    if (process.env.FIREBASE_PROJECT_ID) {
+      // console.log('[DB:FIRESTORE] Querying spirits...');
+      let query: FirebaseFirestore.Query = firestore.collection('spirits');
 
-    if (dbBinding) {
-      // console.log('[DB:D1] getSpirits query');
-      let query = 'SELECT * FROM spirits WHERE 1=1';
-      const params: any[] = [];
+      // Filters
+      if (filter.status) query = query.where('status', '==', filter.status);
+      if (filter.category) query = query.where('category', '==', filter.category);
+      if (filter.subcategory) query = query.where('subcategory', '==', filter.subcategory);
+      if (filter.country) query = query.where('country', '==', filter.country);
+      if (filter.isPublished !== undefined) query = query.where('isPublished', '==', filter.isPublished);
 
-      if (filter.status) { query += ' AND status = ?'; params.push(filter.status); }
-      if (filter.category) { query += ' AND category = ?'; params.push(filter.category); }
-      if (filter.subcategory) { query += ' AND subcategory = ?'; params.push(filter.subcategory); }
-      if (filter.country) { query += ' AND country = ?'; params.push(filter.country); }
+      // Ordering (Required for pagination)
+      // Note: Composite indexes may be required for multiple 'where' + 'orderBy'
+      query = query.orderBy('updatedAt', 'desc');
 
-      // Count total
-      const countStmt = dbBinding.prepare(query.replace('SELECT *', 'SELECT count(*) as total'));
-      // @ts-ignore
-      const totalResult = await countStmt.bind(...params).first();
-      const total = totalResult.total as number;
+      // Count Total (Expensive in Firestore, use count() aggregation if available or estimate)
+      // For accurate count with filters, we need a separate count query
+      const countQuery = query.count();
+      const countSnapshot = await countQuery.get();
+      const total = countSnapshot.data().count;
 
-      // Fetch Data
-      query += ' LIMIT ? OFFSET ?';
-      const limit = pagination.pageSize;
+      // Pagination
       const offset = (pagination.page - 1) * pagination.pageSize;
-      params.push(limit, offset);
+      query = query.offset(offset).limit(pagination.pageSize);
 
-      const stmt = dbBinding.prepare(query);
-      // @ts-ignore
-      const { results } = await stmt.bind(...params).all();
+      const snapshot = await query.get();
+      const data = snapshot.docs.map(mapDocToSpirit);
 
       return {
-        data: results.map(mapRowToSpirit),
+        data,
         total,
         page: pagination.page,
         pageSize: pagination.pageSize,
@@ -160,65 +160,21 @@ export const db = {
   },
 
   async getSpirit(id: string): Promise<Spirit | null> {
-    const dbBinding = (process.env as any).DB;
-    if (dbBinding) {
-      const stmt = dbBinding.prepare('SELECT * FROM spirits WHERE id = ?');
-      // @ts-ignore
-      const result = await stmt.bind(id).first();
-      return result ? mapRowToSpirit(result) : null;
+    if (process.env.FIREBASE_PROJECT_ID) {
+      const doc = await firestore.collection('spirits').doc(id).get();
+      return doc.exists ? mapDocToSpirit(doc) : null;
     }
-
     initializeData();
     return allSpirits.find(s => s.id === id) || null;
   },
 
   async updateSpirit(id: string, updates: Partial<Spirit>): Promise<Spirit | null> {
-    const dbBinding = (process.env as any).DB;
-    if (dbBinding) {
-      // Build dynamic update query
-      const fields: string[] = [];
-      const values: any[] = [];
-
-      const toSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
-
-      for (const [key, value] of Object.entries(updates)) {
-        if (key === 'id') continue; // Skip ID
-
-        let dbKey = toSnakeCase(key);
-        let dbValue = value;
-
-        if (key === 'metadata') {
-          dbValue = JSON.stringify(value);
-        } else if (value instanceof Date) {
-          dbValue = value.toISOString();
-        } else if (key === 'createdAt' || key === 'updatedAt' || key === 'reviewedAt') {
-          // Already handled date logic above if value is Date object
-        }
-
-        // Special Mapping for specific keys if needed
-        if (key === 'imageUrl') dbKey = 'image_url';
-        if (key === 'thumbnailUrl') dbKey = 'thumbnail_url';
-        if (key === 'externalId') dbKey = 'external_id';
-        if (key === 'isPublished') { dbKey = 'is_published'; dbValue = value ? 1 : 0; }
-        if (key === 'isReviewed') { dbKey = 'is_reviewed'; dbValue = value ? 1 : 0; }
-        if (key === 'reviewedBy') dbKey = 'reviewed_by';
-        if (key === 'reviewedAt') dbKey = 'reviewed_at';
-
-        fields.push(`${dbKey} = ?`);
-        values.push(dbValue);
-      }
-
-      // Always update 'updated_at'
-      fields.push(`updated_at = ?`);
-      values.push(new Date().toISOString());
-
-      const query = `UPDATE spirits SET ${fields.join(', ')} WHERE id = ? RETURNING *`;
-      values.push(id);
-
-      const stmt = dbBinding.prepare(query);
-      // @ts-ignore
-      const result = await stmt.bind(...values).first();
-      return result ? mapRowToSpirit(result) : null;
+    if (process.env.FIREBASE_PROJECT_ID) {
+      const updateData = { ...updates, updatedAt: new Date() };
+      await firestore.collection('spirits').doc(id).update(updateData);
+      // Fetch updated
+      const doc = await firestore.collection('spirits').doc(id).get();
+      return mapDocToSpirit(doc);
     }
 
     // [LOCAL]
@@ -242,12 +198,9 @@ export const db = {
   },
 
   async deleteSpirit(id: string): Promise<boolean> {
-    const dbBinding = (process.env as any).DB;
-    if (dbBinding) {
-      const stmt = dbBinding.prepare('DELETE FROM spirits WHERE id = ?');
-      // @ts-ignore
-      const info = await stmt.bind(id).run();
-      return info.success;
+    if (process.env.FIREBASE_PROJECT_ID) {
+      await firestore.collection('spirits').doc(id).delete();
+      return true;
     }
 
     initializeData();
