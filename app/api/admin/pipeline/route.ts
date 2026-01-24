@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { enrichSpiritMetadata } from '@/lib/services/gemini';
 import { fetchSpiritImage } from '@/lib/services/image-search';
-import { firestore } from '@/lib/firebase-admin';
 
 export async function POST(req: NextRequest) {
     try {
