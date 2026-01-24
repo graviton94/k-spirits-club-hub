@@ -3,6 +3,8 @@ import { db } from '@/lib/db';
 import { enrichSpiritMetadata } from '@/lib/services/gemini';
 import { fetchSpiritImage } from '@/lib/services/image-search';
 
+export const runtime = 'edge';
+
 export async function POST(req: NextRequest) {
     try {
         const { action } = await req.json();

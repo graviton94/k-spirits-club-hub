@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 
+export const runtime = 'edge';
+
 // PATCH /api/admin/spirits/bulk-patch
 export async function PATCH(req: NextRequest) {
     try {

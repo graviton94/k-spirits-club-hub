@@ -5,6 +5,7 @@ import ReviewSection from "@/components/ui/ReviewSection";
 
 // Force dynamic rendering to prevent build-time Firestore access
 export const dynamic = 'force-dynamic';
+export const runtime = 'edge';
 
 export default async function SpiritDetailPage({
   params,

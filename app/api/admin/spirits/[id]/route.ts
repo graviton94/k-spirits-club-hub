@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 
+export const runtime = 'edge';
+
 // PATCH /api/admin/spirits/[id]
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
     try {
