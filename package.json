@@ -1,0 +1,30 @@
+{
+  "name": "k-spirits-club-hub",
+  "version": "1.0.0",
+  "description": "A mobile-first global spirits platform that centralizes liquor data from food safety authorities, import portals, and global communities. It features a robust Hub-DB for managing 1M+ records, a user-curated digital liquor cabinet, and AI-driven recommendations. Built for scalability on Cloudflare with a roadmap for AdSense and B2B sponsorship.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "pages:build": "npm run build",
+    "pages:deploy": "wrangler pages deploy ./out --project-name=k-spirits-club-hub"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.1.18",
+    "@types/node": "^25.0.10",
+    "@types/react": "^19.2.9",
+    "@types/react-dom": "^19.2.3",
+    "autoprefixer": "^10.4.23",
+    "next": "^16.1.4",
+    "postcss": "^8.5.6",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3"
+  }
+}
