@@ -13,6 +13,8 @@ export default function MyPage() {
     const [isEditing, setIsEditing] = useState(false);
     const [editForm, setEditForm] = useState({ nickname: '', profileImage: '' });
     const [isSaving, setIsSaving] = useState(false);
+    const [uploadMethod, setUploadMethod] = useState<'url' | 'file'>('url');
+    const [uploadError, setUploadError] = useState('');
 
     useEffect(() => {
         if (profile) {
@@ -22,6 +24,35 @@ export default function MyPage() {
             });
         }
     }, [profile]);
+
+    const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        setUploadError('');
+
+        // Validate file size (2MB)
+        if (file.size > 2 * 1024 * 1024) {
+            setUploadError('파일 크기는 2MB 이하여야 합니다');
+            return;
+        }
+
+        // Validate file type
+        if (!file.type.startsWith('image/')) {
+            setUploadError('이미지 파일만 업로드 가능합니다');
+            return;
+        }
+
+        // Convert to base64
+        const reader = new FileReader();
+        reader.onload = () => {
+            setEditForm({ ...editForm, profileImage: reader.result as string });
+        };
+        reader.onerror = () => {
+            setUploadError('파일 읽기에 실패했습니다');
+        };
+        reader.readAsDataURL(file);
+    };
 
     if (loading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
 
@@ -71,15 +102,67 @@ export default function MyPage() {
                                     <button onClick={() => setEditForm(prev => ({ ...prev, nickname: generateRandomNickname() }))} className="bg-secondary border border-border px-3 rounded-xl">🎲</button>
                                 </div>
                             </div>
+
+                            {/* Profile Image Upload */}
                             <div>
-                                <label className="text-xs text-muted-foreground block mb-1 text-left">프로필 이미지 URL</label>
-                                <input
-                                    className="bg-secondary px-4 py-2 rounded-xl font-mono text-xs w-full border border-border"
-                                    value={editForm.profileImage}
-                                    onChange={e => setEditForm({ ...editForm, profileImage: e.target.value })}
-                                    placeholder="https://..."
-                                />
+                                <label className="text-xs text-muted-foreground block mb-2 text-left">프로필 이미지</label>
+
+                                {/* Tab Switcher */}
+                                <div className="flex gap-2 mb-3">
+                                    <button
+                                        onClick={() => setUploadMethod('url')}
+                                        className={`flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-colors ${uploadMethod === 'url'
+                                            ? 'bg-primary text-primary-foreground'
+                                            : 'bg-secondary text-muted-foreground hover:bg-secondary/80'
+                                            }`}
+                                    >
+                                        URL 입력
+                                    </button>
+                                    <button
+                                        onClick={() => setUploadMethod('file')}
+                                        className={`flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-colors ${uploadMethod === 'file'
+                                            ? 'bg-primary text-primary-foreground'
+                                            : 'bg-secondary text-muted-foreground hover:bg-secondary/80'
+                                            }`}
+                                    >
+                                        파일 업로드
+                                    </button>
+                                </div>
+
+                                {/* URL Input */}
+                                {uploadMethod === 'url' && (
+                                    <input
+                                        className="bg-secondary px-4 py-2 rounded-xl font-mono text-xs w-full border border-border"
+                                        value={editForm.profileImage}
+                                        onChange={e => setEditForm({ ...editForm, profileImage: e.target.value })}
+                                        placeholder="https://..."
+                                    />
+                                )}
+
+                                {/* File Upload */}
+                                {uploadMethod === 'file' && (
+                                    <div className="space-y-2">
+                                        <label className="block">
+                                            <div className="bg-secondary border-2 border-dashed border-border rounded-xl p-4 text-center cursor-pointer hover:bg-secondary/80 transition-colors">
+                                                <input
+                                                    type="file"
+                                                    accept="image/*"
+                                                    capture="environment"
+                                                    onChange={handleFileUpload}
+                                                    className="hidden"
+                                                />
+                                                <div className="text-3xl mb-2">📸</div>
+                                                <p className="text-sm font-semibold">사진 선택 또는 촬영</p>
+                                                <p className="text-xs text-muted-foreground mt-1">최대 2MB</p>
+                                            </div>
+                                        </label>
+                                        {uploadError && (
+                                            <p className="text-xs text-red-500">{uploadError}</p>
+                                        )}
+                                    </div>
+                                )}
                             </div>
+
                             <div className="flex gap-2">
                                 <button onClick={() => setIsEditing(false)} className="flex-1 py-3 bg-secondary rounded-xl font-bold">취소</button>
                                 <button onClick={handleSave} disabled={isSaving} className="flex-1 py-3 bg-primary text-primary-foreground rounded-xl font-bold">저장</button>
