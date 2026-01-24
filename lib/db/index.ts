@@ -1,63 +1,11 @@
-import { db as adminDb } from '../firebase-admin';
-import { appId } from '../firebase';
+import { spiritsDb as restSpiritsDb } from './firestore-rest';
 import { Spirit, SpiritStatus, SpiritFilter, PaginationParams, PaginatedResponse } from './schema';
 
 /**
  * [Server-Side Database Adapter]
- * Uses Firebase Admin SDK to bypass Security Rules for API Routes.
- * Path: /artifacts/{appId}/public/data/spirits
+ * Uses Firestore REST API to be compatible with Edge Runtime (Cloudflare).
  */
-
-const COLLECTION_PATH = `artifacts/${appId}/public/data/spirits`;
-
-export const spiritsDb = {
-  // Get All Spirits (Admin SDK)
-  async getAll(status?: SpiritStatus | 'ALL'): Promise<Spirit[]> {
-    let query: FirebaseFirestore.Query = adminDb.collection(COLLECTION_PATH);
-
-    if (status && status !== 'ALL') {
-      query = query.where('status', '==', status);
-    }
-
-    const snapshot = await query.get();
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Spirit));
-  },
-
-  // Get By ID
-  async getById(id: string): Promise<Spirit | null> {
-    const docRef = adminDb.doc(`${COLLECTION_PATH}/${id}`);
-    const snapshot = await docRef.get();
-    if (snapshot.exists) return { id: snapshot.id, ...snapshot.data() } as Spirit;
-    return null;
-  },
-
-  // Upsert (Set with merge)
-  async upsert(id: string, data: Partial<Spirit>) {
-    const docRef = adminDb.doc(`${COLLECTION_PATH}/${id}`);
-    const payload = { ...data, id, updatedAt: new Date().toISOString() };
-    await docRef.set(payload, { merge: true });
-  },
-
-  // Bulk Update
-  async bulkUpdate(ids: string[], updates: Partial<Spirit>) {
-    const batch = adminDb.batch();
-    ids.forEach(id => {
-      const docRef = adminDb.doc(`${COLLECTION_PATH}/${id}`);
-      batch.set(docRef, { ...updates, updatedAt: new Date().toISOString() }, { merge: true });
-    });
-    await batch.commit();
-  },
-
-  // Delete
-  async delete(ids: string[]) {
-    const batch = adminDb.batch();
-    ids.forEach(id => {
-      const docRef = adminDb.doc(`${COLLECTION_PATH}/${id}`);
-      batch.delete(docRef);
-    });
-    await batch.commit();
-  }
-};
+export const spiritsDb = restSpiritsDb;
 
 // -----------------------------------------------------------------------------
 // LEGACY ADAPTER (Compatible Wrapper)
