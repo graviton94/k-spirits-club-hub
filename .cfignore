@@ -1,4 +1,4 @@
-# Cloudflare Pages ignore file
+ㅈ# Cloudflare Pages ignore file
 # Exclude cache and build artifacts that are not needed for deployment
 
 .next/cache

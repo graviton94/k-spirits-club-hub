@@ -55,10 +55,16 @@ async function migrate() {
         for (const file of files) {
             if (file.endsWith('.json')) {
                 const filePath = path.join(rawImportedDir, file);
-                console.log(`Reading ${file}...`);
-                const content = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-                if (Array.isArray(content)) {
-                    allSpirits.push(...content);
+                console.log(`Reading ${file} (Size: ${(fs.statSync(filePath).size / 1024 / 1024).toFixed(2)} MB)...`);
+
+                try {
+                    const content = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+                    if (Array.isArray(content)) {
+                        allSpirits.push(...content);
+                        console.log(`  -> Loaded ${content.length} records.`);
+                    }
+                } catch (e) {
+                    console.error(`  -> Failed to parse ${file}: ${e.message}`);
                 }
             }
         }
