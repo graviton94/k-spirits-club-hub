@@ -5,6 +5,7 @@ import { AuthProvider } from './context/auth-context';
 import OnboardingModal from './components/auth/onboarding-modal';
 import { Header } from '@/components/layout/Header';
 import { BottomNav } from "@/components/layout/BottomNav";
+import StickyFooterAd from '@/components/ui/StickyFooterAd';
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
@@ -41,7 +42,7 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
       </head>
       <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`}>
-        <main className="min-h-screen pb-20">
+        <main className="min-h-screen pb-32">
           <AuthProvider>
             <Header />
             <OnboardingModal />
@@ -66,6 +67,14 @@ export default function RootLayout({
             </p>
           </div>
         </footer>
+
+        {/* Sticky Footer Ad */}
+        {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT && (
+          <StickyFooterAd 
+            client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT}
+            slot={process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT}
+          />
+        )}
 
         <BottomNav />
       </body>

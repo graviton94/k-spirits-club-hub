@@ -3,6 +3,7 @@
 import { useState } from "react";
 import SaveButton from "@/components/ui/SaveButton";
 import ReviewSection from "@/components/ui/ReviewSection";
+import GoogleAd from "@/components/ui/GoogleAd";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 
@@ -80,8 +81,23 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
             {/* Reviews Section */}
             <ReviewSection spiritId={spirit.id} reviews={reviews} />
 
-            {/* Sticky Bottom CTA Buttons */}
-            <div className="fixed bottom-0 left-0 right-0 bg-neutral-900/95 backdrop-blur-lg border-t border-white/10 p-4 z-50">
+            {/* Bottom Ad - After Tasting Notes */}
+            {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT && (
+                <div className="mt-8 mb-6">
+                    <div className="text-xs text-gray-500 text-center mb-2">Advertisement</div>
+                    <GoogleAd
+                        client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT}
+                        slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT}
+                        format="auto"
+                        responsive={true}
+                        style={{ display: 'block', minHeight: '100px' }}
+                        className="rounded-lg overflow-hidden"
+                    />
+                </div>
+            )}
+
+            {/* Sticky Bottom CTA Buttons - Above BottomNav */}
+            <div className="fixed bottom-28 left-0 right-0 bg-neutral-900/95 backdrop-blur-lg border-t border-white/10 p-4 z-50">
                 <div className="container mx-auto max-w-4xl flex gap-3">
                     <button className="flex-1 py-3 px-4 bg-amber-500 hover:bg-amber-600 text-black font-bold rounded-lg transition-colors">
                         내 술장에 담기
