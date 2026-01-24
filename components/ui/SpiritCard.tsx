@@ -8,8 +8,14 @@ interface Spirit {
   id: string;
   name: string;
   category: string;
+  subcategory?: string | null;
+  abv: number;
   imageUrl: string | null;
   distillery: string | null;
+  metadata?: {
+    tasting_note?: string;
+    [key: string]: any;
+  };
 }
 
 interface SpiritCardProps {
@@ -17,50 +23,72 @@ interface SpiritCardProps {
 }
 
 export function SpiritCard({ spirit }: SpiritCardProps) {
+  // Extract first 2 tags from tasting_note
+  const tastingTags = spirit.metadata?.tasting_note
+    ? spirit.metadata.tasting_note.split(',').slice(0, 2).map(tag => tag.trim())
+    : [];
+
   return (
     <Link href={`/spirits/${spirit.id}`}>
       <motion.div
-        className="group relative w-full aspect-[4/5] overflow-hidden rounded-2xl bg-neutral-800 shadow-xl border border-white/5"
-        whileHover={{ scale: 0.98 }}
+        className="group flex gap-3 p-3 rounded-lg bg-neutral-800/50 border border-white/5 hover:bg-neutral-800 hover:border-white/10 transition-all"
+        whileHover={{ scale: 0.99 }}
         transition={{ type: "spring", stiffness: 400, damping: 17 }}
       >
-        {/* Image Layer */}
-        <div className="absolute inset-0 z-0">
+        {/* Left: 80x80 Thumbnail */}
+        <div className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-neutral-900">
           {spirit.imageUrl ? (
             <img
               src={spirit.imageUrl}
               alt={spirit.name}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              className="w-full h-full object-cover"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center bg-neutral-900 text-6xl">
+            <div className="w-full h-full flex items-center justify-center text-4xl">
               🥃
             </div>
           )}
         </div>
 
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10 opacity-80 group-hover:opacity-100 transition-opacity" />
+        {/* Right: Content */}
+        <div className="flex-1 min-w-0 flex flex-col justify-between">
+          {/* Top: Name */}
+          <div>
+            <h3 className="font-bold text-white leading-tight line-clamp-2 mb-1">
+              {spirit.name}
+            </h3>
 
-        {/* Content Layer */}
-        <div className="absolute bottom-0 left-0 right-0 p-5 z-20 flex flex-col justify-end h-full">
-          <div className="flex justify-between items-start mb-1">
-            <span className="text-xs font-bold text-amber-500 uppercase tracking-wider bg-black/50 backdrop-blur-sm px-2 py-1 rounded-md border border-amber-500/20">
-              {spirit.category}
-            </span>
-            <button className="p-2 -mr-2 -mt-2 text-white/50 hover:text-red-500 transition-colors">
-              <Heart className="w-5 h-5" />
-            </button>
+            {/* Subcategory + ABV */}
+            <p className="text-sm text-gray-400">
+              {spirit.subcategory || spirit.category} · {spirit.abv}°
+            </p>
           </div>
 
-          <h3 className="text-xl font-bold text-white leading-tight line-clamp-2 mb-1 drop-shadow-lg">
-            {spirit.name}
-          </h3>
-
-          <p className="text-sm text-gray-300 line-clamp-1 opacity-90">
-            {spirit.distillery || "Unknown Distillery"}
-          </p>
+          {/* Bottom: Tags */}
+          {tastingTags.length > 0 && (
+            <div className="flex gap-1.5 mt-2">
+              {tastingTags.map((tag, index) => (
+                <span
+                  key={index}
+                  className="text-xs px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
+
+        {/* Heart Icon */}
+        <button
+          className="flex-shrink-0 p-1 text-white/30 hover:text-red-500 transition-colors"
+          onClick={(e) => {
+            e.preventDefault();
+            // TODO: Add to wishlist
+          }}
+        >
+          <Heart className="w-5 h-5" />
+        </button>
       </motion.div>
     </Link>
   );

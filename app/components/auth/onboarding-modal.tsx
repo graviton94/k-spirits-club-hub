@@ -55,17 +55,17 @@ export default function OnboardingModal() {
         // Calculate age with strict birth date comparison
         const today = new Date();
         const birthDate = new Date(year, month - 1, day);
-        
+
         // Validate that the birth date is not in the future
         if (birthDate > today) {
             alert('미래의 날짜는 입력할 수 없습니다.');
             return;
         }
-        
+
         let age = today.getFullYear() - birthDate.getFullYear();
         const monthDiff = today.getMonth() - birthDate.getMonth();
         const dayDiff = today.getDate() - birthDate.getDate();
-        
+
         // Adjust age if birthday hasn't occurred this year yet
         if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
             age--;
@@ -110,7 +110,7 @@ export default function OnboardingModal() {
                     >
                         {/* Decorative background gradient */}
                         <div className="absolute inset-0 bg-gradient-to-br from-amber-900/5 to-transparent pointer-events-none" />
-                        
+
                         <div className="relative z-10">
                             {/* Header */}
                             <div className="text-center mb-8">
@@ -142,7 +142,7 @@ export default function OnboardingModal() {
                                                 }}
                                                 min="1900"
                                                 max={new Date().getFullYear()}
-                                                className="w-full bg-slate-800/70 border border-slate-700 rounded-xl px-3 py-3 text-center font-bold text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent"
+                                                className="w-full bg-slate-800/70 border border-slate-700 rounded-xl px-3 py-3 text-center font-bold text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                             />
                                             <p className="text-xs text-slate-500 text-center mt-1">년</p>
                                         </div>
@@ -158,7 +158,7 @@ export default function OnboardingModal() {
                                                 }}
                                                 min="1"
                                                 max="12"
-                                                className="w-full bg-slate-800/70 border border-slate-700 rounded-xl px-3 py-3 text-center font-bold text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent"
+                                                className="w-full bg-slate-800/70 border border-slate-700 rounded-xl px-3 py-3 text-center font-bold text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                             />
                                             <p className="text-xs text-slate-500 text-center mt-1">월</p>
                                         </div>
@@ -174,7 +174,7 @@ export default function OnboardingModal() {
                                                 }}
                                                 min="1"
                                                 max="31"
-                                                className="w-full bg-slate-800/70 border border-slate-700 rounded-xl px-3 py-3 text-center font-bold text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent"
+                                                className="w-full bg-slate-800/70 border border-slate-700 rounded-xl px-3 py-3 text-center font-bold text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                             />
                                             <p className="text-xs text-slate-500 text-center mt-1">일</p>
                                         </div>
@@ -184,7 +184,7 @@ export default function OnboardingModal() {
                                 {/* Legal Notice */}
                                 <div className="bg-red-950/30 border border-red-900/50 rounded-xl p-3">
                                     <p className="text-red-400 text-xs text-center leading-relaxed">
-                                        ⚠️ 19세 미만 청소년에게 주류를 판매하는 것은 법으로 금지되어 있습니다.
+                                        ⚠️ 19세 미만은 접속하실 수 없습니다.
                                     </p>
                                 </div>
                             </div>
@@ -197,7 +197,7 @@ export default function OnboardingModal() {
                                 >
                                     Enter
                                 </button>
-                                
+
                                 <button
                                     onClick={handleExit}
                                     className="w-full py-3 bg-transparent hover:bg-slate-800/50 text-slate-400 hover:text-slate-300 font-semibold rounded-xl transition-all border border-slate-700/50 active:scale-[0.98]"

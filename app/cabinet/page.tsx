@@ -1,4 +1,4 @@
-import SpiritCard from "@/components/ui/SpiritCard";
+import { SpiritCard } from "@/components/ui/SpiritCard";
 
 export default function CabinetPage() {
   // In production, this would fetch user's saved spirits
