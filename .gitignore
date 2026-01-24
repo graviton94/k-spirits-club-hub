@@ -8,6 +8,7 @@ node_modules
 
 # Next.js
 /.next/
+/.next/cache/
 /out/
 next-env.d.ts
 
