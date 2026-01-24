@@ -3,15 +3,16 @@ from bs4 import BeautifulSoup
 import json
 import random
 import time
+import argparse
 from pathlib import Path
 from datetime import datetime
 from urllib.parse import urlencode
 
 # 설정
-ENRICHED_DIR = Path('data/enriched')
-FINAL_OUTPUT = Path('data/enriched/ready_for_confirm.json')
 FAIL_LOG = Path('scripts/image_fail_log.txt')
-CHECKPOINT_INTERVAL = 10
+# Defaults (Backward Compatibility)
+DEFAULT_INPUT_DIR = Path('data/enriched')
+DEFAULT_OUTPUT_FILE = Path('data/enriched/ready_for_confirm.json')
 
 # User-Agent 리스트 (차단 방지용)
 USER_AGENTS = [
@@ -95,70 +96,99 @@ def fetch_image_url(name_en, distillery):
         return None
 
 def main():
-    # 1. 보완 데이터 로드
-    all_enriched = []
-    batch_files = list(ENRICHED_DIR.glob('whisky_enriched_batch_*.json'))
-    
-    if not batch_files:
-        print("❌ 보완 데이터 배치 파일을 찾을 수 없습니다.")
-        return
+    parser = argparse.ArgumentParser(description='Fetch images for enriched spirits data')
+    parser.add_argument('--input', help='Input JSON file path')
+    parser.add_argument('--output', help='Output JSON file path')
+    args = parser.parse_args()
 
-    for f_path in batch_files:
-        with open(f_path, 'r', encoding='utf-8') as f_in:
-            all_enriched.extend(json.load(f_in))
-            
-    print(f"🔍 총 {len(all_enriched)}건의 데이터를 로드했습니다. 고급 이미지 수집을 시작합니다.")
+    # Load Data
+    all_enriched = []
+    
+    if args.input:
+        input_path = Path(args.input)
+        if not input_path.exists():
+            print(f"❌ Input file not found: {input_path}")
+            return
+        with open(input_path, 'r', encoding='utf-8') as f_in:
+            data = json.load(f_in)
+            if isinstance(data, list):
+                all_enriched.extend(data)
+            else:
+                print("❌ Input JSON must be a list of objects")
+                return
+        output_path = Path(args.output) if args.output else DEFAULT_OUTPUT_FILE
+    else:
+        # Backward Compatibility: Scan directory
+        print(f"📂 Scanning default directory: {DEFAULT_INPUT_DIR}")
+        batch_files = list(DEFAULT_INPUT_DIR.glob('whisky_enriched_batch_*.json'))
+        if not batch_files:
+            print("❌ No batch files found.")
+            return
+        for f_path in batch_files:
+            with open(f_path, 'r', encoding='utf-8') as f_in:
+                all_enriched.extend(json.load(f_in))
+        output_path = DEFAULT_OUTPUT_FILE
+
+    print(f"🔍 Loaded {len(all_enriched)} items. Starting Image Search...")
 
     processed_count = 0
     total_items = len(all_enriched)
 
     for i, item in enumerate(all_enriched):
-        # 이미 유효한 이미지 URL이 있으면 스킵
+        # Already has valid image?
         if item.get('imageUrl') and item['imageUrl'].startswith('http') and 'google' not in item['imageUrl']:
             continue
             
         name_en = item.get('metadata', {}).get('name_en', item['name'])
-        distillery = item['distillery']
+        distillery = item.get('distillery', '')
         
-        print(f"📸 [{i+1}/{total_items}] 수집 시도 (Advanced): {name_en}...")
+        print(f"📸 [{i+1}/{total_items}] Fetching: {name_en}...")
         
         img_url = fetch_image_url(name_en, distillery)
         
         if img_url:
             item['imageUrl'] = img_url
             item['thumbnailUrl'] = img_url
-            item['status'] = 'PENDING_CONFIRM' # 상태 머신 반영
+            item['status'] = 'READY_FOR_CONFIRM'
             item['updatedAt'] = datetime.now().isoformat()
-            print(f"✅ 성공: {img_url[:60]}...")
+            print(f"✅ Success: {img_url[:60]}...")
         else:
             item['imageUrl'] = None
             item['status'] = 'IMAGE_FAILED'
-            # 실패 기록
+            # Log failure
             with open(FAIL_LOG, 'a', encoding='utf-8') as f_fail:
                 f_fail.write(f"{item['id']} | {name_en} | {datetime.now().isoformat()}\n")
-            print(f"❌ 실패 (로그 기록됨): {name_en}")
+            print(f"❌ Failed (Logged): {name_en}")
 
         processed_count += 1
         
-        # 지시사항: 넉넉한 랜덤 슬립 (7~12초)
-        delay = random.uniform(7, 12)
+        # Delay
+        delay = random.uniform(3, 6) # Slightly faster for batch processing as batches are small
         if i < total_items - 1:
             time.sleep(delay)
-        
-        # 10건마다 체크포인트 저장
-        if processed_count % CHECKPOINT_INTERVAL == 0:
-            with open(FINAL_OUTPUT, 'w', encoding='utf-8') as f_out:
-                json.dump(all_enriched, f_out, indent=2, ensure_ascii=False)
-            print(f"💾 중간 저장 완료: {FINAL_OUTPUT}")
+            
+        # Intermediate Save (only if not single batch file, or just save always)
+        # For batch mode, we just save at the end usually, but safe to save here.
 
-    # 최종 저장
-    with open(FINAL_OUTPUT, 'w', encoding='utf-8') as f_out:
+    # Save Result
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(output_path, 'w', encoding='utf-8') as f_out:
         json.dump(all_enriched, f_out, indent=2, ensure_ascii=False)
         
-    print(f"✨ 모든 작업 완료! 최종 결과 저장: {FINAL_OUTPUT}")
+    print(f"✨ Validation Ready: {output_path}")
+
+    # Final Summary
+    print("\n" + "="*50)
+    print(" 📊 [SUMMARY] Image Search (Advanced)")
+    print("-" * 50)
+    print(f"  • Total Processed    : {total_items:,}")
+    print(f"  • Images Found       : {sum(1 for i in all_enriched if i.get('imageUrl')):,}")
+    print(f"  • Failed/No Image    : {sum(1 for i in all_enriched if not i.get('imageUrl')):,}")
+    print(f"  • Output File        : {output_path}")
+    print("=" * 50 + "\n")
 
 if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        print("\n👋 사용자에 의해 중단되었습니다.")
+        print("\n👋 Aborted by user.")

@@ -30,6 +30,24 @@ export default function LoginPage() {
                     Google 계정으로 계속하기
                 </button>
 
+                <div className="relative my-6">
+                    <div className="absolute inset-0 flex items-center">
+                        <span className="w-full border-t border-border" />
+                    </div>
+                    <div className="relative flex justify-center text-xs uppercase">
+                        <span className="bg-card px-2 text-muted-foreground">또는</span>
+                    </div>
+                </div>
+
+                <div>
+                    <button
+                        onClick={() => router.push('/')}
+                        className="w-full py-4 bg-secondary text-secondary-foreground font-bold rounded-xl hover:bg-secondary/80 transition-all"
+                    >
+                        비회원으로 둘러보기
+                    </button>
+                </div>
+
                 <div className="mt-8 pt-8 border-t border-border">
                     <p className="text-xs text-muted-foreground">
                         로그인함으로써 서비스 이용약관 및 개인정보 처리방침에 동의하게 됩니다.

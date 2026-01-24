@@ -7,15 +7,42 @@ from pathlib import Path
 from typing import List, Dict, Any
 from google import genai
 from google.genai import types
-from dotenv import load_dotenv
+# from dotenv import load_dotenv (Disabled: .env contains JS code causing parsing errors)
 
-# 설정 로드
-load_dotenv()
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+# Manual .env parser to support hybrid file format
+def load_env_robust():
+    env_vars = {}
+    try:
+        # Search for .env in current and parent directories
+        current_dir = Path.cwd()
+        potential_paths = [current_dir / '.env', current_dir.parent / '.env', Path(__file__).parent.parent / '.env']
+        
+        env_path = next((p for p in potential_paths if p.exists()), None)
+        
+        if env_path:
+            with open(env_path, 'r', encoding='utf-8', errors='ignore') as f:
+                for line in f:
+                    line = line.strip()
+                    # Skip JS objects or comments
+                    if not line or line.startswith('#') or line.startswith('const ') or '{' in line or '}' in line:
+                        continue
+                    if '=' in line:
+                        key, value = line.split('=', 1)
+                        # Clean quotes
+                        env_vars[key.strip()] = value.strip().strip("'").strip('"')
+    except Exception as e:
+        print(f"⚠️ Warning: Custom .env loading encountered error: {e}")
+    return env_vars
+
+# Load Config
+env_conf = load_env_robust()
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") or env_conf.get("GEMINI_API_KEY")
 
 if not GEMINI_API_KEY:
     print("❌ .env 파일에 GEMINI_API_KEY가 설정되어 있지 않습니다.")
     exit(1)
+
+print(f"DEBUG: GEMINI_API_KEY Loaded: {'*' * 5}{GEMINI_API_KEY[-4:] if GEMINI_API_KEY else 'None'}")
 
 # API 클라이언트 및 모델 설정
 client = genai.Client(api_key=GEMINI_API_KEY)
@@ -86,7 +113,9 @@ def enrich_batch(batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
 1. abv: 제품명에 정보가 없다면 해당 제품의 일반적인 도수를 지식으로 추론해(소주: 16~20, 위스키: 40~46 등).
 2. subcategory: 위 가이드의 표준 명칭을 사용해.
 3. Tags: 각 영역(nose, palate, finish)에 대해 반드시 위 인덱스의 단어를 해시태그(#) 형식으로 포함해.
-4. description: 제품에 대한 매력적인 소개글을 1-2문장으로 작성해(한국어).
+   - **중요**: 카테고리에 얽매이지 말고 '제품명' 자체를 분석하여 원재료를 유추해.
+   - 예: '려(Ryeo)' -> 고구마 증류소주 (#고구마, #뿌리채소), '문배술' -> 배향 (#배, #곡물)
+   - 제품명에 특정 과일이나 재료(고구마, 감귤, 포도 등)가 들어있다면 반드시 해당 재료의 풍미를 태그에 반영해.
 
  대상 목록:
 {json.dumps(minimal_batch, ensure_ascii=False)}
@@ -101,8 +130,7 @@ def enrich_batch(batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     "distillery_refined": "공식 제조소 명칭",
     "nose_tags": ["#태그1"],
     "palate_tags": ["#태그2"],
-    "finish_tags": ["#태그3"],
-    "description": "설명"
+    "finish_tags": ["#태그3"]
   }}
 ]
 """
@@ -142,7 +170,7 @@ def enrich_batch(batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
                     item['metadata']['nose_tags'] = res.get('nose_tags', [])
                     item['metadata']['palate_tags'] = res.get('palate_tags', [])
                     item['metadata']['finish_tags'] = res.get('finish_tags', [])
-                    item['metadata']['description'] = res.get('description', '')
+                    # item['metadata']['description'] = res.get('description', '') # Removed as per user request
                     
                     # 태그를 합쳐서 tasting_note 생성 (간단 버전)
                     all_tags = res.get('nose_tags', []) + res.get('palate_tags', []) + res.get('finish_tags', [])
@@ -157,9 +185,10 @@ def enrich_batch(batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
 
         except Exception as e:
             wait_time = (attempt + 1) * 2
-            # print(f"⚠️ {attempt+1}차 시도 실패 ({e})...")
+            print(f"⚠️ Enrichment Attempt {attempt+1} Failed: {e}", flush=True)
             time.sleep(wait_time)
             
+    print(f"❌ Failed to enrich batch after 3 attempts.", flush=True)
     return batch
 
 def main():
@@ -196,6 +225,15 @@ def main():
             json.dump(enriched_data, f, indent=2, ensure_ascii=False)
             
         print(f"Success: Processed {len(enriched_data)} items")
+
+        # Final Summary
+        print("\n" + "="*50)
+        print(" 📊 [SUMMARY] Gemini Enrichment")
+        print("-" * 50)
+        print(f"  • Input Items        : {len(data)}")
+        print(f"  • Successfully Enriched : {len(enriched_data)}")
+        print(f"  • Output File        : {output_path}")
+        print("=" * 50 + "\n")
 
     except Exception as e:
         print(f"Error: {str(e)}")

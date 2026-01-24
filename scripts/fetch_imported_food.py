@@ -46,9 +46,9 @@ def fetch_category_data(category_name: str, category_code: str):
     has_more = True
     total_count = -1 # 초기값
     
-    # 최근 2년 데이터 수집 설정
+    # 최근 1개월 데이터 수집 (신규 출시 제품만 대상)
     today_dt = datetime.now()
-    start_date = (today_dt - timedelta(days=365*2)).strftime("%Y-%m-%d")
+    start_date = (today_dt - timedelta(days=30)).strftime("%Y-%m-%d")
     today = today_dt.strftime("%Y-%m-%d")
     
     print(f"📅 수집 범위: {start_date} ~ {today}")
@@ -170,7 +170,14 @@ def main():
             print(f"💾 '{file_path}' 저장 완료 ({len(category_data):,}건)")
 
     duration = datetime.now() - start_time
-    print(f"\n✨ 수집 완료! 총 {total_total_count:,}건 (소요 시간: {duration})")
+    print("\n" + "="*50)
+    print(" 📊 [SUMMARY] Import Food Data Fetch")
+    print("-" * 50)
+    print(f"  • Total Items Fetched : {total_total_count:,}")
+    print(f"  • Categories Saved    : {len(IMPORTED_FOOD_CATEGORY_CODES)}")
+    print(f"  • Time Elapsed        : {duration}")
+    print(f"  • Output Directory    : {data_dir}")
+    print("=" * 50 + "\n")
 
 if __name__ == "__main__":
     main()

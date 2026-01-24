@@ -29,42 +29,53 @@ const db = admin.firestore();
 const BATCH_SIZE = 400; // Firestore batch limit is 500
 
 async function migrate() {
-    const dataDir = path.join(__dirname, '../data');
-    const rawImportedDir = path.join(dataDir, 'raw_imported');
-
     let allSpirits = [];
+    const args = process.argv.slice(2);
+    const fileArgIndex = args.indexOf('--file');
 
-    // Read from data/*.json files (domestic spirits)
-    if (fs.existsSync(dataDir)) {
-        const files = fs.readdirSync(dataDir);
-        for (const file of files) {
-            if (file.startsWith('spirits_') && file.endsWith('.json')) {
-                const filePath = path.join(dataDir, file);
-                console.log(`Reading ${file}...`);
-                const content = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-                if (Array.isArray(content)) {
-                    allSpirits.push(...content);
+    if (fileArgIndex !== -1 && args[fileArgIndex + 1]) {
+        // Mode 1: Specific File
+        const filePath = args[fileArgIndex + 1];
+        console.log(`📂 Processing specific file: ${filePath}`);
+        if (!fs.existsSync(filePath)) {
+            console.error(`❌ File not found: ${filePath}`);
+            process.exit(1);
+        }
+        const content = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+        if (Array.isArray(content)) allSpirits.push(...content);
+    } else {
+        // Mode 2: Scan Directory (Default)
+        console.log("📂 Scanning 'data/' directory (Default Mode)...");
+
+        // Read from data/*.json files (domestic spirits)
+        if (fs.existsSync(dataDir)) {
+            const files = fs.readdirSync(dataDir);
+            for (const file of files) {
+                if (file.startsWith('spirits_') && file.endsWith('.json')) {
+                    const filePath = path.join(dataDir, file);
+                    console.log(`Reading ${file}...`);
+                    const content = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+                    if (Array.isArray(content)) allSpirits.push(...content);
                 }
             }
         }
-    }
 
-    // Read from data/raw_imported/*.json files (imported spirits)
-    if (fs.existsSync(rawImportedDir)) {
-        const files = fs.readdirSync(rawImportedDir);
-        for (const file of files) {
-            if (file.endsWith('.json')) {
-                const filePath = path.join(rawImportedDir, file);
-                console.log(`Reading ${file} (Size: ${(fs.statSync(filePath).size / 1024 / 1024).toFixed(2)} MB)...`);
-
-                try {
-                    const content = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-                    if (Array.isArray(content)) {
-                        allSpirits.push(...content);
-                        console.log(`  -> Loaded ${content.length} records.`);
+        // Read from data/raw_imported/*.json files (imported spirits)
+        if (fs.existsSync(rawImportedDir)) {
+            const files = fs.readdirSync(rawImportedDir);
+            for (const file of files) {
+                if (file.endsWith('.json')) {
+                    const filePath = path.join(rawImportedDir, file);
+                    console.log(`Reading ${file} (Size: ${(fs.statSync(filePath).size / 1024 / 1024).toFixed(2)} MB)...`);
+                    try {
+                        const content = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+                        if (Array.isArray(content)) {
+                            allSpirits.push(...content);
+                            console.log(`  -> Loaded ${content.length} records.`);
+                        }
+                    } catch (e) {
+                        console.error(`  -> Failed to parse ${file}: ${e.message}`);
                     }
-                } catch (e) {
-                    console.error(`  -> Failed to parse ${file}: ${e.message}`);
                 }
             }
         }
@@ -163,6 +174,16 @@ async function migrate() {
     }
 
     console.log('Migration Complete! Total items uploaded this run:', totalCommitted);
+
+    // Final Summary
+    console.log("\n" + "=".repeat(50));
+    console.log(" 📊 [SUMMARY] Firestore Migration");
+    console.log("-".repeat(50));
+    console.log(`  • Total Found        : ${allSpirits.length}`);
+    console.log(`  • Target (Unique)    : ${spirits.length + processedIds.size}`);
+    console.log(`  • Skipped (Done)     : ${processedIds.size}`);
+    console.log(`  • Uploaded Now       : ${totalCommitted}`);
+    console.log("=".repeat(50) + "\n");
 }
 
 migrate().catch(console.error);
