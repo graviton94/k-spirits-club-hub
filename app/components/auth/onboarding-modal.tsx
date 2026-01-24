@@ -24,12 +24,19 @@ export default function OnboardingModal() {
             return;
         }
 
-        const year = parseInt(birthYear);
-        const month = parseInt(birthMonth);
-        const day = parseInt(birthDay);
+        const year = parseInt(birthYear, 10);
+        const month = parseInt(birthMonth, 10);
+        const day = parseInt(birthDay, 10);
+
+        // Check for NaN from parseInt
+        if (isNaN(year) || isNaN(month) || isNaN(day)) {
+            alert('올바른 숫자를 입력해주세요.');
+            return;
+        }
 
         // Basic validation
-        if (year < 1900 || year > new Date().getFullYear()) {
+        const currentYear = new Date().getFullYear();
+        if (year < 1900 || year > currentYear) {
             alert('올바른 연도를 입력해주세요.');
             return;
         }
@@ -37,14 +44,23 @@ export default function OnboardingModal() {
             alert('올바른 월을 입력해주세요. (1-12)');
             return;
         }
-        if (day < 1 || day > 31) {
-            alert('올바른 일을 입력해주세요. (1-31)');
+
+        // Validate day based on month and year (handles leap years and varying month lengths)
+        const daysInMonth = new Date(year, month, 0).getDate();
+        if (day < 1 || day > daysInMonth) {
+            alert(`${month}월은 ${daysInMonth}일까지 있습니다.`);
             return;
         }
 
         // Calculate age with strict birth date comparison
         const today = new Date();
         const birthDate = new Date(year, month - 1, day);
+        
+        // Validate that the birth date is not in the future
+        if (birthDate > today) {
+            alert('미래의 날짜는 입력할 수 없습니다.');
+            return;
+        }
         
         let age = today.getFullYear() - birthDate.getFullYear();
         const monthDiff = today.getMonth() - birthDate.getMonth();
@@ -59,7 +75,10 @@ export default function OnboardingModal() {
 
         if (!isAdult) {
             alert('19세 미만은 접속할 수 없습니다.');
-            window.location.href = 'https://google.com';
+            // Use setTimeout to ensure alert is dismissed before redirect
+            setTimeout(() => {
+                window.location.href = 'https://google.com';
+            }, 100);
         } else {
             localStorage.setItem('kspirits_age_verified', 'true');
             setIsOpen(false);
