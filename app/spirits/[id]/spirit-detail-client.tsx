@@ -94,8 +94,8 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                 />
             </div>
 
-            {/* Sticky Bottom CTA Buttons */}
-            <div className="fixed bottom-0 left-0 right-0 bg-neutral-900/95 backdrop-blur-lg border-t border-white/10 p-4 z-50">
+            {/* Sticky Bottom CTA Buttons - Above BottomNav */}
+            <div className="fixed bottom-28 left-0 right-0 bg-neutral-900/95 backdrop-blur-lg border-t border-white/10 p-4 z-50">
                 <div className="container mx-auto max-w-4xl flex gap-3">
                     <button className="flex-1 py-3 px-4 bg-amber-500 hover:bg-amber-600 text-black font-bold rounded-lg transition-colors">
                         내 술장에 담기
