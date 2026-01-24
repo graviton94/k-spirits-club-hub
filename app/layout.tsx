@@ -69,10 +69,12 @@ export default function RootLayout({
         </footer>
 
         {/* Sticky Footer Ad */}
-        <StickyFooterAd 
-          client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || "ca-pub-0000000000000000"}
-          slot={process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT || "0000000000"}
-        />
+        {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT && (
+          <StickyFooterAd 
+            client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT}
+            slot={process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT}
+          />
+        )}
 
         <BottomNav />
       </body>

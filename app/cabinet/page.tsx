@@ -359,17 +359,19 @@ export default function CabinetPage() {
       )}
 
       {/* Bottom Ad - After Cabinet Content */}
-      <div className="mt-12 mb-6">
-        <div className="text-xs text-gray-500 text-center mb-2">Advertisement</div>
-        <GoogleAd
-          client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || "ca-pub-0000000000000000"}
-          slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || "1111111111"}
-          format="auto"
-          responsive={true}
-          style={{ display: 'block', minHeight: '100px' }}
-          className="rounded-lg overflow-hidden"
-        />
-      </div>
+      {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT && (
+        <div className="mt-12 mb-6">
+          <div className="text-xs text-gray-500 text-center mb-2">Advertisement</div>
+          <GoogleAd
+            client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT}
+            slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT}
+            format="auto"
+            responsive={true}
+            style={{ display: 'block', minHeight: '100px' }}
+            className="rounded-lg overflow-hidden"
+          />
+        </div>
+      )}
     </div>
   );
 }

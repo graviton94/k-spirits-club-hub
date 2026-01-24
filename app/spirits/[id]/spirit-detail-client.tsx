@@ -82,17 +82,19 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
             <ReviewSection spiritId={spirit.id} reviews={reviews} />
 
             {/* Bottom Ad - After Tasting Notes */}
-            <div className="mt-8 mb-6">
-                <div className="text-xs text-gray-500 text-center mb-2">Advertisement</div>
-                <GoogleAd
-                    client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || "ca-pub-0000000000000000"}
-                    slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || "1111111111"}
-                    format="auto"
-                    responsive={true}
-                    style={{ display: 'block', minHeight: '100px' }}
-                    className="rounded-lg overflow-hidden"
-                />
-            </div>
+            {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT && (
+                <div className="mt-8 mb-6">
+                    <div className="text-xs text-gray-500 text-center mb-2">Advertisement</div>
+                    <GoogleAd
+                        client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT}
+                        slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT}
+                        format="auto"
+                        responsive={true}
+                        style={{ display: 'block', minHeight: '100px' }}
+                        className="rounded-lg overflow-hidden"
+                    />
+                </div>
+            )}
 
             {/* Sticky Bottom CTA Buttons - Above BottomNav */}
             <div className="fixed bottom-28 left-0 right-0 bg-neutral-900/95 backdrop-blur-lg border-t border-white/10 p-4 z-50">

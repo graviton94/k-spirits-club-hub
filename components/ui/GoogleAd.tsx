@@ -47,7 +47,7 @@ export default function GoogleAd({
   style = { display: 'block' },
   className = '',
 }: GoogleAdProps) {
-  const adRef = useRef<boolean>(false);
+  const adRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     // Load AdSense script if not already loaded
@@ -59,19 +59,23 @@ export default function GoogleAd({
       document.head.appendChild(script);
     }
 
-    // Push ad to AdSense queue
-    try {
-      if (!adRef.current) {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-        adRef.current = true;
+    // Push ad to AdSense queue after a short delay to ensure element is mounted
+    const timer = setTimeout(() => {
+      try {
+        if (adRef.current && !adRef.current.hasAttribute('data-adsbygoogle-status')) {
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+        }
+      } catch (error) {
+        console.error('AdSense error:', error);
       }
-    } catch (error) {
-      console.error('AdSense error:', error);
-    }
-  }, [client]);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [client, slot]);
 
   return (
     <ins
+      ref={adRef}
       className={`adsbygoogle ${className}`}
       style={style}
       data-ad-client={client}
