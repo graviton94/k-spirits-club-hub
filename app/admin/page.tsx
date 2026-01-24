@@ -61,16 +61,21 @@ export default function AdminDashboard() {
   });
 
   // Metadata Helpers
-  const whiskyCats = metadata.categories.whisky;
+  const whiskyCats = metadata.categories['위스키'];
   const otherCats = metadata.categories;
 
   const getSubcategories = (cat: string) => {
     if (cat === 'ALL') return [];
     const catLower = cat.toLowerCase();
     if (catLower.includes('whisky') || catLower.includes('위스키')) {
-      return [...whiskyCats.scotch, ...whiskyCats.american, ...whiskyCats.other_regions];
+      return [...whiskyCats.scotch, ...whiskyCats.american, ...whiskyCats.world_whisky];
     } else if (otherCats[catLower as keyof typeof otherCats]) {
-      return otherCats[catLower as keyof typeof otherCats] as string[];
+      const catData = otherCats[catLower as keyof typeof otherCats];
+      // If it's a nested object (has main categories), flatten all subcategories
+      if (typeof catData === 'object' && !Array.isArray(catData)) {
+        return Object.values(catData).flat();
+      }
+      return [];
     }
     return [];
   };

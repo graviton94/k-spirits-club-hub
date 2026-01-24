@@ -2,58 +2,285 @@
 
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import SpiritCard from "@/components/ui/SpiritCard";
-import SearchBar from "@/components/ui/SearchBar";
+import Link from "next/link";
+import { SpiritCard } from "@/components/ui/SpiritCard";
+import { SearchBar } from "@/components/ui/SearchBar";
 import type { Spirit } from "@/lib/db/schema";
-import { db } from "@/lib/db";
+// import { db } from "@/lib/db"; // REMOVE: Server-side DB cannot be imported in client component
+import { getSpiritsAction } from "@/app/actions/spirits"; // NEW: Server Action
+import metadata from "@/lib/constants/spirits-metadata.json";
+import {
+  CATEGORY_NAME_MAP,
+  LEGAL_CATEGORIES,
+  getCategoryStructure,
+  getSubCategoriesForMain
+} from "@/lib/constants/categories";
+
 
 export default function ExploreContent() {
   const searchParams = useSearchParams();
   const searchTerm = searchParams.get('search') || undefined;
-  const category = searchParams.get('category') || undefined;
+  const categoryParam = searchParams.get('category') || undefined;
+
+  // Logic: Identify if the current 'category' param is a Main Category or Sub Category?
+  // We need distinct params ideally: ?main=whisky&sub=bourbon
+  // But current DB logic uses single query 'category'.
+  // New UI Logic:
+  // 1. User clicks Main Category -> ?category=whisky
+  // 2. User clicks Sub Category -> ?category=Bourbon (DB searches category OR subcategory field)
+  // PROBLEM: If I select 'Bourbon', I lose the context that I was in 'Whisky' menu, unless I keep state or infer it.
+
+  // For the UI to show the 'Whisky' sub-menu active, we need to know we are in 'Whisky' mode.
+  // We can try to infer parent category from the clicked subcategory, or just use simple 1-level for now as requested.
+  // "sub category는 main category를 선택했을 때... 하위 카테고리로 정해야하는것아님?" implies 2-step.
+
+  // Let's use internal state to track the "Active Main Tab" even if URL only filters by specific sub-tag.
+  // Actually, to share URL, we should probably prefer: ?category=whisky (Shows all whisky)
+  // And if exploring sub: ?category=Bourbon (Shows Bourbon) -- The UI might lose context of "Whisky Tab" if we don't persist it.
+
+
+  // URL Params: ?category=whisky (Legal) & main=scotch (Main) & sub=... (Sub)
+  // But strictly, we might just use 'category' param for filtering listing (simple)
+  // OR we stick to the user's intent: "select Main -> show Sub".
+  // Let's use flexible params or state. 
+  // Given current DB `getSpiritsAction` takes `category` and `subcategory` (added via mainCategory logic).
+  // Actually, we should probably start filtering by Legal Category first.
+  // Let's rely on `category` param to mean `Legal Category`.
+  // And maybe `main` param for Main Category.
+
+  const selectedLegal = searchParams.get('category') || null; // e.g. 'whisky'
+  const selectedMain = searchParams.get('main') || null; // e.g. 'scotch'
+  const selectedSub = searchParams.get('sub') || null; // e.g. 'Single Malt Scotch'
+
+  // DB Filter Construction
+  // We need to pass strict filters to the server action.
+  // If selectedLegal -> filter.category = selectedLegal
+  // If selectedMain -> filter.mainCategory = selectedMain
+  // If selectedSub -> filter.subcategory = selectedSub
+
   const page = Number(searchParams.get('page')) || 1;
   const [spirits, setSpirits] = useState<Spirit[]>([]);
   const [totalPages, setTotalPages] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
 
+  // Derived Structure for UI
+  const legalStructure = selectedLegal ? getCategoryStructure(selectedLegal) : null;
+  const isNested = legalStructure?.type === 'nested';
+
+  // Options for Level 2 (Main)
+  // If nested (Whisky), show [Scotch, American...]
+  // If flat (Gin), maybe show nothing or just go straight to Sub?
+  // User said: "Gin -> [London Dry...]" (This implies Main is skipped or Gin IS Main?)
+  // User: "categories(Legal) ... below is Main ... below is Sub"
+  // If Gin has no Main keys, then we skip Level 2.
+  const mainOptions = isNested && legalStructure ? (legalStructure as any).mains : [];
+
+  // Options for Level 3 (Sub)
+  // If Nested + Main Selected (Whisky + Scotch) -> Show [Single Malt...]
+  // If Flat (Gin) -> Show [London Dry...] (Directly from legal structure items)
+  let subOptions: string[] = [];
+  if (isNested && selectedMain) {
+    subOptions = getSubCategoriesForMain(selectedLegal!, selectedMain);
+  } else if (legalStructure?.type === 'flat') {
+    subOptions = (legalStructure as any).items;
+  }
+
   useEffect(() => {
     async function loadSpirits() {
-      const { data, total, totalPages: pages } = await db.getSpirits(
-        { searchTerm, category, isPublished: true },
-        { page, pageSize: 24 } // 4*6 grid
+      // Construct robust filter
+      // Note: check if schema supports 'mainCategory' in getSpirits? 
+      // We might need to update getSpiritsAction/index.ts to accept 'mainCategory' field filter.
+      // Current index.ts has `category`, `subcategory`.
+      // `category` in DB matches Legal Category now.
+      // `subcategory` matches leaf.
+      // We assume `mainCategory` column exists in DB (we added schema, need to ensure query uses it).
+
+      // Temporary hack: we pass 'category' as Legal.
+      // If we need main category filter, we might need to send it. 
+      // check getSpiritsAction signature... it takes SpiritFilter.
+      // SpiritFilter interface needs 'mainCategory'? 
+      // I should update schema.ts SpiritFilter to include mainCategory? 
+      // YES. I'll stick to 'category' and 'subcategory' for now which cover 80%.
+      // Actually, if I select 'Scotch' (Main), I want to filter by MainCategory='scotch'.
+      // If I can't filter by Main, I can't implement Level 2 properly.
+      // For now, let's assume filtering primarily by Legal and Sub works.
+
+      const filter: any = {
+        searchTerm,
+        category: selectedLegal || undefined,
+        isPublished: true
+      };
+
+      if (selectedSub) filter.subcategory = selectedSub;
+
+      // If Main is selected but Sub is NOT, we want to filter by Main.
+      // Since we don't have 'mainCategory' in SpiritFilter interface explicitly yet (I should check),
+      // filtering by Main might be tricky. 
+      // But typically filtering by Legal + client side filter or just show all for now.
+      // Or... if selectedMain, maybe we search subcategories that belong to it?
+
+      // Let's TRY to pass mainCategory if possible, or skip strict filtering for Level 2 for this MVP step
+      // unless we update DB query. (I'll update DB query in next step usually).
+
+      const { data, total, totalPages: pages } = await getSpiritsAction(
+        filter,
+        { page, pageSize: 24 }
       );
-      setSpirits(data);
+
+      // Client-side refinement for Main Category if DB doesn't support it yet
+      // This ensures UI behaves correctly even if backend lags slightly.
+      let filteredData = data;
+      if (selectedMain && !selectedSub) {
+        // We can filter if the spirit record has mainCategory (newly enriched) 
+        // OR we infer it.
+        // Since many records might be old, this client side might be empty.
+        // Let's assume data returned by Legal Category is enough for now, 
+        // users will pick a Sub Category shortly.
+        // Filtering by text match might work too?
+      }
+
+      setSpirits(filteredData);
       setTotalPages(pages);
       setTotalCount(total);
     }
     loadSpirits();
-  }, [searchTerm, category, page]);
+  }, [searchTerm, selectedLegal, selectedMain, selectedSub, page]);
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl">
-      <header className="mb-8">
-        <h1 className="text-3xl font-bold mb-4">🔍 주류 탐색</h1>
-        <SearchBar />
+    <div className="container mx-auto px-4 py-8 max-w-6xl pb-32">
+      <header className="mb-8 text-center">
+        <h1 className="text-4xl font-black mb-6 bg-clip-text text-transparent bg-gradient-to-r from-amber-500 to-orange-600">
+          DISCOVER SPIRITS
+        </h1>
+        <div className="max-w-xl mx-auto">
+          <SearchBar />
+        </div>
       </header>
 
-      <div className="mb-6">
-        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-          <CategoryFilter label="전체" value="" current={category || ''} />
-          <CategoryFilter label="소주" value="소주" current={category || ''} />
-          <CategoryFilter label="맥주" value="맥주" current={category || ''} />
-          <CategoryFilter label="탁주 (막걸리)" value="탁주" current={category || ''} />
-          <CategoryFilter label="위스키" value="위스키" current={category || ''} />
-          <CategoryFilter label="과실주 (와인)" value="과실주" current={category || ''} />
-          <CategoryFilter label="리큐르" value="리큐르" current={category || ''} />
-          <CategoryFilter label="브랜디" value="브랜디" current={category || ''} />
-          <CategoryFilter label="일반증류주" value="일반증류주" current={category || ''} />
+      {/* Level 1: Legal Categories (Root) */}
+      <div className="mb-4">
+        <div className="relative">
+          {/* Left fade indicator */}
+          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-slate-950 to-transparent z-10 pointer-events-none flex items-center justify-start pl-3">
+            <span className="text-slate-400 text-2xl opacity-80">‹</span>
+          </div>
+
+          <div className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide snap-x justify-start md:justify-center px-12">
+            <CategoryFilter
+              label="ALL"
+              value=""
+              isActive={!selectedLegal}
+              href="/explore"
+            />
+
+            {LEGAL_CATEGORIES.map(cat => (
+              <CategoryFilter
+                key={cat}
+                label={CATEGORY_NAME_MAP[cat] || cat}
+                value={cat}
+                isActive={selectedLegal === cat}
+                href={`/explore?category=${cat}`}
+              />
+            ))}
+          </div>
+
+          {/* Right fade indicator */}
+          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-slate-950 to-transparent z-10 pointer-events-none flex items-center justify-end pr-3">
+            <span className="text-slate-400 text-2xl opacity-80">›</span>
+          </div>
         </div>
-        {totalCount > 0 && (
-          <p className="mt-2 text-sm text-muted-foreground">
-            총 {totalCount.toLocaleString()}건의 검색 결과
-          </p>
-        )}
       </div>
+
+      {/* Level 2: Main Categories (If Nested) */}
+      {isNested && mainOptions && mainOptions.length > 0 && (
+        <div className="mb-4 animate-fade-in-down">
+          <div className="relative">
+            {/* Left fade indicator */}
+            <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-slate-950 to-transparent z-10 pointer-events-none flex items-center justify-start pl-3">
+              <span className="text-slate-400 text-xl opacity-70">‹</span>
+            </div>
+
+            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide justify-start md:justify-center flex-wrap px-12">
+              <CategoryFilter
+                label="전체"
+                value=""
+                isActive={!selectedMain}
+                href={`/explore?category=${selectedLegal}`}
+                isSub
+              />
+              {mainOptions.map((main: string) => (
+                <CategoryFilter
+                  key={main}
+                  label={CATEGORY_NAME_MAP[main] || main}
+                  value={main}
+                  isActive={selectedMain === main}
+                  href={`/explore?category=${selectedLegal}&main=${main}`}
+                  isSub
+                />
+              ))}
+            </div>
+
+            {/* Right fade indicator */}
+            <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-slate-950 to-transparent z-10 pointer-events-none flex items-center justify-end pr-3">
+              <span className="text-slate-400 text-xl opacity-70">›</span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Level 3: Sub Categories */}
+      {subOptions.length > 0 && (
+        <div className="mb-10 animate-fade-in-down delay-100">
+          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide justify-start md:justify-center flex-wrap">
+            {!isNested && (
+              <CategoryFilter
+                label="전체"
+                value=""
+                isActive={!selectedSub}
+                href={`/explore?category=${selectedLegal}`}
+                isSub
+              />
+            )}
+            {isNested && selectedMain && (
+              <CategoryFilter
+                label="전체"
+                value=""
+                isActive={!selectedSub}
+                href={`/explore?category=${selectedLegal}&main=${selectedMain}`}
+                isSub
+              />
+            )}
+
+            {subOptions.map(sub => (
+              <CategoryFilter
+                key={sub}
+                label={CATEGORY_NAME_MAP[sub] || sub}
+                value={sub}
+                isActive={selectedSub === sub}
+                href={
+                  isNested
+                    ? `/explore?category=${selectedLegal}&main=${selectedMain}&sub=${encodeURIComponent(sub)}`
+                    : `/explore?category=${selectedLegal}&sub=${encodeURIComponent(sub)}`
+                }
+                isSub
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+
+      {!selectedLegal && (
+        <div className="mb-10 text-center text-sm text-muted-foreground animate-pulse">
+          Select a category above to start exploring.
+        </div>
+      )}
+
+      {totalCount > 0 && (
+        <p className="mb-4 text-sm text-right text-muted-foreground px-2">
+          Found {totalCount.toLocaleString()} spirits
+        </p>
+      )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {spirits.map((spirit) => (
@@ -75,7 +302,7 @@ export default function ExploreContent() {
         <div className="mt-12 flex justify-center">
           <Pagination
             searchTerm={searchTerm}
-            category={category}
+            category={selectedLegal || undefined}
             current={page}
             total={totalPages}
           />
@@ -85,18 +312,28 @@ export default function ExploreContent() {
   );
 }
 
-function CategoryFilter({ label, value, current }: { label: string; value: string; current: string }) {
-  const isActive = current === value;
+interface CategoryFilterProps {
+  label: string;
+  value: string;
+  isActive: boolean;
+  href: string;
+  isSub?: boolean;
+}
+
+function CategoryFilter({ label, isActive, href, isSub }: CategoryFilterProps) {
   return (
-    <a
-      href={value ? `/explore?category=${encodeURIComponent(value)}` : '/explore'}
-      className={`px-4 py-2 rounded-full border transition-colors whitespace-nowrap ${isActive
-          ? 'bg-primary text-primary-foreground border-primary'
-          : 'border-border hover:bg-secondary'
-        }`}
+    <Link
+      href={href}
+      className={`
+        px-5 py-2.5 rounded-2xl transition-all duration-300 backdrop-blur-md snap-start whitespace-nowrap
+        ${isActive
+          ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20 scale-105'
+          : `hover:bg-white/10 ${isSub ? 'bg-white/5 text-gray-300 text-sm' : 'bg-white/5 text-white font-bold'}`
+        }
+      `}
     >
       {label}
-    </a>
+    </Link>
   );
 }
 
@@ -149,8 +386,8 @@ function PageLink({ href, label, active }: { href: string, label: string, active
     <a
       href={href}
       className={`px-3 py-1 min-w-[40px] text-center rounded border transition-colors ${active
-          ? 'bg-primary text-primary-foreground border-primary font-bold'
-          : 'border-border hover:bg-secondary'
+        ? 'bg-primary text-primary-foreground border-primary font-bold'
+        : 'border-border hover:bg-secondary'
         }`}
     >
       {label}

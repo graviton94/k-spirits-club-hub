@@ -9,7 +9,8 @@ export interface Spirit {
   bottler: string | null;
   abv: number;
   volume: number | null;
-  category: string; // whisky, vodka, gin, rum, etc.
+  category: string; // whisky, vodka, gin, rum, etc. (Legal/Wide classification)
+  mainCategory: string | null; // Structured grouping (e.g. whisky for bourbon) from metadata
   subcategory: string | null; // single malt, blended, etc.
   country: string;
   region: string | null;

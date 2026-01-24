@@ -1,36 +1,48 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { Search } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-export default function SearchBar() {
-  const [search, setSearch] = useState('');
-  const router = useRouter();
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (search.trim()) {
-      router.push(`/explore?search=${encodeURIComponent(search.trim())}`);
-    }
-  };
+export function SearchBar() {
+  const [isFocused, setIsFocused] = useState(false);
 
   return (
-    <form onSubmit={handleSubmit} className="w-full">
-      <div className="relative">
+    <div className="relative w-full max-w-md mx-auto z-30">
+      <motion.div
+        className={`
+                relative flex items-center gap-3 px-5 py-4 
+                bg-white/10 border border-white/20 backdrop-blur-xl rounded-2xl shadow-lg
+                transition-all duration-300
+                ${isFocused ? 'ring-2 ring-amber-500/50 bg-white/20' : 'hover:bg-white/15'}
+            `}
+        layout
+      >
+        <Search className="w-5 h-5 text-amber-500 shrink-0" />
         <input
           type="text"
-          placeholder="술 이름, 증류소 검색..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full px-4 py-3 pr-12 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+          placeholder="Search spirits, distilleries..."
+          className="w-full bg-transparent border-none outline-none text-white placeholder:text-gray-300 text-lg"
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
         />
-        <button
-          type="submit"
-          className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-primary hover:text-primary/80"
-        >
-          🔍
-        </button>
-      </div>
-    </form>
+      </motion.div>
+
+      {/* Optional: Dropdown results container (Hidden for now) */}
+      <AnimatePresence>
+        {isFocused && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            className="absolute top-full left-0 right-0 mt-3 p-2 bg-neutral-900/90 backdrop-blur-md border border-white/10 rounded-2xl shadow-2xl overflow-hidden"
+          >
+            <div className="p-3 text-center text-sm text-muted-foreground">
+              Type to search across 1M+ spirits
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }

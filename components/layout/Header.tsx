@@ -1,0 +1,57 @@
+'use client';
+
+import Link from "next/link";
+import { useAuth } from "@/app/context/auth-context";
+import { User, LogIn } from "lucide-react";
+
+export function Header() {
+    const { user, profile } = useAuth();
+
+    // Display Name logic: Nickname -> DisplayName -> "Guest"
+    const displayName = user
+        ? (profile?.nickname || user.displayName?.split(' ')[0] || "Member")
+        : "Guest";
+
+    const profileImage = user && (profile?.profileImage || user.photoURL);
+
+    return (
+        <header className="sticky top-0 z-40 w-full border-b border-white/10 bg-background/60 backdrop-blur-md supports-[backdrop-filter]:bg-background/30">
+            <div className="container flex h-16 items-center justify-between px-4 max-w-4xl mx-auto">
+                <Link href="/" className="flex items-center gap-2">
+                    <span className="text-2xl">🥃</span>
+                    <span className="text-xl font-black bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">
+                        K-SPIRITS
+                    </span>
+                </Link>
+
+                {user ? (
+                    <Link href="/me" className="flex items-center gap-3 pl-4 py-1 rounded-full hover:bg-white/5 transition-colors">
+                        <div className="text-right hidden sm:block">
+                            <p className="text-xs text-muted-foreground">Welcome back,</p>
+                            <p className="text-sm font-bold leading-none text-amber-500">{displayName}님</p>
+                        </div>
+                        <div className="relative w-9 h-9 rounded-full overflow-hidden border-2 border-amber-500/50 shadow-sm flex items-center justify-center bg-secondary">
+                            {profileImage ? (
+                                <img
+                                    src={profileImage}
+                                    alt={displayName}
+                                    className="w-full h-full object-cover"
+                                />
+                            ) : (
+                                <User className="w-5 h-5 text-amber-500" />
+                            )}
+                        </div>
+                    </Link>
+                ) : (
+                    <Link
+                        href="/login"
+                        className="flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
+                    >
+                        <LogIn className="w-4 h-4" />
+                        <span>Login</span>
+                    </Link>
+                )}
+            </div>
+        </header>
+    );
+}

@@ -7,19 +7,23 @@
 - **Mobile-First**: 모든 UI는 모바일 브라우저(320px~480px)를 기준으로 하며, 하단 탭 바(Bottom Navigation)와 상단 검색바 구조를 기본으로 합니다.
 - **Hub-DB Strategy**: 실시간 크롤링 대신 1M+ 데이터(식품안전나라, 수입식품정보마루 등)를 허브 DB에 적재한 뒤, 관리자가 승인한 데이터만 서비스합니다.
 
-## 2. 데이터 필터링 및 수집 (Data Pipeline)
-데이터 수집 스크립트 작성 시 다음 필터링 규칙을 적용하십시오.
+## 2. 데이터 파이프라인 (Data Pipeline)
+모든 데이터 수집 및 처리는 `scripts/` 내의 Python 스크립트를 통해 이루어지며, 다음 원칙을 따릅니다.
 
-### A. 식품안전나라 (XML/API)
-- **필터링 대상**: `INDUTY_CD_NM`(업종)이 '주류제조업'이거나, `PRDLST_DCNM`(품목유형)이 주류(탁주, 위스키, 소주 등)인 데이터만 추출합니다.
-- **폐기 대상**: '소스', '엑기스' 등 주류가 아닌 품목은 1차 필터링 단계에서 즉시 폐기합니다.
+### A. 배치 처리 & 오케스트레이션 (Batch Orchestration)
+- **Master Script**: `scripts/run_pipeline.py`가 모든 하위 스크립트를 제어합니다.
+- **Batch Size**: API 안정성을 위해 데이터를 10~20개 단위(Batch)로 끊어서 처리합니다.
+- **State Management**: 중간에 끊겨도 `pipeline_state.json`을 통해 중단된 지점부터 자동 재개(Resume)되어야 합니다.
+- **Offline Capability**: API 할당량 문제 발생 시 `--skip-upload` 옵션으로 로컬(`data/processed_batches/`)에 결과물을 저장할 수 있어야 합니다.
 
-### B. 수입식품정보마루 (HTML)
-- **URL**: https://impfood.mfds.go.kr/CFCCC01F01
-- **추출 필드**: 한글 제품명, 원산지, 해외 제조소명, 수입업소 정보를 파싱합니다.
+### B. AI 데이터 보완 (Enrichment)
+- **Gemini AI**: `enrich_with_gemini.py`를 사용하여 누락된 데이터(도수, 영문명)를 보완하고 해시태그를 생성합니다.
+- **Prompt Engineering**: 제품명 기반으로 원재료를 유추하되, 홍보성 멘트는 배제하고 객관적인 태그를 생성하도록 지시합니다.
+- **Robust Config**: `.env` 파일의 포맷팅 오류(JS 코드 혼입 등)에도 스크립트가 죽지 않도록 커스텀 파싱 로직을 포함합니다.
 
-### C. 허브 DB 스키마 (Master Table)
-- 모든 주류 데이터는 `Name(Ko/En)`, `Category`, `ABV`, `Distillery`, `Image_URL`, `Tasting_Notes` 필드를 포함해야 합니다.
+### C. 허브 DB 적재
+- `migrate_to_firestore.js`를 통해 검증된 데이터(`batch_ready.json`)만 Firestore에 적재합니다.
+- 적재된 데이터는 기본적으로 `status: 'ENRICHED'` 또는 `'READY_FOR_CONFIRM'` 상태를 가집니다.
 
 ## 3. UI/UX 기술 표준
 - [cite_start]**디자인 테마**: 고급스러운 다크 모드(Dark Mode)를 적용합니다. [cite: 51, 65]

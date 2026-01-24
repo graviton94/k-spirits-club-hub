@@ -3,6 +3,7 @@ import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from './context/auth-context';
 import OnboardingModal from './components/auth/onboarding-modal';
+import { Header } from '@/components/layout/Header';
 import { BottomNav } from "@/components/layout/BottomNav";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -40,12 +41,32 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
       </head>
       <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`}>
-        <main className="min-h-screen">
+        <main className="min-h-screen pb-20">
           <AuthProvider>
+            <Header />
             <OnboardingModal />
             {children}
           </AuthProvider>
         </main>
+
+        {/* Footer */}
+        <footer className="bg-slate-900 border-t border-slate-800 py-6 pb-24">
+          <div className="container max-w-4xl mx-auto px-4 text-center">
+            <p className="text-slate-400 text-sm mb-2">
+              © 2026 K-Spirits Club. All rights reserved.
+            </p>
+            <p className="text-slate-500 text-xs">
+              Developed by{" "}
+              <a
+                href="mailto:ruahn49@gmail.com"
+                className="text-amber-500 hover:text-amber-400 transition-colors"
+              >
+                ruahn49@gmail.com
+              </a>
+            </p>
+          </div>
+        </footer>
+
         <BottomNav />
       </body>
     </html>

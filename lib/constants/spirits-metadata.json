@@ -1,9 +1,30 @@
 {
     "project": "K-Spirits Club Hub Master DB",
-    "version": "1.0.0",
-    "last_updated": "2026-01-24",
+    "version": "2.0.0",
+    "last_updated": "2026-01-25",
     "categories": {
-        "whisky": {
+        "소주": {
+            "korean_soju": [
+                "희석식 소주",
+                "증류식 소주"
+            ],
+            "japanese_shochu": [
+                "Shochu (Honkaku)",
+                "Ko-rui Shochu",
+                "Otsu-rui Shochu"
+            ],
+            "japanese_shochu_raw": [
+                "Imo-Shochu",
+                "Mugi-Shochu",
+                "Kome-Shochu",
+                "Soba-Shochu"
+            ],
+            "awamori": [
+                "Awamori",
+                "Kusu (Aged Awamori)"
+            ]
+        },
+        "위스키": {
             "scotch": [
                 "Single Malt Scotch",
                 "Blended Scotch",
@@ -16,48 +37,206 @@
                 "Rye Whiskey",
                 "Corn Whiskey"
             ],
-            "other_regions": [
+            "world_whisky": [
                 "Irish Whiskey",
                 "Japanese Whisky",
-                "Canadian Whisky"
+                "Canadian Whisky",
+                "Taiwanese Whisky",
+                "Korean Whisky",
+                "Indian Whisky",
+                "Australian Whisky",
+                "European Continental Whisky"
             ]
         },
-        "gin": [
-            "London Dry Gin",
-            "Plymouth Gin",
-            "Old Tom Gin",
-            "Navy Strength Gin",
-            "Genever",
-            "New Western / Contemporary"
-        ],
-        "rum": [
-            "Spanish Style (Ron)",
-            "English Style (Rum)",
-            "French Style (Rhum Agricole)",
-            "Overproof Rum"
-        ],
-        "tequila": [
-            "Blanco",
-            "Reposado",
-            "Añejo",
-            "Extra Añejo",
-            "Cristalino",
-            "Mezcal"
-        ],
-        "brandy": [
-            "Cognac",
-            "Armagnac",
-            "Pisco",
-            "Grappa",
-            "Calvados"
-        ],
-        "korean_spirits": [
-            "탁주 (막걸리)",
-            "약주 / 청주",
-            "증류식 소주",
-            "과실주",
-            "일반증류주 / 리큐르"
-        ]
+        "맥주": {
+            "lager": [
+                "Pilsner",
+                "Helles",
+                "Dunkel",
+                "Bock",
+                "Marzen"
+            ],
+            "ale": [
+                "Pale Ale",
+                "IPA",
+                "NEIPA",
+                "Belgian Ale",
+                "Saison"
+            ],
+            "dark_beer": [
+                "Stout",
+                "Porter",
+                "Schwarzbier",
+                "Baltic Porter"
+            ],
+            "specialty": [
+                "Sour",
+                "Wheat Beer",
+                "Barrel Aged Beer",
+                "Flavored Beer",
+                "Hybrid Beer"
+            ]
+        },
+        "일반증류주": {
+            "gin": [
+                "London Dry Gin",
+                "Plymouth Gin",
+                "Old Tom Gin",
+                "Navy Strength Gin",
+                "Genever",
+                "New Western / Contemporary",
+                "Sloe Gin"
+            ],
+            "rum": [
+                "Spanish Style (Ron)",
+                "English Style (Rum)",
+                "French Style (Rhum Agricole)",
+                "Overproof Rum",
+                "Spiced Rum",
+                "Cachaça"
+            ],
+            "tequila_mezcal": [
+                "Blanco",
+                "Reposado",
+                "Añejo",
+                "Extra Añejo",
+                "Cristalino",
+                "Mezcal"
+            ],
+            "vodka": [
+                "Original Vodka",
+                "Flavored Vodka"
+            ],
+            "chinese_baijiu": [
+                "Strong Aroma (浓香型)",
+                "Sauce Aroma (酱香型)",
+                "Light Aroma (清香型)",
+                "Rice Aroma (米香型)",
+                "Mixed Aroma (兼香型)"
+            ],
+            "other_chinese_spirits": [
+                "Erguotou",
+                "Fenjiu",
+                "Xifengjiu"
+            ]
+        },
+        "기타 주류": {
+            "mixed_drink": [
+                "Highball",
+                "RTD",
+                "발포주"
+            ],
+            "others": [
+                "그외주류"
+            ]
+        },
+        "탁주": {
+            "makgeolli": [
+                "탁주(막걸리)",
+                "생막걸리",
+                "살균막걸리",
+                "약탁주"
+            ]
+        },
+        "약주": {
+            "yakju": [
+                "약주",
+                "전통 약주",
+                "개량 약주"
+            ]
+        },
+        "청주": {
+            "korean_cheongju": [
+                "청주"
+            ],
+            "sake_style": [
+                "Sake (Nihonshu)",
+                "Junmai",
+                "Ginjo",
+                "Daiginjo"
+            ]
+        },
+        "과실주": {
+            "grape_wine": [
+                "Wine",
+                "Sparkling Wine"
+            ],
+            "fruit_wine": [
+                "과실주",
+                "Cider",
+                "Mead"
+            ]
+        },
+        "브랜디": {
+            "grape_brandy": [
+                "Cognac",
+                "Armagnac"
+            ],
+            "fruit_brandy": [
+                "Calvados",
+                "Pisco",
+                "Grappa",
+                "Fruit Brandy"
+            ]
+        },
+        "리큐르": {
+            "fruit_liqueur": [
+                "Umeshu",
+                "Fruit Liqueur"
+            ],
+            "cream_liqueur": [
+                "Cream Liqueur",
+                "Coffee Liqueur"
+            ],
+            "herbal_liqueur": [
+                "Herbal Liqueur",
+                "Spice Liqueur",
+                "Bitters"
+            ]
+        }
+    },
+    "display_names": {
+        "소주": "소주",
+        "위스키": "위스키",
+        "맥주": "맥주",
+        "일반증류주": "일반증류주",
+        "기타 주류": "기타 주류",
+        "탁주": "탁주",
+        "약주": "약주",
+        "청주": "청주",
+        "과실주": "과실주",
+        "브랜디": "브랜디",
+        "리큐르": "리큐르",
+        "korean_soju": "한국 소주",
+        "japanese_shochu": "일본 쇼추",
+        "japanese_shochu_raw": "원료별 쇼추",
+        "awamori": "아와모리",
+        "scotch": "스카치",
+        "american": "아메리칸",
+        "world_whisky": "세계 위스키",
+        "lager": "라거",
+        "ale": "에일",
+        "dark_beer": "다크 비어",
+        "specialty": "스페셜티",
+        "gin": "진",
+        "rum": "럼",
+        "tequila_mezcal": "데킬라/메즈칼",
+        "vodka": "보드카",
+        "chinese_baijiu": "중국 백주",
+        "other_chinese_spirits": "기타 중국 증류주",
+        "mixed_drink": "하이볼 등",
+        "others": "기타",
+        "makgeolli": "막걸리",
+        "yakju": "약주",
+        "korean_cheongju": "한국 청주",
+        "sake_style": "사케",
+        "grape_wine": "포도주",
+        "fruit_wine": "과일주",
+        "grape_brandy": "포도 브랜디",
+        "fruit_brandy": "과일 브랜디",
+        "fruit_liqueur": "과일 리큐르",
+        "cream_liqueur": "크림 리큐르",
+        "herbal_liqueur": "허브 리큐르"
     },
     "tag_index": {
         "nose": {

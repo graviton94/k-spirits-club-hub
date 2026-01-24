@@ -20,7 +20,13 @@ export const db = {
     let allItems = await spiritsDb.getAll(filter.status); // Pre-filter by status if present
 
     // 2. Memory Filter
-    if (filter.category) allItems = allItems.filter(s => s.category === filter.category);
+    if (filter.category) {
+      // Smart Filter: Match either category OR subcategory
+      allItems = allItems.filter(s =>
+        s.category === filter.category ||
+        s.subcategory === filter.category
+      );
+    }
     if (filter.subcategory) allItems = allItems.filter(s => s.subcategory === filter.subcategory);
     if (filter.country) allItems = allItems.filter(s => s.country === filter.country);
     if (filter.isPublished !== undefined) allItems = allItems.filter(s => s.isPublished === filter.isPublished);
