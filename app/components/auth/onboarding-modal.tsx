@@ -1,100 +1,219 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useAuth } from '@/app/context/auth-context';
-import { generateRandomNickname } from '@/lib/utils/nickname-generator';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function OnboardingModal() {
-    const { user, profile, updateProfile } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
-    const [nickname, setNickname] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [birthYear, setBirthYear] = useState('');
+    const [birthMonth, setBirthMonth] = useState('');
+    const [birthDay, setBirthDay] = useState('');
 
     useEffect(() => {
-        // Show modal if user is logged in, profile exists, and it's first login
-        if (user && profile?.isFirstLogin) {
+        // Check if user has already verified their age
+        const ageVerified = localStorage.getItem('kspirits_age_verified');
+        if (!ageVerified) {
             setIsOpen(true);
-            if (!nickname) {
-                setNickname(profile.nickname || generateRandomNickname());
-            }
+        }
+    }, []);
+
+    const handleEnter = () => {
+        // Validate inputs
+        if (!birthYear || !birthMonth || !birthDay) {
+            alert('생년월일을 모두 입력해주세요.');
+            return;
+        }
+
+        const year = parseInt(birthYear, 10);
+        const month = parseInt(birthMonth, 10);
+        const day = parseInt(birthDay, 10);
+
+        // Check for NaN from parseInt
+        if (isNaN(year) || isNaN(month) || isNaN(day)) {
+            alert('올바른 숫자를 입력해주세요.');
+            return;
+        }
+
+        // Basic validation
+        const currentYear = new Date().getFullYear();
+        if (year < 1900 || year > currentYear) {
+            alert('올바른 연도를 입력해주세요.');
+            return;
+        }
+        if (month < 1 || month > 12) {
+            alert('올바른 월을 입력해주세요. (1-12)');
+            return;
+        }
+
+        // Validate day based on month and year (handles leap years and varying month lengths)
+        const daysInMonth = new Date(year, month, 0).getDate();
+        if (day < 1 || day > daysInMonth) {
+            alert(`${month}월은 ${daysInMonth}일까지 있습니다.`);
+            return;
+        }
+
+        // Calculate age with strict birth date comparison
+        const today = new Date();
+        const birthDate = new Date(year, month - 1, day);
+        
+        // Validate that the birth date is not in the future
+        if (birthDate > today) {
+            alert('미래의 날짜는 입력할 수 없습니다.');
+            return;
+        }
+        
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        const dayDiff = today.getDate() - birthDate.getDate();
+        
+        // Adjust age if birthday hasn't occurred this year yet
+        if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+            age--;
+        }
+
+        const isAdult = age >= 19;
+
+        if (!isAdult) {
+            alert('19세 미만은 접속할 수 없습니다.');
+            // Use setTimeout to ensure alert is dismissed before redirect
+            // Use replace() to prevent back button navigation
+            setTimeout(() => {
+                window.location.replace('https://google.com');
+            }, 100);
         } else {
+            localStorage.setItem('kspirits_age_verified', 'true');
             setIsOpen(false);
-        }
-    }, [user, profile]);
-
-    const handleRolling = () => {
-        setNickname(generateRandomNickname());
-    };
-
-    const handleSubmit = async () => {
-        if (!nickname.trim()) return alert('닉네임을 입력해주세요.');
-
-        setLoading(true);
-        try {
-            await updateProfile({
-                nickname: nickname,
-                isFirstLogin: false // Mark as onboarding complete
-            });
-            setIsOpen(false);
-            alert('환영합니다! 회원가입이 완료되었습니다.');
-        } catch (error) {
-            console.error(error);
-            alert('저장 중 오류가 발생했습니다.');
-        } finally {
-            setLoading(false);
         }
     };
 
-    if (!isOpen) return null;
+    const handleExit = () => {
+        // Use replace() to prevent back button navigation
+        window.location.replace('https://google.com');
+    };
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-300">
-            <div className="bg-card w-full max-w-md rounded-3xl p-8 shadow-2xl border border-border">
-                <div className="text-center mb-8">
-                    <h2 className="text-2xl font-black mb-2">🎉 환영합니다!</h2>
-                    <p className="text-muted-foreground">Club Hub에서 사용할 닉네임을 정해주세요.</p>
-                </div>
-
-                <div className="space-y-6">
-                    <div className="flex flex-col items-center">
-                        <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center text-4xl mb-4 overflow-hidden border-2 border-primary">
-                            {user?.photoURL ? (
-                                <img src={user.photoURL} alt="Profile" className="w-full h-full object-cover" />
-                            ) : (
-                                <span>👤</span>
-                            )}
-                        </div>
-                        <p className="text-xs text-muted-foreground">프로필 사진은 구글 계정을 따릅니다.</p>
-                    </div>
-
-                    <div>
-                        <label className="block text-xs font-bold text-muted-foreground mb-2 ml-1">닉네임</label>
-                        <div className="flex gap-2">
-                            <input
-                                value={nickname}
-                                onChange={(e) => setNickname(e.target.value)}
-                                className="flex-1 bg-secondary/50 border border-input rounded-xl px-4 py-3 font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                                placeholder="닉네임 입력"
-                            />
-                            <button
-                                onClick={handleRolling}
-                                className="bg-secondary hover:bg-secondary/80 text-secondary-foreground p-3 rounded-xl transition-colors"
-                                title="랜덤 생성"
-                            >
-                                🎲
-                            </button>
-                        </div>
-                    </div>
-
-                    <button
-                        onClick={handleSubmit}
-                        disabled={loading}
-                        className="w-full py-4 bg-primary text-primary-foreground font-bold rounded-xl hover:opacity-90 disabled:opacity-50 transition-all shadow-lg hover:shadow-primary/25"
+        <AnimatePresence>
+            {isOpen && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-md p-4"
+                >
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        transition={{ duration: 0.3, delay: 0.1 }}
+                        className="bg-gradient-to-br from-slate-900 to-slate-950 w-full max-w-md rounded-3xl p-8 shadow-2xl border border-amber-900/30 relative overflow-hidden"
                     >
-                        {loading ? '저장 중...' : '시작하기'}
-                    </button>
-                </div>
-            </div>
-        </div>
+                        {/* Decorative background gradient */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-amber-900/5 to-transparent pointer-events-none" />
+                        
+                        <div className="relative z-10">
+                            {/* Header */}
+                            <div className="text-center mb-8">
+                                <div className="inline-block p-4 bg-amber-900/20 rounded-full mb-4">
+                                    <span className="text-5xl">🔞</span>
+                                </div>
+                                <h2 className="text-2xl font-black text-amber-100 mb-2">Age Verification</h2>
+                                <p className="text-sm text-slate-300 leading-relaxed">
+                                    You must be 19 years or older to enter.
+                                </p>
+                            </div>
+
+                            {/* Birth Date Inputs */}
+                            <div className="space-y-4 mb-6">
+                                <div>
+                                    <label className="block text-xs font-bold text-slate-400 mb-2 ml-1">
+                                        생년월일 입력 (Birth Date)
+                                    </label>
+                                    <div className="grid grid-cols-3 gap-3">
+                                        {/* Year */}
+                                        <div>
+                                            <input
+                                                type="number"
+                                                placeholder="YYYY"
+                                                value={birthYear}
+                                                onChange={(e) => {
+                                                    const value = e.target.value;
+                                                    if (value.length <= 4) setBirthYear(value);
+                                                }}
+                                                min="1900"
+                                                max={new Date().getFullYear()}
+                                                className="w-full bg-slate-800/70 border border-slate-700 rounded-xl px-3 py-3 text-center font-bold text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent"
+                                            />
+                                            <p className="text-xs text-slate-500 text-center mt-1">년</p>
+                                        </div>
+                                        {/* Month */}
+                                        <div>
+                                            <input
+                                                type="number"
+                                                placeholder="MM"
+                                                value={birthMonth}
+                                                onChange={(e) => {
+                                                    const value = e.target.value;
+                                                    if (value.length <= 2) setBirthMonth(value);
+                                                }}
+                                                min="1"
+                                                max="12"
+                                                className="w-full bg-slate-800/70 border border-slate-700 rounded-xl px-3 py-3 text-center font-bold text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent"
+                                            />
+                                            <p className="text-xs text-slate-500 text-center mt-1">월</p>
+                                        </div>
+                                        {/* Day */}
+                                        <div>
+                                            <input
+                                                type="number"
+                                                placeholder="DD"
+                                                value={birthDay}
+                                                onChange={(e) => {
+                                                    const value = e.target.value;
+                                                    if (value.length <= 2) setBirthDay(value);
+                                                }}
+                                                min="1"
+                                                max="31"
+                                                className="w-full bg-slate-800/70 border border-slate-700 rounded-xl px-3 py-3 text-center font-bold text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent"
+                                            />
+                                            <p className="text-xs text-slate-500 text-center mt-1">일</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Legal Notice */}
+                                <div className="bg-red-950/30 border border-red-900/50 rounded-xl p-3">
+                                    <p className="text-red-400 text-xs text-center leading-relaxed">
+                                        ⚠️ 19세 미만 청소년에게 주류를 판매하는 것은 법으로 금지되어 있습니다.
+                                    </p>
+                                </div>
+                            </div>
+
+                            {/* Action buttons */}
+                            <div className="space-y-3">
+                                <button
+                                    onClick={handleEnter}
+                                    className="w-full py-4 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-amber-900/50 active:scale-[0.98]"
+                                >
+                                    Enter
+                                </button>
+                                
+                                <button
+                                    onClick={handleExit}
+                                    className="w-full py-3 bg-transparent hover:bg-slate-800/50 text-slate-400 hover:text-slate-300 font-semibold rounded-xl transition-all border border-slate-700/50 active:scale-[0.98]"
+                                >
+                                    Exit
+                                </button>
+                            </div>
+
+                            {/* Footer notice */}
+                            <p className="text-xs text-slate-500 text-center mt-6 leading-relaxed">
+                                귀하의 정보는 연령 확인 목적으로만 사용되며 저장되지 않습니다.
+                            </p>
+                        </div>
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
     );
 }
