@@ -42,6 +42,21 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
   });
   const [isRefreshing, setIsRefreshing] = useState(false);
 
+  // Helper function to add error to debug info with size limit
+  const addCacheError = (errorMsg: string) => {
+    setDebugInfo(prev => {
+      const newErrors = [...prev.cacheErrors, errorMsg];
+      // Only slice if we exceed the limit (more efficient)
+      if (newErrors.length > MAX_CACHE_ERRORS) {
+        newErrors.splice(0, newErrors.length - MAX_CACHE_ERRORS);
+      }
+      return {
+        ...prev,
+        cacheErrors: newErrors
+      };
+    });
+  };
+
   // Helper function to safely access localStorage
   const safeLocalStorage = {
     getItem: (key: string): string | null => {
@@ -50,10 +65,7 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
       } catch (e) {
         const errorMsg = `localStorage.getItem failed: ${e instanceof Error ? e.message : 'Unknown error'}`;
         console.warn(`[SpiritsCacheContext] ${errorMsg}`);
-        setDebugInfo(prev => ({
-          ...prev,
-          cacheErrors: [...prev.cacheErrors, errorMsg].slice(-MAX_CACHE_ERRORS) // Keep only last N errors
-        }));
+        addCacheError(errorMsg);
         return null;
       }
     },
@@ -64,10 +76,7 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
       } catch (e) {
         const errorMsg = `localStorage.setItem failed: ${e instanceof Error ? e.message : 'Unknown error'}`;
         console.warn(`[SpiritsCacheContext] ${errorMsg}`);
-        setDebugInfo(prev => ({
-          ...prev,
-          cacheErrors: [...prev.cacheErrors, errorMsg].slice(-MAX_CACHE_ERRORS) // Keep only last N errors
-        }));
+        addCacheError(errorMsg);
         return false;
       }
     },
@@ -130,10 +139,7 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
           } catch (e) {
             const parseError = `JSON.parse failed: ${e instanceof Error ? e.message : 'Unknown error'}`;
             console.warn(`[SpiritsCacheContext] ⚠️ ${parseError}`);
-            setDebugInfo(prev => ({
-              ...prev,
-              cacheErrors: [...prev.cacheErrors, parseError].slice(-MAX_CACHE_ERRORS)
-            }));
+            addCacheError(parseError);
           }
         }
       } else {
@@ -191,10 +197,7 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
     } catch (err) {
       console.error('[SpiritsCacheContext] ❌ Failed to fetch data:', err);
       setError(err instanceof Error ? err.message : 'Failed to fetch data');
-      setDebugInfo(prev => ({
-        ...prev,
-        cacheErrors: [...prev.cacheErrors, err instanceof Error ? err.message : 'Failed to fetch data'].slice(-MAX_CACHE_ERRORS)
-      }));
+      addCacheError(err instanceof Error ? err.message : 'Failed to fetch data');
     } finally {
       setIsLoading(false);
     }
