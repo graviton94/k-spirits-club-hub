@@ -26,12 +26,15 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
       console.log('[SpiritsCacheContext] Fetching all published spirits for cache...');
       
       // Fetch all published spirits with a large page size
+      // NOTE: Using 5000 as limit for initial implementation. If dataset grows significantly,
+      // consider implementing: 1) Progressive loading with multiple requests, 
+      // 2) Pagination with lazy loading, or 3) Server-side search instead of client-side cache
       const result = await getSpiritsAction(
         { 
           isPublished: true, 
           status: 'PUBLISHED' 
         },
-        { page: 1, pageSize: 5000 } // Large page size to get all published spirits
+        { page: 1, pageSize: 5000 }
       );
       
       console.log(`[SpiritsCacheContext] Cached ${result.data.length} published spirits`);

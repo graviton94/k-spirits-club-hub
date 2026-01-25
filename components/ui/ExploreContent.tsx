@@ -6,7 +6,7 @@ import Link from "next/link";
 import { SpiritCard } from "@/components/ui/SpiritCard";
 import { SearchBar } from "@/components/ui/SearchBar";
 import SpiritDetailModal from "@/components/ui/SpiritDetailModal";
-import type { Spirit } from "@/lib/db/schema";
+import type { Spirit, SpiritFilter } from "@/lib/db/schema";
 // import { db } from "@/lib/db"; // REMOVE: Server-side DB cannot be imported in client component
 import { getSpiritsAction } from "@/app/actions/spirits"; // NEW: Server Action
 import metadata from "@/lib/constants/spirits-metadata.json";
@@ -95,9 +95,8 @@ export default function ExploreContent() {
 
   useEffect(() => {
     async function loadSpirits() {
-      // Construct robust filter
-      // ALWAYS ensure PUBLISHED filter is applied
-      const filter: any = {
+      // Construct robust filter - Always ensure PUBLISHED filter is applied
+      const filter: SpiritFilter = {
         searchTerm,
         isPublished: true,
         status: 'PUBLISHED'
