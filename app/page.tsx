@@ -1,5 +1,6 @@
 import { SearchBar } from "@/components/ui/SearchBar";
 import { SpiritCard } from "@/components/ui/SpiritCard";
+import { LiveReviews } from "@/components/ui/LiveReviews";
 import { db } from "@/lib/db";
 import Link from "next/link";
 import { CATEGORY_NAME_MAP, LEGAL_CATEGORIES } from "@/lib/constants/categories";
@@ -150,29 +151,11 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 4. Live Reviews (Mock Layout) */}
+      {/* 4. Live Reviews */}
       <section className="bg-secondary py-16 border-y border-border">
         <div className="container max-w-4xl mx-auto px-4">
           <h2 className="text-2xl font-bold mb-8 text-center text-foreground">Live Reviews</h2>
-          <div className="space-y-4">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="flex items-start gap-4 p-4 rounded-xl bg-card border border-border">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold border border-primary/20">
-                  U{i}
-                </div>
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="font-bold text-sm text-foreground">User_{i}99</span>
-                    <span className="text-xs text-muted-foreground">2 mins ago</span>
-                  </div>
-                  <p className="text-sm text-foreground">"This tastes like absolute heaven. The finish is incredibly smooth with hints of vanilla."</p>
-                  <div className="flex gap-1 mt-2">
-                    {[1, 2, 3, 4, 5].map(star => <span key={star} className="text-primary text-xs">★</span>)}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <LiveReviews />
         </div>
       </section>
 
