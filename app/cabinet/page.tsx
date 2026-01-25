@@ -5,6 +5,9 @@ import { motion } from "framer-motion";
 import GoogleAd from "@/components/ui/GoogleAd";
 import Link from "next/link";
 
+// Configuration
+const SPIRITS_PER_ROW = 4;
+
 // Mock data for demonstration - Full shelf simulation
 const MOCK_SPIRITS = [
   {
@@ -203,8 +206,8 @@ export default function CabinetPage() {
           
           {/* Shelf rows with border-bottom to simulate shelves */}
           <div className="relative space-y-12">
-            {/* Chunk spirits into rows of 4 */}
-            {Array.from({ length: Math.ceil(ownedSpirits.length / 4) }, (_, rowIndex) => (
+            {/* Chunk spirits into rows */}
+            {Array.from({ length: Math.ceil(ownedSpirits.length / SPIRITS_PER_ROW) }, (_, rowIndex) => (
               <div key={rowIndex} className="relative pb-6 border-b-4 border-stone-300/80 shadow-sm">
                 <motion.div
                   initial="hidden"
@@ -218,7 +221,7 @@ export default function CabinetPage() {
                   }}
                   className="grid grid-cols-4 gap-4"
                 >
-                  {ownedSpirits.slice(rowIndex * 4, (rowIndex + 1) * 4).map((spirit) => (
+                  {ownedSpirits.slice(rowIndex * SPIRITS_PER_ROW, (rowIndex + 1) * SPIRITS_PER_ROW).map((spirit) => (
                     <motion.div
                       key={spirit.id}
                       variants={{
