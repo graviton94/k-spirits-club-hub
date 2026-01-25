@@ -35,10 +35,14 @@ export function LiveReviews() {
     }
 
     fetchReviews();
-    
-    // Refresh reviews every 30 seconds
-    const interval = setInterval(fetchReviews, 30000);
-    return () => clearInterval(interval);
+
+    // Listen for custom event when a new review is submitted
+    const handleReviewSubmitted = () => {
+      fetchReviews();
+    };
+
+    window.addEventListener('reviewSubmitted', handleReviewSubmitted);
+    return () => window.removeEventListener('reviewSubmitted', handleReviewSubmitted);
   }, []);
 
   const getTimeAgo = (dateString: string) => {

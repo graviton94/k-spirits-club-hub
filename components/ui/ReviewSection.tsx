@@ -333,6 +333,12 @@ function ReviewForm({ spiritId, spiritName, onCancel, onSubmitted }: {
       };
 
       onSubmitted(newReview);
+      
+      // Dispatch custom event to notify LiveReviews component on home page
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('reviewSubmitted'));
+      }
+      
       alert('리뷰가 성공적으로 제출되었습니다!');
     } catch (error) {
       console.error('Error submitting review:', error);
