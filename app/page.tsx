@@ -161,7 +161,7 @@ export default function HomePage() {
               {listSpirits.length === 0 && (
                 <div className="col-span-full py-20 text-center text-muted-foreground bg-secondary/20 rounded-2xl border border-dashed border-border">
                   <Sparkles className="w-10 h-10 mx-auto mb-3 text-amber-500/50" />
-                  <p>Discovering trending spirits...</p>
+                  <p>No trending spirits available yet.</p>
                   <p className="text-sm">Check back soon!</p>
                 </div>
               )}

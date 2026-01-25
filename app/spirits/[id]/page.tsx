@@ -35,12 +35,17 @@ export default function SpiritDetailPage({
     } else {
       // Fallback to fetching from DB if not in cache
       setIsLoading(true);
-      db.getSpirit(id).then(fetchedSpirit => {
-        if (fetchedSpirit) {
-          setSpirit(fetchedSpirit);
-        }
-        setIsLoading(false);
-      });
+      db.getSpirit(id)
+        .then(fetchedSpirit => {
+          if (fetchedSpirit) {
+            setSpirit(fetchedSpirit);
+          }
+          setIsLoading(false);
+        })
+        .catch(error => {
+          console.error('Failed to fetch spirit:', error);
+          setIsLoading(false);
+        });
     }
   }, [id, getSpiritById]);
 

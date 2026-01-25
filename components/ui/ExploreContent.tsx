@@ -9,7 +9,6 @@ import SpiritDetailModal from "@/components/ui/SpiritDetailModal";
 import type { Spirit, SpiritSearchIndex } from "@/lib/db/schema";
 import {
   CATEGORY_NAME_MAP,
-  LEGAL_CATEGORIES,
   getCategoryStructure,
   getSubCategoriesForMain
 } from "@/lib/constants/categories";
