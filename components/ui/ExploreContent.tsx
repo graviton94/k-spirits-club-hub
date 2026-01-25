@@ -6,7 +6,7 @@ import Link from "next/link";
 import { SpiritCard } from "@/components/ui/SpiritCard";
 import { SearchBar } from "@/components/ui/SearchBar";
 import SpiritDetailModal from "@/components/ui/SpiritDetailModal";
-import type { Spirit } from "@/lib/db/schema";
+import type { Spirit, SpiritFilter } from "@/lib/db/schema";
 // import { db } from "@/lib/db"; // REMOVE: Server-side DB cannot be imported in client component
 import { getSpiritsAction } from "@/app/actions/spirits"; // NEW: Server Action
 import metadata from "@/lib/constants/spirits-metadata.json";
@@ -95,32 +95,21 @@ export default function ExploreContent() {
 
   useEffect(() => {
     async function loadSpirits() {
-      // Construct robust filter
-      // Note: check if schema supports 'mainCategory' in getSpirits? 
-      // We might need to update getSpiritsAction/index.ts to accept 'mainCategory' field filter.
-      // Current index.ts has `category`, `subcategory`.
-      // `category` in DB matches Legal Category now.
-      // `subcategory` matches leaf.
-      // We assume `mainCategory` column exists in DB (we added schema, need to ensure query uses it).
-
-      // Temporary hack: we pass 'category' as Legal.
-      // If we need main category filter, we might need to send it. 
-      // check getSpiritsAction signature... it takes SpiritFilter.
-      // SpiritFilter interface needs 'mainCategory'? 
-      // I should update schema.ts SpiritFilter to include mainCategory? 
-      // YES. I'll stick to 'category' and 'subcategory' for now which cover 80%.
-      // Actually, if I select 'Scotch' (Main), I want to filter by MainCategory='scotch'.
-      // If I can't filter by Main, I can't implement Level 2 properly.
-      // For now, let's assume filtering primarily by Legal and Sub works.
-
-      const filter: any = {
+      // Construct robust filter - Always ensure PUBLISHED filter is applied
+      const filter: SpiritFilter = {
         searchTerm,
-        category: selectedLegal || undefined,
         isPublished: true,
         status: 'PUBLISHED'
       };
 
-      if (selectedSub) filter.subcategory = selectedSub;
+      // Apply category filters
+      if (selectedLegal) {
+        filter.category = selectedLegal;
+      }
+
+      if (selectedSub) {
+        filter.subcategory = selectedSub;
+      }
 
       // If Main is selected but Sub is NOT, we want to filter by Main.
       // Since we don't have 'mainCategory' in SpiritFilter interface explicitly yet (I should check),
@@ -130,6 +119,8 @@ export default function ExploreContent() {
 
       // Let's TRY to pass mainCategory if possible, or skip strict filtering for Level 2 for this MVP step
       // unless we update DB query. (I'll update DB query in next step usually).
+
+      console.log('[ExploreContent] Fetching spirits with filter:', filter, 'page:', page);
 
       const { data, total, totalPages: pages } = await getSpiritsAction(
         filter,
@@ -148,6 +139,7 @@ export default function ExploreContent() {
         // Filtering by text match might work too?
       }
 
+      console.log('[ExploreContent] Received', filteredData.length, 'spirits, total:', total);
       setSpirits(filteredData);
       setTotalPages(pages);
       setTotalCount(total);
