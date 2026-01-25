@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import GoogleAd from "@/components/ui/GoogleAd";
 import Link from "next/link";
 import MindMap from "@/components/cabinet/MindMap";
-import { analyzeCellar, MOCK_CELLAR_SPIRITS, type Spirit } from "@/lib/utils/flavor-engine";
+import { analyzeCellar, MOCK_CELLAR_SPIRITS, loadCellarFromStorage, type Spirit } from "@/lib/utils/flavor-engine";
 
 // Configuration
 const SPIRITS_PER_ROW = 4;
@@ -18,24 +18,9 @@ export default function CabinetPage() {
   const [selectedSpirit, setSelectedSpirit] = useState<Spirit | null>(null);
 
   useEffect(() => {
-    // Try to load from localStorage, fall back to mock data
-    const loadSpirits = () => {
-      if (typeof window === 'undefined') return MOCK_CELLAR_SPIRITS;
-      
-      try {
-        const stored = localStorage.getItem('kspirits_cellar');
-        if (stored) {
-          const parsed = JSON.parse(stored);
-          return parsed.length > 0 ? parsed : MOCK_CELLAR_SPIRITS;
-        }
-      } catch (error) {
-        console.error('Failed to load from localStorage:', error);
-      }
-      
-      return MOCK_CELLAR_SPIRITS;
-    };
-
-    setSpirits(loadSpirits());
+    // Load from localStorage or use mock data
+    const loaded = loadCellarFromStorage();
+    setSpirits(loaded.length > 0 ? loaded : MOCK_CELLAR_SPIRITS);
   }, []);
 
   const ownedSpirits = spirits.filter(s => !s.isWishlist);

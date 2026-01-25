@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { FlavorAnalysis } from '@/lib/utils/flavor-engine';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 
 interface MindMapProps {
   analysis: FlavorAnalysis;
@@ -45,27 +45,38 @@ export default function MindMap({ analysis }: MindMapProps) {
 
   const topFlavors = analysis.topKeywords.slice(0, 5);
 
+  // Generate star positions once to avoid re-rendering
+  const stars = useMemo(() => 
+    Array.from({ length: 50 }).map(() => ({
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      opacity: Math.random() * 0.5 + 0.2,
+      duration: Math.random() * 3 + 2,
+      delay: Math.random() * 2,
+    })), []
+  );
+
   return (
     <div className="relative w-full min-h-[70vh] bg-gradient-to-b from-black via-gray-900 to-black rounded-3xl overflow-hidden">
       {/* Starfield background effect */}
       <div className="absolute inset-0 overflow-hidden">
-        {Array.from({ length: 50 }).map((_, i) => (
+        {stars.map((star, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-white rounded-full"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              opacity: Math.random() * 0.5 + 0.2,
+              left: `${star.left}%`,
+              top: `${star.top}%`,
+              opacity: star.opacity,
             }}
             animate={{
               opacity: [0.2, 0.8, 0.2],
               scale: [1, 1.5, 1],
             }}
             transition={{
-              duration: Math.random() * 3 + 2,
+              duration: star.duration,
               repeat: Infinity,
-              delay: Math.random() * 2,
+              delay: star.delay,
             }}
           />
         ))}
