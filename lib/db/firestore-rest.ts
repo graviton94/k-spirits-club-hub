@@ -129,9 +129,11 @@ export const spiritsDb = {
             };
         }
 
-        // Log the query being executed for debugging
-        console.log('[Firestore] Executing query with filters:', JSON.stringify(filter));
-        console.log('[Firestore] Structured query:', JSON.stringify(structuredQuery, null, 2));
+        // Log the query being executed for debugging (only in development)
+        if (process.env.NODE_ENV === 'development') {
+            console.log('[Firestore] Executing query with filters:', JSON.stringify(filter));
+            console.log('[Firestore] Structured query:', JSON.stringify(structuredQuery, null, 2));
+        }
 
         const parent = `projects/${PROJECT_ID}/databases/(default)/documents`;
 
@@ -180,7 +182,7 @@ export const spiritsDb = {
             console.warn('[Firestore] ⚠️ WARNING: Query returned 0 results. Filter:', JSON.stringify(filter));
             console.warn('[Firestore] This may indicate:');
             console.warn('  1. No spirits match the filter criteria');
-            console.warn('  2. Missing composite index (check logs above for index creation link)');
+            console.warn('  2. Database is empty or spirits not yet imported');
             console.warn('  3. Service account permissions issue');
         } else {
             console.log('[Firestore] First result sample:', {
