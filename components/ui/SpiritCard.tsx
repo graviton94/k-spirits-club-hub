@@ -5,8 +5,7 @@ import { Heart } from "lucide-react";
 import Link from "next/link";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import { Spirit } from "@/lib/db/schema";
-
-
+import { getTagStyle } from "@/lib/constants/tag-styles";
 
 interface SpiritCardProps {
   spirit: Spirit;
@@ -66,14 +65,34 @@ export function SpiritCard({ spirit, onClick }: SpiritCardProps) {
         {/* Bottom: Tags */}
         {tastingTags.length > 0 && (
           <div className="flex gap-1.5 mt-2">
-            {tastingTags.map((tag, index) => (
-              <span
-                key={index}
-                className="text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 font-medium"
-              >
-                {tag}
-              </span>
-            ))}
+            {tastingTags.map((tag, index) => {
+              const styles = getTagStyle(tag);
+              return (
+                <span
+                  key={index}
+                  className="text-[10px] px-2 py-0.5 rounded-full font-bold border transition-colors"
+                  style={{
+                    backgroundColor: 'var(--tag-bg)',
+                    color: 'var(--tag-text)',
+                    borderColor: 'var(--tag-border)'
+                  } as any}
+                >
+                  <style jsx>{`
+                    span {
+                      --tag-bg: ${styles.light.bg};
+                      --tag-text: ${styles.light.text};
+                      --tag-border: ${styles.light.border};
+                    }
+                    :global(.dark) span {
+                      --tag-bg: ${styles.dark.bg};
+                      --tag-text: ${styles.dark.text};
+                      --tag-border: ${styles.dark.border};
+                    }
+                  `}</style>
+                  {tag}
+                </span>
+              );
+            })}
           </div>
         )}
       </div>

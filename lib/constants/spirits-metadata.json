@@ -241,7 +241,18 @@
     "tag_index": {
         "nose": {
             "fruit_orchard_citrus": {
-                "color": "amber",
+                "colors": {
+                    "light": {
+                        "bg": "#FFFBEB",
+                        "text": "#92400E",
+                        "border": "#FEF3C7"
+                    },
+                    "dark": {
+                        "bg": "#451A03",
+                        "text": "#FBBF24",
+                        "border": "#78350F"
+                    }
+                },
                 "tags": [
                     "#레몬제스트 (lemon zest)",
                     "#레몬믹스 (lemon)",
@@ -265,7 +276,18 @@
                 ]
             },
             "fruit_berry_tropical": {
-                "color": "pink",
+                "colors": {
+                    "light": {
+                        "bg": "#FDF2F8",
+                        "text": "#9D174D",
+                        "border": "#FCE7F3"
+                    },
+                    "dark": {
+                        "bg": "#500724",
+                        "text": "#F472B6",
+                        "border": "#831843"
+                    }
+                },
                 "tags": [
                     "#딸기 (strawberry)",
                     "#라즈베리 (raspberry)",
@@ -282,7 +304,18 @@
                 ]
             },
             "fruit_dried_cooked": {
-                "color": "orange",
+                "colors": {
+                    "light": {
+                        "bg": "#FFF7ED",
+                        "text": "#9A3412",
+                        "border": "#FFEDD5"
+                    },
+                    "dark": {
+                        "bg": "#431407",
+                        "text": "#FB923C",
+                        "border": "#7C2D12"
+                    }
+                },
                 "tags": [
                     "#건포도 (raisin)",
                     "#무화과 (fig)",
@@ -297,7 +330,18 @@
                 ]
             },
             "floral": {
-                "color": "purple",
+                "colors": {
+                    "light": {
+                        "bg": "#F5F3FF",
+                        "text": "#5B21B6",
+                        "border": "#EDE9FE"
+                    },
+                    "dark": {
+                        "bg": "#2E1065",
+                        "text": "#A78BFA",
+                        "border": "#4C1D95"
+                    }
+                },
                 "tags": [
                     "#아카시아 (acacia)",
                     "#들꽃 (wildflower)",
@@ -312,7 +356,18 @@
                 ]
             },
             "herbal_botanical_vegetal": {
-                "color": "green",
+                "colors": {
+                    "light": {
+                        "bg": "#F0FDF4",
+                        "text": "#166534",
+                        "border": "#DCFCE7"
+                    },
+                    "dark": {
+                        "bg": "#052e16",
+                        "text": "#4ADE80",
+                        "border": "#064e3b"
+                    }
+                },
                 "tags": [
                     "#쥬니퍼베리 (juniper berry)",
                     "#민트 (mint)",
@@ -337,7 +392,18 @@
                 ]
             },
             "spice": {
-                "color": "red",
+                "colors": {
+                    "light": {
+                        "bg": "#FEF2F2",
+                        "text": "#991B1B",
+                        "border": "#FEE2E2"
+                    },
+                    "dark": {
+                        "bg": "#450A0A",
+                        "text": "#F87171",
+                        "border": "#7F1D1D"
+                    }
+                },
                 "tags": [
                     "#시나몬 (cinnamon)",
                     "#정향 (clove)",
@@ -354,7 +420,18 @@
                 ]
             },
             "sweet_confectionery_dairy": {
-                "color": "yellow",
+                "colors": {
+                    "light": {
+                        "bg": "#FEFCE8",
+                        "text": "#854D0E",
+                        "border": "#FEF9C3"
+                    },
+                    "dark": {
+                        "bg": "#422006",
+                        "text": "#EAB308",
+                        "border": "#713F12"
+                    }
+                },
                 "tags": [
                     "#카라멜 (caramel)",
                     "#버터스카치 (butterscotch)",
@@ -375,7 +452,18 @@
                 ]
             },
             "nutty_grain_roasted": {
-                "color": "stone",
+                "colors": {
+                    "light": {
+                        "bg": "#FAFAF9",
+                        "text": "#44403C",
+                        "border": "#F5F5F4"
+                    },
+                    "dark": {
+                        "bg": "#1C1917",
+                        "text": "#A8A29E",
+                        "border": "#292524"
+                    }
+                },
                 "tags": [
                     "#맥아향 (malty)",
                     "#보리 (barley)",
@@ -399,7 +487,18 @@
                 ]
             },
             "woody_earthy_oxidative": {
-                "color": "stone",
+                "colors": {
+                    "light": {
+                        "bg": "#F5F5F4",
+                        "text": "#57534E",
+                        "border": "#E7E5E4"
+                    },
+                    "dark": {
+                        "bg": "#292524",
+                        "text": "#D6D3D1",
+                        "border": "#44403C"
+                    }
+                },
                 "tags": [
                     "#새오크통 (new oak)",
                     "#젖은나무 (wet wood)",
@@ -420,7 +519,18 @@
                 ]
             },
             "smoke_peat_mineral_coastal": {
-                "color": "slate",
+                "colors": {
+                    "light": {
+                        "bg": "#F8FAFC",
+                        "text": "#334155",
+                        "border": "#F1F5F9"
+                    },
+                    "dark": {
+                        "bg": "#0F172A",
+                        "text": "#94A3B8",
+                        "border": "#1E293B"
+                    }
+                },
                 "tags": [
                     "#스모키 (smoky)",
                     "#피트 (peat)",
@@ -437,7 +547,18 @@
                 ]
             },
             "chemical_defect": {
-                "color": "slate",
+                "colors": {
+                    "light": {
+                        "bg": "#F1F5F9",
+                        "text": "#475569",
+                        "border": "#E2E8F0"
+                    },
+                    "dark": {
+                        "bg": "#1E293B",
+                        "text": "#64748B",
+                        "border": "#334155"
+                    }
+                },
                 "tags": [
                     "#솔벤트 (solvent)",
                     "#플라스틱 (plastic)",
@@ -451,7 +572,18 @@
         },
         "palate": {
             "sweetness_acid": {
-                "color": "lime",
+                "colors": {
+                    "light": {
+                        "bg": "#F7FEE7",
+                        "text": "#3F6212",
+                        "border": "#ECFCCB"
+                    },
+                    "dark": {
+                        "bg": "#1A2E05",
+                        "text": "#A3E635",
+                        "border": "#365314"
+                    }
+                },
                 "tags": [
                     "#본드라이",
                     "#드라이",
@@ -465,7 +597,18 @@
                 ]
             },
             "body_texture": {
-                "color": "blue",
+                "colors": {
+                    "light": {
+                        "bg": "#EFF6FF",
+                        "text": "#1E40AF",
+                        "border": "#DBEAFE"
+                    },
+                    "dark": {
+                        "bg": "#172554",
+                        "text": "#60A5FA",
+                        "border": "#1E3A8A"
+                    }
+                },
                 "tags": [
                     "#라이트바디",
                     "#미디엄바디",
@@ -481,7 +624,18 @@
                 ]
             },
             "mouthfeel_structure": {
-                "color": "cyan",
+                "colors": {
+                    "light": {
+                        "bg": "#ECFEFF",
+                        "text": "#155E75",
+                        "border": "#CFFAFE"
+                    },
+                    "dark": {
+                        "bg": "#083344",
+                        "text": "#22D3EE",
+                        "border": "#164E63"
+                    }
+                },
                 "tags": [
                     "#부드러운",
                     "#라운드한",
@@ -500,7 +654,18 @@
                 ]
             },
             "fermentation_umami": {
-                "color": "teal",
+                "colors": {
+                    "light": {
+                        "bg": "#F0FDFA",
+                        "text": "#115E59",
+                        "border": "#CCFBF1"
+                    },
+                    "dark": {
+                        "bg": "#042F2E",
+                        "text": "#2DD4BF",
+                        "border": "#134E4A"
+                    }
+                },
                 "tags": [
                     "#요거트",
                     "#치즈",
@@ -518,7 +683,18 @@
         },
         "finish": {
             "length": {
-                "color": "blue",
+                "colors": {
+                    "light": {
+                        "bg": "#EFF6FF",
+                        "text": "#1E40AF",
+                        "border": "#DBEAFE"
+                    },
+                    "dark": {
+                        "bg": "#172554",
+                        "text": "#60A5FA",
+                        "border": "#1E3A8A"
+                    }
+                },
                 "tags": [
                     "#짧은",
                     "#중간",
@@ -529,7 +705,18 @@
                 ]
             },
             "nature": {
-                "color": "purple",
+                "colors": {
+                    "light": {
+                        "bg": "#F5F3FF",
+                        "text": "#5B21B6",
+                        "border": "#EDE9FE"
+                    },
+                    "dark": {
+                        "bg": "#2E1065",
+                        "text": "#A78BFA",
+                        "border": "#4C1D95"
+                    }
+                },
                 "tags": [
                     "#깔끔한",
                     "#드라이한마무리",
