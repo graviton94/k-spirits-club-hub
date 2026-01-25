@@ -12,8 +12,14 @@ interface SpiritsCacheContextType {
   isLoading: boolean;
   error: string | null;
   refetch: () => Promise<void>;
+  forceRefresh: () => Promise<void>;
   searchSpirits: (query: string) => SpiritSearchIndex[];
   getSpiritById: (id: string) => Spirit | undefined;
+  debugInfo: {
+    lastLoadSource: 'cache' | 'api' | 'none';
+    lastLoadTime: number | null;
+    cacheErrors: string[];
+  };
 }
 
 const SpiritsCacheContext = createContext<SpiritsCacheContextType | undefined>(undefined);
@@ -24,16 +30,64 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
   const [fuseInstance, setFuseInstance] = useState<Fuse<SpiritSearchIndex> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [debugInfo, setDebugInfo] = useState<{
+    lastLoadSource: 'cache' | 'api' | 'none';
+    lastLoadTime: number | null;
+    cacheErrors: string[];
+  }>({
+    lastLoadSource: 'none',
+    lastLoadTime: null,
+    cacheErrors: []
+  });
+
+  // Helper function to safely access localStorage
+  const safeLocalStorage = {
+    getItem: (key: string): string | null => {
+      try {
+        return localStorage.getItem(key);
+      } catch (e) {
+        const errorMsg = `localStorage.getItem failed: ${e instanceof Error ? e.message : 'Unknown error'}`;
+        console.warn(`[SpiritsCacheContext] ${errorMsg}`);
+        setDebugInfo(prev => ({
+          ...prev,
+          cacheErrors: [...prev.cacheErrors, errorMsg]
+        }));
+        return null;
+      }
+    },
+    setItem: (key: string, value: string): boolean => {
+      try {
+        localStorage.setItem(key, value);
+        return true;
+      } catch (e) {
+        const errorMsg = `localStorage.setItem failed: ${e instanceof Error ? e.message : 'Unknown error'}`;
+        console.warn(`[SpiritsCacheContext] ${errorMsg}`);
+        setDebugInfo(prev => ({
+          ...prev,
+          cacheErrors: [...prev.cacheErrors, errorMsg]
+        }));
+        return false;
+      }
+    },
+    removeItem: (key: string): void => {
+      try {
+        localStorage.removeItem(key);
+      } catch (e) {
+        console.warn(`[SpiritsCacheContext] localStorage.removeItem failed:`, e);
+      }
+    }
+  };
 
   const fetchPublishedSpirits = async (forceRefetch = false) => {
     try {
       setIsLoading(true);
       setError(null);
+      const loadStartTime = Date.now();
 
       // 1. Check LocalStorage Cache for search index
       if (!forceRefetch) {
-        const cachedIndex = localStorage.getItem('spirits_search_index');
-        const cachedSpirits = localStorage.getItem('spirits_master_cache');
+        const cachedIndex = safeLocalStorage.getItem('spirits_search_index');
+        const cachedSpirits = safeLocalStorage.getItem('spirits_master_cache');
         
         if (cachedIndex && cachedSpirits) {
           try {
@@ -43,10 +97,10 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
             const ageHours = (now - (parsedIndex.timestamp || 0)) / (1000 * 60 * 60);
 
             if (ageHours < 24 && Array.isArray(parsedIndex.data) && Array.isArray(parsedSpirits.data)) {
-              console.log(`[SpiritsCacheContext] Loaded ${parsedIndex.data.length} spirits from cache (Age: ${ageHours.toFixed(1)}h)`);
-              
               const indexData = parsedIndex.data as SpiritSearchIndex[];
               const spiritsData = parsedSpirits.data as Spirit[];
+              
+              console.log(`[SpiritsCacheContext] ✅ Loaded from CACHE: ${indexData.length} spirits (Age: ${ageHours.toFixed(1)}h)`);
               
               setSearchIndex(indexData);
               setPublishedSpirits(spiritsData);
@@ -59,16 +113,32 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
                 minMatchCharLength: 1
               });
               setFuseInstance(fuse);
+              
+              setDebugInfo({
+                lastLoadSource: 'cache',
+                lastLoadTime: loadStartTime,
+                cacheErrors: []
+              });
+              
               setIsLoading(false);
               return;
+            } else {
+              console.log('[SpiritsCacheContext] ⚠️ Cache expired or invalid, refetching...');
             }
           } catch (e) {
-            console.warn('[SpiritsCacheContext] Cache parsing failed, refetching...');
+            const parseError = `JSON.parse failed: ${e instanceof Error ? e.message : 'Unknown error'}`;
+            console.warn(`[SpiritsCacheContext] ⚠️ ${parseError}`);
+            setDebugInfo(prev => ({
+              ...prev,
+              cacheErrors: [...prev.cacheErrors, parseError]
+            }));
           }
         }
+      } else {
+        console.log('[SpiritsCacheContext] 🔄 Force refresh requested, clearing cache...');
       }
 
-      console.log('[SpiritsCacheContext] Fetching data from Firestore...');
+      console.log('[SpiritsCacheContext] 📡 Fetching data from Firestore...');
 
       // Fetch both the minimized search index and full spirits data
       const [index, spiritsResult] = await Promise.all([
@@ -79,18 +149,24 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
         )
       ]);
 
-      console.log(`[SpiritsCacheContext] Cached ${index.length} spirits to search index`);
+      console.log(`[SpiritsCacheContext] ✅ Fetched from API: ${index.length} spirits, ${spiritsResult.data.length} full records`);
 
-      // 2. Save to LocalStorage
-      localStorage.setItem('spirits_search_index', JSON.stringify({
+      // 2. Save to LocalStorage (with safety wrapper)
+      const indexPayload = JSON.stringify({
         data: index,
         timestamp: Date.now()
-      }));
-      
-      localStorage.setItem('spirits_master_cache', JSON.stringify({
+      });
+      const spiritsPayload = JSON.stringify({
         data: spiritsResult.data,
         timestamp: Date.now()
-      }));
+      });
+      
+      const indexSaved = safeLocalStorage.setItem('spirits_search_index', indexPayload);
+      const spiritsSaved = safeLocalStorage.setItem('spirits_master_cache', spiritsPayload);
+      
+      if (!indexSaved || !spiritsSaved) {
+        console.warn('[SpiritsCacheContext] ⚠️ Could not save to localStorage (quota/private mode). Using memory-only cache.');
+      }
 
       setSearchIndex(index);
       setPublishedSpirits(spiritsResult.data);
@@ -104,9 +180,19 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
       });
       setFuseInstance(fuse);
 
+      setDebugInfo({
+        lastLoadSource: 'api',
+        lastLoadTime: loadStartTime,
+        cacheErrors: []
+      });
+
     } catch (err) {
-      console.error('[SpiritsCacheContext] Failed to fetch data:', err);
+      console.error('[SpiritsCacheContext] ❌ Failed to fetch data:', err);
       setError(err instanceof Error ? err.message : 'Failed to fetch data');
+      setDebugInfo(prev => ({
+        ...prev,
+        cacheErrors: [...prev.cacheErrors, err instanceof Error ? err.message : 'Failed to fetch data']
+      }));
     } finally {
       setIsLoading(false);
     }
@@ -115,6 +201,15 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     fetchPublishedSpirits();
   }, []);
+
+  const forceRefresh = async () => {
+    console.log('[SpiritsCacheContext] 🔄 Force refresh initiated...');
+    // Clear localStorage cache
+    safeLocalStorage.removeItem('spirits_search_index');
+    safeLocalStorage.removeItem('spirits_master_cache');
+    // Re-fetch from server
+    await fetchPublishedSpirits(true);
+  };
 
   const searchSpirits = (query: string): SpiritSearchIndex[] => {
     if (!query.trim() || !fuseInstance) {
@@ -137,8 +232,10 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
     isLoading,
     error,
     refetch: fetchPublishedSpirits,
+    forceRefresh,
     searchSpirits,
-    getSpiritById
+    getSpiritById,
+    debugInfo
   };
 
   return (

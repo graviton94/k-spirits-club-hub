@@ -17,7 +17,7 @@ import { useSpiritsCache } from "@/app/context/spirits-cache-context";
 
 export default function ExploreContent() {
   const searchParams = useSearchParams();
-  const { searchIndex, searchSpirits, getSpiritById, publishedSpirits, isLoading: isCacheLoading } = useSpiritsCache();
+  const { searchIndex, searchSpirits, getSpiritById, publishedSpirits, isLoading: isCacheLoading, forceRefresh, debugInfo } = useSpiritsCache();
 
   // Drag scroll refs for category filters
   const legalCategoryScrollRef = useDragScroll<HTMLDivElement>();
@@ -31,6 +31,8 @@ export default function ExploreContent() {
 
   const [selectedSpirit, setSelectedSpirit] = useState<Spirit | null>(null);
   const [displayLimit, setDisplayLimit] = useState(20);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [showDebugPanel, setShowDebugPanel] = useState(false);
 
   // Dynamic filter extraction from search index
   const dynamicFilters = useMemo(() => {
@@ -108,6 +110,15 @@ export default function ExploreContent() {
     setDisplayLimit(20);
   }, [searchTerm, selectedLegal, selectedMain, selectedSub]);
 
+  const handleForceRefresh = async () => {
+    setIsRefreshing(true);
+    try {
+      await forceRefresh();
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl pb-32">
       <header className="mb-8 text-center">
@@ -117,6 +128,60 @@ export default function ExploreContent() {
         <div className="max-w-xl mx-auto">
           <SearchBar />
         </div>
+        
+        {/* Force Refresh Button */}
+        <div className="mt-4 flex justify-center gap-3 items-center flex-wrap">
+          <button
+            onClick={handleForceRefresh}
+            disabled={isRefreshing}
+            className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm font-semibold rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          >
+            {isRefreshing ? (
+              <>
+                <span className="animate-spin">⟳</span>
+                Refreshing...
+              </>
+            ) : (
+              <>
+                🔄 Clear Cache & Refresh
+              </>
+            )}
+          </button>
+          
+          {/* Debug Toggle (only in development) */}
+          {process.env.NODE_ENV === 'development' && (
+            <button
+              onClick={() => setShowDebugPanel(!showDebugPanel)}
+              className="px-3 py-2 bg-gray-700 text-white text-xs font-semibold rounded-lg hover:bg-gray-600 transition-colors"
+            >
+              {showDebugPanel ? '🔒 Hide Debug' : '🔍 Show Debug'}
+            </button>
+          )}
+        </div>
+
+        {/* Debug Panel */}
+        {showDebugPanel && process.env.NODE_ENV === 'development' && (
+          <div className="mt-4 p-4 bg-gray-900 text-white text-left rounded-xl text-xs font-mono max-w-2xl mx-auto border-2 border-amber-500">
+            <h3 className="font-bold text-amber-400 mb-2">🔍 Debug Information</h3>
+            <div className="space-y-1">
+              <div>📊 Search Index Length: <span className="text-green-400">{searchIndex.length}</span></div>
+              <div>📦 Published Spirits: <span className="text-green-400">{publishedSpirits.length}</span></div>
+              <div>💾 Last Load Source: <span className="text-blue-400">{debugInfo.lastLoadSource}</span></div>
+              <div>⏰ Last Load Time: <span className="text-blue-400">
+                {debugInfo.lastLoadTime ? new Date(debugInfo.lastLoadTime).toLocaleTimeString() : 'N/A'}
+              </span></div>
+              <div>🔍 Filtered Results: <span className="text-yellow-400">{filteredSpirits.length}</span></div>
+              {debugInfo.cacheErrors.length > 0 && (
+                <div className="mt-2">
+                  <div className="text-red-400 font-bold">⚠️ Cache Errors:</div>
+                  {debugInfo.cacheErrors.map((err, i) => (
+                    <div key={i} className="text-red-300 ml-2">• {err}</div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Level 1: Legal Categories (Root) */}
@@ -258,10 +323,10 @@ export default function ExploreContent() {
       )}
 
       {hasMore && (
-        <div className="mt-12 flex justify-center">
+        <div className="mt-12 mb-8 flex justify-center">
           <button
             onClick={() => setDisplayLimit(prev => prev + 20)}
-            className="px-8 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300"
+            className="min-h-[48px] px-8 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300 active:scale-95"
           >
             Load More ({totalCount - displayLimit} remaining)
           </button>
