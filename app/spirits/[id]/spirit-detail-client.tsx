@@ -144,7 +144,7 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
             </div>
 
             {/* 4. Reviews Section */}
-            <ReviewSection spiritId={spirit.id} reviews={reviews} />
+            <ReviewSection spiritId={spirit.id} spiritName={spirit.name} reviews={reviews} />
 
             {/* Bottom Ad */}
             {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT && (

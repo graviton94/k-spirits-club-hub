@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/context/auth-context";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import { getTagColor } from "@/lib/constants/tag-colors";
@@ -18,6 +19,7 @@ interface SpiritDetailModalProps {
 
 export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusChange }: SpiritDetailModalProps) {
     const { user, profile } = useAuth();
+    const router = useRouter();
     const [isReviewOpen, setIsReviewOpen] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false);
     const [localSpirit, setLocalSpirit] = useState<Spirit | null>(spirit);
@@ -79,6 +81,11 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                     isWishlist: action === 'wishlist'
                 });
                 if (onStatusChange) onStatusChange();
+                
+                // Redirect to product detail page after adding to cabinet
+                if (action === 'add') {
+                    router.push(`/spirits/${spirit.id}`);
+                }
             }
         } catch (e) {
             console.error(e);
@@ -162,7 +169,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-6">
                             <div className="flex items-start justify-between">
                                 <div className="flex-1 mr-4">
-                                    <span className="inline-block px-2 py-1 mb-2 text-[10px] font-black text-primary-foreground bg-primary rounded-md uppercase shadow-lg">
+                                    <span className="inline-block px-2 py-1 mb-2 text-[10px] font-black text-primary-foreground bg-primary rounded-md uppercase shadow-[0_0_8px_rgba(251,146,60,0.6)] relative z-10">
                                         {localSpirit.subcategory || localSpirit.category}
                                     </span>
                                     <h2 className="text-2xl sm:text-3xl font-black text-white leading-tight mb-1 drop-shadow-lg break-keep">
@@ -183,28 +190,19 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                     </div>
 
                     {/* 2. Actions & Detailed Info */}
-                    <div className="p-6 space-y-6 max-h-[50vh] overflow-y-auto custom-scrollbar bg-white/60 dark:bg-slate-900/60 text-foreground backdrop-blur-md">
+                    <div className="p-6 space-y-6 max-h-[50vh] overflow-y-auto custom-scrollbar bg-gray-50 dark:bg-slate-900/60 text-foreground backdrop-blur-md">
 
                         {/* Action Buttons */}
                         <div className="flex gap-2">
                             {!cabinetStatus.isOwned ? (
-                                <>
-                                    <button
-                                        disabled={isProcessing}
-                                        onClick={() => handleAction('add')}
-                                        className="flex-1 flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-black rounded-xl hover:from-amber-600 hover:to-orange-700 transition-all scale-100 active:scale-95 disabled:opacity-50 shadow-lg shadow-primary/20"
-                                    >
-                                        {isProcessing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
-                                        <span>술장에 담기</span>
-                                    </button>
-                                    <button
-                                        disabled={isProcessing}
-                                        onClick={() => handleAction('wishlist')}
-                                        className={`p-3 rounded-xl border-2 transition-all active:scale-95 ${cabinetStatus.isWishlist ? 'bg-primary/10 border-primary text-primary' : 'border-border text-muted-foreground hover:bg-secondary'}`}
-                                    >
-                                        {cabinetStatus.isWishlist ? <Check className="w-5 h-5" /> : <Bookmark className="w-5 h-5" />}
-                                    </button>
-                                </>
+                                <button
+                                    disabled={isProcessing}
+                                    onClick={() => handleAction('add')}
+                                    className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-black rounded-xl hover:from-amber-600 hover:to-orange-700 transition-all scale-100 active:scale-95 disabled:opacity-50 shadow-lg shadow-primary/20"
+                                >
+                                    {isProcessing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
+                                    <span>술장에 담기</span>
+                                </button>
                             ) : (
                                 <div className="w-full flex gap-2">
                                     <div className="flex-1 flex items-center justify-center gap-2 py-3 bg-green-500/10 text-green-500 border-2 border-green-500/20 rounded-xl font-bold text-sm">

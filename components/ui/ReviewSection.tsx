@@ -1,7 +1,10 @@
+'use client';
+
 import type { Review } from '@/lib/db/schema';
 import { useState, useEffect, useRef } from 'react';
 import { Star, MessageSquare, Wind, Utensils, Zap, Quote, X, Check } from 'lucide-react';
 import metadata from '@/lib/constants/spirits-metadata.json';
+import { useAuth } from '@/app/context/auth-context';
 
 interface ExtendedReview extends Review {
   noseRating?: number;
@@ -11,35 +14,42 @@ interface ExtendedReview extends Review {
 
 interface ReviewSectionProps {
   spiritId: string;
+  spiritName: string;
   reviews: ExtendedReview[];
 }
 
-export default function ReviewSection({ spiritId, reviews }: ReviewSectionProps) {
+export default function ReviewSection({ spiritId, spiritName, reviews }: ReviewSectionProps) {
   const [showForm, setShowForm] = useState(false);
+  const [liveReviews, setLiveReviews] = useState<ExtendedReview[]>(reviews);
 
   // Calculate averages
-  const avgOverall = reviews.length > 0
-    ? (reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length).toFixed(1)
+  const avgOverall = liveReviews.length > 0
+    ? (liveReviews.reduce((acc, r) => acc + r.rating, 0) / liveReviews.length).toFixed(1)
     : "0.0";
 
-  const avgNose = reviews.length > 0
-    ? (reviews.reduce((acc, r) => acc + (r.noseRating || r.rating), 0) / reviews.length).toFixed(1)
+  const avgNose = liveReviews.length > 0
+    ? (liveReviews.reduce((acc, r) => acc + (r.noseRating || r.rating), 0) / liveReviews.length).toFixed(1)
     : "0.0";
 
-  const avgPalate = reviews.length > 0
-    ? (reviews.reduce((acc, r) => acc + (r.palateRating || r.rating), 0) / reviews.length).toFixed(1)
+  const avgPalate = liveReviews.length > 0
+    ? (liveReviews.reduce((acc, r) => acc + (r.palateRating || r.rating), 0) / liveReviews.length).toFixed(1)
     : "0.0";
 
-  const avgFinish = reviews.length > 0
-    ? (reviews.reduce((acc, r) => acc + (r.finishRating || r.rating), 0) / reviews.length).toFixed(1)
+  const avgFinish = liveReviews.length > 0
+    ? (liveReviews.reduce((acc, r) => acc + (r.finishRating || r.rating), 0) / liveReviews.length).toFixed(1)
     : "0.0";
+
+  const handleReviewSubmitted = (newReview: ExtendedReview) => {
+    setLiveReviews(prev => [newReview, ...prev]);
+    setShowForm(false);
+  };
 
   return (
     <div className="mt-16">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div>
           <h2 className="text-2xl font-black flex items-center gap-2">
-            리뷰 <span className="text-amber-500">{reviews.length}</span>
+            리뷰 <span className="text-amber-500">{liveReviews.length}</span>
           </h2>
           <p className="text-sm text-muted-foreground">시음 경험을 공유해주세요</p>
         </div>
@@ -52,7 +62,7 @@ export default function ReviewSection({ spiritId, reviews }: ReviewSectionProps)
       </div>
 
       {/* Average Summary Card */}
-      {reviews.length > 0 && (
+      {liveReviews.length > 0 && (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10 p-6 bg-card border border-border rounded-3xl shadow-sm">
           <RatingSummaryItem label="OVERALL" value={avgOverall} icon={<Quote className="w-4 h-4" />} />
           <RatingSummaryItem label="NOSE" value={avgNose} icon={<Wind className="w-4 h-4" />} color="text-blue-500" />
@@ -61,13 +71,13 @@ export default function ReviewSection({ spiritId, reviews }: ReviewSectionProps)
         </div>
       )}
 
-      {showForm && <ReviewForm spiritId={spiritId} onCancel={() => setShowForm(false)} />}
+      {showForm && <ReviewForm spiritId={spiritId} spiritName={spiritName} onCancel={() => setShowForm(false)} onSubmitted={handleReviewSubmitted} />}
 
       <div className="space-y-8 mt-6">
-        {reviews.map((review) => (
+        {liveReviews.map((review) => (
           <ReviewCard key={review.id} review={review} />
         ))}
-        {reviews.length === 0 && !showForm && (
+        {liveReviews.length === 0 && !showForm && (
           <div className="text-center py-20 bg-secondary/20 rounded-3xl border border-dashed border-border">
             <MessageSquare className="w-12 h-12 mx-auto mb-4 text-muted-foreground/30" />
             <p className="text-muted-foreground font-medium">
@@ -228,7 +238,13 @@ function ReviewMetricsItem({ title, rating, tags, icon, color }: { title: string
   );
 }
 
-function ReviewForm({ spiritId, onCancel }: { spiritId: string; onCancel: () => void }) {
+function ReviewForm({ spiritId, spiritName, onCancel, onSubmitted }: { 
+  spiritId: string; 
+  spiritName: string;
+  onCancel: () => void;
+  onSubmitted: (review: ExtendedReview) => void;
+}) {
+  const { user, profile } = useAuth();
   const [formData, setFormData] = useState({
     content: '',
     rating: 0,
@@ -239,6 +255,7 @@ function ReviewForm({ spiritId, onCancel }: { spiritId: string; onCancel: () => 
     finish: [] as string[],
     finishRating: 0
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Automatically calculate overall rating whenever component ratings change
   useEffect(() => {
@@ -250,17 +267,85 @@ function ReviewForm({ spiritId, onCancel }: { spiritId: string; onCancel: () => 
     }
   }, [formData.noseRating, formData.palateRating, formData.finishRating]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const finalData = {
-      ...formData,
-      nose: formData.nose.join(', '),
-      palate: formData.palate.join(', '),
-      finish: formData.finish.join(', ')
-    };
-    console.log('Submitting review:', finalData);
-    alert('리뷰가 제출되었습니다!');
-    onCancel();
+
+    if (!user) {
+      alert('로그인이 필요한 기능입니다.');
+      return;
+    }
+
+    if (formData.rating === 0) {
+      alert('별점을 입력해주세요.');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const reviewPayload = {
+        spiritId,
+        spiritName,
+        rating: formData.rating,
+        noseRating: formData.noseRating,
+        palateRating: formData.palateRating,
+        finishRating: formData.finishRating,
+        content: formData.content,
+        nose: formData.nose.join(', '),
+        palate: formData.palate.join(', '),
+        finish: formData.finish.join(', '),
+        userName: profile?.nickname || user.email?.split('@')[0] || 'Anonymous'
+      };
+
+      const response = await fetch('/api/reviews', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-user-id': user.uid
+        },
+        body: JSON.stringify(reviewPayload)
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit review');
+      }
+
+      const result = await response.json();
+
+      // Create a review object to add to the list
+      const newReview: ExtendedReview = {
+        id: result.id,
+        spiritId,
+        userId: user.uid,
+        userName: reviewPayload.userName,
+        rating: formData.rating,
+        noseRating: formData.noseRating,
+        palateRating: formData.palateRating,
+        finishRating: formData.finishRating,
+        title: '',
+        content: formData.content,
+        nose: formData.nose.join(', '),
+        palate: formData.palate.join(', '),
+        finish: formData.finish.join(', '),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        isPublished: true
+      };
+
+      onSubmitted(newReview);
+      
+      // Dispatch custom event to notify LiveReviews component on home page
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('reviewSubmitted'));
+      }
+      
+      alert('리뷰가 성공적으로 제출되었습니다!');
+    } catch (error) {
+      console.error('Error submitting review:', error);
+      alert('리뷰 제출에 실패했습니다. 다시 시도해주세요.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -333,7 +418,7 @@ function ReviewForm({ spiritId, onCancel }: { spiritId: string; onCancel: () => 
               value={formData.content}
               onChange={(e) => setFormData({ ...formData, content: e.target.value })}
               className="w-full px-6 py-4 bg-secondary/50 border border-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary font-medium min-h-[120px] text-lg"
-              placeholder="전반적인 시음 느낌을 자유롭게 적어주세요..."
+              placeholder="후기를 자유롭게 적어주세요!"
             />
           </div>
         </div>
@@ -342,15 +427,26 @@ function ReviewForm({ spiritId, onCancel }: { spiritId: string; onCancel: () => 
           <button
             type="button"
             onClick={onCancel}
-            className="px-8 py-4 bg-secondary text-foreground font-black rounded-2xl hover:bg-secondary/80 transition-all border border-border"
+            disabled={isSubmitting}
+            className="px-8 py-4 bg-secondary text-foreground font-black rounded-2xl hover:bg-secondary/80 transition-all border border-border disabled:opacity-50"
           >
             취소
           </button>
           <button
             type="submit"
-            className="flex-1 py-4 px-8 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-black rounded-2xl hover:shadow-xl hover:shadow-primary/20 transition-all flex items-center justify-center gap-2"
+            disabled={isSubmitting}
+            className="flex-1 py-4 px-8 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-black rounded-2xl hover:shadow-xl hover:shadow-primary/20 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
           >
-            <Check className="w-5 h-5" /> 리뷰 제출하기
+            {isSubmitting ? (
+              <>
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                제출 중...
+              </>
+            ) : (
+              <>
+                <Check className="w-5 h-5" /> 리뷰 제출하기
+              </>
+            )}
           </button>
         </div>
       </div>
@@ -392,37 +488,37 @@ function RatingSection({ label, rating, tags, onRatingChange, onTagsChange, colo
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-        {/* Label and Icon moved inline */}
-        <div className="flex items-center gap-3 min-w-[120px] sm:justify-end">
-          <label className="text-sm font-black tracking-tight uppercase whitespace-nowrap">{label}</label>
-          <div className={`p-2.5 rounded-2xl bg-${color}-500/10 text-${color}-500 border border-${color}-500/20 shadow-sm`}>
+      <div className="flex items-center gap-3 w-full">
+        {/* Label and Icon */}
+        <div className="flex items-center gap-2">
+          <div className={`p-2 rounded-xl bg-${color}-500/10 text-${color}-500 border border-${color}-500/20`}>
             {icon}
           </div>
+          <label className="text-sm font-black tracking-tight uppercase whitespace-nowrap">{label}</label>
         </div>
 
+        {/* Star Rating */}
         <div
           ref={containerRef}
           onPointerMove={handlePointer}
           onPointerLeave={() => setHoverRating(null)}
           onPointerDown={handlePointer}
-          className="flex-1 flex gap-2 justify-between rating-wrap touch-none select-none cursor-pointer p-1"
+          className="flex-1 flex gap-1 justify-end rating-wrap touch-none select-none cursor-pointer"
         >
-          {[1, 2, 3, 4, 5].map((s) => (
-            <div
-              key={s}
-              className="relative flex-1 aspect-square max-w-[48px]"
-            >
-              <div className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity ${hoverRating !== null && (s - 0.5) <= hoverRating ? 'opacity-50' : 'opacity-100'}`}>
-                <Star className={`w-8 h-8 ${s <= activeRating ? starColor : s - 0.5 === activeRating ? 'text-' + color + '-500' : 'text-muted-foreground/20'}`} />
-                {s - 0.5 === activeRating && (
-                  <div className="absolute inset-x-0 overflow-hidden w-[50%] left-0">
-                    <Star className={`w-8 h-8 ${starColor}`} />
+          {[1, 2, 3, 4, 5].map((s) => {
+            const isFull = s <= activeRating;
+            const isHalf = s - 0.5 === activeRating;
+            return (
+              <div key={s} className="relative">
+                <Star className={`w-7 h-7 ${isFull ? starColor : isHalf ? 'text-' + color + '-500' : 'text-muted-foreground/20'}`} />
+                {isHalf && (
+                  <div className="absolute inset-0 overflow-hidden w-[50%]">
+                    <Star className={`w-7 h-7 ${starColor}`} />
                   </div>
                 )}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
@@ -498,7 +594,7 @@ function TagInput({ tags, onTagsChange, color, metadataKey }: { tags: string[], 
           onKeyDown={handleKeyDown}
           onBlur={handleBlur}
           onFocus={() => setShowSuggestions(true)}
-          className="flex-1 bg-transparent border-none outline-none text-xs font-bold min-w-[60px]"
+          className="flex-1 bg-transparent border-none outline-none text-xs font-bold min-w-[60px] placeholder:text-muted-foreground"
           placeholder={tags.length === 0 ? "풍미 입력..." : ""}
         />
       </div>
