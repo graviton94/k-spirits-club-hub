@@ -24,6 +24,18 @@ export interface Spirit {
   };
 }
 
+export interface HierarchicalNode {
+  id: string;
+  type: 'user' | 'product' | 'tag';
+  label: string;
+  category?: string;
+  position: { x: number; y: number };
+  connections: string[]; // IDs of connected nodes
+  size?: number;
+  color?: string;
+  metadata?: any;
+}
+
 export interface FlavorAnalysis {
   totalSpirits: number;
   categoryDistribution: { category: string; count: number; percentage: number }[];
@@ -32,6 +44,7 @@ export interface FlavorAnalysis {
   coreFlavorProfile: string[];
   dominantCategory: string;
   flavorNodes?: FlavorNode[];
+  hierarchicalNodes?: HierarchicalNode[];
 }
 
 export interface FlavorNode {
@@ -56,7 +69,7 @@ export const MOCK_CELLAR_SPIRITS: Spirit[] = [
     imageUrl: "https://via.placeholder.com/300x600/8B4513/FFFFFF?text=달홀진주25",
     distillery: "달홀",
     isWishlist: false,
-    metadata: { 
+    metadata: {
       tasting_note: "깔끔한, 부드러운, 곡물향",
       nose: "곡물향, 바닐라",
       palate: "부드러운, 깔끔한, 미네랄",
@@ -72,7 +85,7 @@ export const MOCK_CELLAR_SPIRITS: Spirit[] = [
     imageUrl: "https://via.placeholder.com/300x600/4A5568/FFFFFF?text=화요",
     distillery: "국순당",
     isWishlist: false,
-    metadata: { 
+    metadata: {
       tasting_note: "스파이시한, 곡물향, 강렬한",
       nose: "곡물향, 후추",
       palate: "스파이시한, 강렬한",
@@ -88,7 +101,7 @@ export const MOCK_CELLAR_SPIRITS: Spirit[] = [
     imageUrl: "https://via.placeholder.com/300x600/2D3748/F0E68C?text=문배주",
     distillery: "문배주양조원",
     isWishlist: false,
-    metadata: { 
+    metadata: {
       tasting_note: "과일향, 달콤한, 부드러운",
       nose: "배향, 과일향",
       palate: "달콤한, 부드러운",
@@ -104,7 +117,7 @@ export const MOCK_CELLAR_SPIRITS: Spirit[] = [
     imageUrl: "https://via.placeholder.com/300x600/B8860B/FFFFFF?text=Hibiki",
     distillery: "Suntory",
     isWishlist: false,
-    metadata: { 
+    metadata: {
       tasting_note: "플로랄, 허니, 부드러운",
       nose: "플로랄, 꿀향",
       palate: "부드러운, 달콤한, 복합적",
@@ -120,7 +133,7 @@ export const MOCK_CELLAR_SPIRITS: Spirit[] = [
     imageUrl: "https://via.placeholder.com/300x600/228B22/FFFFFF?text=Glenfiddich",
     distillery: "Glenfiddich",
     isWishlist: false,
-    metadata: { 
+    metadata: {
       tasting_note: "오크, 바닐라, 부드러운",
       nose: "사과, 배향, 오크",
       palate: "바닐라, 부드러운, 크리미한",
@@ -136,7 +149,7 @@ export const MOCK_CELLAR_SPIRITS: Spirit[] = [
     imageUrl: "https://via.placeholder.com/300x600/006400/FFFFFF?text=Jameson",
     distillery: "Jameson",
     isWishlist: false,
-    metadata: { 
+    metadata: {
       tasting_note: "스무스, 과일향, 부드러운",
       nose: "바닐라, 과일향",
       palate: "스무스, 부드러운, 곡물향",
@@ -152,7 +165,7 @@ export const MOCK_CELLAR_SPIRITS: Spirit[] = [
     imageUrl: "https://via.placeholder.com/300x600/8B4513/FFFFFF?text=안동소주",
     distillery: "안동소주",
     isWishlist: false,
-    metadata: { 
+    metadata: {
       tasting_note: "전통적인, 강렬한, 곡물향",
       nose: "곡물향, 발효향",
       palate: "강렬한, 깔끔한",
@@ -168,7 +181,7 @@ export const MOCK_CELLAR_SPIRITS: Spirit[] = [
     imageUrl: "https://via.placeholder.com/300x600/1A202C/90EE90?text=Hendricks",
     distillery: "Hendrick's",
     isWishlist: false,
-    metadata: { 
+    metadata: {
       tasting_note: "큐컴버, 로즈, 플로랄",
       nose: "큐컴버, 장미향",
       palate: "플로랄, 부드러운, 신선한",
@@ -187,13 +200,13 @@ export const MOCK_CELLAR_SPIRITS: Spirit[] = [
  */
 function calculateSimilarity(keywords1: string[], keywords2: string[]): number {
   if (keywords1.length === 0 || keywords2.length === 0) return 0;
-  
+
   const set1 = new Set(keywords1);
   const set2 = new Set(keywords2);
-  
+
   const intersection = new Set([...set1].filter(x => set2.has(x)));
   const union = new Set([...set1, ...set2]);
-  
+
   return intersection.size / union.size;
 }
 
@@ -221,13 +234,13 @@ function generateFlavorNodes(
   topKeywords: { keyword: string; count: number }[]
 ): FlavorNode[] {
   const nodes: FlavorNode[] = [];
-  
+
   // Create a map of keywords to spirits
   const keywordToSpirits = new Map<string, string[]>();
-  
+
   spirits.forEach(spirit => {
     if (!spirit.metadata) return;
-    
+
     const allText = [
       spirit.metadata.tasting_note,
       spirit.metadata.nose,
@@ -236,12 +249,12 @@ function generateFlavorNodes(
     ]
       .filter(Boolean)
       .join(', ');
-    
+
     const keywords = allText
       .split(',')
       .map(k => k.trim())
       .filter(k => k.length > 0);
-    
+
     keywords.forEach(keyword => {
       if (!keywordToSpirits.has(keyword)) {
         keywordToSpirits.set(keyword, []);
@@ -249,11 +262,11 @@ function generateFlavorNodes(
       keywordToSpirits.get(keyword)!.push(spirit.id);
     });
   });
-  
+
   // Create nodes for top keywords
   topKeywords.forEach((kw, index) => {
     const relatedSpirits = keywordToSpirits.get(kw.keyword) || [];
-    
+
     nodes.push({
       id: `node-${index}`,
       keyword: kw.keyword,
@@ -261,39 +274,154 @@ function generateFlavorNodes(
       relatedSpirits,
     });
   });
-  
+
   // Calculate positions based on similarity
   // Use force-directed layout concept
   if (nodes.length > 0) {
     const radius = 140;
     const angleStep = (Math.PI * 2) / nodes.length;
-    
+
     nodes.forEach((node, index) => {
       // Calculate similarity with other nodes
       const similarities = nodes.map((otherNode, otherIndex) => {
         if (index === otherIndex) return 0;
         return calculateSimilarity(node.relatedSpirits, otherNode.relatedSpirits);
       });
-      
+
       // Base angle for even distribution
       let angle = angleStep * index - Math.PI / 2;
-      
+
       // Adjust angle based on similarity to create clustering
       // Nodes with high similarity should be closer together
       const avgSimilarity = similarities.reduce((a, b) => a + b, 0) / (similarities.length || 1);
-      
+
       // Adjust radius based on count (more common = closer to center)
       const maxCount = Math.max(...nodes.map(n => n.count));
       const radiusModifier = 1 - (node.count / maxCount) * 0.3; // 30% max variation
       const adjustedRadius = radius * radiusModifier;
-      
+
       node.position = {
         x: Math.cos(angle) * adjustedRadius,
         y: Math.sin(angle) * adjustedRadius,
       };
     });
   }
-  
+
+  return nodes;
+}
+
+/**
+ * Generate hierarchical nodes for 3-layer visualization
+ * Layer 1: User (center)
+ * Layer 2: Products (middle orbit, clustered by category)
+ * Layer 3: Tags (outer orbit, near their products)
+ * 
+ * @param spirits - Array of spirit objects
+ * @returns Array of HierarchicalNode objects
+ */
+function generateHierarchicalNodes(spirits: Spirit[]): HierarchicalNode[] {
+  const nodes: HierarchicalNode[] = [];
+
+  // Layer 1: User node at center
+  nodes.push({
+    id: 'user',
+    type: 'user',
+    label: 'You',
+    position: { x: 0, y: 0 },
+    connections: [],
+    size: 64,
+  });
+
+  // Group products by category for clustering
+  const categoryGroups = new Map<string, Spirit[]>();
+  spirits.forEach(spirit => {
+    if (!categoryGroups.has(spirit.category)) {
+      categoryGroups.set(spirit.category, []);
+    }
+    categoryGroups.get(spirit.category)!.push(spirit);
+  });
+
+  // Assign angular sectors to categories
+  const categories = Array.from(categoryGroups.keys());
+  const sectorSize = (Math.PI * 2) / categories.length;
+
+  // Layer 2: Product nodes in middle orbit
+  const productRadius = 140;
+
+  categories.forEach((category, catIndex) => {
+    const productsInCategory = categoryGroups.get(category)!;
+    const sectorStart = catIndex * sectorSize - Math.PI / 2;
+    const angleStep = sectorSize / (productsInCategory.length + 1);
+
+    productsInCategory.forEach((spirit, spiritIndex) => {
+      const angle = sectorStart + angleStep * (spiritIndex + 1);
+      const productId = `product-${spirit.id}`;
+
+      nodes.push({
+        id: productId,
+        type: 'product',
+        label: spirit.name,
+        category: spirit.category,
+        position: {
+          x: Math.cos(angle) * productRadius,
+          y: Math.sin(angle) * productRadius,
+        },
+        connections: ['user'],
+        size: 48,
+        metadata: spirit,
+      });
+
+      // Connect user to this product
+      nodes[0].connections.push(productId);
+
+      // Layer 3: Tag nodes for this product
+      if (spirit.metadata) {
+        const allText = [
+          spirit.metadata.tasting_note,
+          spirit.metadata.nose,
+          spirit.metadata.palate,
+          spirit.metadata.finish,
+        ]
+          .filter(Boolean)
+          .join(', ');
+
+        const tags = allText
+          .split(',')
+          .map(t => t.trim())
+          .filter(t => t.length > 0)
+          .slice(0, 3); // Limit to top 3 tags per product
+
+        const tagRadius = 230;
+        const tagAngleSpread = sectorSize * 0.6; // Tags spread within 60% of sector
+        const tagAngleStep = tagAngleSpread / (tags.length + 1);
+
+        tags.forEach((tag, tagIndex) => {
+          const tagAngle = angle - tagAngleSpread / 2 + tagAngleStep * (tagIndex + 1);
+          const tagId = `tag-${spirit.id}-${tagIndex}`;
+
+          nodes.push({
+            id: tagId,
+            type: 'tag',
+            label: tag,
+            category: spirit.category,
+            position: {
+              x: Math.cos(tagAngle) * tagRadius,
+              y: Math.sin(tagAngle) * tagRadius,
+            },
+            connections: [productId],
+            size: 32,
+          });
+
+          // Connect product to this tag
+          const productNode = nodes.find(n => n.id === productId);
+          if (productNode) {
+            productNode.connections.push(tagId);
+          }
+        });
+      }
+    });
+  });
+
   return nodes;
 }
 
@@ -402,7 +530,7 @@ function generatePersona(
 export function analyzeCellar(spirits?: Spirit[]): FlavorAnalysis {
   // Use provided spirits or mock data
   const cellarSpirits = spirits && spirits.length > 0 ? spirits : MOCK_CELLAR_SPIRITS;
-  
+
   // Filter out wishlist items - only analyze owned spirits
   const ownedSpirits = cellarSpirits.filter(s => !s.isWishlist);
 
@@ -434,6 +562,9 @@ export function analyzeCellar(spirits?: Spirit[]): FlavorAnalysis {
   // Generate flavor nodes with spatial positioning
   const flavorNodes = generateFlavorNodes(ownedSpirits, topKeywords);
 
+  // Generate hierarchical nodes for 3-layer visualization
+  const hierarchicalNodes = generateHierarchicalNodes(ownedSpirits);
+
   // Generate persona
   const persona = generatePersona(topKeywords, dominantCategory);
 
@@ -445,6 +576,7 @@ export function analyzeCellar(spirits?: Spirit[]): FlavorAnalysis {
     coreFlavorProfile,
     dominantCategory,
     flavorNodes,
+    hierarchicalNodes,
   };
 }
 
