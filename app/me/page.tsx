@@ -61,6 +61,9 @@ export default function MyPage() {
     const email = user ? user.email : "로그인이 필요합니다";
     const roleBadge = user ? (role === 'ADMIN' ? '👑 관리자' : '🥂 클럽 멤버') : '👀 구경꾼';
 
+    // Mock user persona badge (would fetch from user data in production)
+    const personaBadge = user ? { emoji: "🥃", title: "위스키 애호가" } : null;
+
     const handleSave = async () => {
         setIsSaving(true);
         try {
@@ -176,6 +179,14 @@ export default function MyPage() {
                             <div className="px-4 py-1 rounded-full bg-secondary text-xs font-bold mb-8">
                                 {roleBadge}
                             </div>
+
+                            {/* Persona Badge - Small and refined */}
+                            {personaBadge && (
+                                <div className="mb-6 flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/10 to-amber-600/10 border border-amber-500/20">
+                                    <span className="text-lg">{personaBadge.emoji}</span>
+                                    <span className="text-xs font-semibold text-amber-200">{personaBadge.title}</span>
+                                </div>
+                            )}
 
                             {/* User Stats Summary with Guest Overlay */}
                             <div className="relative mb-8">
