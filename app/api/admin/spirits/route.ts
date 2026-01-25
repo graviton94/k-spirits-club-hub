@@ -30,10 +30,7 @@ export async function GET(req: NextRequest) {
         return NextResponse.json(spirits);
     } catch (error: any) {
         // Log error to a file for debugging in the absence of terminal access
-        try {
-            const fs = require('fs');
-            fs.appendFileSync('api-error.log', `[${new Date().toISOString()}] GET Spirits Error: ${error.message}\n${error.stack}\n`);
-        } catch (e) { }
+
 
         return NextResponse.json({ error: 'Failed to fetch spirits', details: error.message }, { status: 500 });
     }

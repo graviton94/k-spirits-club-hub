@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cabinetDb, spiritsDb } from '@/lib/db/firestore-rest';
 
+export const runtime = 'edge';
+
 export async function GET(req: NextRequest) {
     const userId = req.headers.get('x-user-id');
     if (!userId) {
