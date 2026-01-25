@@ -66,7 +66,7 @@ export default function SearchSpiritModal({ isOpen, onClose, onAdd, existingIds 
                         <input
                             autoFocus
                             placeholder="찾으시는 술 이름을 입력하세요..."
-                            className="w-full px-4 py-3 rounded-xl border-2 border-border bg-input text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none"
+                            className="w-full px-4 py-3 rounded-xl border-2 border-border bg-input text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary/50 focus:border-primary focus:ring-offset-2 outline-none"
                             value={query}
                             onChange={e => setQuery(e.target.value)}
                         />

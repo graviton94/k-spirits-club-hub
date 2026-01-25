@@ -168,7 +168,7 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit }: Revie
                             value={customTag}
                             onChange={(e) => setCustomTag(e.target.value)}
                             placeholder="+ 직접 입력"
-                            className="w-full px-3 py-1 text-xs rounded-md border-2 border-border bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/50"
+                            className="w-full px-3 py-1 text-xs rounded-md border-2 border-border bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
                         />
                     </form>
                 </div>
