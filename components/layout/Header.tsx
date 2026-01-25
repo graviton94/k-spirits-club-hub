@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useAuth } from "@/app/context/auth-context";
 import { User, LogIn } from "lucide-react";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 export function Header() {
     const { user, profile } = useAuth();
@@ -15,7 +16,7 @@ export function Header() {
     const profileImage = user && (profile?.profileImage || user.photoURL);
 
     return (
-        <header className="sticky top-0 z-40 w-full border-b border-white/10 bg-background/60 backdrop-blur-md supports-[backdrop-filter]:bg-background/30">
+        <header className="sticky top-0 z-40 w-full border-b border-gray-200 dark:border-white/10 bg-white/80 dark:bg-black/80 backdrop-blur-xl supports-[backdrop-filter]:bg-white/30 dark:supports-[backdrop-filter]:bg-black/30">
             <div className="container flex h-16 items-center justify-between px-4 max-w-4xl mx-auto">
                 <Link href="/" className="flex items-center gap-2">
                     <span className="text-2xl">🥃</span>
@@ -24,33 +25,37 @@ export function Header() {
                     </span>
                 </Link>
 
-                {user ? (
-                    <Link href="/me" className="flex items-center gap-3 pl-4 py-1 rounded-full hover:bg-white/5 transition-colors">
-                        <div className="text-right hidden sm:block">
-                            <p className="text-xs text-muted-foreground">Welcome back,</p>
-                            <p className="text-sm font-bold leading-none text-amber-500">{displayName}님</p>
-                        </div>
-                        <div className="relative w-9 h-9 rounded-full overflow-hidden border-2 border-amber-500/50 shadow-sm flex items-center justify-center bg-secondary">
-                            {profileImage ? (
-                                <img
-                                    src={profileImage}
-                                    alt={displayName}
-                                    className="w-full h-full object-cover"
-                                />
-                            ) : (
-                                <User className="w-5 h-5 text-amber-500" />
-                            )}
-                        </div>
-                    </Link>
-                ) : (
-                    <Link
-                        href="/login"
-                        className="flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
-                    >
-                        <LogIn className="w-4 h-4" />
-                        <span>Login</span>
-                    </Link>
-                )}
+                <div className="flex items-center gap-3">
+                    <ThemeToggle />
+
+                    {user ? (
+                        <Link href="/me" className="flex items-center gap-3 pl-4 py-1 rounded-full hover:bg-gray-100 dark:hover:bg-white/5 transition-colors">
+                            <div className="text-right hidden sm:block">
+                                <p className="text-xs text-muted-foreground">Welcome back,</p>
+                                <p className="text-sm font-bold leading-none text-amber-500">{displayName}님</p>
+                            </div>
+                            <div className="relative w-9 h-9 rounded-full overflow-hidden border-2 border-amber-500/50 shadow-sm flex items-center justify-center bg-secondary">
+                                {profileImage ? (
+                                    <img
+                                        src={profileImage}
+                                        alt={displayName}
+                                        className="w-full h-full object-cover"
+                                    />
+                                ) : (
+                                    <User className="w-5 h-5 text-amber-500" />
+                                )}
+                            </div>
+                        </Link>
+                    ) : (
+                        <Link
+                            href="/login"
+                            className="flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
+                        >
+                            <LogIn className="w-4 h-4" />
+                            <span>Login</span>
+                        </Link>
+                    )}
+                </div>
             </div>
         </header>
     );

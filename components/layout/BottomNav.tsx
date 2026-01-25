@@ -19,15 +19,15 @@ export function BottomNav() {
   ];
 
   return (
-    <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-md bg-black/80 backdrop-blur-xl border border-white/10 rounded-full shadow-2xl z-50 animate-fade-in-up">
+    <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-md bg-white/80 dark:bg-black/80 backdrop-blur-xl border border-gray-200 dark:border-white/10 rounded-full shadow-2xl z-50 animate-fade-in-up">
       <div className="flex justify-evenly items-center h-16 px-2">
         {navItems.map((item) => (
           <Link
             key={item.href}
             href={item.href}
-            className={`relative flex flex-col items-center justify-center p-2 rounded-2xl transition-all duration-300 group hover:bg-white/10 w-16 h-16 ${(item.href === "/" ? pathname === "/" : isActive(item.href))
+            className={`relative flex flex-col items-center justify-center p-2 rounded-2xl transition-all duration-300 group hover:bg-gray-100 dark:hover:bg-white/10 w-16 h-16 ${(item.href === "/" ? pathname === "/" : isActive(item.href))
               ? "text-amber-500"
-              : "text-gray-400 hover:text-white"
+              : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
               }`}
           >
             <span className={`text-2xl mb-0.5 transition-transform duration-300 group-hover:-translate-y-1 ${(item.href === "/" ? pathname === "/" : isActive(item.href)) ? "scale-110" : "scale-100"}`}>{item.icon}</span>

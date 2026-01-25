@@ -166,12 +166,7 @@ export default function ExploreContent() {
       {/* Level 1: Legal Categories (Root) */}
       <div className="mb-4">
         <div className="relative">
-          {/* Left fade indicator */}
-          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-slate-950 to-transparent z-10 pointer-events-none flex items-center justify-start pl-3">
-            <span className="text-slate-400 text-2xl opacity-80">‹</span>
-          </div>
-
-          <div ref={legalCategoryScrollRef} className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide snap-x justify-start md:justify-center px-12">
+          <div ref={legalCategoryScrollRef} className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide snap-x justify-start md:justify-center px-4">
             <CategoryFilter
               label="ALL"
               value=""
@@ -190,10 +185,6 @@ export default function ExploreContent() {
             ))}
           </div>
 
-          {/* Right fade indicator */}
-          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-slate-950 to-transparent z-10 pointer-events-none flex items-center justify-end pr-3">
-            <span className="text-slate-400 text-2xl opacity-80">›</span>
-          </div>
         </div>
       </div>
 
@@ -201,12 +192,7 @@ export default function ExploreContent() {
       {isNested && mainOptions && mainOptions.length > 0 && (
         <div className="mb-4 animate-fade-in-down">
           <div className="relative">
-            {/* Left fade indicator */}
-            <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-slate-950 to-transparent z-10 pointer-events-none flex items-center justify-start pl-3">
-              <span className="text-slate-400 text-xl opacity-70">‹</span>
-            </div>
-
-            <div ref={mainCategoryScrollRef} className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide snap-x justify-start md:justify-center px-12">
+            <div ref={mainCategoryScrollRef} className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide snap-x justify-start md:justify-center px-4">
               <CategoryFilter
                 label="전체"
                 value=""
@@ -226,10 +212,6 @@ export default function ExploreContent() {
               ))}
             </div>
 
-            {/* Right fade indicator */}
-            <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-slate-950 to-transparent z-10 pointer-events-none flex items-center justify-end pr-3">
-              <span className="text-slate-400 text-xl opacity-70">›</span>
-            </div>
           </div>
         </div>
       )}
@@ -238,12 +220,7 @@ export default function ExploreContent() {
       {subOptions.length > 0 && (
         <div className="mb-10 animate-fade-in-down delay-100">
           <div className="relative">
-            {/* Left fade indicator */}
-            <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-slate-950 to-transparent z-10 pointer-events-none flex items-center justify-start pl-3">
-              <span className="text-slate-400 text-lg opacity-60">‹</span>
-            </div>
-
-            <div ref={subCategoryScrollRef} className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide snap-x justify-start md:justify-center px-12">
+            <div ref={subCategoryScrollRef} className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide snap-x justify-start md:justify-center px-4">
               {!isNested && (
                 <CategoryFilter
                   label="전체"
@@ -279,10 +256,6 @@ export default function ExploreContent() {
               ))}
             </div>
 
-            {/* Right fade indicator */}
-            <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-slate-950 to-transparent z-10 pointer-events-none flex items-center justify-end pr-3">
-              <span className="text-slate-400 text-lg opacity-60">›</span>
-            </div>
           </div>
         </div>
       )}

@@ -19,6 +19,16 @@ export default function CabinetPage() {
   const [selectedSpirit, setSelectedSpirit] = useState<Spirit | null>(null);
   const { profile } = useAuth();
 
+  /*
+  ### Configuration
+  - [/] Tailwind config - dark mode 활성화
+  - [/] globals.css - CSS 변수로 테마 색상 정의
+
+  ### Theme Toggle Component
+  - [/] ThemeToggle 컴포넌트 생성
+  - [/] Header에 테마 토글 버튼 추가
+  - [/] localStorage로 테마 설정 저장
+  */
   useEffect(() => {
     // Load from localStorage or use mock data
     const loaded = loadCellarFromStorage();
@@ -47,10 +57,10 @@ export default function CabinetPage() {
           >
             🥃
           </motion.div>
-          <h2 className="text-3xl font-bold mb-4 text-white">
+          <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
             술장이 비어있어 간이 심심해하고 있습니다
           </h2>
-          <p className="text-gray-400 mb-8 text-lg">
+          <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg">
             술을 채우러 가볼까요?
           </p>
           <Link
@@ -68,11 +78,11 @@ export default function CabinetPage() {
     <div className="container mx-auto px-4 py-8 max-w-6xl">
       {/* Header with Toggle */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white mb-1">🍾 My Collections</h1>
-        <p className="text-sm text-gray-400 mb-6">{ownedSpirits.length}병 소장중</p>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">🍾 My Collections</h1>
+        <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">{ownedSpirits.length}병 소장중</p>
 
         {/* Segmented Toggle */}
-        <div className="relative inline-flex bg-gray-800/50 backdrop-blur-sm rounded-full p-1 border border-gray-700">
+        <div className="relative inline-flex bg-gray-100 dark:bg-gray-800/50 backdrop-blur-sm rounded-full p-1 border border-gray-300 dark:border-gray-700">
           <motion.div
             className="absolute inset-y-1 bg-gradient-to-r from-amber-500 to-amber-600 rounded-full"
             initial={false}
@@ -85,7 +95,7 @@ export default function CabinetPage() {
 
           <button
             onClick={() => setViewMode('cellar')}
-            className={`relative z-10 px-4 py-2 rounded-full text-xs font-bold transition-colors truncate ${viewMode === 'cellar' ? 'text-black' : 'text-gray-400 hover:text-gray-200'
+            className={`relative z-10 px-4 py-2 rounded-full text-xs font-bold transition-colors truncate ${viewMode === 'cellar' ? 'text-black' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
               }`}
           >
             🍾 술장
@@ -93,7 +103,7 @@ export default function CabinetPage() {
 
           <button
             onClick={() => setViewMode('flavor')}
-            className={`relative z-10 px-4 py-2 rounded-full text-xs font-bold transition-colors truncate ${viewMode === 'flavor' ? 'text-black' : 'text-gray-400 hover:text-gray-200'
+            className={`relative z-10 px-4 py-2 rounded-full text-xs font-bold transition-colors truncate ${viewMode === 'flavor' ? 'text-black' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
               }`}
           >
             🌌 취향 지도
@@ -181,7 +191,7 @@ export default function CabinetPage() {
             {/* Wishlist Section - enhanced with grayscale */}
             {wishlistSpirits.length > 0 && (
               <section className="mb-8">
-                <h2 className="text-lg font-bold text-white mb-4">🔖 위시리스트 ({wishlistSpirits.length})</h2>
+                <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">🔖 위시리스트 ({wishlistSpirits.length})</h2>
                 <div className="grid grid-cols-4 gap-3">
                   {wishlistSpirits.map((spirit) => (
                     <motion.div
@@ -192,14 +202,14 @@ export default function CabinetPage() {
                       onClick={() => setSelectedSpirit(spirit)}
                     >
                       {/* Grayscale filter applied to distinguish from owned items */}
-                      <div className="aspect-[2/3] w-full rounded-lg overflow-hidden bg-neutral-800/50 transition-all duration-300 [filter:grayscale(100%)_drop-shadow(0_3px_6px_rgba(0,0,0,0.15))] hover:[filter:grayscale(0%)_drop-shadow(0_6px_12px_rgba(0,0,0,0.25))]">
+                      <div className="aspect-[2/3] w-full rounded-lg overflow-hidden bg-gray-100 dark:bg-neutral-800/50 transition-all duration-300 [filter:grayscale(100%)_drop-shadow(0_3px_6px_rgba(0,0,0,0.15))] hover:[filter:grayscale(0%)_drop-shadow(0_6px_12px_rgba(0,0,0,0.25))]">
                         {spirit.imageUrl ? (
                           <img src={spirit.imageUrl} alt={spirit.name} className="w-full h-full object-cover opacity-60 hover:opacity-100 transition-opacity" />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center text-3xl opacity-60">🥃</div>
                         )}
                       </div>
-                      <p className="text-[9px] text-center mt-1.5 text-gray-400 truncate w-full px-0.5 leading-tight">{spirit.name}</p>
+                      <p className="text-[9px] text-center mt-1.5 text-gray-600 dark:text-gray-400 truncate w-full px-0.5 leading-tight">{spirit.name}</p>
                     </motion.div>
                   ))}
                 </div>

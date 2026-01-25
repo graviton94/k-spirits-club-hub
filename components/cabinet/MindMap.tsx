@@ -45,7 +45,7 @@ export default function MindMap({ analysis, profileImage }: MindMapProps) {
   };
 
   const topFlavors = analysis.topKeywords.slice(0, 5);
-  
+
   // Use pre-calculated positions from flavor-engine if available
   // Fallback to even circular distribution if positions weren't calculated
   // Note: relatedSpirits is empty in fallback - only used for visualization, not data processing
@@ -58,7 +58,7 @@ export default function MindMap({ analysis, profileImage }: MindMapProps) {
   }));
 
   // Generate star positions once to avoid re-rendering
-  const stars = useMemo(() => 
+  const stars = useMemo(() =>
     Array.from({ length: 50 }).map(() => ({
       left: Math.random() * 100,
       top: Math.random() * 100,
@@ -69,7 +69,7 @@ export default function MindMap({ analysis, profileImage }: MindMapProps) {
   );
 
   return (
-    <div className="relative w-full min-h-[70vh] bg-gradient-to-b from-black via-gray-900 to-black rounded-3xl overflow-hidden">
+    <div className="relative w-full min-h-[70vh] bg-gradient-to-b from-gray-50 via-white to-gray-50 dark:from-black dark:via-gray-900 dark:to-black rounded-3xl overflow-hidden">
       {/* Starfield background effect */}
       <div className="absolute inset-0 overflow-hidden">
         {stars.map((star, i) => (
@@ -115,9 +115,9 @@ export default function MindMap({ analysis, profileImage }: MindMapProps) {
             className="relative w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-amber-400 via-amber-500 to-orange-600 flex items-center justify-center overflow-hidden"
           >
             {profileImage ? (
-              <img 
-                src={profileImage} 
-                alt="Profile" 
+              <img
+                src={profileImage}
+                alt="Profile"
                 className="w-full h-full object-cover"
               />
             ) : (
@@ -228,7 +228,7 @@ export default function MindMap({ analysis, profileImage }: MindMapProps) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1 }}
-        className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black via-black/90 to-transparent"
+        className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-white via-white/90 to-transparent dark:from-black dark:via-black/90 dark:to-transparent"
       >
         <div className="max-w-4xl mx-auto">
           <h3 className="text-gray-400 text-xs sm:text-sm font-semibold mb-3 text-center">
