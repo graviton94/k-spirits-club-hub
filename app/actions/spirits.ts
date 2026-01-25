@@ -33,3 +33,34 @@ export async function getSpiritsAction(
         throw new Error("Failed to fetch spirits");
     }
 }
+
+/**
+ * Server Action to fetch minimized search index for all PUBLISHED spirits.
+ * This returns a lightweight data structure with short keys to reduce bandwidth.
+ * 
+ * Usage from frontend:
+ * ```typescript
+ * import { getSpiritsSearchIndex } from '@/app/actions/spirits';
+ * const searchIndex = await getSpiritsSearchIndex();
+ * // searchIndex = [{ i: id, n: name, en: name_en, c: category, t: thumbnailUrl }, ...]
+ * ```
+ * 
+ * @returns Array of minimized spirit objects with short keys
+ */
+export async function getSpiritsSearchIndex() {
+    try {
+        console.log('[getSpiritsSearchIndex] Generating search index...');
+        const index = await db.getPublishedSearchIndex();
+        console.log('[getSpiritsSearchIndex] Generated index with', index.length, 'spirits');
+        
+        // Log first item as sample
+        if (index.length > 0) {
+            console.log('[getSpiritsSearchIndex] Sample:', index[0]);
+        }
+        
+        return index;
+    } catch (error) {
+        console.error("[getSpiritsSearchIndex] Failed to generate search index:", error);
+        throw new Error("Failed to generate search index");
+    }
+}

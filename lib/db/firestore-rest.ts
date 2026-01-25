@@ -238,6 +238,33 @@ export const spiritsDb = {
                 headers: { Authorization: `Bearer ${token}` }
             });
         }
+    },
+
+    /**
+     * Get all PUBLISHED spirits for search index generation
+     * Returns minimized data structure for bandwidth optimization
+     */
+    async getPublishedSearchIndex(): Promise<Array<{
+        i: string;           // id
+        n: string;           // name
+        en: string | null;   // name_en
+        c: string;           // category
+        t: string | null;    // thumbnailUrl
+    }>> {
+        // Fetch all published spirits
+        const publishedSpirits = await this.getAll({ 
+            status: 'PUBLISHED' as SpiritStatus,
+            isPublished: true 
+        });
+
+        // Map to minimized structure with short keys
+        return publishedSpirits.map(spirit => ({
+            i: spirit.id,
+            n: spirit.name,
+            en: spirit.metadata?.name_en || null,
+            c: spirit.category,
+            t: spirit.thumbnailUrl
+        }));
     }
 };
 
