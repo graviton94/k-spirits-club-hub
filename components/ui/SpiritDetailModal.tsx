@@ -130,7 +130,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                     animate={{ scale: 1, y: 0, opacity: 1 }}
                     exit={{ scale: 0.9, y: 20, opacity: 0 }}
                     transition={{ type: "spring", stiffness: 350, damping: 28 }}
-                    className="bg-background rounded-3xl w-full max-w-sm sm:max-w-md shadow-2xl border border-border overflow-hidden relative"
+                    className="bg-white/30 dark:bg-slate-900/40 backdrop-blur-2xl rounded-3xl w-full max-w-sm sm:max-w-md shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] border border-white/40 dark:border-white/10 overflow-hidden relative"
                     onClick={(e) => e.stopPropagation()}
                 >
                     {/* Close button */}
@@ -183,7 +183,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                     </div>
 
                     {/* 2. Actions & Detailed Info */}
-                    <div className="p-6 space-y-6 max-h-[50vh] overflow-y-auto custom-scrollbar bg-background text-foreground">
+                    <div className="p-6 space-y-6 max-h-[50vh] overflow-y-auto custom-scrollbar bg-white/60 dark:bg-slate-900/60 text-foreground backdrop-blur-md">
 
                         {/* Action Buttons */}
                         <div className="flex gap-2">

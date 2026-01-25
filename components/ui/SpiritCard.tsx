@@ -20,7 +20,7 @@ export function SpiritCard({ spirit, onClick }: SpiritCardProps) {
 
   const content = (
     <motion.div
-      className="group flex gap-3 p-3 rounded-lg bg-card border border-border hover:bg-secondary hover:border-primary/30 transition-all cursor-pointer shadow-sm"
+      className="group flex gap-3 p-3 rounded-2xl bg-white/60 dark:bg-slate-900/40 backdrop-blur-md border border-white/40 dark:border-white/10 hover:bg-white/80 dark:hover:bg-slate-900/60 transition-all cursor-pointer shadow-sm"
       whileHover={{ scale: 0.99 }}
       transition={{ type: "spring", stiffness: 400, damping: 17 }}
       onClick={() => onClick?.(spirit)}

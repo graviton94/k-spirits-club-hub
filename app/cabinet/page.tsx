@@ -38,11 +38,6 @@ export default function CabinetPage() {
   ### Configuration
   - [/] Tailwind config - dark mode 활성화
   - [/] globals.css - CSS 변수로 테마 색상 정의
-
-  ### Theme Toggle Component
-  - [/] ThemeToggle 컴포넌트 생성
-  - [/] Header에 테마 토글 버튼 추가
-  - [/] localStorage로 테마 설정 저장
   */
   useEffect(() => {
     if (loading) return;
@@ -50,13 +45,6 @@ export default function CabinetPage() {
       setSpirits([]);
       return;
     }
-
-    // Load from API
-    // We need user ID. useAuth provides 'user' (Firebase User) which has uid.
-    // However, useAuth returns { user, profile, ... }. 
-    // profile doesn't have ID usually (it has nickname etc).
-    // Let's get 'user' from useAuth.
-    // Wait, I need to destruct 'user' from useAuth().
   }, [profile, loading]);
 
   // We need 'user' for ID
@@ -102,7 +90,6 @@ export default function CabinetPage() {
         });
       } catch (e) {
         console.error('Sync failed', e);
-        // Revert? (Optional complexity)
       }
     }
   };
@@ -113,7 +100,6 @@ export default function CabinetPage() {
     const updatedSpirit = { ...reviewTarget, userReview: review };
     syncSpirit(updatedSpirit);
 
-    // Also update selectedSpirit if it's the one being reviewed
     if (selectedSpirit && selectedSpirit.id === reviewTarget.id) {
       setSelectedSpirit({ ...selectedSpirit, userReview: review });
     }
@@ -152,7 +138,7 @@ export default function CabinetPage() {
           >
             🥃
           </motion.div>
-          <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
+          <h2 className="text-3xl font-black mb-4 bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">
             술장이 비어있어 간이 심심해하고 있습니다
           </h2>
           <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg">
@@ -220,10 +206,8 @@ export default function CabinetPage() {
             {/* Guest User Overlay */}
             {!profile && !loading && (
               <div className="absolute inset-0 z-40 flex items-center justify-center">
-                {/* Glassmorphism Blur Overlay */}
                 <div className="absolute inset-0 bg-white/60 dark:bg-black/60 backdrop-blur-xl rounded-3xl" />
 
-                {/* Signup Prompt Card */}
                 <motion.div
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
@@ -231,7 +215,6 @@ export default function CabinetPage() {
                   className="relative z-50 bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 rounded-3xl p-10 shadow-2xl border border-slate-200 dark:border-slate-700 max-w-md mx-4"
                 >
                   <div className="text-center space-y-6">
-                    {/* Icon */}
                     <motion.div
                       animate={{ y: [0, -10, 0] }}
                       transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
@@ -240,21 +223,17 @@ export default function CabinetPage() {
                       🗃️
                     </motion.div>
 
-                    {/* Title */}
                     <h2 className="text-3xl font-black bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">
                       회원 전용 공간
                     </h2>
 
-                    {/* Description */}
                     <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed">
                       나만의 술장을 만들고<br />
                       기록 해보세요!
                     </p>
 
-                    {/* Signup Button */}
                     <button
                       onClick={() => {
-                        // Trigger login/signup modal
                         const loginButton = document.querySelector('[aria-label="Login"]') as HTMLElement;
                         if (loginButton) loginButton.click();
                       }}
@@ -263,7 +242,6 @@ export default function CabinetPage() {
                       회원가입하고 시작하기
                     </button>
 
-                    {/* Additional Info */}
                     <p className="text-xs text-gray-500 dark:text-gray-500">
                       이미 회원이신가요? 로그인하세요
                     </p>
@@ -274,12 +252,9 @@ export default function CabinetPage() {
 
             {/* Visual Display Shelf Section */}
             <section className="mb-16">
-              {/* Premium Gallery Container */}
               <div className="relative bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 rounded-3xl p-10 shadow-2xl border border-slate-200 dark:border-slate-700">
-                {/* Elegant overlay pattern */}
                 <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] bg-[radial-gradient(circle_at_50%_50%,rgba(0,0,0,0.1),transparent_50%)] pointer-events-none rounded-3xl" />
 
-                {/* Premium Gallery Grid */}
                 <div className="relative">
                   <motion.div
                     initial="hidden"
@@ -305,19 +280,15 @@ export default function CabinetPage() {
                         className="cursor-pointer group relative"
                         onClick={() => setSelectedSpirit(spirit)}
                       >
-                        {/* Existing Review Badge */}
                         {spirit.userReview && (
                           <div className="absolute top-2 right-2 z-20 bg-amber-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md flex items-center gap-1">
                             <span>★</span> {spirit.userReview.ratingOverall.toFixed(1)}
                           </div>
                         )}
 
-                        {/* Premium Card with gradient border */}
                         <div className="relative aspect-[2/3] rounded-2xl overflow-hidden bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 p-1 shadow-xl hover:shadow-2xl transition-all duration-300">
-                          {/* Gradient border effect */}
                           <div className="absolute inset-0 bg-gradient-to-br from-amber-200 via-orange-200 to-amber-300 dark:from-amber-600 dark:via-orange-600 dark:to-amber-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
 
-                          {/* Image container */}
                           <div className="relative h-full rounded-xl overflow-hidden bg-white dark:bg-slate-900 group-hover:blur-[2px] transition-all duration-300">
                             {spirit.imageUrl ? (
                               <img
@@ -338,11 +309,8 @@ export default function CabinetPage() {
                               />
                             )}
 
-                            {/* Overlay gradient on hover */}
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
-                              {/* Hover Actions */}
                               <div className="flex justify-between items-center w-full mt-auto">
-                                {/* Write Review Button (Bottom Left) */}
                                 <button
                                   onClick={(e) => openReviewModal(e, spirit)}
                                   className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md hover:bg-amber-500 text-white flex items-center justify-center transition-all hover:scale-110 active:scale-95"
@@ -351,7 +319,6 @@ export default function CabinetPage() {
                                   ✏️
                                 </button>
 
-                                {/* Info Button (Bottom Right) */}
                                 <button
                                   onClick={(e) => openInfoModal(e, spirit)}
                                   className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md hover:bg-blue-500 text-white flex items-center justify-center transition-all hover:scale-110 active:scale-95"
@@ -364,15 +331,12 @@ export default function CabinetPage() {
                           </div>
                         </div>
 
-                        {/* Label */}
                         <p className="text-xs text-center mt-3 text-gray-800 dark:text-gray-200 font-semibold truncate px-1">
                           {spirit.name}
                         </p>
                       </motion.div>
-
                     ))}
 
-                    {/* Add New Button Card */}
                     <motion.div
                       whileHover={{ y: -4, scale: 1.02 }}
                       className="cursor-pointer group flex flex-col items-center justify-center aspect-[2/3] rounded-2xl border-2 border-dashed border-gray-300 dark:border-gray-700 hover:border-amber-500 hover:bg-amber-50/50 dark:hover:bg-amber-900/10 transition-all"
@@ -388,7 +352,6 @@ export default function CabinetPage() {
               </div>
             </section>
 
-            {/* Wishlist Section - enhanced with grayscale */}
             {wishlistSpirits.length > 0 && (
               <section className="mb-8">
                 <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">🔖 위시리스트 ({wishlistSpirits.length})</h2>
@@ -401,7 +364,6 @@ export default function CabinetPage() {
                       className="relative cursor-pointer flex flex-col items-center"
                       onClick={() => setSelectedSpirit(spirit)}
                     >
-                      {/* Grayscale filter applied to distinguish from owned items */}
                       <div className="aspect-[2/3] w-full rounded-lg overflow-hidden bg-gray-100 dark:bg-neutral-800/50 transition-all duration-300 [filter:grayscale(100%)_drop-shadow(0_3px_6px_rgba(0,0,0,0.15))] hover:[filter:grayscale(0%)_drop-shadow(0_6px_12px_rgba(0,0,0,0.25))]">
                         {spirit.imageUrl ? (
                           <img
@@ -438,13 +400,10 @@ export default function CabinetPage() {
             transition={{ duration: 0.3 }}
             className="relative"
           >
-            {/* Guest User Overlay for Flavor Map */}
             {!profile && !loading && (
               <div className="absolute inset-0 z-40 flex items-center justify-center">
-                {/* Glassmorphism Blur Overlay */}
                 <div className="absolute inset-0 bg-white/60 dark:bg-black/60 backdrop-blur-xl rounded-3xl" />
 
-                {/* Signup Prompt Card */}
                 <motion.div
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
@@ -452,7 +411,6 @@ export default function CabinetPage() {
                   className="relative z-50 bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 rounded-3xl p-10 shadow-2xl border border-slate-200 dark:border-slate-700 max-w-md mx-4"
                 >
                   <div className="text-center space-y-6">
-                    {/* Icon */}
                     <motion.div
                       animate={{ rotate: [0, 10, -10, 0] }}
                       transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
@@ -461,18 +419,15 @@ export default function CabinetPage() {
                       🌌
                     </motion.div>
 
-                    {/* Title */}
                     <h2 className="text-3xl font-black bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">
                       취향 지도 잠금
                     </h2>
 
-                    {/* Description */}
                     <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed">
                       나만의 취향 분석을<br />
                       시작 해보세요!
                     </p>
 
-                    {/* Signup Button */}
                     <button
                       onClick={() => {
                         const loginButton = document.querySelector('[aria-label="Login"]') as HTMLElement;
@@ -492,19 +447,15 @@ export default function CabinetPage() {
         )}
       </AnimatePresence>
 
-      {/* Review Modal */}
-      {
-        reviewModalOpen && reviewTarget && (
-          <ReviewModal
-            spirit={reviewTarget}
-            isOpen={reviewModalOpen}
-            onClose={() => setReviewModalOpen(false)}
-            onSubmit={handleReviewSubmit}
-          />
-        )
-      }
+      {reviewModalOpen && reviewTarget && (
+        <ReviewModal
+          spirit={reviewTarget}
+          isOpen={reviewModalOpen}
+          onClose={() => setReviewModalOpen(false)}
+          onSubmit={handleReviewSubmit}
+        />
+      )}
 
-      {/* Search Modal */}
       <SearchSpiritModal
         isOpen={searchModalOpen}
         onClose={() => setSearchModalOpen(false)}
@@ -518,13 +469,11 @@ export default function CabinetPage() {
         existingIds={new Set(spirits.map(s => s.id))}
       />
 
-      {/* Quick Info Popup Modal - Redesigned */}
       <SpiritDetailModal
         isOpen={!!selectedSpirit}
         spirit={selectedSpirit}
         onClose={() => setSelectedSpirit(null)}
         onStatusChange={() => {
-          // Re-fetch cellar data to reflect changes
           if (user) {
             fetch('/api/cabinet', {
               headers: { 'x-user-id': user!.uid }
@@ -537,22 +486,19 @@ export default function CabinetPage() {
         }}
       />
 
-      {/* Bottom Ad - After Cabinet Content */}
-      {
-        process.env.NEXT_PUBLIC_ADSENSE_CLIENT && process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT && (
-          <div className="mt-12 mb-6">
-            <div className="text-xs text-gray-500 text-center mb-2">Advertisement</div>
-            <GoogleAd
-              client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT}
-              slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT}
-              format="auto"
-              responsive={true}
-              style={{ display: 'block', minHeight: '100px' }}
-              className="rounded-lg overflow-hidden"
-            />
-          </div>
-        )
-      }
+      {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT && (
+        <div className="mt-12 mb-6">
+          <div className="text-xs text-gray-500 text-center mb-2">Advertisement</div>
+          <GoogleAd
+            client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT}
+            slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT}
+            format="auto"
+            responsive={true}
+            style={{ display: 'block', minHeight: '100px' }}
+            className="rounded-lg overflow-hidden"
+          />
+        </div>
+      )}
     </div >
   );
 }

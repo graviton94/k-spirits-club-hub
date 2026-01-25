@@ -1,36 +1,36 @@
 export type TagColorVariant = 'amber' | 'orange' | 'red' | 'pink' | 'purple' | 'blue' | 'cyan' | 'teal' | 'green' | 'lime' | 'yellow' | 'stone' | 'slate';
 
 export const TAG_COLOR_MAPPING: Record<string, TagColorVariant> = {
-    // Nose - Fruit
-    'fruit_orchard_citrus': 'amber', // lemon, lime, orange -> bright warm
-    'fruit_berry_tropical': 'pink',  // berry, tropical -> pink/red
-    'fruit_dried_cooked': 'orange',  // dried fruit, jam -> deep warm
+    // Nose - 과일
+    '과일_시트러스': 'amber',
+    '과일_베리_열대과일': 'pink',
+    '과일_말린_조린': 'orange',
 
-    // Nose - Floral & Herbal
-    'floral': 'purple',              // flowers -> purple/lilac
-    'herbal_botanical_vegetal': 'green', // herbs, grass -> green
+    // Nose - 꽃 & 허브
+    '꽃': 'purple',
+    '허브_식물_채소': 'green',
 
-    // Nose - Spice & Sweet
-    'spice': 'red',                  // cinnamon, pepper -> spicy red
-    'sweet_confectionery_dairy': 'yellow', // caramel, cream -> sweet yellow
+    // Nose - 향신료 & 달콤함
+    '향신료': 'red',
+    '달콤함_과자_유제품': 'yellow',
 
-    // Nose - Nutty & Woody
-    'nutty_grain_roasted': 'stone',  // grain, coffee -> earthy stone
-    'woody_earthy_oxidative': 'stone', // wood, leather -> earthy stone
+    // Nose - 견과 & 우디
+    '고소함_곡물_로스팅': 'stone',
+    '우디_흙_산화': 'stone',
 
-    // Nose - Others
-    'smoke_peat_mineral_coastal': 'slate', // smoke, ash -> grey slate
-    'chemical_defect': 'slate',            // industrial -> grey slate
+    // Nose - 기타
+    '스모크_피트_미네랄_해안': 'slate',
+    '화학적_결함': 'slate',
 
     // Palate
-    'sweetness_acid': 'lime',        // sweet/sour -> zesty lime
-    'body_texture': 'blue',          // mouthfeel -> structural blue
-    'mouthfeel_structure': 'cyan',   // structure -> clean cyan
-    'fermentation_umami': 'teal',    // fermentation -> complex teal
+    '단맛_산미': 'lime',
+    '바디_질감': 'blue',
+    '입안촉감_구조': 'cyan',
+    '발효_감칠맛': 'teal',
 
     // Finish
-    'length': 'blue',                // duration -> cool blue
-    'nature': 'purple',              // character -> complex purple
+    '길이': 'blue',
+    '성질': 'purple',
 };
 
 export const TAG_COLORS: Record<TagColorVariant, { bg: string, text: string, border: string, hex: string }> = {

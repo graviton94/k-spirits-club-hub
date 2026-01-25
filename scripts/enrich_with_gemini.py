@@ -69,19 +69,19 @@ def get_category_prompt(category: str) -> str:
     cat_lower = str(category).lower()
     
     if 'whisky' in cat_lower or '위스키' in cat_lower:
-        categories = METADATA['categories'].get('whisky', {})
+        categories = METADATA['categories'].get('위스키', {})
         return f"- 위스키 카테고리 가이드: {json.dumps(categories, ensure_ascii=False)}"
     elif 'gin' in cat_lower or '진' in cat_lower:
-        return f"- 진(Gin) 카테고리 가이드: {json.dumps(METADATA['categories'].get('gin', []), ensure_ascii=False)}"
+        return f"- 진(Gin) 카테고리 가이드: {json.dumps(METADATA['categories'].get('일반증류주', {}).get('진', []), ensure_ascii=False)}"
     elif 'rum' in cat_lower or '럼' in cat_lower:
-        return f"- 럼(Rum) 카테고리 가이드: {json.dumps(METADATA['categories'].get('rum', []), ensure_ascii=False)}"
+        return f"- 럼(Rum) 카테고리 가이드: {json.dumps(METADATA['categories'].get('일반증류주', {}).get('럼', []), ensure_ascii=False)}"
     elif 'tequila' in cat_lower or '테킬라' in cat_lower or '데킬라' in cat_lower:
-        return f"- 테킬라 카테고리 가이드: {json.dumps(METADATA['categories'].get('tequila', []), ensure_ascii=False)}"
+        return f"- 데킬라 카테고리 가이드: {json.dumps(METADATA['categories'].get('일반증류주', {}).get('데킬라/메즈칼', []), ensure_ascii=False)}"
     elif 'brandy' in cat_lower or '브랜디' in cat_lower or 'cognac' in cat_lower:
-        return f"- 브랜디 카테고리 가이드: {json.dumps(METADATA['categories'].get('brandy', []), ensure_ascii=False)}"
+        return f"- 브랜디 카테고리 가이드: {json.dumps(METADATA['categories'].get('브랜디', []), ensure_ascii=False)}"
     else:
-        # Default or Korean Spirits
-        return f"- 일반/기타 주류 가이드: {json.dumps(METADATA['categories'].get('korean_spirits', []), ensure_ascii=False)}"
+        # Default or Korean Spirits (소주, 탁주 등)
+        return f"- 일반/기타 주류 가이드: {json.dumps(METADATA['categories'].get('소주', {}), ensure_ascii=False)}"
 
 def enrich_batch(batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     # 컨텍스트 최적화: 필요한 정보만 추출

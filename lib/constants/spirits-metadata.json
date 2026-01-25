@@ -4,134 +4,132 @@
     "last_updated": "2026-01-25",
     "categories": {
         "소주": {
-            "korean_soju": [
+            "한국 소주": [
                 "희석식 소주",
                 "증류식 소주"
             ],
-            "japanese_shochu": [
-                "Shochu (Honkaku)",
-                "Ko-rui Shochu",
-                "Otsu-rui Shochu"
+            "일본 쇼추": [
+                "혼카쿠 쇼추",
+                "코루이 쇼추",
+                "오토루이 쇼추",
+                "이모 쇼추",
+                "무기 쇼추",
+                "코메 쇼추",
+                "소바 쇼추"
             ],
-            "japanese_shochu_raw": [
-                "Imo-Shochu",
-                "Mugi-Shochu",
-                "Kome-Shochu",
-                "Soba-Shochu"
-            ],
-            "awamori": [
-                "Awamori",
-                "Kusu (Aged Awamori)"
+            "아와모리": [
+                "아와모리",
+                "숙성 아와모리"
             ]
         },
         "위스키": {
-            "scotch": [
-                "Single Malt Scotch",
-                "Blended Scotch",
-                "Single Grain Scotch",
-                "Blended Malt"
+            "스카치 위스키": [
+                "싱글 몰트 스카치 위스키",
+                "블렌디드 스카치 위스키",
+                "싱글 그린 스카치 위스키",
+                "블렌디드 몰트 스카치 위스키"
             ],
-            "american": [
-                "Bourbon",
-                "Tennessee",
-                "Rye Whiskey",
-                "Corn Whiskey"
+            "아메리칸 위스키": [
+                "버번 위스키",
+                "테네시 위스키",
+                "라이 위스키",
+                "콘 위스키"
             ],
-            "world_whisky": [
-                "Irish Whiskey",
-                "Japanese Whisky",
-                "Canadian Whisky",
-                "Taiwanese Whisky",
-                "Korean Whisky",
-                "Indian Whisky",
-                "Australian Whisky",
-                "European Continental Whisky"
+            "월드 위스키": [
+                "아이리쉬 위스키",
+                "일본 위스키",
+                "캐나다 위스키",
+                "타이완 위스키",
+                "한국 위스키",
+                "인도 위스키",
+                "아우스트리아 위스키",
+                "유럽 대륙 위스키"
             ]
         },
         "맥주": {
-            "lager": [
-                "Pilsner",
-                "Helles",
-                "Dunkel",
-                "Bock",
-                "Marzen"
+            "라거": [
+                "필스너",
+                "헬레스",
+                "듄켈",
+                "복",
+                "메르첸"
             ],
-            "ale": [
-                "Pale Ale",
+            "에일": [
+                "페일에일",
                 "IPA",
-                "NEIPA",
-                "Belgian Ale",
-                "Saison"
+                "잉글랜드 IPA",
+                "벨지안 에일",
+                "세종"
             ],
-            "dark_beer": [
-                "Stout",
-                "Porter",
-                "Schwarzbier",
-                "Baltic Porter"
+            "흑맥주": [
+                "스타우트",
+                "포터",
+                "슈바르츠비어",
+                "발틱 포터"
             ],
-            "specialty": [
-                "Sour",
-                "Wheat Beer",
-                "Barrel Aged Beer",
-                "Flavored Beer",
-                "Hybrid Beer"
+            "기타맥주": [
+                "사워",
+                "밀맥주",
+                "오크 숙성 맥주",
+                "가향 가당 맥주",
+                "기타 맥주"
             ]
         },
         "일반증류주": {
-            "gin": [
-                "London Dry Gin",
-                "Plymouth Gin",
-                "Old Tom Gin",
-                "Navy Strength Gin",
-                "Genever",
-                "New Western / Contemporary",
-                "Sloe Gin"
+            "진": [
+                "런던 드라이 진",
+                "플리머스 진",
+                "올드 톰 진",
+                "네이비 스트렝스 진",
+                "제네버",
+                "뉴 웨스턴 / 컨템포러리 진",
+                "슬로 진"
             ],
-            "rum": [
-                "Spanish Style (Ron)",
-                "English Style (Rum)",
-                "French Style (Rhum Agricole)",
-                "Overproof Rum",
-                "Spiced Rum",
-                "Cachaça"
+            "럼": [
+                "스페니시 스타일 럼",
+                "잉글리시 스타일 럼",
+                "프렌치 스타일 럼(럼 아그리콜)",
+                "오버프루프 럼",
+                "스파이스드 럼",
+                "카샤사"
             ],
-            "tequila_mezcal": [
-                "Blanco",
-                "Reposado",
-                "Añejo",
-                "Extra Añejo",
-                "Cristalino",
-                "Mezcal"
+            "데킬라/메즈칼": [
+                "블랑코",
+                "레포사도",
+                "아네호",
+                "엑스트라 아네호",
+                "크리스탈리노",
+                "메즈칼"
             ],
-            "vodka": [
-                "Original Vodka",
-                "Flavored Vodka"
+            "보드카": [
+                "오리지널 보드카",
+                "플레이버드 보드카"
             ],
-            "chinese_baijiu": [
-                "Strong Aroma (浓香型)",
-                "Sauce Aroma (酱香型)",
-                "Light Aroma (清香型)",
-                "Rice Aroma (米香型)",
-                "Mixed Aroma (兼香型)"
+            "중국 백주": [
+                "농향형",
+                "장향형",
+                "청향형",
+                "미향형",
+                "겸향형"
             ],
-            "other_chinese_spirits": [
-                "Erguotou",
-                "Fenjiu",
-                "Xifengjiu"
+            "기타 중국 주류": [
+                "이과두주",
+                "분주",
+                "서봉주"
             ]
         },
         "기타 주류": {
-            "mixed_drink": [
-                "Highball",
-                "RTD",
+            "하이볼/RTD": [
+                "하이볼",
+                "즉석음용주(RTD)",
                 "발포주"
             ],
-            "others": [
+            "기타": [
                 "그외주류"
             ]
         },
         "탁주": {
-            "makgeolli": [
+            "막걸리": [
                 "탁주(막걸리)",
                 "생막걸리",
                 "살균막걸리",
@@ -139,59 +137,59 @@
             ]
         },
         "약주": {
-            "yakju": [
+            "약주": [
                 "약주",
                 "전통 약주",
                 "개량 약주"
             ]
         },
         "청주": {
-            "korean_cheongju": [
+            "한국 청주": [
                 "청주"
             ],
-            "sake_style": [
-                "Sake (Nihonshu)",
-                "Junmai",
-                "Ginjo",
-                "Daiginjo"
+            "사케": [
+                "사케(니혼슈)",
+                "준마이",
+                "긴조",
+                "다이긴조"
             ]
         },
         "과실주": {
-            "grape_wine": [
-                "Wine",
-                "Sparkling Wine"
+            "포도주": [
+                "와인",
+                "스파클링 와인"
             ],
-            "fruit_wine": [
+            "과실주": [
                 "과실주",
-                "Cider",
-                "Mead"
+                "사이더",
+                "미드(벌꿀주)"
             ]
         },
         "브랜디": {
-            "grape_brandy": [
-                "Cognac",
-                "Armagnac"
+            "포도 브랜디": [
+                "코냑",
+                "아르마냑"
             ],
-            "fruit_brandy": [
-                "Calvados",
-                "Pisco",
-                "Grappa",
-                "Fruit Brandy"
+            "과일 브랜디": [
+                "깔바도스",
+                "피스코",
+                "그라파",
+                "과일 브랜디"
             ]
         },
         "리큐르": {
-            "fruit_liqueur": [
-                "Umeshu",
-                "Fruit Liqueur"
+            "과일 리큐르": [
+                "우메슈",
+                "과일 리큐르"
             ],
-            "cream_liqueur": [
-                "Cream Liqueur",
-                "Coffee Liqueur"
+            "크림 리큐르": [
+                "크림 리큐르",
+                "커피 리큐르"
             ],
-            "herbal_liqueur": [
-                "Herbal Liqueur",
-                "Spice Liqueur",
-                "Bitters"
+            "허브 리큐르": [
+                "허브 리큐르",
+                "향신료 리큐르",
+                "비터스"
             ]
         }
     },
@@ -202,45 +200,42 @@
         "일반증류주": "일반증류주",
         "기타 주류": "기타 주류",
         "탁주": "탁주",
-        "약주": "약주",
         "청주": "청주",
-        "과실주": "과실주",
         "브랜디": "브랜디",
         "리큐르": "리큐르",
-        "korean_soju": "한국 소주",
-        "japanese_shochu": "일본 쇼추",
-        "japanese_shochu_raw": "원료별 쇼추",
-        "awamori": "아와모리",
-        "scotch": "스카치",
-        "american": "아메리칸",
-        "world_whisky": "세계 위스키",
-        "lager": "라거",
-        "ale": "에일",
-        "dark_beer": "다크 비어",
-        "specialty": "스페셜티",
-        "gin": "진",
-        "rum": "럼",
-        "tequila_mezcal": "데킬라/메즈칼",
-        "vodka": "보드카",
-        "chinese_baijiu": "중국 백주",
-        "other_chinese_spirits": "기타 중국 증류주",
-        "mixed_drink": "하이볼 등",
-        "others": "기타",
-        "makgeolli": "막걸리",
-        "yakju": "약주",
-        "korean_cheongju": "한국 청주",
-        "sake_style": "사케",
-        "grape_wine": "포도주",
-        "fruit_wine": "과일주",
-        "grape_brandy": "포도 브랜디",
-        "fruit_brandy": "과일 브랜디",
-        "fruit_liqueur": "과일 리큐르",
-        "cream_liqueur": "크림 리큐르",
-        "herbal_liqueur": "허브 리큐르"
+        "한국 소주": "한국 소주",
+        "일본 쇼추": "일본 쇼추",
+        "아와모리": "아와모리",
+        "스카치 위스키": "스카치 위스키",
+        "아메리칸 위스키": "아메리칸 위스키",
+        "월드 위스키": "월드 위스키",
+        "라거": "라거",
+        "에일": "에일",
+        "흑맥주": "흑맥주",
+        "기타맥주": "기타맥주",
+        "진": "진",
+        "럼": "럼",
+        "데킬라/메즈칼": "데킬라/메즈칼",
+        "보드카": "보드카",
+        "중국 백주": "중국 백주",
+        "기타 중국 주류": "기타 중국 주류",
+        "하이볼/RTD": "하이볼/RTD",
+        "기타": "기타",
+        "막걸리": "막걸리",
+        "약주": "약주",
+        "한국 청주": "한국 청주",
+        "사케": "사케",
+        "포도주": "포도주",
+        "과실주": "과실주",
+        "포도 브랜디": "포도 브랜디",
+        "과일 브랜디": "과일 브랜디",
+        "과일 리큐르": "과일 리큐르",
+        "크림 리큐르": "크림 리큐르",
+        "허브 리큐르": "허브 리큐르"
     },
     "tag_index": {
         "nose": {
-            "fruit_orchard_citrus": {
+            "과일_시트러스": {
                 "colors": {
                     "light": {
                         "bg": "#FFFBEB",
@@ -275,7 +270,7 @@
                     "#과육 (citrus pulp)"
                 ]
             },
-            "fruit_berry_tropical": {
+            "과일_베리_열대과일": {
                 "colors": {
                     "light": {
                         "bg": "#FDF2F8",
@@ -303,7 +298,7 @@
                     "#구즈베리 (gooseberry)"
                 ]
             },
-            "fruit_dried_cooked": {
+            "과일_말린_조린": {
                 "colors": {
                     "light": {
                         "bg": "#FFF7ED",
@@ -329,7 +324,7 @@
                     "#카라멜라이즈드프룻 (caramelized fruit)"
                 ]
             },
-            "floral": {
+            "꽃": {
                 "colors": {
                     "light": {
                         "bg": "#F5F3FF",
@@ -355,7 +350,7 @@
                     "#플로랄헤이 (floral hay)"
                 ]
             },
-            "herbal_botanical_vegetal": {
+            "허브_식물_채소": {
                 "colors": {
                     "light": {
                         "bg": "#F0FDF4",
@@ -391,7 +386,7 @@
                     "#시금치/케일 (spinach/kale)"
                 ]
             },
-            "spice": {
+            "향신료": {
                 "colors": {
                     "light": {
                         "bg": "#FEF2F2",
@@ -419,7 +414,7 @@
                     "#카다멈 (cardamom)"
                 ]
             },
-            "sweet_confectionery_dairy": {
+            "달콤함_과자_유제품": {
                 "colors": {
                     "light": {
                         "bg": "#FEFCE8",
@@ -451,7 +446,7 @@
                     "#연유/크림캐러멜 (condensed milk)"
                 ]
             },
-            "nutty_grain_roasted": {
+            "고소함_곡물_로스팅": {
                 "colors": {
                     "light": {
                         "bg": "#FAFAF9",
@@ -486,7 +481,7 @@
                     "#그릴드/바비큐 (grilled/barbecue)"
                 ]
             },
-            "woody_earthy_oxidative": {
+            "우디_흙_산화": {
                 "colors": {
                     "light": {
                         "bg": "#F5F5F4",
@@ -518,7 +513,7 @@
                     "#말린견과 (dried nut)"
                 ]
             },
-            "smoke_peat_mineral_coastal": {
+            "스모크_피트_미네랄_해안": {
                 "colors": {
                     "light": {
                         "bg": "#F8FAFC",
@@ -546,7 +541,7 @@
                     "#페놀릭 (phenolic)"
                 ]
             },
-            "chemical_defect": {
+            "화학적_결함": {
                 "colors": {
                     "light": {
                         "bg": "#F1F5F9",
@@ -571,7 +566,7 @@
             }
         },
         "palate": {
-            "sweetness_acid": {
+            "단맛_산미": {
                 "colors": {
                     "light": {
                         "bg": "#F7FEE7",
@@ -596,7 +591,7 @@
                     "#사워 (sour/acidic)"
                 ]
             },
-            "body_texture": {
+            "바디_질감": {
                 "colors": {
                     "light": {
                         "bg": "#EFF6FF",
@@ -623,7 +618,7 @@
                     "#벨벨같은"
                 ]
             },
-            "mouthfeel_structure": {
+            "입안촉감_구조": {
                 "colors": {
                     "light": {
                         "bg": "#ECFEFF",
@@ -653,7 +648,7 @@
                     "#집중감 (intense)"
                 ]
             },
-            "fermentation_umami": {
+            "발효_감칠맛": {
                 "colors": {
                     "light": {
                         "bg": "#F0FDFA",
@@ -682,7 +677,7 @@
             }
         },
         "finish": {
-            "length": {
+            "길이": {
                 "colors": {
                     "light": {
                         "bg": "#EFF6FF",
@@ -704,7 +699,7 @@
                     "#짧은피니시"
                 ]
             },
-            "nature": {
+            "성질": {
                 "colors": {
                     "light": {
                         "bg": "#F5F3FF",

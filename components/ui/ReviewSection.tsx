@@ -45,15 +45,11 @@ export default function ReviewSection({ spiritId, reviews }: ReviewSectionProps)
         </div>
         <button
           onClick={() => setShowForm(!showForm)}
-          className={`px-6 py-2.5 rounded-xl font-bold transition-all shadow-lg text-white ${showForm
-            ? 'bg-secondary !text-foreground hover:bg-secondary/80'
-            : 'bg-gradient-to-r from-amber-500 to-orange-600 hover:shadow-primary/30'
-            }`}
+          className="px-6 py-2.5 rounded-xl font-bold transition-all shadow-lg text-white bg-gradient-to-r from-amber-500 to-orange-600 hover:shadow-primary/30"
         >
           {showForm ? '취소하기' : '+ 리뷰 작성하기'}
         </button>
       </div>
-// ... existing average summary and list logic
 
       {/* Average Summary Card */}
       {reviews.length > 0 && (
@@ -92,17 +88,17 @@ function RatingSummaryItem({ label, value, icon, color = "text-amber-500" }: { l
         {icon} {label}
       </div>
       <div className="text-2xl font-black text-foreground">{value}</div>
-      <div className="flex justify-center gap-0.5 mt-1">
+      <div className="flex justify-center gap-1 mt-2">
         {Array.from({ length: 5 }).map((_, i) => {
           const rating = Number(value);
           const isFull = i + 1 <= rating;
           const isHalf = i + 0.5 <= rating && i + 1 > rating;
           return (
             <div key={i} className="relative">
-              <Star className={`w-2.5 h-2.5 ${isFull ? 'fill-amber-500 text-amber-500' : isHalf ? 'text-amber-500' : 'text-border'}`} />
+              <Star className={`w-6 h-6 ${isFull ? 'fill-amber-500 text-amber-500' : isHalf ? 'text-amber-500' : 'text-muted-foreground/20'}`} />
               {isHalf && (
                 <div className="absolute inset-0 overflow-hidden w-[50%]">
-                  <Star className="w-2.5 h-2.5 fill-amber-500 text-amber-500" />
+                  <Star className="w-6 h-6 fill-amber-500 text-amber-500" />
                 </div>
               )}
             </div>
@@ -196,15 +192,21 @@ function ReviewMetricsItem({ title, rating, tags, icon, color }: { title: string
         </div>
         <div className="text-sm font-black">{rating.toFixed(1)}</div>
       </div>
-      <div className="flex gap-0.5">
+      <div className="flex gap-1">
         {Array.from({ length: 5 }).map((_, i) => {
-          const filled = Math.min(Math.max(rating - i, 0), 1);
+          const isFull = i + 1 <= rating;
+          const isHalf = i + 0.5 <= rating && i + 1 > rating;
+          const starColor = color === 'blue' ? 'text-blue-500' : color === 'orange' ? 'text-orange-500' : 'text-purple-500';
+          const fillClass = color === 'blue' ? 'fill-blue-500' : color === 'orange' ? 'fill-orange-500' : 'fill-purple-500';
+
           return (
-            <div key={i} className="h-1 flex-1 rounded-full bg-muted overflow-hidden">
-              <div className={`h-full`} style={{
-                width: `${filled * 100}%`,
-                backgroundColor: color === 'blue' ? '#3b82f6' : color === 'orange' ? '#f97316' : '#a855f7'
-              }} />
+            <div key={i} className="relative">
+              <Star className={`w-5 h-5 ${isFull ? `${fillClass} ${starColor}` : isHalf ? starColor : 'text-muted-foreground/20'}`} />
+              {isHalf && (
+                <div className="absolute inset-0 overflow-hidden w-[50%]">
+                  <Star className={`w-5 h-5 ${fillClass} ${starColor}`} />
+                </div>
+              )}
             </div>
           );
         })}
@@ -390,10 +392,11 @@ function RatingSection({ label, rating, tags, onRatingChange, onTagsChange, colo
 
   return (
     <div className="space-y-6">
-      <div>
-        <div className="flex items-center justify-end gap-2 mb-4">
-          <label className="text-sm font-black tracking-tighter uppercase">{label}</label>
-          <div className={`p-2 rounded-xl bg-${color}-500/10 text-${color}-500 border border-${color}-500/20`}>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        {/* Label and Icon moved inline */}
+        <div className="flex items-center gap-3 min-w-[120px] sm:justify-end">
+          <label className="text-sm font-black tracking-tight uppercase whitespace-nowrap">{label}</label>
+          <div className={`p-2.5 rounded-2xl bg-${color}-500/10 text-${color}-500 border border-${color}-500/20 shadow-sm`}>
             {icon}
           </div>
         </div>
@@ -403,18 +406,18 @@ function RatingSection({ label, rating, tags, onRatingChange, onTagsChange, colo
           onPointerMove={handlePointer}
           onPointerLeave={() => setHoverRating(null)}
           onPointerDown={handlePointer}
-          className="flex gap-1.5 justify-between rating-wrap touch-none select-none cursor-pointer"
+          className="flex-1 flex gap-2 justify-between rating-wrap touch-none select-none cursor-pointer p-1"
         >
           {[1, 2, 3, 4, 5].map((s) => (
             <div
               key={s}
-              className="relative flex-1 aspect-square group"
+              className="relative flex-1 aspect-square max-w-[48px]"
             >
               <div className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity ${hoverRating !== null && (s - 0.5) <= hoverRating ? 'opacity-50' : 'opacity-100'}`}>
-                <Star className={`w-full h-full ${s <= activeRating ? starColor : s - 0.5 === activeRating ? 'text-' + color + '-500' : 'text-muted-foreground/20'}`} />
+                <Star className={`w-8 h-8 ${s <= activeRating ? starColor : s - 0.5 === activeRating ? 'text-' + color + '-500' : 'text-muted-foreground/20'}`} />
                 {s - 0.5 === activeRating && (
                   <div className="absolute inset-x-0 overflow-hidden w-[50%] left-0">
-                    <Star className={`w-full h-full ${starColor}`} />
+                    <Star className={`w-8 h-8 ${starColor}`} />
                   </div>
                 )}
               </div>

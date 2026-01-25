@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Spirit, UserReview } from "@/lib/utils/flavor-engine";
-import { TAG_COLORS, TagColorVariant, getTagColor } from "@/lib/constants/tag-colors";
+import { TAG_COLORS, TagColorVariant, getTagColor, TAG_COLOR_MAPPING } from "@/lib/constants/tag-colors";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import SPIRITS_METADATA from "@/lib/constants/spirits-metadata.json";
 
@@ -18,7 +18,7 @@ type TagCategory = 'nose' | 'palate' | 'finish';
 
 // Helper to access metadata safely
 const getMetadataTags = (category: TagCategory) => {
-    return SPIRITS_METADATA.tag_index[category] as Record<string, { color: string, tags: string[] }>;
+    return SPIRITS_METADATA.tag_index[category] as Record<string, { colors: any, tags: string[] }>;
 };
 
 export default function ReviewModal({ spirit, isOpen, onClose, onSubmit }: ReviewModalProps) {
@@ -123,8 +123,8 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit }: Revie
                 {/* Preset Tags from Metadata */}
                 <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto custom-scrollbar p-1 border-2 border-border rounded-lg bg-card">
                     {Object.entries(metadata).map(([subKey, info]) => {
-                        const colorKey = info.color as TagColorVariant;
-                        const colors = TAG_COLORS[colorKey] || TAG_COLORS.stone;
+                        const colorKey = (TAG_COLOR_MAPPING as any)[subKey] || 'stone';
+                        const colors = TAG_COLORS[colorKey as TagColorVariant] || TAG_COLORS.stone;
 
                         return info.tags.map((tag) => {
                             const isSelected = selectedTags.includes(tag);
