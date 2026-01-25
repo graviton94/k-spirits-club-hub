@@ -1,19 +1,41 @@
 'use client';
 
 import { Search } from "lucide-react";
-import { useState, KeyboardEvent } from "react";
+import { useState, KeyboardEvent, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { useSpiritsCache } from "@/app/context/spirits-cache-context";
+import Link from "next/link";
 
 export function SearchBar({ isHero = false }: { isHero?: boolean }) {
   const [isFocused, setIsFocused] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const router = useRouter();
+  const { searchSpirits, getSpiritById, isLoading } = useSpiritsCache();
+
+  // Get instant search results using Fuse.js
+  const instantResults = useMemo(() => {
+    if (!searchValue.trim() || isLoading) {
+      return [];
+    }
+    
+    const startTime = performance.now();
+    const searchIndex = searchSpirits(searchValue);
+    const results = searchIndex
+      .slice(0, 5) // Show top 5 results
+      .map(item => getSpiritById(item.i))
+      .filter(s => s !== undefined);
+    const endTime = performance.now();
+    
+    console.log(`[SearchBar] Search completed in ${(endTime - startTime).toFixed(2)}ms`);
+    return results;
+  }, [searchValue, searchSpirits, getSpiritById, isLoading]);
 
   const handleSearch = () => {
     if (searchValue.trim()) {
       // Navigate to explore page with search query
       router.push(`/explore?search=${encodeURIComponent(searchValue.trim())}`);
+      setIsFocused(false);
     }
   };
 
@@ -47,13 +69,69 @@ export function SearchBar({ isHero = false }: { isHero?: boolean }) {
           className={`w-full bg-transparent border-none outline-none text-lg ${isHero ? 'text-white placeholder:text-neutral-400' : 'text-foreground placeholder:text-muted-foreground'
             }`}
           onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
+          onBlur={() => setTimeout(() => setIsFocused(false), 200)} // Delay to allow clicking results
         />
       </motion.div>
 
-      {/* Optional: Dropdown results container (Hidden for now) */}
+      {/* Instant search results dropdown */}
       <AnimatePresence>
-        {isFocused && (
+        {isFocused && searchValue.trim() && !isLoading && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            className={`absolute top-full left-0 right-0 mt-3 backdrop-blur-md border-2 rounded-2xl shadow-2xl overflow-hidden ${isHero ? 'bg-neutral-900/90 border-white/20 text-white' : 'bg-popover border-border'
+              }`}
+          >
+            {instantResults.length > 0 ? (
+              <div className="max-h-80 overflow-y-auto">
+                {instantResults.map((spirit) => (
+                  <Link
+                    key={spirit.id}
+                    href={`/spirits/${spirit.id}`}
+                    className={`block p-3 hover:bg-primary/10 transition-colors border-b last:border-b-0 ${isHero ? 'border-white/10' : 'border-border'
+                      }`}
+                  >
+                    <div className="flex gap-3 items-center">
+                      {spirit.thumbnailUrl && (
+                        <img
+                          src={spirit.thumbnailUrl}
+                          alt={spirit.name}
+                          className="w-12 h-12 object-cover rounded-lg"
+                        />
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <div className={`font-semibold truncate ${isHero ? 'text-white' : 'text-foreground'
+                          }`}>
+                          {spirit.name}
+                        </div>
+                        <div className={`text-sm truncate ${isHero ? 'text-neutral-400' : 'text-muted-foreground'
+                          }`}>
+                          {spirit.metadata?.name_en || spirit.distillery || spirit.category}
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+                <button
+                  onClick={handleSearch}
+                  className={`w-full p-3 text-center text-sm font-medium transition-colors ${isHero
+                    ? 'text-amber-400 hover:bg-amber-400/10'
+                    : 'text-primary hover:bg-primary/10'
+                    }`}
+                >
+                  View all results for &quot;{searchValue}&quot;
+                </button>
+              </div>
+            ) : (
+              <div className={`p-4 text-center text-sm ${isHero ? 'text-neutral-400' : 'text-muted-foreground'
+                }`}>
+                No results found for &quot;{searchValue}&quot;
+              </div>
+            )}
+          </motion.div>
+        )}
+        {isFocused && !searchValue.trim() && (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -62,7 +140,7 @@ export function SearchBar({ isHero = false }: { isHero?: boolean }) {
               }`}
           >
             <div className={`p-3 text-center text-sm ${isHero ? 'text-neutral-400' : 'text-muted-foreground'}`}>
-              {searchValue.trim() ? `Press Enter to search for "${searchValue}"` : 'Type to search across published spirits'}
+              Type to search across published spirits
             </div>
           </motion.div>
         )}
