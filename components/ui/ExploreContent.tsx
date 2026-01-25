@@ -31,7 +31,6 @@ export default function ExploreContent() {
 
   const [selectedSpirit, setSelectedSpirit] = useState<Spirit | null>(null);
   const [displayLimit, setDisplayLimit] = useState(20);
-  const [isRefreshing, setIsRefreshing] = useState(false);
   const [showDebugPanel, setShowDebugPanel] = useState(false);
   
   const isDevelopment = process.env.NODE_ENV === 'development';
@@ -112,15 +111,6 @@ export default function ExploreContent() {
     setDisplayLimit(20);
   }, [searchTerm, selectedLegal, selectedMain, selectedSub]);
 
-  const handleForceRefresh = async () => {
-    setIsRefreshing(true);
-    try {
-      await forceRefresh();
-    } finally {
-      setIsRefreshing(false);
-    }
-  };
-
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl pb-32">
       <header className="mb-8 text-center">
@@ -134,11 +124,11 @@ export default function ExploreContent() {
         {/* Force Refresh Button */}
         <div className="mt-4 flex justify-center gap-3 items-center flex-wrap">
           <button
-            onClick={handleForceRefresh}
-            disabled={isRefreshing}
+            onClick={forceRefresh}
+            disabled={isCacheLoading}
             className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm font-semibold rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
           >
-            {isRefreshing ? (
+            {isCacheLoading ? (
               <>
                 <span className="animate-spin">⟳</span>
                 Refreshing...

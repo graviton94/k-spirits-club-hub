@@ -40,6 +40,7 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
     lastLoadTime: null,
     cacheErrors: []
   });
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   // Helper function to safely access localStorage
   const safeLocalStorage = {
@@ -204,12 +205,23 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const forceRefresh = async () => {
-    console.log('[SpiritsCacheContext] 🔄 Force refresh initiated...');
-    // Clear localStorage cache
-    safeLocalStorage.removeItem('spirits_search_index');
-    safeLocalStorage.removeItem('spirits_master_cache');
-    // Re-fetch from server
-    await fetchPublishedSpirits(true);
+    // Prevent concurrent refresh operations
+    if (isRefreshing || isLoading) {
+      console.log('[SpiritsCacheContext] ⚠️ Refresh already in progress, skipping...');
+      return;
+    }
+    
+    setIsRefreshing(true);
+    try {
+      console.log('[SpiritsCacheContext] 🔄 Force refresh initiated...');
+      // Clear localStorage cache
+      safeLocalStorage.removeItem('spirits_search_index');
+      safeLocalStorage.removeItem('spirits_master_cache');
+      // Re-fetch from server
+      await fetchPublishedSpirits(true);
+    } finally {
+      setIsRefreshing(false);
+    }
   };
 
   const searchSpirits = (query: string): SpiritSearchIndex[] => {
