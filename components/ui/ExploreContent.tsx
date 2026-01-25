@@ -9,7 +9,6 @@ import SpiritDetailModal from "@/components/ui/SpiritDetailModal";
 import type { Spirit, SpiritSearchIndex } from "@/lib/db/schema";
 import {
   CATEGORY_NAME_MAP,
-  LEGAL_CATEGORIES,
   getCategoryStructure,
   getSubCategoriesForMain
 } from "@/lib/constants/categories";
@@ -29,10 +28,28 @@ export default function ExploreContent() {
   const selectedLegal = searchParams.get('category') || null;
   const selectedMain = searchParams.get('main') || null;
   const selectedSub = searchParams.get('sub') || null;
-  const page = Number(searchParams.get('page')) || 1;
-  const pageSize = 24;
 
   const [selectedSpirit, setSelectedSpirit] = useState<Spirit | null>(null);
+  const [displayLimit, setDisplayLimit] = useState(20);
+
+  // Dynamic filter extraction from search index
+  const dynamicFilters = useMemo(() => {
+    const categories = new Set<string>();
+    const mainCategories = new Set<string>();
+    const subCategories = new Set<string>();
+
+    searchIndex.forEach(item => {
+      if (item.c) categories.add(item.c);
+      if (item.mc) mainCategories.add(item.mc);
+      if (item.sc) subCategories.add(item.sc);
+    });
+
+    return {
+      categories: Array.from(categories).sort(),
+      mainCategories: Array.from(mainCategories).sort(),
+      subCategories: Array.from(subCategories).sort()
+    };
+  }, [searchIndex]);
 
   // Client-side filtering logic using the search index
   const filteredSpirits = useMemo(() => {
@@ -78,17 +95,18 @@ export default function ExploreContent() {
     return [];
   }, [isNested, selectedMain, selectedLegal, legalStructure]);
 
-  // Pagination on filtered results
+  // Infinite scroll/load more on filtered results
   const totalCount = filteredSpirits.length;
-  const totalPages = Math.ceil(totalCount / pageSize);
-  const paginatedSpirits = useMemo(() =>
-    filteredSpirits.slice((page - 1) * pageSize, page * pageSize),
-    [filteredSpirits, page]
+  const displayedSpirits = useMemo(() =>
+    filteredSpirits.slice(0, displayLimit),
+    [filteredSpirits, displayLimit]
   );
+  const hasMore = displayLimit < totalCount;
 
+  // Reset display limit when filters change
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [page, searchTerm, selectedLegal, selectedMain, selectedSub]);
+    setDisplayLimit(20);
+  }, [searchTerm, selectedLegal, selectedMain, selectedSub]);
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl pb-32">
@@ -112,7 +130,7 @@ export default function ExploreContent() {
               href="/explore"
             />
 
-            {LEGAL_CATEGORIES.map(cat => (
+            {dynamicFilters.categories.map(cat => (
               <CategoryFilter
                 key={cat}
                 label={CATEGORY_NAME_MAP[cat] || cat}
@@ -217,7 +235,7 @@ export default function ExploreContent() {
             <div key={i} className="aspect-[3/4] bg-card/50 animate-pulse rounded-3xl" />
           ))
         ) : (
-          paginatedSpirits.map((spirit) => (
+          displayedSpirits.map((spirit) => (
             <SpiritCard key={spirit.id} spirit={spirit} onClick={(s) => setSelectedSpirit(s)} />
           ))
         )}
@@ -239,14 +257,14 @@ export default function ExploreContent() {
         </div>
       )}
 
-      {totalPages > 1 && (
+      {hasMore && (
         <div className="mt-12 flex justify-center">
-          <Pagination
-            searchTerm={searchTerm}
-            category={selectedLegal || undefined}
-            current={page}
-            total={totalPages}
-          />
+          <button
+            onClick={() => setDisplayLimit(prev => prev + 20)}
+            className="px-8 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300"
+          >
+            Load More ({totalCount - displayLimit} remaining)
+          </button>
         </div>
       )}
     </div>
@@ -279,63 +297,5 @@ function CategoryFilter({ label, isActive, href, isSub }: CategoryFilterProps) {
     >
       {label}
     </Link>
-  );
-}
-
-function Pagination({ searchTerm, category, current, total }: { searchTerm?: string, category?: string, current: number, total: number }) {
-  const start = Math.max(1, current - 2);
-  const end = Math.min(total, current + 2);
-
-  const getUrl = (p: number) => {
-    const params = new URLSearchParams();
-    if (searchTerm) params.set('search', searchTerm);
-    if (category) params.set('category', category);
-    params.set('page', p.toString());
-    return `/explore?${params.toString()}`;
-  };
-
-  return (
-    <div className="flex gap-1 items-center">
-      {current > 1 && <PageLink href={getUrl(current - 1)} label="이전" />}
-
-      {start > 1 && (
-        <>
-          <PageLink href={getUrl(1)} label="1" />
-          <span className="px-2">...</span>
-        </>
-      )}
-
-      {Array.from({ length: end - start + 1 }, (_, i) => start + i).map(p => (
-        <PageLink
-          key={p}
-          href={getUrl(p)}
-          label={p.toString()}
-          active={p === current}
-        />
-      ))}
-
-      {end < total && (
-        <>
-          <span className="px-2">...</span>
-          <PageLink href={getUrl(total)} label={total.toString()} />
-        </>
-      )}
-
-      {current < total && <PageLink href={getUrl(current + 1)} label="다음" />}
-    </div>
-  );
-}
-
-function PageLink({ href, label, active }: { href: string, label: string, active?: boolean }) {
-  return (
-    <a
-      href={href}
-      className={`px-3 py-1 min-w-[40px] text-center rounded border transition-colors ${active
-        ? 'bg-primary text-primary-foreground border-primary font-bold'
-        : 'border-border hover:bg-secondary'
-        }`}
-    >
-      {label}
-    </a>
   );
 }
