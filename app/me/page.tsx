@@ -230,21 +230,19 @@ export default function MyPage() {
                                             <div className="flex gap-2">
                                                 <button
                                                     onClick={() => setTheme('light')}
-                                                    className={`flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-all ${
-                                                        theme === 'light'
-                                                            ? 'bg-white text-gray-900 shadow-md'
-                                                            : 'bg-secondary/50 text-muted-foreground hover:bg-secondary/70'
-                                                    }`}
+                                                    className={`flex-1 py-3 px-3 rounded-xl text-sm font-bold transition-all ${theme === 'light'
+                                                            ? 'bg-[#FFF9C4] text-black ring-2 ring-amber-400 ring-offset-2 ring-offset-card shadow-md scale-105'
+                                                            : 'bg-[#FFF9C4] text-black/40 opacity-70 hover:opacity-100 hover:scale-105'
+                                                        }`}
                                                 >
                                                     ☀️ Light
                                                 </button>
                                                 <button
                                                     onClick={() => setTheme('dark')}
-                                                    className={`flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-all ${
-                                                        theme === 'dark'
-                                                            ? 'bg-slate-800 text-white shadow-md'
-                                                            : 'bg-secondary/50 text-muted-foreground hover:bg-secondary/70'
-                                                    }`}
+                                                    className={`flex-1 py-3 px-3 rounded-xl text-sm font-bold transition-all ${theme === 'dark'
+                                                            ? 'bg-[#262626] text-white ring-2 ring-gray-500 ring-offset-2 ring-offset-card shadow-md scale-105'
+                                                            : 'bg-[#262626] text-white/40 opacity-70 hover:opacity-100 hover:scale-105'
+                                                        }`}
                                                 >
                                                     🌙 Dark
                                                 </button>

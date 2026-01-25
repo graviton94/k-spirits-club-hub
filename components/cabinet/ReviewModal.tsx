@@ -201,6 +201,10 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit }: Revie
                                 src={spirit.imageUrl || getCategoryFallbackImage(spirit.category)}
                                 alt={spirit.name}
                                 className="w-full h-full object-cover"
+                                onError={(e) => {
+                                    const target = e.target as HTMLImageElement;
+                                    target.src = getCategoryFallbackImage(spirit.category);
+                                }}
                             />
                         </div>
                         <div>

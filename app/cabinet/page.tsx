@@ -6,7 +6,8 @@ import GoogleAd from "@/components/ui/GoogleAd";
 import Link from "next/link";
 import MindMap from "@/components/cabinet/MindMap";
 import ReviewModal from "@/components/cabinet/ReviewModal";
-import { analyzeCellar, MOCK_CELLAR_SPIRITS, loadCellarFromStorage, type Spirit, type UserReview } from "@/lib/utils/flavor-engine";
+import SearchSpiritModal from "@/components/cabinet/SearchSpiritModal";
+import { analyzeCellar, loadCellarFromStorage, type Spirit, type UserReview } from "@/lib/utils/flavor-engine";
 import { useAuth } from "@/app/context/auth-context";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import { getTagColor } from "@/lib/constants/tag-colors";
@@ -27,6 +28,9 @@ export default function CabinetPage() {
   const [reviewModalOpen, setReviewModalOpen] = useState(false);
   const [reviewTarget, setReviewTarget] = useState<Spirit | null>(null);
 
+  // Search Modal
+  const [searchModalOpen, setSearchModalOpen] = useState(false);
+
   const { profile, loading } = useAuth();
 
   /*
@@ -40,9 +44,9 @@ export default function CabinetPage() {
   - [/] localStorage로 테마 설정 저장
   */
   useEffect(() => {
-    // Load from localStorage or use mock data
+    // Load from localStorage (No Mock Data)
     const loaded = loadCellarFromStorage();
-    setSpirits(loaded.length > 0 ? loaded : MOCK_CELLAR_SPIRITS);
+    setSpirits(loaded);
   }, []);
 
   const saveSpiritsToStorage = (updatedSpirits: Spirit[]) => {
@@ -121,7 +125,7 @@ export default function CabinetPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl">
+    <div className="container mx-auto px-4 py-8 max-w-6xl pb-32">
       {/* Header with Toggle */}
       <div className="mb-8 text-center">
         <h1 className="text-3xl font-black mb-2 bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">My Collections</h1>
@@ -320,7 +324,20 @@ export default function CabinetPage() {
                           {spirit.name}
                         </p>
                       </motion.div>
+
                     ))}
+
+                    {/* Add New Button Card */}
+                    <motion.div
+                      whileHover={{ y: -4, scale: 1.02 }}
+                      className="cursor-pointer group flex flex-col items-center justify-center aspect-[2/3] rounded-2xl border-2 border-dashed border-gray-300 dark:border-gray-700 hover:border-amber-500 hover:bg-amber-50/50 dark:hover:bg-amber-900/10 transition-all"
+                      onClick={() => setSearchModalOpen(true)}
+                    >
+                      <div className="w-12 h-12 rounded-full bg-amber-100 dark:bg-amber-900 text-amber-600 dark:text-amber-400 flex items-center justify-center text-2xl font-bold mb-2 group-hover:scale-110 transition-transform">
+                        +
+                      </div>
+                      <span className="text-sm font-bold text-gray-500 group-hover:text-amber-600 dark:text-gray-400">새 술 추가하기</span>
+                    </motion.div>
                   </motion.div>
                 </div>
               </div>
@@ -431,212 +448,233 @@ export default function CabinetPage() {
       </AnimatePresence>
 
       {/* Review Modal */}
-      {reviewModalOpen && reviewTarget && (
-        <ReviewModal
-          spirit={reviewTarget}
-          isOpen={reviewModalOpen}
-          onClose={() => setReviewModalOpen(false)}
-          onSubmit={handleReviewSubmit}
-        />
-      )}
+      {
+        reviewModalOpen && reviewTarget && (
+          <ReviewModal
+            spirit={reviewTarget}
+            isOpen={reviewModalOpen}
+            onClose={() => setReviewModalOpen(false)}
+            onSubmit={handleReviewSubmit}
+          />
+        )
+      }
+
+      {/* Search Modal */}
+      <SearchSpiritModal
+        isOpen={searchModalOpen}
+        onClose={() => setSearchModalOpen(false)}
+        onAdd={(newSpirit) => {
+          const cabinetSpirit = {
+            ...newSpirit,
+            isWishlist: false
+          };
+          const updated = [...spirits, cabinetSpirit as Spirit];
+          saveSpiritsToStorage(updated);
+        }}
+        existingIds={new Set(spirits.map(s => s.id))}
+      />
 
       {/* Quick Info Popup Modal - Redesigned */}
-      {selectedSpirit && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto"
-          onClick={() => setSelectedSpirit(null)}
-        >
+      {
+        selectedSpirit && (
           <motion.div
-            initial={{ scale: 0.9, y: 20, opacity: 0 }}
-            animate={{ scale: 1, y: 0, opacity: 1 }}
-            exit={{ scale: 0.9, y: 20, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 350, damping: 28 }}
-            className="bg-white dark:bg-gray-900 rounded-3xl w-full max-w-sm sm:max-w-md shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden relative"
-            onClick={(e) => e.stopPropagation()}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 overflow-y-auto"
+            onClick={() => setSelectedSpirit(null)}
           >
-            {/* Close button */}
-            <button
-              onClick={() => setSelectedSpirit(null)}
-              className="absolute top-4 right-4 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-black/20 hover:bg-black/40 backdrop-blur-md text-white transition-colors"
+            <motion.div
+              initial={{ scale: 0.9, y: 20, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.9, y: 20, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 350, damping: 28 }}
+              className="bg-white dark:bg-gray-900 rounded-3xl w-full max-w-sm sm:max-w-md shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden relative"
+              onClick={(e) => e.stopPropagation()}
             >
-              ✕
-            </button>
+              {/* Close button */}
+              <button
+                onClick={() => setSelectedSpirit(null)}
+                className="absolute top-4 right-4 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-black/20 hover:bg-black/40 backdrop-blur-md text-white transition-colors"
+              >
+                ✕
+              </button>
 
-            {/* 1. Image Header with Info Overlay */}
-            <div className="relative h-72 sm:h-80 w-full bg-gray-100 dark:bg-gray-800">
-              {selectedSpirit.imageUrl ? (
-                <img
-                  src={selectedSpirit.imageUrl}
-                  alt={selectedSpirit.name}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = getCategoryFallbackImage(selectedSpirit.category);
-                    target.classList.add('opacity-50');
-                  }}
-                />
-              ) : (
-                <img
-                  src={getCategoryFallbackImage(selectedSpirit.category)}
-                  alt={selectedSpirit.name}
-                  className="w-full h-full object-cover opacity-50"
-                />
-              )}
+              {/* 1. Image Header with Info Overlay */}
+              <div className="relative h-72 sm:h-80 w-full bg-gray-100 dark:bg-gray-800">
+                {selectedSpirit.imageUrl ? (
+                  <img
+                    src={selectedSpirit.imageUrl}
+                    alt={selectedSpirit.name}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = getCategoryFallbackImage(selectedSpirit.category);
+                      target.classList.add('opacity-50');
+                    }}
+                  />
+                ) : (
+                  <img
+                    src={getCategoryFallbackImage(selectedSpirit.category)}
+                    alt={selectedSpirit.name}
+                    className="w-full h-full object-cover opacity-50"
+                  />
+                )}
 
-              {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-6">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <span className="inline-block px-2 py-1 mb-2 text-[10px] font-bold text-black bg-amber-400 rounded-md">
-                      {selectedSpirit.subcategory || selectedSpirit.category}
-                    </span>
-                    <h2 className="text-2xl sm:text-3xl font-black text-white leading-none mb-1 shadow-black drop-shadow-md">
-                      {selectedSpirit.name}
-                    </h2>
-                    {selectedSpirit.distillery && (
-                      <p className="text-gray-300 text-sm font-medium">
-                        {selectedSpirit.distillery}
-                      </p>
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-6">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <span className="inline-block px-2 py-1 mb-2 text-[10px] font-bold text-black bg-amber-400 rounded-md">
+                        {selectedSpirit.subcategory || selectedSpirit.category}
+                      </span>
+                      <h2 className="text-2xl sm:text-3xl font-black text-white leading-none mb-1 shadow-black drop-shadow-md">
+                        {selectedSpirit.name}
+                      </h2>
+                      {selectedSpirit.distillery && (
+                        <p className="text-gray-300 text-sm font-medium">
+                          {selectedSpirit.distillery}
+                        </p>
+                      )}
+                    </div>
+                    <div className="flex flex-col items-center justify-center bg-white/20 backdrop-blur-md rounded-lg p-2 min-w-[3.5rem]">
+                      <span className="text-[10px] text-gray-200 font-bold uppercase">ABV</span>
+                      <span className="text-xl font-black text-white">{selectedSpirit.abv}<span className="text-xs">%</span></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 2. Detailed Info & Tasting Notes */}
+              <div className="p-6 space-y-6 max-h-[50vh] overflow-y-auto custom-scrollbar">
+
+                {/* User Rating Summary (if exists) */}
+                {selectedSpirit.userReview && (
+                  <div className="bg-amber-50 dark:bg-amber-900/20 rounded-xl p-4 border border-amber-100 dark:border-amber-800/30">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="flex items-center gap-1 text-amber-500 font-black text-xl">
+                        <span>★</span> {selectedSpirit.userReview.ratingOverall.toFixed(1)}
+                      </div>
+                      <div className="h-4 w-px bg-amber-200 dark:bg-amber-800"></div>
+                      <span className="text-xs text-amber-800 dark:text-amber-200 font-medium">내 평가</span>
+                    </div>
+                    <p className="text-sm text-gray-700 dark:text-gray-300 italic">
+                      "{selectedSpirit.userReview.comment}"
+                    </p>
+                  </div>
+                )}
+
+                {/* Tasting Profile - N/P/F */}
+                <div>
+                  <h3 className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-4">
+                    Tasting Profile
+                  </h3>
+
+                  <div className="space-y-4">
+                    {/* Nose */}
+                    {((selectedSpirit.userReview?.tagsN?.length || 0) > 0 || selectedSpirit.metadata?.nose) && (
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-sm font-bold text-gray-900 dark:text-white">👃 Nose</span>
+                          <div className="h-px flex-1 bg-gray-100 dark:bg-gray-800"></div>
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {(selectedSpirit.userReview?.tagsN || selectedSpirit.metadata?.nose?.split(',') || []).map((tag, i) => {
+                            const color = getTagColor(tag.trim());
+                            return (
+                              <span key={i} className={`inline-block text-[10px] px-2 py-1 rounded-md border font-medium ${color.bg} ${color.text} ${color.border}`}>
+                                {tag.trim()}
+                              </span>
+                            )
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Palate */}
+                    {((selectedSpirit.userReview?.tagsP?.length || 0) > 0 || selectedSpirit.metadata?.palate) && (
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-sm font-bold text-gray-900 dark:text-white">👅 Palate</span>
+                          <div className="h-px flex-1 bg-gray-100 dark:bg-gray-800"></div>
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {(selectedSpirit.userReview?.tagsP || selectedSpirit.metadata?.palate?.split(',') || []).map((tag, i) => {
+                            const color = getTagColor(tag.trim());
+                            return (
+                              <span key={i} className={`inline-block text-[10px] px-2 py-1 rounded-md border font-medium ${color.bg} ${color.text} ${color.border}`}>
+                                {tag.trim()}
+                              </span>
+                            )
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Finish */}
+                    {((selectedSpirit.userReview?.tagsF?.length || 0) > 0 || selectedSpirit.metadata?.finish) && (
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-sm font-bold text-gray-900 dark:text-white">🏁 Finish</span>
+                          <div className="h-px flex-1 bg-gray-100 dark:bg-gray-800"></div>
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {(selectedSpirit.userReview?.tagsF || selectedSpirit.metadata?.finish?.split(',') || []).map((tag, i) => {
+                            const color = getTagColor(tag.trim());
+                            return (
+                              <span key={i} className={`inline-block text-[10px] px-2 py-1 rounded-md border font-medium ${color.bg} ${color.text} ${color.border}`}>
+                                {tag.trim()}
+                              </span>
+                            )
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Fallback if no N/P/F tags found anywhere */}
+                    {!selectedSpirit.userReview?.tagsN && !selectedSpirit.metadata?.nose && selectedSpirit.metadata?.tasting_note && (
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-sm font-bold text-gray-900 dark:text-white">📝 Notes</span>
+                          <div className="h-px flex-1 bg-gray-100 dark:bg-gray-800"></div>
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {selectedSpirit.metadata.tasting_note.split(',').map((tag, i) => {
+                            const color = getTagColor(tag.trim());
+                            return (
+                              <span key={i} className={`inline-block text-[10px] px-2 py-1 rounded-md border font-medium ${color.bg} ${color.text} ${color.border}`}>
+                                {tag.trim()}
+                              </span>
+                            )
+                          })}
+                        </div>
+                      </div>
                     )}
                   </div>
-                  <div className="flex flex-col items-center justify-center bg-white/20 backdrop-blur-md rounded-lg p-2 min-w-[3.5rem]">
-                    <span className="text-[10px] text-gray-200 font-bold uppercase">ABV</span>
-                    <span className="text-xl font-black text-white">{selectedSpirit.abv}<span className="text-xs">%</span></span>
-                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* 2. Detailed Info & Tasting Notes */}
-            <div className="p-6 space-y-6 max-h-[50vh] overflow-y-auto custom-scrollbar">
-
-              {/* User Rating Summary (if exists) */}
-              {selectedSpirit.userReview && (
-                <div className="bg-amber-50 dark:bg-amber-900/20 rounded-xl p-4 border border-amber-100 dark:border-amber-800/30">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="flex items-center gap-1 text-amber-500 font-black text-xl">
-                      <span>★</span> {selectedSpirit.userReview.ratingOverall.toFixed(1)}
-                    </div>
-                    <div className="h-4 w-px bg-amber-200 dark:bg-amber-800"></div>
-                    <span className="text-xs text-amber-800 dark:text-amber-200 font-medium">내 평가</span>
-                  </div>
-                  <p className="text-sm text-gray-700 dark:text-gray-300 italic">
-                    "{selectedSpirit.userReview.comment}"
-                  </p>
-                </div>
-              )}
-
-              {/* Tasting Profile - N/P/F */}
-              <div>
-                <h3 className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-4">
-                  Tasting Profile
-                </h3>
-
-                <div className="space-y-4">
-                  {/* Nose */}
-                  {((selectedSpirit.userReview?.tagsN?.length || 0) > 0 || selectedSpirit.metadata?.nose) && (
-                    <div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-sm font-bold text-gray-900 dark:text-white">👃 Nose</span>
-                        <div className="h-px flex-1 bg-gray-100 dark:bg-gray-800"></div>
-                      </div>
-                      <div className="flex flex-wrap gap-1.5">
-                        {(selectedSpirit.userReview?.tagsN || selectedSpirit.metadata?.nose?.split(',') || []).map((tag, i) => {
-                          const color = getTagColor(tag.trim());
-                          return (
-                            <span key={i} className={`inline-block text-[10px] px-2 py-1 rounded-md border font-medium ${color.bg} ${color.text} ${color.border}`}>
-                              {tag.trim()}
-                            </span>
-                          )
-                        })}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Palate */}
-                  {((selectedSpirit.userReview?.tagsP?.length || 0) > 0 || selectedSpirit.metadata?.palate) && (
-                    <div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-sm font-bold text-gray-900 dark:text-white">👅 Palate</span>
-                        <div className="h-px flex-1 bg-gray-100 dark:bg-gray-800"></div>
-                      </div>
-                      <div className="flex flex-wrap gap-1.5">
-                        {(selectedSpirit.userReview?.tagsP || selectedSpirit.metadata?.palate?.split(',') || []).map((tag, i) => {
-                          const color = getTagColor(tag.trim());
-                          return (
-                            <span key={i} className={`inline-block text-[10px] px-2 py-1 rounded-md border font-medium ${color.bg} ${color.text} ${color.border}`}>
-                              {tag.trim()}
-                            </span>
-                          )
-                        })}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Finish */}
-                  {((selectedSpirit.userReview?.tagsF?.length || 0) > 0 || selectedSpirit.metadata?.finish) && (
-                    <div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-sm font-bold text-gray-900 dark:text-white">🏁 Finish</span>
-                        <div className="h-px flex-1 bg-gray-100 dark:bg-gray-800"></div>
-                      </div>
-                      <div className="flex flex-wrap gap-1.5">
-                        {(selectedSpirit.userReview?.tagsF || selectedSpirit.metadata?.finish?.split(',') || []).map((tag, i) => {
-                          const color = getTagColor(tag.trim());
-                          return (
-                            <span key={i} className={`inline-block text-[10px] px-2 py-1 rounded-md border font-medium ${color.bg} ${color.text} ${color.border}`}>
-                              {tag.trim()}
-                            </span>
-                          )
-                        })}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Fallback if no N/P/F tags found anywhere */}
-                  {!selectedSpirit.userReview?.tagsN && !selectedSpirit.metadata?.nose && selectedSpirit.metadata?.tasting_note && (
-                    <div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-sm font-bold text-gray-900 dark:text-white">📝 Notes</span>
-                        <div className="h-px flex-1 bg-gray-100 dark:bg-gray-800"></div>
-                      </div>
-                      <div className="flex flex-wrap gap-1.5">
-                        {selectedSpirit.metadata.tasting_note.split(',').map((tag, i) => {
-                          const color = getTagColor(tag.trim());
-                          return (
-                            <span key={i} className={`inline-block text-[10px] px-2 py-1 rounded-md border font-medium ${color.bg} ${color.text} ${color.border}`}>
-                              {tag.trim()}
-                            </span>
-                          )
-                        })}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-
+            </motion.div>
           </motion.div>
-        </motion.div>
-      )}
+        )
+      }
 
       {/* Bottom Ad - After Cabinet Content */}
-      {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT && (
-        <div className="mt-12 mb-6">
-          <div className="text-xs text-gray-500 text-center mb-2">Advertisement</div>
-          <GoogleAd
-            client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT}
-            slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT}
-            format="auto"
-            responsive={true}
-            style={{ display: 'block', minHeight: '100px' }}
-            className="rounded-lg overflow-hidden"
-          />
-        </div>
-      )}
-    </div>
+      {
+        process.env.NEXT_PUBLIC_ADSENSE_CLIENT && process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT && (
+          <div className="mt-12 mb-6">
+            <div className="text-xs text-gray-500 text-center mb-2">Advertisement</div>
+            <GoogleAd
+              client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT}
+              slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT}
+              format="auto"
+              responsive={true}
+              style={{ display: 'block', minHeight: '100px' }}
+              className="rounded-lg overflow-hidden"
+            />
+          </div>
+        )
+      }
+    </div >
   );
 }
