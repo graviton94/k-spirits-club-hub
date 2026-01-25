@@ -2,6 +2,18 @@
 
 export type SpiritStatus = 'RAW' | 'ENRICHED' | 'READY_FOR_CONFIRM' | 'PUBLISHED' | 'ERROR';
 
+/**
+ * Minimized search index structure for bandwidth optimization.
+ * Uses short keys to reduce JSON payload size.
+ */
+export interface SpiritSearchIndex {
+  i: string;           // id
+  n: string;           // name
+  en: string | null;   // name_en (English name from metadata)
+  c: string;           // category
+  t: string | null;    // thumbnailUrl
+}
+
 export interface Spirit {
   id: string;
   name: string;

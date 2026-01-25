@@ -1,4 +1,4 @@
-import { Spirit, SpiritStatus, SpiritFilter } from '../db/schema';
+import { Spirit, SpiritStatus, SpiritFilter, SpiritSearchIndex } from '../db/schema';
 import { getServiceAccountToken } from '../auth/service-account';
 
 const PROJECT_ID = process.env.FIREBASE_PROJECT_ID;
@@ -238,6 +238,31 @@ export const spiritsDb = {
                 headers: { Authorization: `Bearer ${token}` }
             });
         }
+    },
+
+    /**
+     * Get all PUBLISHED spirits for search index generation
+     * Returns minimized data structure for bandwidth optimization
+     * 
+     * Note: This fetches all published spirits (up to Firestore's 5000 limit).
+     * For very large datasets (>5000 spirits), consider implementing pagination
+     * or using a different indexing strategy.
+     */
+    async getPublishedSearchIndex(): Promise<SpiritSearchIndex[]> {
+        // Fetch all published spirits
+        const publishedSpirits = await this.getAll({ 
+            status: 'PUBLISHED' as SpiritStatus,
+            isPublished: true 
+        });
+
+        // Map to minimized structure with short keys
+        return publishedSpirits.map(spirit => ({
+            i: spirit.id,
+            n: spirit.name,
+            en: spirit.metadata?.name_en ?? null,
+            c: spirit.category,
+            t: spirit.thumbnailUrl ?? null
+        }));
     }
 };
 

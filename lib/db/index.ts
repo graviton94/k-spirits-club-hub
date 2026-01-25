@@ -1,5 +1,5 @@
 import { spiritsDb as restSpiritsDb } from './firestore-rest';
-import { Spirit, SpiritStatus, SpiritFilter, PaginationParams, PaginatedResponse } from './schema';
+import { Spirit, SpiritStatus, SpiritFilter, PaginationParams, PaginatedResponse, SpiritSearchIndex } from './schema';
 import { generateSpiritSearchKeywords } from '../utils/search-keywords';
 
 /**
@@ -65,6 +65,11 @@ export const db = {
   },
 
   async updateSpirit(id: string, updates: Partial<Spirit>): Promise<Spirit | null> {
+    // Data Consistency Guard: Ensure status='PUBLISHED' always sets isPublished=true
+    if (updates.status === 'PUBLISHED') {
+      updates.isPublished = true;
+    }
+    
     // Auto-generate searchKeywords if name, distillery, or metadata.name_en is being updated
     const needsKeywordUpdate = updates.name || updates.distillery || updates.metadata?.name_en;
     
@@ -88,5 +93,13 @@ export const db = {
   async deleteSpirit(id: string): Promise<boolean> {
     await spiritsDb.delete([id]);
     return true;
+  },
+
+  /**
+   * Get minimized search index for all PUBLISHED spirits
+   * Uses short keys to reduce bandwidth consumption
+   */
+  async getPublishedSearchIndex(): Promise<SpiritSearchIndex[]> {
+    return spiritsDb.getPublishedSearchIndex();
   }
 };
