@@ -432,11 +432,11 @@ export default function AdminDashboard() {
       {
         editingId && (
           <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[9999] flex items-start justify-center p-4 overflow-y-auto">
-            <div className="bg-white dark:bg-zinc-950 w-full max-w-7xl rounded-3xl shadow-2xl border border-border p-8 md:p-12 animate-in zoom-in-95 duration-200 flex flex-col h-fit my-8">
-              <div className="flex justify-between items-center mb-8 pb-6 border-b border-border">
+            <div className="bg-white dark:bg-zinc-900 w-full max-w-7xl rounded-3xl shadow-2xl border border-gray-200 dark:border-zinc-800 p-8 md:p-12 animate-in zoom-in-95 duration-200 flex flex-col h-fit my-8">
+              <div className="flex justify-between items-center mb-8 pb-6 border-b border-gray-200 dark:border-zinc-800">
                 <div>
-                  <h2 className="text-3xl font-black text-foreground">데이터 클린룸 (Deep Edit)</h2>
-                  <p className="text-muted-foreground text-sm mt-1">ID: {editingId}</p>
+                  <h2 className="text-3xl font-black text-gray-900 dark:text-white">데이터 클린룸 (Deep Edit)</h2>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">ID: {editingId}</p>
                 </div>
                 <button onClick={() => setEditingId(null)} className="p-2 rounded-full hover:bg-secondary text-2xl">✕</button>
               </div>
@@ -449,32 +449,32 @@ export default function AdminDashboard() {
                   <div className="flex-1 space-y-8 w-full">
                     {/* Basic Info Block */}
                     <section className="space-y-4">
-                      <h3 className="text-sm font-bold bg-secondary/50 px-3 py-1 rounded-lg inline-block text-foreground">기본 정보</h3>
+                      <h3 className="text-sm font-bold bg-gray-100 dark:bg-zinc-800 px-3 py-1 rounded-lg inline-block text-gray-900 dark:text-white">기본 정보</h3>
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <label className="text-[10px] font-black uppercase text-muted-foreground">제품명 (KO)</label>
-                          <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl bg-secondary/30 font-bold text-foreground focus:ring-2 focus:ring-primary/50 outline-none"
+                          <label className="text-[10px] font-black uppercase text-gray-500 dark:text-gray-400">제품명 (KO)</label>
+                          <input className="w-full mt-1 px-4 py-3 border border-gray-200 dark:border-zinc-700 rounded-xl bg-gray-50 dark:bg-zinc-950 font-bold text-gray-900 dark:text-white focus:ring-2 focus:ring-amber-500/50 outline-none"
                             value={editForm.name} onChange={e => setEditForm({ ...editForm, name: e.target.value })} />
                         </div>
                         <div>
-                          <label className="text-[10px] font-black uppercase text-muted-foreground">영문 명칭</label>
-                          <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold text-primary bg-background focus:ring-2 focus:ring-primary/50 outline-none"
+                          <label className="text-[10px] font-black uppercase text-gray-500 dark:text-gray-400">영문 명칭</label>
+                          <input className="w-full mt-1 px-4 py-3 border border-gray-200 dark:border-zinc-700 rounded-xl bg-gray-50 dark:bg-zinc-950 font-bold text-gray-900 dark:text-white focus:ring-2 focus:ring-amber-500/50 outline-none"
                             value={editForm.name_en} onChange={e => setEditForm({ ...editForm, name_en: e.target.value })} />
                         </div>
                       </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div>
-                          <label className="text-[10px] font-black uppercase text-muted-foreground">카테고리</label>
-                          <select className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm"
+                          <label className="text-[10px] font-black uppercase text-gray-500 dark:text-gray-400">카테고리</label>
+                          <select className="w-full mt-1 px-4 py-3 border border-gray-200 dark:border-zinc-700 rounded-xl bg-gray-50 dark:bg-zinc-950 font-bold text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-amber-500/50 outline-none"
                             value={editForm.category} onChange={e => setEditForm({ ...editForm, category: e.target.value, subcategory: '' })}>
                             <option value="">선택</option>
                             {level1Options.map(c => <option key={c} value={c}>{c}</option>)}
                           </select>
                         </div>
                         <div>
-                          <label className="text-[10px] font-black uppercase text-muted-foreground">세부종류</label>
-                          <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm"
+                          <label className="text-[10px] font-black uppercase text-gray-500 dark:text-gray-400">세부종류</label>
+                          <input className="w-full mt-1 px-4 py-3 border border-gray-200 dark:border-zinc-700 rounded-xl bg-gray-50 dark:bg-zinc-950 font-bold text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-amber-500/50 outline-none"
                             list="subcategory-options"
                             value={editForm.subcategory} onChange={e => setEditForm({ ...editForm, subcategory: e.target.value })} />
                           <datalist id="subcategory-options">
@@ -488,38 +488,38 @@ export default function AdminDashboard() {
                           </datalist>
                         </div>
                         <div>
-                          <label className="text-[10px] font-black uppercase text-muted-foreground">도수 (ABV)</label>
+                          <label className="text-[10px] font-black uppercase text-gray-500 dark:text-gray-400">도수 (ABV)</label>
                           <div className="relative">
-                            <input type="number" step="0.1" className="w-full mt-1 pl-4 pr-8 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-right"
+                            <input type="number" step="0.1" className="w-full mt-1 pl-4 pr-8 py-3 border border-gray-200 dark:border-zinc-700 rounded-xl bg-gray-50 dark:bg-zinc-950 font-bold text-gray-900 dark:text-white text-right focus:ring-2 focus:ring-amber-500/50 outline-none"
                               value={editForm.abv} onChange={e => setEditForm({ ...editForm, abv: e.target.value })} />
-                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-muted-foreground">%</span>
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-400">%</span>
                           </div>
                         </div>
                       </div>
                     </section>
 
                     {/* Origin & Production Block */}
-                    <section className="space-y-4 pt-4 border-t border-border/50">
-                      <h3 className="text-sm font-bold bg-secondary/50 px-3 py-1 rounded-lg inline-block text-foreground">제조 및 원산지</h3>
+                    <section className="space-y-4 pt-4 border-t border-gray-200 dark:border-zinc-800">
+                      <h3 className="text-sm font-bold bg-gray-100 dark:bg-zinc-800 px-3 py-1 rounded-lg inline-block text-gray-900 dark:text-white">제조 및 원산지</h3>
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <label className="text-[10px] font-black uppercase text-muted-foreground">제조국 (Country)</label>
-                          <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm"
+                          <label className="text-[10px] font-black uppercase text-gray-500 dark:text-gray-400">제조국 (Country)</label>
+                          <input className="w-full mt-1 px-4 py-3 border border-gray-200 dark:border-zinc-700 rounded-xl font-bold bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-amber-500/50 outline-none"
                             value={editForm.country} onChange={e => setEditForm({ ...editForm, country: e.target.value })} />
                         </div>
                         <div>
-                          <label className="text-[10px] font-black uppercase text-muted-foreground">지역 (Region)</label>
-                          <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm"
+                          <label className="text-[10px] font-black uppercase text-gray-500 dark:text-gray-400">지역 (Region)</label>
+                          <input className="w-full mt-1 px-4 py-3 border border-gray-200 dark:border-zinc-700 rounded-xl font-bold bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-amber-500/50 outline-none"
                             value={editForm.region} onChange={e => setEditForm({ ...editForm, region: e.target.value })} />
                         </div>
                         <div>
-                          <label className="text-[10px] font-black uppercase text-muted-foreground">증류소/제조사 (Distillery)</label>
-                          <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm"
+                          <label className="text-[10px] font-black uppercase text-gray-500 dark:text-gray-400">증류소/제조사 (Distillery)</label>
+                          <input className="w-full mt-1 px-4 py-3 border border-gray-200 dark:border-zinc-700 rounded-xl font-bold bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-amber-500/50 outline-none"
                             value={editForm.distillery} onChange={e => setEditForm({ ...editForm, distillery: e.target.value })} />
                         </div>
                         <div>
-                          <label className="text-[10px] font-black uppercase text-muted-foreground">병입자/브랜드 (Bottler)</label>
-                          <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm"
+                          <label className="text-[10px] font-black uppercase text-gray-500 dark:text-gray-400">병입자/브랜드 (Bottler)</label>
+                          <input className="w-full mt-1 px-4 py-3 border border-gray-200 dark:border-zinc-700 rounded-xl font-bold bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-amber-500/50 outline-none"
                             value={editForm.bottler} onChange={e => setEditForm({ ...editForm, bottler: e.target.value })} />
                         </div>
                       </div>
@@ -527,35 +527,35 @@ export default function AdminDashboard() {
                   </div>
 
                   {/* Right Column: Visuals (Fixed Width) */}
-                  <div className="w-full xl:w-96 shrink-0 space-y-6 bg-secondary/5 p-6 rounded-3xl border border-border/50">
+                  <div className="w-full xl:w-96 shrink-0 space-y-6 bg-gray-50 dark:bg-zinc-900 p-6 rounded-3xl border border-gray-200 dark:border-zinc-800">
                     <div className="space-y-3">
-                      <label className="text-[10px] font-black uppercase text-muted-foreground">제품 이미지</label>
-                      <div className="aspect-[3/4] bg-white rounded-2xl border-2 border-dashed border-border flex items-center justify-center overflow-hidden relative group shadow-sm">
+                      <label className="text-[10px] font-black uppercase text-gray-500 dark:text-gray-400">제품 이미지</label>
+                      <div className="aspect-[3/4] bg-white rounded-2xl border-2 border-dashed border-gray-300 dark:border-zinc-700 flex items-center justify-center overflow-hidden relative group shadow-sm">
                         {editForm.imageUrl ? (
                           <img src={editForm.imageUrl} className="w-full h-full object-contain p-4 transition-transform group-hover:scale-105" alt="Preview" />
-                        ) : <span className="text-5xl opacity-20">🥃</span>}
+                        ) : <span className="text-5xl opacity-20 text-gray-900">🥃</span>}
                       </div>
-                      <input className="w-full px-4 py-2 border border-input rounded-xl text-xs bg-background text-muted-foreground font-mono truncate focus:text-foreground"
+                      <input className="w-full px-4 py-2 border border-gray-200 dark:border-zinc-700 rounded-xl text-xs bg-white dark:bg-zinc-950 text-gray-500 dark:text-gray-400 font-mono truncate focus:text-gray-900 dark:focus:text-white focus:ring-2 focus:ring-amber-500/50 outline-none"
                         value={editForm.imageUrl} onChange={e => setEditForm({ ...editForm, imageUrl: e.target.value })} placeholder="https://..." />
                     </div>
                   </div>
                 </div>
 
                 {/* Description Block (Full Width) */}
-                <section className="space-y-4 pt-4 border-t border-border/50">
-                  <label className="text-[10px] font-black uppercase text-muted-foreground">소개/설명 (Description)</label>
-                  <textarea rows={5} className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-medium bg-background text-foreground text-sm leading-relaxed focus:ring-2 focus:ring-primary/50 outline-none"
+                <section className="space-y-4 pt-4 border-t border-gray-200 dark:border-zinc-800">
+                  <label className="text-[10px] font-black uppercase text-gray-500 dark:text-gray-400">소개/설명 (Description)</label>
+                  <textarea rows={5} className="w-full mt-1 px-4 py-3 border border-gray-200 dark:border-zinc-700 rounded-xl font-medium bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-white text-sm leading-relaxed focus:ring-2 focus:ring-amber-500/50 outline-none"
                     value={editForm.description} onChange={e => setEditForm({ ...editForm, description: e.target.value })} />
                 </section>
 
                 {/* Flavor DNA Section (Horizontal) */}
-                <section className="bg-secondary/10 p-8 rounded-3xl border border-border space-y-6">
+                <section className="bg-gray-50 dark:bg-zinc-900 p-8 rounded-3xl border border-gray-200 dark:border-zinc-800 space-y-6">
                   <div className="flex items-center gap-2">
-                    <h3 className="text-lg font-black text-foreground">🧬 Flavor DNA</h3>
-                    <span className="text-xs text-muted-foreground font-medium bg-background px-2 py-1 rounded-md border border-border">태그를 선택하여 맛을 표현하세요</span>
+                    <h3 className="text-lg font-black text-gray-900 dark:text-white">🧬 Flavor DNA</h3>
+                    <span className="text-xs text-gray-500 font-medium bg-white dark:bg-zinc-950 px-2 py-1 rounded-md border border-gray-200 dark:border-zinc-800">태그를 선택하여 맛을 표현하세요</span>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  <div className="space-y-8">
                     <TagMultiSelect
                       label="Nose (향)"
                       availableTags={metadata.tag_index.nose as any}
@@ -581,10 +581,10 @@ export default function AdminDashboard() {
               </div>
 
               {/* Footer Actions (Static at bottom of container) */}
-              <div className="mt-12 pt-8 border-t border-border flex gap-4">
-                <button onClick={() => setEditingId(null)} className="flex-1 py-4 font-bold bg-secondary text-secondary-foreground rounded-2xl hover:bg-secondary/80 transition-colors">닫기 (취소)</button>
-                <button disabled={isProcessing} onClick={() => saveEdit(false)} className="flex-1 py-4 font-bold bg-primary/10 text-primary border-2 border-primary/20 rounded-2xl hover:bg-primary/20 transition-colors">단순 저장</button>
-                <button disabled={isProcessing} onClick={() => saveEdit(true)} className="flex-[2] py-4 font-bold bg-primary text-primary-foreground rounded-2xl shadow-xl hover:shadow-primary/30 hover:scale-[1.01] active:scale-95 transition-all">
+              <div className="mt-12 pt-8 border-t border-gray-200 dark:border-zinc-800 flex gap-4">
+                <button onClick={() => setEditingId(null)} className="flex-1 py-4 font-bold bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-gray-300 rounded-2xl hover:bg-gray-200 dark:hover:bg-zinc-700 transition-colors">닫기 (취소)</button>
+                <button disabled={isProcessing} onClick={() => saveEdit(false)} className="flex-1 py-4 font-bold bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 border-2 border-amber-200 dark:border-amber-900/50 rounded-2xl hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-colors">단순 저장</button>
+                <button disabled={isProcessing} onClick={() => saveEdit(true)} className="flex-[2] py-4 font-bold bg-amber-600 hover:bg-amber-500 text-white rounded-2xl shadow-xl shadow-amber-500/20 hover:scale-[1.01] active:scale-95 transition-all">
                   {isProcessing ? '처리 중...' : '✨ 저장 및 최종 승인 (공개)'}
                 </button>
               </div>

@@ -75,11 +75,7 @@ function toFirestore(data: Partial<Spirit>): any {
 export const spiritsDb = {
     async getAll(status?: SpiritStatus | 'ALL'): Promise<Spirit[]> {
         const token = await getServiceAccountToken();
-        const url = `${BASE_URL}/artifacts/graviton94-k-spirits-club-hub/public/data/spirits?pageSize=100`;
-        // Note: Filter is not easy in one go via listDocuments REST without StructuredQuery. 
-        // For simplicity, we fetch recent 100 or use runQuery.
-
-        let queryUrl = url;
+        const url = `${BASE_URL}/spirits?pageSize=100`;
 
         // Use runQuery for filtering
         const runQueryUrl = `${BASE_URL}:runQuery`;
@@ -90,15 +86,8 @@ export const spiritsDb = {
             }
         };
 
-        // Note: The COLLECTION_PATH in old db was `artifacts/${appId}/public/data/spirits`.
-        // Here we just use 'spirits' assuming it's a root or we need full path.
-        // Actually, in the old file: `artifacts/${appId}/public/data/spirits`.
-        // Firestore REST `parent` should be `projects/{id}/databases/(default)/documents/artifacts/{appId}/public/data`.
-        // Then collectionId = spirits.
-
-        // Simpler approach: Just use standard list if possible, or runQuery with path.
-        // Ideally we keep using the full path.
-        const parent = `projects/${PROJECT_ID}/databases/(default)/documents/artifacts/graviton94-k-spirits-club-hub/public/data`;
+        // Root parent path
+        const parent = `projects/${PROJECT_ID}/databases/(default)/documents`;
 
         if (status && status !== 'ALL') {
             payload.structuredQuery.where = {
@@ -126,7 +115,6 @@ export const spiritsDb = {
         }
 
         const json = await res.json();
-        // runQuery returns [{document: ...}, {readTime: ...}]
         return json
             .filter((r: any) => r.document)
             .map((r: any) => fromFirestore(r.document));
@@ -134,14 +122,19 @@ export const spiritsDb = {
 
     async getById(id: string): Promise<Spirit | null> {
         const token = await getServiceAccountToken();
-        const path = `artifacts/graviton94-k-spirits-club-hub/public/data/spirits/${id}`;
+        const path = `spirits/${id}`;
         const url = `${BASE_URL}/${path}`;
+
+        console.log(`[Firestore] Fetching Spirit: ${url} (ID: ${id})`); // DEBUG
 
         const res = await fetch(url, {
             headers: { Authorization: `Bearer ${token}` }
         });
 
-        if (res.status === 404) return null;
+        if (res.status === 404) {
+            console.error(`[Firestore] Spirit Not Found: ${url}`);
+            return null;
+        }
         if (!res.ok) throw new Error(await res.text());
 
         const doc = await res.json();
@@ -149,9 +142,6 @@ export const spiritsDb = {
     },
 
     async getByIds(ids: string[]): Promise<Spirit[]> {
-        // Firestore REST doesn't have a simple "where id in [...]" without structured query complexity.
-        // For simplicity and typical cabinet size (<100), Promise.all(getById) is acceptable.
-        // We can optimize with batchGet later if needed.
         const promises = ids.map(id => this.getById(id));
         const results = await Promise.all(promises);
         return results.filter((s): s is Spirit => s !== null);
@@ -159,7 +149,7 @@ export const spiritsDb = {
 
     async upsert(id: string, data: Partial<Spirit>) {
         const token = await getServiceAccountToken();
-        const path = `artifacts/graviton94-k-spirits-club-hub/public/data/spirits/${id}`;
+        const path = `spirits/${id}`;
 
         // Construct Update Mask dynamically based on data keys
         const fieldPaths = Object.keys(data).filter(k => k !== 'id').map(k => `updateMask.fieldPaths=${k}`).join('&');
@@ -179,7 +169,7 @@ export const spiritsDb = {
     async delete(ids: string[]) {
         const token = await getServiceAccountToken();
         for (const id of ids) {
-            const path = `artifacts/graviton94-k-spirits-club-hub/public/data/spirits/${id}`;
+            const path = `spirits/${id}`;
             await fetch(`${BASE_URL}/${path}`, {
                 method: 'DELETE',
                 headers: { Authorization: `Bearer ${token}` }
