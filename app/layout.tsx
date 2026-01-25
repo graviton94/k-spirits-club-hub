@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from './context/auth-context';
+import { SpiritsCacheProvider } from './context/spirits-cache-context';
 import OnboardingModal from './components/auth/onboarding-modal';
 import { Header } from '@/components/layout/Header';
 import { BottomNav } from "@/components/layout/BottomNav";
@@ -44,9 +45,11 @@ export default function RootLayout({
       <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`}>
         <main className="min-h-screen pb-32">
           <AuthProvider>
-            <Header />
-            <OnboardingModal />
-            {children}
+            <SpiritsCacheProvider>
+              <Header />
+              <OnboardingModal />
+              {children}
+            </SpiritsCacheProvider>
           </AuthProvider>
         </main>
 
