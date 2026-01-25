@@ -1,160 +1,48 @@
 'use client';
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import GoogleAd from "@/components/ui/GoogleAd";
 import Link from "next/link";
+import MindMap from "@/components/cabinet/MindMap";
+import { analyzeCellar, MOCK_CELLAR_SPIRITS, type Spirit } from "@/lib/utils/flavor-engine";
 
 // Configuration
 const SPIRITS_PER_ROW = 4;
 
-// Mock data for demonstration - Full shelf simulation
-const MOCK_SPIRITS = [
-  {
-    id: "1",
-    name: "달홀진주25",
-    category: "소주",
-    subcategory: "증류식 소주",
-    abv: 25,
-    imageUrl: "https://via.placeholder.com/300x600/8B4513/FFFFFF?text=달홀진주25",
-    distillery: "달홀",
-    isWishlist: false,
-    metadata: { tasting_note: "깔끔한, 부드러운" }
-  },
-  {
-    id: "2",
-    name: "화요",
-    category: "소주",
-    subcategory: "증류식 소주",
-    abv: 41,
-    imageUrl: "https://via.placeholder.com/300x600/4A5568/FFFFFF?text=화요",
-    distillery: "국순당",
-    isWishlist: false,
-    metadata: { tasting_note: "스파이시한, 곡물향" }
-  },
-  {
-    id: "3",
-    name: "문배주",
-    category: "전통주",
-    subcategory: "증류식 소주",
-    abv: 40,
-    imageUrl: "https://via.placeholder.com/300x600/2D3748/F0E68C?text=문배주",
-    distillery: "문배주양조원",
-    isWishlist: false,
-    metadata: { tasting_note: "과일향, 달콤한" }
-  },
-  {
-    id: "4",
-    name: "Hibiki Harmony",
-    category: "위스키",
-    subcategory: "Japanese Whisky",
-    abv: 43,
-    imageUrl: "https://via.placeholder.com/300x600/B8860B/FFFFFF?text=Hibiki",
-    distillery: "Suntory",
-    isWishlist: false,
-    metadata: { tasting_note: "플로랄, 허니" }
-  },
-  {
-    id: "5",
-    name: "Hendrick's Gin",
-    category: "일반증류주",
-    subcategory: "Gin",
-    abv: 44,
-    imageUrl: "https://via.placeholder.com/300x600/1A202C/90EE90?text=Hendricks",
-    distillery: "Hendrick's",
-    isWishlist: true,
-    metadata: { tasting_note: "큐컴버, 로즈" }
-  },
-  {
-    id: "6",
-    name: "안동소주",
-    category: "전통주",
-    subcategory: "증류식 소주",
-    abv: 45,
-    imageUrl: "https://via.placeholder.com/300x600/8B4513/FFFFFF?text=안동소주",
-    distillery: "안동소주",
-    isWishlist: true,
-    metadata: { tasting_note: "전통적인, 강렬한" }
-  },
-  {
-    id: "7",
-    name: "막걸리 생탁",
-    category: "탁주",
-    subcategory: "생막걸리",
-    abv: 6,
-    imageUrl: "https://via.placeholder.com/300x600/F5F5DC/000000?text=막걸리",
-    distillery: "서울탁주",
-    isWishlist: false,
-    metadata: { tasting_note: "상큼한, 발효향" }
-  },
-  {
-    id: "8",
-    name: "Glenfiddich 12",
-    category: "위스키",
-    subcategory: "Single Malt Scotch",
-    abv: 40,
-    imageUrl: "https://via.placeholder.com/300x600/228B22/FFFFFF?text=Glenfiddich",
-    distillery: "Glenfiddich",
-    isWishlist: true,
-    metadata: { tasting_note: "오크, 바닐라" }
-  },
-  {
-    id: "9",
-    name: "Jameson Irish Whiskey",
-    category: "위스키",
-    subcategory: "Irish Whiskey",
-    abv: 40,
-    imageUrl: "https://via.placeholder.com/300x600/006400/FFFFFF?text=Jameson",
-    distillery: "Jameson",
-    isWishlist: false,
-    metadata: { tasting_note: "스무스, 과일향" }
-  },
-  {
-    id: "10",
-    name: "참이슬",
-    category: "소주",
-    subcategory: "희석식 소주",
-    abv: 16.5,
-    imageUrl: "https://via.placeholder.com/300x600/90EE90/000000?text=참이슬",
-    distillery: "하이트진로",
-    isWishlist: false,
-    metadata: { tasting_note: "청량한, 가벼운" }
-  },
-  {
-    id: "11",
-    name: "처음처럼",
-    category: "소주",
-    subcategory: "희석식 소주",
-    abv: 16.9,
-    imageUrl: "https://via.placeholder.com/300x600/FFB6C1/000000?text=처음처럼",
-    distillery: "롯데칠성",
-    isWishlist: false,
-    metadata: { tasting_note: "부드러운, 청량한" }
-  },
-  {
-    id: "12",
-    name: "Tanqueray Gin",
-    category: "일반증류주",
-    subcategory: "Gin",
-    abv: 47.3,
-    imageUrl: "https://via.placeholder.com/300x600/FF6347/FFFFFF?text=Tanqueray",
-    distillery: "Tanqueray",
-    isWishlist: false,
-    metadata: { tasting_note: "주니퍼, 시트러스" }
-  }
-];
+type ViewMode = 'cellar' | 'flavor';
 
 export default function CabinetPage() {
-  const [spirits, setSpirits] = useState<typeof MOCK_SPIRITS>([]);
-  const [selectedSpirit, setSelectedSpirit] = useState<typeof MOCK_SPIRITS[0] | null>(null);
+  const [viewMode, setViewMode] = useState<ViewMode>('cellar');
+  const [spirits, setSpirits] = useState<Spirit[]>([]);
+  const [selectedSpirit, setSelectedSpirit] = useState<Spirit | null>(null);
 
   useEffect(() => {
-    // In production, fetch from localStorage/API
-    setSpirits(MOCK_SPIRITS);
+    // Try to load from localStorage, fall back to mock data
+    const loadSpirits = () => {
+      if (typeof window === 'undefined') return MOCK_CELLAR_SPIRITS;
+      
+      try {
+        const stored = localStorage.getItem('kspirits_cellar');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          return parsed.length > 0 ? parsed : MOCK_CELLAR_SPIRITS;
+        }
+      } catch (error) {
+        console.error('Failed to load from localStorage:', error);
+      }
+      
+      return MOCK_CELLAR_SPIRITS;
+    };
+
+    setSpirits(loadSpirits());
   }, []);
 
   const ownedSpirits = spirits.filter(s => !s.isWishlist);
   const wishlistSpirits = spirits.filter(s => s.isWishlist);
+  
+  // Generate flavor analysis
+  const flavorAnalysis = analyzeCellar(spirits);
 
   // Empty state
   if (spirits.length === 0 || ownedSpirits.length === 0) {
@@ -191,14 +79,55 @@ export default function CabinetPage() {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
-      {/* Simple Header */}
+      {/* Header with Toggle */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white mb-1">🍾 내 술장</h1>
-        <p className="text-sm text-gray-400">{ownedSpirits.length}병 소장중</p>
+        <h1 className="text-2xl font-bold text-white mb-1">🍾 My Collections</h1>
+        <p className="text-sm text-gray-400 mb-6">{ownedSpirits.length}병 소장중</p>
+        
+        {/* Segmented Toggle */}
+        <div className="relative inline-flex bg-gray-800/50 backdrop-blur-sm rounded-full p-1 border border-gray-700">
+          <motion.div
+            className="absolute inset-y-1 bg-gradient-to-r from-amber-500 to-amber-600 rounded-full"
+            initial={false}
+            animate={{
+              x: viewMode === 'cellar' ? 0 : '100%',
+              width: viewMode === 'cellar' ? '50%' : '50%',
+            }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+          />
+          
+          <button
+            onClick={() => setViewMode('cellar')}
+            className={`relative z-10 px-6 py-2 rounded-full text-sm font-bold transition-colors ${
+              viewMode === 'cellar' ? 'text-black' : 'text-gray-400 hover:text-gray-200'
+            }`}
+          >
+            🍾 술장 (Cellar)
+          </button>
+          
+          <button
+            onClick={() => setViewMode('flavor')}
+            className={`relative z-10 px-6 py-2 rounded-full text-sm font-bold transition-colors ${
+              viewMode === 'flavor' ? 'text-black' : 'text-gray-400 hover:text-gray-200'
+            }`}
+          >
+            🌌 취향 지도 (Flavor Map)
+          </button>
+        </div>
       </div>
 
-      {/* Visual Display Shelf Section */}
-      <section className="mb-16">
+      {/* View Container with Animation */}
+      <AnimatePresence mode="wait">
+        {viewMode === 'cellar' ? (
+          <motion.div
+            key="cellar"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
+            transition={{ duration: 0.3 }}
+          >
+            {/* Visual Display Shelf Section */}
+            <section className="mb-16">
         {/* Modern Shelf Container with enhanced depth */}
         <div className="relative bg-gradient-to-b from-gray-50 via-white to-gray-100 rounded-2xl p-8 shadow-2xl">
           {/* Subtle wood grain texture overlay */}
@@ -291,6 +220,19 @@ export default function CabinetPage() {
           </div>
         </section>
       )}
+          </motion.div>
+        ) : (
+          <motion.div
+            key="flavor"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <MindMap analysis={flavorAnalysis} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Quick Info Popup Modal - Centered */}
       {selectedSpirit && (
