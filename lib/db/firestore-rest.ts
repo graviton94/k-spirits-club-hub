@@ -78,6 +78,10 @@ export const spiritsDb = {
         const runQueryUrl = `${BASE_URL}:runQuery`;
 
         const filters: any[] = [];
+
+        // Unify PUBLISHED logic: If status is PUBLISHED, we don't strictly need isPublished filter 
+        // to reduce composite index requirements, IF the data is consistent.
+        // However, for safety and following user requirement to unify:
         if (filter.status && (filter.status as string) !== 'ALL') {
             filters.push({
                 fieldFilter: {
@@ -87,7 +91,9 @@ export const spiritsDb = {
                 }
             });
         }
-        if (filter.isPublished !== undefined) {
+
+        // If isPublished is explicitly requested and it's not redundant with status
+        if (filter.isPublished !== undefined && filter.status !== 'PUBLISHED') {
             filters.push({
                 fieldFilter: {
                     field: { fieldPath: 'isPublished' },
@@ -96,8 +102,7 @@ export const spiritsDb = {
                 }
             });
         }
-        // Category filter is applied in memory with OR logic (category OR subcategory)
-        // so we don't filter at DB level to avoid conflicts
+
         if (filter.subcategory) {
             filters.push({
                 fieldFilter: {
@@ -110,7 +115,7 @@ export const spiritsDb = {
 
         const structuredQuery: any = {
             from: [{ collectionId: 'spirits' }],
-            limit: 5000 // Covers more area for search
+            limit: 5000
         };
 
         if (filters.length === 1) {
@@ -126,9 +131,6 @@ export const spiritsDb = {
 
         const parent = `projects/${PROJECT_ID}/databases/(default)/documents`;
 
-        console.log('[Firestore] Query filters:', JSON.stringify(filters, null, 2));
-        console.log('[Firestore] Structured query:', JSON.stringify(structuredQuery, null, 2));
-
         const res = await fetch(runQueryUrl, {
             method: 'POST',
             headers: { Authorization: `Bearer ${token}` },
@@ -139,8 +141,28 @@ export const spiritsDb = {
         });
 
         if (!res.ok) {
-            const err = await res.text();
-            console.error('Firestore REST Error:', err);
+            const errText = await res.text();
+            let errorMessage = errText;
+            try {
+                const errJson = JSON.parse(errText);
+                errorMessage = errJson.error?.message || errText;
+
+                // CRITICAL: Look for Index Creation Link
+                if (errText.includes('index') || res.status === 400) {
+                    console.error(' [FIRESTORE INDEX ERROR] ');
+                    console.error('The current query requires a composite index.');
+                    console.error('Please visit this link to create it:');
+                    const match = errText.match(/https:\/\/console\.firebase\.google\.com[^\s"]+/);
+                    if (match) {
+                        console.error('👉', match[0]);
+                    } else {
+                        console.error('Full Error Body:', errText);
+                    }
+                }
+            } catch (e) {
+                console.error('Failed to parse Firestore error:', errText);
+            }
+            console.error(`[Firestore REST] ${res.status} Error:`, errorMessage);
             return [];
         }
 
@@ -148,7 +170,7 @@ export const spiritsDb = {
         const results = json
             .filter((r: any) => r.document)
             .map((r: any) => fromFirestore(r.document));
-        
+
         console.log(`[Firestore] Query returned ${results.length} spirits`);
         if (results.length > 0) {
             console.log('[Firestore] First result sample:', {
@@ -158,7 +180,7 @@ export const spiritsDb = {
                 isPublished: results[0].isPublished
             });
         }
-        
+
         return results;
     },
 

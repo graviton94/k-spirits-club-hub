@@ -111,15 +111,6 @@ export default function ExploreContent() {
         filter.subcategory = selectedSub;
       }
 
-      // If Main is selected but Sub is NOT, we want to filter by Main.
-      // Since we don't have 'mainCategory' in SpiritFilter interface explicitly yet (I should check),
-      // filtering by Main might be tricky. 
-      // But typically filtering by Legal + client side filter or just show all for now.
-      // Or... if selectedMain, maybe we search subcategories that belong to it?
-
-      // Let's TRY to pass mainCategory if possible, or skip strict filtering for Level 2 for this MVP step
-      // unless we update DB query. (I'll update DB query in next step usually).
-
       console.log('[ExploreContent] Fetching spirits with filter:', filter, 'page:', page);
 
       const { data, total, totalPages: pages } = await getSpiritsAction(
