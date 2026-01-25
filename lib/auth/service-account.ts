@@ -31,10 +31,18 @@ function pemToArrayBuffer(pem: string): ArrayBuffer {
 }
 
 export async function getServiceAccountToken() {
-    const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
+    // Sanitize: Strip potential surrounding quotes often added by mistake or platform
+    const clientEmail = process.env.FIREBASE_CLIENT_EMAIL
+        ? process.env.FIREBASE_CLIENT_EMAIL.replace(/^["']|["']$/g, '')
+        : undefined;
+
+    const privateKeyEnv = process.env.FIREBASE_PRIVATE_KEY
+        ? process.env.FIREBASE_PRIVATE_KEY.replace(/^["']|["']$/g, '')
+        : undefined;
+
     // Replace double escaped newlines for Vercel vars
-    const privateKey = process.env.FIREBASE_PRIVATE_KEY
-        ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n')
+    const privateKey = privateKeyEnv
+        ? privateKeyEnv.replace(/\\n/g, '\n')
         : undefined;
 
     if (!clientEmail || !privateKey) {
