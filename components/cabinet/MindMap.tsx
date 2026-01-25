@@ -6,13 +6,14 @@ import { useState, useMemo } from 'react';
 
 interface MindMapProps {
   analysis: FlavorAnalysis;
+  profileImage?: string | null;
 }
 
 /**
  * Galaxy-style Mind Map Component
  * Visualizes user's flavor preferences as an interactive constellation
  */
-export default function MindMap({ analysis }: MindMapProps) {
+export default function MindMap({ analysis, profileImage }: MindMapProps) {
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
 
   if (analysis.totalSpirits === 0) {
@@ -44,6 +45,15 @@ export default function MindMap({ analysis }: MindMapProps) {
   };
 
   const topFlavors = analysis.topKeywords.slice(0, 5);
+  
+  // Use pre-calculated positions if available (from flavor-engine)
+  const flavorNodes = analysis.flavorNodes || topFlavors.map((flavor, index) => ({
+    id: `node-${index}`,
+    keyword: flavor.keyword,
+    count: flavor.count,
+    relatedSpirits: [],
+    position: getOrbitPosition(index, topFlavors.length, 140)
+  }));
 
   // Generate star positions once to avoid re-rendering
   const stars = useMemo(() => 
@@ -100,9 +110,17 @@ export default function MindMap({ analysis }: MindMapProps) {
               ],
             }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="relative w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-amber-400 via-amber-500 to-orange-600 flex items-center justify-center"
+            className="relative w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-amber-400 via-amber-500 to-orange-600 flex items-center justify-center overflow-hidden"
           >
-            <div className="text-4xl sm:text-5xl">🌟</div>
+            {profileImage ? (
+              <img 
+                src={profileImage} 
+                alt="Profile" 
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div className="text-4xl sm:text-5xl">🌟</div>
+            )}
           </motion.div>
 
           {/* User persona label */}
@@ -119,9 +137,9 @@ export default function MindMap({ analysis }: MindMapProps) {
         </motion.div>
 
         {/* Flavor nodes in orbit */}
-        {topFlavors.map((flavor, index) => {
-          const position = getOrbitPosition(index, topFlavors.length, 140);
-          const isSelected = selectedNode === flavor.keyword;
+        {flavorNodes.map((node, index) => {
+          const position = node.position || getOrbitPosition(index, flavorNodes.length, 140);
+          const isSelected = selectedNode === node.keyword;
 
           // Color palette for different flavor types
           const getFlavorColor = (keyword: string) => {
@@ -136,7 +154,7 @@ export default function MindMap({ analysis }: MindMapProps) {
 
           return (
             <motion.div
-              key={flavor.keyword}
+              key={node.id}
               initial={{ scale: 0, opacity: 0 }}
               animate={{
                 scale: 1,
@@ -151,7 +169,7 @@ export default function MindMap({ analysis }: MindMapProps) {
                 delay: index * 0.1 + 0.3,
               }}
               className="absolute cursor-pointer"
-              onClick={() => setSelectedNode(isSelected ? null : flavor.keyword)}
+              onClick={() => setSelectedNode(isSelected ? null : node.keyword)}
               style={{
                 left: '50%',
                 top: '50%',
@@ -190,12 +208,12 @@ export default function MindMap({ analysis }: MindMapProps) {
                     : '0 0 20px 5px rgba(251, 191, 36, 0.3)',
                 }}
                 className={`relative px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-gradient-to-r ${getFlavorColor(
-                  flavor.keyword
+                  node.keyword
                 )} text-black font-bold text-xs sm:text-sm shadow-lg`}
               >
                 <div className="flex items-center gap-2">
-                  <span>{flavor.keyword}</span>
-                  <span className="text-[10px] sm:text-xs opacity-70">×{flavor.count}</span>
+                  <span>{node.keyword}</span>
+                  <span className="text-[10px] sm:text-xs opacity-70">×{node.count}</span>
                 </div>
               </motion.div>
             </motion.div>

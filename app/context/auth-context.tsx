@@ -20,6 +20,7 @@ interface UserProfile {
     nickname: string;
     profileImage: string | null;
     isFirstLogin: boolean;
+    themePreference?: 'light' | 'dark';
 }
 
 interface AuthContextType {
@@ -27,6 +28,8 @@ interface AuthContextType {
     profile: UserProfile | null;
     role: UserRole;
     loading: boolean;
+    theme: 'light' | 'dark';
+    setTheme: (theme: 'light' | 'dark') => void;
     loginWithGoogle: () => Promise<void>;
     logout: () => Promise<void>;
     updateProfile: (data: Partial<UserProfile>) => Promise<void>;
@@ -37,6 +40,8 @@ const AuthContext = createContext<AuthContextType>({
     profile: null,
     role: null,
     loading: true,
+    theme: 'light',
+    setTheme: () => { },
     loginWithGoogle: async () => { },
     logout: async () => { },
     updateProfile: async () => { },
@@ -47,7 +52,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [role, setRole] = useState<UserRole>(null);
     const [loading, setLoading] = useState(true);
+    const [theme, setThemeState] = useState<'light' | 'dark'>('light');
     const router = useRouter();
+
+    useEffect(() => {
+        // Load theme from localStorage on mount
+        const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
+        if (savedTheme) {
+            setThemeState(savedTheme);
+            document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+        } else {
+            // Default to light theme
+            setThemeState('light');
+            document.documentElement.classList.remove('dark');
+        }
+    }, []);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -61,11 +80,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 if (userDoc.exists()) {
                     const data = userDoc.data();
                     setRole(data.role as UserRole);
+                    const userTheme = data.themePreference || 'light';
                     setProfile({
                         nickname: data.nickname || currentUser.displayName || 'Anonymous',
                         profileImage: data.profileImage || currentUser.photoURL,
-                        isFirstLogin: data.isFirstLogin ?? false
+                        isFirstLogin: data.isFirstLogin ?? false,
+                        themePreference: userTheme
                     });
+                    // Apply theme from user profile
+                    setThemeState(userTheme);
+                    document.documentElement.classList.toggle('dark', userTheme === 'dark');
+                    localStorage.setItem('theme', userTheme);
                 } else {
                     // Create new user doc with default role & profile
                     // nickname and isFirstLogin will be handled by Onboarding
@@ -75,6 +100,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                         nickname: currentUser.displayName || 'New User',
                         profileImage: currentUser.photoURL,
                         isFirstLogin: true, // Trigger Onboarding
+                        themePreference: 'light',
                         createdAt: new Date().toISOString()
                     };
                     await setDoc(userDocRef, initialProfile);
@@ -82,7 +108,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                     setProfile({
                         nickname: initialProfile.nickname,
                         profileImage: initialProfile.profileImage,
-                        isFirstLogin: true
+                        isFirstLogin: true,
+                        themePreference: 'light'
                     });
                 }
             } else {
@@ -102,6 +129,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setProfile(prev => prev ? { ...prev, ...data } : null);
     };
 
+    const setTheme = (newTheme: 'light' | 'dark') => {
+        setThemeState(newTheme);
+        document.documentElement.classList.toggle('dark', newTheme === 'dark');
+        localStorage.setItem('theme', newTheme);
+        
+        // Save to user profile if logged in
+        if (user) {
+            updateProfile({ themePreference: newTheme });
+        }
+    };
+
     const loginWithGoogle = async () => {
         try {
             const provider = new GoogleAuthProvider();
@@ -119,7 +157,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, profile, role, loading, loginWithGoogle, logout, updateProfile }}>
+        <AuthContext.Provider value={{ user, profile, role, loading, theme, setTheme, loginWithGoogle, logout, updateProfile }}>
             {children}
         </AuthContext.Provider>
     );

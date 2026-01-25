@@ -343,11 +343,12 @@ function CategoryFilter({ label, isActive, href, isSub }: CategoryFilterProps) {
     <Link
       href={href}
       className={`
-        px-5 py-2.5 rounded-2xl transition-all duration-300 backdrop-blur-md snap-start whitespace-nowrap
+        transition-all duration-300 backdrop-blur-md snap-start whitespace-nowrap
         ${isActive
           ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20 scale-105'
-          : `hover:bg-white/10 ${isSub ? 'bg-white/5 text-gray-300 text-sm' : 'bg-white/5 text-white font-bold'}`
+          : `hover:bg-white/10 ${isSub ? 'bg-white/5 text-gray-300' : 'bg-white/5 text-white font-bold'}`
         }
+        ${isSub ? 'px-3 py-1.5 rounded-lg text-xs' : 'px-4 py-2 rounded-xl text-sm'}
       `}
     >
       {label}
