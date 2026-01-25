@@ -1,34 +1,45 @@
+'use client';
+
 import { SearchBar } from "@/components/ui/SearchBar";
 import { SpiritCard } from "@/components/ui/SpiritCard";
 import { LiveReviews } from "@/components/ui/LiveReviews";
-import { db } from "@/lib/db";
 import Link from "next/link";
-import { CATEGORY_NAME_MAP, LEGAL_CATEGORIES } from "@/lib/constants/categories";
+import { CATEGORY_NAME_MAP } from "@/lib/constants/categories";
 import { ArrowRight, Flame, Sparkles } from "lucide-react";
 import styles from "./page.module.css";
 import { RandomBackground } from "@/components/ui/RandomBackground";
+import { useSpiritsCache } from "@/app/context/spirits-cache-context";
+import { useMemo } from "react";
 
-export const revalidate = 60; // Revalidate every minute
+export default function HomePage() {
+  const { publishedSpirits, isLoading } = useSpiritsCache();
 
-async function getTrendingSpirits() {
-  // Fetch latest updated spirits that have images
-  try {
-    const { data } = await db.getSpirits(
-      { isPublished: true, status: 'PUBLISHED' }, // Only show published spirits
-      { page: 1, pageSize: 12 }
-    );
-    // Filter items with images for better UI
-    return data.filter(s => s.imageUrl).slice(0, 6);
-  } catch (e) {
-    console.error("Failed to fetch trending spirits", e);
-    return [];
-  }
-}
+  // Get top trending spirits from cache (sorted by createdAt, most recent first)
+  const trendingSpirits = useMemo(() => {
+    if (!publishedSpirits.length) return [];
+    
+    // Filter spirits with images and sort by createdAt (most recent first)
+    return publishedSpirits
+      .filter(s => s.imageUrl)
+      .sort((a, b) => {
+        const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+        const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+        return dateB - dateA;
+      })
+      .slice(0, 10);
+  }, [publishedSpirits]);
 
-export default async function HomePage() {
-  const trendingSpirits = await getTrendingSpirits();
   const heroSpirit = trendingSpirits[0];
   const listSpirits = trendingSpirits.slice(1);
+
+  // Dynamically get available categories from cached data
+  const availableCategories = useMemo(() => {
+    const categories = new Set<string>();
+    publishedSpirits.forEach(spirit => {
+      if (spirit.category) categories.add(spirit.category);
+    });
+    return Array.from(categories).sort();
+  }, [publishedSpirits]);
 
   return (
     <div className="min-h-screen bg-background text-foreground pb-20">
@@ -70,7 +81,7 @@ export default async function HomePage() {
         <div className="relative overflow-hidden">
           <div className={`flex gap-4 ${styles['animate-scroll-rtl']}`}>
             {/* Duplicate items for infinite scroll effect */}
-            {[...LEGAL_CATEGORIES, ...LEGAL_CATEGORIES].map((cat, index) => {
+            {[...availableCategories, ...availableCategories].map((cat, index) => {
               // Updated Icons mapping for all 11 categories
               const icons: Record<string, string> = {
                 "소주": "🍶",
@@ -136,17 +147,25 @@ export default async function HomePage() {
         </div>
 
         <div className="flex flex-col gap-4">
-          {listSpirits.slice(0, 3).map((spirit) => (
-            <SpiritCard key={spirit.id} spirit={spirit} />
-          ))}
+          {isLoading ? (
+            Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="h-24 bg-card/50 animate-pulse rounded-2xl" />
+            ))
+          ) : (
+            <>
+              {listSpirits.slice(0, 3).map((spirit) => (
+                <SpiritCard key={spirit.id} spirit={spirit} />
+              ))}
 
-          {/* Fallback Mock Items if no data */}
-          {listSpirits.length === 0 && (
-            <div className="col-span-full py-20 text-center text-muted-foreground bg-secondary/20 rounded-2xl border border-dashed border-border">
-              <Sparkles className="w-10 h-10 mx-auto mb-3 text-amber-500/50" />
-              <p>No spirits found yet.</p>
-              <p className="text-sm">Run the data pipeline to populate trends!</p>
-            </div>
+              {/* Fallback Mock Items if no data */}
+              {listSpirits.length === 0 && (
+                <div className="col-span-full py-20 text-center text-muted-foreground bg-secondary/20 rounded-2xl border border-dashed border-border">
+                  <Sparkles className="w-10 h-10 mx-auto mb-3 text-amber-500/50" />
+                  <p>Discovering trending spirits...</p>
+                  <p className="text-sm">Check back soon!</p>
+                </div>
+              )}
+            </>
           )}
         </div>
       </section>
