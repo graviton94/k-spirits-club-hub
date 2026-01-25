@@ -1,5 +1,6 @@
 import { Spirit, SpiritStatus, SpiritFilter } from '../db/schema';
 import { getServiceAccountToken } from '../auth/service-account';
+import { extractSearchKeyword } from '../utils/search-keywords';
 
 const PROJECT_ID = process.env.FIREBASE_PROJECT_ID;
 const BASE_URL = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
@@ -79,9 +80,8 @@ export const spiritsDb = {
 
         const filters: any[] = [];
 
-        // Unify PUBLISHED logic: If status is PUBLISHED, we don't strictly need isPublished filter 
-        // to reduce composite index requirements, IF the data is consistent.
-        // However, for safety and following user requirement to unify:
+        // Unified PUBLISHED logic: Always apply both status and isPublished filters
+        // This ensures consistent behavior across all queries
         if (filter.status && (filter.status as string) !== 'ALL') {
             filters.push({
                 fieldFilter: {
@@ -92,8 +92,8 @@ export const spiritsDb = {
             });
         }
 
-        // If isPublished is explicitly requested and it's not redundant with status
-        if (filter.isPublished !== undefined && filter.status !== 'PUBLISHED') {
+        // Always apply isPublished filter when explicitly specified
+        if (filter.isPublished !== undefined) {
             filters.push({
                 fieldFilter: {
                     field: { fieldPath: 'isPublished' },

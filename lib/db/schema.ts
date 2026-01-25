@@ -41,6 +41,9 @@ export interface Spirit {
     [key: string]: any;
   };
 
+  // Search optimization
+  searchKeywords?: string[]; // N-gram keywords for efficient searching
+
   createdAt: Date;
   updatedAt: Date;
 }
