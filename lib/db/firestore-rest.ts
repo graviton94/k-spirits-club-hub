@@ -1,6 +1,5 @@
 import { Spirit, SpiritStatus, SpiritFilter } from '../db/schema';
 import { getServiceAccountToken } from '../auth/service-account';
-import { extractSearchKeyword } from '../utils/search-keywords';
 
 const PROJECT_ID = process.env.FIREBASE_PROJECT_ID;
 const BASE_URL = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;

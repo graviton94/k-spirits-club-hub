@@ -10,14 +10,29 @@
  */
 
 const admin = require('firebase-admin');
-const path = require('path');
+require('dotenv').config({ path: '.env.local' });
+require('dotenv').config();
 
-// Initialize Firebase Admin
-const serviceAccount = require('../service-account-key.json');
+// Initialize Firebase
+if (!process.env.FIREBASE_PROJECT_ID) {
+  console.error("Error: FIREBASE_PROJECT_ID is not set in environment variables.");
+  process.exit(1);
+}
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
+// Handle private key newlines
+const privateKey = process.env.FIREBASE_PRIVATE_KEY
+  ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n')
+  : undefined;
+
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: privateKey,
+    }),
+  });
+}
 
 const db = admin.firestore();
 

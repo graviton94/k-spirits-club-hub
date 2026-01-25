@@ -40,9 +40,7 @@ export function generateNGrams(text: string, minLength: number = 2, maxLength: n
       for (let i = 0; i <= word.length - minLength; i++) {
         for (let len = minLength; len <= Math.min(maxLength, word.length - i); len++) {
           const ngram = word.substring(i, i + len);
-          if (ngram.length >= minLength) {
-            keywords.add(ngram);
-          }
+          keywords.add(ngram);
         }
       }
     }
