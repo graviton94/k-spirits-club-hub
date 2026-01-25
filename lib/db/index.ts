@@ -1,5 +1,6 @@
 import { spiritsDb as restSpiritsDb } from './firestore-rest';
 import { Spirit, SpiritStatus, SpiritFilter, PaginationParams, PaginatedResponse } from './schema';
+import { generateSpiritSearchKeywords } from '../utils/search-keywords';
 
 /**
  * [Server-Side Database Adapter]
@@ -31,10 +32,15 @@ export const db = {
     // Note: isPublished is already filtered at DB level, no need for memory filter
     if (filter.searchTerm) {
       const lowerTerm = filter.searchTerm.toLowerCase();
-      allItems = allItems.filter(s =>
-        s.name.toLowerCase().includes(lowerTerm) ||
-        (s.metadata?.name_en && s.metadata.name_en.toLowerCase().includes(lowerTerm))
-      );
+      allItems = allItems.filter(s => {
+        // Try searchKeywords first (more efficient if populated)
+        if (s.searchKeywords && s.searchKeywords.length > 0) {
+          return s.searchKeywords.some(keyword => keyword.includes(lowerTerm));
+        }
+        // Fall back to traditional includes search
+        return s.name.toLowerCase().includes(lowerTerm) ||
+          (s.metadata?.name_en && s.metadata.name_en.toLowerCase().includes(lowerTerm));
+      });
     }
 
     // 3. Sort (Default: UpdatedAt Desc)
@@ -59,6 +65,22 @@ export const db = {
   },
 
   async updateSpirit(id: string, updates: Partial<Spirit>): Promise<Spirit | null> {
+    // Auto-generate searchKeywords if name, distillery, or metadata.name_en is being updated
+    const needsKeywordUpdate = updates.name || updates.distillery || updates.metadata?.name_en;
+    
+    if (needsKeywordUpdate) {
+      // Fetch current spirit to get all fields for keyword generation
+      const currentSpirit = await spiritsDb.getById(id);
+      if (currentSpirit) {
+        const spiritForKeywords = {
+          name: updates.name || currentSpirit.name,
+          distillery: updates.distillery !== undefined ? updates.distillery : currentSpirit.distillery,
+          metadata: updates.metadata ? { ...currentSpirit.metadata, ...updates.metadata } : currentSpirit.metadata
+        };
+        updates.searchKeywords = generateSpiritSearchKeywords(spiritForKeywords);
+      }
+    }
+    
     await spiritsDb.upsert(id, updates);
     return spiritsDb.getById(id);
   },
