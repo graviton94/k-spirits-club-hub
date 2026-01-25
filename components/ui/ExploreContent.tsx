@@ -116,7 +116,8 @@ export default function ExploreContent() {
       const filter: any = {
         searchTerm,
         category: selectedLegal || undefined,
-        isPublished: true
+        isPublished: true,
+        status: 'PUBLISHED'
       };
 
       if (selectedSub) filter.subcategory = selectedSub;

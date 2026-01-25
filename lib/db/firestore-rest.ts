@@ -96,15 +96,8 @@ export const spiritsDb = {
                 }
             });
         }
-        if (filter.category) {
-            filters.push({
-                fieldFilter: {
-                    field: { fieldPath: 'category' },
-                    op: 'EQUAL',
-                    value: { stringValue: filter.category }
-                }
-            });
-        }
+        // Category filter is applied in memory with OR logic (category OR subcategory)
+        // so we don't filter at DB level to avoid conflicts
         if (filter.subcategory) {
             filters.push({
                 fieldFilter: {
@@ -133,6 +126,9 @@ export const spiritsDb = {
 
         const parent = `projects/${PROJECT_ID}/databases/(default)/documents`;
 
+        console.log('[Firestore] Query filters:', JSON.stringify(filters, null, 2));
+        console.log('[Firestore] Structured query:', JSON.stringify(structuredQuery, null, 2));
+
         const res = await fetch(runQueryUrl, {
             method: 'POST',
             headers: { Authorization: `Bearer ${token}` },
@@ -149,9 +145,21 @@ export const spiritsDb = {
         }
 
         const json = await res.json();
-        return json
+        const results = json
             .filter((r: any) => r.document)
             .map((r: any) => fromFirestore(r.document));
+        
+        console.log(`[Firestore] Query returned ${results.length} spirits`);
+        if (results.length > 0) {
+            console.log('[Firestore] First result sample:', {
+                id: results[0].id,
+                name: results[0].name,
+                status: results[0].status,
+                isPublished: results[0].isPublished
+            });
+        }
+        
+        return results;
     },
 
     async getById(id: string): Promise<Spirit | null> {

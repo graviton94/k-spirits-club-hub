@@ -12,18 +12,24 @@ export async function getSpiritsAction(
     pagination: PaginationParams = { page: 1, pageSize: 20 }
 ) {
     try {
+        console.log('[getSpiritsAction] Fetching spirits with filter:', JSON.stringify(filter), 'pagination:', pagination);
         const result = await db.getSpirits(filter, pagination);
-        // Plain objects are required for server actions (no Dates, though our db returns dates? 
-        // Wait, fromFirestore returns Dates? 
-        // Looking at schema, Spirit has `updatedAt: string | Date`. 
-        // If it's Date, we might need to serialize.
-        // firestore-rest.ts uses `value.timestampValue` which is ISO string. 
-        // And toFirestore uses `new Date()`.
-        // Let's assume serialization happens automatically or data is already simple types.
-        // Next.js Server Actions can return JSON-serializable structures.
+        console.log('[getSpiritsAction] Returned', result.data.length, 'spirits out of', result.total, 'total');
+        
+        // Log a sample spirit to verify published status
+        if (result.data.length > 0) {
+            const sample = result.data[0];
+            console.log('[getSpiritsAction] Sample spirit:', {
+                id: sample.id,
+                name: sample.name,
+                status: sample.status,
+                isPublished: sample.isPublished
+            });
+        }
+        
         return result;
     } catch (error) {
-        console.error("Failed to fetch spirits:", error);
+        console.error("[getSpiritsAction] Failed to fetch spirits:", error);
         throw new Error("Failed to fetch spirits");
     }
 }
