@@ -79,8 +79,9 @@ export const spiritsDb = {
 
         const filters: any[] = [];
 
-        // Unified PUBLISHED logic: Always apply both status and isPublished filters
-        // This ensures consistent behavior across all queries
+        // Apply filters based on the provided SpiritFilter
+        // Note: Avoid using both status='PUBLISHED' AND isPublished=true together
+        // as it creates redundancy (status='PUBLISHED' always implies isPublished=true)
         if (filter.status && (filter.status as string) !== 'ALL') {
             filters.push({
                 fieldFilter: {
