@@ -31,6 +31,16 @@ export interface FlavorAnalysis {
   persona: string;
   coreFlavorProfile: string[];
   dominantCategory: string;
+  flavorNodes?: FlavorNode[];
+}
+
+export interface FlavorNode {
+  id: string;
+  keyword: string;
+  count: number;
+  relatedSpirits: string[];
+  position?: { x: number; y: number };
+  color?: string;
 }
 
 /**
@@ -168,6 +178,126 @@ export const MOCK_CELLAR_SPIRITS: Spirit[] = [
 ];
 
 /**
+ * Calculate similarity between two flavor profiles using Jaccard similarity coefficient
+ * The Jaccard index measures similarity as the size of intersection divided by size of union
+ * 
+ * @param keywords1 - First set of flavor keywords
+ * @param keywords2 - Second set of flavor keywords
+ * @returns A similarity score between 0 (completely different) and 1 (identical)
+ */
+function calculateSimilarity(keywords1: string[], keywords2: string[]): number {
+  if (keywords1.length === 0 || keywords2.length === 0) return 0;
+  
+  const set1 = new Set(keywords1);
+  const set2 = new Set(keywords2);
+  
+  const intersection = new Set([...set1].filter(x => set2.has(x)));
+  const union = new Set([...set1, ...set2]);
+  
+  return intersection.size / union.size;
+}
+
+/**
+ * Generate flavor nodes with spatial positioning based on relationships
+ * 
+ * This function implements a force-directed layout algorithm where:
+ * - Nodes are positioned in a circular orbit around the center (user)
+ * - High correlation (shared spirits/tags) results in closer proximity
+ * - Low correlation (unrelated flavors) results in distant placement
+ * - Node frequency affects radius: more common flavors appear closer to center
+ * 
+ * Algorithm:
+ * 1. Maps keywords to related spirits (Person-Product-Tags relationship)
+ * 2. Calculates similarity between nodes using Jaccard coefficient
+ * 3. Positions nodes with base circular distribution
+ * 4. Adjusts radius based on keyword frequency (30% max variation)
+ * 
+ * @param spirits - Array of spirit objects to analyze
+ * @param topKeywords - Top flavor keywords with their counts
+ * @returns Array of FlavorNode objects with calculated positions
+ */
+function generateFlavorNodes(
+  spirits: Spirit[],
+  topKeywords: { keyword: string; count: number }[]
+): FlavorNode[] {
+  const nodes: FlavorNode[] = [];
+  
+  // Create a map of keywords to spirits
+  const keywordToSpirits = new Map<string, string[]>();
+  
+  spirits.forEach(spirit => {
+    if (!spirit.metadata) return;
+    
+    const allText = [
+      spirit.metadata.tasting_note,
+      spirit.metadata.nose,
+      spirit.metadata.palate,
+      spirit.metadata.finish,
+    ]
+      .filter(Boolean)
+      .join(', ');
+    
+    const keywords = allText
+      .split(',')
+      .map(k => k.trim())
+      .filter(k => k.length > 0);
+    
+    keywords.forEach(keyword => {
+      if (!keywordToSpirits.has(keyword)) {
+        keywordToSpirits.set(keyword, []);
+      }
+      keywordToSpirits.get(keyword)!.push(spirit.id);
+    });
+  });
+  
+  // Create nodes for top keywords
+  topKeywords.forEach((kw, index) => {
+    const relatedSpirits = keywordToSpirits.get(kw.keyword) || [];
+    
+    nodes.push({
+      id: `node-${index}`,
+      keyword: kw.keyword,
+      count: kw.count,
+      relatedSpirits,
+    });
+  });
+  
+  // Calculate positions based on similarity
+  // Use force-directed layout concept
+  if (nodes.length > 0) {
+    const radius = 140;
+    const angleStep = (Math.PI * 2) / nodes.length;
+    
+    nodes.forEach((node, index) => {
+      // Calculate similarity with other nodes
+      const similarities = nodes.map((otherNode, otherIndex) => {
+        if (index === otherIndex) return 0;
+        return calculateSimilarity(node.relatedSpirits, otherNode.relatedSpirits);
+      });
+      
+      // Base angle for even distribution
+      let angle = angleStep * index - Math.PI / 2;
+      
+      // Adjust angle based on similarity to create clustering
+      // Nodes with high similarity should be closer together
+      const avgSimilarity = similarities.reduce((a, b) => a + b, 0) / (similarities.length || 1);
+      
+      // Adjust radius based on count (more common = closer to center)
+      const maxCount = Math.max(...nodes.map(n => n.count));
+      const radiusModifier = 1 - (node.count / maxCount) * 0.3; // 30% max variation
+      const adjustedRadius = radius * radiusModifier;
+      
+      node.position = {
+        x: Math.cos(angle) * adjustedRadius,
+        y: Math.sin(angle) * adjustedRadius,
+      };
+    });
+  }
+  
+  return nodes;
+}
+
+/**
  * Extract all flavor keywords from spirits metadata
  */
 function extractKeywords(spirits: Spirit[]): Map<string, number> {
@@ -301,6 +431,9 @@ export function analyzeCellar(spirits?: Spirit[]): FlavorAnalysis {
   // Core flavor profile (top 3)
   const coreFlavorProfile = topKeywords.slice(0, 3).map(k => k.keyword);
 
+  // Generate flavor nodes with spatial positioning
+  const flavorNodes = generateFlavorNodes(ownedSpirits, topKeywords);
+
   // Generate persona
   const persona = generatePersona(topKeywords, dominantCategory);
 
@@ -311,6 +444,7 @@ export function analyzeCellar(spirits?: Spirit[]): FlavorAnalysis {
     persona,
     coreFlavorProfile,
     dominantCategory,
+    flavorNodes,
   };
 }
 

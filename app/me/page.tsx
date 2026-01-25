@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { generateRandomNickname } from '@/lib/utils/nickname-generator';
 
 export default function MyPage() {
-    const { user, role, profile, logout, loading, updateProfile, loginWithGoogle } = useAuth();
+    const { user, role, profile, logout, loading, updateProfile, loginWithGoogle, theme, setTheme } = useAuth();
     const router = useRouter();
 
     const [isEditing, setIsEditing] = useState(false);
@@ -224,6 +224,33 @@ export default function MyPage() {
                             <div className="w-full space-y-3">
                                 {user && (
                                     <>
+                                        {/* Theme Toggle */}
+                                        <div className="mb-4 p-4 bg-secondary/30 rounded-xl">
+                                            <label className="text-xs text-muted-foreground block mb-2">테마 설정</label>
+                                            <div className="flex gap-2">
+                                                <button
+                                                    onClick={() => setTheme('light')}
+                                                    className={`flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-all ${
+                                                        theme === 'light'
+                                                            ? 'bg-white text-gray-900 shadow-md'
+                                                            : 'bg-secondary/50 text-muted-foreground hover:bg-secondary/70'
+                                                    }`}
+                                                >
+                                                    ☀️ Light
+                                                </button>
+                                                <button
+                                                    onClick={() => setTheme('dark')}
+                                                    className={`flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-all ${
+                                                        theme === 'dark'
+                                                            ? 'bg-slate-800 text-white shadow-md'
+                                                            : 'bg-secondary/50 text-muted-foreground hover:bg-secondary/70'
+                                                    }`}
+                                                >
+                                                    🌙 Dark
+                                                </button>
+                                            </div>
+                                        </div>
+
                                         <button
                                             onClick={() => setIsEditing(true)}
                                             className="w-full py-3 bg-secondary text-secondary-foreground font-bold rounded-xl hover:bg-secondary/80 transition-all"
