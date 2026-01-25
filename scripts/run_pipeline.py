@@ -7,7 +7,8 @@ import time
 from pathlib import Path
 
 # Debug
-
+sys.stdout.reconfigure(encoding='utf-8')
+sys.stderr.reconfigure(encoding='utf-8')
 
 def run_step(description, command):
     print(f"\n   ⚙️  [STEP] {description}...", flush=True)

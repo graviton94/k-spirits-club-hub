@@ -7,6 +7,18 @@
  * - Taste persona
  */
 
+export interface UserReview {
+  ratingN: number; // 0.5 - 5.0
+  ratingP: number;
+  ratingF: number;
+  ratingOverall: number;
+  comment: string;
+  tagsN: string[];
+  tagsP: string[];
+  tagsF: string[];
+  createdAt: string;
+}
+
 export interface Spirit {
   id: string;
   name: string;
@@ -16,6 +28,7 @@ export interface Spirit {
   imageUrl?: string;
   distillery?: string;
   isWishlist: boolean;
+  userReview?: UserReview;
   metadata?: {
     tasting_note?: string;
     nose?: string;
