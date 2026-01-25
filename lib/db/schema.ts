@@ -5,14 +5,14 @@ export type SpiritStatus = 'RAW' | 'ENRICHED' | 'READY_FOR_CONFIRM' | 'PUBLISHED
 export interface Spirit {
   id: string;
   name: string;
-  distillery: string;
+  distillery: string | null;
   bottler: string | null;
   abv: number;
   volume: number | null;
   category: string; // whisky, vodka, gin, rum, etc. (Legal/Wide classification)
   mainCategory: string | null; // Structured grouping (e.g. whisky for bourbon) from metadata
   subcategory: string | null; // single malt, blended, etc.
-  country: string;
+  country: string | null;
   region: string | null;
   imageUrl: string | null;
   thumbnailUrl: string | null;

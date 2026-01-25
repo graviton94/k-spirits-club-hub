@@ -12,9 +12,9 @@ export function SearchBar() {
       <motion.div
         className={`
                 relative flex items-center gap-3 px-5 py-4 
-                bg-white/10 border border-white/20 backdrop-blur-xl rounded-2xl shadow-lg
+                bg-background/40 dark:bg-white/10 border border-border/50 backdrop-blur-xl rounded-2xl shadow-lg
                 transition-all duration-300
-                ${isFocused ? 'ring-2 ring-amber-500/50 bg-white/20' : 'hover:bg-white/15'}
+                ${isFocused ? 'ring-2 ring-amber-500/50 bg-background/60 dark:bg-white/20' : 'hover:bg-background/50 dark:hover:bg-white/15'}
             `}
         layout
       >
@@ -22,7 +22,7 @@ export function SearchBar() {
         <input
           type="text"
           placeholder="Search spirits, distilleries..."
-          className="w-full bg-transparent border-none outline-none text-white placeholder:text-gray-300 text-lg"
+          className="w-full bg-transparent border-none outline-none text-foreground placeholder:text-muted-foreground text-lg"
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
         />

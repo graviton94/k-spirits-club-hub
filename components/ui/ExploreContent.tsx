@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { SpiritCard } from "@/components/ui/SpiritCard";
 import { SearchBar } from "@/components/ui/SearchBar";
+import SpiritDetailModal from "@/components/ui/SpiritDetailModal";
 import type { Spirit } from "@/lib/db/schema";
 // import { db } from "@/lib/db"; // REMOVE: Server-side DB cannot be imported in client component
 import { getSpiritsAction } from "@/app/actions/spirits"; // NEW: Server Action
@@ -68,6 +69,7 @@ export default function ExploreContent() {
   const [spirits, setSpirits] = useState<Spirit[]>([]);
   const [totalPages, setTotalPages] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
+  const [selectedSpirit, setSelectedSpirit] = useState<Spirit | null>(null);
 
   // Derived Structure for UI
   const legalStructure = selectedLegal ? getCategoryStructure(selectedLegal) : null;
@@ -275,9 +277,15 @@ export default function ExploreContent() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {spirits.map((spirit) => (
-          <SpiritCard key={spirit.id} spirit={spirit} />
+          <SpiritCard key={spirit.id} spirit={spirit} onClick={(s) => setSelectedSpirit(s)} />
         ))}
       </div>
+
+      <SpiritDetailModal
+        isOpen={!!selectedSpirit}
+        spirit={selectedSpirit}
+        onClose={() => setSelectedSpirit(null)}
+      />
 
       {spirits.length === 0 && (
         <div className="text-center py-20 bg-secondary/30 rounded-2xl">

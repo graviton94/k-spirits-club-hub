@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { generateRandomNickname } from '@/lib/utils/nickname-generator';
+import { ThemeSwitcher } from '@/components/ui/ThemeSwitcher';
 
 export default function MyPage() {
     const { user, role, profile, logout, loading, updateProfile, loginWithGoogle, theme, setTheme } = useAuth();
@@ -225,29 +226,7 @@ export default function MyPage() {
                                 {user && (
                                     <>
                                         {/* Theme Toggle */}
-                                        <div className="mb-4 p-4 bg-secondary/30 rounded-xl">
-                                            <label className="text-xs text-muted-foreground block mb-2">테마 설정</label>
-                                            <div className="flex gap-2">
-                                                <button
-                                                    onClick={() => setTheme('light')}
-                                                    className={`flex-1 py-3 px-3 rounded-xl text-sm font-bold transition-all ${theme === 'light'
-                                                            ? 'bg-[#FFF9C4] text-black ring-2 ring-amber-400 ring-offset-2 ring-offset-card shadow-md scale-105'
-                                                            : 'bg-[#FFF9C4] text-black/40 opacity-70 hover:opacity-100 hover:scale-105'
-                                                        }`}
-                                                >
-                                                    ☀️ Light
-                                                </button>
-                                                <button
-                                                    onClick={() => setTheme('dark')}
-                                                    className={`flex-1 py-3 px-3 rounded-xl text-sm font-bold transition-all ${theme === 'dark'
-                                                            ? 'bg-[#262626] text-white ring-2 ring-gray-500 ring-offset-2 ring-offset-card shadow-md scale-105'
-                                                            : 'bg-[#262626] text-white/40 opacity-70 hover:opacity-100 hover:scale-105'
-                                                        }`}
-                                                >
-                                                    🌙 Dark
-                                                </button>
-                                            </div>
-                                        </div>
+                                        <ThemeSwitcher showLabel className="mb-6" />
 
                                         <button
                                             onClick={() => setIsEditing(true)}

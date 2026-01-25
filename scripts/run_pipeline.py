@@ -47,23 +47,32 @@ def main():
     # State File for Resume Capability
     state_file = temp_dir / 'pipeline_state.json'
     start_index = 0
+    state_db = {}
+    
+    # Normalize path for key stability
+    source_id = str(source_path.resolve())
     
     if state_file.exists():
         try:
             with open(state_file, 'r', encoding='utf-8') as f:
                 state_db = json.load(f)
                 
-                # Check if it's new format (dict of dicts) or old format (flat dict)
-                # Old key 'source_file' implies old format -> migrate it or ignore
+                # Migrate or handle legacy format
                 if 'source_file' in state_db:
-                    # Old format: only resume if exact match, otherwise treat as empty for this file
-                    if state_db.get('source_file') == str(source_path):
-                         start_index = state_db.get('next_index', 0)
-                else:
-                    # New format: { "path": { "next_index": 10 } }
-                    file_state = state_db.get(str(source_path), {})
-                    start_index = file_state.get('next_index', 0)
-                    
+                    legacy_path = state_db.get('source_file')
+                    legacy_idx = state_db.get('next_index', 0)
+                    # Convert to new format
+                    state_db = { legacy_path: { 'next_index': legacy_idx } }
+                
+                file_state = state_db.get(source_id, {})
+                if not file_state:
+                    # Fallback check for relative path match if absolute not found
+                    for k, v in state_db.items():
+                        if Path(k).name == source_path.name:
+                            file_state = v
+                            break
+                            
+                start_index = file_state.get('next_index', 0)
                 if start_index > 0:
                     print(f"RESUME: Found previous state for {source_path.name}. Resuming from index {start_index}...")
                 
@@ -159,9 +168,10 @@ def main():
         else:
             current_db = {}
             
-        current_db[str(source_path)] = {
+        current_db[source_id] = {
             'next_index': next_start_index,
-            'last_updated': time.time()
+            'last_updated': time.time(),
+            'filename': source_path.name
         }
         
         with open(state_file, 'w', encoding='utf-8') as f:

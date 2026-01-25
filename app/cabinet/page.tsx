@@ -8,6 +8,7 @@ import MindMap from "@/components/cabinet/MindMap";
 import ReviewModal from "@/components/cabinet/ReviewModal";
 import SearchSpiritModal from "@/components/cabinet/SearchSpiritModal";
 import { analyzeCellar, loadCellarFromStorage, type Spirit, type UserReview } from "@/lib/utils/flavor-engine";
+import SpiritDetailModal from "@/components/ui/SpiritDetailModal";
 import { useAuth } from "@/app/context/auth-context";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import { getTagColor } from "@/lib/constants/tag-colors";
@@ -518,189 +519,23 @@ export default function CabinetPage() {
       />
 
       {/* Quick Info Popup Modal - Redesigned */}
-      {
-        selectedSpirit && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 overflow-y-auto"
-            onClick={() => setSelectedSpirit(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, y: 20, opacity: 0 }}
-              animate={{ scale: 1, y: 0, opacity: 1 }}
-              exit={{ scale: 0.9, y: 20, opacity: 0 }}
-              transition={{ type: "spring", stiffness: 350, damping: 28 }}
-              className="bg-white dark:bg-gray-900 rounded-3xl w-full max-w-sm sm:max-w-md shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden relative"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Close button */}
-              <button
-                onClick={() => setSelectedSpirit(null)}
-                className="absolute top-4 right-4 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-black/20 hover:bg-black/40 backdrop-blur-md text-white transition-colors"
-              >
-                ✕
-              </button>
-
-              {/* 1. Image Header with Info Overlay */}
-              <div className="relative h-72 sm:h-80 w-full bg-gray-100 dark:bg-gray-800">
-                {selectedSpirit.imageUrl ? (
-                  <img
-                    src={selectedSpirit.imageUrl}
-                    alt={selectedSpirit.name}
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = getCategoryFallbackImage(selectedSpirit.category);
-                      target.classList.add('opacity-50');
-                    }}
-                  />
-                ) : (
-                  <img
-                    src={getCategoryFallbackImage(selectedSpirit.category)}
-                    alt={selectedSpirit.name}
-                    className="w-full h-full object-cover opacity-50"
-                  />
-                )}
-
-                {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-6">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <span className="inline-block px-2 py-1 mb-2 text-[10px] font-bold text-black bg-amber-400 rounded-md">
-                        {selectedSpirit.subcategory || selectedSpirit.category}
-                      </span>
-                      <h2 className="text-2xl sm:text-3xl font-black text-white leading-none mb-1 shadow-black drop-shadow-md">
-                        {selectedSpirit.name}
-                      </h2>
-                      {selectedSpirit.distillery && (
-                        <p className="text-gray-300 text-sm font-medium">
-                          {selectedSpirit.distillery}
-                        </p>
-                      )}
-                    </div>
-                    <div className="flex flex-col items-center justify-center bg-white/20 backdrop-blur-md rounded-lg p-2 min-w-[3.5rem]">
-                      <span className="text-[10px] text-gray-200 font-bold uppercase">ABV</span>
-                      <span className="text-xl font-black text-white">{selectedSpirit.abv}<span className="text-xs">%</span></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* 2. Detailed Info & Tasting Notes */}
-              <div className="p-6 space-y-6 max-h-[50vh] overflow-y-auto custom-scrollbar">
-
-                {/* User Rating Summary (if exists) */}
-                {selectedSpirit.userReview && (
-                  <div className="bg-amber-50 dark:bg-amber-900/20 rounded-xl p-4 border border-amber-100 dark:border-amber-800/30">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="flex items-center gap-1 text-amber-500 font-black text-xl">
-                        <span>★</span> {selectedSpirit.userReview.ratingOverall.toFixed(1)}
-                      </div>
-                      <div className="h-4 w-px bg-amber-200 dark:bg-amber-800"></div>
-                      <span className="text-xs text-amber-800 dark:text-amber-200 font-medium">내 평가</span>
-                    </div>
-                    <p className="text-sm text-gray-700 dark:text-gray-300 italic">
-                      "{selectedSpirit.userReview.comment}"
-                    </p>
-                  </div>
-                )}
-
-                {/* Tasting Profile - N/P/F */}
-                <div>
-                  <h3 className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-4">
-                    Tasting Profile
-                  </h3>
-
-                  <div className="space-y-4">
-                    {/* Nose */}
-                    {((selectedSpirit.userReview?.tagsN?.length || 0) > 0 || selectedSpirit.metadata?.nose) && (
-                      <div>
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="text-sm font-bold text-gray-900 dark:text-white">👃 Nose</span>
-                          <div className="h-px flex-1 bg-gray-100 dark:bg-gray-800"></div>
-                        </div>
-                        <div className="flex flex-wrap gap-1.5">
-                          {(selectedSpirit.userReview?.tagsN || selectedSpirit.metadata?.nose?.split(',') || []).map((tag, i) => {
-                            const color = getTagColor(tag.trim());
-                            return (
-                              <span key={i} className={`inline-block text-[10px] px-2 py-1 rounded-md border font-medium ${color.bg} ${color.text} ${color.border}`}>
-                                {tag.trim()}
-                              </span>
-                            )
-                          })}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Palate */}
-                    {((selectedSpirit.userReview?.tagsP?.length || 0) > 0 || selectedSpirit.metadata?.palate) && (
-                      <div>
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="text-sm font-bold text-gray-900 dark:text-white">👅 Palate</span>
-                          <div className="h-px flex-1 bg-gray-100 dark:bg-gray-800"></div>
-                        </div>
-                        <div className="flex flex-wrap gap-1.5">
-                          {(selectedSpirit.userReview?.tagsP || selectedSpirit.metadata?.palate?.split(',') || []).map((tag, i) => {
-                            const color = getTagColor(tag.trim());
-                            return (
-                              <span key={i} className={`inline-block text-[10px] px-2 py-1 rounded-md border font-medium ${color.bg} ${color.text} ${color.border}`}>
-                                {tag.trim()}
-                              </span>
-                            )
-                          })}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Finish */}
-                    {((selectedSpirit.userReview?.tagsF?.length || 0) > 0 || selectedSpirit.metadata?.finish) && (
-                      <div>
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="text-sm font-bold text-gray-900 dark:text-white">🏁 Finish</span>
-                          <div className="h-px flex-1 bg-gray-100 dark:bg-gray-800"></div>
-                        </div>
-                        <div className="flex flex-wrap gap-1.5">
-                          {(selectedSpirit.userReview?.tagsF || selectedSpirit.metadata?.finish?.split(',') || []).map((tag, i) => {
-                            const color = getTagColor(tag.trim());
-                            return (
-                              <span key={i} className={`inline-block text-[10px] px-2 py-1 rounded-md border font-medium ${color.bg} ${color.text} ${color.border}`}>
-                                {tag.trim()}
-                              </span>
-                            )
-                          })}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Fallback if no N/P/F tags found anywhere */}
-                    {!selectedSpirit.userReview?.tagsN && !selectedSpirit.metadata?.nose && selectedSpirit.metadata?.tasting_note && (
-                      <div>
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="text-sm font-bold text-gray-900 dark:text-white">📝 Notes</span>
-                          <div className="h-px flex-1 bg-gray-100 dark:bg-gray-800"></div>
-                        </div>
-                        <div className="flex flex-wrap gap-1.5">
-                          {selectedSpirit.metadata.tasting_note.split(',').map((tag, i) => {
-                            const color = getTagColor(tag.trim());
-                            return (
-                              <span key={i} className={`inline-block text-[10px] px-2 py-1 rounded-md border font-medium ${color.bg} ${color.text} ${color.border}`}>
-                                {tag.trim()}
-                              </span>
-                            )
-                          })}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-            </motion.div>
-          </motion.div>
-        )
-      }
+      <SpiritDetailModal
+        isOpen={!!selectedSpirit}
+        spirit={selectedSpirit}
+        onClose={() => setSelectedSpirit(null)}
+        onStatusChange={() => {
+          // Re-fetch cellar data to reflect changes
+          if (user) {
+            fetch('/api/cabinet', {
+              headers: { 'x-user-id': user!.uid }
+            })
+              .then(res => res.json())
+              .then(json => {
+                if (json.data) setSpirits(json.data);
+              });
+          }
+        }}
+      />
 
       {/* Bottom Ad - After Cabinet Content */}
       {

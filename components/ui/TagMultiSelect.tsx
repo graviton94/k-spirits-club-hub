@@ -52,7 +52,7 @@ export function TagMultiSelect({ label, availableTags, selectedTags, onChange }:
             <label className="text-[10px] font-black uppercase text-gray-500 dark:text-gray-400 block mb-1">{label}</label>
 
             {/* Selected Tags Display */}
-            <div className="flex flex-wrap gap-2 min-h-[48px] p-3 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 rounded-xl cursor-pointer hover:border-amber-400/50 transition-colors shadow-sm"
+            <div className="flex flex-wrap gap-2 min-h-[48px] p-3 bg-background border border-border rounded-xl cursor-pointer hover:border-amber-400/50 transition-colors shadow-sm"
                 onClick={() => setIsOpen(!isOpen)}>
                 {selectedTags.length > 0 ? (
                     selectedTags.map(tag => {
@@ -71,7 +71,7 @@ export function TagMultiSelect({ label, availableTags, selectedTags, onChange }:
 
             {/* Dropdown / Expandable Area */}
             {isOpen && (
-                <div className="mt-2 p-4 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 rounded-xl space-y-6 shadow-xl animate-in fade-in slide-in-from-top-2">
+                <div className="mt-2 p-4 bg-background border border-border rounded-xl space-y-6 shadow-xl animate-in fade-in slide-in-from-top-2">
                     {Object.entries(availableTags).map(([categoryKey, data]) => {
                         const categoryColorClass = COLOR_MAP[data.color] || DEFAULT_COLOR;
                         // Strip border from header style to keep it clean, just use text color maybe?
@@ -105,8 +105,8 @@ export function TagMultiSelect({ label, availableTags, selectedTags, onChange }:
                                                 type="button"
                                                 onClick={() => toggleTag(tag)}
                                                 className={`px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all border ${isSelected
-                                                        ? `${baseColor} ring-2 ring-offset-1 ring-offset-white dark:ring-offset-black ring-black/10 dark:ring-white/20`
-                                                        : `bg-gray-50 dark:bg-zinc-900/50 text-gray-600 dark:text-gray-400 border-gray-200 dark:border-zinc-800 hover:bg-gray-100 dark:hover:bg-zinc-800`
+                                                    ? `${baseColor} ring-2 ring-offset-1 ring-offset-white dark:ring-offset-black ring-black/10 dark:ring-white/20`
+                                                    : `bg-gray-50 dark:bg-zinc-900/50 text-gray-600 dark:text-gray-400 border-gray-200 dark:border-zinc-800 hover:bg-gray-100 dark:hover:bg-zinc-800`
                                                     }`}
                                             >
                                                 {tag.split(' (')[0]}
