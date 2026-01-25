@@ -1,15 +1,12 @@
 'use client';
 
 import { useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { SpiritCard } from "@/components/ui/SpiritCard";
 import { SearchBar } from "@/components/ui/SearchBar";
 import SpiritDetailModal from "@/components/ui/SpiritDetailModal";
-import type { Spirit, SpiritFilter } from "@/lib/db/schema";
-// import { db } from "@/lib/db"; // REMOVE: Server-side DB cannot be imported in client component
-import { getSpiritsAction } from "@/app/actions/spirits"; // NEW: Server Action
-import metadata from "@/lib/constants/spirits-metadata.json";
+import type { Spirit } from "@/lib/db/schema";
 import {
   CATEGORY_NAME_MAP,
   LEGAL_CATEGORIES,
@@ -17,126 +14,81 @@ import {
   getSubCategoriesForMain
 } from "@/lib/constants/categories";
 import { useDragScroll } from "@/lib/hooks/useDragScroll";
-
+import { useSpiritsCache } from "@/app/context/spirits-cache-context";
 
 export default function ExploreContent() {
   const searchParams = useSearchParams();
+  const { publishedSpirits, isLoading: isCacheLoading } = useSpiritsCache();
 
   // Drag scroll refs for category filters
   const legalCategoryScrollRef = useDragScroll<HTMLDivElement>();
   const mainCategoryScrollRef = useDragScroll<HTMLDivElement>();
   const subCategoryScrollRef = useDragScroll<HTMLDivElement>();
-  const searchTerm = searchParams.get('search') || undefined;
-  const categoryParam = searchParams.get('category') || undefined;
 
-  // Logic: Identify if the current 'category' param is a Main Category or Sub Category?
-  // We need distinct params ideally: ?main=whisky&sub=bourbon
-  // But current DB logic uses single query 'category'.
-  // New UI Logic:
-  // 1. User clicks Main Category -> ?category=whisky
-  // 2. User clicks Sub Category -> ?category=Bourbon (DB searches category OR subcategory field)
-  // PROBLEM: If I select 'Bourbon', I lose the context that I was in 'Whisky' menu, unless I keep state or infer it.
-
-  // For the UI to show the 'Whisky' sub-menu active, we need to know we are in 'Whisky' mode.
-  // We can try to infer parent category from the clicked subcategory, or just use simple 1-level for now as requested.
-  // "sub category는 main category를 선택했을 때... 하위 카테고리로 정해야하는것아님?" implies 2-step.
-
-  // Let's use internal state to track the "Active Main Tab" even if URL only filters by specific sub-tag.
-  // Actually, to share URL, we should probably prefer: ?category=whisky (Shows all whisky)
-  // And if exploring sub: ?category=Bourbon (Shows Bourbon) -- The UI might lose context of "Whisky Tab" if we don't persist it.
-
-
-  // URL Params: ?category=whisky (Legal) & main=scotch (Main) & sub=... (Sub)
-  // But strictly, we might just use 'category' param for filtering listing (simple)
-  // OR we stick to the user's intent: "select Main -> show Sub".
-  // Let's use flexible params or state. 
-  // Given current DB `getSpiritsAction` takes `category` and `subcategory` (added via mainCategory logic).
-  // Actually, we should probably start filtering by Legal Category first.
-  // Let's rely on `category` param to mean `Legal Category`.
-  // And maybe `main` param for Main Category.
-
-  const selectedLegal = searchParams.get('category') || null; // e.g. 'whisky'
-  const selectedMain = searchParams.get('main') || null; // e.g. 'scotch'
-  const selectedSub = searchParams.get('sub') || null; // e.g. 'Single Malt Scotch'
-
-  // DB Filter Construction
-  // We need to pass strict filters to the server action.
-  // If selectedLegal -> filter.category = selectedLegal
-  // If selectedMain -> filter.mainCategory = selectedMain
-  // If selectedSub -> filter.subcategory = selectedSub
-
+  const searchTerm = searchParams.get('search') || '';
+  const selectedLegal = searchParams.get('category') || null;
+  const selectedMain = searchParams.get('main') || null;
+  const selectedSub = searchParams.get('sub') || null;
   const page = Number(searchParams.get('page')) || 1;
-  const [spirits, setSpirits] = useState<Spirit[]>([]);
-  const [totalPages, setTotalPages] = useState(0);
-  const [totalCount, setTotalCount] = useState(0);
+  const pageSize = 24;
+
   const [selectedSpirit, setSelectedSpirit] = useState<Spirit | null>(null);
 
-  // Derived Structure for UI
-  const legalStructure = selectedLegal ? getCategoryStructure(selectedLegal) : null;
-  const isNested = legalStructure?.type === 'nested';
+  // Client-side filtering logic
+  const filteredSpirits = useMemo(() => {
+    return publishedSpirits.filter(spirit => {
+      // 1. Search term
+      if (searchTerm) {
+        const lowerSearch = searchTerm.toLowerCase();
+        const matchesName = spirit.name.toLowerCase().includes(lowerSearch);
+        const matchesEnName = spirit.metadata?.name_en?.toLowerCase().includes(lowerSearch);
+        const matchesDistillery = spirit.distillery?.toLowerCase().includes(lowerSearch);
+        if (!matchesName && !matchesEnName && !matchesDistillery) return false;
+      }
 
-  // Options for Level 2 (Main)
-  // If nested (Whisky), show [Scotch, American...]
-  // If flat (Gin), maybe show nothing or just go straight to Sub?
-  // User said: "Gin -> [London Dry...]" (This implies Main is skipped or Gin IS Main?)
-  // User: "categories(Legal) ... below is Main ... below is Sub"
-  // If Gin has no Main keys, then we skip Level 2.
+      // 2. Legal Category
+      if (selectedLegal && spirit.category !== selectedLegal) return false;
+
+      // 3. Main Category 
+      if (selectedMain) {
+        // Checking subcategory against main options or mainCategory if specifically set
+        if (spirit.mainCategory !== selectedMain && spirit.subcategory !== selectedMain) {
+          // Some fallback logic if needed
+        }
+      }
+
+      // 4. Sub Category
+      if (selectedSub && spirit.subcategory !== selectedSub) return false;
+
+      return true;
+    });
+  }, [publishedSpirits, searchTerm, selectedLegal, selectedMain, selectedSub]);
+
+  // Derived Structure for UI
+  const legalStructure = useMemo(() => selectedLegal ? getCategoryStructure(selectedLegal) : null, [selectedLegal]);
+  const isNested = legalStructure?.type === 'nested';
   const mainOptions = isNested && legalStructure ? (legalStructure as any).mains : [];
 
-  // Options for Level 3 (Sub)
-  // If Nested + Main Selected (Whisky + Scotch) -> Show [Single Malt...]
-  // If Flat (Gin) -> Show [London Dry...] (Directly from legal structure items)
-  let subOptions: string[] = [];
-  if (isNested && selectedMain) {
-    subOptions = getSubCategoriesForMain(selectedLegal!, selectedMain);
-  } else if (legalStructure?.type === 'flat') {
-    subOptions = (legalStructure as any).items;
-  }
+  const subOptions = useMemo(() => {
+    if (isNested && selectedMain) {
+      return getSubCategoriesForMain(selectedLegal!, selectedMain);
+    } else if (legalStructure?.type === 'flat') {
+      return (legalStructure as any).items;
+    }
+    return [];
+  }, [isNested, selectedMain, selectedLegal, legalStructure]);
+
+  // Pagination on filtered results
+  const totalCount = filteredSpirits.length;
+  const totalPages = Math.ceil(totalCount / pageSize);
+  const paginatedSpirits = useMemo(() =>
+    filteredSpirits.slice((page - 1) * pageSize, page * pageSize),
+    [filteredSpirits, page]
+  );
 
   useEffect(() => {
-    async function loadSpirits() {
-      // Construct robust filter - Always ensure PUBLISHED filter is applied
-      const filter: SpiritFilter = {
-        searchTerm,
-        isPublished: true,
-        status: 'PUBLISHED'
-      };
-
-      // Apply category filters
-      if (selectedLegal) {
-        filter.category = selectedLegal;
-      }
-
-      if (selectedSub) {
-        filter.subcategory = selectedSub;
-      }
-
-      console.log('[ExploreContent] Fetching spirits with filter:', filter, 'page:', page);
-
-      const { data, total, totalPages: pages } = await getSpiritsAction(
-        filter,
-        { page, pageSize: 24 }
-      );
-
-      // Client-side refinement for Main Category if DB doesn't support it yet
-      // This ensures UI behaves correctly even if backend lags slightly.
-      let filteredData = data;
-      if (selectedMain && !selectedSub) {
-        // We can filter if the spirit record has mainCategory (newly enriched) 
-        // OR we infer it.
-        // Since many records might be old, this client side might be empty.
-        // Let's assume data returned by Legal Category is enough for now, 
-        // users will pick a Sub Category shortly.
-        // Filtering by text match might work too?
-      }
-
-      console.log('[ExploreContent] Received', filteredData.length, 'spirits, total:', total);
-      setSpirits(filteredData);
-      setTotalPages(pages);
-      setTotalCount(total);
-    }
-    loadSpirits();
-  }, [searchTerm, selectedLegal, selectedMain, selectedSub, page]);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [page, searchTerm, selectedLegal, selectedMain, selectedSub]);
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl pb-32">
@@ -226,7 +178,7 @@ export default function ExploreContent() {
                 />
               )}
 
-              {subOptions.map(sub => (
+              {subOptions.map((sub: string) => (
                 <CategoryFilter
                   key={sub}
                   label={CATEGORY_NAME_MAP[sub] || sub}
@@ -260,9 +212,15 @@ export default function ExploreContent() {
       )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {spirits.map((spirit) => (
-          <SpiritCard key={spirit.id} spirit={spirit} onClick={(s) => setSelectedSpirit(s)} />
-        ))}
+        {isCacheLoading ? (
+          Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="aspect-[3/4] bg-card/50 animate-pulse rounded-3xl" />
+          ))
+        ) : (
+          paginatedSpirits.map((spirit) => (
+            <SpiritCard key={spirit.id} spirit={spirit} onClick={(s) => setSelectedSpirit(s)} />
+          ))
+        )}
       </div>
 
       <SpiritDetailModal
@@ -271,7 +229,7 @@ export default function ExploreContent() {
         onClose={() => setSelectedSpirit(null)}
       />
 
-      {spirits.length === 0 && (
+      {totalCount === 0 && (
         <div className="text-center py-20 bg-secondary/30 rounded-2xl">
           <div className="text-6xl mb-4">🔍</div>
           <h2 className="text-xl font-semibold mb-2">검색 결과가 없습니다</h2>

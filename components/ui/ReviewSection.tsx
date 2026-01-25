@@ -45,14 +45,15 @@ export default function ReviewSection({ spiritId, reviews }: ReviewSectionProps)
         </div>
         <button
           onClick={() => setShowForm(!showForm)}
-          className={`px-6 py-2.5 rounded-xl font-bold transition-all shadow-lg ${showForm
-            ? 'bg-secondary text-foreground hover:bg-secondary/80'
-            : 'bg-primary text-white hover:bg-primary/90 shadow-primary/20'
+          className={`px-6 py-2.5 rounded-xl font-bold transition-all shadow-lg text-white ${showForm
+            ? 'bg-secondary !text-foreground hover:bg-secondary/80'
+            : 'bg-gradient-to-r from-amber-500 to-orange-600 hover:shadow-primary/30'
             }`}
         >
           {showForm ? '취소하기' : '+ 리뷰 작성하기'}
         </button>
       </div>
+// ... existing average summary and list logic
 
       {/* Average Summary Card */}
       {reviews.length > 0 && (
@@ -345,7 +346,7 @@ function ReviewForm({ spiritId, onCancel }: { spiritId: string; onCancel: () => 
           </button>
           <button
             type="submit"
-            className="flex-1 py-4 px-8 bg-primary text-white font-black rounded-2xl hover:bg-primary/90 shadow-xl shadow-primary/20 transition-all flex items-center justify-center gap-2"
+            className="flex-1 py-4 px-8 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-black rounded-2xl hover:shadow-xl hover:shadow-primary/20 transition-all flex items-center justify-center gap-2"
           >
             <Check className="w-5 h-5" /> 리뷰 제출하기
           </button>
@@ -365,38 +366,53 @@ function RatingSection({ label, rating, tags, onRatingChange, onTagsChange, colo
   icon: any;
   metadataKey: string;
 }) {
+  const [hoverRating, setHoverRating] = useState<number | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const activeRating = hoverRating !== null ? hoverRating : rating;
+
   const starColor = color === 'blue' ? 'fill-blue-500 text-blue-500' : color === 'orange' ? 'fill-orange-500 text-orange-500' : 'fill-purple-500 text-purple-500';
-  const ghostStarColor = color === 'blue' ? 'text-blue-500' : color === 'orange' ? 'text-orange-500' : 'text-purple-500';
+
+  const handlePointer = (e: React.PointerEvent) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const width = rect.width;
+    const percent = Math.max(0, Math.min(1, x / width));
+    const rawRating = percent * 5;
+    const snappedRating = Math.ceil(rawRating * 2) / 2;
+    setHoverRating(snappedRating);
+
+    // If clicking/dragging (pointer down)
+    if (e.buttons === 1) {
+      onRatingChange(snappedRating);
+    }
+  };
 
   return (
     <div className="space-y-6">
       <div>
-        <div className="flex items-center gap-2 mb-4">
+        <div className="flex items-center justify-end gap-2 mb-4">
+          <label className="text-sm font-black tracking-tighter uppercase">{label}</label>
           <div className={`p-2 rounded-xl bg-${color}-500/10 text-${color}-500 border border-${color}-500/20`}>
             {icon}
           </div>
-          <label className="text-sm font-black tracking-tighter uppercase">{label}</label>
         </div>
 
-        <div className="flex gap-1.5 justify-between">
+        <div
+          ref={containerRef}
+          onPointerMove={handlePointer}
+          onPointerLeave={() => setHoverRating(null)}
+          onPointerDown={handlePointer}
+          className="flex gap-1.5 justify-between rating-wrap touch-none select-none cursor-pointer"
+        >
           {[1, 2, 3, 4, 5].map((s) => (
-            <div key={s} className="relative flex-1 aspect-square">
-              {/* Left Half Hotspot */}
-              <button
-                type="button"
-                onClick={() => onRatingChange(s - 0.5)}
-                className="absolute inset-y-0 left-0 w-1/2 z-10"
-              />
-              {/* Right Half Hotspot */}
-              <button
-                type="button"
-                onClick={() => onRatingChange(s)}
-                className="absolute inset-y-0 right-0 w-1/2 z-10"
-              />
-
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <Star className={`w-full h-full ${s <= rating ? starColor : s - 0.5 === rating ? 'text-' + color + '-500' : 'text-muted-foreground/20'}`} />
-                {s - 0.5 === rating && (
+            <div
+              key={s}
+              className="relative flex-1 aspect-square group"
+            >
+              <div className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity ${hoverRating !== null && (s - 0.5) <= hoverRating ? 'opacity-50' : 'opacity-100'}`}>
+                <Star className={`w-full h-full ${s <= activeRating ? starColor : s - 0.5 === activeRating ? 'text-' + color + '-500' : 'text-muted-foreground/20'}`} />
+                {s - 0.5 === activeRating && (
                   <div className="absolute inset-x-0 overflow-hidden w-[50%] left-0">
                     <Star className={`w-full h-full ${starColor}`} />
                   </div>
@@ -447,6 +463,8 @@ function TagInput({ tags, onTagsChange, color, metadataKey }: { tags: string[], 
     if (e.key === 'Enter' || e.key === ',') {
       e.preventDefault();
       addTag(inputValue);
+    } else if (e.key === 'Backspace' && !inputValue && tags.length > 0) {
+      removeTag(tags[tags.length - 1]);
     }
   };
 

@@ -19,25 +19,50 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchPublishedSpirits = async () => {
+  const fetchPublishedSpirits = async (forceRefetch = false) => {
     try {
       setIsLoading(true);
       setError(null);
-      console.log('[SpiritsCacheContext] Fetching all published spirits for cache...');
-      
-      // Fetch all published spirits with a large page size
-      // NOTE: Using 5000 as limit for initial implementation. If dataset grows significantly,
-      // consider implementing: 1) Progressive loading with multiple requests, 
-      // 2) Pagination with lazy loading, or 3) Server-side search instead of client-side cache
+
+      // 1. Check LocalStorage Cache
+      if (!forceRefetch) {
+        const cachedData = localStorage.getItem('spirits_master_cache');
+        if (cachedData) {
+          try {
+            const parsed = JSON.parse(cachedData);
+            const now = Date.now();
+            const ageHours = (now - (parsed.timestamp || 0)) / (1000 * 60 * 60);
+
+            if (ageHours < 24 && Array.isArray(parsed.data)) {
+              console.log(`[SpiritsCacheContext] Loaded ${parsed.data.length} spirits from LocalStorage (Age: ${ageHours.toFixed(1)}h)`);
+              setPublishedSpirits(parsed.data);
+              setIsLoading(false);
+              return;
+            }
+          } catch (e) {
+            console.warn('[SpiritsCacheContext] Cache parsing failed, refetching...');
+          }
+        }
+      }
+
+      console.log('[SpiritsCacheContext] Fetching all published spirits from Firestore...');
+
       const result = await getSpiritsAction(
-        { 
-          isPublished: true, 
-          status: 'PUBLISHED' 
+        {
+          isPublished: true,
+          status: 'PUBLISHED'
         },
-        { page: 1, pageSize: 5000 }
+        { page: 1, pageSize: 15000 } // Increased limit for larger datasets
       );
-      
-      console.log(`[SpiritsCacheContext] Cached ${result.data.length} published spirits`);
+
+      console.log(`[SpiritsCacheContext] Cached ${result.data.length} published spirits to LocalStorage`);
+
+      // 2. Save to LocalStorage
+      localStorage.setItem('spirits_master_cache', JSON.stringify({
+        data: result.data,
+        timestamp: Date.now()
+      }));
+
       setPublishedSpirits(result.data);
     } catch (err) {
       console.error('[SpiritsCacheContext] Failed to fetch published spirits:', err);
@@ -57,7 +82,7 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
     }
 
     const lowerQuery = query.toLowerCase();
-    return publishedSpirits.filter(spirit => 
+    return publishedSpirits.filter(spirit =>
       spirit.name.toLowerCase().includes(lowerQuery) ||
       spirit.distillery?.toLowerCase().includes(lowerQuery) ||
       spirit.category?.toLowerCase().includes(lowerQuery) ||
