@@ -134,8 +134,8 @@ export default async function HomePage() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-          {listSpirits.map((spirit) => (
+        <div className="flex flex-col gap-4">
+          {listSpirits.slice(0, 3).map((spirit) => (
             <SpiritCard key={spirit.id} spirit={spirit} />
           ))}
 

@@ -417,66 +417,68 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          {/* Data Table */}
-          <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden shadow-sm min-h-[500px] flex flex-col">
-            <table className="w-full text-left text-sm border-collapse">
-              <thead className="bg-gray-50 dark:bg-gray-900 text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-20">
-                <tr>
-                  <th className="p-4 w-12 text-center">
-                    <input type="checkbox"
-                      checked={paginatedSpirits.length > 0 && paginatedSpirits.every(s => selectedIds.has(s.id))}
-                      onChange={toggleSelectAll} className="w-4 h-4 rounded border-gray-300 dark:border-gray-700 accent-amber-500" />
-                  </th>
-                  <th className="p-4">주류 정보</th>
-                  <th className="p-4">상태</th>
-                  <th className="p-4">DNA (Tags)</th>
-                  <th className="p-4">이미지</th>
-                  <th className="p-4">작업</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100 dark:divide-gray-900">
-                {paginatedSpirits.map(spirit => (
-                  <tr key={spirit.id} className={`hover:bg-amber-500/5 transition-colors ${selectedIds.has(spirit.id) ? 'bg-amber-500/5' : ''}`}>
-                    <td className="p-4 text-center"><input type="checkbox" checked={selectedIds.has(spirit.id)} onChange={() => toggleSelect(spirit.id)} className="w-4 h-4 rounded border-gray-300 dark:border-gray-700 accent-amber-500" /></td>
-                    <td className="p-4">
-                      <div className="font-bold text-base text-black dark:text-white max-w-[300px] truncate">{spirit.name}</div>
-                      <div className="text-[11px] text-gray-500 dark:text-gray-400">{spirit.distillery || '-'} | {spirit.abv}% | {spirit.category} › {spirit.subcategory}</div>
-                    </td>
-                    <td className="p-4">
-                      <span className={`px-2 py-1 rounded text-[10px] font-black border ${spirit.status === 'PUBLISHED' ? 'bg-green-100 text-green-700 border-green-200' : 'bg-amber-100 text-amber-700 border-amber-200'}`}>
-                        {spirit.status === 'PUBLISHED' ? 'PUBLISHED' : '검수대기'}
-                      </span>
-                    </td>
-                    <td className="p-4">
-                      <div className="max-w-[240px] flex flex-wrap gap-1">
-                        {(spirit.metadata?.nose_tags || []).slice(0, 3).map(t => <span key={t} className="text-[9px] bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-gray-500 dark:text-gray-400">{t}</span>)}
-                        {(spirit.metadata?.nose_tags?.length || 0) > 3 && <span className="text-[9px] text-gray-400">...</span>}
-                      </div>
-                    </td>
-                    <td className="p-4">
-                      {spirit.imageUrl ? (
-                        <img src={spirit.imageUrl} className="w-10 h-10 object-contain bg-white rounded-lg border border-gray-200 dark:border-gray-800 shadow-sm" alt="Bottle" />
-                      ) : <div className="w-10 h-10 bg-gray-100 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 border-dashed" />}
-                    </td>
-                    <td className="p-4">
-                      <div className="flex gap-2">
-                        <button onClick={() => startEdit(spirit)} className="px-3 py-1.5 bg-white dark:bg-black border border-gray-200 dark:border-gray-800 text-xs font-bold rounded-lg hover:bg-gray-100 dark:hover:bg-gray-900 text-black dark:text-white">편집</button>
-                        {spirit.status !== 'PUBLISHED' && (
-                          <button onClick={() => publishSpirit(spirit.id)} className="px-3 py-1.5 bg-green-500/10 border border-green-500/20 text-green-600 text-xs font-bold rounded-lg hover:bg-green-500/20">발행</button>
-                        )}
-                        <button onClick={() => deleteSpirit(spirit.id)} className="px-3 py-1.5 bg-red-500/10 border border-red-500/20 text-red-600 text-xs font-bold rounded-lg hover:bg-red-500/20">삭제</button>
-                      </div>
-                    </td>
+          {/* Data Table with Horizontal Scroll */}
+          <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-2xl shadow-sm min-h-[500px] flex flex-col overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm border-collapse min-w-[800px]">
+                <thead className="bg-gray-50 dark:bg-gray-900 text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-20">
+                  <tr>
+                    <th className="p-4 w-12 text-center">
+                      <input type="checkbox"
+                        checked={paginatedSpirits.length > 0 && paginatedSpirits.every(s => selectedIds.has(s.id))}
+                        onChange={toggleSelectAll} className="w-4 h-4 rounded border-gray-300 dark:border-gray-700 accent-amber-500" />
+                    </th>
+                    <th className="p-4">주류 정보</th>
+                    <th className="p-4">상태</th>
+                    <th className="p-4">DNA (Tags)</th>
+                    <th className="p-4">이미지</th>
+                    <th className="p-4">작업</th>
                   </tr>
-                ))}
-                {paginatedSpirits.length === 0 && !loading && (
-                  <tr><td colSpan={6} className="p-12 text-center text-gray-500">데이터가 없습니다.</td></tr>
-                )}
-                {loading && (
-                  <tr><td colSpan={6} className="p-12 text-center text-amber-500 animate-pulse font-bold">데이터를 로딩 중입니다...</td></tr>
-                )}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-gray-100 dark:divide-gray-900">
+                  {paginatedSpirits.map(spirit => (
+                    <tr key={spirit.id} className={`hover:bg-amber-500/5 transition-colors ${selectedIds.has(spirit.id) ? 'bg-amber-500/5' : ''}`}>
+                      <td className="p-4 text-center"><input type="checkbox" checked={selectedIds.has(spirit.id)} onChange={() => toggleSelect(spirit.id)} className="w-4 h-4 rounded border-gray-300 dark:border-gray-700 accent-amber-500" /></td>
+                      <td className="p-4">
+                        <div className="font-bold text-base text-black dark:text-white max-w-[300px] truncate">{spirit.name}</div>
+                        <div className="text-[11px] text-gray-500 dark:text-gray-400">{spirit.distillery || '-'} | {spirit.abv}% | {spirit.category} › {spirit.subcategory}</div>
+                      </td>
+                      <td className="p-4">
+                        <span className={`px-2 py-1 rounded text-[10px] font-black border ${spirit.status === 'PUBLISHED' ? 'bg-green-100 text-green-700 border-green-200' : 'bg-amber-100 text-amber-700 border-amber-200'}`}>
+                          {spirit.status === 'PUBLISHED' ? 'PUBLISHED' : '검수대기'}
+                        </span>
+                      </td>
+                      <td className="p-4">
+                        <div className="max-w-[240px] flex flex-wrap gap-1">
+                          {(spirit.metadata?.nose_tags || []).slice(0, 3).map(t => <span key={t} className="text-[9px] bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-gray-500 dark:text-gray-400">{t}</span>)}
+                          {(spirit.metadata?.nose_tags?.length || 0) > 3 && <span className="text-[9px] text-gray-400">...</span>}
+                        </div>
+                      </td>
+                      <td className="p-4">
+                        {spirit.imageUrl ? (
+                          <img src={spirit.imageUrl} className="w-10 h-10 object-contain bg-white rounded-lg border border-gray-200 dark:border-gray-800 shadow-sm" alt="Bottle" />
+                        ) : <div className="w-10 h-10 bg-gray-100 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 border-dashed" />}
+                      </td>
+                      <td className="p-4">
+                        <div className="flex gap-2">
+                          <button onClick={() => startEdit(spirit)} className="px-3 py-1.5 bg-white dark:bg-black border border-gray-200 dark:border-gray-800 text-xs font-bold rounded-lg hover:bg-gray-100 dark:hover:bg-gray-900 text-black dark:text-white">편집</button>
+                          {spirit.status !== 'PUBLISHED' && (
+                            <button onClick={() => publishSpirit(spirit.id)} className="px-3 py-1.5 bg-green-500/10 border border-green-500/20 text-green-600 text-xs font-bold rounded-lg hover:bg-green-500/20">발행</button>
+                          )}
+                          <button onClick={() => deleteSpirit(spirit.id)} className="px-3 py-1.5 bg-red-500/10 border border-red-500/20 text-red-600 text-xs font-bold rounded-lg hover:bg-red-500/20">삭제</button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                  {paginatedSpirits.length === 0 && !loading && (
+                    <tr><td colSpan={6} className="p-12 text-center text-gray-500">데이터가 없습니다.</td></tr>
+                  )}
+                  {loading && (
+                    <tr><td colSpan={6} className="p-12 text-center text-amber-500 animate-pulse font-bold">데이터를 로딩 중입니다...</td></tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
 
             {/* Pagination Controls */}
             <div className="mt-auto p-4 border-t border-gray-200 dark:border-gray-800 flex justify-center items-center gap-4">

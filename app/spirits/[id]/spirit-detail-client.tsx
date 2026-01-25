@@ -5,27 +5,13 @@ import SaveButton from "@/components/ui/SaveButton";
 import ReviewSection from "@/components/ui/ReviewSection";
 import GoogleAd from "@/components/ui/GoogleAd";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { X, Search, ArrowLeft } from "lucide-react";
+import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
+import { useRouter } from "next/navigation";
 
-interface Spirit {
-    id: string;
-    name: string;
-    distillery: string;
-    bottler: string | null;
-    abv: number;
-    volume: number | null;
-    category: string;
-    subcategory: string | null;
-    country: string;
-    region: string | null;
-    imageUrl: string | null;
-    metadata?: {
-        nose_tags?: string[];
-        palate_tags?: string[];
-        finish_tags?: string[];
-        [key: string]: any;
-    };
-}
+import { Spirit } from "@/lib/db/schema";
+import { getTagStyle } from "@/lib/constants/tag-styles";
+import { CATEGORY_NAME_MAP } from "@/lib/constants/categories";
 
 interface SpiritDetailClientProps {
     spirit: Spirit;
@@ -33,89 +19,147 @@ interface SpiritDetailClientProps {
 }
 
 export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClientProps) {
+    const router = useRouter();
+
     return (
         <div className="container mx-auto px-4 py-6 max-w-4xl pb-32">
-            {/* Header: Horizontal Layout */}
-            <div className="flex gap-4 mb-6">
-                {/* 120x120 Expandable Image */}
-                <ExpandableImage imageUrl={spirit.imageUrl} name={spirit.name} />
+            {/* Back Button */}
+            <button
+                onClick={() => router.back()}
+                className="mb-6 flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group"
+            >
+                <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
+                <span className="text-sm font-bold">뒤로가기</span>
+            </button>
 
-                {/* Name/Distillery/ABV */}
-                <div className="flex-1 min-w-0">
-                    <h1 className="text-2xl font-bold mb-2 leading-tight">{spirit.name}</h1>
-                    <div className="space-y-1 text-sm">
-                        <p className="text-gray-400">{spirit.distillery}</p>
-                        <p className="text-amber-400 font-semibold">{spirit.abv}% ABV</p>
-                        {spirit.volume && <p className="text-gray-400">{spirit.volume}ml</p>}
+            {/* 1. Header: Image Left, Info Right */}
+            <div className="flex flex-row gap-6 mb-8 items-start">
+                <div className="w-32 sm:w-48 flex-shrink-0">
+                    <ExpandableImage imageUrl={spirit.imageUrl} name={spirit.name} category={spirit.category} />
+                </div>
+
+                <div className="flex-1 min-w-0 pt-2">
+                    <h1 className="text-2xl sm:text-4xl font-black mb-1 leading-tight text-foreground uppercase tracking-tight">
+                        {spirit.name}
+                    </h1>
+                    {spirit.metadata?.name_en && (
+                        <p className="text-lg text-muted-foreground font-medium mb-3 italic">
+                            {spirit.metadata.name_en}
+                        </p>
+                    )}
+                    <div className="flex flex-col gap-1">
+                        <p className="text-amber-500 font-bold tracking-wider">{spirit.distillery}</p>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <span className="px-2 py-0.5 bg-secondary rounded-md border border-border">
+                                {spirit.abv}% ABV
+                            </span>
+                            {spirit.volume && (
+                                <span className="px-2 py-0.5 bg-secondary rounded-md border border-border">
+                                    {spirit.volume}ml
+                                </span>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
 
-            {/* Basic Info */}
-            <div className="grid grid-cols-2 gap-3 mb-6 text-sm">
-                <InfoItem label="카테고리" value={spirit.category} />
-                {spirit.subcategory && <InfoItem label="종류" value={spirit.subcategory} />}
-                <InfoItem label="원산지" value={spirit.country} />
-                {spirit.region && <InfoItem label="지역" value={spirit.region} />}
-                {spirit.bottler && <InfoItem label="박틀러" value={spirit.bottler} />}
+            {/* 2. Enhanced Info Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                {/* Category Card */}
+                <div className="p-4 bg-card border border-border rounded-2xl shadow-sm">
+                    <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-3">Classification</h3>
+                    <div className="space-y-2">
+                        <div className="flex justify-between items-center text-sm">
+                            <span className="text-muted-foreground">Category</span>
+                            <span className="font-bold">{CATEGORY_NAME_MAP[spirit.category] || spirit.category}</span>
+                        </div>
+                        {spirit.mainCategory && (
+                            <div className="flex justify-between items-center text-sm">
+                                <span className="text-muted-foreground">Main</span>
+                                <span className="font-bold">{CATEGORY_NAME_MAP[spirit.mainCategory] || spirit.mainCategory}</span>
+                            </div>
+                        )}
+                        {spirit.subcategory && (
+                            <div className="flex justify-between items-center text-sm">
+                                <span className="text-muted-foreground">Sub</span>
+                                <span className="font-bold text-amber-500">{CATEGORY_NAME_MAP[spirit.subcategory] || spirit.subcategory}</span>
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                {/* Origin Card */}
+                <div className="p-4 bg-card border border-border rounded-2xl shadow-sm">
+                    <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-3">Origin & Details</h3>
+                    <div className="space-y-2">
+                        <div className="flex justify-between items-center text-sm">
+                            <span className="text-muted-foreground">Country</span>
+                            <span className="font-bold">{spirit.country || "Unknown"}</span>
+                        </div>
+                        {spirit.region && (
+                            <div className="flex justify-between items-center text-sm">
+                                <span className="text-muted-foreground">Region</span>
+                                <span className="font-bold">{spirit.region}</span>
+                            </div>
+                        )}
+                        {spirit.bottler && (
+                            <div className="flex justify-between items-center text-sm">
+                                <span className="text-muted-foreground">Bottler</span>
+                                <span className="font-bold">{spirit.bottler}</span>
+                            </div>
+                        )}
+                    </div>
+                </div>
             </div>
 
-            {/* Flavor Profile: Compact Grid */}
+            {/* 3. Flavor Profile with Dynamic Colors */}
             {(spirit.metadata?.nose_tags || spirit.metadata?.palate_tags || spirit.metadata?.finish_tags) && (
-                <div className="mb-6">
-                    <h2 className="text-lg font-bold mb-3">Flavor Profile</h2>
-                    <div className="grid grid-cols-1 gap-4">
+                <div className="mb-10 p-6 bg-secondary/30 rounded-3xl border border-dashed border-border">
+                    <h2 className="text-xl font-black mb-6 flex items-center gap-2">
+                        <span className="w-2 h-6 bg-amber-500 rounded-full"></span>
+                        FLAVOR NOTES
+                    </h2>
+                    <div className="space-y-6">
                         {spirit.metadata.nose_tags && (
-                            <FlavorSection title="Nose" tags={spirit.metadata.nose_tags} />
+                            <FlavorSection title="NOSE" tags={spirit.metadata.nose_tags} />
                         )}
                         {spirit.metadata.palate_tags && (
-                            <FlavorSection title="Palate" tags={spirit.metadata.palate_tags} />
+                            <FlavorSection title="PALATE" tags={spirit.metadata.palate_tags} />
                         )}
                         {spirit.metadata.finish_tags && (
-                            <FlavorSection title="Finish" tags={spirit.metadata.finish_tags} />
+                            <FlavorSection title="FINISH" tags={spirit.metadata.finish_tags} />
                         )}
                     </div>
                 </div>
             )}
 
-            {/* Reviews Section */}
+            {/* Action Buttons - Moved here from sticky bottom */}
+            <div className="flex flex-col sm:flex-row gap-3 mb-12">
+                <button className="flex-1 py-4 px-6 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-black rounded-2xl shadow-lg shadow-amber-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                    <span>🥃</span> 내 술장에 담기
+                </button>
+                <div className="flex-1">
+                    <SaveButton spiritId={spirit.id} />
+                </div>
+            </div>
+
+            {/* 4. Reviews Section */}
             <ReviewSection spiritId={spirit.id} reviews={reviews} />
 
-            {/* Bottom Ad - After Tasting Notes */}
+            {/* Bottom Ad */}
             {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT && (
-                <div className="mt-8 mb-6">
-                    <div className="text-xs text-gray-500 text-center mb-2">Advertisement</div>
+                <div className="mt-12 mb-6">
+                    <div className="text-xs text-muted-foreground text-center mb-2 uppercase tracking-widest opacity-50">Advertisement</div>
                     <GoogleAd
                         client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT}
                         slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT}
                         format="auto"
                         responsive={true}
                         style={{ display: 'block', minHeight: '100px' }}
-                        className="rounded-lg overflow-hidden"
+                        className="rounded-2xl overflow-hidden border border-border"
                     />
                 </div>
             )}
-
-            {/* Sticky Bottom CTA Buttons - Above BottomNav */}
-            <div className="fixed bottom-28 left-0 right-0 bg-neutral-900/95 backdrop-blur-lg border-t border-white/10 p-4 z-50">
-                <div className="container mx-auto max-w-4xl flex gap-3">
-                    <button className="flex-1 py-3 px-4 bg-amber-500 hover:bg-amber-600 text-black font-bold rounded-lg transition-colors">
-                        내 술장에 담기
-                    </button>
-                    <button className="flex-1 py-3 px-4 border border-white/20 hover:border-white/40 text-white font-semibold rounded-lg transition-colors">
-                        위시리스트
-                    </button>
-                </div>
-            </div>
-        </div>
-    );
-}
-
-function InfoItem({ label, value }: { label: string; value: string }) {
-    return (
-        <div className="p-3 bg-neutral-800/50 rounded-lg border border-white/5">
-            <p className="text-xs text-gray-500 mb-1">{label}</p>
-            <p className="font-semibold text-white">{value}</p>
         </div>
     );
 }
@@ -123,43 +167,71 @@ function InfoItem({ label, value }: { label: string; value: string }) {
 function FlavorSection({ title, tags }: { title: string; tags: string[] }) {
     return (
         <div>
-            <h3 className="text-sm font-semibold text-amber-400 mb-2">{title}</h3>
+            <h3 className="text-xs font-black text-muted-foreground mb-3 tracking-widest">{title}</h3>
             <div className="flex flex-wrap gap-2">
-                {tags.map((tag, index) => (
-                    <span
-                        key={index}
-                        className="text-xs px-3 py-1.5 rounded-full bg-neutral-800 text-gray-300 border border-white/10"
-                    >
-                        {tag}
-                    </span>
-                ))}
+                {tags.map((tag, index) => {
+                    const styles = getTagStyle(tag);
+                    return (
+                        <span
+                            key={index}
+                            className="text-xs px-3 py-1.5 rounded-full font-bold border transition-colors"
+                            style={{
+                                backgroundColor: 'var(--tag-bg)',
+                                color: 'var(--tag-text)',
+                                borderColor: 'var(--tag-border)'
+                            } as any}
+                        >
+                            <style jsx>{`
+                                span {
+                                    --tag-bg: ${styles.light.bg};
+                                    --tag-text: ${styles.light.text};
+                                    --tag-border: ${styles.light.border};
+                                }
+                                :global(.dark) span {
+                                    --tag-bg: ${styles.dark.bg};
+                                    --tag-text: ${styles.dark.text};
+                                    --tag-border: ${styles.dark.border};
+                                }
+                            `}</style>
+                            {tag}
+                        </span>
+                    );
+                })}
             </div>
         </div>
     );
 }
 
-function ExpandableImage({ imageUrl, name }: { imageUrl: string | null; name: string }) {
+function ExpandableImage({ imageUrl, name, category }: { imageUrl: string | null; name: string; category: string }) {
     const [isExpanded, setIsExpanded] = useState(false);
+    const fallbackImage = getCategoryFallbackImage(category);
 
     return (
         <>
-            {/* Thumbnail */}
             <motion.div
-                className="flex-shrink-0 w-30 h-30 rounded-lg overflow-hidden bg-neutral-800 cursor-pointer"
-                whileHover={{ scale: 1.05 }}
+                className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-secondary border border-border cursor-pointer shadow-md group"
+                whileHover={{ y: -4 }}
                 onClick={() => setIsExpanded(true)}
             >
                 {imageUrl ? (
                     <img
                         src={imageUrl}
                         alt={name}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = fallbackImage;
+                            target.classList.add('opacity-50');
+                        }}
                     />
                 ) : (
-                    <div className="w-full h-full flex items-center justify-center text-6xl">
-                        🥃
+                    <div className="w-full h-full flex items-center justify-center bg-secondary">
+                        <img src={fallbackImage} className="w-2/3 h-2/3 object-contain opacity-20 grayscale" alt="placeholder" />
                     </div>
                 )}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                    <Search className="text-white opacity-0 group-hover:opacity-100 transition-opacity w-8 h-8" />
+                </div>
             </motion.div>
 
             {/* Full Screen Overlay */}
