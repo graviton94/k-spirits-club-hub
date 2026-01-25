@@ -6,7 +6,7 @@ import Link from "next/link";
 import { SpiritCard } from "@/components/ui/SpiritCard";
 import { SearchBar } from "@/components/ui/SearchBar";
 import SpiritDetailModal from "@/components/ui/SpiritDetailModal";
-import type { Spirit } from "@/lib/db/schema";
+import type { Spirit, SpiritSearchIndex } from "@/lib/db/schema";
 import {
   CATEGORY_NAME_MAP,
   LEGAL_CATEGORIES,
@@ -18,7 +18,7 @@ import { useSpiritsCache } from "@/app/context/spirits-cache-context";
 
 export default function ExploreContent() {
   const searchParams = useSearchParams();
-  const { publishedSpirits, isLoading: isCacheLoading } = useSpiritsCache();
+  const { searchIndex, searchSpirits, getSpiritById, publishedSpirits, isLoading: isCacheLoading } = useSpiritsCache();
 
   // Drag scroll refs for category filters
   const legalCategoryScrollRef = useDragScroll<HTMLDivElement>();
@@ -34,35 +34,35 @@ export default function ExploreContent() {
 
   const [selectedSpirit, setSelectedSpirit] = useState<Spirit | null>(null);
 
-  // Client-side filtering logic
+  // Client-side filtering logic using the search index
   const filteredSpirits = useMemo(() => {
-    return publishedSpirits.filter(spirit => {
-      // 1. Search term
-      if (searchTerm) {
-        const lowerSearch = searchTerm.toLowerCase();
-        const matchesName = spirit.name.toLowerCase().includes(lowerSearch);
-        const matchesEnName = spirit.metadata?.name_en?.toLowerCase().includes(lowerSearch);
-        const matchesDistillery = spirit.distillery?.toLowerCase().includes(lowerSearch);
-        if (!matchesName && !matchesEnName && !matchesDistillery) return false;
-      }
+    let results = searchIndex;
 
-      // 2. Legal Category
-      if (selectedLegal && spirit.category !== selectedLegal) return false;
+    // 1. Search term - use Fuse.js for fuzzy search
+    if (searchTerm) {
+      results = searchSpirits(searchTerm);
+    }
 
-      // 3. Main Category 
-      if (selectedMain) {
-        // Checking subcategory against main options or mainCategory if specifically set
-        if (spirit.mainCategory !== selectedMain && spirit.subcategory !== selectedMain) {
-          // Some fallback logic if needed
-        }
-      }
+    // 2. Legal Category filter
+    if (selectedLegal) {
+      results = results.filter(spirit => spirit.c === selectedLegal);
+    }
 
-      // 4. Sub Category
-      if (selectedSub && spirit.subcategory !== selectedSub) return false;
+    // 3. Main Category filter
+    if (selectedMain) {
+      results = results.filter(spirit => 
+        spirit.mc === selectedMain || spirit.sc === selectedMain
+      );
+    }
 
-      return true;
-    });
-  }, [publishedSpirits, searchTerm, selectedLegal, selectedMain, selectedSub]);
+    // 4. Sub Category filter
+    if (selectedSub) {
+      results = results.filter(spirit => spirit.sc === selectedSub);
+    }
+
+    // Map back to full Spirit objects
+    return results.map(item => getSpiritById(item.i)).filter((s): s is Spirit => s !== undefined);
+  }, [searchIndex, searchSpirits, searchTerm, selectedLegal, selectedMain, selectedSub, getSpiritById]);
 
   // Derived Structure for UI
   const legalStructure = useMemo(() => selectedLegal ? getCategoryStructure(selectedLegal) : null, [selectedLegal]);

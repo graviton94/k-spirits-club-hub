@@ -261,6 +261,8 @@ export const spiritsDb = {
             n: spirit.name,
             en: spirit.metadata?.name_en ?? null,
             c: spirit.category,
+            mc: spirit.mainCategory ?? null,
+            sc: spirit.subcategory ?? null,
             t: spirit.thumbnailUrl ?? null
         }));
     }

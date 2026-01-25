@@ -1,21 +1,27 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import type { Spirit } from '@/lib/db/schema';
-import { getSpiritsAction } from '@/app/actions/spirits';
+import type { Spirit, SpiritSearchIndex } from '@/lib/db/schema';
+import { getSpiritsAction, getSpiritsSearchIndex } from '@/app/actions/spirits';
+import Fuse from 'fuse.js';
 
 interface SpiritsCacheContextType {
   publishedSpirits: Spirit[];
+  searchIndex: SpiritSearchIndex[];
+  fuseInstance: Fuse<SpiritSearchIndex> | null;
   isLoading: boolean;
   error: string | null;
   refetch: () => Promise<void>;
-  searchSpirits: (query: string) => Spirit[];
+  searchSpirits: (query: string) => SpiritSearchIndex[];
+  getSpiritById: (id: string) => Spirit | undefined;
 }
 
 const SpiritsCacheContext = createContext<SpiritsCacheContextType | undefined>(undefined);
 
 export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
   const [publishedSpirits, setPublishedSpirits] = useState<Spirit[]>([]);
+  const [searchIndex, setSearchIndex] = useState<SpiritSearchIndex[]>([]);
+  const [fuseInstance, setFuseInstance] = useState<Fuse<SpiritSearchIndex> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -24,18 +30,35 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
       setIsLoading(true);
       setError(null);
 
-      // 1. Check LocalStorage Cache
+      // 1. Check LocalStorage Cache for search index
       if (!forceRefetch) {
-        const cachedData = localStorage.getItem('spirits_master_cache');
-        if (cachedData) {
+        const cachedIndex = localStorage.getItem('spirits_search_index');
+        const cachedSpirits = localStorage.getItem('spirits_master_cache');
+        
+        if (cachedIndex && cachedSpirits) {
           try {
-            const parsed = JSON.parse(cachedData);
+            const parsedIndex = JSON.parse(cachedIndex);
+            const parsedSpirits = JSON.parse(cachedSpirits);
             const now = Date.now();
-            const ageHours = (now - (parsed.timestamp || 0)) / (1000 * 60 * 60);
+            const ageHours = (now - (parsedIndex.timestamp || 0)) / (1000 * 60 * 60);
 
-            if (ageHours < 24 && Array.isArray(parsed.data)) {
-              console.log(`[SpiritsCacheContext] Loaded ${parsed.data.length} spirits from LocalStorage (Age: ${ageHours.toFixed(1)}h)`);
-              setPublishedSpirits(parsed.data);
+            if (ageHours < 24 && Array.isArray(parsedIndex.data) && Array.isArray(parsedSpirits.data)) {
+              console.log(`[SpiritsCacheContext] Loaded ${parsedIndex.data.length} spirits from cache (Age: ${ageHours.toFixed(1)}h)`);
+              
+              const indexData = parsedIndex.data as SpiritSearchIndex[];
+              const spiritsData = parsedSpirits.data as Spirit[];
+              
+              setSearchIndex(indexData);
+              setPublishedSpirits(spiritsData);
+              
+              // Initialize Fuse.js with the cached index
+              const fuse = new Fuse<SpiritSearchIndex>(indexData, {
+                keys: ['n', 'en', 'c'],
+                threshold: 0.3,
+                includeScore: true,
+                minMatchCharLength: 1
+              });
+              setFuseInstance(fuse);
               setIsLoading(false);
               return;
             }
@@ -45,28 +68,45 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
         }
       }
 
-      console.log('[SpiritsCacheContext] Fetching all published spirits from Firestore...');
+      console.log('[SpiritsCacheContext] Fetching data from Firestore...');
 
-      const result = await getSpiritsAction(
-        {
-          isPublished: true,
-          status: 'PUBLISHED'
-        },
-        { page: 1, pageSize: 15000 } // Increased limit for larger datasets
-      );
+      // Fetch both the minimized search index and full spirits data
+      const [index, spiritsResult] = await Promise.all([
+        getSpiritsSearchIndex(),
+        getSpiritsAction(
+          { isPublished: true, status: 'PUBLISHED' },
+          { page: 1, pageSize: 15000 }
+        )
+      ]);
 
-      console.log(`[SpiritsCacheContext] Cached ${result.data.length} published spirits to LocalStorage`);
+      console.log(`[SpiritsCacheContext] Cached ${index.length} spirits to search index`);
 
       // 2. Save to LocalStorage
+      localStorage.setItem('spirits_search_index', JSON.stringify({
+        data: index,
+        timestamp: Date.now()
+      }));
+      
       localStorage.setItem('spirits_master_cache', JSON.stringify({
-        data: result.data,
+        data: spiritsResult.data,
         timestamp: Date.now()
       }));
 
-      setPublishedSpirits(result.data);
+      setSearchIndex(index);
+      setPublishedSpirits(spiritsResult.data);
+
+      // 3. Initialize Fuse.js with the search index
+      const fuse = new Fuse<SpiritSearchIndex>(index, {
+        keys: ['n', 'en', 'c'],
+        threshold: 0.3,
+        includeScore: true,
+        minMatchCharLength: 1
+      });
+      setFuseInstance(fuse);
+
     } catch (err) {
-      console.error('[SpiritsCacheContext] Failed to fetch published spirits:', err);
-      setError(err instanceof Error ? err.message : 'Failed to fetch spirits');
+      console.error('[SpiritsCacheContext] Failed to fetch data:', err);
+      setError(err instanceof Error ? err.message : 'Failed to fetch data');
     } finally {
       setIsLoading(false);
     }
@@ -76,28 +116,29 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
     fetchPublishedSpirits();
   }, []);
 
-  const searchSpirits = (query: string): Spirit[] => {
-    if (!query.trim()) {
-      return publishedSpirits;
+  const searchSpirits = (query: string): SpiritSearchIndex[] => {
+    if (!query.trim() || !fuseInstance) {
+      return searchIndex;
     }
 
-    const lowerQuery = query.toLowerCase();
-    return publishedSpirits.filter(spirit =>
-      spirit.name.toLowerCase().includes(lowerQuery) ||
-      spirit.distillery?.toLowerCase().includes(lowerQuery) ||
-      spirit.category?.toLowerCase().includes(lowerQuery) ||
-      spirit.subcategory?.toLowerCase().includes(lowerQuery) ||
-      spirit.country?.toLowerCase().includes(lowerQuery) ||
-      spirit.metadata?.name_en?.toLowerCase().includes(lowerQuery)
-    );
+    // Use Fuse.js for fuzzy search
+    const results = fuseInstance.search(query);
+    return results.map(result => result.item);
+  };
+
+  const getSpiritById = (id: string): Spirit | undefined => {
+    return publishedSpirits.find(spirit => spirit.id === id);
   };
 
   const value: SpiritsCacheContextType = {
     publishedSpirits,
+    searchIndex,
+    fuseInstance,
     isLoading,
     error,
     refetch: fetchPublishedSpirits,
-    searchSpirits
+    searchSpirits,
+    getSpiritById
   };
 
   return (
