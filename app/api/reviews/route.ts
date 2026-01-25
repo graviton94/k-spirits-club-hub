@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { collection, addDoc, getDocs, query, orderBy, limit, where, Timestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
+export const runtime = 'edge';
+
 // POST /api/reviews - Create a new review
 export async function POST(request: NextRequest) {
   try {
