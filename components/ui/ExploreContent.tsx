@@ -316,10 +316,13 @@ function CategoryFilter({ label, isActive, href, isSub }: CategoryFilterProps) {
     <Link
       href={href}
       className={`
-        transition-all duration-300 backdrop-blur-md snap-start whitespace-nowrap
+        transition-all duration-300 snap-start whitespace-nowrap border
         ${isActive
-          ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20 scale-105'
-          : `hover:bg-white/10 ${isSub ? 'bg-white/5 text-gray-300' : 'bg-white/5 text-white font-bold'}`
+          ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/30 scale-105 border-amber-500'
+          : `${isSub
+            ? 'bg-slate-200 dark:bg-slate-800 text-gray-800 dark:text-gray-200 border-slate-300 dark:border-slate-700 hover:bg-slate-300 dark:hover:bg-slate-700'
+            : 'bg-slate-200 dark:bg-slate-800 text-gray-900 dark:text-white font-bold border-slate-300 dark:border-slate-700 hover:bg-slate-300 dark:hover:bg-slate-700'
+          }`
         }
         ${isSub ? 'px-3 py-1.5 rounded-lg text-xs' : 'px-4 py-2 rounded-xl text-sm'}
       `}

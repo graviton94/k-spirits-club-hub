@@ -3,19 +3,11 @@
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 import Link from "next/link";
-
-interface Spirit {
-  id: string;
-  name: string;
-  category: string;
-  subcategory?: string | null;
-  abv: number;
-  imageUrl: string | null;
-  distillery: string | null;
-  metadata?: {
-    tasting_note?: string;
-    [key: string]: any;
-  };
+import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
+metadata ?: {
+  tasting_note?: string;
+  [key: string]: any;
+};
 }
 
 interface SpiritCardProps {
@@ -41,12 +33,20 @@ export function SpiritCard({ spirit }: SpiritCardProps) {
             <img
               src={spirit.imageUrl}
               alt={spirit.name}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+              onError={(e) => {
+                // On error, use category fallback image
+                const target = e.target as HTMLImageElement;
+                target.src = getCategoryFallbackImage(spirit.category);
+                target.classList.add('opacity-50');
+              }}
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center text-4xl">
-              🥃
-            </div>
+            <img
+              src={getCategoryFallbackImage(spirit.category)}
+              alt={spirit.name}
+              className="w-full h-full object-cover opacity-50"
+            />
           )}
         </div>
 

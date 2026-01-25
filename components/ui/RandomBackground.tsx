@@ -16,38 +16,28 @@ export function RandomBackground() {
     }, []);
 
     // Don't render until mounted to avoid hydration mismatch
-    if (!mounted) {
+    if (!mounted || !bgImage) {
         return <div className="absolute inset-0 z-0 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-neutral-900 dark:to-neutral-800" />;
     }
 
     return (
         <div className="absolute inset-0 z-0">
             {/* Background Image */}
+            <img
+                src={bgImage}
+                alt="Background"
+                className="absolute inset-0 w-full h-full object-cover"
+            />
+
+            {/* Gradient overlay: transparent -> black -> transparent/white */}
             <div
-                className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                style={{ backgroundImage: `url(${bgImage})` }}
-            />
-
-            {/* Gradient overlay for bottom fade-out */}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white dark:to-background"
+                className="absolute inset-0"
                 style={{
-                    background: `linear-gradient(to bottom, 
-            rgba(255, 255, 255, 0) 0%, 
-            rgba(255, 255, 255, 0) 60%, 
-            rgba(255, 255, 255, 0.3) 80%, 
-            rgba(255, 255, 255, 1) 100%
-          )`
-                }}
-            />
-
-            {/* Dark mode gradient overlay */}
-            <div className="absolute inset-0 dark:block hidden"
-                style={{
-                    background: `linear-gradient(to bottom, 
-            rgba(0, 0, 0, 0) 0%, 
-            rgba(0, 0, 0, 0) 60%, 
-            rgba(0, 0, 0, 0.5) 80%, 
-            rgba(0, 0, 0, 1) 100%
+                    background: `linear-gradient(to bottom,
+            transparent 0%,
+            transparent 40%,
+            rgba(0, 0, 0, 0.8) 70%,
+            transparent 100%
           )`
                 }}
             />
