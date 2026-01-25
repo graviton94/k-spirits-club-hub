@@ -178,8 +178,12 @@ export const MOCK_CELLAR_SPIRITS: Spirit[] = [
 ];
 
 /**
- * Calculate similarity between two flavor profiles
- * Returns a score between 0 and 1 (1 = identical)
+ * Calculate similarity between two flavor profiles using Jaccard similarity coefficient
+ * The Jaccard index measures similarity as the size of intersection divided by size of union
+ * 
+ * @param keywords1 - First set of flavor keywords
+ * @param keywords2 - Second set of flavor keywords
+ * @returns A similarity score between 0 (completely different) and 1 (identical)
  */
 function calculateSimilarity(keywords1: string[], keywords2: string[]): number {
   if (keywords1.length === 0 || keywords2.length === 0) return 0;
@@ -195,8 +199,22 @@ function calculateSimilarity(keywords1: string[], keywords2: string[]): number {
 
 /**
  * Generate flavor nodes with spatial positioning based on relationships
- * High correlation (shared tags) = Close proximity
- * Low correlation (unrelated) = Distant placement
+ * 
+ * This function implements a force-directed layout algorithm where:
+ * - Nodes are positioned in a circular orbit around the center (user)
+ * - High correlation (shared spirits/tags) results in closer proximity
+ * - Low correlation (unrelated flavors) results in distant placement
+ * - Node frequency affects radius: more common flavors appear closer to center
+ * 
+ * Algorithm:
+ * 1. Maps keywords to related spirits (Person-Product-Tags relationship)
+ * 2. Calculates similarity between nodes using Jaccard coefficient
+ * 3. Positions nodes with base circular distribution
+ * 4. Adjusts radius based on keyword frequency (30% max variation)
+ * 
+ * @param spirits - Array of spirit objects to analyze
+ * @param topKeywords - Top flavor keywords with their counts
+ * @returns Array of FlavorNode objects with calculated positions
  */
 function generateFlavorNodes(
   spirits: Spirit[],

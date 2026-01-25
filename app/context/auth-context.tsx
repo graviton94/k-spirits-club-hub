@@ -56,15 +56,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const router = useRouter();
 
     useEffect(() => {
-        // Load theme from localStorage on mount
+        // Load theme from localStorage after component mounts (client-side only)
+        // This prevents hydration mismatches in Next.js SSR
         const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
         if (savedTheme) {
             setThemeState(savedTheme);
-            document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+            if (typeof document !== 'undefined') {
+                document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+            }
         } else {
             // Default to light theme
             setThemeState('light');
-            document.documentElement.classList.remove('dark');
+            if (typeof document !== 'undefined') {
+                document.documentElement.classList.remove('dark');
+            }
         }
     }, []);
 
@@ -87,9 +92,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                         isFirstLogin: data.isFirstLogin ?? false,
                         themePreference: userTheme
                     });
-                    // Apply theme from user profile
+                    // Apply theme from user profile (client-side only to prevent hydration issues)
                     setThemeState(userTheme);
-                    document.documentElement.classList.toggle('dark', userTheme === 'dark');
+                    if (typeof document !== 'undefined') {
+                        document.documentElement.classList.toggle('dark', userTheme === 'dark');
+                    }
                     localStorage.setItem('theme', userTheme);
                 } else {
                     // Create new user doc with default role & profile
@@ -131,7 +138,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const setTheme = (newTheme: 'light' | 'dark') => {
         setThemeState(newTheme);
-        document.documentElement.classList.toggle('dark', newTheme === 'dark');
+        // Apply theme class only on client-side to prevent SSR hydration mismatches
+        if (typeof document !== 'undefined') {
+            document.documentElement.classList.toggle('dark', newTheme === 'dark');
+        }
         localStorage.setItem('theme', newTheme);
         
         // Save to user profile if logged in

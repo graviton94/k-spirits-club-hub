@@ -46,12 +46,14 @@ export default function MindMap({ analysis, profileImage }: MindMapProps) {
 
   const topFlavors = analysis.topKeywords.slice(0, 5);
   
-  // Use pre-calculated positions if available (from flavor-engine)
+  // Use pre-calculated positions from flavor-engine if available
+  // Fallback to even circular distribution if positions weren't calculated
+  // Note: relatedSpirits is empty in fallback - only used for visualization, not data processing
   const flavorNodes = analysis.flavorNodes || topFlavors.map((flavor, index) => ({
     id: `node-${index}`,
     keyword: flavor.keyword,
     count: flavor.count,
-    relatedSpirits: [],
+    relatedSpirits: [], // Empty in fallback mode - positions are still visually distributed
     position: getOrbitPosition(index, topFlavors.length, 140)
   }));
 
