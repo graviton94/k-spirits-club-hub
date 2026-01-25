@@ -51,3 +51,5 @@ yarn-error.log*
 data/
 image_fail_log.txt
 scripts/image_fail_log.txt
+migration_success_log.json
+scripts/migration_success_log.json
