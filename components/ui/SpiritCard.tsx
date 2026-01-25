@@ -21,13 +21,13 @@ export function SpiritCard({ spirit, onClick }: SpiritCardProps) {
 
   const content = (
     <motion.div
-      className="group flex gap-3 p-3 rounded-lg bg-secondary/50 border border-border/50 hover:bg-secondary hover:border-border transition-all cursor-pointer"
+      className="group flex gap-3 p-3 rounded-lg bg-card border border-border hover:bg-secondary hover:border-primary/30 transition-all cursor-pointer shadow-sm"
       whileHover={{ scale: 0.99 }}
       transition={{ type: "spring", stiffness: 400, damping: 17 }}
       onClick={() => onClick?.(spirit)}
     >
       {/* Left: 80x80 Thumbnail */}
-      <div className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-background border border-border/50">
+      <div className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-muted border border-border">
         {spirit.imageUrl ? (
           <img
             src={spirit.imageUrl}

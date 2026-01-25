@@ -12,13 +12,13 @@ export function SearchBar() {
       <motion.div
         className={`
                 relative flex items-center gap-3 px-5 py-4 
-                bg-white/90 dark:bg-white/10 border border-border/50 backdrop-blur-xl rounded-2xl shadow-lg
+                bg-card border-2 backdrop-blur-sm rounded-2xl shadow-lg
                 transition-all duration-300
-                ${isFocused ? 'ring-2 ring-amber-500/50 bg-white/100 dark:bg-white/20' : 'hover:bg-white/95 dark:hover:bg-white/15'}
+                ${isFocused ? 'ring-2 ring-primary/50 border-primary' : 'border-border hover:border-primary/40'}
             `}
         layout
       >
-        <Search className="w-5 h-5 text-amber-500 shrink-0" />
+        <Search className="w-5 h-5 text-primary shrink-0" />
         <input
           type="text"
           placeholder="Search spirits, distilleries..."
@@ -35,7 +35,7 @@ export function SearchBar() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
-            className="absolute top-full left-0 right-0 mt-3 p-2 bg-neutral-900/90 backdrop-blur-md border border-white/10 rounded-2xl shadow-2xl overflow-hidden"
+            className="absolute top-full left-0 right-0 mt-3 p-2 bg-popover backdrop-blur-md border-2 border-border rounded-2xl shadow-2xl overflow-hidden"
           >
             <div className="p-3 text-center text-sm text-muted-foreground">
               Type to search across 1M+ spirits

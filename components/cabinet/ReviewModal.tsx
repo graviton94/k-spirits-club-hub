@@ -78,13 +78,13 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit }: Revie
                         <button
                             key={star}
                             onClick={() => onChange(star)}
-                            className={`text-2xl transition-transform hover:scale-110 focus:outline-none ${value >= star ? 'text-amber-400' : 'text-gray-200 dark:text-gray-700'
+                            className={`text-2xl transition-transform hover:scale-110 focus:outline-none ${value >= star ? 'text-primary' : 'text-muted-foreground/20 dark:text-muted-foreground/30'
                                 }`}
                         >
                             ★
                         </button>
                     ))}
-                    <span className="ml-2 text-sm font-semibold text-gray-500">{value.toFixed(1)}</span>
+                    <span className="ml-2 text-sm font-semibold text-muted-foreground">{value.toFixed(1)}</span>
                 </div>
             </div>
         );
@@ -121,7 +121,7 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit }: Revie
         return (
             <div className="space-y-3">
                 {/* Preset Tags from Metadata */}
-                <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto custom-scrollbar p-1 border border-gray-100 dark:border-gray-800 rounded-lg">
+                <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto custom-scrollbar p-1 border-2 border-border rounded-lg bg-card">
                     {Object.entries(metadata).map(([subKey, info]) => {
                         const colorKey = info.color as TagColorVariant;
                         const colors = TAG_COLORS[colorKey] || TAG_COLORS.stone;
@@ -135,8 +135,8 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit }: Revie
                                     className={`
                      text-[10px] sm:text-xs px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border transition-all
                      ${isSelected
-                                            ? `${colors.bg} ${colors.text} ${colors.border} ring-2 ring-offset-1 ring-amber-500/50 font-bold`
-                                            : 'bg-white dark:bg-gray-800 text-gray-500 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'}
+                                            ? `${colors.bg} ${colors.text} ${colors.border} ring-2 ring-offset-1 ring-primary/50 font-bold`
+                                            : 'bg-card text-muted-foreground border-border hover:bg-secondary'}
                    `}
                                 >
                                     {tag}
@@ -168,7 +168,7 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit }: Revie
                             value={customTag}
                             onChange={(e) => setCustomTag(e.target.value)}
                             placeholder="+ 직접 입력"
-                            className="w-full px-3 py-1 text-xs rounded-md border border-gray-200 dark:border-gray-700 bg-transparent focus:outline-none focus:border-amber-500"
+                            className="w-full px-3 py-1 text-xs rounded-md border-2 border-border bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/50"
                         />
                     </form>
                 </div>
@@ -191,12 +191,12 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit }: Revie
                     initial={{ scale: 0.95, opacity: 0, y: 20 }}
                     animate={{ scale: 1, opacity: 1, y: 0 }}
                     exit={{ scale: 0.95, opacity: 0, y: 20 }}
-                    className="bg-white dark:bg-gray-900 w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden border border-gray-200 dark:border-gray-800 flex flex-col max-h-[90vh]"
+                    className="bg-background border-2 border-border w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
                     onClick={(e) => e.stopPropagation()}
                 >
                     {/* Header */}
-                    <div className="p-4 sm:p-6 bg-gradient-to-r from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 border-b border-gray-200 dark:border-gray-700 flex items-center gap-4 shrink-0">
-                        <div className="w-16 h-16 rounded-xl overflow-hidden shadow-md bg-white">
+                    <div className="p-4 sm:p-6 bg-secondary border-b border-border flex items-center gap-4 shrink-0">
+                        <div className="w-16 h-16 rounded-xl overflow-hidden shadow-md bg-muted border border-border">
                             <img
                                 src={spirit.imageUrl || getCategoryFallbackImage(spirit.category)}
                                 alt={spirit.name}
@@ -208,8 +208,8 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit }: Revie
                             />
                         </div>
                         <div>
-                            <h2 className="text-xl font-black text-gray-900 dark:text-white leading-tight">{spirit.name}</h2>
-                            <p className="text-xs text-gray-500 mt-1">{spirit.category} • ABV {spirit.abv}%</p>
+                            <h2 className="text-xl font-black text-foreground leading-tight">{spirit.name}</h2>
+                            <p className="text-xs text-muted-foreground mt-1">{spirit.category} • ABV {spirit.abv}%</p>
                         </div>
                     </div>
 
@@ -219,59 +219,59 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit }: Revie
                         {/* Nose Section */}
                         <div className="space-y-3">
                             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                                <h3 className="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                                <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
                                     <span className="text-lg">👃</span> Aroma (향)
                                 </h3>
-                                <StarRating label="" value={ratingN} onChange={setRatingN} colorClass="text-amber-500" />
+                                <StarRating label="" value={ratingN} onChange={setRatingN} colorClass="text-primary" />
                             </div>
                             <TagMultiSelect category="nose" selectedTags={tagsN} onChange={setTagsN} />
                         </div>
 
-                        <div className="h-px bg-gray-100 dark:bg-gray-800 opacity-50" />
+                        <div className="h-px bg-border opacity-50" />
 
                         {/* Palate Section */}
                         <div className="space-y-3">
                             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                                <h3 className="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                                <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
                                     <span className="text-lg">👅</span> Taste (맛)
                                 </h3>
-                                <StarRating label="" value={ratingP} onChange={setRatingP} colorClass="text-orange-500" />
+                                <StarRating label="" value={ratingP} onChange={setRatingP} colorClass="text-primary" />
                             </div>
                             <TagMultiSelect category="palate" selectedTags={tagsP} onChange={setTagsP} />
                         </div>
 
-                        <div className="h-px bg-gray-100 dark:bg-gray-800 opacity-50" />
+                        <div className="h-px bg-border opacity-50" />
 
                         {/* Finish Section */}
                         <div className="space-y-3">
                             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                                <h3 className="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                                <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
                                     <span className="text-lg">🏁</span> Finish (여운)
                                 </h3>
-                                <StarRating label="" value={ratingF} onChange={setRatingF} colorClass="text-blue-500" />
+                                <StarRating label="" value={ratingF} onChange={setRatingF} colorClass="text-primary" />
                             </div>
                             <TagMultiSelect category="finish" selectedTags={tagsF} onChange={setTagsF} />
                         </div>
 
-                        <div className="h-px bg-gray-100 dark:bg-gray-800 opacity-50" />
+                        <div className="h-px bg-border opacity-50" />
 
                         {/* Comment */}
                         <div>
-                            <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3">📝 총평</h3>
+                            <h3 className="text-sm font-bold text-foreground mb-3">📝 총평</h3>
                             <textarea
                                 value={comment}
                                 onChange={(e) => setComment(e.target.value)}
                                 placeholder="전체적인 감상평을 남겨주세요."
-                                className="w-full h-24 p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 text-sm focus:ring-2 focus:ring-amber-500 outline-none resize-none"
+                                className="w-full h-24 p-4 rounded-xl border-2 border-border bg-input text-sm text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none resize-none"
                             />
                         </div>
                     </div>
 
                     {/* Footer - Fixed */}
-                    <div className="p-4 sm:p-6 bg-gray-50 dark:bg-gray-800/80 border-t border-gray-200 dark:border-gray-700 shrink-0 flex justify-between items-center">
+                    <div className="p-4 sm:p-6 bg-secondary border-t border-border shrink-0 flex justify-between items-center">
                         <div className="flex flex-col">
-                            <span className="text-xs text-gray-500">Average Rating</span>
-                            <div className="text-2xl font-black text-amber-500 flex items-center gap-1">
+                            <span className="text-xs text-muted-foreground">Average Rating</span>
+                            <div className="text-2xl font-black text-primary flex items-center gap-1">
                                 ★ {ratingOverall.toFixed(1)}
                             </div>
                         </div>
@@ -279,13 +279,13 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit }: Revie
                         <div className="flex gap-3">
                             <button
                                 onClick={onClose}
-                                className="px-6 py-3 rounded-xl font-bold text-gray-600 hover:bg-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 transition-colors"
+                                className="px-6 py-3 rounded-xl font-bold text-foreground hover:bg-muted transition-colors"
                             >
                                 취소
                             </button>
                             <button
                                 onClick={handleSubmit}
-                                className="px-8 py-3 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold rounded-xl shadow-lg hover:shadow-amber-500/25 active:scale-95 transition-all"
+                                className="px-8 py-3 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold rounded-xl shadow-lg hover:shadow-primary/25 active:scale-95 transition-all"
                             >
                                 저장하기
                             </button>

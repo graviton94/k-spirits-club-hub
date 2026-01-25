@@ -162,7 +162,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-6">
                             <div className="flex items-start justify-between">
                                 <div className="flex-1 mr-4">
-                                    <span className="inline-block px-2 py-1 mb-2 text-[10px] font-black text-black bg-amber-400 rounded-md uppercase">
+                                    <span className="inline-block px-2 py-1 mb-2 text-[10px] font-black text-white bg-primary rounded-md uppercase shadow-lg">
                                         {localSpirit.subcategory || localSpirit.category}
                                     </span>
                                     <h2 className="text-2xl sm:text-3xl font-black text-white leading-tight mb-1 drop-shadow-lg break-keep">
@@ -192,7 +192,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                     <button
                                         disabled={isProcessing}
                                         onClick={() => handleAction('add')}
-                                        className="flex-1 flex items-center justify-center gap-2 py-3 px-4 bg-primary text-primary-foreground font-black rounded-xl hover:opacity-90 transition-all scale-100 active:scale-95 disabled:opacity-50 shadow-lg shadow-primary/20"
+                                        className="flex-1 flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-black rounded-xl hover:from-amber-600 hover:to-orange-700 transition-all scale-100 active:scale-95 disabled:opacity-50 shadow-lg shadow-primary/20"
                                     >
                                         {isProcessing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
                                         <span>술장에 담기</span>
@@ -200,19 +200,19 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                     <button
                                         disabled={isProcessing}
                                         onClick={() => handleAction('wishlist')}
-                                        className={`p-3 rounded-xl border transition-all active:scale-95 ${cabinetStatus.isWishlist ? 'bg-amber-500/10 border-amber-500 text-amber-500' : 'border-border text-muted-foreground hover:bg-secondary'}`}
+                                        className={`p-3 rounded-xl border-2 transition-all active:scale-95 ${cabinetStatus.isWishlist ? 'bg-primary/10 border-primary text-primary' : 'border-border text-muted-foreground hover:bg-secondary'}`}
                                     >
                                         {cabinetStatus.isWishlist ? <Check className="w-5 h-5" /> : <Bookmark className="w-5 h-5" />}
                                     </button>
                                 </>
                             ) : (
                                 <div className="w-full flex gap-2">
-                                    <div className="flex-1 flex items-center justify-center gap-2 py-3 bg-green-500/10 text-green-500 border border-green-500/20 rounded-xl font-bold text-sm">
+                                    <div className="flex-1 flex items-center justify-center gap-2 py-3 bg-green-500/10 text-green-500 border-2 border-green-500/20 rounded-xl font-bold text-sm">
                                         <Check className="w-4 h-4" /> 내 술장 소장 중
                                     </div>
                                     <button
                                         onClick={() => setIsReviewOpen(true)}
-                                        className="flex-1 flex items-center justify-center gap-2 py-3 bg-amber-500 text-white rounded-xl font-bold text-sm shadow-lg shadow-amber-500/20 hover:scale-105 transition-all"
+                                        className="flex-1 flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-xl font-bold text-sm shadow-lg shadow-primary/20 hover:from-amber-600 hover:to-orange-700 hover:scale-105 transition-all"
                                     >
                                         <Pencil className="w-4 h-4" />
                                         {localSpirit.userReview ? '리뷰 수정하기' : '리뷰 쓰기'}
@@ -223,13 +223,13 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
 
                         {/* User Rating Summary (if exists) */}
                         {localSpirit.userReview && (
-                            <div className="bg-amber-500/5 dark:bg-amber-900/10 rounded-2xl p-4 border border-amber-500/10">
+                            <div className="bg-primary/5 rounded-2xl p-4 border-2 border-primary/10">
                                 <div className="flex items-center gap-3 mb-2">
-                                    <div className="flex items-center gap-1 text-amber-500 font-black text-xl">
+                                    <div className="flex items-center gap-1 text-primary font-black text-xl">
                                         <span>★</span> {localSpirit.userReview.ratingOverall.toFixed(1)}
                                     </div>
-                                    <div className="h-4 w-px bg-amber-500/20"></div>
-                                    <span className="text-[10px] text-amber-600 dark:text-amber-400 font-black uppercase tracking-widest">Master Review</span>
+                                    <div className="h-4 w-px bg-primary/20"></div>
+                                    <span className="text-[10px] text-primary font-black uppercase tracking-widest">Master Review</span>
                                 </div>
                                 <p className="text-sm text-foreground italic leading-relaxed">
                                     "{localSpirit.userReview.comment}"
