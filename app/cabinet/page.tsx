@@ -197,29 +197,33 @@ export default function CabinetPage() {
         <p className="text-sm text-gray-400">{ownedSpirits.length}병 소장중</p>
       </div>
 
-      {/* White Wood Shelf Section */}
+      {/* Visual Display Shelf Section */}
       <section className="mb-16">
-        {/* Shelf Container with white wood texture */}
-        <div className="relative bg-gradient-to-b from-stone-100 via-stone-50 to-stone-100 rounded-2xl p-8 shadow-xl">
-          {/* Wood grain texture overlay */}
-          <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0id29vZCIgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxsaW5lIHgxPSIwIiB5MT0iMCIgeDI9IjIwMCIgeTI9IjAiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIiBvcGFjaXR5PSIwLjEiLz48bGluZSB4MT0iMCIgeTE9IjUwIiB4Mj0iMjAwIiB5Mj0iNTAiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIiBvcGFjaXR5PSIwLjA1Ii8+PGxpbmUgeDE9IjAiIHkxPSIxMDAiIHgyPSIyMDAiIHkyPSIxMDAiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIiBvcGFjaXR5PSIwLjEiLz48bGluZSB4MT0iMCIgeTE9IjE1MCIgeDI9IjIwMCIgeTI9IjE1MCIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEiIG9wYWNpdHk9IjAuMDUiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjd29vZCkiLz48L3N2Zz4=')] pointer-events-none rounded-2xl" />
+        {/* Modern Shelf Container with enhanced depth */}
+        <div className="relative bg-gradient-to-b from-gray-50 via-white to-gray-100 rounded-2xl p-8 shadow-2xl">
+          {/* Subtle wood grain texture overlay */}
+          <div className="absolute inset-0 opacity-5 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0id29vZCIgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxsaW5lIHgxPSIwIiB5MT0iMCIgeDI9IjIwMCIgeTI9IjAiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIiBvcGFjaXR5PSIwLjEiLz48bGluZSB4MT0iMCIgeTE9IjUwIiB4Mj0iMjAwIiB5Mj0iNTAiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIiBvcGFjaXR5PSIwLjA1Ii8+PGxpbmUgeDE9IjAiIHkxPSIxMDAiIHgyPSIyMDAiIHkyPSIxMDAiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIiBvcGFjaXR5PSIwLjEiLz48bGluZSB4MT0iMCIgeTE9IjE1MCIgeDI9IjIwMCIgeTI9IjE1MCIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEiIG9wYWNpdHk9IjAuMDUiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjd29vZCkiLz48L3N2Zz4=')] pointer-events-none rounded-2xl" />
           
-          {/* Shelf rows with border-bottom to simulate shelves */}
-          <div className="relative space-y-12">
+          {/* Shelf rows with enhanced 3D effect */}
+          <div className="relative space-y-10">
             {/* Chunk spirits into rows */}
             {Array.from({ length: Math.ceil(ownedSpirits.length / SPIRITS_PER_ROW) }, (_, rowIndex) => (
-              <div key={rowIndex} className="relative pb-6 border-b-4 border-stone-300/80 shadow-sm">
+              <div key={rowIndex} className="relative pb-8">
+                {/* Enhanced shelf line with gradient and shadow for depth */}
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent shadow-md"></div>
+                
                 <motion.div
                   initial="hidden"
                   animate="visible"
                   variants={{
                     visible: {
                       transition: {
-                        staggerChildren: 0.1
+                        staggerChildren: 0.08
                       }
                     }
                   }}
-                  className="grid grid-cols-4 gap-4"
+                  className="grid grid-cols-3 sm:grid-cols-4 gap-6 pb-4"
                 >
                   {ownedSpirits.slice(rowIndex * SPIRITS_PER_ROW, (rowIndex + 1) * SPIRITS_PER_ROW).map((spirit) => (
                     <motion.div
@@ -228,27 +232,30 @@ export default function CabinetPage() {
                         hidden: { opacity: 0, y: 20 },
                         visible: { opacity: 1, y: 0 }
                       }}
-                      whileHover={{ y: -8, scale: 1.05 }}
-                      transition={{ type: "spring", stiffness: 300 }}
-                      className="cursor-pointer"
+                      whileHover={{ y: -10, scale: 1.03 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                      className="cursor-pointer flex flex-col items-center"
                       onClick={() => setSelectedSpirit(spirit)}
                     >
-                      {/* Bottle image only - clean display */}
-                      <div className="aspect-[2/3] rounded-lg overflow-hidden bg-white shadow-md">
+                      {/* Bottle image with enhanced drop-shadow for 3D effect */}
+                      <div className="aspect-[2/3] w-full rounded-lg overflow-hidden bg-white/80 backdrop-blur-sm" 
+                           style={{ filter: 'drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15)) drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1))' }}>
                         {spirit.imageUrl ? (
                           <img
                             src={spirit.imageUrl}
                             alt={spirit.name}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center text-6xl">
+                          <div className="w-full h-full flex items-center justify-center text-5xl">
                             🥃
                           </div>
                         )}
                       </div>
-                      {/* Small label below bottle */}
-                      <p className="text-xs text-center mt-2 text-stone-700 font-medium truncate">{spirit.name}</p>
+                      {/* Minimal label - very small and simple */}
+                      <p className="text-[10px] sm:text-xs text-center mt-2 text-gray-700 font-medium truncate w-full px-1 leading-tight">
+                        {spirit.name}
+                      </p>
                     </motion.div>
                   ))}
                 </motion.div>
@@ -258,62 +265,74 @@ export default function CabinetPage() {
         </div>
       </section>
 
-      {/* Wishlist Section - smaller */}
+      {/* Wishlist Section - enhanced with grayscale */}
       {wishlistSpirits.length > 0 && (
         <section className="mb-8">
           <h2 className="text-lg font-bold text-white mb-4">🔖 위시리스트 ({wishlistSpirits.length})</h2>
-          <div className="grid grid-cols-4 gap-3">
+          <div className="grid grid-cols-3 sm:grid-cols-4 gap-4">
             {wishlistSpirits.map((spirit) => (
               <motion.div
                 key={spirit.id}
-                whileHover={{ scale: 1.05 }}
-                className="relative opacity-60 hover:opacity-100 transition-opacity cursor-pointer"
+                whileHover={{ scale: 1.05, y: -4 }}
+                transition={{ type: "spring", stiffness: 400 }}
+                className="relative cursor-pointer flex flex-col items-center"
                 onClick={() => setSelectedSpirit(spirit)}
               >
-                <div className="aspect-[2/3] rounded-lg overflow-hidden bg-neutral-800 grayscale hover:grayscale-0 transition-all">
+                {/* Grayscale filter applied to distinguish from owned items */}
+                <div 
+                  className="aspect-[2/3] w-full rounded-lg overflow-hidden bg-neutral-800/50 grayscale hover:grayscale-0 transition-all duration-300"
+                  style={{ filter: 'grayscale(100%) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2))' }}
+                  onMouseEnter={(e) => e.currentTarget.style.filter = 'grayscale(0%) drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3))'}
+                  onMouseLeave={(e) => e.currentTarget.style.filter = 'grayscale(100%) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2))'}
+                >
                   {spirit.imageUrl ? (
-                    <img src={spirit.imageUrl} alt={spirit.name} className="w-full h-full object-cover" />
+                    <img src={spirit.imageUrl} alt={spirit.name} className="w-full h-full object-cover opacity-60 hover:opacity-100 transition-opacity" />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-4xl">🥃</div>
+                    <div className="w-full h-full flex items-center justify-center text-4xl opacity-60">🥃</div>
                   )}
                 </div>
-                <p className="text-xs text-center mt-1 text-gray-400 truncate">{spirit.name}</p>
+                <p className="text-[10px] sm:text-xs text-center mt-2 text-gray-400 truncate w-full px-1 leading-tight">{spirit.name}</p>
               </motion.div>
             ))}
           </div>
         </section>
       )}
 
-      {/* Popup Modal */}
+      {/* Quick Info Popup Modal - Centered */}
       {selectedSpirit && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/75 backdrop-blur-md z-50 flex items-center justify-center p-4"
           onClick={() => setSelectedSpirit(null)}
         >
           <motion.div
-            initial={{ scale: 0.8, y: 50 }}
-            animate={{ scale: 1, y: 0 }}
-            exit={{ scale: 0.8, y: 50 }}
-            transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl"
+            initial={{ scale: 0.85, y: 30, opacity: 0 }}
+            animate={{ scale: 1, y: 0, opacity: 1 }}
+            exit={{ scale: 0.85, y: 30, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 350, damping: 28 }}
+            className="bg-gradient-to-br from-white to-gray-50 rounded-3xl p-8 max-w-md w-full shadow-2xl border border-gray-100"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Popup content */}
+            {/* Quick Info Content */}
             <div className="text-center">
-              <h3 className="text-2xl font-bold text-stone-900 mb-2">{selectedSpirit.name}</h3>
-              <p className="text-sm text-stone-600 mb-1">{selectedSpirit.subcategory || selectedSpirit.category}</p>
-              <p className="text-lg font-bold text-amber-600 mb-4">ABV {selectedSpirit.abv}°</p>
+              <div className="mb-4">
+                <h3 className="text-3xl font-black text-gray-900 mb-2 leading-tight">{selectedSpirit.name}</h3>
+                <p className="text-sm text-gray-500 font-medium">{selectedSpirit.subcategory || selectedSpirit.category}</p>
+              </div>
+              
+              <div className="inline-block px-6 py-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full mb-6">
+                <p className="text-2xl font-black text-white">ABV {selectedSpirit.abv}°</p>
+              </div>
 
-              {/* Top 2 Tags */}
+              {/* Top 2 Tags - Prominent Display */}
               {selectedSpirit.metadata?.tasting_note && (
-                <div className="flex gap-2 justify-center mb-6">
+                <div className="flex gap-3 justify-center mb-8">
                   {selectedSpirit.metadata.tasting_note.split(',').slice(0, 2).map((tag, index) => (
                     <span
                       key={index}
-                      className="text-sm px-3 py-1 rounded-full bg-amber-100 text-amber-800 border border-amber-300"
+                      className="text-sm font-semibold px-4 py-2 rounded-full bg-amber-50 text-amber-900 border-2 border-amber-200 shadow-sm"
                     >
                       {tag.trim()}
                     </span>
@@ -321,13 +340,13 @@ export default function CabinetPage() {
                 </div>
               )}
 
-              {/* View Details Link */}
+              {/* Detail Page Button */}
               <Link
                 href={`/spirits/${selectedSpirit.id}`}
-                className="inline-block w-full py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold rounded-xl transition-all shadow-lg"
+                className="inline-block w-full py-4 bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white font-bold rounded-2xl transition-all shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98]"
                 onClick={() => setSelectedSpirit(null)}
               >
-                상세 보기 →
+                상세 페이지 이동 →
               </Link>
             </div>
 
