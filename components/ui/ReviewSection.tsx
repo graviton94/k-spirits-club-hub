@@ -333,7 +333,7 @@ function ReviewForm({ spiritId, onCancel }: { spiritId: string; onCancel: () => 
               value={formData.content}
               onChange={(e) => setFormData({ ...formData, content: e.target.value })}
               className="w-full px-6 py-4 bg-secondary/50 border border-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary font-medium min-h-[120px] text-lg"
-              placeholder="전반적인 시음 느낌을 자유롭게 적어주세요..."
+              placeholder="후기를 자유롭게 적어주세요!"
             />
           </div>
         </div>
@@ -392,9 +392,9 @@ function RatingSection({ label, rating, tags, onRatingChange, onTagsChange, colo
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+      <div className="flex flex-col items-start gap-4">
         {/* Label and Icon moved inline */}
-        <div className="flex items-center gap-3 min-w-[120px] sm:justify-end">
+        <div className="flex items-center gap-3 w-full">
           <label className="text-sm font-black tracking-tight uppercase whitespace-nowrap">{label}</label>
           <div className={`p-2.5 rounded-2xl bg-${color}-500/10 text-${color}-500 border border-${color}-500/20 shadow-sm`}>
             {icon}
@@ -406,18 +406,18 @@ function RatingSection({ label, rating, tags, onRatingChange, onTagsChange, colo
           onPointerMove={handlePointer}
           onPointerLeave={() => setHoverRating(null)}
           onPointerDown={handlePointer}
-          className="flex-1 flex gap-2 justify-between rating-wrap touch-none select-none cursor-pointer p-1"
+          className="w-full flex gap-2 justify-between rating-wrap touch-none select-none cursor-pointer p-1"
         >
           {[1, 2, 3, 4, 5].map((s) => (
             <div
               key={s}
-              className="relative flex-1 aspect-square max-w-[48px]"
+              className="relative flex-1 aspect-square max-w-[60px]"
             >
               <div className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity ${hoverRating !== null && (s - 0.5) <= hoverRating ? 'opacity-50' : 'opacity-100'}`}>
-                <Star className={`w-8 h-8 ${s <= activeRating ? starColor : s - 0.5 === activeRating ? 'text-' + color + '-500' : 'text-muted-foreground/20'}`} />
+                <Star className={`w-full h-full ${s <= activeRating ? starColor : s - 0.5 === activeRating ? 'text-' + color + '-500' : 'text-muted-foreground/20'}`} />
                 {s - 0.5 === activeRating && (
                   <div className="absolute inset-x-0 overflow-hidden w-[50%] left-0">
-                    <Star className={`w-8 h-8 ${starColor}`} />
+                    <Star className={`w-full h-full ${starColor}`} />
                   </div>
                 )}
               </div>
@@ -498,8 +498,8 @@ function TagInput({ tags, onTagsChange, color, metadataKey }: { tags: string[], 
           onKeyDown={handleKeyDown}
           onBlur={handleBlur}
           onFocus={() => setShowSuggestions(true)}
-          className="flex-1 bg-transparent border-none outline-none text-xs font-bold min-w-[60px]"
-          placeholder={tags.length === 0 ? "풍미 입력..." : ""}
+          className="flex-1 bg-transparent border-none outline-none text-xs font-bold min-w-[60px] placeholder:text-muted-foreground/60"
+          placeholder="풍미 입력..."
         />
       </div>
 
