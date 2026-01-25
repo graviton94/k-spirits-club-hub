@@ -11,6 +11,8 @@ export interface SpiritSearchIndex {
   n: string;           // name
   en: string | null;   // name_en (English name from metadata)
   c: string;           // category
+  mc: string | null;   // mainCategory
+  sc: string | null;   // subcategory
   t: string | null;    // thumbnailUrl
 }
 
