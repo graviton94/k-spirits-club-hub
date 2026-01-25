@@ -149,10 +149,12 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
       console.log('[SpiritsCacheContext] 📡 Fetching data from Firestore...');
 
       // Fetch both the minimized search index and full spirits data
+      // Note: We only filter by status='PUBLISHED' because isPublished is redundant
+      // (status='PUBLISHED' always implies isPublished=true due to data consistency guard)
       const [index, spiritsResult] = await Promise.all([
         getSpiritsSearchIndex(),
         getSpiritsAction(
-          { isPublished: true, status: 'PUBLISHED' },
+          { status: 'PUBLISHED' },
           { page: 1, pageSize: 15000 }
         )
       ]);

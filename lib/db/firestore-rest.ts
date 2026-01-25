@@ -79,8 +79,9 @@ export const spiritsDb = {
 
         const filters: any[] = [];
 
-        // Unified PUBLISHED logic: Always apply both status and isPublished filters
-        // This ensures consistent behavior across all queries
+        // Apply filters based on the provided SpiritFilter
+        // Note: Avoid using both status='PUBLISHED' AND isPublished=true together
+        // as it creates redundancy (status='PUBLISHED' always implies isPublished=true)
         if (filter.status && (filter.status as string) !== 'ALL') {
             filters.push({
                 fieldFilter: {
@@ -128,6 +129,12 @@ export const spiritsDb = {
             };
         }
 
+        // Log the query being executed for debugging (only in development)
+        if (process.env.NODE_ENV === 'development') {
+            console.log('[Firestore] Executing query with filters:', JSON.stringify(filter));
+            console.log('[Firestore] Structured query:', JSON.stringify(structuredQuery, null, 2));
+        }
+
         const parent = `projects/${PROJECT_ID}/databases/(default)/documents`;
 
         const res = await fetch(runQueryUrl, {
@@ -171,7 +178,13 @@ export const spiritsDb = {
             .map((r: any) => fromFirestore(r.document));
 
         console.log(`[Firestore] Query returned ${results.length} spirits`);
-        if (results.length > 0) {
+        if (results.length === 0) {
+            console.warn('[Firestore] ⚠️ WARNING: Query returned 0 results. Filter:', JSON.stringify(filter));
+            console.warn('[Firestore] This may indicate:');
+            console.warn('  1. No spirits match the filter criteria');
+            console.warn('  2. Database is empty or spirits not yet imported');
+            console.warn('  3. Service account permissions issue');
+        } else {
             console.log('[Firestore] First result sample:', {
                 id: results[0].id,
                 name: results[0].name,
@@ -250,9 +263,10 @@ export const spiritsDb = {
      */
     async getPublishedSearchIndex(): Promise<SpiritSearchIndex[]> {
         // Fetch all published spirits
+        // Note: We only filter by status='PUBLISHED' because isPublished is redundant
+        // (status='PUBLISHED' always implies isPublished=true due to data consistency guard)
         const publishedSpirits = await this.getAll({ 
-            status: 'PUBLISHED' as SpiritStatus,
-            isPublished: true 
+            status: 'PUBLISHED' as SpiritStatus
         });
 
         // Map to minimized structure with short keys
