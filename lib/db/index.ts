@@ -12,14 +12,13 @@ export const spiritsDb = restSpiritsDb;
 // -----------------------------------------------------------------------------
 export const db = {
   async getSpirits(filter: SpiritFilter = {}, pagination: PaginationParams = { page: 1, pageSize: 20 }): Promise<PaginatedResponse<Spirit>> {
-    // 1. Fetch filtered items from Firestore (Memory Filtering for specialized fields)
-    // Note: Admin SDK supports complex queries better, but we keep memory filter logic for consistency with previous behavior unless performance issues arise.
-    // For 42k items, fetching ALL and filtering in memory is NOT scalable permanently, but for now we stick to "fetch all by Status" and filter rest.
+    // 1. Fetch filtered items from Firestore
+    // DB-level filters: status, isPublished (applied in firestore-rest.ts)
+    // Memory filters: category (OR logic), subcategory, country, searchTerm
+    
+    let allItems = await spiritsDb.getAll(filter); // Pre-filter by status and isPublished at DB level
 
-    // Improvement: Use Firestore Query for basic fields if possible.
-    let allItems = await spiritsDb.getAll(filter); // Pre-filter by DB fields if possible
-
-    // 2. Memory Filter
+    // 2. Memory Filters (for fields requiring custom logic)
     if (filter.category) {
       // Smart Filter: Match either category OR subcategory
       allItems = allItems.filter(s =>
@@ -29,7 +28,7 @@ export const db = {
     }
     if (filter.subcategory) allItems = allItems.filter(s => s.subcategory === filter.subcategory);
     if (filter.country) allItems = allItems.filter(s => s.country === filter.country);
-    if (filter.isPublished !== undefined) allItems = allItems.filter(s => s.isPublished === filter.isPublished);
+    // Note: isPublished is already filtered at DB level, no need for memory filter
     if (filter.searchTerm) {
       const lowerTerm = filter.searchTerm.toLowerCase();
       allItems = allItems.filter(s =>

@@ -13,7 +13,7 @@ async function getTrendingSpirits() {
   // Fetch latest updated spirits that have images
   try {
     const { data } = await db.getSpirits(
-      { isPublished: false }, // In dev, we show unpublished too. In prod, switch to true.
+      { isPublished: true, status: 'PUBLISHED' }, // Only show published spirits
       { page: 1, pageSize: 12 }
     );
     // Filter items with images for better UI
