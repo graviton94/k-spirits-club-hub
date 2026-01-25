@@ -41,8 +41,15 @@ export function LiveReviews() {
       fetchReviews();
     };
 
-    window.addEventListener('reviewSubmitted', handleReviewSubmitted);
-    return () => window.removeEventListener('reviewSubmitted', handleReviewSubmitted);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('reviewSubmitted', handleReviewSubmitted);
+    }
+    
+    return () => {
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('reviewSubmitted', handleReviewSubmitted);
+      }
+    };
   }, []);
 
   const getTimeAgo = (dateString: string) => {
