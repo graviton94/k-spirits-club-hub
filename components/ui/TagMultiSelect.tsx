@@ -24,7 +24,7 @@ const COLOR_MAP: Record<string, string> = {
     pink: 'bg-pink-100 text-pink-700 border-pink-200 dark:bg-pink-900/40 dark:text-pink-300 dark:border-pink-800',
 };
 
-const DEFAULT_COLOR = 'bg-secondary text-secondary-foreground border-border';
+const DEFAULT_COLOR = 'bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-800';
 
 export function TagMultiSelect({ label, availableTags, selectedTags, onChange }: TagMultiSelectProps) {
     const [isOpen, setIsOpen] = useState(false);
@@ -52,7 +52,7 @@ export function TagMultiSelect({ label, availableTags, selectedTags, onChange }:
             <label className="text-[10px] font-black uppercase text-gray-500 dark:text-gray-400 block mb-1">{label}</label>
 
             {/* Selected Tags Display */}
-            <div className="flex flex-wrap gap-2 min-h-[48px] p-3 bg-background border border-border rounded-xl cursor-pointer hover:border-amber-400/50 transition-colors shadow-sm"
+            <div className="flex flex-wrap gap-2 min-h-[48px] p-3 bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-xl cursor-pointer hover:border-amber-400/50 transition-colors shadow-sm"
                 onClick={() => setIsOpen(!isOpen)}>
                 {selectedTags.length > 0 ? (
                     selectedTags.map(tag => {
@@ -71,7 +71,7 @@ export function TagMultiSelect({ label, availableTags, selectedTags, onChange }:
 
             {/* Dropdown / Expandable Area */}
             {isOpen && (
-                <div className="mt-2 p-4 bg-background border border-border rounded-xl space-y-6 shadow-xl animate-in fade-in slide-in-from-top-2">
+                <div className="mt-2 p-4 bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-xl space-y-6 shadow-xl animate-in fade-in slide-in-from-top-2">
                     {Object.entries(availableTags).map(([categoryKey, data]) => {
                         const categoryColorClass = COLOR_MAP[data.color] || DEFAULT_COLOR;
                         // Strip border from header style to keep it clean, just use text color maybe?

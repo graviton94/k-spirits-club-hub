@@ -1,4 +1,4 @@
-import { Spirit, SpiritStatus } from '../db/schema';
+import { Spirit, SpiritStatus, SpiritFilter } from '../db/schema';
 import { getServiceAccountToken } from '../auth/service-account';
 
 const PROJECT_ID = process.env.FIREBASE_PROJECT_ID;
@@ -73,33 +73,51 @@ function toFirestore(data: Partial<Spirit>): any {
 }
 
 export const spiritsDb = {
-    async getAll(status?: SpiritStatus | 'ALL', isPublished?: boolean): Promise<Spirit[]> {
+    async getAll(filter: SpiritFilter = {}): Promise<Spirit[]> {
         const token = await getServiceAccountToken();
         const runQueryUrl = `${BASE_URL}:runQuery`;
 
         const filters: any[] = [];
-        if (status && status !== 'ALL') {
+        if (filter.status && (filter.status as string) !== 'ALL') {
             filters.push({
                 fieldFilter: {
                     field: { fieldPath: 'status' },
                     op: 'EQUAL',
-                    value: { stringValue: status }
+                    value: { stringValue: filter.status }
                 }
             });
         }
-        if (isPublished !== undefined) {
+        if (filter.isPublished !== undefined) {
             filters.push({
                 fieldFilter: {
                     field: { fieldPath: 'isPublished' },
                     op: 'EQUAL',
-                    value: { booleanValue: isPublished }
+                    value: { booleanValue: filter.isPublished }
+                }
+            });
+        }
+        if (filter.category) {
+            filters.push({
+                fieldFilter: {
+                    field: { fieldPath: 'category' },
+                    op: 'EQUAL',
+                    value: { stringValue: filter.category }
+                }
+            });
+        }
+        if (filter.subcategory) {
+            filters.push({
+                fieldFilter: {
+                    field: { fieldPath: 'subcategory' },
+                    op: 'EQUAL',
+                    value: { stringValue: filter.subcategory }
                 }
             });
         }
 
         const structuredQuery: any = {
             from: [{ collectionId: 'spirits' }],
-            limit: 2000 // Increased limit for memory-filter based search
+            limit: 5000 // Covers more area for search
         };
 
         if (filters.length === 1) {
