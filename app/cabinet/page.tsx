@@ -1,190 +1,35 @@
 'use client';
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { SpiritCard } from "@/components/ui/SpiritCard";
+import { motion, AnimatePresence } from "framer-motion";
 import GoogleAd from "@/components/ui/GoogleAd";
 import Link from "next/link";
+import MindMap from "@/components/cabinet/MindMap";
+import { analyzeCellar, MOCK_CELLAR_SPIRITS, loadCellarFromStorage, type Spirit } from "@/lib/utils/flavor-engine";
+import { useAuth } from "@/app/context/auth-context";
 
-// Mock data for demonstration
-const MOCK_SPIRITS = [
-  {
-    id: "1",
-    name: "달홀진주25",
-    category: "소주",
-    subcategory: "증류식 소주",
-    abv: 25,
-    imageUrl: "http://cdn.veluga.kr/files/supplier/414/drinks/30_%E1%84%8B%E1%85%B2%E1%84%85%E1%85%B5%E1%84%87%E1%85%A7%E1%86%BC_375.%E1%84%8B%E1%85%A6%E1%84%89%E1%85%B3%E1%84%8B%E1%85%A6%E1%86%B7%E1%84%90%E1%85%B3%E1%84%85%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%83%E1%85%B3_%E1%84%83%E1%85%A1%E1%86%AF%E1%84%92%E1%85%A9%E1%86%AF%E1%84%8C%E1%85%B5%E1%86%AB%E1%84%8C%E1%85%AE_25.png",
-    distillery: "달홀",
-    isWishlist: false,
-    metadata: { tasting_note: "깔끔한, 부드러운" }
-  },
-  {
-    id: "2",
-    name: "화요",
-    category: "소주",
-    subcategory: "증류식 소주",
-    abv: 41,
-    imageUrl: null,
-    distillery: "국순당",
-    isWishlist: false,
-    metadata: { tasting_note: "스파이시한, 곡물향" }
-  },
-  {
-    id: "3",
-    name: "문배주",
-    category: "전통주",
-    subcategory: "증류식 소주",
-    abv: 40,
-    imageUrl: null,
-    distillery: "문배주양조원",
-    isWishlist: false,
-    metadata: { tasting_note: "과일향, 달콤한" }
-  },
-  {
-    id: "4",
-    name: "Hibiki Harmony",
-    category: "위스키",
-    subcategory: "Japanese Whisky",
-    abv: 43,
-    imageUrl: null,
-    distillery: "Suntory",
-    isWishlist: false,
-    metadata: { tasting_note: "플로랄, 허니" }
-  },
-  {
-    id: "5",
-    name: "Hendrick's Gin",
-    category: "일반증류주",
-    subcategory: "Gin",
-    abv: 44,
-    imageUrl: null,
-    distillery: "Hendrick's",
-    isWishlist: true,
-    metadata: { tasting_note: "큐컴버, 로즈" }
-  },
-  {
-    id: "6",
-    name: "안동소주",
-    category: "전통주",
-    subcategory: "증류식 소주",
-    abv: 45,
-    imageUrl: null,
-    distillery: "안동소주",
-    isWishlist: true,
-    metadata: { tasting_note: "전통적인, 강렬한" }
-  },
-  {
-    id: "7",
-    name: "막걸리 생탁",
-    category: "탁주",
-    subcategory: "생막걸리",
-    abv: 6,
-    imageUrl: null,
-    distillery: "서울탁주",
-    isWishlist: false,
-    metadata: { tasting_note: "상큼한, 발효향" }
-  },
-  {
-    id: "8",
-    name: "Glenfiddich 12",
-    category: "위스키",
-    subcategory: "Single Malt Scotch",
-    abv: 40,
-    imageUrl: null,
-    distillery: "Glenfiddich",
-    isWishlist: true,
-    metadata: { tasting_note: "오크, 바닐라" }
-  }
-];
+// Configuration
+const SPIRITS_PER_ROW = 4;
 
-interface PersonaData {
-  title: string;
-  emoji: string;
-  description: string;
-}
-
-function generatePersona(spirits: typeof MOCK_SPIRITS): PersonaData {
-  const owned = spirits.filter(s => !s.isWishlist);
-
-  if (owned.length === 0) {
-    return {
-      title: "술 탐험가 입문자",
-      emoji: "🗺️",
-      description: "아직 술장이 비어있지만, 곧 멋진 컬렉션이 시작될 거예요!"
-    };
-  }
-
-  const categoryCount: Record<string, number> = {};
-  owned.forEach(s => {
-    categoryCount[s.category] = (categoryCount[s.category] || 0) + 1;
-  });
-
-  const sortedCategories = Object.entries(categoryCount)
-    .sort((a, b) => b[1] - a[1]);
-
-  const dominantCategory = sortedCategories[0][0];
-  const dominantPercentage = (sortedCategories[0][1] / owned.length) * 100;
-
-  // Persona logic
-  if (dominantPercentage > 60) {
-    const personaMap: Record<string, PersonaData> = {
-      "위스키": {
-        title: "위스키 애호가",
-        emoji: "🥃",
-        description: "깊이 있는 위스키 컬렉션을 자랑하는 진정한 애호가"
-      },
-      "소주": {
-        title: "소주 컬렉터",
-        emoji: "🍶",
-        description: "한국 증류주의 다양성을 탐구하는 소주 마니아"
-      },
-      "전통주": {
-        title: "전통주 마스터",
-        emoji: "🏺",
-        description: "우리 술의 깊은 맛을 아는 전통주 전문가"
-      },
-      "탁주": {
-        title: "막걸리 러버",
-        emoji: "🍚",
-        description: "발효의 매력에 푹 빠진 탁주 애호가"
-      }
-    };
-    return personaMap[dominantCategory] || {
-      title: `${dominantCategory} 전문가`,
-      emoji: "🍾",
-      description: `${dominantCategory}의 세계를 깊이 탐구하는 전문가`
-    };
-  }
-
-  // Diverse collection
-  if (sortedCategories.length >= 4) {
-    return {
-      title: "다양성의 탐험가",
-      emoji: "🌍",
-      description: "세계 각국의 술을 폭넓게 즐기는 진정한 탐험가"
-    };
-  }
-
-  return {
-    title: "술 컬렉터",
-    emoji: "🎯",
-    description: "자신만의 취향을 찾아가는 컬렉터"
-  };
-}
+type ViewMode = 'cellar' | 'flavor';
 
 export default function CabinetPage() {
-  const [spirits, setSpirits] = useState<typeof MOCK_SPIRITS>([]);
-  const [persona, setPersona] = useState<PersonaData | null>(null);
+  const [viewMode, setViewMode] = useState<ViewMode>('cellar');
+  const [spirits, setSpirits] = useState<Spirit[]>([]);
+  const [selectedSpirit, setSelectedSpirit] = useState<Spirit | null>(null);
+  const { profile } = useAuth();
 
   useEffect(() => {
-    // In production, fetch from localStorage/API
-    setSpirits(MOCK_SPIRITS);
-    setPersona(generatePersona(MOCK_SPIRITS));
+    // Load from localStorage or use mock data
+    const loaded = loadCellarFromStorage();
+    setSpirits(loaded.length > 0 ? loaded : MOCK_CELLAR_SPIRITS);
   }, []);
 
   const ownedSpirits = spirits.filter(s => !s.isWishlist);
   const wishlistSpirits = spirits.filter(s => s.isWishlist);
+
+  // Generate flavor analysis
+  const flavorAnalysis = analyzeCellar(spirits);
 
   // Empty state
   if (spirits.length === 0 || ownedSpirits.length === 0) {
@@ -221,141 +66,244 @@ export default function CabinetPage() {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
-      {/* Persona Section */}
-      {persona && (
+      {/* Header with Toggle */}
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold text-white mb-1">🍾 My Collections</h1>
+        <p className="text-sm text-gray-400 mb-6">{ownedSpirits.length}병 소장중</p>
+
+        {/* Segmented Toggle */}
+        <div className="relative inline-flex bg-gray-800/50 backdrop-blur-sm rounded-full p-1 border border-gray-700">
+          <motion.div
+            className="absolute inset-y-1 bg-gradient-to-r from-amber-500 to-amber-600 rounded-full"
+            initial={false}
+            animate={{
+              x: viewMode === 'cellar' ? 0 : '100%',
+              width: viewMode === 'cellar' ? '50%' : '50%',
+            }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+          />
+
+          <button
+            onClick={() => setViewMode('cellar')}
+            className={`relative z-10 px-4 py-2 rounded-full text-xs font-bold transition-colors truncate ${viewMode === 'cellar' ? 'text-black' : 'text-gray-400 hover:text-gray-200'
+              }`}
+          >
+            🍾 술장
+          </button>
+
+          <button
+            onClick={() => setViewMode('flavor')}
+            className={`relative z-10 px-4 py-2 rounded-full text-xs font-bold transition-colors truncate ${viewMode === 'flavor' ? 'text-black' : 'text-gray-400 hover:text-gray-200'
+              }`}
+          >
+            🌌 취향 지도
+          </button>
+        </div>
+      </div>
+
+      {/* View Container with Animation */}
+      <AnimatePresence mode="wait">
+        {viewMode === 'cellar' ? (
+          <motion.div
+            key="cellar"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
+            transition={{ duration: 0.3 }}
+          >
+            {/* Visual Display Shelf Section */}
+            <section className="mb-16">
+              {/* Modern Shelf Container with enhanced depth */}
+              <div className="relative bg-gradient-to-b from-gray-50 via-white to-gray-100 rounded-2xl p-8 shadow-2xl">
+                {/* Subtle wood grain texture overlay */}
+                <div className="absolute inset-0 opacity-5 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0id29vZCIgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxsaW5lIHgxPSIwIiB5MT0iMCIgeDI9IjIwMCIgeTI9IjAiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIiBvcGFjaXR5PSIwLjEiLz48bGluZSB4MT0iMCIgeTE9IjUwIiB4Mj0iMjAwIiB5Mj0iNTAiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIiBvcGFjaXR5PSIwLjA1Ii8+PGxpbmUgeDE9IjAiIHkxPSIxMDAiIHgyPSIyMDAiIHkyPSIxMDAiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIiBvcGFjaXR5PSIwLjEiLz48bGluZSB4MT0iMCIgeTE9IjE1MCIgeDI9IjIwMCIgeTI9IjE1MCIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEiIG9wYWNpdHk9IjAuMDUiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjd29vZCkiLz48L3N2Zz4=')] pointer-events-none rounded-2xl" />
+
+                {/* Shelf rows with enhanced 3D effect */}
+                <div className="relative space-y-10">
+                  {/* Chunk spirits into rows */}
+                  {Array.from({ length: Math.ceil(ownedSpirits.length / SPIRITS_PER_ROW) }, (_, rowIndex) => (
+                    <div key={rowIndex} className="relative pb-8">
+                      {/* Enhanced shelf line with gradient and shadow for depth */}
+                      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+                      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent shadow-md"></div>
+
+                      <motion.div
+                        initial="hidden"
+                        animate="visible"
+                        variants={{
+                          visible: {
+                            transition: {
+                              staggerChildren: 0.08
+                            }
+                          }
+                        }}
+                        className="grid grid-cols-4 gap-4 pb-4"
+                      >
+                        {ownedSpirits.slice(rowIndex * SPIRITS_PER_ROW, (rowIndex + 1) * SPIRITS_PER_ROW).map((spirit) => (
+                          <motion.div
+                            key={spirit.id}
+                            variants={{
+                              hidden: { opacity: 0, y: 20 },
+                              visible: { opacity: 1, y: 0 }
+                            }}
+                            whileHover={{ y: -10, scale: 1.03 }}
+                            transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                            className="cursor-pointer flex flex-col items-center"
+                            onClick={() => setSelectedSpirit(spirit)}
+                          >
+                            {/* Bottle image with enhanced drop-shadow for 3D effect */}
+                            <div className="aspect-[2/3] w-full rounded-lg overflow-hidden bg-white/80 backdrop-blur-sm [filter:drop-shadow(0_6px_12px_rgba(0,0,0,0.12))_drop-shadow(0_3px_5px_rgba(0,0,0,0.08))]">
+                              {spirit.imageUrl ? (
+                                <img
+                                  src={spirit.imageUrl}
+                                  alt={spirit.name}
+                                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                                />
+                              ) : (
+                                <div className="w-full h-full flex items-center justify-center text-4xl">
+                                  🥃
+                                </div>
+                              )}
+                            </div>
+                            {/* Minimal label - very small and simple */}
+                            <p className="text-[9px] text-center mt-1.5 text-gray-700 font-medium truncate w-full px-0.5 leading-tight">
+                              {spirit.name}
+                            </p>
+                          </motion.div>
+                        ))}
+                      </motion.div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* Wishlist Section - enhanced with grayscale */}
+            {wishlistSpirits.length > 0 && (
+              <section className="mb-8">
+                <h2 className="text-lg font-bold text-white mb-4">🔖 위시리스트 ({wishlistSpirits.length})</h2>
+                <div className="grid grid-cols-4 gap-3">
+                  {wishlistSpirits.map((spirit) => (
+                    <motion.div
+                      key={spirit.id}
+                      whileHover={{ scale: 1.05, y: -4 }}
+                      transition={{ type: "spring", stiffness: 400 }}
+                      className="relative cursor-pointer flex flex-col items-center"
+                      onClick={() => setSelectedSpirit(spirit)}
+                    >
+                      {/* Grayscale filter applied to distinguish from owned items */}
+                      <div className="aspect-[2/3] w-full rounded-lg overflow-hidden bg-neutral-800/50 transition-all duration-300 [filter:grayscale(100%)_drop-shadow(0_3px_6px_rgba(0,0,0,0.15))] hover:[filter:grayscale(0%)_drop-shadow(0_6px_12px_rgba(0,0,0,0.25))]">
+                        {spirit.imageUrl ? (
+                          <img src={spirit.imageUrl} alt={spirit.name} className="w-full h-full object-cover opacity-60 hover:opacity-100 transition-opacity" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-3xl opacity-60">🥃</div>
+                        )}
+                      </div>
+                      <p className="text-[9px] text-center mt-1.5 text-gray-400 truncate w-full px-0.5 leading-tight">{spirit.name}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </section>
+            )}
+          </motion.div>
+        ) : (
+          <motion.div
+            key="flavor"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <MindMap analysis={flavorAnalysis} profileImage={profile?.profileImage} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Quick Info Popup Modal - Centered Vertical Card */}
+      {selectedSpirit && (
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="mb-12 relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-900/20 via-amber-800/10 to-transparent border border-amber-900/30 p-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/75 backdrop-blur-md z-50 flex items-center justify-center p-4"
+          onClick={() => setSelectedSpirit(null)}
         >
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTEsMTkxLDM2LDAuMDUpIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-30" />
-
-          <div className="relative z-10 flex items-center gap-6">
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
-              className="text-7xl"
+          <motion.div
+            initial={{ scale: 0.85, y: 30, opacity: 0 }}
+            animate={{ scale: 1, y: 0, opacity: 1 }}
+            exit={{ scale: 0.85, y: 30, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 350, damping: 28 }}
+            className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-6 max-w-xs w-full shadow-2xl border border-gray-100 relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close button - Inside card top-right */}
+            <button
+              onClick={() => setSelectedSpirit(null)}
+              className="absolute top-3 right-3 w-7 h-7 flex items-center justify-center rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 font-bold transition-colors z-10"
             >
-              {persona.emoji}
-            </motion.div>
+              ✕
+            </button>
 
-            <div className="flex-1">
-              <motion.h1
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.4 }}
-                className="text-4xl font-black text-amber-100 mb-2"
+            {/* Quick Info Content - Vertical Layout */}
+            <div className="flex flex-col items-center text-center">
+              {/* Small Bottle Image */}
+              <div className="w-20 h-28 mb-3 rounded-lg overflow-hidden bg-white shadow-md">
+                {selectedSpirit.imageUrl ? (
+                  <img
+                    src={selectedSpirit.imageUrl}
+                    alt={selectedSpirit.name}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-3xl">
+                    🥃
+                  </div>
+                )}
+              </div>
+
+              {/* Product Name */}
+              <h3 className="text-xl font-black text-gray-900 mb-1 leading-tight">{selectedSpirit.name}</h3>
+
+              {/* Subcategory */}
+              <p className="text-xs text-gray-500 font-medium mb-2">{selectedSpirit.subcategory || selectedSpirit.category}</p>
+
+              {/* Distillery Info */}
+              {selectedSpirit.distillery && (
+                <p className="text-xs text-gray-600 mb-3">
+                  🏭 {selectedSpirit.distillery}
+                </p>
+              )}
+
+              {/* ABV Badge */}
+              <div className="inline-block px-4 py-1.5 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full mb-4">
+                <p className="text-lg font-black text-white">ABV {selectedSpirit.abv}°</p>
+              </div>
+
+              {/* Tasting Tags Row */}
+              {selectedSpirit.metadata?.tasting_note && (
+                <div className="flex flex-wrap gap-2 justify-center mb-5">
+                  {selectedSpirit.metadata.tasting_note.split(',').slice(0, 3).map((tag, index) => (
+                    <span
+                      key={index}
+                      className="text-[10px] font-semibold px-2.5 py-1 rounded-full bg-amber-50 text-amber-900 border border-amber-200"
+                    >
+                      {tag.trim()}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              {/* Detail Page Button */}
+              <Link
+                href={`/spirits/${selectedSpirit.id}`}
+                className="inline-block w-full py-3 bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white text-sm font-bold rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98]"
+                onClick={() => setSelectedSpirit(null)}
               >
-                {persona.title}
-              </motion.h1>
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-                className="text-amber-200/70 text-lg"
-              >
-                {persona.description}
-              </motion.p>
+                상세 페이지 이동 →
+              </Link>
             </div>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.6 }}
-              className="text-right"
-            >
-              <div className="text-5xl font-black text-amber-400">{ownedSpirits.length}</div>
-              <div className="text-sm text-amber-200/60">병 소장중</div>
-            </motion.div>
-          </div>
+          </motion.div>
         </motion.div>
-      )}
-
-      {/* My Cellar Section */}
-      <section className="mb-16">
-        <div className="flex items-center gap-3 mb-6">
-          <h2 className="text-3xl font-bold text-white">🍾 내 술장</h2>
-          <span className="text-sm text-gray-500">({ownedSpirits.length})</span>
-        </div>
-
-        {/* Luxury Shelf Design */}
-        <div className="relative">
-          {/* Wood shelf background */}
-          <div className="absolute inset-0 bg-gradient-to-b from-amber-950/20 via-amber-900/10 to-transparent rounded-xl pointer-events-none" />
-
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={{
-              visible: {
-                transition: {
-                  staggerChildren: 0.1
-                }
-              }
-            }}
-            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 relative"
-          >
-            {ownedSpirits.map((spirit, index) => (
-              <motion.div
-                key={spirit.id}
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 }
-                }}
-                whileHover={{ y: -5 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <SpiritCard spirit={spirit} />
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Wishlist Section */}
-      {wishlistSpirits.length > 0 && (
-        <section>
-          <div className="flex items-center gap-3 mb-6">
-            <h2 className="text-3xl font-bold text-white">🔖 위시리스트</h2>
-            <span className="text-sm text-gray-500">({wishlistSpirits.length})</span>
-          </div>
-
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={{
-              visible: {
-                transition: {
-                  staggerChildren: 0.1
-                }
-              }
-            }}
-            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"
-          >
-            {wishlistSpirits.map((spirit) => (
-              <motion.div
-                key={spirit.id}
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 }
-                }}
-                className="relative group"
-              >
-                {/* Grayscale overlay for wishlist items */}
-                <div className="grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
-                  <SpiritCard spirit={spirit} />
-                </div>
-
-                {/* Wishlist badge */}
-                <div className="absolute top-2 right-2 bg-amber-500/90 backdrop-blur-sm text-black text-xs font-bold px-2 py-1 rounded-full">
-                  WISH
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </section>
       )}
 
       {/* Bottom Ad - After Cabinet Content */}

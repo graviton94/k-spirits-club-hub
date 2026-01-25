@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { generateRandomNickname } from '@/lib/utils/nickname-generator';
 
 export default function MyPage() {
-    const { user, role, profile, logout, loading, updateProfile, loginWithGoogle } = useAuth();
+    const { user, role, profile, logout, loading, updateProfile, loginWithGoogle, theme, setTheme } = useAuth();
     const router = useRouter();
 
     const [isEditing, setIsEditing] = useState(false);
@@ -60,6 +60,9 @@ export default function MyPage() {
     const nickname = user ? (profile?.nickname || user.displayName) : "손님 (비회원)";
     const email = user ? user.email : "로그인이 필요합니다";
     const roleBadge = user ? (role === 'ADMIN' ? '👑 관리자' : '🥂 클럽 멤버') : '👀 구경꾼';
+
+    // Mock user persona badge (would fetch from user data in production)
+    const personaBadge = user ? { emoji: "🥃", title: "위스키 애호가" } : null;
 
     const handleSave = async () => {
         setIsSaving(true);
@@ -177,6 +180,14 @@ export default function MyPage() {
                                 {roleBadge}
                             </div>
 
+                            {/* Persona Badge - Small and refined */}
+                            {personaBadge && (
+                                <div className="mb-6 flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/10 to-amber-600/10 border border-amber-500/20">
+                                    <span className="text-lg">{personaBadge.emoji}</span>
+                                    <span className="text-xs font-semibold text-amber-200">{personaBadge.title}</span>
+                                </div>
+                            )}
+
                             {/* User Stats Summary with Guest Overlay */}
                             <div className="relative mb-8">
                                 <div className="grid grid-cols-3 gap-4 w-full">
@@ -213,6 +224,33 @@ export default function MyPage() {
                             <div className="w-full space-y-3">
                                 {user && (
                                     <>
+                                        {/* Theme Toggle */}
+                                        <div className="mb-4 p-4 bg-secondary/30 rounded-xl">
+                                            <label className="text-xs text-muted-foreground block mb-2">테마 설정</label>
+                                            <div className="flex gap-2">
+                                                <button
+                                                    onClick={() => setTheme('light')}
+                                                    className={`flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-all ${
+                                                        theme === 'light'
+                                                            ? 'bg-white text-gray-900 shadow-md'
+                                                            : 'bg-secondary/50 text-muted-foreground hover:bg-secondary/70'
+                                                    }`}
+                                                >
+                                                    ☀️ Light
+                                                </button>
+                                                <button
+                                                    onClick={() => setTheme('dark')}
+                                                    className={`flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-all ${
+                                                        theme === 'dark'
+                                                            ? 'bg-slate-800 text-white shadow-md'
+                                                            : 'bg-secondary/50 text-muted-foreground hover:bg-secondary/70'
+                                                    }`}
+                                                >
+                                                    🌙 Dark
+                                                </button>
+                                            </div>
+                                        </div>
+
                                         <button
                                             onClick={() => setIsEditing(true)}
                                             className="w-full py-3 bg-secondary text-secondary-foreground font-bold rounded-xl hover:bg-secondary/80 transition-all"
