@@ -12,9 +12,9 @@ export function SearchBar() {
       <motion.div
         className={`
                 relative flex items-center gap-3 px-5 py-4 
-                bg-background/40 dark:bg-white/10 border border-border/50 backdrop-blur-xl rounded-2xl shadow-lg
+                bg-white/90 dark:bg-white/10 border border-border/50 backdrop-blur-xl rounded-2xl shadow-lg
                 transition-all duration-300
-                ${isFocused ? 'ring-2 ring-amber-500/50 bg-background/60 dark:bg-white/20' : 'hover:bg-background/50 dark:hover:bg-white/15'}
+                ${isFocused ? 'ring-2 ring-amber-500/50 bg-white/100 dark:bg-white/20' : 'hover:bg-white/95 dark:hover:bg-white/15'}
             `}
         layout
       >

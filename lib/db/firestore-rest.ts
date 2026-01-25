@@ -73,38 +73,54 @@ function toFirestore(data: Partial<Spirit>): any {
 }
 
 export const spiritsDb = {
-    async getAll(status?: SpiritStatus | 'ALL'): Promise<Spirit[]> {
+    async getAll(status?: SpiritStatus | 'ALL', isPublished?: boolean): Promise<Spirit[]> {
         const token = await getServiceAccountToken();
-        const url = `${BASE_URL}/spirits?pageSize=100`;
-
-        // Use runQuery for filtering
         const runQueryUrl = `${BASE_URL}:runQuery`;
-        const payload: any = {
-            structuredQuery: {
-                from: [{ collectionId: 'spirits' }],
-                limit: 100
-            }
-        };
 
-        // Root parent path
-        const parent = `projects/${PROJECT_ID}/databases/(default)/documents`;
-
+        const filters: any[] = [];
         if (status && status !== 'ALL') {
-            payload.structuredQuery.where = {
+            filters.push({
                 fieldFilter: {
                     field: { fieldPath: 'status' },
                     op: 'EQUAL',
                     value: { stringValue: status }
                 }
+            });
+        }
+        if (isPublished !== undefined) {
+            filters.push({
+                fieldFilter: {
+                    field: { fieldPath: 'isPublished' },
+                    op: 'EQUAL',
+                    value: { booleanValue: isPublished }
+                }
+            });
+        }
+
+        const structuredQuery: any = {
+            from: [{ collectionId: 'spirits' }],
+            limit: 2000 // Increased limit for memory-filter based search
+        };
+
+        if (filters.length === 1) {
+            structuredQuery.where = filters[0];
+        } else if (filters.length > 1) {
+            structuredQuery.where = {
+                compositeFilter: {
+                    op: 'AND',
+                    filters: filters
+                }
             };
         }
+
+        const parent = `projects/${PROJECT_ID}/databases/(default)/documents`;
 
         const res = await fetch(runQueryUrl, {
             method: 'POST',
             headers: { Authorization: `Bearer ${token}` },
             body: JSON.stringify({
                 parent,
-                structuredQuery: payload.structuredQuery
+                structuredQuery
             })
         });
 

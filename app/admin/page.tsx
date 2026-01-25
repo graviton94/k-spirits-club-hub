@@ -433,7 +433,7 @@ export default function AdminDashboard() {
         {
           editingId && (
             <div className="fixed inset-0 bg-slate-900/40 dark:bg-black/80 backdrop-blur-sm z-[9999] flex items-start justify-center p-4 overflow-y-auto pt-12">
-              <div className="bg-background w-full max-w-7xl rounded-3xl shadow-2xl border border-border p-8 md:p-12 animate-in zoom-in-95 duration-200 flex flex-col h-fit my-8">
+              <div className="bg-white/90 dark:bg-neutral-900/90 backdrop-blur-xl w-full max-w-7xl rounded-3xl shadow-2xl border border-border/50 p-8 md:p-12 animate-in zoom-in-95 duration-200 flex flex-col h-fit my-8">
                 <div className="flex justify-between items-center mb-8 pb-6 border-b border-border">
                   <div>
                     <h2 className="text-3xl font-black text-foreground">데이터 클린룸 (Deep Edit)</h2>

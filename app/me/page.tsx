@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { generateRandomNickname } from '@/lib/utils/nickname-generator';
-import { ThemeSwitcher } from '@/components/ui/ThemeSwitcher';
 
 export default function MyPage() {
     const { user, role, profile, logout, loading, updateProfile, loginWithGoogle, theme, setTheme } = useAuth();
@@ -225,8 +224,7 @@ export default function MyPage() {
                             <div className="w-full space-y-3">
                                 {user && (
                                     <>
-                                        {/* Theme Toggle */}
-                                        <ThemeSwitcher showLabel className="mb-6" />
+
 
                                         <button
                                             onClick={() => setIsEditing(true)}

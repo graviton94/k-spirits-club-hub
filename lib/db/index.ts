@@ -17,7 +17,7 @@ export const db = {
     // For 42k items, fetching ALL and filtering in memory is NOT scalable permanently, but for now we stick to "fetch all by Status" and filter rest.
 
     // Improvement: Use Firestore Query for basic fields if possible.
-    let allItems = await spiritsDb.getAll(filter.status); // Pre-filter by status if present
+    let allItems = await spiritsDb.getAll(filter.status, filter.isPublished); // Pre-filter by status & published if present
 
     // 2. Memory Filter
     if (filter.category) {
