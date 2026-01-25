@@ -238,8 +238,7 @@ export default function CabinetPage() {
                       onClick={() => setSelectedSpirit(spirit)}
                     >
                       {/* Bottle image with enhanced drop-shadow for 3D effect */}
-                      <div className="aspect-[2/3] w-full rounded-lg overflow-hidden bg-white/80 backdrop-blur-sm" 
-                           style={{ filter: 'drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15)) drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1))' }}>
+                      <div className="aspect-[2/3] w-full rounded-lg overflow-hidden bg-white/80 backdrop-blur-sm [filter:drop-shadow(0_8px_16px_rgba(0,0,0,0.15))_drop-shadow(0_4px_6px_rgba(0,0,0,0.1))]">
                         {spirit.imageUrl ? (
                           <img
                             src={spirit.imageUrl}
@@ -279,12 +278,7 @@ export default function CabinetPage() {
                 onClick={() => setSelectedSpirit(spirit)}
               >
                 {/* Grayscale filter applied to distinguish from owned items */}
-                <div 
-                  className="aspect-[2/3] w-full rounded-lg overflow-hidden bg-neutral-800/50 grayscale hover:grayscale-0 transition-all duration-300"
-                  style={{ filter: 'grayscale(100%) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2))' }}
-                  onMouseEnter={(e) => e.currentTarget.style.filter = 'grayscale(0%) drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3))'}
-                  onMouseLeave={(e) => e.currentTarget.style.filter = 'grayscale(100%) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2))'}
-                >
+                <div className="aspect-[2/3] w-full rounded-lg overflow-hidden bg-neutral-800/50 transition-all duration-300 [filter:grayscale(100%)_drop-shadow(0_4px_8px_rgba(0,0,0,0.2))] hover:[filter:grayscale(0%)_drop-shadow(0_8px_16px_rgba(0,0,0,0.3))]">
                   {spirit.imageUrl ? (
                     <img src={spirit.imageUrl} alt={spirit.name} className="w-full h-full object-cover opacity-60 hover:opacity-100 transition-opacity" />
                   ) : (
