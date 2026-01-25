@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { spiritsDb } from '@/lib/db/firestore-rest';
+import { db } from '@/lib/db';
 
 export const runtime = 'edge';
 
@@ -16,34 +16,35 @@ export async function POST(req: NextRequest) {
         console.log('[fix-published-sync] Starting audit...');
 
         // Fetch all spirits (no filter to get everything)
-        const allSpirits = await spiritsDb.getAll({});
+        // Note: This fetches up to 5000 spirits (Firestore query limit)
+        const allSpirits = await db.getSpirits({}, { page: 1, pageSize: 5000 });
         
         // Find inconsistent records
-        const inconsistentSpirits = allSpirits.filter(
+        const inconsistentSpirits = allSpirits.data.filter(
             spirit => spirit.status === 'PUBLISHED' && spirit.isPublished !== true
         );
 
-        console.log(`[fix-published-sync] Found ${inconsistentSpirits.length} inconsistent spirits out of ${allSpirits.length} total`);
+        console.log(`[fix-published-sync] Found ${inconsistentSpirits.length} inconsistent spirits out of ${allSpirits.total} total`);
 
         if (inconsistentSpirits.length === 0) {
             return NextResponse.json({
                 success: true,
                 message: 'No inconsistencies found. All PUBLISHED spirits have isPublished=true.',
-                totalChecked: allSpirits.length,
+                totalChecked: allSpirits.total,
                 fixedCount: 0,
                 inconsistentSpirits: []
             });
         }
 
-        // Fix each inconsistent spirit
+        // Fix each inconsistent spirit using db.updateSpirit to ensure all business logic is applied
         const fixedSpirits: Array<{ id: string; name: string }> = [];
         const failedFixes: Array<{ id: string; name: string; error: string }> = [];
 
         for (const spirit of inconsistentSpirits) {
             try {
-                await spiritsDb.upsert(spirit.id, { 
-                    isPublished: true,
-                    updatedAt: new Date()
+                // Use db.updateSpirit to apply all business rules including search keyword generation
+                await db.updateSpirit(spirit.id, { 
+                    isPublished: true
                 });
                 fixedSpirits.push({ id: spirit.id, name: spirit.name });
                 console.log(`[fix-published-sync] Fixed: ${spirit.id} - ${spirit.name}`);
@@ -60,7 +61,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({
             success: true,
             message: `Fixed ${fixedSpirits.length} out of ${inconsistentSpirits.length} inconsistent spirits.`,
-            totalChecked: allSpirits.length,
+            totalChecked: allSpirits.total,
             fixedCount: fixedSpirits.length,
             failedCount: failedFixes.length,
             fixedSpirits,

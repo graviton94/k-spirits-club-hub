@@ -49,15 +49,8 @@ export async function getSpiritsAction(
  */
 export async function getSpiritsSearchIndex() {
     try {
-        console.log('[getSpiritsSearchIndex] Generating search index...');
         const index = await db.getPublishedSearchIndex();
         console.log('[getSpiritsSearchIndex] Generated index with', index.length, 'spirits');
-        
-        // Log first item as sample
-        if (index.length > 0) {
-            console.log('[getSpiritsSearchIndex] Sample:', index[0]);
-        }
-        
         return index;
     } catch (error) {
         console.error("[getSpiritsSearchIndex] Failed to generate search index:", error);

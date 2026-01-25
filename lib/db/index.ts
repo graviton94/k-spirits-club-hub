@@ -1,5 +1,5 @@
 import { spiritsDb as restSpiritsDb } from './firestore-rest';
-import { Spirit, SpiritStatus, SpiritFilter, PaginationParams, PaginatedResponse } from './schema';
+import { Spirit, SpiritStatus, SpiritFilter, PaginationParams, PaginatedResponse, SpiritSearchIndex } from './schema';
 import { generateSpiritSearchKeywords } from '../utils/search-keywords';
 
 /**
@@ -99,13 +99,7 @@ export const db = {
    * Get minimized search index for all PUBLISHED spirits
    * Uses short keys to reduce bandwidth consumption
    */
-  async getPublishedSearchIndex(): Promise<Array<{
-    i: string;           // id
-    n: string;           // name
-    en: string | null;   // name_en
-    c: string;           // category
-    t: string | null;    // thumbnailUrl
-  }>> {
+  async getPublishedSearchIndex(): Promise<SpiritSearchIndex[]> {
     return spiritsDb.getPublishedSearchIndex();
   }
 };
