@@ -392,37 +392,37 @@ function RatingSection({ label, rating, tags, onRatingChange, onTagsChange, colo
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col items-start gap-4">
-        {/* Label and Icon moved inline */}
-        <div className="flex items-center gap-3 w-full">
-          <label className="text-sm font-black tracking-tight uppercase whitespace-nowrap">{label}</label>
-          <div className={`p-2.5 rounded-2xl bg-${color}-500/10 text-${color}-500 border border-${color}-500/20 shadow-sm`}>
+      <div className="flex items-center gap-3 w-full">
+        {/* Label and Icon */}
+        <div className="flex items-center gap-2">
+          <div className={`p-2 rounded-xl bg-${color}-500/10 text-${color}-500 border border-${color}-500/20`}>
             {icon}
           </div>
+          <label className="text-sm font-black tracking-tight uppercase whitespace-nowrap">{label}</label>
         </div>
 
+        {/* Star Rating */}
         <div
           ref={containerRef}
           onPointerMove={handlePointer}
           onPointerLeave={() => setHoverRating(null)}
           onPointerDown={handlePointer}
-          className="w-full flex gap-2 justify-between rating-wrap touch-none select-none cursor-pointer p-1"
+          className="flex-1 flex gap-1 justify-end rating-wrap touch-none select-none cursor-pointer"
         >
-          {[1, 2, 3, 4, 5].map((s) => (
-            <div
-              key={s}
-              className="relative flex-1 aspect-square max-w-[60px]"
-            >
-              <div className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity ${hoverRating !== null && (s - 0.5) <= hoverRating ? 'opacity-50' : 'opacity-100'}`}>
-                <Star className={`w-full h-full ${s <= activeRating ? starColor : s - 0.5 === activeRating ? 'text-' + color + '-500' : 'text-muted-foreground/20'}`} />
-                {s - 0.5 === activeRating && (
-                  <div className="absolute inset-x-0 overflow-hidden w-[50%] left-0">
-                    <Star className={`w-full h-full ${starColor}`} />
+          {[1, 2, 3, 4, 5].map((s) => {
+            const isFull = s <= activeRating;
+            const isHalf = s - 0.5 === activeRating;
+            return (
+              <div key={s} className="relative">
+                <Star className={`w-7 h-7 ${isFull ? starColor : isHalf ? 'text-' + color + '-500' : 'text-muted-foreground/20'}`} />
+                {isHalf && (
+                  <div className="absolute inset-0 overflow-hidden w-[50%]">
+                    <Star className={`w-7 h-7 ${starColor}`} />
                   </div>
                 )}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
