@@ -4,7 +4,7 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export function SearchBar() {
+export function SearchBar({ isHero = false }: { isHero?: boolean }) {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
@@ -12,9 +12,12 @@ export function SearchBar() {
       <motion.div
         className={`
                 relative flex items-center gap-3 px-5 py-4 
-                bg-card border-2 backdrop-blur-sm rounded-2xl shadow-lg
+                ${isHero
+            ? 'bg-neutral-900 border-white dark:border-border text-white'
+            : 'bg-card border-border hover:border-primary/40 text-foreground'} 
+                border-2 backdrop-blur-sm rounded-2xl shadow-lg
                 transition-all duration-300
-                ${isFocused ? 'ring-2 ring-primary/50 border-primary' : 'border-border hover:border-primary/40'}
+                ${isFocused ? 'ring-2 ring-primary/50 border-primary' : ''}
             `}
         layout
       >
@@ -22,7 +25,8 @@ export function SearchBar() {
         <input
           type="text"
           placeholder="Search spirits, distilleries..."
-          className="w-full bg-transparent border-none outline-none text-foreground placeholder:text-muted-foreground text-lg"
+          className={`w-full bg-transparent border-none outline-none text-lg ${isHero ? 'text-white placeholder:text-neutral-400' : 'text-foreground placeholder:text-muted-foreground'
+            }`}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
         />
@@ -35,9 +39,10 @@ export function SearchBar() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
-            className="absolute top-full left-0 right-0 mt-3 p-2 bg-popover backdrop-blur-md border-2 border-border rounded-2xl shadow-2xl overflow-hidden"
+            className={`absolute top-full left-0 right-0 mt-3 p-2 backdrop-blur-md border-2 rounded-2xl shadow-2xl overflow-hidden ${isHero ? 'bg-neutral-900/90 border-white/20 text-white' : 'bg-popover border-border'
+              }`}
           >
-            <div className="p-3 text-center text-sm text-muted-foreground">
+            <div className={`p-3 text-center text-sm ${isHero ? 'text-neutral-400' : 'text-muted-foreground'}`}>
               Type to search across 1M+ spirits
             </div>
           </motion.div>

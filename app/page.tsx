@@ -52,7 +52,7 @@ export default async function HomePage() {
           </div>
 
           <div className="w-full max-w-lg mx-auto animate-fade-in-up delay-200">
-            <SearchBar />
+            <SearchBar isHero={true} />
           </div>
 
           <div className="flex flex-wrap justify-center gap-2 text-sm text-gray-600 dark:text-gray-400 animate-fade-in-up delay-300">
