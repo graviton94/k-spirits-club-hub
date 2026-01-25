@@ -148,6 +148,15 @@ export const spiritsDb = {
         return fromFirestore(doc);
     },
 
+    async getByIds(ids: string[]): Promise<Spirit[]> {
+        // Firestore REST doesn't have a simple "where id in [...]" without structured query complexity.
+        // For simplicity and typical cabinet size (<100), Promise.all(getById) is acceptable.
+        // We can optimize with batchGet later if needed.
+        const promises = ids.map(id => this.getById(id));
+        const results = await Promise.all(promises);
+        return results.filter((s): s is Spirit => s !== null);
+    },
+
     async upsert(id: string, data: Partial<Spirit>) {
         const token = await getServiceAccountToken();
         const path = `artifacts/graviton94-k-spirits-club-hub/public/data/spirits/${id}`;
@@ -176,5 +185,98 @@ export const spiritsDb = {
                 headers: { Authorization: `Bearer ${token}` }
             });
         }
+    }
+};
+
+export const cabinetDb = {
+    async getAll(userId: string): Promise<any[]> {
+        const token = await getServiceAccountToken();
+        // Path: users/{userId}/cabinet (collection)
+        // Root path construction for custom collections might differ, usually:
+        // projects/{id}/databases/(default)/documents/users/{userId}/cabinet
+        const url = `${BASE_URL}/users/${userId}/cabinet`;
+
+        const res = await fetch(url, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (res.status === 404) return []; // Collection doesn't exist yet
+        if (!res.ok) {
+            // If collection empty/not found, REST might error or return empty. verify.
+            // Often it returns 200 with { documents: [] } or just {}
+            return [];
+        }
+
+        const json = await res.json();
+        if (!json.documents) return [];
+
+        return json.documents.map((doc: any) => {
+            // generic fromFirestore for cabinet items
+            const obj: any = {};
+            const fields = doc.fields || {};
+            for (const [key, value] of Object.entries(fields) as [string, any][]) {
+                if (value.stringValue) obj[key] = value.stringValue;
+                else if (value.integerValue) obj[key] = Number(value.integerValue);
+                else if (value.doubleValue) obj[key] = Number(value.doubleValue);
+                else if (value.booleanValue) obj[key] = value.booleanValue;
+                else if (value.timestampValue) obj[key] = value.timestampValue;
+                else if (value.mapValue) {
+                    // Handle nested map (e.g. userReview)
+                    const mapData: any = {};
+                    const mapFields = value.mapValue.fields || {};
+                    for (const [mk, mv] of Object.entries(mapFields) as [string, any][]) {
+                        if (mv.stringValue) mapData[mk] = mv.stringValue;
+                        if (mv.integerValue) mapData[mk] = Number(mv.integerValue);
+                        if (mv.doubleValue) mapData[mk] = Number(mv.doubleValue);
+                        if (mv.arrayValue) mapData[mk] = (mv.arrayValue.values || []).map((v: any) => v.stringValue);
+                    }
+                    obj[key] = mapData;
+                }
+            }
+            return obj;
+        });
+    },
+
+    async upsert(userId: string, spiritId: string, data: any) {
+        const token = await getServiceAccountToken();
+        // Document ID = spiritId (to ensure uniqueness per spirit per user)
+        const url = `${BASE_URL}/users/${userId}/cabinet/${spiritId}`;
+
+        // Convert data to Firestore JSON. Can reuse toFirestore(data)? 
+        // We need to support 'userReview' object structure. 
+        // `toFirestore` in this file is tailored for Spirit, but it handles Map generically enough (1 level).
+        // Let's use it.
+        const body = toFirestore(data);
+
+        // For upsert without merge complexity, we can use PATCH with null updateMask (if we passed all fields)
+        // OR standard commit. REST API `patch` creates if missing.
+        // We'll use PATCH with updateMask for known fields to merge, 
+        // OR just simple PATCH with all fields? 
+        // If we want to simple SET (overwrite), we don't pass updateMask.
+
+        // Wait, toFirestore handles `id` skip.
+
+        // We'll use generic PATCH to upsert.
+        // If we want merge, we must specify updateMask.
+        // If we want replace/create, passing no updateMask is ambiguous in REST? 
+        // Check docs: "If the document does not exist, it will be created."
+        // "If the document exists, it is updated... If mask is not set, the entire document is replaced."
+
+        const res = await fetch(url, {
+            method: 'PATCH',
+            headers: { Authorization: `Bearer ${token}` },
+            body: JSON.stringify(body)
+        });
+
+        if (!res.ok) throw new Error(await res.text());
+    },
+
+    async delete(userId: string, spiritId: string) {
+        const token = await getServiceAccountToken();
+        const url = `${BASE_URL}/users/${userId}/cabinet/${spiritId}`;
+        await fetch(url, {
+            method: 'DELETE',
+            headers: { Authorization: `Bearer ${token}` }
+        });
     }
 };

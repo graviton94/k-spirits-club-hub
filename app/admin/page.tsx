@@ -201,29 +201,55 @@ export default function AdminDashboard() {
     if (!editingId) return;
     setIsProcessing(true);
     try {
-      const payload: any = { /* ... same payload builder ... */
-        name: editForm.name, abv: parseFloat(String(editForm.abv)), imageUrl: editForm.imageUrl,
-        category: editForm.category, subcategory: editForm.subcategory,
-        country: editForm.country, region: editForm.region, distillery: editForm.distillery, bottler: editForm.bottler,
-        volume: Number(editForm.volume),
+      const payload: any = {
+        name: editForm.name,
+        abv: parseFloat(String(editForm.abv)) || 0,
+        imageUrl: editForm.imageUrl,
+        category: editForm.category,
+        subcategory: editForm.subcategory,
+        country: editForm.country,
+        region: editForm.region,
+        distillery: editForm.distillery,
+        bottler: editForm.bottler,
+        volume: Number(editForm.volume) || 700,
         metadata: {
-          name_en: editForm.name_en, tasting_note: editForm.tasting_note, description: editForm.description,
+          name_en: editForm.name_en,
+          tasting_note: editForm.tasting_note,
+          description: editForm.description,
           nose_tags: editForm.nose_tags.split(',').filter(Boolean).map(t => t.trim()),
           palate_tags: editForm.palate_tags.split(',').filter(Boolean).map(t => t.trim()),
           finish_tags: editForm.finish_tags.split(',').filter(Boolean).map(t => t.trim())
         },
         updatedAt: new Date().toISOString()
       };
-      if (publish) { payload.status = 'PUBLISHED'; payload.isPublished = true; }
 
-      const res = await fetch(`/api/admin/spirits/${editingId}/`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      if (publish) {
+        payload.status = 'PUBLISHED';
+        payload.isPublished = true;
+        payload.reviewedBy = 'ADMIN';
+        payload.reviewedAt = new Date().toISOString();
+      }
+
+      const res = await fetch(`/api/admin/spirits/${editingId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
       if (res.ok) {
         handleUpdateLocal(editingId, payload);
         setEditingId(null);
-        if (publish) alert('✅ 저장 완료');
+        alert(publish ? '✅ 저장 및 공개 완료' : '✅ 저장 완료');
+      } else {
+        const err = await res.text();
+        alert(`저장 실패: ${err}`);
       }
-    } catch (e) { alert('Error'); }
-    finally { setIsProcessing(false); }
+    } catch (e) {
+      console.error(e);
+      alert('Error during save');
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   const toggleSelect = (id: string) => {
@@ -405,8 +431,8 @@ export default function AdminDashboard() {
       {/* Expanded Edit Modal with High Z-Index to cover Bottom Nav */}
       {
         editingId && (
-          <div className="fixed inset-0 bg-background/95 backdrop-blur-md z-[9999] flex items-center justify-center p-4 overflow-y-auto">
-            <div className="bg-card w-full max-w-7xl min-h-[90vh] rounded-3xl shadow-2xl border border-border p-8 md:p-12 animate-in zoom-in-95 duration-200 flex flex-col">
+          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[9999] flex items-start justify-center p-4 overflow-y-auto">
+            <div className="bg-white dark:bg-zinc-950 w-full max-w-7xl rounded-3xl shadow-2xl border border-border p-8 md:p-12 animate-in zoom-in-95 duration-200 flex flex-col h-fit my-8">
               <div className="flex justify-between items-center mb-8 pb-6 border-b border-border">
                 <div>
                   <h2 className="text-3xl font-black text-foreground">데이터 클린룸 (Deep Edit)</h2>
@@ -415,115 +441,121 @@ export default function AdminDashboard() {
                 <button onClick={() => setEditingId(null)} className="p-2 rounded-full hover:bg-secondary text-2xl">✕</button>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 flex-1">
-                {/* Left Column: Core Data (7 cols) */}
-                <div className="lg:col-span-7 space-y-8">
+              <div className="space-y-10">
+                {/* Top Section: Info + Image */}
+                <div className="flex flex-col xl:flex-row gap-12 items-start">
 
-                  {/* Basic Info Block */}
-                  <section className="space-y-4">
-                    <h3 className="text-sm font-bold bg-secondary/50 px-3 py-1 rounded-lg inline-block text-foreground">기본 정보</h3>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="text-[10px] font-black uppercase text-muted-foreground">제품명 (KO)</label>
-                        <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl bg-secondary/30 font-bold text-foreground focus:ring-2 focus:ring-primary/50 outline-none"
-                          value={editForm.name} onChange={e => setEditForm({ ...editForm, name: e.target.value })} />
-                      </div>
-                      <div>
-                        <label className="text-[10px] font-black uppercase text-muted-foreground">영문 명칭</label>
-                        <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold text-primary bg-background focus:ring-2 focus:ring-primary/50 outline-none"
-                          value={editForm.name_en} onChange={e => setEditForm({ ...editForm, name_en: e.target.value })} />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-3 gap-4">
-                      <div>
-                        <label className="text-[10px] font-black uppercase text-muted-foreground">카테고리</label>
-                        <select className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm"
-                          value={editForm.category} onChange={e => setEditForm({ ...editForm, category: e.target.value, subcategory: '' })}>
-                          <option value="">선택</option>
-                          {level1Options.map(c => <option key={c} value={c}>{c}</option>)}
-                        </select>
-                      </div>
-                      <div>
-                        <label className="text-[10px] font-black uppercase text-muted-foreground">세부종류</label>
-                        <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm"
-                          list="subcategory-options"
-                          value={editForm.subcategory} onChange={e => setEditForm({ ...editForm, subcategory: e.target.value })} />
-                        <datalist id="subcategory-options">
-                          {(() => {
-                            if (!editForm.category) return null;
-                            const catData = metadata.categories[editForm.category as keyof typeof metadata.categories];
-                            if (!catData) return null;
-                            const subOptions = Array.isArray(catData) ? catData : Object.values(catData).flat();
-                            return subOptions.map((c: string) => <option key={c} value={c} />);
-                          })()}
-                        </datalist>
-                      </div>
-                      <div>
-                        <label className="text-[10px] font-black uppercase text-muted-foreground">도수 (ABV)</label>
-                        <div className="relative">
-                          <input type="number" step="0.1" className="w-full mt-1 pl-4 pr-8 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-right"
-                            value={editForm.abv} onChange={e => setEditForm({ ...editForm, abv: e.target.value })} />
-                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-muted-foreground">%</span>
+                  {/* Left Column: Core Data */}
+                  <div className="flex-1 space-y-8 w-full">
+                    {/* Basic Info Block */}
+                    <section className="space-y-4">
+                      <h3 className="text-sm font-bold bg-secondary/50 px-3 py-1 rounded-lg inline-block text-foreground">기본 정보</h3>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label className="text-[10px] font-black uppercase text-muted-foreground">제품명 (KO)</label>
+                          <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl bg-secondary/30 font-bold text-foreground focus:ring-2 focus:ring-primary/50 outline-none"
+                            value={editForm.name} onChange={e => setEditForm({ ...editForm, name: e.target.value })} />
+                        </div>
+                        <div>
+                          <label className="text-[10px] font-black uppercase text-muted-foreground">영문 명칭</label>
+                          <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold text-primary bg-background focus:ring-2 focus:ring-primary/50 outline-none"
+                            value={editForm.name_en} onChange={e => setEditForm({ ...editForm, name_en: e.target.value })} />
                         </div>
                       </div>
-                    </div>
-                  </section>
 
-                  {/* Origin & Production Block */}
-                  <section className="space-y-4 pt-4 border-t border-border/50">
-                    <h3 className="text-sm font-bold bg-secondary/50 px-3 py-1 rounded-lg inline-block text-foreground">제조 및 원산지</h3>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="text-[10px] font-black uppercase text-muted-foreground">제조국 (Country)</label>
-                        <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm"
-                          value={editForm.country} onChange={e => setEditForm({ ...editForm, country: e.target.value })} />
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div>
+                          <label className="text-[10px] font-black uppercase text-muted-foreground">카테고리</label>
+                          <select className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm"
+                            value={editForm.category} onChange={e => setEditForm({ ...editForm, category: e.target.value, subcategory: '' })}>
+                            <option value="">선택</option>
+                            {level1Options.map(c => <option key={c} value={c}>{c}</option>)}
+                          </select>
+                        </div>
+                        <div>
+                          <label className="text-[10px] font-black uppercase text-muted-foreground">세부종류</label>
+                          <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm"
+                            list="subcategory-options"
+                            value={editForm.subcategory} onChange={e => setEditForm({ ...editForm, subcategory: e.target.value })} />
+                          <datalist id="subcategory-options">
+                            {(() => {
+                              if (!editForm.category) return null;
+                              const catData = metadata.categories[editForm.category as keyof typeof metadata.categories];
+                              if (!catData) return null;
+                              const subOptions = Array.isArray(catData) ? catData : Object.values(catData).flat();
+                              return subOptions.map((c: string) => <option key={c} value={c} />);
+                            })()}
+                          </datalist>
+                        </div>
+                        <div>
+                          <label className="text-[10px] font-black uppercase text-muted-foreground">도수 (ABV)</label>
+                          <div className="relative">
+                            <input type="number" step="0.1" className="w-full mt-1 pl-4 pr-8 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-right"
+                              value={editForm.abv} onChange={e => setEditForm({ ...editForm, abv: e.target.value })} />
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-muted-foreground">%</span>
+                          </div>
+                        </div>
                       </div>
-                      <div>
-                        <label className="text-[10px] font-black uppercase text-muted-foreground">지역 (Region)</label>
-                        <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm"
-                          value={editForm.region} onChange={e => setEditForm({ ...editForm, region: e.target.value })} />
-                      </div>
-                      <div>
-                        <label className="text-[10px] font-black uppercase text-muted-foreground">증류소/제조사 (Distillery)</label>
-                        <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm"
-                          value={editForm.distillery} onChange={e => setEditForm({ ...editForm, distillery: e.target.value })} />
-                      </div>
-                      <div>
-                        <label className="text-[10px] font-black uppercase text-muted-foreground">병입자/브랜드 (Bottler)</label>
-                        <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm"
-                          value={editForm.bottler} onChange={e => setEditForm({ ...editForm, bottler: e.target.value })} />
-                      </div>
-                    </div>
-                  </section>
+                    </section>
 
-                  {/* Description Block */}
-                  <section className="space-y-4 pt-4 border-t border-border/50">
-                    <label className="text-[10px] font-black uppercase text-muted-foreground">소개/설명 (Description)</label>
-                    <textarea rows={5} className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-medium bg-background text-foreground text-sm leading-relaxed"
-                      value={editForm.description} onChange={e => setEditForm({ ...editForm, description: e.target.value })} />
-                  </section>
-                </div>
-
-                {/* Right Column: Visuals & Tasting (5 cols) */}
-                <div className="lg:col-span-5 space-y-8 flex flex-col">
-
-                  {/* Image Section */}
-                  <div className="space-y-3">
-                    <label className="text-[10px] font-black uppercase text-muted-foreground">제품 이미지</label>
-                    <div className="aspect-[3/4] bg-white rounded-2xl border-2 border-dashed border-border flex items-center justify-center overflow-hidden relative group">
-                      {editForm.imageUrl ? (
-                        <img src={editForm.imageUrl} className="w-full h-full object-contain p-4 transition-transform group-hover:scale-105" alt="Preview" />
-                      ) : <span className="text-4xl opacity-20">🥃</span>}
-                    </div>
-                    <input className="w-full px-4 py-2 border border-input rounded-xl text-xs bg-background text-muted-foreground font-mono truncate focus:text-foreground"
-                      value={editForm.imageUrl} onChange={e => setEditForm({ ...editForm, imageUrl: e.target.value })} placeholder="https://..." />
+                    {/* Origin & Production Block */}
+                    <section className="space-y-4 pt-4 border-t border-border/50">
+                      <h3 className="text-sm font-bold bg-secondary/50 px-3 py-1 rounded-lg inline-block text-foreground">제조 및 원산지</h3>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label className="text-[10px] font-black uppercase text-muted-foreground">제조국 (Country)</label>
+                          <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm"
+                            value={editForm.country} onChange={e => setEditForm({ ...editForm, country: e.target.value })} />
+                        </div>
+                        <div>
+                          <label className="text-[10px] font-black uppercase text-muted-foreground">지역 (Region)</label>
+                          <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm"
+                            value={editForm.region} onChange={e => setEditForm({ ...editForm, region: e.target.value })} />
+                        </div>
+                        <div>
+                          <label className="text-[10px] font-black uppercase text-muted-foreground">증류소/제조사 (Distillery)</label>
+                          <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm"
+                            value={editForm.distillery} onChange={e => setEditForm({ ...editForm, distillery: e.target.value })} />
+                        </div>
+                        <div>
+                          <label className="text-[10px] font-black uppercase text-muted-foreground">병입자/브랜드 (Bottler)</label>
+                          <input className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-bold bg-background text-foreground text-sm"
+                            value={editForm.bottler} onChange={e => setEditForm({ ...editForm, bottler: e.target.value })} />
+                        </div>
+                      </div>
+                    </section>
                   </div>
 
-                  {/* Tags Section (New MultiSelect) */}
-                  <div className="bg-secondary/20 p-6 rounded-2xl border border-border space-y-6 flex-1">
-                    <h3 className="text-sm font-bold text-foreground mb-4">🧬 Flavor DNA</h3>
+                  {/* Right Column: Visuals (Fixed Width) */}
+                  <div className="w-full xl:w-96 shrink-0 space-y-6 bg-secondary/5 p-6 rounded-3xl border border-border/50">
+                    <div className="space-y-3">
+                      <label className="text-[10px] font-black uppercase text-muted-foreground">제품 이미지</label>
+                      <div className="aspect-[3/4] bg-white rounded-2xl border-2 border-dashed border-border flex items-center justify-center overflow-hidden relative group shadow-sm">
+                        {editForm.imageUrl ? (
+                          <img src={editForm.imageUrl} className="w-full h-full object-contain p-4 transition-transform group-hover:scale-105" alt="Preview" />
+                        ) : <span className="text-5xl opacity-20">🥃</span>}
+                      </div>
+                      <input className="w-full px-4 py-2 border border-input rounded-xl text-xs bg-background text-muted-foreground font-mono truncate focus:text-foreground"
+                        value={editForm.imageUrl} onChange={e => setEditForm({ ...editForm, imageUrl: e.target.value })} placeholder="https://..." />
+                    </div>
+                  </div>
+                </div>
 
+                {/* Description Block (Full Width) */}
+                <section className="space-y-4 pt-4 border-t border-border/50">
+                  <label className="text-[10px] font-black uppercase text-muted-foreground">소개/설명 (Description)</label>
+                  <textarea rows={5} className="w-full mt-1 px-4 py-3 border border-input rounded-xl font-medium bg-background text-foreground text-sm leading-relaxed focus:ring-2 focus:ring-primary/50 outline-none"
+                    value={editForm.description} onChange={e => setEditForm({ ...editForm, description: e.target.value })} />
+                </section>
+
+                {/* Flavor DNA Section (Horizontal) */}
+                <section className="bg-secondary/10 p-8 rounded-3xl border border-border space-y-6">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-lg font-black text-foreground">🧬 Flavor DNA</h3>
+                    <span className="text-xs text-muted-foreground font-medium bg-background px-2 py-1 rounded-md border border-border">태그를 선택하여 맛을 표현하세요</span>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <TagMultiSelect
                       label="Nose (향)"
                       availableTags={metadata.tag_index.nose as any}
@@ -545,11 +577,11 @@ export default function AdminDashboard() {
                       onChange={(tags) => setEditForm({ ...editForm, finish_tags: tags.join(', ') })}
                     />
                   </div>
-                </div>
+                </section>
               </div>
 
-              {/* Footer Actions */}
-              <div className="mt-8 pt-8 border-t border-border flex gap-4 sticky bottom-0 bg-card p-4 z-10">
+              {/* Footer Actions (Static at bottom of container) */}
+              <div className="mt-12 pt-8 border-t border-border flex gap-4">
                 <button onClick={() => setEditingId(null)} className="flex-1 py-4 font-bold bg-secondary text-secondary-foreground rounded-2xl hover:bg-secondary/80 transition-colors">닫기 (취소)</button>
                 <button disabled={isProcessing} onClick={() => saveEdit(false)} className="flex-1 py-4 font-bold bg-primary/10 text-primary border-2 border-primary/20 rounded-2xl hover:bg-primary/20 transition-colors">단순 저장</button>
                 <button disabled={isProcessing} onClick={() => saveEdit(true)} className="flex-[2] py-4 font-bold bg-primary text-primary-foreground rounded-2xl shadow-xl hover:shadow-primary/30 hover:scale-[1.01] active:scale-95 transition-all">

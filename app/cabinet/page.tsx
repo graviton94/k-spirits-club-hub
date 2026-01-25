@@ -44,29 +44,73 @@ export default function CabinetPage() {
   - [/] localStorage로 테마 설정 저장
   */
   useEffect(() => {
-    // Load from localStorage (No Mock Data)
-    const loaded = loadCellarFromStorage();
-    setSpirits(loaded);
-  }, []);
-
-  const saveSpiritsToStorage = (updatedSpirits: Spirit[]) => {
-    // Save to localStorage
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('kspirits_cellar', JSON.stringify(updatedSpirits));
+    if (loading) return;
+    if (!profile) {
+      setSpirits([]);
+      return;
     }
-    setSpirits(updatedSpirits);
+
+    // Load from API
+    // We need user ID. useAuth provides 'user' (Firebase User) which has uid.
+    // However, useAuth returns { user, profile, ... }. 
+    // profile doesn't have ID usually (it has nickname etc).
+    // Let's get 'user' from useAuth.
+    // Wait, I need to destruct 'user' from useAuth().
+  }, [profile, loading]);
+
+  // We need 'user' for ID
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (loading || !user) return;
+
+    async function fetchData() {
+      try {
+        const res = await fetch('/api/cabinet', {
+          headers: { 'x-user-id': user!.uid }
+        });
+        const json = await res.json();
+        if (json.data) setSpirits(json.data);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    fetchData();
+  }, [user, loading]);
+
+  const syncSpirit = async (updatedSpirit: Spirit) => {
+    // 1. Optimistic Update
+    setSpirits(prev => {
+      const exists = prev.find(s => s.id === updatedSpirit.id);
+      if (exists) {
+        return prev.map(s => s.id === updatedSpirit.id ? updatedSpirit : s);
+      }
+      return [...prev, updatedSpirit];
+    });
+
+    // 2. API Sync
+    if (user) {
+      try {
+        await fetch('/api/cabinet', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-user-id': user.uid
+          },
+          body: JSON.stringify(updatedSpirit)
+        });
+      } catch (e) {
+        console.error('Sync failed', e);
+        // Revert? (Optional complexity)
+      }
+    }
   };
 
   const handleReviewSubmit = (review: UserReview) => {
     if (!reviewTarget) return;
 
-    const updatedSpirits = spirits.map(s =>
-      s.id === reviewTarget.id
-        ? { ...s, userReview: review }
-        : s
-    );
-
-    saveSpiritsToStorage(updatedSpirits);
+    const updatedSpirit = { ...reviewTarget, userReview: review };
+    syncSpirit(updatedSpirit);
 
     // Also update selectedSpirit if it's the one being reviewed
     if (selectedSpirit && selectedSpirit.id === reviewTarget.id) {
@@ -468,8 +512,7 @@ export default function CabinetPage() {
             ...newSpirit,
             isWishlist: false
           };
-          const updated = [...spirits, cabinetSpirit as Spirit];
-          saveSpiritsToStorage(updated);
+          syncSpirit(cabinetSpirit as Spirit);
         }}
         existingIds={new Set(spirits.map(s => s.id))}
       />

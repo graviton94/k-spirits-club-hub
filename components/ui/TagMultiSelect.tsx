@@ -41,7 +41,7 @@ export function TagMultiSelect({ label, availableTags, selectedTags, onChange }:
 
             {/* Dropdown / Expandable Area */}
             {isOpen && (
-                <div className="mt-2 p-4 bg-secondary/30 border border-border rounded-xl space-y-4 max-h-[300px] overflow-y-auto scrollbar-thin">
+                <div className="mt-2 p-4 bg-secondary/30 border border-border rounded-xl space-y-4">
                     {Object.entries(availableTags).map(([categoryKey, data]) => (
                         <div key={categoryKey} className="space-y-2">
                             <h4 className="text-xs font-bold text-foreground capitalize opacity-70 border-b border-border/50 pb-1">{categoryKey.replace(/_/g, ' ')}</h4>
@@ -54,8 +54,8 @@ export function TagMultiSelect({ label, availableTags, selectedTags, onChange }:
                                             type="button"
                                             onClick={() => toggleTag(tag)}
                                             className={`px-2.5 py-1 rounded-full text-[10px] font-bold transition-all border ${isSelected
-                                                    ? `bg-primary text-primary-foreground border-primary shadow-sm scale-105`
-                                                    : `bg-background text-muted-foreground border-border hover:bg-white hover:text-foreground hover:border-foreground/30`
+                                                ? `bg-primary text-primary-foreground border-primary shadow-sm scale-105`
+                                                : `bg-background text-muted-foreground border-border hover:bg-white hover:text-foreground hover:border-foreground/30`
                                                 }`}
                                         >
                                             {tag.split(' (')[0]}
