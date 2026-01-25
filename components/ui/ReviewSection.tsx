@@ -498,8 +498,8 @@ function TagInput({ tags, onTagsChange, color, metadataKey }: { tags: string[], 
           onKeyDown={handleKeyDown}
           onBlur={handleBlur}
           onFocus={() => setShowSuggestions(true)}
-          className="flex-1 bg-transparent border-none outline-none text-xs font-bold min-w-[60px] placeholder:text-muted-foreground/60"
-          placeholder="풍미 입력..."
+          className="flex-1 bg-transparent border-none outline-none text-xs font-bold min-w-[60px] placeholder:text-muted-foreground"
+          placeholder={tags.length === 0 ? "풍미 입력..." : ""}
         />
       </div>
 
