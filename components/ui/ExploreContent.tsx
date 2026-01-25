@@ -33,6 +33,8 @@ export default function ExploreContent() {
   const [displayLimit, setDisplayLimit] = useState(20);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [showDebugPanel, setShowDebugPanel] = useState(false);
+  
+  const isDevelopment = process.env.NODE_ENV === 'development';
 
   // Dynamic filter extraction from search index
   const dynamicFilters = useMemo(() => {
@@ -149,7 +151,7 @@ export default function ExploreContent() {
           </button>
           
           {/* Debug Toggle (only in development) */}
-          {process.env.NODE_ENV === 'development' && (
+          {isDevelopment && (
             <button
               onClick={() => setShowDebugPanel(!showDebugPanel)}
               className="px-3 py-2 bg-gray-700 text-white text-xs font-semibold rounded-lg hover:bg-gray-600 transition-colors"
@@ -160,7 +162,7 @@ export default function ExploreContent() {
         </div>
 
         {/* Debug Panel */}
-        {showDebugPanel && process.env.NODE_ENV === 'development' && (
+        {showDebugPanel && isDevelopment && (
           <div className="mt-4 p-4 bg-gray-900 text-white text-left rounded-xl text-xs font-mono max-w-2xl mx-auto border-2 border-amber-500">
             <h3 className="font-bold text-amber-400 mb-2">🔍 Debug Information</h3>
             <div className="space-y-1">

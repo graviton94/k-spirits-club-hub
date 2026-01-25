@@ -5,6 +5,12 @@ import type { Spirit, SpiritSearchIndex } from '@/lib/db/schema';
 import { getSpiritsAction, getSpiritsSearchIndex } from '@/app/actions/spirits';
 import Fuse from 'fuse.js';
 
+interface DebugInfo {
+  lastLoadSource: 'cache' | 'api' | 'none';
+  lastLoadTime: number | null;
+  cacheErrors: string[];
+}
+
 interface SpiritsCacheContextType {
   publishedSpirits: Spirit[];
   searchIndex: SpiritSearchIndex[];
@@ -15,12 +21,11 @@ interface SpiritsCacheContextType {
   forceRefresh: () => Promise<void>;
   searchSpirits: (query: string) => SpiritSearchIndex[];
   getSpiritById: (id: string) => Spirit | undefined;
-  debugInfo: {
-    lastLoadSource: 'cache' | 'api' | 'none';
-    lastLoadTime: number | null;
-    cacheErrors: string[];
-  };
+  debugInfo: DebugInfo;
 }
+
+// Constants
+const MAX_CACHE_ERRORS = 5; // Limit stored errors to prevent memory issues
 
 const SpiritsCacheContext = createContext<SpiritsCacheContextType | undefined>(undefined);
 
@@ -30,11 +35,7 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
   const [fuseInstance, setFuseInstance] = useState<Fuse<SpiritSearchIndex> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [debugInfo, setDebugInfo] = useState<{
-    lastLoadSource: 'cache' | 'api' | 'none';
-    lastLoadTime: number | null;
-    cacheErrors: string[];
-  }>({
+  const [debugInfo, setDebugInfo] = useState<DebugInfo>({
     lastLoadSource: 'none',
     lastLoadTime: null,
     cacheErrors: []
@@ -50,7 +51,7 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
         console.warn(`[SpiritsCacheContext] ${errorMsg}`);
         setDebugInfo(prev => ({
           ...prev,
-          cacheErrors: [...prev.cacheErrors, errorMsg]
+          cacheErrors: [...prev.cacheErrors, errorMsg].slice(-MAX_CACHE_ERRORS) // Keep only last N errors
         }));
         return null;
       }
@@ -64,7 +65,7 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
         console.warn(`[SpiritsCacheContext] ${errorMsg}`);
         setDebugInfo(prev => ({
           ...prev,
-          cacheErrors: [...prev.cacheErrors, errorMsg]
+          cacheErrors: [...prev.cacheErrors, errorMsg].slice(-MAX_CACHE_ERRORS) // Keep only last N errors
         }));
         return false;
       }
@@ -114,11 +115,11 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
               });
               setFuseInstance(fuse);
               
-              setDebugInfo({
+              setDebugInfo(prev => ({
                 lastLoadSource: 'cache',
                 lastLoadTime: loadStartTime,
-                cacheErrors: []
-              });
+                cacheErrors: prev.cacheErrors // Preserve previous errors
+              }));
               
               setIsLoading(false);
               return;
@@ -130,7 +131,7 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
             console.warn(`[SpiritsCacheContext] ⚠️ ${parseError}`);
             setDebugInfo(prev => ({
               ...prev,
-              cacheErrors: [...prev.cacheErrors, parseError]
+              cacheErrors: [...prev.cacheErrors, parseError].slice(-MAX_CACHE_ERRORS)
             }));
           }
         }
@@ -180,18 +181,18 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
       });
       setFuseInstance(fuse);
 
-      setDebugInfo({
+      setDebugInfo(prev => ({
         lastLoadSource: 'api',
         lastLoadTime: loadStartTime,
-        cacheErrors: []
-      });
+        cacheErrors: prev.cacheErrors // Preserve previous errors
+      }));
 
     } catch (err) {
       console.error('[SpiritsCacheContext] ❌ Failed to fetch data:', err);
       setError(err instanceof Error ? err.message : 'Failed to fetch data');
       setDebugInfo(prev => ({
         ...prev,
-        cacheErrors: [...prev.cacheErrors, err instanceof Error ? err.message : 'Failed to fetch data']
+        cacheErrors: [...prev.cacheErrors, err instanceof Error ? err.message : 'Failed to fetch data'].slice(-MAX_CACHE_ERRORS)
       }));
     } finally {
       setIsLoading(false);
