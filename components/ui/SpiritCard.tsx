@@ -69,7 +69,7 @@ export function SpiritCard({ spirit, onClick }: SpiritCardProps) {
             {tastingTags.map((tag, index) => (
               <span
                 key={index}
-                className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/20 font-medium"
+                className="text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 font-medium"
               >
                 {tag}
               </span>
