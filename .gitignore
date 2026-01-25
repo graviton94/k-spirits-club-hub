@@ -49,3 +49,5 @@ yarn-error.log*
 
 # Data
 data/
+image_fail_log.txt
+scripts/image_fail_log.txt
