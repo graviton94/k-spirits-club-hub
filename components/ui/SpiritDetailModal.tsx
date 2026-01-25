@@ -162,7 +162,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-6">
                             <div className="flex items-start justify-between">
                                 <div className="flex-1 mr-4">
-                                    <span className="inline-block px-2 py-1 mb-2 text-[10px] font-black text-white bg-primary rounded-md uppercase shadow-lg">
+                                    <span className="inline-block px-2 py-1 mb-2 text-[10px] font-black text-primary-foreground bg-primary rounded-md uppercase shadow-lg">
                                         {localSpirit.subcategory || localSpirit.category}
                                     </span>
                                     <h2 className="text-2xl sm:text-3xl font-black text-white leading-tight mb-1 drop-shadow-lg break-keep">

@@ -103,9 +103,9 @@ export default function SearchSpiritModal({ isOpen, onClose, onAdd, existingIds 
                                                 onAdd(spirit);
                                                 onClose();
                                             }}
-                                            className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-colors ${isAdded
-                                                    ? 'bg-muted text-muted-foreground cursor-not-allowed border border-border'
-                                                    : 'bg-gradient-to-r from-amber-500 to-orange-600 text-white hover:from-amber-600 hover:to-orange-700'
+                                            className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-colors border ${isAdded
+                                                    ? 'bg-muted text-muted-foreground cursor-not-allowed border-border'
+                                                    : 'bg-gradient-to-r from-amber-500 to-orange-600 text-white hover:from-amber-600 hover:to-orange-700 border-transparent'
                                                 }`}
                                         >
                                             {isAdded ? '보유중' : '추가'}

@@ -35,7 +35,7 @@ export function BottomNav() {
 
             {/* Active Indicator Dot */}
             {(item.href === "/" ? pathname === "/" : isActive(item.href)) && (
-              <span className="absolute top-2 right-3 w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_hsl(var(--primary)_/_0.8)]" />
+              <span className="absolute top-2 right-3 w-1.5 h-1.5 rounded-full bg-primary shadow-lg shadow-primary/50" />
             )}
           </Link>
         ))}

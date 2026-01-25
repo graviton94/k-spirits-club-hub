@@ -78,7 +78,7 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit }: Revie
                         <button
                             key={star}
                             onClick={() => onChange(star)}
-                            className={`text-2xl transition-transform hover:scale-110 focus:outline-none ${value >= star ? 'text-primary' : 'text-muted-foreground/20 dark:text-muted-foreground/30'
+                            className={`text-2xl transition-transform hover:scale-110 focus:outline-none ${value >= star ? 'text-primary' : 'text-muted-foreground/25'
                                 }`}
                         >
                             ★

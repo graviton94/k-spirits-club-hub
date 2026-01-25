@@ -106,6 +106,8 @@ export default function OnboardingModal() {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.95 }}
                         transition={{ duration: 0.3, delay: 0.1 }}
+                        // Note: This modal intentionally uses slate colors to maintain a dark, serious aesthetic
+                        // for age verification, separate from the main app theme
                         className="bg-gradient-to-br from-slate-900 to-slate-950 w-full max-w-md rounded-3xl p-8 shadow-2xl border-2 border-primary/30 relative overflow-hidden"
                     >
                         {/* Decorative background gradient */}
