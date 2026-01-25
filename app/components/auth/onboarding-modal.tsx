@@ -106,18 +106,20 @@ export default function OnboardingModal() {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.95 }}
                         transition={{ duration: 0.3, delay: 0.1 }}
-                        className="bg-gradient-to-br from-slate-900 to-slate-950 w-full max-w-md rounded-3xl p-8 shadow-2xl border border-amber-900/30 relative overflow-hidden"
+                        // Note: This modal intentionally uses slate colors to maintain a dark, serious aesthetic
+                        // for age verification, separate from the main app theme
+                        className="bg-gradient-to-br from-slate-900 to-slate-950 w-full max-w-md rounded-3xl p-8 shadow-2xl border-2 border-primary/30 relative overflow-hidden"
                     >
                         {/* Decorative background gradient */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-amber-900/5 to-transparent pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none" />
 
                         <div className="relative z-10">
                             {/* Header */}
                             <div className="text-center mb-8">
-                                <div className="inline-block p-4 bg-amber-900/20 rounded-full mb-4">
+                                <div className="inline-block p-4 bg-primary/20 rounded-full mb-4 border-2 border-primary/30">
                                     <span className="text-5xl">🔞</span>
                                 </div>
-                                <h2 className="text-2xl font-black text-amber-100 mb-2">Age Verification</h2>
+                                <h2 className="text-2xl font-black text-white mb-2">Age Verification</h2>
                                 <p className="text-sm text-slate-300 leading-relaxed">
                                     You must be 19 years or older to enter.
                                 </p>
@@ -142,7 +144,7 @@ export default function OnboardingModal() {
                                                 }}
                                                 min="1900"
                                                 max={new Date().getFullYear()}
-                                                className="w-full bg-slate-800/70 border border-slate-700 rounded-xl px-3 py-3 text-center font-bold text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                                className="w-full bg-slate-800/70 border-2 border-slate-700 rounded-xl px-3 py-3 text-center font-bold text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                             />
                                             <p className="text-xs text-slate-500 text-center mt-1">년</p>
                                         </div>
@@ -158,7 +160,7 @@ export default function OnboardingModal() {
                                                 }}
                                                 min="1"
                                                 max="12"
-                                                className="w-full bg-slate-800/70 border border-slate-700 rounded-xl px-3 py-3 text-center font-bold text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                                className="w-full bg-slate-800/70 border-2 border-slate-700 rounded-xl px-3 py-3 text-center font-bold text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                             />
                                             <p className="text-xs text-slate-500 text-center mt-1">월</p>
                                         </div>
@@ -174,7 +176,7 @@ export default function OnboardingModal() {
                                                 }}
                                                 min="1"
                                                 max="31"
-                                                className="w-full bg-slate-800/70 border border-slate-700 rounded-xl px-3 py-3 text-center font-bold text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                                className="w-full bg-slate-800/70 border-2 border-slate-700 rounded-xl px-3 py-3 text-center font-bold text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                             />
                                             <p className="text-xs text-slate-500 text-center mt-1">일</p>
                                         </div>
@@ -182,7 +184,7 @@ export default function OnboardingModal() {
                                 </div>
 
                                 {/* Legal Notice */}
-                                <div className="bg-red-950/30 border border-red-900/50 rounded-xl p-3">
+                                <div className="bg-red-950/30 border-2 border-red-900/50 rounded-xl p-3">
                                     <p className="text-red-400 text-xs text-center leading-relaxed">
                                         ⚠️ 19세 미만은 접속하실 수 없습니다.
                                     </p>
@@ -193,14 +195,14 @@ export default function OnboardingModal() {
                             <div className="space-y-3">
                                 <button
                                     onClick={handleEnter}
-                                    className="w-full py-4 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-amber-900/50 active:scale-[0.98]"
+                                    className="w-full py-4 bg-gradient-to-r from-amber-600 to-orange-700 hover:from-amber-500 hover:to-orange-600 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-primary/50 active:scale-[0.98]"
                                 >
                                     Enter
                                 </button>
 
                                 <button
                                     onClick={handleExit}
-                                    className="w-full py-3 bg-transparent hover:bg-slate-800/50 text-slate-400 hover:text-slate-300 font-semibold rounded-xl transition-all border border-slate-700/50 active:scale-[0.98]"
+                                    className="w-full py-3 bg-transparent hover:bg-slate-800/50 text-slate-400 hover:text-slate-300 font-semibold rounded-xl transition-all border-2 border-slate-700/50 active:scale-[0.98]"
                                 >
                                     Exit
                                 </button>

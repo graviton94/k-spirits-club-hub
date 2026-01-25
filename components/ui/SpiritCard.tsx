@@ -21,13 +21,13 @@ export function SpiritCard({ spirit, onClick }: SpiritCardProps) {
 
   const content = (
     <motion.div
-      className="group flex gap-3 p-3 rounded-lg bg-secondary/50 border border-border/50 hover:bg-secondary hover:border-border transition-all cursor-pointer"
+      className="group flex gap-3 p-3 rounded-lg bg-card border border-border hover:bg-secondary hover:border-primary/30 transition-all cursor-pointer shadow-sm"
       whileHover={{ scale: 0.99 }}
       transition={{ type: "spring", stiffness: 400, damping: 17 }}
       onClick={() => onClick?.(spirit)}
     >
       {/* Left: 80x80 Thumbnail */}
-      <div className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-background border border-border/50">
+      <div className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-muted border border-border">
         {spirit.imageUrl ? (
           <img
             src={spirit.imageUrl}
@@ -69,7 +69,7 @@ export function SpiritCard({ spirit, onClick }: SpiritCardProps) {
             {tastingTags.map((tag, index) => (
               <span
                 key={index}
-                className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/20 font-medium"
+                className="text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 font-medium"
               >
                 {tag}
               </span>

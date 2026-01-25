@@ -324,12 +324,12 @@ function CategoryFilter({ label, isActive, href, isSub }: CategoryFilterProps) {
     <Link
       href={href}
       className={`
-        transition-all duration-300 snap-start whitespace-nowrap border
+        transition-all duration-300 snap-start whitespace-nowrap border-2
         ${isActive
-          ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/30 scale-105 border-amber-500'
+          ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg shadow-primary/30 scale-105 border-primary'
           : `${isSub
-            ? 'bg-slate-200 dark:bg-slate-800 text-gray-800 dark:text-gray-200 border-slate-300 dark:border-slate-700 hover:bg-slate-300 dark:hover:bg-slate-700'
-            : 'bg-slate-200 dark:bg-slate-800 text-gray-900 dark:text-white font-bold border-slate-300 dark:border-slate-700 hover:bg-slate-300 dark:hover:bg-slate-700'
+            ? 'bg-card text-foreground border-border hover:bg-secondary'
+            : 'bg-card text-foreground font-bold border-border hover:bg-secondary'
           }`
         }
         ${isSub ? 'px-3 py-1.5 rounded-lg text-xs' : 'px-4 py-2 rounded-xl text-sm'}

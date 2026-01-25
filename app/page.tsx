@@ -151,23 +151,23 @@ export default async function HomePage() {
       </section>
 
       {/* 4. Live Reviews (Mock Layout) */}
-      <section className="bg-gray-50 dark:bg-neutral-900/50 py-16 border-y border-gray-200 dark:border-white/5">
+      <section className="bg-secondary py-16 border-y border-border">
         <div className="container max-w-4xl mx-auto px-4">
-          <h2 className="text-2xl font-bold mb-8 text-center">Live Reviews</h2>
+          <h2 className="text-2xl font-bold mb-8 text-center text-foreground">Live Reviews</h2>
           <div className="space-y-4">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="flex items-start gap-4 p-4 rounded-xl bg-white dark:bg-background/40 border border-gray-200 dark:border-white/5">
-                <div className="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-500/20 flex items-center justify-center text-indigo-700 dark:text-indigo-400 font-bold">
+              <div key={i} className="flex items-start gap-4 p-4 rounded-xl bg-card border border-border">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold border border-primary/20">
                   U{i}
                 </div>
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="font-bold text-sm">User_{i}99</span>
+                    <span className="font-bold text-sm text-foreground">User_{i}99</span>
                     <span className="text-xs text-muted-foreground">2 mins ago</span>
                   </div>
-                  <p className="text-sm text-gray-700 dark:text-gray-300">"This tastes like absolute heaven. The finish is incredibly smooth with hints of vanilla."</p>
+                  <p className="text-sm text-foreground">"This tastes like absolute heaven. The finish is incredibly smooth with hints of vanilla."</p>
                   <div className="flex gap-1 mt-2">
-                    {[1, 2, 3, 4, 5].map(star => <span key={star} className="text-yellow-500 text-xs">★</span>)}
+                    {[1, 2, 3, 4, 5].map(star => <span key={star} className="text-primary text-xs">★</span>)}
                   </div>
                 </div>
               </div>
