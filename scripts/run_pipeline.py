@@ -51,12 +51,27 @@ def main():
     if state_file.exists():
         try:
             with open(state_file, 'r', encoding='utf-8') as f:
-                state = json.load(f)
-                if state.get('source_file') == str(source_path):
-                    start_index = state.get('next_index', 0)
-                    print(f"RESUME: Found previous state. Resuming from index {start_index}...")
+                state_db = json.load(f)
+                
+                # Check if it's new format (dict of dicts) or old format (flat dict)
+                # Old key 'source_file' implies old format -> migrate it or ignore
+                if 'source_file' in state_db:
+                    # Old format: only resume if exact match, otherwise treat as empty for this file
+                    if state_db.get('source_file') == str(source_path):
+                         start_index = state_db.get('next_index', 0)
+                else:
+                    # New format: { "path": { "next_index": 10 } }
+                    file_state = state_db.get(str(source_path), {})
+                    start_index = file_state.get('next_index', 0)
+                    
+                if start_index > 0:
+                    print(f"RESUME: Found previous state for {source_path.name}. Resuming from index {start_index}...")
+                
         except Exception as e:
             print(f"⚠️ Failed to load state file: {e}")
+            state_db = {}
+    else:
+        state_db = {}
 
     f_input = temp_dir / 'batch_input.json'
     f_enriched = temp_dir / 'batch_enriched.json'
@@ -130,14 +145,27 @@ def main():
              
         processed_in_this_run += (batch_end - i)
         
-        # Save State
+        # Save State (Preserve other files)
         next_start_index = batch_end
+        
+        # Load fresh state to avoid race conditions (simple approach)
+        if state_file.exists():
+            try:
+                with open(state_file, 'r', encoding='utf-8') as f:
+                     current_db = json.load(f)
+                     if 'source_file' in current_db: current_db = {} # Wipe old format
+            except:
+                current_db = {}
+        else:
+            current_db = {}
+            
+        current_db[str(source_path)] = {
+            'next_index': next_start_index,
+            'last_updated': time.time()
+        }
+        
         with open(state_file, 'w', encoding='utf-8') as f:
-            json.dump({
-                'source_file': str(source_path),
-                'next_index': next_start_index,
-                'last_updated': time.time()
-            }, f, indent=2)
+            json.dump(current_db, f, indent=2, ensure_ascii=False)
             
         print(f"✅ Batch {current_range_str} Completed (Next: {next_start_index}).\n")
         

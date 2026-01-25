@@ -84,7 +84,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
                 if (userDoc.exists()) {
                     const data = userDoc.data();
-                    setRole(data.role as UserRole);
+
+                    // [Start] Hardcoded Admin Check
+                    const ADMIN_EMAILS = ['ruahn49@gmail.com'];
+                    let userRole = data.role as UserRole;
+                    if (currentUser.email && ADMIN_EMAILS.includes(currentUser.email)) {
+                        userRole = 'ADMIN';
+                    }
+                    setRole(userRole);
+                    // [End] Hardcoded Admin Check
+
                     const userTheme = data.themePreference || 'light';
                     setProfile({
                         nickname: data.nickname || currentUser.displayName || 'Anonymous',
@@ -143,7 +152,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             document.documentElement.classList.toggle('dark', newTheme === 'dark');
         }
         localStorage.setItem('theme', newTheme);
-        
+
         // Save to user profile if logged in
         if (user) {
             updateProfile({ themePreference: newTheme });
