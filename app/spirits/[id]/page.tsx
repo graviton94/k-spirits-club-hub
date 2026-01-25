@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import { db } from "@/lib/db";
 import type { Spirit } from "@/lib/db/schema";
 
+export const runtime = 'edge';
+
 export default function SpiritDetailPage({
   params,
 }: {
