@@ -1,17 +1,20 @@
 'use client';
 
 import { Search } from "lucide-react";
-import { useState, KeyboardEvent, useMemo, useEffect } from "react";
+import { useState, KeyboardEvent, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useSpiritsCache } from "@/app/context/spirits-cache-context";
 import Link from "next/link";
+
+const BLUR_DELAY_MS = 200; // Delay to allow clicking dropdown results before blur
 
 export function SearchBar({ isHero = false }: { isHero?: boolean }) {
   const [isFocused, setIsFocused] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const router = useRouter();
   const { searchSpirits, getSpiritById, isLoading } = useSpiritsCache();
+  const blurTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Get instant search results using Fuse.js
   const instantResults = useMemo(() => {
@@ -27,7 +30,9 @@ export function SearchBar({ isHero = false }: { isHero?: boolean }) {
       .filter(s => s !== undefined);
     const endTime = performance.now();
     
-    console.log(`[SearchBar] Search completed in ${(endTime - startTime).toFixed(2)}ms`);
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`[SearchBar] Search completed in ${(endTime - startTime).toFixed(2)}ms`);
+    }
     return results;
   }, [searchValue, searchSpirits, getSpiritById, isLoading]);
 
@@ -43,6 +48,25 @@ export function SearchBar({ isHero = false }: { isHero?: boolean }) {
     if (e.key === 'Enter') {
       handleSearch();
     }
+  };
+
+  const handleBlur = () => {
+    // Clear any existing timeout
+    if (blurTimeoutRef.current) {
+      clearTimeout(blurTimeoutRef.current);
+    }
+    // Delay blur to allow clicking dropdown results
+    blurTimeoutRef.current = setTimeout(() => {
+      setIsFocused(false);
+    }, BLUR_DELAY_MS);
+  };
+
+  const handleFocus = () => {
+    // Clear blur timeout if user refocuses
+    if (blurTimeoutRef.current) {
+      clearTimeout(blurTimeoutRef.current);
+    }
+    setIsFocused(true);
   };
 
   return (
@@ -68,8 +92,8 @@ export function SearchBar({ isHero = false }: { isHero?: boolean }) {
           onKeyDown={handleKeyDown}
           className={`w-full bg-transparent border-none outline-none text-lg ${isHero ? 'text-white placeholder:text-neutral-400' : 'text-foreground placeholder:text-muted-foreground'
             }`}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setTimeout(() => setIsFocused(false), 200)} // Delay to allow clicking results
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         />
       </motion.div>
 
