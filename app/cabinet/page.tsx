@@ -14,7 +14,7 @@ const MOCK_SPIRITS = [
     category: "소주",
     subcategory: "증류식 소주",
     abv: 25,
-    imageUrl: null,
+    imageUrl: "http://cdn.veluga.kr/files/supplier/414/drinks/30_%E1%84%8B%E1%85%B2%E1%84%85%E1%85%B5%E1%84%87%E1%85%A7%E1%86%BC_375.%E1%84%8B%E1%85%A6%E1%84%89%E1%85%B3%E1%84%8B%E1%85%A6%E1%86%B7%E1%84%90%E1%85%B3%E1%84%85%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%83%E1%85%B3_%E1%84%83%E1%85%A1%E1%86%AF%E1%84%92%E1%85%A9%E1%86%AF%E1%84%8C%E1%85%B5%E1%86%AB%E1%84%8C%E1%85%AE_25.png",
     distillery: "달홀",
     isWishlist: false,
     metadata: { tasting_note: "깔끔한, 부드러운" }
