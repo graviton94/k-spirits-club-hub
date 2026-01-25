@@ -17,21 +17,37 @@ export async function GET(req: NextRequest) {
 
     try {
         const filter: any = {};
-        if (status && status !== 'ALL') filter.status = status as SpiritStatus;
-        if (category && category !== 'ALL') filter.category = category;
+        // CRITICAL FIX: Only apply status filter if explicitly provided and not 'ALL'
+        // This ensures admin can see ALL spirits by default
+        if (status && status !== 'ALL') {
+            filter.status = status as SpiritStatus;
+        }
+        // Note: Admin should see ALL spirits regardless of isPublished flag
+        // Do NOT add isPublished filter for admin view
+        
         if (category && category !== 'ALL') filter.category = category;
         if (subcategory && subcategory !== 'ALL') filter.subcategory = subcategory;
 
         const search = searchParams.get('search');
         if (search) filter.searchTerm = search;
 
+        console.log('[API /api/admin/spirits] Fetching with filter:', JSON.stringify(filter));
         const spirits = await db.getSpirits(filter, { page, pageSize });
-        console.log(`[API] Admin fetch returned ${spirits.data.length} spirits (Total: ${spirits.total})`);
+        console.log(`[API /api/admin/spirits] Returned ${spirits.data.length} spirits (Total: ${spirits.total}, Page: ${page}/${spirits.totalPages})`);
+        
+        // Add diagnostic info for zero results
+        if (spirits.total === 0) {
+            console.warn('[API /api/admin/spirits] ⚠️ ZERO RESULTS WARNING');
+            console.warn('Filter applied:', JSON.stringify(filter));
+            console.warn('This may indicate:');
+            console.warn('  1. Database is empty');
+            console.warn('  2. All spirits filtered out by the applied filter');
+            console.warn('  3. Firestore query error (check previous logs)');
+        }
+        
         return NextResponse.json(spirits);
     } catch (error: any) {
-        // Log error to a file for debugging in the absence of terminal access
-
-
+        console.error('[API /api/admin/spirits] Error:', error);
         return NextResponse.json({ error: 'Failed to fetch spirits', details: error.message }, { status: 500 });
     }
 }
