@@ -1,11 +1,27 @@
 'use client';
 
 import { Search } from "lucide-react";
-import { useState } from "react";
+import { useState, KeyboardEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 export function SearchBar({ isHero = false }: { isHero?: boolean }) {
   const [isFocused, setIsFocused] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+  const router = useRouter();
+
+  const handleSearch = () => {
+    if (searchValue.trim()) {
+      // Navigate to explore page with search query
+      router.push(`/explore?search=${encodeURIComponent(searchValue.trim())}`);
+    }
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
 
   return (
     <div className="relative w-full max-w-md mx-auto z-30">
@@ -25,6 +41,9 @@ export function SearchBar({ isHero = false }: { isHero?: boolean }) {
         <input
           type="text"
           placeholder="Search spirits, distilleries..."
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+          onKeyDown={handleKeyDown}
           className={`w-full bg-transparent border-none outline-none text-lg ${isHero ? 'text-white placeholder:text-neutral-400' : 'text-foreground placeholder:text-muted-foreground'
             }`}
           onFocus={() => setIsFocused(true)}
@@ -43,7 +62,7 @@ export function SearchBar({ isHero = false }: { isHero?: boolean }) {
               }`}
           >
             <div className={`p-3 text-center text-sm ${isHero ? 'text-neutral-400' : 'text-muted-foreground'}`}>
-              Type to search across 1M+ spirits
+              {searchValue.trim() ? `Press Enter to search for "${searchValue}"` : 'Type to search across published spirits'}
             </div>
           </motion.div>
         )}
