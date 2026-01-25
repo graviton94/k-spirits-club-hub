@@ -1,5 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
+import sys
+import os
 import json
 import random
 import time
@@ -7,6 +9,10 @@ import argparse
 from pathlib import Path
 from datetime import datetime
 from urllib.parse import urlencode
+
+# Force UTF-8 for Windows
+sys.stdout.reconfigure(encoding='utf-8')
+sys.stderr.reconfigure(encoding='utf-8')
 
 # 설정
 FAIL_LOG = Path('scripts/image_fail_log.txt')

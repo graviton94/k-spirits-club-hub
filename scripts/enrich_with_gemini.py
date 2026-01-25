@@ -1,4 +1,10 @@
 import os
+import sys
+
+# Force UTF-8 for Windows
+sys.stdout.reconfigure(encoding='utf-8')
+sys.stderr.reconfigure(encoding='utf-8')
+
 import json
 import time
 import argparse
