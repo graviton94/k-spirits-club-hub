@@ -38,13 +38,17 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
     // Check status on mount
     useEffect(() => {
         if (user && spirit.id) {
-            import('@/app/actions/cabinet').then(({ checkCabinetStatus }) => {
-                checkCabinetStatus(user.uid, spirit.id).then(status => {
+            fetch(`/api/cabinet/check?uid=${user.uid}&sid=${spirit.id}`)
+                .then(res => res.json())
+                .then(status => {
                     setIsInCabinet(status.isOwned);
                     setIsWishlist(status.isWishlist);
                     setIsLoadingStatus(false);
+                })
+                .catch(err => {
+                    console.error(err);
+                    setIsLoadingStatus(false);
                 });
-            });
         } else {
             setIsLoadingStatus(false);
         }

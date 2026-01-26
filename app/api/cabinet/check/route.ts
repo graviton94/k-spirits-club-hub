@@ -1,30 +1,32 @@
+
 import { NextRequest, NextResponse } from 'next/server';
 import { cabinetDb } from '@/lib/db/firestore-rest';
 
-export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
 
-export async function GET(req: NextRequest) {
-    const userId = req.headers.get('x-user-id');
-    const { searchParams } = new URL(req.url);
-    const spiritId = searchParams.get('spiritId');
+export async function GET(request: NextRequest) {
+    const searchParams = request.nextUrl.searchParams;
+    const userId = searchParams.get('uid');
+    const spiritId = searchParams.get('sid');
 
     if (!userId || !spiritId) {
-        return NextResponse.json({ error: 'Missing parameters' }, { status: 400 });
+        return NextResponse.json({ isOwned: false, isWishlist: false, data: null }, { status: 400 });
     }
 
     try {
         const item = await cabinetDb.getById(userId, spiritId);
+
         if (!item) {
-            return NextResponse.json({ isOwned: false, isWishlist: false });
+            return NextResponse.json({ isOwned: false, isWishlist: false, data: null });
         }
 
         return NextResponse.json({
             isOwned: !item.isWishlist,
-            isWishlist: !!item.isWishlist,
+            isWishlist: item.isWishlist === true,
             data: item
         });
     } catch (error) {
-        console.error('Cabinet Check Error:', error);
-        return NextResponse.json({ error: 'Failed to check cabinet' }, { status: 500 });
+        console.error('Error checking cabinet status:', error);
+        return NextResponse.json({ isOwned: false, isWishlist: false, data: null }, { status: 500 });
     }
 }

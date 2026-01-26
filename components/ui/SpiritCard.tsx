@@ -8,7 +8,7 @@ import { Spirit } from "@/lib/db/schema";
 import { getTagStyle } from "@/lib/constants/tag-styles";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/app/context/auth-context";
-import { addToCabinet, removeFromCabinet, checkCabinetStatus } from "@/app/actions/cabinet";
+import { addToCabinet, removeFromCabinet } from "@/app/actions/cabinet";
 import CabinetSelectionModal from "./CabinetSelectionModal";
 import ReviewModal from "@/components/cabinet/ReviewModal";
 import { UserReview } from "@/lib/utils/flavor-engine";
@@ -33,9 +33,12 @@ export function SpiritCard({ spirit, onClick, onCabinetChange }: SpiritCardProps
   // Check cabinet status on mount
   useEffect(() => {
     if (user) {
-      checkCabinetStatus(user.uid, spirit.id).then(({ isOwned, isWishlist }) => {
-        setIsInCabinet(isOwned || isWishlist);
-      });
+      fetch(`/api/cabinet/check?uid=${user.uid}&sid=${spirit.id}`)
+        .then(res => res.json())
+        .then(({ isOwned, isWishlist }) => {
+          setIsInCabinet(isOwned || isWishlist);
+        })
+        .catch(err => console.error('Failed to check status:', err));
     }
   }, [user, spirit.id]);
 

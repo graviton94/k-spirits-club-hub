@@ -9,7 +9,7 @@ import { getTagColor } from "@/lib/constants/tag-colors";
 import type { Spirit, UserReview } from "@/lib/utils/flavor-engine";
 import ReviewModal from "@/components/cabinet/ReviewModal";
 import { Bookmark, Plus, Pencil, Check, Loader2 } from "lucide-react";
-import { addToCabinet, checkCabinetStatus } from "@/app/actions/cabinet";
+import { addToCabinet } from "@/app/actions/cabinet";
 
 interface SpiritDetailModalProps {
     spirit: any; // Flexible for now
@@ -40,7 +40,8 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
 
         async function checkStatus() {
             try {
-                const status = await checkCabinetStatus(user!.uid, spirit.id);
+                const res = await fetch(`/api/cabinet/check?uid=${user!.uid}&sid=${spirit.id}`);
+                const status = await res.json();
                 setCabinetStatus({ isOwned: status.isOwned, isWishlist: status.isWishlist });
                 if (status.data) setLocalSpirit(status.data);
             } catch (e) {
