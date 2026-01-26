@@ -149,17 +149,30 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
       console.log('[SpiritsCacheContext] 📡 Fetching data from Firestore...');
 
       // Fetch both the minimized search index and full spirits data
-      // Note: We only filter by status='PUBLISHED' because isPublished is redundant
-      // (status='PUBLISHED' always implies isPublished=true due to data consistency guard)
+      // CRITICAL FIX: Use isPublished filter instead of status='PUBLISHED'
+      // The previous filter was missing spirits that had isPublished=true but different 
+      // status values like 'READY_FOR_CONFIRM', causing zero results for public users.
       const [index, spiritsResult] = await Promise.all([
         getSpiritsSearchIndex(),
         getSpiritsAction(
-          { status: 'PUBLISHED' },
+          { isPublished: true },
           { page: 1, pageSize: 15000 }
         )
       ]);
 
       console.log(`[SpiritsCacheContext] ✅ Fetched from API: ${index.length} spirits, ${spiritsResult.data.length} full records`);
+
+      // SYSTEM DIAGNOSTIC: Report visibility stats
+      console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+      console.log('[SYSTEM_REPORT] Data Visibility Summary');
+      console.log(`[SYSTEM_REPORT] Total Docs Fetched: ${spiritsResult.data.length}`);
+      console.log(`[SYSTEM_REPORT] Search Index Length: ${index.length}`);
+      console.log(`[SYSTEM_REPORT] User Visible (Published): ${index.length}`);
+      if (spiritsResult.data.length > 0) {
+        const sample = spiritsResult.data[0];
+        console.log(`[SYSTEM_REPORT] Sample Spirit: ${sample.name} (Status: ${sample.status}, Published: ${sample.isPublished})`);
+      }
+      console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
 
       // 2. Save to LocalStorage (with safety wrapper)
       const indexPayload = JSON.stringify({

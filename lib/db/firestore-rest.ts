@@ -73,7 +73,7 @@ function toFirestore(data: Partial<Spirit>): any {
 }
 
 export const spiritsDb = {
-    async getAll(filter: SpiritFilter = {}): Promise<Spirit[]> {
+  async getAll(filter: SpiritFilter = {}): Promise<Spirit[]> {
         const token = await getServiceAccountToken();
         const runQueryUrl = `${BASE_URL}:runQuery`;
 
@@ -92,7 +92,9 @@ export const spiritsDb = {
             });
         }
 
-        // Always apply isPublished filter when explicitly specified
+        // CRITICAL FIX: Always apply isPublished filter when explicitly specified
+        // This filter is used by public-facing queries to show only published content.
+        // It is NOT applied by admin queries, which should see all spirits regardless of publish status.
         if (filter.isPublished !== undefined) {
             filters.push({
                 fieldFilter: {
@@ -178,12 +180,15 @@ export const spiritsDb = {
             .map((r: any) => fromFirestore(r.document));
 
         console.log(`[Firestore] Query returned ${results.length} spirits`);
+        console.log('[SYSTEM_CHECK] Query filter:', JSON.stringify(filter));
+        
         if (results.length === 0) {
             console.warn('[Firestore] ⚠️ WARNING: Query returned 0 results. Filter:', JSON.stringify(filter));
             console.warn('[Firestore] This may indicate:');
             console.warn('  1. No spirits match the filter criteria');
             console.warn('  2. Database is empty or spirits not yet imported');
             console.warn('  3. Service account permissions issue');
+            console.warn('  4. Firestore composite index missing (check error messages above)');
         } else {
             console.log('[Firestore] First result sample:', {
                 id: results[0].id,
@@ -191,6 +196,11 @@ export const spiritsDb = {
                 status: results[0].status,
                 isPublished: results[0].isPublished
             });
+            
+            // Count published vs unpublished for diagnostics
+            const publishedCount = results.filter((s: Spirit) => s.isPublished === true).length;
+            const unpublishedCount = results.length - publishedCount;
+            console.log(`[SYSTEM_CHECK] Total Docs: ${results.length} | Published: ${publishedCount} | Unpublished: ${unpublishedCount}`);
         }
 
         return results;
@@ -262,11 +272,11 @@ export const spiritsDb = {
      * or using a different indexing strategy.
      */
     async getPublishedSearchIndex(): Promise<SpiritSearchIndex[]> {
-        // Fetch all published spirits
-        // Note: We only filter by status='PUBLISHED' because isPublished is redundant
-        // (status='PUBLISHED' always implies isPublished=true due to data consistency guard)
+        // Fetch all published spirits using isPublished flag
+        // CRITICAL FIX: Use isPublished filter instead of status='PUBLISHED' to ensure
+        // we capture all published items regardless of their exact status value
         const publishedSpirits = await this.getAll({ 
-            status: 'PUBLISHED' as SpiritStatus
+            isPublished: true
         });
 
         // Map to minimized structure with short keys
