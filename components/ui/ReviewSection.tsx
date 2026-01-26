@@ -19,8 +19,16 @@ interface ReviewSectionProps {
 }
 
 export default function ReviewSection({ spiritId, spiritName, reviews }: ReviewSectionProps) {
+  const { user } = useAuth();
   const [showForm, setShowForm] = useState(false);
   const [liveReviews, setLiveReviews] = useState<ExtendedReview[]>(reviews);
+
+  // Synchronize internal state when reviews prop changes (e.g., after fetching from API)
+  useEffect(() => {
+    setLiveReviews(reviews);
+  }, [reviews]);
+
+  const hasReviewed = !!user && liveReviews.some(r => r.userId === user.uid);
 
   // Calculate averages
   const avgOverall = liveReviews.length > 0
@@ -40,7 +48,11 @@ export default function ReviewSection({ spiritId, spiritName, reviews }: ReviewS
     : "0.0";
 
   const handleReviewSubmitted = (newReview: ExtendedReview) => {
-    setLiveReviews(prev => [newReview, ...prev]);
+    setLiveReviews(prev => {
+      // Filter out existing review by same user to prevent duplicate keys
+      const filtered = prev.filter(r => r.userId !== newReview.userId);
+      return [newReview, ...filtered];
+    });
     setShowForm(false);
   };
 
@@ -54,10 +66,16 @@ export default function ReviewSection({ spiritId, spiritName, reviews }: ReviewS
           <p className="text-sm text-muted-foreground">시음 경험을 공유해주세요</p>
         </div>
         <button
-          onClick={() => setShowForm(!showForm)}
-          className="px-6 py-2.5 rounded-xl font-bold transition-all shadow-lg text-white bg-gradient-to-r from-amber-500 to-orange-600 hover:shadow-primary/30"
+          onClick={() => {
+            if (!showForm && hasReviewed) {
+              alert('이미 제품에 대한 리뷰를 작성하셨습니다. 한 제품에는 하나의 리뷰만 작성 가능합니다.');
+              return;
+            }
+            setShowForm(!showForm);
+          }}
+          className={`px-6 py-2.5 rounded-xl font-bold transition-all shadow-lg ${hasReviewed && !showForm ? 'bg-secondary text-muted-foreground cursor-not-allowed' : 'text-white bg-gradient-to-r from-amber-500 to-orange-600 hover:shadow-primary/30'}`}
         >
-          {showForm ? '취소하기' : '+ 리뷰 작성하기'}
+          {showForm ? '취소하기' : hasReviewed ? '리뷰 작성 완료' : '+ 리뷰 작성하기'}
         </button>
       </div>
 

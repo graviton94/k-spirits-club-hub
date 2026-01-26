@@ -513,7 +513,7 @@ export const reviewsDb = {
 
     async getAllForSpirit(spiritId: string): Promise<any[]> {
         const token = await getServiceAccountToken();
-        const reviewsPath = getAppPath().reviews;
+        const reviewsPath = getAppPath().spiritReviews(spiritId);
         const url = `${BASE_URL}/${reviewsPath}`;
 
         const res = await fetch(url, {
@@ -526,15 +526,19 @@ export const reviewsDb = {
         const json = await res.json();
         if (!json.documents) return [];
 
-        // Filter for this spirit's reviews
-        return json.documents
-            .map((doc: any) => parseFirestoreFields(doc.fields || {}))
-            .filter((review: any) => review.spiritId === spiritId);
+        return json.documents.map((doc: any) => {
+            const data = parseFirestoreFields(doc.fields || {});
+            // Document ID is the userId in this subcollection
+            if (!data.userId) {
+                data.userId = doc.name.split('/').pop();
+            }
+            return data;
+        });
     },
 
     async getAllForUser(userId: string): Promise<any[]> {
         const token = await getServiceAccountToken();
-        const reviewsPath = getAppPath().reviews;
+        const reviewsPath = getAppPath().userReviews(userId);
         const url = `${BASE_URL}/${reviewsPath}`;
 
         const res = await fetch(url, {
@@ -547,10 +551,14 @@ export const reviewsDb = {
         const json = await res.json();
         if (!json.documents) return [];
 
-        // Filter for this user's reviews
-        return json.documents
-            .map((doc: any) => parseFirestoreFields(doc.fields || {}))
-            .filter((review: any) => review.userId === userId);
+        return json.documents.map((doc: any) => {
+            const data = parseFirestoreFields(doc.fields || {});
+            // Document ID is the spiritId in this subcollection
+            if (!data.spiritId) {
+                data.spiritId = doc.name.split('/').pop();
+            }
+            return data;
+        });
     }
 };
 
