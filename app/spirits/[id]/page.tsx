@@ -90,4 +90,3 @@ export default function SpiritDetailPage({
 
   return <SpiritDetailClient spirit={spirit} reviews={reviews} />;
 }
-}
