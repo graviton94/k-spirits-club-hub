@@ -13,6 +13,17 @@ const privateKey = process.env.FIREBASE_PRIVATE_KEY
     ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n')
     : undefined;
 
+if (!privateKey) {
+    console.error("Error: FIREBASE_PRIVATE_KEY is not set or malformed in environment variables.");
+    console.error("Please check your .env.local file.");
+    process.exit(1);
+}
+
+if (!process.env.FIREBASE_CLIENT_EMAIL) {
+    console.error("Error: FIREBASE_CLIENT_EMAIL is not set in environment variables.");
+    process.exit(1);
+}
+
 if (!admin.apps.length) {
     admin.initializeApp({
         credential: admin.credential.cert({
@@ -48,7 +59,7 @@ async function bulkPublishReadySpirits() {
         console.log(`✅ Found ${totalSpirits} spirits to publish\n`);
 
         // Step 2: Update each spirit in batches
-        const batchSize = 500; // Firestore batch limit
+        const batchSize = 200; // Conservative batch size for safety (Firestore max is 500)
         let batchCount = 0;
         let currentBatch = db.batch();
         let successCount = 0;

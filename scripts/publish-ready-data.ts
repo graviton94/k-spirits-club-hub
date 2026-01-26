@@ -90,12 +90,9 @@ async function bulkPublishViaAPI() {
     }
 }
 
-// Run the script
-if (require.main === module) {
-    bulkPublishViaAPI().catch(err => {
-        console.error(err);
-        process.exit(1);
-    });
-}
+// Run the script if executed directly
+bulkPublishViaAPI().catch(err => {
+    console.error(err);
+    process.exit(1);
+});
 
-export { bulkPublishViaAPI };
