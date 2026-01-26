@@ -11,6 +11,8 @@ import ReviewModal from "@/components/cabinet/ReviewModal";
 import { Bookmark, Plus, Pencil, Check, Loader2 } from "lucide-react";
 import { addToCabinet } from "@/app/actions/cabinet";
 
+import SuccessToast from "@/components/ui/SuccessToast";
+
 interface SpiritDetailModalProps {
     spirit: any; // Flexible for now
     isOpen: boolean;
@@ -28,6 +30,8 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
         isOwned: false,
         isWishlist: false
     });
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState("");
 
     // Sync local spirit when prop changes
     useEffect(() => {
@@ -75,9 +79,14 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
             });
             if (onStatusChange) onStatusChange();
 
-            // Redirect to product detail page after adding to cabinet
+            // Show Toast instead of redirect
             if (action === 'add') {
-                router.push(`/spirits/${spirit.id}`);
+                setToastMessage("성공적으로 술장에 담겼습니다! 🥃");
+                setShowToast(true);
+            } else if (action === 'wishlist') {
+                // Might as well add toast for wishlist too for consistency
+                setToastMessage("위시리스트에 담겼습니다! 🔖");
+                setShowToast(true);
             }
         } catch (e) {
             console.error(e);
@@ -188,18 +197,40 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                         {/* Action Buttons */}
                         <div className="flex gap-2">
                             {!cabinetStatus.isOwned ? (
-                                <button
-                                    disabled={isProcessing}
-                                    onClick={() => handleAction('add')}
-                                    className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-black rounded-xl hover:from-amber-600 hover:to-orange-700 transition-all scale-100 active:scale-95 disabled:opacity-50 shadow-lg shadow-primary/20"
-                                >
-                                    {isProcessing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
-                                    <span>술장에 담기</span>
-                                </button>
+                                <div className="w-full flex gap-2">
+                                    <button
+                                        disabled={isProcessing}
+                                        onClick={() => handleAction('add')}
+                                        className="flex-[2] flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-black rounded-xl hover:from-emerald-600 hover:to-green-700 transition-all scale-100 active:scale-95 disabled:opacity-50 shadow-lg shadow-emerald-900/20"
+                                    >
+                                        {isProcessing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
+                                        <span>술장에 담기</span>
+                                    </button>
+                                    {cabinetStatus.isWishlist && (
+                                        <button
+                                            disabled={isProcessing}
+                                            onClick={async () => {
+                                                if (!confirm('위시리스트에서 제거하시겠습니까?')) return;
+                                                setIsProcessing(true);
+                                                try {
+                                                    await import('@/app/actions/cabinet').then(({ removeFromCabinet }) =>
+                                                        removeFromCabinet(user!.uid, spirit.id)
+                                                    );
+                                                    setCabinetStatus({ isOwned: false, isWishlist: false });
+                                                    if (onStatusChange) onStatusChange();
+                                                } catch (e) { console.error(e); }
+                                                finally { setIsProcessing(false); }
+                                            }}
+                                            className="flex-1 flex items-center justify-center gap-2 py-3 bg-red-500/10 text-red-500 border border-red-500/50 hover:bg-red-500/20 rounded-xl font-bold text-sm transition-colors"
+                                        >
+                                            <Check className="w-4 h-4" /> 제거하기
+                                        </button>
+                                    )}
+                                </div>
                             ) : (
                                 <div className="w-full flex gap-2">
                                     <button
-                                        onClick={() => setIsReviewOpen(true)}
+                                        onClick={() => router.push(`/spirits/${localSpirit.id}`)}
                                         className="flex-[2] flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-xl font-bold text-sm shadow-lg shadow-primary/20 hover:from-amber-600 hover:to-orange-700 hover:scale-105 transition-all"
                                     >
                                         <Pencil className="w-4 h-4" />
@@ -314,15 +345,11 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                     </div>
                 </motion.div>
 
-                {/* Review Modal Integration */}
-                {isReviewOpen && (
-                    <ReviewModal
-                        spirit={localSpirit as any}
-                        isOpen={isReviewOpen}
-                        onClose={() => setIsReviewOpen(false)}
-                        onSubmit={handleReviewSubmit}
-                    />
-                )}
+                <SuccessToast
+                    isVisible={showToast}
+                    message={toastMessage}
+                    onClose={() => setShowToast(false)}
+                />
             </motion.div>
         </AnimatePresence>
     );

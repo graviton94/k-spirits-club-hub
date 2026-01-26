@@ -93,7 +93,7 @@ export const SpiritsCacheProvider: React.FC<{ children: React.ReactNode }> = ({ 
     // First check in detail cache
     const cached = detailCache.get(id);
     if (cached) return cached;
-    
+
     // Fallback to publishedSpirits if available
     return publishedSpirits.find(s => s.id === id);
   }, [publishedSpirits, detailCache]);
@@ -122,7 +122,7 @@ export const SpiritsCacheProvider: React.FC<{ children: React.ReactNode }> = ({ 
     try {
       console.log(`[SpiritsCache] 🔄 Fetching detail for: ${id}`);
       const response = await fetch(`/api/spirits/${id}`);
-      
+
       if (!response.ok) {
         console.warn(`[SpiritsCache] ❌ Failed to fetch spirit: ${id}`);
         return null;
@@ -158,13 +158,16 @@ export const SpiritsCacheProvider: React.FC<{ children: React.ReactNode }> = ({ 
     const lowerQuery = query.toLowerCase();
 
     // Search across multiple fields: name, English name, distillery, and category
-    return searchIndex.filter(item => {
+    const results = searchIndex.filter(item => {
       const nameMatch = item.n && item.n.toLowerCase().includes(lowerQuery);
       const enMatch = item.en && item.en.toLowerCase().includes(lowerQuery);
       const distilleryMatch = item.d && item.d.toLowerCase().includes(lowerQuery);
       const categoryMatch = item.c && item.c.toLowerCase().includes(lowerQuery);
       return nameMatch || enMatch || distilleryMatch || categoryMatch;
     });
+
+    // Sort alphabetically (Korean > English)
+    return results.sort((a, b) => a.n.localeCompare(b.n, 'ko-KR'));
   }, [searchIndex]);
 
   return (

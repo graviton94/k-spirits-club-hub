@@ -18,6 +18,10 @@ type ViewMode = 'cellar' | 'flavor';
 
 export const runtime = 'edge';
 
+import SuccessToast from "@/components/ui/SuccessToast";
+
+// ... imports
+
 export default function CabinetPage() {
   // View state
   const [viewMode, setViewMode] = useState<ViewMode>('cellar');
@@ -31,6 +35,10 @@ export default function CabinetPage() {
   const [reviewModalOpen, setReviewModalOpen] = useState(false);
   const [reviewTarget, setReviewTarget] = useState<Spirit | null>(null);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
+
+  // Toast state
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
   // Hooks
   const { profile, loading, user } = useAuth();
@@ -101,26 +109,7 @@ export default function CabinetPage() {
     }
   };
 
-  // Handle adding new spirit
-  const handleAddSpirit = async (newSpirit: any) => {
-    if (!user) return;
 
-    try {
-      await addToCabinet(user.uid, newSpirit.id, {
-        isWishlist: false,
-        name: newSpirit.name,
-        distillery: newSpirit.distillery,
-        imageUrl: newSpirit.imageUrl,
-        category: newSpirit.category,
-        abv: newSpirit.abv
-      });
-
-      // Refresh cabinet
-      await fetchCabinet();
-    } catch (error) {
-      console.error('Failed to add spirit:', error);
-    }
-  };
 
   // Event handlers
   const openReviewModal = (e: React.MouseEvent, spirit: Spirit) => {
@@ -247,7 +236,12 @@ export default function CabinetPage() {
       <SearchSpiritModal
         isOpen={searchModalOpen}
         onClose={() => setSearchModalOpen(false)}
-        onAdd={handleAddSpirit}
+        onSuccess={(message) => {
+          fetchCabinet();
+          setToastMessage(message);
+          setShowToast(true);
+          setSearchModalOpen(false);
+        }}
         existingIds={new Set(spirits.map(s => s.id))}
       />
 
@@ -256,6 +250,12 @@ export default function CabinetPage() {
         spirit={selectedSpirit}
         onClose={() => setSelectedSpirit(null)}
         onStatusChange={fetchCabinet}
+      />
+
+      <SuccessToast
+        isVisible={showToast}
+        message={toastMessage}
+        onClose={() => setShowToast(false)}
       />
 
       {/* Ad */}
@@ -410,8 +410,8 @@ function SpiritCard({
           <div className="absolute inset-0 z-10 flex flex-col justify-end p-4 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
             <div className="flex flex-col items-start gap-1">
               {/* Badge */}
-              <span className={`inline-block px-2 py-0.5 text-[10px] font-bold text-white rounded-md uppercase shadow-sm backdrop-blur-md ${spirit.isWishlist ? 'bg-purple-600/80' : 'bg-green-600/80'}`}>
-                {spirit.isWishlist ? '위시리스트' : '보유중'}
+              <span className={`inline-block px-2 py-0.5 text-[11px] font-bold text-white rounded-md uppercase shadow-sm backdrop-blur-md ${spirit.isWishlist ? 'bg-red-600/80' : 'bg-green-600/80'}`}>
+                {spirit.isWishlist ? '🔖Wish' : '✅️보유중'}
               </span>
               {/* Name */}
               <p className="text-sm font-bold text-white text-left leading-tight line-clamp-2 drop-shadow-md">

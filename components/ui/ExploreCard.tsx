@@ -11,6 +11,8 @@ import { addToCabinet, removeFromCabinet, checkCabinetStatus } from "@/app/actio
 import { triggerLoginModal } from "@/lib/utils/spirit-adapters";
 import SuccessToast from "./SuccessToast";
 
+import { Bookmark } from "lucide-react";
+
 interface ExploreCardProps {
   spirit: Spirit;
   onClick?: (spirit: Spirit) => void;
@@ -223,24 +225,29 @@ export function ExploreCard({ spirit, onClick }: ExploreCardProps) {
         <button
           onClick={handleCabinetAction}
           disabled={isToggling || isLoadingStatus}
-          className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap
+          className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap text-white
             ${isInCabinet
-              ? 'bg-red-500 hover:bg-red-600 text-white'
-              : 'bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white'
+              ? 'bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700'
+              : 'bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700'
             }`}
         >
-          {isInCabinet ? '술장 빼기' : '술장 담기'}
+          {isInCabinet ? '➖술장 빼기' : '➕술장 담기'}
         </button>
         <button
           onClick={handleWishlistAction}
           disabled={isToggling || isLoadingStatus}
-          className={`px-3 py-1.5 text-xs font-bold rounded-lg border transition-all disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap
+          className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap text-white
             ${isWishlist
-              ? 'bg-red-50 dark:bg-red-900/20 text-red-600 border-red-200 dark:border-red-800'
-              : 'bg-background hover:bg-secondary text-foreground border-border hover:border-amber-500'
+              ? 'bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700'
+              : 'bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700'
             }`}
         >
-          {isWishlist ? '위시 제거' : '위시 담기'}
+          <div className="flex items-center gap-1.5 leading-none">
+            <Bookmark className={`w-4 h-4 ${isWishlist ? 'fill-current' : ''}`} />
+            <span className="text-sm font-medium">
+              {isWishlist ? '위시 빼기' : '위시 담기'}
+            </span>
+          </div>
         </button>
       </div>
     </motion.div>
