@@ -218,11 +218,13 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit }: Revie
 
                         {/* Nose Section */}
                         <div className="space-y-3">
-                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                                <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
-                                    <span className="text-lg">👃</span> Aroma (향)
-                                </h3>
-                                <StarRating label="" value={ratingN} onChange={setRatingN} colorClass="text-primary" />
+                            <div className="p-3 sm:p-4 bg-secondary/50 rounded-xl border border-border">
+                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                                    <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
+                                        <span className="text-lg">👃</span> Aroma (향)
+                                    </h3>
+                                    <StarRating label="" value={ratingN} onChange={setRatingN} colorClass="text-primary" />
+                                </div>
                             </div>
                             <TagMultiSelect category="nose" selectedTags={tagsN} onChange={setTagsN} />
                         </div>
@@ -231,11 +233,13 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit }: Revie
 
                         {/* Palate Section */}
                         <div className="space-y-3">
-                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                                <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
-                                    <span className="text-lg">👅</span> Taste (맛)
-                                </h3>
-                                <StarRating label="" value={ratingP} onChange={setRatingP} colorClass="text-primary" />
+                            <div className="p-3 sm:p-4 bg-secondary/50 rounded-xl border border-border">
+                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                                    <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
+                                        <span className="text-lg">👅</span> Taste (맛)
+                                    </h3>
+                                    <StarRating label="" value={ratingP} onChange={setRatingP} colorClass="text-primary" />
+                                </div>
                             </div>
                             <TagMultiSelect category="palate" selectedTags={tagsP} onChange={setTagsP} />
                         </div>
@@ -244,11 +248,13 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit }: Revie
 
                         {/* Finish Section */}
                         <div className="space-y-3">
-                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                                <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
-                                    <span className="text-lg">🏁</span> Finish (여운)
-                                </h3>
-                                <StarRating label="" value={ratingF} onChange={setRatingF} colorClass="text-primary" />
+                            <div className="p-3 sm:p-4 bg-secondary/50 rounded-xl border border-border">
+                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                                    <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
+                                        <span className="text-lg">🏁</span> Finish (여운)
+                                    </h3>
+                                    <StarRating label="" value={ratingF} onChange={setRatingF} colorClass="text-primary" />
+                                </div>
                             </div>
                             <TagMultiSelect category="finish" selectedTags={tagsF} onChange={setTagsF} />
                         </div>

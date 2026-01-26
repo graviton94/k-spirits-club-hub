@@ -2,13 +2,16 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import { useSpiritsCache } from '@/app/context/spirits-cache-context';
-import SpiritCard from './SpiritCard';
+import { SpiritCard } from './SpiritCard';
 import { Search, Loader2, AlertCircle, RefreshCw } from 'lucide-react';
 
 export default function ExploreContent() {
   const { searchIndex, isLoading, isRefreshing, refreshCache } = useSpiritsCache();
   const [searchTerm, setSearchTerm] = useState('');
   const [displayLimit, setDisplayLimit] = useState(24);
+
+  // Constant timestamp to avoid recreating Date objects on every render
+  const fallbackTimestamp = useMemo(() => new Date(), []);
 
   // [SYSTEM_CHECK] 데이터 가시성 최종 리포트 로그
   useEffect(() => {
@@ -76,7 +79,26 @@ export default function ExploreContent() {
                   id: item.i,
                   name: item.n,
                   category: item.c,
+                  subcategory: item.sc,
+                  imageUrl: item.t,
                   thumbnailUrl: item.t,
+                  abv: 0,
+                  volume: null,
+                  distillery: null,
+                  bottler: null,
+                  mainCategory: item.mc,
+                  country: null,
+                  region: null,
+                  source: 'food_safety_korea' as const,
+                  externalId: null,
+                  status: 'PUBLISHED' as const,
+                  isPublished: true,
+                  isReviewed: false,
+                  reviewedBy: null,
+                  reviewedAt: null,
+                  metadata: {},
+                  createdAt: fallbackTimestamp,
+                  updatedAt: fallbackTimestamp,
                 }} 
               />
             ))}

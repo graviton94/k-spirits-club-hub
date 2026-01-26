@@ -58,7 +58,8 @@ export function SpiritCard({ spirit, onClick }: SpiritCardProps) {
 
           {/* Subcategory + ABV */}
           <p className="text-sm text-muted-foreground">
-            {spirit.subcategory || spirit.category} · {spirit.abv}°
+            {spirit.subcategory || spirit.category}
+            {spirit.abv > 0 && ` · ${spirit.abv}°`}
           </p>
         </div>
 
