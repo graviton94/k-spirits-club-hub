@@ -9,11 +9,7 @@
  * - artifacts/{appId}/users/{userId}/cabinet: User cabinet (private)
  */
 
-const APP_ID = process.env.NEXT_PUBLIC_APP_ID;
-
-if (!APP_ID) {
-  throw new Error('NEXT_PUBLIC_APP_ID environment variable is required');
-}
+const APP_ID = process.env.NEXT_PUBLIC_APP_ID || 'k-spirits-club-hub';
 
 export type PathType = 'spirits' | 'reviews' | 'userCabinet';
 
