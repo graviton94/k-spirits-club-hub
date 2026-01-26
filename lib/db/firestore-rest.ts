@@ -432,9 +432,9 @@ export const cabinetDb = {
                 const mapFields = value.mapValue.fields || {};
                 for (const [mk, mv] of Object.entries(mapFields) as [string, any][]) {
                     if ('stringValue' in mv) mapData[mk] = mv.stringValue;
-                    if ('integerValue' in mv) mapData[mk] = Number(mv.integerValue);
-                    if ('doubleValue' in mv) mapData[mk] = Number(mv.doubleValue);
-                    if (mv.arrayValue) mapData[mk] = (mv.arrayValue.values || []).map((v: any) => v.stringValue);
+                    else if ('integerValue' in mv) mapData[mk] = Number(mv.integerValue);
+                    else if ('doubleValue' in mv) mapData[mk] = Number(mv.doubleValue);
+                    else if (mv.arrayValue) mapData[mk] = (mv.arrayValue.values || []).map((v: any) => v.stringValue);
                 }
                 obj[key] = mapData;
             }

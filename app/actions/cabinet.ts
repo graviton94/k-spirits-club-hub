@@ -3,19 +3,6 @@
 import { cabinetDb, spiritsDb } from '@/lib/db/firestore-rest';
 
 /**
- * Toggle a spirit in/out of the user's cabinet
- * If the spirit exists in the cabinet, it will be removed
- * If it doesn't exist, it will be added with serverTimestamp
- */
-export async function toggleCabinet(spiritId: string, authToken?: string) {
-  // For server actions, we need to get the user ID from the client
-  // Since we can't use Firebase Auth directly in server actions,
-  // we'll need the user to pass their auth token or UID
-  // For now, we'll throw an error - this will be called from client with proper auth
-  throw new Error('toggleCabinet must be called from client-side with proper authentication');
-}
-
-/**
  * Update a cabinet entry with personalRating and personalNotes
  */
 export async function updateCabinetEntry(
@@ -29,8 +16,7 @@ export async function updateCabinetEntry(
 
   try {
     // Fetch existing cabinet item
-    const cabinetItems = await cabinetDb.getAll(userId);
-    const existingItem = cabinetItems.find((item: any) => item.id === spiritId);
+    const existingItem = await cabinetDb.getById(userId, spiritId);
 
     if (!existingItem) {
       throw new Error('Spirit not found in cabinet');
@@ -158,8 +144,7 @@ export async function checkCabinetStatus(userId: string, spiritId: string) {
   }
 
   try {
-    const cabinetItems = await cabinetDb.getAll(userId);
-    const item = cabinetItems.find((i: any) => i.id === spiritId);
+    const item = await cabinetDb.getById(userId, spiritId);
     
     if (!item) {
       return { isOwned: false, isWishlist: false, data: null };
