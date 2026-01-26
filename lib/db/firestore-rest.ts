@@ -279,19 +279,34 @@ export const spiritsDb = {
             isPublished: true
         });
 
+        console.log(`[SearchIndex] Total published spirits fetched: ${publishedSpirits.length}`);
+
         // Map to minimized structure with short keys
         // DEFENSIVE: Handle missing required fields with defaults to prevent data loss
-        return publishedSpirits
-            .filter(spirit => spirit.id && spirit.name && spirit.category) // Skip malformed docs
-            .map(spirit => ({
-                i: spirit.id,
-                n: spirit.name,
-                en: spirit.metadata?.name_en ?? null,
-                c: spirit.category,
-                mc: spirit.mainCategory ?? null,
-                sc: spirit.subcategory ?? null,
-                t: spirit.thumbnailUrl ?? spirit.imageUrl ?? null // Fallback to imageUrl if thumbnailUrl missing
-            }));
+        const validSpirits = publishedSpirits.filter(spirit => {
+            const isValid = spirit.id && spirit.name && spirit.category;
+            if (!isValid) {
+                console.warn(`[SearchIndex] Skipping malformed spirit:`, {
+                    id: spirit.id,
+                    hasName: !!spirit.name,
+                    hasCategory: !!spirit.category,
+                    isPublished: spirit.isPublished
+                });
+            }
+            return isValid;
+        });
+
+        console.log(`[SearchIndex] Valid spirits after filtering: ${validSpirits.length}`);
+
+        return validSpirits.map(spirit => ({
+            i: spirit.id,
+            n: spirit.name,
+            en: spirit.metadata?.name_en ?? null,
+            c: spirit.category,
+            mc: spirit.mainCategory ?? null,
+            sc: spirit.subcategory ?? null,
+            t: spirit.thumbnailUrl ?? spirit.imageUrl ?? null // Fallback to imageUrl if thumbnailUrl missing
+        }));
     }
 };
 
