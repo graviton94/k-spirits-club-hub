@@ -16,6 +16,7 @@ export interface SpiritSearchIndex {
   t: string | null;    // thumbnailUrl
   a: number;           // abv (alcohol by volume)
   d: string | null;    // distillery
+  cre?: string;        // createdAt
   m?: any;             // metadata (optional, minimized)
   s?: string;          // status (only for admin)
 }

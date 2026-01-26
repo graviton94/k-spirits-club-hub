@@ -2,7 +2,7 @@
 
 import type { Review } from '@/lib/db/schema';
 import { useState, useEffect, useRef } from 'react';
-import { Star, MessageSquare, Wind, Utensils, Zap, Quote, X, Check } from 'lucide-react';
+import { Star, MessageSquare, Wind, Utensils, Zap, Quote, X, Check, Edit2, Trash2 } from 'lucide-react';
 import metadata from '@/lib/constants/spirits-metadata.json';
 import { useAuth } from '@/app/context/auth-context';
 
@@ -15,13 +15,15 @@ interface ExtendedReview extends Review {
 interface ReviewSectionProps {
   spiritId: string;
   spiritName: string;
+  spiritImageUrl?: string | null;
   reviews: ExtendedReview[];
 }
 
-export default function ReviewSection({ spiritId, spiritName, reviews }: ReviewSectionProps) {
+export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, reviews }: ReviewSectionProps) {
   const { user } = useAuth();
   const [showForm, setShowForm] = useState(false);
   const [liveReviews, setLiveReviews] = useState<ExtendedReview[]>(reviews);
+  const [editingReview, setEditingReview] = useState<ExtendedReview | null>(null);
 
   // Synchronize internal state when reviews prop changes (e.g., after fetching from API)
   useEffect(() => {
@@ -54,6 +56,38 @@ export default function ReviewSection({ spiritId, spiritName, reviews }: ReviewS
       return [newReview, ...filtered];
     });
     setShowForm(false);
+    setEditingReview(null);
+  };
+
+  const handleDelete = async (review: ExtendedReview) => {
+    if (!user) return;
+    if (!confirm('정말로 이 리뷰를 삭제하시겠습니까?')) return;
+
+    try {
+      const response = await fetch(`/api/reviews?spiritId=${spiritId}`, {
+        method: 'DELETE',
+        headers: {
+          'x-user-id': user.uid
+        }
+      });
+
+      if (response.ok) {
+        setLiveReviews(prev => prev.filter(r => r.userId !== user.uid));
+        // Reset hasReviewed by triggering any relevant checks if needed
+      } else {
+        alert('리뷰 삭제에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('Delete review error:', error);
+      alert('오류가 발생했습니다.');
+    }
+  };
+
+  const handleEdit = (review: ExtendedReview) => {
+    setEditingReview(review);
+    setShowForm(true);
+    // Scroll to form
+    window.scrollTo({ top: document.getElementById('review-form-anchor')?.offsetTop || 0, behavior: 'smooth' });
   };
 
   return (
@@ -66,12 +100,18 @@ export default function ReviewSection({ spiritId, spiritName, reviews }: ReviewS
           <p className="text-sm text-muted-foreground">시음 경험을 공유해주세요</p>
         </div>
         <button
+          id="review-form-anchor"
           onClick={() => {
-            if (!showForm && hasReviewed) {
+            if (!showForm && hasReviewed && !editingReview) {
               alert('이미 제품에 대한 리뷰를 작성하셨습니다. 한 제품에는 하나의 리뷰만 작성 가능합니다.');
               return;
             }
-            setShowForm(!showForm);
+            if (showForm) {
+              setShowForm(false);
+              setEditingReview(null);
+            } else {
+              setShowForm(true);
+            }
           }}
           className={`px-6 py-2.5 rounded-xl font-bold transition-all shadow-lg ${hasReviewed && !showForm ? 'bg-secondary text-muted-foreground cursor-not-allowed' : 'text-white bg-gradient-to-r from-amber-500 to-orange-600 hover:shadow-primary/30'}`}
         >
@@ -89,11 +129,29 @@ export default function ReviewSection({ spiritId, spiritName, reviews }: ReviewS
         </div>
       )}
 
-      {showForm && <ReviewForm spiritId={spiritId} spiritName={spiritName} onCancel={() => setShowForm(false)} onSubmitted={handleReviewSubmitted} />}
+      {showForm && (
+        <ReviewForm
+          spiritId={spiritId}
+          spiritName={spiritName}
+          spiritImageUrl={spiritImageUrl}
+          initialData={editingReview}
+          onCancel={() => {
+            setShowForm(false);
+            setEditingReview(null);
+          }}
+          onSubmitted={handleReviewSubmitted}
+        />
+      )}
 
       <div className="space-y-8 mt-6">
         {liveReviews.map((review) => (
-          <ReviewCard key={review.id} review={review} />
+          <ReviewCard
+            key={review.id}
+            review={review}
+            isOwner={user?.uid === review.userId}
+            onEdit={() => handleEdit(review)}
+            onDelete={() => handleDelete(review)}
+          />
         ))}
         {liveReviews.length === 0 && !showForm && (
           <div className="text-center py-20 bg-secondary/20 rounded-3xl border border-dashed border-border">
@@ -137,17 +195,43 @@ function RatingSummaryItem({ label, value, icon, color = "text-amber-500" }: { l
   );
 }
 
-function ReviewCard({ review }: { review: ExtendedReview }) {
+function ReviewCard({ review, isOwner, onEdit, onDelete }: {
+  review: ExtendedReview,
+  isOwner?: boolean,
+  onEdit?: () => void,
+  onDelete?: () => void
+}) {
   return (
-    <div className="bg-card border border-border rounded-3xl p-6 sm:p-8 shadow-sm transition-hover hover:border-primary/20">
+    <div className="bg-card border border-border rounded-3xl p-6 sm:p-8 shadow-sm transition-hover hover:border-primary/20 relative group/card">
       <div className="flex justify-between items-start mb-6">
-        <div className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-2xl bg-secondary flex items-center justify-center text-primary font-black border border-border">
-            {review.userName.substring(0, 1)}
+        <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 rounded-2xl bg-secondary flex items-center justify-center text-primary font-black border border-border">
+              {review.userName.substring(0, 1)}
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground font-bold">{review.userName} • {new Date(review.createdAt).toLocaleDateString()}</p>
+            </div>
           </div>
-          <div>
-            <p className="text-sm text-muted-foreground font-bold">{review.userName} • {new Date(review.createdAt).toLocaleDateString()}</p>
-          </div>
+
+          {isOwner && (
+            <div className="flex gap-2 sm:ml-2">
+              <button
+                onClick={onEdit}
+                className="p-2 rounded-lg bg-secondary/50 text-muted-foreground hover:text-amber-600 hover:bg-amber-500/10 transition-all border border-transparent hover:border-amber-500/20"
+                title="수정하기"
+              >
+                <Edit2 className="w-3.5 h-3.5" />
+              </button>
+              <button
+                onClick={onDelete}
+                className="p-2 rounded-lg bg-secondary/50 text-muted-foreground hover:text-red-600 hover:bg-red-500/10 transition-all border border-transparent hover:border-red-500/20"
+                title="삭제하기"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
         </div>
         <div className="flex flex-col items-end">
           {(() => {
@@ -253,22 +337,24 @@ function ReviewMetricsItem({ title, rating, tags, icon, color }: { title: string
   );
 }
 
-function ReviewForm({ spiritId, spiritName, onCancel, onSubmitted }: {
+function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitted, initialData }: {
   spiritId: string;
   spiritName: string;
+  spiritImageUrl?: string | null;
   onCancel: () => void;
   onSubmitted: (review: ExtendedReview) => void;
+  initialData?: ExtendedReview | null;
 }) {
   const { user, profile } = useAuth();
   const [formData, setFormData] = useState({
-    content: '',
-    rating: 0,
-    nose: [] as string[],
-    noseRating: 0,
-    palate: [] as string[],
-    palateRating: 0,
-    finish: [] as string[],
-    finishRating: 0
+    content: initialData?.content || '',
+    rating: initialData?.rating || 0,
+    nose: initialData?.nose ? initialData.nose.split(',').map(t => t.trim()).filter(Boolean) : [] as string[],
+    noseRating: initialData?.noseRating || initialData?.rating || 0,
+    palate: initialData?.palate ? initialData.palate.split(',').map(t => t.trim()).filter(Boolean) : [] as string[],
+    palateRating: initialData?.palateRating || initialData?.rating || 0,
+    finish: initialData?.finish ? initialData.finish.split(',').map(t => t.trim()).filter(Boolean) : [] as string[],
+    finishRating: initialData?.finishRating || initialData?.rating || 0
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -303,6 +389,7 @@ function ReviewForm({ spiritId, spiritName, onCancel, onSubmitted }: {
       const reviewPayload = {
         spiritId,
         spiritName,
+        imageUrl: spiritImageUrl || '',
         rating: formData.rating,
         noseRating: formData.noseRating,
         palateRating: formData.palateRating,
@@ -391,7 +478,7 @@ function ReviewForm({ spiritId, spiritName, onCancel, onSubmitted }: {
       <div className="mb-10">
         <h3 className="text-xl font-black flex items-center gap-2 mb-1">
           <span className="w-2 h-6 bg-primary rounded-full"></span>
-          리뷰 작성하기
+          {initialData ? '리뷰 수정하기' : '리뷰 작성하기'}
         </h3>
         <p className="text-xs text-muted-foreground font-medium ml-4">
           (점수 클릭 시 0.1점 단위로 조정 가능합니다!)
@@ -499,7 +586,7 @@ function ReviewForm({ spiritId, spiritName, onCancel, onSubmitted }: {
               </>
             ) : (
               <>
-                <Check className="w-5 h-5" /> 리뷰 제출하기
+                <Check className="w-5 h-5" /> {initialData ? '리뷰 수정 완료' : '리뷰 제출하기'}
               </>
             )}
           </button>

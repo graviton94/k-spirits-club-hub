@@ -8,6 +8,10 @@ interface LiveReview {
   id: string;
   spiritId: string;
   spiritName: string;
+  imageUrl?: string;
+  nose?: string;
+  palate?: string;
+  finish?: string;
   userId: string;
   userName: string;
   rating: number;
@@ -22,7 +26,7 @@ export function LiveReviews() {
   useEffect(() => {
     async function fetchReviews() {
       try {
-        const response = await fetch('/api/reviews?limit=5');
+        const response = await fetch('/api/reviews?mode=recent');
         if (response.ok) {
           const data = await response.json();
           setReviews(data.reviews || []);
@@ -44,7 +48,7 @@ export function LiveReviews() {
     if (typeof window !== 'undefined') {
       window.addEventListener('reviewSubmitted', handleReviewSubmitted);
     }
-    
+
     return () => {
       if (typeof window !== 'undefined') {
         window.removeEventListener('reviewSubmitted', handleReviewSubmitted);
@@ -92,43 +96,82 @@ export function LiveReviews() {
   return (
     <div className="space-y-4">
       {reviews.map((review) => (
-        <Link 
-          key={review.id} 
+        <Link
+          key={review.id}
           href={`/spirits/${review.spiritId}`}
           className="block group"
         >
-          <div className="flex items-start gap-4 p-4 rounded-xl bg-card border border-border hover:border-primary/50 transition-all">
-            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold border border-primary/20">
-              {review.userName.substring(0, 2).toUpperCase()}
+          <div className="flex items-center gap-4 p-4 rounded-xl bg-card border border-border hover:border-primary/50 transition-all">
+            {/* Section 1: Product Image */}
+            <div className="w-12 h-16 sm:w-16 sm:h-20 rounded-lg bg-secondary overflow-hidden flex-shrink-0 border border-border">
+              {review.imageUrl ? (
+                <img src={review.imageUrl} alt={review.spiritName} className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-xl bg-primary/5">🥃</div>
+              )}
             </div>
+
+            {/* Section 2: Text Content Area */}
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1 flex-wrap">
                 <span className="font-bold text-sm text-foreground">{review.userName}</span>
                 <span className="text-xs text-muted-foreground">·</span>
                 <span className="text-xs text-muted-foreground">{getTimeAgo(review.createdAt)}</span>
               </div>
-              <div className="text-xs text-primary font-bold mb-2 group-hover:text-primary/80 transition-colors">
+              <div className="text-xs text-primary font-bold mb-1 group-hover:text-primary/80 transition-colors">
                 {review.spiritName}
               </div>
-              <p className="text-sm text-foreground line-clamp-2 mb-2">
+              <p className="text-sm text-foreground line-clamp-2 italic opacity-80 mb-2">
                 "{review.content}"
               </p>
-              <div className="flex gap-0.5">
-                {Array.from({ length: 5 }).map((_, i) => {
-                  const isFull = i + 1 <= review.rating;
-                  const isHalf = i + 0.5 === review.rating;
-                  return (
-                    <div key={i} className="relative">
-                      <Star className={`w-3 h-3 ${isFull ? 'fill-amber-500 text-amber-500' : isHalf ? 'text-amber-500' : 'text-muted-foreground/30'}`} />
-                      {isHalf && (
-                        <div className="absolute inset-0 overflow-hidden w-[50%]">
-                          <Star className="w-3 h-3 fill-amber-500 text-amber-500" />
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
+
+              {/* Tags Section */}
+              {(() => {
+                const allTags = [
+                  ...(review.nose?.split(',') || []),
+                  ...(review.palate?.split(',') || []),
+                  ...(review.finish?.split(',') || [])
+                ].map(t => t.trim()).filter(Boolean);
+
+                if (allTags.length === 0) return null;
+
+                return (
+                  <div className="flex flex-wrap gap-1">
+                    {allTags.slice(0, 4).map((tag, idx) => (
+                      <span
+                        key={idx}
+                        className="text-[8px] sm:text-[9px] px-2 py-0.5 rounded-md bg-secondary border border-border font-bold text-muted-foreground whitespace-nowrap"
+                      >
+                        #{tag}
+                      </span>
+                    ))}
+                    {allTags.length > 4 && (
+                      <span className="text-[8px] font-bold text-muted-foreground/50 self-center ml-1">
+                        +{allTags.length - 4}
+                      </span>
+                    )}
+                  </div>
+                );
+              })()}
+            </div>
+
+            {/* Section 3: Overall Score Card */}
+            <div className="shrink-0">
+              {(() => {
+                const score = review.rating;
+                const colorClass = score >= 4.0
+                  ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
+                  : score >= 2.5
+                    ? "bg-amber-500/10 text-amber-600 border-amber-500/20"
+                    : "bg-rose-500/10 text-rose-600 border-rose-500/20";
+
+                return (
+                  <div className={`flex flex-col items-center justify-center px-4 py-3 sm:py-4 rounded-2xl border ${colorClass} min-w-[72px] shadow-sm`}>
+                    <span className="text-[9px] font-black uppercase tracking-[0.1em] mb-1 opacity-80">Overall</span>
+                    <span className="text-xl font-black leading-none">{score.toFixed(2)}</span>
+                  </div>
+                );
+              })()}
             </div>
           </div>
         </Link>

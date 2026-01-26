@@ -37,6 +37,15 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
 
     // Check status on mount
     useEffect(() => {
+        if (spirit.id) {
+            // Log 'view' event for trending calculation
+            fetch('/api/trending/log', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ spiritId: spirit.id, action: 'view' })
+            }).catch(err => console.error('Failed to log view:', err));
+        }
+
         if (user && spirit.id) {
             fetch(`/api/cabinet/check?uid=${user.uid}&sid=${spirit.id}`)
                 .then(res => res.json())
@@ -84,6 +93,13 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                 setIsInCabinet(true);
                 setIsWishlist(false); // If it was in wishlist, it's now owned
                 setSuccessMessage('🥃 술장에 저장되었습니다!');
+
+                // Log 'cabinet' event for trending
+                fetch('/api/trending/log', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ spiritId: spirit.id, action: 'cabinet' })
+                }).catch(err => console.error('Failed to log cabinet add:', err));
             }
             setShowSuccessToast(true);
         } catch (error: any) {
@@ -125,6 +141,13 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                 setIsWishlist(true);
                 setIsInCabinet(false); // Can't be both (usually)
                 setSuccessMessage('🔖 위시리스트에 추가되었습니다!');
+
+                // Log 'wishlist' event for trending
+                fetch('/api/trending/log', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ spiritId: spirit.id, action: 'wishlist' })
+                }).catch(err => console.error('Failed to log wishlist add:', err));
             }
             setShowSuccessToast(true);
         } catch (error: any) {
@@ -305,7 +328,7 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
             </div>
 
             {/* 4. Reviews Section */}
-            <ReviewSection spiritId={spirit.id} spiritName={spirit.name} reviews={reviews} />
+            <ReviewSection spiritId={spirit.id} spiritName={spirit.name} spiritImageUrl={spirit.imageUrl} reviews={reviews} />
 
             {/* Bottom Ad */}
             {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT && (

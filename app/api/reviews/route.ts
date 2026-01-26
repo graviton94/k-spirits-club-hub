@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { spiritId, spiritName, rating, noseRating, palateRating, finishRating, content, nose, palate, finish, userName } = body;
+    const { spiritId, spiritName, imageUrl, rating, noseRating, palateRating, finishRating, content, nose, palate, finish, userName } = body;
 
     // Validate required fields
     if (!spiritId || !spiritName || rating === undefined || !content) {
@@ -23,6 +23,7 @@ export async function POST(request: NextRequest) {
     const reviewData = {
       spiritId,
       spiritName,
+      imageUrl: imageUrl || '',
       userId,
       userName: userName || 'Anonymous',
       rating: Number(rating),
@@ -40,6 +41,10 @@ export async function POST(request: NextRequest) {
 
     // Save to public reviews using reviewsDb
     await reviewsDb.upsert(spiritId, userId, reviewData);
+
+    // Log 'review' event for trending stats
+    const { trendingDb } = await import('@/lib/db/firestore-rest');
+    await trendingDb.logEvent(spiritId, 'review');
 
     return NextResponse.json({
       success: true,
@@ -61,12 +66,30 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const spiritId = searchParams.get('spiritId');
     const userId = searchParams.get('userId');
+    const mode = searchParams.get('mode');
+
+    if (mode === 'recent') {
+      const reviews = await reviewsDb.getRecent();
+      return NextResponse.json({
+        reviews: reviews.map(r => ({
+          id: `${r.spiritId}_${r.userId}`,
+          ...r,
+          noseRating: r.ratingN,
+          palateRating: r.ratingP,
+          finishRating: r.ratingF,
+          content: r.notes,
+          nose: r.tagsN,
+          palate: r.tagsP,
+          finish: r.tagsF
+        }))
+      }, { status: 200 });
+    }
 
     if (spiritId) {
       // Get reviews for a specific spirit
       const reviews = await reviewsDb.getAllForSpirit(spiritId);
-      
-      return NextResponse.json({ 
+
+      return NextResponse.json({
         reviews: reviews.map(r => ({
           id: `${r.spiritId}_${r.userId}`,
           ...r,
@@ -85,8 +108,8 @@ export async function GET(request: NextRequest) {
     if (userId) {
       // Get reviews by a specific user
       const reviews = await reviewsDb.getAllForUser(userId);
-      
-      return NextResponse.json({ 
+
+      return NextResponse.json({
         reviews: reviews.map(r => ({
           id: `${r.spiritId}_${r.userId}`,
           ...r,
@@ -108,6 +131,31 @@ export async function GET(request: NextRequest) {
     console.error('Error fetching reviews:', error);
     return NextResponse.json({
       error: 'Failed to fetch reviews',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    }, { status: 500 });
+  }
+}
+// DELETE /api/reviews - Delete a review
+export async function DELETE(request: NextRequest) {
+  try {
+    const userId = request.headers.get('x-user-id');
+    const { searchParams } = new URL(request.url);
+    const spiritId = searchParams.get('spiritId');
+
+    if (!userId || !spiritId) {
+      return NextResponse.json({ error: 'Unauthorized or Missing SpiritId' }, { status: 401 });
+    }
+
+    await reviewsDb.delete(spiritId, userId);
+
+    return NextResponse.json({
+      success: true,
+      message: 'Review deleted successfully'
+    }, { status: 200 });
+  } catch (error) {
+    console.error('Error deleting review:', error);
+    return NextResponse.json({
+      error: 'Failed to delete review',
       details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 });
   }

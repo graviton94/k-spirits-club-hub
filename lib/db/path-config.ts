@@ -52,7 +52,10 @@ export const getAppPath = (appId: string = APP_ID) => ({
   reviews: `artifacts/${appId}/public/data/reviews`,
   userCabinet: (userId: string) => `artifacts/${appId}/users/${userId}/cabinet`,
   spiritReviews: (spiritId: string) => `artifacts/${appId}/spirits/${spiritId}/reviews`,
-  userReviews: (userId: string) => `artifacts/${appId}/users/${userId}/reviews`
+  userReviews: (userId: string) => `artifacts/${appId}/users/${userId}/reviews`,
+  recentReviews: `artifacts/${appId}/public/data/recent_reviews`,
+  trendingDaily: (date: string) => `artifacts/${appId}/public/trending/daily/${date}`,
+  trendingGlobal: `artifacts/${appId}/public/trending/global`
 });
 
 /**

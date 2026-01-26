@@ -10,28 +10,48 @@ import { ArrowRight, Flame, Sparkles } from "lucide-react";
 import styles from "./page.module.css";
 import { RandomBackground } from "@/components/ui/RandomBackground";
 import { useSpiritsCache } from "@/app/context/spirits-cache-context";
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 
 export default function HomePage() {
-  const { publishedSpirits, isLoading } = useSpiritsCache();
+  const { publishedSpirits, isLoading: isCacheLoading } = useSpiritsCache();
+  const [trendingSpirits, setTrendingSpirits] = useState<any[]>([]);
+  const [isTrendingLoading, setIsTrendingLoading] = useState(true);
 
-  // Get top trending spirits from cache (sorted by createdAt, most recent first)
-  const trendingSpirits = useMemo(() => {
+  useEffect(() => {
+    async function fetchTrending() {
+      try {
+        const res = await fetch('/api/trending/list?limit=5');
+        if (res.ok) {
+          const data = await res.json();
+          setTrendingSpirits(data.spirits || []);
+        }
+      } catch (err) {
+        console.error('Failed to fetch trending:', err);
+      } finally {
+        setIsTrendingLoading(false);
+      }
+    }
+    fetchTrending();
+  }, []);
+
+  // Compute final display spirits (trending or fallback to recent)
+  const displaySpirits = useMemo(() => {
+    if (trendingSpirits.length > 0) return trendingSpirits;
+
+    // Fallback: Show most recent spirits from cache
     if (!publishedSpirits.length) return [];
-
-    // Filter spirits with images and sort by createdAt (most recent first)
-    return publishedSpirits
+    return [...publishedSpirits]
       .filter(s => s.imageUrl)
       .sort((a, b) => {
         const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
         const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
         return dateB - dateA;
       })
-      .slice(0, 10);
-  }, [publishedSpirits]);
+      .slice(0, 5);
+  }, [trendingSpirits, publishedSpirits]);
 
-  const heroSpirit = trendingSpirits[0];
-  const listSpirits = trendingSpirits.slice(1);
+  const listSpirits = displaySpirits;
+  const isLoading = isCacheLoading && isTrendingLoading;
 
   // Use all categories from metadata
   const allCategories = Object.keys(metadata.categories);
@@ -150,7 +170,7 @@ export default function HomePage() {
             ))
           ) : (
             <>
-              {listSpirits.slice(0, 3).map((spirit) => (
+              {listSpirits.map((spirit) => (
                 <SpiritCard key={spirit.id} spirit={spirit} />
               ))}
 
@@ -170,7 +190,7 @@ export default function HomePage() {
       {/* 4. Live Reviews */}
       <section className="bg-secondary py-16 border-y border-border">
         <div className="container max-w-4xl mx-auto px-4">
-          <h2 className="text-2xl font-bold mb-8 text-center text-foreground">Live Reviews</h2>
+          <h2 className="text-2xl font-bold mb-8 text-left text-foreground">✍️ Live Reviews</h2>
           <LiveReviews />
         </div>
       </section>

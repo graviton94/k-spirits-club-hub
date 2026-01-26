@@ -433,7 +433,12 @@ export const cabinetDb = {
 export const reviewsDb = {
     async upsert(spiritId: string, userId: string, data: any) {
         const token = await getServiceAccountToken();
-        const reviewData = { ...data, spiritId, userId };
+        const reviewData = {
+            ...data,
+            spiritId,
+            userId,
+            updatedAt: new Date().toISOString()
+        };
         const body = toFirestore(reviewData);
 
         // Define paths
@@ -462,6 +467,59 @@ export const reviewsDb = {
         });
 
         await Promise.all(promises);
+
+        // Sync to "Latest 3" collection for home page
+        try {
+            await this.syncRecent(reviewData);
+        } catch (err) {
+            console.error('Failed to sync recent reviews:', err);
+        }
+    },
+
+    async getRecent(): Promise<any[]> {
+        const token = await getServiceAccountToken();
+        const reviewsPath = getAppPath().recentReviews;
+        const url = `${BASE_URL}/${reviewsPath}`;
+
+        const res = await fetch(url, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (res.status === 404) return [];
+        if (!res.ok) return [];
+
+        const json = await res.json();
+        if (!json.documents) return [];
+
+        return json.documents
+            .map((doc: any) => parseFirestoreFields(doc.fields || {}))
+            .sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    },
+
+    async syncRecent(reviewData: any) {
+        const token = await getServiceAccountToken();
+        const reviewsPath = getAppPath().recentReviews;
+
+        // 1. Get current top 3
+        const current = await this.getRecent();
+
+        // 2. Insert new one at the top and deduplicate (by same spirit + same user)
+        const newId = `${reviewData.spiritId}_${reviewData.userId}`;
+        const filtered = current.filter(r => `${r.spiritId}_${r.userId}` !== newId);
+        const updated = [reviewData, ...filtered].slice(0, 3);
+
+        // 3. Update the 3 slots (0, 1, 2)
+        const promises = updated.map(async (review, index) => {
+            const url = `${BASE_URL}/${reviewsPath}/${index}`;
+            const body = toFirestore(review);
+            await fetch(url, {
+                method: 'PATCH',
+                headers: { Authorization: `Bearer ${token}` },
+                body: JSON.stringify(body)
+            });
+        });
+
+        await Promise.all(promises);
     },
 
     async delete(spiritId: string, userId: string): Promise<void> {
@@ -486,9 +544,62 @@ export const reviewsDb = {
                 }
             });
             await Promise.all(promises);
+
+            // Re-sync "Latest 3" by fetching the top 3 from the main reviews collection
+            await this.refreshRecentSlots();
         } catch (error) {
             console.error('Error deleting review:', error);
         }
+    },
+
+    async refreshRecentSlots() {
+        const token = await getServiceAccountToken();
+        const reviewsPath = getAppPath().reviews;
+        const recentPath = getAppPath().recentReviews;
+
+        // 1. Fetch current reviews from public folder (using runQuery to get top 3 by date)
+        const parent = `projects/${PROJECT_ID}/databases/(default)/documents/${reviewsPath.split('/').slice(0, -1).join('/')}`;
+        const collectionId = reviewsPath.split('/').pop();
+
+        const res = await fetch(`${BASE_URL}:runQuery`, {
+            method: 'POST',
+            headers: { Authorization: `Bearer ${token}` },
+            body: JSON.stringify({
+                parent,
+                structuredQuery: {
+                    from: [{ collectionId }],
+                    orderBy: [{ field: { fieldPath: 'createdAt' }, direction: 'DESCENDING' }],
+                    limit: 3
+                }
+            })
+        });
+
+        if (!res.ok) return;
+        const json = await res.json();
+        const top3 = json
+            .filter((r: any) => r.document)
+            .map((r: any) => parseFirestoreFields(r.document.fields || {}));
+
+        // 2. Overwrite slots 0, 1, 2
+        const updatePromises = [0, 1, 2].map(async (index) => {
+            const url = `${BASE_URL}/${recentPath}/${index}`;
+            const review = top3[index];
+            if (review) {
+                await fetch(url, {
+                    method: 'PATCH',
+                    headers: { Authorization: `Bearer ${token}` },
+                    body: JSON.stringify(toFirestore(review))
+                });
+            } else {
+                // If fewer than 3 reviews remain, delete the extra slot
+                await fetch(url, {
+                    method: 'DELETE',
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+            }
+        });
+
+        await Promise.all(updatePromises);
     },
 
     async getById(spiritId: string, userId: string): Promise<any | null> {
@@ -559,6 +670,107 @@ export const reviewsDb = {
             }
             return data;
         });
+    }
+};
+
+export const trendingDb = {
+    async logEvent(spiritId: string, action: 'view' | 'wishlist' | 'cabinet' | 'review') {
+        const token = await getServiceAccountToken();
+        const dateId = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+        const dailyDocPath = `${getAppPath().trendingDaily(dateId)}/${spiritId}`;
+        const commitUrl = `${BASE_URL.replace('/documents', '')}:commit`;
+
+        const fieldMap: Record<string, { field: string, weight: number }> = {
+            'view': { field: 'views', weight: 1 },
+            'wishlist': { field: 'wishlistAdds', weight: 5 },
+            'cabinet': { field: 'cabinetAdds', weight: 10 },
+            'review': { field: 'reviewsCount', weight: 20 }
+        };
+
+        const config = fieldMap[action];
+        if (!config) return;
+
+        // Atomic increment using Firestore REST commit
+        const body = {
+            writes: [
+                {
+                    transform: {
+                        document: `projects/${PROJECT_ID}/databases/(default)/documents/${dailyDocPath}`,
+                        fieldTransforms: [
+                            {
+                                fieldPath: config.field,
+                                increment: { integerValue: "1" }
+                            },
+                            {
+                                fieldPath: 'totalScore',
+                                increment: { integerValue: config.weight.toString() }
+                            }
+                        ]
+                    }
+                }
+            ]
+        };
+
+        await fetch(commitUrl, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        });
+    },
+
+    async getTopTrending(limit: number = 5): Promise<any[]> {
+        const token = await getServiceAccountToken();
+        const dateId = new Date().toISOString().split('T')[0];
+        const dailyPath = getAppPath().trendingDaily(dateId);
+
+        // Use runQuery for efficient top-N retrieval
+        const runQueryUrl = `${BASE_URL}:runQuery`;
+        const segments = dailyPath.split('/');
+        const collectionId = segments.pop();
+        const parentPath = segments.join('/');
+        const parent = `projects/${PROJECT_ID}/databases/(default)/documents/${parentPath}`;
+
+        const res = await fetch(runQueryUrl, {
+            method: 'POST',
+            headers: { Authorization: `Bearer ${token}` },
+            body: JSON.stringify({
+                parent,
+                structuredQuery: {
+                    from: [{ collectionId }],
+                    orderBy: [
+                        { field: { fieldPath: 'totalScore' }, direction: 'DESCENDING' }
+                    ],
+                    limit: limit
+                }
+            })
+        });
+
+        if (!res.ok) return [];
+
+        const json = await res.json();
+        if (!Array.isArray(json)) return [];
+
+        return json
+            .filter((r: any) => r.document)
+            .map((r: any) => {
+                const doc = r.document;
+                const fields = parseFirestoreFields(doc.fields || {});
+                const spiritId = doc.name.split('/').pop();
+
+                return {
+                    spiritId,
+                    score: fields.totalScore || 0,
+                    stats: {
+                        views: fields.views || 0,
+                        wishlist: fields.wishlistAdds || 0,
+                        cabinet: fields.cabinetAdds || 0,
+                        reviews: fields.reviewsCount || 0
+                    }
+                };
+            });
     }
 };
 
