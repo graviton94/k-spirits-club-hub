@@ -362,6 +362,7 @@ export const cabinetDb = {
 
         if (res.status === 404) return []; // Collection doesn't exist yet
         if (!res.ok) {
+            console.error(`Failed to fetch cabinet for user ${userId}: ${res.status} ${res.statusText}`);
             return [];
         }
 

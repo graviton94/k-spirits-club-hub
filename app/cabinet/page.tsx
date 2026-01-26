@@ -308,24 +308,16 @@ export default function CabinetPage() {
                           <div className="absolute inset-0 bg-gradient-to-br from-amber-200 via-orange-200 to-amber-300 dark:from-amber-600 dark:via-orange-600 dark:to-amber-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
 
                           <div className="relative h-full rounded-xl overflow-hidden bg-white dark:bg-slate-900 group-hover:blur-[2px] transition-all duration-300">
-                            {spirit.imageUrl ? (
-                              <img
-                                src={spirit.imageUrl}
-                                alt={spirit.name}
-                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                onError={(e) => {
-                                  const target = e.target as HTMLImageElement;
-                                  target.src = getCategoryFallbackImage(spirit.category);
-                                  target.classList.add('opacity-50');
-                                }}
-                              />
-                            ) : (
-                              <img
-                                src={getCategoryFallbackImage(spirit.category)}
-                                alt={spirit.name}
-                                className="w-full h-full object-cover opacity-50"
-                              />
-                            )}
+                            <img
+                              src={spirit.imageUrl && spirit.imageUrl.trim() ? spirit.imageUrl : getCategoryFallbackImage(spirit.category)}
+                              alt={spirit.name}
+                              className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 ${!spirit.imageUrl || !spirit.imageUrl.trim() ? 'opacity-50' : ''}`}
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                target.src = getCategoryFallbackImage(spirit.category);
+                                target.classList.add('opacity-50');
+                              }}
+                            />
 
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
                               <div className="flex justify-between items-center w-full mt-auto">
@@ -383,24 +375,16 @@ export default function CabinetPage() {
                       onClick={() => setSelectedSpirit(spirit)}
                     >
                       <div className="aspect-[2/3] w-full rounded-lg overflow-hidden bg-gray-100 dark:bg-neutral-800/50 transition-all duration-300 [filter:grayscale(100%)_drop-shadow(0_3px_6px_rgba(0,0,0,0.15))] hover:[filter:grayscale(0%)_drop-shadow(0_6px_12px_rgba(0,0,0,0.25))]">
-                        {spirit.imageUrl ? (
-                          <img
-                            src={spirit.imageUrl}
-                            alt={spirit.name}
-                            className="w-full h-full object-cover opacity-60 hover:opacity-100 transition-opacity"
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              target.src = getCategoryFallbackImage(spirit.category);
-                              target.classList.add('opacity-40');
-                            }}
-                          />
-                        ) : (
-                          <img
-                            src={getCategoryFallbackImage(spirit.category)}
-                            alt={spirit.name}
-                            className="w-full h-full object-cover opacity-40"
-                          />
-                        )}
+                        <img
+                          src={spirit.imageUrl && spirit.imageUrl.trim() ? spirit.imageUrl : getCategoryFallbackImage(spirit.category)}
+                          alt={spirit.name}
+                          className={`w-full h-full object-cover opacity-60 hover:opacity-100 transition-opacity ${!spirit.imageUrl || !spirit.imageUrl.trim() ? 'opacity-40' : ''}`}
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = getCategoryFallbackImage(spirit.category);
+                            target.classList.add('opacity-40');
+                          }}
+                        />
                       </div>
                       <p className="text-[9px] text-center mt-1.5 text-gray-600 dark:text-gray-400 truncate w-full px-0.5 leading-tight">{spirit.name}</p>
                     </motion.div>
