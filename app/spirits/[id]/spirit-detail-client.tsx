@@ -13,6 +13,7 @@ import { addToCabinet } from "@/app/actions/cabinet";
 import ReviewModal from "@/components/cabinet/ReviewModal";
 import { UserReview } from "@/lib/utils/flavor-engine";
 import { toFlavorSpirit, triggerLoginModal } from "@/lib/utils/spirit-adapters";
+import SuccessToast from "@/components/ui/SuccessToast";
 
 import { Spirit } from "@/lib/db/schema";
 import { getTagStyle } from "@/lib/constants/tag-styles";
@@ -29,13 +30,27 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
     const [showReviewModal, setShowReviewModal] = useState(false);
     const [isAddingToCabinet, setIsAddingToCabinet] = useState(false);
     const [isAddingToWishlist, setIsAddingToWishlist] = useState(false);
+    const [showSuccessToast, setShowSuccessToast] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('');
 
-    const handleAddToCabinet = () => {
+    const handleAddToCabinet = async () => {
         if (!user) {
             triggerLoginModal();
             return;
         }
-        setShowReviewModal(true);
+        
+        // Immediate save to cabinet
+        setIsAddingToCabinet(true);
+        try {
+            await addToCabinet(user.uid, spirit.id, { isWishlist: false });
+            setSuccessMessage('🥃 술장에 저장되었습니다!');
+            setShowSuccessToast(true);
+        } catch (error) {
+            console.error('Failed to add to cabinet:', error);
+            alert('저장에 실패했습니다. 다시 시도해주세요.');
+        } finally {
+            setIsAddingToCabinet(false);
+        }
     };
 
     const handleReviewSubmit = async (review: UserReview) => {
@@ -65,7 +80,8 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
         setIsAddingToWishlist(true);
         try {
             await addToCabinet(user.uid, spirit.id, { isWishlist: true });
-            alert('위시리스트에 추가되었습니다!');
+            setSuccessMessage('🔖 위시리스트에 추가되었습니다!');
+            setShowSuccessToast(true);
         } catch (error) {
             console.error('Failed to add to wishlist:', error);
             alert('추가에 실패했습니다. 다시 시도해주세요.');
@@ -228,6 +244,13 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                 isOpen={showReviewModal}
                 onClose={() => setShowReviewModal(false)}
                 onSubmit={handleReviewSubmit}
+            />
+            
+            {/* Success Toast */}
+            <SuccessToast
+                isVisible={showSuccessToast}
+                message={successMessage}
+                onClose={() => setShowSuccessToast(false)}
             />
         </div>
     );
