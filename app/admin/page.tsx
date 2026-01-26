@@ -263,6 +263,7 @@ export default function AdminDashboard() {
         name: editForm.name,
         abv: parseFloat(String(editForm.abv)) || 0,
         imageUrl: editForm.imageUrl,
+        thumbnailUrl: editForm.imageUrl, // Sync thumbnailUrl with imageUrl
         category: editForm.category,
         subcategory: editForm.subcategory,
         country: editForm.country,
