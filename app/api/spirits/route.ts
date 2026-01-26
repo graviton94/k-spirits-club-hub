@@ -8,11 +8,17 @@ export const runtime = 'edge';
 /**
  * GET /api/spirits
  * Public API endpoint for fetching published spirits data
- * Returns both full spirits array and minimized search index
+ * 
+ * Query Parameters:
+ * - mode=index: Returns only lightweight search index (optimized for listing)
+ * - mode=full (default): Returns both full spirits and search index
  */
 export async function GET(request: NextRequest) {
   try {
-    console.log('[API] GET /api/spirits - Fetching published spirits...');
+    const { searchParams } = new URL(request.url);
+    const mode = searchParams.get('mode') || 'full';
+    
+    console.log(`[API] GET /api/spirits?mode=${mode} - Fetching published spirits...`);
 
     // Fetch all published spirits from Firestore
     const spirits = await spiritsDb.getAll({ isPublished: true });
@@ -36,6 +42,7 @@ export async function GET(request: NextRequest) {
       mc: s.mainCategory || null,
       sc: s.subcategory || null,
       t: s.thumbnailUrl || s.imageUrl || null, // Thumbnail fallback to imageUrl
+      a: s.abv || 0, // ABV for display
       d: s.distillery || null, // distillery
       m: s.metadata ? {
         tasting_note: s.metadata.tasting_note
@@ -44,9 +51,33 @@ export async function GET(request: NextRequest) {
       } : {}
     }));
 
+    // Calculate data sizes for optimization tracking
+    const indexSize = JSON.stringify(searchIndex).length;
+    const indexSizeKB = (indexSize / 1024).toFixed(2);
+
+    // MODE: INDEX - Return only lightweight index
+    if (mode === 'index') {
+      console.log(`[OPTIMIZATION] Index-only mode: ${indexSizeKB} KB for ${searchIndex.length} items`);
+      
+      return NextResponse.json({
+        searchIndex,
+        count: searchIndex.length,
+        timestamp: Date.now()
+      }, {
+        status: 200,
+        headers: {
+          'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+        }
+      });
+    }
+
+    // MODE: FULL - Return both full data and index (backward compatible)
     // Limit published spirits to 100 items (consistent with original implementation)
     const limitedSpirits = spirits.slice(0, 100);
+    const fullSize = JSON.stringify(limitedSpirits).length;
+    const fullSizeKB = (fullSize / 1024).toFixed(2);
 
+    console.log(`[OPTIMIZATION] Full mode: Index=${indexSizeKB} KB, Full Data=${fullSizeKB} KB`);
     console.log(`[API] ✅ Successfully fetched ${limitedSpirits.length} spirits, ${searchIndex.length} in search index`);
 
     return NextResponse.json({
@@ -57,7 +88,7 @@ export async function GET(request: NextRequest) {
     }, {
       status: 200,
       headers: {
-        'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
       }
     });
 

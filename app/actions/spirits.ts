@@ -25,6 +25,34 @@ export async function getSpiritsAction(filters: any = {}) {
 }
 
 /**
+ * 개별 제품 상세 조회 액션 (서버 사이드)
+ * On-demand loading을 위한 단일 제품 조회
+ */
+export async function getSpiritById(id: string): Promise<Spirit | null> {
+  try {
+    console.log(`[Action] getSpiritById - Fetching spirit: ${id}`);
+    
+    const spirit = await spiritsDb.getById(id);
+    
+    if (!spirit) {
+      console.warn(`[Action] Spirit not found: ${id}`);
+      return null;
+    }
+    
+    // Only return published spirits
+    if (!spirit.isPublished) {
+      console.warn(`[Action] Attempted to access unpublished spirit: ${id}`);
+      return null;
+    }
+    
+    return spirit as Spirit;
+  } catch (error) {
+    console.error('[Action] getSpiritById Error:', error);
+    return null;
+  }
+}
+
+/**
  * 검색용 경량 인덱스 생성 액션
  * 비로그인 유저도 즉시 검색할 수 있도록 필드 매핑을 최적화합니다.
  */
@@ -45,7 +73,9 @@ export async function getSpiritsSearchIndex(): Promise<SpiritSearchIndex[]> {
       c: s.category || '기타',
       mc: s.mainCategory || null,
       sc: s.subcategory || null,
-      t: s.thumbnailUrl || s.imageUrl || null // 썸네일 누락 시 원본 이미지로 폴백
+      t: s.thumbnailUrl || s.imageUrl || null, // 썸네일 누락 시 원본 이미지로 폴백
+      a: s.abv || 0,
+      d: s.distillery || null
     }));
   } catch (error) {
     console.error('[Action] getSpiritsSearchIndex Error:', error);
