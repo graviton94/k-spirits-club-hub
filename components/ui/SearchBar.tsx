@@ -13,28 +13,24 @@ export function SearchBar({ isHero = false }: { isHero?: boolean }) {
   const [isFocused, setIsFocused] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const router = useRouter();
-  const { searchSpirits, getSpiritById, isLoading } = useSpiritsCache();
+  const { searchSpirits, isLoading } = useSpiritsCache();
   const blurTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Get instant search results using Fuse.js
+  // Get instant search results using search index (lightweight)
   const instantResults = useMemo(() => {
     if (!searchValue.trim() || isLoading) {
       return [];
     }
     
     const startTime = performance.now();
-    const searchIndex = searchSpirits(searchValue);
-    const results = searchIndex
-      .slice(0, 5) // Show top 5 results
-      .map(item => getSpiritById(item.i))
-      .filter(s => s !== undefined);
+    const results = searchSpirits(searchValue).slice(0, 5); // Show top 5 results
     const endTime = performance.now();
     
     if (process.env.NODE_ENV === 'development') {
       console.log(`[SearchBar] Search completed in ${(endTime - startTime).toFixed(2)}ms`);
     }
     return results;
-  }, [searchValue, searchSpirits, getSpiritById, isLoading]);
+  }, [searchValue, searchSpirits, isLoading]);
 
   const handleSearch = () => {
     if (searchValue.trim()) {
@@ -109,29 +105,29 @@ export function SearchBar({ isHero = false }: { isHero?: boolean }) {
           >
             {instantResults.length > 0 ? (
               <div className="max-h-80 overflow-y-auto">
-                {instantResults.map((spirit) => (
+                {instantResults.map((item) => (
                   <Link
-                    key={spirit.id}
-                    href={`/spirits/${spirit.id}`}
+                    key={item.i}
+                    href={`/spirits/${item.i}`}
                     className={`block p-3 hover:bg-primary/10 transition-colors border-b last:border-b-0 ${isHero ? 'border-white/10' : 'border-border'
                       }`}
                   >
                     <div className="flex gap-3 items-center">
-                      {spirit.thumbnailUrl && (
+                      {item.t && (
                         <img
-                          src={spirit.thumbnailUrl}
-                          alt={spirit.name}
+                          src={item.t}
+                          alt={item.n}
                           className="w-12 h-12 object-cover rounded-lg"
                         />
                       )}
                       <div className="flex-1 min-w-0">
                         <div className={`font-semibold truncate ${isHero ? 'text-white' : 'text-foreground'
                           }`}>
-                          {spirit.name}
+                          {item.n}
                         </div>
                         <div className={`text-sm truncate ${isHero ? 'text-neutral-400' : 'text-muted-foreground'
                           }`}>
-                          {spirit.metadata?.name_en || spirit.distillery || spirit.category}
+                          {item.en || item.d || item.c}
                         </div>
                       </div>
                     </div>

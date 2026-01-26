@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import SpiritDetailClient from "./spirit-detail-client";
 import { useSpiritsCache } from "@/app/context/spirits-cache-context";
 import { useEffect, useState } from "react";
-import { db } from "@/lib/db";
 import type { Spirit } from "@/lib/db/schema";
 
 export const runtime = 'edge';
@@ -14,7 +13,7 @@ export default function SpiritDetailPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const { getSpiritById } = useSpiritsCache();
+  const { getSpiritDetail } = useSpiritsCache();
   const [id, setId] = useState<string | null>(null);
   const [spirit, setSpirit] = useState<Spirit | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -24,32 +23,25 @@ export default function SpiritDetailPage({
     params.then(p => setId(p.id));
   }, [params]);
 
-  // Load spirit from cache or fetch from DB
+  // Load spirit using on-demand detail loading
   useEffect(() => {
     if (!id) return;
 
-    // Try to get from cache first for instant transition
-    const cachedSpirit = getSpiritById(id);
+    setIsLoading(true);
     
-    if (cachedSpirit) {
-      setSpirit(cachedSpirit);
-      setIsLoading(false);
-    } else {
-      // Fallback to fetching from DB if not in cache
-      setIsLoading(true);
-      db.getSpirit(id)
-        .then(fetchedSpirit => {
-          if (fetchedSpirit) {
-            setSpirit(fetchedSpirit);
-          }
-          setIsLoading(false);
-        })
-        .catch(error => {
-          console.error('Failed to fetch spirit:', error);
-          setIsLoading(false);
-        });
-    }
-  }, [id, getSpiritById]);
+    // Use getSpiritDetail which handles caching and on-demand loading
+    getSpiritDetail(id)
+      .then(fetchedSpirit => {
+        if (fetchedSpirit) {
+          setSpirit(fetchedSpirit);
+        }
+        setIsLoading(false);
+      })
+      .catch(error => {
+        console.error('Failed to fetch spirit:', error);
+        setIsLoading(false);
+      });
+  }, [id, getSpiritDetail]);
 
   if (isLoading) {
     return (
