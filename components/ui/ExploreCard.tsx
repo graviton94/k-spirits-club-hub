@@ -225,7 +225,7 @@ export function ExploreCard({ spirit, onClick }: ExploreCardProps) {
         <button
           onClick={handleCabinetAction}
           disabled={isToggling || isLoadingStatus}
-          className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap text-white
+          className={`px-5 py-1.5 text-xs font-medium rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap text-white
             ${isInCabinet
               ? 'bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700'
               : 'bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700'
@@ -236,18 +236,16 @@ export function ExploreCard({ spirit, onClick }: ExploreCardProps) {
         <button
           onClick={handleWishlistAction}
           disabled={isToggling || isLoadingStatus}
-          className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap text-white
+          className={`px-5 py-1.5 text-xs font-medium rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap text-white flex items-center justify-center gap-1.5
             ${isWishlist
               ? 'bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700'
               : 'bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700'
             }`}
         >
-          <div className="flex items-center gap-1.5 leading-none">
-            <Bookmark className={`w-4 h-4 ${isWishlist ? 'fill-current' : ''}`} />
-            <span className="text-sm font-medium">
-              {isWishlist ? '위시 빼기' : '위시 담기'}
-            </span>
-          </div>
+          <Bookmark className={`w-4 h-4 ${isWishlist ? 'fill-current' : ''}`} />
+          <span className="text-xs font-bold">
+            {isWishlist ? '위시 빼기' : '위시 담기'}
+          </span>
         </button>
       </div>
     </motion.div>
