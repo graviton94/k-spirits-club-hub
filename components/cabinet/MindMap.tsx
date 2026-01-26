@@ -20,6 +20,7 @@ interface MindMapProps {
  */
 export default function MindMap({ analysis, profileImage }: MindMapProps) {
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
+  const [profileImageError, setProfileImageError] = useState(false);
 
   if (analysis.totalSpirits === 0) {
     return (
@@ -118,16 +119,12 @@ export default function MindMap({ analysis, profileImage }: MindMapProps) {
             transition={{ duration: 2, repeat: Infinity }}
             className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 via-amber-500 to-orange-600 flex items-center justify-center overflow-hidden"
           >
-            {profileImage && profileImage.trim() ? (
+            {profileImage && profileImage.trim() && !profileImageError ? (
               <img 
                 src={profileImage} 
                 alt="Profile" 
                 className="w-full h-full object-cover"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                  target.parentElement!.innerHTML = '<div class="text-3xl">🌟</div>';
-                }}
+                onError={() => setProfileImageError(true)}
               />
             ) : (
               <div className="text-3xl">🌟</div>
