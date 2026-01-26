@@ -10,6 +10,9 @@ export default function ExploreContent() {
   const [searchTerm, setSearchTerm] = useState('');
   const [displayLimit, setDisplayLimit] = useState(24);
 
+  // Constant timestamp to avoid recreating Date objects on every render
+  const fallbackTimestamp = useMemo(() => new Date(), []);
+
   // [SYSTEM_CHECK] 데이터 가시성 최종 리포트 로그
   useEffect(() => {
     if (!isLoading) {
@@ -94,8 +97,8 @@ export default function ExploreContent() {
                   reviewedBy: null,
                   reviewedAt: null,
                   metadata: {},
-                  createdAt: new Date(),
-                  updatedAt: new Date(),
+                  createdAt: fallbackTimestamp,
+                  updatedAt: fallbackTimestamp,
                 }} 
               />
             ))}
