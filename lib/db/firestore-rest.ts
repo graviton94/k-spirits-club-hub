@@ -2,6 +2,7 @@ import { Spirit, SpiritStatus, SpiritFilter, SpiritSearchIndex } from '../db/sch
 import { getServiceAccountToken } from '../auth/service-account';
 
 const PROJECT_ID = process.env.FIREBASE_PROJECT_ID;
+const APP_ID = process.env.NEXT_PUBLIC_APP_ID || 'k-spirits-club-hub';
 const BASE_URL = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
 
 /**
@@ -315,10 +316,8 @@ export const spiritsDb = {
 export const cabinetDb = {
     async getAll(userId: string): Promise<any[]> {
         const token = await getServiceAccountToken();
-        // Path: users/{userId}/cabinet (collection)
-        // Root path construction for custom collections might differ, usually:
-        // projects/{id}/databases/(default)/documents/users/{userId}/cabinet
-        const url = `${BASE_URL}/users/${userId}/cabinet`;
+        // Path: artifacts/{appId}/users/{userId}/cabinet (collection)
+        const url = `${BASE_URL}/artifacts/${APP_ID}/users/${userId}/cabinet`;
 
         const res = await fetch(url, {
             headers: { Authorization: `Bearer ${token}` }
@@ -364,7 +363,7 @@ export const cabinetDb = {
     async upsert(userId: string, spiritId: string, data: any) {
         const token = await getServiceAccountToken();
         // Document ID = spiritId (to ensure uniqueness per spirit per user)
-        const url = `${BASE_URL}/users/${userId}/cabinet/${spiritId}`;
+        const url = `${BASE_URL}/artifacts/${APP_ID}/users/${userId}/cabinet/${spiritId}`;
 
         // Convert data to Firestore JSON. Can reuse toFirestore(data)? 
         // We need to support 'userReview' object structure. 
@@ -397,7 +396,7 @@ export const cabinetDb = {
 
     async delete(userId: string, spiritId: string) {
         const token = await getServiceAccountToken();
-        const url = `${BASE_URL}/users/${userId}/cabinet/${spiritId}`;
+        const url = `${BASE_URL}/artifacts/${APP_ID}/users/${userId}/cabinet/${spiritId}`;
         await fetch(url, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${token}` }
