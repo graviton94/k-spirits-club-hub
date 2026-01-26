@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import { useSpiritsCache } from '@/app/context/spirits-cache-context';
-import SpiritCard from './SpiritCard';
+import { SpiritCard } from './SpiritCard';
 import { Search, Loader2, AlertCircle, RefreshCw } from 'lucide-react';
 
 export default function ExploreContent() {
@@ -76,7 +76,26 @@ export default function ExploreContent() {
                   id: item.i,
                   name: item.n,
                   category: item.c,
+                  subcategory: item.sc,
+                  imageUrl: item.t,
                   thumbnailUrl: item.t,
+                  abv: 0,
+                  volume: null,
+                  distillery: null,
+                  bottler: null,
+                  mainCategory: item.mc,
+                  country: null,
+                  region: null,
+                  source: 'food_safety_korea' as const,
+                  externalId: null,
+                  status: 'PUBLISHED' as const,
+                  isPublished: true,
+                  isReviewed: false,
+                  reviewedBy: null,
+                  reviewedAt: null,
+                  metadata: {},
+                  createdAt: new Date(),
+                  updatedAt: new Date(),
                 }} 
               />
             ))}
