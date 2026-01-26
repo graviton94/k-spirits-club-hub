@@ -35,7 +35,7 @@ export default function CabinetSelectionModal({
         >
           {/* Header */}
           <div className="p-6 bg-gradient-to-br from-background/95 to-background/80 border-b border-border/50">
-            <h2 className="text-xl font-black text-foreground text-center">어디에 저장하시겠어요?</h2>
+            <h2 className="text-xl font-black text-white text-center">어디에 저장하시겠어요?</h2>
           </div>
 
           {/* Options */}
@@ -73,7 +73,7 @@ export default function CabinetSelectionModal({
           <div className="p-4 bg-gradient-to-br from-background/95 to-background/80 border-t border-border/50 flex justify-center">
             <button
               onClick={onClose}
-              className="px-6 py-2 rounded-lg text-sm font-bold text-muted-foreground hover:text-foreground transition-colors"
+              className="px-6 py-2 rounded-lg text-sm font-bold text-white hover:text-white/80 transition-colors"
             >
               취소
             </button>
