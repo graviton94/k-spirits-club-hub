@@ -17,6 +17,8 @@ export default function SpiritDetailPage({
   const [id, setId] = useState<string | null>(null);
   const [spirit, setSpirit] = useState<Spirit | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [reviews, setReviews] = useState<any[]>([]);
+  const [isLoadingReviews, setIsLoadingReviews] = useState(true);
 
   // Unwrap params promise
   useEffect(() => {
@@ -43,6 +45,27 @@ export default function SpiritDetailPage({
       });
   }, [id, getSpiritDetail]);
 
+  // Fetch reviews for this spirit
+  useEffect(() => {
+    if (!id) return;
+
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch(`/api/reviews?spiritId=${id}`);
+        if (response.ok) {
+          const data = await response.json();
+          setReviews(data.reviews || []);
+        }
+      } catch (error) {
+        console.error('Failed to fetch reviews:', error);
+      } finally {
+        setIsLoadingReviews(false);
+      }
+    };
+
+    fetchReviews();
+  }, [id]);
+
   if (isLoading) {
     return (
       <div className="container mx-auto px-4 py-6 max-w-4xl pb-32">
@@ -65,29 +88,6 @@ export default function SpiritDetailPage({
     notFound();
   }
 
-  // Fetch reviews for this spirit
-  const [reviews, setReviews] = useState<any[]>([]);
-  const [isLoadingReviews, setIsLoadingReviews] = useState(true);
-
-  useEffect(() => {
-    if (!id) return;
-
-    const fetchReviews = async () => {
-      try {
-        const response = await fetch(`/api/reviews?spiritId=${id}`);
-        if (response.ok) {
-          const data = await response.json();
-          setReviews(data.reviews || []);
-        }
-      } catch (error) {
-        console.error('Failed to fetch reviews:', error);
-      } finally {
-        setIsLoadingReviews(false);
-      }
-    };
-
-    fetchReviews();
-  }, [id]);
-
   return <SpiritDetailClient spirit={spirit} reviews={reviews} />;
+}
 }
