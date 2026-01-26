@@ -10,6 +10,7 @@ const BASE_URL = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/dat
  */
 function fromFirestore(doc: any): Spirit {
     const fields = doc.fields || {};
+    // Extract ID from the full path which might be deep
     const id = doc.name.split('/').pop();
     const data: any = { id };
 
@@ -79,7 +80,7 @@ function toFirestore(data: Partial<Spirit>): any {
  */
 function parseFirestoreFields(fields: any): any {
     const obj: any = {};
-    
+
     for (const [key, value] of Object.entries(fields) as [string, any][]) {
         if ('stringValue' in value) obj[key] = value.stringValue;
         else if ('integerValue' in value) obj[key] = Number(value.integerValue);
@@ -101,14 +102,15 @@ function parseFirestoreFields(fields: any): any {
             obj[key] = mapData;
         }
     }
-    
+
     return obj;
 }
 
 export const spiritsDb = {
-  async getAll(filter: SpiritFilter = {}): Promise<Spirit[]> {
+    async getAll(filter: SpiritFilter = {}): Promise<Spirit[]> {
         const token = await getServiceAccountToken();
         const runQueryUrl = `${BASE_URL}:runQuery`;
+        const collectionPath = getAppPath().spirits;
 
         const filters: any[] = [];
 
@@ -149,9 +151,22 @@ export const spiritsDb = {
         }
 
         const structuredQuery: any = {
-            from: [{ collectionId: 'spirits' }],
+            from: [{ collectionId: 'spirits' }], // collectionId is just the last p
+            // Wait, for deep collections, structuredQuery 'from' might need full path if it's a subcollection query?
+            // "If the collection ID is not unique, you must specify the parent." 
+            // "from: [{ collectionId: 'spirits' }]" works if searching ALL collections named 'spirits'.
+            // But we want specifically our new path.
+            // When querying via runQuery, we should set the 'parent' field correctly.
+            // parent: "projects/{projectId}/databases/(default)/documents/{parent_path}"
             limit: 5000
         };
+
+        // Determine parent from collectionPath
+        // collectionPath = "artifacts/k-spirits-club-hub/public/data/spirits"
+        // parent = "projects/.../documents/artifacts/k-spirits-club-hub/public/data"
+        const segments = collectionPath.split('/');
+        const collectionId = segments.pop(); // 'spirits'
+        const parentPath = segments.join('/'); // 'artifacts/k-spirits-club-hub/public/data'
 
         if (filters.length === 1) {
             structuredQuery.where = filters[0];
@@ -167,17 +182,20 @@ export const spiritsDb = {
         // Log the query being executed for debugging (only in development)
         if (process.env.NODE_ENV === 'development') {
             console.log('[Firestore] Executing query with filters:', JSON.stringify(filter));
-            console.log('[Firestore] Structured query:', JSON.stringify(structuredQuery, null, 2));
+
         }
 
-        const parent = `projects/${PROJECT_ID}/databases/(default)/documents`;
+        const parent = `projects/${PROJECT_ID}/databases/(default)/documents/${parentPath}`;
 
         const res = await fetch(runQueryUrl, {
             method: 'POST',
             headers: { Authorization: `Bearer ${token}` },
             body: JSON.stringify({
                 parent,
-                structuredQuery
+                structuredQuery: {
+                    ...structuredQuery,
+                    from: [{ collectionId }] // Query within the specific parent
+                }
             })
         });
 
@@ -214,7 +232,7 @@ export const spiritsDb = {
 
         console.log(`[Firestore] Query returned ${results.length} spirits`);
         console.log('[SYSTEM_CHECK] Query filter:', JSON.stringify(filter));
-        
+
         if (results.length === 0) {
             console.warn('[Firestore] ⚠️ WARNING: Query returned 0 results. Filter:', JSON.stringify(filter));
             console.warn('[Firestore] This may indicate:');
@@ -223,13 +241,6 @@ export const spiritsDb = {
             console.warn('  3. Service account permissions issue');
             console.warn('  4. Firestore composite index missing (check error messages above)');
         } else {
-            console.log('[Firestore] First result sample:', {
-                id: results[0].id,
-                name: results[0].name,
-                status: results[0].status,
-                isPublished: results[0].isPublished
-            });
-            
             // Count published vs unpublished for diagnostics
             const publishedCount = results.filter((s: Spirit) => s.isPublished === true).length;
             const unpublishedCount = results.length - publishedCount;
@@ -241,8 +252,8 @@ export const spiritsDb = {
 
     async getById(id: string): Promise<Spirit | null> {
         const token = await getServiceAccountToken();
-        const path = `spirits/${id}`;
-        const url = `${BASE_URL}/${path}`;
+        const collectionPath = getAppPath().spirits;
+        const url = `${BASE_URL}/${collectionPath}/${id}`;
 
         console.log(`[Firestore] Fetching Spirit: ${url} (ID: ${id})`); // DEBUG
 
@@ -268,11 +279,12 @@ export const spiritsDb = {
 
     async upsert(id: string, data: Partial<Spirit>) {
         const token = await getServiceAccountToken();
-        const path = `spirits/${id}`;
+        const collectionPath = getAppPath().spirits;
+        const url = `${BASE_URL}/${collectionPath}/${id}`;
 
         // Construct Update Mask dynamically based on data keys
         const fieldPaths = Object.keys(data).filter(k => k !== 'id').map(k => `updateMask.fieldPaths=${k}`).join('&');
-        const patchUrl = `${BASE_URL}/${path}?${fieldPaths}&updateMask.fieldPaths=updatedAt`;
+        const patchUrl = `${url}?${fieldPaths}&updateMask.fieldPaths=updatedAt`;
 
         const body = toFirestore({ ...data, updatedAt: new Date() });
 
@@ -287,9 +299,10 @@ export const spiritsDb = {
 
     async delete(ids: string[]) {
         const token = await getServiceAccountToken();
+        const collectionPath = getAppPath().spirits;
         for (const id of ids) {
-            const path = `spirits/${id}`;
-            await fetch(`${BASE_URL}/${path}`, {
+            const url = `${BASE_URL}/${collectionPath}/${id}`;
+            await fetch(url, {
                 method: 'DELETE',
                 headers: { Authorization: `Bearer ${token}` }
             });
@@ -298,24 +311,15 @@ export const spiritsDb = {
 
     /**
      * Get all PUBLISHED spirits for search index generation
-     * Returns minimized data structure for bandwidth optimization
-     * 
-     * Note: This fetches all published spirits (up to Firestore's 5000 limit).
-     * For very large datasets (>5000 spirits), consider implementing pagination
-     * or using a different indexing strategy.
      */
     async getPublishedSearchIndex(): Promise<SpiritSearchIndex[]> {
         // Fetch all published spirits using isPublished flag
-        // CRITICAL FIX: Use isPublished filter instead of status='PUBLISHED' to ensure
-        // we capture all published items regardless of their exact status value
-        const publishedSpirits = await this.getAll({ 
+        const publishedSpirits = await this.getAll({
             isPublished: true
         });
 
         console.log(`[SearchIndex] Total published spirits fetched: ${publishedSpirits.length}`);
 
-        // Map to minimized structure with short keys
-        // DEFENSIVE: Handle missing required fields with defaults to prevent data loss
         const validSpirits = publishedSpirits.filter(spirit => {
             const isValid = spirit.id && spirit.name && spirit.category;
             if (!isValid) {
@@ -358,8 +362,6 @@ export const cabinetDb = {
 
         if (res.status === 404) return []; // Collection doesn't exist yet
         if (!res.ok) {
-            // If collection empty/not found, REST might error or return empty. verify.
-            // Often it returns 200 with { documents: [] } or just {}
             return [];
         }
 
@@ -375,25 +377,7 @@ export const cabinetDb = {
         const cabinetPath = getAppPath('userCabinet', { userId });
         const url = `${BASE_URL}/${cabinetPath}/${spiritId}`;
 
-        // Convert data to Firestore JSON. Can reuse toFirestore(data)? 
-        // We need to support 'userReview' object structure. 
-        // `toFirestore` in this file is tailored for Spirit, but it handles Map generically enough (1 level).
-        // Let's use it.
         const body = toFirestore(data);
-
-        // For upsert without merge complexity, we can use PATCH with null updateMask (if we passed all fields)
-        // OR standard commit. REST API `patch` creates if missing.
-        // We'll use PATCH with updateMask for known fields to merge, 
-        // OR just simple PATCH with all fields? 
-        // If we want to simple SET (overwrite), we don't pass updateMask.
-
-        // Wait, toFirestore handles `id` skip.
-
-        // We'll use generic PATCH to upsert.
-        // If we want merge, we must specify updateMask.
-        // If we want replace/create, passing no updateMask is ambiguous in REST? 
-        // Check docs: "If the document does not exist, it will be created."
-        // "If the document exists, it is updated... If mask is not set, the entire document is replaced."
 
         const res = await fetch(url, {
             method: 'PATCH',
@@ -437,6 +421,7 @@ export const cabinetDb = {
 export const reviewsDb = {
     async upsert(spiritId: string, userId: string, data: any) {
         const token = await getServiceAccountToken();
+        const collectionPath = getAppPath().reviews;
         // Document ID = ${spiritId}_${userId} for uniqueness
         const reviewId = `${spiritId}_${userId}`;
         const reviewsPath = getAppPath('reviews');
@@ -459,6 +444,7 @@ export const reviewsDb = {
 
     async delete(spiritId: string, userId: string): Promise<void> {
         const token = await getServiceAccountToken();
+        const collectionPath = getAppPath().reviews;
         const reviewId = `${spiritId}_${userId}`;
         const reviewsPath = getAppPath('reviews');
         const url = `${BASE_URL}/${reviewsPath}/${reviewId}`;
@@ -468,21 +454,20 @@ export const reviewsDb = {
                 method: 'DELETE',
                 headers: { Authorization: `Bearer ${token}` }
             });
-            
+
             // Don't throw on 404 - review might not exist
             if (!res.ok && res.status !== 404) {
                 const errorText = await res.text();
                 console.error('Failed to delete review:', errorText);
-                // Don't throw - we want dual-delete to be resilient
             }
         } catch (error) {
             console.error('Error deleting review:', error);
-            // Don't throw - we want dual-delete to be resilient
         }
     },
 
     async getById(spiritId: string, userId: string): Promise<any | null> {
         const token = await getServiceAccountToken();
+        const collectionPath = getAppPath().reviews;
         const reviewId = `${spiritId}_${userId}`;
         const reviewsPath = getAppPath('reviews');
         const url = `${BASE_URL}/${reviewsPath}/${reviewId}`;
@@ -522,3 +507,4 @@ export const reviewsDb = {
             .filter((review: any) => review.spiritId === spiritId);
     }
 };
+
