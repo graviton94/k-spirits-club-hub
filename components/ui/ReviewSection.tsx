@@ -24,8 +24,8 @@ export default function ReviewSection({ spiritId, spiritName, reviews }: ReviewS
 
   // Calculate averages
   const avgOverall = liveReviews.length > 0
-    ? (liveReviews.reduce((acc, r) => acc + r.rating, 0) / liveReviews.length).toFixed(1)
-    : "0.0";
+    ? (liveReviews.reduce((acc, r) => acc + r.rating, 0) / liveReviews.length).toFixed(2)
+    : "0.00";
 
   const avgNose = liveReviews.length > 0
     ? (liveReviews.reduce((acc, r) => acc + (r.noseRating || r.rating), 0) / liveReviews.length).toFixed(1)
@@ -262,8 +262,9 @@ function ReviewForm({ spiritId, spiritName, onCancel, onSubmitted }: {
     const total = formData.noseRating + formData.palateRating + formData.finishRating;
     if (total > 0) {
       const avg = total / 3;
-      const snapped = Math.round(avg * 2) / 2;
-      setFormData(prev => ({ ...prev, rating: snapped }));
+      // Round up from the 2nd decimal place (ceil to 2 decimal)
+      const ceiled = Math.ceil(avg * 100) / 100;
+      setFormData(prev => ({ ...prev, rating: ceiled }));
     }
   }, [formData.noseRating, formData.palateRating, formData.finishRating]);
 
@@ -350,16 +351,23 @@ function ReviewForm({ spiritId, spiritName, onCancel, onSubmitted }: {
 
   return (
     <form onSubmit={handleSubmit} className="bg-card border-2 border-primary/20 rounded-3xl p-6 sm:p-8 mb-10 shadow-xl shadow-primary/5">
-      <h3 className="text-xl font-black mb-10 flex items-center gap-2">
-        <span className="w-2 h-6 bg-primary rounded-full"></span>
-        리뷰 작성하기
-      </h3>
+      <div className="mb-10">
+        <h3 className="text-xl font-black flex items-center gap-2 mb-1">
+          <span className="w-2 h-6 bg-primary rounded-full"></span>
+          리뷰 작성하기
+        </h3>
+        <p className="text-xs text-muted-foreground font-medium ml-4">
+          (점수 클릭 시 0.1점 단위로 조정 가능합니다!)
+        </p>
+      </div>
 
       <div className="space-y-12">
         {/* N / P / F Sequential Flow */}
-        <div className="grid md:grid-cols-3 gap-12">
+        <div className="space-y-6">
           <RatingSection
-            label="NOSE (향)"
+            label="향기와 맛(Nose&Flavor)"
+            shortLabel="Nose"
+            placeholder="어떤 향기가 느껴졌나요?"
             rating={formData.noseRating}
             tags={formData.nose}
             onRatingChange={(r) => setFormData({ ...formData, noseRating: r })}
@@ -369,7 +377,9 @@ function ReviewForm({ spiritId, spiritName, onCancel, onSubmitted }: {
             metadataKey="nose"
           />
           <RatingSection
-            label="PALATE (맛)"
+            label="바디감과 질감(Palate)"
+            shortLabel="Palate"
+            placeholder="머금었을 때는 어떤 느낌인가요?"
             rating={formData.palateRating}
             tags={formData.palate}
             onRatingChange={(r) => setFormData({ ...formData, palateRating: r })}
@@ -379,7 +389,9 @@ function ReviewForm({ spiritId, spiritName, onCancel, onSubmitted }: {
             metadataKey="palate"
           />
           <RatingSection
-            label="FINISH (여운)"
+            label="여운과 끝맛(Finish)"
+            shortLabel="Finish"
+            placeholder="피니시는 어땠나요?"
             rating={formData.finishRating}
             tags={formData.finish}
             onRatingChange={(r) => setFormData({ ...formData, finishRating: r })}
@@ -395,18 +407,24 @@ function ReviewForm({ spiritId, spiritName, onCancel, onSubmitted }: {
           <div className="flex flex-col items-center justify-center p-6 bg-secondary/30 rounded-3xl border border-border/50">
             <label className="text-xs font-black tracking-widest text-muted-foreground uppercase mb-2">종합 평점 (자동 계산)</label>
             <div className="flex items-center gap-4">
-              <div className="text-4xl font-black text-foreground">{formData.rating.toFixed(1)}</div>
+              <div className="text-4xl font-black text-foreground">{formData.rating.toFixed(2)}</div>
               <div className="flex gap-1">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <div key={i} className="relative">
-                    <Star className={`w-8 h-8 ${i + 1 <= formData.rating ? 'fill-amber-500 text-amber-500' : i + 0.5 === formData.rating ? 'text-amber-500' : 'text-muted-foreground/30'}`} />
-                    {i + 0.5 === formData.rating && (
-                      <div className="absolute inset-0 overflow-hidden w-[50%]">
-                        <Star className="w-8 h-8 fill-amber-500 text-amber-500" />
-                      </div>
-                    )}
-                  </div>
-                ))}
+                {Array.from({ length: 5 }).map((_, i) => {
+                  const s = i + 1;
+                  const visualRating = Math.round(formData.rating * 2) / 2;
+                  const isFull = s <= visualRating;
+                  const isHalf = s - 0.5 === visualRating;
+                  return (
+                    <div key={i} className="relative">
+                      <Star className={`w-8 h-8 ${isFull ? 'fill-amber-500 text-amber-500' : isHalf ? 'text-amber-500' : 'text-muted-foreground/30'}`} />
+                      {isHalf && (
+                        <div className="absolute inset-0 overflow-hidden w-[50%]">
+                          <Star className="w-8 h-8 fill-amber-500 text-amber-500" />
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -454,8 +472,9 @@ function ReviewForm({ spiritId, spiritName, onCancel, onSubmitted }: {
   );
 }
 
-function RatingSection({ label, rating, tags, onRatingChange, onTagsChange, color, icon, metadataKey }: {
+function RatingSection({ label, shortLabel, rating, tags, onRatingChange, onTagsChange, color, icon, metadataKey, placeholder }: {
   label: string;
+  shortLabel: string;
   rating: number;
   tags: string[];
   onRatingChange: (r: number) => void;
@@ -463,6 +482,7 @@ function RatingSection({ label, rating, tags, onRatingChange, onTagsChange, colo
   color: string;
   icon: any;
   metadataKey: string;
+  placeholder: string;
 }) {
   const [hoverRating, setHoverRating] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -482,52 +502,69 @@ function RatingSection({ label, rating, tags, onRatingChange, onTagsChange, colo
 
     // If clicking/dragging (pointer down)
     if (e.buttons === 1) {
-      onRatingChange(snappedRating);
+      const fineRating = Math.round(rawRating * 10) / 10;
+      onRatingChange(fineRating);
     }
   };
 
   return (
     <div className={`group p-5 rounded-3xl border border-border/60 bg-card/50 hover:border-${color}-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-${color}-500/5 space-y-4`}>
-      <div className="flex flex-col gap-3">
-        <div className="flex items-center justify-between">
-          {/* Label and Icon */}
-          <div className="flex items-center gap-2">
-            <div className={`p-2 rounded-xl bg-${color}-500/10 text-${color}-500 ring-1 ring-${color}-500/20`}>
-              {icon}
-            </div>
-            <label className={`text-sm font-black tracking-tight uppercase ${activeRating > 0 ? `text-${color}-500` : 'text-muted-foreground'} transition-colors`}>
-              {label}
-            </label>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        {/* Label and Icon */}
+        <div className="flex-1 flex items-center gap-2 min-w-0">
+          <div className={`p-2 rounded-xl bg-${color}-500/10 text-${color}-500 ring-1 ring-${color}-500/20 shrink-0`}>
+            {icon}
           </div>
-
-          {/* Rating Value Number (Optional, adding for clarity) */}
-          <div className={`text-lg font-black ${activeRating > 0 ? `text-${color}-500` : 'text-muted-foreground/30'}`}>
-            {activeRating > 0 ? activeRating.toFixed(1) : '-'}
-          </div>
+          <label className={`text-sm font-black tracking-tight ${activeRating > 0 ? `text-${color}-500` : 'text-muted-foreground'} transition-colors truncate`}>
+            <span className="hidden sm:inline">{label}</span>
+            <span className="sm:hidden">{shortLabel}</span>
+          </label>
         </div>
 
-        {/* Star Rating */}
-        <div
-          ref={containerRef}
-          onPointerMove={handlePointer}
-          onPointerLeave={() => setHoverRating(null)}
-          onPointerDown={handlePointer}
-          className="flex justify-between w-full px-2 py-3 rounded-2xl bg-secondary/30 cursor-pointer touch-none select-none hover:bg-secondary/50 transition-colors"
-        >
-          {[1, 2, 3, 4, 5].map((s) => {
-            const isFull = s <= activeRating;
-            const isHalf = s - 0.5 === activeRating;
-            return (
-              <div key={s} className="relative transition-transform hover:scale-110 duration-200">
-                <Star className={`w-8 h-8 ${isFull ? starColor : isHalf ? 'text-' + color + '-500' : 'text-muted-foreground/10'}`} />
-                {isHalf && (
-                  <div className="absolute inset-0 overflow-hidden w-[50%]">
-                    <Star className={`w-8 h-8 ${starColor}`} />
-                  </div>
-                )}
-              </div>
-            );
-          })}
+        <div className="flex items-center gap-4 self-end sm:self-auto w-full sm:w-auto justify-between sm:justify-end">
+          {/* Star Rating */}
+          <div
+            ref={containerRef}
+            onPointerMove={handlePointer}
+            onPointerLeave={() => setHoverRating(null)}
+            onPointerDown={handlePointer}
+            className="flex justify-between gap-1 px-3 py-2 rounded-xl bg-secondary/30 cursor-pointer touch-none select-none hover:bg-secondary/50 transition-colors"
+          >
+            {[1, 2, 3, 4, 5].map((s) => {
+              const visualRating = Math.round(activeRating * 2) / 2;
+              const isFull = s <= visualRating;
+              const isHalf = s - 0.5 === visualRating;
+              return (
+                <div key={s} className="relative transition-transform hover:scale-110 duration-200">
+                  <Star className={`w-6 h-6 ${isFull ? starColor : isHalf ? 'text-' + color + '-500' : 'text-muted-foreground/10'}`} />
+                  {isHalf && (
+                    <div className="absolute inset-0 overflow-hidden w-[50%]">
+                      <Star className={`w-6 h-6 ${starColor}`} />
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Rating Value Number */}
+          <input
+            type="number"
+            step="0.1"
+            min="0"
+            max="5"
+            value={activeRating > 0 ? activeRating : ""}
+            onChange={(e) => {
+              const val = parseFloat(e.target.value);
+              if (!isNaN(val)) {
+                onRatingChange(Math.min(5, Math.max(0, Math.round(val * 10) / 10)));
+              } else {
+                onRatingChange(0);
+              }
+            }}
+            className={`w-14 bg-transparent text-right font-black text-lg focus:outline-none focus:ring-2 focus:ring-${color}-500/20 rounded-lg px-1 ${activeRating > 0 ? `text-${color}-500` : 'text-muted-foreground/30'} [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
+            placeholder="0.0"
+          />
         </div>
       </div>
 
@@ -536,12 +573,13 @@ function RatingSection({ label, rating, tags, onRatingChange, onTagsChange, colo
         onTagsChange={onTagsChange}
         color={color}
         metadataKey={metadataKey}
+        placeholder={placeholder}
       />
     </div>
   );
 }
 
-function TagInput({ tags, onTagsChange, color, metadataKey }: { tags: string[], onTagsChange: (t: string[]) => void, color: string, metadataKey: string }) {
+function TagInput({ tags, onTagsChange, color, metadataKey, placeholder }: { tags: string[], onTagsChange: (t: string[]) => void, color: string, metadataKey: string, placeholder: string }) {
   const [inputValue, setInputValue] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -604,7 +642,7 @@ function TagInput({ tags, onTagsChange, color, metadataKey }: { tags: string[], 
           onBlur={handleBlur}
           onFocus={() => setShowSuggestions(true)}
           className="flex-1 bg-transparent border-none outline-none text-xs font-bold min-w-[60px] placeholder:text-muted-foreground"
-          placeholder={tags.length === 0 ? "풍미 입력..." : ""}
+          placeholder={tags.length === 0 ? placeholder : ""}
         />
       </div>
 

@@ -1,3 +1,4 @@
+//미사용
 'use client';
 
 import { useState, useEffect } from "react";
@@ -69,26 +70,7 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit }: Revie
         onClose();
     };
 
-    const StarRating = ({ value, onChange, label, colorClass }: { value: number, onChange: (v: number) => void, label: string, colorClass: string }) => {
-        return (
-            <div className="flex items-center gap-4">
-                <span className={`w-14 font-bold text-sm ${colorClass}`}>{label}</span>
-                <div className="flex items-center gap-1">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                        <button
-                            key={star}
-                            onClick={() => onChange(star)}
-                            className={`text-2xl transition-transform hover:scale-110 focus:outline-none ${value >= star ? 'text-primary' : 'text-muted-foreground/25'
-                                }`}
-                        >
-                            ★
-                        </button>
-                    ))}
-                    <span className="ml-2 text-sm font-semibold text-muted-foreground">{value.toFixed(1)}</span>
-                </div>
-            </div>
-        );
-    };
+
 
     const TagMultiSelect = ({
         category,
@@ -133,11 +115,12 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit }: Revie
                                     key={tag}
                                     onClick={() => toggleTag(tag)}
                                     className={`
-                     text-[10px] sm:text-xs px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border transition-all
+text - [10px] sm: text - xs px - 2 sm: px - 3 py - 1 sm: py - 1.5 rounded - full border transition - all
                      ${isSelected
                                             ? `${colors.bg} ${colors.text} ${colors.border} ring-2 ring-offset-1 ring-primary/50 font-bold`
-                                            : 'bg-card text-muted-foreground border-border hover:bg-secondary'}
-                   `}
+                                            : 'bg-card text-muted-foreground border-border hover:bg-secondary'
+                                        }
+`}
                                 >
                                     {tag}
                                 </button>
@@ -153,7 +136,7 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit }: Revie
                             {selectedTags.map(tag => {
                                 const color = getTagColor(tag);
                                 return (
-                                    <span key={tag} className={`inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-semibold border ${color.bg} ${color.text} ${color.border}`}>
+                                    <span key={tag} className={`inline - flex items - center gap - 1 px - 2 py - 1 rounded - md text - xs font - semibold border ${color.bg} ${color.text} ${color.border} `}>
                                         {tag}
                                         <button onClick={() => toggleTag(tag)} className="hover:opacity-70">×</button>
                                     </span>
@@ -219,11 +202,28 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit }: Revie
                         {/* Nose Section */}
                         <div className="space-y-3">
                             <div className="p-3 sm:p-4 bg-secondary/50 rounded-xl border border-border">
-                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                                    <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
-                                        <span className="text-lg">👃</span> Aroma (향)
+                                <div className="flex items-center justify-between gap-2">
+                                    <h3 className="text-sm font-bold text-foreground flex items-center gap-2 flex-1">
+                                        <span className="text-lg">👃</span>
+                                        <span className="hidden sm:inline">어떤 향기가 느껴졌나요?</span>
+                                        <span className="sm:hidden">Nose</span>
                                     </h3>
-                                    <StarRating label="" value={ratingN} onChange={setRatingN} colorClass="text-primary" />
+
+                                    <div className="flex items-center justify-center gap-1 flex-1">
+                                        {[1, 2, 3, 4, 5].map((star) => (
+                                            <button
+                                                key={star}
+                                                onClick={() => setRatingN(star)}
+                                                className={`text - 2xl transition - transform hover: scale - 110 focus: outline - none ${ratingN >= star ? 'text-primary' : 'text-muted-foreground/25'} `}
+                                            >
+                                                ★
+                                            </button>
+                                        ))}
+                                    </div>
+
+                                    <div className="flex-1 text-right font-bold text-primary text-lg">
+                                        {ratingN.toFixed(1)}
+                                    </div>
                                 </div>
                             </div>
                             <TagMultiSelect category="nose" selectedTags={tagsN} onChange={setTagsN} />
@@ -234,11 +234,28 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit }: Revie
                         {/* Palate Section */}
                         <div className="space-y-3">
                             <div className="p-3 sm:p-4 bg-secondary/50 rounded-xl border border-border">
-                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                                    <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
-                                        <span className="text-lg">👅</span> Taste (맛)
+                                <div className="flex items-center justify-between gap-2">
+                                    <h3 className="text-sm font-bold text-foreground flex items-center gap-2 flex-1">
+                                        <span className="text-lg">👅</span>
+                                        <span className="hidden sm:inline">머금었을 때는 어떤 느낌인가요?</span>
+                                        <span className="sm:hidden">Palate</span>
                                     </h3>
-                                    <StarRating label="" value={ratingP} onChange={setRatingP} colorClass="text-primary" />
+
+                                    <div className="flex items-center justify-center gap-1 flex-1">
+                                        {[1, 2, 3, 4, 5].map((star) => (
+                                            <button
+                                                key={star}
+                                                onClick={() => setRatingP(star)}
+                                                className={`text - 2xl transition - transform hover: scale - 110 focus: outline - none ${ratingP >= star ? 'text-primary' : 'text-muted-foreground/25'} `}
+                                            >
+                                                ★
+                                            </button>
+                                        ))}
+                                    </div>
+
+                                    <div className="flex-1 text-right font-bold text-primary text-lg">
+                                        {ratingP.toFixed(1)}
+                                    </div>
                                 </div>
                             </div>
                             <TagMultiSelect category="palate" selectedTags={tagsP} onChange={setTagsP} />
@@ -249,11 +266,28 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit }: Revie
                         {/* Finish Section */}
                         <div className="space-y-3">
                             <div className="p-3 sm:p-4 bg-secondary/50 rounded-xl border border-border">
-                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                                    <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
-                                        <span className="text-lg">🏁</span> Finish (여운)
+                                <div className="flex items-center justify-between gap-2">
+                                    <h3 className="text-sm font-bold text-foreground flex items-center gap-2 flex-1">
+                                        <span className="text-lg">🏁</span>
+                                        <span className="hidden sm:inline">피니시는 어땠나요?</span>
+                                        <span className="sm:hidden">Finish</span>
                                     </h3>
-                                    <StarRating label="" value={ratingF} onChange={setRatingF} colorClass="text-primary" />
+
+                                    <div className="flex items-center justify-center gap-1 flex-1">
+                                        {[1, 2, 3, 4, 5].map((star) => (
+                                            <button
+                                                key={star}
+                                                onClick={() => setRatingF(star)}
+                                                className={`text - 2xl transition - transform hover: scale - 110 focus: outline - none ${ratingF >= star ? 'text-primary' : 'text-muted-foreground/25'} `}
+                                            >
+                                                ★
+                                            </button>
+                                        ))}
+                                    </div>
+
+                                    <div className="flex-1 text-right font-bold text-primary text-lg">
+                                        {ratingF.toFixed(1)}
+                                    </div>
                                 </div>
                             </div>
                             <TagMultiSelect category="finish" selectedTags={tagsF} onChange={setTagsF} />
@@ -303,3 +337,4 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit }: Revie
         </AnimatePresence>
     );
 }
+//미사용
