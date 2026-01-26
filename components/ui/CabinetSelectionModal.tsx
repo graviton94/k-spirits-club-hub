@@ -30,11 +30,11 @@ export default function CabinetSelectionModal({
           initial={{ scale: 0.9, opacity: 0, y: 20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.9, opacity: 0, y: 20 }}
-          className="bg-background/90 dark:bg-slate-900/90 backdrop-blur-md border-2 border-border w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden"
+          className="bg-slate-800/95 dark:bg-slate-900/90 backdrop-blur-md border-2 border-border w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="p-6 bg-gradient-to-br from-background/95 to-background/80 border-b border-border/50">
+          <div className="p-6 bg-gradient-to-br from-slate-700/95 to-slate-800/80 border-b border-border/50">
             <h2 className="text-xl font-black text-white text-center">어디에 저장하시겠어요?</h2>
           </div>
 
@@ -70,7 +70,7 @@ export default function CabinetSelectionModal({
           </div>
 
           {/* Footer */}
-          <div className="p-4 bg-gradient-to-br from-background/95 to-background/80 border-t border-border/50 flex justify-center">
+          <div className="p-4 bg-gradient-to-br from-slate-700/95 to-slate-800/80 border-t border-border/50 flex justify-center">
             <button
               onClick={onClose}
               className="px-6 py-2 rounded-lg text-sm font-bold text-white hover:text-white/80 transition-colors"
