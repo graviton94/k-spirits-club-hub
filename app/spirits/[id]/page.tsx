@@ -7,6 +7,23 @@ import type { Spirit } from "@/lib/db/schema";
 
 export const runtime = 'edge';
 
+const DESCRIPTION_MAX_LENGTH = 100;
+
+// Utility function to transform review data from DB format to client format
+function transformReviewData(reviewsData: any[]): any[] {
+  return reviewsData.map(r => ({
+    id: `${r.spiritId}_${r.userId}`,
+    ...r,
+    noseRating: r.ratingN,
+    palateRating: r.ratingP,
+    finishRating: r.ratingF,
+    content: r.notes,
+    nose: r.tagsN,
+    palate: r.tagsP,
+    finish: r.tagsF
+  }));
+}
+
 // Generate dynamic metadata for SEO
 export async function generateMetadata({
   params,
@@ -35,7 +52,7 @@ export async function generateMetadata({
     spirit.category,
   ]
     .filter(Boolean)
-    .join(' · ') + (spirit.metadata?.description ? ` - ${spirit.metadata.description.substring(0, 100)}` : '');
+    .join(' · ') + (spirit.metadata?.description ? ` - ${spirit.metadata.description.substring(0, DESCRIPTION_MAX_LENGTH)}` : '');
 
   return {
     title,
@@ -76,17 +93,7 @@ export default async function SpiritDetailPage({
   let reviews: any[] = [];
   try {
     const reviewsData = await reviewsDb.getAllForSpirit(id);
-    reviews = reviewsData.map(r => ({
-      id: `${r.spiritId}_${r.userId}`,
-      ...r,
-      noseRating: r.ratingN,
-      palateRating: r.ratingP,
-      finishRating: r.ratingF,
-      content: r.notes,
-      nose: r.tagsN,
-      palate: r.tagsP,
-      finish: r.tagsF
-    }));
+    reviews = transformReviewData(reviewsData);
   } catch (error) {
     console.error('Failed to fetch reviews:', error);
   }
@@ -97,7 +104,7 @@ export default async function SpiritDetailPage({
     '@type': 'Product',
     name: spirit.name,
     description: spirit.metadata?.description || `${spirit.name} from ${spirit.distillery || 'Unknown Distillery'}`,
-    image: spirit.imageUrl || undefined,
+    image: spirit.imageUrl,
     brand: {
       '@type': 'Brand',
       name: spirit.distillery || 'Unknown',
