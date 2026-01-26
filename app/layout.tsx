@@ -17,7 +17,6 @@ export const metadata: Metadata = {
   verification: {
     google: "EztyFtmuOluuqxjs6wbD0Xx1DPSJwO3FXcY8Nz3CQ_o",
   },
-};
   keywords: ["위스키", "증류주", "술", "증류소", "리뷰", "대한민국", "K-Spirits", "술 정보", "주류 검색", "전통주", "Whisky", "soju"],
   manifest: "/manifest.json",
   appleWebApp: {
