@@ -30,7 +30,7 @@ export default function CabinetSelectionModal({
           initial={{ scale: 0.9, opacity: 0, y: 20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.9, opacity: 0, y: 20 }}
-          className="bg-slate-800/95 dark:bg-slate-900/90 backdrop-blur-md border-2 border-border w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden"
+          className="bg-white/90 backdrop-blur-md border-2 border-border w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
