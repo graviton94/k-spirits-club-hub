@@ -140,6 +140,7 @@ export async function addToCabinet(
 /**
  * Remove a spirit from the cabinet
  * Implements dual-delete: removes from both private cabinet and public reviews
+ * Both operations are attempted; partial failures are logged but don't block the operation
  */
 export async function removeFromCabinet(userId: string, spiritId: string) {
   if (!userId) {
@@ -147,11 +148,23 @@ export async function removeFromCabinet(userId: string, spiritId: string) {
   }
 
   try {
-    // Delete from both locations
-    await Promise.all([
+    // Delete from both locations - reviewsDb.delete is resilient and won't throw
+    // cabinetDb.delete may throw, but we want to attempt both regardless
+    const results = await Promise.allSettled([
       cabinetDb.delete(userId, spiritId),
       reviewsDb.delete(spiritId, userId)
     ]);
+    
+    // Check if cabinet delete failed (the critical operation)
+    if (results[0].status === 'rejected') {
+      console.error('Failed to delete from cabinet:', results[0].reason);
+      throw new Error('Failed to delete from cabinet');
+    }
+    
+    // Log if review delete failed, but don't throw (it's non-critical)
+    if (results[1].status === 'rejected') {
+      console.warn('Failed to delete review (non-critical):', results[1].reason);
+    }
     
     return { success: true };
   } catch (error) {

@@ -73,6 +73,38 @@ function toFirestore(data: Partial<Spirit>): any {
     return { fields };
 }
 
+/**
+ * Helper to parse Firestore document fields into a plain object
+ * Used by cabinetDb and reviewsDb for consistent deserialization
+ */
+function parseFirestoreFields(fields: any): any {
+    const obj: any = {};
+    
+    for (const [key, value] of Object.entries(fields) as [string, any][]) {
+        if ('stringValue' in value) obj[key] = value.stringValue;
+        else if ('integerValue' in value) obj[key] = Number(value.integerValue);
+        else if ('doubleValue' in value) obj[key] = Number(value.doubleValue);
+        else if ('booleanValue' in value) obj[key] = value.booleanValue;
+        else if ('timestampValue' in value) obj[key] = value.timestampValue;
+        else if (value.arrayValue) {
+            obj[key] = (value.arrayValue.values || []).map((v: any) => v.stringValue);
+        }
+        else if (value.mapValue) {
+            const mapData: any = {};
+            const mapFields = value.mapValue.fields || {};
+            for (const [mk, mv] of Object.entries(mapFields) as [string, any][]) {
+                if ('stringValue' in mv) mapData[mk] = mv.stringValue;
+                else if ('integerValue' in mv) mapData[mk] = Number(mv.integerValue);
+                else if ('doubleValue' in mv) mapData[mk] = Number(mv.doubleValue);
+                else if (mv.arrayValue) mapData[mk] = (mv.arrayValue.values || []).map((v: any) => v.stringValue);
+            }
+            obj[key] = mapData;
+        }
+    }
+    
+    return obj;
+}
+
 export const spiritsDb = {
   async getAll(filter: SpiritFilter = {}): Promise<Spirit[]> {
         const token = await getServiceAccountToken();
@@ -333,31 +365,7 @@ export const cabinetDb = {
         const json = await res.json();
         if (!json.documents) return [];
 
-        return json.documents.map((doc: any) => {
-            // generic fromFirestore for cabinet items
-            const obj: any = {};
-            const fields = doc.fields || {};
-            for (const [key, value] of Object.entries(fields) as [string, any][]) {
-                if ('stringValue' in value) obj[key] = value.stringValue;
-                else if ('integerValue' in value) obj[key] = Number(value.integerValue);
-                else if ('doubleValue' in value) obj[key] = Number(value.doubleValue);
-                else if ('booleanValue' in value) obj[key] = value.booleanValue;
-                else if ('timestampValue' in value) obj[key] = value.timestampValue;
-                else if (value.mapValue) {
-                    // Handle nested map (e.g. userReview)
-                    const mapData: any = {};
-                    const mapFields = value.mapValue.fields || {};
-                    for (const [mk, mv] of Object.entries(mapFields) as [string, any][]) {
-                        if ('stringValue' in mv) mapData[mk] = mv.stringValue;
-                        if ('integerValue' in mv) mapData[mk] = Number(mv.integerValue);
-                        if ('doubleValue' in mv) mapData[mk] = Number(mv.doubleValue);
-                        if (mv.arrayValue) mapData[mk] = (mv.arrayValue.values || []).map((v: any) => v.stringValue);
-                    }
-                    obj[key] = mapData;
-                }
-            }
-            return obj;
-        });
+        return json.documents.map((doc: any) => parseFirestoreFields(doc.fields || {}));
     },
 
     async upsert(userId: string, spiritId: string, data: any) {
@@ -418,29 +426,7 @@ export const cabinetDb = {
         }
 
         const doc = await res.json();
-        const fields = doc.fields || {};
-        const obj: any = {};
-        
-        for (const [key, value] of Object.entries(fields) as [string, any][]) {
-            if ('stringValue' in value) obj[key] = value.stringValue;
-            else if ('integerValue' in value) obj[key] = Number(value.integerValue);
-            else if ('doubleValue' in value) obj[key] = Number(value.doubleValue);
-            else if ('booleanValue' in value) obj[key] = value.booleanValue;
-            else if ('timestampValue' in value) obj[key] = value.timestampValue;
-            else if (value.mapValue) {
-                const mapData: any = {};
-                const mapFields = value.mapValue.fields || {};
-                for (const [mk, mv] of Object.entries(mapFields) as [string, any][]) {
-                    if ('stringValue' in mv) mapData[mk] = mv.stringValue;
-                    else if ('integerValue' in mv) mapData[mk] = Number(mv.integerValue);
-                    else if ('doubleValue' in mv) mapData[mk] = Number(mv.doubleValue);
-                    else if (mv.arrayValue) mapData[mk] = (mv.arrayValue.values || []).map((v: any) => v.stringValue);
-                }
-                obj[key] = mapData;
-            }
-        }
-        
-        return obj;
+        return parseFirestoreFields(doc.fields || {});
     }
 };
 
@@ -459,22 +445,33 @@ export const reviewsDb = {
             body: JSON.stringify(body)
         });
 
-        if (!res.ok) throw new Error(await res.text());
+        if (!res.ok) {
+            const errorText = await res.text();
+            console.error('Failed to upsert review:', errorText);
+            throw new Error(`Failed to upsert review: ${errorText}`);
+        }
     },
 
-    async delete(spiritId: string, userId: string) {
+    async delete(spiritId: string, userId: string): Promise<void> {
         const token = await getServiceAccountToken();
         const reviewId = `${spiritId}_${userId}`;
         const url = `${BASE_URL}/artifacts/${APP_ID}/public/data/reviews/${reviewId}`;
         
-        const res = await fetch(url, {
-            method: 'DELETE',
-            headers: { Authorization: `Bearer ${token}` }
-        });
-        
-        // Don't throw on 404 - review might not exist
-        if (!res.ok && res.status !== 404) {
-            console.error('Failed to delete review:', await res.text());
+        try {
+            const res = await fetch(url, {
+                method: 'DELETE',
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            
+            // Don't throw on 404 - review might not exist
+            if (!res.ok && res.status !== 404) {
+                const errorText = await res.text();
+                console.error('Failed to delete review:', errorText);
+                // Don't throw - we want dual-delete to be resilient
+            }
+        } catch (error) {
+            console.error('Error deleting review:', error);
+            // Don't throw - we want dual-delete to be resilient
         }
     },
 
@@ -494,18 +491,7 @@ export const reviewsDb = {
         }
 
         const doc = await res.json();
-        const fields = doc.fields || {};
-        const obj: any = {};
-        
-        for (const [key, value] of Object.entries(fields) as [string, any][]) {
-            if ('stringValue' in value) obj[key] = value.stringValue;
-            else if ('integerValue' in value) obj[key] = Number(value.integerValue);
-            else if ('doubleValue' in value) obj[key] = Number(value.doubleValue);
-            else if ('booleanValue' in value) obj[key] = value.booleanValue;
-            else if ('timestampValue' in value) obj[key] = value.timestampValue;
-        }
-        
-        return obj;
+        return parseFirestoreFields(doc.fields || {});
     },
 
     async getAllForSpirit(spiritId: string): Promise<any[]> {
@@ -524,18 +510,7 @@ export const reviewsDb = {
 
         // Filter for this spirit's reviews
         return json.documents
-            .map((doc: any) => {
-                const obj: any = {};
-                const fields = doc.fields || {};
-                for (const [key, value] of Object.entries(fields) as [string, any][]) {
-                    if ('stringValue' in value) obj[key] = value.stringValue;
-                    else if ('integerValue' in value) obj[key] = Number(value.integerValue);
-                    else if ('doubleValue' in value) obj[key] = Number(value.doubleValue);
-                    else if ('booleanValue' in value) obj[key] = value.booleanValue;
-                    else if ('timestampValue' in value) obj[key] = value.timestampValue;
-                }
-                return obj;
-            })
+            .map((doc: any) => parseFirestoreFields(doc.fields || {}))
             .filter((review: any) => review.spiritId === spiritId);
     }
 };
