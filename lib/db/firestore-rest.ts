@@ -197,7 +197,7 @@ export const spiritsDb = {
             });
             
             // Count published vs unpublished for diagnostics
-            const publishedCount = results.filter(s => s.isPublished === true).length;
+            const publishedCount = results.filter((s: Spirit) => s.isPublished === true).length;
             const unpublishedCount = results.length - publishedCount;
             console.log(`[SYSTEM_CHECK] Total Docs: ${results.length} | Published: ${publishedCount} | Unpublished: ${unpublishedCount}`);
         }
