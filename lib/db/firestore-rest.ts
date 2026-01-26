@@ -433,47 +433,59 @@ export const cabinetDb = {
 export const reviewsDb = {
     async upsert(spiritId: string, userId: string, data: any) {
         const token = await getServiceAccountToken();
-        // Document ID = ${spiritId}_${userId} for uniqueness
-        const reviewId = `${spiritId}_${userId}`;
-        const reviewsPath = getAppPath().reviews;
-        const url = `${BASE_URL}/${reviewsPath}/${reviewId}`;
+        const reviewData = { ...data, spiritId, userId };
+        const body = toFirestore(reviewData);
 
-        // Construct Update Mask dynamically based on data keys
-        const fieldPaths = Object.keys(data).filter(k => k !== 'id').map(k => `updateMask.fieldPaths=${k}`).join('&');
-        const patchUrl = `${url}?${fieldPaths}`;
+        // Define paths
+        const paths = [
+            `${getAppPath().reviews}/${spiritId}_${userId}`,
+            `${getAppPath().spiritReviews(spiritId)}/${userId}`,
+            `${getAppPath().userReviews(userId)}/${spiritId}`
+        ];
 
-        const body = toFirestore(data);
+        // Construct update mask
+        const fieldPaths = Object.keys(reviewData).filter(k => k !== 'id').map(k => `updateMask.fieldPaths=${k}`).join('&');
 
-        const res = await fetch(patchUrl, {
-            method: 'PATCH',
-            headers: { Authorization: `Bearer ${token}` },
-            body: JSON.stringify(body)
+        const promises = paths.map(async (path) => {
+            const patchUrl = `${BASE_URL}/${path}?${fieldPaths}`;
+            const res = await fetch(patchUrl, {
+                method: 'PATCH',
+                headers: { Authorization: `Bearer ${token}` },
+                body: JSON.stringify(body)
+            });
+
+            if (!res.ok) {
+                const errorText = await res.text();
+                console.error(`Failed to upsert review at ${path}:`, errorText);
+                throw new Error(`Failed to upsert review at ${path}: ${errorText}`);
+            }
         });
 
-        if (!res.ok) {
-            const errorText = await res.text();
-            console.error('Failed to upsert review:', errorText);
-            throw new Error(`Failed to upsert review: ${errorText}`);
-        }
+        await Promise.all(promises);
     },
 
     async delete(spiritId: string, userId: string): Promise<void> {
         const token = await getServiceAccountToken();
-        const reviewId = `${spiritId}_${userId}`;
-        const reviewsPath = getAppPath().reviews;
-        const url = `${BASE_URL}/${reviewsPath}/${reviewId}`;
+        const paths = [
+            `${getAppPath().reviews}/${spiritId}_${userId}`,
+            `${getAppPath().spiritReviews(spiritId)}/${userId}`,
+            `${getAppPath().userReviews(userId)}/${spiritId}`
+        ];
 
         try {
-            const res = await fetch(url, {
-                method: 'DELETE',
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const promises = paths.map(async (path) => {
+                const url = `${BASE_URL}/${path}`;
+                const res = await fetch(url, {
+                    method: 'DELETE',
+                    headers: { Authorization: `Bearer ${token}` }
+                });
 
-            // Don't throw on 404 - review might not exist
-            if (!res.ok && res.status !== 404) {
-                const errorText = await res.text();
-                console.error('Failed to delete review:', errorText);
-            }
+                if (!res.ok && res.status !== 404) {
+                    const errorText = await res.text();
+                    console.error(`Failed to delete review at ${path}:`, errorText);
+                }
+            });
+            await Promise.all(promises);
         } catch (error) {
             console.error('Error deleting review:', error);
         }

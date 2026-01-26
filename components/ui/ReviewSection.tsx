@@ -132,24 +132,21 @@ function ReviewCard({ review }: { review: ExtendedReview }) {
           </div>
         </div>
         <div className="flex flex-col items-end">
-          <div className="flex items-center gap-0.5">
-            {Array.from({ length: 5 }).map((_, i) => {
-              const r = review.rating;
-              const isFull = i + 1 <= r;
-              const isHalf = i + 0.5 <= r && i + 1 > r;
-              return (
-                <div key={i} className="relative">
-                  <Star className={`w-4 h-4 ${isFull ? 'fill-amber-500 text-amber-500' : isHalf ? 'text-amber-500' : 'text-border'}`} />
-                  {isHalf && (
-                    <div className="absolute inset-0 overflow-hidden w-[50%]">
-                      <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-          <span className="text-[10px] font-black text-amber-500 mt-1 uppercase tracking-widest">Overall Score</span>
+          {(() => {
+            const score = review.rating;
+            const colorClass = score >= 4.0
+              ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
+              : score >= 2.5
+                ? "bg-amber-500/10 text-amber-600 border-amber-500/20"
+                : "bg-rose-500/10 text-rose-600 border-rose-500/20";
+
+            return (
+              <div className={`flex flex-col items-center justify-center px-5 py-2.5 rounded-2xl border ${colorClass} min-w-[80px] shadow-sm`}>
+                <span className="text-[9px] font-black uppercase tracking-[0.2em] mb-1 opacity-80">Overall</span>
+                <span className="text-2xl font-black leading-none">{score.toFixed(2)}</span>
+              </div>
+            );
+          })()}
         </div>
       </div>
 
@@ -256,6 +253,7 @@ function ReviewForm({ spiritId, spiritName, onCancel, onSubmitted }: {
     finishRating: 0
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   // Automatically calculate overall rating whenever component ratings change
   useEffect(() => {
@@ -340,7 +338,7 @@ function ReviewForm({ spiritId, spiritName, onCancel, onSubmitted }: {
         window.dispatchEvent(new CustomEvent('reviewSubmitted'));
       }
 
-      alert('리뷰가 성공적으로 제출되었습니다!');
+      setIsSuccess(true);
     } catch (error) {
       console.error('Error submitting review:', error);
       alert('리뷰 제출에 실패했습니다. 다시 시도해주세요.');
@@ -348,6 +346,27 @@ function ReviewForm({ spiritId, spiritName, onCancel, onSubmitted }: {
       setIsSubmitting(false);
     }
   };
+
+  if (isSuccess) {
+    return (
+      <div className="bg-card border-2 border-primary/20 rounded-3xl p-12 mb-10 shadow-xl shadow-primary/5 text-center flex flex-col items-center animate-in fade-in zoom-in duration-500">
+        <div className="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center mb-6 ring-4 ring-green-500/20">
+          <Check className="w-10 h-10 text-green-500" />
+        </div>
+        <h3 className="text-2xl font-black mb-2">리뷰 제출 완료!</h3>
+        <p className="text-muted-foreground font-medium mb-8">
+          소중한 경험을 공유해주셔서 감사합니다.<br />
+          당신의 리뷰가 다른 분들에게 큰 도움이 될 거예요.
+        </p>
+        <button
+          onClick={onCancel}
+          className="px-12 py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-black rounded-2xl hover:shadow-xl hover:shadow-primary/20 transition-all"
+        >
+          확인
+        </button>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} className="bg-card border-2 border-primary/20 rounded-3xl p-6 sm:p-8 mb-10 shadow-xl shadow-primary/5">

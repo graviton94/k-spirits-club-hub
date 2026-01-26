@@ -24,18 +24,18 @@ export function getAppPathUtil(type: PathType, params?: { userId?: string }): st
     case 'spirits':
       // Root collection
       return 'spirits';
-    
+
     case 'reviews':
       // Public reviews under artifacts namespace
       return `artifacts/${APP_ID}/public/data/reviews`;
-    
+
     case 'userCabinet':
       // User cabinet under artifacts namespace (requires userId)
       if (!params?.userId) {
         throw new Error('userId is required for userCabinet path');
       }
       return `artifacts/${APP_ID}/users/${params.userId}/cabinet`;
-    
+
     default:
       throw new Error(`Unknown path type: ${type}`);
   }
@@ -50,7 +50,9 @@ export function getAppPathUtil(type: PathType, params?: { userId?: string }): st
 export const getAppPath = (appId: string = APP_ID) => ({
   spirits: `spirits`, // Root collection
   reviews: `artifacts/${appId}/public/data/reviews`,
-  userCabinet: (userId: string) => `artifacts/${appId}/users/${userId}/cabinet`
+  userCabinet: (userId: string) => `artifacts/${appId}/users/${userId}/cabinet`,
+  spiritReviews: (spiritId: string) => `artifacts/${appId}/spirits/${spiritId}/reviews`,
+  userReviews: (userId: string) => `artifacts/${appId}/users/${userId}/reviews`
 });
 
 /**
