@@ -2,6 +2,7 @@ import { Spirit, SpiritStatus, SpiritFilter, SpiritSearchIndex } from '../db/sch
 import { getServiceAccountToken } from '../auth/service-account';
 
 const PROJECT_ID = process.env.FIREBASE_PROJECT_ID;
+const APP_ID = process.env.NEXT_PUBLIC_APP_ID || 'k-spirits-club-hub';
 const BASE_URL = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
 
 /**
@@ -315,10 +316,8 @@ export const spiritsDb = {
 export const cabinetDb = {
     async getAll(userId: string): Promise<any[]> {
         const token = await getServiceAccountToken();
-        // Path: users/{userId}/cabinet (collection)
-        // Root path construction for custom collections might differ, usually:
-        // projects/{id}/databases/(default)/documents/users/{userId}/cabinet
-        const url = `${BASE_URL}/users/${userId}/cabinet`;
+        // Path: artifacts/{appId}/users/{userId}/cabinet (collection)
+        const url = `${BASE_URL}/artifacts/${APP_ID}/users/${userId}/cabinet`;
 
         const res = await fetch(url, {
             headers: { Authorization: `Bearer ${token}` }
@@ -364,7 +363,7 @@ export const cabinetDb = {
     async upsert(userId: string, spiritId: string, data: any) {
         const token = await getServiceAccountToken();
         // Document ID = spiritId (to ensure uniqueness per spirit per user)
-        const url = `${BASE_URL}/users/${userId}/cabinet/${spiritId}`;
+        const url = `${BASE_URL}/artifacts/${APP_ID}/users/${userId}/cabinet/${spiritId}`;
 
         // Convert data to Firestore JSON. Can reuse toFirestore(data)? 
         // We need to support 'userReview' object structure. 
@@ -397,10 +396,50 @@ export const cabinetDb = {
 
     async delete(userId: string, spiritId: string) {
         const token = await getServiceAccountToken();
-        const url = `${BASE_URL}/users/${userId}/cabinet/${spiritId}`;
+        const url = `${BASE_URL}/artifacts/${APP_ID}/users/${userId}/cabinet/${spiritId}`;
         await fetch(url, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${token}` }
         });
+    },
+
+    async getById(userId: string, spiritId: string): Promise<any | null> {
+        const token = await getServiceAccountToken();
+        const url = `${BASE_URL}/artifacts/${APP_ID}/users/${userId}/cabinet/${spiritId}`;
+
+        const res = await fetch(url, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (res.status === 404) return null; // Document doesn't exist
+        if (!res.ok) {
+            console.error('Failed to get cabinet item:', await res.text());
+            return null;
+        }
+
+        const doc = await res.json();
+        const fields = doc.fields || {};
+        const obj: any = {};
+        
+        for (const [key, value] of Object.entries(fields) as [string, any][]) {
+            if ('stringValue' in value) obj[key] = value.stringValue;
+            else if ('integerValue' in value) obj[key] = Number(value.integerValue);
+            else if ('doubleValue' in value) obj[key] = Number(value.doubleValue);
+            else if ('booleanValue' in value) obj[key] = value.booleanValue;
+            else if ('timestampValue' in value) obj[key] = value.timestampValue;
+            else if (value.mapValue) {
+                const mapData: any = {};
+                const mapFields = value.mapValue.fields || {};
+                for (const [mk, mv] of Object.entries(mapFields) as [string, any][]) {
+                    if ('stringValue' in mv) mapData[mk] = mv.stringValue;
+                    else if ('integerValue' in mv) mapData[mk] = Number(mv.integerValue);
+                    else if ('doubleValue' in mv) mapData[mk] = Number(mv.doubleValue);
+                    else if (mv.arrayValue) mapData[mk] = (mv.arrayValue.values || []).map((v: any) => v.stringValue);
+                }
+                obj[key] = mapData;
+            }
+        }
+        
+        return obj;
     }
 };

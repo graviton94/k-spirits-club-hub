@@ -9,6 +9,7 @@ import { getTagColor } from "@/lib/constants/tag-colors";
 import type { Spirit, UserReview } from "@/lib/utils/flavor-engine";
 import ReviewModal from "@/components/cabinet/ReviewModal";
 import { Bookmark, Plus, Pencil, Check, Loader2 } from "lucide-react";
+import { addToCabinet, checkCabinetStatus } from "@/app/actions/cabinet";
 
 interface SpiritDetailModalProps {
     spirit: any; // Flexible for now
@@ -39,12 +40,9 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
 
         async function checkStatus() {
             try {
-                const res = await fetch(`/api/cabinet/check?spiritId=${spirit.id}`, {
-                    headers: { 'x-user-id': user!.uid }
-                });
-                const { isOwned, isWishlist, data } = await res.json();
-                setCabinetStatus({ isOwned, isWishlist });
-                if (data) setLocalSpirit(data);
+                const status = await checkCabinetStatus(user!.uid, spirit.id);
+                setCabinetStatus({ isOwned: status.isOwned, isWishlist: status.isWishlist });
+                if (status.data) setLocalSpirit(status.data);
             } catch (e) {
                 console.error("Status check failed", e);
             }
@@ -60,32 +58,20 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
 
         setIsProcessing(true);
         try {
-            const payload = {
-                ...spirit,
+            await addToCabinet(user.uid, spirit.id, {
                 isWishlist: action === 'wishlist',
-                updatedAt: new Date().toISOString()
-            };
-
-            const res = await fetch('/api/cabinet', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-user-id': user.uid
-                },
-                body: JSON.stringify(payload)
+                userReview: localSpirit?.userReview
             });
 
-            if (res.ok) {
-                setCabinetStatus({
-                    isOwned: action === 'add',
-                    isWishlist: action === 'wishlist'
-                });
-                if (onStatusChange) onStatusChange();
-                
-                // Redirect to product detail page after adding to cabinet
-                if (action === 'add') {
-                    router.push(`/spirits/${spirit.id}`);
-                }
+            setCabinetStatus({
+                isOwned: action === 'add',
+                isWishlist: action === 'wishlist'
+            });
+            if (onStatusChange) onStatusChange();
+            
+            // Redirect to product detail page after adding to cabinet
+            if (action === 'add') {
+                router.push(`/spirits/${spirit.id}`);
             }
         } catch (e) {
             console.error(e);
@@ -100,20 +86,15 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
         setIsProcessing(true);
         try {
             const updatedSpirit = { ...localSpirit, userReview: review };
-            const res = await fetch('/api/cabinet', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-user-id': user.uid
-                },
-                body: JSON.stringify(updatedSpirit)
+            
+            await addToCabinet(user.uid, spirit.id, {
+                isWishlist: localSpirit.isWishlist || false,
+                userReview: review
             });
 
-            if (res.ok) {
-                setLocalSpirit(updatedSpirit);
-                setCabinetStatus(prev => ({ ...prev, isOwned: true }));
-                if (onStatusChange) onStatusChange();
-            }
+            setLocalSpirit(updatedSpirit);
+            setCabinetStatus(prev => ({ ...prev, isOwned: true }));
+            if (onStatusChange) onStatusChange();
         } catch (e) {
             console.error(e);
         } finally {

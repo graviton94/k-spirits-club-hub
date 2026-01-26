@@ -6,13 +6,58 @@ import Link from "next/link";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import { Spirit } from "@/lib/db/schema";
 import { getTagStyle } from "@/lib/constants/tag-styles";
+import { useState, useEffect } from "react";
+import { useAuth } from "@/app/context/auth-context";
+import { addToCabinet, removeFromCabinet, checkCabinetStatus } from "@/app/actions/cabinet";
 
 interface SpiritCardProps {
   spirit: Spirit;
   onClick?: (spirit: Spirit) => void;
+  onCabinetChange?: () => void;
 }
 
-export function SpiritCard({ spirit, onClick }: SpiritCardProps) {
+export function SpiritCard({ spirit, onClick, onCabinetChange }: SpiritCardProps) {
+  const { user } = useAuth();
+  const [isInCabinet, setIsInCabinet] = useState(false);
+  const [isToggling, setIsToggling] = useState(false);
+
+  // Check cabinet status on mount
+  useEffect(() => {
+    if (user) {
+      checkCabinetStatus(user.uid, spirit.id).then(({ isOwned, isWishlist }) => {
+        setIsInCabinet(isOwned || isWishlist);
+      });
+    }
+  }, [user, spirit.id]);
+
+  const handleHeartClick = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    if (!user) {
+      // Trigger login modal
+      const loginButton = document.querySelector('[aria-label="Login"]') as HTMLElement;
+      if (loginButton) loginButton.click();
+      return;
+    }
+
+    setIsToggling(true);
+    try {
+      if (isInCabinet) {
+        await removeFromCabinet(user.uid, spirit.id);
+        setIsInCabinet(false);
+      } else {
+        await addToCabinet(user.uid, spirit.id, { isWishlist: true });
+        setIsInCabinet(true);
+      }
+      onCabinetChange?.();
+    } catch (error) {
+      console.error('Failed to toggle cabinet:', error);
+    } finally {
+      setIsToggling(false);
+    }
+  };
+
   // Extract first 2 tags from tasting_note
   const tastingTags = spirit.metadata?.tasting_note
     ? spirit.metadata.tasting_note.split(',').slice(0, 2).map(tag => tag.trim())
@@ -116,14 +161,17 @@ export function SpiritCard({ spirit, onClick }: SpiritCardProps) {
 
       {/* Heart Icon */}
       <button
-        className="flex-shrink-0 p-1 text-muted-foreground/30 hover:text-red-500 transition-colors"
-        onClick={(e) => {
-          e.stopPropagation();
-          e.preventDefault();
-          // TODO: Add to wishlist
-        }}
+        className={`flex-shrink-0 p-1 transition-colors ${
+          isToggling 
+            ? 'opacity-50 cursor-wait' 
+            : isInCabinet 
+              ? 'text-red-500' 
+              : 'text-muted-foreground/30 hover:text-red-500'
+        }`}
+        onClick={handleHeartClick}
+        disabled={isToggling}
       >
-        <Heart className="w-5 h-5" />
+        <Heart className={`w-5 h-5 ${isInCabinet ? 'fill-current' : ''}`} />
       </button>
     </motion.div>
   );
