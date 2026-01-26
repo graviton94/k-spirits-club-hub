@@ -421,7 +421,6 @@ export const cabinetDb = {
 export const reviewsDb = {
     async upsert(spiritId: string, userId: string, data: any) {
         const token = await getServiceAccountToken();
-        const collectionPath = getAppPath().reviews;
         // Document ID = ${spiritId}_${userId} for uniqueness
         const reviewId = `${spiritId}_${userId}`;
         const reviewsPath = getAppPath().reviews;
@@ -444,7 +443,6 @@ export const reviewsDb = {
 
     async delete(spiritId: string, userId: string): Promise<void> {
         const token = await getServiceAccountToken();
-        const collectionPath = getAppPath().reviews;
         const reviewId = `${spiritId}_${userId}`;
         const reviewsPath = getAppPath().reviews;
         const url = `${BASE_URL}/${reviewsPath}/${reviewId}`;
@@ -467,7 +465,6 @@ export const reviewsDb = {
 
     async getById(spiritId: string, userId: string): Promise<any | null> {
         const token = await getServiceAccountToken();
-        const collectionPath = getAppPath().reviews;
         const reviewId = `${spiritId}_${userId}`;
         const reviewsPath = getAppPath().reviews;
         const url = `${BASE_URL}/${reviewsPath}/${reviewId}`;
