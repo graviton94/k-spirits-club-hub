@@ -48,10 +48,17 @@ export default function MyPage() {
             const ownedSpirits = cabinetData.filter((item) => !item.isWishlist);
             setCabinetCount(ownedSpirits.length);
             
-            // Count items with reviews (must have userReview with a comment/notes)
-            const withReviews = cabinetData.filter((item) => 
-                item.userReview && (item.userReview.comment || item.userReview.ratingOverall)
-            );
+            // Count items with reviews - check for personalNotes or userReview
+            const withReviews = cabinetData.filter((item) => {
+                // Check both personalNotes (new field) and userReview (legacy field)
+                if (item.personalNotes && item.personalNotes.trim().length > 0) {
+                    return true;
+                }
+                if (item.userReview && (item.userReview.comment || item.userReview.ratingOverall)) {
+                    return true;
+                }
+                return false;
+            });
             setReviewCount(withReviews.length);
         } catch (error) {
             console.error('Failed to load user stats:', error);

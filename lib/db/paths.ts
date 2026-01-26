@@ -1,15 +1,22 @@
-export const APP_ID = process.env.NEXT_PUBLIC_APP_ID || 'k-spirits-club-hub';
+/**
+ * Compatibility wrapper for path-config.ts
+ * Provides object-based API for client-side Firebase SDK usage
+ */
+import { getAppPath as getAppPathUtil, APP_ID } from './path-config';
+
+export { APP_ID };
 
 /**
- * 리팩토링된 최적의 Firestore 경로 설정
+ * Get Firestore paths with object-based API
+ * Compatible with client-side Firebase SDK
  */
 export const getAppPath = (appId: string = APP_ID) => ({
-    // 마스터 데이터 (최상위 컬렉션 유지)
-    spirits: `spirits`,
+    // Master data (root collection)
+    spirits: getAppPathUtil('spirits'),
 
-    // 공용 리뷰 (제품별/유저별 조회가 용이한 평탄화 구조)
-    reviews: `artifacts/${appId}/public/data/reviews`,
+    // Public reviews (flattened structure for easy product/user queries)
+    reviews: getAppPathUtil('reviews'),
 
-    // 유저별 프라이빗 술장
-    userCabinet: (userId: string) => `artifacts/${appId}/users/${userId}/cabinet`
+    // User-specific private cabinet
+    userCabinet: (userId: string) => getAppPathUtil('userCabinet', { userId })
 });

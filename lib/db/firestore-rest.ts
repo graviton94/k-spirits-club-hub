@@ -1,6 +1,6 @@
 import { Spirit, SpiritStatus, SpiritFilter, SpiritSearchIndex } from '../db/schema';
 import { getServiceAccountToken } from '../auth/service-account';
-import { getAppPath, APP_ID } from './paths';
+import { getAppPath, APP_ID } from './path-config';
 
 const PROJECT_ID = process.env.FIREBASE_PROJECT_ID;
 const BASE_URL = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
@@ -352,8 +352,9 @@ export const spiritsDb = {
 export const cabinetDb = {
     async getAll(userId: string): Promise<any[]> {
         const token = await getServiceAccountToken();
-        const collectionPath = getAppPath().userCabinet(userId);
-        const url = `${BASE_URL}/${collectionPath}`;
+        // Path: artifacts/{appId}/users/{userId}/cabinet (collection)
+        const cabinetPath = getAppPath('userCabinet', { userId });
+        const url = `${BASE_URL}/${cabinetPath}`;
 
         const res = await fetch(url, {
             headers: { Authorization: `Bearer ${token}` }
@@ -372,8 +373,9 @@ export const cabinetDb = {
 
     async upsert(userId: string, spiritId: string, data: any) {
         const token = await getServiceAccountToken();
-        const collectionPath = getAppPath().userCabinet(userId);
-        const url = `${BASE_URL}/${collectionPath}/${spiritId}`;
+        // Document ID = spiritId (to ensure uniqueness per spirit per user)
+        const cabinetPath = getAppPath('userCabinet', { userId });
+        const url = `${BASE_URL}/${cabinetPath}/${spiritId}`;
 
         const body = toFirestore(data);
 
@@ -388,8 +390,8 @@ export const cabinetDb = {
 
     async delete(userId: string, spiritId: string) {
         const token = await getServiceAccountToken();
-        const collectionPath = getAppPath().userCabinet(userId);
-        const url = `${BASE_URL}/${collectionPath}/${spiritId}`;
+        const cabinetPath = getAppPath('userCabinet', { userId });
+        const url = `${BASE_URL}/${cabinetPath}/${spiritId}`;
         await fetch(url, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${token}` }
@@ -398,8 +400,8 @@ export const cabinetDb = {
 
     async getById(userId: string, spiritId: string): Promise<any | null> {
         const token = await getServiceAccountToken();
-        const collectionPath = getAppPath().userCabinet(userId);
-        const url = `${BASE_URL}/${collectionPath}/${spiritId}`;
+        const cabinetPath = getAppPath('userCabinet', { userId });
+        const url = `${BASE_URL}/${cabinetPath}/${spiritId}`;
 
         const res = await fetch(url, {
             headers: { Authorization: `Bearer ${token}` }
@@ -422,7 +424,8 @@ export const reviewsDb = {
         const collectionPath = getAppPath().reviews;
         // Document ID = ${spiritId}_${userId} for uniqueness
         const reviewId = `${spiritId}_${userId}`;
-        const url = `${BASE_URL}/${collectionPath}/${reviewId}`;
+        const reviewsPath = getAppPath('reviews');
+        const url = `${BASE_URL}/${reviewsPath}/${reviewId}`;
 
         const body = toFirestore(data);
 
@@ -443,8 +446,9 @@ export const reviewsDb = {
         const token = await getServiceAccountToken();
         const collectionPath = getAppPath().reviews;
         const reviewId = `${spiritId}_${userId}`;
-        const url = `${BASE_URL}/${collectionPath}/${reviewId}`;
-
+        const reviewsPath = getAppPath('reviews');
+        const url = `${BASE_URL}/${reviewsPath}/${reviewId}`;
+        
         try {
             const res = await fetch(url, {
                 method: 'DELETE',
@@ -465,7 +469,8 @@ export const reviewsDb = {
         const token = await getServiceAccountToken();
         const collectionPath = getAppPath().reviews;
         const reviewId = `${spiritId}_${userId}`;
-        const url = `${BASE_URL}/${collectionPath}/${reviewId}`;
+        const reviewsPath = getAppPath('reviews');
+        const url = `${BASE_URL}/${reviewsPath}/${reviewId}`;
 
         const res = await fetch(url, {
             headers: { Authorization: `Bearer ${token}` }
@@ -483,8 +488,8 @@ export const reviewsDb = {
 
     async getAllForSpirit(spiritId: string): Promise<any[]> {
         const token = await getServiceAccountToken();
-        const collectionPath = getAppPath().reviews;
-        const url = `${BASE_URL}/${collectionPath}`;
+        const reviewsPath = getAppPath('reviews');
+        const url = `${BASE_URL}/${reviewsPath}`;
 
         const res = await fetch(url, {
             headers: { Authorization: `Bearer ${token}` }

@@ -13,6 +13,7 @@ import CabinetSelectionModal from "./CabinetSelectionModal";
 import ReviewModal from "@/components/cabinet/ReviewModal";
 import { UserReview } from "@/lib/utils/flavor-engine";
 import { toFlavorSpirit, triggerLoginModal } from "@/lib/utils/spirit-adapters";
+import SuccessToast from "./SuccessToast";
 
 interface SpiritCardProps {
   spirit: Spirit;
@@ -26,6 +27,8 @@ export function SpiritCard({ spirit, onClick, onCabinetChange }: SpiritCardProps
   const [isToggling, setIsToggling] = useState(false);
   const [showSelectionModal, setShowSelectionModal] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   // Check cabinet status on mount
   useEffect(() => {
@@ -63,9 +66,24 @@ export function SpiritCard({ spirit, onClick, onCabinetChange }: SpiritCardProps
     }
   };
 
-  const handleSelectCabinet = () => {
-    // Open review modal for cabinet (owned spirits)
-    setShowReviewModal(true);
+  const handleSelectCabinet = async () => {
+    // Immediate save to cabinet without review
+    if (!user) return;
+    
+    setIsToggling(true);
+    try {
+      await addToCabinet(user.uid, spirit.id, { isWishlist: false });
+      setIsInCabinet(true);
+      onCabinetChange?.();
+      setSuccessMessage('🥃 술장에 저장되었습니다!');
+      setShowSuccessToast(true);
+    } catch (error) {
+      console.error('Failed to add to cabinet:', error);
+      setSuccessMessage('❌ 저장에 실패했습니다. 다시 시도해주세요.');
+      setShowSuccessToast(true);
+    } finally {
+      setIsToggling(false);
+    }
   };
 
   const handleSelectWishlist = async () => {
@@ -77,8 +95,12 @@ export function SpiritCard({ spirit, onClick, onCabinetChange }: SpiritCardProps
       await addToCabinet(user.uid, spirit.id, { isWishlist: true });
       setIsInCabinet(true);
       onCabinetChange?.();
+      setSuccessMessage('🔖 위시리스트에 추가되었습니다!');
+      setShowSuccessToast(true);
     } catch (error) {
       console.error('Failed to add to wishlist:', error);
+      setSuccessMessage('❌ 추가에 실패했습니다. 다시 시도해주세요.');
+      setShowSuccessToast(true);
     } finally {
       setIsToggling(false);
     }
@@ -95,9 +117,12 @@ export function SpiritCard({ spirit, onClick, onCabinetChange }: SpiritCardProps
       });
       setIsInCabinet(true);
       onCabinetChange?.();
+      setSuccessMessage('✅ 리뷰와 함께 술장에 저장되었습니다!');
+      setShowSuccessToast(true);
     } catch (error) {
       console.error('Failed to add to cabinet with review:', error);
-      alert('리뷰 저장에 실패했습니다. 다시 시도해주세요.');
+      setSuccessMessage('❌ 리뷰 저장에 실패했습니다. 다시 시도해주세요.');
+      setShowSuccessToast(true);
     } finally {
       setIsToggling(false);
     }
@@ -241,6 +266,12 @@ export function SpiritCard({ spirit, onClick, onCabinetChange }: SpiritCardProps
         isOpen={showReviewModal}
         onClose={() => setShowReviewModal(false)}
         onSubmit={handleReviewSubmit}
+      />
+      
+      <SuccessToast
+        isVisible={showSuccessToast}
+        message={successMessage}
+        onClose={() => setShowSuccessToast(false)}
       />
     </>
   );
