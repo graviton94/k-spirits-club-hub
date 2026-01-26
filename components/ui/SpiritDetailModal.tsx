@@ -159,25 +159,26 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
 
                         {/* Gradient Overlay */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-6">
-                            <div className="flex items-start justify-between">
-                                <div className="flex-1 mr-4">
-                                    <span className="inline-block px-2 py-1 mb-2 text-[10px] font-black text-primary-foreground bg-primary rounded-md uppercase shadow-[0_0_8px_rgba(251,146,60,0.6)] relative z-10">
-                                        {localSpirit.subcategory || localSpirit.category}
-                                    </span>
-                                    <h2 className="text-2xl sm:text-3xl font-black text-white leading-tight mb-1 drop-shadow-lg break-keep">
-                                        {localSpirit.name}
-                                    </h2>
-                                    {localSpirit.distillery && (
-                                        <p className="text-gray-300 text-sm font-medium">
-                                            {localSpirit.distillery}
-                                        </p>
-                                    )}
-                                </div>
-                                <div className="flex flex-col items-center justify-center bg-white/20 backdrop-blur-md rounded-lg p-2 min-w-[3.5rem] border border-white/10">
-                                    <span className="text-[10px] text-gray-200 font-bold uppercase tracking-tighter">ABV</span>
-                                    <span className="text-xl font-black text-white">{localSpirit.abv}<span className="text-xs ml-0.5">%</span></span>
-                                </div>
+                            <h2 className="text-2xl sm:text-3xl font-black text-white leading-tight mb-2 drop-shadow-lg break-keep">
+                                {localSpirit.name}
+                            </h2>
+
+                            <div className="flex items-center gap-2 mb-2">
+                                {/* Subcategory Badge */}
+                                <span className="inline-block px-3 py-1 text-[10px] font-bold text-white bg-gradient-to-r from-amber-500 to-orange-600 rounded-full shadow-lg shadow-amber-900/40 uppercase relative z-10">
+                                    {localSpirit.subcategory || localSpirit.category}
+                                </span>
+                                {/* ABV Badge */}
+                                <span className="inline-block px-3 py-1 text-[10px] font-bold text-white bg-black/40 backdrop-blur-md border border-white/10 rounded-full">
+                                    {localSpirit.abv}% ABV
+                                </span>
                             </div>
+
+                            {localSpirit.distillery && (
+                                <p className="text-gray-300 text-sm font-medium pl-1">
+                                    {localSpirit.distillery}
+                                </p>
+                            )}
                         </div>
                     </div>
 
@@ -198,6 +199,13 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                             ) : (
                                 <div className="w-full flex gap-2">
                                     <button
+                                        onClick={() => setIsReviewOpen(true)}
+                                        className="flex-[2] flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-xl font-bold text-sm shadow-lg shadow-primary/20 hover:from-amber-600 hover:to-orange-700 hover:scale-105 transition-all"
+                                    >
+                                        <Pencil className="w-4 h-4" />
+                                        {localSpirit.userReview ? '리뷰 수정하기' : '리뷰 쓰기'}
+                                    </button>
+                                    <button
                                         disabled={isProcessing}
                                         onClick={async () => {
                                             if (!confirm('정말 술장에서 제거하시겠습니까?')) return;
@@ -211,16 +219,9 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                             } catch (e) { console.error(e); }
                                             finally { setIsProcessing(false); }
                                         }}
-                                        className="flex-1 flex items-center justify-center gap-2 py-3 bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 rounded-xl font-bold text-sm transition-colors"
+                                        className="flex-1 flex items-center justify-center gap-2 py-3 bg-red-500/10 text-red-500 border border-red-500/50 hover:bg-red-500/20 rounded-xl font-bold text-sm transition-colors"
                                     >
                                         <Check className="w-4 h-4" /> 제거하기
-                                    </button>
-                                    <button
-                                        onClick={() => setIsReviewOpen(true)}
-                                        className="flex-[2] flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-xl font-bold text-sm shadow-lg shadow-primary/20 hover:from-amber-600 hover:to-orange-700 hover:scale-105 transition-all"
-                                    >
-                                        <Pencil className="w-4 h-4" />
-                                        {localSpirit.userReview ? '리뷰 수정하기' : '리뷰 쓰기'}
                                     </button>
                                 </div>
                             )}

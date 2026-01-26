@@ -180,7 +180,7 @@ export default function CabinetPage() {
           My Collections
         </h1>
         <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
-          {ownedSpirits.length}병 소장중
+          {spirits.length}병 기록중
         </p>
 
         {/* View Mode Toggle */}
@@ -217,8 +217,7 @@ export default function CabinetPage() {
         {viewMode === 'cellar' ? (
           <CellarView
             key="cellar"
-            ownedSpirits={ownedSpirits}
-            wishlistSpirits={wishlistSpirits}
+            spirits={spirits}
             profile={profile}
             loading={loading}
             onReviewClick={openReviewModal}
@@ -279,16 +278,14 @@ export default function CabinetPage() {
 
 // Cellar View Component
 function CellarView({
-  ownedSpirits,
-  wishlistSpirits,
+  spirits,
   profile,
   loading,
   onReviewClick,
   onInfoClick,
   onAddClick
 }: {
-  ownedSpirits: Spirit[];
-  wishlistSpirits: Spirit[];
+  spirits: Spirit[];
   profile: any;
   loading: boolean;
   onReviewClick: (e: React.MouseEvent, spirit: Spirit) => void;
@@ -308,7 +305,7 @@ function CellarView({
         <GuestOverlay />
       )}
 
-      {/* Owned Spirits Grid */}
+      {/* Spirits Grid */}
       <section className="mb-16">
         <div className="relative bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 rounded-3xl p-10 shadow-2xl border border-slate-200 dark:border-slate-700">
           <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] bg-[radial-gradient(circle_at_50%_50%,rgba(0,0,0,0.1),transparent_50%)] pointer-events-none rounded-3xl" />
@@ -322,7 +319,7 @@ function CellarView({
               }}
               className="grid grid-cols-4 gap-6"
             >
-              {ownedSpirits.map((spirit) => (
+              {spirits.map((spirit) => (
                 <SpiritCard
                   key={spirit.id}
                   spirit={spirit}
@@ -337,11 +334,6 @@ function CellarView({
           </div>
         </div>
       </section>
-
-      {/* Wishlist */}
-      {wishlistSpirits.length > 0 && (
-        <WishlistSection spirits={wishlistSpirits} onInfoClick={onInfoClick} />
-      )}
     </motion.div>
   );
 }
@@ -414,30 +406,21 @@ function SpiritCard({
             }}
           />
 
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
-            <div className="flex justify-between items-center w-full mt-auto">
-              <button
-                onClick={(e) => onReviewClick(e, spirit)}
-                className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md hover:bg-amber-500 text-white flex items-center justify-center transition-all hover:scale-110 active:scale-95"
-                title="리뷰 작성"
-              >
-                ✏️
-              </button>
-              <button
-                onClick={(e) => onInfoClick(e, spirit)}
-                className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md hover:bg-blue-500 text-white flex items-center justify-center transition-all hover:scale-110 active:scale-95"
-                title="정보 보기"
-              >
-                ℹ️
-              </button>
+          {/* Content Overlay (Always Visible, Top Layer) */}
+          <div className="absolute inset-0 z-10 flex flex-col justify-end p-4 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
+            <div className="flex flex-col items-start gap-1">
+              {/* Badge */}
+              <span className={`inline-block px-2 py-0.5 text-[10px] font-bold text-white rounded-md uppercase shadow-sm backdrop-blur-md ${spirit.isWishlist ? 'bg-purple-600/80' : 'bg-green-600/80'}`}>
+                {spirit.isWishlist ? '위시리스트' : '보유중'}
+              </span>
+              {/* Name */}
+              <p className="text-sm font-bold text-white text-left leading-tight line-clamp-2 drop-shadow-md">
+                {spirit.name}
+              </p>
             </div>
           </div>
         </div>
       </div>
-
-      <p className="text-xs text-center mt-3 text-gray-800 dark:text-gray-200 font-semibold truncate px-1">
-        {spirit.name}
-      </p>
     </motion.div>
   );
 }
@@ -460,49 +443,7 @@ function AddSpiritCard({ onClick }: { onClick: () => void }) {
   );
 }
 
-// Wishlist Section Component
-function WishlistSection({
-  spirits,
-  onInfoClick
-}: {
-  spirits: Spirit[];
-  onInfoClick: (e: React.MouseEvent, spirit: Spirit) => void;
-}) {
-  return (
-    <section className="mb-8">
-      <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
-        🔖 위시리스트 ({spirits.length})
-      </h2>
-      <div className="grid grid-cols-4 gap-3">
-        {spirits.map((spirit) => (
-          <motion.div
-            key={spirit.id}
-            whileHover={{ scale: 1.05, y: -4 }}
-            transition={{ type: "spring", stiffness: 400 }}
-            className="relative cursor-pointer flex flex-col items-center"
-            onClick={(e) => onInfoClick(e, spirit)}
-          >
-            <div className="aspect-[2/3] w-full rounded-lg overflow-hidden bg-gray-100 dark:bg-neutral-800/50 transition-all duration-300 [filter:grayscale(100%)_drop-shadow(0_3px_6px_rgba(0,0,0,0.15))] hover:[filter:grayscale(0%)_drop-shadow(0_6px_12px_rgba(0,0,0,0.25))]">
-              <img
-                src={spirit.imageUrl && spirit.imageUrl.trim() ? spirit.imageUrl : getCategoryFallbackImage(spirit.category)}
-                alt={spirit.name}
-                className={`w-full h-full object-cover opacity-60 hover:opacity-100 transition-opacity ${!spirit.imageUrl || !spirit.imageUrl.trim() ? 'opacity-40' : ''}`}
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.src = getCategoryFallbackImage(spirit.category);
-                  target.classList.add('opacity-40');
-                }}
-              />
-            </div>
-            <p className="text-[9px] text-center mt-1.5 text-gray-600 dark:text-gray-400 truncate w-full px-0.5 leading-tight">
-              {spirit.name}
-            </p>
-          </motion.div>
-        ))}
-      </div>
-    </section>
-  );
-}
+
 
 // Guest Overlay Component
 function GuestOverlay({ flavor = false }: { flavor?: boolean }) {
