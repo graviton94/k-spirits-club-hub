@@ -219,7 +219,7 @@ export function ExploreCard({ spirit, onClick }: ExploreCardProps) {
       </div>
 
       {/* Right: Two Action Buttons */}
-      <div className="flex flex-col gap-2 justify-center">
+      <div className="flex flex-col gap-2 justify-center relative z-10">
         <button
           onClick={handleCabinetAction}
           disabled={isToggling || isLoadingStatus}
