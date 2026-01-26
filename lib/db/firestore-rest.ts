@@ -742,6 +742,32 @@ export const reviewsDb = {
         });
 
         return { likes: newLikesCount, isLiked: !isLiked };
+    },
+
+    /**
+     * Get user review statistics
+     * Returns count of reviews and total likes received
+     */
+    async getUserStats(userId: string): Promise<{ reviewCount: number, totalLikes: number }> {
+        const token = await getServiceAccountToken();
+        const reviewsPath = getAppPath().userReviews(userId);
+        const url = `${BASE_URL}/${reviewsPath}`;
+
+        const res = await fetch(url, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (res.status === 404) return { reviewCount: 0, totalLikes: 0 };
+        if (!res.ok) return { reviewCount: 0, totalLikes: 0 };
+
+        const json = await res.json();
+        if (!json.documents) return { reviewCount: 0, totalLikes: 0 };
+
+        const reviews = json.documents.map((doc: any) => parseFirestoreFields(doc.fields || {}));
+        const reviewCount = reviews.length;
+        const totalLikes = reviews.reduce((sum: number, review: any) => sum + (review.likes || 0), 0);
+
+        return { reviewCount, totalLikes };
     }
 };
 
