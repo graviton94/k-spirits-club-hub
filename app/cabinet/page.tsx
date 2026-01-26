@@ -49,7 +49,7 @@ export default function CabinetPage() {
       setIsLoadingCabinet(true);
       try {
         // Fetch cabinet items using server action
-        const cabinetData = await getUserCabinet(user.uid);
+        const cabinetData = await getUserCabinet(user!.uid);
         
         // Join with searchIndex to get thumbnail URLs for items that might not have them
         const enrichedData = cabinetData.map((item: any) => {

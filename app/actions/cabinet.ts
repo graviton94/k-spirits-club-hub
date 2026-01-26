@@ -1,6 +1,5 @@
 "use server";
 
-import { auth } from '@/lib/firebase-admin';
 import { cabinetDb, spiritsDb } from '@/lib/db/firestore-rest';
 
 /**

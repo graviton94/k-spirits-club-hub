@@ -401,5 +401,45 @@ export const cabinetDb = {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${token}` }
         });
+    },
+
+    async getById(userId: string, spiritId: string): Promise<any | null> {
+        const token = await getServiceAccountToken();
+        const url = `${BASE_URL}/artifacts/${APP_ID}/users/${userId}/cabinet/${spiritId}`;
+
+        const res = await fetch(url, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (res.status === 404) return null; // Document doesn't exist
+        if (!res.ok) {
+            console.error('Failed to get cabinet item:', await res.text());
+            return null;
+        }
+
+        const doc = await res.json();
+        const fields = doc.fields || {};
+        const obj: any = {};
+        
+        for (const [key, value] of Object.entries(fields) as [string, any][]) {
+            if ('stringValue' in value) obj[key] = value.stringValue;
+            else if ('integerValue' in value) obj[key] = Number(value.integerValue);
+            else if ('doubleValue' in value) obj[key] = Number(value.doubleValue);
+            else if ('booleanValue' in value) obj[key] = value.booleanValue;
+            else if ('timestampValue' in value) obj[key] = value.timestampValue;
+            else if (value.mapValue) {
+                const mapData: any = {};
+                const mapFields = value.mapValue.fields || {};
+                for (const [mk, mv] of Object.entries(mapFields) as [string, any][]) {
+                    if ('stringValue' in mv) mapData[mk] = mv.stringValue;
+                    if ('integerValue' in mv) mapData[mk] = Number(mv.integerValue);
+                    if ('doubleValue' in mv) mapData[mk] = Number(mv.doubleValue);
+                    if (mv.arrayValue) mapData[mk] = (mv.arrayValue.values || []).map((v: any) => v.stringValue);
+                }
+                obj[key] = mapData;
+            }
+        }
+        
+        return obj;
     }
 };
