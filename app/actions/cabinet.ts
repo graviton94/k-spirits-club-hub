@@ -1,6 +1,6 @@
 "use server";
 
-import { cabinetDb, spiritsDb } from '@/lib/db/firestore-rest';
+import { cabinetDb, spiritsDb, reviewsDb } from '@/lib/db/firestore-rest';
 
 /**
  * Update a cabinet entry with personalRating and personalNotes
@@ -91,11 +91,12 @@ export async function getUserCabinet(userId: string) {
 
 /**
  * Add a spirit to the cabinet
+ * Implements dual-write: saves to both private cabinet and public reviews when a review is present
  */
 export async function addToCabinet(
   userId: string,
   spiritId: string,
-  data?: { isWishlist?: boolean; userReview?: any }
+  data?: { isWishlist?: boolean; userReview?: any; userName?: string }
 ) {
   if (!userId) {
     throw new Error('User not authenticated');
@@ -109,7 +110,25 @@ export async function addToCabinet(
       addedAt: new Date().toISOString()
     };
 
+    // 1. Save to private cabinet
     await cabinetDb.upsert(userId, spiritId, cabinetData);
+    
+    // 2. If there's a review (not wishlist), also save to public reviews
+    if (!cabinetData.isWishlist && data?.userReview) {
+      const publicReviewData = {
+        spiritId,
+        userId,
+        userName: data?.userName || 'Anonymous',
+        rating: data.userReview.ratingOverall || 0,
+        ratingN: data.userReview.ratingN || 0,
+        ratingP: data.userReview.ratingP || 0,
+        ratingF: data.userReview.ratingF || 0,
+        notes: data.userReview.comment || '',
+        createdAt: data.userReview.createdAt || new Date().toISOString()
+      };
+      
+      await reviewsDb.upsert(spiritId, userId, publicReviewData);
+    }
     
     return { success: true };
   } catch (error) {
@@ -120,6 +139,7 @@ export async function addToCabinet(
 
 /**
  * Remove a spirit from the cabinet
+ * Implements dual-delete: removes from both private cabinet and public reviews
  */
 export async function removeFromCabinet(userId: string, spiritId: string) {
   if (!userId) {
@@ -127,7 +147,12 @@ export async function removeFromCabinet(userId: string, spiritId: string) {
   }
 
   try {
-    await cabinetDb.delete(userId, spiritId);
+    // Delete from both locations
+    await Promise.all([
+      cabinetDb.delete(userId, spiritId),
+      reviewsDb.delete(spiritId, userId)
+    ]);
+    
     return { success: true };
   } catch (error) {
     console.error('Error removing from cabinet:', error);

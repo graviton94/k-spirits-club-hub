@@ -443,3 +443,99 @@ export const cabinetDb = {
         return obj;
     }
 };
+
+export const reviewsDb = {
+    async upsert(spiritId: string, userId: string, data: any) {
+        const token = await getServiceAccountToken();
+        // Document ID = ${spiritId}_${userId} for uniqueness
+        const reviewId = `${spiritId}_${userId}`;
+        const url = `${BASE_URL}/artifacts/${APP_ID}/public/data/reviews/${reviewId}`;
+
+        const body = toFirestore(data);
+
+        const res = await fetch(url, {
+            method: 'PATCH',
+            headers: { Authorization: `Bearer ${token}` },
+            body: JSON.stringify(body)
+        });
+
+        if (!res.ok) throw new Error(await res.text());
+    },
+
+    async delete(spiritId: string, userId: string) {
+        const token = await getServiceAccountToken();
+        const reviewId = `${spiritId}_${userId}`;
+        const url = `${BASE_URL}/artifacts/${APP_ID}/public/data/reviews/${reviewId}`;
+        
+        const res = await fetch(url, {
+            method: 'DELETE',
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        
+        // Don't throw on 404 - review might not exist
+        if (!res.ok && res.status !== 404) {
+            console.error('Failed to delete review:', await res.text());
+        }
+    },
+
+    async getById(spiritId: string, userId: string): Promise<any | null> {
+        const token = await getServiceAccountToken();
+        const reviewId = `${spiritId}_${userId}`;
+        const url = `${BASE_URL}/artifacts/${APP_ID}/public/data/reviews/${reviewId}`;
+
+        const res = await fetch(url, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (res.status === 404) return null;
+        if (!res.ok) {
+            console.error('Failed to get review:', await res.text());
+            return null;
+        }
+
+        const doc = await res.json();
+        const fields = doc.fields || {};
+        const obj: any = {};
+        
+        for (const [key, value] of Object.entries(fields) as [string, any][]) {
+            if ('stringValue' in value) obj[key] = value.stringValue;
+            else if ('integerValue' in value) obj[key] = Number(value.integerValue);
+            else if ('doubleValue' in value) obj[key] = Number(value.doubleValue);
+            else if ('booleanValue' in value) obj[key] = value.booleanValue;
+            else if ('timestampValue' in value) obj[key] = value.timestampValue;
+        }
+        
+        return obj;
+    },
+
+    async getAllForSpirit(spiritId: string): Promise<any[]> {
+        const token = await getServiceAccountToken();
+        const url = `${BASE_URL}/artifacts/${APP_ID}/public/data/reviews`;
+
+        const res = await fetch(url, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (res.status === 404) return [];
+        if (!res.ok) return [];
+
+        const json = await res.json();
+        if (!json.documents) return [];
+
+        // Filter for this spirit's reviews
+        return json.documents
+            .map((doc: any) => {
+                const obj: any = {};
+                const fields = doc.fields || {};
+                for (const [key, value] of Object.entries(fields) as [string, any][]) {
+                    if ('stringValue' in value) obj[key] = value.stringValue;
+                    else if ('integerValue' in value) obj[key] = Number(value.integerValue);
+                    else if ('doubleValue' in value) obj[key] = Number(value.doubleValue);
+                    else if ('booleanValue' in value) obj[key] = value.booleanValue;
+                    else if ('timestampValue' in value) obj[key] = value.timestampValue;
+                }
+                return obj;
+            })
+            .filter((review: any) => review.spiritId === spiritId);
+    }
+};
