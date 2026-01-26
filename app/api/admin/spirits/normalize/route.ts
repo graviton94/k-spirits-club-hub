@@ -6,28 +6,57 @@ export const runtime = 'edge';
 
 // Mappings for Normalization - CORRECTED to preserve Granularity
 const REGION_MAP: Record<string, string> = {
-    // Standardize Country Spellings only. DO NOT AGGREGATE REGIONS.
+    // Countries & Broad Regions
     'USA': '미국',
+    'U.S.A.': '미국',
     'America': '미국',
     'United States': '미국',
     'South Korea': '대한민국',
     'Republic of Korea': '대한민국',
     'Korea': '대한민국',
+    'Scotland': '스코틀랜드',
+    'United Kingdom': '영국',
+    'UK': '영국',
+    'Japan': '일본',
+    'Nippon': '일본',
+    'Ireland': '아일랜드',
+    'France': '프랑스',
     'Deutschland': '독일',
     'Germany': '독일',
-    'Bavaria': '바이에른', // Keep specific
-    'Speyside': '스페이사이드', // Keep specific
-    'Highland': '하이랜드', // Keep specific
-    'Lowland': '로우랜드', // Keep specific
-    'Islay': '아일라', // Keep specific
-    'Isle of Islay': '아일라', // Keep specific
-    'Campbeltown': '캠벨타운', // Keep specific
-    'Islands': '아일랜드(Islands)', // Keep specific (Island region of Scotland)
+    'India': '인도',
+    'Taiwan': '대만',
+    'Australia': '호주',
+    'Canada': '캐나다',
+
+    // Scotland regions
+    'Speyside': '스페이사이드',
+    'Highland': '하이랜드',
+    'Lowland': '로우랜드',
+    'Islay': '아일라',
+    'Isle of Islay': '아일라',
+    'Campbeltown': '캠벨타운',
+    'Islands': '아일랜드(Islands)',
+
+    // USA states
+    'Kentucky': '켄터키',
+    'Tennessee': '테네시',
+    'Texas': '텍사스',
+    'New York': '뉴욕',
+    'California': '캘리포니아',
+
+    // France regions
     'Cognac': '꼬냑',
     'Champagne': '샹파뉴',
+    'Brittany': '브르타뉴',
+
+    // Germany regions
+    'Bavaria': '바이에른',
+
+    // Taiwan regions
+    'Yilan': '이란',
+    'Nantou': '난터우',
 };
 
-// RECOVERY MAPPING: Restore Region from Distillery if it was wrongly flattened to '스코틀랜드'
 const DISTILLERY_TO_REGION: Record<string, string> = {
     // Speyside
     'Macallan': '스페이사이드',
@@ -41,6 +70,8 @@ const DISTILLERY_TO_REGION: Record<string, string> = {
     'Benriach': '스페이사이드',
     'Glentauchers': '스페이사이드',
     'Glenburgie': '스페이사이드',
+    'Longmorn': '스페이사이드',
+    'Craigellachie': '스페이사이드',
 
     // Islay
     'Ardbeg': '아일라',
@@ -62,33 +93,85 @@ const DISTILLERY_TO_REGION: Record<string, string> = {
     'Aberfeldy': '하이랜드',
     'Dalwhinnie': '하이랜드',
     'Clynelish': '하이랜드',
-    'Royal Salute': '스페이사이드', // Blend base, but often associated here or Speyside. Strategy: Keep widely accepted single malt origin or Blend origin. Royal Salute is blend, maybe '스코틀랜드' is okay, but user wants granularity.
+    'Old Pulteney': '하이랜드',
+    'Royal Salute': '스페이사이드',
 
     // Islands
-    'Talisker': '아일랜드(Islands)', // Isle of Skye
-    'Highland Park': '아일랜드(Islands)', // Orkney
+    'Talisker': '아일랜드(Islands)',
+    'Highland Park': '아일랜드(Islands)',
     'Jura': '아일랜드(Islands)',
     'Arran': '아일랜드(Islands)',
+    'Tobermory': '아일랜드(Islands)',
     'Ledaig': '아일랜드(Islands)',
+    'Scapa': '아일랜드(Islands)',
 
     // Campbeltown
     'Springbank': '캠벨타운',
     'Glen Scotia': '캠벨타운',
     'Kilkerran': '캠벨타운',
+    'Longrow': '캠벨타운',
 
     // Lowland
     'Auchentoshan': '로우랜드',
     'Glenkinchie': '로우랜드',
     'Bladnoch': '로우랜드',
+    'Littlemill': '로우랜드',
 
-    // Tennessee (USA) - Restore state level
+    // USA
     'Jack Daniel\'s': '테네시',
-
-    // Kentucky (USA) - Restore state level
+    'George Dickel': '테네시',
     'Jim Beam': '켄터키',
     'Maker\'s Mark': '켄터키',
     'Wild Turkey': '켄터키',
     'Buffalo Trace': '켄터키',
+    'Woodford Reserve': '켄터키',
+    'Knob Creek': '켄터키',
+    'Bulleit': '켄터키',
+    'Garrison Brothers': '텍사스',
+    'Hudson Whiskey': '뉴욕',
+    'St. George Spirits': '캘리포니아',
+
+    // Japan
+    'Yamazaki': '일본(야마나시)',
+    'Hakushu': '일본(야마나시)',
+    'Yoichi': '일본(홋카이도)',
+    'Miyagikyo': '일본(미야기)',
+    'Chichibu': '일본(시가)',
+    'Fuji Gotemba': '일본(시즈오카)',
+    'Kanosuke': '일본(가고시마)',
+
+    // Ireland (New Enriched)
+    'Jameson': '아일랜드',
+    'Bushmills': '북아일랜드',
+    'Redbreast': '아일랜드',
+    'Teeling': '더블린',
+    'Middleton': '코크',
+    'Tullamore Dew': '오펄리',
+
+    // Taiwan (New Enriched)
+    'Kavalan': '이란',
+    'Omar': '난터우',
+
+    // India (New Enriched)
+    'Amrut': '벵갈루루',
+    'Paul John': '고아',
+    'Indri': '하리아나',
+
+    // France (New Enriched)
+    'Armorik': '브르타뉴',
+    'Kornog': '브르타뉴',
+
+    // Korea
+    'Ki One': '경기도 남양주시',
+    'Ki-One': '경기도 남양주시',
+    'Three Societies': '경기도 남양주시',
+    'Hwayo': '경기도 이천시',
+    'Andong': '경상북도 안동시',
+    'Won Soju': '경기도 원주시',
+    'Damyang': '전라남도 담양군',
+    'Jeju': '제주특별시',
+    'Sunyang': '대전광역시',
+    'Muhak': '경상남도 창원시'
 };
 
 const DISTILLERY_MAP: Record<string, string> = {
@@ -102,6 +185,8 @@ const DISTILLERY_MAP: Record<string, string> = {
     'JAMESON': 'Jameson',
     'JACK DANIEL DISTILLERY': 'Jack Daniel\'s',
     'JIM BEAM BRANDS CO': 'Jim Beam',
+    'KAVALAN DISTILLERY': 'Kavalan',
+    'AMRUT DISTILLERIES PVT LTD': 'Amrut',
 };
 
 const SUBCATEGORY_MAP: Record<string, string> = {
