@@ -307,7 +307,7 @@ function CellarView({
 
       {/* Spirits Grid */}
       <section className="mb-16">
-        <div className="relative bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 rounded-3xl p-10 shadow-2xl border border-slate-200 dark:border-slate-700">
+        <div className="relative bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 rounded-3xl px-3 py-6 sm:p-10 shadow-2xl border border-slate-200 dark:border-slate-700">
           <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] bg-[radial-gradient(circle_at_50%_50%,rgba(0,0,0,0.1),transparent_50%)] pointer-events-none rounded-3xl" />
 
           <div className="relative">
@@ -317,7 +317,7 @@ function CellarView({
               variants={{
                 visible: { transition: { staggerChildren: 0.05 } }
               }}
-              className="grid grid-cols-4 gap-6"
+              className="grid grid-cols-3 min-[400px]:grid-cols-4 sm:grid-cols-4 md:grid-cols-5 gap-2 sm:gap-6"
             >
               {spirits.map((spirit) => (
                 <SpiritCard
@@ -386,7 +386,7 @@ function SpiritCard({
       onClick={(e) => onInfoClick(e, spirit)}
     >
       {spirit.userReview && (
-        <div className="absolute top-2 right-2 z-20 bg-amber-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md flex items-center gap-1">
+        <div className="absolute top-1 right-1 sm:top-2 sm:right-2 z-20 bg-amber-500 text-white text-[8px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-full shadow-md flex items-center gap-0.5 sm:gap-1">
           <span>★</span> {spirit.userReview.ratingOverall.toFixed(1)}
         </div>
       )}
@@ -407,14 +407,14 @@ function SpiritCard({
           />
 
           {/* Content Overlay (Always Visible, Top Layer) */}
-          <div className="absolute inset-0 z-10 flex flex-col justify-end p-4 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
-            <div className="flex flex-col items-start gap-1">
+          <div className="absolute inset-0 z-10 flex flex-col justify-end p-2 sm:p-4 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
+            <div className="flex flex-col items-start gap-0.5 sm:gap-1">
               {/* Badge */}
-              <span className={`inline-block px-2 py-0.5 text-[11px] font-bold text-white rounded-md uppercase shadow-sm backdrop-blur-md ${spirit.isWishlist ? 'bg-red-600/80' : 'bg-green-600/80'}`}>
-                {spirit.isWishlist ? '🔖Wish' : '✅️보유중'}
+              <span className={`inline-block px-1.5 py-0.5 text-[8px] sm:text-[11px] font-bold text-white rounded-md uppercase shadow-sm backdrop-blur-md ${spirit.isWishlist ? 'bg-red-600/80' : 'bg-green-600/80'}`}>
+                {spirit.isWishlist ? '🔖' : '✅️'}
               </span>
               {/* Name */}
-              <p className="text-sm font-bold text-white text-left leading-tight line-clamp-2 drop-shadow-md">
+              <p className="text-[10px] sm:text-sm font-bold text-white text-left leading-tight line-clamp-2 drop-shadow-md">
                 {spirit.name}
               </p>
             </div>
@@ -433,11 +433,11 @@ function AddSpiritCard({ onClick }: { onClick: () => void }) {
       className="cursor-pointer group flex flex-col items-center justify-center aspect-[2/3] rounded-2xl border-2 border-dashed border-gray-300 dark:border-gray-700 hover:border-amber-500 hover:bg-amber-50/50 dark:hover:bg-amber-900/10 transition-all"
       onClick={onClick}
     >
-      <div className="w-12 h-12 rounded-full bg-amber-100 dark:bg-amber-900 text-amber-600 dark:text-amber-400 flex items-center justify-center text-2xl font-bold mb-2 group-hover:scale-110 transition-transform">
+      <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-amber-100 dark:bg-amber-900 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl sm:text-2xl font-bold mb-1 sm:mb-2 group-hover:scale-110 transition-transform">
         +
       </div>
-      <span className="text-sm font-bold text-gray-500 group-hover:text-amber-600 dark:text-gray-400">
-        새 술 추가하기
+      <span className="text-[10px] sm:text-sm font-bold text-gray-500 group-hover:text-amber-600 dark:text-gray-400 text-center px-1">
+        추가
       </span>
     </motion.div>
   );

@@ -13,9 +13,23 @@ import { useSpiritsCache } from "@/app/context/spirits-cache-context";
 import { useMemo, useState, useEffect } from "react";
 
 export default function HomePage() {
-  const { publishedSpirits, isLoading: isCacheLoading } = useSpiritsCache();
+  const { publishedSpirits, searchIndex, isLoading: isCacheLoading } = useSpiritsCache();
   const [trendingSpirits, setTrendingSpirits] = useState<any[]>([]);
   const [isTrendingLoading, setIsTrendingLoading] = useState(true);
+
+  // Get 10 most recently confirmed spirits from search index
+  const newArrivals = useMemo(() => {
+    if (!searchIndex.length) return [];
+
+    return [...searchIndex]
+      .filter(s => s.t) // Must have an image
+      .sort((a, b) => {
+        const dateA = a.cre ? new Date(a.cre).getTime() : 0;
+        const dateB = b.cre ? new Date(b.cre).getTime() : 0;
+        return dateB - dateA;
+      })
+      .slice(0, 10);
+  }, [searchIndex]);
 
   useEffect(() => {
     async function fetchTrending() {
@@ -52,9 +66,6 @@ export default function HomePage() {
 
   const listSpirits = displaySpirits;
   const isLoading = isCacheLoading && isTrendingLoading;
-
-  // Use all categories from metadata
-  const allCategories = Object.keys(metadata.categories);
 
   return (
     <div className="min-h-screen bg-background text-foreground pb-20">
@@ -93,61 +104,49 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 2. Categories Auto-Scroll Carousel */}
-      <section className="container max-w-4xl mx-auto px-4 mt-8 relative z-20 mb-16">
-        <div className="relative overflow-hidden">
-          <div className={`flex gap-4 ${styles['animate-scroll-rtl']}`}>
-            {/* Duplicate items for infinite scroll effect */}
-            {[...allCategories, ...allCategories].map((cat, index) => {
-              // Updated Icons mapping for all 11 categories
-              const icons: Record<string, string> = {
-                "소주": "🍶",
-                "위스키": "🥃",
-                "맥주": "🍺",
-                "일반증류주": "🍸",
-                "기타 주류": "🥂",
-                "탁주": "🥛",
-                "약주": "🍵",
-                "청주": "🍶",
-                "과실주": "🍾",
-                "브랜디": "🍷",
-                "리큐르": "🍹"
-              };
-              const icon = icons[cat] || "🍾";
+      {/* 2. New Arrivals Auto-Scroll Carousel */}
+      <section className="container max-w-4xl mx-auto px-4 mt-12 relative z-20 mb-20">
+        <div className="flex items-center gap-2 mb-6">
+          <Sparkles className="w-5 h-5 text-amber-500" />
+          <h2 className="text-xl font-black tracking-tight">New Arrivals</h2>
+        </div>
 
-              // Gradient mapping
-              const gradients: Record<string, string> = {
-                "소주": "from-green-100 to-green-300 dark:from-green-600 dark:to-green-800",
-                "위스키": "from-amber-100 to-amber-300 dark:from-amber-700 dark:to-amber-900",
-                "맥주": "from-yellow-100 to-yellow-300 dark:from-yellow-600 dark:to-yellow-800",
-                "일반증류주": "from-sky-100 to-sky-300 dark:from-sky-700 dark:to-sky-900",
-                "기타 주류": "from-gray-200 to-gray-400 dark:from-gray-500 dark:to-gray-700",
-                "탁주": "from-stone-200 to-stone-400 dark:from-stone-200 dark:to-stone-400",
-                "약주": "from-emerald-100 to-emerald-300 dark:from-emerald-100 dark:to-emerald-300",
-                "청주": "from-blue-100 to-blue-300 dark:from-blue-100 dark:to-blue-300",
-                "과실주": "from-rose-100 to-rose-300 dark:from-rose-500 dark:to-red-700",
-                "브랜디": "from-purple-100 to-purple-300 dark:from-purple-700 dark:to-purple-900",
-                "리큐르": "from-pink-100 to-pink-300 dark:from-pink-600 dark:to-pink-800"
-              };
-              const gradient = gradients[cat] || "from-gray-200 to-gray-400 dark:from-gray-700 dark:to-gray-900";
-              const textColor = "text-gray-900 dark:text-white";
-
-              return (
+        <div className="relative overflow-hidden py-4">
+          {newArrivals.length > 0 ? (
+            <div className={`flex gap-6 ${styles['animate-scroll-rtl']}`}>
+              {/* Duplicate items for infinite scroll effect */}
+              {[...newArrivals, ...newArrivals].map((spirit, index) => (
                 <Link
-                  href={`/explore?category=${cat}`}
-                  key={`${cat}-${index}`}
-                  className="flex-shrink-0"
+                  href={`/spirits/${spirit.i}`}
+                  key={`${spirit.i}-${index}`}
+                  className="flex-shrink-0 group"
                 >
-                  <div className={`w-28 h-28 rounded-2xl bg-gradient-to-br ${gradient} flex flex-col items-center justify-center ${textColor} border border-gray-200 dark:border-white/10 shadow-lg hover:scale-105 transition-transform cursor-pointer`}>
-                    <span className="text-3xl mb-2">{icon}</span>
-                    <span className="font-bold text-sm text-center px-1 break-keep">
-                      {CATEGORY_NAME_MAP[cat] || cat}
+                  <div className="w-32 flex flex-col items-center gap-3 transition-transform duration-300 group-hover:scale-105">
+                    <div className="relative w-28 h-36 rounded-2xl bg-card border border-border shadow-md overflow-hidden flex items-center justify-center p-2 group-hover:border-amber-500/50 transition-colors">
+                      {spirit.t ? (
+                        <img
+                          src={spirit.t}
+                          alt={spirit.n}
+                          className="w-full h-full object-contain"
+                        />
+                      ) : (
+                        <span className="text-3xl">🍾</span>
+                      )}
+                    </div>
+                    <span className="font-bold text-xs text-center line-clamp-2 px-1 text-foreground group-hover:text-amber-600 transition-colors">
+                      {spirit.n}
                     </span>
                   </div>
                 </Link>
-              );
-            })}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="flex gap-4">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="w-28 h-40 bg-secondary/50 rounded-2xl animate-pulse" />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

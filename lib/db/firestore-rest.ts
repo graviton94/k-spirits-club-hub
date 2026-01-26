@@ -344,7 +344,8 @@ export const spiritsDb = {
             sc: spirit.subcategory ?? null,
             t: spirit.thumbnailUrl ?? spirit.imageUrl ?? null, // Fallback to imageUrl if thumbnailUrl missing
             a: spirit.abv ?? 0,
-            d: spirit.distillery ?? null
+            d: spirit.distillery ?? null,
+            cre: spirit.createdAt ? (spirit.createdAt instanceof Date ? spirit.createdAt.toISOString() : (spirit.createdAt as any)) : null
         }));
     }
 };
