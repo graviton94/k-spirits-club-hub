@@ -93,7 +93,8 @@ export const spiritsDb = {
         }
 
         // CRITICAL FIX: Always apply isPublished filter when explicitly specified
-        // This is the primary filter for public-facing queries
+        // This filter is used by public-facing queries to show only published content.
+        // It is NOT applied by admin queries, which should see all spirits regardless of publish status.
         if (filter.isPublished !== undefined) {
             filters.push({
                 fieldFilter: {
@@ -187,7 +188,7 @@ export const spiritsDb = {
             console.warn('  1. No spirits match the filter criteria');
             console.warn('  2. Database is empty or spirits not yet imported');
             console.warn('  3. Service account permissions issue');
-            console.warn('  4. Firestore composite index missing (check earlier logs)');
+            console.warn('  4. Firestore composite index missing (check error messages above)');
         } else {
             console.log('[Firestore] First result sample:', {
                 id: results[0].id,

@@ -14,6 +14,7 @@ export async function GET(req: NextRequest) {
         console.log('[diagnose] Starting diagnostic check...');
 
         // Fetch ALL spirits without any filter
+        // NOTE: Limited to 5000 spirits due to Firestore query limit
         const allSpirits = await db.getSpirits({}, { page: 1, pageSize: 5000 });
         
         console.log(`[diagnose] Total spirits in database: ${allSpirits.total}`);
@@ -25,6 +26,12 @@ export async function GET(req: NextRequest) {
                 totalSpirits: 0,
                 recommendation: 'Import spirits data using the data import scripts in /scripts directory'
             });
+        }
+
+        // Warning if we hit the query limit
+        const hitQueryLimit = allSpirits.data.length >= 5000;
+        if (hitQueryLimit) {
+            console.warn('[diagnose] ⚠️ WARNING: Query limit reached (5000). Database may contain more spirits.');
         }
 
         // Analyze the data
@@ -77,6 +84,8 @@ export async function GET(req: NextRequest) {
         const result = {
             success: true,
             totalSpirits: allSpirits.total,
+            dataAnalyzed: allSpirits.data.length,
+            queryLimitReached: hitQueryLimit,
             statusBreakdown: statusCounts,
             publishedBreakdown: publishedCounts,
             crossAnalysis: statusAndPublished,
@@ -96,6 +105,12 @@ export async function GET(req: NextRequest) {
             },
             recommendations: [] as string[]
         };
+
+        // Add query limit warning
+        if (hitQueryLimit) {
+            result.recommendations.push('⚠️ WARNING: Query limit reached (5000 spirits). This diagnostic may be incomplete.');
+            result.recommendations.push('INFO: Database contains more than 5000 spirits. Consider implementing paginated diagnostics.');
+        }
 
         // Add recommendations
         if (publishedCounts.isPublishedTrue === 0) {

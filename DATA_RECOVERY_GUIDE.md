@@ -370,6 +370,33 @@ Look for these logs when admin fetches data:
 
 ## Security Considerations
 
+### ⚠️ CRITICAL: Admin Endpoint Authentication
+
+**IMPORTANT:** The following endpoints are currently unprotected and should have admin authentication added before deploying to production:
+
+- `/api/admin/spirits/diagnose` - Exposes database statistics
+- `/api/admin/spirits/bulk-publish` - Can modify spirit publication status
+- `/api/admin/spirits/fix-published-sync` - Can modify spirit data
+
+**Recommended Action:** Implement admin authentication middleware for all `/api/admin/*` routes.
+
+Example using Next.js middleware:
+```typescript
+// middleware.ts
+import { auth } from '@/lib/auth';
+import { NextResponse } from 'next/server';
+
+export async function middleware(req: Request) {
+  if (req.url.includes('/api/admin/')) {
+    const session = await auth();
+    if (!session?.user?.isAdmin) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+  }
+  return NextResponse.next();
+}
+```
+
 ### Firestore Rules
 Current rules allow public read access:
 

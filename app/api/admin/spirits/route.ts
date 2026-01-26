@@ -18,12 +18,13 @@ export async function GET(req: NextRequest) {
     try {
         const filter: any = {};
         // CRITICAL FIX: Only apply status filter if explicitly provided and not 'ALL'
-        // This ensures admin can see ALL spirits by default
+        // Admin dashboard needs to see ALL spirits for management purposes (review, edit, publish).
+        // Unlike public queries (which filter by isPublished=true), admin queries should not
+        // filter by isPublished so that unpublished content is visible for moderation.
         if (status && status !== 'ALL') {
             filter.status = status as SpiritStatus;
         }
-        // Note: Admin should see ALL spirits regardless of isPublished flag
-        // Do NOT add isPublished filter for admin view
+        // Note: Do NOT add isPublished filter for admin view - admin should see everything
         
         if (category && category !== 'ALL') filter.category = category;
         if (subcategory && subcategory !== 'ALL') filter.subcategory = subcategory;

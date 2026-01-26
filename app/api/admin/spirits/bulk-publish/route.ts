@@ -13,11 +13,12 @@ export const runtime = 'edge';
  * - publishAll: boolean - If true, publishes ALL spirits regardless of status
  * - publishByStatus: string - Publish only spirits with this status (e.g., 'READY_FOR_CONFIRM')
  * - spiritIds: string[] - Publish only specific spirit IDs
+ * - updateStatus: boolean - (Optional, default: true) If true, also sets status to 'PUBLISHED'
  */
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
-        const { publishAll, publishByStatus, spiritIds } = body;
+        const { publishAll, publishByStatus, spiritIds, updateStatus = true } = body;
 
         console.log('[bulk-publish] Starting bulk publish with options:', { publishAll, publishByStatus, spiritIds });
 
@@ -60,12 +61,17 @@ export async function POST(req: NextRequest) {
 
         for (const spirit of spiritsToPublish) {
             try {
-                await db.updateSpirit(spirit.id, { 
-                    isPublished: true,
-                    status: 'PUBLISHED' // Also update status to be consistent
-                });
+                const updateData: any = { isPublished: true };
+                
+                // Only update status to PUBLISHED if explicitly requested (default: true)
+                // This allows for workflows where spirits can be published without changing their status
+                if (updateStatus) {
+                    updateData.status = 'PUBLISHED';
+                }
+                
+                await db.updateSpirit(spirit.id, updateData);
                 results.success.push(spirit.id);
-                console.log(`[bulk-publish] Published: ${spirit.id} - ${spirit.name}`);
+                console.log(`[bulk-publish] Published: ${spirit.id} - ${spirit.name} (status update: ${updateStatus})`);
             } catch (error: any) {
                 results.failed.push({ id: spirit.id, error: error.message });
                 console.error(`[bulk-publish] Failed to publish ${spirit.id}:`, error);

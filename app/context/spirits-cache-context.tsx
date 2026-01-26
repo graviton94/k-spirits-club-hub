@@ -149,8 +149,9 @@ export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
       console.log('[SpiritsCacheContext] 📡 Fetching data from Firestore...');
 
       // Fetch both the minimized search index and full spirits data
-      // CRITICAL FIX: Use isPublished filter instead of status to ensure we get all published items
-      // regardless of their exact status value (some may be PUBLISHED, some may have other statuses)
+      // CRITICAL FIX: Use isPublished filter instead of status='PUBLISHED'
+      // The previous filter was missing spirits that had isPublished=true but different 
+      // status values like 'READY_FOR_CONFIRM', causing zero results for public users.
       const [index, spiritsResult] = await Promise.all([
         getSpiritsSearchIndex(),
         getSpiritsAction(
