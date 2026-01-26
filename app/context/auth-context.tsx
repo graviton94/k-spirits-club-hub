@@ -21,6 +21,8 @@ interface UserProfile {
     profileImage: string | null;
     isFirstLogin: boolean;
     themePreference?: 'light' | 'dark';
+    reviewsWritten?: number;
+    heartsReceived?: number;
 }
 
 interface AuthContextType {
@@ -99,7 +101,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                         nickname: data.nickname || currentUser.displayName || 'Anonymous',
                         profileImage: data.profileImage || currentUser.photoURL,
                         isFirstLogin: data.isFirstLogin ?? false,
-                        themePreference: userTheme
+                        themePreference: userTheme,
+                        reviewsWritten: data.reviewsWritten || 0,
+                        heartsReceived: data.heartsReceived || 0
                     });
                     // Apply theme from user profile (client-side only to prevent hydration issues)
                     setThemeState(userTheme);

@@ -164,40 +164,62 @@ export default function CabinetPage() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl pb-32">
       {/* Header */}
-      <div className="mb-8 text-center">
-        <h1 className="text-3xl font-black mb-2 bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">
-          My Collections
-        </h1>
-        <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
-          {spirits.length}병 기록중
-        </p>
+      <div className="mb-12 relative">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-amber-500/10 blur-[100px] pointer-events-none" />
+
+        <div className="text-center mb-10 relative z-10">
+          <h1 className="text-4xl md:text-5xl font-black mb-3 tracking-tighter bg-gradient-to-r from-amber-200 via-amber-500 to-orange-600 bg-clip-text text-transparent drop-shadow-sm">
+            My Collections
+          </h1>
+          <p className="text-sm font-bold text-muted-foreground/60 tracking-widest uppercase">
+            Curated Spirits & Tasting Journey
+          </p>
+        </div>
+
+        {/* Stats Grid */}
+        <div className="grid grid-cols-3 gap-3 sm:gap-6 mb-10 max-w-2xl mx-auto relative z-10">
+          <div className="bg-card/40 backdrop-blur-md border border-border/50 rounded-2xl p-4 sm:p-6 text-center shadow-xl shadow-black/5 hover:border-amber-500/30 transition-colors group">
+            <p className="text-2xl sm:text-3xl font-black text-foreground group-hover:scale-110 transition-transform duration-300">{spirits.length}</p>
+            <p className="text-[9px] sm:text-[10px] font-black text-muted-foreground uppercase tracking-widest mt-1 opacity-60">Bottles</p>
+          </div>
+          <div className="bg-card/40 backdrop-blur-md border border-border/50 rounded-2xl p-4 sm:p-6 text-center shadow-xl shadow-black/5 hover:border-amber-500/30 transition-colors group">
+            <p className="text-2xl sm:text-3xl font-black text-foreground group-hover:scale-110 transition-transform duration-300">{profile?.reviewsWritten || 0}</p>
+            <p className="text-[9px] sm:text-[10px] font-black text-muted-foreground uppercase tracking-widest mt-1 opacity-60">Reviews</p>
+          </div>
+          <div className="bg-card/40 backdrop-blur-md border border-border/50 rounded-2xl p-4 sm:p-6 text-center shadow-xl shadow-black/5 hover:border-rose-500/30 transition-colors group">
+            <p className="text-2xl sm:text-3xl font-black text-rose-500 group-hover:scale-110 transition-transform duration-300">{profile?.heartsReceived || 0}</p>
+            <p className="text-[9px] sm:text-[10px] font-black text-muted-foreground uppercase tracking-widest mt-1 opacity-60">Hearts</p>
+          </div>
+        </div>
 
         {/* View Mode Toggle */}
-        <div className="inline-flex gap-3">
-          <button
-            onClick={() => setViewMode('cellar')}
-            className={`
-              transition-all duration-300 px-4 py-2 rounded-xl text-sm font-bold border
-              ${viewMode === 'cellar'
-                ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/30 scale-105 border-amber-500'
-                : 'bg-slate-200 dark:bg-slate-800 text-gray-900 dark:text-white border-slate-300 dark:border-slate-700 hover:bg-slate-300 dark:hover:bg-slate-700'
-              }
-            `}
-          >
-            🍾 술장
-          </button>
-          <button
-            onClick={() => setViewMode('flavor')}
-            className={`
-              transition-all duration-300 px-4 py-2 rounded-xl text-sm font-bold border
-              ${viewMode === 'flavor'
-                ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/30 scale-105 border-amber-500'
-                : 'bg-slate-200 dark:bg-slate-800 text-gray-900 dark:text-white border-slate-300 dark:border-slate-700 hover:bg-slate-300 dark:hover:bg-slate-700'
-              }
-            `}
-          >
-            🌌 취향 지도
-          </button>
+        <div className="flex justify-center relative z-10">
+          <div className="inline-flex p-1.5 bg-secondary/50 backdrop-blur-md border border-border/50 rounded-2xl shadow-inner mb-2">
+            <button
+              onClick={() => setViewMode('cellar')}
+              className={`
+                flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-black transition-all duration-300
+                ${viewMode === 'cellar'
+                  ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/40 scale-105'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
+                }
+              `}
+            >
+              <span>🍾</span> 술장
+            </button>
+            <button
+              onClick={() => setViewMode('flavor')}
+              className={`
+                flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-black transition-all duration-300
+                ${viewMode === 'flavor'
+                  ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/40 scale-105'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
+                }
+              `}
+            >
+              <span>🌌</span> 취향 지도
+            </button>
+          </div>
         </div>
       </div>
 
@@ -307,8 +329,10 @@ function CellarView({
 
       {/* Spirits Grid */}
       <section className="mb-16">
-        <div className="relative bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 rounded-3xl px-3 py-6 sm:p-10 shadow-2xl border border-slate-200 dark:border-slate-700">
-          <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] bg-[radial-gradient(circle_at_50%_50%,rgba(0,0,0,0.1),transparent_50%)] pointer-events-none rounded-3xl" />
+        <div className="relative bg-[#0f172a] rounded-[2.5rem] px-3 py-6 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/5 overflow-hidden">
+          {/* Neon Glow Effects */}
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-amber-500/10 blur-[80px] rounded-full pointer-events-none" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-orange-600/10 blur-[80px] rounded-full pointer-events-none" />
 
           <div className="relative">
             <motion.div
@@ -317,7 +341,7 @@ function CellarView({
               variants={{
                 visible: { transition: { staggerChildren: 0.05 } }
               }}
-              className="grid grid-cols-3 min-[400px]:grid-cols-4 sm:grid-cols-4 md:grid-cols-5 gap-2 sm:gap-6"
+              className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2 sm:gap-3"
             >
               {spirits.map((spirit) => (
                 <SpiritCard
@@ -391,14 +415,14 @@ function SpiritCard({
         </div>
       )}
 
-      <div className="relative aspect-[2/3] rounded-2xl overflow-hidden bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 p-1 shadow-xl hover:shadow-2xl transition-all duration-300">
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-200 via-orange-200 to-amber-300 dark:from-amber-600 dark:via-orange-600 dark:to-amber-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
+      <div className="relative aspect-[2/3] rounded-2xl overflow-hidden bg-white dark:bg-slate-800/50 p-[1px] shadow-sm transition-all duration-500 group-hover:shadow-amber-500/20">
+        <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-orange-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
 
-        <div className="relative h-full rounded-xl overflow-hidden bg-white dark:bg-slate-900 group-hover:blur-[2px] transition-all duration-300">
+        <div className="relative h-full rounded-xl overflow-hidden bg-slate-50 dark:bg-slate-900 group-hover:blur-[1px] group-hover:scale-[0.98] transition-all duration-500">
           <img
             src={spirit.imageUrl && spirit.imageUrl.trim() ? spirit.imageUrl : getCategoryFallbackImage(spirit.category)}
             alt={spirit.name}
-            className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 ${!spirit.imageUrl || !spirit.imageUrl.trim() ? 'opacity-50' : ''}`}
+            className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${!spirit.imageUrl || !spirit.imageUrl.trim() ? 'opacity-30 blur-sm' : 'opacity-100'} group-hover:opacity-90`}
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.src = getCategoryFallbackImage(spirit.category);

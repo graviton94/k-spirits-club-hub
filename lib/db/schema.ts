@@ -90,6 +90,9 @@ export interface Review {
   finish: string | null;
   createdAt: Date;
   updatedAt: Date;
+  isActive?: boolean;
+  likes?: number;
+  likedBy?: string[];
   isPublished: boolean;
 }
 

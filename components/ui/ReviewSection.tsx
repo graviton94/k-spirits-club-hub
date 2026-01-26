@@ -2,7 +2,7 @@
 
 import type { Review } from '@/lib/db/schema';
 import { useState, useEffect, useRef } from 'react';
-import { Star, MessageSquare, Wind, Utensils, Zap, Quote, X, Check, Edit2, Trash2 } from 'lucide-react';
+import { Star, MessageSquare, Wind, Utensils, Zap, Quote, X, Check, Edit2, Trash2, Heart } from 'lucide-react';
 import metadata from '@/lib/constants/spirits-metadata.json';
 import { useAuth } from '@/app/context/auth-context';
 
@@ -201,6 +201,52 @@ function ReviewCard({ review, isOwner, onEdit, onDelete }: {
   onEdit?: () => void,
   onDelete?: () => void
 }) {
+  const { user } = useAuth();
+  const [likes, setLikes] = useState(review.likes || 0);
+  const [isLiked, setIsLiked] = useState(user ? (review.likedBy || []).includes(user.uid) : false);
+  const [isLiking, setIsLiking] = useState(false);
+
+  const handleLike = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!user) {
+      alert('로그인이 필요한 기능입니다.');
+      return;
+    }
+    if (isLiking) return;
+
+    // Optimistic UI update
+    const prevLiked = isLiked;
+    const prevLikesCount = likes;
+    setIsLiked(!prevLiked);
+    setLikes(prevLiked ? prevLikesCount - 1 : prevLikesCount + 1);
+    setIsLiking(true);
+
+    try {
+      const res = await fetch('/api/reviews/like', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          spiritId: review.spiritId,
+          reviewUserId: review.userId,
+          likerUserId: user.uid
+        })
+      });
+
+      if (!res.ok) throw new Error('Failed to like');
+      const data = await res.json();
+      // Update with real count from server
+      setLikes(data.likes);
+      setIsLiked(data.isLiked);
+    } catch (err) {
+      // Rollback on error
+      setIsLiked(prevLiked);
+      setLikes(prevLikesCount);
+      console.error(err);
+    } finally {
+      setIsLiking(false);
+    }
+  };
+
   return (
     <div className="bg-card border border-border rounded-3xl p-6 sm:p-8 shadow-sm transition-hover hover:border-primary/20 relative group/card">
       <div className="flex justify-between items-start mb-6">
@@ -210,7 +256,16 @@ function ReviewCard({ review, isOwner, onEdit, onDelete }: {
               {review.userName.substring(0, 1)}
             </div>
             <div>
-              <p className="text-sm text-muted-foreground font-bold">{review.userName} • {new Date(review.createdAt).toLocaleDateString()}</p>
+              <p className="text-xs text-muted-foreground font-bold">{review.userName}</p>
+              <div className="flex items-center gap-3 mt-1">
+                <button
+                  onClick={handleLike}
+                  className={`flex items-center gap-1.5 text-xs font-bold transition-all px-2 py-1 rounded-lg ${isLiked ? 'text-rose-500 bg-rose-500/10 border-rose-500/20' : 'text-muted-foreground hover:text-rose-500 hover:bg-rose-500/10 border border-transparent'}`}
+                >
+                  <Heart className={`w-3.5 h-3.5 ${isLiked ? 'fill-rose-500' : ''}`} />
+                  <span>{likes}</span>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -249,6 +304,7 @@ function ReviewCard({ review, isOwner, onEdit, onDelete }: {
               </div>
             );
           })()}
+          <p className="text-[10px] text-muted-foreground mt-2 font-bold px-1">{new Date(review.createdAt).toLocaleDateString()}</p>
         </div>
       </div>
 

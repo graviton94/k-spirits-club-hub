@@ -434,6 +434,10 @@ export const cabinetDb = {
 export const reviewsDb = {
     async upsert(spiritId: string, userId: string, data: any) {
         const token = await getServiceAccountToken();
+
+        // 1. Check if it's a new review to increment user stats
+        const isNew = !(await this.getById(spiritId, userId));
+
         const reviewData = {
             ...data,
             spiritId,
@@ -468,6 +472,11 @@ export const reviewsDb = {
         });
 
         await Promise.all(promises);
+
+        // 2. Increment user review count if new
+        if (isNew) {
+            await userDb.incrementStats(userId, { reviewsWritten: 1 });
+        }
 
         // Sync to "Latest 3" collection for home page
         try {
@@ -670,6 +679,107 @@ export const reviewsDb = {
                 data.spiritId = doc.name.split('/').pop();
             }
             return data;
+        });
+    },
+
+    async toggleLike(spiritId: string, reviewUserId: string, likerUserId: string): Promise<{ likes: number, isLiked: boolean }> {
+        const token = await getServiceAccountToken();
+        const reviewId = `${spiritId}_${reviewUserId}`;
+        const mainPath = `${getAppPath().reviews}/${reviewId}`;
+        const commitUrl = `${BASE_URL.replace('/documents', '')}:commit`;
+
+        // 1. Get current review to check if already liked
+        const review = await this.getById(spiritId, reviewUserId);
+        if (!review) throw new Error('Review not found');
+
+        const likedBy = review.likedBy || [];
+        const isLiked = likedBy.includes(likerUserId);
+        const newLikesCount = isLiked ? (review.likes || 1) - 1 : (review.likes || 0) + 1;
+        const newLikedBy = isLiked ? likedBy.filter((id: string) => id !== likerUserId) : [...likedBy, likerUserId];
+
+        // 2. Perform atomic updates across all mirrors and profile
+        const paths = [
+            mainPath,
+            `${getAppPath().spiritReviews(spiritId)}/${reviewUserId}`,
+            `${getAppPath().userReviews(reviewUserId)}/${spiritId}`
+        ];
+
+        const writes = paths.map(path => ({
+            update: {
+                name: `projects/${PROJECT_ID}/databases/(default)/documents/${path}`,
+                fields: {
+                    likes: { integerValue: newLikesCount.toString() },
+                    likedBy: { arrayValue: { values: newLikedBy.map((id: string) => ({ stringValue: id })) } }
+                }
+            },
+            updateMask: { fieldPaths: ['likes', 'likedBy'] }
+        }));
+
+        // 3. Increment author heart count
+        const profilePath = `users/${reviewUserId}`;
+        writes.push({
+            update: {
+                name: `projects/${PROJECT_ID}/databases/(default)/documents/${profilePath}`,
+                fields: {
+                    heartsReceived: { integerValue: "0" } // Dummy for structure, will use transform
+                }
+            } as any, // TypeScript union issue
+            transform: {
+                document: `projects/${PROJECT_ID}/databases/(default)/documents/${profilePath}`,
+                fieldTransforms: [
+                    {
+                        fieldPath: 'heartsReceived',
+                        increment: { integerValue: isLiked ? "-1" : "1" }
+                    }
+                ]
+            }
+        } as any);
+
+        await fetch(commitUrl, {
+            method: 'POST',
+            headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ writes })
+        });
+
+        return { likes: newLikesCount, isLiked: !isLiked };
+    }
+};
+
+export const userDb = {
+    async incrementStats(userId: string, stats: { reviewsWritten?: number, heartsReceived?: number }) {
+        const token = await getServiceAccountToken();
+        const docPath = `users/${userId}`;
+        const commitUrl = `${BASE_URL.replace('/documents', '')}:commit`;
+
+        const fieldTransforms = [];
+        if (stats.reviewsWritten) {
+            fieldTransforms.push({
+                fieldPath: 'reviewsWritten',
+                increment: { integerValue: stats.reviewsWritten.toString() }
+            });
+        }
+        if (stats.heartsReceived) {
+            fieldTransforms.push({
+                fieldPath: 'heartsReceived',
+                increment: { integerValue: stats.heartsReceived.toString() }
+            });
+        }
+
+        if (fieldTransforms.length === 0) return;
+
+        const body = {
+            writes: [{
+                transform: {
+                    document: `projects/${PROJECT_ID}/databases/(default)/documents/${docPath}`,
+                    fieldTransforms
+                }
+            }]
+        };
+
+        await fetch(commitUrl, {
+            method: 'POST',
+            headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
         });
     }
 };

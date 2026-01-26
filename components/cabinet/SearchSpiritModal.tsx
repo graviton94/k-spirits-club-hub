@@ -56,88 +56,128 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[9999] flex items-center justify-center p-4"
+                className="fixed inset-0 bg-black/90 backdrop-blur-md z-[9999] flex items-center justify-center p-4 sm:p-6"
                 onClick={onClose}
             >
-                <div
-                    className="bg-background border-2 border-border w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh]"
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                    className="bg-slate-950 border border-white/10 w-full max-w-xl rounded-3xl shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col max-h-[85vh] relative"
                     onClick={e => e.stopPropagation()}
                 >
-                    <div className="p-4 border-b border-border bg-secondary">
-                        <div className="flex justify-between items-center mb-4">
-                            <h2 className="text-lg font-bold text-foreground">새 술 추가하기</h2>
-                            <button onClick={onClose} className="text-muted-foreground hover:text-foreground">✕</button>
+                    {/* Header bg glow */}
+                    <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-amber-500/10 to-transparent pointer-events-none" />
+
+                    <div className="p-6 sm:p-8 border-b border-white/5 relative z-10">
+                        <div className="flex justify-between items-center mb-6">
+                            <div>
+                                <h2 className="text-2xl font-black text-white tracking-tight">콜렉션 추가</h2>
+                                <p className="text-xs text-muted-foreground mt-1 font-bold uppercase tracking-widest opacity-60">Search & Add to Cabinet</p>
+                            </div>
+                            <button
+                                onClick={onClose}
+                                className="w-10 h-10 rounded-full flex items-center justify-center bg-white/5 hover:bg-white/10 text-white transition-all border border-white/5"
+                            >
+                                ✕
+                            </button>
                         </div>
-                        <input
-                            autoFocus
-                            placeholder="찾으시는 술 이름을 입력하세요..."
-                            className="w-full px-4 py-3 rounded-xl border-2 border-border bg-input text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary/50 focus:border-primary focus:ring-offset-2 outline-none"
-                            value={query}
-                            onChange={e => setQuery(e.target.value)}
-                        />
+                        <div className="relative">
+                            <input
+                                autoFocus
+                                placeholder="어떤 술을 찾고 계신가요?"
+                                className="w-full pl-12 pr-4 py-4 rounded-2xl border border-white/10 bg-white/5 text-white placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 transition-all font-medium text-lg"
+                                value={query}
+                                onChange={e => setQuery(e.target.value)}
+                            />
+                            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">
+                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </div>
+                        </div>
                     </div>
 
-                    <div className="flex-1 overflow-y-auto custom-scrollbar p-2">
-                        {isLoading && <div className="p-8 text-center text-muted-foreground">데이터 로딩 중... 🥃</div>}
+                    <div className="flex-1 overflow-y-auto custom-scrollbar p-4 sm:p-6 space-y-2 relative z-10 min-h-[300px]">
+                        {isLoading && (
+                            <div className="flex flex-col items-center justify-center py-20 text-muted-foreground gap-4">
+                                <Loader2 className="w-10 h-10 animate-spin text-amber-500" />
+                                <p className="font-bold text-sm">데이터를 불러오는 중입니다...</p>
+                            </div>
+                        )}
                         {!isLoading && results.length === 0 && query && (
-                            <div className="p-8 text-center text-muted-foreground">검색 결과가 없습니다.</div>
+                            <div className="flex flex-col items-center justify-center py-20 text-muted-foreground opacity-50">
+                                <p className="text-4xl mb-4">🔍</p>
+                                <p className="font-bold">검색 결과가 없습니다.</p>
+                            </div>
                         )}
                         {!isLoading && !query && (
-                            <div className="p-8 text-center text-muted-foreground">술 이름을 입력하여 검색하세요.</div>
+                            <div className="flex flex-col items-center justify-center py-20 text-muted-foreground opacity-50">
+                                <p className="text-4xl mb-4">🥃</p>
+                                <p className="font-bold">제품명을 정확하게 입력해보세요.</p>
+                            </div>
                         )}
 
-                        <div className="space-y-1">
+                        <div className="space-y-3">
                             {results.map(item => {
                                 const isAdded = existingIds.has(item.i);
                                 const isProcessing = processingId === item.i;
 
                                 return (
-                                    <div key={item.i} className="flex items-center gap-3 p-3 hover:bg-secondary rounded-xl transition-colors group">
-                                        <div className="w-12 h-12 rounded-lg overflow-hidden bg-muted shrink-0 border border-border">
+                                    <motion.div
+                                        layout
+                                        key={item.i}
+                                        className="flex items-center gap-3 p-2.5 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/5 transition-all group"
+                                    >
+                                        <div className="w-12 h-12 rounded-xl overflow-hidden bg-slate-900 shrink-0 border border-white/10">
                                             <img
                                                 src={(item.t && item.t.trim()) ? item.t : getCategoryFallbackImage(item.c)}
                                                 alt={item.n}
-                                                className="w-full h-full object-cover"
+                                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                                 onError={(e) => {
                                                     (e.target as HTMLImageElement).src = getCategoryFallbackImage(item.c);
                                                 }}
                                             />
                                         </div>
-                                        <div className="flex-1 min-w-0">
-                                            <div className="font-bold text-sm truncate text-foreground">{item.n}</div>
-                                            <div className="text-xs text-muted-foreground">{item.c} {item.d ? `• ${item.d}` : ''}</div>
+                                        <div className="flex-1 min-w-0 flex flex-col justify-center">
+                                            <div className="font-black text-sm text-white leading-tight line-clamp-2 whitespace-normal">{item.n}</div>
+                                            <div className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest opacity-60 whitespace-normal mt-0.5">
+                                                {item.c} {item.d ? `| ${item.d}` : ''}
+                                            </div>
                                         </div>
 
-                                        <div className="flex items-center gap-1">
+                                        <div className="flex items-center gap-1.5">
                                             {isAdded ? (
-                                                <span className="text-xs font-bold text-muted-foreground bg-muted px-2 py-1 rounded-md">보유중</span>
+                                                <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                                                    <span className="text-[9px] font-black uppercase tracking-tighter">In</span>
+                                                </div>
                                             ) : (
                                                 <>
                                                     <button
                                                         disabled={isProcessing}
                                                         onClick={() => handleAdd(item, false)}
-                                                        className="p-2 rounded-full hover:bg-amber-100 dark:hover:bg-amber-900/50 text-amber-500 transition-colors"
-                                                        title="술장에 담기"
+                                                        className="w-9 h-9 rounded-xl bg-amber-500 hover:bg-amber-600 text-white flex items-center justify-center transition-all shadow-lg shadow-amber-500/20 active:scale-90 disabled:opacity-50"
+                                                        title="술장에 추가"
                                                     >
-                                                        {isProcessing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
+                                                        {isProcessing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-5 h-5" />}
                                                     </button>
                                                     <button
                                                         disabled={isProcessing}
                                                         onClick={() => handleAdd(item, true)}
-                                                        className="p-2 rounded-full hover:bg-purple-100 dark:hover:bg-purple-900/50 text-purple-500 transition-colors"
-                                                        title="위시리스트 담기"
+                                                        className="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center transition-all border border-white/10 active:scale-90 disabled:opacity-50"
+                                                        title="위시리스트"
                                                     >
                                                         {isProcessing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Bookmark className="w-4 h-4" />}
                                                     </button>
                                                 </>
                                             )}
                                         </div>
-                                    </div>
+                                    </motion.div>
                                 );
                             })}
                         </div>
                     </div>
-                </div>
+                </motion.div>
             </motion.div>
         </AnimatePresence>
     );

@@ -11,7 +11,7 @@ import { addToCabinet, removeFromCabinet, checkCabinetStatus } from "@/app/actio
 import { triggerLoginModal } from "@/lib/utils/spirit-adapters";
 import SuccessToast from "./SuccessToast";
 
-import { Bookmark } from "lucide-react";
+import { Bookmark, Plus, Minus, Loader2 } from "lucide-react";
 
 interface ExploreCardProps {
   spirit: Spirit;
@@ -155,97 +155,68 @@ export function ExploreCard({ spirit, onClick }: ExploreCardProps) {
       </div>
 
       {/* Middle: Content */}
-      <div className="flex-1 min-w-0 flex flex-col justify-between h-full py-0.5">
-        <div>
-          <h3 className="font-bold text-foreground leading-tight line-clamp-2 mb-1">
-            <span className="mr-1.5 text-lg inline-block align-middle">
+      <div className="flex-1 min-w-0 flex flex-col justify-center py-0.5">
+        <h3 className="font-black text-sm text-foreground leading-tight line-clamp-2 mb-1">
+          <span className="mr-1 text-base inline-block align-middle">
+            {
               {
-                {
-                  "소주": "🍶", "위스키": "🥃", "맥주": "🍺", "일반증류주": "🍸",
-                  "기타 주류": "🥂", "탁주": "🥛", "약주": "🍵", "청주": "🍶",
-                  "과실주": "🍾", "브랜디": "🍷", "리큐르": "🍹"
-                }[spirit.category] || "🍾"
-              }
-            </span>
-            {spirit.name}
-          </h3>
+                "소주": "🍶", "위스키": "🥃", "맥주": "🍺", "일반증류주": "🍸",
+                "기타 주류": "🥂", "탁주": "🥛", "약주": "🍵", "청주": "🍶",
+                "과실주": "🍾", "브랜디": "🍷", "리큐르": "🍹"
+              }[spirit.category] || "🍾"
+            }
+          </span>
+          {spirit.name}
+        </h3>
 
-          <p className="text-xs font-medium text-muted-foreground flex items-center gap-1">
-            <span>📂</span>
-            <span>
-              {spirit.category}
-              {spirit.subcategory && ` · ${spirit.subcategory}`}
-              {spirit.abv > 0 && ` · ${spirit.abv}%`}
-            </span>
-          </p>
-
-          {spirit.distillery && (
-            <p className="text-xs text-muted-foreground/80 mt-0.5 max-w-full truncate">
-              🏭 {spirit.distillery}
-            </p>
-          )}
+        <div className="text-[10px] font-bold text-muted-foreground flex items-center gap-1.5 flex-wrap">
+          <span className="uppercase tracking-widest opacity-70">{spirit.subcategory || spirit.category}</span>
+          {spirit.abv > 0 && <span className="opacity-40">|</span>}
+          {spirit.abv > 0 && <span className="opacity-70">{spirit.abv}%</span>}
         </div>
 
-        {tastingTags.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mt-2">
-            {tastingTags.map((tag, index) => {
-              const styles = getTagStyle(tag);
-              return (
-                <span
-                  key={index}
-                  className="text-[10px] px-2 py-0.5 rounded-full font-bold border transition-colors whitespace-nowrap"
-                  style={{
-                    backgroundColor: 'var(--tag-bg)',
-                    color: 'var(--tag-text)',
-                    borderColor: 'var(--tag-border)'
-                  } as any}
-                >
-                  <style jsx>{`
-                    span {
-                      --tag-bg: ${styles.light.bg};
-                      --tag-text: ${styles.light.text};
-                      --tag-border: ${styles.light.border};
-                    }
-                    :global(.dark) span {
-                      --tag-bg: ${styles.dark.bg};
-                      --tag-text: ${styles.dark.text};
-                      --tag-border: ${styles.dark.border};
-                    }
-                  `}</style>
-                  #{tag}
-                </span>
-              );
-            })}
-          </div>
+        {spirit.distillery && (
+          <p className="text-[10px] text-muted-foreground/60 mt-0.5 truncate">
+            {spirit.distillery}
+          </p>
         )}
       </div>
 
       {/* Right: Two Action Buttons */}
-      <div className="flex flex-col gap-2 justify-center relative z-10">
+      <div className="flex items-center gap-1.5 relative z-10 pl-1">
         <button
           onClick={handleCabinetAction}
           disabled={isToggling || isLoadingStatus}
-          className={`px-5 py-1.5 text-xs font-medium rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap text-white
+          className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all shadow-lg active:scale-90 disabled:opacity-50 
             ${isInCabinet
-              ? 'bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700'
-              : 'bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700'
+              ? 'bg-rose-500 text-white shadow-rose-500/20'
+              : 'bg-emerald-500 text-white shadow-emerald-500/20 hover:bg-emerald-600'
             }`}
+          title={isInCabinet ? '술장에서 제거' : '술장에 추가'}
         >
-          {isInCabinet ? '➖술장 빼기' : '➕술장 담기'}
+          {isToggling ? (
+            <Loader2 className="w-4 h-4 animate-spin" />
+          ) : isInCabinet ? (
+            <Minus className="w-5 h-5" />
+          ) : (
+            <Plus className="w-5 h-5" />
+          )}
         </button>
         <button
           onClick={handleWishlistAction}
           disabled={isToggling || isLoadingStatus}
-          className={`px-5 py-1.5 text-xs font-medium rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap text-white flex items-center justify-center gap-1.5
+          className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all border shadow-lg active:scale-90 disabled:opacity-50
             ${isWishlist
-              ? 'bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700'
-              : 'bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700'
+              ? 'bg-amber-500 text-white border-amber-500 shadow-amber-500/20'
+              : 'bg-slate-800 text-white border-white/10 hover:bg-slate-700 shadow-black/20'
             }`}
+          title={isWishlist ? '위시리스트 삭제' : '위시리스트 담기'}
         >
-          <Bookmark className={`w-4 h-4 ${isWishlist ? 'fill-current' : ''}`} />
-          <span className="text-xs font-bold">
-            {isWishlist ? '위시 빼기' : '위시 담기'}
-          </span>
+          {isToggling ? (
+            <Loader2 className="w-4 h-4 animate-spin" />
+          ) : (
+            <Bookmark className={`w-4 h-4 ${isWishlist ? 'fill-current' : ''}`} />
+          )}
         </button>
       </div>
     </motion.div>
