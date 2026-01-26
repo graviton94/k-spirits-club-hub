@@ -177,7 +177,7 @@ export default function ExploreContent() {
           )}
         </>
       ) : (
-        <div className="bg-background dark:bg-slate-900/40 rounded-[32px] p-16 text-center border border-dashed border-border shadow-inner">
+        <div className="bg-background rounded-[32px] p-16 text-center border border-dashed border-border shadow-inner">
           <AlertCircle className="mx-auto w-16 h-16 text-muted-foreground/30 mb-6" />
           <h3 className="text-2xl font-bold text-foreground">찾으시는 제품이 없나요?</h3>
           <p className="text-muted-foreground mt-3 max-w-sm mx-auto">검색어를 변경하거나 아래 버튼을 눌러 최신 데이터를 새로고침 해보세요.</p>
