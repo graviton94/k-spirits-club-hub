@@ -92,15 +92,18 @@ export async function generateMetadata({
   const enName = spirit.metadata?.name_en;
   const title = enName ? `${koName} (${enName}) | K-Spirits Club` : `${koName} | K-Spirits Club`;
   
-  const description = [
+  const descriptionParts = [
     spirit.distillery,
     spirit.region,
     spirit.country,
     `${spirit.abv}% ABV`,
     spirit.category,
-  ]
-    .filter(Boolean)
-    .join(' · ') + (spirit.metadata?.description ? ` - ${truncateDescription(spirit.metadata.description, DESCRIPTION_MAX_LENGTH)}` : '');
+  ].filter(Boolean);
+  
+  const description = descriptionParts.join(' · ') + 
+    (spirit.metadata?.description 
+      ? ` - ${truncateDescription(spirit.metadata.description, DESCRIPTION_MAX_LENGTH)}` 
+      : '');
 
   return {
     title,
@@ -141,7 +144,10 @@ export default async function SpiritDetailPage({
   let reviews: TransformedReview[] = [];
   try {
     const reviewsData = await reviewsDb.getAllForSpirit(id);
-    reviews = transformReviewData(reviewsData as DbReview[]);
+    // Runtime validation: ensure reviewsData has the expected structure
+    if (Array.isArray(reviewsData)) {
+      reviews = transformReviewData(reviewsData as DbReview[]);
+    }
   } catch (error) {
     console.error('Failed to fetch reviews:', error);
   }
@@ -168,17 +174,17 @@ export default async function SpiritDetailPage({
         name: 'Alcohol By Volume',
         value: `${spirit.abv}%`,
       },
-      spirit.country && {
-        '@type': 'PropertyValue',
+      ...(spirit.country ? [{
+        '@type': 'PropertyValue' as const,
         name: 'Country',
         value: spirit.country,
-      },
-      spirit.region && {
-        '@type': 'PropertyValue',
+      }] : []),
+      ...(spirit.region ? [{
+        '@type': 'PropertyValue' as const,
         name: 'Region',
         value: spirit.region,
-      },
-    ].filter(Boolean),
+      }] : []),
+    ],
   };
 
   return (
