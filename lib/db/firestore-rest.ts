@@ -369,7 +369,14 @@ export const cabinetDb = {
         const json = await res.json();
         if (!json.documents) return [];
 
-        return json.documents.map((doc: any) => parseFirestoreFields(doc.fields || {}));
+        return json.documents.map((doc: any) => {
+            const data = parseFirestoreFields(doc.fields || {});
+            // Ensure ID is present from document key if missing in fields
+            if (!data.id) {
+                data.id = doc.name.split('/').pop();
+            }
+            return data;
+        });
     },
 
     async upsert(userId: string, spiritId: string, data: any) {
@@ -455,7 +462,7 @@ export const reviewsDb = {
         const reviewId = `${spiritId}_${userId}`;
         const reviewsPath = getAppPath().reviews;
         const url = `${BASE_URL}/${reviewsPath}/${reviewId}`;
-        
+
         try {
             const res = await fetch(url, {
                 method: 'DELETE',

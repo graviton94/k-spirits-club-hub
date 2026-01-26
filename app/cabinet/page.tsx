@@ -12,7 +12,7 @@ import SpiritDetailModal from "@/components/ui/SpiritDetailModal";
 import { useAuth } from "@/app/context/auth-context";
 import { useSpiritsCache } from "@/app/context/spirits-cache-context";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
-import { getUserCabinet, addToCabinet } from "@/app/actions/cabinet";
+import { addToCabinet } from "@/app/actions/cabinet";
 
 type ViewMode = 'cellar' | 'flavor';
 
@@ -45,7 +45,12 @@ export default function CabinetPage() {
 
     setIsLoadingCabinet(true);
     try {
-      const cabinetData = await getUserCabinet(user.uid);
+      // Use API route instead of Server Action to avoid 405 on Edge
+      const response = await fetch(`/api/cabinet/list?uid=${user.uid}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch cabinet data');
+      }
+      const { data: cabinetData } = await response.json();
 
       // Enrich with search index data for thumbnails
       const enrichedData = cabinetData.map((item: any) => {

@@ -129,7 +129,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                     animate={{ scale: 1, y: 0, opacity: 1 }}
                     exit={{ scale: 0.9, y: 20, opacity: 0 }}
                     transition={{ type: "spring", stiffness: 350, damping: 28 }}
-                    className="bg-white/30 dark:bg-slate-900/40 backdrop-blur-2xl rounded-3xl w-full max-w-sm sm:max-w-md shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] border border-white/40 dark:border-white/10 overflow-hidden relative"
+                    className="bg-neutral-900/95 backdrop-blur-2xl rounded-3xl w-full max-w-sm sm:max-w-md shadow-[0_32px_64px_-16px_rgba(0,0,0,0.5)] border border-white/10 overflow-hidden relative"
                     onClick={(e) => e.stopPropagation()}
                 >
                     {/* Close button */}
@@ -182,7 +182,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                     </div>
 
                     {/* 2. Actions & Detailed Info */}
-                    <div className="p-6 space-y-6 max-h-[50vh] overflow-y-auto custom-scrollbar bg-gray-50 dark:bg-slate-900/60 text-foreground backdrop-blur-md">
+                    <div className="p-6 space-y-6 max-h-[50vh] overflow-y-auto custom-scrollbar bg-neutral-900/40 text-white backdrop-blur-md">
 
                         {/* Action Buttons */}
                         <div className="flex gap-2">
@@ -234,9 +234,9 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                         <span>★</span> {localSpirit.userReview.ratingOverall.toFixed(1)}
                                     </div>
                                     <div className="h-4 w-px bg-primary/20"></div>
-                                    <span className="text-[10px] text-primary font-black uppercase tracking-widest">Master Review</span>
+                                    <span className="text-[10px] text-amber-500 font-black uppercase tracking-widest">Master Review</span>
                                 </div>
-                                <p className="text-sm text-foreground italic leading-relaxed">
+                                <p className="text-sm text-gray-200 italic leading-relaxed">
                                     "{localSpirit.userReview.comment}"
                                 </p>
                             </div>
@@ -244,7 +244,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
 
                         {/* Tasting Profile - N/P/F */}
                         <div>
-                            <h3 className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-4">
+                            <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4">
                                 Tasting Profile
                             </h3>
 
@@ -253,8 +253,8 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                 {((localSpirit.userReview?.tagsN?.length || 0) > 0 || (localSpirit.metadata as any)?.nose_tags) && (
                                     <div>
                                         <div className="flex items-center gap-2 mb-2">
-                                            <span className="text-xs font-bold text-foreground">👃 Aroma</span>
-                                            <div className="h-px flex-1 bg-border/50"></div>
+                                            <span className="text-xs font-bold text-white">👃 Aroma</span>
+                                            <div className="h-px flex-1 bg-white/20"></div>
                                         </div>
                                         <div className="flex flex-wrap gap-1.5">
                                             {(localSpirit.userReview?.tagsN || (localSpirit.metadata as any)?.nose_tags || []).map((tag: any, i: number) => {
@@ -273,8 +273,8 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                 {((localSpirit.userReview?.tagsP?.length || 0) > 0 || (localSpirit.metadata as any)?.palate_tags) && (
                                     <div>
                                         <div className="flex items-center gap-2 mb-2">
-                                            <span className="text-xs font-bold text-foreground">👅 Palate</span>
-                                            <div className="h-px flex-1 bg-border/50"></div>
+                                            <span className="text-xs font-bold text-white">👅 Palate</span>
+                                            <div className="h-px flex-1 bg-white/20"></div>
                                         </div>
                                         <div className="flex flex-wrap gap-1.5">
                                             {(localSpirit.userReview?.tagsP || (localSpirit.metadata as any)?.palate_tags || []).map((tag: any, i: number) => {
@@ -293,8 +293,8 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                 {((localSpirit.userReview?.tagsF?.length || 0) > 0 || (localSpirit.metadata as any)?.finish_tags) && (
                                     <div>
                                         <div className="flex items-center gap-2 mb-2">
-                                            <span className="text-xs font-bold text-foreground">🏁 Finish</span>
-                                            <div className="h-px flex-1 bg-border/50"></div>
+                                            <span className="text-xs font-bold text-white">🏁 Finish</span>
+                                            <div className="h-px flex-1 bg-white/20"></div>
                                         </div>
                                         <div className="flex flex-wrap gap-1.5">
                                             {(localSpirit.userReview?.tagsF || (localSpirit.metadata as any)?.finish_tags || []).map((tag: any, i: number) => {
