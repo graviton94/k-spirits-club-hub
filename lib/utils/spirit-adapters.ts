@@ -25,7 +25,13 @@ export function toFlavorSpirit(dbSpirit: DbSpirit, userReview?: UserReview): Fla
 
 /**
  * Triggers the login modal by clicking the login button
- * This is a temporary solution until auth context provides a proper method
+ * 
+ * NOTE: This is a temporary solution using DOM manipulation.
+ * In the future, this should be replaced with a proper method
+ * from the auth context (e.g., auth.showLoginModal()).
+ * 
+ * The function looks for a button with aria-label="Login" and clicks it.
+ * If not found, it falls back to redirecting to /login page.
  */
 export function triggerLoginModal() {
   const loginButton = document.querySelector('[aria-label="Login"]') as HTMLElement;
