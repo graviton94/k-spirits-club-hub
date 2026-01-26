@@ -111,6 +111,13 @@ export default function ExploreContent() {
     setDisplayLimit(20);
   }, [searchTerm, selectedLegal, selectedMain, selectedSub]);
 
+  // Final Check: Log guest-visible spirits count
+  useEffect(() => {
+    if (!isCacheLoading && publishedSpirits.length > 0) {
+      console.log(`[FINAL_CHECK] Guest user now sees ${publishedSpirits.length} spirits`);
+    }
+  }, [publishedSpirits.length, isCacheLoading]);
+
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl pb-32">
       <header className="mb-8 text-center">
