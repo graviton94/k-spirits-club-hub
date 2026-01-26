@@ -13,11 +13,11 @@ function fromFirestore(doc: any): Spirit {
     const data: any = { id };
 
     for (const [key, value] of Object.entries(fields) as [string, any][]) {
-        if (value.stringValue) data[key] = value.stringValue;
-        else if (value.integerValue) data[key] = Number(value.integerValue);
-        else if (value.doubleValue) data[key] = Number(value.doubleValue); // Number
-        else if (value.booleanValue) data[key] = value.booleanValue;
-        else if (value.timestampValue) data[key] = value.timestampValue; // Date String?
+        if ('stringValue' in value) data[key] = value.stringValue;
+        else if ('integerValue' in value) data[key] = Number(value.integerValue);
+        else if ('doubleValue' in value) data[key] = Number(value.doubleValue); // Number
+        else if ('booleanValue' in value) data[key] = value.booleanValue;
+        else if ('timestampValue' in value) data[key] = value.timestampValue; // Date String?
         else if (value.arrayValue) {
             data[key] = (value.arrayValue.values || []).map((v: any) => v.stringValue);
         }
@@ -26,7 +26,7 @@ function fromFirestore(doc: any): Spirit {
             const mapData: any = {};
             const mapFields = value.mapValue.fields || {};
             for (const [mk, mv] of Object.entries(mapFields) as [string, any][]) {
-                if (mv.stringValue) mapData[mk] = mv.stringValue;
+                if ('stringValue' in mv) mapData[mk] = mv.stringValue;
                 if (mv.arrayValue) mapData[mk] = (mv.arrayValue.values || []).map((v: any) => v.stringValue);
             }
             data[key] = mapData;
@@ -280,15 +280,18 @@ export const spiritsDb = {
         });
 
         // Map to minimized structure with short keys
-        return publishedSpirits.map(spirit => ({
-            i: spirit.id,
-            n: spirit.name,
-            en: spirit.metadata?.name_en ?? null,
-            c: spirit.category,
-            mc: spirit.mainCategory ?? null,
-            sc: spirit.subcategory ?? null,
-            t: spirit.thumbnailUrl ?? null
-        }));
+        // DEFENSIVE: Handle missing required fields with defaults to prevent data loss
+        return publishedSpirits
+            .filter(spirit => spirit.id && spirit.name && spirit.category) // Skip malformed docs
+            .map(spirit => ({
+                i: spirit.id,
+                n: spirit.name,
+                en: spirit.metadata?.name_en ?? null,
+                c: spirit.category,
+                mc: spirit.mainCategory ?? null,
+                sc: spirit.subcategory ?? null,
+                t: spirit.thumbnailUrl ?? spirit.imageUrl ?? null // Fallback to imageUrl if thumbnailUrl missing
+            }));
     }
 };
 
@@ -319,19 +322,19 @@ export const cabinetDb = {
             const obj: any = {};
             const fields = doc.fields || {};
             for (const [key, value] of Object.entries(fields) as [string, any][]) {
-                if (value.stringValue) obj[key] = value.stringValue;
-                else if (value.integerValue) obj[key] = Number(value.integerValue);
-                else if (value.doubleValue) obj[key] = Number(value.doubleValue);
-                else if (value.booleanValue) obj[key] = value.booleanValue;
-                else if (value.timestampValue) obj[key] = value.timestampValue;
+                if ('stringValue' in value) obj[key] = value.stringValue;
+                else if ('integerValue' in value) obj[key] = Number(value.integerValue);
+                else if ('doubleValue' in value) obj[key] = Number(value.doubleValue);
+                else if ('booleanValue' in value) obj[key] = value.booleanValue;
+                else if ('timestampValue' in value) obj[key] = value.timestampValue;
                 else if (value.mapValue) {
                     // Handle nested map (e.g. userReview)
                     const mapData: any = {};
                     const mapFields = value.mapValue.fields || {};
                     for (const [mk, mv] of Object.entries(mapFields) as [string, any][]) {
-                        if (mv.stringValue) mapData[mk] = mv.stringValue;
-                        if (mv.integerValue) mapData[mk] = Number(mv.integerValue);
-                        if (mv.doubleValue) mapData[mk] = Number(mv.doubleValue);
+                        if ('stringValue' in mv) mapData[mk] = mv.stringValue;
+                        if ('integerValue' in mv) mapData[mk] = Number(mv.integerValue);
+                        if ('doubleValue' in mv) mapData[mk] = Number(mv.doubleValue);
                         if (mv.arrayValue) mapData[mk] = (mv.arrayValue.values || []).map((v: any) => v.stringValue);
                     }
                     obj[key] = mapData;
