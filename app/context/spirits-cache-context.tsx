@@ -1,8 +1,6 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-// 상대 경로를 사용하여 컴파일 오류 해결
-import { getSpiritsAction, getSpiritsSearchIndex } from '../actions/spirits';
 import { Spirit, SpiritSearchIndex } from '@/lib/db/schema';
 
 interface SpiritsCacheContextType {
@@ -31,27 +29,39 @@ export const SpiritsCacheProvider: React.FC<{ children: React.ReactNode }> = ({ 
     console.log('[SpiritsCache] 🔄 데이터 로딩 시작...');
 
     try {
-      // 1. 서버에서 데이터 가져오기 (병렬 처리)
-      // 메인 화면 가시성 확보를 위해 isPublished: true 조건을 확실히 부여
-      const [indexResult, masterResult] = await Promise.all([
-        getSpiritsSearchIndex(),
-        getSpiritsAction({ isPublished: true, limit: 100 })
-      ]);
+      // API Route를 통해 데이터 가져오기 (cache-busting timestamp 포함)
+      const timestamp = Date.now();
+      const response = await fetch(`/api/spirits?t=${timestamp}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-      // 데이터 정합성 체크 후 상태 업데이트
-      if (Array.isArray(indexResult)) {
-        setSearchIndex(indexResult);
-        console.log(`[SpiritsCache] ✅ 검색 인덱스 로드 완료: ${indexResult.length}개`);
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
       }
 
-      if (Array.isArray(masterResult)) {
-        setPublishedSpirits(masterResult);
-        console.log(`[SpiritsCache] ✅ 마스터 데이터 로드 완료: ${masterResult.length}개`);
+      const data = await response.json();
+
+      // 데이터 정합성 체크 후 상태 업데이트
+      if (Array.isArray(data.searchIndex)) {
+        setSearchIndex(data.searchIndex);
+        console.log(`[SpiritsCache] ✅ 검색 인덱스 로드 완료: ${data.searchIndex.length}개`);
+      }
+
+      if (Array.isArray(data.publishedSpirits)) {
+        setPublishedSpirits(data.publishedSpirits);
+        console.log(`[SpiritsCache] ✅ 마스터 데이터 로드 완료: ${data.publishedSpirits.length}개`);
       }
 
     } catch (error) {
       console.error('[SpiritsCache] ❌ 데이터 로드 중 치명적 오류:', error);
+      // 오류 발생 시 빈 배열로 설정하여 UI가 정상 작동하도록 함
+      setSearchIndex([]);
+      setPublishedSpirits([]);
     } finally {
+      // 항상 isLoading을 false로 설정하여 무한 로딩 방지
       setIsLoading(false);
       setIsRefreshing(false);
     }
