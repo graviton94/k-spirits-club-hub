@@ -49,11 +49,29 @@ export default function ReviewsPage() {
     
     setIsLoading(true);
     try {
-      const cabinetData = await getUserCabinet(user.uid) as CabinetItem[];
-      
-      // Filter only items with reviews
-      const withReviews = cabinetData.filter((item) => item.userReview);
-      setSpirits(withReviews as SpiritWithReview[]);
+      // Fetch reviews from public reviews collection
+      const response = await fetch(`/api/reviews?userId=${user.uid}`);
+      if (response.ok) {
+        const data = await response.json();
+        
+        // Map reviews to spirit format for display
+        const reviewSpirits = data.reviews.map((review: any) => ({
+          id: review.spiritId,
+          name: review.spiritName || 'Unknown Spirit',
+          category: 'Unknown', // We don't store category in reviews
+          imageUrl: undefined, // Will use fallback
+          userReview: {
+            ratingOverall: review.rating,
+            comment: review.content || review.notes,
+            createdAt: review.createdAt,
+            ratingN: review.ratingN || review.noseRating,
+            ratingP: review.ratingP || review.palateRating,
+            ratingF: review.ratingF || review.finishRating
+          }
+        }));
+        
+        setSpirits(reviewSpirits);
+      }
     } catch (error) {
       console.error('Failed to load reviews:', error);
     } finally {

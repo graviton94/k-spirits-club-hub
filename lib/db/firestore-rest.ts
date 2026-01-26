@@ -362,6 +362,7 @@ export const cabinetDb = {
 
         if (res.status === 404) return []; // Collection doesn't exist yet
         if (!res.ok) {
+            console.error(`Failed to fetch cabinet for user ${userId}: ${res.status} ${res.statusText}`);
             return [];
         }
 
@@ -510,6 +511,27 @@ export const reviewsDb = {
         return json.documents
             .map((doc: any) => parseFirestoreFields(doc.fields || {}))
             .filter((review: any) => review.spiritId === spiritId);
+    },
+
+    async getAllForUser(userId: string): Promise<any[]> {
+        const token = await getServiceAccountToken();
+        const reviewsPath = getAppPath().reviews;
+        const url = `${BASE_URL}/${reviewsPath}`;
+
+        const res = await fetch(url, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (res.status === 404) return [];
+        if (!res.ok) return [];
+
+        const json = await res.json();
+        if (!json.documents) return [];
+
+        // Filter for this user's reviews
+        return json.documents
+            .map((doc: any) => parseFirestoreFields(doc.fields || {}))
+            .filter((review: any) => review.userId === userId);
     }
 };
 
