@@ -12,6 +12,7 @@ import { useAuth } from "@/app/context/auth-context";
 import { addToCabinet } from "@/app/actions/cabinet";
 import ReviewModal from "@/components/cabinet/ReviewModal";
 import { UserReview } from "@/lib/utils/flavor-engine";
+import { toFlavorSpirit, triggerLoginModal } from "@/lib/utils/spirit-adapters";
 
 import { Spirit } from "@/lib/db/schema";
 import { getTagStyle } from "@/lib/constants/tag-styles";
@@ -31,8 +32,7 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
 
     const handleAddToCabinet = () => {
         if (!user) {
-            const loginButton = document.querySelector('[aria-label="Login"]') as HTMLElement;
-            if (loginButton) loginButton.click();
+            triggerLoginModal();
             return;
         }
         setShowReviewModal(true);
@@ -58,8 +58,7 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
 
     const handleAddToWishlist = async () => {
         if (!user) {
-            const loginButton = document.querySelector('[aria-label="Login"]') as HTMLElement;
-            if (loginButton) loginButton.click();
+            triggerLoginModal();
             return;
         }
         
@@ -225,11 +224,7 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
 
             {/* Review Modal */}
             <ReviewModal
-                spirit={{
-                    ...spirit,
-                    isWishlist: false,
-                    userReview: undefined
-                } as any}
+                spirit={toFlavorSpirit(spirit)}
                 isOpen={showReviewModal}
                 onClose={() => setShowReviewModal(false)}
                 onSubmit={handleReviewSubmit}

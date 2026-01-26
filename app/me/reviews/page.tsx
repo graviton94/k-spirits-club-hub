@@ -8,6 +8,7 @@ import { getCategoryFallbackImage } from '@/lib/utils/image-fallback';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Trash2 } from 'lucide-react';
 import Link from 'next/link';
+import { CabinetItem } from '@/lib/utils/spirit-adapters';
 
 interface SpiritWithReview {
   id: string;
@@ -48,11 +49,11 @@ export default function ReviewsPage() {
     
     setIsLoading(true);
     try {
-      const cabinetData = await getUserCabinet(user.uid);
+      const cabinetData = await getUserCabinet(user.uid) as CabinetItem[];
       
       // Filter only items with reviews
-      const withReviews = cabinetData.filter((item: any) => item.userReview);
-      setSpirits(withReviews);
+      const withReviews = cabinetData.filter((item) => item.userReview);
+      setSpirits(withReviews as SpiritWithReview[]);
     } catch (error) {
       console.error('Failed to load reviews:', error);
     } finally {

@@ -12,6 +12,7 @@ import { addToCabinet, removeFromCabinet, checkCabinetStatus } from "@/app/actio
 import CabinetSelectionModal from "./CabinetSelectionModal";
 import ReviewModal from "@/components/cabinet/ReviewModal";
 import { UserReview } from "@/lib/utils/flavor-engine";
+import { toFlavorSpirit, triggerLoginModal } from "@/lib/utils/spirit-adapters";
 
 interface SpiritCardProps {
   spirit: Spirit;
@@ -40,9 +41,7 @@ export function SpiritCard({ spirit, onClick, onCabinetChange }: SpiritCardProps
     e.preventDefault();
 
     if (!user) {
-      // Trigger login modal
-      const loginButton = document.querySelector('[aria-label="Login"]') as HTMLElement;
-      if (loginButton) loginButton.click();
+      triggerLoginModal();
       return;
     }
 
@@ -238,11 +237,7 @@ export function SpiritCard({ spirit, onClick, onCabinetChange }: SpiritCardProps
       />
       
       <ReviewModal
-        spirit={{
-          ...spirit,
-          isWishlist: false,
-          userReview: (spirit as any).userReview
-        } as any}
+        spirit={toFlavorSpirit(spirit)}
         isOpen={showReviewModal}
         onClose={() => setShowReviewModal(false)}
         onSubmit={handleReviewSubmit}

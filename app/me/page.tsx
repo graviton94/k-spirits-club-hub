@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { generateRandomNickname } from '@/lib/utils/nickname-generator';
 import { getUserCabinet } from '@/app/actions/cabinet';
+import { CabinetItem } from '@/lib/utils/spirit-adapters';
 
 export default function MyPage() {
     const { user, role, profile, logout, loading, updateProfile, loginWithGoogle, theme, setTheme } = useAuth();
@@ -41,14 +42,14 @@ export default function MyPage() {
         
         setIsLoadingStats(true);
         try {
-            const cabinetData = await getUserCabinet(user.uid);
+            const cabinetData = await getUserCabinet(user.uid) as CabinetItem[];
             
             // Count total cabinet items (excluding wishlist)
-            const ownedSpirits = cabinetData.filter((item: any) => !item.isWishlist);
+            const ownedSpirits = cabinetData.filter((item) => !item.isWishlist);
             setCabinetCount(ownedSpirits.length);
             
             // Count items with reviews
-            const withReviews = cabinetData.filter((item: any) => item.userReview);
+            const withReviews = cabinetData.filter((item) => item.userReview);
             setReviewCount(withReviews.length);
         } catch (error) {
             console.error('Failed to load user stats:', error);
