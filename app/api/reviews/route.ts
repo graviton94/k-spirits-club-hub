@@ -1,19 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { collection, addDoc, getDocs, query, orderBy, limit, where, Timestamp } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
-import { getAppPath } from '@/lib/db/paths';
+import { reviewsDb } from '@/lib/db/firestore-rest';
 
 export const runtime = 'edge';
-
-// Helper to safely get reviews path
-function getReviewsPathSafe() {
-  try {
-    return getAppPath().reviews;
-  } catch (e) {
-    console.warn('getAppPath failed, using fallback path');
-    return `artifacts/k-spirits-club-hub/public/data/reviews`;
-  }
-}
 
 // POST /api/reviews - Create a new review
 export async function POST(request: NextRequest) {
@@ -38,24 +26,24 @@ export async function POST(request: NextRequest) {
       userId,
       userName: userName || 'Anonymous',
       rating: Number(rating),
-      noseRating: noseRating ? Number(noseRating) : Number(rating),
-      palateRating: palateRating ? Number(palateRating) : Number(rating),
-      finishRating: finishRating ? Number(finishRating) : Number(rating),
-      content,
-      nose: nose || null,
-      palate: palate || null,
-      finish: finish || null,
-      createdAt: Timestamp.now(),
-      updatedAt: Timestamp.now(),
+      ratingN: noseRating ? Number(noseRating) : Number(rating),
+      ratingP: palateRating ? Number(palateRating) : Number(rating),
+      ratingF: finishRating ? Number(finishRating) : Number(rating),
+      notes: content,
+      tagsN: nose || '',
+      tagsP: palate || '',
+      tagsF: finish || '',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
       isPublished: true
     };
 
-    const reviewsRef = collection(db, getAppPath().reviews);
-    const docRef = await addDoc(reviewsRef, reviewData);
+    // Save to public reviews using reviewsDb
+    await reviewsDb.upsert(spiritId, userId, reviewData);
 
     return NextResponse.json({
       success: true,
-      id: docRef.id,
+      id: `${spiritId}_${userId}`,
       message: 'Review created successfully'
     }, { status: 201 });
   } catch (error) {
@@ -67,44 +55,55 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// GET /api/reviews - Get recent reviews
+// GET /api/reviews - Get reviews
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const spiritId = searchParams.get('spiritId');
-    const limitCount = parseInt(searchParams.get('limit') || '10');
-
-    const reviewsRef = collection(db, getAppPath().reviews);
-    let q;
+    const userId = searchParams.get('userId');
 
     if (spiritId) {
       // Get reviews for a specific spirit
-      q = query(
-        reviewsRef,
-        where('spiritId', '==', spiritId),
-        where('isPublished', '==', true),
-        orderBy('createdAt', 'desc'),
-        limit(limitCount)
-      );
-    } else {
-      // Get recent reviews across all spirits
-      q = query(
-        reviewsRef,
-        where('isPublished', '==', true),
-        orderBy('createdAt', 'desc'),
-        limit(limitCount)
-      );
+      const reviews = await reviewsDb.getAllForSpirit(spiritId);
+      
+      return NextResponse.json({ 
+        reviews: reviews.map(r => ({
+          id: `${r.spiritId}_${r.userId}`,
+          ...r,
+          // Map REST API fields to expected frontend fields
+          noseRating: r.ratingN,
+          palateRating: r.ratingP,
+          finishRating: r.ratingF,
+          content: r.notes,
+          nose: r.tagsN,
+          palate: r.tagsP,
+          finish: r.tagsF
+        }))
+      }, { status: 200 });
     }
 
-    const querySnapshot = await getDocs(q);
-    const reviews = querySnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-      createdAt: doc.data().createdAt?.toDate?.()?.toISOString() || new Date().toISOString(),
-      updatedAt: doc.data().updatedAt?.toDate?.()?.toISOString() || new Date().toISOString(),
-    }));
+    if (userId) {
+      // Get reviews by a specific user
+      const reviews = await reviewsDb.getAllForUser(userId);
+      
+      return NextResponse.json({ 
+        reviews: reviews.map(r => ({
+          id: `${r.spiritId}_${r.userId}`,
+          ...r,
+          // Map REST API fields to expected frontend fields
+          noseRating: r.ratingN,
+          palateRating: r.ratingP,
+          finishRating: r.ratingF,
+          content: r.notes,
+          nose: r.tagsN,
+          palate: r.tagsP,
+          finish: r.tagsF
+        }))
+      }, { status: 200 });
+    }
 
-    return NextResponse.json({ reviews }, { status: 200 });
+    // If no filters, return empty array (could implement getAll if needed)
+    return NextResponse.json({ reviews: [] }, { status: 200 });
   } catch (error) {
     console.error('Error fetching reviews:', error);
     return NextResponse.json({

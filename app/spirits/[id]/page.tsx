@@ -65,8 +65,29 @@ export default function SpiritDetailPage({
     notFound();
   }
 
-  // TODO: Implement reviews feature in Firestore
-  const reviews: any[] = [];
+  // Fetch reviews for this spirit
+  const [reviews, setReviews] = useState<any[]>([]);
+  const [isLoadingReviews, setIsLoadingReviews] = useState(true);
+
+  useEffect(() => {
+    if (!id) return;
+
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch(`/api/reviews?spiritId=${id}`);
+        if (response.ok) {
+          const data = await response.json();
+          setReviews(data.reviews || []);
+        }
+      } catch (error) {
+        console.error('Failed to fetch reviews:', error);
+      } finally {
+        setIsLoadingReviews(false);
+      }
+    };
+
+    fetchReviews();
+  }, [id]);
 
   return <SpiritDetailClient spirit={spirit} reviews={reviews} />;
 }
