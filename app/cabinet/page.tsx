@@ -19,11 +19,11 @@ type ViewMode = 'cellar' | 'flavor';
 export default function CabinetPage() {
   // View state
   const [viewMode, setViewMode] = useState<ViewMode>('cellar');
-  
+
   // Cabinet state
   const [spirits, setSpirits] = useState<Spirit[]>([]);
   const [isLoadingCabinet, setIsLoadingCabinet] = useState(false);
-  
+
   // Modal state
   const [selectedSpirit, setSelectedSpirit] = useState<Spirit | null>(null);
   const [reviewModalOpen, setReviewModalOpen] = useState(false);
@@ -44,7 +44,7 @@ export default function CabinetPage() {
     setIsLoadingCabinet(true);
     try {
       const cabinetData = await getUserCabinet(user.uid);
-      
+
       // Enrich with search index data for thumbnails
       const enrichedData = cabinetData.map((item: any) => {
         const indexItem = searchIndex.find(s => s.i === item.id);
@@ -54,7 +54,7 @@ export default function CabinetPage() {
           imageUrl: item.imageUrl || indexItem?.t,
         };
       });
-      
+
       setSpirits(enrichedData as Spirit[]);
     } catch (error) {
       console.error('Failed to fetch cabinet:', error);
@@ -82,7 +82,7 @@ export default function CabinetPage() {
       });
 
       // Update local state
-      setSpirits(prev => 
+      setSpirits(prev =>
         prev.map(s => s.id === reviewTarget.id ? { ...s, userReview: review } : s)
       );
 
@@ -149,16 +149,16 @@ export default function CabinetPage() {
             🥃
           </motion.div>
           <h2 className="text-3xl font-black mb-4 bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">
-            술장이 비어있어 간이 심심해하고 있습니다
+            술장이 잠들어 있어요.💤
           </h2>
           <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg">
-            술을 채우러 가볼까요?
+            한 번 깨우러 가볼까요?
           </p>
           <Link
             href="/explore"
             className="inline-block px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-black font-bold rounded-xl transition-all shadow-lg hover:shadow-amber-900/50 active:scale-[0.98]"
           >
-            탐색하러 가기 →
+            탐색하러 가기
           </Link>
         </motion.div>
       </div>
@@ -305,7 +305,7 @@ function CellarView({
       <section className="mb-16">
         <div className="relative bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 rounded-3xl p-10 shadow-2xl border border-slate-200 dark:border-slate-700">
           <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] bg-[radial-gradient(circle_at_50%_50%,rgba(0,0,0,0.1),transparent_50%)] pointer-events-none rounded-3xl" />
-          
+
           <div className="relative">
             <motion.div
               initial="hidden"
@@ -323,7 +323,7 @@ function CellarView({
                   onInfoClick={onInfoClick}
                 />
               ))}
-              
+
               {/* Add Button */}
               <AddSpiritCard onClick={onAddClick} />
             </motion.div>
