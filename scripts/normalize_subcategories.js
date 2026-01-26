@@ -188,10 +188,68 @@ const skipValues = new Set([
     "undefined", "undefined", "(제외)", ""
 ]);
 
-async function normalizeSubcategories() {
+// Normalization Logic Helper
+function getNormalizedSubcategory(originalSub) {
+    if (!originalSub) return originalSub;
+    const trimmed = String(originalSub).trim();
+    if (skipValues.has(trimmed) || skipValues.has(originalSub)) return originalSub;
+
+    if (subcategoryMapping.hasOwnProperty(trimmed)) {
+        return subcategoryMapping[trimmed];
+    }
+    return originalSub;
+}
+
+// File Processing Mode
+async function normalizeLocalFile(filePath) {
+    const fs = require('fs');
     try {
-        console.log("Starting Subcategory Normalization...");
-        const spiritsRef = db.collection('spirits');
+        console.log(`📂 Processing local file: ${filePath}`);
+        if (!fs.existsSync(filePath)) {
+            console.error("File not found.");
+            process.exit(1);
+        }
+
+        const rawData = fs.readFileSync(filePath, 'utf-8');
+        let items = JSON.parse(rawData);
+        if (!Array.isArray(items)) {
+            console.error("Input file must be a JSON array.");
+            process.exit(1);
+        }
+
+        let updatedCount = 0;
+        items = items.map(item => {
+            const original = item.subcategory;
+            const normalized = getNormalizedSubcategory(original);
+            if (original !== normalized) {
+                item.subcategory = normalized;
+                item.normalizedAt = new Date().toISOString();
+                updatedCount++;
+            }
+            return item;
+        });
+
+        fs.writeFileSync(filePath, JSON.stringify(items, null, 2), 'utf-8');
+        console.log(`✅ Normalized ${updatedCount} items in local file.`);
+        console.log("Subcategory Normalization Complete (Local).");
+    } catch (error) {
+        console.error("Error processing local file:", error);
+        process.exit(1);
+    }
+}
+
+// Firestore Processing Mode
+// Firestore Processing Mode
+async function normalizeFirestore() {
+    try {
+        console.log("Starting Subcategory Normalization (Firestore)...");
+
+        const APP_ID = process.env.NEXT_PUBLIC_APP_ID || 'k-spirits-club-hub';
+        const collectionPath = `artifacts/${APP_ID}/public/data/spirits`;
+        const spiritsRef = db.collection(collectionPath);
+
+        console.log(`Target Collection: ${collectionPath}`);
+
         const snapshot = await spiritsRef.get();
 
         let batch = db.batch();
@@ -237,7 +295,7 @@ async function normalizeSubcategories() {
             console.log(`Committed final batch of ${ops} updates.`);
         }
 
-        console.log("Subcategory Normalization Complete.");
+        console.log("Subcategory Normalization Complete (Firestore).");
         console.log(`Total documents updated: ${updatedCount}`);
 
     } catch (error) {
@@ -246,4 +304,14 @@ async function normalizeSubcategories() {
     }
 }
 
-normalizeSubcategories();
+// Main Execution Entry Point
+const args = process.argv.slice(2);
+const fileFlagIndex = args.indexOf('--file');
+
+if (fileFlagIndex !== -1 && args[fileFlagIndex + 1]) {
+    // Local File Mode
+    normalizeLocalFile(args[fileFlagIndex + 1]);
+} else {
+    // Default Firestore Mode
+    normalizeFirestore();
+}
