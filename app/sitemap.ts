@@ -49,13 +49,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // Generate dynamic routes for spirit detail pages
     const spiritRoutes: MetadataRoute.Sitemap = publishedSpirits
-      .filter(spirit => spirit.id) // Ensure spirit has valid ID
-      .map(spirit => ({
-        url: `${baseUrl}/spirits/${spirit.id}`,
-        lastModified: spirit.updatedAt ? new Date(spirit.updatedAt) : new Date(),
-        changeFrequency: 'weekly' as const,
-        priority: 0.8,
-      }));
+      .filter(spirit => spirit.id && typeof spirit.id === 'string' && spirit.id.trim().length > 0)
+      .map(spirit => {
+        // Safely parse lastModified date
+        let lastModified = new Date();
+        if (spirit.updatedAt) {
+          const parsedDate = new Date(spirit.updatedAt);
+          if (!isNaN(parsedDate.getTime())) {
+            lastModified = parsedDate;
+          }
+        }
+        
+        return {
+          url: `${baseUrl}/spirits/${spirit.id}`,
+          lastModified,
+          changeFrequency: 'weekly' as const,
+          priority: 0.8,
+        };
+      });
 
     console.log(`[Sitemap] Generated ${spiritRoutes.length} spirit routes`);
 

@@ -1,5 +1,8 @@
 import { MetadataRoute } from 'next';
 
+// Paths that should not be indexed by search engines
+const DISALLOWED_PATHS = ['/admin', '/api'];
+
 /**
  * Robots.txt Configuration
  * Defines crawling rules for search engine bots
@@ -13,7 +16,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/admin', '/api'],
+        disallow: DISALLOWED_PATHS,
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
