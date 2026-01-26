@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { collection, addDoc, getDocs, query, orderBy, limit, where, Timestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import { getAppPath } from '@/lib/db/paths';
 
 export const runtime = 'edge';
 
@@ -39,17 +40,17 @@ export async function POST(request: NextRequest) {
       isPublished: true
     };
 
-    const reviewsRef = collection(db, 'reviews');
+    const reviewsRef = collection(db, getAppPath().reviews);
     const docRef = await addDoc(reviewsRef, reviewData);
 
-    return NextResponse.json({ 
-      success: true, 
+    return NextResponse.json({
+      success: true,
       id: docRef.id,
-      message: 'Review created successfully' 
+      message: 'Review created successfully'
     }, { status: 201 });
   } catch (error) {
     console.error('Error creating review:', error);
-    return NextResponse.json({ 
+    return NextResponse.json({
       error: 'Failed to create review',
       details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 });
@@ -63,7 +64,7 @@ export async function GET(request: NextRequest) {
     const spiritId = searchParams.get('spiritId');
     const limitCount = parseInt(searchParams.get('limit') || '10');
 
-    const reviewsRef = collection(db, 'reviews');
+    const reviewsRef = collection(db, getAppPath().reviews);
     let q;
 
     if (spiritId) {
@@ -96,7 +97,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ reviews }, { status: 200 });
   } catch (error) {
     console.error('Error fetching reviews:', error);
-    return NextResponse.json({ 
+    return NextResponse.json({
       error: 'Failed to fetch reviews',
       details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 });

@@ -177,10 +177,68 @@ const skipValues = new Set([
     "undefined", "N/A", "(공백)", "", "Unknown", "미상"
 ]);
 
-async function normalizeRegions() {
+// Normalization Logic Helper
+function getNormalizedRegion(originalRegion) {
+    if (!originalRegion) return originalRegion;
+    const trimmed = String(originalRegion).trim();
+    if (skipValues.has(trimmed) || skipValues.has(originalRegion)) return originalRegion;
+
+    if (regionMapping.hasOwnProperty(trimmed)) {
+        return regionMapping[trimmed];
+    }
+    return originalRegion;
+}
+
+// File Processing Mode
+async function normalizeLocalFile(filePath) {
+    const fs = require('fs');
     try {
-        console.log("Starting Region Normalization...");
-        const spiritsRef = db.collection('spirits');
+        console.log(`📂 Processing local file: ${filePath}`);
+        if (!fs.existsSync(filePath)) {
+            console.error("File not found.");
+            process.exit(1);
+        }
+
+        const rawData = fs.readFileSync(filePath, 'utf-8');
+        let items = JSON.parse(rawData);
+        if (!Array.isArray(items)) {
+            console.error("Input file must be a JSON array.");
+            process.exit(1);
+        }
+
+        let updatedCount = 0;
+        items = items.map(item => {
+            const original = item.region;
+            const normalized = getNormalizedRegion(original);
+            if (original !== normalized) {
+                item.region = normalized;
+                item.normalizedAt = new Date().toISOString();
+                updatedCount++;
+            }
+            return item;
+        });
+
+        fs.writeFileSync(filePath, JSON.stringify(items, null, 2), 'utf-8');
+        console.log(`✅ Normalized ${updatedCount} items in local file.`);
+        console.log("Region Normalization Complete (Local).");
+    } catch (error) {
+        console.error("Error processing local file:", error);
+        process.exit(1);
+    }
+}
+
+// Firestore Processing Mode
+// Firestore Processing Mode
+async function normalizeFirestore() {
+    try {
+        console.log("Starting Region Normalization (Firestore)...");
+
+        const APP_ID = process.env.NEXT_PUBLIC_APP_ID || 'k-spirits-club-hub';
+        const collectionPath = `artifacts/${APP_ID}/public/data/spirits`;
+        const spiritsRef = db.collection(collectionPath);
+
+        console.log(`Target Collection: ${collectionPath}`);
+
         const snapshot = await spiritsRef.get();
 
         let batch = db.batch();
@@ -226,7 +284,7 @@ async function normalizeRegions() {
             console.log(`Committed final batch of ${ops} updates.`);
         }
 
-        console.log("Region Normalization Complete.");
+        console.log("Region Normalization Complete (Firestore).");
         console.log(`Total documents updated: ${updatedCount}`);
 
     } catch (error) {
@@ -235,4 +293,14 @@ async function normalizeRegions() {
     }
 }
 
-normalizeRegions();
+// Main Execution Entry Point
+const args = process.argv.slice(2);
+const fileFlagIndex = args.indexOf('--file');
+
+if (fileFlagIndex !== -1 && args[fileFlagIndex + 1]) {
+    // Local File Mode
+    normalizeLocalFile(args[fileFlagIndex + 1]);
+} else {
+    // Default Firestore Mode
+    normalizeFirestore();
+}

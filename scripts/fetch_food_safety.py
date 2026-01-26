@@ -7,9 +7,12 @@ from datetime import datetime
 
 from pathlib import Path
 
-# .env 파일 경로 명시 (스크립트 위치 기준 상위 폴더의 .env)
+# .env 및 .env.local 파일 로드
 env_path = Path(__file__).parent.parent / '.env'
+env_local_path = Path(__file__).parent.parent / '.env.local'
+
 load_dotenv(dotenv_path=env_path)
+load_dotenv(dotenv_path=env_local_path, override=True) # .env.local이 우선순위 높음
 
 # API KEY 확인 (두 가지 명명 규칙 지원)
 API_KEY = os.getenv('FOOD_SAFETY_KOREA_API_KEY') or os.getenv('FOOD_SAFETY_API_KEY')

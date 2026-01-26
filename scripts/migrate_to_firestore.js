@@ -15,6 +15,9 @@ const privateKey = process.env.FIREBASE_PRIVATE_KEY
     ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n')
     : undefined;
 
+const APP_ID = process.env.NEXT_PUBLIC_APP_ID || 'k-spirits-club-hub';
+const collectionPath = 'spirits';
+
 if (!admin.apps.length) {
     admin.initializeApp({
         credential: admin.credential.cert({
@@ -118,7 +121,8 @@ async function migrate() {
     let currentBatchIds = [];
 
     for (const spirit of spirits) {
-        const docRef = db.collection('spirits').doc(spirit.id);
+        // Use the new nested path
+        const docRef = db.collection(collectionPath).doc(spirit.id);
 
         // Convert Dates
         const prepareData = {

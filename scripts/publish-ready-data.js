@@ -42,9 +42,12 @@ async function bulkPublishReadySpirits() {
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
 
     try {
+        const APP_ID = process.env.NEXT_PUBLIC_APP_ID || 'k-spirits-club-hub';
+        const collectionPath = 'spirits';
+
         // Step 1: Get all spirits with status READY_FOR_CONFIRM
         console.log('\n📊 Querying Firestore for READY_FOR_CONFIRM spirits...');
-        const spiritsRef = db.collection('spirits');
+        const spiritsRef = db.collection(collectionPath);
         const snapshot = await spiritsRef
             .where('status', '==', 'READY_FOR_CONFIRM')
             .get();
@@ -68,7 +71,7 @@ async function bulkPublishReadySpirits() {
         for (const doc of snapshot.docs) {
             const spiritRef = spiritsRef.doc(doc.id);
             const spiritData = doc.data();
-            
+
             // Update: set isPublished = true and status = PUBLISHED
             currentBatch.update(spiritRef, {
                 isPublished: true,
@@ -90,7 +93,7 @@ async function bulkPublishReadySpirits() {
                 await currentBatch.commit();
                 successCount += batchCount;
                 console.log(`  ✅ Batch committed successfully (${successCount}/${totalSpirits})\n`);
-                
+
                 // Start new batch
                 currentBatch = db.batch();
                 batchCount = 0;

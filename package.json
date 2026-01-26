@@ -9,7 +9,9 @@
     "pages:build": "npx @cloudflare/next-on-pages",
     "start": "next start",
     "lint": "next lint",
-    "publish-ready-spirits": "npx tsx scripts/publish-ready-data.ts"
+    "publish-ready-spirits": "npx tsx scripts/publish-ready-data.ts",
+    "pipe": "python scripts/run_pipeline.py",
+    "fetch": "python scripts/fetch_food_safety.py"
   },
   "keywords": [],
   "author": "",

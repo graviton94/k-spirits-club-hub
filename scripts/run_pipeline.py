@@ -130,10 +130,19 @@ def main():
             print("⚠️ Skipping batch due to error.")
             continue
 
+
         # 3. Image Search
         if not run_step("Image Search (Google)", f'python "{scripts_dir / "fetch_images_advanced.py"}" --input "{f_enriched}" --output "{f_ready}"'):
              print("⚠️ Skipping batch due to error.")
              continue
+
+        # 3.1 Normalize Regions
+        if not run_step("Normalize Regions", f'node "{scripts_dir / "normalize_regions.js"}" --file "{f_ready}"'):
+             print("⚠️ Warning: Region Normalization failed, but continuing.")
+        
+        # 3.2 Normalize Subcategories
+        if not run_step("Normalize Subcategories", f'node "{scripts_dir / "normalize_subcategories.js"}" --file "{f_ready}"'):
+             print("⚠️ Warning: Subcategory Normalization failed, but continuing.")
 
         # 4. Upload OR Save Locally
         if args.skip_upload:
