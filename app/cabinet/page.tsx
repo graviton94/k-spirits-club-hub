@@ -16,6 +16,8 @@ import { getUserCabinet, addToCabinet } from "@/app/actions/cabinet";
 
 type ViewMode = 'cellar' | 'flavor';
 
+export const runtime = 'edge';
+
 export default function CabinetPage() {
   // View state
   const [viewMode, setViewMode] = useState<ViewMode>('cellar');

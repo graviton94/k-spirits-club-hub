@@ -8,6 +8,8 @@ import { generateRandomNickname } from '@/lib/utils/nickname-generator';
 import { getUserCabinet } from '@/app/actions/cabinet';
 import { CabinetItem } from '@/lib/utils/spirit-adapters';
 
+export const runtime = 'edge';
+
 export default function MyPage() {
     const { user, role, profile, logout, loading, updateProfile, loginWithGoogle, theme, setTheme } = useAuth();
     const router = useRouter();
@@ -39,15 +41,15 @@ export default function MyPage() {
 
     const loadUserStats = async () => {
         if (!user) return;
-        
+
         setIsLoadingStats(true);
         try {
             const cabinetData = await getUserCabinet(user.uid) as CabinetItem[];
-            
+
             // Count total cabinet items (excluding wishlist)
             const ownedSpirits = cabinetData.filter((item) => !item.isWishlist);
             setCabinetCount(ownedSpirits.length);
-            
+
             // Count items with reviews - check for personalNotes or userReview
             const withReviews = cabinetData.filter((item) => {
                 // Check both personalNotes (new field) and userReview (legacy field)
