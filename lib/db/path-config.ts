@@ -14,12 +14,12 @@ export const APP_ID = process.env.NEXT_PUBLIC_APP_ID || 'k-spirits-club-hub';
 export type PathType = 'spirits' | 'reviews' | 'userCabinet';
 
 /**
- * Get the Firestore path for a given path type
+ * Get the Firestore path for a given path type (legacy function-based API)
  * @param type - The type of path to retrieve
  * @param params - Optional parameters (userId for userCabinet)
  * @returns The full Firestore path
  */
-export function getAppPath(type: PathType, params?: { userId?: string }): string {
+export function getAppPathUtil(type: PathType, params?: { userId?: string }): string {
   switch (type) {
     case 'spirits':
       // Root collection
@@ -42,6 +42,18 @@ export function getAppPath(type: PathType, params?: { userId?: string }): string
 }
 
 /**
+ * Get Firestore paths with object-based API (new required format)
+ * This is the single source of truth for path configuration
+ * @param appId - Application ID (defaults to APP_ID constant)
+ * @returns Object with path getters
+ */
+export const getAppPath = (appId: string = APP_ID) => ({
+  spirits: `spirits`, // Root collection
+  reviews: `artifacts/${appId}/public/data/reviews`,
+  userCabinet: (userId: string) => `artifacts/${appId}/users/${userId}/cabinet`
+});
+
+/**
  * Get the full document path including document ID
  * @param type - The type of path to retrieve
  * @param params - Parameters including document ID
@@ -51,6 +63,6 @@ export function getDocumentPath(
   type: PathType,
   params: { userId?: string; documentId: string }
 ): string {
-  const basePath = getAppPath(type, params);
+  const basePath = getAppPathUtil(type, params);
   return `${basePath}/${params.documentId}`;
 }
