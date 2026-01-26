@@ -198,7 +198,7 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit }: Revie
                     <div className="p-4 sm:p-6 bg-secondary border-b border-border flex items-center gap-4 shrink-0">
                         <div className="w-16 h-16 rounded-xl overflow-hidden shadow-md bg-muted border border-border">
                             <img
-                                src={spirit.imageUrl || getCategoryFallbackImage(spirit.category)}
+                                src={(spirit.imageUrl && spirit.imageUrl.trim()) ? spirit.imageUrl : getCategoryFallbackImage(spirit.category)}
                                 alt={spirit.name}
                                 className="w-full h-full object-cover"
                                 onError={(e) => {

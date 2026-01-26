@@ -85,7 +85,7 @@ export default function SearchSpiritModal({ isOpen, onClose, onAdd, existingIds 
                                     <div key={spirit.id} className="flex items-center gap-3 p-3 hover:bg-secondary rounded-xl transition-colors">
                                         <div className="w-12 h-12 rounded-lg overflow-hidden bg-muted shrink-0 border border-border">
                                             <img
-                                                src={spirit.imageUrl || getCategoryFallbackImage(spirit.category)}
+                                                src={(spirit.imageUrl && spirit.imageUrl.trim()) ? spirit.imageUrl : getCategoryFallbackImage(spirit.category)}
                                                 alt={spirit.name}
                                                 className="w-full h-full object-cover"
                                                 onError={(e) => {

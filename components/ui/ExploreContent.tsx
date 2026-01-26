@@ -94,11 +94,11 @@ export default function ExploreContent() {
               setSelectedCategory(e.target.value);
               setSelectedSubCategory(''); // Reset subcategory on main category change
             }}
-            className="px-4 py-3 rounded-2xl bg-background border border-border outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 min-w-[140px] text-foreground"
+            className="px-4 py-3 pr-10 rounded-2xl bg-background border border-border outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 min-w-[140px] text-foreground appearance-none bg-no-repeat bg-[length:1.5em] bg-[right_0.5rem_center] [background-image:url('data:image/svg+xml;charset=UTF-8,%3csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3cpath%20d%3D%22M7%207l3-3%203%203m0%206l-3%203-3-3%22%20stroke%3D%22%239ca3af%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3c%2fsvg%3E')] dark:[background-image:url('data:image/svg+xml;charset=UTF-8,%3csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3cpath%20d%3D%22M7%207l3-3%203%203m0%206l-3%203-3-3%22%20stroke%3D%22%239ca3af%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3c%2fsvg%3E')]"
           >
-            <option value="">모든 주종</option>
+            <option value="" className="bg-white dark:bg-slate-900 text-foreground">모든 주종</option>
             {Object.keys(metadata.categories).map((cat) => (
-              <option key={cat} value={cat}>{cat}</option>
+              <option key={cat} value={cat} className="bg-white dark:bg-slate-900 text-foreground">{cat}</option>
             ))}
           </select>
 
@@ -107,11 +107,11 @@ export default function ExploreContent() {
             value={selectedSubCategory}
             onChange={(e) => setSelectedSubCategory(e.target.value)}
             disabled={!selectedCategory || availableSubcategories.length === 0}
-            className="px-4 py-3 rounded-2xl bg-background border border-border outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 min-w-[140px] disabled:opacity-50 disabled:bg-muted text-foreground"
+            className="px-4 py-3 pr-10 rounded-2xl bg-background border border-border outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 min-w-[140px] disabled:opacity-50 disabled:bg-muted text-foreground appearance-none bg-no-repeat bg-[length:1.5em] bg-[right_0.5rem_center] [background-image:url('data:image/svg+xml;charset=UTF-8,%3csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3cpath%20d%3D%22M7%207l3-3%203%203m0%206l-3%203-3-3%22%20stroke%3D%22%239ca3af%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3c%2fsvg%3E')] dark:[background-image:url('data:image/svg+xml;charset=UTF-8,%3csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3cpath%20d%3D%22M7%207l3-3%203%203m0%206l-3%203-3-3%22%20stroke%3D%22%239ca3af%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3c%2fsvg%3E')]"
           >
-            <option value="">상세 분류</option>
+            <option value="" className="bg-white dark:bg-slate-900 text-foreground">상세 분류</option>
             {availableSubcategories.map(sub => (
-              <option key={sub} value={sub}>{sub}</option>
+              <option key={sub} value={sub} className="bg-white dark:bg-slate-900 text-foreground">{sub}</option>
             ))}
           </select>
 
