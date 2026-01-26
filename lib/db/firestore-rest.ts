@@ -377,9 +377,13 @@ export const cabinetDb = {
         const cabinetPath = getAppPath().userCabinet(userId);
         const url = `${BASE_URL}/${cabinetPath}/${spiritId}`;
 
+        // Construct Update Mask dynamically based on data keys
+        const fieldPaths = Object.keys(data).filter(k => k !== 'id').map(k => `updateMask.fieldPaths=${k}`).join('&');
+        const patchUrl = `${url}?${fieldPaths}`;
+
         const body = toFirestore(data);
 
-        const res = await fetch(url, {
+        const res = await fetch(patchUrl, {
             method: 'PATCH',
             headers: { Authorization: `Bearer ${token}` },
             body: JSON.stringify(body)
@@ -426,9 +430,13 @@ export const reviewsDb = {
         const reviewsPath = getAppPath().reviews;
         const url = `${BASE_URL}/${reviewsPath}/${reviewId}`;
 
+        // Construct Update Mask dynamically based on data keys
+        const fieldPaths = Object.keys(data).filter(k => k !== 'id').map(k => `updateMask.fieldPaths=${k}`).join('&');
+        const patchUrl = `${url}?${fieldPaths}`;
+
         const body = toFirestore(data);
 
-        const res = await fetch(url, {
+        const res = await fetch(patchUrl, {
             method: 'PATCH',
             headers: { Authorization: `Bearer ${token}` },
             body: JSON.stringify(body)
