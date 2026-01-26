@@ -6,13 +6,103 @@ import Link from "next/link";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import { Spirit } from "@/lib/db/schema";
 import { getTagStyle } from "@/lib/constants/tag-styles";
+import { useState, useEffect } from "react";
+import { useAuth } from "@/app/context/auth-context";
+import { addToCabinet, removeFromCabinet, checkCabinetStatus } from "@/app/actions/cabinet";
+import CabinetSelectionModal from "./CabinetSelectionModal";
+import ReviewModal from "@/components/cabinet/ReviewModal";
+import { UserReview } from "@/lib/utils/flavor-engine";
+import { toFlavorSpirit, triggerLoginModal } from "@/lib/utils/spirit-adapters";
 
 interface SpiritCardProps {
   spirit: Spirit;
   onClick?: (spirit: Spirit) => void;
+  onCabinetChange?: () => void;
 }
 
-export function SpiritCard({ spirit, onClick }: SpiritCardProps) {
+export function SpiritCard({ spirit, onClick, onCabinetChange }: SpiritCardProps) {
+  const { user } = useAuth();
+  const [isInCabinet, setIsInCabinet] = useState(false);
+  const [isToggling, setIsToggling] = useState(false);
+  const [showSelectionModal, setShowSelectionModal] = useState(false);
+  const [showReviewModal, setShowReviewModal] = useState(false);
+
+  // Check cabinet status on mount
+  useEffect(() => {
+    if (user) {
+      checkCabinetStatus(user.uid, spirit.id).then(({ isOwned, isWishlist }) => {
+        setIsInCabinet(isOwned || isWishlist);
+      });
+    }
+  }, [user, spirit.id]);
+
+  const handleHeartClick = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    if (!user) {
+      triggerLoginModal();
+      return;
+    }
+
+    // If already in cabinet, remove it
+    if (isInCabinet) {
+      setIsToggling(true);
+      try {
+        await removeFromCabinet(user.uid, spirit.id);
+        setIsInCabinet(false);
+        onCabinetChange?.();
+      } catch (error) {
+        console.error('Failed to remove from cabinet:', error);
+      } finally {
+        setIsToggling(false);
+      }
+    } else {
+      // Show selection modal for cabinet or wishlist
+      setShowSelectionModal(true);
+    }
+  };
+
+  const handleSelectCabinet = () => {
+    // Open review modal for cabinet (owned spirits)
+    setShowReviewModal(true);
+  };
+
+  const handleSelectWishlist = async () => {
+    // Add to wishlist immediately without review
+    if (!user) return;
+    
+    setIsToggling(true);
+    try {
+      await addToCabinet(user.uid, spirit.id, { isWishlist: true });
+      setIsInCabinet(true);
+      onCabinetChange?.();
+    } catch (error) {
+      console.error('Failed to add to wishlist:', error);
+    } finally {
+      setIsToggling(false);
+    }
+  };
+
+  const handleReviewSubmit = async (review: UserReview) => {
+    if (!user) return;
+    
+    setIsToggling(true);
+    try {
+      await addToCabinet(user.uid, spirit.id, { 
+        isWishlist: false,
+        userReview: review
+      });
+      setIsInCabinet(true);
+      onCabinetChange?.();
+    } catch (error) {
+      console.error('Failed to add to cabinet with review:', error);
+      alert('리뷰 저장에 실패했습니다. 다시 시도해주세요.');
+    } finally {
+      setIsToggling(false);
+    }
+  };
+
   // Extract first 2 tags from tasting_note
   const tastingTags = spirit.metadata?.tasting_note
     ? spirit.metadata.tasting_note.split(',').slice(0, 2).map(tag => tag.trim())
@@ -116,14 +206,17 @@ export function SpiritCard({ spirit, onClick }: SpiritCardProps) {
 
       {/* Heart Icon */}
       <button
-        className="flex-shrink-0 p-1 text-muted-foreground/30 hover:text-red-500 transition-colors"
-        onClick={(e) => {
-          e.stopPropagation();
-          e.preventDefault();
-          // TODO: Add to wishlist
-        }}
+        className={`flex-shrink-0 p-1 transition-colors ${
+          isToggling 
+            ? 'opacity-50 cursor-wait' 
+            : isInCabinet 
+              ? 'text-red-500' 
+              : 'text-muted-foreground/30 hover:text-red-500'
+        }`}
+        onClick={handleHeartClick}
+        disabled={isToggling}
       >
-        <Heart className="w-5 h-5" />
+        <Heart className={`w-5 h-5 ${isInCabinet ? 'fill-current' : ''}`} />
       </button>
     </motion.div>
   );
@@ -131,8 +224,24 @@ export function SpiritCard({ spirit, onClick }: SpiritCardProps) {
   if (onClick) return content;
 
   return (
-    <Link href={`/spirits/${spirit.id}`}>
-      {content}
-    </Link>
+    <>
+      <Link href={`/spirits/${spirit.id}`}>
+        {content}
+      </Link>
+      
+      <CabinetSelectionModal
+        isOpen={showSelectionModal}
+        onClose={() => setShowSelectionModal(false)}
+        onSelectCabinet={handleSelectCabinet}
+        onSelectWishlist={handleSelectWishlist}
+      />
+      
+      <ReviewModal
+        spirit={toFlavorSpirit(spirit)}
+        isOpen={showReviewModal}
+        onClose={() => setShowReviewModal(false)}
+        onSubmit={handleReviewSubmit}
+      />
+    </>
   );
 }

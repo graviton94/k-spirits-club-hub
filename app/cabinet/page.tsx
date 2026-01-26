@@ -10,8 +10,10 @@ import SearchSpiritModal from "@/components/cabinet/SearchSpiritModal";
 import { analyzeCellar, loadCellarFromStorage, type Spirit, type UserReview } from "@/lib/utils/flavor-engine";
 import SpiritDetailModal from "@/components/ui/SpiritDetailModal";
 import { useAuth } from "@/app/context/auth-context";
+import { useSpiritsCache } from "@/app/context/spirits-cache-context";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import { getTagColor } from "@/lib/constants/tag-colors";
+import { getUserCabinet, updateCabinetEntry, addToCabinet } from "@/app/actions/cabinet";
 
 // Configuration
 const SPIRITS_PER_ROW = 4;
@@ -24,6 +26,7 @@ export default function CabinetPage() {
   // State initialization
   const [spirits, setSpirits] = useState<Spirit[]>([]);
   const [selectedSpirit, setSelectedSpirit] = useState<Spirit | null>(null);
+  const [isLoadingCabinet, setIsLoadingCabinet] = useState(false);
 
   // Review Modal State
   const [reviewModalOpen, setReviewModalOpen] = useState(false);
@@ -32,40 +35,45 @@ export default function CabinetPage() {
   // Search Modal
   const [searchModalOpen, setSearchModalOpen] = useState(false);
 
-  const { profile, loading } = useAuth();
+  const { profile, loading, user } = useAuth();
+  const { searchIndex, getSpiritDetail } = useSpiritsCache();
 
-  /*
-  ### Configuration
-  - [/] Tailwind config - dark mode 활성화
-  - [/] globals.css - CSS 변수로 테마 색상 정의
-  */
+  // Fetch user's cabinet on mount
   useEffect(() => {
-    if (loading) return;
-    if (!profile) {
+    if (loading || !user) {
       setSpirits([]);
       return;
     }
-  }, [profile, loading]);
 
-  // We need 'user' for ID
-  const { user } = useAuth();
-
-  useEffect(() => {
-    if (loading || !user) return;
-
-    async function fetchData() {
+    async function fetchCabinet() {
+      setIsLoadingCabinet(true);
       try {
-        const res = await fetch('/api/cabinet', {
-          headers: { 'x-user-id': user!.uid }
+        // Fetch cabinet items using server action
+        const cabinetData = await getUserCabinet(user!.uid);
+        
+        // Join with searchIndex to get thumbnail URLs for items that might not have them
+        const enrichedData = cabinetData.map((item: any) => {
+          // Find matching item in searchIndex
+          const indexItem = searchIndex.find(s => s.i === item.id);
+          
+          return {
+            ...item,
+            // Use thumbnailUrl from searchIndex if not present in item
+            thumbnailUrl: item.thumbnailUrl || indexItem?.t || item.imageUrl,
+            imageUrl: item.imageUrl || indexItem?.t,
+          };
         });
-        const json = await res.json();
-        if (json.data) setSpirits(json.data);
+        
+        setSpirits(enrichedData as Spirit[]);
       } catch (e) {
-        console.error(e);
+        console.error('Failed to fetch cabinet:', e);
+      } finally {
+        setIsLoadingCabinet(false);
       }
     }
-    fetchData();
-  }, [user, loading]);
+    
+    fetchCabinet();
+  }, [user, loading, searchIndex]);
 
   const syncSpirit = async (updatedSpirit: Spirit) => {
     // 1. Optimistic Update
@@ -77,16 +85,12 @@ export default function CabinetPage() {
       return [...prev, updatedSpirit];
     });
 
-    // 2. API Sync
+    // 2. Sync with server action
     if (user) {
       try {
-        await fetch('/api/cabinet', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-user-id': user.uid
-          },
-          body: JSON.stringify(updatedSpirit)
+        await addToCabinet(user.uid, updatedSpirit.id, {
+          isWishlist: updatedSpirit.isWishlist,
+          userReview: updatedSpirit.userReview
         });
       } catch (e) {
         console.error('Sync failed', e);
@@ -94,14 +98,28 @@ export default function CabinetPage() {
     }
   };
 
-  const handleReviewSubmit = (review: UserReview) => {
-    if (!reviewTarget) return;
+  const handleReviewSubmit = async (review: UserReview) => {
+    if (!reviewTarget || !user) return;
 
+    // Optimistic update
     const updatedSpirit = { ...reviewTarget, userReview: review };
-    syncSpirit(updatedSpirit);
+    setSpirits(prev => 
+      prev.map(s => s.id === reviewTarget.id ? updatedSpirit : s)
+    );
 
     if (selectedSpirit && selectedSpirit.id === reviewTarget.id) {
       setSelectedSpirit({ ...selectedSpirit, userReview: review });
+    }
+
+    // Sync with server - include userName for public review
+    try {
+      await addToCabinet(user.uid, reviewTarget.id, {
+        isWishlist: reviewTarget.isWishlist,
+        userReview: review,
+        userName: profile?.nickname || user.displayName || 'Anonymous'
+      });
+    } catch (e) {
+      console.error('Failed to save review:', e);
     }
   };
 
@@ -473,15 +491,22 @@ export default function CabinetPage() {
         isOpen={!!selectedSpirit}
         spirit={selectedSpirit}
         onClose={() => setSelectedSpirit(null)}
-        onStatusChange={() => {
+        onStatusChange={async () => {
           if (user) {
-            fetch('/api/cabinet', {
-              headers: { 'x-user-id': user!.uid }
-            })
-              .then(res => res.json())
-              .then(json => {
-                if (json.data) setSpirits(json.data);
+            try {
+              const cabinetData = await getUserCabinet(user.uid);
+              const enrichedData = cabinetData.map((item: any) => {
+                const indexItem = searchIndex.find(s => s.i === item.id);
+                return {
+                  ...item,
+                  thumbnailUrl: item.thumbnailUrl || indexItem?.t || item.imageUrl,
+                  imageUrl: item.imageUrl || indexItem?.t,
+                };
               });
+              setSpirits(enrichedData as Spirit[]);
+            } catch (e) {
+              console.error('Failed to refresh cabinet:', e);
+            }
           }
         }}
       />
