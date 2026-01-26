@@ -238,7 +238,11 @@ export function SpiritCard({ spirit, onClick, onCabinetChange }: SpiritCardProps
       />
       
       <ReviewModal
-        spirit={spirit}
+        spirit={{
+          ...spirit,
+          isWishlist: false,
+          userReview: (spirit as any).userReview
+        } as any}
         isOpen={showReviewModal}
         onClose={() => setShowReviewModal(false)}
         onSubmit={handleReviewSubmit}

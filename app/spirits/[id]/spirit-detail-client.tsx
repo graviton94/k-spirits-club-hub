@@ -225,7 +225,11 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
 
             {/* Review Modal */}
             <ReviewModal
-                spirit={spirit}
+                spirit={{
+                    ...spirit,
+                    isWishlist: false,
+                    userReview: undefined
+                } as any}
                 isOpen={showReviewModal}
                 onClose={() => setShowReviewModal(false)}
                 onSubmit={handleReviewSubmit}
