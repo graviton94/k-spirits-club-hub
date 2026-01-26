@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { generateRandomNickname } from '@/lib/utils/nickname-generator';
+import { getUserCabinet } from '@/app/actions/cabinet';
 
 export default function MyPage() {
     const { user, role, profile, logout, loading, updateProfile, loginWithGoogle, theme, setTheme } = useAuth();
@@ -15,6 +16,9 @@ export default function MyPage() {
     const [isSaving, setIsSaving] = useState(false);
     const [uploadMethod, setUploadMethod] = useState<'url' | 'file'>('url');
     const [uploadError, setUploadError] = useState('');
+    const [reviewCount, setReviewCount] = useState(0);
+    const [cabinetCount, setCabinetCount] = useState(0);
+    const [isLoadingStats, setIsLoadingStats] = useState(false);
 
     useEffect(() => {
         if (profile) {
@@ -24,6 +28,34 @@ export default function MyPage() {
             });
         }
     }, [profile]);
+
+    // Load user stats
+    useEffect(() => {
+        if (user && !loading) {
+            loadUserStats();
+        }
+    }, [user, loading]);
+
+    const loadUserStats = async () => {
+        if (!user) return;
+        
+        setIsLoadingStats(true);
+        try {
+            const cabinetData = await getUserCabinet(user.uid);
+            
+            // Count total cabinet items (excluding wishlist)
+            const ownedSpirits = cabinetData.filter((item: any) => !item.isWishlist);
+            setCabinetCount(ownedSpirits.length);
+            
+            // Count items with reviews
+            const withReviews = cabinetData.filter((item: any) => item.userReview);
+            setReviewCount(withReviews.length);
+        } catch (error) {
+            console.error('Failed to load user stats:', error);
+        } finally {
+            setIsLoadingStats(false);
+        }
+    };
 
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -191,21 +223,21 @@ export default function MyPage() {
                             {/* User Stats Summary with Guest Overlay */}
                             <div className="relative mb-8">
                                 <div className="grid grid-cols-3 gap-4 w-full">
-                                    <div className="bg-secondary/30 p-4 rounded-2xl flex flex-col items-center">
+                                    <Link href="/me/reviews" className="bg-secondary/30 p-4 rounded-2xl flex flex-col items-center hover:bg-secondary/50 transition-colors">
                                         <span className="text-2xl mb-1">📝</span>
-                                        <span className="text-lg font-black">0</span>
+                                        <span className="text-lg font-black">{isLoadingStats ? '...' : reviewCount}</span>
                                         <span className="text-xs text-muted-foreground">내가 쓴 글</span>
-                                    </div>
+                                    </Link>
                                     <div className="bg-secondary/30 p-4 rounded-2xl flex flex-col items-center">
                                         <span className="text-2xl mb-1">❤️</span>
                                         <span className="text-lg font-black">0</span>
                                         <span className="text-xs text-muted-foreground">받은 추천</span>
                                     </div>
-                                    <div className="bg-secondary/30 p-4 rounded-2xl flex flex-col items-center">
+                                    <Link href="/cabinet" className="bg-secondary/30 p-4 rounded-2xl flex flex-col items-center hover:bg-secondary/50 transition-colors">
                                         <span className="text-2xl mb-1">🥃</span>
-                                        <span className="text-lg font-black">0</span>
+                                        <span className="text-lg font-black">{isLoadingStats ? '...' : cabinetCount}</span>
                                         <span className="text-xs text-muted-foreground">내 술장</span>
-                                    </div>
+                                    </Link>
                                 </div>
 
                                 {/* Glassmorphism Overlay for Guests */}

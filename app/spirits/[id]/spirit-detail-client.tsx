@@ -8,6 +8,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Search, ArrowLeft } from "lucide-react";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/context/auth-context";
+import { addToCabinet } from "@/app/actions/cabinet";
+import ReviewModal from "@/components/cabinet/ReviewModal";
+import { UserReview } from "@/lib/utils/flavor-engine";
 
 import { Spirit } from "@/lib/db/schema";
 import { getTagStyle } from "@/lib/constants/tag-styles";
@@ -20,6 +24,56 @@ interface SpiritDetailClientProps {
 
 export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClientProps) {
     const router = useRouter();
+    const { user } = useAuth();
+    const [showReviewModal, setShowReviewModal] = useState(false);
+    const [isAddingToCabinet, setIsAddingToCabinet] = useState(false);
+    const [isAddingToWishlist, setIsAddingToWishlist] = useState(false);
+
+    const handleAddToCabinet = () => {
+        if (!user) {
+            const loginButton = document.querySelector('[aria-label="Login"]') as HTMLElement;
+            if (loginButton) loginButton.click();
+            return;
+        }
+        setShowReviewModal(true);
+    };
+
+    const handleReviewSubmit = async (review: UserReview) => {
+        if (!user) return;
+        
+        setIsAddingToCabinet(true);
+        try {
+            await addToCabinet(user.uid, spirit.id, { 
+                isWishlist: false,
+                userReview: review
+            });
+            alert('술장에 저장되었습니다!');
+        } catch (error) {
+            console.error('Failed to add to cabinet with review:', error);
+            alert('저장에 실패했습니다. 다시 시도해주세요.');
+        } finally {
+            setIsAddingToCabinet(false);
+        }
+    };
+
+    const handleAddToWishlist = async () => {
+        if (!user) {
+            const loginButton = document.querySelector('[aria-label="Login"]') as HTMLElement;
+            if (loginButton) loginButton.click();
+            return;
+        }
+        
+        setIsAddingToWishlist(true);
+        try {
+            await addToCabinet(user.uid, spirit.id, { isWishlist: true });
+            alert('위시리스트에 추가되었습니다!');
+        } catch (error) {
+            console.error('Failed to add to wishlist:', error);
+            alert('추가에 실패했습니다. 다시 시도해주세요.');
+        } finally {
+            setIsAddingToWishlist(false);
+        }
+    };
 
     return (
         <div className="container mx-auto px-4 py-6 max-w-4xl pb-32">
@@ -135,12 +189,20 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
 
             {/* Action Buttons - Moved here from sticky bottom */}
             <div className="flex flex-col sm:flex-row gap-3 mb-12">
-                <button className="flex-1 py-4 px-6 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-black rounded-2xl shadow-lg shadow-amber-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2">
-                    <span>🥃</span> 내 술장에 담기
+                <button 
+                    onClick={handleAddToCabinet}
+                    disabled={isAddingToCabinet}
+                    className="flex-1 py-4 px-6 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-black rounded-2xl shadow-lg shadow-amber-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    <span>🥃</span> {isAddingToCabinet ? '저장 중...' : '내 술장에 담기'}
                 </button>
-                <div className="flex-1">
-                    <SaveButton spiritId={spirit.id} />
-                </div>
+                <button 
+                    onClick={handleAddToWishlist}
+                    disabled={isAddingToWishlist}
+                    className="flex-1 py-4 px-6 bg-background hover:bg-secondary text-foreground font-black rounded-2xl border-2 border-primary hover:border-amber-600 shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    <span>🔖</span> {isAddingToWishlist ? '추가 중...' : '위시리스트에 담기'}
+                </button>
             </div>
 
             {/* 4. Reviews Section */}
@@ -160,6 +222,14 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                     />
                 </div>
             )}
+
+            {/* Review Modal */}
+            <ReviewModal
+                spirit={spirit}
+                isOpen={showReviewModal}
+                onClose={() => setShowReviewModal(false)}
+                onSubmit={handleReviewSubmit}
+            />
         </div>
     );
 }
