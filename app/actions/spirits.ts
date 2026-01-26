@@ -69,7 +69,7 @@ export async function getSpiritsSearchIndex(): Promise<SpiritSearchIndex[]> {
     return spirits.map(s => ({
       i: s.id,
       n: s.name || '이름 없음',
-      en: s.name_en || s.metadata?.name_en || null,
+      en: s.metadata?.name_en || null,
       c: s.category || '기타',
       mc: s.mainCategory || null,
       sc: s.subcategory || null,

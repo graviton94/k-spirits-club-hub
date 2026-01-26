@@ -142,7 +142,7 @@ export default function ExploreContent() {
                   subcategory: item.sc,
                   imageUrl: item.t,
                   thumbnailUrl: item.t,
-                  abv: 0,
+                  abv: item.a || 0,
                   volume: null,
                   distillery: item.d || null,
                   bottler: null,
