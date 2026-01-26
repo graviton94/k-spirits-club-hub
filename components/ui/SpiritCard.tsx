@@ -79,7 +79,8 @@ export function SpiritCard({ spirit, onClick, onCabinetChange }: SpiritCardProps
       setShowSuccessToast(true);
     } catch (error) {
       console.error('Failed to add to cabinet:', error);
-      alert('저장에 실패했습니다. 다시 시도해주세요.');
+      setSuccessMessage('❌ 저장에 실패했습니다. 다시 시도해주세요.');
+      setShowSuccessToast(true);
     } finally {
       setIsToggling(false);
     }
@@ -98,7 +99,8 @@ export function SpiritCard({ spirit, onClick, onCabinetChange }: SpiritCardProps
       setShowSuccessToast(true);
     } catch (error) {
       console.error('Failed to add to wishlist:', error);
-      alert('추가에 실패했습니다. 다시 시도해주세요.');
+      setSuccessMessage('❌ 추가에 실패했습니다. 다시 시도해주세요.');
+      setShowSuccessToast(true);
     } finally {
       setIsToggling(false);
     }
@@ -115,9 +117,12 @@ export function SpiritCard({ spirit, onClick, onCabinetChange }: SpiritCardProps
       });
       setIsInCabinet(true);
       onCabinetChange?.();
+      setSuccessMessage('✅ 리뷰와 함께 술장에 저장되었습니다!');
+      setShowSuccessToast(true);
     } catch (error) {
       console.error('Failed to add to cabinet with review:', error);
-      alert('리뷰 저장에 실패했습니다. 다시 시도해주세요.');
+      setSuccessMessage('❌ 리뷰 저장에 실패했습니다. 다시 시도해주세요.');
+      setShowSuccessToast(true);
     } finally {
       setIsToggling(false);
     }
