@@ -47,7 +47,7 @@ export default function HomePage() {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 w-full max-w-4xl px-4 text-center space-y-8">
+        <div className="relative z-30 w-full max-w-4xl px-4 text-center space-y-8">
           <div className="space-y-2">
             <p className="text-amber-500 font-bold uppercase tracking-widest text-sm animate-fade-in-up">
               Discover Your Taste

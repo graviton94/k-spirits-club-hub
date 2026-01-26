@@ -115,7 +115,7 @@ export default function ExploreContent() {
             ))}
           </select>
 
-          <div className="relative w-full md:w-80">
+          <div className="relative z-10 w-full md:w-80">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
             <input
               type="text"

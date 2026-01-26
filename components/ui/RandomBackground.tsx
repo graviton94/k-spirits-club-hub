@@ -17,11 +17,11 @@ export function RandomBackground() {
 
     // Don't render until mounted to avoid hydration mismatch
     if (!mounted || !bgImage) {
-        return <div className="absolute inset-0 z-0 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-neutral-900 dark:to-neutral-800" />;
+        return <div className="absolute inset-0 z-[-1] bg-gradient-to-br from-gray-50 to-gray-100 dark:from-neutral-900 dark:to-neutral-800" />;
     }
 
     return (
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-[-1]">
             {/* Background Image */}
             <img
                 src={bgImage}
