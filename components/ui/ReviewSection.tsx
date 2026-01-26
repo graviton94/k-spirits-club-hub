@@ -121,7 +121,7 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
 
       {/* Average Summary Card */}
       {liveReviews.length > 0 && (
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10 p-6 bg-card border border-border rounded-3xl shadow-sm">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8 p-4 sm:p-6 bg-card border border-border rounded-3xl shadow-sm">
           <RatingSummaryItem label="OVERALL" value={avgOverall} icon={<Quote className="w-4 h-4" />} />
           <RatingSummaryItem label="NOSE" value={avgNose} icon={<Wind className="w-4 h-4" />} color="text-blue-500" />
           <RatingSummaryItem label="PALATE" value={avgPalate} icon={<Utensils className="w-4 h-4" />} color="text-orange-500" />
@@ -143,7 +143,7 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
         />
       )}
 
-      <div className="space-y-8 mt-6">
+      <div className="space-y-4 sm:space-y-6 mt-6">
         {liveReviews.map((review) => (
           <ReviewCard
             key={review.id}
@@ -248,9 +248,9 @@ function ReviewCard({ review, isOwner, onEdit, onDelete }: {
   };
 
   return (
-    <div className="bg-card border border-border rounded-3xl p-6 sm:p-8 shadow-sm transition-hover hover:border-primary/20 relative group/card">
-      <div className="flex justify-between items-start mb-6">
-        <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+    <div className="bg-card border border-border rounded-3xl p-4 sm:p-6 shadow-sm transition-hover hover:border-primary/20 relative group/card">
+      <div className="flex justify-between items-start mb-4">
+        <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
           <div className="flex items-center gap-4">
             <div className="w-10 h-10 rounded-2xl bg-secondary flex items-center justify-center text-primary font-black border border-border">
               {review.userName.substring(0, 1)}
@@ -308,11 +308,11 @@ function ReviewCard({ review, isOwner, onEdit, onDelete }: {
         </div>
       </div>
 
-      <p className="text-foreground leading-relaxed mb-6 font-medium bg-secondary/30 p-4 rounded-2xl border border-border/50 italic">
+      <p className="text-sm text-foreground leading-relaxed mb-4 font-medium bg-secondary/30 p-3.5 rounded-2xl border border-border/50 italic">
         "{review.content}"
       </p>
 
-      <div className="grid sm:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6">
         <ReviewMetricsItem
           title="NOSE"
           rating={review.noseRating || review.rating}
@@ -530,8 +530,8 @@ function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitte
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-card border-2 border-primary/20 rounded-3xl p-6 sm:p-8 mb-10 shadow-xl shadow-primary/5">
-      <div className="mb-10">
+    <form onSubmit={handleSubmit} className="bg-card border-2 border-primary/20 rounded-3xl p-5 sm:p-8 mb-8 shadow-xl shadow-primary/5">
+      <div className="mb-6">
         <h3 className="text-xl font-black flex items-center gap-2 mb-1">
           <span className="w-2 h-6 bg-primary rounded-full"></span>
           {initialData ? '리뷰 수정하기' : '리뷰 작성하기'}
@@ -541,7 +541,7 @@ function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitte
         </p>
       </div>
 
-      <div className="space-y-12">
+      <div className="space-y-8 sm:space-y-12">
         {/* N / P / F Sequential Flow */}
         <div className="space-y-6">
           <RatingSection
@@ -582,9 +582,8 @@ function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitte
           />
         </div>
 
-        {/* Bottom Section: Overall Score & Content */}
-        <div className="pt-8 border-t border-border space-y-8">
-          <div className="flex flex-col items-center justify-center p-6 bg-secondary/30 rounded-3xl border border-border/50">
+        <div className="pt-6 border-t border-border space-y-6">
+          <div className="flex flex-col items-center justify-center p-4 bg-secondary/30 rounded-3xl border border-border/50">
             <label className="text-xs font-black tracking-widest text-muted-foreground uppercase mb-2">종합 평점 (자동 계산)</label>
             <div className="flex items-center gap-4">
               <div className="text-4xl font-black text-foreground">{formData.rating.toFixed(2)}</div>
@@ -642,7 +641,7 @@ function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitte
               </>
             ) : (
               <>
-                <Check className="w-5 h-5" /> {initialData ? '리뷰 수정 완료' : '리뷰 제출하기'}
+                <Check className="w-5 h-5" /> {initialData ? '리뷰 수정' : '리뷰 제출'}
               </>
             )}
           </button>
