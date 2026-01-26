@@ -9,8 +9,45 @@ export const runtime = 'edge';
 
 const DESCRIPTION_MAX_LENGTH = 100;
 
+// Review interface matching the client format
+interface TransformedReview {
+  id: string;
+  spiritId: string;
+  userId: string;
+  userName: string;
+  rating: number;
+  noseRating: number;
+  palateRating: number;
+  finishRating: number;
+  content: string;
+  nose: string;
+  palate: string;
+  finish: string;
+  createdAt: string;
+  updatedAt: string;
+  isPublished: boolean;
+}
+
+// Database review format interface
+interface DbReview {
+  spiritId: string;
+  userId: string;
+  userName: string;
+  rating: number;
+  ratingN: number;
+  ratingP: number;
+  ratingF: number;
+  notes: string;
+  tagsN: string;
+  tagsP: string;
+  tagsF: string;
+  createdAt: string;
+  updatedAt: string;
+  isPublished: boolean;
+}
+
 // Utility function to transform review data from DB format to client format
-function transformReviewData(reviewsData: any[]): any[] {
+function transformReviewData(reviewsData: DbReview[]): TransformedReview[] {
   return reviewsData.map(r => ({
     id: `${r.spiritId}_${r.userId}`,
     ...r,
@@ -22,6 +59,17 @@ function transformReviewData(reviewsData: any[]): any[] {
     palate: r.tagsP,
     finish: r.tagsF
   }));
+}
+
+// Helper function to truncate description with ellipsis
+function truncateDescription(description: string, maxLength: number): string {
+  if (description.length <= maxLength) {
+    return description;
+  }
+  // Find the last space before maxLength to avoid cutting mid-word
+  const truncated = description.substring(0, maxLength);
+  const lastSpace = truncated.lastIndexOf(' ');
+  return (lastSpace > 0 ? truncated.substring(0, lastSpace) : truncated) + '...';
 }
 
 // Generate dynamic metadata for SEO
@@ -52,7 +100,7 @@ export async function generateMetadata({
     spirit.category,
   ]
     .filter(Boolean)
-    .join(' · ') + (spirit.metadata?.description ? ` - ${spirit.metadata.description.substring(0, DESCRIPTION_MAX_LENGTH)}` : '');
+    .join(' · ') + (spirit.metadata?.description ? ` - ${truncateDescription(spirit.metadata.description, DESCRIPTION_MAX_LENGTH)}` : '');
 
   return {
     title,
@@ -90,10 +138,10 @@ export default async function SpiritDetailPage({
   }
 
   // Fetch reviews server-side
-  let reviews: any[] = [];
+  let reviews: TransformedReview[] = [];
   try {
     const reviewsData = await reviewsDb.getAllForSpirit(id);
-    reviews = transformReviewData(reviewsData);
+    reviews = transformReviewData(reviewsData as DbReview[]);
   } catch (error) {
     console.error('Failed to fetch reviews:', error);
   }
