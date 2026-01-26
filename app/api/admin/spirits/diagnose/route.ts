@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
         // Fetch ALL spirits without any filter
         // NOTE: Limited to 5000 spirits due to Firestore query limit
         const allSpirits = await db.getSpirits({}, { page: 1, pageSize: 5000 });
-        
+
         console.log(`[diagnose] Total spirits in database: ${allSpirits.total}`);
 
         if (allSpirits.total === 0) {
@@ -34,8 +34,13 @@ export async function GET(req: NextRequest) {
             console.warn('[diagnose] ⚠️ WARNING: Query limit reached (5000). Database may contain more spirits.');
         }
 
-        // Analyze the data
+        // Initialize aggregation counters
         const statusCounts: Record<string, number> = {};
+        const categoryCounts: Record<string, number> = {};
+        const subcategoryCounts: Record<string, number> = {};
+        const regionCounts: Record<string, number> = {};
+        const distilleryCounts: Record<string, number> = {};
+
         const publishedCounts = {
             isPublishedTrue: 0,
             isPublishedFalse: 0,
@@ -53,6 +58,19 @@ export async function GET(req: NextRequest) {
             // Count by status
             const status = spirit.status || 'UNDEFINED';
             statusCounts[status] = (statusCounts[status] || 0) + 1;
+
+            // Aggregations
+            const cat = spirit.category || 'Unknown';
+            categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
+
+            const sub = spirit.subcategory || 'Unknown';
+            subcategoryCounts[sub] = (subcategoryCounts[sub] || 0) + 1;
+
+            const reg = spirit.region || 'Unknown';
+            regionCounts[reg] = (regionCounts[reg] || 0) + 1;
+
+            const dist = spirit.distillery || 'Unknown';
+            distilleryCounts[dist] = (distilleryCounts[dist] || 0) + 1;
 
             // Count by isPublished
             if (spirit.isPublished === true) {
@@ -86,6 +104,12 @@ export async function GET(req: NextRequest) {
             totalSpirits: allSpirits.total,
             dataAnalyzed: allSpirits.data.length,
             queryLimitReached: hitQueryLimit,
+            schemaAnalysis: {
+                categories: categoryCounts,
+                subcategories: subcategoryCounts,
+                regions: regionCounts,
+                distilleries: distilleryCounts
+            },
             statusBreakdown: statusCounts,
             publishedBreakdown: publishedCounts,
             crossAnalysis: statusAndPublished,
@@ -135,10 +159,10 @@ export async function GET(req: NextRequest) {
     } catch (error: any) {
         console.error('[diagnose] Error during diagnostic:', error);
         return NextResponse.json(
-            { 
-                error: 'Failed to run diagnostic', 
-                details: error.message 
-            }, 
+            {
+                error: 'Failed to run diagnostic',
+                details: error.message
+            },
             { status: 500 }
         );
     }
