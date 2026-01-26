@@ -305,7 +305,9 @@ export const spiritsDb = {
             c: spirit.category,
             mc: spirit.mainCategory ?? null,
             sc: spirit.subcategory ?? null,
-            t: spirit.thumbnailUrl ?? spirit.imageUrl ?? null // Fallback to imageUrl if thumbnailUrl missing
+            t: spirit.thumbnailUrl ?? spirit.imageUrl ?? null, // Fallback to imageUrl if thumbnailUrl missing
+            a: spirit.abv ?? 0,
+            d: spirit.distillery ?? null
         }));
     }
 };

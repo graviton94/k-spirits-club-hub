@@ -14,8 +14,10 @@ export interface SpiritSearchIndex {
   mc: string | null;   // mainCategory
   sc: string | null;   // subcategory
   t: string | null;    // thumbnailUrl
+  a: number;           // abv (alcohol by volume)
   d: string | null;    // distillery
   m?: any;             // metadata (optional, minimized)
+  s?: string;          // status (only for admin)
 }
 
 export interface Spirit {
