@@ -3,7 +3,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useSpiritsCache } from '@/app/context/spirits-cache-context';
-import { SpiritCard } from './SpiritCard';
+import { ExploreCard } from './ExploreCard';
 import { Search, Loader2, AlertCircle, RefreshCw } from 'lucide-react';
 import metadata from '@/lib/constants/spirits-metadata.json';
 
@@ -133,7 +133,7 @@ export default function ExploreContent() {
         <>
           <div className="grid grid-cols-1 gap-4">
             {filteredSpirits.map((item) => (
-              <SpiritCard
+              <ExploreCard
                 key={item.i}
                 spirit={{
                   id: item.i,
