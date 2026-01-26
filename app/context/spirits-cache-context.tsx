@@ -157,12 +157,13 @@ export const SpiritsCacheProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
     const lowerQuery = query.toLowerCase();
 
-    // Simple filter for now, can be upgraded to Fuse.js if needed
-    // Matches by name (n) or English name (en)
+    // Search across multiple fields: name, English name, distillery, and category
     return searchIndex.filter(item => {
       const nameMatch = item.n && item.n.toLowerCase().includes(lowerQuery);
       const enMatch = item.en && item.en.toLowerCase().includes(lowerQuery);
-      return nameMatch || enMatch;
+      const distilleryMatch = item.d && item.d.toLowerCase().includes(lowerQuery);
+      const categoryMatch = item.c && item.c.toLowerCase().includes(lowerQuery);
+      return nameMatch || enMatch || distilleryMatch || categoryMatch;
     });
   }, [searchIndex]);
 

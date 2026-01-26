@@ -127,7 +127,7 @@ export function SearchBar({ isHero = false }: { isHero?: boolean }) {
                         </div>
                         <div className={`text-sm truncate ${isHero ? 'text-neutral-400' : 'text-muted-foreground'
                           }`}>
-                          {item.en || item.d || item.c}
+                          {item.en ? `${item.en}` : item.d ? `🏭 ${item.d}` : item.c}
                         </div>
                       </div>
                     </div>
