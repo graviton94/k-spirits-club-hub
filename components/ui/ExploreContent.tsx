@@ -1,365 +1,113 @@
-'use client';
+"use client";
 
-import { useSearchParams } from "next/navigation";
-import { useState, useEffect, useMemo } from "react";
-import Link from "next/link";
-import { SpiritCard } from "@/components/ui/SpiritCard";
-import { SearchBar } from "@/components/ui/SearchBar";
-import SpiritDetailModal from "@/components/ui/SpiritDetailModal";
-import type { Spirit, SpiritSearchIndex } from "@/lib/db/schema";
-import {
-  CATEGORY_NAME_MAP,
-  getCategoryStructure,
-  getSubCategoriesForMain
-} from "@/lib/constants/categories";
-import { useDragScroll } from "@/lib/hooks/useDragScroll";
-import { useSpiritsCache } from "@/app/context/spirits-cache-context";
+import React, { useState, useMemo, useEffect } from 'react';
+import { useSpiritsCache } from '@/app/context/spirits-cache-context';
+import SpiritCard from './SpiritCard';
+import { Search, Loader2, AlertCircle, RefreshCw } from 'lucide-react';
 
 export default function ExploreContent() {
-  const searchParams = useSearchParams();
-  const { searchIndex, searchSpirits, getSpiritById, publishedSpirits, isLoading: isCacheLoading, forceRefresh, debugInfo } = useSpiritsCache();
+  const { searchIndex, isLoading, isRefreshing, refreshCache } = useSpiritsCache();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [displayLimit, setDisplayLimit] = useState(24);
 
-  // Drag scroll refs for category filters
-  const legalCategoryScrollRef = useDragScroll<HTMLDivElement>();
-  const mainCategoryScrollRef = useDragScroll<HTMLDivElement>();
-  const subCategoryScrollRef = useDragScroll<HTMLDivElement>();
+  // [SYSTEM_CHECK] 데이터 가시성 최종 리포트 로그
+  useEffect(() => {
+    if (!isLoading) {
+      console.log(`[SYSTEM_REPORT] 현재 렌더링 가능한 검색 인덱스: ${searchIndex?.length || 0}개`);
+    }
+  }, [isLoading, searchIndex]);
 
-  const searchTerm = searchParams.get('search') || '';
-  const selectedLegal = searchParams.get('category') || null;
-  const selectedMain = searchParams.get('main') || null;
-  const selectedSub = searchParams.get('sub') || null;
-
-  const [selectedSpirit, setSelectedSpirit] = useState<Spirit | null>(null);
-  const [displayLimit, setDisplayLimit] = useState(20);
-  const [showDebugPanel, setShowDebugPanel] = useState(false);
-  
-  const isDevelopment = process.env.NODE_ENV === 'development';
-
-  // Dynamic filter extraction from search index
-  const dynamicFilters = useMemo(() => {
-    const categories = new Set<string>();
-    const mainCategories = new Set<string>();
-    const subCategories = new Set<string>();
-
-    searchIndex.forEach(item => {
-      if (item.c) categories.add(item.c);
-      if (item.mc) mainCategories.add(item.mc);
-      if (item.sc) subCategories.add(item.sc);
-    });
-
-    return {
-      categories: Array.from(categories).sort(),
-      mainCategories: Array.from(mainCategories).sort(),
-      subCategories: Array.from(subCategories).sort()
-    };
-  }, [searchIndex]);
-
-  // Client-side filtering logic using the search index
   const filteredSpirits = useMemo(() => {
-    let results = searchIndex;
-
-    // 1. Search term - use Fuse.js for fuzzy search
+    if (!searchIndex || !Array.isArray(searchIndex)) return [];
+    
+    let results = [...searchIndex];
+    
     if (searchTerm) {
-      results = searchSpirits(searchTerm);
-    }
-
-    // 2. Legal Category filter
-    if (selectedLegal) {
-      results = results.filter(spirit => spirit.c === selectedLegal);
-    }
-
-    // 3. Main Category filter
-    if (selectedMain) {
-      results = results.filter(spirit => 
-        spirit.mc === selectedMain || spirit.sc === selectedMain
+      const lowerSearch = searchTerm.toLowerCase();
+      results = results.filter(s => 
+        (s.n && s.n.toLowerCase().includes(lowerSearch)) || 
+        (s.en && s.en.toLowerCase().includes(lowerSearch)) ||
+        (s.c && s.c.toLowerCase().includes(lowerSearch))
       );
     }
+    
+    return results.slice(0, displayLimit);
+  }, [searchIndex, searchTerm, displayLimit]);
 
-    // 4. Sub Category filter
-    if (selectedSub) {
-      results = results.filter(spirit => spirit.sc === selectedSub);
-    }
-
-    // Map back to full Spirit objects
-    return results.map(item => getSpiritById(item.i)).filter((s): s is Spirit => s !== undefined);
-  }, [searchIndex, searchSpirits, searchTerm, selectedLegal, selectedMain, selectedSub, getSpiritById]);
-
-  // Derived Structure for UI
-  const legalStructure = useMemo(() => selectedLegal ? getCategoryStructure(selectedLegal) : null, [selectedLegal]);
-  const isNested = legalStructure?.type === 'nested';
-  const mainOptions = isNested && legalStructure ? (legalStructure as any).mains : [];
-
-  const subOptions = useMemo(() => {
-    if (isNested && selectedMain) {
-      return getSubCategoriesForMain(selectedLegal!, selectedMain);
-    } else if (legalStructure?.type === 'flat') {
-      return (legalStructure as any).items;
-    }
-    return [];
-  }, [isNested, selectedMain, selectedLegal, legalStructure]);
-
-  // Infinite scroll/load more on filtered results
-  const totalCount = filteredSpirits.length;
-  const displayedSpirits = useMemo(() =>
-    filteredSpirits.slice(0, displayLimit),
-    [filteredSpirits, displayLimit]
-  );
-  const hasMore = displayLimit < totalCount;
-
-  // Reset display limit when filters change
-  useEffect(() => {
-    setDisplayLimit(20);
-  }, [searchTerm, selectedLegal, selectedMain, selectedSub]);
-
-  // Final Check: Log guest-visible spirits count
-  useEffect(() => {
-    if (!isCacheLoading && publishedSpirits.length > 0) {
-      console.log(`[FINAL_CHECK] Guest user now sees ${publishedSpirits.length} spirits`);
-    }
-  }, [publishedSpirits.length, isCacheLoading]);
+  // 로딩 상태 처리
+  if (isLoading && (!searchIndex || searchIndex.length === 0)) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+        <Loader2 className="w-10 h-10 animate-spin text-indigo-600" />
+        <p className="text-gray-500 font-medium">제품 정보를 불러오는 중입니다...</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl pb-32">
-      <header className="mb-8 text-center">
-        <h1 className="text-4xl font-black mb-6 bg-clip-text text-transparent bg-gradient-to-r from-amber-500 to-orange-600">
-          DISCOVER SPIRITS
-        </h1>
-        <div className="max-w-xl mx-auto">
-          <SearchBar />
+    <div className="max-w-7xl mx-auto px-4 py-8">
+      {/* 검색 바 및 헤더 */}
+      <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-6">
+        <div className="flex flex-col">
+          <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">전체 둘러보기</h1>
+          <p className="text-gray-500 text-sm mt-1">총 {searchIndex?.length || 0}개의 주종이 등록되어 있습니다.</p>
         </div>
         
-        {/* Force Refresh Button */}
-        <div className="mt-4 flex justify-center gap-3 items-center flex-wrap">
-          <button
-            onClick={forceRefresh}
-            disabled={isCacheLoading}
-            className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm font-semibold rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-          >
-            {isCacheLoading ? (
-              <>
-                <span className="animate-spin">⟳</span>
-                Refreshing...
-              </>
-            ) : (
-              <>
-                🔄 Clear Cache & Refresh
-              </>
-            )}
-          </button>
-          
-          {/* Debug Toggle (only in development) */}
-          {isDevelopment && (
-            <button
-              onClick={() => setShowDebugPanel(!showDebugPanel)}
-              className="px-3 py-2 bg-gray-700 text-white text-xs font-semibold rounded-lg hover:bg-gray-600 transition-colors"
-            >
-              {showDebugPanel ? '🔒 Hide Debug' : '🔍 Show Debug'}
-            </button>
-          )}
+        <div className="relative w-full md:w-96">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+          <input 
+            type="text" 
+            placeholder="이름, 주종, 브랜드 검색..." 
+            className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white border border-gray-100 shadow-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
+      </div>
 
-        {/* Debug Panel */}
-        {showDebugPanel && isDevelopment && (
-          <div className="mt-4 p-4 bg-gray-900 text-white text-left rounded-xl text-xs font-mono max-w-2xl mx-auto border-2 border-amber-500">
-            <h3 className="font-bold text-amber-400 mb-2">🔍 Debug Information</h3>
-            <div className="space-y-1">
-              <div>📊 Search Index Length: <span className="text-green-400">{searchIndex.length}</span></div>
-              <div>📦 Published Spirits: <span className="text-green-400">{publishedSpirits.length}</span></div>
-              <div>💾 Last Load Source: <span className="text-blue-400">{debugInfo.lastLoadSource}</span></div>
-              <div>⏰ Last Load Time: <span className="text-blue-400">
-                {debugInfo.lastLoadTime ? new Date(debugInfo.lastLoadTime).toLocaleTimeString() : 'N/A'}
-              </span></div>
-              <div>🔍 Filtered Results: <span className="text-yellow-400">{filteredSpirits.length}</span></div>
-              {debugInfo.cacheErrors.length > 0 && (
-                <div className="mt-2">
-                  <div className="text-red-400 font-bold">⚠️ Cache Errors:</div>
-                  {debugInfo.cacheErrors.map((err, i) => (
-                    <div key={i} className="text-red-300 ml-2">• {err}</div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-      </header>
-
-      {/* Level 1: Legal Categories (Root) */}
-      <div className="mb-4">
-        <div className="relative">
-          <div ref={legalCategoryScrollRef} className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide snap-x justify-start md:justify-center px-4">
-            <CategoryFilter
-              label="ALL"
-              value=""
-              isActive={!selectedLegal}
-              href="/explore"
-            />
-
-            {dynamicFilters.categories.map(cat => (
-              <CategoryFilter
-                key={cat}
-                label={CATEGORY_NAME_MAP[cat] || cat}
-                value={cat}
-                isActive={selectedLegal === cat}
-                href={`/explore?category=${cat}`}
+      {/* 제품 그리드 */}
+      {filteredSpirits.length > 0 ? (
+        <>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 md:gap-6">
+            {filteredSpirits.map((item) => (
+              <SpiritCard 
+                key={item.i} 
+                spirit={{
+                  id: item.i,
+                  name: item.n,
+                  category: item.c,
+                  thumbnailUrl: item.t,
+                }} 
               />
             ))}
           </div>
-
-        </div>
-      </div>
-
-      {/* Level 2: Main Categories (If Nested) */}
-      {isNested && mainOptions && mainOptions.length > 0 && (
-        <div className="mb-4 animate-fade-in-down">
-          <div className="relative">
-            <div ref={mainCategoryScrollRef} className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide snap-x justify-start md:justify-center px-4">
-              <CategoryFilter
-                label="전체"
-                value=""
-                isActive={!selectedMain}
-                href={`/explore?category=${selectedLegal}`}
-                isSub
-              />
-              {mainOptions.map((main: string) => (
-                <CategoryFilter
-                  key={main}
-                  label={CATEGORY_NAME_MAP[main] || main}
-                  value={main}
-                  isActive={selectedMain === main}
-                  href={`/explore?category=${selectedLegal}&main=${main}`}
-                  isSub
-                />
-              ))}
+          
+          {searchIndex.length > displayLimit && (
+            <div className="mt-16 flex justify-center">
+              <button 
+                onClick={() => setDisplayLimit(prev => prev + 24)}
+                disabled={isRefreshing}
+                className="px-10 py-4 bg-white border border-gray-200 rounded-2xl font-bold text-gray-700 hover:bg-gray-50 transition-all shadow-sm active:scale-95 disabled:opacity-50"
+              >
+                {isRefreshing ? "로딩 중..." : "더 많은 제품 보기"}
+              </button>
             </div>
-
-          </div>
-        </div>
-      )}
-
-      {/* Level 3: Sub Categories */}
-      {subOptions.length > 0 && (
-        <div className="mb-10 animate-fade-in-down delay-100">
-          <div className="relative">
-            <div ref={subCategoryScrollRef} className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide snap-x justify-start md:justify-center px-4">
-              {!isNested && (
-                <CategoryFilter
-                  label="전체"
-                  value=""
-                  isActive={!selectedSub}
-                  href={`/explore?category=${selectedLegal}`}
-                  isSub
-                />
-              )}
-              {isNested && selectedMain && (
-                <CategoryFilter
-                  label="전체"
-                  value=""
-                  isActive={!selectedSub}
-                  href={`/explore?category=${selectedLegal}&main=${selectedMain}`}
-                  isSub
-                />
-              )}
-
-              {subOptions.map((sub: string) => (
-                <CategoryFilter
-                  key={sub}
-                  label={CATEGORY_NAME_MAP[sub] || sub}
-                  value={sub}
-                  isActive={selectedSub === sub}
-                  href={
-                    isNested
-                      ? `/explore?category=${selectedLegal}&main=${selectedMain}&sub=${encodeURIComponent(sub)}`
-                      : `/explore?category=${selectedLegal}&sub=${encodeURIComponent(sub)}`
-                  }
-                  isSub
-                />
-              ))}
-            </div>
-
-          </div>
-        </div>
-      )}
-
-
-      {!selectedLegal && (
-        <div className="mb-10 text-center text-sm text-muted-foreground animate-pulse">
-          Select a category above to start exploring.
-        </div>
-      )}
-
-      {totalCount > 0 && (
-        <p className="mb-4 text-sm text-right text-muted-foreground px-2">
-          Found {totalCount.toLocaleString()} spirits
-        </p>
-      )}
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {isCacheLoading ? (
-          Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="aspect-[3/4] bg-card/50 animate-pulse rounded-3xl" />
-          ))
-        ) : (
-          displayedSpirits.map((spirit) => (
-            <SpiritCard key={spirit.id} spirit={spirit} onClick={(s) => setSelectedSpirit(s)} />
-          ))
-        )}
-      </div>
-
-      <SpiritDetailModal
-        isOpen={!!selectedSpirit}
-        spirit={selectedSpirit}
-        onClose={() => setSelectedSpirit(null)}
-      />
-
-      {totalCount === 0 && (
-        <div className="text-center py-20 bg-secondary/30 rounded-2xl">
-          <div className="text-6xl mb-4">🔍</div>
-          <h2 className="text-xl font-semibold mb-2">검색 결과가 없습니다</h2>
-          <p className="text-muted-foreground">
-            다른 검색어를 입력하거나 필터를 변경해보세요.
-          </p>
-        </div>
-      )}
-
-      {hasMore && (
-        <div className="mt-12 mb-8 flex justify-center">
-          <button
-            onClick={() => setDisplayLimit(prev => prev + 20)}
-            className="min-h-[48px] px-8 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300 active:scale-95"
+          )}
+        </>
+      ) : (
+        <div className="bg-white rounded-[32px] p-16 text-center border border-dashed border-gray-200 shadow-inner">
+          <AlertCircle className="mx-auto w-16 h-16 text-gray-200 mb-6" />
+          <h3 className="text-2xl font-bold text-gray-900">찾으시는 제품이 없나요?</h3>
+          <p className="text-gray-500 mt-3 max-w-sm mx-auto">검색어를 변경하거나 아래 버튼을 눌러 최신 데이터를 새로고침 해보세요.</p>
+          <button 
+            onClick={() => refreshCache()}
+            className="mt-8 px-8 py-3 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100 flex items-center gap-2 mx-auto active:scale-95"
           >
-            Load More ({totalCount - displayLimit} remaining)
+            <RefreshCw size={18} className={isRefreshing ? "animate-spin" : ""} />
+            데이터 새로고침
           </button>
         </div>
       )}
     </div>
-  );
-}
-
-interface CategoryFilterProps {
-  label: string;
-  value: string;
-  isActive: boolean;
-  href: string;
-  isSub?: boolean;
-}
-
-function CategoryFilter({ label, isActive, href, isSub }: CategoryFilterProps) {
-  return (
-    <Link
-      href={href}
-      className={`
-        transition-all duration-300 snap-start whitespace-nowrap border-2
-        ${isActive
-          ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg shadow-primary/30 scale-105 border-primary'
-          : `${isSub
-            ? 'bg-card text-foreground border-border hover:bg-secondary'
-            : 'bg-card text-foreground font-bold border-border hover:bg-secondary'
-          }`
-        }
-        ${isSub ? 'px-3 py-1.5 rounded-lg text-xs' : 'px-4 py-2 rounded-xl text-sm'}
-      `}
-    >
-      {label}
-    </Link>
   );
 }
