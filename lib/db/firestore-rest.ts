@@ -379,7 +379,7 @@ export const cabinetDb = {
 
         // Construct Update Mask dynamically based on data keys
         const fieldPaths = Object.keys(data).filter(k => k !== 'id').map(k => `updateMask.fieldPaths=${k}`).join('&');
-        const patchUrl = fieldPaths ? `${url}?${fieldPaths}` : url;
+        const patchUrl = `${url}?${fieldPaths}`;
 
         const body = toFirestore(data);
 
@@ -432,7 +432,7 @@ export const reviewsDb = {
 
         // Construct Update Mask dynamically based on data keys
         const fieldPaths = Object.keys(data).filter(k => k !== 'id').map(k => `updateMask.fieldPaths=${k}`).join('&');
-        const patchUrl = fieldPaths ? `${url}?${fieldPaths}` : url;
+        const patchUrl = `${url}?${fieldPaths}`;
 
         const body = toFirestore(data);
 
