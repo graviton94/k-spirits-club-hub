@@ -111,11 +111,12 @@ export default function CabinetPage() {
       setSelectedSpirit({ ...selectedSpirit, userReview: review });
     }
 
-    // Sync with server
+    // Sync with server - include userName for public review
     try {
       await addToCabinet(user.uid, reviewTarget.id, {
         isWishlist: reviewTarget.isWishlist,
-        userReview: review
+        userReview: review,
+        userName: profile?.nickname || user.displayName || 'Anonymous'
       });
     } catch (e) {
       console.error('Failed to save review:', e);
