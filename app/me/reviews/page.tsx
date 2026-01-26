@@ -91,7 +91,9 @@ export default function ReviewsPage() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to delete review');
+        const errorText = await response.text();
+        console.error('Failed to delete review:', response.status, errorText);
+        throw new Error(`Failed to delete review: ${response.status}`);
       }
 
       setSpirits(prev => prev.filter(s => s.id !== deleteTarget.id));

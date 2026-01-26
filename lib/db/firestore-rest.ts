@@ -758,7 +758,10 @@ export const reviewsDb = {
         });
 
         if (res.status === 404) return { reviewCount: 0, totalLikes: 0 };
-        if (!res.ok) return { reviewCount: 0, totalLikes: 0 };
+        if (!res.ok) {
+            console.error(`Failed to fetch user stats for ${userId}:`, res.status, res.statusText);
+            return { reviewCount: 0, totalLikes: 0 };
+        }
 
         const json = await res.json();
         if (!json.documents) return { reviewCount: 0, totalLikes: 0 };
