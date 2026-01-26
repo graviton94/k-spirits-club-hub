@@ -88,15 +88,20 @@ export async function enrichSpiritMetadata(spirit: Spirit): Promise<Partial<Spir
 
 [카테고리 분류 규칙]
 이 제품은 이미 법적 분류 "${legalCategory}"로 확정되었습니다.
-당신의 역할은 이 분류 내에서 더 세부적인 분류를 결정하는 것입니다:
+당신의 역할은 이 분류 내에서 "가장 하위 단계"의 항목을 찾아 정밀하게 매칭하는 것입니다.
 
-1. MainCategory (중분류): 
-   - 아래 "전체 카테고리 구조"에서 "${legalCategory}"의 하위 키를 선택
-   - 중분류가 없는 경우(예: 맥주, 탁주): null 또는 ""
-   
-2. SubCategory (소분류/세부): 
-   - **우선순위**: 위 "전체 카테고리 구조"에 있는 항목을 최우선으로 사용해.
-   - **신규 생성**: 만약 해당 항목이 전혀 적합하지 않다면, 주류학적으로 통용되는 **새로운 SubCategory 명칭**을 생성해도 좋아.
+1. 전체 카테고리 구조에서 "${legalCategory}" 섹션을 찾으세요.
+2. 해당 섹션의 계층 구조를 끝까지 추적하여 가장 적합한 최종 항목을 선택하세요.
+
+- **MainCategory (중분류)**: 
+  - "${legalCategory}" 바로 아래에 있는 첫 번째 단계의 키(Key) 이름을 선택하세요.
+  - 예: "소주"인 경우 "한국 소주", "일본 쇼추", "아와모리" 중 하나를 반드시 선택해야 함.
+  - 중분류가 아예 없는 카테고리라면 null 또는 ""로 응답하세요.
+
+- **SubCategory (소분류)**: 
+  - **필수 사항**: 선택한 MainCategory 내의 배열(Array)에 포함된 항목 중 하나를 반드시 선택하세요.
+  - **우선순위**: 기존 구조에 있는 명칭을 최우선으로 사용하세요.
+  - **신규 생성**: 기존 항목 중 어느 것도 주류학적으로 일치하지 않을 때만, 전문적인 새로운 명칭을 생성하세요.
 
 [전체 카테고리 구조]
 ${categoryStructure}
@@ -115,8 +120,8 @@ ${categoryStructure}
 {
   "abv": 40.0,
   "region": "상세 지역",
-  "mainCategory": "gin",
-  "subcategory": "London Dry Gin",
+  "mainCategory": "MainCategory 명칭",
+  "subcategory": "SubCategory 명칭",
   "distillery_refined": "공식 제조소 명칭",
   "nose_tags": ["#태그1"],
   "palate_tags": ["#태그2"],

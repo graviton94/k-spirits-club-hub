@@ -60,7 +60,12 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
         try {
             await addToCabinet(user.uid, spirit.id, {
                 isWishlist: action === 'wishlist',
-                userReview: localSpirit?.userReview
+                userReview: localSpirit?.userReview,
+                name: spirit.name,
+                distillery: spirit.distillery ?? undefined,
+                imageUrl: spirit.imageUrl || undefined,
+                category: spirit.category,
+                abv: spirit.abv
             });
 
             setCabinetStatus({
@@ -68,7 +73,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                 isWishlist: action === 'wishlist'
             });
             if (onStatusChange) onStatusChange();
-            
+
             // Redirect to product detail page after adding to cabinet
             if (action === 'add') {
                 router.push(`/spirits/${spirit.id}`);
@@ -86,10 +91,15 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
         setIsProcessing(true);
         try {
             const updatedSpirit = { ...localSpirit, userReview: review };
-            
+
             await addToCabinet(user.uid, spirit.id, {
                 isWishlist: localSpirit.isWishlist || false,
-                userReview: review
+                userReview: review,
+                name: spirit.name,
+                distillery: spirit.distillery ?? undefined,
+                imageUrl: spirit.imageUrl || undefined,
+                category: spirit.category,
+                abv: spirit.abv
             });
 
             setLocalSpirit(updatedSpirit);
@@ -186,12 +196,27 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                 </button>
                             ) : (
                                 <div className="w-full flex gap-2">
-                                    <div className="flex-1 flex items-center justify-center gap-2 py-3 bg-green-500/10 text-green-500 border-2 border-green-500/20 rounded-xl font-bold text-sm">
-                                        <Check className="w-4 h-4" /> 내 술장 소장 중
-                                    </div>
+                                    <button
+                                        disabled={isProcessing}
+                                        onClick={async () => {
+                                            if (!confirm('정말 술장에서 제거하시겠습니까?')) return;
+                                            setIsProcessing(true);
+                                            try {
+                                                await import('@/app/actions/cabinet').then(({ removeFromCabinet }) =>
+                                                    removeFromCabinet(user!.uid, spirit.id)
+                                                );
+                                                setCabinetStatus({ isOwned: false, isWishlist: false });
+                                                if (onStatusChange) onStatusChange();
+                                            } catch (e) { console.error(e); }
+                                            finally { setIsProcessing(false); }
+                                        }}
+                                        className="flex-1 flex items-center justify-center gap-2 py-3 bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 rounded-xl font-bold text-sm transition-colors"
+                                    >
+                                        <Check className="w-4 h-4" /> 제거하기
+                                    </button>
                                     <button
                                         onClick={() => setIsReviewOpen(true)}
-                                        className="flex-1 flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-xl font-bold text-sm shadow-lg shadow-primary/20 hover:from-amber-600 hover:to-orange-700 hover:scale-105 transition-all"
+                                        className="flex-[2] flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-xl font-bold text-sm shadow-lg shadow-primary/20 hover:from-amber-600 hover:to-orange-700 hover:scale-105 transition-all"
                                     >
                                         <Pencil className="w-4 h-4" />
                                         {localSpirit.userReview ? '리뷰 수정하기' : '리뷰 쓰기'}
@@ -224,14 +249,14 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
 
                             <div className="space-y-5">
                                 {/* Nose */}
-                                {((localSpirit.userReview?.tagsN?.length || 0) > 0 || localSpirit.metadata?.nose_tags) && (
+                                {((localSpirit.userReview?.tagsN?.length || 0) > 0 || (localSpirit.metadata as any)?.nose_tags) && (
                                     <div>
                                         <div className="flex items-center gap-2 mb-2">
                                             <span className="text-xs font-bold text-foreground">👃 Aroma</span>
                                             <div className="h-px flex-1 bg-border/50"></div>
                                         </div>
                                         <div className="flex flex-wrap gap-1.5">
-                                            {(localSpirit.userReview?.tagsN || localSpirit.metadata?.nose_tags || []).map((tag: any, i: number) => {
+                                            {(localSpirit.userReview?.tagsN || (localSpirit.metadata as any)?.nose_tags || []).map((tag: any, i: number) => {
                                                 const color = getTagColor(tag);
                                                 return (
                                                     <span key={i} className={`inline-block text-[10px] px-2.5 py-1 rounded-md border font-bold ${color.bg} ${color.text} ${color.border}`}>
@@ -244,14 +269,14 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                 )}
 
                                 {/* Palate */}
-                                {((localSpirit.userReview?.tagsP?.length || 0) > 0 || localSpirit.metadata?.palate_tags) && (
+                                {((localSpirit.userReview?.tagsP?.length || 0) > 0 || (localSpirit.metadata as any)?.palate_tags) && (
                                     <div>
                                         <div className="flex items-center gap-2 mb-2">
                                             <span className="text-xs font-bold text-foreground">👅 Palate</span>
                                             <div className="h-px flex-1 bg-border/50"></div>
                                         </div>
                                         <div className="flex flex-wrap gap-1.5">
-                                            {(localSpirit.userReview?.tagsP || localSpirit.metadata?.palate_tags || []).map((tag: any, i: number) => {
+                                            {(localSpirit.userReview?.tagsP || (localSpirit.metadata as any)?.palate_tags || []).map((tag: any, i: number) => {
                                                 const color = getTagColor(tag);
                                                 return (
                                                     <span key={i} className={`inline-block text-[10px] px-2.5 py-1 rounded-md border font-bold ${color.bg} ${color.text} ${color.border}`}>
@@ -264,14 +289,14 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                 )}
 
                                 {/* Finish */}
-                                {((localSpirit.userReview?.tagsF?.length || 0) > 0 || localSpirit.metadata?.finish_tags) && (
+                                {((localSpirit.userReview?.tagsF?.length || 0) > 0 || (localSpirit.metadata as any)?.finish_tags) && (
                                     <div>
                                         <div className="flex items-center gap-2 mb-2">
                                             <span className="text-xs font-bold text-foreground">🏁 Finish</span>
                                             <div className="h-px flex-1 bg-border/50"></div>
                                         </div>
                                         <div className="flex flex-wrap gap-1.5">
-                                            {(localSpirit.userReview?.tagsF || localSpirit.metadata?.finish_tags || []).map((tag: any, i: number) => {
+                                            {(localSpirit.userReview?.tagsF || (localSpirit.metadata as any)?.finish_tags || []).map((tag: any, i: number) => {
                                                 const color = getTagColor(tag);
                                                 return (
                                                     <span key={i} className={`inline-block text-[10px] px-2.5 py-1 rounded-md border font-bold ${color.bg} ${color.text} ${color.border}`}>

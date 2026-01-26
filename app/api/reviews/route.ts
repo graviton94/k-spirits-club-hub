@@ -5,6 +5,16 @@ import { getAppPath } from '@/lib/db/paths';
 
 export const runtime = 'edge';
 
+// Helper to safely get reviews path
+function getReviewsPathSafe() {
+  try {
+    return getAppPath().reviews;
+  } catch (e) {
+    console.warn('getAppPath failed, using fallback path');
+    return `artifacts/k-spirits-club-hub/public/data/reviews`;
+  }
+}
+
 // POST /api/reviews - Create a new review
 export async function POST(request: NextRequest) {
   try {

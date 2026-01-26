@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SaveButton from "@/components/ui/SaveButton";
 import ReviewSection from "@/components/ui/ReviewSection";
 import GoogleAd from "@/components/ui/GoogleAd";
@@ -27,70 +27,135 @@ interface SpiritDetailClientProps {
 export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClientProps) {
     const router = useRouter();
     const { user } = useAuth();
-    const [showReviewModal, setShowReviewModal] = useState(false);
-    const [isAddingToCabinet, setIsAddingToCabinet] = useState(false);
-    const [isAddingToWishlist, setIsAddingToWishlist] = useState(false);
+    const [isInCabinet, setIsInCabinet] = useState(false);
+    const [isWishlist, setIsWishlist] = useState(false);
+    const [isLoadingStatus, setIsLoadingStatus] = useState(true);
     const [showSuccessToast, setShowSuccessToast] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
+    const [isToggling, setIsToggling] = useState(false);
+    const [showReviewModal, setShowReviewModal] = useState(false);
 
-    const handleAddToCabinet = async () => {
+    // Check status on mount
+    useEffect(() => {
+        if (user && spirit.id) {
+            import('@/app/actions/cabinet').then(({ checkCabinetStatus }) => {
+                checkCabinetStatus(user.uid, spirit.id).then(status => {
+                    setIsInCabinet(status.isOwned);
+                    setIsWishlist(status.isWishlist);
+                    setIsLoadingStatus(false);
+                });
+            });
+        } else {
+            setIsLoadingStatus(false);
+        }
+    }, [user, spirit.id]);
+
+    const handleCabinetAction = async () => {
         if (!user) {
             triggerLoginModal();
             return;
         }
-        
-        // Immediate save to cabinet
-        setIsAddingToCabinet(true);
+
+        setIsToggling(true);
         try {
-            await addToCabinet(user.uid, spirit.id, { isWishlist: false });
-            setSuccessMessage('🥃 술장에 저장되었습니다!');
+            if (isInCabinet) {
+                // Remove from cabinet
+                await import('@/app/actions/cabinet').then(({ removeFromCabinet }) =>
+                    removeFromCabinet(user.uid, spirit.id)
+                );
+                setIsInCabinet(false);
+                setSuccessMessage('🗑️ 술장에서 제거되었습니다.');
+            } else {
+                // Add to cabinet
+                await import('@/app/actions/cabinet').then(({ addToCabinet }) =>
+                    addToCabinet(user.uid, spirit.id, {
+                        isWishlist: false,
+                        name: spirit.name,
+                        distillery: spirit.distillery ?? undefined,
+                        imageUrl: spirit.imageUrl ?? undefined,
+                        category: spirit.category,
+                        abv: spirit.abv
+                    })
+                );
+                setIsInCabinet(true);
+                setIsWishlist(false); // If it was in wishlist, it's now owned
+                setSuccessMessage('🥃 술장에 저장되었습니다!');
+            }
             setShowSuccessToast(true);
-        } catch (error) {
-            console.error('Failed to add to cabinet:', error);
-            setSuccessMessage('❌ 저장에 실패했습니다. 다시 시도해주세요.');
+        } catch (error: any) {
+            console.error('Failed to update cabinet:', error);
+            setSuccessMessage(`❌ ${error.message || '작업 실패'}`);
             setShowSuccessToast(true);
         } finally {
-            setIsAddingToCabinet(false);
+            setIsToggling(false);
+        }
+    };
+
+    const handleWishlistAction = async () => {
+        if (!user) {
+            triggerLoginModal();
+            return;
+        }
+
+        setIsToggling(true);
+        try {
+            if (isWishlist) {
+                // Remove from wishlist
+                await import('@/app/actions/cabinet').then(({ removeFromCabinet }) =>
+                    removeFromCabinet(user.uid, spirit.id)
+                );
+                setIsWishlist(false);
+                setSuccessMessage('🗑️ 위시리스트에서 제거되었습니다.');
+            } else {
+                // Add to wishlist
+                await import('@/app/actions/cabinet').then(({ addToCabinet }) =>
+                    addToCabinet(user.uid, spirit.id, {
+                        isWishlist: true,
+                        name: spirit.name,
+                        distillery: spirit.distillery ?? undefined,
+                        imageUrl: spirit.imageUrl ?? undefined,
+                        category: spirit.category,
+                        abv: spirit.abv
+                    })
+                );
+                setIsWishlist(true);
+                setIsInCabinet(false); // Can't be both (usually)
+                setSuccessMessage('🔖 위시리스트에 추가되었습니다!');
+            }
+            setShowSuccessToast(true);
+        } catch (error: any) {
+            console.error('Failed to update wishlist:', error);
+            setSuccessMessage(`❌ ${error.message || '작업 실패'}`);
+            setShowSuccessToast(true);
+        } finally {
+            setIsToggling(false);
         }
     };
 
     const handleReviewSubmit = async (review: UserReview) => {
         if (!user) return;
-        
-        setIsAddingToCabinet(true);
+
+        setIsToggling(true);
         try {
-            await addToCabinet(user.uid, spirit.id, { 
+            await addToCabinet(user.uid, spirit.id, {
                 isWishlist: false,
-                userReview: review
+                userReview: review,
+                name: spirit.name,
+                distillery: spirit.distillery ?? undefined,
+                imageUrl: spirit.imageUrl || undefined,
+                category: spirit.category,
+                abv: spirit.abv
             });
+            setIsInCabinet(true);
+            setIsWishlist(false);
             setSuccessMessage('✅ 리뷰와 함께 술장에 저장되었습니다!');
             setShowSuccessToast(true);
-        } catch (error) {
+        } catch (error: any) {
             console.error('Failed to add to cabinet with review:', error);
-            setSuccessMessage('❌ 리뷰 저장에 실패했습니다. 다시 시도해주세요.');
+            setSuccessMessage(`❌ ${error.message || '리뷰 저장 실패'}`);
             setShowSuccessToast(true);
         } finally {
-            setIsAddingToCabinet(false);
-        }
-    };
-
-    const handleAddToWishlist = async () => {
-        if (!user) {
-            triggerLoginModal();
-            return;
-        }
-        
-        setIsAddingToWishlist(true);
-        try {
-            await addToCabinet(user.uid, spirit.id, { isWishlist: true });
-            setSuccessMessage('🔖 위시리스트에 추가되었습니다!');
-            setShowSuccessToast(true);
-        } catch (error) {
-            console.error('Failed to add to wishlist:', error);
-            setSuccessMessage('❌ 추가에 실패했습니다. 다시 시도해주세요.');
-            setShowSuccessToast(true);
-        } finally {
-            setIsAddingToWishlist(false);
+            setIsToggling(false);
         }
     };
 
@@ -186,41 +251,52 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
             </div>
 
             {/* 3. Flavor Profile with Dynamic Colors */}
-            {(spirit.metadata?.nose_tags || spirit.metadata?.palate_tags || spirit.metadata?.finish_tags) && (
+            {((spirit.metadata as any)?.nose_tags || (spirit.metadata as any)?.palate_tags || (spirit.metadata as any)?.finish_tags) && (
                 <div className="mb-10 p-6 bg-secondary/30 rounded-3xl border border-dashed border-border">
                     <h2 className="text-xl font-black mb-6 flex items-center gap-2">
                         <span className="w-2 h-6 bg-amber-500 rounded-full"></span>
                         FLAVOR NOTES
                     </h2>
                     <div className="space-y-6">
-                        {spirit.metadata.nose_tags && (
-                            <FlavorSection title="NOSE" tags={spirit.metadata.nose_tags} />
+                        {(spirit.metadata as any).nose_tags && (
+                            <FlavorSection title="NOSE" tags={(spirit.metadata as any).nose_tags} />
                         )}
-                        {spirit.metadata.palate_tags && (
-                            <FlavorSection title="PALATE" tags={spirit.metadata.palate_tags} />
+                        {(spirit.metadata as any).palate_tags && (
+                            <FlavorSection title="PALATE" tags={(spirit.metadata as any).palate_tags} />
                         )}
-                        {spirit.metadata.finish_tags && (
-                            <FlavorSection title="FINISH" tags={spirit.metadata.finish_tags} />
+                        {(spirit.metadata as any).finish_tags && (
+                            <FlavorSection title="FINISH" tags={(spirit.metadata as any).finish_tags} />
                         )}
                     </div>
                 </div>
             )}
 
             {/* Action Buttons - Moved here from sticky bottom */}
+            {/* Action Buttons - Moved here from sticky bottom */}
             <div className="flex flex-col sm:flex-row gap-3 mb-12">
-                <button 
-                    onClick={handleAddToCabinet}
-                    disabled={isAddingToCabinet}
-                    className="flex-1 py-4 px-6 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-black rounded-2xl shadow-lg shadow-amber-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                <button
+                    onClick={handleCabinetAction}
+                    disabled={isToggling || isLoadingStatus}
+                    className={`flex-1 py-4 px-6 font-black rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed
+                        ${isInCabinet
+                            ? 'bg-red-500 hover:bg-red-600 text-white shadow-red-500/20'
+                            : 'bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white shadow-amber-500/20 hover:scale-[1.02] active:scale-[0.98]'
+                        }`}
                 >
-                    <span>🥃</span> {isAddingToCabinet ? '저장 중...' : '내 술장에 담기'}
+                    <span>{isInCabinet ? '🗑️' : '🥃'}</span>
+                    {isToggling ? '처리 중...' : (isInCabinet ? '내 술장에서 빼기' : '내 술장에 담기')}
                 </button>
-                <button 
-                    onClick={handleAddToWishlist}
-                    disabled={isAddingToWishlist}
-                    className="flex-1 py-4 px-6 bg-background hover:bg-secondary text-foreground font-black rounded-2xl border-2 border-primary hover:border-amber-600 shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                <button
+                    onClick={handleWishlistAction}
+                    disabled={isToggling || isLoadingStatus}
+                    className={`flex-1 py-4 px-6 font-black rounded-2xl border-2 shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed
+                        ${isWishlist
+                            ? 'bg-red-50 bg-opacity-20 hover:bg-red-100 text-red-600 border-red-200 shadow-red-500/10'
+                            : 'bg-background hover:bg-secondary text-foreground hover:border-amber-600 border-primary shadow-lg hover:scale-[1.02] active:scale-[0.98]'
+                        }`}
                 >
-                    <span>🔖</span> {isAddingToWishlist ? '추가 중...' : '위시리스트에 담기'}
+                    <span>{isWishlist ? '🗑️' : '🔖'}</span>
+                    {isToggling ? '처리 중...' : (isWishlist ? '위시리스트에서 제거' : '위시리스트에 담기')}
                 </button>
             </div>
 
@@ -249,7 +325,7 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                 onClose={() => setShowReviewModal(false)}
                 onSubmit={handleReviewSubmit}
             />
-            
+
             {/* Success Toast */}
             <SuccessToast
                 isVisible={showSuccessToast}

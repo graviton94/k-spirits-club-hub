@@ -39,6 +39,46 @@ export function SpiritCard({ spirit, onClick, onCabinetChange }: SpiritCardProps
     }
   }, [user, spirit.id]);
 
+  // Generic handler for adding (cabinet or wishlist)
+  const handleAdd = async (isWishlist: boolean, review?: any) => {
+    if (!user) {
+      triggerLoginModal();
+      return;
+    }
+    setIsToggling(true);
+    try {
+      await addToCabinet(user.uid, spirit.id, {
+        isWishlist,
+        userReview: review,
+        name: spirit.name,
+        distillery: spirit.distillery ?? undefined,
+        imageUrl: spirit.imageUrl || undefined,
+        category: spirit.category,
+        abv: spirit.abv
+      });
+
+      // Notify parent to refresh if needed
+      onCabinetChange?.();
+
+      if (isWishlist) setSuccessMessage('🔖 위시리스트에 추가되었습니다!');
+      else setSuccessMessage('🥃 술장에 저장되었습니다!');
+
+      if (review) setSuccessMessage('✅ 리뷰와 함께 술장에 저장되었습니다!');
+
+      setShowSuccessToast(true);
+
+      // Update local state if adding to cabinet/wishlist (not just review update)
+      if (!isInCabinet) setIsInCabinet(true);
+
+    } catch (error: any) {
+      console.error('Failed to add:', error);
+      setSuccessMessage(`❌ ${error.message || '실패했습니다.'}`);
+      setShowSuccessToast(true);
+    } finally {
+      setIsToggling(false);
+    }
+  };
+
   const handleHeartClick = async (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
@@ -67,65 +107,18 @@ export function SpiritCard({ spirit, onClick, onCabinetChange }: SpiritCardProps
   };
 
   const handleSelectCabinet = async () => {
-    // Immediate save to cabinet without review
-    if (!user) return;
-    
-    setIsToggling(true);
-    try {
-      await addToCabinet(user.uid, spirit.id, { isWishlist: false });
-      setIsInCabinet(true);
-      onCabinetChange?.();
-      setSuccessMessage('🥃 술장에 저장되었습니다!');
-      setShowSuccessToast(true);
-    } catch (error) {
-      console.error('Failed to add to cabinet:', error);
-      setSuccessMessage('❌ 저장에 실패했습니다. 다시 시도해주세요.');
-      setShowSuccessToast(true);
-    } finally {
-      setIsToggling(false);
-    }
+    setShowSelectionModal(false);
+    await handleAdd(false); // Add to cabinet
   };
 
   const handleSelectWishlist = async () => {
-    // Add to wishlist immediately without review
-    if (!user) return;
-    
-    setIsToggling(true);
-    try {
-      await addToCabinet(user.uid, spirit.id, { isWishlist: true });
-      setIsInCabinet(true);
-      onCabinetChange?.();
-      setSuccessMessage('🔖 위시리스트에 추가되었습니다!');
-      setShowSuccessToast(true);
-    } catch (error) {
-      console.error('Failed to add to wishlist:', error);
-      setSuccessMessage('❌ 추가에 실패했습니다. 다시 시도해주세요.');
-      setShowSuccessToast(true);
-    } finally {
-      setIsToggling(false);
-    }
+    setShowSelectionModal(false);
+    await handleAdd(true); // Add to wishlist
   };
 
   const handleReviewSubmit = async (review: UserReview) => {
-    if (!user) return;
-    
-    setIsToggling(true);
-    try {
-      await addToCabinet(user.uid, spirit.id, { 
-        isWishlist: false,
-        userReview: review
-      });
-      setIsInCabinet(true);
-      onCabinetChange?.();
-      setSuccessMessage('✅ 리뷰와 함께 술장에 저장되었습니다!');
-      setShowSuccessToast(true);
-    } catch (error) {
-      console.error('Failed to add to cabinet with review:', error);
-      setSuccessMessage('❌ 리뷰 저장에 실패했습니다. 다시 시도해주세요.');
-      setShowSuccessToast(true);
-    } finally {
-      setIsToggling(false);
-    }
+    setShowReviewModal(false);
+    await handleAdd(false, review); // Add to cabinet with review
   };
 
   // Extract first 2 tags from tasting_note
@@ -231,13 +224,12 @@ export function SpiritCard({ spirit, onClick, onCabinetChange }: SpiritCardProps
 
       {/* Heart Icon */}
       <button
-        className={`flex-shrink-0 p-1 transition-colors ${
-          isToggling 
-            ? 'opacity-50 cursor-wait' 
-            : isInCabinet 
-              ? 'text-red-500' 
-              : 'text-muted-foreground/30 hover:text-red-500'
-        }`}
+        className={`flex-shrink-0 p-1 transition-colors ${isToggling
+          ? 'opacity-50 cursor-wait'
+          : isInCabinet
+            ? 'text-red-500'
+            : 'text-muted-foreground/30 hover:text-red-500'
+          }`}
         onClick={handleHeartClick}
         disabled={isToggling}
       >
@@ -253,21 +245,21 @@ export function SpiritCard({ spirit, onClick, onCabinetChange }: SpiritCardProps
       <Link href={`/spirits/${spirit.id}`}>
         {content}
       </Link>
-      
+
       <CabinetSelectionModal
         isOpen={showSelectionModal}
         onClose={() => setShowSelectionModal(false)}
         onSelectCabinet={handleSelectCabinet}
         onSelectWishlist={handleSelectWishlist}
       />
-      
+
       <ReviewModal
         spirit={toFlavorSpirit(spirit)}
         isOpen={showReviewModal}
         onClose={() => setShowReviewModal(false)}
         onSubmit={handleReviewSubmit}
       />
-      
+
       <SuccessToast
         isVisible={showSuccessToast}
         message={successMessage}
