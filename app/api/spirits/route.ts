@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
 
     // Fetch all published spirits from Firestore
     const spirits = await spiritsDb.getAll({ isPublished: true });
-    
+
     if (!spirits || spirits.length === 0) {
       console.warn('[API] No published spirits found');
       return NextResponse.json({
@@ -31,11 +31,17 @@ export async function GET(request: NextRequest) {
     const searchIndex: SpiritSearchIndex[] = spirits.map(s => ({
       i: s.id,
       n: s.name || '이름 없음',
-      en: s.name_en || s.metadata?.name_en || null,
+      en: s.metadata?.name_en || null,
       c: s.category || '기타',
       mc: s.mainCategory || null,
       sc: s.subcategory || null,
-      t: s.thumbnailUrl || s.imageUrl || null // Thumbnail fallback to imageUrl
+      t: s.thumbnailUrl || s.imageUrl || null, // Thumbnail fallback to imageUrl
+      d: s.distillery || null, // distillery
+      m: s.metadata ? {
+        tasting_note: s.metadata.tasting_note
+          ? s.metadata.tasting_note.split(',').slice(0, 2).join(',') // Only first 2 tags
+          : null
+      } : {}
     }));
 
     // Limit published spirits to 100 items (consistent with original implementation)
@@ -48,16 +54,16 @@ export async function GET(request: NextRequest) {
       searchIndex,
       count: searchIndex.length,
       timestamp: Date.now()
-    }, { 
+    }, {
       status: 200,
       headers: {
         'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
       }
     });
-    
+
   } catch (error) {
     console.error('[API] ❌ Error fetching spirits:', error);
-    
+
     return NextResponse.json({
       error: 'Failed to fetch spirits data',
       publishedSpirits: [],

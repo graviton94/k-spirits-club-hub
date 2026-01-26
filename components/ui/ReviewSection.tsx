@@ -238,8 +238,8 @@ function ReviewMetricsItem({ title, rating, tags, icon, color }: { title: string
   );
 }
 
-function ReviewForm({ spiritId, spiritName, onCancel, onSubmitted }: { 
-  spiritId: string; 
+function ReviewForm({ spiritId, spiritName, onCancel, onSubmitted }: {
+  spiritId: string;
   spiritName: string;
   onCancel: () => void;
   onSubmitted: (review: ExtendedReview) => void;
@@ -333,12 +333,12 @@ function ReviewForm({ spiritId, spiritName, onCancel, onSubmitted }: {
       };
 
       onSubmitted(newReview);
-      
+
       // Dispatch custom event to notify LiveReviews component on home page
       if (typeof window !== 'undefined') {
         window.dispatchEvent(new CustomEvent('reviewSubmitted'));
       }
-      
+
       alert('리뷰가 성공적으로 제출되었습니다!');
     } catch (error) {
       console.error('Error submitting review:', error);
@@ -487,14 +487,23 @@ function RatingSection({ label, rating, tags, onRatingChange, onTagsChange, colo
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-3 w-full">
-        {/* Label and Icon */}
-        <div className="flex items-center gap-2">
-          <div className={`p-2 rounded-xl bg-${color}-500/10 text-${color}-500 border border-${color}-500/20`}>
-            {icon}
+    <div className={`group p-5 rounded-3xl border border-border/60 bg-card/50 hover:border-${color}-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-${color}-500/5 space-y-4`}>
+      <div className="flex flex-col gap-3">
+        <div className="flex items-center justify-between">
+          {/* Label and Icon */}
+          <div className="flex items-center gap-2">
+            <div className={`p-2 rounded-xl bg-${color}-500/10 text-${color}-500 ring-1 ring-${color}-500/20`}>
+              {icon}
+            </div>
+            <label className={`text-sm font-black tracking-tight uppercase ${activeRating > 0 ? `text-${color}-500` : 'text-muted-foreground'} transition-colors`}>
+              {label}
+            </label>
           </div>
-          <label className="text-sm font-black tracking-tight uppercase whitespace-nowrap">{label}</label>
+
+          {/* Rating Value Number (Optional, adding for clarity) */}
+          <div className={`text-lg font-black ${activeRating > 0 ? `text-${color}-500` : 'text-muted-foreground/30'}`}>
+            {activeRating > 0 ? activeRating.toFixed(1) : '-'}
+          </div>
         </div>
 
         {/* Star Rating */}
@@ -503,17 +512,17 @@ function RatingSection({ label, rating, tags, onRatingChange, onTagsChange, colo
           onPointerMove={handlePointer}
           onPointerLeave={() => setHoverRating(null)}
           onPointerDown={handlePointer}
-          className="flex-1 flex gap-1 justify-end rating-wrap touch-none select-none cursor-pointer"
+          className="flex justify-between w-full px-2 py-3 rounded-2xl bg-secondary/30 cursor-pointer touch-none select-none hover:bg-secondary/50 transition-colors"
         >
           {[1, 2, 3, 4, 5].map((s) => {
             const isFull = s <= activeRating;
             const isHalf = s - 0.5 === activeRating;
             return (
-              <div key={s} className="relative">
-                <Star className={`w-7 h-7 ${isFull ? starColor : isHalf ? 'text-' + color + '-500' : 'text-muted-foreground/20'}`} />
+              <div key={s} className="relative transition-transform hover:scale-110 duration-200">
+                <Star className={`w-8 h-8 ${isFull ? starColor : isHalf ? 'text-' + color + '-500' : 'text-muted-foreground/10'}`} />
                 {isHalf && (
                   <div className="absolute inset-0 overflow-hidden w-[50%]">
-                    <Star className={`w-7 h-7 ${starColor}`} />
+                    <Star className={`w-8 h-8 ${starColor}`} />
                   </div>
                 )}
               </div>

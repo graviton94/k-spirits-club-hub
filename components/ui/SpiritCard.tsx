@@ -49,29 +49,45 @@ export function SpiritCard({ spirit, onClick }: SpiritCardProps) {
       </div>
 
       {/* Right: Content */}
-      <div className="flex-1 min-w-0 flex flex-col justify-between">
-        {/* Top: Name */}
+      <div className="flex-1 min-w-0 flex flex-col justify-between h-full py-0.5">
         <div>
           <h3 className="font-bold text-foreground leading-tight line-clamp-2 mb-1">
+            <span className="mr-1.5 text-lg inline-block align-middle">
+              {
+                {
+                  "소주": "🍶", "위스키": "🥃", "맥주": "🍺", "일반증류주": "🍸",
+                  "기타 주류": "🥂", "탁주": "🥛", "약주": "🍵", "청주": "🍶",
+                  "과실주": "🍾", "브랜디": "🍷", "리큐르": "🍹"
+                }[spirit.category] || "🍾"
+              }
+            </span>
             {spirit.name}
           </h3>
 
-          {/* Subcategory + ABV */}
-          <p className="text-sm text-muted-foreground">
-            {spirit.subcategory || spirit.category}
-            {spirit.abv > 0 && ` · ${spirit.abv}°`}
+          <p className="text-xs font-medium text-muted-foreground flex items-center gap-1">
+            <span>📂</span>
+            <span>
+              {spirit.category}
+              {spirit.subcategory && ` · ${spirit.subcategory}`}
+              {spirit.abv > 0 && ` · ${spirit.abv}%`}
+            </span>
           </p>
+
+          {spirit.distillery && (
+            <p className="text-xs text-muted-foreground/80 mt-0.5 max-w-full truncate">
+              🏭 {spirit.distillery}
+            </p>
+          )}
         </div>
 
-        {/* Bottom: Tags */}
         {tastingTags.length > 0 && (
-          <div className="flex gap-1.5 mt-2">
+          <div className="flex flex-wrap gap-1.5 mt-2">
             {tastingTags.map((tag, index) => {
               const styles = getTagStyle(tag);
               return (
                 <span
                   key={index}
-                  className="text-[10px] px-2 py-0.5 rounded-full font-bold border transition-colors"
+                  className="text-[10px] px-2 py-0.5 rounded-full font-bold border transition-colors whitespace-nowrap"
                   style={{
                     backgroundColor: 'var(--tag-bg)',
                     color: 'var(--tag-text)',
@@ -90,7 +106,7 @@ export function SpiritCard({ spirit, onClick }: SpiritCardProps) {
                       --tag-border: ${styles.dark.border};
                     }
                   `}</style>
-                  {tag}
+                  #{tag}
                 </span>
               );
             })}

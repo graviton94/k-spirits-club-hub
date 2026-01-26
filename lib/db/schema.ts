@@ -14,6 +14,8 @@ export interface SpiritSearchIndex {
   mc: string | null;   // mainCategory
   sc: string | null;   // subcategory
   t: string | null;    // thumbnailUrl
+  d: string | null;    // distillery
+  m?: any;             // metadata (optional, minimized)
 }
 
 export interface Spirit {

@@ -10,6 +10,7 @@ interface SpiritsCacheContextType {
   isRefreshing: boolean;
   refreshCache: () => Promise<void>;
   getSpiritById: (id: string) => Spirit | undefined;
+  searchSpirits: (query: string) => SpiritSearchIndex[];
 }
 
 const SpiritsCacheContext = createContext<SpiritsCacheContextType | undefined>(undefined);
@@ -78,6 +79,21 @@ export const SpiritsCacheProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
   const refreshCache = () => loadData(true);
 
+  // fuse.js or simple filter based search
+  const searchSpirits = useCallback((query: string) => {
+    if (!query || !searchIndex.length) return [];
+
+    const lowerQuery = query.toLowerCase();
+
+    // Simple filter for now, can be upgraded to Fuse.js if needed
+    // Matches by name (n) or English name (en)
+    return searchIndex.filter(item => {
+      const nameMatch = item.n && item.n.toLowerCase().includes(lowerQuery);
+      const enMatch = item.en && item.en.toLowerCase().includes(lowerQuery);
+      return nameMatch || enMatch;
+    });
+  }, [searchIndex]);
+
   return (
     <SpiritsCacheContext.Provider value={{
       publishedSpirits,
@@ -85,7 +101,8 @@ export const SpiritsCacheProvider: React.FC<{ children: React.ReactNode }> = ({ 
       isLoading,
       isRefreshing,
       refreshCache,
-      getSpiritById
+      getSpiritById,
+      searchSpirits
     }}>
       {children}
     </SpiritsCacheContext.Provider>

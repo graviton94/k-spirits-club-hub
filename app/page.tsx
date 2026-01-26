@@ -5,6 +5,7 @@ import { SpiritCard } from "@/components/ui/SpiritCard";
 import { LiveReviews } from "@/components/ui/LiveReviews";
 import Link from "next/link";
 import { CATEGORY_NAME_MAP } from "@/lib/constants/categories";
+import metadata from '@/lib/constants/spirits-metadata.json';
 import { ArrowRight, Flame, Sparkles } from "lucide-react";
 import styles from "./page.module.css";
 import { RandomBackground } from "@/components/ui/RandomBackground";
@@ -17,7 +18,7 @@ export default function HomePage() {
   // Get top trending spirits from cache (sorted by createdAt, most recent first)
   const trendingSpirits = useMemo(() => {
     if (!publishedSpirits.length) return [];
-    
+
     // Filter spirits with images and sort by createdAt (most recent first)
     return publishedSpirits
       .filter(s => s.imageUrl)
@@ -32,22 +33,18 @@ export default function HomePage() {
   const heroSpirit = trendingSpirits[0];
   const listSpirits = trendingSpirits.slice(1);
 
-  // Dynamically get available categories from cached data
-  const availableCategories = useMemo(() => {
-    const categories = new Set<string>();
-    publishedSpirits.forEach(spirit => {
-      if (spirit.category) categories.add(spirit.category);
-    });
-    return Array.from(categories).sort();
-  }, [publishedSpirits]);
+  // Use all categories from metadata
+  const allCategories = Object.keys(metadata.categories);
 
   return (
     <div className="min-h-screen bg-background text-foreground pb-20">
 
       {/* 1. Hero Section */}
-      <section className="relative w-full h-[70vh] min-h-[500px] flex flex-col items-center justify-center overflow-hidden">
+      <section className="relative w-full h-[70vh] min-h-[500px] flex flex-col items-center justify-center">
         {/* Background Layer */}
-        <RandomBackground />
+        <div className="absolute inset-0 overflow-hidden">
+          <RandomBackground />
+        </div>
 
         {/* Content */}
         <div className="relative z-10 w-full max-w-4xl px-4 text-center space-y-8">
@@ -63,7 +60,7 @@ export default function HomePage() {
             </h1>
           </div>
 
-          <div className="w-full max-w-lg mx-auto animate-fade-in-up delay-200">
+          <div className="w-full max-w-lg mx-auto animate-fade-in-up delay-200 relative z-30">
             <SearchBar isHero={true} />
           </div>
 
@@ -77,11 +74,11 @@ export default function HomePage() {
       </section>
 
       {/* 2. Categories Auto-Scroll Carousel */}
-      <section className="container max-w-4xl mx-auto px-4 -mt-10 relative z-20 mb-16">
+      <section className="container max-w-4xl mx-auto px-4 mt-8 relative z-20 mb-16">
         <div className="relative overflow-hidden">
           <div className={`flex gap-4 ${styles['animate-scroll-rtl']}`}>
             {/* Duplicate items for infinite scroll effect */}
-            {[...availableCategories, ...availableCategories].map((cat, index) => {
+            {[...allCategories, ...allCategories].map((cat, index) => {
               // Updated Icons mapping for all 11 categories
               const icons: Record<string, string> = {
                 "소주": "🍶",
