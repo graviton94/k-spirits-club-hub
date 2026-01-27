@@ -1062,7 +1062,8 @@ export const newArrivalsDb = {
         const newArrivalsPath = getAppPath().newArrivals;
 
         try {
-            // 1. Query top 10 published spirits ordered by updatedAt DESC (Changed from createdAt)
+            // 1. Query top 10 published spirits ordered by updatedAt DESC
+            // NOTE: This requires a Firestore Composite Index: Collection: spirits, Fields: isPublished (ASC), updatedAt (DESC)
             const runQueryUrl = `${BASE_URL}:runQuery`;
             const parent = `projects/${PROJECT_ID}/databases/(default)/documents`;
 
@@ -1094,7 +1095,7 @@ export const newArrivalsDb = {
 
             if (!res.ok) {
                 const text = await res.text();
-                // This is expected if the new index is missing
+                // If index is missing, this will fail with 400.
                 console.error('Failed to query spirits for new arrivals:', text);
                 return { success: false, error: text, status: res.status };
             }
@@ -1128,8 +1129,8 @@ export const newArrivalsDb = {
                     thumbnailUrl: spirit.thumbnailUrl,
                     category: spirit.category, // Required for fallback image
                     subcategory: spirit.subcategory,
-                    updatedAt: spirit.updatedAt, // Required for sorting
-                    createdAt: spirit.createdAt  // Required for fallback sorting
+                    updatedAt: spirit.updatedAt,
+                    createdAt: spirit.createdAt
                 };
 
                 const body = toFirestore(minifiedSpirit);
@@ -1200,9 +1201,9 @@ export const newArrivalsDb = {
                 .map((doc: any) => fromFirestore(doc))
                 .filter((s: Spirit) => s.id) // Filter out invalid documents
                 .sort((a: Spirit, b: Spirit) => {
-                    // Changed sort to updatedAt to match the backend query
-                    const dateA = a.updatedAt ? new Date(a.updatedAt).getTime() : (a.createdAt ? new Date(a.createdAt).getTime() : 0);
-                    const dateB = b.updatedAt ? new Date(b.updatedAt).getTime() : (b.createdAt ? new Date(b.createdAt).getTime() : 0);
+                    // Sort by updatedAt (descending)
+                    const dateA = a.updatedAt ? new Date(a.updatedAt).getTime() : 0;
+                    const dateB = b.updatedAt ? new Date(b.updatedAt).getTime() : 0;
                     return dateB - dateA;
                 });
         } catch (error) {
