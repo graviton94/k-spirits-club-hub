@@ -98,6 +98,12 @@ export default function ReviewsPage() {
 
       setSpirits(prev => prev.filter(s => s.id !== deleteTarget.id));
       setDeleteTarget(null);
+      
+      // Dispatch event to notify LiveReviews component to refresh
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('reviewDeleted'));
+      }
+      
       alert('리뷰가 삭제되었습니다.');
     } catch (error) {
       console.error('Failed to delete review:', error);

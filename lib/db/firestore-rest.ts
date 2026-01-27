@@ -863,54 +863,95 @@ export const trendingDb = {
 
     async getTopTrending(limit: number = 5): Promise<any[]> {
         const token = await getServiceAccountToken();
-        const dateId = new Date().toISOString().split('T')[0];
-        const dailyPath = getAppPath().trendingDaily(dateId);
-
-        // Use runQuery for efficient top-N retrieval
-        const runQueryUrl = `${BASE_URL}:runQuery`;
-        const segments = dailyPath.split('/');
-        const collectionId = segments.pop();
-        const parentPath = segments.join('/');
-        const parent = `projects/${PROJECT_ID}/databases/(default)/documents/${parentPath}`;
-
-        const res = await fetch(runQueryUrl, {
-            method: 'POST',
-            headers: { Authorization: `Bearer ${token}` },
-            body: JSON.stringify({
-                parent,
-                structuredQuery: {
-                    from: [{ collectionId }],
-                    orderBy: [
-                        { field: { fieldPath: 'totalScore' }, direction: 'DESCENDING' }
-                    ],
-                    limit: limit
-                }
-            })
-        });
-
-        if (!res.ok) return [];
-
-        const json = await res.json();
-        if (!Array.isArray(json)) return [];
-
-        return json
-            .filter((r: any) => r.document)
-            .map((r: any) => {
+        
+        // Configuration constants for trending algorithm
+        const DAYS_TO_CHECK = 7;
+        const DAILY_DECAY_FACTOR = 0.7; // 70% weight reduction per day
+        const AGGREGATION_MULTIPLIER = 2; // Fetch 2x items for better aggregation
+        const MIN_DAYS_TO_CHECK = 2; // Minimum days to check before early exit
+        
+        const aggregatedScores = new Map<string, { score: number, stats: any }>();
+        
+        for (let daysAgo = 0; daysAgo < DAYS_TO_CHECK; daysAgo++) {
+            const date = new Date();
+            date.setDate(date.getDate() - daysAgo);
+            const dateId = date.toISOString().split('T')[0];
+            const dailyPath = getAppPath().trendingDaily(dateId);
+            
+            // Use runQuery for efficient top-N retrieval
+            const runQueryUrl = `${BASE_URL}:runQuery`;
+            const segments = dailyPath.split('/');
+            const collectionId = segments.pop();
+            const parentPath = segments.join('/');
+            const parent = `projects/${PROJECT_ID}/databases/(default)/documents/${parentPath}`;
+            
+            const res = await fetch(runQueryUrl, {
+                method: 'POST',
+                headers: { Authorization: `Bearer ${token}` },
+                body: JSON.stringify({
+                    parent,
+                    structuredQuery: {
+                        from: [{ collectionId }],
+                        orderBy: [
+                            { field: { fieldPath: 'totalScore' }, direction: 'DESCENDING' }
+                        ],
+                        limit: limit * AGGREGATION_MULTIPLIER
+                    }
+                })
+            });
+            
+            if (!res.ok) continue;
+            
+            const json = await res.json();
+            if (!Array.isArray(json)) continue;
+            
+            // Aggregate scores with decay factor (more recent days have higher weight)
+            const decayFactor = Math.pow(DAILY_DECAY_FACTOR, daysAgo);
+            
+            json.filter((r: any) => r.document).forEach((r: any) => {
                 const doc = r.document;
                 const fields = parseFirestoreFields(doc.fields || {});
                 const spiritId = doc.name.split('/').pop();
-
-                return {
-                    spiritId,
-                    score: fields.totalScore || 0,
-                    stats: {
-                        views: fields.views || 0,
-                        wishlist: fields.wishlistAdds || 0,
-                        cabinet: fields.cabinetAdds || 0,
-                        reviews: fields.reviewsCount || 0
-                    }
-                };
+                const score = (fields.totalScore || 0) * decayFactor;
+                
+                const existing = aggregatedScores.get(spiritId);
+                if (existing) {
+                    // Accumulate score with decay factor
+                    existing.score += score;
+                    // Aggregate stats - note: this sums daily counts across days,
+                    // which is intentional to show total engagement over the period
+                    existing.stats.views += fields.views || 0;
+                    existing.stats.wishlist += fields.wishlistAdds || 0;
+                    existing.stats.cabinet += fields.cabinetAdds || 0;
+                    existing.stats.reviews += fields.reviewsCount || 0;
+                } else {
+                    aggregatedScores.set(spiritId, {
+                        score,
+                        stats: {
+                            views: fields.views || 0,
+                            wishlist: fields.wishlistAdds || 0,
+                            cabinet: fields.cabinetAdds || 0,
+                            reviews: fields.reviewsCount || 0
+                        }
+                    });
+                }
             });
+            
+            // If we have enough data from recent days, stop checking older days
+            if (aggregatedScores.size >= limit && daysAgo >= MIN_DAYS_TO_CHECK) {
+                break;
+            }
+        }
+        
+        // Convert map to array and sort by aggregated score
+        return Array.from(aggregatedScores.entries())
+            .map(([spiritId, data]) => ({
+                spiritId,
+                score: data.score,
+                stats: data.stats
+            }))
+            .sort((a, b) => b.score - a.score)
+            .slice(0, limit);
     }
 };
 

@@ -40,18 +40,24 @@ export function LiveReviews() {
 
     fetchReviews();
 
-    // Listen for custom event when a new review is submitted
+    // Listen for custom events when a review is submitted or deleted
     const handleReviewSubmitted = () => {
+      fetchReviews();
+    };
+    
+    const handleReviewDeleted = () => {
       fetchReviews();
     };
 
     if (typeof window !== 'undefined') {
       window.addEventListener('reviewSubmitted', handleReviewSubmitted);
+      window.addEventListener('reviewDeleted', handleReviewDeleted);
     }
 
     return () => {
       if (typeof window !== 'undefined') {
         window.removeEventListener('reviewSubmitted', handleReviewSubmitted);
+        window.removeEventListener('reviewDeleted', handleReviewDeleted);
       }
     };
   }, []);
