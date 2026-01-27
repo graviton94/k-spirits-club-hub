@@ -11,7 +11,10 @@ export default function OnboardingModal() {
     const [birthDay, setBirthDay] = useState('');
 
     useEffect(() => {
-        // Bypass age verification for search engine crawlers
+        // Bypass age verification for search engine crawlers (Googlebot, etc.)
+        // This simulates a verified adult user (e.g. 2000-01-01 birthdate) entering the site.
+        // The modal is suppressed so crawlers can access the main content (`children` in layout) immediately.
+        // 
         // Note: This is safe from hydration mismatches because:
         // 1. Initial state (isOpen = false) is consistent on server and client
         // 2. Bot detection only runs client-side after hydration completes

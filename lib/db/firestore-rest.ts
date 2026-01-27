@@ -733,14 +733,44 @@ export const reviewsDb = {
         const json = await res.json();
         if (!json.documents) return [];
 
-        return json.documents.map((doc: any) => {
+        const reviews = json.documents.map((doc: any) => {
             const data = parseFirestoreFields(doc.fields || {});
-            // Document ID is the spiritId in this subcollection
             if (!data.spiritId) {
                 data.spiritId = doc.name.split('/').pop();
             }
             return data;
         });
+
+        // Optimization: Fetch all related spirits to get authoritative Image URL and Name
+        // This fixes the issue where review documents might have missing or outdated image URLs
+        const spiritIds = [...new Set(reviews.map((r: any) => r.spiritId))].filter(Boolean);
+
+        if (spiritIds.length > 0) {
+            try {
+                // Fix: Call spiritsDb directly, not 'this'
+                const spirits = await spiritsDb.getByIds(spiritIds as string[]);
+                const spiritMap = new Map(spirits.map((s: Spirit) => [s.id, s]));
+
+                // Merge spirit data into review
+                return reviews.map((r: any) => {
+                    const spirit = spiritMap.get(r.spiritId);
+                    if (spirit) {
+                        return {
+                            ...r,
+                            imageUrl: spirit.thumbnailUrl || spirit.imageUrl || r.imageUrl, // Prefer Spirit Image
+                            spiritName: spirit.name || r.spiritName, // Prefer Spirit Name
+                            category: spirit.category // Useful for fallbacks
+                        };
+                    }
+                    return r;
+                });
+            } catch (error) {
+                console.error('Failed to enrich reviews with spirit data:', error);
+                return reviews; // Fallback to existing data
+            }
+        }
+
+        return reviews;
     },
 
     async toggleLike(spiritId: string, reviewUserId: string, likerUserId: string): Promise<{ likes: number, isLiked: boolean }> {
@@ -1026,50 +1056,63 @@ export const newArrivalsDb = {
      * Sync the new_arrivals cache with the top 10 published spirits by updatedAt
      * Called when admin confirms/publishes a spirit
      */
-    async syncCache(): Promise<void> {
+    async syncCache(): Promise<any> {
         const token = await getServiceAccountToken();
         const spiritsPath = 'spirits';
         const newArrivalsPath = getAppPath().newArrivals;
 
         try {
-            // 1. Query top 10 published spirits ordered by updatedAt DESC
+            // 1. Query top 10 published spirits ordered by updatedAt DESC (Changed from createdAt)
             const runQueryUrl = `${BASE_URL}:runQuery`;
             const parent = `projects/${PROJECT_ID}/databases/(default)/documents`;
+
+            const queryBody = {
+                parent,
+                structuredQuery: {
+                    from: [{ collectionId: spiritsPath }],
+                    where: {
+                        fieldFilter: {
+                            field: { fieldPath: 'isPublished' },
+                            op: 'EQUAL',
+                            value: { booleanValue: true }
+                        }
+                    },
+                    orderBy: [
+                        { field: { fieldPath: 'updatedAt' }, direction: 'DESCENDING' }
+                    ],
+                    limit: 10
+                }
+            };
+
+            // console.log('DEBUG: Sync Query:', JSON.stringify(queryBody));
 
             const res = await fetch(runQueryUrl, {
                 method: 'POST',
                 headers: { Authorization: `Bearer ${token}` },
-                body: JSON.stringify({
-                    parent,
-                    structuredQuery: {
-                        from: [{ collectionId: spiritsPath }],
-                        where: {
-                            fieldFilter: {
-                                field: { fieldPath: 'isPublished' },
-                                op: 'EQUAL',
-                                value: { booleanValue: true }
-                            }
-                        },
-                        orderBy: [
-                            { field: { fieldPath: 'createdAt' }, direction: 'DESCENDING' }
-                        ],
-                        limit: 10
-                    }
-                })
+                body: JSON.stringify(queryBody)
             });
 
             if (!res.ok) {
-                console.error('Failed to query spirits for new arrivals:', await res.text());
-                return;
+                const text = await res.text();
+                // This is expected if the new index is missing
+                console.error('Failed to query spirits for new arrivals:', text);
+                return { success: false, error: text, status: res.status };
             }
 
             const json = await res.json();
-            if (!Array.isArray(json)) return;
+            if (!Array.isArray(json)) return { success: false, error: 'Response not array', json };
 
             const top10 = json
                 .filter((r: any) => r.document)
                 .map((r: any) => fromFirestore(r.document))
                 .filter(s => s.imageUrl || s.thumbnailUrl); // Only include spirits with images
+
+            // Debug return
+            const debugResult = {
+                found: top10.length,
+                rawCount: json.length,
+                firstItem: top10[0]
+            };
 
             // 2. Update the new_arrivals cache with these 10 spirits
             const updatePromises = top10.map(async (spirit, index) => {
@@ -1077,8 +1120,6 @@ export const newArrivalsDb = {
                 const body = toFirestore(spirit);
 
                 // CRITICAL FIX: Inject the real Spirit ID into the fields
-                // because the document ID here is just the index '0', '1', etc.
-                // toFirestore() removes 'id' by default.
                 if (spirit.id) {
                     body.fields.id = { stringValue: spirit.id };
                 }
@@ -1096,7 +1137,7 @@ export const newArrivalsDb = {
 
             await Promise.all(updatePromises);
 
-            // 3. Delete extra slots if fewer than 10 spirits
+            // 3. Delete extra slots
             if (top10.length < 10) {
                 const deletePromises = [];
                 for (let i = top10.length; i < 10; i++) {
@@ -1105,20 +1146,16 @@ export const newArrivalsDb = {
                         fetch(url, {
                             method: 'DELETE',
                             headers: { Authorization: `Bearer ${token}` }
-                        }).then(res => {
-                            // Only log errors that aren't 404 (slot already doesn't exist)
-                            if (!res.ok && res.status !== 404) {
-                                console.error(`Failed to delete new arrivals slot ${i}: ${res.status}`);
-                            }
-                        }).catch(err => {
-                            console.error(`Error deleting new arrivals slot ${i}:`, err);
                         })
                     );
                 }
                 await Promise.all(deletePromises);
             }
+
+            return { success: true, ...debugResult };
         } catch (error) {
             console.error('Error syncing new arrivals cache:', error);
+            return { success: false, error: error instanceof Error ? error.message : String(error) };
         }
     },
 
@@ -1145,8 +1182,9 @@ export const newArrivalsDb = {
                 .map((doc: any) => fromFirestore(doc))
                 .filter((s: Spirit) => s.id) // Filter out invalid documents
                 .sort((a: Spirit, b: Spirit) => {
-                    const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
-                    const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+                    // Changed sort to updatedAt to match the backend query
+                    const dateA = a.updatedAt ? new Date(a.updatedAt).getTime() : (a.createdAt ? new Date(a.createdAt).getTime() : 0);
+                    const dateB = b.updatedAt ? new Date(b.updatedAt).getTime() : (b.createdAt ? new Date(b.createdAt).getTime() : 0);
                     return dateB - dateA;
                 });
         } catch (error) {
