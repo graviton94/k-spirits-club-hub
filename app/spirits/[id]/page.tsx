@@ -105,7 +105,7 @@ export async function generateMetadata({
     spirit.distillery,
     spirit.region,
     spirit.country,
-    (typeof spirit.abv === 'number' && spirit.abv > 0) ? `${spirit.abv}% ABV` : null,
+    (typeof spirit.abv === 'number' && spirit.abv > 0 && spirit.abv <= 100) ? `${spirit.abv}% ABV` : null,
   ].filter(Boolean);
   
   const baseDescription = descriptionParts.join(' · ');
@@ -113,7 +113,7 @@ export async function generateMetadata({
     ? `${baseDescription} - ${truncateDescription(spirit.metadata.description, DESCRIPTION_MAX_LENGTH)}` 
     : baseDescription;
   
-  const fullDescription = `${extendedDescription}${extendedDescription.match(/[.!?]$/) ? '' : '.'} ${SEO_SUFFIX}`;
+  const fullDescription = `${extendedDescription}${extendedDescription.match(/[.!?…。！？]$/) ? '' : '.'} ${SEO_SUFFIX}`;
 
   // OpenGraph title for social sharing
   const ogTitle = enName 
