@@ -197,11 +197,11 @@ export default async function SpiritDetailPage({
       priceCurrency: 'KRW',
     },
     additionalProperty: [
-      {
-        '@type': 'PropertyValue',
+      ...(formatAbv(spirit.abv) ? [{
+        '@type': 'PropertyValue' as const,
         name: 'Alcohol By Volume',
-        value: `${spirit.abv}%`,
-      },
+        value: formatAbv(spirit.abv),
+      }] : []),
       ...(spirit.country ? [{
         '@type': 'PropertyValue' as const,
         name: 'Country',
