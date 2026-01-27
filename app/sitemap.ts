@@ -8,7 +8,7 @@ import { spiritsDb } from '@/lib/db';
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Get base URL from environment or default to production URL
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://k-spirits-club-hub.com';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://k-spirits-club-hub.pages.dev';
   
   // Static routes with priority and changeFrequency
   const staticRoutes: MetadataRoute.Sitemap = [
