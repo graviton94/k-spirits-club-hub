@@ -49,7 +49,8 @@ function toFirestoreValue(value: any): any {
         if (Number.isInteger(value)) return { integerValue: value.toString() };
         return { doubleValue: value };
     }
-    if (value instanceof Date) return { timestampValue: value.toISOString() };
+    const isDate = value instanceof Date || Object.prototype.toString.call(value) === '[object Date]';
+    if (isDate) return { timestampValue: (value as Date).toISOString() };
 
     if (Array.isArray(value)) {
         return {
@@ -1357,9 +1358,15 @@ export const tasteProfileDb = {
 
 export const modificationDb = {
     async add(request: Omit<ModificationRequest, 'id'>) {
+        if (!PROJECT_ID) {
+            throw new Error("FIREBASE_PROJECT_ID is not defined in environment variables.");
+        }
+
         const token = await getServiceAccountToken();
         const collectionPath = 'modification_requests';
         const url = `${BASE_URL}/${collectionPath}`;
+
+        console.log(`[modificationDb] Submitting to ${url}`);
 
         const body = toFirestore(request);
         const res = await fetch(url, {
@@ -1373,10 +1380,13 @@ export const modificationDb = {
 
         if (!res.ok) {
             const errorText = await res.text();
+            console.error(`[modificationDb] Error: ${res.status}`, errorText);
             throw new Error(`Failed to submit modification request: ${errorText}`);
         }
 
         const doc = await res.json();
-        return doc.name.split('/').pop();
+        const id = doc.name.split('/').pop();
+        console.log(`[modificationDb] Success: Created document ${id}`);
+        return id;
     }
 };
