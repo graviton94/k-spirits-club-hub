@@ -79,11 +79,18 @@ function truncateDescription(description: string, maxLength: number): string {
 }
 
 // Helper function to format ABV for SEO descriptions
+// Note: Includes 0% ABV for non-alcoholic spirits
 function formatAbv(abv: number | null | undefined): string | null {
-  if (typeof abv === 'number' && abv > 0 && abv <= 100) {
+  if (typeof abv === 'number' && abv >= 0 && abv <= 100) {
     return `${abv}% ABV`;
   }
   return null;
+}
+
+// Helper function to build SEO-optimized description with suffix
+function buildSeoDescription(baseDescription: string, suffix: string): string {
+  const hasEndingPunctuation = baseDescription.match(ENDING_PUNCTUATION_REGEX);
+  return `${baseDescription}${hasEndingPunctuation ? '' : '.'} ${suffix}`;
 }
 
 // Generate dynamic metadata for SEO
@@ -111,6 +118,7 @@ export async function generateMetadata({
     : `${koName} 정보 및 리뷰`;
   
   // Build comprehensive description with category, ABV, origin
+  // Note: Category is placed first for better SEO weight on primary classification
   const descriptionParts = [
     spirit.category,
     spirit.distillery,
@@ -124,7 +132,7 @@ export async function generateMetadata({
     ? `${baseDescription} - ${truncateDescription(spirit.metadata.description, DESCRIPTION_MAX_LENGTH)}` 
     : baseDescription;
   
-  const fullDescription = `${extendedDescription}${extendedDescription.match(ENDING_PUNCTUATION_REGEX) ? '' : '.'} ${SEO_SUFFIX}`;
+  const fullDescription = buildSeoDescription(extendedDescription, SEO_SUFFIX);
 
   // OpenGraph title for social sharing
   const ogTitle = enName 
