@@ -280,48 +280,42 @@ export const spiritsDb = {
     async upsert(id: string, data: Partial<Spirit>) {
         const token = await getServiceAccountToken();
         const collectionPath = getAppPath().spirits;
-        const docPath = `${collectionPath}/${id}`;
-        const commitUrl = `${BASE_URL.replace('/documents', '')}:commit`;
+        const url = `${BASE_URL}/${collectionPath}/${id}`;
 
-        // Use Firestore server timestamp for updatedAt
-        const fieldTransforms = [{
-            fieldPath: 'updatedAt',
-            setToServerValue: 'REQUEST_TIME'
-        }];
-
-        const body = {
-            writes: [
-                {
-                    update: {
-                        name: `projects/${PROJECT_ID}/databases/(default)/documents/${docPath}`,
-                        fields: toFirestore(data).fields
-                    },
-                    updateMask: {
-                        fieldPaths: [...Object.keys(data).filter(k => k !== 'id')]
-                    }
-                },
-                {
-                    transform: {
-                        document: `projects/${PROJECT_ID}/databases/(default)/documents/${docPath}`,
-                        fieldTransforms
-                    }
-                }
-            ]
+        // Simplified Upsert: Use standard PATCH instead of :commit to avoid UpdateMask complexity
+        // We handle timestamp manually (Edge runtime time is sufficient)
+        const payload: any = {
+            ...data,
+            updatedAt: new Date().toISOString()
         };
 
-        const res = await fetch(commitUrl, {
-            method: 'POST',
-            headers: { 
+        const converted = toFirestore(payload);
+
+        // Construct Update Mask: Explicitly list all keys being sent
+        // This ensures partial updates work without deleting other fields
+        // and without "field missing in payload" errors.
+        const fieldKeys = Object.keys(converted.fields);
+        const queryParams = new URLSearchParams();
+        fieldKeys.forEach(key => queryParams.append('updateMask.fieldPaths', key));
+
+        const patchUrl = `${url}?${queryParams.toString()}`;
+
+        console.log(`[Spirit Upsert] Patching ${id}. Fields:`, fieldKeys.join(', '));
+
+        const res = await fetch(patchUrl, {
+            method: 'PATCH',
+            headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(body)
+            body: JSON.stringify(converted)
         });
 
         if (!res.ok) {
             const errorText = await res.text();
-            console.error('Failed to upsert spirit:', errorText);
-            throw new Error(`Failed to upsert spirit: ${errorText}`);
+            console.error('Failed to upsert spirit. Status:', res.status);
+            console.error('Error Body:', errorText);
+            throw new Error(`Failed to upsert spirit (${res.status}): ${errorText}`);
         }
     },
 
@@ -544,9 +538,10 @@ export const reviewsDb = {
         // 2. Insert new one at the top and deduplicate (by same spirit + same user)
         const newId = `${reviewData.spiritId}_${reviewData.userId}`;
         const filtered = current.filter(r => `${r.spiritId}_${r.userId}` !== newId);
-        const updated = [reviewData, ...filtered].slice(0, 3);
+        // BUFFER: Store top 6 instead of 3
+        const updated = [reviewData, ...filtered].slice(0, 6);
 
-        // 3. Update the 3 slots (0, 1, 2)
+        // 3. Update the 6 slots (0-5)
         const promises = updated.map(async (review, index) => {
             const url = `${BASE_URL}/${reviewsPath}/${index}`;
             const body = toFirestore(review);
@@ -583,45 +578,83 @@ export const reviewsDb = {
             });
             await Promise.all(promises);
 
-            // Re-sync "Latest 3" by fetching the top 3 from the main reviews collection
-            await this.refreshRecentSlots();
+            // Re-sync "Latest 3" with fallback to prevent wiping
+            const reviewId = `${spiritId}_${userId}`;
+            await this.refreshRecentSlots(reviewId);
         } catch (error) {
             console.error('Error deleting review:', error);
         }
     },
 
-    async refreshRecentSlots() {
+    async refreshRecentSlots(excludedId?: string) {
         const token = await getServiceAccountToken();
         const reviewsPath = getAppPath().reviews;
         const recentPath = getAppPath().recentReviews;
 
-        // 1. Fetch current reviews from public folder (using runQuery to get top 3 by date)
+        // 1. Fetch current top 3 from cache (Fallback source)
+        const currentCached = await this.getRecent();
+
+        // 2. Fetch fresh top 3 from master collection
         const parent = `projects/${PROJECT_ID}/databases/(default)/documents/${reviewsPath.split('/').slice(0, -1).join('/')}`;
         const collectionId = reviewsPath.split('/').pop();
 
-        const res = await fetch(`${BASE_URL}:runQuery`, {
-            method: 'POST',
-            headers: { Authorization: `Bearer ${token}` },
-            body: JSON.stringify({
-                parent,
-                structuredQuery: {
-                    from: [{ collectionId }],
-                    orderBy: [{ field: { fieldPath: 'createdAt' }, direction: 'DESCENDING' }],
-                    limit: 3
+        let freshReviews: any[] = [];
+        let queryFailed = false;
+
+        try {
+            const res = await fetch(`${BASE_URL}:runQuery`, {
+                method: 'POST',
+                headers: { Authorization: `Bearer ${token}` },
+                body: JSON.stringify({
+                    parent,
+                    structuredQuery: {
+                        from: [{ collectionId }],
+                        orderBy: [{ field: { fieldPath: 'createdAt' }, direction: 'DESCENDING' }],
+                        limit: 6 // BUFFER: Fetch more to have backups
+                    }
+                })
+            });
+
+            if (!res.ok) {
+                console.error('Failed to query reviews for refresh (HTTP Error):', await res.text());
+                queryFailed = true;
+            } else {
+                const json = await res.json();
+                if (Array.isArray(json)) {
+                    freshReviews = json
+                        .filter((r: any) => r.document)
+                        .map((r: any) => parseFirestoreFields(r.document.fields || {}));
                 }
-            })
-        });
+            }
+        } catch (err) {
+            console.error('Failed to query reviews for refresh (Exception):', err);
+            queryFailed = true;
+        }
 
-        if (!res.ok) return;
-        const json = await res.json();
-        const top3 = json
-            .filter((r: any) => r.document)
-            .map((r: any) => parseFirestoreFields(r.document.fields || {}));
+        // 3. Determine the final list
+        let finalList: any[] = [];
 
-        // 2. Overwrite slots 0, 1, 2
-        const updatePromises = [0, 1, 2].map(async (index) => {
+        if (!queryFailed && freshReviews.length > 0) {
+            // Happy path: We got fresh data
+            finalList = freshReviews;
+        } else {
+            // Fallback path: Query failed OR returned 0 items (which might be a bug if we know we have data)
+            // We use the cached version, filtering out the excluded ID if provided.
+            console.warn('[refreshRecentSlots] Using cached fallback strategy. QueryFailed:', queryFailed, 'FreshCount:', freshReviews.length);
+
+            finalList = currentCached;
+            if (excludedId) {
+                finalList = finalList.filter(r => `${r.spiritId}_${r.userId}` !== excludedId);
+            }
+        }
+
+        // Limit to 6 items (Buffer size)
+        finalList = finalList.slice(0, 6);
+
+        // 4. Overwrite slots 0-5
+        const updatePromises = [0, 1, 2, 3, 4, 5].map(async (index) => {
             const url = `${BASE_URL}/${recentPath}/${index}`;
-            const review = top3[index];
+            const review = finalList[index];
             if (review) {
                 await fetch(url, {
                     method: 'PATCH',
@@ -744,14 +777,12 @@ export const reviewsDb = {
         }));
 
         // 3. Increment author heart count
+        // 3. Increment author heart count
+        // FIX: Split into two operations because 'update' and 'transform' cannot be in the same Write object
+        // However, for efficiency and since profile should exist, we just use transform.
+        // If the profile strictly uses 'users' collection, it should exist if they reviewed.
         const profilePath = `users/${reviewUserId}`;
         writes.push({
-            update: {
-                name: `projects/${PROJECT_ID}/databases/(default)/documents/${profilePath}`,
-                fields: {
-                    heartsReceived: { integerValue: "0" } // Dummy for structure, will use transform
-                }
-            } as any, // TypeScript union issue
             transform: {
                 document: `projects/${PROJECT_ID}/databases/(default)/documents/${profilePath}`,
                 fieldTransforms: [
@@ -845,7 +876,9 @@ export const trendingDb = {
     async logEvent(spiritId: string, action: 'view' | 'wishlist' | 'cabinet' | 'review') {
         const token = await getServiceAccountToken();
         const dateId = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-        const dailyDocPath = `${getAppPath().trendingDaily(dateId)}/${spiritId}`;
+        // FIX: Use subcollection 'spirits' for cleaner structure and to avoid issues
+        // Path: artifacts/.../trending/daily/{dateId}/spirits/{spiritId}
+        const dailyDocPath = `${getAppPath().trendingDaily(dateId)}/spirits/${spiritId}`;
         const commitUrl = `${BASE_URL.replace('/documents', '')}:commit`;
 
         const fieldMap: Record<string, { field: string, weight: number }> = {
@@ -891,28 +924,29 @@ export const trendingDb = {
 
     async getTopTrending(limit: number = 5): Promise<any[]> {
         const token = await getServiceAccountToken();
-        
+
         // Configuration constants for trending algorithm
         const DAYS_TO_CHECK = 7;
         const DAILY_DECAY_FACTOR = 0.7; // 70% weight reduction per day
         const AGGREGATION_MULTIPLIER = 2; // Fetch 2x items for better aggregation
         const MIN_DAYS_TO_CHECK = 2; // Minimum days to check before early exit
-        
+
         const aggregatedScores = new Map<string, { score: number, stats: any }>();
-        
+
         for (let daysAgo = 0; daysAgo < DAYS_TO_CHECK; daysAgo++) {
             const date = new Date();
             date.setDate(date.getDate() - daysAgo);
             const dateId = date.toISOString().split('T')[0];
             const dailyPath = getAppPath().trendingDaily(dateId);
-            
+
             // Use runQuery for efficient top-N retrieval
             const runQueryUrl = `${BASE_URL}:runQuery`;
-            const segments = dailyPath.split('/');
-            const collectionId = segments.pop();
-            const parentPath = segments.join('/');
-            const parent = `projects/${PROJECT_ID}/databases/(default)/documents/${parentPath}`;
-            
+
+            // FIX: Query the 'spirits' subcollection within the daily document
+            // Parent: projects/.../databases/(default)/documents/artifacts/.../trending/daily/{dateId}
+            const parent = `projects/${PROJECT_ID}/databases/(default)/documents/${dailyPath}`;
+            const collectionId = 'spirits';
+
             const res = await fetch(runQueryUrl, {
                 method: 'POST',
                 headers: { Authorization: `Bearer ${token}` },
@@ -927,21 +961,21 @@ export const trendingDb = {
                     }
                 })
             });
-            
+
             if (!res.ok) continue;
-            
+
             const json = await res.json();
             if (!Array.isArray(json)) continue;
-            
+
             // Aggregate scores with decay factor (more recent days have higher weight)
             const decayFactor = Math.pow(DAILY_DECAY_FACTOR, daysAgo);
-            
+
             json.filter((r: any) => r.document).forEach((r: any) => {
                 const doc = r.document;
                 const fields = parseFirestoreFields(doc.fields || {});
                 const spiritId = doc.name.split('/').pop();
                 const score = (fields.totalScore || 0) * decayFactor;
-                
+
                 const existing = aggregatedScores.get(spiritId);
                 if (existing) {
                     // Accumulate score with decay factor
@@ -964,13 +998,13 @@ export const trendingDb = {
                     });
                 }
             });
-            
+
             // If we have enough data from recent days, stop checking older days
             if (aggregatedScores.size >= limit && daysAgo >= MIN_DAYS_TO_CHECK) {
                 break;
             }
         }
-        
+
         // Convert map to array and sort by aggregated score
         return Array.from(aggregatedScores.entries())
             .map(([spiritId, data]) => ({
@@ -1017,7 +1051,7 @@ export const newArrivalsDb = {
                             }
                         },
                         orderBy: [
-                            { field: { fieldPath: 'updatedAt' }, direction: 'DESCENDING' }
+                            { field: { fieldPath: 'createdAt' }, direction: 'DESCENDING' }
                         ],
                         limit: 10
                     }
@@ -1046,7 +1080,7 @@ export const newArrivalsDb = {
                     headers: { Authorization: `Bearer ${token}` },
                     body: JSON.stringify(body)
                 });
-                
+
                 if (!res.ok) {
                     console.error(`Failed to update new arrivals slot ${index}:`, await res.text());
                 }
@@ -1101,7 +1135,12 @@ export const newArrivalsDb = {
 
             return json.documents
                 .map((doc: any) => fromFirestore(doc))
-                .filter((s: Spirit) => s.id); // Filter out invalid documents
+                .filter((s: Spirit) => s.id) // Filter out invalid documents
+                .sort((a: Spirit, b: Spirit) => {
+                    const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+                    const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+                    return dateB - dateA;
+                });
         } catch (error) {
             console.error('Error getting new arrivals:', error);
             return [];

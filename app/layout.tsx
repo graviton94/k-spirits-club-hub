@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from './context/auth-context';
@@ -21,9 +22,9 @@ export const metadata: Metadata = {
     google: "EztyFtmuOluuqxjs6wbD0Xx1DPSJwO3FXcY8Nz3CQ_o",
   },
   keywords: [
-    "위스키", "증류주", "술", "증류소", "리뷰", "대한민국", "K-Spirits", "술 정보", 
+    "위스키", "증류주", "술", "증류소", "리뷰", "대한민국", "K-Spirits", "술 정보",
     "주류 검색", "전통주", "Whisky", "soju", "위스키 검색", "주류 DB", "주류 데이터베이스",
-    "한국 술 정보", "전통주 정보", "전통주 테이스팅 노트", "위스키 리뷰", 
+    "한국 술 정보", "전통주 정보", "전통주 테이스팅 노트", "위스키 리뷰",
     "Whisky Database", "Korean Spirits", "Korean Traditional Liquor"
   ],
   manifest: "/manifest.json",
@@ -66,6 +67,11 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
       </head>
       <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`}>
+        <Script
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5574169833640769"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
         <main className="min-h-screen pb-32">
           <AuthProvider>
             <SpiritsCacheProvider>
@@ -96,7 +102,7 @@ export default function RootLayout({
 
         {/* Sticky Footer Ad */}
         {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT && (
-          <StickyFooterAd 
+          <StickyFooterAd
             client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT}
             slot={process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT}
           />

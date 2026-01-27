@@ -69,7 +69,10 @@ export async function GET(request: NextRequest) {
     const mode = searchParams.get('mode');
 
     if (mode === 'recent') {
-      const reviews = await reviewsDb.getRecent();
+      const allRecent = await reviewsDb.getRecent();
+      // Only return the top 3 to the frontend (even if we store more)
+      const reviews = allRecent.slice(0, 3);
+
       return NextResponse.json({
         reviews: reviews.map(r => ({
           id: `${r.spiritId}_${r.userId}`,
