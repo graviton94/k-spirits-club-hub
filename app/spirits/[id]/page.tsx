@@ -9,6 +9,12 @@ export const runtime = 'edge';
 
 const DESCRIPTION_MAX_LENGTH = 100;
 
+// SEO suffix for spirit descriptions
+const SEO_SUFFIX = "주류 리뷰, 테이스팅 노트, 가격 정보를 K-Spirits Club에서 확인하세요.";
+
+// Regex pattern for detecting ending punctuation (English, Korean, and special characters)
+const ENDING_PUNCTUATION_REGEX = /[.!?…。！？]$/;
+
 // Review interface matching the client format
 interface TransformedReview {
   id: string;
@@ -72,6 +78,21 @@ function truncateDescription(description: string, maxLength: number): string {
   return (lastSpace > 0 ? truncated.substring(0, lastSpace) : truncated) + '...';
 }
 
+// Helper function to format ABV for SEO descriptions
+// Note: Includes 0% ABV for non-alcoholic spirits
+function formatAbv(abv: number | null | undefined): string | null {
+  if (typeof abv === 'number' && abv >= 0 && abv <= 100) {
+    return `${abv}% ABV`;
+  }
+  return null;
+}
+
+// Helper function to build SEO-optimized description with suffix
+function buildSeoDescription(baseDescription: string, suffix: string): string {
+  const hasEndingPunctuation = ENDING_PUNCTUATION_REGEX.test(baseDescription);
+  return `${baseDescription}${hasEndingPunctuation ? '' : '.'} ${suffix}`;
+}
+
 // Generate dynamic metadata for SEO
 export async function generateMetadata({
   params,
@@ -83,41 +104,56 @@ export async function generateMetadata({
 
   if (!spirit) {
     return {
-      title: "Spirit Not Found | K-Spirits Club",
+      title: "Spirit Not Found",
       description: "The requested spirit could not be found.",
     };
   }
 
   const koName = spirit.name;
   const enName = spirit.metadata?.name_en;
-  const title = enName ? `${koName} (${enName}) | K-Spirits Club` : `${koName} | K-Spirits Club`;
   
+  // Enhanced title format with Korean and English names
+  const title = enName 
+    ? `${koName} (${enName}) 정보 및 리뷰` 
+    : `${koName} 정보 및 리뷰`;
+  
+  // Build comprehensive description with category, ABV, origin
+  // Note: Category is placed first for better SEO weight on primary classification
   const descriptionParts = [
+    spirit.category,
     spirit.distillery,
     spirit.region,
     spirit.country,
-    `${spirit.abv}% ABV`,
-    spirit.category,
+    formatAbv(spirit.abv),
   ].filter(Boolean);
   
-  const description = descriptionParts.join(' · ') + 
-    (spirit.metadata?.description 
-      ? ` - ${truncateDescription(spirit.metadata.description, DESCRIPTION_MAX_LENGTH)}` 
-      : '');
+  const baseDescription = descriptionParts.join(' · ');
+  const extendedDescription = spirit.metadata?.description 
+    ? `${baseDescription} - ${truncateDescription(spirit.metadata.description, DESCRIPTION_MAX_LENGTH)}` 
+    : baseDescription;
+  
+  const fullDescription = buildSeoDescription(extendedDescription, SEO_SUFFIX);
+
+  // OpenGraph title for social sharing
+  const ogTitle = enName 
+    ? `${koName} (${enName}) 정보 및 리뷰 | K-Spirits Club` 
+    : `${koName} 정보 및 리뷰 | K-Spirits Club`;
 
   return {
     title,
-    description,
+    description: fullDescription,
     openGraph: {
-      title,
-      description,
+      title: ogTitle,
+      description: fullDescription,
       images: spirit.imageUrl ? [spirit.imageUrl] : [],
       type: 'website',
+      locale: 'ko_KR',
+      siteName: 'K-Spirits Club',
     },
     twitter: {
       card: 'summary_large_image',
-      title,
-      description,
+      title: ogTitle,
+      description: fullDescription,
       images: spirit.imageUrl ? [spirit.imageUrl] : [],
     },
   };
@@ -169,11 +205,11 @@ export default async function SpiritDetailPage({
       priceCurrency: 'KRW',
     },
     additionalProperty: [
-      {
-        '@type': 'PropertyValue',
+      ...(formatAbv(spirit.abv) ? [{
+        '@type': 'PropertyValue' as const,
         name: 'Alcohol By Volume',
-        value: `${spirit.abv}%`,
-      },
+        value: formatAbv(spirit.abv),
+      }] : []),
       ...(spirit.country ? [{
         '@type': 'PropertyValue' as const,
         name: 'Country',
