@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { isBotClient } from '@/lib/utils/bot-detection';
 
 export default function OnboardingModal() {
     const [isOpen, setIsOpen] = useState(false);
@@ -10,6 +11,15 @@ export default function OnboardingModal() {
     const [birthDay, setBirthDay] = useState('');
 
     useEffect(() => {
+        // Bypass age verification for search engine crawlers
+        // Note: This is safe from hydration mismatches because:
+        // 1. Initial state (isOpen = false) is consistent on server and client
+        // 2. Bot detection only runs client-side after hydration completes
+        // 3. Modal state only changes after component mounts (post-hydration)
+        if (isBotClient()) {
+            return;
+        }
+
         // Check if user has already verified their age
         const ageVerified = localStorage.getItem('kspirits_age_verified');
         if (!ageVerified) {
