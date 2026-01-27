@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { isBotClient } from '@/lib/utils/bot-detection';
 
 export default function OnboardingModal() {
     const [isOpen, setIsOpen] = useState(false);
@@ -10,6 +11,11 @@ export default function OnboardingModal() {
     const [birthDay, setBirthDay] = useState('');
 
     useEffect(() => {
+        // Bypass age verification for search engine crawlers
+        if (isBotClient()) {
+            return;
+        }
+
         // Check if user has already verified their age
         const ageVerified = localStorage.getItem('kspirits_age_verified');
         if (!ageVerified) {

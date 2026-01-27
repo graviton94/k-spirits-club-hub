@@ -1,11 +1,12 @@
 import { MetadataRoute } from 'next';
 
-// Paths that should not be indexed by search engines
-const DISALLOWED_PATHS = ['/admin', '/api'];
-
 /**
  * Robots.txt Configuration
  * Defines crawling rules for search engine bots
+ * 
+ * Strategy:
+ * - Allow public API endpoints for data indexing (/api/spirits, /api/reviews, /api/trending)
+ * - Disallow sensitive endpoints (/api/admin, /api/auth)
  */
 export default function robots(): MetadataRoute.Robots {
   // Get base URL from environment or default to production URL
@@ -15,8 +16,17 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: '*',
-        allow: '/',
-        disallow: DISALLOWED_PATHS,
+        allow: [
+          '/',
+          '/api/spirits',
+          '/api/reviews',
+          '/api/trending',
+        ],
+        disallow: [
+          '/admin',
+          '/api/admin',
+          '/api/auth',
+        ],
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
