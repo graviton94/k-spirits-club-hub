@@ -40,7 +40,7 @@ function fromFirestore(doc: any): Spirit {
 /**
  * Helper to Convert Object to Firestore JSON
  */
-function toFirestore(data: Partial<Spirit>): any {
+function toFirestore(data: any): any {
     const fields: any = {};
     for (const [key, value] of Object.entries(data)) {
         if (key === 'id') continue;
@@ -378,6 +378,8 @@ export const cabinetDb = {
         // Path: artifacts/{appId}/users/{userId}/cabinet (collection)
         const cabinetPath = getAppPath().userCabinet(userId);
         const url = `${BASE_URL}/${cabinetPath}`;
+
+        console.log(`[Firestore] Fetching Cabinet: ${url}`); // DEBUG PATH
 
         const res = await fetch(url, {
             headers: { Authorization: `Bearer ${token}` }
@@ -1213,4 +1215,123 @@ export const newArrivalsDb = {
     }
 };
 
+export const tasteProfileDb = {
+    async get(userId: string): Promise<any | null> {
+        const token = await getServiceAccountToken();
+        // Path: users/{userId}/taste_data/profile
+        // Note: 'taste_data' is a subcollection, 'profile' is the document ID
+        const path = `users/${userId}/taste_data/profile`;
+        const url = `${BASE_URL}/${path}`;
 
+        try {
+            const res = await fetch(url, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            if (res.status === 404) return null;
+            if (!res.ok) {
+                console.warn(`[TasteProfile] Failed to fetch: ${res.status}`);
+                return null;
+            }
+
+            const doc = await res.json();
+            return parseFirestoreFields(doc.fields || {});
+        } catch (error) {
+            console.error('[TasteProfile] Error fetching:', error);
+            return null;
+        }
+    },
+
+    async save(userId: string, data: any) {
+        const token = await getServiceAccountToken();
+        const path = `users/${userId}/taste_data/profile`;
+        const url = `${BASE_URL}/${path}`;
+
+        // Add userId to data if not present, though path determines location
+        const payload = { ...data, userId };
+
+        // Use PATCH to upsert
+        const body = toFirestore(payload);
+
+        // Generate UpdateMask for all top-level keys
+        const fieldKeys = Object.keys(body.fields);
+        const queryParams = new URLSearchParams();
+        fieldKeys.forEach(key => queryParams.append('updateMask.fieldPaths', key));
+
+        const patchUrl = `${url}?${queryParams.toString()}`;
+
+        const res = await fetch(patchUrl, {
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        });
+
+        if (!res.ok) {
+            const errorText = await res.text();
+            throw new Error(`Failed to save taste profile: ${errorText}`);
+        }
+    },
+
+    async getUsage(userId: string): Promise<{ date: string, count: number }> {
+        const token = await getServiceAccountToken();
+        const path = `users/${userId}/taste_data/usage`;
+        const url = `${BASE_URL}/${path}`;
+
+        try {
+            const res = await fetch(url, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            if (res.status === 404) return { date: '', count: 0 };
+
+            const doc = await res.json();
+            const data = parseFirestoreFields(doc.fields || {});
+            return { date: data.date || '', count: data.count || 0 };
+        } catch (error) {
+            return { date: '', count: 0 };
+        }
+    },
+
+    async incrementUsage(userId: string, date: string) {
+        const token = await getServiceAccountToken();
+        const path = `users/${userId}/taste_data/usage`;
+        const url = `${BASE_URL}/${path}`;
+        const commitUrl = `${BASE_URL.replace('/documents', '')}:commit`;
+
+        // We need an atomic increment that DOES NOT increment if the date is different
+        // But Firestore REST :commit condition is complex.
+        // Simplified Logic: Read -> Check -> Write (Optimistic Locking is hard here, so we trust "Latest win" for now or just overwrite)
+
+        // Better approach: Just blindly overwrite if date is different, or increment if same.
+        // But to be safe and simple: just read in API route, check logic, then simple upsert here.
+        // Actually, let's keep logic in API route and just provide a 'setUsage' here.
+        // Renaming to updateUsage for clarity.
+
+        const body = toFirestore({ date, count: 1 }); // Fallback body? No, we want to specify count.
+    },
+
+    async setUsage(userId: string, date: string, count: number) {
+        const token = await getServiceAccountToken();
+        const path = `users/${userId}/taste_data/usage`;
+        const url = `${BASE_URL}/${path}`;
+
+        const body = toFirestore({ date, count });
+        const fieldKeys = ['date', 'count'];
+        const queryParams = new URLSearchParams();
+        fieldKeys.forEach(key => queryParams.append('updateMask.fieldPaths', key));
+
+        const patchUrl = `${url}?${queryParams.toString()}`;
+
+        await fetch(patchUrl, {
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        });
+    }
+};

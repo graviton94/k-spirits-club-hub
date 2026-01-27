@@ -294,40 +294,51 @@ export default function ReviewsPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
             onClick={() => !isDeleting && setDeleteTarget(null)}
           >
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-background border-2 border-border w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden"
+              initial={{ scale: 0.95, opacity: 0, y: 10 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 10 }}
+              className="bg-white dark:bg-zinc-900 w-full max-w-sm rounded-[2rem] shadow-2xl overflow-hidden relative"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="p-6 bg-secondary border-b border-border">
-                <h2 className="text-xl font-black text-foreground text-center">리뷰 삭제</h2>
-              </div>
+              {/* Decorative Header Background */}
+              <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-br from-rose-500/10 to-orange-500/10 z-0" />
 
-              <div className="p-6">
-                <p className="text-center text-foreground mb-6">
-                  <span className="font-bold">{deleteTarget.name}</span>의<br />
-                  리뷰를 정말 삭제하시겠습니까?
+              <div className="relative z-10 p-8 flex flex-col items-center text-center">
+                {/* Icon Bubble */}
+                <div className="w-20 h-20 bg-rose-50 dark:bg-rose-900/20 rounded-full flex items-center justify-center mb-6 shadow-inner ring-1 ring-rose-500/20">
+                  <Trash2 className="w-10 h-10 text-rose-500" />
+                </div>
+
+                <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2">
+                  리뷰 삭제
+                </h2>
+
+                <p className="text-slate-500 dark:text-slate-400 mb-8 text-sm leading-relaxed">
+                  <span className="font-bold text-slate-900 dark:text-white block text-base mb-1">
+                    "{deleteTarget.name}"
+                  </span>
+                  이 리뷰를 삭제하시겠습니까?<br />
+                  삭제된 리뷰는 복구할 수 없습니다.
                 </p>
 
-                <div className="flex gap-3">
+                <div className="flex gap-3 w-full">
                   <button
                     onClick={() => setDeleteTarget(null)}
                     disabled={isDeleting}
-                    className="flex-1 py-3 bg-secondary hover:bg-secondary/80 text-foreground font-bold rounded-xl border-2 border-border transition-all disabled:opacity-50"
+                    className="flex-1 py-3.5 px-4 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-2xl transition-all active:scale-[0.98]"
                   >
                     취소
                   </button>
                   <button
                     onClick={handleDeleteReview}
                     disabled={isDeleting}
-                    className="flex-1 py-3 bg-destructive hover:bg-destructive/90 text-destructive-foreground font-bold rounded-xl transition-all disabled:opacity-50"
+                    className="flex-1 py-3.5 px-4 bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 text-white shadow-lg shadow-rose-500/30 font-bold rounded-2xl transition-all active:scale-[0.98]"
                   >
-                    {isDeleting ? '삭제 중...' : '삭제'}
+                    {isDeleting ? '삭제 중...' : '삭제하기'}
                   </button>
                 </div>
               </div>

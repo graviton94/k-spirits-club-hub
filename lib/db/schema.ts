@@ -6,6 +6,33 @@ export type SpiritStatus = 'RAW' | 'ENRICHED' | 'READY_FOR_CONFIRM' | 'PUBLISHED
  * Minimized search index structure for bandwidth optimization.
  * Uses short keys to reduce JSON payload size.
  */
+// Taste Analysis Types
+export interface FlavorStats {
+  woody: number;  // 우디함 (0-100)
+  peaty: number;  // 피트/스모키 (0-100)
+  floral: number; // 꽃향 (0-100)
+  fruity: number; // 과일향 (0-100)
+  nutty: number;  // 견과류/고소함 (0-100)
+  richness: number; // 바디감 (0-100)
+}
+
+export interface UserTasteProfile {
+  userId: string;
+  analyzedAt: Date; // 분석 시점 (재분석 쿨타임 관리용)
+  stats: FlavorStats;
+  persona: {
+    title: string;       // 예: "고독한 아일라의 사냥꾼"
+    description: string; // AI 분석 텍스트
+    keywords: string[];  // 예: ["#피트", "#CS", "#독병"]
+  };
+  recommendation: {
+    spiritId: string;
+    name: string;
+    matchRate: number;   // 일치도 (예: 98)
+    linkUrl?: string;    // 제휴/구매 링크
+  } | null;
+}
+
 export interface SpiritSearchIndex {
   i: string;           // id
   n: string;           // name
@@ -16,7 +43,7 @@ export interface SpiritSearchIndex {
   t: string | null;    // thumbnailUrl
   a: number;           // abv (alcohol by volume)
   d: string | null;    // distillery
-  cre?: string;        // createdAt
+  cre: string | null;  // createdAt (for new/trending)
   m?: any;             // metadata (optional, minimized)
   s?: string;          // status (only for admin)
 }

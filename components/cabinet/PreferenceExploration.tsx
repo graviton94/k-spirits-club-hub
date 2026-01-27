@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from "framer-motion";
-import MindMap from "@/components/cabinet/MindMap";
+import FlavorView from "@/components/cabinet/FlavorView";
 import GuestOverlay from "./GuestOverlay";
 
 interface PreferenceExplorationProps {
@@ -11,7 +11,7 @@ interface PreferenceExplorationProps {
 }
 
 export default function PreferenceExploration({
-    flavorAnalysis,
+    flavorAnalysis, // Not used in new FlavorView, kept for interface compat for now
     profile,
     loading
 }: PreferenceExplorationProps) {
@@ -26,7 +26,9 @@ export default function PreferenceExploration({
             {!profile && !loading && (
                 <GuestOverlay flavor />
             )}
-            <MindMap analysis={flavorAnalysis} profileImage={profile?.profileImage} />
+
+            {/* New Taste Analysis View */}
+            <FlavorView />
         </motion.div>
     );
 }
