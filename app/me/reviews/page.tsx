@@ -3,12 +3,10 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/app/context/auth-context';
 import { useRouter } from 'next/navigation';
-import { getUserCabinet, removeFromCabinet } from '@/app/actions/cabinet';
 import { getCategoryFallbackImage } from '@/lib/utils/image-fallback';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Trash2 } from 'lucide-react';
 import Link from 'next/link';
-import { CabinetItem } from '@/lib/utils/spirit-adapters';
 
 interface SpiritWithReview {
   id: string;
@@ -84,7 +82,20 @@ export default function ReviewsPage() {
 
     setIsDeleting(true);
     try {
-      await removeFromCabinet(user.uid, deleteTarget.id);
+      // Use the review API endpoint to delete the review properly
+      const response = await fetch(`/api/reviews?spiritId=${deleteTarget.id}`, {
+        method: 'DELETE',
+        headers: {
+          'x-user-id': user.uid
+        }
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Failed to delete review:', response.status, errorText);
+        throw new Error(`Failed to delete review: ${response.status}`);
+      }
+
       setSpirits(prev => prev.filter(s => s.id !== deleteTarget.id));
       setDeleteTarget(null);
       alert('리뷰가 삭제되었습니다.');

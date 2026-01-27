@@ -30,6 +30,11 @@ export default function CabinetPage() {
   const [spirits, setSpirits] = useState<Spirit[]>([]);
   const [isLoadingCabinet, setIsLoadingCabinet] = useState(false);
 
+  // User stats state
+  const [reviewCount, setReviewCount] = useState(0);
+  const [likesReceived, setLikesReceived] = useState(0);
+  const [isLoadingStats, setIsLoadingStats] = useState(false);
+
   // Modal state
   const [selectedSpirit, setSelectedSpirit] = useState<Spirit | null>(null);
   const [reviewModalOpen, setReviewModalOpen] = useState(false);
@@ -83,7 +88,41 @@ export default function CabinetPage() {
   useEffect(() => {
     if (loading) return;
     fetchCabinet();
+    fetchUserStats();
   }, [loading, fetchCabinet]);
+
+  // Fetch user stats
+  const fetchUserStats = async () => {
+    if (!user) {
+      setReviewCount(0);
+      setLikesReceived(0);
+      return;
+    }
+
+    setIsLoadingStats(true);
+    try {
+      const response = await fetch('/api/users/stats', {
+        headers: {
+          'x-user-id': user.uid
+        }
+      });
+
+      if (response.ok) {
+        const stats = await response.json();
+        setReviewCount(stats.reviewCount || 0);
+        setLikesReceived(stats.totalLikes || 0);
+      } else {
+        setReviewCount(0);
+        setLikesReceived(0);
+      }
+    } catch (error) {
+      console.error('Failed to load user stats:', error);
+      setReviewCount(0);
+      setLikesReceived(0);
+    } finally {
+      setIsLoadingStats(false);
+    }
+  };
 
   // Handle review submission
   const handleReviewSubmit = async (review: UserReview) => {
@@ -183,11 +222,11 @@ export default function CabinetPage() {
             <p className="text-[9px] sm:text-[10px] font-black text-muted-foreground uppercase tracking-widest mt-1 opacity-60">Bottles</p>
           </div>
           <div className="bg-card/40 backdrop-blur-md border border-border/50 rounded-2xl p-4 sm:p-6 text-center shadow-xl shadow-black/5 hover:border-amber-500/30 transition-colors group">
-            <p className="text-2xl sm:text-3xl font-black text-foreground group-hover:scale-110 transition-transform duration-300">{profile?.reviewsWritten || 0}</p>
+            <p className="text-2xl sm:text-3xl font-black text-foreground group-hover:scale-110 transition-transform duration-300">{isLoadingStats ? '...' : reviewCount}</p>
             <p className="text-[9px] sm:text-[10px] font-black text-muted-foreground uppercase tracking-widest mt-1 opacity-60">Reviews</p>
           </div>
           <div className="bg-card/40 backdrop-blur-md border border-border/50 rounded-2xl p-4 sm:p-6 text-center shadow-xl shadow-black/5 hover:border-rose-500/30 transition-colors group">
-            <p className="text-2xl sm:text-3xl font-black text-rose-500 group-hover:scale-110 transition-transform duration-300">{profile?.heartsReceived || 0}</p>
+            <p className="text-2xl sm:text-3xl font-black text-rose-500 group-hover:scale-110 transition-transform duration-300">{isLoadingStats ? '...' : likesReceived}</p>
             <p className="text-[9px] sm:text-[10px] font-black text-muted-foreground uppercase tracking-widest mt-1 opacity-60">Hearts</p>
           </div>
         </div>

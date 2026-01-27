@@ -20,6 +20,7 @@ export default function MyPage() {
     const [uploadMethod, setUploadMethod] = useState<'url' | 'file'>('url');
     const [uploadError, setUploadError] = useState('');
     const [reviewCount, setReviewCount] = useState(0);
+    const [likesReceived, setLikesReceived] = useState(0);
     const [cabinetCount, setCabinetCount] = useState(0);
     const [isLoadingStats, setIsLoadingStats] = useState(false);
 
@@ -44,26 +45,31 @@ export default function MyPage() {
 
         setIsLoadingStats(true);
         try {
+            // Fetch cabinet data for cabinet count
             const cabinetData = await getUserCabinet(user.uid) as CabinetItem[];
-
-            // Count total cabinet items (excluding wishlist)
             const ownedSpirits = cabinetData.filter((item) => !item.isWishlist);
             setCabinetCount(ownedSpirits.length);
 
-            // Count items with reviews - check for personalNotes or userReview
-            const withReviews = cabinetData.filter((item) => {
-                // Check both personalNotes (new field) and userReview (legacy field)
-                if (item.personalNotes && item.personalNotes.trim().length > 0) {
-                    return true;
+            // Fetch review statistics from the new API endpoint
+            const response = await fetch('/api/users/stats', {
+                headers: {
+                    'x-user-id': user.uid
                 }
-                if (item.userReview && (item.userReview.comment || item.userReview.ratingOverall)) {
-                    return true;
-                }
-                return false;
             });
-            setReviewCount(withReviews.length);
+
+            if (response.ok) {
+                const stats = await response.json();
+                setReviewCount(stats.reviewCount || 0);
+                setLikesReceived(stats.totalLikes || 0);
+            } else {
+                // Fallback to 0 if API fails
+                setReviewCount(0);
+                setLikesReceived(0);
+            }
         } catch (error) {
             console.error('Failed to load user stats:', error);
+            setReviewCount(0);
+            setLikesReceived(0);
         } finally {
             setIsLoadingStats(false);
         }
@@ -242,7 +248,7 @@ export default function MyPage() {
                                     </Link>
                                     <div className="bg-secondary/30 p-4 rounded-2xl flex flex-col items-center">
                                         <span className="text-2xl mb-1">❤️</span>
-                                        <span className="text-lg font-black">0</span>
+                                        <span className="text-lg font-black">{isLoadingStats ? '...' : likesReceived}</span>
                                         <span className="text-xs text-muted-foreground">받은 추천</span>
                                     </div>
                                     <Link href="/cabinet" className="bg-secondary/30 p-4 rounded-2xl flex flex-col items-center hover:bg-secondary/50 transition-colors">
