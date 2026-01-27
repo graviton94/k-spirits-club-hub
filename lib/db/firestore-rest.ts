@@ -1075,6 +1075,14 @@ export const newArrivalsDb = {
             const updatePromises = top10.map(async (spirit, index) => {
                 const url = `${BASE_URL}/${newArrivalsPath}/${index}`;
                 const body = toFirestore(spirit);
+
+                // CRITICAL FIX: Inject the real Spirit ID into the fields
+                // because the document ID here is just the index '0', '1', etc.
+                // toFirestore() removes 'id' by default.
+                if (spirit.id) {
+                    body.fields.id = { stringValue: spirit.id };
+                }
+
                 const res = await fetch(url, {
                     method: 'PATCH',
                     headers: { Authorization: `Bearer ${token}` },
