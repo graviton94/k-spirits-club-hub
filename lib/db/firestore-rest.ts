@@ -864,11 +864,15 @@ export const trendingDb = {
     async getTopTrending(limit: number = 5): Promise<any[]> {
         const token = await getServiceAccountToken();
         
-        // Try to get trending data from the last 7 days, starting with today
-        const daysToCheck = 7;
+        // Configuration constants for trending algorithm
+        const DAYS_TO_CHECK = 7;
+        const DAILY_DECAY_FACTOR = 0.7; // 70% weight reduction per day
+        const AGGREGATION_MULTIPLIER = 2; // Fetch 2x items for better aggregation
+        const MIN_DAYS_TO_CHECK = 2; // Minimum days to check before early exit
+        
         const aggregatedScores = new Map<string, { score: number, stats: any }>();
         
-        for (let daysAgo = 0; daysAgo < daysToCheck; daysAgo++) {
+        for (let daysAgo = 0; daysAgo < DAYS_TO_CHECK; daysAgo++) {
             const date = new Date();
             date.setDate(date.getDate() - daysAgo);
             const dateId = date.toISOString().split('T')[0];
@@ -891,7 +895,7 @@ export const trendingDb = {
                         orderBy: [
                             { field: { fieldPath: 'totalScore' }, direction: 'DESCENDING' }
                         ],
-                        limit: limit * 2 // Get more items to aggregate
+                        limit: limit * AGGREGATION_MULTIPLIER
                     }
                 })
             });
@@ -902,7 +906,7 @@ export const trendingDb = {
             if (!Array.isArray(json)) continue;
             
             // Aggregate scores with decay factor (more recent days have higher weight)
-            const decayFactor = Math.pow(0.7, daysAgo); // 70% weight reduction per day
+            const decayFactor = Math.pow(DAILY_DECAY_FACTOR, daysAgo);
             
             json.filter((r: any) => r.document).forEach((r: any) => {
                 const doc = r.document;
@@ -931,7 +935,7 @@ export const trendingDb = {
             });
             
             // If we have enough data from recent days, stop checking older days
-            if (aggregatedScores.size >= limit && daysAgo >= 2) {
+            if (aggregatedScores.size >= limit && daysAgo >= MIN_DAYS_TO_CHECK) {
                 break;
             }
         }
