@@ -6,6 +6,7 @@ import { MetadataRoute } from 'next';
  * 
  * Strategy:
  * - Allow public API endpoints for data indexing (/api/spirits, /api/reviews, /api/trending)
+ * - Allow static resources (fonts, images, etc.) via /_next/static/
  * - Disallow sensitive endpoints (/api/admin, /api/auth)
  */
 export default function robots(): MetadataRoute.Robots {
@@ -21,6 +22,7 @@ export default function robots(): MetadataRoute.Robots {
           '/api/spirits',
           '/api/reviews',
           '/api/trending',
+          '/_next/static/',
         ],
         disallow: [
           '/admin',

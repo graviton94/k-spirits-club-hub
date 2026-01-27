@@ -8,8 +8,8 @@ import { Header } from '@/components/layout/Header';
 import { BottomNav } from "@/components/layout/BottomNav";
 import StickyFooterAd from '@/components/ui/StickyFooterAd';
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
+const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit", display: "swap" });
 
 export const metadata: Metadata = {
   title: {
