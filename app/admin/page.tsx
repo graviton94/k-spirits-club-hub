@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Spirit, SpiritStatus } from '@/lib/db/schema';
 import Link from 'next/link';

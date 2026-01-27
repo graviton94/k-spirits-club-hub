@@ -1,6 +1,7 @@
 'use client';
 
 import { SearchBar } from "@/components/ui/SearchBar";
+import DailyPick from "@/components/home/DailyPick";
 import { SpiritCard } from "@/components/ui/SpiritCard";
 import { LiveReviews } from "@/components/ui/LiveReviews";
 import Link from "next/link";
@@ -99,13 +100,7 @@ export default function HomePage() {
 
           <div className="w-full max-w-lg mx-auto animate-fade-in-up delay-200 relative z-30">
             <SearchBar isHero={true} />
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-2 text-sm text-gray-600 dark:text-gray-400 animate-fade-in-up delay-300">
-            <span>Trending:</span>
-            <span className="text-gray-900 dark:text-white hover:text-amber-500 cursor-pointer transition-colors block">#Highball</span>
-            <span className="text-gray-900 dark:text-white hover:text-amber-500 cursor-pointer transition-colors block">#Smoky</span>
-            <span className="text-gray-900 dark:text-white hover:text-amber-500 cursor-pointer transition-colors block">#GinTonic</span>
+            <DailyPick />
           </div>
         </div>
       </section>
