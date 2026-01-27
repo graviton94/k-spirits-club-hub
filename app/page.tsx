@@ -16,20 +16,26 @@ export default function HomePage() {
   const { publishedSpirits, searchIndex, isLoading: isCacheLoading } = useSpiritsCache();
   const [trendingSpirits, setTrendingSpirits] = useState<any[]>([]);
   const [isTrendingLoading, setIsTrendingLoading] = useState(true);
+  const [newArrivals, setNewArrivals] = useState<any[]>([]);
+  const [isNewArrivalsLoading, setIsNewArrivalsLoading] = useState(true);
 
-  // Get 10 most recently confirmed spirits from search index
-  const newArrivals = useMemo(() => {
-    if (!searchIndex.length) return [];
-
-    return [...searchIndex]
-      .filter(s => s.t) // Must have an image
-      .sort((a, b) => {
-        const dateA = a.cre ? new Date(a.cre).getTime() : 0;
-        const dateB = b.cre ? new Date(b.cre).getTime() : 0;
-        return dateB - dateA;
-      })
-      .slice(0, 10);
-  }, [searchIndex]);
+  // Fetch new arrivals from cache
+  useEffect(() => {
+    async function fetchNewArrivals() {
+      try {
+        const res = await fetch('/api/new-arrivals');
+        if (res.ok) {
+          const data = await res.json();
+          setNewArrivals(data.spirits || []);
+        }
+      } catch (err) {
+        console.error('Failed to fetch new arrivals:', err);
+      } finally {
+        setIsNewArrivalsLoading(false);
+      }
+    }
+    fetchNewArrivals();
+  }, []);
 
   useEffect(() => {
     async function fetchTrending() {
@@ -117,16 +123,16 @@ export default function HomePage() {
               {/* Duplicate items for infinite scroll effect */}
               {[...newArrivals, ...newArrivals].map((spirit, index) => (
                 <Link
-                  href={`/spirits/${spirit.i}`}
-                  key={`${spirit.i}-${index}`}
+                  href={`/spirits/${spirit.id}`}
+                  key={`${spirit.id}-${index}`}
                   className="flex-shrink-0 group"
                 >
                   <div className="w-32 flex flex-col items-center gap-3 transition-transform duration-300 group-hover:scale-105">
                     <div className="relative w-28 h-36 rounded-2xl bg-card border border-border shadow-md overflow-hidden flex items-center justify-center p-2 group-hover:border-amber-500/50 transition-colors">
-                      {spirit.t ? (
+                      {spirit.thumbnailUrl || spirit.imageUrl ? (
                         <img
-                          src={spirit.t}
-                          alt={spirit.n}
+                          src={spirit.thumbnailUrl || spirit.imageUrl}
+                          alt={spirit.name}
                           className="w-full h-full object-contain"
                         />
                       ) : (
@@ -134,17 +140,21 @@ export default function HomePage() {
                       )}
                     </div>
                     <span className="font-bold text-xs text-center line-clamp-2 px-1 text-foreground group-hover:text-amber-600 transition-colors">
-                      {spirit.n}
+                      {spirit.name}
                     </span>
                   </div>
                 </Link>
               ))}
             </div>
-          ) : (
+          ) : isNewArrivalsLoading ? (
             <div className="flex gap-4">
               {Array.from({ length: 6 }).map((_, i) => (
                 <div key={i} className="w-28 h-40 bg-secondary/50 rounded-2xl animate-pulse" />
               ))}
+            </div>
+          ) : (
+            <div className="text-center py-8 text-muted-foreground">
+              <p>아직 새로운 상품이 없습니다.</p>
             </div>
           )}
         </div>

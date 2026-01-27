@@ -87,6 +87,18 @@ export const db = {
     }
     
     await spiritsDb.upsert(id, updates);
+    
+    // If spirit was published, sync the new arrivals cache
+    if (updates.isPublished === true) {
+      const { newArrivalsDb } = await import('./firestore-rest');
+      try {
+        await newArrivalsDb.syncCache();
+      } catch (error) {
+        console.error('Failed to sync new arrivals cache:', error);
+        // Don't fail the update if cache sync fails
+      }
+    }
+    
     return spiritsDb.getById(id);
   },
 
