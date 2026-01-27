@@ -89,7 +89,7 @@ function formatAbv(abv: number | null | undefined): string | null {
 
 // Helper function to build SEO-optimized description with suffix
 function buildSeoDescription(baseDescription: string, suffix: string): string {
-  const hasEndingPunctuation = baseDescription.match(ENDING_PUNCTUATION_REGEX);
+  const hasEndingPunctuation = ENDING_PUNCTUATION_REGEX.test(baseDescription);
   return `${baseDescription}${hasEndingPunctuation ? '' : '.'} ${suffix}`;
 }
 
