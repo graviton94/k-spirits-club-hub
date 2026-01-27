@@ -1,3 +1,26 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "커뮤니티 리뷰",
+  description: "K-Spirits Club 커뮤니티의 위스키 리뷰와 전통주 테이스팅 노트를 확인하세요. 실제 사용자들의 시음 경험과 평가를 공유합니다.",
+  keywords: [
+    "위스키 리뷰", "전통주 리뷰", "테이스팅 노트", "시음 노트",
+    "커뮤니티 리뷰", "술 평가", "Whisky Reviews", "Tasting Notes"
+  ],
+  openGraph: {
+    title: "커뮤니티 리뷰 | K-Spirits Club",
+    description: "K-Spirits Club 커뮤니티의 위스키 리뷰와 전통주 테이스팅 노트를 확인하세요.",
+    type: "website",
+    locale: "ko_KR",
+    siteName: "K-Spirits Club",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "커뮤니티 리뷰 | K-Spirits Club",
+    description: "위스키 리뷰와 전통주 테이스팅 노트를 확인하세요.",
+  },
+};
+
 export default function ReviewsPage() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
