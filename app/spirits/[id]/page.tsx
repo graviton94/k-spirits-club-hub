@@ -12,6 +12,9 @@ const DESCRIPTION_MAX_LENGTH = 100;
 // SEO suffix for spirit descriptions
 const SEO_SUFFIX = "주류 리뷰, 테이스팅 노트, 가격 정보를 K-Spirits Club에서 확인하세요.";
 
+// Regex pattern for detecting ending punctuation (English, Korean, and special characters)
+const ENDING_PUNCTUATION_REGEX = /[.!?…。！？]$/;
+
 // Review interface matching the client format
 interface TransformedReview {
   id: string;
@@ -75,6 +78,14 @@ function truncateDescription(description: string, maxLength: number): string {
   return (lastSpace > 0 ? truncated.substring(0, lastSpace) : truncated) + '...';
 }
 
+// Helper function to format ABV for SEO descriptions
+function formatAbv(abv: number | null | undefined): string | null {
+  if (typeof abv === 'number' && abv > 0 && abv <= 100) {
+    return `${abv}% ABV`;
+  }
+  return null;
+}
+
 // Generate dynamic metadata for SEO
 export async function generateMetadata({
   params,
@@ -105,7 +116,7 @@ export async function generateMetadata({
     spirit.distillery,
     spirit.region,
     spirit.country,
-    (typeof spirit.abv === 'number' && spirit.abv > 0 && spirit.abv <= 100) ? `${spirit.abv}% ABV` : null,
+    formatAbv(spirit.abv),
   ].filter(Boolean);
   
   const baseDescription = descriptionParts.join(' · ');
@@ -113,7 +124,7 @@ export async function generateMetadata({
     ? `${baseDescription} - ${truncateDescription(spirit.metadata.description, DESCRIPTION_MAX_LENGTH)}` 
     : baseDescription;
   
-  const fullDescription = `${extendedDescription}${extendedDescription.match(/[.!?…。！？]$/) ? '' : '.'} ${SEO_SUFFIX}`;
+  const fullDescription = `${extendedDescription}${extendedDescription.match(ENDING_PUNCTUATION_REGEX) ? '' : '.'} ${SEO_SUFFIX}`;
 
   // OpenGraph title for social sharing
   const ogTitle = enName 
