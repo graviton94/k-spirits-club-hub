@@ -2,6 +2,16 @@
 const nextConfig = {
   images: {
     unoptimized: true, // Cloudflare Pages compatibility
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.firebaseapp.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.googleapis.com',
+      },
+    ],
   },
   // 빌드 시 타입 체크 오류 무시
   typescript: { ignoreBuildErrors: true },

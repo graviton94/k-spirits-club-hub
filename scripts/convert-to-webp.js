@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const publicDir = path.join(__dirname, '../public');
-const images = ['mys(1).png', 'mys(2).png', 'mys(3).png', 'mys(4).png', 'mys(5).png', 'background(1).png', 'background(2).png'];
+const images = ['mys-1.png', 'mys-2.png', 'mys-3.png', 'mys-4.png', 'mys-5.png', 'background-v1.png', 'background-v2.png'];
 
 async function convertToWebP() {
     console.log('Starting PNG to WebP conversion...\n');

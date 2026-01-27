@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-const BACKGROUNDS = ['/background(1).webp', '/background(2).webp'];
+const BACKGROUNDS = ['/background-v1.webp', '/background-v2.webp'];
 
 export function RandomBackground() {
     const [bgImage, setBgImage] = useState<string>('');
