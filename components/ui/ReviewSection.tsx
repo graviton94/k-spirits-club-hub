@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Star, MessageSquare, Wind, Utensils, Zap, Quote, X, Check, Edit2, Trash2, Heart } from 'lucide-react';
 import metadata from '@/lib/constants/spirits-metadata.json';
 import { useAuth } from '@/app/context/auth-context';
+import SuccessToast from '@/components/ui/SuccessToast';
 
 interface ExtendedReview extends Review {
   noseRating?: number;
@@ -24,6 +25,7 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
   const [showForm, setShowForm] = useState(false);
   const [liveReviews, setLiveReviews] = useState<ExtendedReview[]>(reviews);
   const [editingReview, setEditingReview] = useState<ExtendedReview | null>(null);
+  const [toast, setToast] = useState<{ message: string; variant: 'success' | 'error' } | null>(null);
 
   // Synchronize internal state when reviews prop changes (e.g., after fetching from API)
   useEffect(() => {
@@ -73,13 +75,13 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
 
       if (response.ok) {
         setLiveReviews(prev => prev.filter(r => r.userId !== user.uid));
-        // Reset hasReviewed by triggering any relevant checks if needed
+        setToast({ message: '리뷰가 삭제되었습니다.', variant: 'success' });
       } else {
-        alert('리뷰 삭제에 실패했습니다.');
+        setToast({ message: '리뷰 삭제에 실패했습니다.', variant: 'error' });
       }
     } catch (error) {
       console.error('Delete review error:', error);
-      alert('오류가 발생했습니다.');
+      setToast({ message: '오류가 발생했습니다.', variant: 'error' });
     }
   };
 
@@ -103,7 +105,7 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
           id="review-form-anchor"
           onClick={() => {
             if (!showForm && hasReviewed && !editingReview) {
-              alert('이미 제품에 대한 리뷰를 작성하셨습니다. 한 제품에는 하나의 리뷰만 작성 가능합니다.');
+              setToast({ message: '이미 제품에 대한 리뷰를 작성하셨습니다. 한 제품에는 하나의 리뷰만 작성 가능합니다.', variant: 'error' });
               return;
             }
             if (showForm) {
@@ -140,6 +142,7 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
             setEditingReview(null);
           }}
           onSubmitted={handleReviewSubmitted}
+          onToast={(message, variant) => setToast({ message, variant })}
         />
       )}
 
@@ -163,6 +166,16 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
           </div>
         )}
       </div>
+
+      {/* Toast Notification */}
+      {toast && (
+        <SuccessToast
+          isVisible={!!toast}
+          message={toast.message}
+          variant={toast.variant}
+          onClose={() => setToast(null)}
+        />
+      )}
     </div>
   );
 }
@@ -393,13 +406,14 @@ function ReviewMetricsItem({ title, rating, tags, icon, color }: { title: string
   );
 }
 
-function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitted, initialData }: {
+function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitted, initialData, onToast }: {
   spiritId: string;
   spiritName: string;
   spiritImageUrl?: string | null;
   onCancel: () => void;
   onSubmitted: (review: ExtendedReview) => void;
   initialData?: ExtendedReview | null;
+  onToast?: (message: string, variant: 'success' | 'error') => void;
 }) {
   const { user, profile } = useAuth();
   const [formData, setFormData] = useState({
@@ -413,7 +427,6 @@ function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitte
     finishRating: initialData?.finishRating || initialData?.rating || 0
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
 
   // Automatically calculate overall rating whenever component ratings change
   useEffect(() => {
@@ -430,12 +443,12 @@ function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitte
     e.preventDefault();
 
     if (!user) {
-      alert('로그인이 필요한 기능입니다.');
+      onToast?.('로그인이 필요한 기능입니다.', 'error');
       return;
     }
 
     if (formData.rating === 0) {
-      alert('별점을 입력해주세요.');
+      onToast?.('별점을 입력해주세요.', 'error');
       return;
     }
 
@@ -499,35 +512,18 @@ function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitte
         window.dispatchEvent(new CustomEvent('reviewSubmitted'));
       }
 
-      setIsSuccess(true);
+      // Show success toast
+      onToast?.('리뷰가 성공적으로 제출되었습니다!', 'success');
+      
+      // Close form
+      onCancel();
     } catch (error) {
       console.error('Error submitting review:', error);
-      alert('리뷰 제출에 실패했습니다. 다시 시도해주세요.');
+      onToast?.('리뷰 제출에 실패했습니다. 다시 시도해주세요.', 'error');
     } finally {
       setIsSubmitting(false);
     }
   };
-
-  if (isSuccess) {
-    return (
-      <div className="bg-card border-2 border-primary/20 rounded-3xl p-12 mb-10 shadow-xl shadow-primary/5 text-center flex flex-col items-center animate-in fade-in zoom-in duration-500">
-        <div className="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center mb-6 ring-4 ring-green-500/20">
-          <Check className="w-10 h-10 text-green-500" />
-        </div>
-        <h3 className="text-2xl font-black mb-2">리뷰 제출 완료!</h3>
-        <p className="text-muted-foreground font-medium mb-8">
-          소중한 경험을 공유해주셔서 감사합니다.<br />
-          당신의 리뷰가 다른 분들에게 큰 도움이 될 거예요.
-        </p>
-        <button
-          onClick={onCancel}
-          className="px-12 py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-black rounded-2xl hover:shadow-xl hover:shadow-primary/20 transition-all"
-        >
-          확인
-        </button>
-      </div>
-    );
-  }
 
   return (
     <form onSubmit={handleSubmit} className="bg-card border-2 border-primary/20 rounded-3xl p-5 sm:p-8 mb-8 shadow-xl shadow-primary/5">

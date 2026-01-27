@@ -280,21 +280,49 @@ export const spiritsDb = {
     async upsert(id: string, data: Partial<Spirit>) {
         const token = await getServiceAccountToken();
         const collectionPath = getAppPath().spirits;
-        const url = `${BASE_URL}/${collectionPath}/${id}`;
+        const docPath = `${collectionPath}/${id}`;
+        const commitUrl = `${BASE_URL.replace('/documents', '')}:commit`;
 
-        // Construct Update Mask dynamically based on data keys
-        const fieldPaths = Object.keys(data).filter(k => k !== 'id').map(k => `updateMask.fieldPaths=${k}`).join('&');
-        const patchUrl = `${url}?${fieldPaths}&updateMask.fieldPaths=updatedAt`;
+        // Use Firestore server timestamp for updatedAt
+        const fieldTransforms = [{
+            fieldPath: 'updatedAt',
+            setToServerValue: 'REQUEST_TIME'
+        }];
 
-        const body = toFirestore({ ...data, updatedAt: new Date() });
+        const body = {
+            writes: [
+                {
+                    update: {
+                        name: `projects/${PROJECT_ID}/databases/(default)/documents/${docPath}`,
+                        fields: toFirestore(data).fields
+                    },
+                    updateMask: {
+                        fieldPaths: [...Object.keys(data).filter(k => k !== 'id')]
+                    }
+                },
+                {
+                    transform: {
+                        document: `projects/${PROJECT_ID}/databases/(default)/documents/${docPath}`,
+                        fieldTransforms
+                    }
+                }
+            ]
+        };
 
-        const res = await fetch(patchUrl, {
-            method: 'PATCH',
-            headers: { Authorization: `Bearer ${token}` },
+        const res = await fetch(commitUrl, {
+            method: 'POST',
+            headers: { 
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(body)
         });
 
-        if (!res.ok) throw new Error(await res.text());
+        if (!res.ok) {
+            const errorText = await res.text();
+            console.error('Failed to upsert spirit:', errorText);
+            throw new Error(`Failed to upsert spirit: ${errorText}`);
+        }
     },
 
     async delete(ids: string[]) {
@@ -954,4 +982,120 @@ export const trendingDb = {
             .slice(0, limit);
     }
 };
+
+/**
+ * New Arrivals Cache Database
+ * Manages the cache document for the top 10 most recently confirmed spirits
+ */
+export const newArrivalsDb = {
+    /**
+     * Sync the new_arrivals cache with the top 10 published spirits by updatedAt
+     * Called when admin confirms/publishes a spirit
+     */
+    async syncCache(): Promise<void> {
+        const token = await getServiceAccountToken();
+        const spiritsPath = 'spirits';
+        const newArrivalsPath = getAppPath().newArrivals;
+
+        try {
+            // 1. Query top 10 published spirits ordered by updatedAt DESC
+            const runQueryUrl = `${BASE_URL}:runQuery`;
+            const parent = `projects/${PROJECT_ID}/databases/(default)/documents`;
+
+            const res = await fetch(runQueryUrl, {
+                method: 'POST',
+                headers: { Authorization: `Bearer ${token}` },
+                body: JSON.stringify({
+                    parent,
+                    structuredQuery: {
+                        from: [{ collectionId: spiritsPath }],
+                        where: {
+                            fieldFilter: {
+                                field: { fieldPath: 'isPublished' },
+                                op: 'EQUAL',
+                                value: { booleanValue: true }
+                            }
+                        },
+                        orderBy: [
+                            { field: { fieldPath: 'updatedAt' }, direction: 'DESCENDING' }
+                        ],
+                        limit: 10
+                    }
+                })
+            });
+
+            if (!res.ok) {
+                console.error('Failed to query spirits for new arrivals:', await res.text());
+                return;
+            }
+
+            const json = await res.json();
+            if (!Array.isArray(json)) return;
+
+            const top10 = json
+                .filter((r: any) => r.document)
+                .map((r: any) => fromFirestore(r.document))
+                .filter(s => s.imageUrl || s.thumbnailUrl); // Only include spirits with images
+
+            // 2. Update the new_arrivals cache with these 10 spirits
+            const updatePromises = top10.map(async (spirit, index) => {
+                const url = `${BASE_URL}/${newArrivalsPath}/${index}`;
+                const body = toFirestore(spirit);
+                await fetch(url, {
+                    method: 'PATCH',
+                    headers: { Authorization: `Bearer ${token}` },
+                    body: JSON.stringify(body)
+                });
+            });
+
+            await Promise.all(updatePromises);
+
+            // 3. Delete extra slots if fewer than 10 spirits
+            if (top10.length < 10) {
+                const deletePromises = [];
+                for (let i = top10.length; i < 10; i++) {
+                    const url = `${BASE_URL}/${newArrivalsPath}/${i}`;
+                    deletePromises.push(
+                        fetch(url, {
+                            method: 'DELETE',
+                            headers: { Authorization: `Bearer ${token}` }
+                        }).catch(() => {}) // Ignore 404 errors
+                    );
+                }
+                await Promise.all(deletePromises);
+            }
+        } catch (error) {
+            console.error('Error syncing new arrivals cache:', error);
+        }
+    },
+
+    /**
+     * Get the cached new arrivals (top 10 most recently confirmed spirits)
+     */
+    async getAll(): Promise<Spirit[]> {
+        const token = await getServiceAccountToken();
+        const newArrivalsPath = getAppPath().newArrivals;
+        const url = `${BASE_URL}/${newArrivalsPath}`;
+
+        try {
+            const res = await fetch(url, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            if (res.status === 404) return [];
+            if (!res.ok) return [];
+
+            const json = await res.json();
+            if (!json.documents) return [];
+
+            return json.documents
+                .map((doc: any) => fromFirestore(doc))
+                .filter((s: Spirit) => s.id); // Filter out invalid documents
+        } catch (error) {
+            console.error('Error getting new arrivals:', error);
+            return [];
+        }
+    }
+};
+
 
