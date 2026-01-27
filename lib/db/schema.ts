@@ -160,3 +160,18 @@ export interface PaginatedResponse<T> {
   pageSize: number;
   totalPages: number;
 }
+
+export interface ModificationRequest {
+  id: string;
+  spiritId: string;       // 대상 술 ID
+  spiritName: string;     // 대상 술 이름 (관리자 식별용)
+  userId: string | null;  // 로그인 유저 ID (없으면 null/익명)
+
+  // 유저 입력 데이터 (심플하게 2개만)
+  title: string;          // 예: "도수가 잘못 표기되어 있어요"
+  content: string;        // 예: "40%가 아니라 43%입니다. 공식 홈피 링크 첨부합니다..."
+
+  // 상태 관리
+  status: 'pending' | 'checked' | 'resolved'; // 대기중 | 확인중 | 처리완료
+  createdAt: Date;
+}

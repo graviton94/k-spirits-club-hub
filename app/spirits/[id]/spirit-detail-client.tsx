@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import SaveButton from "@/components/ui/SaveButton";
 import ReviewSection from "@/components/ui/ReviewSection";
 import GoogleAd from "@/components/ui/GoogleAd";
+import ModificationRequestButton from "@/components/spirits/ModificationRequestButton";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Search, ArrowLeft } from "lucide-react";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
@@ -329,6 +330,30 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
 
             {/* 4. Reviews Section */}
             <ReviewSection spiritId={spirit.id} spiritName={spirit.name} spiritImageUrl={spirit.imageUrl} reviews={reviews} />
+
+            {/* 5. Data Source & Correction Request */}
+            <div className="mt-12 p-6 bg-secondary/20 rounded-2xl border border-border">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-1">Data Source</h4>
+                        <p className="text-sm font-medium text-foreground">
+                            {spirit.source === 'food_safety_korea' ? '식품의약품안전처 (공공데이터)' :
+                                spirit.source === 'imported_food_maru' ? '수입식품정보마루' :
+                                    spirit.source === 'whiskybase' ? 'Whiskybase' :
+                                        spirit.source === 'manual' ? '운영진 수동 등록' : '기타 외부 데이터'}
+                        </p>
+                    </div>
+
+                    <ModificationRequestButton
+                        spiritId={spirit.id}
+                        spiritName={spirit.name}
+                    />
+                </div>
+                <p className="mt-4 text-[11px] text-muted-foreground leading-relaxed">
+                    본 데이터는 각 출처의 공공데이터 및 정보를 바탕으로 제공되며, 실제 제품의 정보와 차이가 있을 수 있습니다.
+                    잘못된 정보가 있다면 위의 버튼을 통해 제보 부탁드립니다.
+                </p>
+            </div>
 
             {/* Bottom Ad */}
             {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT && (

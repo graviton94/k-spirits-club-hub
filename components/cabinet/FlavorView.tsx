@@ -232,7 +232,7 @@ export default function FlavorView() {
                                     rel="noopener noreferrer"
                                     className="w-full mt-2 bg-white text-black py-2.5 rounded-lg font-bold text-sm flex items-center justify-center gap-2 hover:bg-neutral-200 transition-colors"
                                 >
-                                    <ShoppingBag className="w-4 h-4" /> 최저가 확인하기 <ExternalLink className="w-3 h-3 opacity-50" />
+                                    <ShoppingBag className="w-4 h-4" /> 최저가 확인(🚧개발중) <ExternalLink className="w-3 h-3 opacity-50" />
                                 </a>
                             </div>
                         )}

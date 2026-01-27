@@ -1,4 +1,4 @@
-import { Spirit, SpiritStatus, SpiritFilter, SpiritSearchIndex } from '../db/schema';
+import { Spirit, SpiritStatus, SpiritFilter, SpiritSearchIndex, ModificationRequest } from '../db/schema';
 import { getServiceAccountToken } from '../auth/service-account';
 import { getAppPath, APP_ID } from './paths';
 
@@ -38,71 +38,90 @@ function fromFirestore(doc: any): Spirit {
 }
 
 /**
+ * Helper to convert a plain value to Firestore REST Value structure
+ */
+function toFirestoreValue(value: any): any {
+    if (value === null || value === undefined) return null;
+
+    if (typeof value === 'string') return { stringValue: value };
+    if (typeof value === 'boolean') return { booleanValue: value };
+    if (typeof value === 'number') {
+        if (Number.isInteger(value)) return { integerValue: value.toString() };
+        return { doubleValue: value };
+    }
+    if (value instanceof Date) return { timestampValue: value.toISOString() };
+
+    if (Array.isArray(value)) {
+        return {
+            arrayValue: {
+                values: value.map(v => toFirestoreValue(v)).filter(v => v !== null)
+            }
+        };
+    }
+
+    if (typeof value === 'object') {
+        const fields: any = {};
+        for (const [k, v] of Object.entries(value)) {
+            const fireValue = toFirestoreValue(v);
+            if (fireValue !== null) fields[k] = fireValue;
+        }
+        return { mapValue: { fields } };
+    }
+
+    return null;
+}
+
+/**
+ * Helper to convert a Firestore REST Value structure to a plain JS value
+ */
+function fromFirestoreValue(value: any): any {
+    if (!value) return null;
+
+    if ('stringValue' in value) return value.stringValue;
+    if ('booleanValue' in value) return value.booleanValue;
+    if ('integerValue' in value) return Number(value.integerValue);
+    if ('doubleValue' in value) return Number(value.doubleValue);
+    if ('timestampValue' in value) return value.timestampValue;
+
+    if (value.arrayValue) {
+        return (value.arrayValue.values || []).map((v: any) => fromFirestoreValue(v));
+    }
+
+    if (value.mapValue) {
+        const obj: any = {};
+        const fields = value.mapValue.fields || {};
+        for (const [k, v] of Object.entries(fields)) {
+            obj[k] = fromFirestoreValue(v);
+        }
+        return obj;
+    }
+
+    return null;
+}
+
+/**
  * Helper to Convert Object to Firestore JSON
  */
 function toFirestore(data: any): any {
     const fields: any = {};
     for (const [key, value] of Object.entries(data)) {
         if (key === 'id') continue;
-        if (value === undefined || value === null) continue; // Skip nulls
-
-        if (typeof value === 'string') fields[key] = { stringValue: value };
-        else if (typeof value === 'number') {
-            if (Number.isInteger(value)) fields[key] = { integerValue: value.toString() };
-            else fields[key] = { doubleValue: value };
+        const fireValue = toFirestoreValue(value);
+        if (fireValue !== null) {
+            fields[key] = fireValue;
         }
-        else if (typeof value === 'boolean') fields[key] = { booleanValue: value };
-        else if (Array.isArray(value)) {
-            fields[key] = { arrayValue: { values: value.map(v => ({ stringValue: v })) } };
-        }
-        if (value instanceof Date) {
-            fields[key] = { timestampValue: value.toISOString() };
-        }
-        else if (typeof value === 'object') {
-            // Map (Metadata)
-            const mapFields: any = {};
-            for (const [mk, mv] of Object.entries(value)) {
-                if (typeof mv === 'string') mapFields[mk] = { stringValue: mv };
-                if (Array.isArray(mv)) mapFields[mk] = { arrayValue: { values: mv.map((v: any) => ({ stringValue: v })) } };
-            }
-            fields[key] = { mapValue: { fields: mapFields } };
-        }
-        // Handle Dates? Firestore uses timestampValue (RFC3339)
-        // If data comes as String (ISO), it's stringValue unless we parse.
-        // Let's assume schema asks for string/Date. The REST API takes RFC3339 strings for timestampValue.
     }
     return { fields };
 }
 
 /**
  * Helper to parse Firestore document fields into a plain object
- * Used by cabinetDb and reviewsDb for consistent deserialization
  */
 function parseFirestoreFields(fields: any): any {
     const obj: any = {};
-
-    for (const [key, value] of Object.entries(fields) as [string, any][]) {
-        if ('stringValue' in value) obj[key] = value.stringValue;
-        else if ('integerValue' in value) obj[key] = Number(value.integerValue);
-        else if ('doubleValue' in value) obj[key] = Number(value.doubleValue);
-        else if ('booleanValue' in value) obj[key] = value.booleanValue;
-        else if ('timestampValue' in value) obj[key] = value.timestampValue;
-        else if (value.arrayValue) {
-            obj[key] = (value.arrayValue.values || []).map((v: any) => v.stringValue);
-        }
-        else if (value.mapValue) {
-            const mapData: any = {};
-            const mapFields = value.mapValue.fields || {};
-            for (const [mk, mv] of Object.entries(mapFields) as [string, any][]) {
-                if ('stringValue' in mv) mapData[mk] = mv.stringValue;
-                else if ('integerValue' in mv) mapData[mk] = Number(mv.integerValue);
-                else if ('doubleValue' in mv) mapData[mk] = Number(mv.doubleValue);
-                else if (mv.arrayValue) mapData[mk] = (mv.arrayValue.values || []).map((v: any) => v.stringValue);
-            }
-            obj[key] = mapData;
-        }
+    for (const [key, value] of Object.entries(fields)) {
+        obj[key] = fromFirestoreValue(value);
     }
-
     return obj;
 }
 
@@ -1333,5 +1352,31 @@ export const tasteProfileDb = {
             },
             body: JSON.stringify(body)
         });
+    }
+};
+
+export const modificationDb = {
+    async add(request: Omit<ModificationRequest, 'id'>) {
+        const token = await getServiceAccountToken();
+        const collectionPath = 'modification_requests';
+        const url = `${BASE_URL}/${collectionPath}`;
+
+        const body = toFirestore(request);
+        const res = await fetch(url, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        });
+
+        if (!res.ok) {
+            const errorText = await res.text();
+            throw new Error(`Failed to submit modification request: ${errorText}`);
+        }
+
+        const doc = await res.json();
+        return doc.name.split('/').pop();
     }
 };
