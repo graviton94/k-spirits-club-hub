@@ -1117,9 +1117,27 @@ export const newArrivalsDb = {
             // 2. Update the new_arrivals cache with these 10 spirits
             const updatePromises = top10.map(async (spirit, index) => {
                 const url = `${BASE_URL}/${newArrivalsPath}/${index}`;
-                const body = toFirestore(spirit);
+
+                // OPTIMIZATION: Store only essential fields for the "New Arrivals" card
+                // This reduces document size and bandwidth usage significantly.
+                // We exclude heavy fields like description, tasting_note, searchKeywords, etc.
+                const minifiedSpirit: Partial<Spirit> = {
+                    id: spirit.id,
+                    name: spirit.name,
+                    imageUrl: spirit.imageUrl,
+                    thumbnailUrl: spirit.thumbnailUrl,
+                    category: spirit.category, // Required for fallback image
+                    subcategory: spirit.subcategory,
+                    updatedAt: spirit.updatedAt, // Required for sorting
+                    createdAt: spirit.createdAt  // Required for fallback sorting
+                };
+
+                const body = toFirestore(minifiedSpirit);
 
                 // CRITICAL FIX: Inject the real Spirit ID into the fields
+                // toFirestore filters out 'id' by default (as it's usually the doc ID)
+                // but here we are storing spirits inside a numbered collection (0, 1, 2...),
+                // so we must explicity store the original Product ID as a field.
                 if (spirit.id) {
                     body.fields.id = { stringValue: spirit.id };
                 }
