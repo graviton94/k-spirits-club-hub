@@ -9,6 +9,9 @@ export const runtime = 'edge';
 
 const DESCRIPTION_MAX_LENGTH = 100;
 
+// SEO suffix for spirit descriptions
+const SEO_SUFFIX = "주류 리뷰, 테이스팅 노트, 가격 정보를 K-Spirits Club에서 확인하세요.";
+
 // Review interface matching the client format
 interface TransformedReview {
   id: string;
@@ -102,7 +105,7 @@ export async function generateMetadata({
     spirit.distillery,
     spirit.region,
     spirit.country,
-    `${spirit.abv}% ABV`,
+    spirit.abv ? `${spirit.abv}% ABV` : null,
   ].filter(Boolean);
   
   const baseDescription = descriptionParts.join(' · ');
@@ -110,7 +113,7 @@ export async function generateMetadata({
     ? `${baseDescription} - ${truncateDescription(spirit.metadata.description, DESCRIPTION_MAX_LENGTH)}` 
     : baseDescription;
   
-  const fullDescription = `${extendedDescription}. 주류 리뷰, 테이스팅 노트, 가격 정보를 K-Spirits Club에서 확인하세요.`;
+  const fullDescription = `${extendedDescription}. ${SEO_SUFFIX}`;
 
   // OpenGraph title for social sharing
   const ogTitle = enName 
