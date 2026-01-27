@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
       t: s.thumbnailUrl || s.imageUrl || null, // Thumbnail fallback to imageUrl
       a: s.abv || 0, // ABV for display
       d: s.distillery || null, // distillery
-      cre: s.createdAt || null, // createdAt for sorting by registration date
+      cre: s.createdAt ? (typeof s.createdAt === 'string' ? s.createdAt : s.createdAt.toISOString()) : null, // createdAt for sorting by registration date
       m: s.metadata ? {
         tasting_note: s.metadata.tasting_note
           ? s.metadata.tasting_note.split(',').slice(0, 2).join(',') // Only first 2 tags
