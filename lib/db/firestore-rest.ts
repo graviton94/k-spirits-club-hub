@@ -916,7 +916,10 @@ export const trendingDb = {
                 
                 const existing = aggregatedScores.get(spiritId);
                 if (existing) {
+                    // Accumulate score with decay factor
                     existing.score += score;
+                    // Aggregate stats - note: this sums daily counts across days,
+                    // which is intentional to show total engagement over the period
                     existing.stats.views += fields.views || 0;
                     existing.stats.wishlist += fields.wishlistAdds || 0;
                     existing.stats.cabinet += fields.cabinetAdds || 0;
