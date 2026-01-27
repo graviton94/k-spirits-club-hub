@@ -12,17 +12,37 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
 export const metadata: Metadata = {
-  title: "K-Spirits Club - 대한민국 No.1 글로벌 주류 데이터베이스",
+  title: {
+    default: "K-Spirits Club | 위스키, 전통주, 글로벌 주류 데이터베이스 & 리뷰",
+    template: "%s | K-Spirits Club",
+  },
   description: "전 세계 100만 개 이상의 위스키, 증류주 정보를 탐색하고 저장하며 리뷰를 공유하세요. 나만의 주류 캐비닛을 만들어보세요.",
   verification: {
     google: "EztyFtmuOluuqxjs6wbD0Xx1DPSJwO3FXcY8Nz3CQ_o",
   },
-  keywords: ["위스키", "증류주", "술", "증류소", "리뷰", "대한민국", "K-Spirits", "술 정보", "주류 검색", "전통주", "Whisky", "soju"],
+  keywords: [
+    "위스키", "증류주", "술", "증류소", "리뷰", "대한민국", "K-Spirits", "술 정보", 
+    "주류 검색", "전통주", "Whisky", "soju", "위스키 검색", "주류 DB", "주류 데이터베이스",
+    "한국 술 정보", "전통주 정보", "전통주 테이스팅 노트", "위스키 리뷰", 
+    "Whisky Database", "Korean Spirits", "Korean Traditional Liquor"
+  ],
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
     title: "K-Spirits Club",
+  },
+  openGraph: {
+    title: "K-Spirits Club | 위스키, 전통주, 글로벌 주류 데이터베이스 & 리뷰",
+    description: "대한민국 주류 데이터베이스: 위스키와 전통주의 모든 것. 전 세계 100만 개 이상의 증류주 정보를 탐색하고 리뷰를 공유하세요.",
+    type: "website",
+    locale: "ko_KR",
+    siteName: "K-Spirits Club",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "K-Spirits Club | 위스키, 전통주, 글로벌 주류 데이터베이스 & 리뷰",
+    description: "대한민국 주류 데이터베이스: 위스키와 전통주의 모든 것. 전 세계 100만 개 이상의 증류주 정보를 탐색하고 리뷰를 공유하세요.",
   },
 };
 

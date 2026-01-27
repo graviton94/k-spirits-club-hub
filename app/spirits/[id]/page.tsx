@@ -83,41 +83,55 @@ export async function generateMetadata({
 
   if (!spirit) {
     return {
-      title: "Spirit Not Found | K-Spirits Club",
+      title: "Spirit Not Found",
       description: "The requested spirit could not be found.",
     };
   }
 
   const koName = spirit.name;
   const enName = spirit.metadata?.name_en;
-  const title = enName ? `${koName} (${enName}) | K-Spirits Club` : `${koName} | K-Spirits Club`;
   
+  // Enhanced title format with Korean and English names
+  const title = enName 
+    ? `${koName} (${enName}) 정보 및 리뷰` 
+    : `${koName} 정보 및 리뷰`;
+  
+  // Build comprehensive description with category, ABV, origin
   const descriptionParts = [
+    spirit.category,
     spirit.distillery,
     spirit.region,
     spirit.country,
     `${spirit.abv}% ABV`,
-    spirit.category,
   ].filter(Boolean);
   
-  const description = descriptionParts.join(' · ') + 
-    (spirit.metadata?.description 
-      ? ` - ${truncateDescription(spirit.metadata.description, DESCRIPTION_MAX_LENGTH)}` 
-      : '');
+  const baseDescription = descriptionParts.join(' · ');
+  const extendedDescription = spirit.metadata?.description 
+    ? `${baseDescription} - ${truncateDescription(spirit.metadata.description, DESCRIPTION_MAX_LENGTH)}` 
+    : baseDescription;
+  
+  const fullDescription = `${extendedDescription}. 위스키 리뷰, 테이스팅 노트, 가격 정보를 K-Spirits Club에서 확인하세요.`;
+
+  // OpenGraph title for social sharing
+  const ogTitle = enName 
+    ? `${koName} (${enName}) 정보 및 리뷰 | K-Spirits Club` 
+    : `${koName} 정보 및 리뷰 | K-Spirits Club`;
 
   return {
     title,
-    description,
+    description: fullDescription,
     openGraph: {
-      title,
-      description,
+      title: ogTitle,
+      description: fullDescription,
       images: spirit.imageUrl ? [spirit.imageUrl] : [],
       type: 'website',
+      locale: 'ko_KR',
+      siteName: 'K-Spirits Club',
     },
     twitter: {
       card: 'summary_large_image',
-      title,
-      description,
+      title: ogTitle,
+      description: fullDescription,
       images: spirit.imageUrl ? [spirit.imageUrl] : [],
     },
   };
