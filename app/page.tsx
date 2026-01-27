@@ -154,7 +154,7 @@ export default function HomePage() {
             </div>
           ) : (
             <div className="text-center py-8 text-muted-foreground">
-              <p>No new arrivals yet.</p>
+              <p>아직 새로운 상품이 없습니다.</p>
             </div>
           )}
         </div>

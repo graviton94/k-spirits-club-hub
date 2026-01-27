@@ -1041,11 +1041,15 @@ export const newArrivalsDb = {
             const updatePromises = top10.map(async (spirit, index) => {
                 const url = `${BASE_URL}/${newArrivalsPath}/${index}`;
                 const body = toFirestore(spirit);
-                await fetch(url, {
+                const res = await fetch(url, {
                     method: 'PATCH',
                     headers: { Authorization: `Bearer ${token}` },
                     body: JSON.stringify(body)
                 });
+                
+                if (!res.ok) {
+                    console.error(`Failed to update new arrivals slot ${index}:`, await res.text());
+                }
             });
 
             await Promise.all(updatePromises);
@@ -1059,7 +1063,14 @@ export const newArrivalsDb = {
                         fetch(url, {
                             method: 'DELETE',
                             headers: { Authorization: `Bearer ${token}` }
-                        }).catch(() => {}) // Ignore 404 errors
+                        }).then(res => {
+                            // Only log errors that aren't 404 (slot already doesn't exist)
+                            if (!res.ok && res.status !== 404) {
+                                console.error(`Failed to delete new arrivals slot ${i}: ${res.status}`);
+                            }
+                        }).catch(err => {
+                            console.error(`Error deleting new arrivals slot ${i}:`, err);
+                        })
                     );
                 }
                 await Promise.all(deletePromises);
