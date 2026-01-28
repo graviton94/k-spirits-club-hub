@@ -5,37 +5,20 @@ import { MetadataRoute } from 'next';
  * Defines crawling rules for search engine bots
  * 
  * Strategy:
- * - Allow public API endpoints for data indexing (/api/spirits, /api/reviews, /api/trending)
- * - Allow static resources (fonts, images, etc.) via /_next/static/
- * - Disallow sensitive endpoints (/api/admin, /api/auth)
+ * - Allow all public pages and content (/)
+ * - Disallow admin pages (/admin/) to prevent indexing of admin interface
+ * - Disallow personal cabinet pages (/cabinet/) for user privacy
  */
 export default function robots(): MetadataRoute.Robots {
   // Get base URL from environment or default to production URL
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://k-spirits-club-hub.com';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://k-spirits-club-hub.pages.dev';
 
   return {
-    rules: [
-      {
-        userAgent: 'Googlebot',
-        allow: '/',
-        disallow: ['/admin', '/api/admin', '/api/auth'],
-      },
-      {
-        userAgent: '*',
-        allow: [
-          '/',
-          '/api/spirits',
-          '/api/reviews',
-          '/api/trending',
-          '/_next/static/',
-        ],
-        disallow: [
-          '/admin',
-          '/api/admin',
-          '/api/auth',
-        ],
-      },
-    ],
+    rules: {
+      userAgent: '*',
+      allow: '/',
+      disallow: ['/admin/', '/cabinet/'], // Admin and personal cabinet pages are not indexed
+    },
     sitemap: `${baseUrl}/sitemap.xml`,
   };
 }
