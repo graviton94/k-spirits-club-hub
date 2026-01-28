@@ -6,8 +6,9 @@ import { MetadataRoute } from 'next';
  * 
  * Strategy:
  * - Allow all public pages and content (/)
- * - Disallow admin pages (/admin/) to prevent indexing of admin interface
- * - Disallow personal cabinet pages (/cabinet/) for user privacy
+ * - Disallow admin pages and APIs (/admin/, /api/admin/) to prevent indexing
+ * - Disallow personal cabinet pages and APIs (/cabinet/, /api/cabinet/) for user privacy
+ * - Disallow authentication endpoints (/api/auth/) for security
  */
 export default function robots(): MetadataRoute.Robots {
   // Get base URL from environment or default to production URL
@@ -17,7 +18,13 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/admin/', '/cabinet/'], // Admin and personal cabinet pages are not indexed
+      disallow: [
+        '/admin/',
+        '/cabinet/',
+        '/api/admin/',
+        '/api/cabinet/',
+        '/api/auth/',
+      ],
     },
     sitemap: `${baseUrl}/sitemap.xml`,
   };
