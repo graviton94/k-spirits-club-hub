@@ -2,14 +2,14 @@
 
 import Image from 'next/image';
 
-// Avatar options - user (1).jpg is the default
+// Avatar options - user-1.webp is the default
 const AVATAR_OPTIONS = Array.from({ length: 12 }, (_, i) => ({
     id: i + 1,
-    path: `/icons/user/user (${i + 1}).jpg`,
+    path: `/icons/user/user-${i + 1}.webp`,
     alt: `Avatar ${i + 1}`
 }));
 
-export const DEFAULT_AVATAR = AVATAR_OPTIONS[0].path; // user (1).jpg
+export const DEFAULT_AVATAR = AVATAR_OPTIONS[0].path; // user-1.webp
 
 interface AvatarSelectorProps {
     selectedAvatar: string;
@@ -30,8 +30,8 @@ export default function AvatarSelector({ selectedAvatar, onSelect }: AvatarSelec
                         type="button"
                         onClick={() => onSelect(avatar.path)}
                         className={`relative aspect-square rounded-xl overflow-hidden border-2 transition-all hover:scale-105 ${selectedAvatar === avatar.path
-                                ? 'border-primary ring-2 ring-primary/50'
-                                : 'border-border hover:border-primary/50'
+                            ? 'border-primary ring-2 ring-primary/50'
+                            : 'border-border hover:border-primary/50'
                             }`}
                     >
                         <Image

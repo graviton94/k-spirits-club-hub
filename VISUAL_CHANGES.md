@@ -301,3 +301,28 @@ No vendor prefixes needed for implemented features.
 - ✅ Filter bar: ~25% less vertical space
 
 **Total improvement**: Users see **25-30% more content** per screen while maintaining readability and usability.
+# #   R e c e n t   V i s u a l   C h a n g e s   ( 2 0 2 6 - 0 1 - 2 9 ) 
+ # # #   C o n t e n t s   H u b   R e f a c t o r 
+ -   R e n a m e d   p a g e   f r o m   \ / r e v i e w s \   t o   \ / c o n t e n t s \ . 
+ -   * * N e w   U I * * :   I m p l e m e n t e d   h i g h - f i d e l i t y   ' g l a s s m o r p h i s m '   d e s i g n   s y s t e m   ( f r o m   C a b i n e t ) . 
+ -   * * L a y o u t * * :   S i m p l i f i e d   c a r d   d e s i g n   b y   a l i g n i n g   I c o n   &   T i t l e   h o r i z o n t a l l y   a n d   r e m o v i n g   s t a t u s   b a d g e s . 
+ -   * * I n t e r a c t i o n s * * :   E n h a n c e d   h o v e r   s t a t e s   w i t h   g r a d i e n t   r e v e a l s .  
+ -   C o m p a c t   L a y o u t :   R e d u c e d   m a r g i n s ,   p a d d i n g ,   a n d   f o n t   s i z e s   f o r   a   t i g h t e r   U I .  
+ # # #   T a s t i n g   C h a l l e n g e   ( R o u l e t t e   G a m e ) 
+ -   N e w   p a g e :   \ / c o n t e n t s / r o u l e t t e \ 
+ -   I m p l e m e n t e d   C S S + F r a m e r   M o t i o n   s p i n n i n g   w h e e l . 
+ -   C a t e g o r i e s   c o r r e s p o n d   t o   a c t u a l   D B   f i l t e r s   ( w h i s k y ,   g i n ,   e t c . ) . 
+ -   D e e p   l i n k s   t o   e x p l o r e r   p a g e   f o r   r e s u l t s .  
+ -   R e f a c t o r e d   R o u l e t t e   G a m e   t o   * * W a l k i n g   P e n a l t y   G a m e * *   ( U s e r   R e q u e s t ) . 
+ -   U p d a t e d   c a t e g o r i e s :   ' O n e   S h o t ' ,   ' L o v e   S h o t ' ,   ' H i s t o r y   T a l k ' ,   e t c . 
+ -   C h a n g e d   t h e m e   t o   R e d / O r a n g e   f o r   e x c i t e m e n t .  
+ -   R e f a c t o r e d   M i n i - g a m e   t o   * * G o l d e n   R a t i o   M a s t e r   ( P e r f e c t   P o u r ) * * . 
+ -   I m p l e m e n t e d   t i m i n g - b a s e d   g a u g e   g a m e . 
+ -   A d d e d   c o n f e t t i   e f f e c t s   f o r   s u c c e s s . 
+ -   R e p l a c e d   ' R o u l e t t e '   i n   C o n t e n t s   H u b .  
+ -   U p d a t e d   P e r f e c t   P o u r   G a m e :   V a r i a b l e   f i l l i n g   s p e e d   ( 3 0 - 3 0 0 % )   f o r   1 - c l i c k   d i f f i c u l t y .  
+ -   G a m e   M e c h a n i c   U p d a t e :   * * S o m a e k   ( S o j u + B e e r )   M i x i n g * *   f e a t u r e . 
+ -   T w o - s t e p   p o u r i n g   p r o c e s s   ( S o j u   - >   B e e r ) . 
+ -   V i s u a l s :   S i l v e r   S o j u   l a y e r   +   G o l d e n   B e e r   l a y e r . 
+ -   S c o r i n g :   S t r i c t   3 : 7   R a t i o   A N D   8 0 %   T o t a l   V o l u m e   c h e c k .  
+ 

@@ -14,7 +14,7 @@ export function BottomNav() {
     { href: "/explore", icon: "🔍", label: "탐색" },
     { href: "/cabinet", icon: "📚", label: "캐비닛" },
     { href: "/", icon: "🏠", label: "홈" },
-    { href: "/reviews", icon: "✍️", label: "리뷰" },
+    { href: "/contents", icon: "🎮", label: "컨텐츠" },
     { href: "/me", icon: "👤", label: "내 정보" },
   ];
 
