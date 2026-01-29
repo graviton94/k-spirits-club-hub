@@ -1388,5 +1388,79 @@ export const modificationDb = {
         const id = doc.name.split('/').pop();
         console.log(`[modificationDb] Success: Created document ${id}`);
         return id;
+    },
+
+    async getAll(): Promise<ModificationRequest[]> {
+        const token = await getServiceAccountToken();
+        const collectionPath = getAppPath().modificationRequests;
+        const runQueryUrl = `${BASE_URL}:runQuery`;
+
+        const parent = `projects/${PROJECT_ID}/databases/(default)/documents`;
+
+        const res = await fetch(runQueryUrl, {
+            method: 'POST',
+            headers: { Authorization: `Bearer ${token}` },
+            body: JSON.stringify({
+                parent,
+                structuredQuery: {
+                    from: [{ collectionId: 'modification_requests' }],
+                    orderBy: [{ field: { fieldPath: 'createdAt' }, direction: 'DESCENDING' }],
+                    limit: 1000
+                }
+            })
+        });
+
+        if (!res.ok) {
+            const errText = await res.text();
+            console.error(`[modificationDb] Failed to fetch requests:`, errText);
+            return [];
+        }
+
+        const json = await res.json();
+        const results = json
+            .filter((r: any) => r.document)
+            .map((r: any) => {
+                const fields = r.document.fields || {};
+                const id = r.document.name.split('/').pop();
+                const data: any = { id };
+
+                for (const [key, value] of Object.entries(fields) as [string, any][]) {
+                    data[key] = fromFirestoreValue(value);
+                }
+
+                return data as ModificationRequest;
+            });
+
+        console.log(`[modificationDb] Fetched ${results.length} modification requests`);
+        return results;
+    },
+
+    async updateStatus(id: string, status: 'pending' | 'checked' | 'resolved'): Promise<void> {
+        const token = await getServiceAccountToken();
+        const collectionPath = getAppPath().modificationRequests;
+        const url = `${BASE_URL}/${collectionPath}/${id}`;
+
+        const payload = { status };
+        const converted = toFirestore(payload);
+
+        const patchUrl = `${url}?updateMask.fieldPaths=status`;
+
+        const res = await fetch(patchUrl, {
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(converted)
+        });
+
+        if (!res.ok) {
+            const errorText = await res.text();
+            console.error(`[modificationDb] Failed to update status:`, errorText);
+            throw new Error(`Failed to update modification request status: ${errorText}`);
+        }
+
+        console.log(`[modificationDb] Updated request ${id} to status: ${status}`);
     }
 };
+

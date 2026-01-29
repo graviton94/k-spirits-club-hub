@@ -1,0 +1,1250 @@
+{
+  "processed": 113,
+  "updated": 113,
+  "errors": 0,
+  "changes": [
+    {
+      "id": "fsk-201300190973",
+      "updates": {
+        "name": "스포라이스",
+        "description": "sporice"
+      },
+      "changes": [
+        "name: 스포라이스(sporice) → 스포라이스",
+        "description: sporice"
+      ]
+    },
+    {
+      "id": "fsk-2013001604510",
+      "updates": {
+        "name": "농부 맥주 세종",
+        "description": "saison"
+      },
+      "changes": [
+        "name: 농부 맥주 세종 (saison) → 농부 맥주 세종",
+        "description: saison"
+      ]
+    },
+    {
+      "id": "fsk-2013001604512",
+      "updates": {
+        "name": "등산객맥주 페일 에일",
+        "description": "pale ale"
+      },
+      "changes": [
+        "name: 등산객맥주 페일 에일(pale ale) → 등산객맥주 페일 에일",
+        "description: pale ale"
+      ]
+    },
+    {
+      "id": "fsk-2013001704265",
+      "updates": {
+        "name": "히어로즈인어 페스트 쉘",
+        "description": "Heroes in a Fest-Sheel"
+      },
+      "changes": [
+        "name: 히어로즈인어 페스트 쉘(Heroes in a Fest-Sheel) → 히어로즈인어 페스트 쉘",
+        "description: Heroes in a Fest-Sheel"
+      ]
+    },
+    {
+      "id": "fsk-2013001704233",
+      "updates": {
+        "name": "호피토피",
+        "description": "HOPITOPI"
+      },
+      "changes": [
+        "name: 호피토피(HOPITOPI) → 호피토피",
+        "description: HOPITOPI"
+      ]
+    },
+    {
+      "id": "fsk-2013001704235",
+      "updates": {
+        "name": "렛츠댄스",
+        "description": "Let's dance"
+      },
+      "changes": [
+        "name: 렛츠댄스(Let's dance) → 렛츠댄스",
+        "description: Let's dance"
+      ]
+    },
+    {
+      "id": "fsk-2013001704246",
+      "updates": {
+        "name": "로우 옐로우",
+        "description": "Raw Yellow"
+      },
+      "changes": [
+        "name: 로우 옐로우(Raw Yellow) → 로우 옐로우",
+        "description: Raw Yellow"
+      ]
+    },
+    {
+      "id": "fsk-2013001704253",
+      "updates": {
+        "name": "런 어스 하이",
+        "description": "Run Us High"
+      },
+      "changes": [
+        "name: 런 어스 하이(Run Us High) → 런 어스 하이",
+        "description: Run Us High"
+      ]
+    },
+    {
+      "id": "fsk-2013001704230",
+      "updates": {
+        "name": "오!",
+        "description": "Oh!"
+      },
+      "changes": [
+        "name: 오!(Oh!) → 오!",
+        "description: Oh!"
+      ]
+    },
+    {
+      "id": "fsk-2013001704231",
+      "updates": {
+        "name": "Lager That",
+        "description": "라거댓"
+      },
+      "changes": [
+        "name: Lager That (라거댓) → Lager That",
+        "description: 라거댓"
+      ]
+    },
+    {
+      "id": "fsk-2013001704244",
+      "updates": {
+        "name": "팁시",
+        "description": "Tipsy"
+      },
+      "changes": [
+        "name: 팁시(Tipsy) → 팁시",
+        "description: Tipsy"
+      ]
+    },
+    {
+      "id": "fsk-2013001704234",
+      "updates": {
+        "name": "Paradiso Lager",
+        "description": "파라디소 라거"
+      },
+      "changes": [
+        "name: Paradiso Lager(파라디소 라거) → Paradiso Lager",
+        "description: 파라디소 라거"
+      ]
+    },
+    {
+      "id": "fsk-2013001704257",
+      "updates": {
+        "name": "웰컴&필스",
+        "description": "Welcome and Pils"
+      },
+      "changes": [
+        "name: 웰컴&필스(Welcome and Pils) → 웰컴&필스",
+        "description: Welcome and Pils"
+      ]
+    },
+    {
+      "id": "fsk-201300160185",
+      "updates": {
+        "name": "금정",
+        "description": "GEUMJEONG"
+      },
+      "changes": [
+        "name: 금정(GEUMJEONG) → 금정",
+        "description: GEUMJEONG"
+      ]
+    },
+    {
+      "id": "fsk-2013001601612",
+      "updates": {
+        "name": "송파",
+        "description": "SONG.PA"
+      },
+      "changes": [
+        "name: 송파(SONG.PA) → 송파",
+        "description: SONG.PA"
+      ]
+    },
+    {
+      "id": "fsk-201300160188",
+      "updates": {
+        "name": "비터 아이피에이",
+        "description": "Bitter IPA"
+      },
+      "changes": [
+        "name: 비터 아이피에이(Bitter IPA) → 비터 아이피에이",
+        "description: Bitter IPA"
+      ]
+    },
+    {
+      "id": "fsk-201300201864",
+      "updates": {
+        "name": "대덕주",
+        "description": "단상지교"
+      },
+      "changes": [
+        "name: 대덕주 (단상지교) → 대덕주",
+        "description: 단상지교"
+      ]
+    },
+    {
+      "id": "fsk-2001001523223",
+      "updates": {
+        "name": "LUDOVIC XIII",
+        "description": "루도빅 13세"
+      },
+      "changes": [
+        "name: LUDOVIC XIII(루도빅 13세) → LUDOVIC XIII",
+        "description: 루도빅 13세"
+      ]
+    },
+    {
+      "id": "fsk-2006001502095",
+      "updates": {
+        "name": "가브리엘",
+        "description": "Gabriel"
+      },
+      "changes": [
+        "name: 가브리엘(Gabriel) → 가브리엘",
+        "description: Gabriel"
+      ]
+    },
+    {
+      "id": "fsk-201300200824",
+      "updates": {
+        "name": "두레앙브랜디",
+        "description": "40"
+      },
+      "changes": [
+        "name: 두레앙브랜디(40) → 두레앙브랜디",
+        "description: 40"
+      ]
+    },
+    {
+      "id": "fsk-200100152328",
+      "updates": {
+        "name": "MONROI XIV",
+        "description": "몽루아14"
+      },
+      "changes": [
+        "name: MONROI XIV(몽루아14) → MONROI XIV",
+        "description: 몽루아14"
+      ]
+    },
+    {
+      "id": "fsk-2013002007629",
+      "updates": {
+        "name": "담은죽심",
+        "description": "대나무통술"
+      },
+      "changes": [
+        "name: 담은죽심(대나무통술) → 담은죽심",
+        "description: 대나무통술"
+      ]
+    },
+    {
+      "id": "fsk-201300201185",
+      "updates": {
+        "name": "한산명품소곡주",
+        "description": "살균"
+      },
+      "changes": [
+        "name: 한산명품소곡주(살균) → 한산명품소곡주",
+        "description: 살균"
+      ]
+    },
+    {
+      "id": "fsk-201300201662",
+      "updates": {
+        "name": "석로주",
+        "description": "순"
+      },
+      "changes": [
+        "name: 석로주(순) → 석로주",
+        "description: 순"
+      ]
+    },
+    {
+      "id": "fsk-201300161102",
+      "updates": {
+        "name": "비고즈 맑은술",
+        "description": "B.GOZE.334"
+      },
+      "changes": [
+        "name: 비고즈 맑은술(B.GOZE.334) → 비고즈 맑은술",
+        "description: B.GOZE.334"
+      ]
+    },
+    {
+      "id": "fsk-199000150021",
+      "updates": {
+        "name": "서주",
+        "description": "감자술"
+      },
+      "changes": [
+        "name: 서주(감자술) → 서주",
+        "description: 감자술"
+      ]
+    },
+    {
+      "id": "fsk-201300190995",
+      "updates": {
+        "name": "니모메",
+        "description": "NIMOME"
+      },
+      "changes": [
+        "name: 니모메 (NIMOME) → 니모메",
+        "description: NIMOME"
+      ]
+    },
+    {
+      "id": "fsk-201300202583",
+      "updates": {
+        "name": "청명주",
+        "description": "생주"
+      },
+      "changes": [
+        "name: 청명주(생주) → 청명주",
+        "description: 생주"
+      ]
+    },
+    {
+      "id": "fsk-201300202957",
+      "updates": {
+        "name": "한산소곡주",
+        "description": "살균약주"
+      },
+      "changes": [
+        "name: 한산소곡주(살균약주) → 한산소곡주",
+        "description: 살균약주"
+      ]
+    },
+    {
+      "id": "fsk-201400200378",
+      "updates": {
+        "name": "풍정사계 夏",
+        "description": "하"
+      },
+      "changes": [
+        "name: 풍정사계 夏(하) → 풍정사계 夏",
+        "description: 하"
+      ]
+    },
+    {
+      "id": "fsk-2021001283822",
+      "updates": {
+        "name": "효모재 B1 #01",
+        "description": "HYOMO JAE B1 #01"
+      },
+      "changes": [
+        "name: 효모재 B1 #01 (HYOMO JAE B1 #01) → 효모재 B1 #01",
+        "description: HYOMO JAE B1 #01"
+      ]
+    },
+    {
+      "id": "fsk-2021001283823",
+      "updates": {
+        "name": "효모재 B1 #02",
+        "description": "HYOMO JAE B1 #02"
+      },
+      "changes": [
+        "name: 효모재 B1 #02 (HYOMO JAE B1 #02) → 효모재 B1 #02",
+        "description: HYOMO JAE B1 #02"
+      ]
+    },
+    {
+      "id": "fsk-201800165043",
+      "updates": {
+        "name": "SEOUL 청주",
+        "description": "서울"
+      },
+      "changes": [
+        "name: SEOUL(서울) 청주 → SEOUL 청주",
+        "description: 서울"
+      ]
+    },
+    {
+      "id": "fsk-201400171178",
+      "updates": {
+        "name": "삼양춘 청주",
+        "description": "살균주"
+      },
+      "changes": [
+        "name: 삼양춘 청주 (살균주) → 삼양춘 청주",
+        "description: 살균주"
+      ]
+    },
+    {
+      "id": "fsk-2013001508596",
+      "updates": {
+        "name": "알포",
+        "description": "R4"
+      },
+      "changes": [
+        "name: 알포(R4) → 알포",
+        "description: R4"
+      ]
+    },
+    {
+      "id": "fsk-201300191172",
+      "updates": {
+        "abv": 13.0,
+        "name": "청하"
+      },
+      "changes": [
+        "abv: 13.0",
+        "name: 청하 13도 → 청하"
+      ]
+    },
+    {
+      "id": "fsk-2013001705511",
+      "updates": {
+        "name": "행복한상상 위켄드",
+        "description": "Sunday"
+      },
+      "changes": [
+        "name: 행복한상상 위켄드(Sunday) → 행복한상상 위켄드",
+        "description: Sunday"
+      ]
+    },
+    {
+      "id": "fsk-2013001705512",
+      "updates": {
+        "name": "행복한상상 위켄드",
+        "description": "Saturday"
+      },
+      "changes": [
+        "name: 행복한상상 위켄드(Saturday) → 행복한상상 위켄드",
+        "description: Saturday"
+      ]
+    },
+    {
+      "id": "fsk-201300170558",
+      "updates": {
+        "name": "행복한상상 위켄드",
+        "description": "Friday"
+      },
+      "changes": [
+        "name: 행복한상상 위켄드(Friday) → 행복한상상 위켄드",
+        "description: Friday"
+      ]
+    },
+    {
+      "id": "mfds-202500749261",
+      "updates": {
+        "name": "라가불린 12년 SR",
+        "description": "2023"
+      },
+      "changes": [
+        "name: 라가불린 12년 SR (2023) → 라가불린 12년 SR",
+        "description: 2023"
+      ]
+    },
+    {
+      "id": "fsk-2014001711711",
+      "updates": {
+        "name": "오마이갓",
+        "description": "Oh My Gat"
+      },
+      "changes": [
+        "name: 오마이갓(Oh My Gat) → 오마이갓",
+        "description: Oh My Gat"
+      ]
+    },
+    {
+      "id": "fsk-201400171177",
+      "updates": {
+        "name": "삼양춘 청",
+        "description": "살균약주"
+      },
+      "changes": [
+        "name: 삼양춘 청(살균약주) → 삼양춘 청",
+        "description: 살균약주"
+      ]
+    },
+    {
+      "id": "fsk-201300161674",
+      "updates": {
+        "name": "월이",
+        "description": "하이오디생청"
+      },
+      "changes": [
+        "name: 월이(하이오디생청) → 월이",
+        "description: 하이오디생청"
+      ]
+    },
+    {
+      "id": "fsk-201300161675",
+      "updates": {
+        "name": "월해",
+        "description": "하이생청"
+      },
+      "changes": [
+        "name: 월해(하이생청) → 월해",
+        "description: 하이생청"
+      ]
+    },
+    {
+      "id": "fsk-201300191534",
+      "updates": {
+        "name": "골드가시오가피술",
+        "description": "GOLD"
+      },
+      "changes": [
+        "name: 골드(GOLD)가시오가피술 → 골드가시오가피술",
+        "description: GOLD"
+      ]
+    },
+    {
+      "id": "fsk-2013001805282",
+      "updates": {
+        "name": "소월미주",
+        "description": "신"
+      },
+      "changes": [
+        "name: 소월미주(신) → 소월미주",
+        "description: 신"
+      ]
+    },
+    {
+      "id": "fsk-2013002007610",
+      "updates": {
+        "name": "담은옻술",
+        "description": "옻누리주"
+      },
+      "changes": [
+        "name: 담은옻술(옻누리주) → 담은옻술",
+        "description: 옻누리주"
+      ]
+    },
+    {
+      "id": "fsk-2013001927113",
+      "updates": {
+        "name": "아이러브유자",
+        "description": "I LOVE YUJA / 내수용"
+      },
+      "changes": [
+        "name: 아이러브유자(I LOVE YUJA)(내수용) → 아이러브유자",
+        "description: I LOVE YUJA / 내수용"
+      ]
+    },
+    {
+      "id": "fsk-202000042043",
+      "updates": {
+        "name": "남양주 위스키",
+        "description": "Namyangju Whisky"
+      },
+      "changes": [
+        "name: 남양주 위스키 (Namyangju Whisky) → 남양주 위스키",
+        "description: Namyangju Whisky"
+      ]
+    },
+    {
+      "id": "fsk-2013001614112",
+      "updates": {
+        "name": "PHANTOM THE WHITE",
+        "description": "팬텀 더 화이트"
+      },
+      "changes": [
+        "name: PHANTOM THE WHITE(팬텀 더 화이트) → PHANTOM THE WHITE",
+        "description: 팬텀 더 화이트"
+      ]
+    },
+    {
+      "id": "fsk-2013001614114",
+      "updates": {
+        "name": "팬텀 디 오리지널 17",
+        "description": "PHANTOM THE ORIGINAL 17"
+      },
+      "changes": [
+        "name: 팬텀 디 오리지널 17(PHANTOM THE ORIGINAL 17) → 팬텀 디 오리지널 17",
+        "description: PHANTOM THE ORIGINAL 17"
+      ]
+    },
+    {
+      "id": "fsk-2013001614116",
+      "updates": {
+        "name": "골든블루 더블샷 하이볼",
+        "description": "GOLDENBLUE Double-Shot Highball"
+      },
+      "changes": [
+        "name: 골든블루 더블샷 하이볼(GOLDENBLUE Double-Shot Highball) → 골든블루 더블샷 하이볼",
+        "description: GOLDENBLUE Double-Shot Highball"
+      ]
+    },
+    {
+      "id": "fsk-2013001614117",
+      "updates": {
+        "name": "골든블루 더 그레이트 저니 셰리 캐스크",
+        "description": "GOLDENBLUE THE GREAT JOURNEY SHERRY CASK"
+      },
+      "changes": [
+        "name: 골든블루 더 그레이트 저니 셰리 캐스크(GOLDENBLUE THE GREAT JOURNEY SHERRY CASK) → 골든블루 더 그레이트 저니 셰리 캐스크",
+        "description: GOLDENBLUE THE GREAT JOURNEY SHERRY CASK"
+      ]
+    },
+    {
+      "id": "fsk-2013001614118",
+      "updates": {
+        "name": "골든블루 더 그레이트 저니 포트 캐스크",
+        "description": "GOLDENBLUE THE GREAT JOURNEY PORT CASK"
+      },
+      "changes": [
+        "name: 골든블루 더 그레이트 저니 포트 캐스크(GOLDENBLUE THE GREAT JOURNEY PORT CASK) → 골든블루 더 그레이트 저니 포트 캐스크",
+        "description: GOLDENBLUE THE GREAT JOURNEY PORT CASK"
+      ]
+    },
+    {
+      "id": "fsk-2013001614115",
+      "updates": {
+        "name": "팬텀 디 오리지널 리저브",
+        "description": "Phantom The Original Reserve"
+      },
+      "changes": [
+        "name: 팬텀 디 오리지널 리저브(Phantom The Original Reserve) → 팬텀 디 오리지널 리저브",
+        "description: Phantom The Original Reserve"
+      ]
+    },
+    {
+      "id": "fsk-2001001523211",
+      "updates": {
+        "name": "GOLDWIN",
+        "description": "골드윈"
+      },
+      "changes": [
+        "name: GOLDWIN(골드윈) → GOLDWIN",
+        "description: 골드윈"
+      ]
+    },
+    {
+      "id": "fsk-2001001523227",
+      "updates": {
+        "name": "오듀",
+        "description": "ODEW"
+      },
+      "changes": [
+        "name: 오듀(ODEW) → 오듀",
+        "description: ODEW"
+      ]
+    },
+    {
+      "id": "fsk-2001001523222",
+      "updates": {
+        "name": "CAROLUS XII",
+        "description": "카롤루스 XII"
+      },
+      "changes": [
+        "name: CAROLUS XII (카롤루스 XII) → CAROLUS XII",
+        "description: 카롤루스 XII"
+      ]
+    },
+    {
+      "id": "fsk-2001001523224",
+      "updates": {
+        "name": "CAROLUS XII",
+        "description": "카롤루스 XII"
+      },
+      "changes": [
+        "name: CAROLUS XII(카롤루스 XII) → CAROLUS XII",
+        "description: 카롤루스 XII"
+      ]
+    },
+    {
+      "id": "fsk-2001001523225",
+      "updates": {
+        "name": "LUXE GOLD NO24",
+        "description": "럭스골드 넘버24"
+      },
+      "changes": [
+        "name: LUXE GOLD NO24(럭스골드 넘버24) → LUXE GOLD NO24",
+        "description: 럭스골드 넘버24"
+      ]
+    },
+    {
+      "id": "fsk-2001001523240",
+      "updates": {
+        "name": "아콘",
+        "description": "ARCHON NO12"
+      },
+      "changes": [
+        "name: 아콘(ARCHON NO12) → 아콘",
+        "description: ARCHON NO12"
+      ]
+    },
+    {
+      "id": "fsk-2013001911724",
+      "updates": {
+        "name": "PEERS CLUB",
+        "description": "피어스클럽"
+      },
+      "changes": [
+        "name: PEERS CLUB(피어스클럽) → PEERS CLUB",
+        "description: 피어스클럽"
+      ]
+    },
+    {
+      "id": "fsk-201300192043",
+      "updates": {
+        "name": "청화몽",
+        "description": "淸花夢"
+      },
+      "changes": [
+        "name: 청화몽(淸花夢) → 청화몽",
+        "description: 淸花夢"
+      ]
+    },
+    {
+      "id": "fsk-201300170406",
+      "updates": {
+        "name": "金鋪醴酒 醴",
+        "description": "김포예주 예"
+      },
+      "changes": [
+        "name: 金鋪醴酒 醴(김포예주 예) → 金鋪醴酒 醴",
+        "description: 김포예주 예"
+      ]
+    },
+    {
+      "id": "fsk-201300170407",
+      "updates": {
+        "name": "金鋪藥酒",
+        "description": "김포약주"
+      },
+      "changes": [
+        "name: 金鋪藥酒(김포약주) → 金鋪藥酒",
+        "description: 김포약주"
+      ]
+    },
+    {
+      "id": "fsk-2006001502099",
+      "updates": {
+        "name": "백세주",
+        "description": "시음용"
+      },
+      "changes": [
+        "name: 백세주(시음용) → 백세주",
+        "description: 시음용"
+      ]
+    },
+    {
+      "id": "fsk-2006001502064",
+      "updates": {
+        "name": "예담",
+        "description": "한모금"
+      },
+      "changes": [
+        "name: 예담(한모금) → 예담",
+        "description: 한모금"
+      ]
+    },
+    {
+      "id": "fsk-201300180113",
+      "updates": {
+        "name": "제왕",
+        "description": "帝王"
+      },
+      "changes": [
+        "name: 제왕(帝王) → 제왕",
+        "description: 帝王"
+      ]
+    },
+    {
+      "id": "mfds-202500663575",
+      "updates": {
+        "name": "산미구엘 세르베자 블랑카",
+        "description": "캔"
+      },
+      "changes": [
+        "name: 산미구엘 세르베자 블랑카(캔) → 산미구엘 세르베자 블랑카",
+        "description: 캔"
+      ]
+    },
+    {
+      "id": "mfds-202500672380",
+      "updates": {
+        "name": "트리포터 헤븐",
+        "description": "20Ll"
+      },
+      "changes": [
+        "name: 트리포터 헤븐 (20Ll) → 트리포터 헤븐",
+        "description: 20Ll"
+      ]
+    },
+    {
+      "id": "mfds-202500830331",
+      "updates": {
+        "name": "플렌스부르거 바이젠",
+        "description": "병"
+      },
+      "changes": [
+        "name: 플렌스부르거 바이젠 (병) → 플렌스부르거 바이젠",
+        "description: 병"
+      ]
+    },
+    {
+      "id": "mfds-202600052068",
+      "updates": {
+        "name": "더블유 아이스 바이 윈저",
+        "description": "779434"
+      },
+      "changes": [
+        "name: 더블유 아이스 바이 윈저 (779434) → 더블유 아이스 바이 윈저",
+        "description: 779434"
+      ]
+    },
+    {
+      "id": "mfds-202600017896",
+      "updates": {
+        "name": "쿨 일라 12년",
+        "description": "734790"
+      },
+      "changes": [
+        "name: 쿨 일라 12년 (734790) → 쿨 일라 12년",
+        "description: 734790"
+      ]
+    },
+    {
+      "id": "mfds-202600012434",
+      "updates": {
+        "name": "더블유19 바이 윈저",
+        "description": "771215"
+      },
+      "changes": [
+        "name: 더블유19 바이 윈저 (771215) → 더블유19 바이 윈저",
+        "description: 771215"
+      ]
+    },
+    {
+      "id": "mfds-202500863564",
+      "updates": {
+        "name": "탈리스커 1984",
+        "description": "772196"
+      },
+      "changes": [
+        "name: 탈리스커 1984 (772196) → 탈리스커 1984",
+        "description: 772196"
+      ]
+    },
+    {
+      "id": "mfds-202500830378",
+      "updates": {
+        "name": "플렌스부르거 필스너",
+        "description": "케그"
+      },
+      "changes": [
+        "name: 플렌스부르거 필스너 (케그) → 플렌스부르거 필스너",
+        "description: 케그"
+      ]
+    },
+    {
+      "id": "mfds-202500801584",
+      "updates": {
+        "name": "싱글톤 더프타운 12년",
+        "description": "758793"
+      },
+      "changes": [
+        "name: 싱글톤 더프타운 12년 (758793) → 싱글톤 더프타운 12년",
+        "description: 758793"
+      ]
+    },
+    {
+      "id": "mfds-202600027635",
+      "updates": {
+        "name": "간바래 오또상",
+        "description": "900미리리터"
+      },
+      "changes": [
+        "name: 간바래 오또상(900미리리터) → 간바래 오또상",
+        "description: 900미리리터"
+      ]
+    },
+    {
+      "id": "mfds-202500678901",
+      "updates": {
+        "name": "브레이크사이드 아이피에이",
+        "description": "캔"
+      },
+      "changes": [
+        "name: 브레이크사이드 아이피에이 (캔) → 브레이크사이드 아이피에이",
+        "description: 캔"
+      ]
+    },
+    {
+      "id": "mfds-202500720353",
+      "updates": {
+        "name": "올라덥",
+        "description": "12"
+      },
+      "changes": [
+        "name: 올라덥(12) → 올라덥",
+        "description: 12"
+      ]
+    },
+    {
+      "id": "mfds-202500779092",
+      "updates": {
+        "name": "하누만 프리미엄 라이트",
+        "description": "캔"
+      },
+      "changes": [
+        "name: 하누만 프리미엄 라이트 (캔) → 하누만 프리미엄 라이트",
+        "description: 캔"
+      ]
+    },
+    {
+      "id": "mfds-202500803677",
+      "updates": {
+        "name": "에딩거 바이스비어",
+        "description": "500mL캔"
+      },
+      "changes": [
+        "name: 에딩거 바이스비어 (500mL캔) → 에딩거 바이스비어",
+        "description: 500mL캔"
+      ]
+    },
+    {
+      "id": "mfds-202500812321",
+      "updates": {
+        "name": "데스페라도스 오리지널_330ML_BOT",
+        "description": "G"
+      },
+      "changes": [
+        "name: 데스페라도스 오리지널_330ML_BOT (G) → 데스페라도스 오리지널_330ML_BOT",
+        "description: G"
+      ]
+    },
+    {
+      "id": "mfds-202500849990",
+      "updates": {
+        "name": "캄보디아 블랙",
+        "description": "캔"
+      },
+      "changes": [
+        "name: 캄보디아 블랙 (캔) → 캄보디아 블랙",
+        "description: 캔"
+      ]
+    },
+    {
+      "id": "mfds-202600003484",
+      "updates": {
+        "name": "칭따오 퓨어드래프트",
+        "description": "생"
+      },
+      "changes": [
+        "name: 칭따오 퓨어드래프트(생) → 칭따오 퓨어드래프트",
+        "description: 생"
+      ]
+    },
+    {
+      "id": "mfds-202600018412",
+      "updates": {
+        "name": "슈나이더 호펜바이세",
+        "description": "0.5"
+      },
+      "changes": [
+        "name: 슈나이더 호펜바이세 [0.5] → 슈나이더 호펜바이세",
+        "description: 0.5"
+      ]
+    },
+    {
+      "id": "mfds-202600018288",
+      "updates": {
+        "name": "슈나이더 헬레스",
+        "description": "0.5"
+      },
+      "changes": [
+        "name: 슈나이더 헬레스 [0.5] → 슈나이더 헬레스",
+        "description: 0.5"
+      ]
+    },
+    {
+      "id": "mfds-202600045053",
+      "updates": {
+        "name": "크롬바커",
+        "description": "캔"
+      },
+      "changes": [
+        "name: 크롬바커 [캔] → 크롬바커",
+        "description: 캔"
+      ]
+    },
+    {
+      "id": "mfds-202600034079",
+      "updates": {
+        "name": "하노이 프리미엄 맥주",
+        "description": "BOTTLE"
+      },
+      "changes": [
+        "name: 하노이 프리미엄 맥주 (BOTTLE) → 하노이 프리미엄 맥주",
+        "description: BOTTLE"
+      ]
+    },
+    {
+      "id": "mfds-202600048510",
+      "updates": {
+        "name": "시그나토리 오크니",
+        "description": "HP"
+      },
+      "changes": [
+        "name: 시그나토리 오크니 (HP) → 시그나토리 오크니",
+        "description: HP"
+      ]
+    },
+    {
+      "id": "mfds-202600048579",
+      "updates": {
+        "name": "시그나토리 스페이사이드 15년",
+        "description": "M"
+      },
+      "changes": [
+        "name: 시그나토리 스페이사이드(M) 15년 → 시그나토리 스페이사이드 15년",
+        "description: M"
+      ]
+    },
+    {
+      "id": "mfds-202600057393",
+      "updates": {
+        "name": "브란즈",
+        "description": "L24/2310"
+      },
+      "changes": [
+        "name: 브란즈 (L24/2310) → 브란즈",
+        "description: L24/2310"
+      ]
+    },
+    {
+      "id": "mfds-202500720207",
+      "updates": {
+        "name": "올드 캐슬",
+        "description": "가정용"
+      },
+      "changes": [
+        "name: 올드 캐슬 (가정용) → 올드 캐슬",
+        "description: 가정용"
+      ]
+    },
+    {
+      "id": "mfds-202500747065",
+      "updates": {
+        "name": "보모어 12년 쉐리",
+        "description": "L 5114"
+      },
+      "changes": [
+        "name: 보모어 12년 쉐리(L 5114) → 보모어 12년 쉐리",
+        "description: L 5114"
+      ]
+    },
+    {
+      "id": "mfds-202500757494",
+      "updates": {
+        "name": "글렌로티스 18년",
+        "description": "구형"
+      },
+      "changes": [
+        "name: 글렌로티스 18년(구형) → 글렌로티스 18년",
+        "description: 구형"
+      ]
+    },
+    {
+      "id": "mfds-202500757512",
+      "updates": {
+        "name": "글렌모렌지 12년 라산타",
+        "description": "구형"
+      },
+      "changes": [
+        "name: 글렌모렌지 12년 라산타(구형) → 글렌모렌지 12년 라산타",
+        "description: 구형"
+      ]
+    },
+    {
+      "id": "mfds-202500757720",
+      "updates": {
+        "name": "글렌모렌지 넥타도르",
+        "description": "구형"
+      },
+      "changes": [
+        "name: 글렌모렌지 넥타도르(구형) → 글렌모렌지 넥타도르",
+        "description: 구형"
+      ]
+    },
+    {
+      "id": "mfds-202500764676",
+      "updates": {
+        "name": "캐나디언 클럽",
+        "description": "L5212"
+      },
+      "changes": [
+        "name: 캐나디언 클럽(L5212) → 캐나디언 클럽",
+        "description: L5212"
+      ]
+    },
+    {
+      "id": "mfds-202500816337",
+      "updates": {
+        "name": "더블유 허니 바이 윈저",
+        "description": "779435"
+      },
+      "changes": [
+        "name: 더블유 허니 바이 윈저 (779435) → 더블유 허니 바이 윈저",
+        "description: 779435"
+      ]
+    },
+    {
+      "id": "mfds-202500823733",
+      "updates": {
+        "name": "와일드터키 101 12년",
+        "description": "LL/LC23"
+      },
+      "changes": [
+        "name: 와일드터키 101 12년 (LL/LC23) → 와일드터키 101 12년",
+        "description: LL/LC23"
+      ]
+    },
+    {
+      "id": "mfds-202500823774",
+      "updates": {
+        "name": "와일드터키 101 8년",
+        "description": "LANI03B"
+      },
+      "changes": [
+        "name: 와일드터키 101 8년 (LANI03B) → 와일드터키 101 8년",
+        "description: LANI03B"
+      ]
+    },
+    {
+      "id": "mfds-202500827557",
+      "updates": {
+        "name": "하쿠슈",
+        "description": "L B5I"
+      },
+      "changes": [
+        "name: 하쿠슈(L B5I) → 하쿠슈",
+        "description: L B5I"
+      ]
+    },
+    {
+      "id": "mfds-202500863339",
+      "updates": {
+        "name": "야마자키 18년",
+        "description": "P5E"
+      },
+      "changes": [
+        "name: 야마자키 18년(P5E) → 야마자키 18년",
+        "description: P5E"
+      ]
+    },
+    {
+      "id": "mfds-202500907505",
+      "updates": {
+        "name": "더 글랜드로낙 오드 투 더 다크",
+        "description": "L110018371-1305"
+      },
+      "changes": [
+        "name: 더 글랜드로낙 오드 투 더 다크 (L110018371-1305) → 더 글랜드로낙 오드 투 더 다크",
+        "description: L110018371-1305"
+      ]
+    },
+    {
+      "id": "mfds-202600026743",
+      "updates": {
+        "name": "시그나토리 스페이사이드 16년",
+        "description": "M"
+      },
+      "changes": [
+        "name: 시그나토리 스페이사이드(M) 16년 → 시그나토리 스페이사이드 16년",
+        "description: M"
+      ]
+    },
+    {
+      "id": "mfds-202600037516",
+      "updates": {
+        "name": "싱글톤 더프타운 15년",
+        "description": "759499"
+      },
+      "changes": [
+        "name: 싱글톤 더프타운 15년 (759499) → 싱글톤 더프타운 15년",
+        "description: 759499"
+      ]
+    },
+    {
+      "id": "mfds-202600043741",
+      "updates": {
+        "name": "올드 스머글러",
+        "description": "LFENH29"
+      },
+      "changes": [
+        "name: 올드 스머글러(LFENH29) → 올드 스머글러",
+        "description: LFENH29"
+      ]
+    },
+    {
+      "id": "mfds-202500770496",
+      "updates": {
+        "name": "더 글렌그란트 12년 쉐리 캐스크",
+        "description": "RONH05A"
+      },
+      "changes": [
+        "name: 더 글렌그란트 12년 쉐리 캐스크 (RONH05A) → 더 글렌그란트 12년 쉐리 캐스크",
+        "description: RONH05A"
+      ]
+    },
+    {
+      "id": "mfds-202500824573",
+      "updates": {
+        "name": "와일드터키 켄터키 스피릿",
+        "description": "LANF11E"
+      },
+      "changes": [
+        "name: 와일드터키 켄터키 스피릿 (LANF11E) → 와일드터키 켄터키 스피릿",
+        "description: LANF11E"
+      ]
+    },
+    {
+      "id": "mfds-202500824413",
+      "updates": {
+        "name": "와일드 터키 레어 브리드 라이",
+        "description": "LANA29C"
+      },
+      "changes": [
+        "name: 와일드 터키 레어 브리드 라이 (LANA29C) → 와일드 터키 레어 브리드 라이",
+        "description: LANA29C"
+      ]
+    },
+    {
+      "id": "mfds-202600055567",
+      "updates": {
+        "name": "비 데 타울라",
+        "description": "레드"
+      },
+      "changes": [
+        "name: 비 데 타울라 (레드) → 비 데 타울라",
+        "description: 레드"
+      ]
+    },
+    {
+      "id": "mfds-202600055302",
+      "updates": {
+        "name": "차카나 에스테이트 셀렉션 말벡",
+        "description": "L-25024"
+      },
+      "changes": [
+        "name: 차카나 에스테이트 셀렉션 말벡(L-25024) → 차카나 에스테이트 셀렉션 말벡",
+        "description: L-25024"
+      ]
+    },
+    {
+      "id": "mfds-202600056378",
+      "updates": {
+        "name": "도멘 앙리 들라그랑쥬 오뜨 꼬뜨 드 본",
+        "description": "루즈"
+      },
+      "changes": [
+        "name: 도멘 앙리 들라그랑쥬 오뜨 꼬뜨 드 본 (루즈) → 도멘 앙리 들라그랑쥬 오뜨 꼬뜨 드 본",
+        "description: 루즈"
+      ]
+    }
+  ]
+}

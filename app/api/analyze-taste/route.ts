@@ -55,10 +55,15 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+    console.log('[Analyze Taste] POST Request received');
+
     // 1. API 키 확인
     if (!API_KEY) {
-        console.error('[Analyze Taste] API Key is missing');
-        return NextResponse.json({ error: 'Server configuration error (API Key)' }, { status: 500 });
+        console.error('[Analyze Taste] API Key is missing (GEMINI_API_KEY)');
+        return NextResponse.json({
+            error: 'Server configuration error (API Key)',
+            details: 'GEMINI_API_KEY environment variable is not defined.'
+        }, { status: 500 });
     }
 
     try {
@@ -67,12 +72,22 @@ export async function POST(req: NextRequest) {
         const { userId } = body;
 
         if (!userId) {
+            console.error('[Analyze Taste] User ID missing in request body');
             return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
         }
 
         // 0. Check Usage Limit
         const today = getKSTDate();
-        const usage = await tasteProfileDb.getUsage(userId);
+        console.log(`[Analyze Taste] Checking usage for User: ${userId} on ${today}`);
+
+        let usage;
+        try {
+            usage = await tasteProfileDb.getUsage(userId);
+        } catch (usageError: any) {
+            console.error('[Analyze Taste] Usage Check DB Error:', usageError);
+            // Non-blocking for now, or we can decide to fail
+        }
+
         let currentCount = 0;
 
         if (usage && usage.date === today) {
@@ -80,13 +95,14 @@ export async function POST(req: NextRequest) {
         }
 
         if (currentCount >= 3) {
+            console.warn(`[Analyze Taste] User ${userId} reached limit: ${currentCount}/3`);
             return NextResponse.json({
                 error: 'Daily limit reached',
                 message: '오늘의 AI 분석 횟수(3회)를 모두 사용하셨어요. 내일 다시 시도해주세요!'
             }, { status: 429 });
         }
 
-        console.log(`[Analyze Taste] Starting analysis for User: ${userId} (Count: ${currentCount}/3)`);
+        console.log(`[Analyze Taste] Data fetching for User: ${userId}`);
 
         // 2. Fetch Data (DB 에러 1차 방어)
         let cabinetItems = [];
@@ -97,9 +113,13 @@ export async function POST(req: NextRequest) {
                 cabinetDb.getAll(userId),
                 reviewsDb.getAllForUser(userId)
             ]);
-        } catch (dbError) {
+            console.log(`[Analyze Taste] Fetched ${cabinetItems.length} cabinet items and ${userReviews.length} reviews`);
+        } catch (dbError: any) {
             console.error('[Analyze Taste] DB Fetch Error:', dbError);
-            return NextResponse.json({ error: 'Failed to fetch user data' }, { status: 500 });
+            return NextResponse.json({
+                error: 'Failed to fetch user data',
+                details: dbError.message
+            }, { status: 500 });
         }
 
         // 3. Merge Data (데이터 병합)
@@ -122,18 +142,19 @@ export async function POST(req: NextRequest) {
         });
 
         const promptData = buildTasteAnalysisPrompt(spiritsForAnalysis);
-        console.log(`[Analyze Taste] Prompt Length: ${promptData?.length}`);
+        console.log(`[Analyze Taste] Prompt generated (Length: ${promptData?.length})`);
 
         // 프롬프트가 너무 짧으면(분석할 술이 없으면) 에러 처리
         if (!promptData || promptData.length < 10) {
-            console.error('[Analyze Taste] Prompt too short');
+            console.error('[Analyze Taste] Prompt too short or empty');
             return NextResponse.json({
                 error: 'Invalid data',
-                message: 'AI에게 전달할 데이터가 부족합니다.'
+                message: 'AI에게 전달할 데이터가 부족합니다. 최소 1개 이상의 술을 술장에 넣어주세요!'
             }, { status: 400 });
         }
 
         // 4. Call AI
+        console.log('[Analyze Taste] Initializing Gemini Model: gemini-2.0-flash');
         const genAI = new GoogleGenerativeAI(API_KEY);
 
         const systemInstruction = `
@@ -175,38 +196,71 @@ export async function POST(req: NextRequest) {
             }
         });
 
-        const result = await model.generateContent([
-            systemInstruction,
-            promptData
-        ]);
+        console.log('[Analyze Taste] Generating content with Gemini...');
+        let result;
+        try {
+            result = await model.generateContent([
+                systemInstruction,
+                promptData
+            ]);
+        } catch (aiError: any) {
+            console.error('[Analyze Taste] Gemini API Critical Error:', aiError);
+            return NextResponse.json({
+                error: 'AI Generation Failed',
+                details: aiError.message
+            }, { status: 500 });
+        }
 
-        let responseText = result.response.text();
-        console.log('[AI Analysis] Raw Response:', responseText);
+        let responseText = '';
+        try {
+            responseText = result.response.text();
+            console.log('[Analyze Taste] AI Response received (Length: ${responseText.length})');
+        } catch (textError: any) {
+            console.error('[Analyze Taste] Error extracting text from Gemini response:', textError);
+            return NextResponse.json({
+                error: 'AI Output Extraction Failed',
+                details: textError.message
+            }, { status: 500 });
+        }
 
         // 5. Parse JSON
-        responseText = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
-
         let analysisResult;
         try {
-            analysisResult = JSON.parse(responseText);
-        } catch (e) {
-            console.error('[AI Analysis] JSON Parse Failed. Raw text:', responseText);
-            return NextResponse.json({ error: 'AI output format error' }, { status: 500 });
+            const cleanJson = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
+            analysisResult = JSON.parse(cleanJson);
+            console.log('[Analyze Taste] JSON Parsing Successful');
+        } catch (parseError: any) {
+            console.error('[Analyze Taste] JSON Parse Failed. Raw text samples:', responseText.substring(0, 100));
+            return NextResponse.json({
+                error: 'AI output format error',
+                details: parseError.message
+            }, { status: 500 });
         }
 
         // 6. Save & Response
+        console.log('[Analyze Taste] Saving results to DB...');
         const profile = {
             userId,
             analyzedAt: new Date().toISOString(),
             ...analysisResult
         };
 
-        // Update Usage & Save Profile
-        // Increment count and save
-        await Promise.all([
-            tasteProfileDb.save(userId, profile),
-            tasteProfileDb.setUsage(userId, today, currentCount + 1)
-        ]);
+        try {
+            // Update Usage & Save Profile
+            await Promise.all([
+                tasteProfileDb.save(userId, profile),
+                tasteProfileDb.setUsage(userId, today, currentCount + 1)
+            ]);
+            console.log('[Analyze Taste] Save Successful');
+        } catch (saveError: any) {
+            console.error('[Analyze Taste] DB Save Error:', saveError);
+            // We can still return the profile even if save fails, but it's risky for UI consistency
+            // For now, let's treat it as a 500
+            return NextResponse.json({
+                error: 'Failed to save analysis results',
+                details: saveError.message
+            }, { status: 500 });
+        }
 
         return NextResponse.json({
             success: true,

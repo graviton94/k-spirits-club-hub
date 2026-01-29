@@ -144,6 +144,14 @@ def main():
         if not run_step("Normalize Subcategories", f'node "{scripts_dir / "normalize_subcategories.js"}" --file "{f_ready}"'):
              print("⚠️ Warning: Subcategory Normalization failed, but continuing.")
 
+        # 3.3 Normalize Spirit Names (Extract volume/ABV/lot, move brackets to description)
+        if not run_step("Normalize Spirit Names", f'python "{scripts_dir / "normalize_spirit_names.py"}" --file "{f_ready}"'):
+             print("⚠️ Warning: Spirit name normalization failed, but continuing.")
+
+        # 3.4 Filter Large Volumes (Remove spirits >= 5L)
+        if not run_step("Filter Large Volumes", f'python "{scripts_dir / "filter_large_volumes.py"}" --file "{f_ready}"'):
+             print("⚠️ Warning: Volume filtering failed, but continuing.")
+
         # 4. Upload OR Save Locally
         if args.skip_upload:
             # Save to permanent file

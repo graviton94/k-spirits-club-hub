@@ -1,0 +1,8916 @@
+{
+  "stats": {
+    "total": 2308,
+    "with_volume_in_name": 408,
+    "with_lot_in_name": 10,
+    "with_abv_in_name": 127,
+    "needs_normalization": 500
+  },
+  "issues": [
+    {
+      "id": "fsk-201300190487",
+      "name": "정고집나주배약주9%",
+      "current_volume": 700,
+      "current_abv": 9,
+      "findings": {
+        "abv": [
+          {
+            "text": "9%",
+            "position": [
+              8,
+              10
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-201300190488",
+      "name": "정고집나주배약주15%",
+      "current_volume": 700,
+      "current_abv": 15,
+      "findings": {
+        "abv": [
+          {
+            "text": "15%",
+            "position": [
+              8,
+              11
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-2013002016228",
+      "name": "무아주 5도",
+      "current_volume": 700,
+      "current_abv": 5,
+      "findings": {
+        "abv": [
+          {
+            "text": "5도",
+            "position": [
+              4,
+              6
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500732729",
+      "name": "클라이넬리쉬 14년 700mL (665644)",
+      "current_volume": 700,
+      "current_abv": 46,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-2013002007642",
+      "name": "지호인생주 13%",
+      "current_volume": 700,
+      "current_abv": 13,
+      "findings": {
+        "abv": [
+          {
+            "text": "13%",
+            "position": [
+              6,
+              9
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600056364",
+      "name": "올리비에 트리꽁 샤블리 프르미에 크뤼 몽떼 드 또네흐 (13%) (750 mL) [ LMTE311 24 ]",
+      "current_volume": 700,
+      "current_abv": 13,
+      "findings": {
+        "volume": [
+          {
+            "text": "750 ml",
+            "position": [
+              37,
+              43
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "13%",
+            "position": [
+              31,
+              34
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600007338",
+      "name": "뽀할라 줄루포터 330ml",
+      "current_volume": 700,
+      "current_abv": 8.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600008792",
+      "name": "뽀할라 로겐울프 330ml",
+      "current_volume": 700,
+      "current_abv": 7.7,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600007537",
+      "name": "뽀할라 바스케 440ml",
+      "current_volume": 700,
+      "current_abv": 12.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "440ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-201300201731",
+      "name": "소백산 신선주(13%)",
+      "current_volume": 700,
+      "current_abv": 13,
+      "findings": {
+        "abv": [
+          {
+            "text": "13%",
+            "position": [
+              8,
+              11
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-201300201732",
+      "name": "소백산 신선주(16%)",
+      "current_volume": 700,
+      "current_abv": 16,
+      "findings": {
+        "abv": [
+          {
+            "text": "16%",
+            "position": [
+              8,
+              11
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-199000150022",
+      "name": "서주(감자술16%)",
+      "current_volume": 700,
+      "current_abv": 16,
+      "findings": {
+        "abv": [
+          {
+            "text": "16%",
+            "position": [
+              6,
+              9
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-201100151034",
+      "name": "이백 13%",
+      "current_volume": 700,
+      "current_abv": 13,
+      "findings": {
+        "abv": [
+          {
+            "text": "13%",
+            "position": [
+              3,
+              6
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-20130020258113",
+      "name": "청명주14.5%(살균)",
+      "current_volume": 700,
+      "current_abv": 14.5,
+      "findings": {
+        "abv": [
+          {
+            "text": "14.5%",
+            "position": [
+              3,
+              8
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-20130020258112",
+      "name": "청명주14.5%",
+      "current_volume": 700,
+      "current_abv": 14.5,
+      "findings": {
+        "abv": [
+          {
+            "text": "14.5%",
+            "position": [
+              3,
+              8
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-2003001503616",
+      "name": "가시오가피술(11%)",
+      "current_volume": 700,
+      "current_abv": 11,
+      "findings": {
+        "abv": [
+          {
+            "text": "11%",
+            "position": [
+              7,
+              10
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-200300150364",
+      "name": "대잎소리(11%)",
+      "current_volume": 700,
+      "current_abv": 11,
+      "findings": {
+        "abv": [
+          {
+            "text": "11%",
+            "position": [
+              5,
+              8
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500802007",
+      "name": "로얄살루트 21년 해리스 리드 에디션 2 / 700ml",
+      "current_volume": 700,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              25,
+              30
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600009682",
+      "name": "발렌타인 40년 마스터클래스 컬렉션 / 700mL",
+      "current_volume": 700,
+      "current_abv": 45,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              22,
+              27
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500710292",
+      "name": "글렌피딕 14년-700ML",
+      "current_volume": 700,
+      "current_abv": 43,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600052095",
+      "name": "기네스 스타우트(드래프트) 20L",
+      "current_volume": 700,
+      "current_abv": 4.2,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              15,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600054688",
+      "name": "기네스 드래프트 330mL",
+      "current_volume": 700,
+      "current_abv": 4.2,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600056342",
+      "name": "올리비에 트리꽁 샤블리 (12.5%) (750 mL) ",
+      "current_volume": 700,
+      "current_abv": 12.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "750 ml",
+            "position": [
+              22,
+              28
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "12.5%",
+            "position": [
+              14,
+              19
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600056371",
+      "name": "올리비에 트리꽁, 샤블리 그랑 크뤼 부그로 (13%) (750 mL)",
+      "current_volume": 700,
+      "current_abv": 13,
+      "findings": {
+        "volume": [
+          {
+            "text": "750 ml",
+            "position": [
+              31,
+              37
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "13%",
+            "position": [
+              25,
+              28
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600056347",
+      "name": "올리비에 트리꽁 샤블리 프리미에 크뤼 몽멩 (13%) (750 mL)",
+      "current_volume": 700,
+      "current_abv": 13,
+      "findings": {
+        "volume": [
+          {
+            "text": "750 ml",
+            "position": [
+              31,
+              37
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "13%",
+            "position": [
+              25,
+              28
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500802599",
+      "name": "탈리스커 10년(45.8%) 700mL",
+      "current_volume": 700,
+      "current_abv": 45.8,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              16,
+              21
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "45.8%",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600037687",
+      "name": "기네스 드래프트 나이트로서지 558mL",
+      "current_volume": 700,
+      "current_abv": 4.2,
+      "findings": {
+        "volume": [
+          {
+            "text": "558ml",
+            "position": [
+              16,
+              21
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500802281",
+      "name": "오반 14년(43%) 700mL",
+      "current_volume": 700,
+      "current_abv": 43,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "43%",
+            "position": [
+              7,
+              10
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500895947",
+      "name": "몰트락 16년 750mL",
+      "current_volume": 700,
+      "current_abv": 43.4,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-2014001711721",
+      "name": "삼양춘 약주 13.5%",
+      "current_volume": null,
+      "current_abv": 13.5,
+      "findings": {
+        "abv": [
+          {
+            "text": "13.5%",
+            "position": [
+              7,
+              12
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-2003001503621",
+      "name": "출렁다리출렁주 배양근산삼주(11%)",
+      "current_volume": null,
+      "current_abv": 11,
+      "findings": {
+        "abv": [
+          {
+            "text": "11%",
+            "position": [
+              15,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-200300150365",
+      "name": "메밀모주(11%)",
+      "current_volume": null,
+      "current_abv": 11,
+      "findings": {
+        "abv": [
+          {
+            "text": "11%",
+            "position": [
+              5,
+              8
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-200300150367",
+      "name": "오가피술(12%)",
+      "current_volume": null,
+      "current_abv": 12,
+      "findings": {
+        "abv": [
+          {
+            "text": "12%",
+            "position": [
+              5,
+              8
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-200300150368",
+      "name": "오가피술(13%)",
+      "current_volume": null,
+      "current_abv": 13,
+      "findings": {
+        "abv": [
+          {
+            "text": "13%",
+            "position": [
+              5,
+              8
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-201300190993",
+      "name": "오메기술 15%",
+      "current_volume": null,
+      "current_abv": 15,
+      "findings": {
+        "abv": [
+          {
+            "text": "15%",
+            "position": [
+              5,
+              8
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-201300190994",
+      "name": "오메기술 13%",
+      "current_volume": null,
+      "current_abv": 13,
+      "findings": {
+        "abv": [
+          {
+            "text": "13%",
+            "position": [
+              5,
+              8
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-2013002021711",
+      "name": "신선주(16%)",
+      "current_volume": null,
+      "current_abv": 16,
+      "findings": {
+        "abv": [
+          {
+            "text": "16%",
+            "position": [
+              4,
+              7
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-2013002021712",
+      "name": "소백산 신선주 (16%)",
+      "current_volume": null,
+      "current_abv": 16,
+      "findings": {
+        "abv": [
+          {
+            "text": "16%",
+            "position": [
+              9,
+              12
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-201300201567",
+      "name": "새순 솔잎주 11%",
+      "current_volume": null,
+      "current_abv": 11,
+      "findings": {
+        "abv": [
+          {
+            "text": "11%",
+            "position": [
+              7,
+              10
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-201300201562",
+      "name": "100세 산삼배양근주 골드 20%",
+      "current_volume": null,
+      "current_abv": 20,
+      "findings": {
+        "abv": [
+          {
+            "text": "20%",
+            "position": [
+              15,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-201300201563",
+      "name": "100세 산삼배양근주 16%",
+      "current_volume": null,
+      "current_abv": 16,
+      "findings": {
+        "abv": [
+          {
+            "text": "16%",
+            "position": [
+              12,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-201300201564",
+      "name": "100세 산삼배양근주 13%",
+      "current_volume": null,
+      "current_abv": 13,
+      "findings": {
+        "abv": [
+          {
+            "text": "13%",
+            "position": [
+              12,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-2013002007640",
+      "name": "토종복분자주5%",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "abv": [
+          {
+            "text": "5%",
+            "position": [
+              6,
+              8
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-2013002007641",
+      "name": "토종복분자주 3%",
+      "current_volume": null,
+      "current_abv": 3,
+      "findings": {
+        "abv": [
+          {
+            "text": "3%",
+            "position": [
+              7,
+              9
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-2013002007418",
+      "name": "세종 가시오가피(11%)",
+      "current_volume": null,
+      "current_abv": 11,
+      "findings": {
+        "abv": [
+          {
+            "text": "11%",
+            "position": [
+              9,
+              12
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-2013002007417",
+      "name": "세종 가시오가피(13%)",
+      "current_volume": null,
+      "current_abv": 13,
+      "findings": {
+        "abv": [
+          {
+            "text": "13%",
+            "position": [
+              9,
+              12
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-2013002007438",
+      "name": "세종뽕마실 11%",
+      "current_volume": null,
+      "current_abv": 11,
+      "findings": {
+        "abv": [
+          {
+            "text": "11%",
+            "position": [
+              6,
+              9
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-2013002007439",
+      "name": "세종 유기농 뽕마실11%",
+      "current_volume": null,
+      "current_abv": 11,
+      "findings": {
+        "abv": [
+          {
+            "text": "11%",
+            "position": [
+              10,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-202500165001",
+      "name": "원석 위스키(60%)",
+      "current_volume": null,
+      "current_abv": 60,
+      "findings": {
+        "abv": [
+          {
+            "text": "60%",
+            "position": [
+              7,
+              10
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-202500165002",
+      "name": "원석위스키(57%)",
+      "current_volume": null,
+      "current_abv": 57,
+      "findings": {
+        "abv": [
+          {
+            "text": "57%",
+            "position": [
+              6,
+              9
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-2020000420493",
+      "name": "기원 배치7 캐스크 스트랭스 KI ONE BATCH7 CASK STRENGTH",
+      "current_volume": null,
+      "current_abv": 55,
+      "findings": {
+        "lot": [
+          {
+            "text": "batch7",
+            "position": [
+              23,
+              29
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-2020000420468",
+      "name": "기원 배치4 스모크드 KI ONE BATCH4 SMOKED",
+      "current_volume": null,
+      "current_abv": 46,
+      "findings": {
+        "lot": [
+          {
+            "text": "batch4",
+            "position": [
+              19,
+              25
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-2020000420483",
+      "name": "기원 배치6 캐스크 스트랭스 KI ONE BATCH6 CASK STRENGTH",
+      "current_volume": null,
+      "current_abv": 58,
+      "findings": {
+        "lot": [
+          {
+            "text": "batch6",
+            "position": [
+              23,
+              29
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-2020000420470",
+      "name": "기원 배치5 KI ONE BATCH5",
+      "current_volume": null,
+      "current_abv": 43,
+      "findings": {
+        "lot": [
+          {
+            "text": "batch5",
+            "position": [
+              14,
+              20
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-2020000420471",
+      "name": "기원 배치5 캐스크 스트랭스 KI ONE BATCH5 CASK STRENGTH",
+      "current_volume": null,
+      "current_abv": 57.1,
+      "findings": {
+        "lot": [
+          {
+            "text": "batch5",
+            "position": [
+              23,
+              29
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-2020000420482",
+      "name": "기원 배치6 KI ONE BATCH6",
+      "current_volume": null,
+      "current_abv": 43,
+      "findings": {
+        "lot": [
+          {
+            "text": "batch6",
+            "position": [
+              14,
+              20
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-2020000420467",
+      "name": "기원 배치4 피티드 캐스크 스트랭스 KI ONE BATCH4 PEATED CASK STRENGTH",
+      "current_volume": null,
+      "current_abv": 57,
+      "findings": {
+        "lot": [
+          {
+            "text": "batch4",
+            "position": [
+              27,
+              33
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-2020000420469",
+      "name": "기원 배치4 스모크드 캐스크 스트랭스 KI ONE BATCH4 SMOKED CASK STRENGTH",
+      "current_volume": null,
+      "current_abv": 57,
+      "findings": {
+        "lot": [
+          {
+            "text": "batch4",
+            "position": [
+              28,
+              34
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-2020000420459",
+      "name": "기원 배치3 KI ONE BATCH3",
+      "current_volume": null,
+      "current_abv": 43,
+      "findings": {
+        "lot": [
+          {
+            "text": "batch3",
+            "position": [
+              14,
+              20
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-2020000420460",
+      "name": "기원 배치3 캐스크 스트랭스 KI ONE BATCH3 CASK STRENGTH",
+      "current_volume": null,
+      "current_abv": 55,
+      "findings": {
+        "lot": [
+          {
+            "text": "batch3",
+            "position": [
+              23,
+              29
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-201300200704",
+      "name": "이상헌약주14%",
+      "current_volume": null,
+      "current_abv": 14,
+      "findings": {
+        "abv": [
+          {
+            "text": "14%",
+            "position": [
+              5,
+              8
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-2013001601429",
+      "name": "화이트(19.9%)",
+      "current_volume": 700,
+      "current_abv": 19.9,
+      "findings": {
+        "abv": [
+          {
+            "text": "19.9%",
+            "position": [
+              4,
+              9
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-2013001601415",
+      "name": "화이트(19.0%)",
+      "current_volume": 700,
+      "current_abv": 19,
+      "findings": {
+        "abv": [
+          {
+            "text": "19.0%",
+            "position": [
+              4,
+              9
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500664997",
+      "name": "데블스비어 (330ML)",
+      "current_volume": null,
+      "current_abv": 8,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              7,
+              12
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500670044",
+      "name": "콜센동크 파터 (750ml)",
+      "current_volume": null,
+      "current_abv": 8,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500671192",
+      "name": "베스트말러 듀벨 (330ml)",
+      "current_volume": null,
+      "current_abv": 9.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              10,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500671225",
+      "name": "로슈포르6 (330ML)",
+      "current_volume": null,
+      "current_abv": 7.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              7,
+              12
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500671450",
+      "name": "로슈포르8 (330ML)",
+      "current_volume": null,
+      "current_abv": 9.2,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              7,
+              12
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500671465",
+      "name": "로슈포르10 (330ML)",
+      "current_volume": null,
+      "current_abv": 11.3,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500672589",
+      "name": "트리포터 벨지안 오크 [750ml]",
+      "current_volume": null,
+      "current_abv": 10,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              13,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500672601",
+      "name": "베스트말러 트리펠 (330ml)",
+      "current_volume": null,
+      "current_abv": 9.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500672640",
+      "name": "로슈포르 트리플 엑스트라 (330ML)",
+      "current_volume": null,
+      "current_abv": 11.3,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              15,
+              20
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500650723",
+      "name": "800파운드 고릴라 473ML",
+      "current_volume": null,
+      "current_abv": 9,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500660453",
+      "name": "크러쉬 디디에이치 수도수 [473ML]",
+      "current_volume": null,
+      "current_abv": 7.8,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              15,
+              20
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500693929",
+      "name": "에딩거 생맥주 (20L)",
+      "current_volume": null,
+      "current_abv": 5.4,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              9,
+              12
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600008410",
+      "name": "뽀할라 오렌지 고제 330ml",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-201300200343",
+      "name": "선양린 高 20.2%",
+      "current_volume": 700,
+      "current_abv": 20.2,
+      "findings": {
+        "abv": [
+          {
+            "text": "20.2%",
+            "position": [
+              6,
+              11
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500736150",
+      "name": "아드벡 싱글 캐스크 385 / 1116496, 700ML, L2557784",
+      "current_volume": null,
+      "current_abv": 55,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              26,
+              31
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500826599",
+      "name": "고든 앤 맥페일 코노세어 초이스 글렌 스코티아 (700mL) (55.7%) (06/03/2025)",
+      "current_volume": null,
+      "current_abv": 55.7,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              27,
+              32
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "55.7%",
+            "position": [
+              35,
+              40
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600010187",
+      "name": "탈리스커 18년 700mL (762349)",
+      "current_volume": null,
+      "current_abv": 45.8,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600036912",
+      "name": "탈리스커 30년(49.5%) 700mL (785932)",
+      "current_volume": null,
+      "current_abv": 49.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              16,
+              21
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "49.5%",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600057026",
+      "name": "로얄살루트 21년 / LKSX0012, 700ml",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              22,
+              27
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600051968",
+      "name": "발렌타인 10년 / LKMW5463, 200mL",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "200ml",
+            "position": [
+              21,
+              26
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600050826",
+      "name": "발렌타인 파이니스트 / LKMW5474, 200ml",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "200ml",
+            "position": [
+              23,
+              28
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600038725",
+      "name": "발렌타인 마스터스 / 700ml, LKGW0260",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600041543",
+      "name": "시바스 리갈 12년 / 500mL, LKWV5138",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              13,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600038715",
+      "name": "발렌타인 30년 / LKRW5999, 700mL",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              21,
+              26
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600025865",
+      "name": "코퍼독 700mL (726705)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              4,
+              9
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600052243",
+      "name": "윈저17 450mL (779430)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "450ml",
+            "position": [
+              5,
+              10
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600016745",
+      "name": "벨즈 블렌디드 스카치 위스키 700mL (771202)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              16,
+              21
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600050887",
+      "name": "발렌타인 싱글몰트 글렌버기 15년 / LKRW2242, 700mL",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              31,
+              36
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600041532",
+      "name": "발렌타인 21년 / LKGW5575, 700mL",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              21,
+              26
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600007354",
+      "name": "뽀할라 엠버우드 330ml",
+      "current_volume": null,
+      "current_abv": 6.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500857522",
+      "name": "조니워커 30년 에잇트레저 750mL (780415)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              15,
+              20
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500801007",
+      "name": "조니워커 엑스알21 리미티드 에디션 (Horse) 750mL (796297)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              28,
+              33
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500842268",
+      "name": "몰트락 네버바운드 700mL (798449)",
+      "current_volume": null,
+      "current_abv": 43.4,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              10,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500782780",
+      "name": "시트라 홉 드랍 (홉 5.5% 함유)",
+      "current_volume": null,
+      "current_abv": 6.8,
+      "findings": {
+        "abv": [
+          {
+            "text": "5.5%",
+            "position": [
+              12,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500835741",
+      "name": "탈리스커 14년 700mL (797601)",
+      "current_volume": null,
+      "current_abv": 53.9,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500835348",
+      "name": "클라이넬리쉬 18년 700mL (797581)",
+      "current_volume": null,
+      "current_abv": 51.6,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500835731",
+      "name": "로즈아일 14년 700mL (797585)",
+      "current_volume": null,
+      "current_abv": 55.9,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500835411",
+      "name": "오반 12년 700mL (797584)",
+      "current_volume": null,
+      "current_abv": 54.7,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              7,
+              12
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500835765",
+      "name": "달유인 21년 700mL (797602)",
+      "current_volume": null,
+      "current_abv": 54.3,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500835742",
+      "name": "티니닉 8년 700mL (797603)",
+      "current_volume": null,
+      "current_abv": 60.3,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              7,
+              12
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500835737",
+      "name": "싱글톤 글렌오드 17년 700mL (797583)",
+      "current_volume": null,
+      "current_abv": 55.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              13,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500824412",
+      "name": "발렌타인 21년 아티스트 에디션 5 / 700mL / LKGW4397",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              22,
+              27
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500823259",
+      "name": "발렌타인 23년 / LKGW4343, 700mL",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              21,
+              26
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500662333",
+      "name": "데슈츠 프레쉬 헤이즈 (355mL)",
+      "current_volume": null,
+      "current_abv": 6.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              13,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500662230",
+      "name": "심포닉 크로닉 더블 헤이즈 (568mL)",
+      "current_volume": null,
+      "current_abv": 7,
+      "findings": {
+        "volume": [
+          {
+            "text": "568ml",
+            "position": [
+              16,
+              21
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500828132",
+      "name": "발티카 NO.7 (500ml)",
+      "current_volume": null,
+      "current_abv": 5.4,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              10,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500662396",
+      "name": "심포닉 크로닉 더블 주시 (568mL)",
+      "current_volume": null,
+      "current_abv": 7,
+      "findings": {
+        "volume": [
+          {
+            "text": "568ml",
+            "position": [
+              15,
+              20
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500894874",
+      "name": "킬호만100%아일라",
+      "current_volume": 700,
+      "current_abv": 50,
+      "findings": {
+        "abv": [
+          {
+            "text": "100%",
+            "position": [
+              3,
+              7
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500894853",
+      "name": "킬호만100%아일라11년셰리케스크",
+      "current_volume": 700,
+      "current_abv": 50,
+      "findings": {
+        "abv": [
+          {
+            "text": "100%",
+            "position": [
+              3,
+              7
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-2013001702815",
+      "name": "우곡쌀소주 41%",
+      "current_volume": 700,
+      "current_abv": 41,
+      "findings": {
+        "abv": [
+          {
+            "text": "41%",
+            "position": [
+              6,
+              9
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-201300200348",
+      "name": "潾 20%",
+      "current_volume": 700,
+      "current_abv": 20,
+      "findings": {
+        "abv": [
+          {
+            "text": "20%",
+            "position": [
+              2,
+              5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-201300200347",
+      "name": "潾 25%",
+      "current_volume": 700,
+      "current_abv": 25,
+      "findings": {
+        "abv": [
+          {
+            "text": "25%",
+            "position": [
+              2,
+              5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fsk-2013002003831",
+      "name": "맑은바람20.5%",
+      "current_volume": 700,
+      "current_abv": 20.5,
+      "findings": {
+        "abv": [
+          {
+            "text": "20.5%",
+            "position": [
+              4,
+              9
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600029971",
+      "name": "하쿠쯔루 다이긴죠 720ML",
+      "current_volume": null,
+      "current_abv": 16,
+      "findings": {
+        "volume": [
+          {
+            "text": "720ml",
+            "position": [
+              10,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600029986",
+      "name": "하쿠쯔루 마루 900ML",
+      "current_volume": null,
+      "current_abv": 15,
+      "findings": {
+        "volume": [
+          {
+            "text": "900ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600025558",
+      "name": "이부키 준마이긴죠(720ml)",
+      "current_volume": null,
+      "current_abv": 15,
+      "findings": {
+        "volume": [
+          {
+            "text": "720ml",
+            "position": [
+              10,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600027638",
+      "name": "고키겐쵸상 (720ML)",
+      "current_volume": null,
+      "current_abv": 15,
+      "findings": {
+        "volume": [
+          {
+            "text": "720ml",
+            "position": [
+              7,
+              12
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600026710",
+      "name": "미오 (300ml)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "300ml",
+            "position": [
+              4,
+              9
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600031161",
+      "name": "하쿠류 가라구치(15도 720ML)",
+      "current_volume": null,
+      "current_abv": 15,
+      "findings": {
+        "volume": [
+          {
+            "text": "720ml",
+            "position": [
+              13,
+              18
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "15도",
+            "position": [
+              9,
+              12
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600031477",
+      "name": "코이마리 사키 전량 오야마니시키 쥰마이긴죠(720ml)",
+      "current_volume": null,
+      "current_abv": 15,
+      "findings": {
+        "volume": [
+          {
+            "text": "720ml",
+            "position": [
+              24,
+              29
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600034130",
+      "name": "타니카와다케 초카라준마이 (1800ml)",
+      "current_volume": null,
+      "current_abv": 15,
+      "findings": {
+        "volume": [
+          {
+            "text": "1800ml",
+            "position": [
+              15,
+              21
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600037025",
+      "name": "센 (300ML)",
+      "current_volume": null,
+      "current_abv": 15,
+      "findings": {
+        "volume": [
+          {
+            "text": "300ml",
+            "position": [
+              3,
+              8
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600031495",
+      "name": "테즈쿠리 쥰마이슈 미츠타케 720ML",
+      "current_volume": null,
+      "current_abv": 15,
+      "findings": {
+        "volume": [
+          {
+            "text": "720ml",
+            "position": [
+              15,
+              20
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600037725",
+      "name": "타미노히카리 블랙라벨 준마이다이긴죠 (720mL)",
+      "current_volume": null,
+      "current_abv": 16,
+      "findings": {
+        "volume": [
+          {
+            "text": "720ml",
+            "position": [
+              21,
+              26
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600037753",
+      "name": "타미노히카리 카라쿠치 준마이긴죠 (720mL)",
+      "current_volume": null,
+      "current_abv": 15,
+      "findings": {
+        "volume": [
+          {
+            "text": "720ml",
+            "position": [
+              19,
+              24
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600037836",
+      "name": "타미노히카리 비젠오마치 준마이다이긴죠 (300mL)",
+      "current_volume": null,
+      "current_abv": 16,
+      "findings": {
+        "volume": [
+          {
+            "text": "300ml",
+            "position": [
+              22,
+              27
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600048597",
+      "name": "후부키 1.8L",
+      "current_volume": null,
+      "current_abv": 14,
+      "findings": {
+        "volume": [
+          {
+            "text": "8l",
+            "position": [
+              6,
+              8
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600039797",
+      "name": "후도 이치도히이레 준마이긴죠 (720ml)",
+      "current_volume": null,
+      "current_abv": 15,
+      "findings": {
+        "volume": [
+          {
+            "text": "720ml",
+            "position": [
+              17,
+              22
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600039802",
+      "name": "후도 이치도히이레 토쿠베츠 준마이 (720ML)",
+      "current_volume": null,
+      "current_abv": 15,
+      "findings": {
+        "volume": [
+          {
+            "text": "720ml",
+            "position": [
+              20,
+              25
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600048634",
+      "name": "고래 1.8L",
+      "current_volume": null,
+      "current_abv": 14,
+      "findings": {
+        "volume": [
+          {
+            "text": "8l",
+            "position": [
+              5,
+              7
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600039812",
+      "name": "후도 이치도히이레 준마이다이긴죠 (720ML)",
+      "current_volume": null,
+      "current_abv": 16,
+      "findings": {
+        "volume": [
+          {
+            "text": "720ml",
+            "position": [
+              19,
+              24
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600039827",
+      "name": "후도 이치도히이레 야마하이 준마이 (720ml)",
+      "current_volume": null,
+      "current_abv": 15,
+      "findings": {
+        "volume": [
+          {
+            "text": "720ml",
+            "position": [
+              20,
+              25
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600039865",
+      "name": "후도 이치도히이레 혼죠조 엑스트라 드라이 (720ml)",
+      "current_volume": null,
+      "current_abv": 15,
+      "findings": {
+        "volume": [
+          {
+            "text": "720ml",
+            "position": [
+              24,
+              29
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600044505",
+      "name": "쥰마이 니토 야마다니시키65(1800ml)",
+      "current_volume": null,
+      "current_abv": 15,
+      "findings": {
+        "volume": [
+          {
+            "text": "1800ml",
+            "position": [
+              16,
+              22
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500645211",
+      "name": "투비 투비 [750ml]",
+      "current_volume": null,
+      "current_abv": 8,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              7,
+              12
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500651810",
+      "name": "마이셀 오리지날(330ML)",
+      "current_volume": null,
+      "current_abv": 5.2,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500650671",
+      "name": "임피치드 473ML",
+      "current_volume": null,
+      "current_abv": 7,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              5,
+              10
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500650598",
+      "name": "레비티커스 473ML",
+      "current_volume": null,
+      "current_abv": 7,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              6,
+              11
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500650524",
+      "name": "하이드라 앤 하스틸러티 473ML",
+      "current_volume": null,
+      "current_abv": 7,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              13,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500656040",
+      "name": "산미구엘 세르베자 블랑카 밀맥주 (15L) (5.4%)",
+      "current_volume": null,
+      "current_abv": 5.4,
+      "findings": {
+        "volume": [
+          {
+            "text": "15l",
+            "position": [
+              19,
+              22
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "5.4%",
+            "position": [
+              25,
+              29
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500658227",
+      "name": "수도수 473 ml",
+      "current_volume": null,
+      "current_abv": 5.8,
+      "findings": {
+        "volume": [
+          {
+            "text": "473 ml",
+            "position": [
+              4,
+              10
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500660454",
+      "name": "모닝 딜라이트 651 ml",
+      "current_volume": null,
+      "current_abv": 12,
+      "findings": {
+        "volume": [
+          {
+            "text": "651 ml",
+            "position": [
+              8,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500662827",
+      "name": "블랙뷰트 리저브 37주년 (355mL)",
+      "current_volume": null,
+      "current_abv": 6.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              15,
+              20
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500672660",
+      "name": "베스트말레 엑스트라 (330ml)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500662851",
+      "name": "프레쉬 스퀴즈드 올드 패션드 (20L)",
+      "current_volume": null,
+      "current_abv": 6.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              17,
+              20
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500674827",
+      "name": "레이서 5 아이피에이 (CAN, 355mL)",
+      "current_volume": null,
+      "current_abv": 7.2,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              18,
+              23
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500678585",
+      "name": "샌디에이고 394 페일 에일 (CAN, 355ML)",
+      "current_volume": null,
+      "current_abv": 5.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              22,
+              27
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500679736",
+      "name": "블러드 오렌지 아이피에이 (CAN, 355ML)",
+      "current_volume": null,
+      "current_abv": 7,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              20,
+              25
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500679731",
+      "name": "브루프리! 오아 다이 헤이지 아이피에이 (KEG, 20L)",
+      "current_volume": null,
+      "current_abv": 7,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              28,
+              31
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500679720",
+      "name": "옥토버페스트 (KGE, 20L)",
+      "current_volume": null,
+      "current_abv": 6,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              13,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500679719",
+      "name": "어멘드먼트 라거 (KEG, 20L)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              15,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500679150",
+      "name": "에일스미스 아이피에이 (KEG, 20L)",
+      "current_volume": null,
+      "current_abv": 7.2,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              18,
+              21
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500678880",
+      "name": "헤이지 394 (KEG, 20L)",
+      "current_volume": null,
+      "current_abv": 6.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              14,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500678572",
+      "name": "스피드웨이 스타우트 (20L, KEG)",
+      "current_volume": null,
+      "current_abv": 12,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              12,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500677957",
+      "name": "프렌즈 위드 베네핏 (20L)",
+      "current_volume": null,
+      "current_abv": 7,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              12,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500682748",
+      "name": "배럴 에이지드 해머헤드 에디션 (KEG, 20L)",
+      "current_volume": null,
+      "current_abv": 12,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              23,
+              26
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500683127",
+      "name": "데일스페일에일 (355ml)",
+      "current_volume": null,
+      "current_abv": 6.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500683182",
+      "name": "에네그렌 옥토버페스트 (473ml)",
+      "current_volume": null,
+      "current_abv": 5.8,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              13,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500683199",
+      "name": "에네그렌 리버티 필스너 (473ml)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              14,
+              19
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500684094",
+      "name": "구아야베라 시트라 페일에일 (355ml)",
+      "current_volume": null,
+      "current_abv": 5.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              16,
+              21
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500684939",
+      "name": "쾨니희 필스너 (캔 500ML)",
+      "current_volume": null,
+      "current_abv": 4.8,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500684747",
+      "name": "리프 크리퍼즈 (473ml)",
+      "current_volume": null,
+      "current_abv": 7,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500684735",
+      "name": "더블 넥타론 데이드림 (473ml)",
+      "current_volume": null,
+      "current_abv": 7,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              13,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500684732",
+      "name": "아이 에이스드 인 스페이스 (473ml)",
+      "current_volume": null,
+      "current_abv": 7,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              16,
+              21
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500684728",
+      "name": "그린 다운 투 더 삭스 (473ml)",
+      "current_volume": null,
+      "current_abv": 7,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              14,
+              19
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500684122",
+      "name": "마두로 브라운에일 (355ml)",
+      "current_volume": null,
+      "current_abv": 5.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500684121",
+      "name": "데일스 더블 아이피에이 (20L)",
+      "current_volume": null,
+      "current_abv": 9.9,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              14,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500684114",
+      "name": "하이알라이 (355ml)",
+      "current_volume": null,
+      "current_abv": 7.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              7,
+              12
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500683154",
+      "name": "에네그렌 쇼너 탁 (355ml)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500690436",
+      "name": "시메이 그랑리저브 (750ml)",
+      "current_volume": null,
+      "current_abv": 9,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500690228",
+      "name": "에네그렌 라즌메어 비어 (473ml)",
+      "current_volume": null,
+      "current_abv": 4.8,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              14,
+              19
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500685341",
+      "name": "풀 홉 알케미스트 / 20.4L",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "4l",
+            "position": [
+              15,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500695322",
+      "name": "배럴 에이지드 몬스터스 파크 에디션 (KEG, 20L)",
+      "current_volume": null,
+      "current_abv": 12,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              26,
+              29
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500720864",
+      "name": "쓰리폰테이넌 오드괴즈 (750ml) (6.0%)",
+      "current_volume": null,
+      "current_abv": 6,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              13,
+              18
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "6.0%",
+            "position": [
+              21,
+              25
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500720862",
+      "name": "골든 블렌드 (7.5%)",
+      "current_volume": null,
+      "current_abv": 7.5,
+      "findings": {
+        "abv": [
+          {
+            "text": "7.5%",
+            "position": [
+              8,
+              12
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500718956",
+      "name": "오드람빅 (20L) (6.3%)",
+      "current_volume": null,
+      "current_abv": 6.3,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              6,
+              9
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "6.3%",
+            "position": [
+              12,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500718918",
+      "name": "알만드 앤 가스통 (750ml) (6.5%)",
+      "current_volume": null,
+      "current_abv": 6.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "6.5%",
+            "position": [
+              19,
+              23
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500720947",
+      "name": "부쿠 아이피에이 (6.5%) (355ml캔)",
+      "current_volume": null,
+      "current_abv": 6.5,
+      "findings": {
+        "abv": [
+          {
+            "text": "6.5%",
+            "position": [
+              10,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500718967",
+      "name": "젠느 와이 프론테라 (7.7%)",
+      "current_volume": null,
+      "current_abv": 7.7,
+      "findings": {
+        "abv": [
+          {
+            "text": "7.7%",
+            "position": [
+              12,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500720887",
+      "name": "피넛버터 밀크 스타우트 (5.3%)(355ml 캔)",
+      "current_volume": null,
+      "current_abv": 5.3,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              20,
+              25
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "5.3%",
+            "position": [
+              14,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500721844",
+      "name": "피넛버터 밀크 스타우트 니트로 (5.3%)(355ml 병)",
+      "current_volume": null,
+      "current_abv": 5.3,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              24,
+              29
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "5.3%",
+            "position": [
+              18,
+              22
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500747282",
+      "name": "슈렝케를라 메르첸 (500mL) (5.1%)",
+      "current_volume": null,
+      "current_abv": 5.1,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "5.1%",
+            "position": [
+              19,
+              23
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500766501",
+      "name": "생푀이엔 그랑크뤼(1500ML)",
+      "current_volume": null,
+      "current_abv": 8.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "1500ml",
+            "position": [
+              10,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500777507",
+      "name": "더티 호스 (750ml)",
+      "current_volume": null,
+      "current_abv": 8.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              7,
+              12
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500777054",
+      "name": "세인트 버나두스 앱12 (330ml)",
+      "current_volume": null,
+      "current_abv": 10,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              14,
+              19
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500776979",
+      "name": "바빅 슈퍼 필스 (330ml, 병)",
+      "current_volume": null,
+      "current_abv": 5.2,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              10,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500776128",
+      "name": "가펠 소넨호펜 (330ml병) (4.9%)",
+      "current_volume": null,
+      "current_abv": 4.9,
+      "findings": {
+        "abv": [
+          {
+            "text": "4.9%",
+            "position": [
+              18,
+              22
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500779046",
+      "name": "하얼빈 (BOTTLE, 500ML)",
+      "current_volume": null,
+      "current_abv": 4.8,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              13,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500780568",
+      "name": "림브룩스 윗떼 레몬 (레몬주스 0.2 %)",
+      "current_volume": null,
+      "current_abv": 4.5,
+      "findings": {
+        "abv": [
+          {
+            "text": "0.2 %",
+            "position": [
+              17,
+              22
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500782582",
+      "name": "러쉬 아이피에이 (355ml)",
+      "current_volume": null,
+      "current_abv": 6.2,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              10,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500780553",
+      "name": "림브룩스 윗떼 스트로우베리 (딸기주스 0.5 %)",
+      "current_volume": null,
+      "current_abv": 4.5,
+      "findings": {
+        "abv": [
+          {
+            "text": "0.5 %",
+            "position": [
+              21,
+              26
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500785420",
+      "name": "델리리움 크리스마스 20L",
+      "current_volume": null,
+      "current_abv": 10,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              11,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500785409",
+      "name": "델리리움 크리스마스 330ml",
+      "current_volume": null,
+      "current_abv": 10,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500784631",
+      "name": "세인트버나두스 위트 (330ml)",
+      "current_volume": null,
+      "current_abv": 5.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500782888",
+      "name": "라이프(473ML)",
+      "current_volume": null,
+      "current_abv": 6,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              4,
+              9
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500782762",
+      "name": "사이버수 355ML",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              5,
+              10
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500786633",
+      "name": "프리마토르 바이젠 (20L) (4.8%)",
+      "current_volume": null,
+      "current_abv": 4.8,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              11,
+              14
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "4.8%",
+            "position": [
+              17,
+              21
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500789523",
+      "name": "멜빈 아이피에이 (20L)",
+      "current_volume": null,
+      "current_abv": 7,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              10,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500789501",
+      "name": "멜빈 2X4 (20L)",
+      "current_volume": null,
+      "current_abv": 7,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              8,
+              11
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500785735",
+      "name": "블랙댐네이션 블랙베리 알버트 (1.5L)",
+      "current_volume": null,
+      "current_abv": 10,
+      "findings": {
+        "volume": [
+          {
+            "text": "5l",
+            "position": [
+              19,
+              21
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500796440",
+      "name": "미켈롭 울트라 (330ML)",
+      "current_volume": null,
+      "current_abv": 4.2,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500786191",
+      "name": "생푀이엔 쿼드루펠(750ML)",
+      "current_volume": null,
+      "current_abv": 10,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              10,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500797496",
+      "name": "레드홀스 (1,000ml)",
+      "current_volume": null,
+      "current_abv": 6.9,
+      "findings": {
+        "volume": [
+          {
+            "text": "000ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500797562",
+      "name": "산미구엘페일필젠맥주 (320ml)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "320ml",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500805320",
+      "name": "테르프 좀비 (473mL)",
+      "current_volume": null,
+      "current_abv": 8.1,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500805337",
+      "name": "개리맨서 (473mL)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              6,
+              11
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500804219",
+      "name": "프레쉬 홉 사샤 (473mL)",
+      "current_volume": null,
+      "current_abv": 6,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              10,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500805126",
+      "name": "제스터킹 나니 (473mL)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500809215",
+      "name": "비에르 아이피에이 아네모네 (330ML)",
+      "current_volume": null,
+      "current_abv": 5.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              16,
+              21
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500814409",
+      "name": "생푀이앵 세종(330ML)",
+      "current_volume": null,
+      "current_abv": 6.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500812680",
+      "name": "크롬바커 둔켈[30L/케그]",
+      "current_volume": null,
+      "current_abv": 4.8,
+      "findings": {
+        "volume": [
+          {
+            "text": "30l",
+            "position": [
+              8,
+              11
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500819092",
+      "name": "바이엔슈테판 헤페바이스 (병 ,500ML)",
+      "current_volume": null,
+      "current_abv": 5.4,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              17,
+              22
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500818328",
+      "name": "생푀이엔 브륀느(330ML)",
+      "current_volume": null,
+      "current_abv": 8.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500822449",
+      "name": "바이엔슈테판 크리스탈 (500ML , 병)",
+      "current_volume": null,
+      "current_abv": 5.4,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              13,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500822439",
+      "name": "바이엔슈테판 둔켈 (500ML / 병)",
+      "current_volume": null,
+      "current_abv": 5.3,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500825459",
+      "name": "비어라오 다크(330ml)",
+      "current_volume": null,
+      "current_abv": 6.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500825467",
+      "name": "바이엔슈테판 비투스 (500ML / 병)",
+      "current_volume": null,
+      "current_abv": 7.7,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500825503",
+      "name": "비어라오(500ml)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              5,
+              10
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500825512",
+      "name": "비어라오 IPA(330ml)",
+      "current_volume": null,
+      "current_abv": 6.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500825521",
+      "name": "비어라오 그린(330ml)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500828119",
+      "name": "발티카 NO.3 (500ml)",
+      "current_volume": null,
+      "current_abv": 4.8,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              10,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500830054",
+      "name": "프리스타일 판타스틱 (473ml)",
+      "current_volume": null,
+      "current_abv": 7,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500830065",
+      "name": "리얼니스 (473ml)",
+      "current_volume": null,
+      "current_abv": 7,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              6,
+              11
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500830083",
+      "name": "조인트 포스 코브라 (473ml)",
+      "current_volume": null,
+      "current_abv": 7,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500830100",
+      "name": "디디에이치 넬시 (473ml)",
+      "current_volume": null,
+      "current_abv": 8.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              10,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500831841",
+      "name": "레버넌트 아이피에이 (355ml)",
+      "current_volume": null,
+      "current_abv": 6.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500831848",
+      "name": "포그커터 더블 아이피에이 (355ml)",
+      "current_volume": null,
+      "current_abv": 8.7,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              15,
+              20
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500834017",
+      "name": "나스 750ML",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              3,
+              8
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500833812",
+      "name": "깐띠용 괴즈 750ml",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              7,
+              12
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500835843",
+      "name": "로덴바흐 그랑크뤼 330ml",
+      "current_volume": null,
+      "current_abv": 6,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              10,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500835592",
+      "name": "베럴 에이지드 크리스마스 밤!(20L)",
+      "current_volume": null,
+      "current_abv": 8.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              17,
+              20
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500835567",
+      "name": "콜센동크 크리스마스 에일 (750ml)",
+      "current_volume": null,
+      "current_abv": 8.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              15,
+              20
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500835522",
+      "name": "콜센동크 아그너스 (750ml)",
+      "current_volume": null,
+      "current_abv": 8,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500835050",
+      "name": "크리스마스 밤!(20L)",
+      "current_volume": null,
+      "current_abv": 13,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              9,
+              12
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500834500",
+      "name": "레인보우 셔뱃(355ML)",
+      "current_volume": null,
+      "current_abv": 5.2,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500834194",
+      "name": "깐띠용 마무쉬 20L",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              8,
+              11
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500834118",
+      "name": "아샨티 750ML",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              4,
+              9
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500837031",
+      "name": "퀴베 생 질루아즈 20L",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              10,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500836640",
+      "name": "듀벨[330ML, 2025.05.12]",
+      "current_volume": null,
+      "current_abv": 8.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              3,
+              8
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500834768",
+      "name": "쏘리 낫 사워(355ml)",
+      "current_volume": null,
+      "current_abv": 4.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500842849",
+      "name": "더블 리와카 데이드림 (473ml)",
+      "current_volume": null,
+      "current_abv": 8,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              13,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500842836",
+      "name": "그린 (473ml)",
+      "current_volume": null,
+      "current_abv": 6,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              4,
+              9
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500842558",
+      "name": "티디에이치 올 위 에버 원티드 워즈 에브리싱 (473ml)",
+      "current_volume": null,
+      "current_abv": 9,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              26,
+              31
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500842513",
+      "name": "스택스 온 스택스 (473ml)",
+      "current_volume": null,
+      "current_abv": 8,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500842480",
+      "name": "렛치워스 폴즈 (473ml)",
+      "current_volume": null,
+      "current_abv": 7,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500834794",
+      "name": "펌킨 컬퍼플(20L)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              7,
+              10
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500834721",
+      "name": "릴 덩크(355ml)",
+      "current_volume": null,
+      "current_abv": 5.2,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              5,
+              10
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500843783",
+      "name": "라 쇼페 [병,330ML]",
+      "current_volume": null,
+      "current_abv": 8,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500844825",
+      "name": "파운더스 솔리드 골드(355ML)",
+      "current_volume": null,
+      "current_abv": 4.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500851233",
+      "name": "투올, 고제투할리우드 330ml",
+      "current_volume": null,
+      "current_abv": 4,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500849606",
+      "name": "슈바츠비어(500ML)",
+      "current_volume": null,
+      "current_abv": 4.8,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              6,
+              11
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500849559",
+      "name": "엑스포트 (500ML)",
+      "current_volume": null,
+      "current_abv": 5.2,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              6,
+              11
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500849014",
+      "name": "헤페바이젠 (500ML)",
+      "current_volume": null,
+      "current_abv": 5.4,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              7,
+              12
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500851887",
+      "name": "투올, 카오틱 뉴트럴 750ml",
+      "current_volume": null,
+      "current_abv": 8,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500857577",
+      "name": "산미구엘 페일필센5%",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "abv": [
+          {
+            "text": "5%",
+            "position": [
+              9,
+              11
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500858045",
+      "name": "킹수 473ML",
+      "current_volume": null,
+      "current_abv": 7.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              3,
+              8
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500858047",
+      "name": "수도수 [473 ML]",
+      "current_volume": null,
+      "current_abv": 7.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "473 ml",
+            "position": [
+              5,
+              11
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500863490",
+      "name": "복 20L",
+      "current_volume": null,
+      "current_abv": 6.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              2,
+              5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500863433",
+      "name": "웨스트 코스트 고스트 20L",
+      "current_volume": null,
+      "current_abv": 7,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              12,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500863373",
+      "name": "고스트 인 더 머신 473ML",
+      "current_volume": null,
+      "current_abv": 8.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500862824",
+      "name": "에네그렌 크리스마스 복 (473ml)",
+      "current_volume": null,
+      "current_abv": 7,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              14,
+              19
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500862683",
+      "name": "에네그렌 덩켈 (30L)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "30l",
+            "position": [
+              9,
+              12
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500862614",
+      "name": "에네그렌 나이트호크 (473ml)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500862059",
+      "name": "에네그렌 발키리 (355ml)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              10,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500869654",
+      "name": "산미구엘 세르베자 네그라 흑생맥주 (15L) (5%)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "15l",
+            "position": [
+              20,
+              23
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "5%",
+            "position": [
+              26,
+              28
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500862942",
+      "name": "에네그렌 블론드파이어 (30L)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "30l",
+            "position": [
+              13,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500868482",
+      "name": "산미구엘 생맥주 (15L) (5%)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "15l",
+            "position": [
+              10,
+              13
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "5%",
+            "position": [
+              16,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500867389",
+      "name": "카스틸 엑스트라 (330ML)",
+      "current_volume": null,
+      "current_abv": 6.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              10,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500866704",
+      "name": "바리스타 (330ML)",
+      "current_volume": null,
+      "current_abv": 11,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              6,
+              11
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500866474",
+      "name": "카스틸 꾸베 (750ML)",
+      "current_volume": null,
+      "current_abv": 11,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500867931",
+      "name": "커클랜드 시그니춰 빈티지 에일 (12%)(650mL)",
+      "current_volume": null,
+      "current_abv": 12,
+      "findings": {
+        "volume": [
+          {
+            "text": "650ml",
+            "position": [
+              23,
+              28
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "12%",
+            "position": [
+              18,
+              21
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500870934",
+      "name": "트리펠 까르멜리엇 (750ML)",
+      "current_volume": null,
+      "current_abv": 8.4,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500883141",
+      "name": "부드바르 다크라거 (500ml)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500887562",
+      "name": "리치몬드 라거 (5%) (355mL캔)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "abv": [
+          {
+            "text": "5%",
+            "position": [
+              9,
+              11
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500887899",
+      "name": "그레이트 리턴 (7.5%) (20리터)",
+      "current_volume": null,
+      "current_abv": 7.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "20리터",
+            "position": [
+              16,
+              20
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "7.5%",
+            "position": [
+              9,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500891592",
+      "name": "부드바르 오리지널 (500ml)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500891969",
+      "name": "비에르 블롱드 라넥도트 (330ML)",
+      "current_volume": null,
+      "current_abv": 6.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              14,
+              19
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500892607",
+      "name": "아잉거 브로바이스 (500mL) (5.1%)",
+      "current_volume": null,
+      "current_abv": 5.1,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "5.1%",
+            "position": [
+              19,
+              23
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500892614",
+      "name": "아잉거 셀러브레이터 도펠복 (330mL) (6.7%)",
+      "current_volume": null,
+      "current_abv": 6.7,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              16,
+              21
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "6.7%",
+            "position": [
+              24,
+              28
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500892631",
+      "name": "아잉거 야훈데르트비어 (500mL) (5.5%)",
+      "current_volume": null,
+      "current_abv": 5.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              13,
+              18
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "5.5%",
+            "position": [
+              21,
+              25
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500892648",
+      "name": "아잉거 알트바이리쉬 둔켈 (500mL) (5.0%)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              15,
+              20
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "5.0%",
+            "position": [
+              23,
+              27
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500892653",
+      "name": "아잉거 우르바이스 (500mL) (5.8%)",
+      "current_volume": null,
+      "current_abv": 5.8,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "5.8%",
+            "position": [
+              19,
+              23
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500893275",
+      "name": "비에르 암브르 아네스티지 (330ML)",
+      "current_volume": null,
+      "current_abv": 6.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              15,
+              20
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500896085",
+      "name": "에딩거 우르바이스 (30L)",
+      "current_volume": null,
+      "current_abv": 8.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "30l",
+            "position": [
+              11,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500894916",
+      "name": "빅 웨이브 골든 에일 (473ml, 대캔)",
+      "current_volume": null,
+      "current_abv": 4.4,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              13,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500900159",
+      "name": "로덴바흐 프루티지 20L",
+      "current_volume": null,
+      "current_abv": 4.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              10,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500903700",
+      "name": "바이엔슈테판 헤페바이스 (30L / KEG)",
+      "current_volume": null,
+      "current_abv": 5.4,
+      "findings": {
+        "volume": [
+          {
+            "text": "30l",
+            "position": [
+              14,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500903725",
+      "name": "바이엔슈테판 오리지날 (30L / KEG)",
+      "current_volume": null,
+      "current_abv": 5.1,
+      "findings": {
+        "volume": [
+          {
+            "text": "30l",
+            "position": [
+              13,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500903820",
+      "name": "풀러스 런던 프라이드 에일 330ML BOT",
+      "current_volume": null,
+      "current_abv": 4.7,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              15,
+              20
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500903837",
+      "name": "바이엔슈테판 크리스탈 (30L , KEG)",
+      "current_volume": null,
+      "current_abv": 5.4,
+      "findings": {
+        "volume": [
+          {
+            "text": "30l",
+            "position": [
+              13,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500907333",
+      "name": "크람푸스 아이피에이 (473mL)",
+      "current_volume": null,
+      "current_abv": 7.1,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500907630",
+      "name": "사뮤엘아담스(355ml)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              7,
+              12
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600000035",
+      "name": "블랙 메탈 스타우트 (473mL)",
+      "current_volume": null,
+      "current_abv": 6.8,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600002720",
+      "name": "하얼빈 맥주(3.6%,330ml)",
+      "current_volume": null,
+      "current_abv": 3.6,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "3.6%",
+            "position": [
+              7,
+              11
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600001105",
+      "name": "듀체스 드 부르고뉴 (750ML)",
+      "current_volume": null,
+      "current_abv": 6.2,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600000219",
+      "name": "데슈츠 프레쉬 스퀴즈드 (355mL)",
+      "current_volume": null,
+      "current_abv": 6.4,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              14,
+              19
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600000043",
+      "name": "데슈츠 블랙퓨트 포터 (355mL)",
+      "current_volume": null,
+      "current_abv": 5.2,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              13,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600000031",
+      "name": "심포닉 크로닉 더블 댕크 (568mL)",
+      "current_volume": null,
+      "current_abv": 8.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "568ml",
+            "position": [
+              15,
+              20
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600006637",
+      "name": "드돌레 스틸나흐트 330ml",
+      "current_volume": null,
+      "current_abv": 12,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              10,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600006547",
+      "name": "드돌레 둘레떼브 330ml",
+      "current_volume": null,
+      "current_abv": 10,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600006268",
+      "name": "드돌레 오르비어 330ml",
+      "current_volume": null,
+      "current_abv": 7.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600005734",
+      "name": "에이비씨 엑스트라 스타우트(6.8%)",
+      "current_volume": null,
+      "current_abv": 6.8,
+      "findings": {
+        "abv": [
+          {
+            "text": "6.8%",
+            "position": [
+              15,
+              19
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600000046",
+      "name": "벨스니켈 스타우트 (473mL)",
+      "current_volume": null,
+      "current_abv": 10,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600007472",
+      "name": "산타카스 (473ml)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              6,
+              11
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600008370",
+      "name": "벨코포포빅키 코젤 화이트_500ML CAN",
+      "current_volume": null,
+      "current_abv": 4,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              14,
+              19
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600005385",
+      "name": "폴 그레이너 레전더리 473ml",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600004640",
+      "name": "더 리얼 멕시칸 473ml",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600004523",
+      "name": "대니쉬 아메리칸 가이 20L",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              12,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600004411",
+      "name": "그린하우스 체크 다크 라거 473ml",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              15,
+              20
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600010829",
+      "name": "버드와이저 (355ml)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              7,
+              12
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600009005",
+      "name": "하베스트 오브 애시즈 (473mL)",
+      "current_volume": null,
+      "current_abv": 6,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              13,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600008785",
+      "name": "괴즈 틸퀸 20L",
+      "current_volume": null,
+      "current_abv": 7,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              6,
+              9
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600008155",
+      "name": "뽀할라 바리끄 누아르 330ml",
+      "current_volume": null,
+      "current_abv": 8,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600007402",
+      "name": "뽀할라 프란츠라우어베르크 330ml",
+      "current_volume": null,
+      "current_abv": 13,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              14,
+              19
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600014932",
+      "name": "뽀할라 노던데카당스 330ml",
+      "current_volume": null,
+      "current_abv": 12.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600014794",
+      "name": "라트라페 쿼드루펠 330ml",
+      "current_volume": null,
+      "current_abv": 10,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              10,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600014677",
+      "name": "로덴바흐 알렉산더 330ml",
+      "current_volume": null,
+      "current_abv": 6,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              10,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600007582",
+      "name": "오드비어셀 오드 괴즈 750ml",
+      "current_volume": null,
+      "current_abv": 6,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600004918",
+      "name": "프리미엄 에비스 (500ml)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              10,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600016283",
+      "name": "페로니 나스트라즈로_500ML CAN",
+      "current_volume": null,
+      "current_abv": 5.1,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600016177",
+      "name": "벨코포포빅키 코젤 프리미엄 라거_30L KEG",
+      "current_volume": null,
+      "current_abv": 4.2,
+      "findings": {
+        "volume": [
+          {
+            "text": "30l",
+            "position": [
+              18,
+              21
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500894388",
+      "name": "에반 윌리엄스 블랙 / 750ML",
+      "current_volume": null,
+      "current_abv": 43,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              13,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600018835",
+      "name": "빅 웨이브 리퀴드 알로하 (355ml, 병)",
+      "current_volume": 700,
+      "current_abv": 4.4,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              15,
+              20
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600029967",
+      "name": "아사히 수퍼 드라이 생맥주캔 (340ml)",
+      "current_volume": 700,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "340ml",
+            "position": [
+              17,
+              22
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600029951",
+      "name": "아사히 수퍼 드라이 19L",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "19l",
+            "position": [
+              11,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600008235",
+      "name": "긴가코겐 350ml",
+      "current_volume": 700,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "350ml",
+            "position": [
+              5,
+              10
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500903850",
+      "name": "라벨 5 블렌디드 스카치 위스키 (700mL)(40%)(L526755C)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              19,
+              24
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "40%",
+            "position": [
+              26,
+              29
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500904642",
+      "name": "시바스 리갈 18년 / LKGW5506, 700ML",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              23,
+              28
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500906021",
+      "name": "발렌타인 싱글몰트 글렌버기 21년 / LKNW5274, 700mL",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              31,
+              36
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600007825",
+      "name": "요나요나 에일 350ml",
+      "current_volume": null,
+      "current_abv": 5.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "350ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600007846",
+      "name": "수요일의 네코 350ml",
+      "current_volume": null,
+      "current_abv": 4.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "350ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600008213",
+      "name": "쏘리 닛폰 시트러스 에일 350ml",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "350ml",
+            "position": [
+              14,
+              19
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600012384",
+      "name": "오리온 더 드래프트 (10L)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "10l",
+            "position": [
+              12,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600016060",
+      "name": "필스너 우르켈_500ML CAN",
+      "current_volume": null,
+      "current_abv": 4.4,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600020764",
+      "name": "발베니 14년-700ML(LOT NO. L 0113097 1906)",
+      "current_volume": null,
+      "current_abv": 43,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600020765",
+      "name": "글렌피딕 21년-700ML(LOT NO. L 0117714 0210)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600020798",
+      "name": "발베니 12년 아메리칸 오크-700ML (LOT NO. L 0114257 1007)",
+      "current_volume": null,
+      "current_abv": 43,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              16,
+              21
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600020820",
+      "name": "글렌피딕 18년-700ML(제조번호 :  L 0121721 2509)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600021549",
+      "name": "파운더스 케이비에스(355ML)",
+      "current_volume": null,
+      "current_abv": 12,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600021772",
+      "name": "파운더스 포터(355ML)",
+      "current_volume": null,
+      "current_abv": 6.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600023224",
+      "name": "바르슈타이너 프리미엄 / 500ML",
+      "current_volume": null,
+      "current_abv": 4.8,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              14,
+              19
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600023365",
+      "name": "삿포로 생맥주 70 (500ml, SHIZUOKA)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600023700",
+      "name": "파운더스 센테니얼 아이피에이(355ml)",
+      "current_volume": null,
+      "current_abv": 7.2,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              16,
+              21
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600023764",
+      "name": "파운더스 더티 배스타드 (355ML)",
+      "current_volume": null,
+      "current_abv": 8.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              14,
+              19
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600024260",
+      "name": "파운더스 브렉퍼스트 스타우트(355ML)",
+      "current_volume": null,
+      "current_abv": 8.3,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              16,
+              21
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600024287",
+      "name": "파운더스 백우드 배스터드 (30L)",
+      "current_volume": null,
+      "current_abv": 11.9,
+      "findings": {
+        "volume": [
+          {
+            "text": "30l",
+            "position": [
+              15,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600024801",
+      "name": "파운더스 올데이 아이피에이 (30L)",
+      "current_volume": null,
+      "current_abv": 4.7,
+      "findings": {
+        "volume": [
+          {
+            "text": "30l",
+            "position": [
+              16,
+              19
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600025462",
+      "name": "제임슨 스탠다드 / LFOX225309, 700mL",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              23,
+              28
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600025603",
+      "name": "올드라스푸틴 (19.51L)",
+      "current_volume": null,
+      "current_abv": 9,
+      "findings": {
+        "volume": [
+          {
+            "text": "51l",
+            "position": [
+              11,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600031320",
+      "name": "발렌타인 7년 아메리칸 배럴 / LKMW5508, 200ML",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "200ml",
+            "position": [
+              28,
+              33
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600031375",
+      "name": "로얄살루트 21년 몰트 / LKSW5002, 700mL",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              25,
+              30
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600031387",
+      "name": "로얄살루트 21년 블렌디드 그레인 / LKSW5028, 700mL",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              31,
+              36
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600032701",
+      "name": "더 글렌리벳 12년 / 700mL, LKBW5597",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              13,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600032732",
+      "name": "발렌타인 싱글몰트 글렌버기 12년 / LKRW3357, 700mL",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              31,
+              36
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600033764",
+      "name": "벨코포포빅키 코젤다크_500ml CAN",
+      "current_volume": null,
+      "current_abv": 4.1,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600033798",
+      "name": "파울라너 뮌헨 라거(500ml)",
+      "current_volume": null,
+      "current_abv": 5.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600034271",
+      "name": "벤로막 15년 (700mL) (43%) (16/10/2025)",
+      "current_volume": null,
+      "current_abv": 43,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "43%",
+            "position": [
+              17,
+              20
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600034580",
+      "name": "벤로막 21년 (700mL) (43%) (06/10/2023)",
+      "current_volume": null,
+      "current_abv": 43,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "43%",
+            "position": [
+              17,
+              20
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600035442",
+      "name": "발렌타인 17년 아티스트 에디션 5 / 700mL / LKGW5692",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              22,
+              27
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600038081",
+      "name": "가펠쾰쉬 (330mL병) (4.8%)",
+      "current_volume": null,
+      "current_abv": 4.8,
+      "findings": {
+        "abv": [
+          {
+            "text": "4.8%",
+            "position": [
+              15,
+              19
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600040435",
+      "name": "커클랜드 시그니춰 블랜디드 스카치 위스키 (1.75L) (40%) (276/25)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "75l",
+            "position": [
+              26,
+              29
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "40%",
+            "position": [
+              32,
+              35
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600041234",
+      "name": "듀어스 12년 / 700mL /  L25287",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              10,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600041682",
+      "name": "발베니 20년-700ML(LOT NO. L 0114162 0508)",
+      "current_volume": null,
+      "current_abv": 47.7,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600041728",
+      "name": "글렌피딕 15년-700ML(LOT NO. L 0118543 2708)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600041747",
+      "name": "파울라너 바이스비어(500ML)",
+      "current_volume": null,
+      "current_abv": 5.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600043790",
+      "name": "델리리움 트레멘스 1500ml",
+      "current_volume": null,
+      "current_abv": 8.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "1500ml",
+            "position": [
+              10,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600043792",
+      "name": "델리리움 레드 330ml",
+      "current_volume": null,
+      "current_abv": 8,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600044284",
+      "name": "포쉐트 330ml",
+      "current_volume": null,
+      "current_abv": 10,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              4,
+              9
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600044313",
+      "name": "몽스카페 330ml",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              5,
+              10
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600044349",
+      "name": "드가르 1500ml",
+      "current_volume": null,
+      "current_abv": 8.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "1500ml",
+            "position": [
+              4,
+              10
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600044943",
+      "name": "크롬바커 바이젠(0.5L/병)",
+      "current_volume": null,
+      "current_abv": 5.3,
+      "findings": {
+        "volume": [
+          {
+            "text": "5l",
+            "position": [
+              11,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600046858",
+      "name": "기네스 오리지널 엑스트라 스타우트 440mL (798189)",
+      "current_volume": null,
+      "current_abv": 4.2,
+      "findings": {
+        "volume": [
+          {
+            "text": "440ml",
+            "position": [
+              19,
+              24
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600047070",
+      "name": "세종 듀퐁 [330ML]",
+      "current_volume": null,
+      "current_abv": 6.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              7,
+              12
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600048188",
+      "name": "더블유17 바이 윈저 450mL (779676)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "450ml",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600048309",
+      "name": "짐빔 500mL / L5262",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              3,
+              8
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600050930",
+      "name": "오드 괴즈 분 (375ML)",
+      "current_volume": 700,
+      "current_abv": 7,
+      "findings": {
+        "volume": [
+          {
+            "text": "375ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600051044",
+      "name": "블랑쉐 드 브뤼헤 [330ml]",
+      "current_volume": 700,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600051050",
+      "name": "괴즈 마리아주 파르페 (750ML)",
+      "current_volume": null,
+      "current_abv": 8,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              13,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600052226",
+      "name": "벤로막 캐스크 스트랭스 12년 (700mL) (58.9%) (01/05/2025)",
+      "current_volume": null,
+      "current_abv": 58.9,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              18,
+              23
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "58.9%",
+            "position": [
+              26,
+              31
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600053318",
+      "name": "골든블루 더 사피루스 (450ml)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "450ml",
+            "position": [
+              13,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600057437",
+      "name": "벤치마크 750ML",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              5,
+              10
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600057453",
+      "name": "켄터키젠틀맨 스트레이트 1.75L",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "75l",
+            "position": [
+              15,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500705343",
+      "name": "글렌 맨션(200ML)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "200ml",
+            "position": [
+              6,
+              11
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500735549",
+      "name": "화이트 캐슬34.5%",
+      "current_volume": null,
+      "current_abv": 34.5,
+      "findings": {
+        "abv": [
+          {
+            "text": "34.5%",
+            "position": [
+              6,
+              11
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500748792",
+      "name": "듀어스 12 / 700ML, L25205",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500755871",
+      "name": "조니워커 블론드 700mL (792925)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500757373",
+      "name": "부나하벤 크루아모나 1리터",
+      "current_volume": null,
+      "current_abv": 46,
+      "findings": {
+        "volume": [
+          {
+            "text": "1리터",
+            "position": [
+              11,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500757378",
+      "name": "부나하벤 에리 네 그레이뉴 1리터",
+      "current_volume": null,
+      "current_abv": 46,
+      "findings": {
+        "volume": [
+          {
+            "text": "1리터",
+            "position": [
+              15,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500757406",
+      "name": "부나하벤 안 클라닥 1리터",
+      "current_volume": null,
+      "current_abv": 46,
+      "findings": {
+        "volume": [
+          {
+            "text": "1리터",
+            "position": [
+              11,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500757415",
+      "name": "글렌모렌지 레전더리 시리즈 두탁 1리터",
+      "current_volume": null,
+      "current_abv": 43,
+      "findings": {
+        "volume": [
+          {
+            "text": "1리터",
+            "position": [
+              18,
+              21
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500757497",
+      "name": "글렌피딕 셀렉트 캐스크 1리터",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "1리터",
+            "position": [
+              13,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500757502",
+      "name": "글렌모렌지 레전더리 시리즈 테인 1리터",
+      "current_volume": null,
+      "current_abv": 43,
+      "findings": {
+        "volume": [
+          {
+            "text": "1리터",
+            "position": [
+              18,
+              21
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500757642",
+      "name": "글렌모렌지 레전더리 시리즈 캐드볼 1리터",
+      "current_volume": null,
+      "current_abv": 43,
+      "findings": {
+        "volume": [
+          {
+            "text": "1리터",
+            "position": [
+              19,
+              22
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500785460",
+      "name": "버니빌 리치와인 CS 52.3%",
+      "current_volume": null,
+      "current_abv": 52.3,
+      "findings": {
+        "abv": [
+          {
+            "text": "52.3%",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500785493",
+      "name": "버니빌 금귤와인 CS 52.2%",
+      "current_volume": null,
+      "current_abv": 52.2,
+      "findings": {
+        "abv": [
+          {
+            "text": "52.2%",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500785772",
+      "name": "버니빌 싱글몰트 오롱차 CS 52.3%",
+      "current_volume": null,
+      "current_abv": 52.3,
+      "findings": {
+        "abv": [
+          {
+            "text": "52.3%",
+            "position": [
+              16,
+              21
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500793055",
+      "name": "카발란 솔리스트 비노 바리끄 싱글몰트 위스키 (57.8%)",
+      "current_volume": null,
+      "current_abv": 57.8,
+      "findings": {
+        "abv": [
+          {
+            "text": "57.8%",
+            "position": [
+              26,
+              31
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500793155",
+      "name": "카발란 솔리스트 포트캐스크 싱글몰트 위스키 (56.3%)",
+      "current_volume": null,
+      "current_abv": 56.3,
+      "findings": {
+        "abv": [
+          {
+            "text": "56.3%",
+            "position": [
+              25,
+              30
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500793232",
+      "name": "카발란 솔리스트 포트캐스크 싱글몰트 위스키 (52.4%)",
+      "current_volume": null,
+      "current_abv": 52.4,
+      "findings": {
+        "abv": [
+          {
+            "text": "52.4%",
+            "position": [
+              25,
+              30
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500796454",
+      "name": "글렌피딕 50년-700ML",
+      "current_volume": null,
+      "current_abv": 43.3,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500811608",
+      "name": "조니워커 더블 블랙 700mL (777809)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500811611",
+      "name": "조니워커 블랙 루비 700mL (792515)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500826511",
+      "name": "고든 앤 맥페일 코노세어 초이스 크라이겔라키 (700mL) (64.5%) (27/08/2024)",
+      "current_volume": null,
+      "current_abv": 64.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              26,
+              31
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "64.5%",
+            "position": [
+              34,
+              39
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500826569",
+      "name": "고든 앤 맥페일 코노세어 초이스 스페이번 (700mL) (60.2%) (23/04/2024)",
+      "current_volume": null,
+      "current_abv": 60.2,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              24,
+              29
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "60.2%",
+            "position": [
+              32,
+              37
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500826668",
+      "name": "고든 앤 맥페일 미스터 조지 레가시 파이널에디션 글렌 그란트 1954 (700mL) (50.5%) (06/01/2025)",
+      "current_volume": null,
+      "current_abv": 50.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              40,
+              45
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "50.5%",
+            "position": [
+              48,
+              53
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500828472",
+      "name": "카발란 솔리스트 마데이라 캐스크 싱글몰트 위스키 (60.2%)",
+      "current_volume": null,
+      "current_abv": 60.2,
+      "findings": {
+        "abv": [
+          {
+            "text": "60.2%",
+            "position": [
+              28,
+              33
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500846042",
+      "name": "발베니 12년-700ML(제조번호 : L 0118317 2608)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500854515",
+      "name": "듀어스 더블더블 21년, L24144, 500mL",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              22,
+              27
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500860285",
+      "name": "발베니 16년-700ML(LOT NO. L 0116335 0808)",
+      "current_volume": null,
+      "current_abv": 47.6,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500867937",
+      "name": "윈저 12 (500mL / 779428)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              7,
+              12
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500869920",
+      "name": "커클랜드 시그니춰 싱글 몰트 스카치 위스키 8년 (1L)(44%)(L1)",
+      "current_volume": null,
+      "current_abv": 44,
+      "findings": {
+        "volume": [
+          {
+            "text": "1l",
+            "position": [
+              28,
+              30
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "44%",
+            "position": [
+              32,
+              35
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500882062",
+      "name": "클라이넬리쉬 14년 700mL (786072)",
+      "current_volume": null,
+      "current_abv": 46,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500884845",
+      "name": "글렌피딕 16년-700ML(제조번호 :  L 0125255 2711)",
+      "current_volume": null,
+      "current_abv": 43,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500886603",
+      "name": "그란츠 트리플우드-1000ML(LOT NO. L 0118592 1908)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "1000ml",
+            "position": [
+              10,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600050238",
+      "name": "버팔로 트레이스(750ML)",
+      "current_volume": null,
+      "current_abv": 45,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600050285",
+      "name": "글렌피딕 23년-700ML(LOT NO. L 0118526 2609)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600050361",
+      "name": "글렌피딕 12년-700ML(제조번호 : L 0113945 1706)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600055601",
+      "name": "에스트렐라 담 바르셀로나(330ml)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              14,
+              19
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600057150",
+      "name": "꼬뜨 드 뉘 빌라쥬 떼르 부르곤드 (13.5%) (L.CDNTB23)",
+      "current_volume": null,
+      "current_abv": 13.5,
+      "findings": {
+        "abv": [
+          {
+            "text": "13.5%",
+            "position": [
+              20,
+              25
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600057170",
+      "name": "꼬뜨 드 뉘 빌라쥬 “레 비뇨뜨” (13.5%) (L.CDNVV23)",
+      "current_volume": null,
+      "current_abv": 13.5,
+      "findings": {
+        "abv": [
+          {
+            "text": "13.5%",
+            "position": [
+              20,
+              25
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600057176",
+      "name": "사비니 레 본 피멘티에르 (13.5%) (L.SAV23)",
+      "current_volume": null,
+      "current_abv": 13.5,
+      "findings": {
+        "abv": [
+          {
+            "text": "13.5%",
+            "position": [
+              15,
+              20
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600057445",
+      "name": "삿포로 프리미엄 실버컵 650ml",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "650ml",
+            "position": [
+              13,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500873510",
+      "name": "달위니 30년 700mL (756541)",
+      "current_volume": null,
+      "current_abv": 54.7,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500873789",
+      "name": "조니워커 블루 레이블 고스트 앤 레어 750mL (778883)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              21,
+              26
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500875842",
+      "name": "조니워커 블루 레이블 750mL (779447)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600002809",
+      "name": "메이커스 마크 (1L / L5289)",
+      "current_volume": null,
+      "current_abv": 45,
+      "findings": {
+        "volume": [
+          {
+            "text": "1l",
+            "position": [
+              9,
+              11
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600007830",
+      "name": "아오오니 IPA 350ml",
+      "current_volume": null,
+      "current_abv": 7,
+      "findings": {
+        "volume": [
+          {
+            "text": "350ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600009694",
+      "name": "커클랜드 시그니춰 캐나디언 위스키 (1.75L)(40%)(L25332330531B)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "75l",
+            "position": [
+              22,
+              25
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "40%",
+            "position": [
+              27,
+              30
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600021644",
+      "name": "파운더스 씨비에스(355ML)",
+      "current_volume": null,
+      "current_abv": 11.7,
+      "findings": {
+        "volume": [
+          {
+            "text": "355ml",
+            "position": [
+              10,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600022994",
+      "name": "조니워커 그린레이블 700mL (795332)",
+      "current_volume": null,
+      "current_abv": 43,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600023231",
+      "name": "조니워커 블랙 레이블 1.75L (774588)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "75l",
+            "position": [
+              14,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600027360",
+      "name": "발베니 40년-700ML(LOT NO. L 0063349 1810)",
+      "current_volume": null,
+      "current_abv": 47.9,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600029061",
+      "name": "조니워커 블랙 레이블 500ml (770111)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600029786",
+      "name": "하얼빈 맥주(5.0%,610ml)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "610ml",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "5.0%",
+            "position": [
+              7,
+              11
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600031775",
+      "name": "노아 [330ML]",
+      "current_volume": null,
+      "current_abv": 12,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              4,
+              9
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600031776",
+      "name": "조디악(20L)",
+      "current_volume": null,
+      "current_abv": 6.2,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              4,
+              7
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600035020",
+      "name": "발렌타인 17년 / LKGW0760, 700ML",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              21,
+              26
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600035447",
+      "name": "발렌타인 싱글몰트 글렌버기 15년 아티스트 에디션 5/ LKRW5505, 700mL",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              41,
+              46
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600037000",
+      "name": "블랙애더 밀스톤 더치 싱글몰트 피트 PX (53.6%)",
+      "current_volume": null,
+      "current_abv": 53.6,
+      "findings": {
+        "abv": [
+          {
+            "text": "53.6%",
+            "position": [
+              24,
+              29
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600037478",
+      "name": "달위니 15년 700mL (75919)",
+      "current_volume": null,
+      "current_abv": 43,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600037583",
+      "name": "조니워커 레드 레이블 500mL (770048)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600042769",
+      "name": "에비스 생맥주 10L",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "10l",
+            "position": [
+              8,
+              11
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600048920",
+      "name": "기린 이치방(350ML)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "350ml",
+            "position": [
+              7,
+              12
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600049193",
+      "name": "에드라두어 10Y 46%",
+      "current_volume": null,
+      "current_abv": 46,
+      "findings": {
+        "abv": [
+          {
+            "text": "46%",
+            "position": [
+              10,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500725835",
+      "name": "글렌알라키 싱글캐스크 싱글몰트위스키 (56.7%)",
+      "current_volume": null,
+      "current_abv": 56.7,
+      "findings": {
+        "abv": [
+          {
+            "text": "56.7%",
+            "position": [
+              21,
+              26
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500729323",
+      "name": "글렌알라키 싱글캐스크 싱글몰트위스키 (55.7%)",
+      "current_volume": null,
+      "current_abv": 55.7,
+      "findings": {
+        "abv": [
+          {
+            "text": "55.7%",
+            "position": [
+              21,
+              26
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500729400",
+      "name": "글렌알라키 싱글캐스크 싱글몰트위스키 (60.1%)",
+      "current_volume": null,
+      "current_abv": 60.1,
+      "findings": {
+        "abv": [
+          {
+            "text": "60.1%",
+            "position": [
+              21,
+              26
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500729843",
+      "name": "발베니 14년 위크 오브 피트-700ML(LOT NO. L 0109633 2304)",
+      "current_volume": null,
+      "current_abv": 48.3,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              17,
+              22
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500730524",
+      "name": "글렌피딕 30년-700ML(제조번호 : L 0072880 0612)",
+      "current_volume": null,
+      "current_abv": 43,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500734204",
+      "name": "커클랜드 시그니춰 아이리쉬 위스키 (1.75L)(40%)(185/25)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "75l",
+            "position": [
+              22,
+              25
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "40%",
+            "position": [
+              27,
+              30
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500777210",
+      "name": "휘슬피그 올드 월드 라이 12년 엘오에프피 / 1112754, 750mL,",
+      "current_volume": null,
+      "current_abv": 46,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              35,
+              40
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500786428",
+      "name": "조니워커 골드 레이블 리저브 750mL (786985)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              16,
+              21
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500814577",
+      "name": "제퍼슨 오션 / L3242FA, 700mL",
+      "current_volume": null,
+      "current_abv": 45,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              18,
+              23
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500838257",
+      "name": "글렌파클라스 105 1리터",
+      "current_volume": null,
+      "current_abv": 60,
+      "findings": {
+        "volume": [
+          {
+            "text": "1리터",
+            "position": [
+              11,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500838344",
+      "name": "제임슨 스타우트 에디션 / LFOX625199, 700mL",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              27,
+              32
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600038973",
+      "name": "피치 실루엣 (473ml)",
+      "current_volume": 700,
+      "current_abv": 6,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600038987",
+      "name": "초콜릿 커버드 오렌지 실루엣 (20L)",
+      "current_volume": 700,
+      "current_abv": 7,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              17,
+              20
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600039001",
+      "name": "홀리 아이콘 (20L)",
+      "current_volume": 700,
+      "current_abv": 7,
+      "findings": {
+        "volume": [
+          {
+            "text": "20l",
+            "position": [
+              8,
+              11
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600039009",
+      "name": "토탈 인터널 리플렉션 (473ml)",
+      "current_volume": 700,
+      "current_abv": 7,
+      "findings": {
+        "volume": [
+          {
+            "text": "473ml",
+            "position": [
+              13,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600048824",
+      "name": "버드와이저 / 740ml, 91498",
+      "current_volume": 700,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "740ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600048866",
+      "name": "킹피셔맥주(330ML)",
+      "current_volume": 700,
+      "current_abv": 4.8,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              6,
+              11
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600054117",
+      "name": "스텔라 아르투아 330mL",
+      "current_volume": 700,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600037066",
+      "name": "산토리 프리미엄 몰트 (10L)",
+      "current_volume": null,
+      "current_abv": 5.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "10l",
+            "position": [
+              13,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600047778",
+      "name": "스트라프 헨드릭 트리펠 (750ml)",
+      "current_volume": null,
+      "current_abv": 9,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              14,
+              19
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600047106",
+      "name": "모네트 블론드 [750ML]",
+      "current_volume": null,
+      "current_abv": 8,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500731588",
+      "name": "케스크 스트랭스 싱글 배럴 버번 위스키 (55%)",
+      "current_volume": null,
+      "current_abv": 55,
+      "findings": {
+        "abv": [
+          {
+            "text": "55%",
+            "position": [
+              23,
+              26
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500731560",
+      "name": "케스크 스트랭스 싱글 배럴 스트레이트 라이 위스키 (54%)",
+      "current_volume": null,
+      "current_abv": 54,
+      "findings": {
+        "abv": [
+          {
+            "text": "54%",
+            "position": [
+              29,
+              32
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500759113",
+      "name": "발베니 12년 싱글배럴-700ML(제조번호 : L 0122738 1609)",
+      "current_volume": null,
+      "current_abv": 47.8,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              13,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500761495",
+      "name": "커클랜드 시그니춰 켄터키 스트레이트 버번 위스키 바틀드 인 본드 (1L)(50%)(L2513615)",
+      "current_volume": null,
+      "current_abv": 50,
+      "findings": {
+        "volume": [
+          {
+            "text": "1l",
+            "position": [
+              37,
+              39
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "50%",
+            "position": [
+              41,
+              44
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500761500",
+      "name": "커클랜드 시그니춰 켄터키 스트레이트 버번 위스키 스몰 배치 (1L) (46%) (L25083)",
+      "current_volume": null,
+      "current_abv": 46,
+      "findings": {
+        "volume": [
+          {
+            "text": "1l",
+            "position": [
+              34,
+              36
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "46%",
+            "position": [
+              39,
+              42
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500785205",
+      "name": "버니빌 싱글몰트 NO 19 CS 55.1%",
+      "current_volume": null,
+      "current_abv": 55.1,
+      "findings": {
+        "abv": [
+          {
+            "text": "55.1%",
+            "position": [
+              18,
+              23
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500785216",
+      "name": "버니빌 싱글몰트 NO 19 40%",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "abv": [
+          {
+            "text": "40%",
+            "position": [
+              15,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500785245",
+      "name": "버니빌 멀베리 와인 CS 52%",
+      "current_volume": null,
+      "current_abv": 52,
+      "findings": {
+        "abv": [
+          {
+            "text": "52%",
+            "position": [
+              14,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500785410",
+      "name": "버니빌 레몬와인 CS 52%",
+      "current_volume": null,
+      "current_abv": 52,
+      "findings": {
+        "abv": [
+          {
+            "text": "52%",
+            "position": [
+              12,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500785514",
+      "name": "버니빌 로즈와인 CS 52.1%",
+      "current_volume": null,
+      "current_abv": 52.1,
+      "findings": {
+        "abv": [
+          {
+            "text": "52.1%",
+            "position": [
+              12,
+              17
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500785780",
+      "name": "버니빌 싱글몰트 블랙퀸 머스캣 CS 48.5%",
+      "current_volume": null,
+      "current_abv": 48.5,
+      "findings": {
+        "abv": [
+          {
+            "text": "48.5%",
+            "position": [
+              20,
+              25
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500785802",
+      "name": "버니빌 싱글몰트 골든 머스캣 CS 49.2%",
+      "current_volume": null,
+      "current_abv": 49.2,
+      "findings": {
+        "abv": [
+          {
+            "text": "49.2%",
+            "position": [
+              19,
+              24
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500785971",
+      "name": "버니빌 싱글몰트 오롱차 40%",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "abv": [
+          {
+            "text": "40%",
+            "position": [
+              13,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600033759",
+      "name": "칼스버그 대니쉬 필스너 (500mL) (5%)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              14,
+              19
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "5%",
+            "position": [
+              22,
+              24
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600054168",
+      "name": "카스 프레시 / 740mL",
+      "current_volume": null,
+      "current_abv": 4.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "740ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600041490",
+      "name": "삿포로 생맥주 10L",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "10l",
+            "position": [
+              8,
+              11
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600050807",
+      "name": "싱하 캔(490ml)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "490ml",
+            "position": [
+              5,
+              10
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600046391",
+      "name": "1664 블랑(500ml)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "500ml",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600043791",
+      "name": "델리리움 녹터넘 330ml",
+      "current_volume": null,
+      "current_abv": 8.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              9,
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600036580",
+      "name": "삿포로 프리미엄 맥주 (330ml)",
+      "current_volume": null,
+      "current_abv": 5,
+      "findings": {
+        "volume": [
+          {
+            "text": "330ml",
+            "position": [
+              13,
+              18
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202500878836",
+      "name": "듀어스 15년 / 700mL /  L25322",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              10,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600015664",
+      "name": "화이트캐슬 5년 올드 위스키  375ml",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "375ml",
+            "position": [
+              17,
+              22
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600049768",
+      "name": "이네딧 담(750ml)",
+      "current_volume": null,
+      "current_abv": 4.8,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              6,
+              11
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600055101",
+      "name": "몬포르티노 바롤로 리제르바 (750ML)",
+      "current_volume": null,
+      "current_abv": 14.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              16,
+              21
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600055212",
+      "name": "바롤로 프란치아 (750ML)",
+      "current_volume": null,
+      "current_abv": 14,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              10,
+              15
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600055158",
+      "name": "페페 네로 뀌베 스푸만테 브륏 (11.5%) [L51962]",
+      "current_volume": null,
+      "current_abv": 11.5,
+      "findings": {
+        "abv": [
+          {
+            "text": "11.5%",
+            "position": [
+              18,
+              23
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600055136",
+      "name": "세이 애니메 (14.5%) (L5325)",
+      "current_volume": null,
+      "current_abv": 14.5,
+      "findings": {
+        "abv": [
+          {
+            "text": "14.5%",
+            "position": [
+              8,
+              13
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600056850",
+      "name": "샤또 무똥 로칠드 (13.5%) (1.5L)",
+      "current_volume": null,
+      "current_abv": 13.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "5l",
+            "position": [
+              21,
+              23
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "13.5%",
+            "position": [
+              11,
+              16
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600056830",
+      "name": "샤또 라플레르 (15%) (1.5L) (LoT LF15M)",
+      "current_volume": null,
+      "current_abv": 15,
+      "findings": {
+        "volume": [
+          {
+            "text": "5l",
+            "position": [
+              17,
+              19
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "15%",
+            "position": [
+              9,
+              12
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600056720",
+      "name": "비올레뜨(750ML)",
+      "current_volume": null,
+      "current_abv": 13,
+      "findings": {
+        "volume": [
+          {
+            "text": "750ml",
+            "position": [
+              5,
+              10
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600056390",
+      "name": "플루텔 블랑 드 블랑 브뤼 (11.5%) (750 mL) [ L5303021 ]",
+      "current_volume": null,
+      "current_abv": 11.5,
+      "findings": {
+        "volume": [
+          {
+            "text": "750 ml",
+            "position": [
+              24,
+              30
+            ]
+          }
+        ],
+        "abv": [
+          {
+            "text": "11.5%",
+            "position": [
+              16,
+              21
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mfds-202600057057",
+      "name": "몽키숄더-700ML(LOT NO. L 0119355 0409)",
+      "current_volume": null,
+      "current_abv": 40,
+      "findings": {
+        "volume": [
+          {
+            "text": "700ml",
+            "position": [
+              5,
+              10
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

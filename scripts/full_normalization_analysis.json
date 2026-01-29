@@ -1,0 +1,806 @@
+{
+  "stats": {
+    "total": 2508,
+    "needs_normalization": 113,
+    "empty_parentheses": 0,
+    "empty_brackets": 0,
+    "has_parentheses_content": 109,
+    "has_brackets_content": 3,
+    "has_volume": 0,
+    "has_abv": 1,
+    "has_lot": 0
+  },
+  "spirits_needing_normalization": [
+    {
+      "id": "fsk-201300190973",
+      "name": "스포라이스(sporice)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2013001604510",
+      "name": "농부 맥주 세종 (saison)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2013001604512",
+      "name": "등산객맥주 페일 에일(pale ale)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2013001704265",
+      "name": "히어로즈인어 페스트 쉘(Heroes in a Fest-Sheel)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2013001704233",
+      "name": "호피토피(HOPITOPI)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2013001704235",
+      "name": "렛츠댄스(Let's dance)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2013001704246",
+      "name": "로우 옐로우(Raw Yellow)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2013001704253",
+      "name": "런 어스 하이(Run Us High)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2013001704230",
+      "name": "오!(Oh!)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2013001704231",
+      "name": "Lager That (라거댓)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2013001704244",
+      "name": "팁시(Tipsy)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2013001704234",
+      "name": "Paradiso Lager(파라디소 라거)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2013001704257",
+      "name": "웰컴&필스(Welcome and Pils)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-201300160185",
+      "name": "금정(GEUMJEONG)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2013001601612",
+      "name": "송파(SONG.PA)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-201300160188",
+      "name": "비터 아이피에이(Bitter IPA)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-201300201864",
+      "name": "대덕주 (단상지교)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2001001523223",
+      "name": "LUDOVIC XIII(루도빅 13세)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2006001502095",
+      "name": "가브리엘(Gabriel)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-201300200824",
+      "name": "두레앙브랜디(40)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-200100152328",
+      "name": "MONROI XIV(몽루아14)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2013002007629",
+      "name": "담은죽심(대나무통술)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-201300201185",
+      "name": "한산명품소곡주(살균)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-201300201662",
+      "name": "석로주(순)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-201300161102",
+      "name": "비고즈 맑은술(B.GOZE.334)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-199000150021",
+      "name": "서주(감자술)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-201300190995",
+      "name": "니모메 (NIMOME)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-201300202583",
+      "name": "청명주(생주)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-201300202957",
+      "name": "한산소곡주(살균약주)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-201400200378",
+      "name": "풍정사계 夏(하)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2021001283822",
+      "name": "효모재 B1 #01 (HYOMO JAE B1 #01)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2021001283823",
+      "name": "효모재 B1 #02 (HYOMO JAE B1 #02)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-201800165043",
+      "name": "SEOUL(서울) 청주",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-201400171178",
+      "name": "삼양춘 청주 (살균주)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2013001508596",
+      "name": "알포(R4)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-201300191172",
+      "name": "청하 13도",
+      "issues": [
+        "has_abv"
+      ]
+    },
+    {
+      "id": "fsk-2013001705511",
+      "name": "행복한상상 위켄드(Sunday)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2013001705512",
+      "name": "행복한상상 위켄드(Saturday)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-201300170558",
+      "name": "행복한상상 위켄드(Friday)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500749261",
+      "name": "라가불린 12년 SR (2023)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2014001711711",
+      "name": "오마이갓(Oh My Gat)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-201400171177",
+      "name": "삼양춘 청(살균약주)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-201300161674",
+      "name": "월이(하이오디생청)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-201300161675",
+      "name": "월해(하이생청)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-201300191534",
+      "name": "골드(GOLD)가시오가피술",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2013001805282",
+      "name": "소월미주(신)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2013002007610",
+      "name": "담은옻술(옻누리주)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2013001927113",
+      "name": "아이러브유자(I LOVE YUJA)(내수용)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-202000042043",
+      "name": "남양주 위스키 (Namyangju Whisky)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2013001614112",
+      "name": "PHANTOM THE WHITE(팬텀 더 화이트)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2013001614114",
+      "name": "팬텀 디 오리지널 17(PHANTOM THE ORIGINAL 17)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2013001614116",
+      "name": "골든블루 더블샷 하이볼(GOLDENBLUE Double-Shot Highball)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2013001614117",
+      "name": "골든블루 더 그레이트 저니 셰리 캐스크(GOLDENBLUE THE GREAT JOURNEY SHERRY CASK)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2013001614118",
+      "name": "골든블루 더 그레이트 저니 포트 캐스크(GOLDENBLUE THE GREAT JOURNEY PORT CASK)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2013001614115",
+      "name": "팬텀 디 오리지널 리저브(Phantom The Original Reserve)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2001001523211",
+      "name": "GOLDWIN(골드윈)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2001001523227",
+      "name": "오듀(ODEW)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2001001523222",
+      "name": "CAROLUS XII (카롤루스 XII)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2001001523224",
+      "name": "CAROLUS XII(카롤루스 XII)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2001001523225",
+      "name": "LUXE GOLD NO24(럭스골드 넘버24)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2001001523240",
+      "name": "아콘(ARCHON NO12)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2013001911724",
+      "name": "PEERS CLUB(피어스클럽)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-201300192043",
+      "name": "청화몽(淸花夢)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-201300170406",
+      "name": "金鋪醴酒 醴(김포예주 예)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-201300170407",
+      "name": "金鋪藥酒(김포약주)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2006001502099",
+      "name": "백세주(시음용)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-2006001502064",
+      "name": "예담(한모금)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "fsk-201300180113",
+      "name": "제왕(帝王)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500663575",
+      "name": "산미구엘 세르베자 블랑카(캔)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500672380",
+      "name": "트리포터 헤븐 (20Ll)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500830331",
+      "name": "플렌스부르거 바이젠 (병)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202600052068",
+      "name": "더블유 아이스 바이 윈저 (779434)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202600017896",
+      "name": "쿨 일라 12년 (734790)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202600012434",
+      "name": "더블유19 바이 윈저 (771215)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500863564",
+      "name": "탈리스커 1984 (772196)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500830378",
+      "name": "플렌스부르거 필스너 (케그)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500801584",
+      "name": "싱글톤 더프타운 12년 (758793)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202600027635",
+      "name": "간바래 오또상(900미리리터)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500678901",
+      "name": "브레이크사이드 아이피에이 (캔)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500720353",
+      "name": "올라덥(12)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500779092",
+      "name": "하누만 프리미엄 라이트 (캔)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500803677",
+      "name": "에딩거 바이스비어 (500mL캔)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500812321",
+      "name": "데스페라도스 오리지널_330ML_BOT (G)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500849990",
+      "name": "캄보디아 블랙 (캔)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202600003484",
+      "name": "칭따오 퓨어드래프트(생)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202600018412",
+      "name": "슈나이더 호펜바이세 [0.5]",
+      "issues": [
+        "has_brackets_content"
+      ]
+    },
+    {
+      "id": "mfds-202600018288",
+      "name": "슈나이더 헬레스 [0.5]",
+      "issues": [
+        "has_brackets_content"
+      ]
+    },
+    {
+      "id": "mfds-202600045053",
+      "name": "크롬바커 [캔]",
+      "issues": [
+        "has_brackets_content"
+      ]
+    },
+    {
+      "id": "mfds-202600034079",
+      "name": "하노이 프리미엄 맥주 (BOTTLE)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202600048510",
+      "name": "시그나토리 오크니 (HP)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202600048579",
+      "name": "시그나토리 스페이사이드(M) 15년",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202600057393",
+      "name": "브란즈 (L24/2310)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500720207",
+      "name": "올드 캐슬 (가정용)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500747065",
+      "name": "보모어 12년 쉐리(L 5114)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500757494",
+      "name": "글렌로티스 18년(구형)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500757512",
+      "name": "글렌모렌지 12년 라산타(구형)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500757720",
+      "name": "글렌모렌지 넥타도르(구형)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500764676",
+      "name": "캐나디언 클럽(L5212)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500816337",
+      "name": "더블유 허니 바이 윈저 (779435)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500823733",
+      "name": "와일드터키 101 12년 (LL/LC23)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500823774",
+      "name": "와일드터키 101 8년 (LANI03B)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500827557",
+      "name": "하쿠슈(L B5I)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500863339",
+      "name": "야마자키 18년(P5E)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500907505",
+      "name": "더 글랜드로낙 오드 투 더 다크 (L110018371-1305)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202600026743",
+      "name": "시그나토리 스페이사이드(M) 16년",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202600037516",
+      "name": "싱글톤 더프타운 15년 (759499)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202600043741",
+      "name": "올드 스머글러(LFENH29)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500770496",
+      "name": "더 글렌그란트 12년 쉐리 캐스크 (RONH05A)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500824573",
+      "name": "와일드터키 켄터키 스피릿 (LANF11E)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202500824413",
+      "name": "와일드 터키 레어 브리드 라이 (LANA29C)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202600055567",
+      "name": "비 데 타울라 (레드)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202600055302",
+      "name": "차카나 에스테이트 셀렉션 말벡(L-25024)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    },
+    {
+      "id": "mfds-202600056378",
+      "name": "도멘 앙리 들라그랑쥬 오뜨 꼬뜨 드 본 (루즈)",
+      "issues": [
+        "has_parentheses_content"
+      ]
+    }
+  ]
+}

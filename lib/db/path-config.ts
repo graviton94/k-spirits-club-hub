@@ -56,7 +56,8 @@ export const getAppPath = (appId: string = APP_ID) => ({
   recentReviews: `artifacts/${appId}/public/data/recent_reviews`,
   newArrivals: `artifacts/${appId}/public/data/new_arrivals`,
   trendingDaily: (date: string) => `artifacts/${appId}/public/trending/daily/${date}`,
-  trendingGlobal: `artifacts/${appId}/public/trending/global`
+  trendingGlobal: `artifacts/${appId}/public/trending/global`,
+  modificationRequests: `modification_requests` // Root collection for user-submitted modification requests
 });
 
 /**

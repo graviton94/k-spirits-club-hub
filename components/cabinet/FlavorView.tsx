@@ -149,7 +149,7 @@ export default function FlavorView() {
                     className="mt-6 w-full py-3 bg-neutral-800 hover:bg-neutral-700 text-neutral-300 font-bold rounded-xl transition-colors flex items-center justify-center gap-2 text-sm"
                 >
                     <RefreshCw className="w-4 h-4" />
-                    취향 다시 분석하기 (오늘 남은 횟수: {usage.remaining}회)
+                    취향 재분석 (오늘 남은 횟수: {usage.remaining}회)
                 </button>
             );
         } else {
@@ -180,7 +180,7 @@ export default function FlavorView() {
                             <div className="absolute inset-0 bg-gradient-to-br from-neutral-800/20 to-transparent rounded-full" />
                             <TasteRadar data={chartData} />
                             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-[10px] text-neutral-500 font-mono tracking-widest bg-neutral-900/80 px-2 py-1 rounded">
-                                ANALYZED: {profile!.analyzedAt.toLocaleDateString()}
+                                {profile!.analyzedAt.toLocaleDateString()}
                             </div>
                         </div>
                     </div>

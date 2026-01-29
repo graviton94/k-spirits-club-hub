@@ -3,7 +3,7 @@
 export const dynamic = 'force-dynamic';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Spirit, SpiritStatus } from '@/lib/db/schema';
+import { Spirit, SpiritStatus, ModificationRequest } from '@/lib/db/schema';
 import Link from 'next/link';
 import metadata from '@/lib/constants/spirits-metadata.json';
 import { TagMultiSelect } from '@/components/ui/TagMultiSelect';
@@ -36,17 +36,24 @@ interface EditFormState {
  * - Enhanced Edit Modal with Select Inputs
  */
 export default function AdminDashboard() {
-  // --- Refactored Admin Dashboard for Client-Side Processing ---
-  const [allSpirits, setAllSpirits] = useState<Spirit[]>([]);
-  const [filteredSpirits, setFilteredSpirits] = useState<Spirit[]>([]);
+  // --- Server-Side Filtering Admin Dashboard ---
+  const [spirits, setSpirits] = useState<Spirit[]>([]);
   const [loading, setLoading] = useState(false);
+  const [totalCount, setTotalCount] = useState(0);
+
+  // Tab State
+  const [activeTab, setActiveTab] = useState<'spirits' | 'modifications'>('spirits');
+
+  // Modification Requests State
+  const [modificationRequests, setModificationRequests] = useState<ModificationRequest[]>([]);
+  const [loadingMods, setLoadingMods] = useState(false);
 
   // Pagination State
   const [page, setPage] = useState(1);
-  const pageSize = 20;
+  const pageSize = 50; // Reduced from 20 for efficiency
 
-  // Filters
-  const [statusFilter, setStatusFilter] = useState<SpiritStatus | 'ALL'>('ALL');
+  // Filters - Default to READY_FOR_CONFIRM for efficiency
+  const [statusFilter, setStatusFilter] = useState<SpiritStatus | 'ALL'>('READY_FOR_CONFIRM');
   const [level1Cat, setLevel1Cat] = useState<string>('ALL'); // Legal Category (e.g. 위스키)
   const [level2Cat, setLevel2Cat] = useState<string>('ALL'); // Main Family (e.g. scotch) - Virtual
   const [level3Cat, setLevel3Cat] = useState<string>('ALL'); // Sub Category (e.g. Single Malt)
@@ -90,80 +97,79 @@ export default function AdminDashboard() {
   };
   const level3Options = getLevel3Options(level1Cat, level2Cat);
 
-  // --- 1. Load ALL Data on Mount ---
-  const loadAllData = useCallback(async () => {
+  // --- Load Spirits with Server-Side Filtering ---
+  const loadSpirits = useCallback(async () => {
     setLoading(true);
     try {
-      // Fetch larger chunk (2000) to act as "All" for now
-      const response = await fetch(`/api/admin/spirits/?page=1&pageSize=2000`);
+      const params = new URLSearchParams();
+      params.append('page', page.toString());
+      params.append('pageSize', pageSize.toString());
+
+      if (statusFilter !== 'ALL') params.append('status', statusFilter);
+      if (level1Cat !== 'ALL') params.append('category', level1Cat);
+      if (level3Cat !== 'ALL') params.append('subcategory', level3Cat);
+      if (searchQuery) params.append('search', searchQuery);
+
+      const response = await fetch(`/api/admin/spirits?${params.toString()}`);
       const data = await response.json();
-      setAllSpirits(data.data || []);
-      setFilteredSpirits(data.data || []);
+
+      setSpirits(data.data || []);
+      setTotalCount(data.total || 0);
     } catch (error) {
       console.error('Failed to load spirits:', error);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [page, statusFilter, level1Cat, level3Cat, searchQuery]);
 
   useEffect(() => {
-    loadAllData();
-  }, [loadAllData]);
+    loadSpirits();
+    loadModificationRequests();
+  }, [loadSpirits]);
 
-  // --- 2. Client-Side Filtering ---
-  useEffect(() => {
-    let result = allSpirits;
-
-    // A. Status Filter (Only if not ALL)
-    if (statusFilter !== 'ALL') {
-      result = result.filter(s => s.status === statusFilter);
+  // Load Modification Requests
+  const loadModificationRequests = async () => {
+    setLoadingMods(true);
+    try {
+      const response = await fetch('/api/admin/modifications');
+      const data = await response.json();
+      setModificationRequests(data.data || []);
+    } catch (error) {
+      console.error('Failed to load modification requests:', error);
+    } finally {
+      setLoadingMods(false);
     }
+  };
 
-    // B. Category Hierarchy Filter
-    if (level1Cat !== 'ALL') {
-      result = result.filter(s => s.category === level1Cat);
-    }
+  // Update Modification Request Status
+  const updateModificationStatus = async (id: string, status: 'checked' | 'resolved') => {
+    try {
+      const res = await fetch('/api/admin/modifications', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, status })
+      });
 
-    // Level 2 Filter (Virtual - match any of the subcategories in this group)
-    if (level1Cat !== 'ALL' && level2Cat !== 'ALL') {
-      const validSubcats = getLevel3Options(level1Cat, level2Cat);
-      if (validSubcats.length > 0) {
-        result = result.filter(s => s.subcategory && validSubcats.includes(s.subcategory));
+      if (res.ok) {
+        setModificationRequests(prev => prev.map(req =>
+          req.id === id ? { ...req, status } : req
+        ));
+        alert(status === 'resolved' ? '✅ 적용 완료' : '❌ 기각됨');
       }
+    } catch (e) {
+      alert('오류가 발생했습니다.');
     }
-
-    // Level 3 Filter (Specific Subcategory)
-    if (level3Cat !== 'ALL') {
-      result = result.filter(s => s.subcategory === level3Cat);
-    }
-
-    // C. Search
-    if (searchQuery) {
-      const q = searchQuery.toLowerCase();
-      result = result.filter(s =>
-        s.name.toLowerCase().includes(q) ||
-        (s.metadata?.name_en || '').toLowerCase().includes(q)
-      );
-    }
-
-    setFilteredSpirits(result);
-    setPage(1); // Reset to page 1 on filter change
-    setSelectedIds(new Set());
-  }, [allSpirits, statusFilter, level1Cat, level2Cat, level3Cat, searchQuery]);
-
-  // --- 3. Pagination Slicing ---
-  const totalPages = Math.ceil(filteredSpirits.length / pageSize);
-  const paginatedSpirits = filteredSpirits.slice((page - 1) * pageSize, page * pageSize);
-
-  // ... Actions (Publish, Delete) remain mostly same but refresh local state ...
-  const handleDeleteLocal = (ids: string[]) => {
-    setAllSpirits(prev => prev.filter(s => !ids.includes(s.id)));
-    setSelectedIds(new Set());
   };
 
-  const handleUpdateLocal = (id: string, updates: Partial<Spirit>) => {
-    setAllSpirits(prev => prev.map(s => s.id === id ? { ...s, ...updates } : s));
-  };
+
+
+  // --- Pagination ---
+  const totalPages = Math.ceil(totalCount / pageSize);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setPage(1);
+  }, [statusFilter, level1Cat, level3Cat, searchQuery]);
 
 
   const publishSpirit = async (id: string) => {
@@ -174,7 +180,7 @@ export default function AdminDashboard() {
         body: JSON.stringify({ status: 'PUBLISHED', isPublished: true, reviewedBy: 'ADMIN', reviewedAt: new Date().toISOString() })
       });
       if (res.ok) {
-        handleUpdateLocal(id, { status: 'PUBLISHED', isPublished: true });
+        await loadSpirits(); // Reload from server
       }
     } catch (e) {
       alert('발행 실패');
@@ -197,8 +203,7 @@ export default function AdminDashboard() {
       });
 
       if (res.ok) {
-        // Local Update
-        setAllSpirits(prev => prev.map(s => selectedIds.has(s.id) ? { ...s, status: 'PUBLISHED', isPublished: true } : s));
+        await loadSpirits(); // Reload from server
         alert('✅ 일괄 발행 완료');
         setSelectedIds(new Set());
       }
@@ -214,7 +219,7 @@ export default function AdminDashboard() {
     try {
       const res = await fetch(`/api/admin/spirits/${id}`, { method: 'DELETE' });
       if (res.ok) {
-        handleDeleteLocal([id]);
+        await loadSpirits(); // Reload from server
       }
     } catch (e) {
       alert('삭제 실패');
@@ -234,7 +239,7 @@ export default function AdminDashboard() {
       });
 
       if (res.ok) {
-        handleDeleteLocal(Array.from(selectedIds));
+        await loadSpirits(); // Reload from server
         alert('✅ 일괄 삭제 완료');
         setSelectedIds(new Set());
       }
@@ -298,7 +303,7 @@ export default function AdminDashboard() {
       });
 
       if (res.ok) {
-        handleUpdateLocal(editingId, payload);
+        await loadSpirits(); // Reload from server
         setEditingId(null);
         alert(publish ? '✅ 저장 및 공개 완료' : '✅ 저장 완료');
       } else {
@@ -320,8 +325,7 @@ export default function AdminDashboard() {
     setSelectedIds(newSet);
   };
   const toggleSelectAll = () => {
-    // Select all visible on current PAGE only? Or all filtered? Usually page for bulk actions is safer visually
-    const idsOnPage = paginatedSpirits.map(s => s.id);
+    const idsOnPage = spirits.map(s => s.id);
     if (idsOnPage.every(id => selectedIds.has(id))) {
       // Deselect all on page
       const newSet = new Set(selectedIds);
@@ -345,154 +349,253 @@ export default function AdminDashboard() {
         </div>
 
         <div className="flex border-b border-gray-200 dark:border-gray-800 mb-8 overflow-x-auto">
-          <button className="px-8 py-4 font-bold border-b-4 border-amber-500 text-amber-600 dark:text-amber-400 transition-all whitespace-nowrap">📚 마스터 데이터</button>
+          <button
+            onClick={() => setActiveTab('spirits')}
+            className={`px-8 py-4 font-bold border-b-4 transition-all whitespace-nowrap ${activeTab === 'spirits'
+              ? 'border-amber-500 text-amber-600 dark:text-amber-400'
+              : 'border-transparent text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
+              }`}>
+            📚 마스터 데이터
+          </button>
+          <button
+            onClick={() => setActiveTab('modifications')}
+            className={`px-8 py-4 font-bold border-b-4 transition-all whitespace-nowrap ${activeTab === 'modifications'
+              ? 'border-amber-500 text-amber-600 dark:text-amber-400'
+              : 'border-transparent text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
+              }`}>
+            📝 보고된 수정 요청 {modificationRequests.filter(r => r.status === 'pending').length > 0 &&
+              <span className="ml-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
+                {modificationRequests.filter(r => r.status === 'pending').length}
+              </span>
+            }
+          </button>
         </div>
 
-        <div className="space-y-8 animate-in fade-in duration-500">
+        {activeTab === 'spirits' && (
+          <div className="space-y-8 animate-in fade-in duration-500">
 
-          {/* Control Bar */}
-          <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-2xl p-6 shadow-xl space-y-6">
-            <div className="flex flex-col xl:flex-row gap-6 justify-between items-start xl:items-center">
+            {/* Control Bar */}
+            <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-2xl p-6 shadow-xl space-y-6">
+              <div className="flex flex-col xl:flex-row gap-6 justify-between items-start xl:items-center">
 
-              {/* 3-Level Category Filters */}
-              <div className="flex flex-wrap gap-2 items-center">
-                <span className="text-xs font-bold text-gray-500 dark:text-gray-400 mr-2">분류 필터:</span>
+                {/* 3-Level Category Filters */}
+                <div className="flex flex-wrap gap-2 items-center">
+                  <span className="text-xs font-bold text-gray-500 dark:text-gray-400 mr-2">분류 필터:</span>
 
-                {/* Level 1 */}
-                <select className="px-3 py-2 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-800 bg-white dark:bg-black text-black dark:text-white"
-                  value={level1Cat} onChange={e => { setLevel1Cat(e.target.value); setLevel2Cat('ALL'); setLevel3Cat('ALL'); }}>
-                  <option value="ALL">📂 전체 카테고리</option>
-                  {level1Options.map(c => <option key={c} value={c}>{c}</option>)}
-                </select>
+                  {/* Level 1 */}
+                  <select className="px-3 py-2 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-800 bg-white dark:bg-black text-black dark:text-white"
+                    value={level1Cat} onChange={e => { setLevel1Cat(e.target.value); setLevel2Cat('ALL'); setLevel3Cat('ALL'); }}>
+                    <option value="ALL">📂 전체 카테고리</option>
+                    {level1Options.map(c => <option key={c} value={c}>{c}</option>)}
+                  </select>
 
-                {/* Level 2 (Conditional) */}
-                {level2Options.length > 0 && (
-                  <>
-                    <span className="text-gray-400">›</span>
-                    <select className="px-3 py-2 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-800 bg-white dark:bg-black text-black dark:text-white"
-                      value={level2Cat} onChange={e => { setLevel2Cat(e.target.value); setLevel3Cat('ALL'); }}>
-                      <option value="ALL">📁 세부 분류 (전체)</option>
-                      {level2Options.map(c => <option key={c} value={c}>{c}</option>)}
-                    </select>
-                  </>
-                )}
+                  {/* Level 2 (Conditional) */}
+                  {level2Options.length > 0 && (
+                    <>
+                      <span className="text-gray-400">›</span>
+                      <select className="px-3 py-2 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-800 bg-white dark:bg-black text-black dark:text-white"
+                        value={level2Cat} onChange={e => { setLevel2Cat(e.target.value); setLevel3Cat('ALL'); }}>
+                        <option value="ALL">📁 세부 분류 (전체)</option>
+                        {level2Options.map(c => <option key={c} value={c}>{c}</option>)}
+                      </select>
+                    </>
+                  )}
 
-                {/* Level 3 (Conditional) */}
-                {level3Options.length > 0 && (
-                  <>
-                    <span className="text-gray-400">›</span>
-                    <select className="px-3 py-2 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-800 bg-white dark:bg-black text-black dark:text-white"
-                      value={level3Cat} onChange={e => setLevel3Cat(e.target.value)}>
-                      <option value="ALL">📑 제품 종류 (전체)</option>
-                      {level3Options.map(c => <option key={c} value={c}>{c}</option>)}
-                    </select>
-                  </>
-                )}
+                  {/* Level 3 (Conditional) */}
+                  {level3Options.length > 0 && (
+                    <>
+                      <span className="text-gray-400">›</span>
+                      <select className="px-3 py-2 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-800 bg-white dark:bg-black text-black dark:text-white"
+                        value={level3Cat} onChange={e => setLevel3Cat(e.target.value)}>
+                        <option value="ALL">📑 제품 종류 (전체)</option>
+                        {level3Options.map(c => <option key={c} value={c}>{c}</option>)}
+                      </select>
+                    </>
+                  )}
+                </div>
+
+                {/* Status & Search */}
+                <div className="flex flex-wrap gap-4 items-center">
+                  <div className="flex bg-gray-100 dark:bg-gray-900 rounded-lg p-1">
+                    {(['ALL', 'READY_FOR_CONFIRM', 'PUBLISHED'] as const).map(f => (
+                      <button key={f} onClick={() => setStatusFilter(f)}
+                        className={`px-3 py-1.5 rounded-md text-[10px] font-bold transition-all ${statusFilter === f ? 'bg-white dark:bg-black shadow text-amber-600 dark:text-amber-400' : 'text-gray-500 dark:text-gray-400'}`}>
+                        {f === 'ALL' ? '전체' : f === 'PUBLISHED' ? '공개됨' : '검수대기'}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="relative">
+                    <input placeholder="이름 검색..." className="bg-gray-100 dark:bg-gray-950 px-4 py-2 rounded-xl text-xs font-bold w-48 border border-transparent focus:border-amber-500 focus:outline-none text-black dark:text-white placeholder:text-gray-400"
+                      value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
+                  </div>
+                </div>
               </div>
 
-              {/* Status & Search */}
-              <div className="flex flex-wrap gap-4 items-center">
-                <div className="flex bg-gray-100 dark:bg-gray-900 rounded-lg p-1">
-                  {(['ALL', 'READY_FOR_CONFIRM', 'PUBLISHED'] as const).map(f => (
-                    <button key={f} onClick={() => setStatusFilter(f)}
-                      className={`px-3 py-1.5 rounded-md text-[10px] font-bold transition-all ${statusFilter === f ? 'bg-white dark:bg-black shadow text-amber-600 dark:text-amber-400' : 'text-gray-500 dark:text-gray-400'}`}>
-                      {f === 'ALL' ? '전체' : f === 'PUBLISHED' ? '공개됨' : '검수대기'}
-                    </button>
-                  ))}
+              {/* Bulk Actions & Counts */}
+              <div className="flex justify-between items-center pt-4 border-t border-gray-100 dark:border-gray-900">
+                <div className="text-xs font-bold text-gray-500 dark:text-gray-400">
+                  총 <span className="text-amber-600 dark:text-amber-400 text-base mx-1">{totalCount.toLocaleString()}</span>건 조회됨 (현재 페이지: {spirits.length}건)
+                  {selectedIds.size > 0 && <span className="ml-4 text-black dark:text-white">({selectedIds.size}개 선택됨)</span>}
                 </div>
-                <div className="relative">
-                  <input placeholder="이름 검색..." className="bg-gray-100 dark:bg-gray-950 px-4 py-2 rounded-xl text-xs font-bold w-48 border border-transparent focus:border-amber-500 focus:outline-none text-black dark:text-white placeholder:text-gray-400"
-                    value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
+                <div className="flex gap-2">
+                  <button disabled={!selectedIds.size || isProcessing} onClick={handleBulkPublish} className="bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold disabled:opacity-30 hover:bg-amber-500 transition-colors">선택 항목 발행</button>
+                  <button disabled={!selectedIds.size || isProcessing} onClick={handleBulkDelete} className="bg-red-600 text-white px-4 py-2 rounded-xl text-xs font-bold disabled:opacity-30 hover:bg-red-500 transition-colors">선택 삭제</button>
                 </div>
               </div>
             </div>
 
-            {/* Bulk Actions & Counts */}
-            <div className="flex justify-between items-center pt-4 border-t border-gray-100 dark:border-gray-900">
-              <div className="text-xs font-bold text-gray-500 dark:text-gray-400">
-                총 <span className="text-amber-600 dark:text-amber-400 text-base mx-1">{filteredSpirits.length.toLocaleString()}</span>건 조회됨
-                {selectedIds.size > 0 && <span className="ml-4 text-black dark:text-white">({selectedIds.size}개 선택됨)</span>}
-              </div>
-              <div className="flex gap-2">
-                <button disabled={!selectedIds.size || isProcessing} onClick={handleBulkPublish} className="bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold disabled:opacity-30 hover:bg-amber-500 transition-colors">선택 항목 발행</button>
-                <button disabled={!selectedIds.size || isProcessing} onClick={handleBulkDelete} className="bg-red-600 text-white px-4 py-2 rounded-xl text-xs font-bold disabled:opacity-30 hover:bg-red-500 transition-colors">선택 삭제</button>
-              </div>
-            </div>
-          </div>
-
-          {/* Data Table with Horizontal Scroll */}
-          <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-2xl shadow-sm min-h-[500px] flex flex-col overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm border-collapse min-w-[800px]">
-                <thead className="bg-gray-50 dark:bg-gray-900 text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-20">
-                  <tr>
-                    <th className="p-4 w-12 text-center">
-                      <input type="checkbox"
-                        checked={paginatedSpirits.length > 0 && paginatedSpirits.every(s => selectedIds.has(s.id))}
-                        onChange={toggleSelectAll} className="w-4 h-4 rounded border-gray-300 dark:border-gray-700 accent-amber-500" />
-                    </th>
-                    <th className="p-4">주류 정보</th>
-                    <th className="p-4">상태</th>
-                    <th className="p-4">DNA (Tags)</th>
-                    <th className="p-4">이미지</th>
-                    <th className="p-4">작업</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100 dark:divide-gray-900">
-                  {paginatedSpirits.map(spirit => (
-                    <tr key={spirit.id} className={`hover:bg-amber-500/5 transition-colors ${selectedIds.has(spirit.id) ? 'bg-amber-500/5' : ''}`}>
-                      <td className="p-4 text-center"><input type="checkbox" checked={selectedIds.has(spirit.id)} onChange={() => toggleSelect(spirit.id)} className="w-4 h-4 rounded border-gray-300 dark:border-gray-700 accent-amber-500" /></td>
-                      <td className="p-4">
-                        <div className="font-bold text-base text-black dark:text-white max-w-[300px] truncate">{spirit.name}</div>
-                        <div className="text-[11px] text-gray-500 dark:text-gray-400">{spirit.distillery || '-'} | {spirit.abv}% | {spirit.category} › {spirit.subcategory}</div>
-                      </td>
-                      <td className="p-4">
-                        <span className={`px-2 py-1 rounded text-[10px] font-black border ${spirit.status === 'PUBLISHED' ? 'bg-green-100 text-green-700 border-green-200' : 'bg-amber-100 text-amber-700 border-amber-200'}`}>
-                          {spirit.status === 'PUBLISHED' ? 'PUBLISHED' : '검수대기'}
-                        </span>
-                      </td>
-                      <td className="p-4">
-                        <div className="max-w-[240px] flex flex-wrap gap-1">
-                          {(spirit.metadata?.nose_tags || []).slice(0, 3).map(t => <span key={t} className="text-[9px] bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-gray-500 dark:text-gray-400">{t}</span>)}
-                          {(spirit.metadata?.nose_tags?.length || 0) > 3 && <span className="text-[9px] text-gray-400">...</span>}
-                        </div>
-                      </td>
-                      <td className="p-4">
-                        {spirit.imageUrl ? (
-                          <img src={spirit.imageUrl} className="w-10 h-10 object-contain bg-white rounded-lg border border-gray-200 dark:border-gray-800 shadow-sm" alt="Bottle" />
-                        ) : <div className="w-10 h-10 bg-gray-100 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 border-dashed" />}
-                      </td>
-                      <td className="p-4">
-                        <div className="flex gap-2">
-                          <button onClick={() => startEdit(spirit)} className="px-3 py-1.5 bg-white dark:bg-black border border-gray-200 dark:border-gray-800 text-xs font-bold rounded-lg hover:bg-gray-100 dark:hover:bg-gray-900 text-black dark:text-white">편집</button>
-                          {spirit.status !== 'PUBLISHED' && (
-                            <button onClick={() => publishSpirit(spirit.id)} className="px-3 py-1.5 bg-green-500/10 border border-green-500/20 text-green-600 text-xs font-bold rounded-lg hover:bg-green-500/20">발행</button>
-                          )}
-                          <button onClick={() => deleteSpirit(spirit.id)} className="px-3 py-1.5 bg-red-500/10 border border-red-500/20 text-red-600 text-xs font-bold rounded-lg hover:bg-red-500/20">삭제</button>
-                        </div>
-                      </td>
+            {/* Data Table with Horizontal Scroll */}
+            <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-2xl shadow-sm min-h-[500px] flex flex-col overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm border-collapse min-w-[800px]">
+                  <thead className="bg-gray-50 dark:bg-gray-900 text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-20">
+                    <tr>
+                      <th className="p-4 w-12 text-center">
+                        <input type="checkbox"
+                          checked={spirits.length > 0 && spirits.every(s => selectedIds.has(s.id))}
+                          onChange={toggleSelectAll} className="w-4 h-4 rounded border-gray-300 dark:border-gray-700 accent-amber-500" />
+                      </th>
+                      <th className="p-4">주류 정보</th>
+                      <th className="p-4">상태</th>
+                      <th className="p-4">DNA (Tags)</th>
+                      <th className="p-4">이미지</th>
+                      <th className="p-4">작업</th>
                     </tr>
-                  ))}
-                  {paginatedSpirits.length === 0 && !loading && (
-                    <tr><td colSpan={6} className="p-12 text-center text-gray-500">데이터가 없습니다.</td></tr>
-                  )}
-                  {loading && (
-                    <tr><td colSpan={6} className="p-12 text-center text-amber-500 animate-pulse font-bold">데이터를 로딩 중입니다...</td></tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-
-            {/* Pagination Controls */}
-            <div className="mt-auto p-4 border-t border-gray-200 dark:border-gray-800 flex justify-center items-center gap-4">
-              <button disabled={page === 1} onClick={() => setPage(p => p - 1)} className="px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900 disabled:opacity-30 font-bold text-sm text-black dark:text-white">Prev</button>
-              <div className="text-sm font-bold text-gray-500 dark:text-gray-400">
-                Page <span className="text-black dark:text-white">{page}</span> of {Math.max(1, totalPages)}
+                  </thead>
+                  <tbody className="divide-y divide-gray-100 dark:divide-gray-900">
+                    {spirits.map(spirit => (
+                      <tr key={spirit.id} className={`hover:bg-amber-500/5 transition-colors ${selectedIds.has(spirit.id) ? 'bg-amber-500/5' : ''}`}>
+                        <td className="p-4 text-center"><input type="checkbox" checked={selectedIds.has(spirit.id)} onChange={() => toggleSelect(spirit.id)} className="w-4 h-4 rounded border-gray-300 dark:border-gray-700 accent-amber-500" /></td>
+                        <td className="p-4">
+                          <div className="font-bold text-base text-black dark:text-white max-w-[300px] truncate">{spirit.name}</div>
+                          <div className="text-[11px] text-gray-500 dark:text-gray-400">{spirit.distillery || '-'} | {spirit.abv}% | {spirit.category} › {spirit.subcategory}</div>
+                        </td>
+                        <td className="p-4">
+                          <span className={`px-2 py-1 rounded text-[10px] font-black border ${spirit.status === 'PUBLISHED' ? 'bg-green-100 text-green-700 border-green-200' : 'bg-amber-100 text-amber-700 border-amber-200'}`}>
+                            {spirit.status === 'PUBLISHED' ? 'PUBLISHED' : '검수대기'}
+                          </span>
+                        </td>
+                        <td className="p-4">
+                          <div className="max-w-[240px] flex flex-wrap gap-1">
+                            {(spirit.metadata?.nose_tags || []).slice(0, 3).map(t => <span key={t} className="text-[9px] bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-gray-500 dark:text-gray-400">{t}</span>)}
+                            {(spirit.metadata?.nose_tags?.length || 0) > 3 && <span className="text-[9px] text-gray-400">...</span>}
+                          </div>
+                        </td>
+                        <td className="p-4">
+                          {spirit.imageUrl ? (
+                            <img src={spirit.imageUrl} className="w-10 h-10 object-contain bg-white rounded-lg border border-gray-200 dark:border-gray-800 shadow-sm" alt="Bottle" />
+                          ) : <div className="w-10 h-10 bg-gray-100 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 border-dashed" />}
+                        </td>
+                        <td className="p-4">
+                          <div className="flex gap-2">
+                            <button onClick={() => startEdit(spirit)} className="px-3 py-1.5 bg-white dark:bg-black border border-gray-200 dark:border-gray-800 text-xs font-bold rounded-lg hover:bg-gray-100 dark:hover:bg-gray-900 text-black dark:text-white">편집</button>
+                            {spirit.status !== 'PUBLISHED' && (
+                              <button onClick={() => publishSpirit(spirit.id)} className="px-3 py-1.5 bg-green-500/10 border border-green-500/20 text-green-600 text-xs font-bold rounded-lg hover:bg-green-500/20">발행</button>
+                            )}
+                            <button onClick={() => deleteSpirit(spirit.id)} className="px-3 py-1.5 bg-red-500/10 border border-red-500/20 text-red-600 text-xs font-bold rounded-lg hover:bg-red-500/20">삭제</button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                    {spirits.length === 0 && !loading && (
+                      <tr><td colSpan={6} className="p-12 text-center text-gray-500">조건에 맞는 데이터가 없습니다.</td></tr>
+                    )}
+                    {loading && (
+                      <tr><td colSpan={6} className="p-12 text-center text-amber-500 animate-pulse font-bold">데이터를 로딩 중입니다...</td></tr>
+                    )}
+                  </tbody>
+                </table>
               </div>
-              <button disabled={page >= totalPages} onClick={() => setPage(p => p + 1)} className="px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900 disabled:opacity-30 font-bold text-sm text-black dark:text-white">Next</button>
+
+              {/* Pagination Controls */}
+              <div className="mt-auto p-4 border-t border-gray-200 dark:border-gray-800 flex justify-center items-center gap-4">
+                <button disabled={page === 1} onClick={() => setPage(p => p - 1)} className="px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900 disabled:opacity-30 font-bold text-sm text-black dark:text-white">Prev</button>
+                <div className="text-sm font-bold text-gray-500 dark:text-gray-400">
+                  Page <span className="text-black dark:text-white">{page}</span> of {Math.max(1, totalPages)}
+                </div>
+                <button disabled={page >= totalPages} onClick={() => setPage(p => p + 1)} className="px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900 disabled:opacity-30 font-bold text-sm text-black dark:text-white">Next</button>
+              </div>
             </div>
           </div>
-        </div>
+        )}
+
+        {activeTab === 'modifications' && (
+          <div className="space-y-8 animate-in fade-in duration-500">
+            <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-2xl p-6 shadow-xl">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-black text-black dark:text-white">📝 사용자 수정 요청</h2>
+                <div className="text-sm text-gray-500 dark:text-gray-400">
+                  총 <span className="text-amber-600 dark:text-amber-400 font-bold">{modificationRequests.length}</span>건
+                </div>
+              </div>
+
+              {loadingMods && (
+                <div className="text-center py-12 text-amber-500 animate-pulse font-bold">로딩 중...</div>
+              )}
+
+              {!loadingMods && modificationRequests.length === 0 && (
+                <div className="text-center py-12 text-gray-500">수정 요청이 없습니다.</div>
+              )}
+
+              <div className="space-y-4">
+                {modificationRequests.map(request => (
+                  <div key={request.id} className="bg-gray-50 dark:bg-gray-950 border border-gray-200 dark:border-gray-800 rounded-xl p-6 hover:border-amber-500/30 transition-all">
+                    <div className="flex justify-between items-start gap-4">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-3">
+                          <button
+                            onClick={() => {
+                              const spirit = allSpirits.find(s => s.id === request.spiritId);
+                              if (spirit) startEdit(spirit);
+                            }}
+                            className="text-lg font-bold text-black dark:text-white hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
+                          >
+                            {request.spiritName}
+                          </button>
+                          <span className={`px-2 py-1 rounded text-xs font-black ${request.status === 'pending' ? 'bg-yellow-100 text-yellow-700 border border-yellow-200' :
+                            request.status === 'checked' ? 'bg-red-100 text-red-700 border border-red-200' :
+                              'bg-green-100 text-green-700 border border-green-200'
+                            }`}>
+                            {request.status === 'pending' ? '대기 중' : request.status === 'checked' ? '기각됨' : '적용 완료'}
+                          </span>
+                        </div>
+                        <div className="mb-2">
+                          <span className="text-sm font-bold text-gray-700 dark:text-gray-300">{request.title}</span>
+                        </div>
+                        <div className="text-sm text-gray-600 dark:text-gray-400 mb-3 whitespace-pre-wrap">
+                          {request.content}
+                        </div>
+                        <div className="flex gap-4 text-xs text-gray-500 dark:text-gray-500">
+                          <span>요청자: {request.userId || '익명'}</span>
+                          <span>•</span>
+                          <span>{new Date(request.createdAt).toLocaleString('ko-KR')}</span>
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        {request.status === 'pending' && (
+                          <>
+                            <button
+                              onClick={() => updateModificationStatus(request.id, 'checked')}
+                              className="px-4 py-2 bg-red-500/10 border border-red-500/20 text-red-600 text-sm font-bold rounded-lg hover:bg-red-500/20 whitespace-nowrap"
+                            >
+                              기각
+                            </button>
+                            <button
+                              onClick={() => updateModificationStatus(request.id, 'resolved')}
+                              className="px-4 py-2 bg-green-500/10 border border-green-500/20 text-green-600 text-sm font-bold rounded-lg hover:bg-green-500/20 whitespace-nowrap"
+                            >
+                              적용 완료
+                            </button>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
 
 
 
