@@ -3,7 +3,6 @@ import { Metadata } from "next";
 import SpiritDetailClient from "./spirit-detail-client";
 import { db } from "@/lib/db/index";
 import { reviewsDb } from "@/lib/db/firestore-rest";
-import type { Spirit } from "@/lib/db/schema";
 
 export const runtime = 'edge';
 
@@ -12,8 +11,10 @@ const DESCRIPTION_MAX_LENGTH = 100;
 // SEO suffix for spirit descriptions
 const SEO_SUFFIX = "주류 리뷰, 테이스팅 노트, 가격 정보를 K-Spirits Club에서 확인하세요.";
 
-// Regex pattern for detecting ending punctuation (English, Korean, and special characters)
+// Regex pattern for detecting ending punctuation
 const ENDING_PUNCTUATION_REGEX = /[.!?…。！？]$/;
+
+// --- Interfaces ---
 
 // Review interface matching the client format
 interface TransformedReview {
@@ -52,6 +53,8 @@ interface DbReview {
   isPublished: boolean;
 }
 
+// --- Helper Functions ---
+
 // Utility function to transform review data from DB format to client format
 function transformReviewData(reviewsData: DbReview[]): TransformedReview[] {
   return reviewsData.map(r => ({
@@ -69,17 +72,15 @@ function transformReviewData(reviewsData: DbReview[]): TransformedReview[] {
 
 // Helper function to truncate description with ellipsis
 function truncateDescription(description: string, maxLength: number): string {
-  if (description.length <= maxLength) {
-    return description;
+  if (!description || description.length <= maxLength) {
+    return description || "";
   }
-  // Find the last space before maxLength to avoid cutting mid-word
   const truncated = description.substring(0, maxLength);
   const lastSpace = truncated.lastIndexOf(' ');
   return (lastSpace > 0 ? truncated.substring(0, lastSpace) : truncated) + '...';
 }
 
 // Helper function to format ABV for SEO descriptions
-// Note: Includes 0% ABV for non-alcoholic spirits
 function formatAbv(abv: number | null | undefined): string | null {
   if (typeof abv === 'number' && abv >= 0 && abv <= 100) {
     return `${abv}% ABV`;
@@ -89,11 +90,13 @@ function formatAbv(abv: number | null | undefined): string | null {
 
 // Helper function to build SEO-optimized description with suffix
 function buildSeoDescription(baseDescription: string, suffix: string): string {
+  if (!baseDescription) return suffix;
   const hasEndingPunctuation = ENDING_PUNCTUATION_REGEX.test(baseDescription);
   return `${baseDescription}${hasEndingPunctuation ? '' : '.'} ${suffix}`;
 }
 
-// Generate dynamic metadata for SEO
+// --- Metadata Generation ---
+
 export async function generateMetadata({
   params,
 }: {
@@ -111,14 +114,13 @@ export async function generateMetadata({
 
   const koName = spirit.name;
   const enName = spirit.metadata?.name_en;
-  
+
   // Enhanced title format with Korean and English names
   const title = enName 
     ? `${koName} (${enName}) 정보 및 리뷰` 
     : `${koName} 정보 및 리뷰`;
-  
-  // Build comprehensive description with category, ABV, origin
-  // Note: Category is placed first for better SEO weight on primary classification
+
+  // Build comprehensive description
   const descriptionParts = [
     spirit.category,
     spirit.distillery,
@@ -126,15 +128,15 @@ export async function generateMetadata({
     spirit.country,
     formatAbv(spirit.abv),
   ].filter(Boolean);
-  
+
   const baseDescription = descriptionParts.join(' · ');
   const extendedDescription = spirit.metadata?.description 
     ? `${baseDescription} - ${truncateDescription(spirit.metadata.description, DESCRIPTION_MAX_LENGTH)}` 
     : baseDescription;
-  
+
   const fullDescription = buildSeoDescription(extendedDescription, SEO_SUFFIX);
 
-  // OpenGraph title for social sharing
+  // OpenGraph title
   const ogTitle = enName 
     ? `${koName} (${enName}) 정보 및 리뷰 | K-Spirits Club` 
     : `${koName} 정보 및 리뷰 | K-Spirits Club`;
@@ -159,8 +161,7 @@ export async function generateMetadata({
   };
 }
 
-// Note: generateStaticParams is not compatible with edge runtime
-// Edge runtime is required for Cloudflare Pages deployment
+// --- Main Page Component ---
 
 export default async function SpiritDetailPage({
   params,
@@ -169,18 +170,17 @@ export default async function SpiritDetailPage({
 }) {
   const { id } = await params;
 
-  // Fetch spirit data server-side
+  // 1. Fetch spirit data (Server-Side)
   const spirit = await db.getSpirit(id);
 
   if (!spirit) {
     notFound();
   }
 
-  // Fetch reviews server-side
+  // 2. Fetch reviews (Server-Side)
   let reviews: TransformedReview[] = [];
   try {
     const reviewsData = await reviewsDb.getAllForSpirit(id);
-    // Runtime validation: ensure reviewsData has the expected structure
     if (Array.isArray(reviewsData)) {
       reviews = transformReviewData(reviewsData as DbReview[]);
     }
@@ -188,50 +188,85 @@ export default async function SpiritDetailPage({
     console.error('Failed to fetch reviews:', error);
   }
 
-  // Generate JSON-LD structured data for SEO
-  const jsonLd = {
+  // 3. Generate JSON-LD (Search Console Fix)
+  
+  // Calculate Review Aggregates
+  const reviewCount = reviews.length;
+  const averageRating = reviewCount > 0
+    ? (reviews.reduce((acc, r) => acc + r.rating, 0) / reviewCount).toFixed(1)
+    : null;
+
+  // Construct JSON-LD Object
+  const jsonLd: any = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: spirit.name,
-    description: spirit.metadata?.description || `${spirit.name} from ${spirit.distillery || 'Unknown Distillery'}`,
-    image: spirit.imageUrl,
+    description: spirit.metadata?.description || `${spirit.name} - ${spirit.category} from ${spirit.distillery || 'Unknown Distillery'}`,
+    image: spirit.imageUrl ? [spirit.imageUrl] : [],
     brand: {
       '@type': 'Brand',
       name: spirit.distillery || 'Unknown',
     },
     category: spirit.category,
-    offers: {
-      '@type': 'AggregateOffer',
-      priceCurrency: 'KRW',
-    },
+    // Note: 'offers' is REMOVED if price is missing to prevent "lowPrice missing" error
     additionalProperty: [
       ...(formatAbv(spirit.abv) ? [{
-        '@type': 'PropertyValue' as const,
+        '@type': 'PropertyValue',
         name: 'Alcohol By Volume',
         value: formatAbv(spirit.abv),
       }] : []),
       ...(spirit.country ? [{
-        '@type': 'PropertyValue' as const,
+        '@type': 'PropertyValue',
         name: 'Country',
         value: spirit.country,
       }] : []),
       ...(spirit.region ? [{
-        '@type': 'PropertyValue' as const,
+        '@type': 'PropertyValue',
         name: 'Region',
         value: spirit.region,
       }] : []),
     ],
   };
 
+  // Add Aggregate Rating (Fixes "aggregateRating missing")
+  if (averageRating) {
+    jsonLd.aggregateRating = {
+      '@type': 'AggregateRating',
+      ratingValue: averageRating,
+      reviewCount: reviewCount,
+      bestRating: "5",
+      worstRating: "1"
+    };
+  }
+
+  // Add Reviews (Fixes "review missing") - Top 5
+  if (reviews.length > 0) {
+    jsonLd.review = reviews.slice(0, 5).map((r) => ({
+      '@type': 'Review',
+      reviewRating: {
+        '@type': 'Rating',
+        ratingValue: r.rating,
+        bestRating: "5",
+        worstRating: "1"
+      },
+      author: {
+        '@type': 'Person',
+        name: r.userName || 'Member'
+      },
+      datePublished: r.createdAt ? new Date(r.createdAt).toISOString().split('T')[0] : '',
+      reviewBody: r.content || ''
+    }));
+  }
+
   return (
     <>
-      {/* JSON-LD Structured Data */}
+      {/* Inject Structured Data for Google SEO */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      
-      {/* Client Component with Initial Data */}
+
+      {/* Render Client Component */}
       <SpiritDetailClient spirit={spirit} reviews={reviews} />
     </>
   );
