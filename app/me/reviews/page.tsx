@@ -7,6 +7,7 @@ import { getCategoryFallbackImage } from '@/lib/utils/image-fallback';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Trash2 } from 'lucide-react';
 import Link from 'next/link';
+import SuccessToast from '@/components/ui/SuccessToast';
 
 interface SpiritWithReview {
   id: string;
@@ -30,6 +31,9 @@ export default function ReviewsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [deleteTarget, setDeleteTarget] = useState<SpiritWithReview | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastVariant, setToastVariant] = useState<'success' | 'error'>('success');
 
   useEffect(() => {
     if (!loading && !user) {
@@ -114,14 +118,16 @@ export default function ReviewsPage() {
       setDeleteTarget(null);
 
       // Dispatch event to notify LiveReviews component to refresh
-      if (typeof window !== 'undefined') {
-        window.dispatchEvent(new CustomEvent('reviewDeleted'));
-      }
+      window.dispatchEvent(new CustomEvent('reviewDeleted'));
 
-      alert('리뷰가 삭제되었습니다.');
+      setToastMessage('리뷰가 삭제되었습니다.');
+      setToastVariant('success');
+      setShowToast(true);
     } catch (error) {
       console.error('Failed to delete review:', error);
-      alert('삭제에 실패했습니다. 다시 시도해주세요.');
+      setToastMessage('삭제에 실패했습니다. 다시 시도해주세요.');
+      setToastVariant('error');
+      setShowToast(true);
     } finally {
       setIsDeleting(false);
     }
@@ -346,6 +352,13 @@ export default function ReviewsPage() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <SuccessToast
+        isVisible={showToast}
+        message={toastMessage}
+        variant={toastVariant}
+        onClose={() => setShowToast(false)}
+      />
     </div>
   );
 }

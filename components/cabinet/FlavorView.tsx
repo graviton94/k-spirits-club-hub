@@ -15,6 +15,7 @@ export default function FlavorView() {
     const [usage, setUsage] = useState<{ count: number, remaining: number } | null>(null);
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
+    const [toastVariant, setToastVariant] = useState<'success' | 'error'>('success');
 
     const reportRef = useRef<HTMLDivElement>(null);
 
@@ -64,12 +65,16 @@ export default function FlavorView() {
 
     const handleAnalyze = async () => {
         if (!user) {
-            alert('로그인이 필요합니다.');
+            setToastMessage('로그인이 필요합니다.');
+            setToastVariant('error');
+            setShowToast(true);
             return;
         }
 
         if (usage && usage.remaining <= 0) {
-            alert('분석 횟수가 소진되었습니다.\n내일 다시 만나요!');
+            setToastMessage('분석 횟수가 소진되었습니다. 내일 다시 만나요! 😢');
+            setToastVariant('error');
+            setShowToast(true);
             return;
         }
 
@@ -101,7 +106,9 @@ export default function FlavorView() {
 
         } catch (error) {
             console.error('Analysis failed:', error);
-            alert(error instanceof Error ? error.message : '분석 중 오류가 발생했습니다.');
+            setToastMessage(error instanceof Error ? error.message : '분석 중 오류가 발생했습니다.');
+            setToastVariant('error');
+            setShowToast(true);
         } finally {
             setIsAnalyzing(false);
         }
@@ -125,21 +132,27 @@ export default function FlavorView() {
             link.click();
 
             setToastMessage('이미지가 저장되었습니다!');
+            setToastVariant('success');
             setShowToast(true);
         } catch (err) {
             console.error('Failed to save image:', err);
-            alert('이미지 저장에 실패했습니다.');
+            setToastMessage('이미지 저장에 실패했습니다.');
+            setToastVariant('error');
+            setShowToast(true);
         }
     };
 
     const handleCopyUrl = async () => {
         try {
             await navigator.clipboard.writeText(window.location.href);
-            setToastMessage('공유 링크가 클립보드에 복사되었습니다!');
+            setToastMessage('🔗공유 링크가 클립보드에 복사되었습니다!');
+            setToastVariant('success');
             setShowToast(true);
         } catch (err) {
             console.error('Failed to copy URL:', err);
-            alert('링크 복사에 실패했습니다.');
+            setToastMessage('링크 복사에 실패했습니다.');
+            setToastVariant('error');
+            setShowToast(true);
         }
     };
 
@@ -332,6 +345,7 @@ export default function FlavorView() {
             <SuccessToast
                 isVisible={showToast}
                 message={toastMessage}
+                variant={toastVariant}
                 onClose={() => setShowToast(false)}
             />
         </motion.div>

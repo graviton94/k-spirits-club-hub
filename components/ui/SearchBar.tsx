@@ -5,6 +5,7 @@ import { useState, KeyboardEvent, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useSpiritsCache } from "@/app/context/spirits-cache-context";
+import SuccessToast from "@/components/ui/SuccessToast";
 import { useAuth } from "@/app/context/auth-context";
 import { addToCabinet } from "@/app/actions/cabinet";
 import Link from "next/link";
@@ -18,6 +19,9 @@ export function SearchBar({ isHero = false }: { isHero?: boolean }) {
   const { searchSpirits, isLoading } = useSpiritsCache();
   const { user } = useAuth();
   const blurTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastVariant, setToastVariant] = useState<'success' | 'error'>('success');
 
   // Get instant search results using search index (lightweight)
   const instantResults = useMemo(() => {
@@ -147,7 +151,9 @@ export function SearchBar({ isHero = false }: { isHero?: boolean }) {
                           e.stopPropagation();
                           e.preventDefault();
                           if (!user) {
-                            alert('로그인이 필요합니다.');
+                            setToastMessage('로그인이 필요합니다.');
+                            setToastVariant('error');
+                            setShowToast(true);
                             return;
                           }
                           try {
@@ -159,7 +165,9 @@ export function SearchBar({ isHero = false }: { isHero?: boolean }) {
                               category: item.c,
                               // abv: item.a // SearchIndex might not have abv, check schema
                             });
-                            alert('술장에 추가되었습니다.');
+                            setToastMessage('술장에 추가되었습니다! 🥃');
+                            setToastVariant('success');
+                            setShowToast(true);
                           } catch (err) {
                             console.error(err);
                           }
@@ -174,7 +182,9 @@ export function SearchBar({ isHero = false }: { isHero?: boolean }) {
                           e.stopPropagation();
                           e.preventDefault();
                           if (!user) {
-                            alert('로그인이 필요합니다.');
+                            setToastMessage('로그인이 필요합니다.');
+                            setToastVariant('error');
+                            setShowToast(true);
                             return;
                           }
                           try {
@@ -185,7 +195,9 @@ export function SearchBar({ isHero = false }: { isHero?: boolean }) {
                               imageUrl: item.t || undefined,
                               category: item.c,
                             });
-                            alert('위시리스트에 담겼습니다.');
+                            setToastMessage('위시리스트에 담겼습니다! 🔖');
+                            setToastVariant('success');
+                            setShowToast(true);
                           } catch (err) {
                             console.error(err);
                           }
@@ -230,6 +242,12 @@ export function SearchBar({ isHero = false }: { isHero?: boolean }) {
           </motion.div>
         )}
       </AnimatePresence>
+      <SuccessToast
+        isVisible={showToast}
+        message={toastMessage}
+        variant={toastVariant}
+        onClose={() => setShowToast(false)}
+      />
     </div>
   );
 }

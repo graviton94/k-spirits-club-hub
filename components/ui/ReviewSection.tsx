@@ -154,6 +154,7 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
             isOwner={user?.uid === review.userId}
             onEdit={() => handleEdit(review)}
             onDelete={() => handleDelete(review)}
+            onToast={(message, variant) => setToast({ message, variant })}
           />
         ))}
         {liveReviews.length === 0 && !showForm && (
@@ -208,11 +209,12 @@ function RatingSummaryItem({ label, value, icon, color = "text-amber-500" }: { l
   );
 }
 
-function ReviewCard({ review, isOwner, onEdit, onDelete }: {
+function ReviewCard({ review, isOwner, onEdit, onDelete, onToast }: {
   review: ExtendedReview,
   isOwner?: boolean,
   onEdit?: () => void,
-  onDelete?: () => void
+  onDelete?: () => void,
+  onToast?: (message: string, variant: 'success' | 'error') => void
 }) {
   const { user } = useAuth();
   const [likes, setLikes] = useState(review.likes || 0);
@@ -222,7 +224,7 @@ function ReviewCard({ review, isOwner, onEdit, onDelete }: {
   const handleLike = async (e: React.MouseEvent) => {
     e.stopPropagation();
     if (!user) {
-      alert('로그인이 필요한 기능입니다.');
+      onToast?.('로그인이 필요한 기능입니다. 👤', 'error');
       return;
     }
     if (isLiking) return;

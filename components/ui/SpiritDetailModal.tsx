@@ -32,6 +32,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
     });
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState("");
+    const [toastVariant, setToastVariant] = useState<'success' | 'error'>('success');
 
     // Sync local spirit when prop changes
     useEffect(() => {
@@ -57,7 +58,9 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
 
     const handleAction = async (action: 'add' | 'wishlist') => {
         if (!user) {
-            alert('로그인이 필요한 기능입니다.');
+            setToastMessage('로그인이 필요한 기능입니다. 👤');
+            setToastVariant('error');
+            setShowToast(true);
             return;
         }
 
@@ -82,10 +85,11 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
             // Show Toast instead of redirect
             if (action === 'add') {
                 setToastMessage("성공적으로 술장에 담겼습니다! 🥃");
+                setToastVariant('success');
                 setShowToast(true);
             } else if (action === 'wishlist') {
-                // Might as well add toast for wishlist too for consistency
                 setToastMessage("위시리스트에 담겼습니다! 🔖");
+                setToastVariant('success');
                 setShowToast(true);
             }
         } catch (e) {
@@ -348,6 +352,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                 <SuccessToast
                     isVisible={showToast}
                     message={toastMessage}
+                    variant={toastVariant}
                     onClose={() => setShowToast(false)}
                 />
             </motion.div>

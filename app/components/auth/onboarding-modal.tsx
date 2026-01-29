@@ -3,12 +3,22 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { isBotClient } from '@/lib/utils/bot-detection';
+import SuccessToast from '@/components/ui/SuccessToast';
 
 export default function OnboardingModal() {
     const [isOpen, setIsOpen] = useState(false);
     const [birthYear, setBirthYear] = useState('');
     const [birthMonth, setBirthMonth] = useState('');
     const [birthDay, setBirthDay] = useState('');
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [toastVariant, setToastVariant] = useState<'success' | 'error'>('error');
+
+    const triggerToast = (msg: string, variant: 'success' | 'error' = 'error') => {
+        setToastMessage(msg);
+        setToastVariant(variant);
+        setShowToast(true);
+    };
 
     useEffect(() => {
         // Bypass age verification for search engine crawlers (Googlebot, etc.)
@@ -33,7 +43,7 @@ export default function OnboardingModal() {
     const handleEnter = () => {
         // Validate inputs
         if (!birthYear || !birthMonth || !birthDay) {
-            alert('생년월일을 모두 입력해주세요.');
+            triggerToast('생년월일을 모두 입력해주세요.');
             return;
         }
 
@@ -41,37 +51,32 @@ export default function OnboardingModal() {
         const month = parseInt(birthMonth, 10);
         const day = parseInt(birthDay, 10);
 
-        // Check for NaN from parseInt
         if (isNaN(year) || isNaN(month) || isNaN(day)) {
-            alert('올바른 숫자를 입력해주세요.');
+            triggerToast('올바른 숫자를 입력해주세요.');
             return;
         }
 
-        // Basic validation
         const currentYear = new Date().getFullYear();
         if (year < 1900 || year > currentYear) {
-            alert('올바른 연도를 입력해주세요.');
+            triggerToast('올바른 연도를 입력해주세요.');
             return;
         }
         if (month < 1 || month > 12) {
-            alert('올바른 월을 입력해주세요. (1-12)');
+            triggerToast('올바른 월을 입력해주세요. (1-12)');
             return;
         }
 
-        // Validate day based on month and year (handles leap years and varying month lengths)
         const daysInMonth = new Date(year, month, 0).getDate();
         if (day < 1 || day > daysInMonth) {
-            alert(`${month}월은 ${daysInMonth}일까지 있습니다.`);
+            triggerToast(`${month}월은 ${daysInMonth}일까지 있습니다.`);
             return;
         }
 
-        // Calculate age with strict birth date comparison
         const today = new Date();
         const birthDate = new Date(year, month - 1, day);
 
-        // Validate that the birth date is not in the future
         if (birthDate > today) {
-            alert('미래의 날짜는 입력할 수 없습니다.');
+            triggerToast('미래의 날짜는 입력할 수 없습니다.');
             return;
         }
 
@@ -79,7 +84,6 @@ export default function OnboardingModal() {
         const monthDiff = today.getMonth() - birthDate.getMonth();
         const dayDiff = today.getDate() - birthDate.getDate();
 
-        // Adjust age if birthday hasn't occurred this year yet
         if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
             age--;
         }
@@ -87,12 +91,10 @@ export default function OnboardingModal() {
         const isAdult = age >= 19;
 
         if (!isAdult) {
-            alert('19세 미만은 접속할 수 없습니다.');
-            // Use setTimeout to ensure alert is dismissed before redirect
-            // Use replace() to prevent back button navigation
+            triggerToast('19세 미만은 접속할 수 없습니다.');
             setTimeout(() => {
                 window.location.replace('https://google.com');
-            }, 100);
+            }, 1500);
         } else {
             localStorage.setItem('kspirits_age_verified', 'true');
             setIsOpen(false);
@@ -229,6 +231,12 @@ export default function OnboardingModal() {
                     </motion.div>
                 </motion.div>
             )}
+            <SuccessToast
+                isVisible={showToast}
+                message={toastMessage}
+                variant={toastVariant}
+                onClose={() => setShowToast(false)}
+            />
         </AnimatePresence>
     );
 }

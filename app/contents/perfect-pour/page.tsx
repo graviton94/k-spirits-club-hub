@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { ChevronLeft, RefreshCw, Trophy, AlertTriangle, Share2 } from 'lucide-react';
 import Link from 'next/link';
 import confetti from 'canvas-confetti';
+import SuccessToast from '@/components/ui/SuccessToast';
 
 export default function PerfectPourPage() {
     const [gameState, setGameState] = useState<'IDLE' | 'POURING_SOJU' | 'POURING_BEER' | 'FINISHED'>('IDLE');
@@ -18,6 +19,8 @@ export default function PerfectPourPage() {
 
     const [score, setScore] = useState<number | null>(null);
     const [message, setMessage] = useState('');
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
 
     const requestRef = useRef<number | null>(null);
     const animationIdCounter = useRef<number>(0);
@@ -67,12 +70,13 @@ export default function PerfectPourPage() {
         if (navigator.share) {
             navigator.share({
                 title: 'Somaek Master 🍺',
-                text: `제 소맥 점수는 ${score}점입니다! 당신도 도전해보세요!`,
+                text: `내 소맥 점수는 ${score}점! 당신도 도전해보세요!`,
                 url: window.location.href,
             }).catch(console.error);
         } else {
             navigator.clipboard.writeText(window.location.href);
-            alert('링크가 복사되었습니다! 친구에게 공유해보세요 🍻');
+            setToastMessage('🔗링크가 복사되었습니다! 친구에게 공유해보세요 🍻');
+            setShowToast(true);
         }
     };
 
@@ -366,6 +370,11 @@ export default function PerfectPourPage() {
                     )}
                 </div>
             </div>
+            <SuccessToast
+                isVisible={showToast}
+                message={toastMessage}
+                onClose={() => setShowToast(false)}
+            />
         </div >
     );
 }

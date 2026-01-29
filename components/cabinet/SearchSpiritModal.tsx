@@ -6,6 +6,7 @@ import { useSpiritsCache } from "@/app/context/spirits-cache-context";
 import { useAuth } from "@/app/context/auth-context";
 import { addToCabinet } from "@/app/actions/cabinet";
 import { Plus, Bookmark, Loader2 } from "lucide-react";
+import SuccessToast from "@/components/ui/SuccessToast";
 
 interface SearchSpiritModalProps {
     isOpen: boolean;
@@ -19,13 +20,18 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
     const { searchSpirits, isLoading } = useSpiritsCache();
     const { user } = useAuth();
     const [processingId, setProcessingId] = useState<string | null>(null);
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState("");
+    const [toastVariant, setToastVariant] = useState<'success' | 'error'>('success');
 
     // Get results from cache
     const results = query.trim() ? searchSpirits(query) : [];
 
     const handleAdd = async (item: any, isWishlist: boolean) => {
         if (!user) {
-            alert('로그인이 필요합니다.');
+            setToastMessage('로그인이 필요합니다.');
+            setToastVariant('error');
+            setShowToast(true);
             return;
         }
 
@@ -42,7 +48,9 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
             onSuccess(isWishlist ? "위시리스트에 담겼습니다! 🔖" : "성공적으로 술장에 담겼습니다! 🥃");
         } catch (e) {
             console.error(e);
-            alert('오류가 발생했습니다.');
+            setToastMessage('오류가 발생했습니다.');
+            setToastVariant('error');
+            setShowToast(true);
         } finally {
             setProcessingId(null);
         }
@@ -179,6 +187,12 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
                     </div>
                 </motion.div>
             </motion.div>
+            <SuccessToast
+                isVisible={showToast}
+                message={toastMessage}
+                variant={toastVariant}
+                onClose={() => setShowToast(false)}
+            />
         </AnimatePresence>
     );
 }
