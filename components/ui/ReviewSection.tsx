@@ -514,7 +514,7 @@ function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitte
 
       // Show success toast
       onToast?.('리뷰가 성공적으로 제출되었습니다!', 'success');
-      
+
       // Close form
       onCancel();
     } catch (error) {
@@ -675,10 +675,10 @@ function RatingSection({ label, shortLabel, rating, tags, onRatingChange, onTags
     const snappedRating = Math.ceil(rawRating * 2) / 2;
     setHoverRating(snappedRating);
 
-    // If clicking/dragging (pointer down)
+    // If clicking/dragging (pointer down) - snap to 0.5 increments
     if (e.buttons === 1) {
-      const fineRating = Math.round(rawRating * 10) / 10;
-      onRatingChange(fineRating);
+      const halfStepRating = Math.round(rawRating * 2) / 2; // Round to nearest 0.5
+      onRatingChange(halfStepRating);
     }
   };
 

@@ -99,7 +99,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                     const userTheme = data.themePreference || 'light';
                     setProfile({
                         nickname: data.nickname || currentUser.displayName || 'Anonymous',
-                        profileImage: data.profileImage || currentUser.photoURL,
+                        profileImage: data.profileImage || '/icons/user/user (1).jpg',
                         isFirstLogin: data.isFirstLogin ?? false,
                         themePreference: userTheme,
                         reviewsWritten: data.reviewsWritten || 0,
@@ -118,7 +118,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                         email: currentUser.email,
                         role: 'USER',
                         nickname: currentUser.displayName || 'New User',
-                        profileImage: currentUser.photoURL,
+                        profileImage: '/icons/user/user (1).jpg', // Default avatar
                         isFirstLogin: true, // Trigger Onboarding
                         themePreference: 'light',
                         createdAt: new Date().toISOString()

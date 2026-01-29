@@ -14,6 +14,11 @@ export default function LoginPage() {
         }
     }, [user, loading, router]);
 
+    // Set page title for SEO
+    useEffect(() => {
+        document.title = `K-Spirits Club | 로그인 - Google 계정으로 시작하기`;
+    }, []);
+
     if (loading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
 
     return (

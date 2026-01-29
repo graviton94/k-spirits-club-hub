@@ -14,7 +14,7 @@ const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit", display: 
 
 export const metadata: Metadata = {
   title: {
-    default: "K-Spirits Club | 위스키, 전통주, 글로벌 주류 데이터베이스 & 리뷰",
+    default: "K-Spirits Club | 대한민국 대표 주류 데이터베이스(DB) & 리뷰",
     template: "%s | K-Spirits Club",
   },
   description: "전 세계 100만 개 이상의 위스키, 증류주 정보를 탐색하고 저장하며 리뷰를 공유하세요. 나만의 주류 캐비닛을 만들어보세요.",

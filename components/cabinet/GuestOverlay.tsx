@@ -27,7 +27,7 @@ export default function GuestOverlay({ flavor = false }: GuestOverlayProps) {
                     </motion.div>
 
                     <h2 className="text-3xl font-black bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">
-                        {flavor ? '취향 지도 잠금' : '회원 전용 공간'}
+                        {flavor ? '취향 탐색 잠금' : '회원 전용 공간'}
                     </h2>
 
                     <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed">

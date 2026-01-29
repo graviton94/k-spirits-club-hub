@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "커뮤니티 리뷰", "술 평가", "Whisky Reviews", "Tasting Notes"
   ],
   openGraph: {
-    title: "커뮤니티 리뷰 | K-Spirits Club",
+    title: "K-Spirits Club | 술 취향 월드컵, 나와 어울리는 술은? 다양한 컨텐츠를 즐겨보세요!",
     description: "K-Spirits Club 커뮤니티의 위스키 리뷰와 전통주 테이스팅 노트를 확인하세요.",
     type: "website",
     locale: "ko_KR",

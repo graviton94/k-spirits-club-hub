@@ -1,16 +1,22 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, RefreshCw, ShoppingBag, ExternalLink } from 'lucide-react';
+import { Sparkles, RefreshCw, ShoppingBag, ExternalLink, Download, Share2 } from 'lucide-react';
+import { toPng } from 'html-to-image';
 import { useAuth } from '@/app/context/auth-context';
 import TasteRadar from './TasteRadar';
+import SuccessToast from '@/components/ui/SuccessToast';
 import { UserTasteProfile } from '@/lib/db/schema';
 
 export default function FlavorView() {
     const [profile, setProfile] = useState<UserTasteProfile | null>(null); // 초기엔 null
     const [isAnalyzing, setIsAnalyzing] = useState(false);
     const [usage, setUsage] = useState<{ count: number, remaining: number } | null>(null);
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+
+    const reportRef = useRef<HTMLDivElement>(null);
 
     // 차트 데이터 변환 유틸
     const getChartData = (stats: any) => [
@@ -101,6 +107,42 @@ export default function FlavorView() {
         }
     };
 
+    const handleSaveImage = async () => {
+        if (!reportRef.current) return;
+
+        try {
+            const dataUrl = await toPng(reportRef.current, {
+                cacheBust: true,
+                backgroundColor: '#0a0a0a',
+                style: {
+                    borderRadius: '0'
+                }
+            });
+
+            const link = document.createElement('a');
+            link.download = `k-spirits-dna-${new Date().getTime()}.png`;
+            link.href = dataUrl;
+            link.click();
+
+            setToastMessage('이미지가 저장되었습니다!');
+            setShowToast(true);
+        } catch (err) {
+            console.error('Failed to save image:', err);
+            alert('이미지 저장에 실패했습니다.');
+        }
+    };
+
+    const handleCopyUrl = async () => {
+        try {
+            await navigator.clipboard.writeText(window.location.href);
+            setToastMessage('공유 링크가 클립보드에 복사되었습니다!');
+            setShowToast(true);
+        } catch (err) {
+            console.error('Failed to copy URL:', err);
+            alert('링크 복사에 실패했습니다.');
+        }
+    };
+
     // 1. 분석 전: 데이터 없음 상태
     if (!profile && !isAnalyzing) {
         return (
@@ -129,8 +171,31 @@ export default function FlavorView() {
     if (isAnalyzing) {
         return (
             <div className="flex flex-col items-center justify-center py-32 space-y-6">
-                <RefreshCw className="w-12 h-12 text-pink-500 animate-spin" />
-                <p className="text-lg font-medium animate-pulse">AI가 회원님의 미각 데이터를 분석 중입니다...</p>
+                <div className="relative">
+                    {/* Glowing background effect */}
+                    <div className="absolute inset-0 bg-pink-500/30 blur-3xl rounded-full animate-pulse" />
+
+                    {/* Avatar image with animations */}
+                    <motion.div
+                        animate={{
+                            scale: [1, 1.1, 1],
+                            rotate: [0, 5, -5, 0],
+                        }}
+                        transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                        }}
+                        className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-pink-500/50 shadow-2xl shadow-pink-500/50"
+                    >
+                        <img
+                            src="/icons/user/user (3).jpg"
+                            alt="AI Analyzing"
+                            className="w-full h-full object-cover"
+                        />
+                    </motion.div>
+                </div>
+                <p className="text-lg font-medium animate-pulse">당신에게 딱 맞는 취향을 찾는 중...</p>
             </div>
         );
     }
@@ -168,7 +233,10 @@ export default function FlavorView() {
             className="space-y-6 pb-20"
         >
             {/* 메인 리포트 카드 */}
-            <div className="bg-neutral-900/60 backdrop-blur-sm border border-neutral-800 rounded-3xl p-6 md:p-10 relative overflow-hidden group">
+            <div
+                ref={reportRef}
+                className="bg-neutral-900/60 backdrop-blur-sm border border-neutral-800 rounded-3xl p-6 md:p-10 relative overflow-hidden group"
+            >
                 {/* 은은한 배경 효과 */}
                 <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-pink-600/5 blur-[120px] rounded-full pointer-events-none" />
 
@@ -242,6 +310,30 @@ export default function FlavorView() {
                     </div>
                 </div>
             </div>
+
+            {/* Sharing Buttons */}
+            <div className="grid grid-cols-2 gap-4">
+                <button
+                    onClick={handleSaveImage}
+                    className="flex items-center justify-center gap-2 py-4 bg-neutral-800 hover:bg-neutral-700 text-white rounded-2xl font-bold transition-all transform active:scale-95 border border-neutral-700 shadow-lg"
+                >
+                    <Download className="w-5 h-5 text-pink-500" />
+                    이미지 저장
+                </button>
+                <button
+                    onClick={handleCopyUrl}
+                    className="flex items-center justify-center gap-2 py-4 bg-neutral-800 hover:bg-neutral-700 text-white rounded-2xl font-bold transition-all transform active:scale-95 border border-neutral-700 shadow-lg"
+                >
+                    <Share2 className="w-5 h-5 text-purple-500" />
+                    친구에게 공유
+                </button>
+            </div>
+
+            <SuccessToast
+                isVisible={showToast}
+                message={toastMessage}
+                onClose={() => setShowToast(false)}
+            />
         </motion.div>
     );
 }

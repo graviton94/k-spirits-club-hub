@@ -8,6 +8,7 @@ import Link from 'next/link';
 import metadata from '@/lib/constants/spirits-metadata.json';
 import { TagMultiSelect } from '@/components/ui/TagMultiSelect';
 
+
 interface EditFormState {
   name: string;
   abv: number | string;
@@ -36,6 +37,11 @@ interface EditFormState {
  * - Enhanced Edit Modal with Select Inputs
  */
 export default function AdminDashboard() {
+  // Set page title for SEO
+  useEffect(() => {
+    document.title = `K-Spirits Club | 관리자 대시보드 - 주류 데이터 관리`;
+  }, []);
+
   // --- Server-Side Filtering Admin Dashboard ---
   const [spirits, setSpirits] = useState<Spirit[]>([]);
   const [loading, setLoading] = useState(false);
@@ -545,7 +551,7 @@ export default function AdminDashboard() {
                         <div className="flex items-center gap-3 mb-3">
                           <button
                             onClick={() => {
-                              const spirit = allSpirits.find(s => s.id === request.spiritId);
+                              const spirit = spirits.find((s: Spirit) => s.id === request.spiritId);
                               if (spirit) startEdit(spirit);
                             }}
                             className="text-lg font-bold text-black dark:text-white hover:text-amber-600 dark:hover:text-amber-400 transition-colors"

@@ -34,7 +34,7 @@ export default function MindMap({ analysis, profileImage }: MindMapProps) {
             🌌
           </motion.div>
           <p className="text-gray-400 text-lg">
-            술을 수집하면 취향 지도가 생성됩니다
+            술을 수집하면 취향 탐색 메뉴가 생성됩니다
           </p>
         </div>
       </div>
@@ -120,9 +120,9 @@ export default function MindMap({ analysis, profileImage }: MindMapProps) {
             className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 via-amber-500 to-orange-600 flex items-center justify-center overflow-hidden"
           >
             {profileImage && profileImage.trim() && !profileImageError ? (
-              <img 
-                src={profileImage} 
-                alt="Profile" 
+              <img
+                src={profileImage}
+                alt="Profile"
                 className="w-full h-full object-cover"
                 onError={() => setProfileImageError(true)}
               />

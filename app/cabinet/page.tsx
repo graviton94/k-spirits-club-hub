@@ -48,6 +48,11 @@ export default function CabinetPage() {
   const { profile, loading, user } = useAuth();
   const { searchIndex } = useSpiritsCache();
 
+  // Set page title for SEO
+  useEffect(() => {
+    document.title = `K-Spirits Club | 나만의 술장 만들기 & AI 취향 분석`;
+  }, []);
+
   // Fetch cabinet data
   const fetchCabinet = useCallback(async () => {
     if (!user) {
@@ -253,7 +258,7 @@ export default function CabinetPage() {
                 }
               `}
             >
-              <span>🌌</span> 취향 지도
+              <span>🌌</span> 취향 탐색
             </button>
           </div>
         </div>

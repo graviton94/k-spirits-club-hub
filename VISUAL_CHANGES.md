@@ -47,14 +47,14 @@ This document describes the visual changes implemented in each component.
 
 ### Before:
 ```
-🍾 술장 (Cellar)    🌌 취향 지도 (Flavor Map)
+🍾 술장 (Cellar)    🌌 취향 탐색 (Flavor Map)
 ```
 - Longer text causing potential overflow
 - Larger buttons: `px-6 py-2`, `text-sm`
 
 ### After:
 ```
-🍾 술장    🌌 취향 지도
+🍾 술장    🌌 취향 탐색
 ```
 - Shortened labels (removed English)
 - Compact buttons: `px-4 py-2`, `text-xs`
