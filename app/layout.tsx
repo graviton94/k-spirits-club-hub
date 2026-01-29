@@ -45,6 +45,11 @@ export const metadata: Metadata = {
     title: "K-Spirits Club | 위스키, 전통주, 글로벌 주류 데이터베이스 & 리뷰",
     description: "대한민국 주류 데이터베이스: 위스키와 전통주의 모든 것. 전 세계 100만 개 이상의 증류주 정보를 탐색하고 리뷰를 공유하세요.",
   },
+  icons: {
+    icon: '/icon.png',
+    shortcut: '/icon.png',
+    apple: '/icon.png',
+  },
 };
 
 export const viewport: Viewport = {
