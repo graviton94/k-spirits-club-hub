@@ -202,7 +202,7 @@ export default function FlavorView() {
                         className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-pink-500/50 shadow-2xl shadow-pink-500/50"
                     >
                         <img
-                            src="/icons/user/user (3).jpg"
+                            src="/icons/user/user-3.webp"
                             alt="AI Analyzing"
                             className="w-full h-full object-cover"
                         />
