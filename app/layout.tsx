@@ -13,7 +13,6 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "sw
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit", display: "swap" });
 
 export const metadata: Metadata = {
-  // ... metadata content ...
   title: {
     default: "K-Spirits Club | 대한민국 대표 주류 데이터베이스(DB) & 리뷰",
     template: "%s | K-Spirits Club",
@@ -69,35 +68,32 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <head>
-        {/* Google Tag Manager - GTM-NDF5RKBN */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-NDF5RKBN');`,
-          }}
+        {/* 1. Google Tag Manager (GTM) - afterInteractive 전략 사용 */}
+        <Script id="gtm-script" strategy="afterInteractive">
+          {`
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-NDF5RKBN');
+          `}
+        </Script>
+
+        {/* 2. Google Analytics (GA4) - gtag.js 연동 */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-0QF9WTQFF2"
+          strategy="afterInteractive"
         />
+        <Script id="ga-config" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-0QF9WTQFF2');
+          `}
+        </Script>
 
-        {/* Google tag (gtag.js) - G-0QF9WTQFF2 */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0QF9WTQFF2"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-
-              gtag('config', 'G-0QF9WTQFF2');
-            `,
-          }}
-        />
-
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="mobile-web-app-capable" content="yes" />
-
-        {/* Microsoft Clarity */}
+        {/* 3. Microsoft Clarity - Next.js Script 컴포넌트로 래핑 */}
         <Script id="microsoft-clarity" strategy="afterInteractive">
           {`
             (function(c,l,a,r,i,t,y){
@@ -107,9 +103,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             })(window, document, "clarity", "script", "vag1ydm09c");
           `}
         </Script>
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
       </head>
       <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`}>
-        {/* Google Tag Manager (noscript) */}
+        {/* GTM Noscript (자바스크립트 미지원 브라우저용) */}
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-NDF5RKBN"
@@ -118,12 +117,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             style={{ display: 'none', visibility: 'hidden' }}
           />
         </noscript>
-        {/* End Google Tag Manager (noscript) */}
+
+        {/* Google Adsense - 페이지 로드 후 천천히 불러오도록 설정 */}
         <Script
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5574169833640769"
           crossOrigin="anonymous"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
+
         <main className="min-h-screen pb-32">
           <AuthProvider>
             <SpiritsCacheProvider>
