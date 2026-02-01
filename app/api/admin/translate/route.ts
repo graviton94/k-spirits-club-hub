@@ -1,7 +1,7 @@
 export const runtime = 'edge';
 
 import { NextRequest, NextResponse } from 'next/server';
-import { translateSpiritName } from '@/lib/services/gemini';
+import { translateSpiritName } from '@/lib/services/gemini-translation';
 
 export async function POST(req: NextRequest) {
     try {
