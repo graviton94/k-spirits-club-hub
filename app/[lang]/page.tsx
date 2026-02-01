@@ -1,4 +1,5 @@
 'use client';
+export const runtime = 'edge';
 
 import { SearchBar } from "@/components/ui/SearchBar";
 import DailyPick from "@/components/home/DailyPick";

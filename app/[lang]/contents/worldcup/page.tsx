@@ -10,6 +10,7 @@ import {
     ChevronRight,
     Info
 } from 'lucide-react';
+export const runtime = 'edge';
 import metadata from "@/lib/constants/spirits-metadata.json";
 
 // 강수 옵션

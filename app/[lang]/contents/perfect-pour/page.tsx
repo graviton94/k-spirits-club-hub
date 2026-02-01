@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import confetti from 'canvas-confetti';
 import SuccessToast from '@/components/ui/SuccessToast';
+export const runtime = 'edge';
 
 export default function PerfectPourPage() {
     const params = useParams();
