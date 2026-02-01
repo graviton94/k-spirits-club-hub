@@ -94,9 +94,9 @@ function buildSeoDescription(baseDescription: string, suffix: string): string {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: string; lang: string }>;
 }): Promise<Metadata> {
-  const { id } = await params;
+  const { id, lang } = await params;
   const spirit = await db.getSpirit(id);
 
   if (!spirit) {
@@ -107,33 +107,53 @@ export async function generateMetadata({
   }
 
   const koName = spirit.name;
-  const enName = spirit.metadata?.name_en;
-  const title = enName ? `${koName} (${enName}) 정보 및 리뷰` : `${koName} 정보 및 리뷰`;
+  const enName = spirit.name_en || spirit.metadata?.name_en;
+
+  // Title based on language
+  let title = '';
+  if (lang === 'en') {
+    title = enName ? `${enName} Info & Reviews` : `${koName} Info & Reviews`;
+  } else {
+    title = enName ? `${koName} (${enName}) 정보 및 리뷰` : `${koName} 정보 및 리뷰`;
+  }
 
   const descriptionParts = [
     spirit.category,
     spirit.distillery,
-    spirit.region,
     spirit.country,
     formatAbv(spirit.abv),
   ].filter(Boolean);
 
   const baseDescription = descriptionParts.join(' · ');
-  const extendedDescription = spirit.metadata?.description 
-    ? `${baseDescription} - ${truncateDescription(spirit.metadata.description, DESCRIPTION_MAX_LENGTH)}` 
+
+  // Localized summary
+  const spiritDesc = (lang === 'en' ? spirit.description_en : null) || spirit.metadata?.description;
+  const extendedDescription = spiritDesc
+    ? `${baseDescription} - ${truncateDescription(spiritDesc, DESCRIPTION_MAX_LENGTH)}`
     : baseDescription;
 
-  const fullDescription = buildSeoDescription(extendedDescription, SEO_SUFFIX);
+  const seoSuffix = lang === 'en'
+    ? "Check out liquor reviews and tasting notes on K-Spirits Club."
+    : SEO_SUFFIX;
+
+  const fullDescription = buildSeoDescription(extendedDescription, seoSuffix);
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://k-spirits.club';
 
   return {
     title,
     description: fullDescription,
+    alternates: {
+      languages: {
+        'ko-KR': `${baseUrl}/ko/spirits/${id}`,
+        'en-US': `${baseUrl}/en/spirits/${id}`,
+      },
+    },
     openGraph: {
       title: `${title} | K-Spirits Club`,
       description: fullDescription,
       images: spirit.imageUrl ? [spirit.imageUrl] : [],
       type: 'website',
-      locale: 'ko_KR',
+      locale: lang === 'ko' ? 'ko_KR' : 'en_US',
       siteName: 'K-Spirits Club',
     },
     twitter: {
@@ -150,9 +170,9 @@ export async function generateMetadata({
 export default async function SpiritDetailPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: string; lang: string }>;
 }) {
-  const { id } = await params;
+  const { id, lang } = await params;
   const spirit = await db.getSpirit(id);
 
   if (!spirit) {
@@ -170,7 +190,7 @@ export default async function SpiritDetailPage({
   }
 
   // --- [데이터가 없는 수천 개 페이지 구제 로직] ---
-  
+
   const realReviewCount = reviews.length;
   // 리뷰가 없어도 기본 5.0점으로 셋팅 (Fallback)
   const ratingValue = realReviewCount > 0
@@ -192,9 +212,9 @@ export default async function SpiritDetailPage({
       name: spirit.distillery || 'K-Spirits',
     },
     category: spirit.category,
-    
+
     // ✅ [해결] offers를 완전히 제거하여 lowPrice, offerCount 에러 원천 차단
-    
+
     // ✅ [해결] DB에 데이터가 없어도 무조건 생성하여 aggregateRating 누락 에러 해결
     aggregateRating: {
       '@type': 'AggregateRating',
@@ -203,7 +223,7 @@ export default async function SpiritDetailPage({
       bestRating: "5",
       worstRating: "1"
     },
-    
+
     additionalProperty: [
       ...(formatAbv(spirit.abv) ? [{
         '@type': 'PropertyValue' as const,

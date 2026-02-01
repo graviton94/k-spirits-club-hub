@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 import { Spirit } from "@/lib/utils/flavor-engine";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
@@ -16,6 +17,9 @@ export default function CabinetSpiritCard({
     onReviewClick,
     onInfoClick
 }: CabinetSpiritCardProps) {
+    const pathname = usePathname() || "";
+    const lang = pathname.split('/')[1] === 'en' ? 'en' : 'ko';
+    const isEn = lang === 'en';
     return (
         <motion.div
             variants={{
@@ -58,7 +62,7 @@ export default function CabinetSpiritCard({
                             </span>
                             {/* Name */}
                             <p className="text-[10px] sm:text-sm font-bold text-white text-left leading-tight line-clamp-2 drop-shadow-md">
-                                {spirit.name}
+                                {spirit.name_en && isEn ? spirit.name_en : spirit.name}
                             </p>
                         </div>
                     </div>

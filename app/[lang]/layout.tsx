@@ -3,9 +3,9 @@ import Script from "next/script";
 import { Inter, Outfit } from "next/font/google";
 import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google'; // ✅ 공식 라이브러리 추가
 import "./globals.css";
-import { AuthProvider } from './context/auth-context';
-import { SpiritsCacheProvider } from './context/spirits-cache-context';
-import OnboardingModal from './components/auth/onboarding-modal';
+import { AuthProvider } from '../context/auth-context';
+import { SpiritsCacheProvider } from '../context/spirits-cache-context';
+import OnboardingModal from '../components/auth/onboarding-modal';
 import { Header } from '@/components/layout/Header';
 import { BottomNav } from "@/components/layout/BottomNav";
 import StickyFooterAd from '@/components/ui/StickyFooterAd';
@@ -62,13 +62,16 @@ export const viewport: Viewport = {
   themeColor: "#c17830",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ lang: string }>;
 }>) {
+  const { lang } = await params;
   return (
-    <html lang="ko">
+    <html lang={lang}>
       <head>
         {/* Mixed Content 자동 업그레이드 (HTTP -> HTTPS) */}
         <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
@@ -114,9 +117,27 @@ export default function RootLayout({
         </main>
 
         {/* Footer */}
-        <footer className="bg-slate-900 border-t border-slate-800 py-6 pb-24">
+        <footer className="bg-slate-50 dark:bg-neutral-950 border-t border-slate-200 dark:border-white/5 py-8 pb-32">
           <div className="container max-w-4xl mx-auto px-4 text-center">
-            <p className="text-slate-400 text-sm mb-2">
+
+            {/* 19+ Warning Badge */}
+            <div className="flex justify-center mb-6">
+              <div className="border-2 border-red-600 rounded-full w-12 h-12 flex items-center justify-center">
+                <span className="text-red-600 font-black text-lg">19+</span>
+              </div>
+            </div>
+
+            {/* Legal Warnings */}
+            <div className="space-y-3 mb-8">
+              <p className="text-slate-600 dark:text-slate-500 text-[10px] leading-relaxed break-keep">
+                <strong className="text-slate-800 dark:text-slate-400">경고:</strong> 지나친 음주는 뇌졸중, 기억력 손상이나 치매를 유발합니다. 임신 중 음주는 기형아 출생 위험을 높입니다.
+              </p>
+              <p className="text-slate-500 dark:text-slate-600 text-[10px] leading-relaxed italic">
+                <strong className="text-slate-700 dark:text-slate-500">WARNING:</strong> Excessive drinking can cause stroke, memory loss, or dementia. Drinking during pregnancy increases the risk of birth defects.
+              </p>
+            </div>
+
+            <p className="text-slate-500 dark:text-slate-400 text-sm mb-2">
               © 2026 K-Spirits Club. All rights reserved.
             </p>
             <p className="text-slate-500 text-xs">
@@ -124,6 +145,8 @@ export default function RootLayout({
               <a
                 href="mailto:ruahn49@gmail.com"
                 className="text-amber-500 hover:text-amber-400 transition-colors"
+                target="_blank"
+                rel="noreferrer"
               >
                 ruahn49@gmail.com
               </a>

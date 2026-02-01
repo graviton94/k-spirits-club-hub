@@ -29,11 +29,14 @@ export interface Spirit {
   distillery?: string;
   isWishlist: boolean;
   userReview?: UserReview;
+  name_en?: string | null;
+  description_en?: string | null;
   metadata?: {
     tasting_note?: string;
     nose?: string;
     palate?: string;
     finish?: string;
+    pairing_guide_en?: string;
   };
 }
 

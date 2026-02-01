@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Star } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { getOptimizedImageUrl } from '@/lib/utils/image-optimization';
 
 interface LiveReview {
@@ -21,6 +22,9 @@ interface LiveReview {
 }
 
 export function LiveReviews() {
+  const pathname = usePathname() || "";
+  const lang = pathname.split('/')[1] === 'en' ? 'en' : 'ko';
+
   const [reviews, setReviews] = useState<LiveReview[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -105,7 +109,7 @@ export function LiveReviews() {
       {reviews.map((review) => (
         <Link
           key={review.id}
-          href={`/spirits/${review.spiritId}`}
+          href={`/${lang}/spirits/${review.spiritId}`}
           className="block group"
         >
           <div className="flex items-center gap-4 p-4 rounded-xl bg-card border border-border hover:border-primary/50 transition-all">

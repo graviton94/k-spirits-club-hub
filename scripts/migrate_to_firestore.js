@@ -130,6 +130,8 @@ async function migrate() {
             createdAt: spirit.createdAt ? new Date(spirit.createdAt) : new Date(),
             updatedAt: spirit.updatedAt ? new Date(spirit.updatedAt) : new Date(),
             reviewedAt: spirit.reviewedAt ? new Date(spirit.reviewedAt) : null,
+            name_en: spirit.name_en || (spirit.metadata && spirit.metadata.name_en) || null,
+            description_en: spirit.description_en || (spirit.metadata && spirit.metadata.description_en) || null,
             metadata: spirit.metadata || {}
         };
 

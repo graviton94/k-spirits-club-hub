@@ -380,7 +380,7 @@ export const spiritsDb = {
         return validSpirits.map(spirit => ({
             i: spirit.id,
             n: spirit.name,
-            en: spirit.metadata?.name_en ?? null,
+            en: spirit.name_en ?? spirit.metadata?.name_en ?? null,
             c: spirit.category,
             mc: spirit.mainCategory ?? null,
             sc: spirit.subcategory ?? null,

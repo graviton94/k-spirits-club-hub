@@ -10,40 +10,53 @@ import {
   Beer
 } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "K-Spirits Club | 컨텐츠 허브",
-  description: "술 취향 월드컵, 미니게임, 테이스팅 노트 등 K-Spirits Club의 다양한 즐길거리를 만나보세요.",
-  openGraph: {
-    title: "K-Spirits Club | 컨텐츠 허브",
-    description: "다양한 주류 컨텐츠와 이벤트를 즐겨보세요.",
-    type: "website",
-    siteName: "K-Spirits Club",
-  },
-};
+interface ContentsPageProps {
+  params: Promise<{ lang: string }>;
+}
 
-export default function ContentsPage() {
+export async function generateMetadata({ params }: ContentsPageProps): Promise<Metadata> {
+  const { lang } = await params;
+  const isEn = lang === 'en';
+  return {
+    title: isEn ? "K-Spirits Club | Contents Hub" : "K-Spirits Club | 컨텐츠 허브",
+    description: isEn
+      ? "Enjoy various contents like Spirit World Cup, Mini Games, and Tasting Notes."
+      : "술 취향 월드컵, 미니게임, 테이스팅 노트 등 K-Spirits Club의 다양한 즐길거리를 만나보세요.",
+    openGraph: {
+      title: isEn ? "K-Spirits Club | Contents Hub" : "K-Spirits Club | 컨텐츠 허브",
+      description: isEn ? "Enjoy various spirits contents and events." : "다양한 주류 컨텐츠와 이벤트를 즐겨보세요.",
+      type: "website",
+      siteName: "K-Spirits Club",
+    },
+  };
+}
+
+export default async function ContentsPage({ params }: ContentsPageProps) {
+  const { lang } = await params;
+  const isEn = lang === 'en';
+
   const contents = [
     {
-      title: "술 취향 월드컵",
-      description: "당신의 최애 술은? 랭킹 토너먼트.",
+      title: isEn ? "Spirit World Cup" : "술 취향 월드컵",
+      description: isEn ? "What's your favorite spirit? Ranking Tournament." : "당신의 최애 술은? 랭킹 토너먼트.",
       icon: <Trophy className="w-8 h-8 text-amber-500" />,
-      link: "/contents/worldcup",
+      link: `/${lang}/contents/worldcup`,
       status: "OPEN",
       gradient: "from-amber-500/20 to-orange-600/20",
       borderHover: "group-hover:border-amber-500/50"
     },
     {
-      title: "황금 비율 마스터",
-      description: "당신의 소맥 비율은 몇 점? 타이밍 미니게임.",
+      title: isEn ? "Golden Ratio Master" : "황금 비율 마스터",
+      description: isEn ? "Test your pouring skills! Somaek Mini Game." : "당신의 소맥 비율은 몇 점? 타이밍 미니게임.",
       icon: <Beer className="w-8 h-8 text-amber-400" />,
-      link: "/contents/perfect-pour",
+      link: `/${lang}/contents/perfect-pour`,
       status: "NEW",
       gradient: "from-amber-400/20 to-yellow-500/20",
       borderHover: "group-hover:border-amber-400/50"
     },
     {
-      title: "시음 노트(🚧개발 중)",
-      description: "서로의 미각을 공유하는 커뮤니티 공간.",
+      title: isEn ? "Tasting Notes (🚧Dev)" : "시음 노트(🚧개발 중)",
+      description: isEn ? "Community to share your tasting experiences." : "서로의 미각을 공유하는 커뮤니티 공간.",
       icon: <PenTool className="w-8 h-8 text-blue-500" />,
       link: "#",
       status: "Ready",
@@ -51,8 +64,8 @@ export default function ContentsPage() {
       borderHover: "group-hover:border-blue-500/50"
     },
     {
-      title: "명예의 전당(🚧개발 중)",
-      description: "이달의 베스트 멤버와 인기 주류 랭킹.",
+      title: isEn ? "Hall of Fame (🚧Dev)" : "명예의 전당(🚧개발 중)",
+      description: isEn ? "Best members of the month & Popular spirits." : "이달의 베스트 멤버와 인기 주류 랭킹.",
       icon: <BarChart3 className="w-8 h-8 text-emerald-500" />,
       link: "#",
       status: "Ready",

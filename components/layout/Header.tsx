@@ -4,9 +4,14 @@ import Link from "next/link";
 import { useAuth } from "@/app/context/auth-context";
 import { User, LogIn } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
+import { usePathname } from "next/navigation";
 
 export function Header() {
     const { user, profile } = useAuth();
+    const pathname = usePathname() || "";
+    const segments = pathname.split('/');
+    const lang = (segments[1] === 'en' || segments[1] || 'ko') === 'en' ? 'en' : 'ko';
 
     // Display Name logic: Nickname -> DisplayName -> "Guest"
     const displayName = user
@@ -18,7 +23,7 @@ export function Header() {
     return (
         <header className="sticky top-0 z-40 w-full border-b border-border bg-card/90 backdrop-blur-xl">
             <div className="container flex h-16 items-center justify-between px-4 max-w-4xl mx-auto">
-                <Link href="/" className="flex items-center gap-2">
+                <Link href={`/${lang}`} className="flex items-center gap-2">
                     <span className="text-2xl">🥃</span>
                     <span className="text-xl font-black bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">
                         K-SPIRITS
@@ -26,10 +31,11 @@ export function Header() {
                 </Link>
 
                 <div className="flex items-center gap-3">
+                    <LanguageSwitcher />
                     <ThemeToggle />
 
                     {user ? (
-                        <Link href="/me" className="flex items-center gap-3 pl-4 py-1 rounded-full hover:bg-secondary transition-colors">
+                        <Link href={`/${lang}/me`} className="flex items-center gap-3 pl-4 py-1 rounded-full hover:bg-secondary transition-colors">
                             <div className="text-right hidden sm:block">
                                 <p className="text-xs text-muted-foreground">Welcome back,</p>
                                 <p className="text-sm font-bold leading-none text-primary">{displayName}님</p>
@@ -48,7 +54,7 @@ export function Header() {
                         </Link>
                     ) : (
                         <Link
-                            href="/login"
+                            href={`/${lang}/login`}
                             className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500 to-orange-600 text-white text-sm font-bold hover:from-amber-600 hover:to-orange-700 transition-all shadow-lg shadow-primary/20"
                         >
                             <LogIn className="w-4 h-4" />

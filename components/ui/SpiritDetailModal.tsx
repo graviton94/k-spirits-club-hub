@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "@/app/context/auth-context";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import { getTagColor } from "@/lib/constants/tag-colors";
@@ -11,6 +11,7 @@ import ReviewModal from "@/components/cabinet/ReviewModal";
 import { Bookmark, Plus, Pencil, Check, Loader2 } from "lucide-react";
 import { addToCabinet } from "@/app/actions/cabinet";
 import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
+import metadata from "@/lib/constants/spirits-metadata.json";
 
 import SuccessToast from "@/components/ui/SuccessToast";
 
@@ -21,9 +22,55 @@ interface SpiritDetailModalProps {
     onStatusChange?: () => void; // Refresh parent if needed
 }
 
+const UI_TEXT = {
+    ko: {
+        add_cabinet: "술장에 담기",
+        remove_cabinet: "제거하기",
+        edit_review: "리뷰 수정하기",
+        write_review: "리뷰 쓰기",
+        master_review: "Master Review",
+        aroma: "👃 Aroma",
+        palate: "👅 Palate",
+        finish: "🏁 Finish",
+        description: "Description",
+        toast_login: "로그인이 필요한 기능입니다. 👤",
+        toast_added: "성공적으로 술장에 담겼습니다! 🥃",
+        toast_wishlist: "위시리스트에 담겼습니다! 🔖",
+        confirm_remove_wishlist: "위시리스트에서 제거하시겠습니까?",
+        confirm_remove_cabinet: "정말 술장에서 제거하시겠습니까?"
+    },
+    en: {
+        add_cabinet: "Add to Cabinet",
+        remove_cabinet: "Remove",
+        edit_review: "Edit Review",
+        write_review: "Write Review",
+        master_review: "Master Review",
+        aroma: "👃 Aroma",
+        palate: "👅 Palate",
+        finish: "🏁 Finish",
+        description: "Description",
+        toast_login: "Login required. 👤",
+        toast_added: "Added to Cabinet! 🥃",
+        toast_wishlist: "Added to Wishlist! 🔖",
+        confirm_remove_wishlist: "Remove from Wishlist?",
+        confirm_remove_cabinet: "Remove from Cabinet?"
+    }
+};
+
 export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusChange }: SpiritDetailModalProps) {
     const { user, profile } = useAuth();
     const router = useRouter();
+    const pathname = usePathname() || "";
+    const isEn = pathname.split('/')[1] === 'en';
+    const t = isEn ? UI_TEXT.en : UI_TEXT.ko;
+
+    // Helper to get localized category name
+    const getLocalizedCategory = (cat: string) => {
+        if (!cat) return '';
+        const displayNames = isEn ? (metadata as any).display_names_en : metadata.display_names;
+        return displayNames[cat] || cat;
+    };
+
     const [isReviewOpen, setIsReviewOpen] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false);
     const [localSpirit, setLocalSpirit] = useState<Spirit | null>(spirit);
@@ -59,7 +106,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
 
     const handleAction = async (action: 'add' | 'wishlist') => {
         if (!user) {
-            setToastMessage('로그인이 필요한 기능입니다. 👤');
+            setToastMessage(t.toast_login);
             setToastVariant('error');
             setShowToast(true);
             return;
@@ -83,13 +130,13 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
             });
             if (onStatusChange) onStatusChange();
 
-            // Show Toast instead of redirect
+            // Show Toast
             if (action === 'add') {
-                setToastMessage("성공적으로 술장에 담겼습니다! 🥃");
+                setToastMessage(t.toast_added);
                 setToastVariant('success');
                 setShowToast(true);
             } else if (action === 'wishlist') {
-                setToastMessage("위시리스트에 담겼습니다! 🔖");
+                setToastMessage(t.toast_wishlist);
                 setToastVariant('success');
                 setShowToast(true);
             }
@@ -131,70 +178,10 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
 
     return (
         <AnimatePresence>
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 overflow-y-auto"
-                onClick={onClose}
-            >
-                <motion.div
-                    initial={{ scale: 0.9, y: 20, opacity: 0 }}
-                    animate={{ scale: 1, y: 0, opacity: 1 }}
-                    exit={{ scale: 0.9, y: 20, opacity: 0 }}
-                    transition={{ type: "spring", stiffness: 350, damping: 28 }}
-                    className="bg-neutral-900/95 backdrop-blur-2xl rounded-3xl w-full max-w-sm sm:max-w-md shadow-[0_32px_64px_-16px_rgba(0,0,0,0.5)] border border-white/10 overflow-hidden relative"
-                    onClick={(e) => e.stopPropagation()}
-                >
-                    {/* Close button */}
-                    <button
-                        onClick={onClose}
-                        className="absolute top-4 right-4 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-black/20 hover:bg-black/40 backdrop-blur-md text-white transition-colors"
-                    >
-                        ✕
-                    </button>
-
-                    {/* 1. Image Header with Info Overlay */}
-                    <div className="relative h-72 sm:h-80 w-full bg-secondary">
-                        {localSpirit.imageUrl ? (
-                            <img
-                                src={getOptimizedImageUrl(localSpirit.imageUrl, 600)}
-                                alt={localSpirit.name}
-                                className="w-full h-full object-cover"
-                                onError={(e) => {
-                                    const target = e.target as HTMLImageElement;
-                                    target.src = getCategoryFallbackImage(localSpirit.category);
-                                    target.classList.add('opacity-50');
-                                }}
-                            />
-                        ) : (
-                            <div className="w-full h-full flex items-center justify-center text-8xl bg-secondary opacity-50">🥃</div>
-                        )}
-
-                        {/* Gradient Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-6">
-                            <h2 className="text-2xl sm:text-3xl font-black text-white leading-tight mb-2 drop-shadow-lg break-keep">
-                                {localSpirit.name}
-                            </h2>
-
-                            <div className="flex items-center gap-2 mb-2">
-                                {/* Subcategory Badge */}
-                                <span className="inline-block px-3 py-1 text-[10px] font-bold text-white bg-gradient-to-r from-amber-500 to-orange-600 rounded-full shadow-lg shadow-amber-900/40 uppercase relative z-10">
-                                    {localSpirit.subcategory || localSpirit.category}
-                                </span>
-                                {/* ABV Badge */}
-                                <span className="inline-block px-3 py-1 text-[10px] font-bold text-white bg-black/40 backdrop-blur-md border border-white/10 rounded-full">
-                                    {localSpirit.abv}% ABV
-                                </span>
-                            </div>
-
-                            {localSpirit.distillery && (
-                                <p className="text-gray-300 text-sm font-medium pl-1">
-                                    {localSpirit.distillery}
-                                </p>
-                            )}
-                        </div>
-                    </div>
+            <motion.div>
+                {/* ... wrapper ... */}
+                <motion.div>
+                    {/* ... close button & header ... */}
 
                     {/* 2. Actions & Detailed Info */}
                     <div className="p-6 space-y-6 max-h-[50vh] overflow-y-auto custom-scrollbar bg-neutral-900/40 text-white backdrop-blur-md">
@@ -209,13 +196,13 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                         className="flex-[2] flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-black rounded-xl hover:from-emerald-600 hover:to-green-700 transition-all scale-100 active:scale-95 disabled:opacity-50 shadow-lg shadow-emerald-900/20"
                                     >
                                         {isProcessing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
-                                        <span>술장에 담기</span>
+                                        <span>{t.add_cabinet}</span>
                                     </button>
                                     {cabinetStatus.isWishlist && (
                                         <button
                                             disabled={isProcessing}
                                             onClick={async () => {
-                                                if (!confirm('위시리스트에서 제거하시겠습니까?')) return;
+                                                if (!confirm(t.confirm_remove_wishlist)) return;
                                                 setIsProcessing(true);
                                                 try {
                                                     await import('@/app/actions/cabinet').then(({ removeFromCabinet }) =>
@@ -228,7 +215,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                             }}
                                             className="flex-1 flex items-center justify-center gap-2 py-3 bg-red-500/10 text-red-500 border border-red-500/50 hover:bg-red-500/20 rounded-xl font-bold text-sm transition-colors"
                                         >
-                                            <Check className="w-4 h-4" /> 제거하기
+                                            <Check className="w-4 h-4" /> {t.remove_cabinet}
                                         </button>
                                     )}
                                 </div>
@@ -239,12 +226,12 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                         className="flex-[2] flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-xl font-bold text-sm shadow-lg shadow-primary/20 hover:from-amber-600 hover:to-orange-700 hover:scale-105 transition-all"
                                     >
                                         <Pencil className="w-4 h-4" />
-                                        {localSpirit.userReview ? '리뷰 수정하기' : '리뷰 쓰기'}
+                                        {localSpirit.userReview ? t.edit_review : t.write_review}
                                     </button>
                                     <button
                                         disabled={isProcessing}
                                         onClick={async () => {
-                                            if (!confirm('정말 술장에서 제거하시겠습니까?')) return;
+                                            if (!confirm(t.confirm_remove_cabinet)) return;
                                             setIsProcessing(true);
                                             try {
                                                 await import('@/app/actions/cabinet').then(({ removeFromCabinet }) =>
@@ -257,11 +244,21 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                         }}
                                         className="flex-1 flex items-center justify-center gap-2 py-3 bg-red-500/10 text-red-500 border border-red-500/50 hover:bg-red-500/20 rounded-xl font-bold text-sm transition-colors"
                                     >
-                                        <Check className="w-4 h-4" /> 제거하기
+                                        <Check className="w-4 h-4" /> {t.remove_cabinet}
                                     </button>
                                 </div>
                             )}
                         </div>
+
+                        {/* Description (EN) */}
+                        {(localSpirit as any).description_en && (
+                            <div className="mb-2">
+                                <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">{t.description}</h3>
+                                <p className="text-sm text-gray-200 leading-relaxed font-light">
+                                    {(localSpirit as any).description_en}
+                                </p>
+                            </div>
+                        )}
 
                         {/* User Rating Summary (if exists) */}
                         {localSpirit.userReview && (
@@ -347,6 +344,28 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                 )}
                             </div>
                         </div>
+
+                        {/* AI Global Pairing Guide */}
+                        {((isEn ? localSpirit.metadata?.pairing_guide_en : (localSpirit.metadata as any)?.pairing_guide_ko) || localSpirit.metadata?.pairing_guide_en) && (
+                            <div className="mt-6">
+                                <div className="flex items-center gap-2 mb-3">
+                                    <span className="text-[10px] font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 uppercase tracking-widest flex items-center gap-1">
+                                        ✨ {isEn ? 'Pairing Guide' : '페어링 추천'}
+                                    </span>
+                                    <div className="h-px flex-1 bg-white/20"></div>
+                                </div>
+
+                                <div className="relative overflow-hidden rounded-2xl p-[1px] bg-gradient-to-br from-purple-500/30 via-pink-500/30 to-orange-500/30">
+                                    <div className="relative bg-neutral-900/80 backdrop-blur-xl p-4 rounded-2xl">
+                                        <p className="text-sm text-gray-200 leading-relaxed break-words font-medium">
+                                            {isEn
+                                                ? localSpirit.metadata?.pairing_guide_en
+                                                : ((localSpirit.metadata as any)?.pairing_guide_ko || localSpirit.metadata?.pairing_guide_en)}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </motion.div>
 

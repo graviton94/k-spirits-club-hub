@@ -3,12 +3,12 @@
 import { useState, useEffect } from "react";
 import SaveButton from "@/components/ui/SaveButton";
 import ReviewSection from "@/components/ui/ReviewSection";
-import GoogleAd from "@/components/ui/GoogleAd";
+import AdSlot from "@/components/common/AdSlot";
 import ModificationRequestButton from "@/components/spirits/ModificationRequestButton";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Search, ArrowLeft } from "lucide-react";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "@/app/context/auth-context";
 import { addToCabinet } from "@/app/actions/cabinet";
 import ReviewModal from "@/components/cabinet/ReviewModal";
@@ -26,8 +26,57 @@ interface SpiritDetailClientProps {
     reviews: any[];
 }
 
+const UI_TEXT = {
+    ko: {
+        back: "뒤로가기",
+        classification: "주류 분류",
+        category: "카테고리",
+        main: "메인",
+        sub: "세부",
+        origin: "원산지 및 정보",
+        country: "제조국",
+        region: "지역",
+        bottler: "병입자",
+        flavor: "맛과 향",
+        add_cabinet: "내 술장에 담기",
+        remove_cabinet: "내 술장에서 빼기",
+        add_wishlist: "위시리스트에 담기",
+        remove_wishlist: "위시리스트에서 제거",
+        processing: "처리 중...",
+        source: "데이터 출처",
+        source_manual: "운영진 수동 등록",
+        source_external: "기타 외부 데이터",
+        disclaimer: "본 데이터는 각 출처의 공공데이터 및 AI로 수집된 정보를 바탕으로 제공되며, 실제 제품의 정보와 차이가 있을 수 있습니다. 잘못된 정보가 있다면 위의 버튼을 통해 제보 부탁드립니다."
+    },
+    en: {
+        back: "Back",
+        classification: "Classification",
+        category: "Category",
+        main: "Main",
+        sub: "Sub",
+        origin: "Origin & Details",
+        country: "Country",
+        region: "Region",
+        bottler: "Bottler",
+        flavor: "Flavor Notes",
+        add_cabinet: "Add to Cabinet",
+        remove_cabinet: "Remove",
+        add_wishlist: "Add to Wishlist",
+        remove_wishlist: "Remove",
+        processing: "Processing...",
+        source: "Data Source",
+        source_manual: "Manual Entry",
+        source_external: "External Data",
+        disclaimer: "This data is provided based on public data and information from various sources include AI, and may differ from the actual product information. If there is incorrect information, please report it via the button above."
+    }
+};
+
 export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClientProps) {
     const router = useRouter();
+    const pathname = usePathname();
+    const isEn = pathname?.startsWith('/en');
+    const t = isEn ? UI_TEXT.en : UI_TEXT.ko;
+
     const { user } = useAuth();
     const [isInCabinet, setIsInCabinet] = useState(false);
     const [isWishlist, setIsWishlist] = useState(false);
@@ -79,7 +128,7 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                     removeFromCabinet(user.uid, spirit.id)
                 );
                 setIsInCabinet(false);
-                setSuccessMessage('🗑️ 술장에서 제거되었습니다.');
+                setSuccessMessage(t.remove_cabinet + ' 🗑️');
             } else {
                 // Add to cabinet
                 await import('@/app/actions/cabinet').then(({ addToCabinet }) =>
@@ -94,7 +143,7 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                 );
                 setIsInCabinet(true);
                 setIsWishlist(false); // If it was in wishlist, it's now owned
-                setSuccessMessage('🥃 술장에 저장되었습니다!');
+                setSuccessMessage(t.add_cabinet + ' 🥃');
 
                 // Log 'cabinet' event for trending
                 fetch('/api/trending/log', {
@@ -106,7 +155,7 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
             setShowSuccessToast(true);
         } catch (error: any) {
             console.error('Failed to update cabinet:', error);
-            setSuccessMessage(`❌ ${error.message || '작업 실패'}`);
+            setSuccessMessage(`❌ ${error.message || 'Error'}`);
             setShowSuccessToast(true);
         } finally {
             setIsToggling(false);
@@ -127,7 +176,7 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                     removeFromCabinet(user.uid, spirit.id)
                 );
                 setIsWishlist(false);
-                setSuccessMessage('🗑️ 위시리스트에서 제거되었습니다.');
+                setSuccessMessage(t.remove_wishlist + ' 🗑️');
             } else {
                 // Add to wishlist
                 await import('@/app/actions/cabinet').then(({ addToCabinet }) =>
@@ -142,7 +191,7 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                 );
                 setIsWishlist(true);
                 setIsInCabinet(false); // Can't be both (usually)
-                setSuccessMessage('🔖 위시리스트에 추가되었습니다!');
+                setSuccessMessage(t.add_wishlist + ' 🔖');
 
                 // Log 'wishlist' event for trending
                 fetch('/api/trending/log', {
@@ -154,7 +203,7 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
             setShowSuccessToast(true);
         } catch (error: any) {
             console.error('Failed to update wishlist:', error);
-            setSuccessMessage(`❌ ${error.message || '작업 실패'}`);
+            setSuccessMessage(`❌ ${error.message || 'Error'}`);
             setShowSuccessToast(true);
         } finally {
             setIsToggling(false);
@@ -177,11 +226,11 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
             });
             setIsInCabinet(true);
             setIsWishlist(false);
-            setSuccessMessage('✅ 리뷰와 함께 술장에 저장되었습니다!');
+            setSuccessMessage('Review Saved! ✅');
             setShowSuccessToast(true);
         } catch (error: any) {
             console.error('Failed to add to cabinet with review:', error);
-            setSuccessMessage(`❌ ${error.message || '리뷰 저장 실패'}`);
+            setSuccessMessage(`❌ ${error.message || 'Failed'}`);
             setShowSuccessToast(true);
         } finally {
             setIsToggling(false);
@@ -196,7 +245,7 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                 className="mb-6 flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group"
             >
                 <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
-                <span className="text-sm font-bold">뒤로가기</span>
+                <span className="text-sm font-bold">{t.back}</span>
             </button>
 
             {/* 1. Header: Image Left, Info Right */}
@@ -212,6 +261,11 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                     {spirit.metadata?.name_en && (
                         <p className="text-lg text-muted-foreground font-medium mb-3 italic">
                             {spirit.metadata.name_en}
+                        </p>
+                    )}
+                    {(spirit as any).description_en && (
+                        <p className="text-sm text-foreground/80 leading-relaxed max-w-xl mb-4">
+                            {(spirit as any).description_en}
                         </p>
                     )}
                     <div className="flex flex-col gap-1">
@@ -234,21 +288,21 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
                 {/* Category Card */}
                 <div className="p-4 bg-card border border-border rounded-2xl shadow-sm">
-                    <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-3">Classification</h3>
+                    <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-3">{t.classification}</h3>
                     <div className="space-y-2">
                         <div className="flex justify-between items-center text-sm">
-                            <span className="text-muted-foreground">Category</span>
+                            <span className="text-muted-foreground">{t.category}</span>
                             <span className="font-bold">{CATEGORY_NAME_MAP[spirit.category] || spirit.category}</span>
                         </div>
                         {spirit.mainCategory && (
                             <div className="flex justify-between items-center text-sm">
-                                <span className="text-muted-foreground">Main</span>
+                                <span className="text-muted-foreground">{t.main}</span>
                                 <span className="font-bold">{CATEGORY_NAME_MAP[spirit.mainCategory] || spirit.mainCategory}</span>
                             </div>
                         )}
                         {spirit.subcategory && (
                             <div className="flex justify-between items-center text-sm">
-                                <span className="text-muted-foreground">Sub</span>
+                                <span className="text-muted-foreground">{t.sub}</span>
                                 <span className="font-bold text-amber-500">{CATEGORY_NAME_MAP[spirit.subcategory] || spirit.subcategory}</span>
                             </div>
                         )}
@@ -257,21 +311,21 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
 
                 {/* Origin Card */}
                 <div className="p-4 bg-card border border-border rounded-2xl shadow-sm">
-                    <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-3">Origin & Details</h3>
+                    <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-3">{t.origin}</h3>
                     <div className="space-y-2">
                         <div className="flex justify-between items-center text-sm">
-                            <span className="text-muted-foreground">Country</span>
+                            <span className="text-muted-foreground">{t.country}</span>
                             <span className="font-bold">{spirit.country || "Unknown"}</span>
                         </div>
                         {spirit.region && (
                             <div className="flex justify-between items-center text-sm">
-                                <span className="text-muted-foreground">Region</span>
+                                <span className="text-muted-foreground">{t.region}</span>
                                 <span className="font-bold">{spirit.region}</span>
                             </div>
                         )}
                         {spirit.bottler && (
                             <div className="flex justify-between items-center text-sm">
-                                <span className="text-muted-foreground">Bottler</span>
+                                <span className="text-muted-foreground">{t.bottler}</span>
                                 <span className="font-bold">{spirit.bottler}</span>
                             </div>
                         )}
@@ -284,8 +338,9 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                 <div className="mb-10 p-6 bg-secondary/30 rounded-3xl border border-dashed border-border">
                     <h2 className="text-xl font-black mb-6 flex items-center gap-2">
                         <span className="w-2 h-6 bg-amber-500 rounded-full"></span>
-                        FLAVOR NOTES
+                        {t.flavor}
                     </h2>
+                    {/* ... flavor sections ... */}
                     <div className="space-y-6">
                         {(spirit.metadata as any).nose_tags && (
                             <FlavorSection title="NOSE" tags={(spirit.metadata as any).nose_tags} />
@@ -300,8 +355,26 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                 </div>
             )}
 
-            {/* Action Buttons - Moved here from sticky bottom */}
-            {/* Action Buttons - Moved here from sticky bottom */}
+            {/* AI Global Pairing Guide */}
+            {((isEn ? (spirit.metadata as any)?.pairing_guide_en : (spirit.metadata as any)?.pairing_guide_ko) || (spirit.metadata as any)?.pairing_guide_en) && (
+                <div className="mb-10 p-[1px] rounded-3xl bg-gradient-to-br from-purple-500/30 via-pink-500/30 to-orange-500/30">
+                    <div className="bg-card/95 backdrop-blur-xl p-6 rounded-3xl h-full">
+                        <div className="flex items-center gap-2 mb-4">
+                            <span className="text-xs font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 uppercase tracking-widest flex items-center gap-1">
+                                ✨ {isEn ? 'Pairing Guide' : '페어링 추천'}
+                            </span>
+                            <div className="h-px flex-1 bg-border"></div>
+                        </div>
+                        <p className="text-base text-card-foreground leading-relaxed font-medium">
+                            {isEn
+                                ? (spirit.metadata as any).pairing_guide_en
+                                : ((spirit.metadata as any).pairing_guide_ko || (spirit.metadata as any).pairing_guide_en)}
+                        </p>
+                    </div>
+                </div>
+            )}
+
+            {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 mb-12">
                 <button
                     onClick={handleCabinetAction}
@@ -313,7 +386,7 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                         }`}
                 >
                     <span>{isInCabinet ? '🗑️' : '🥃'}</span>
-                    {isToggling ? '처리 중...' : (isInCabinet ? '내 술장에서 빼기' : '내 술장에 담기')}
+                    {isToggling ? t.processing : (isInCabinet ? t.remove_cabinet : t.add_cabinet)}
                 </button>
                 <button
                     onClick={handleWishlistAction}
@@ -325,23 +398,32 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                         }`}
                 >
                     <span>{isWishlist ? '🗑️' : '🔖'}</span>
-                    {isToggling ? '처리 중...' : (isWishlist ? '위시리스트에서 제거' : '위시리스트에 담기')}
+                    {isToggling ? t.processing : (isWishlist ? t.remove_wishlist : t.add_wishlist)}
                 </button>
             </div>
 
-            {/* 4. Reviews Section */}
+            {/* Middle Ad - Between Info and Reviews */}
+            <div className="mb-10">
+                <AdSlot
+                    slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || "0000000000"}
+                    variant="responsive"
+                    className="rounded-xl overflow-hidden shadow-sm bg-secondary/10"
+                />
+            </div>
+
+            {/* ... ReviewSection (passed prop? No, ReviewSection might handle its own logic, or I need to pass lang) */}
             <ReviewSection spiritId={spirit.id} spiritName={spirit.name} spiritImageUrl={spirit.imageUrl} reviews={reviews} />
 
-            {/* 5. Data Source & Correction Request */}
+            {/* 5. Data Source */}
             <div className="mt-12 p-6 bg-secondary/20 rounded-2xl border border-border">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
-                        <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-1">Data Source</h4>
+                        <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-1">{t.source}</h4>
                         <p className="text-sm font-medium text-foreground">
                             {spirit.source === 'food_safety_korea' ? '식품의약품안전처 (공공데이터)' :
                                 spirit.source === 'imported_food_maru' ? '수입식품정보마루' :
                                     spirit.source === 'whiskybase' ? 'Whiskybase' :
-                                        spirit.source === 'manual' ? '운영진 수동 등록' : '기타 외부 데이터'}
+                                        spirit.source === 'manual' ? t.source_manual : t.source_external}
                         </p>
                     </div>
 
@@ -351,25 +433,19 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                     />
                 </div>
                 <p className="mt-4 text-[11px] text-muted-foreground leading-relaxed">
-                    본 데이터는 각 출처의 공공데이터 및 정보를 바탕으로 제공되며, 실제 제품의 정보와 차이가 있을 수 있습니다.
-                    잘못된 정보가 있다면 위의 버튼을 통해 제보 부탁드립니다.
+                    {t.disclaimer}
                 </p>
             </div>
 
+
             {/* Bottom Ad */}
-            {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT && (
-                <div className="mt-12 mb-6">
-                    <div className="text-xs text-muted-foreground text-center mb-2 uppercase tracking-widest opacity-50">Advertisement</div>
-                    <GoogleAd
-                        client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT}
-                        slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT}
-                        format="auto"
-                        responsive={true}
-                        style={{ display: 'block', minHeight: '100px' }}
-                        className="rounded-2xl overflow-hidden border border-border"
-                    />
-                </div>
-            )}
+            <div className="mt-12 mb-6">
+                <AdSlot
+                    slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || "0000000000"}
+                    variant="responsive"
+                    className="rounded-2xl overflow-hidden border border-border"
+                />
+            </div>
 
             {/* Review Modal */}
             <ReviewModal

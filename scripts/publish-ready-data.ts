@@ -45,14 +45,14 @@ async function bulkPublishViaAPI() {
         }
 
         const result = await response.json();
-        
+
         console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
         console.log('✅ BULK PUBLISH COMPLETED');
         console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
         console.log(`📊 Message: ${result.message}`);
         console.log(`✅ Successfully Published: ${result.publishedCount} spirits`);
         console.log(`❌ Failed: ${result.failedCount || 0} spirits`);
-        
+
         if (result.publishedIds && result.publishedIds.length > 0) {
             console.log(`\n📝 First 10 Published IDs:`);
             result.publishedIds.slice(0, 10).forEach((id: string, idx: number) => {
@@ -62,14 +62,14 @@ async function bulkPublishViaAPI() {
                 console.log(`   ... and ${result.publishedIds.length - 10} more`);
             }
         }
-        
+
         if (result.failures && result.failures.length > 0) {
             console.log(`\n⚠️  Failures:`);
             result.failures.forEach((failure: any) => {
                 console.log(`   ❌ ${failure.id}: ${failure.error}`);
             });
         }
-        
+
         console.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
         console.log('🎯 VERIFICATION STEPS:');
         console.log('   1. Open the app in incognito mode (guest user)');
@@ -78,7 +78,22 @@ async function bulkPublishViaAPI() {
         console.log(`   4. Look for: [FINAL_CHECK] Guest user now sees ${result.publishedCount} spirits`);
         console.log('   5. Verify spirits are visible in the grid');
         console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
-        
+
+        // Automatic Trigger of Bulk Processor
+        if (result.publishedCount > 0) {
+            console.log('🤖 Auto-Triggering AI Enrichment (Bulk Processor)...');
+            try {
+                const { execSync } = require('child_process');
+                // Inherit stdio to show the processor's output in real-time
+                execSync('npx tsx scripts/bulkProcessor.ts', { stdio: 'inherit' });
+            } catch (err) {
+                console.error('⚠️ Automatic AI processing failed to start. You can run it manually:');
+                console.error('   npx tsx scripts/bulkProcessor.ts');
+            }
+        } else {
+            console.log('ℹ️ No new items published, skipping AI enrichment.');
+        }
+
     } catch (error) {
         console.error('\n❌ Error during bulk publish:', error);
         console.error('\n💡 TROUBLESHOOTING:');

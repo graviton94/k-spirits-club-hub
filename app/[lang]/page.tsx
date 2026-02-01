@@ -11,10 +11,11 @@ import { ArrowRight, Flame, Sparkles } from "lucide-react";
 import styles from "./page.module.css";
 import { RandomBackground } from "@/components/ui/RandomBackground";
 import { useSpiritsCache } from "@/app/context/spirits-cache-context";
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, use } from "react";
 import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
 
-export default function HomePage() {
+export default function HomePage({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = use(params);
   const { publishedSpirits, searchIndex, isLoading: isCacheLoading } = useSpiritsCache();
   const [trendingSpirits, setTrendingSpirits] = useState<any[]>([]);
   const [isTrendingLoading, setIsTrendingLoading] = useState(true);
@@ -119,7 +120,7 @@ export default function HomePage() {
               {/* Duplicate items for infinite scroll effect */}
               {[...newArrivals, ...newArrivals].map((spirit, index) => (
                 <Link
-                  href={`/spirits/${spirit.id}`}
+                  href={`/${lang}/spirits/${spirit.id}`}
                   key={`${spirit.id}-${index}`}
                   className="flex-shrink-0 group"
                 >
@@ -164,7 +165,7 @@ export default function HomePage() {
             <Flame className="w-6 h-6 text-orange-500" />
             <h2 className="text-2xl font-bold">Today's Trending</h2>
           </div>
-          <Link href="/explore" className="text-sm text-muted-foreground hover:text-amber-500 flex items-center gap-1 transition-colors">
+          <Link href={`/${lang}/explore`} className="text-sm text-muted-foreground hover:text-amber-500 flex items-center gap-1 transition-colors">
             View All <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

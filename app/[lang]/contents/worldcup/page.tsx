@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     ChevronLeft,
@@ -18,6 +18,10 @@ const ROUND_OPTIONS = [16, 32, 64, 128];
 export default function WorldCupSelectionPage() {
     const router = useRouter();
 
+    const params = useParams();
+    const lang = params?.lang as string || 'ko';
+    const isEn = lang === 'en';
+
     // 상태 관리
     const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
     const [selectedSubCategories, setSelectedSubCategories] = useState<string[]>(['ALL']);
@@ -25,21 +29,22 @@ export default function WorldCupSelectionPage() {
 
     // 카테고리 데이터 - metadata.json에서 동적으로 가져옴
     const legalCategories = useMemo(() => {
+        const displayNames = isEn ? (metadata as any).display_names_en : metadata.display_names;
         const cats = Object.keys(metadata.categories).map(cat => ({
             id: cat,
-            name: cat // Display name as key itself or could use mapping if exists
+            name: displayNames[cat] || cat
         }));
-        return [{ id: 'ALL', name: '전체 주류' }, ...cats];
-    }, []);
+        return [{ id: 'ALL', name: isEn ? 'All Spirits' : '전체 주류' }, ...cats];
+    }, [isEn]);
 
     // 서브 카테고리 기기 - metadata.json 구조에 맞춰 동적 생성
     const subCategories = useMemo(() => {
         if (selectedCategory === 'ALL') {
-            return [{ id: 'ALL', name: '모든 종류' }];
+            return [{ id: 'ALL', name: isEn ? 'All Types' : '모든 종류' }];
         }
 
         const catData = (metadata.categories as any)[selectedCategory];
-        if (!catData) return [{ id: 'ALL', name: '모든 종류' }];
+        if (!catData) return [{ id: 'ALL', name: isEn ? 'All Types' : '모든 종류' }];
 
         let items: string[] = [];
         if (Array.isArray(catData)) {
@@ -55,8 +60,17 @@ export default function WorldCupSelectionPage() {
 
         // Deduplicate and sort
         const uniqueItems = Array.from(new Set(items)).sort();
-        return [{ id: 'ALL', name: `${selectedCategory} 전체` }, ...uniqueItems.map(item => ({ id: item, name: item }))];
-    }, [selectedCategory]);
+        const displayNames = isEn ? (metadata as any).display_names_en : metadata.display_names;
+        const allLabel = isEn ? `${displayNames[selectedCategory] || selectedCategory} All` : `${metadata.display_names[selectedCategory as keyof typeof metadata.display_names] || selectedCategory} 전체`;
+
+        return [
+            { id: 'ALL', name: allLabel },
+            ...uniqueItems.map(item => ({
+                id: item,
+                name: displayNames[item] || item
+            }))
+        ];
+    }, [selectedCategory, isEn]);
 
     const toggleSubCategory = (id: string) => {
         setSelectedSubCategories(prev => {
@@ -72,12 +86,12 @@ export default function WorldCupSelectionPage() {
     };
 
     const handleStart = () => {
-        const params = new URLSearchParams({
+        const queryParams = new URLSearchParams({
             cat: selectedCategory,
             sub: selectedSubCategories.join(','),
             round: selectedRound.toString()
         });
-        router.push(`/contents/worldcup/game?${params.toString()}`);
+        router.push(`/${lang}/contents/worldcup/game?${queryParams.toString()}`);
     };
 
     return (
@@ -85,7 +99,7 @@ export default function WorldCupSelectionPage() {
             {/* 1. 상단 헤더 */}
             <div className="flex items-center gap-4 mb-10">
                 <button
-                    onClick={() => router.push('/contents')}
+                    onClick={() => router.push(`/${lang}/contents`)}
                     className="p-2.5 bg-card/50 backdrop-blur-md border border-border rounded-2xl hover:bg-muted transition-all"
                 >
                     <ChevronLeft className="w-5 h-5 text-foreground" />
@@ -93,7 +107,7 @@ export default function WorldCupSelectionPage() {
                 <div>
                     <h1 className="text-2xl font-black text-white tracking-tighter flex items-center gap-2">
                         <Trophy className="w-6 h-6 text-amber-500" />
-                        주류 취향 월드컵
+                        {isEn ? "Spirit World Cup" : "주류 취향 월드컵"}
                     </h1>
                     <p className="text-neutral-500 text-xs font-bold uppercase tracking-widest">Tournament Settings</p>
                 </div>
@@ -104,7 +118,7 @@ export default function WorldCupSelectionPage() {
                 <section>
                     <label className="text-sm font-black text-neutral-400 mb-4 block flex items-center gap-2">
                         <div className="w-1 h-4 bg-amber-500 rounded-full" />
-                        STEP 1. 주종 선택
+                        {isEn ? "STEP 1. Select Category" : "STEP 1. 주종 선택"}
                     </label>
                     <div className="grid grid-cols-3 gap-2">
                         {legalCategories.map((cat) => (
@@ -136,7 +150,7 @@ export default function WorldCupSelectionPage() {
                         >
                             <label className="text-sm font-black text-neutral-400 mb-4 block flex items-center gap-2">
                                 <div className="w-1 h-4 bg-neutral-600 rounded-full" />
-                                STEP 2. 세부 카테고리
+                                {isEn ? "STEP 2. Subcategory" : "STEP 2. 세부 카테고리"}
                             </label>
                             <div className="flex flex-wrap gap-2">
                                 {subCategories.map((sub) => {
@@ -164,7 +178,7 @@ export default function WorldCupSelectionPage() {
                 <section>
                     <label className="text-sm font-black text-neutral-400 mb-4 block flex items-center gap-2">
                         <div className="w-1 h-4 bg-amber-500 rounded-full" />
-                        STEP 3. 라운드 설정
+                        {isEn ? "STEP 3. Select Round" : "STEP 3. 라운드 설정"}
                     </label>
                     <div className="flex gap-3">
                         {ROUND_OPTIONS.map((round) => (
@@ -182,7 +196,8 @@ export default function WorldCupSelectionPage() {
                         ))}
                     </div>
                     <p className="mt-3 text-[10px] text-neutral-600 flex items-center gap-1">
-                        <Info className="w-3 h-3" /> 선택한 조건의 술이 강수보다 적을 경우 자동으로 최대치로 조정됩니다.
+                        <Info className="w-3 h-3" />
+                        {isEn ? "Rounds may be adjusted if items are insufficient." : "선택한 조건의 술이 강수보다 적을 경우 자동으로 최대치로 조정됩니다."}
                     </p>
                 </section>
 
@@ -193,11 +208,11 @@ export default function WorldCupSelectionPage() {
                         className="w-full py-5 bg-amber-500 hover:bg-amber-400 text-black font-black rounded-2xl shadow-[0_10px_40px_rgba(245,158,11,0.3)] transition-all flex items-center justify-center gap-3 active:scale-95 group"
                     >
                         <Play className="w-5 h-5 fill-current" />
-                        <span className="text-lg">월드컵 시작하기</span>
+                        <span className="text-lg">{isEn ? "Start World Cup" : "월드컵 시작하기"}</span>
                         <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </button>
                     <p className="mt-4 text-center text-[10px] text-neutral-500 font-medium">
-                        ※ 선택한 조건에 맞는 술이 부족할 경우 게임이 시작되지 않을 수 있습니다.
+                        {isEn ? "※ Game may not start if not enough spirits match." : "※ 선택한 조건에 맞는 술이 부족할 경우 게임이 시작되지 않을 수 있습니다."}
                     </p>
                 </section>
             </div>

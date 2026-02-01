@@ -31,6 +31,35 @@ const nextConfig = {
     }
     return config;
   },
+  async redirects() {
+    return [
+      {
+        source: '/explore',
+        destination: '/ko/explore',
+        permanent: true,
+      },
+      {
+        source: '/spirits/:path*',
+        destination: '/ko/spirits/:path*',
+        permanent: true,
+      },
+      {
+        source: '/me/:path*',
+        destination: '/ko/me/:path*',
+        permanent: true,
+      },
+      {
+        source: '/cabinet',
+        destination: '/ko/cabinet',
+        permanent: true,
+      },
+      {
+        source: '/contents/:path*',
+        destination: '/ko/contents/:path*',
+        permanent: true,
+      }
+    ];
+  },
 };
 
 module.exports = nextConfig;

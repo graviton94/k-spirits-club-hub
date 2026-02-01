@@ -51,11 +51,13 @@ export interface SpiritSearchIndex {
 export interface Spirit {
   id: string;
   name: string;
+  name_en: string | null;
   distillery: string | null;
   bottler: string | null;
   abv: number;
   volume: number | null;
   category: string; // whisky, vodka, gin, rum, etc. (Legal/Wide classification)
+  description_en: string | null;
   mainCategory: string | null; // Structured grouping (e.g. whisky for bourbon) from metadata
   subcategory: string | null; // single malt, blended, etc.
   country: string | null;

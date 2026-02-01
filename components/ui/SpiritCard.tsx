@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import { Spirit } from "@/lib/db/schema";
 import { getTagStyle } from "@/lib/constants/tag-styles";
@@ -23,6 +24,8 @@ interface SpiritCardProps {
 }
 
 export function SpiritCard({ spirit, onClick, onCabinetChange }: SpiritCardProps) {
+  const pathname = usePathname() || "";
+  const lang = pathname.split('/')[1] === 'en' ? 'en' : 'ko';
   const { user } = useAuth();
   const [isInCabinet, setIsInCabinet] = useState(false);
   const [isToggling, setIsToggling] = useState(false);
@@ -247,7 +250,7 @@ export function SpiritCard({ spirit, onClick, onCabinetChange }: SpiritCardProps
 
   return (
     <>
-      <Link href={`/spirits/${spirit.id}`}>
+      <Link href={`/${lang}/spirits/${spirit.id}`}>
         {content}
       </Link>
 

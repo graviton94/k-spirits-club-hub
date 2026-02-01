@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Sparkles, RefreshCw, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { usePathname } from 'next/navigation';
 import { CATEGORY_NAME_MAP } from '@/lib/constants/categories';
 
 interface RandomSpirit {
@@ -13,6 +14,9 @@ interface RandomSpirit {
 }
 
 export default function DailyPick() {
+    const pathname = usePathname() || "";
+    const lang = pathname.split('/')[1] === 'en' ? 'en' : 'ko';
+
     const [spirit, setSpirit] = useState<RandomSpirit | null>(null);
     const [loading, setLoading] = useState(true);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -84,7 +88,7 @@ export default function DailyPick() {
                                     transition={{ type: "spring", stiffness: 200, damping: 20 }}
                                 >
                                     <Link
-                                        href={`/spirits/${spirit.id}`}
+                                        href={`/${lang}/spirits/${spirit.id}`}
                                         className="flex items-center justify-between gap-4 group/link w-full"
                                     >
                                         <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 text-left">

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, use } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import GoogleAd from "@/components/ui/GoogleAd";
 import Link from "next/link";
@@ -21,7 +21,13 @@ type ViewMode = 'cellar' | 'flavor';
 
 export const runtime = 'edge';
 
-export default function CabinetPage() {
+interface CabinetPageProps {
+  params: Promise<{ lang: string }>;
+}
+
+export default function CabinetPage({ params }: CabinetPageProps) {
+  const { lang } = use(params);
+  const isEn = lang === 'en';
   // View state
   const [viewMode, setViewMode] = useState<ViewMode>('cellar');
 
@@ -49,9 +55,12 @@ export default function CabinetPage() {
   const { searchIndex } = useSpiritsCache();
 
   // Set page title for SEO
+  // Set page title for SEO
   useEffect(() => {
-    document.title = `K-Spirits Club | 나만의 술장 만들기 & AI 취향 분석`;
-  }, []);
+    document.title = isEn
+      ? `My Cabinet | K-Spirits Club`
+      : `K-Spirits Club | 나만의 술장 만들기 & AI 취향 분석`;
+  }, [isEn]);
 
   // Fetch cabinet data
   const fetchCabinet = useCallback(async () => {
@@ -186,16 +195,16 @@ export default function CabinetPage() {
             🥃
           </motion.div>
           <h2 className="text-3xl font-black mb-4 bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">
-            술장이 잠들어 있어요.💤
+            {isEn ? "Your cabinet is sleeping... 💤" : "술장이 잠들어 있어요.💤"}
           </h2>
           <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg">
-            한 번 깨우러 가볼까요?
+            {isEn ? "Let's wake it up!" : "한 번 깨우러 가볼까요?"}
           </p>
           <Link
-            href="/explore"
+            href={`/${lang}/explore`}
             className="inline-block px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-black font-bold rounded-xl transition-all shadow-lg hover:shadow-amber-900/50 active:scale-[0.98]"
           >
-            탐색하러 가기
+            {isEn ? "Go Explore" : "탐색하러 가기"}
           </Link>
         </motion.div>
       </div>
@@ -246,7 +255,7 @@ export default function CabinetPage() {
                 }
               `}
             >
-              <span>🍾</span> 술장
+              <span>🍾</span> {isEn ? "Cabinet" : "술장"}
             </button>
             <button
               onClick={() => setViewMode('flavor')}
@@ -258,7 +267,7 @@ export default function CabinetPage() {
                 }
               `}
             >
-              <span>🌌</span> 취향 탐색
+              <span>🌌</span> {isEn ? "Taste DNA" : "취향 탐색"}
             </button>
           </div>
         </div>

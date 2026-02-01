@@ -71,8 +71,8 @@ export const db = {
       updates.isPublished = true;
     }
 
-    // Auto-generate searchKeywords if name, distillery, or metadata.name_en is being updated
-    const needsKeywordUpdate = updates.name || updates.distillery || updates.metadata?.name_en;
+    // Auto-generate searchKeywords if name, distillery, or name_en is being updated
+    const needsKeywordUpdate = updates.name || updates.distillery || updates.name_en || updates.metadata?.name_en;
 
     if (needsKeywordUpdate) {
       // Fetch current spirit to get all fields for keyword generation
@@ -80,6 +80,7 @@ export const db = {
       if (currentSpirit) {
         const spiritForKeywords = {
           name: updates.name || currentSpirit.name,
+          name_en: updates.name_en || currentSpirit.name_en,
           distillery: updates.distillery !== undefined ? updates.distillery : currentSpirit.distillery,
           metadata: updates.metadata ? { ...currentSpirit.metadata, ...updates.metadata } : currentSpirit.metadata
         };

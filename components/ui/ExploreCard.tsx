@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import { Spirit } from "@/lib/db/schema";
 import { getTagStyle } from "@/lib/constants/tag-styles";
@@ -13,6 +14,7 @@ import SuccessToast from "./SuccessToast";
 
 import { Bookmark, Plus, Minus, Loader2 } from "lucide-react";
 import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
+import metadata from "@/lib/constants/spirits-metadata.json";
 
 interface ExploreCardProps {
   spirit: Spirit;
@@ -20,6 +22,17 @@ interface ExploreCardProps {
 }
 
 export function ExploreCard({ spirit, onClick }: ExploreCardProps) {
+  const pathname = usePathname() || "";
+  const lang = pathname.split('/')[1] === 'en' ? 'en' : 'ko';
+  const isEn = lang === 'en';
+
+  // Helper to get localized category name
+  const getLocalizedCategory = (cat: string) => {
+    if (!cat) return '';
+    const displayNames = isEn ? (metadata as any).display_names_en : metadata.display_names;
+    return displayNames[cat] || cat;
+  };
+
   const { user } = useAuth();
   const [isInCabinet, setIsInCabinet] = useState(false);
   const [isWishlist, setIsWishlist] = useState(false);
@@ -167,7 +180,7 @@ export function ExploreCard({ spirit, onClick }: ExploreCardProps) {
               }[spirit.category] || "🍾"
             }
           </span>
-          {spirit.name}
+          {spirit.name_en && isEn ? spirit.name_en : spirit.name}
         </h3>
 
         <div className="text-[10px] font-bold text-muted-foreground flex items-center gap-1.5 flex-wrap">
@@ -236,7 +249,7 @@ export function ExploreCard({ spirit, onClick }: ExploreCardProps) {
 
   return (
     <>
-      <Link href={`/spirits/${spirit.id}`}>
+      <Link href={`/${lang}/spirits/${spirit.id}`}>
         {content}
       </Link>
       <SuccessToast

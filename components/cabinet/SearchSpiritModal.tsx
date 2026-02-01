@@ -8,6 +8,8 @@ import { useAuth } from "@/app/context/auth-context";
 import { addToCabinet } from "@/app/actions/cabinet";
 import { Plus, Bookmark, Loader2 } from "lucide-react";
 import SuccessToast from "@/components/ui/SuccessToast";
+import { usePathname } from "next/navigation";
+import metadata from "@/lib/constants/spirits-metadata.json";
 
 interface SearchSpiritModalProps {
     isOpen: boolean;
@@ -18,12 +20,21 @@ interface SearchSpiritModalProps {
 
 export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existingIds }: SearchSpiritModalProps) {
     const [query, setQuery] = useState("");
+    const pathname = usePathname() || "";
+    const isEn = pathname.split('/')[1] === 'en';
     const { searchSpirits, isLoading } = useSpiritsCache();
     const { user } = useAuth();
     const [processingId, setProcessingId] = useState<string | null>(null);
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState("");
     const [toastVariant, setToastVariant] = useState<'success' | 'error'>('success');
+
+    // Helper to get localized category name
+    const getLocalizedCategory = (cat: string) => {
+        if (!cat) return '';
+        const displayNames = isEn ? (metadata as any).display_names_en : metadata.display_names;
+        return displayNames[cat] || cat;
+    };
 
     // Get results from cache
     const results = query.trim() ? searchSpirits(query) : [];
@@ -152,7 +163,7 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
                                         <div className="flex-1 min-w-0 flex flex-col justify-center">
                                             <div className="font-black text-sm text-white leading-tight line-clamp-2 whitespace-normal">{item.n}</div>
                                             <div className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest opacity-60 whitespace-normal mt-0.5">
-                                                {item.c} {item.d ? `| ${item.d}` : ''}
+                                                {getLocalizedCategory(item.c)} {item.d ? `| ${item.d}` : ''}
                                             </div>
                                         </div>
 

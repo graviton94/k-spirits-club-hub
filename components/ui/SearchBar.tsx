@@ -3,7 +3,7 @@
 import { Search, Plus, Bookmark } from "lucide-react";
 import { useState, KeyboardEvent, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useSpiritsCache } from "@/app/context/spirits-cache-context";
 import SuccessToast from "@/components/ui/SuccessToast";
 import { useAuth } from "@/app/context/auth-context";
@@ -16,6 +16,8 @@ export function SearchBar({ isHero = false }: { isHero?: boolean }) {
   const [isFocused, setIsFocused] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const router = useRouter();
+  const pathname = usePathname() || "";
+  const lang = pathname.split('/')[1] === 'en' ? 'en' : 'ko';
   const { searchSpirits, isLoading } = useSpiritsCache();
   const { user } = useAuth();
   const blurTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -42,7 +44,7 @@ export function SearchBar({ isHero = false }: { isHero?: boolean }) {
   const handleSearch = () => {
     if (searchValue.trim()) {
       // Navigate to explore page with search query
-      router.push(`/explore?search=${encodeURIComponent(searchValue.trim())}`);
+      router.push(`/${lang}/explore?search=${encodeURIComponent(searchValue.trim())}`);
       setIsFocused(false);
     }
   };
@@ -118,7 +120,7 @@ export function SearchBar({ isHero = false }: { isHero?: boolean }) {
                     className={`group flex items-center justify-between p-3 hover:bg-primary/5 transition-colors border-b last:border-b-0 ${isHero ? 'border-white/10' : 'border-border'}`}
                   >
                     <Link
-                      href={`/spirits/${item.i}`}
+                      href={`/${lang}/spirits/${item.i}`}
                       className="flex gap-3 items-center flex-1 min-w-0"
                     >
                       {item.t ? (

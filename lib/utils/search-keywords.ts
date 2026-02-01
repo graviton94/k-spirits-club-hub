@@ -20,21 +20,21 @@
  */
 export function generateNGrams(text: string, minLength: number = 2, maxLength: number = 10): string[] {
   if (!text || typeof text !== 'string') return [];
-  
+
   const normalized = text.toLowerCase().trim();
   const keywords = new Set<string>();
-  
+
   // Split by spaces and process each word
   const words = normalized.split(/\s+/);
-  
+
   for (const word of words) {
     if (word.length === 0) continue;
-    
+
     // Add the full word if it's within max length
     if (word.length <= maxLength) {
       keywords.add(word);
     }
-    
+
     // Generate n-grams for longer words
     if (word.length >= minLength) {
       for (let i = 0; i <= word.length - minLength; i++) {
@@ -45,7 +45,7 @@ export function generateNGrams(text: string, minLength: number = 2, maxLength: n
       }
     }
   }
-  
+
   return Array.from(keywords);
 }
 
@@ -65,6 +65,7 @@ export function generateNGrams(text: string, minLength: number = 2, maxLength: n
  */
 export function generateSpiritSearchKeywords(spirit: {
   name: string;
+  name_en?: string | null;
   distillery?: string | null;
   metadata?: {
     name_en?: string;
@@ -72,25 +73,26 @@ export function generateSpiritSearchKeywords(spirit: {
   };
 }): string[] {
   const allKeywords = new Set<string>();
-  
+
   // Add keywords from Korean name
   if (spirit.name) {
     const nameKeywords = generateNGrams(spirit.name);
     nameKeywords.forEach(k => allKeywords.add(k));
   }
-  
-  // Add keywords from English name
-  if (spirit.metadata?.name_en) {
-    const enNameKeywords = generateNGrams(spirit.metadata.name_en);
+
+  // Add keywords from English name (prioritize top-level, fallback to metadata)
+  const enName = spirit.name_en || spirit.metadata?.name_en;
+  if (enName) {
+    const enNameKeywords = generateNGrams(enName);
     enNameKeywords.forEach(k => allKeywords.add(k));
   }
-  
+
   // Add keywords from distillery
   if (spirit.distillery) {
     const distilleryKeywords = generateNGrams(spirit.distillery);
     distilleryKeywords.forEach(k => allKeywords.add(k));
   }
-  
+
   return Array.from(allKeywords).sort();
 }
 
@@ -108,16 +110,16 @@ export function generateSpiritSearchKeywords(spirit: {
  */
 export function extractSearchKeyword(searchTerm: string): string {
   if (!searchTerm || typeof searchTerm !== 'string') return '';
-  
+
   const normalized = searchTerm.toLowerCase().trim();
-  
+
   // Split by spaces and get the longest word (min 2 chars)
   const words = normalized.split(/\s+/).filter(w => w.length >= 2);
-  
+
   if (words.length === 0) return '';
-  
+
   // Return the longest word as it's most specific
-  return words.reduce((longest, current) => 
+  return words.reduce((longest, current) =>
     current.length > longest.length ? current : longest
-  , '');
+    , '');
 }

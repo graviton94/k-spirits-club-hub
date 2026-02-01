@@ -2,20 +2,28 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Home, Search, Library, Gamepad2, User } from "lucide-react";
 
 export function BottomNav() {
-  const pathname = usePathname();
+  const pathname = usePathname() || "";
+  const segments = pathname.split('/');
+  const lang = (segments[1] === 'en' || segments[1] === 'ko') ? segments[1] : 'ko';
+  const isEn = lang === 'en';
 
   const isActive = (path: string) => {
-    return pathname.startsWith(path);
+    // path examples: "/explore", "/"
+    if (path === "/") {
+      return pathname === `/${lang}` || pathname === `/${lang}/`;
+    }
+    return pathname.startsWith(`/${lang}${path}`);
   };
 
   const navItems = [
-    { href: "/explore", icon: "🔍", label: "탐색" },
-    { href: "/cabinet", icon: "📚", label: "캐비닛" },
-    { href: "/", icon: "🏠", label: "홈" },
-    { href: "/contents", icon: "🎮", label: "컨텐츠" },
-    { href: "/me", icon: "👤", label: "내 정보" },
+    { href: "/explore", icon: Search, label: isEn ? "Explore" : "탐색" },
+    { href: "/cabinet", icon: Library, label: isEn ? "Cabinet" : "캐비닛" },
+    { href: "/", icon: Home, label: isEn ? "Home" : "홈" },
+    { href: "/contents", icon: Gamepad2, label: isEn ? "Contents" : "컨텐츠" },
+    { href: "/me", icon: User, label: isEn ? "My" : "내 정보" },
   ];
 
   return (
@@ -25,17 +33,20 @@ export function BottomNav() {
           {navItems.map((item) => (
             <Link
               key={item.href}
-              href={item.href}
-              className={`relative flex flex-col items-center justify-center p-2 rounded-2xl transition-all duration-300 group hover:bg-secondary w-16 h-16 ${(item.href === "/" ? pathname === "/" : isActive(item.href))
+              href={`/${lang}${item.href === "/" ? "" : item.href}`}
+              className={`relative flex flex-col items-center justify-center p-2 rounded-2xl transition-all duration-300 group hover:bg-secondary w-16 h-16 ${isActive(item.href)
                 ? "text-primary"
                 : "text-muted-foreground hover:text-foreground"
                 }`}
             >
-              <span className={`text-2xl mb-0.5 transition-transform duration-300 group-hover:-translate-y-1 ${(item.href === "/" ? pathname === "/" : isActive(item.href)) ? "scale-110" : "scale-100"}`}>{item.icon}</span>
-              <span className={`text-[10px] font-medium absolute bottom-1.5 opacity-0 transition-all duration-300 ${(item.href === "/" ? pathname === "/" : isActive(item.href)) ? "opacity-100 translate-y-0" : "translate-y-2 group-hover:opacity-100 group-hover:translate-y-0"}`}>{item.label}</span>
+              <item.icon
+                className={`w-6 h-6 mb-1 transition-all duration-300 ${isActive(item.href) ? "-translate-y-1" : "group-hover:-translate-y-1"}`}
+                strokeWidth={isActive(item.href) ? 2.5 : 2}
+              />
+              <span className={`text-[10px] font-medium absolute bottom-1.5 opacity-0 transition-all duration-300 ${isActive(item.href) ? "opacity-100 translate-y-0" : "translate-y-2 group-hover:opacity-100 group-hover:translate-y-0"}`}>{item.label}</span>
 
               {/* Active Indicator Dot */}
-              {(item.href === "/" ? pathname === "/" : isActive(item.href)) && (
+              {isActive(item.href) && (
                 <span className="absolute top-2 right-3 w-1.5 h-1.5 rounded-full bg-primary shadow-lg shadow-primary/50" />
               )}
             </Link>

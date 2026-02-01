@@ -11,6 +11,32 @@ interface AdminSpiritCardProps {
 export default function AdminSpiritCard({ spirit }: AdminSpiritCardProps) {
   const [status, setStatus] = useState(spirit.isPublished ? 'published' : 'pending');
   const [isLoading, setIsLoading] = useState(false);
+  const [isTranslating, setIsTranslating] = useState(false);
+  const [nameEn, setNameEn] = useState(spirit.name_en || '');
+
+  const handleTranslate = async () => {
+    if (!spirit.name) return;
+    setIsTranslating(true);
+    try {
+      const response = await fetch('/api/admin/translate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: spirit.name,
+          category: spirit.category,
+          distillery: spirit.distillery
+        })
+      });
+      const data = await response.json();
+      if (data.name_en) {
+        setNameEn(data.name_en);
+      }
+    } catch (error) {
+      console.error("Translation failed:", error);
+    } finally {
+      setIsTranslating(false);
+    }
+  };
 
   const handlePublish = async () => {
     setIsLoading(true);
@@ -19,7 +45,8 @@ export default function AdminSpiritCard({ spirit }: AdminSpiritCardProps) {
         isPublished: true,
         isReviewed: true,
         reviewedBy: 'admin',
-        reviewedAt: new Date()
+        reviewedAt: new Date(),
+        name_en: nameEn || null // 영문명 반영
       });
       setStatus('published');
     } catch (error) {
@@ -66,6 +93,28 @@ export default function AdminSpiritCard({ spirit }: AdminSpiritCardProps) {
               {spirit.source}
             </span>
           </div>
+
+          {/* 영문명 편집 및 AI 번역 영역 */}
+          {status === 'pending' && (
+            <div className="mt-3 flex flex-col gap-2">
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={nameEn}
+                  onChange={(e) => setNameEn(e.target.value)}
+                  placeholder="English Name (AI 번역 가능)"
+                  className="flex-1 px-3 py-1.5 text-sm border border-border rounded bg-background focus:outline-none focus:ring-1 focus:ring-primary"
+                />
+                <button
+                  onClick={handleTranslate}
+                  disabled={isTranslating || isLoading}
+                  className="px-3 py-1.5 bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400 border border-blue-100 dark:border-blue-800 rounded text-xs font-bold hover:bg-blue-100 disabled:opacity-50 flex items-center gap-1"
+                >
+                  {isTranslating ? '...' : '🤖 AI 번역'}
+                </button>
+              </div>
+            </div>
+          )}
 
           {status === 'published' && (
             <div className="mt-2 text-xs text-muted-foreground">

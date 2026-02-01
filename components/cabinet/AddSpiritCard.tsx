@@ -1,12 +1,15 @@
 'use client';
 
 import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 interface AddSpiritCardProps {
     onClick: () => void;
 }
 
 export default function AddSpiritCard({ onClick }: AddSpiritCardProps) {
+    const pathname = usePathname() || "";
+    const isEn = pathname.split('/')[1] === 'en';
     return (
         <motion.div
             whileHover={{ y: -4, scale: 1.02 }}
@@ -17,7 +20,7 @@ export default function AddSpiritCard({ onClick }: AddSpiritCardProps) {
                 +
             </div>
             <span className="text-[10px] sm:text-sm font-bold text-gray-500 group-hover:text-amber-600 dark:text-gray-400 text-center px-1">
-                추가
+                {isEn ? "Add" : "추가"}
             </span>
         </motion.div>
     );
