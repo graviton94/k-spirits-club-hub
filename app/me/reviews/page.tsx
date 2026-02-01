@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/app/context/auth-context';
 import { useRouter } from 'next/navigation';
 import { getCategoryFallbackImage } from '@/lib/utils/image-fallback';
+import { getOptimizedImageUrl } from '@/lib/utils/image-optimization';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Trash2 } from 'lucide-react';
 import Link from 'next/link';
@@ -192,8 +193,9 @@ export default function ReviewsPage() {
                 <Link href={`/spirits/${spirit.id}`} className="flex-shrink-0 pt-1">
                   <div className="w-16 h-20 sm:w-20 sm:h-24 rounded-lg bg-secondary overflow-hidden border border-border flex items-center justify-center">
                     <img
-                      src={spirit.imageUrl || getCategoryFallbackImage(spirit.category)}
+                      src={getOptimizedImageUrl(spirit.imageUrl || getCategoryFallbackImage(spirit.category), 160)}
                       alt={spirit.name}
+                      loading="lazy"
                       className="w-full h-full object-cover"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;

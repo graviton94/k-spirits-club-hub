@@ -7,6 +7,7 @@ import { Spirit, SpiritStatus, ModificationRequest } from '@/lib/db/schema';
 import Link from 'next/link';
 import metadata from '@/lib/constants/spirits-metadata.json';
 import { TagMultiSelect } from '@/components/ui/TagMultiSelect';
+import { getOptimizedImageUrl } from '@/lib/utils/image-optimization';
 
 
 interface EditFormState {
@@ -509,7 +510,7 @@ export default function AdminDashboard() {
                         </td>
                         <td className="p-4">
                           {spirit.imageUrl ? (
-                            <img src={spirit.imageUrl} className="w-10 h-10 object-contain bg-white rounded-lg border border-gray-200 dark:border-gray-800 shadow-sm" alt="Bottle" />
+                            <img src={getOptimizedImageUrl(spirit.imageUrl, 80)} className="w-10 h-10 object-contain bg-white rounded-lg border border-gray-200 dark:border-gray-800 shadow-sm" alt="Bottle" />
                           ) : <div className="w-10 h-10 bg-gray-100 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 border-dashed" />}
                         </td>
                         <td className="p-4">
@@ -731,7 +732,7 @@ export default function AdminDashboard() {
                         <label className="text-[10px] font-black uppercase text-gray-400 dark:text-gray-500">제품 이미지</label>
                         <div className="aspect-[3/4] bg-white rounded-2xl border-2 border-dashed border-gray-200 dark:border-gray-800 flex items-center justify-center overflow-hidden relative group shadow-sm">
                           {editForm.imageUrl ? (
-                            <img src={editForm.imageUrl} className="w-full h-full object-contain p-4 transition-transform group-hover:scale-105" alt="Preview" />
+                            <img src={getOptimizedImageUrl(editForm.imageUrl, 400)} className="w-full h-full object-contain p-4 transition-transform group-hover:scale-105" alt="Preview" />
                           ) : <span className="text-5xl opacity-20 text-black dark:text-white">🥃</span>}
                         </div>
                         <input className="w-full px-4 py-2 border border-gray-200 dark:border-gray-800 rounded-xl text-[10px] bg-white dark:bg-black text-gray-400 font-mono truncate focus:ring-2 focus:ring-amber-500/50 outline-none"

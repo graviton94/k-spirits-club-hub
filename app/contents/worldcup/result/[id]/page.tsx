@@ -3,6 +3,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/db/firebase';
 import { Trophy, ChevronLeft, Download, Share2, Gamepad2, RotateCcw } from 'lucide-react';
 import Image from 'next/image';
+import { getOptimizedImageUrl } from '@/lib/utils/image-optimization';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -126,11 +127,10 @@ export default async function WorldCupResultPage({ params }: { params: { id: str
                         <div className="w-64 bg-white border border-[#e5e5e5] rounded-[24px] overflow-hidden shadow-lg relative">
                             <div className="aspect-square relative p-6 bg-[#f8f8f8] border-b border-[#e5e5e5]">
                                 <Image
-                                    src={winner.imageUrl || winner.thumbnailUrl || ''}
+                                    src={getOptimizedImageUrl(winner.imageUrl || winner.thumbnailUrl || '', 500)}
                                     alt={winner.name}
                                     fill
                                     className="object-contain p-2"
-                                    unoptimized
                                 />
                             </div>
 

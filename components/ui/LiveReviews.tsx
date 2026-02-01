@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Star } from 'lucide-react';
 import Link from 'next/link';
+import { getOptimizedImageUrl } from '@/lib/utils/image-optimization';
 
 interface LiveReview {
   id: string;
@@ -44,7 +45,7 @@ export function LiveReviews() {
     const handleReviewSubmitted = () => {
       fetchReviews();
     };
-    
+
     const handleReviewDeleted = () => {
       fetchReviews();
     };
@@ -111,7 +112,12 @@ export function LiveReviews() {
             {/* Section 1: Product Image */}
             <div className="w-12 h-16 sm:w-16 sm:h-20 rounded-lg bg-secondary overflow-hidden flex-shrink-0 border border-border">
               {review.imageUrl ? (
-                <img src={review.imageUrl} alt={review.spiritName} className="w-full h-full object-cover" />
+                <img
+                  src={getOptimizedImageUrl(review.imageUrl, 160)}
+                  alt={review.spiritName}
+                  loading="lazy"
+                  className="w-full h-full object-cover"
+                />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-xl bg-primary/5">🥃</div>
               )}

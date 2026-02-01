@@ -10,6 +10,7 @@ import type { Spirit, UserReview } from "@/lib/utils/flavor-engine";
 import ReviewModal from "@/components/cabinet/ReviewModal";
 import { Bookmark, Plus, Pencil, Check, Loader2 } from "lucide-react";
 import { addToCabinet } from "@/app/actions/cabinet";
+import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
 
 import SuccessToast from "@/components/ui/SuccessToast";
 
@@ -157,7 +158,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                     <div className="relative h-72 sm:h-80 w-full bg-secondary">
                         {localSpirit.imageUrl ? (
                             <img
-                                src={localSpirit.imageUrl}
+                                src={getOptimizedImageUrl(localSpirit.imageUrl, 600)}
                                 alt={localSpirit.name}
                                 className="w-full h-full object-cover"
                                 onError={(e) => {

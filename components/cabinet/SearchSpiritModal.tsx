@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Spirit } from "@/lib/db/schema";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
+import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
 import { useSpiritsCache } from "@/app/context/spirits-cache-context";
 import { useAuth } from "@/app/context/auth-context";
 import { addToCabinet } from "@/app/actions/cabinet";
@@ -139,8 +140,9 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
                                     >
                                         <div className="w-12 h-12 rounded-xl overflow-hidden bg-slate-900 shrink-0 border border-white/10">
                                             <img
-                                                src={(item.t && item.t.trim()) ? item.t : getCategoryFallbackImage(item.c)}
+                                                src={getOptimizedImageUrl((item.t && item.t.trim()) ? item.t : getCategoryFallbackImage(item.c), 120)}
                                                 alt={item.n}
+                                                loading="lazy"
                                                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                                 onError={(e) => {
                                                     (e.target as HTMLImageElement).src = getCategoryFallbackImage(item.c);

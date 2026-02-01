@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Spirit } from "@/lib/utils/flavor-engine";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
+import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
 
 interface CabinetSpiritCardProps {
     spirit: Spirit;
@@ -37,8 +38,9 @@ export default function CabinetSpiritCard({
 
                 <div className="relative h-full rounded-xl overflow-hidden bg-slate-50 dark:bg-slate-900 group-hover:blur-[1px] group-hover:scale-[0.98] transition-all duration-500">
                     <img
-                        src={spirit.imageUrl && spirit.imageUrl.trim() ? spirit.imageUrl : getCategoryFallbackImage(spirit.category)}
+                        src={getOptimizedImageUrl(spirit.imageUrl && spirit.imageUrl.trim() ? spirit.imageUrl : getCategoryFallbackImage(spirit.category), 240)}
                         alt={spirit.name}
+                        loading="lazy"
                         className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${!spirit.imageUrl || !spirit.imageUrl.trim() ? 'opacity-30 blur-sm' : 'opacity-100'} group-hover:opacity-90`}
                         onError={(e) => {
                             const target = e.target as HTMLImageElement;
