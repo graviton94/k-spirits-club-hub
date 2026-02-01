@@ -68,32 +68,34 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <head>
-        {/* 1. Google Tag Manager (GTM) - afterInteractive 전략 사용 */}
-        <Script id="gtm-script" strategy="afterInteractive">
-          {`
-            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        {/* Mixed Content 자동 업그레이드 (HTTP -> HTTPS) */}
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+
+        {/* 1. Google Tag Manager (GTM) - 소스 코드에서 즉시 감지되도록 표준 태그 사용 */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-NDF5RKBN');
-          `}
-        </Script>
-
-        {/* 2. Google Analytics (GA4) - gtag.js 연동 */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-0QF9WTQFF2"
-          strategy="afterInteractive"
+            })(window,document,'script','dataLayer','GTM-NDF5RKBN');`,
+          }}
         />
-        <Script id="ga-config" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-0QF9WTQFF2');
-          `}
-        </Script>
 
-        {/* 3. Microsoft Clarity - Next.js Script 컴포넌트로 래핑 */}
+        {/* 2. Google Analytics (GA4) - gtag.js 표준 태그 사용 */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0QF9WTQFF2" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-0QF9WTQFF2');
+            `,
+          }}
+        />
+
+        {/* 3. Microsoft Clarity */}
         <Script id="microsoft-clarity" strategy="afterInteractive">
           {`
             (function(c,l,a,r,i,t,y){
@@ -108,7 +110,7 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
       </head>
       <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`}>
-        {/* GTM Noscript (자바스크립트 미지원 브라우저용) */}
+        {/* GTM Noscript */}
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-NDF5RKBN"
