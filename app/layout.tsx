@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Inter, Outfit } from "next/font/google";
+import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google'; // ✅ 공식 라이브러리 추가
 import "./globals.css";
 import { AuthProvider } from './context/auth-context';
 import { SpiritsCacheProvider } from './context/spirits-cache-context';
@@ -69,33 +70,12 @@ export default function RootLayout({
     <html lang="ko">
       <head>
         {/* Mixed Content 자동 업그레이드 (HTTP -> HTTPS) */}
-        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+        <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
 
-        {/* 1. Google Tag Manager (GTM) - 소스 코드에서 즉시 감지되도록 표준 태그 사용 */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-NDF5RKBN');`,
-          }}
-        />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
 
-        {/* 2. Google Analytics (GA4) - gtag.js 표준 태그 사용 */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0QF9WTQFF2" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-0QF9WTQFF2');
-            `,
-          }}
-        />
-
-        {/* 3. Microsoft Clarity */}
+        {/* 3. Microsoft Clarity (Next.js Script 컴포넌트 사용) */}
         <Script id="microsoft-clarity" strategy="afterInteractive">
           {`
             (function(c,l,a,r,i,t,y){
@@ -105,22 +85,17 @@ export default function RootLayout({
             })(window, document, "clarity", "script", "vag1ydm09c");
           `}
         </Script>
-
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="mobile-web-app-capable" content="yes" />
       </head>
-      <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`}>
-        {/* GTM Noscript */}
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-NDF5RKBN"
-            height="0"
-            width="0"
-            style={{ display: 'none', visibility: 'hidden' }}
-          />
-        </noscript>
 
-        {/* Google Adsense - 페이지 로드 후 천천히 불러오도록 설정 */}
+      <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`}>
+        {/* ✅ 1 & 2. Google Analytics & Tag Manager (공식 라이브러리)
+          - body 태그 내부에 위치시켜도 Next.js가 최적의 위치로 자동 렌더링합니다.
+          - GA4와 GTM을 함께 사용하는 경우, 데이터 정합성을 위해 둘 다 명시하는 것이 좋습니다.
+        */}
+        <GoogleTagManager gtmId="GTM-NDF5RKBN" />
+        <GoogleAnalytics gaId="G-0QF9WTQFF2" />
+
+        {/* Google Adsense - 성능을 위해 지연 로드(lazyOnload) 적용 */}
         <Script
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5574169833640769"
           crossOrigin="anonymous"
