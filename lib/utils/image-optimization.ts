@@ -17,7 +17,7 @@ export function getOptimizedImageUrl(url: string | null | undefined, width = 400
         const encodedUrl = encodeURIComponent(url);
         // w: width, q: quality, output: format (webp), fit: cover (crop to fit)
         // We use contain for product images to avoid cutting off bottles
-        return `https://wsrv.nl/?url=${encodedUrl}&w=${width}&q=${quality}&output=webp&fit=contain`;
+        return `https://wsrv.nl/?url=${encodedUrl}&w=${width}&q=${quality}&output=webp&fit=inside`;
     } catch (e) {
         console.warn('[ImageOptimization] Failed to encode URL:', url);
         return url; // Fallback to original

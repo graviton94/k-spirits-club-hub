@@ -127,10 +127,12 @@ export default async function WorldCupResultPage({ params }: { params: { id: str
                         <div className="w-64 bg-white border border-[#e5e5e5] rounded-[24px] overflow-hidden shadow-lg relative">
                             <div className="aspect-square relative p-6 bg-[#f8f8f8] border-b border-[#e5e5e5]">
                                 <Image
-                                    src={getOptimizedImageUrl(winner.imageUrl || winner.thumbnailUrl || '', 500)}
+                                    src={getOptimizedImageUrl(winner.imageUrl || winner.thumbnailUrl || '', 600)}
                                     alt={winner.name}
                                     fill
                                     className="object-contain p-2"
+                                    unoptimized
+                                    priority
                                 />
                             </div>
 

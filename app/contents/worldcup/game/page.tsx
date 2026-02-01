@@ -202,6 +202,21 @@ export default function WorldCupGamePage() {
         }
     }, [currentIndex, currentRoundItems, nextRoundItems]);
 
+    // PRELOADER: Preload images for the next pair
+    useEffect(() => {
+        if (currentIndex + 2 < currentRoundItems.length) {
+            const nextPair = [
+                currentRoundItems[currentIndex + 2],
+                currentRoundItems[currentIndex + 3]
+            ].filter(Boolean);
+
+            nextPair.forEach(item => {
+                const img = new (window as any).Image();
+                img.src = getOptimizedImageUrl(item.imageUrl || item.thumbnailUrl || '', 400);
+            });
+        }
+    }, [currentIndex, currentRoundItems]);
+
     // Handle Image Save
     const handleSaveImage = useCallback(async () => {
         if (!resultCardRef.current) return;
@@ -530,7 +545,7 @@ function ChoiceCard({ item, onClick, pos }: { item: Spirit, onClick: () => void,
             {/* 1. Image Block (Reduced height on PC) */}
             <div className="aspect-[4/5] md:aspect-[16/10] relative w-full bg-muted/10 border-b border-border overflow-hidden">
                 <Image
-                    src={getOptimizedImageUrl(item.imageUrl || item.thumbnailUrl || '', 500)}
+                    src={getOptimizedImageUrl(item.imageUrl || item.thumbnailUrl || '', 400)}
                     alt={item.name}
                     fill
                     className="object-contain p-4 md:p-6 transition-transform duration-500 group-hover:scale-110"
