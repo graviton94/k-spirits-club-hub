@@ -70,15 +70,20 @@ async function processSpiritWithAI(spirit: any): Promise<ProcessingResult | null
     const noseTags = spirit.metadata?.nose_tags?.join(', ') || '';
     const palateTags = spirit.metadata?.palate_tags?.join(', ') || '';
     const finishTags = spirit.metadata?.finish_tags?.join(', ') || '';
+    
+    // Determine location context (region preferred, fallback to country)
+    const location = spirit.region || spirit.country || 'Unknown';
+    const locationLabel = spirit.region ? 'Region' : 'Country';
 
     const prompt = `
 You are an expert sommelier and translator specializing in Korean traditional spirits and global liquors.
 
 **Spirit Details:**
-- Name (Korean): ${spirit.name}
+- Product Name (Korean): ${spirit.name}
 - Distillery: ${spirit.distillery || 'Unknown'}
-- Category: ${spirit.category}${spirit.subcategory ? ` / ${spirit.subcategory}` : ''}
-- Region: ${spirit.region || 'Unknown'}
+- Category: ${spirit.category}
+- Detailed Subcategory: ${spirit.subcategory || 'Not specified'}
+- ${locationLabel}: ${location}
 - ABV: ${spirit.abv || 'Unknown'}%
 - Tasting Notes: ${tastingNote}
 - Nose: ${noseTags}
@@ -101,23 +106,46 @@ ${TERM_GUIDELINES}
    - VARIES in structure and vocabulary - avoid repetitive phrasing
    - NO medical claims or exaggerated marketing
 
-3. **pairing_guide_en** - Recommend 2-3 globally recognizable foods (2-3 sentences) that:
-   - Match the spirit's flavor profile based on ABV, category, and tasting notes
-   - Consider: lighter spirits → lighter foods, higher ABV → richer foods
-   - Use international cuisine (e.g., BBQ ribs, grilled seafood, aged cheeses, spicy tacos, pasta carbonara)
-   - Explain WHY the pairing works based on flavor harmony or contrast
-   - VARY recommendations significantly based on the spirit's unique characteristics
-   - Be specific and creative - no generic "pairs well with everything"
+3. **pairing_guide_en** - IMPORTANT: Create UNIQUE and CREATIVE food pairing recommendations (2-3 sentences):
+   
+   **CRITICAL - Consider ALL of these factors:**
+   - Product name and brand identity (e.g., "Teeling" suggests Irish character)
+   - Detailed subcategory (e.g., "Single Grain Scotch Whisky" vs "Blended Malt")
+   - ${locationLabel} (${location}) - Regional food culture and traditions
+   - ABV level (${spirit.abv}%) - Higher ABV → richer, bolder foods
+   - ALL tasting notes (Nose, Palate, Finish) - Match or contrast flavors
+   
+   **MAXIMUM CREATIVITY & AUTONOMY:**
+   - Think OUTSIDE the box - surprise with unexpected but logical pairings
+   - Draw from GLOBAL cuisines (Asian, European, Latin American, Middle Eastern, etc.)
+   - Consider cooking methods (grilled, smoked, fried, raw, braised, etc.)
+   - Include specific dishes, not just food categories (e.g., "Korean LA galbi" not just "BBQ")
+   - Explain the SCIENCE behind the pairing (fat cuts alcohol, sweetness balances spice, etc.)
+   - Make each recommendation DISTINCTLY different from others
+   - Use vivid, sensory language that makes readers want to try the pairing
+   
+   **FORBIDDEN:**
+   - Generic phrases like "pairs well with", "goes great with"
+   - Common pairings everyone suggests (e.g., "cheese and crackers")
+   - Vague categories without specifics (just "seafood", just "meat")
+   - Medical claims or health benefits
+   
+   **STYLE:**
+   - Be confident, specific, and adventurous
+   - Write as if you're a creative chef designing a tasting menu
+   - Each spirit deserves a COMPLETELY UNIQUE pairing experience
 
 4. **pairing_guide_ko** - Korean translation of pairing_guide_en that:
-   - Maintains the same food recommendations (don't change to Korean foods)
-   - Uses natural, conversational Korean
-   - Accurately conveys the reasoning behind pairings
+   - Maintains the EXACT same food recommendations (don't change to Korean foods)
+   - Uses natural, conversational Korean with vivid sensory language
+   - Accurately conveys the reasoning and excitement behind pairings
+   - Preserves all specific dish names and culinary terms
 
 **CRITICAL REQUIREMENTS:**
-✓ Each spirit is unique - tailor your response to its specific ABV, region, and flavor profile
-✓ Vary sentence structure, vocabulary, and recommendations 
-✓ Use the provided tasting notes and metadata to inform your suggestions
+✓ Each spirit is UNIQUE - no two spirits should have similar pairing recommendations
+✓ Vary sentence structure, vocabulary, and creative approach dramatically
+✓ Use ALL provided details (name, subcategory, location, tasting notes) to inform suggestions
+✓ Be BOLD and CREATIVE - this is about culinary artistry, not safe suggestions
 ✓ NO medical claims (e.g., "good for health", "aids digestion")
 ✓ NO generic marketing language
 ✓ Output ONLY valid JSON (no markdown formatting)

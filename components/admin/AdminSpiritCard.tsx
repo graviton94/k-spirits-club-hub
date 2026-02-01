@@ -72,6 +72,7 @@ export default function AdminSpiritCard({ spirit }: AdminSpiritCardProps) {
           distillery: spirit.distillery,
           abv: spirit.abv,
           region: spirit.region,
+          country: spirit.country,
           metadata: spirit.metadata
         })
       });

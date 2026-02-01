@@ -15,7 +15,7 @@ import { enrichSpiritWithAI, type SpiritEnrichmentInput } from '@/lib/services/g
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
-        const { name, category, subcategory, distillery, abv, region, metadata } = body;
+        const { name, category, subcategory, distillery, abv, region, country, metadata } = body;
 
         if (!name || !category) {
             return NextResponse.json(
@@ -31,6 +31,7 @@ export async function POST(req: NextRequest) {
             distillery,
             abv,
             region,
+            country,
             metadata
         };
 

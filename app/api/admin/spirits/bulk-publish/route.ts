@@ -89,6 +89,7 @@ export async function POST(req: NextRequest) {
                             distillery: spirit.distillery,
                             abv: spirit.abv,
                             region: spirit.region,
+                            country: spirit.country,
                             metadata: spirit.metadata
                         };
 
