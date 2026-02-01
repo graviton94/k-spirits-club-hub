@@ -122,7 +122,8 @@ export default function FlavorView() {
             const dataUrl = await toPng(reportRef.current, {
                 cacheBust: true,
                 backgroundColor: '#000000',
-                pixelRatio: 3,
+                pixelRatio: 2,
+                skipFonts: true,
                 style: {
                     borderRadius: '0',
                     padding: '40px',

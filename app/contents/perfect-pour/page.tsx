@@ -96,7 +96,7 @@ export default function PerfectPourPage() {
         if (requestRef.current) cancelAnimationFrame(requestRef.current);
 
         const currentAnimId = ++animationIdCounter.current;
-        const speedPerSecond = 50; // 초당 50% 채움
+        const speedPerSecond = 40; // 초당 40% 채움 (조금 더 정교한 조작 가능)
         let lastTime: number | null = null;
 
         const animate = (time: number) => {
@@ -111,7 +111,7 @@ export default function PerfectPourPage() {
             const delta = (time - lastTime) / 1000;
             lastTime = time;
 
-            const validDelta = Math.min(delta, 0.1);
+            const validDelta = Math.min(delta, 0.05); // More frequent updates limit
             const increment = speedPerSecond * validDelta;
 
             let stopped = false;
@@ -274,7 +274,7 @@ export default function PerfectPourPage() {
 
                     {/* Liquid Layer */}
                     <div
-                        className="absolute w-full transition-all duration-75 ease-linear shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+                        className="absolute w-full shadow-[0_0_20px_rgba(255,255,255,0.2)]"
                         style={{
                             bottom: 0,
                             height: `${Math.min(100, displayTotal)}%`,

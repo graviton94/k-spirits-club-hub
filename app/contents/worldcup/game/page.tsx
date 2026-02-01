@@ -225,7 +225,9 @@ export default function WorldCupGamePage() {
             const dataUrl = await toPng(wrapper, {
                 cacheBust: true,
                 backgroundColor: '#ffffff',
-                pixelRatio: 3,
+                pixelRatio: 2, // 3 is too heavy for some mobiles
+                skipFonts: true, // Often speeds up/fixes external capture
+                includeQueryParams: true, // Support for CDN query params
                 style: {
                     borderRadius: '0',
                     margin: '0',
@@ -342,11 +344,15 @@ export default function WorldCupGamePage() {
                                 {/* 1. Image Block */}
                                 <div className="aspect-square relative p-6 bg-[#f8f8f8] border-b border-[#e5e5e5]">
                                     <Image
-                                        src={winner.imageUrl || winner.thumbnailUrl || ''}
+                                        src={winner.imageUrl || winner.thumbnailUrl || '/icon.png'}
                                         alt={winner.name}
                                         fill
                                         className="object-contain p-2"
                                         unoptimized
+                                        crossOrigin="anonymous"
+                                        onError={(e) => {
+                                            (e.target as HTMLImageElement).src = '/icon.png';
+                                        }}
                                     />
                                 </div>
 

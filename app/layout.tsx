@@ -76,7 +76,7 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
 
         {/* 3. Microsoft Clarity (Next.js Script 컴포넌트 사용) */}
-        <Script id="microsoft-clarity" strategy="afterInteractive">
+        <Script id="microsoft-clarity" strategy="lazyOnload">
           {`
             (function(c,l,a,r,i,t,y){
                 c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};

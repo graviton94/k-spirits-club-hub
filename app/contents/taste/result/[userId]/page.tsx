@@ -16,7 +16,8 @@ export async function generateMetadata({ params }: { params: { userId: string } 
 
     const title = `🧬 나의 미각 DNA: "${profile.persona.title}"`;
     const description = `${profile.persona.keywords.join(' ')} | AI가 분석한 나의 주류 취향을 확인해보세요.`;
-    const image = '/og-taste-dna.png'; // 대중적인 취향 분석 이미지가 있다면 경로 설정
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://k-spirits.club';
+    const image = `${baseUrl}/og-taste-dna.png`;
 
     return {
         title: `${profile.persona.title} - 미각 DNA 리포트`,

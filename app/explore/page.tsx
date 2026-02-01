@@ -26,9 +26,11 @@ export const metadata: Metadata = {
   },
 };
 
+import ExploreLoading from "./loading";
+
 export default function ExplorePage() {
   return (
-    <Suspense fallback={<div className="container mx-auto px-4 py-8">Loading...</div>}>
+    <Suspense fallback={<ExploreLoading />}>
       <ExploreContent />
     </Suspense>
   );

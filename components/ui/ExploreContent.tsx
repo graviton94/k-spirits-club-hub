@@ -70,9 +70,16 @@ export default function ExploreContent() {
   // 로딩 상태 처리
   if (isLoading && (!searchIndex || searchIndex.length === 0)) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-        <Loader2 className="w-10 h-10 animate-spin text-indigo-600 dark:text-indigo-400" />
-        <p className="text-muted-foreground font-medium">제품 정보를 불러오는 중입니다...</p>
+      <div className="flex flex-col items-center justify-center min-h-[60vh]">
+        <div className="flex flex-col items-center gap-6">
+          <div className="text-7xl animate-bounce">🍶</div>
+          <div className="flex gap-2">
+            <div className="w-3 h-3 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+            <div className="w-3 h-3 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+            <div className="w-3 h-3 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+          </div>
+          <p className="text-muted-foreground font-bold tracking-tight mt-2 text-lg">제품 정보를 불러오는 중입니다...</p>
+        </div>
       </div>
     );
   }
