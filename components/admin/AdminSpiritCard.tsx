@@ -30,6 +30,7 @@ export default function AdminSpiritCard({ spirit }: AdminSpiritCardProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [isTranslating, setIsTranslating] = useState(false);
   const [nameEn, setNameEn] = useState(spirit.name_en || '');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleTranslate = async () => {
     if (!spirit.name) return;
@@ -57,6 +58,7 @@ export default function AdminSpiritCard({ spirit }: AdminSpiritCardProps) {
 
   const handlePublish = async () => {
     setIsLoading(true);
+    setErrorMessage(null);
     try {
       // Step 1: Call AI enrichment API to generate name_en, description_en, and pairing guides
       console.log('[Publish] Starting AI enrichment for:', spirit.name);
@@ -77,16 +79,18 @@ export default function AdminSpiritCard({ spirit }: AdminSpiritCardProps) {
       let enrichedData: EnrichmentResult | null = null;
       if (enrichResponse.ok) {
         enrichedData = await enrichResponse.json();
-        console.log('[Publish] AI enrichment successful:', enrichedData);
+        console.log('[Publish] ✓ AI enrichment successful:', enrichedData);
       } else {
-        console.warn('[Publish] AI enrichment failed, continuing without enrichment');
+        const errorData = await enrichResponse.json().catch(() => ({ error: 'Unknown error' }));
+        console.error('[Publish] ✗ AI enrichment failed:', errorData);
+        setErrorMessage(`AI enrichment failed: ${errorData.error || errorData.details || 'Unknown error'}. Publishing without AI content.`);
       }
 
       // Step 2: Update spirit with enriched data
       const updateData: SpiritUpdateData = {
         isPublished: true,
         isReviewed: true,
-        reviewedBy: 'admin',
+        reviewedBy: 'ADMIN',
         reviewedAt: new Date(),
         name_en: enrichedData?.name_en || nameEn || null
       };
@@ -106,10 +110,16 @@ export default function AdminSpiritCard({ spirit }: AdminSpiritCardProps) {
       }
 
       await db.updateSpirit(spirit.id, updateData);
-      console.log('[Publish] Spirit published successfully with AI enrichment');
+      console.log('[Publish] ✓ Spirit published successfully');
       setStatus('published');
+      
+      // Clear error after a few seconds if publish succeeded
+      if (errorMessage) {
+        setTimeout(() => setErrorMessage(null), 5000);
+      }
     } catch (error) {
       console.error("Failed to publish:", error);
+      setErrorMessage(`Failed to publish: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
       setIsLoading(false);
     }
@@ -172,6 +182,12 @@ export default function AdminSpiritCard({ spirit }: AdminSpiritCardProps) {
                   {isTranslating ? '...' : '🤖 AI 번역'}
                 </button>
               </div>
+              {/* Error message display */}
+              {errorMessage && (
+                <div className="text-xs text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 px-2 py-1 rounded">
+                  ⚠️ {errorMessage}
+                </div>
+              )}
             </div>
           )}
 
