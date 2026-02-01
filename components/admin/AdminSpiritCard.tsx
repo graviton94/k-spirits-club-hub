@@ -41,13 +41,55 @@ export default function AdminSpiritCard({ spirit }: AdminSpiritCardProps) {
   const handlePublish = async () => {
     setIsLoading(true);
     try {
-      await db.updateSpirit(spirit.id, {
+      // Step 1: Call AI enrichment API to generate name_en, description_en, and pairing guides
+      console.log('[Publish] Starting AI enrichment for:', spirit.name);
+      const enrichResponse = await fetch('/api/admin/spirits/enrich', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: spirit.name,
+          category: spirit.category,
+          subcategory: spirit.subcategory,
+          distillery: spirit.distillery,
+          abv: spirit.abv,
+          region: spirit.region,
+          metadata: spirit.metadata
+        })
+      });
+
+      let enrichedData: any = null;
+      if (enrichResponse.ok) {
+        enrichedData = await enrichResponse.json();
+        console.log('[Publish] AI enrichment successful:', enrichedData);
+      } else {
+        console.warn('[Publish] AI enrichment failed, continuing without enrichment');
+      }
+
+      // Step 2: Update spirit with enriched data
+      const updateData: any = {
         isPublished: true,
         isReviewed: true,
         reviewedBy: 'admin',
         reviewedAt: new Date(),
-        name_en: nameEn || null // 영문명 반영
-      });
+        name_en: enrichedData?.name_en || nameEn || null
+      };
+
+      // Add description_en if generated
+      if (enrichedData?.description_en) {
+        updateData.description_en = enrichedData.description_en;
+      }
+
+      // Add pairing guides to metadata if generated
+      if (enrichedData?.pairing_guide_en || enrichedData?.pairing_guide_ko) {
+        updateData.metadata = {
+          ...spirit.metadata,
+          pairing_guide_en: enrichedData?.pairing_guide_en || spirit.metadata?.pairing_guide_en,
+          pairing_guide_ko: enrichedData?.pairing_guide_ko || spirit.metadata?.pairing_guide_ko
+        };
+      }
+
+      await db.updateSpirit(spirit.id, updateData);
+      console.log('[Publish] Spirit published successfully with AI enrichment');
       setStatus('published');
     } catch (error) {
       console.error("Failed to publish:", error);

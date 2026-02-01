@@ -65,36 +65,70 @@ const TERM_GUIDELINES = `
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 async function processSpiritWithAI(spirit: any): Promise<ProcessingResult | null> {
+    // Extract detailed metadata for better prompts
+    const tastingNote = spirit.metadata?.tasting_note || spirit.metadata?.description || '';
+    const noseTags = spirit.metadata?.nose_tags?.join(', ') || '';
+    const palateTags = spirit.metadata?.palate_tags?.join(', ') || '';
+    const finishTags = spirit.metadata?.finish_tags?.join(', ') || '';
+
     const prompt = `
-    You are an expert sommelier and translator for Korean traditional spirits and global liquors.
-    
-    Task:
-    1. Translate the product name to English (if not provided/suitable). Use official terminology:
-    ${TERM_GUIDELINES}
-    2. Generate a 'Global Food Pairing Guide' (2-3 sentences max) in English (pairing_guide_en).
-       - Recommend foods global users recognize (e.g., Tacos, BBQ, Cheese, Pasta).
-       - Base recommendation on the spirit's category ('${spirit.category}'), subcategory ('${spirit.subcategory}'), and tasting notes: "${spirit.metadata?.tasting_note || ''}".
-    3. Generate a 'Description' (description_en) in English (1-2 sentences). Explain what this spirit is to a foreigner (e.g. "A premium distilled soju aged in oak...").
-    4. Generate 'Korean Food Pairing Guide' (pairing_guide_ko) by determining the Korean translation of 'pairing_guide_en'.
-       - MUST be consistent with the English guide. Do not recommend different foods.
-       - Translate 'pairing_guide_en' into natural Korean.
+You are an expert sommelier and translator specializing in Korean traditional spirits and global liquors.
 
-    CRITICAL GUARDRAILS:
-    - NO medical claims (e.g., "good for digestion", "healthy").
-    - NO exaggerated marketing fluff.
-    - Output strictly valid JSON.
+**Spirit Details:**
+- Name (Korean): ${spirit.name}
+- Distillery: ${spirit.distillery || 'Unknown'}
+- Category: ${spirit.category}${spirit.subcategory ? ` / ${spirit.subcategory}` : ''}
+- Region: ${spirit.region || 'Unknown'}
+- ABV: ${spirit.abv || 'Unknown'}%
+- Tasting Notes: ${tastingNote}
+- Nose: ${noseTags}
+- Palate: ${palateTags}
+- Finish: ${finishTags}
 
-    Input Data:
-    - Name: ${spirit.name}
-    - Category: ${spirit.category} / ${spirit.subcategory}
-    
-    Output JSON Schema:
-    {
-      "name_en": "Translated Name",
-      "description_en": "Brief English description...",
-      "pairing_guide_en": "Brief English pairing guide...",
-      "pairing_guide_ko": "Brief Korean pairing guide..."
-    }
+**Your Tasks:**
+
+1. **name_en** - Translate the Korean name to English using these terminology rules:
+${TERM_GUIDELINES}
+   - Keep brand names as-is (romanized)
+   - Follow format: [Brand/Distillery] [Product Name] [Edition/Age]
+   - Use Title Case
+
+2. **description_en** - Create a compelling 2-3 sentence description in English that:
+   - Explains what this spirit is to someone unfamiliar with Korean spirits
+   - Highlights unique characteristics based on the category, subcategory, and tasting notes
+   - Mentions distillery heritage or regional significance if notable
+   - Uses specific sensory details (e.g., "oak-aged", "floral notes", "smooth finish")
+   - VARIES in structure and vocabulary - avoid repetitive phrasing
+   - NO medical claims or exaggerated marketing
+
+3. **pairing_guide_en** - Recommend 2-3 globally recognizable foods (2-3 sentences) that:
+   - Match the spirit's flavor profile based on ABV, category, and tasting notes
+   - Consider: lighter spirits → lighter foods, higher ABV → richer foods
+   - Use international cuisine (e.g., BBQ ribs, grilled seafood, aged cheeses, spicy tacos, pasta carbonara)
+   - Explain WHY the pairing works based on flavor harmony or contrast
+   - VARY recommendations significantly based on the spirit's unique characteristics
+   - Be specific and creative - no generic "pairs well with everything"
+
+4. **pairing_guide_ko** - Korean translation of pairing_guide_en that:
+   - Maintains the same food recommendations (don't change to Korean foods)
+   - Uses natural, conversational Korean
+   - Accurately conveys the reasoning behind pairings
+
+**CRITICAL REQUIREMENTS:**
+✓ Each spirit is unique - tailor your response to its specific ABV, region, and flavor profile
+✓ Vary sentence structure, vocabulary, and recommendations 
+✓ Use the provided tasting notes and metadata to inform your suggestions
+✓ NO medical claims (e.g., "good for health", "aids digestion")
+✓ NO generic marketing language
+✓ Output ONLY valid JSON (no markdown formatting)
+
+**Output JSON Format:**
+{
+  "name_en": "English Name",
+  "description_en": "Detailed description...",
+  "pairing_guide_en": "Food pairing recommendations...",
+  "pairing_guide_ko": "음식 페어링 추천..."
+}
     `;
 
     for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
