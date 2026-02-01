@@ -24,11 +24,11 @@ export const metadata: Metadata = {
 export default function ContentsPage() {
   const contents = [
     {
-      title: "술 취향 월드컵(🚧개발 중)",
+      title: "술 취향 월드컵",
       description: "당신의 최애 술은? 랭킹 토너먼트.",
       icon: <Trophy className="w-8 h-8 text-amber-500" />,
-      link: "#",
-      status: "Ready",
+      link: "/contents/worldcup",
+      status: "OPEN",
       gradient: "from-amber-500/20 to-orange-600/20",
       borderHover: "group-hover:border-amber-500/50"
     },

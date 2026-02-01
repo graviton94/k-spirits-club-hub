@@ -6,6 +6,7 @@ import { Sparkles, RefreshCw, ShoppingBag, ExternalLink, Download, Share2 } from
 import { toPng } from 'html-to-image';
 import { useAuth } from '@/app/context/auth-context';
 import TasteRadar from './TasteRadar';
+import TastePublicReport from './TastePublicReport';
 import SuccessToast from '@/components/ui/SuccessToast';
 import { UserTasteProfile } from '@/lib/db/schema';
 
@@ -120,9 +121,15 @@ export default function FlavorView() {
         try {
             const dataUrl = await toPng(reportRef.current, {
                 cacheBust: true,
-                backgroundColor: '#0a0a0a',
+                backgroundColor: '#000000',
+                pixelRatio: 3,
                 style: {
-                    borderRadius: '0'
+                    borderRadius: '0',
+                    padding: '40px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                 }
             });
 
@@ -143,16 +150,25 @@ export default function FlavorView() {
     };
 
     const handleCopyUrl = async () => {
+        if (!user) return;
+
+        const shareUrl = `${window.location.origin}/contents/taste/result/${user.uid}`;
+
         try {
-            await navigator.clipboard.writeText(window.location.href);
-            setToastMessage('🔗공유 링크가 클립보드에 복사되었습니다!');
-            setToastVariant('success');
-            setShowToast(true);
+            if (navigator.share) {
+                await navigator.share({
+                    title: '🧬 나의 미각 DNA 리포트',
+                    text: `AI가 분석한 나의 주류 취향은 [${profile?.persona.title}]! 당신의 취향도 확인해보세요.`,
+                    url: shareUrl
+                });
+            } else {
+                await navigator.clipboard.writeText(shareUrl);
+                setToastMessage('🔗공유 링크가 클립보드에 복사되었습니다!');
+                setToastVariant('success');
+                setShowToast(true);
+            }
         } catch (err) {
-            console.error('Failed to copy URL:', err);
-            setToastMessage('링크 복사에 실패했습니다.');
-            setToastVariant('error');
-            setShowToast(true);
+            console.error('Failed to share:', err);
         }
     };
 
@@ -246,81 +262,14 @@ export default function FlavorView() {
             className="space-y-6 pb-20"
         >
             {/* 메인 리포트 카드 */}
-            <div
-                ref={reportRef}
-                className="bg-neutral-900/60 backdrop-blur-sm border border-neutral-800 rounded-3xl p-6 md:p-10 relative overflow-hidden group"
-            >
-                {/* 은은한 배경 효과 */}
-                <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-pink-600/5 blur-[120px] rounded-full pointer-events-none" />
+            <div>
+                <div ref={reportRef}>
+                    <TastePublicReport profile={profile!} />
+                </div>
 
-                <div className="grid lg:grid-cols-2 gap-10 items-center relative z-10">
-                    {/* 왼쪽: 차트 */}
-                    <div className="w-full aspect-square max-w-[320px] mx-auto relative flex flex-col">
-                        <div className="relative flex-1">
-                            {/* 차트 배경 장식 */}
-                            <div className="absolute inset-0 bg-gradient-to-br from-neutral-800/20 to-transparent rounded-full" />
-                            <TasteRadar data={chartData} />
-                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-[10px] text-neutral-500 font-mono tracking-widest bg-neutral-900/80 px-2 py-1 rounded">
-                                {profile!.analyzedAt.toLocaleDateString()}
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* 오른쪽: 텍스트 & 추천 */}
-                    <div className="space-y-8">
-                        {/* 페르소나 정의 */}
-                        <div>
-                            <div className="flex items-center gap-2 mb-3">
-                                <span className="px-2 py-0.5 bg-pink-500/10 border border-pink-500/20 rounded text-[10px] font-bold text-pink-400 tracking-wider">
-                                    AI REPORT
-                                </span>
-                            </div>
-                            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
-                                "{profile!.persona.title}"
-                            </h2>
-                            <p className="text-neutral-300 leading-relaxed text-sm md:text-base">
-                                {profile!.persona.description}
-                            </p>
-                            <div className="flex flex-wrap gap-2 mt-4">
-                                {profile!.persona.keywords.map((tag) => (
-                                    <span key={tag} className="px-3 py-1 bg-neutral-800 rounded-full text-xs text-neutral-400 font-medium">
-                                        {tag}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* 수익화 섹션: 추천 상품 */}
-                        {profile!.recommendation && (
-                            <div className="p-5 bg-gradient-to-r from-neutral-800 to-neutral-900 rounded-2xl border border-neutral-700 hover:border-pink-500/50 transition-colors group/ad">
-                                <div className="flex justify-between items-start mb-3">
-                                    <div className="flex flex-col">
-                                        <span className="text-xs text-pink-400 font-bold mb-1 flex items-center gap-1">
-                                            <Sparkles className="w-3 h-3" /> BEST MATCH
-                                        </span>
-                                        <h3 className="text-lg font-bold text-white group-hover/ad:text-pink-200 transition-colors">
-                                            {profile!.recommendation.name}
-                                        </h3>
-                                    </div>
-                                    <div className="text-right">
-                                        <div className="text-3xl font-bold text-white">{profile!.recommendation.matchRate}<span className="text-sm align-top ml-1">%</span></div>
-                                    </div>
-                                </div>
-
-                                <a
-                                    href={profile!.recommendation.linkUrl || '#'}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="w-full mt-2 bg-white text-black py-2.5 rounded-lg font-bold text-sm flex items-center justify-center gap-2 hover:bg-neutral-200 transition-colors"
-                                >
-                                    <ShoppingBag className="w-4 h-4" /> 최저가 확인(🚧개발중) <ExternalLink className="w-3 h-3 opacity-50" />
-                                </a>
-                            </div>
-                        )}
-
-                        {/* Limit Message / Regenerate Button */}
-                        {renderLimitMessage()}
-                    </div>
+                {/* 컨트롤 버튼 (보관함에서만 노출) */}
+                <div className="max-w-4xl mx-auto px-6 pb-6">
+                    {renderLimitMessage()}
                 </div>
             </div>
 

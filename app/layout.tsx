@@ -102,7 +102,7 @@ export default function RootLayout({
           strategy="lazyOnload"
         />
 
-        <main className="min-h-screen pb-32">
+        <main className="relative min-h-screen pb-32">
           <AuthProvider>
             <SpiritsCacheProvider>
               <Header />

@@ -16,7 +16,7 @@ export const db = {
     // 1. Fetch filtered items from Firestore
     // DB-level filters: status, isPublished (applied in firestore-rest.ts)
     // Memory filters: category (OR logic), subcategory, country, searchTerm
-    
+
     let allItems = await spiritsDb.getAll(filter); // Pre-filter by status and isPublished at DB level
 
     // 2. Memory Filters (for fields requiring custom logic)
@@ -29,6 +29,7 @@ export const db = {
     }
     if (filter.subcategory) allItems = allItems.filter(s => s.subcategory === filter.subcategory);
     if (filter.country) allItems = allItems.filter(s => s.country === filter.country);
+    if (filter.noImage) allItems = allItems.filter(s => !s.imageUrl);
     // Note: isPublished is already filtered at DB level, no need for memory filter
     if (filter.searchTerm) {
       const lowerTerm = filter.searchTerm.toLowerCase();
@@ -69,10 +70,10 @@ export const db = {
     if (updates.status === 'PUBLISHED') {
       updates.isPublished = true;
     }
-    
+
     // Auto-generate searchKeywords if name, distillery, or metadata.name_en is being updated
     const needsKeywordUpdate = updates.name || updates.distillery || updates.metadata?.name_en;
-    
+
     if (needsKeywordUpdate) {
       // Fetch current spirit to get all fields for keyword generation
       const currentSpirit = await spiritsDb.getById(id);
@@ -85,9 +86,9 @@ export const db = {
         updates.searchKeywords = generateSpiritSearchKeywords(spiritForKeywords);
       }
     }
-    
+
     await spiritsDb.upsert(id, updates);
-    
+
     // If spirit was published, sync the new arrivals cache
     if (updates.isPublished === true) {
       const { newArrivalsDb } = await import('./firestore-rest');
@@ -98,7 +99,7 @@ export const db = {
         // Don't fail the update if cache sync fails
       }
     }
-    
+
     return spiritsDb.getById(id);
   },
 

@@ -195,19 +195,47 @@ def main():
     print(f"시작 시간: {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
 
     for canonical_name, aliases in SPIRIT_CATEGORY_MAP.items():
-        data = fetch_spirits_by_category(canonical_name, aliases)
-        total_count += len(data)
+        file_path = os.path.join(data_dir, f"spirits_{canonical_name}.json")
         
-        if data:
-            # 파일명에서 특수문자 및 공백 제거
-            file_path = os.path.join(data_dir, f"spirits_{canonical_name}.json")
-            
+        # 1. 기존 데이터 로드
+        existing_data = []
+        existing_ids = set()
+        if os.path.exists(file_path):
+            try:
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    existing_data = json.load(f)
+                    # 기존 아이템들의 externalId 수집
+                    existing_ids = {item.get('externalId') for item in existing_data if item.get('externalId')}
+                print(f"📖 기존 데이터 로드 완료: '{file_path}' ({len(existing_data)}건)")
+            except Exception as e:
+                print(f"⚠️ 기존 파일 로드 중 오류 발생 (새 파일로 취급): {e}")
+
+        # 2. API에서 최신 데이터 수집
+        fetched_data = fetch_spirits_by_category(canonical_name, aliases)
+        
+        # 3. 중복 제외 및 신규 아이템 추출
+        new_items = []
+        for item in fetched_data:
+            if item.get('externalId') not in existing_ids:
+                new_items.append(item)
+                # 동일 배치 내 중복 방지
+                if item.get('externalId'):
+                    existing_ids.add(item.get('externalId'))
+
+        total_count += len(fetched_data)
+        
+        # 4. 결과 저장 (기존 데이터 + 신규 데이터)
+        if new_items:
+            combined_data = existing_data + new_items
             with open(file_path, 'w', encoding='utf-8') as f:
-                json.dump(data, f, indent=2, ensure_ascii=False)
+                json.dump(combined_data, f, indent=2, ensure_ascii=False)
             
-            print(f"💾 '{file_path}' 저장 완료 ({len(data):,}건)")
-            print(f"📝 매핑 샘플 (ID: {data[0]['id']}):")
-            print(json.dumps(data[0], indent=2, ensure_ascii=False))
+            print(f"✅ '{file_path}' 업데이트 완료: +{len(new_items)}건 신규 추가 (총 {len(combined_data)}건)")
+            if not existing_data: # 완전 새 파일인 경우 샘플 출력
+                print(f"📝 데이터 샘플:")
+                print(json.dumps(combined_data[0], indent=2, ensure_ascii=False))
+        else:
+            print(f"ℹ️ '{file_path}': 새로 추가할 데이터가 없습니다. (기존 {len(existing_data)}건 유지)")
 
     end_time = datetime.now()
     duration = end_time - start_time

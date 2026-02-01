@@ -58,8 +58,9 @@ export default function AdminDashboard() {
   const [page, setPage] = useState(1);
   const pageSize = 50; // Reduced from 20 for efficiency
 
-  // Filters - Default to READY_FOR_CONFIRM for efficiency
-  const [statusFilter, setStatusFilter] = useState<SpiritStatus | 'ALL'>('READY_FOR_CONFIRM');
+  // Filters - Default to ALL for better visibility of data in pipeline
+  const [statusFilter, setStatusFilter] = useState<SpiritStatus | 'ALL'>('ALL');
+  const [noImageOnly, setNoImageOnly] = useState(false);
   const [level1Cat, setLevel1Cat] = useState<string>('ALL'); // Legal Category (e.g. 위스키)
   const [level2Cat, setLevel2Cat] = useState<string>('ALL'); // Main Family (e.g. scotch) - Virtual
   const [level3Cat, setLevel3Cat] = useState<string>('ALL'); // Sub Category (e.g. Single Malt)
@@ -114,6 +115,7 @@ export default function AdminDashboard() {
       if (statusFilter !== 'ALL') params.append('status', statusFilter);
       if (level1Cat !== 'ALL') params.append('category', level1Cat);
       if (level3Cat !== 'ALL') params.append('subcategory', level3Cat);
+      if (noImageOnly) params.append('noImage', 'true');
       if (searchQuery) params.append('search', searchQuery);
 
       const response = await fetch(`/api/admin/spirits?${params.toString()}`);
@@ -175,7 +177,7 @@ export default function AdminDashboard() {
   // Reset to page 1 when filters change
   useEffect(() => {
     setPage(1);
-  }, [statusFilter, level1Cat, level3Cat, searchQuery]);
+  }, [statusFilter, level1Cat, level3Cat, searchQuery, noImageOnly]);
 
 
   const publishSpirit = async (id: string) => {
@@ -423,13 +425,25 @@ export default function AdminDashboard() {
                 {/* Status & Search */}
                 <div className="flex flex-wrap gap-4 items-center">
                   <div className="flex bg-gray-100 dark:bg-gray-900 rounded-lg p-1">
-                    {(['ALL', 'READY_FOR_CONFIRM', 'PUBLISHED'] as const).map(f => (
+                    {(['ALL', 'ENRICHED', 'READY_FOR_CONFIRM', 'PUBLISHED'] as const).map(f => (
                       <button key={f} onClick={() => setStatusFilter(f)}
                         className={`px-3 py-1.5 rounded-md text-[10px] font-bold transition-all ${statusFilter === f ? 'bg-white dark:bg-black shadow text-amber-600 dark:text-amber-400' : 'text-gray-500 dark:text-gray-400'}`}>
-                        {f === 'ALL' ? '전체' : f === 'PUBLISHED' ? '공개됨' : '검수대기'}
+                        {f === 'ALL' ? '전체' : f === 'PUBLISHED' ? '공개됨' : f === 'ENRICHED' ? 'AI분석' : '검수대기'}
                       </button>
                     ))}
                   </div>
+
+                  {/* Image Filter Checkbox */}
+                  <label className="flex items-center gap-2 cursor-pointer bg-gray-100 dark:bg-gray-900 px-3 py-1.5 rounded-lg border border-transparent hover:border-amber-500/30 transition-all">
+                    <input
+                      type="checkbox"
+                      className="w-3.5 h-3.5 accent-amber-500"
+                      checked={noImageOnly}
+                      onChange={e => setNoImageOnly(e.target.checked)}
+                    />
+                    <span className="text-[10px] font-bold text-gray-600 dark:text-gray-400">이미지 없음</span>
+                  </label>
+
                   <div className="relative">
                     <input placeholder="이름 검색..." className="bg-gray-100 dark:bg-gray-950 px-4 py-2 rounded-xl text-xs font-bold w-48 border border-transparent focus:border-amber-500 focus:outline-none text-black dark:text-white placeholder:text-gray-400"
                       value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
@@ -477,8 +491,12 @@ export default function AdminDashboard() {
                           <div className="text-[11px] text-gray-500 dark:text-gray-400">{spirit.distillery || '-'} | {spirit.abv}% | {spirit.category} › {spirit.subcategory}</div>
                         </td>
                         <td className="p-4">
-                          <span className={`px-2 py-1 rounded text-[10px] font-black border ${spirit.status === 'PUBLISHED' ? 'bg-green-100 text-green-700 border-green-200' : 'bg-amber-100 text-amber-700 border-amber-200'}`}>
-                            {spirit.status === 'PUBLISHED' ? 'PUBLISHED' : '검수대기'}
+                          <span className={`px-2 py-1 rounded text-[10px] font-black border ${spirit.status === 'PUBLISHED' ? 'bg-green-100 text-green-700 border-green-200' :
+                              spirit.status === 'ENRICHED' ? 'bg-blue-100 text-blue-700 border-blue-200' :
+                                'bg-amber-100 text-amber-700 border-amber-200'
+                            }`}>
+                            {spirit.status === 'PUBLISHED' ? 'PUBLISHED' :
+                              spirit.status === 'ENRICHED' ? 'AI분석됨' : '검수대기'}
                           </span>
                         </td>
                         <td className="p-4">

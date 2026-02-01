@@ -83,7 +83,12 @@ export default function MyPage() {
 
 
 
-    if (loading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+    if (loading) return (
+        <div className="flex flex-col items-center justify-center py-20 text-muted-foreground animate-pulse">
+            <span className="text-4xl mb-4">🥃</span>
+            <p className="font-bold">계정 정보를 확인하는 중입니다...</p>
+        </div>
+    );
 
     // Guest Data Fallback
     const nickname = user ? (profile?.nickname || user.displayName) : "손님 (비회원)";
@@ -121,7 +126,7 @@ export default function MyPage() {
     };
 
     return (
-        <div className="container mx-auto px-4 py-12 max-w-2xl">
+        <div className="container mx-auto px-4 py-12 max-w-2xl min-h-[70vh]">
             <div className="bg-card border border-border rounded-3xl p-8 shadow-xl">
                 <div className="flex flex-col items-center text-center">
                     <div className="w-24 h-24 rounded-full flex items-center justify-center text-4xl mb-4 overflow-hidden border-2 border-border shadow-lg">

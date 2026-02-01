@@ -146,6 +146,7 @@ export interface SpiritFilter {
   isReviewed?: boolean;
   subcategory?: string;
   status?: SpiritStatus;
+  noImage?: boolean;
 }
 
 export interface PaginationParams {

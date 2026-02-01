@@ -250,10 +250,10 @@ export default function PerfectPourPage() {
             {/* Header */}
             <div className="flex items-center gap-4 mb-8">
                 <Link
-                    href="/"
-                    className="p-2 bg-neutral-800 rounded-full hover:bg-neutral-700 transition-colors"
+                    href="/contents"
+                    className="p-2.5 bg-card/50 backdrop-blur-md border border-border rounded-2xl hover:bg-muted transition-all"
                 >
-                    <ChevronLeft className="w-6 h-6 text-white" />
+                    <ChevronLeft className="w-5 h-5 text-foreground" />
                 </Link>
                 <h1 className="text-2xl font-black text-white">Somaek Master</h1>
             </div>

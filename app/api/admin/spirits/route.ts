@@ -10,6 +10,7 @@ export async function GET(req: NextRequest) {
     const status = searchParams.get('status');
     const category = searchParams.get('category');
     const subcategory = searchParams.get('subcategory');
+    const noImage = searchParams.get('noImage') === 'true';
 
     // Pagination Params
     const page = parseInt(searchParams.get('page') || '1');
@@ -25,9 +26,10 @@ export async function GET(req: NextRequest) {
             filter.status = status as SpiritStatus;
         }
         // Note: Do NOT add isPublished filter for admin view - admin should see everything
-        
+
         if (category && category !== 'ALL') filter.category = category;
         if (subcategory && subcategory !== 'ALL') filter.subcategory = subcategory;
+        if (noImage) filter.noImage = true;
 
         const search = searchParams.get('search');
         if (search) filter.searchTerm = search;
@@ -35,7 +37,7 @@ export async function GET(req: NextRequest) {
         console.log('[API /api/admin/spirits] Fetching with filter:', JSON.stringify(filter));
         const spirits = await db.getSpirits(filter, { page, pageSize });
         console.log(`[API /api/admin/spirits] Returned ${spirits.data.length} spirits (Total: ${spirits.total}, Page: ${page}/${spirits.totalPages})`);
-        
+
         // Add diagnostic info for zero results
         if (spirits.total === 0) {
             console.warn('[API /api/admin/spirits] ⚠️ ZERO RESULTS WARNING');
@@ -45,7 +47,7 @@ export async function GET(req: NextRequest) {
             console.warn('  2. All spirits filtered out by the applied filter');
             console.warn('  3. Firestore query error (check previous logs)');
         }
-        
+
         return NextResponse.json(spirits);
     } catch (error: any) {
         console.error('[API /api/admin/spirits] Error:', error);
