@@ -128,8 +128,8 @@ ${TERM_GUIDELINES}
         if (text.endsWith('```')) text = text.slice(0, -3);
         text = text.trim();
 
-        // Extract JSON
-        const jsonMatch = text.match(/\{[\s\S]*\}/);
+        // Extract JSON (non-greedy to handle edge cases)
+        const jsonMatch = text.match(/\{[\s\S]*?\}/);
         if (!jsonMatch) {
             throw new Error("No valid JSON found in AI response");
         }

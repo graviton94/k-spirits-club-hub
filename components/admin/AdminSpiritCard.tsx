@@ -8,6 +8,23 @@ interface AdminSpiritCardProps {
   spirit: Spirit;
 }
 
+interface EnrichmentResult {
+  name_en?: string;
+  description_en?: string;
+  pairing_guide_en?: string;
+  pairing_guide_ko?: string;
+}
+
+interface SpiritUpdateData {
+  isPublished?: boolean;
+  isReviewed?: boolean;
+  reviewedBy?: string;
+  reviewedAt?: Date;
+  name_en?: string | null;
+  description_en?: string;
+  metadata?: any;
+}
+
 export default function AdminSpiritCard({ spirit }: AdminSpiritCardProps) {
   const [status, setStatus] = useState(spirit.isPublished ? 'published' : 'pending');
   const [isLoading, setIsLoading] = useState(false);
@@ -57,7 +74,7 @@ export default function AdminSpiritCard({ spirit }: AdminSpiritCardProps) {
         })
       });
 
-      let enrichedData: any = null;
+      let enrichedData: EnrichmentResult | null = null;
       if (enrichResponse.ok) {
         enrichedData = await enrichResponse.json();
         console.log('[Publish] AI enrichment successful:', enrichedData);
@@ -66,7 +83,7 @@ export default function AdminSpiritCard({ spirit }: AdminSpiritCardProps) {
       }
 
       // Step 2: Update spirit with enriched data
-      const updateData: any = {
+      const updateData: SpiritUpdateData = {
         isPublished: true,
         isReviewed: true,
         reviewedBy: 'admin',
