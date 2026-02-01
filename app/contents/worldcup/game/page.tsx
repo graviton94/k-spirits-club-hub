@@ -15,6 +15,7 @@ import {
     Link2
 } from 'lucide-react';
 import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
+import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import { toPng } from 'html-to-image';
 import { useRef } from 'react';
 import {
@@ -40,6 +41,7 @@ interface Spirit {
     category: string;
     subcategory: string | null;
     tags: string[];
+    preloadedImageUrl?: string;  // ✅ 프리로드된 최종 이미지 URL
     metadata?: {
         nose_tags?: string[];
         palate_tags?: string[];
@@ -134,6 +136,10 @@ export default function WorldCupGamePage() {
                 }
 
                 const gameItems = shuffled.slice(0, finalRound);
+
+                // ✅ 이미지 일괄 프리로딩 (폴백 포함)
+                await preloadAllImages(gameItems);
+
                 setSpirits(gameItems);
                 setCurrentRoundItems(gameItems);
                 setTotalRound(finalRound);
@@ -147,6 +153,59 @@ export default function WorldCupGamePage() {
 
         fetchSpirits();
     }, [cat, sub, requestedRound]);
+
+    // 이미지 일괄 프리로딩 함수 (최적화 → 원본 → 폴백 순)
+    const preloadAllImages = async (items: Spirit[]) => {
+        const imagePromises = items.map(item => {
+            return new Promise<void>((resolve) => {
+                const originalUrl = item.imageUrl || item.thumbnailUrl || '';
+                const optimizedUrl = getOptimizedImageUrl(originalUrl, 400);
+                const fallbackUrl = getCategoryFallbackImage(item.category);
+
+                // 1차 시도: 최적화된 이미지
+                const img1 = document.createElement('img') as HTMLImageElement;
+                img1.onload = () => {
+                    item.preloadedImageUrl = optimizedUrl;
+                    resolve();
+                };
+                img1.onerror = () => {
+                    // 2차 시도: 원본 이미지
+                    const img2 = document.createElement('img') as HTMLImageElement;
+                    img2.onload = () => {
+                        item.preloadedImageUrl = originalUrl;
+                        resolve();
+                    };
+                    img2.onerror = () => {
+                        // 3차 시도: 카테고리 폴백
+                        const img3 = document.createElement('img') as HTMLImageElement;
+                        img3.onload = () => {
+                            item.preloadedImageUrl = fallbackUrl;
+                            resolve();
+                        };
+                        img3.onerror = () => {
+                            // 최종 폴백
+                            item.preloadedImageUrl = fallbackUrl;
+                            resolve();
+                        };
+                        img3.src = fallbackUrl;
+                    };
+                    img2.src = originalUrl;
+                };
+                img1.src = optimizedUrl;
+
+                // 타임아웃 설정 (5초)
+                setTimeout(() => {
+                    if (!item.preloadedImageUrl) {
+                        item.preloadedImageUrl = fallbackUrl;
+                        resolve();
+                    }
+                }, 5000);
+            });
+        });
+
+        await Promise.all(imagePromises);
+        console.log(`✅ ${items.length}개 이미지 프리로딩 완료`);
+    };
 
     // Winner Selection Logic
     const selectWinner = useCallback((selected: Spirit) => {
@@ -202,28 +261,14 @@ export default function WorldCupGamePage() {
         }
     }, [currentIndex, currentRoundItems, nextRoundItems]);
 
-    // PRELOADER: Preload images for the next pair
-    useEffect(() => {
-        if (currentIndex + 2 < currentRoundItems.length) {
-            const nextPair = [
-                currentRoundItems[currentIndex + 2],
-                currentRoundItems[currentIndex + 3]
-            ].filter(Boolean);
-
-            nextPair.forEach(item => {
-                const img = new (window as any).Image();
-                img.src = getOptimizedImageUrl(item.imageUrl || item.thumbnailUrl || '', 400);
-            });
-        }
-    }, [currentIndex, currentRoundItems]);
-
     // Handle Image Save
     const handleSaveImage = useCallback(async () => {
         if (!resultCardRef.current) return;
 
         try {
-            // Ensure images are fully loaded before capturing
             const wrapper = resultCardRef.current;
+
+            // 모든 이미지가 로드될 때까지 대기
             const images = wrapper.getElementsByTagName('img');
             await Promise.all(
                 Array.from(images).map(img => {
@@ -231,19 +276,27 @@ export default function WorldCupGamePage() {
                     return new Promise((res) => {
                         img.onload = res;
                         img.onerror = res;
+                        // 5초 타임아웃
+                        setTimeout(res, 5000);
                     });
                 })
             );
 
-            // Give a tiny moment for layout to settle
-            await new Promise(res => setTimeout(res, 50));
+            // 레이아웃 안정화 대기
+            await new Promise(res => setTimeout(res, 100));
 
             const dataUrl = await toPng(wrapper, {
-                cacheBust: true,
+                cacheBust: false,  // 프리로드된 이미지 사용
                 backgroundColor: '#ffffff',
-                pixelRatio: 2, // 3 is too heavy for some mobiles
-                skipFonts: true, // Often speeds up/fixes external capture
-                includeQueryParams: true, // Support for CDN query params
+                pixelRatio: 2,
+                skipFonts: false,
+                filter: (node) => {
+                    // 불필요한 요소 제외
+                    if (node.classList && node.classList.contains('no-export')) {
+                        return false;
+                    }
+                    return true;
+                },
                 style: {
                     borderRadius: '0',
                     margin: '0',
@@ -360,14 +413,13 @@ export default function WorldCupGamePage() {
                                 {/* 1. Image Block */}
                                 <div className="aspect-square relative p-6 bg-[#f8f8f8] border-b border-[#e5e5e5]">
                                     <Image
-                                        src={winner.imageUrl || winner.thumbnailUrl || '/icon.png'}
+                                        src={winner.preloadedImageUrl || getCategoryFallbackImage(winner.category)}
                                         alt={winner.name}
                                         fill
                                         className="object-contain p-2"
                                         unoptimized
-                                        crossOrigin="anonymous"
                                         onError={(e) => {
-                                            (e.target as HTMLImageElement).src = '/icon.png';
+                                            (e.target as HTMLImageElement).src = getCategoryFallbackImage(winner.category);
                                         }}
                                     />
                                 </div>
@@ -545,11 +597,12 @@ function ChoiceCard({ item, onClick, pos }: { item: Spirit, onClick: () => void,
             {/* 1. Image Block (Reduced height on PC) */}
             <div className="aspect-[4/5] md:aspect-[16/10] relative w-full bg-muted/10 border-b border-border overflow-hidden">
                 <Image
-                    src={getOptimizedImageUrl(item.imageUrl || item.thumbnailUrl || '', 400)}
+                    src={item.preloadedImageUrl || getCategoryFallbackImage(item.category)}
                     alt={item.name}
                     fill
                     className="object-contain p-4 md:p-6 transition-transform duration-500 group-hover:scale-110"
                     priority
+                    unoptimized
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent pointer-events-none" />
             </div>
