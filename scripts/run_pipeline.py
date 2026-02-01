@@ -136,15 +136,21 @@ def main():
              print("⚠️ Skipping batch due to error.")
              continue
 
-        # 3.1 Normalize Regions
+        # 4. AI Audit & Normalization (Gemini AI)
+        # 업로드 전 최종적으로 제조국, 지역, 증류소, ABV 등을 정밀 정규화
+        if not run_step("AI Audit & Normalization", f'python "{scripts_dir / "audit_database.py"}" --input "{f_ready}" --output "{f_ready}"'):
+             print("⚠️ Warning: AI Audit failed, but continuing with rule-based normalization.")
+
+        # 5. Rule-based Normalizations
+        # 5.1 Normalize Regions
         if not run_step("Normalize Regions", f'node "{scripts_dir / "normalize_regions.js"}" --file "{f_ready}"'):
              print("⚠️ Warning: Region Normalization failed, but continuing.")
         
-        # 3.2 Normalize Subcategories
+        # 5.2 Normalize Subcategories
         if not run_step("Normalize Subcategories", f'node "{scripts_dir / "normalize_subcategories.js"}" --file "{f_ready}"'):
              print("⚠️ Warning: Subcategory Normalization failed, but continuing.")
 
-        # 3.3 Normalize Spirit Names (Extract volume/ABV/lot, move brackets to description)
+        # 5.3 Normalize Spirit Names (Extract volume/ABV/lot, move brackets to description)
         if not run_step("Normalize Spirit Names", f'python "{scripts_dir / "normalize_spirit_names.py"}" --file "{f_ready}"'):
              print("⚠️ Warning: Spirit name normalization failed, but continuing.")
 

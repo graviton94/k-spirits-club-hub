@@ -18,6 +18,9 @@ interface ResultData {
         imageUrl: string | null;
         thumbnailUrl: string | null;
         tags: string[];
+        abv: number | null;
+        country: string | null;
+        region: string | null;
     };
     category: string;
     timestamp: any;
@@ -136,23 +139,53 @@ export default async function WorldCupResultPage({ params }: { params: { id: str
                                 />
                             </div>
 
-                            <div className="p-5 flex flex-col gap-2 text-center bg-white text-[#1a1a1a]">
-                                <span className="text-amber-600 text-[10px] font-black uppercase tracking-widest">
-                                    {winner.category}
-                                </span>
-                                {winner.subcategory && (
-                                    <span className="text-[#737373] text-[10px] font-bold uppercase tracking-tighter line-clamp-1">
-                                        {winner.subcategory}
+                            <div className="p-5 flex flex-col gap-3 text-center bg-white items-center text-[#1a1a1a]">
+                                {/* 1단. Category / Subcategory Capsules */}
+                                <div className="flex flex-wrap justify-center gap-1.5">
+                                    <span className="px-2 py-0.5 bg-amber-500 text-white text-[10px] font-black rounded-full uppercase tracking-wider">
+                                        {winner.category}
                                     </span>
-                                )}
+                                    {winner.subcategory && (
+                                        <span className="px-2 py-0.5 bg-slate-100 text-slate-500 text-[10px] font-bold rounded-full uppercase tracking-tighter">
+                                            {winner.subcategory}
+                                        </span>
+                                    )}
+                                </div>
+
+                                {/* 2단. Product Name */}
                                 <h3 className="text-lg font-black leading-tight line-clamp-2 px-1">
                                     {winner.name}
                                 </h3>
-                                {winner.distillery && (
-                                    <p className="text-[#a3a3a3] text-[10px] font-medium bg-[#f5f5f5] px-2 py-0.5 rounded-full self-center">
-                                        {winner.distillery}
-                                    </p>
-                                )}
+
+                                {/* 3단. Country / Region Capsules */}
+                                <div className="flex flex-wrap justify-center gap-1.5">
+                                    {winner.country && (
+                                        <span className="px-2 py-0.5 bg-blue-600 text-white text-[10px] font-bold rounded-full uppercase">
+                                            {winner.country}
+                                        </span>
+                                    )}
+                                    {winner.region && (
+                                        <span className="px-2 py-0.5 bg-indigo-600 text-white text-[10px] font-medium rounded-full uppercase">
+                                            {winner.region}
+                                        </span>
+                                    )}
+                                </div>
+
+                                {/* 4단. ABV / Distillery Capsules */}
+                                <div className="flex flex-wrap justify-center gap-1.5">
+                                    {winner.abv !== undefined && winner.abv !== null && (
+                                        <span className="px-2 py-0.5 bg-rose-600 text-white text-[10px] font-black rounded-full">
+                                            {winner.abv}%
+                                        </span>
+                                    )}
+                                    {winner.distillery && (
+                                        <span className="px-2 py-0.5 bg-gray-500 text-white text-[10px] font-medium rounded-full">
+                                            {winner.distillery}
+                                        </span>
+                                    )}
+                                </div>
+
+                                {/* 5단. Flavor Tags (Capsule Style) */}
                                 {winner.tags && winner.tags.length > 0 && (
                                     <div className="flex flex-wrap justify-center gap-1.5 mt-2">
                                         {winner.tags.slice(0, 3).map(tag => (

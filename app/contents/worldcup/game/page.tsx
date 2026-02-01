@@ -41,6 +41,9 @@ interface Spirit {
     category: string;
     subcategory: string | null;
     tags: string[];
+    abv: number | null;
+    country: string | null;
+    region: string | null;
     preloadedImageUrl?: string;  // ✅ 프리로드된 최종 이미지 URL
     metadata?: {
         nose_tags?: string[];
@@ -110,6 +113,9 @@ export default function WorldCupGamePage() {
                         thumbnailUrl: data.thumbnailUrl || null,
                         category: data.category,
                         subcategory: data.subcategory || null,
+                        abv: data.abv !== undefined ? Number(data.abv) : null,
+                        country: data.country || null,
+                        region: data.region || null,
                         tags: [
                             ...(data.metadata?.nose_tags || []),
                             ...(data.metadata?.palate_tags || []),
@@ -425,23 +431,53 @@ export default function WorldCupGamePage() {
                                 </div>
 
                                 {/* 2~5. Info Blocks */}
-                                <div className="p-5 flex flex-col gap-2 text-center bg-white">
-                                    <span className="text-amber-600 text-[10px] font-black uppercase tracking-widest">
-                                        {winner.category}
-                                    </span>
-                                    {winner.subcategory && (
-                                        <span className="text-[#737373] text-[10px] font-bold uppercase tracking-tighter line-clamp-1">
-                                            {winner.subcategory}
+                                <div className="p-5 flex flex-col gap-3 text-center bg-white items-center">
+                                    {/* 1단. Category / Subcategory Capsules */}
+                                    <div className="flex flex-wrap justify-center gap-1.5">
+                                        <span className="px-2 py-0.5 bg-amber-500 text-white text-[10px] font-black rounded-full uppercase tracking-wider">
+                                            {winner.category}
                                         </span>
-                                    )}
+                                        {winner.subcategory && (
+                                            <span className="px-2 py-0.5 bg-slate-100 text-slate-500 text-[10px] font-bold rounded-full uppercase tracking-tighter">
+                                                {winner.subcategory}
+                                            </span>
+                                        )}
+                                    </div>
+
+                                    {/* 2단. Product Name */}
                                     <h3 className="text-lg font-black text-[#1a1a1a] leading-tight line-clamp-2 px-1">
                                         {winner.name}
                                     </h3>
-                                    {winner.distillery && (
-                                        <p className="text-[#a3a3a3] text-[10px] font-medium bg-[#f5f5f5] px-2 py-0.5 rounded-full self-center">
-                                            {winner.distillery}
-                                        </p>
-                                    )}
+
+                                    {/* 3단. Country / Region Capsules */}
+                                    <div className="flex flex-wrap justify-center gap-1.5">
+                                        {winner.country && (
+                                            <span className="px-2 py-0.5 bg-blue-600 text-white text-[10px] font-bold rounded-full uppercase">
+                                                {winner.country}
+                                            </span>
+                                        )}
+                                        {winner.region && (
+                                            <span className="px-2 py-0.5 bg-indigo-600 text-white text-[10px] font-medium rounded-full uppercase">
+                                                {winner.region}
+                                            </span>
+                                        )}
+                                    </div>
+
+                                    {/* 4단. ABV / Distillery Capsules */}
+                                    <div className="flex flex-wrap justify-center gap-1.5">
+                                        {winner.abv !== null && (
+                                            <span className="px-2 py-0.5 bg-rose-600 text-white text-[10px] font-black rounded-full">
+                                                {winner.abv}%
+                                            </span>
+                                        )}
+                                        {winner.distillery && (
+                                            <span className="px-2 py-0.5 bg-gray-500 text-white text-[10px] font-medium rounded-full">
+                                                {winner.distillery}
+                                            </span>
+                                        )}
+                                    </div>
+
+                                    {/* 5단. Flavor Tags (Capsule Style) */}
                                     {winner.tags && winner.tags.length > 0 && (
                                         <div className="flex flex-wrap justify-center gap-1.5 mt-2">
                                             {winner.tags.slice(0, 3).map(tag => (
@@ -608,32 +644,53 @@ function ChoiceCard({ item, onClick, pos }: { item: Spirit, onClick: () => void,
             </div>
 
             {/* 2~6. Info Blocks (Structured) */}
-            <div className="p-4 md:p-6 flex flex-col items-center text-center gap-1.5 md:gap-2 flex-1 justify-center">
-                {/* 2. Category */}
-                <span className="text-amber-500 text-[10px] md:text-xs font-black uppercase tracking-widest">
-                    {item.category}
-                </span>
-
-                {/* 3. Subcategory */}
-                {item.subcategory && (
-                    <span className="text-muted-foreground text-[10px] md:text-sm font-bold uppercase tracking-tight opacity-70">
-                        {item.subcategory}
+            <div className="p-4 md:p-6 flex flex-col items-center text-center gap-3 flex-1 justify-center">
+                {/* 1단. Category / Subcategory Capsules */}
+                <div className="flex flex-wrap justify-center gap-1.5 md:gap-2">
+                    <span className="px-2 md:px-3 py-1 bg-amber-500 text-white text-[10px] md:text-[11px] font-black rounded-full uppercase tracking-wider">
+                        {item.category}
                     </span>
-                )}
+                    {item.subcategory && (
+                        <span className="px-2 md:px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-[10px] md:text-[11px] font-bold rounded-full uppercase tracking-tighter">
+                            {item.subcategory}
+                        </span>
+                    )}
+                </div>
 
-                {/* 4. Product Name */}
+                {/* 2단. Product Name */}
                 <h3 className="text-sm md:text-2xl font-black text-foreground leading-tight line-clamp-2 md:line-clamp-3">
                     {item.name}
                 </h3>
 
-                {/* 5. Distillery */}
-                {item.distillery && (
-                    <p className="text-muted-foreground/60 text-[9px] md:text-xs font-medium bg-muted/50 px-3 py-1 rounded-full">
-                        {item.distillery}
-                    </p>
-                )}
+                {/* 3단. Country / Region Capsules */}
+                <div className="flex flex-wrap justify-center gap-1.5 md:gap-2">
+                    {item.country && (
+                        <span className="px-2 md:px-3 py-1 bg-blue-600 text-white text-[10px] md:text-[11px] font-bold rounded-full uppercase">
+                            {item.country}
+                        </span>
+                    )}
+                    {item.region && (
+                        <span className="px-2 md:px-3 py-1 bg-indigo-600 text-white text-[10px] md:text-[11px] font-medium rounded-full uppercase">
+                            {item.region}
+                        </span>
+                    )}
+                </div>
 
-                {/* 6. Flavor Tags (Capsule Style) */}
+                {/* 4단. ABV / Distillery Capsules */}
+                <div className="flex flex-wrap justify-center gap-1.5 md:gap-2">
+                    {item.abv !== null && (
+                        <span className="px-2 md:px-3 py-1 bg-rose-600 text-white text-[10px] md:text-[11px] font-black rounded-full">
+                            {item.abv}%
+                        </span>
+                    )}
+                    {item.distillery && (
+                        <span className="px-2 md:px-3 py-1 bg-gray-500 text-white text-[10px] md:text-[11px] font-medium rounded-full">
+                            {item.distillery}
+                        </span>
+                    )}
+                </div>
+
+                {/* 5단. Flavor Tags (Capsule Style) */}
                 {item.tags && item.tags.length > 0 && (
                     <div className="flex flex-wrap justify-center gap-1.5 mt-2 border-t border-border/30 pt-3 w-full">
                         {item.tags.slice(0, 3).map(tag => (

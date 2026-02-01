@@ -11,7 +11,9 @@
     "lint": "next lint",
     "publish-ready-spirits": "npx tsx scripts/publish-ready-data.ts",
     "pipe": "python scripts/run_pipeline.py",
-    "fetch": "python scripts/fetch_food_safety.py"
+    "fetch": "python scripts/fetch_food_safety.py",
+    "audit": "python scripts/audit_database.py",
+    "analyze": "npx tsx scripts/analyze_published_data.ts"
   },
   "keywords": [],
   "author": "",
