@@ -425,10 +425,10 @@ export default function AdminDashboard() {
                 {/* Status & Search */}
                 <div className="flex flex-wrap gap-4 items-center">
                   <div className="flex bg-gray-100 dark:bg-gray-900 rounded-lg p-1">
-                    {(['ALL', 'ENRICHED', 'READY_FOR_CONFIRM', 'PUBLISHED'] as const).map(f => (
+                    {(['ALL', 'ENRICHED', 'READY_FOR_CONFIRM', 'IMAGE_FAILED', 'PUBLISHED'] as const).map(f => (
                       <button key={f} onClick={() => setStatusFilter(f)}
                         className={`px-3 py-1.5 rounded-md text-[10px] font-bold transition-all ${statusFilter === f ? 'bg-white dark:bg-black shadow text-amber-600 dark:text-amber-400' : 'text-gray-500 dark:text-gray-400'}`}>
-                        {f === 'ALL' ? '전체' : f === 'PUBLISHED' ? '공개됨' : f === 'ENRICHED' ? 'AI분석' : '검수대기'}
+                        {f === 'ALL' ? '전체' : f === 'PUBLISHED' ? '공개됨' : f === 'ENRICHED' ? 'AI분석' : f === 'IMAGE_FAILED' ? '이미지실패' : '검수대기'}
                       </button>
                     ))}
                   </div>
@@ -492,11 +492,13 @@ export default function AdminDashboard() {
                         </td>
                         <td className="p-4">
                           <span className={`px-2 py-1 rounded text-[10px] font-black border ${spirit.status === 'PUBLISHED' ? 'bg-green-100 text-green-700 border-green-200' :
-                              spirit.status === 'ENRICHED' ? 'bg-blue-100 text-blue-700 border-blue-200' :
+                            spirit.status === 'ENRICHED' ? 'bg-blue-100 text-blue-700 border-blue-200' :
+                              spirit.status === 'IMAGE_FAILED' ? 'bg-red-100 text-red-700 border-red-200' :
                                 'bg-amber-100 text-amber-700 border-amber-200'
                             }`}>
                             {spirit.status === 'PUBLISHED' ? 'PUBLISHED' :
-                              spirit.status === 'ENRICHED' ? 'AI분석됨' : '검수대기'}
+                              spirit.status === 'ENRICHED' ? 'AI분석됨' :
+                                spirit.status === 'IMAGE_FAILED' ? '이미지실패' : '검수대기'}
                           </span>
                         </td>
                         <td className="p-4">

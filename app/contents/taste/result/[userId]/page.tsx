@@ -3,6 +3,8 @@ import { tasteProfileDb } from '@/lib/db/firestore-rest';
 import TastePublicReport from '@/components/cabinet/TastePublicReport';
 import { notFound } from 'next/navigation';
 
+export const runtime = 'edge';
+
 export async function generateMetadata({ params }: { params: { userId: string } }): Promise<Metadata> {
     const profile = await tasteProfileDb.get(params.userId);
 

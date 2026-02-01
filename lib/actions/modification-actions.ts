@@ -29,31 +29,6 @@ export async function submitModificationRequest(data: {
 
         const requestId = await modificationDb.add(newRequest);
 
-        // 3. Local Audit Logging (for current session tracking)
-        try {
-            const fs = require('fs');
-            const path = require('path');
-            const logDir = path.join(process.cwd(), 'data');
-            const logFile = path.join(logDir, 'feedback_submissions.jsonl');
-
-            // Ensure directory exists
-            if (!fs.existsSync(logDir)) {
-                fs.mkdirSync(logDir, { recursive: true });
-            }
-
-            // Append entry
-            const logEntry = JSON.stringify({
-                requestId,
-                ...newRequest,
-                createdAt: newRequest.createdAt.toISOString()
-            }) + '\n';
-
-            fs.appendFileSync(logFile, logEntry);
-            console.log(`[Audit] Feedback logged locally to ${logFile}`);
-        } catch (logLimit: any) {
-            console.warn("Local audit logging skipped:", logLimit.message || logLimit);
-        }
-
         return { success: true, id: requestId };
     } catch (error: any) {
         console.error("Modification request submission failed:", error);

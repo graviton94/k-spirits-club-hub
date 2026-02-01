@@ -1,6 +1,6 @@
 // Database schema types for K-Spirits Club Hub
 
-export type SpiritStatus = 'RAW' | 'ENRICHED' | 'READY_FOR_CONFIRM' | 'PUBLISHED' | 'ERROR';
+export type SpiritStatus = 'RAW' | 'ENRICHED' | 'READY_FOR_CONFIRM' | 'PUBLISHED' | 'ERROR' | 'IMAGE_FAILED';
 
 /**
  * Minimized search index structure for bandwidth optimization.
