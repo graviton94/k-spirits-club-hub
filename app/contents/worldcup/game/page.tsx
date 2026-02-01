@@ -14,6 +14,7 @@ import {
     Gamepad2,
     Link2
 } from 'lucide-react';
+import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
 import { toPng } from 'html-to-image';
 import { useRef } from 'react';
 import {
@@ -529,7 +530,7 @@ function ChoiceCard({ item, onClick, pos }: { item: Spirit, onClick: () => void,
             {/* 1. Image Block (Reduced height on PC) */}
             <div className="aspect-[4/5] md:aspect-[16/10] relative w-full bg-muted/10 border-b border-border overflow-hidden">
                 <Image
-                    src={item.imageUrl || item.thumbnailUrl || ''}
+                    src={getOptimizedImageUrl(item.imageUrl || item.thumbnailUrl || '', 500)}
                     alt={item.name}
                     fill
                     className="object-contain p-4 md:p-6 transition-transform duration-500 group-hover:scale-110"

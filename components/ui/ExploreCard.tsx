@@ -12,6 +12,7 @@ import { triggerLoginModal } from "@/lib/utils/spirit-adapters";
 import SuccessToast from "./SuccessToast";
 
 import { Bookmark, Plus, Minus, Loader2 } from "lucide-react";
+import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
 
 interface ExploreCardProps {
   spirit: Spirit;
@@ -132,12 +133,12 @@ export function ExploreCard({ spirit, onClick }: ExploreCardProps) {
       transition={{ type: "spring", stiffness: 400, damping: 17 }}
       onClick={() => onClick?.(spirit)}
     >
-      {/* Left: 80x80 Thumbnail */}
       <div className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-muted border border-border">
         {spirit.imageUrl ? (
           <img
-            src={spirit.imageUrl}
+            src={getOptimizedImageUrl(spirit.imageUrl, 160)}
             alt={spirit.name}
+            loading="lazy"
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
             onError={(e) => {
               const target = e.target as HTMLImageElement;

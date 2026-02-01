@@ -12,6 +12,7 @@ import styles from "./page.module.css";
 import { RandomBackground } from "@/components/ui/RandomBackground";
 import { useSpiritsCache } from "@/app/context/spirits-cache-context";
 import { useMemo, useState, useEffect } from "react";
+import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
 
 export default function HomePage() {
   const { publishedSpirits, searchIndex, isLoading: isCacheLoading } = useSpiritsCache();
@@ -126,8 +127,9 @@ export default function HomePage() {
                     <div className="relative w-28 h-36 rounded-2xl bg-card border border-border shadow-md overflow-hidden flex items-center justify-center p-2 group-hover:border-amber-500/50 transition-colors">
                       {spirit.thumbnailUrl || spirit.imageUrl ? (
                         <img
-                          src={spirit.thumbnailUrl || spirit.imageUrl}
+                          src={getOptimizedImageUrl(spirit.thumbnailUrl || spirit.imageUrl, 240)}
                           alt={spirit.name}
+                          loading="lazy"
                           className="w-full h-full object-contain"
                         />
                       ) : (

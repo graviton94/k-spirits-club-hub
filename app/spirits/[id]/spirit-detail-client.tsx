@@ -18,6 +18,7 @@ import SuccessToast from "@/components/ui/SuccessToast";
 
 import { Spirit } from "@/lib/db/schema";
 import { getTagStyle } from "@/lib/constants/tag-styles";
+import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
 import { CATEGORY_NAME_MAP } from "@/lib/constants/categories";
 
 interface SpiritDetailClientProps {
@@ -439,7 +440,7 @@ function ExpandableImage({ imageUrl, name, category }: { imageUrl: string | null
             >
                 {imageUrl ? (
                     <img
-                        src={imageUrl}
+                        src={getOptimizedImageUrl(imageUrl, 600)}
                         alt={name}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                         onError={(e) => {
@@ -486,7 +487,7 @@ function ExpandableImage({ imageUrl, name, category }: { imageUrl: string | null
                         >
                             {imageUrl ? (
                                 <img
-                                    src={imageUrl}
+                                    src={getOptimizedImageUrl(imageUrl, 800, 85)}
                                     alt={name}
                                     className="w-full h-full object-contain rounded-lg"
                                 />

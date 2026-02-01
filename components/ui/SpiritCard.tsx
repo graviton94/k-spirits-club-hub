@@ -13,6 +13,7 @@ import CabinetSelectionModal from "./CabinetSelectionModal";
 import ReviewModal from "@/components/cabinet/ReviewModal";
 import { UserReview } from "@/lib/utils/flavor-engine";
 import { toFlavorSpirit, triggerLoginModal } from "@/lib/utils/spirit-adapters";
+import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
 import SuccessToast from "./SuccessToast";
 
 interface SpiritCardProps {
@@ -140,8 +141,9 @@ export function SpiritCard({ spirit, onClick, onCabinetChange }: SpiritCardProps
       <div className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-muted border border-border">
         {spirit.imageUrl ? (
           <img
-            src={spirit.imageUrl}
+            src={getOptimizedImageUrl(spirit.imageUrl, 160)}
             alt={spirit.name}
+            loading="lazy"
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
             onError={(e) => {
               // On error, use category fallback image
