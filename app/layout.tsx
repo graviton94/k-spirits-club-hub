@@ -9,12 +9,11 @@ import { Header } from '@/components/layout/Header';
 import { BottomNav } from "@/components/layout/BottomNav";
 import StickyFooterAd from '@/components/ui/StickyFooterAd';
 
-import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google';
-
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit", display: "swap" });
 
 export const metadata: Metadata = {
+  // ... metadata content ...
   title: {
     default: "K-Spirits Club | 대한민국 대표 주류 데이터베이스(DB) & 리뷰",
     template: "%s | K-Spirits Club",
@@ -69,11 +68,35 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <GoogleTagManager gtmId="GTM-NDF5RKBN" />
-      <GoogleAnalytics gaId="G-0QF9WTQFF2" />
       <head>
+        {/* Google Tag Manager - GTM-NDF5RKBN */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NDF5RKBN');`,
+          }}
+        />
+
+        {/* Google tag (gtag.js) - G-0QF9WTQFF2 */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0QF9WTQFF2"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'G-0QF9WTQFF2');
+            `,
+          }}
+        />
+
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
+
         {/* Microsoft Clarity */}
         <Script id="microsoft-clarity" strategy="afterInteractive">
           {`
@@ -86,6 +109,16 @@ export default function RootLayout({
         </Script>
       </head>
       <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`}>
+        {/* Google Tag Manager (noscript) */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-NDF5RKBN"
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
+          />
+        </noscript>
+        {/* End Google Tag Manager (noscript) */}
         <Script
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5574169833640769"
           crossOrigin="anonymous"
