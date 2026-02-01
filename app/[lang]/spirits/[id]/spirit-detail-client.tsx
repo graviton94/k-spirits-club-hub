@@ -422,7 +422,7 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                         <p className="text-sm font-medium text-foreground">
                             {spirit.source === 'food_safety_korea' ? '식품의약품안전처 (공공데이터)' :
                                 spirit.source === 'imported_food_maru' ? '수입식품정보마루' :
-                                    spirit.source === 'whiskybase' ? 'Whiskybase' :
+                                    spirit.source === 'online' ? 'online' :
                                         spirit.source === 'manual' ? t.source_manual : t.source_external}
                         </p>
                     </div>

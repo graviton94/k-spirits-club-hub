@@ -53,7 +53,7 @@ interface Spirit {
   thumbnailUrl: string | null;  // 썸네일 URL (검색 인덱스용)
   
   // 데이터 출처 추적
-  source: 'food_safety_korea' | 'imported_food_maru' | 'whiskybase' | 'manual' | 'other';
+  source: 'food_safety_korea' | 'imported_food_maru' | 'online' | 'manual' | 'other';
   externalId: string | null;    // 외부 시스템 ID
   
   // 발행 상태
@@ -68,7 +68,10 @@ interface Spirit {
     name_en?: string;           // 영문명
     raw_category?: string;      // 원본 카테고리명
     importer?: string;          // 수입사
-    description?: string;       // AI 생성 설명
+    description?: string;       // AI 생성 설명 (한글)
+    description_en?: string;    // AI 생성 설명 (영문)
+    pairing_guide_en?: string;  // 페어링 가이드 (영문)
+    pairing_guide_ko?: string;  // 페어링 가이드 (국문)
     nose_tags?: string[];       // 향 태그 (예: ["바닐라", "오크"])
     palate_tags?: string[];     // 맛 태그
     finish_tags?: string[];     // 피니시 태그

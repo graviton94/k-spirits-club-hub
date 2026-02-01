@@ -66,7 +66,7 @@ export interface Spirit {
   thumbnailUrl: string | null;
 
   // Data source tracking
-  source: 'food_safety_korea' | 'imported_food_maru' | 'whiskybase' | 'manual' | 'other';
+  source: 'food_safety_korea' | 'imported_food_maru' | 'online' | 'manual' | 'other';
   externalId: string | null;
 
   // Data quality & publishing

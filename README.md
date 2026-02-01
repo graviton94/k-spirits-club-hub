@@ -61,6 +61,11 @@
 - 실시간 물리 엔진 기반 부어따르기 시뮬레이션
 - 리더보드 및 점수 공유 기능
 
+### **7. 🌍 Globalization**
+- **Bilingual Interface**: Seamless Korean/English UI switching (URL based)
+- **Localized Content**: AI-generated English name, descriptions & pairing guides
+- **Context-Aware**: Dynamic UI labels via `UI_TEXT` dictionary
+
 ---
 
 ## 🏗️ Tech Stack

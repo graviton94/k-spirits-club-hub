@@ -87,7 +87,7 @@ export default function AdminSpiritCard({ spirit }: AdminSpiritCardProps) {
             <span className="px-2 py-1 rounded bg-secondary">{spirit.country}</span>
             <span className="px-2 py-1 rounded bg-secondary">{spirit.category}</span>
             <span className={`px-2 py-1 rounded ${spirit.source === 'food_safety_korea' ? 'bg-green-100 dark:bg-green-900' :
-              spirit.source === 'whiskybase' ? 'bg-blue-100 dark:bg-blue-900' :
+              spirit.source === 'online' ? 'bg-blue-100 dark:bg-blue-900' :
                 'bg-gray-100 dark:bg-gray-800'
               }`}>
               {spirit.source}

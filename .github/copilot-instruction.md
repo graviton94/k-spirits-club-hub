@@ -14,8 +14,13 @@
 - **Interaction**: 모든 버튼과 클릭 요소는 터치 친화적(최소 44x44px)이어야 합니다.
 - **Performance**: 이미지 레이지 로딩(Lazy Loading)과 가벼운 CSS 애니메이션을 사용하여 모바일 체감 속도를 높입니다.
 
+## 🌍 Global & Localization Guidelines
+- **Language Detection**: URL Path 기반(`pathname.startsWith('/en')`)으로 언어 모드(`isEn`)를 감지하십시오.
+- **UI Localization**: 컴포넌트 내부의 모든 정적 텍스트는 `UI_TEXT = { ko: {...}, en: {...} }` 딕셔너리로 관리해야 합니다. 하드코딩된 한글 사용 금지.
+- **AI Data Consistency**: AI 생성 데이터(`pairing_guide`, `description`)는 반드시 한/영(`_ko`, `_en`) 쌍으로 생성하고, 내용은 상호 일관성(번역 관계)을 유지해야 합니다.
+
 ## 💾 Data & Backend Logic (데이터 처리)
-- **Data Source**: 식품안전나라(XML), 수입식품정보마루, Whiskybase에서 수집된 데이터를 통합한 규격화된 JSON/SQL 스키마를 따릅니다.
+- **Data Source**: 식품안전나라(XML), 수입식품정보마루, Online에서 수집된 데이터를 통합한 규격화된 JSON/SQL 스키마를 따릅니다.
 - **Filtering**: 100만 건 이상의 로우 데이터 중 '주류' 카테고리만 필터링하는 파이썬/JS 로직을 우선 구현합니다.
 - **Admin Tools**: 관리자가 모바일에서 편리하게 데이터를 검수하고 승인(Publish)할 수 있는 대시보드 기능을 지원합니다.
 

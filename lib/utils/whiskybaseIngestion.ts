@@ -1,16 +1,16 @@
 /**
- * Data ingestion utility for Whiskybase
+ * Data ingestion utility for online
  * 
- * This utility interfaces with Whiskybase data to import global whisky records
+ * This utility interfaces with online data to import global whisky records
  * into the K-Spirits Club database.
  * 
- * Note: Whiskybase requires proper licensing for commercial use.
+ * Note: online requires proper licensing for commercial use.
  * This is a conceptual implementation.
  */
 
 import type { Spirit } from '../db/schema';
 
-interface WhiskybaseRecord {
+interface onlineRecord {
   id: number;
   name: string;
   distillery: string;
@@ -25,34 +25,34 @@ interface WhiskybaseRecord {
   caskType?: string;
 }
 
-export class WhiskybaseIngestion {
+export class onlineIngestion {
   private apiKey: string;
-  private baseUrl = 'https://api.whiskybase.com/v1'; // Hypothetical endpoint
+  private baseUrl = 'https://api.online.com/v1'; // Hypothetical endpoint
 
   constructor(apiKey: string) {
     this.apiKey = apiKey;
   }
 
   /**
-   * Fetch whisky records from Whiskybase
+   * Fetch whisky records from online
    */
-  async fetchRecords(page: number = 1, perPage: number = 100): Promise<WhiskybaseRecord[]> {
+  async fetchRecords(page: number = 1, perPage: number = 100): Promise<onlineRecord[]> {
     // In production, this would make actual API calls
     // const endpoint = `${this.baseUrl}/whiskies?page=${page}&per_page=${perPage}`;
-    
+
     try {
       // Mock implementation
       return [];
     } catch (error) {
-      console.error('Error fetching from Whiskybase:', error);
+      console.error('Error fetching from online:', error);
       return [];
     }
   }
 
   /**
-   * Transform Whiskybase record to Spirit schema
+   * Transform online record to Spirit schema
    */
-  transformRecord(record: WhiskybaseRecord): Partial<Spirit> {
+  transformRecord(record: onlineRecord): Partial<Spirit> {
     return {
       name: record.name,
       distillery: record.distillery,
@@ -65,7 +65,7 @@ export class WhiskybaseIngestion {
       region: record.region || null,
       imageUrl: record.imageUrl || null,
       thumbnailUrl: record.imageUrl || null,
-      source: 'whiskybase',
+      source: 'online',
       externalId: `wb-${record.id}`,
       isPublished: false,
       isReviewed: false,
@@ -79,7 +79,7 @@ export class WhiskybaseIngestion {
    */
   private categorizeWhisky(category: string): string {
     const cat = category?.toLowerCase() || '';
-    
+
     if (cat.includes('single malt')) return 'single malt';
     if (cat.includes('blended malt')) return 'blended malt';
     if (cat.includes('blended')) return 'blended';
@@ -88,12 +88,12 @@ export class WhiskybaseIngestion {
     if (cat.includes('rye')) return 'rye';
     if (cat.includes('irish')) return 'irish';
     if (cat.includes('japanese')) return 'japanese';
-    
+
     return 'other';
   }
 
   /**
-   * Batch import whiskies from Whiskybase
+   * Batch import whiskies from online
    */
   async batchImport(maxPages: number = 100): Promise<{
     imported: number;
@@ -107,7 +107,7 @@ export class WhiskybaseIngestion {
     for (let page = 1; page <= maxPages; page++) {
       try {
         const records = await this.fetchRecords(page);
-        
+
         if (records.length === 0) {
           break; // No more records
         }
@@ -148,5 +148,5 @@ export class WhiskybaseIngestion {
 }
 
 // Usage example:
-// const ingestion = new WhiskybaseIngestion(process.env.WHISKYBASE_API_KEY);
+// const ingestion = new onlineIngestion(process.env.online_API_KEY);
 // const result = await ingestion.batchImport(500);
