@@ -39,17 +39,22 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit }: Revie
     // Initialize state
     useEffect(() => {
         if (isOpen) {
+            document.body.style.overflow = 'hidden';
             if (spirit.userReview) {
                 setTagsN(spirit.userReview.tagsN || []);
                 setTagsP(spirit.userReview.tagsP || []);
                 setTagsF(spirit.userReview.tagsF || []);
             } else {
-                // Reset or load defaults if needed
                 setTagsN([]);
                 setTagsP([]);
                 setTagsF([]);
             }
+        } else {
+            document.body.style.overflow = '';
         }
+        return () => {
+            document.body.style.overflow = '';
+        };
     }, [isOpen, spirit]);
 
     const ratingOverall = parseFloat(((ratingN + ratingP + ratingF) / 3).toFixed(1));

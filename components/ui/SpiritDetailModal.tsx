@@ -104,6 +104,19 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
         checkStatus();
     }, [user, spirit, isOpen]);
 
+    // Body scroll lock
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+            // Also prevent touchmove on the backdrop if needed, but 'hidden' usually works for desktop/modern mobile
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [isOpen]);
+
     const handleAction = async (action: 'add' | 'wishlist') => {
         if (!user) {
             setToastMessage(t.toast_login);
@@ -179,27 +192,27 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
     return (
         <AnimatePresence>
             <motion.div
-                className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center sm:p-4 bg-black/60 backdrop-blur-sm"
+                className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/70 backdrop-blur-md"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={onClose}
             >
                 <motion.div
-                    className="relative w-full sm:max-w-md bg-zinc-900 sm:rounded-3xl rounded-t-3xl overflow-hidden shadow-2xl border border-white/10"
-                    initial={{ y: "100%" }}
-                    animate={{ y: 0 }}
-                    exit={{ y: "100%" }}
+                    className="relative w-full max-w-md bg-zinc-900 rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10 max-h-[90vh] flex flex-col"
+                    initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.9, y: 20 }}
                     transition={{ type: "spring", damping: 25, stiffness: 300 }}
                     onClick={(e) => e.stopPropagation()}
                 >
                     {/* ... (Header Image code remains unchanged) ... */}
                     {/* (Omitted for brevity, but it's part of the replacement block) */}
-                    <div className="relative aspect-square w-full bg-zinc-800">
-                        {/* Close Button */}
+                    <div className="relative h-[28vh] w-full bg-zinc-800 shrink-0">
+                        {/* Close Button (Top Left) */}
                         <button
                             onClick={onClose}
-                            className="absolute top-4 right-4 z-10 p-2 bg-black/20 hover:bg-black/40 backdrop-blur-md rounded-full text-white transition-colors"
+                            className="absolute top-5 left-5 z-20 p-2.5 bg-black/40 hover:bg-black/60 backdrop-blur-xl rounded-full text-white transition-all active:scale-90 shadow-lg border border-white/10"
                         >
                             <X className="w-5 h-5" />
                         </button>
@@ -208,30 +221,29 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                             <img
                                 src={getOptimizedImageUrl(localSpirit.imageUrl, 600)}
                                 alt={localSpirit.name}
-                                className="w-full h-full object-cover"
+                                className="w-full h-full object-cover object-center"
                             />
                         ) : (
                             <div className="w-full h-full flex items-center justify-center text-6xl">
                                 🥃
                             </div>
                         )}
-
-                        {/* Title Overlay */}
-                        <div className="absolute bottom-0 inset-x-0 p-6 bg-linear-to-t from-black/90 via-black/50 to-transparent pt-20">
-                            <span className="inline-block px-2 py-0.5 mb-2 text-[10px] font-bold bg-amber-500/90 text-black rounded uppercase tracking-wider">
-                                {getLocalizedCategory(localSpirit.category)}
-                            </span>
-                            <h2 className="text-2xl font-black text-white leading-tight mb-1">
-                                {localSpirit.name}
-                            </h2>
-                            {localSpirit.distillery && (
-                                <p className="text-sm text-gray-300 font-medium">{localSpirit.distillery}</p>
-                            )}
-                        </div>
                     </div>
 
                     {/* 2. Actions & Detailed Info */}
-                    <div className="p-6 space-y-6 max-h-[70vh] sm:max-h-[80vh] overflow-y-auto custom-scrollbar bg-neutral-900 text-white pb-32 sm:pb-6">
+                    <div className="p-6 space-y-6 overflow-y-auto custom-scrollbar bg-neutral-900 text-white pb-12">
+                        {/* Title Section */}
+                        <div className="mb-2">
+                            <span className="inline-block px-2 py-0.5 mb-2 text-[10px] font-bold bg-amber-500/90 text-black rounded uppercase tracking-wider">
+                                {getLocalizedCategory(localSpirit.category)}
+                            </span>
+                            <h2 className="text-3xl font-black text-white leading-tight mb-1">
+                                {localSpirit.name}
+                            </h2>
+                            {localSpirit.distillery && (
+                                <p className="text-lg text-amber-500 font-bold">{localSpirit.distillery}</p>
+                            )}
+                        </div>
 
                         {/* Action Buttons */}
                         <div className="flex gap-2">

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Spirit } from "@/lib/db/schema";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
@@ -28,6 +28,18 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState("");
     const [toastVariant, setToastVariant] = useState<'success' | 'error'>('success');
+
+    // Body scroll lock
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [isOpen]);
 
     // Helper to get localized category name
     const getLocalizedCategory = (cat: string) => {
