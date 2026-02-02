@@ -1,7 +1,7 @@
 'use client';
 
 import { Search, Plus, Bookmark } from "lucide-react";
-import { useState, KeyboardEvent, useMemo, useRef } from "react";
+import { useState, KeyboardEvent, useMemo, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter, usePathname } from "next/navigation";
 import { useSpiritsCache } from "@/app/context/spirits-cache-context";
@@ -24,22 +24,31 @@ export function SearchBar({ isHero = false }: { isHero?: boolean }) {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastVariant, setToastVariant] = useState<'success' | 'error'>('success');
+  const [debouncedSearchValue, setDebouncedSearchValue] = useState("");
+
+  // Debounce search value
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchValue(searchValue);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchValue]);
 
   // Get instant search results using search index (lightweight)
   const instantResults = useMemo(() => {
-    if (!searchValue.trim() || isLoading) {
+    if (!debouncedSearchValue.trim() || isLoading) {
       return [];
     }
 
     const startTime = performance.now();
-    const results = searchSpirits(searchValue).slice(0, 5); // Show top 5 results
+    const results = searchSpirits(debouncedSearchValue).slice(0, 5); // Show top 5 results
     const endTime = performance.now();
 
     if (process.env.NODE_ENV === 'development') {
       console.log(`[SearchBar] Search completed in ${(endTime - startTime).toFixed(2)}ms`);
     }
     return results;
-  }, [searchValue, searchSpirits, isLoading]);
+  }, [debouncedSearchValue, searchSpirits, isLoading]);
 
   const handleSearch = () => {
     if (searchValue.trim()) {

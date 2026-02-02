@@ -1,12 +1,13 @@
 'use client';
 
+import React, { useState, useEffect, memo, useRef } from "react";
 import { motion } from "framer-motion";
+import Image from 'next/image';
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import { Spirit } from "@/lib/db/schema";
 import { getTagStyle } from "@/lib/constants/tag-styles";
-import { useState, useEffect } from "react";
 import { useAuth } from "@/app/context/auth-context";
 import { addToCabinet, removeFromCabinet, checkCabinetStatus } from "@/app/actions/cabinet";
 import { triggerLoginModal } from "@/lib/utils/spirit-adapters";
@@ -21,7 +22,7 @@ interface ExploreCardProps {
   onClick?: (spirit: Spirit) => void;
 }
 
-export function ExploreCard({ spirit, onClick }: ExploreCardProps) {
+function ExploreCardComponent({ spirit, onClick }: ExploreCardProps) {
   const pathname = usePathname() || "";
   const lang = pathname.split('/')[1] === 'en' ? 'en' : 'ko';
   const isEn = lang === 'en';
@@ -41,18 +42,35 @@ export function ExploreCard({ spirit, onClick }: ExploreCardProps) {
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
 
-  // Check cabinet status on mount
+  const observerRef = useRef<HTMLDivElement>(null);
+  const [hasBeenVisible, setHasBeenVisible] = useState(false);
+
+  // Intersection Observer to stagger status checks
   useEffect(() => {
-    if (user) {
+    if (hasBeenVisible || !user) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        setHasBeenVisible(true);
+      }
+    }, { rootMargin: '200px' });
+
+    if (observerRef.current) observer.observe(observerRef.current);
+    return () => observer.disconnect();
+  }, [user, hasBeenVisible]);
+
+  // Check cabinet status when visible
+  useEffect(() => {
+    if (user && hasBeenVisible) {
       checkCabinetStatus(user.uid, spirit.id).then(({ isOwned, isWishlist }) => {
         setIsInCabinet(isOwned);
         setIsWishlist(isWishlist);
         setIsLoadingStatus(false);
       });
-    } else {
+    } else if (!user) {
       setIsLoadingStatus(false);
     }
-  }, [user, spirit.id]);
+  }, [user, spirit.id, hasBeenVisible]);
 
   const handleCabinetAction = async (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -141,31 +159,24 @@ export function ExploreCard({ spirit, onClick }: ExploreCardProps) {
 
   const content = (
     <motion.div
+      ref={observerRef}
       className="group flex gap-3 p-3 rounded-2xl bg-white/60 dark:bg-slate-900/40 backdrop-blur-md border border-white/40 dark:border-white/10 hover:bg-white/80 dark:hover:bg-slate-900/60 transition-all cursor-pointer shadow-sm"
       whileHover={{ scale: 0.99 }}
       transition={{ type: "spring", stiffness: 400, damping: 17 }}
       onClick={() => onClick?.(spirit)}
     >
-      <div className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-muted border border-border">
-        {spirit.imageUrl ? (
-          <img
-            src={getOptimizedImageUrl(spirit.imageUrl, 160)}
-            alt={spirit.name}
-            loading="lazy"
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.src = getCategoryFallbackImage(spirit.category);
-              target.classList.add('opacity-50');
-            }}
-          />
-        ) : (
-          <img
-            src={getCategoryFallbackImage(spirit.category)}
-            alt={spirit.name}
-            className="w-full h-full object-cover opacity-50"
-          />
-        )}
+      <div className="shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-muted border border-border relative">
+        <Image
+          src={spirit.imageUrl && spirit.imageUrl.trim() ? getOptimizedImageUrl(spirit.imageUrl, 160) : getCategoryFallbackImage(spirit.category)}
+          alt={spirit.name}
+          fill
+          className={`object-cover transition-transform duration-300 group-hover:scale-110 ${!spirit.imageUrl || !spirit.imageUrl.trim() ? 'opacity-50 grayscale' : 'opacity-100'}`}
+          sizes="80px"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = getCategoryFallbackImage(spirit.category);
+          }}
+        />
       </div>
 
       {/* Middle: Content */}
@@ -260,3 +271,5 @@ export function ExploreCard({ spirit, onClick }: ExploreCardProps) {
     </>
   );
 }
+
+export const ExploreCard = memo(ExploreCardComponent);

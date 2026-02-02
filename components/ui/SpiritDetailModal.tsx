@@ -8,7 +8,7 @@ import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import { getTagColor } from "@/lib/constants/tag-colors";
 import type { Spirit, UserReview } from "@/lib/utils/flavor-engine";
 import ReviewModal from "@/components/cabinet/ReviewModal";
-import { Bookmark, Plus, Pencil, Check, Loader2 } from "lucide-react";
+import { Bookmark, Plus, Pencil, Check, Loader2, X } from "lucide-react";
 import { addToCabinet } from "@/app/actions/cabinet";
 import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
 import metadata from "@/lib/constants/spirits-metadata.json";
@@ -178,13 +178,59 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
 
     return (
         <AnimatePresence>
-            <motion.div>
-                {/* ... wrapper ... */}
-                <motion.div>
-                    {/* ... close button & header ... */}
+            <motion.div
+                className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-black/60 backdrop-blur-sm"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={onClose}
+            >
+                <motion.div
+                    className="relative w-full sm:max-w-md bg-zinc-900 sm:rounded-3xl rounded-t-3xl overflow-hidden shadow-2xl border border-white/10"
+                    initial={{ y: "100%" }}
+                    animate={{ y: 0 }}
+                    exit={{ y: "100%" }}
+                    transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    {/* 1. Header Image (Fixed Aspect Ratio to verify CLS fix) */}
+                    <div className="relative aspect-square w-full bg-zinc-800">
+                        {/* Close Button */}
+                        <button
+                            onClick={onClose}
+                            className="absolute top-4 right-4 z-10 p-2 bg-black/20 hover:bg-black/40 backdrop-blur-md rounded-full text-white transition-colors"
+                        >
+                            <X className="w-5 h-5" />
+                        </button>
+
+                        {localSpirit.imageUrl ? (
+                            <img
+                                src={getOptimizedImageUrl(localSpirit.imageUrl, 600)}
+                                alt={localSpirit.name}
+                                className="w-full h-full object-cover"
+                            />
+                        ) : (
+                            <div className="w-full h-full flex items-center justify-center text-6xl">
+                                🥃
+                            </div>
+                        )}
+
+                        {/* Title Overlay */}
+                        <div className="absolute bottom-0 inset-x-0 p-6 bg-linear-to-t from-black/90 via-black/50 to-transparent pt-20">
+                            <span className="inline-block px-2 py-0.5 mb-2 text-[10px] font-bold bg-amber-500/90 text-black rounded uppercase tracking-wider">
+                                {getLocalizedCategory(localSpirit.category)}
+                            </span>
+                            <h2 className="text-2xl font-black text-white leading-tight mb-1">
+                                {localSpirit.name}
+                            </h2>
+                            {localSpirit.distillery && (
+                                <p className="text-sm text-gray-300 font-medium">{localSpirit.distillery}</p>
+                            )}
+                        </div>
+                    </div>
 
                     {/* 2. Actions & Detailed Info */}
-                    <div className="p-6 space-y-6 max-h-[50vh] overflow-y-auto custom-scrollbar bg-neutral-900/40 text-white backdrop-blur-md">
+                    <div className="p-6 space-y-6 max-h-[50vh] overflow-y-auto custom-scrollbar bg-neutral-900 text-white">
 
                         {/* Action Buttons */}
                         <div className="flex gap-2">
@@ -193,7 +239,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                     <button
                                         disabled={isProcessing}
                                         onClick={() => handleAction('add')}
-                                        className="flex-[2] flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-black rounded-xl hover:from-emerald-600 hover:to-green-700 transition-all scale-100 active:scale-95 disabled:opacity-50 shadow-lg shadow-emerald-900/20"
+                                        className="flex-2 flex items-center justify-center gap-2 py-3 px-4 bg-linear-to-r from-emerald-500 to-green-600 text-white font-black rounded-xl hover:from-emerald-600 hover:to-green-700 transition-all scale-100 active:scale-95 disabled:opacity-50 shadow-lg shadow-emerald-900/20"
                                     >
                                         {isProcessing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
                                         <span>{t.add_cabinet}</span>
@@ -223,7 +269,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                 <div className="w-full flex gap-2">
                                     <button
                                         onClick={() => router.push(`/spirits/${localSpirit.id}`)}
-                                        className="flex-[2] flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-xl font-bold text-sm shadow-lg shadow-primary/20 hover:from-amber-600 hover:to-orange-700 hover:scale-105 transition-all"
+                                        className="flex-2 flex items-center justify-center gap-2 py-3 bg-linear-to-r from-amber-500 to-orange-600 text-white rounded-xl font-bold text-sm shadow-lg shadow-primary/20 hover:from-amber-600 hover:to-orange-700 hover:scale-105 transition-all"
                                     >
                                         <Pencil className="w-4 h-4" />
                                         {localSpirit.userReview ? t.edit_review : t.write_review}
@@ -346,26 +392,33 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                         </div>
 
                         {/* AI Global Pairing Guide */}
-                        {((isEn ? localSpirit.metadata?.pairing_guide_en : (localSpirit.metadata as any)?.pairing_guide_ko) || localSpirit.metadata?.pairing_guide_en) && (
-                            <div className="mt-6">
-                                <div className="flex items-center gap-2 mb-3">
-                                    <span className="text-[10px] font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 uppercase tracking-widest flex items-center gap-1">
-                                        ✨ {isEn ? 'Pairing Guide' : '페어링 추천'}
-                                    </span>
-                                    <div className="h-px flex-1 bg-white/20"></div>
-                                </div>
+                        {/* Skeleton Loading State */}
+                        {!localSpirit.metadata && isProcessing ? (
+                            <div className="mt-6 space-y-3">
+                                <div className="h-4 w-32 bg-gray-800 rounded animate-pulse" />
+                                <div className="h-24 w-full bg-gray-800 rounded-2xl animate-pulse" />
+                            </div>
+                        ) : (
+                            ((isEn ? localSpirit.metadata?.pairing_guide_en : (localSpirit.metadata as any)?.pairing_guide_ko) || localSpirit.metadata?.pairing_guide_en) && (
+                                <div className="mt-6">
+                                    <div className="flex items-center gap-2 mb-3">
+                                        <span className="text-[10px] font-black text-transparent bg-clip-text bg-linear-to-r from-purple-400 to-pink-400 uppercase tracking-widest flex items-center gap-1">
+                                            ✨ {isEn ? 'Pairing Guide' : '페어링 추천'}
+                                        </span>
+                                        <div className="h-px flex-1 bg-white/20"></div>
+                                    </div>
 
-                                <div className="relative overflow-hidden rounded-2xl p-[1px] bg-gradient-to-br from-purple-500/30 via-pink-500/30 to-orange-500/30">
-                                    <div className="relative bg-neutral-900/80 backdrop-blur-xl p-4 rounded-2xl">
-                                        <p className="text-sm text-gray-200 leading-relaxed break-words font-medium">
-                                            {isEn
-                                                ? localSpirit.metadata?.pairing_guide_en
-                                                : ((localSpirit.metadata as any)?.pairing_guide_ko || localSpirit.metadata?.pairing_guide_en)}
-                                        </p>
+                                    <div className="relative overflow-hidden rounded-2xl p-px bg-linear-to-br from-purple-500/30 via-pink-500/30 to-orange-500/30">
+                                        <div className="relative bg-neutral-900/80 backdrop-blur-xl p-4 rounded-2xl">
+                                            <p className="text-sm text-gray-200 leading-relaxed wrap-break-word font-medium">
+                                                {isEn
+                                                    ? localSpirit.metadata?.pairing_guide_en
+                                                    : ((localSpirit.metadata as any)?.pairing_guide_ko || localSpirit.metadata?.pairing_guide_en)}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        )}
+                            ))}
                     </div>
                 </motion.div>
 

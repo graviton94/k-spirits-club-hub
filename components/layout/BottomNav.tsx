@@ -34,6 +34,7 @@ export function BottomNav() {
             <Link
               key={item.href}
               href={`/${lang}${item.href === "/" ? "" : item.href}`}
+              prefetch={false}
               className={`relative flex flex-col items-center justify-center p-2 rounded-2xl transition-all duration-300 group hover:bg-secondary w-16 h-16 ${isActive(item.href)
                 ? "text-primary"
                 : "text-muted-foreground hover:text-foreground"

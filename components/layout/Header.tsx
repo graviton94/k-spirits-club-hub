@@ -23,9 +23,9 @@ export function Header() {
     return (
         <header className="sticky top-0 z-40 w-full border-b border-border bg-card/90 backdrop-blur-xl">
             <div className="container flex h-16 items-center justify-between px-4 max-w-4xl mx-auto">
-                <Link href={`/${lang}`} className="flex items-center gap-2">
+                <Link href={`/${lang}`} prefetch={false} className="flex items-center gap-2">
                     <span className="text-2xl">🥃</span>
-                    <span className="text-xl font-black bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">
+                    <span className="text-xl font-black bg-linear-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">
                         K-SPIRITS
                     </span>
                 </Link>
@@ -55,7 +55,7 @@ export function Header() {
                     ) : (
                         <Link
                             href={`/${lang}/login`}
-                            className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500 to-orange-600 text-white text-sm font-bold hover:from-amber-600 hover:to-orange-700 transition-all shadow-lg shadow-primary/20"
+                            className="flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-amber-500 to-orange-600 text-white text-sm font-bold hover:from-amber-600 hover:to-orange-700 transition-all shadow-lg shadow-primary/20"
                         >
                             <LogIn className="w-4 h-4" />
                             <span>Login</span>

@@ -115,7 +115,7 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
               setShowForm(true);
             }
           }}
-          className={`px-6 py-2.5 rounded-xl font-bold transition-all shadow-lg ${hasReviewed && !showForm ? 'bg-secondary text-muted-foreground cursor-not-allowed' : 'text-white bg-gradient-to-r from-amber-500 to-orange-600 hover:shadow-primary/30'}`}
+          className={`px-6 py-2.5 rounded-xl font-bold transition-all shadow-lg ${hasReviewed && !showForm ? 'bg-secondary text-muted-foreground cursor-not-allowed' : 'text-white bg-linear-to-r from-amber-500 to-orange-600 hover:shadow-primary/30'}`}
         >
           {showForm ? '취소하기' : hasReviewed ? '리뷰 작성 완료' : '+ 리뷰 작성하기'}
         </button>
@@ -630,7 +630,7 @@ function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitte
           <button
             type="submit"
             disabled={isSubmitting}
-            className="flex-1 py-4 px-8 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-black rounded-2xl hover:shadow-xl hover:shadow-primary/20 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+            className="flex-1 py-4 px-8 bg-linear-to-r from-amber-500 to-orange-600 text-white font-black rounded-2xl hover:shadow-xl hover:shadow-primary/20 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
           >
             {isSubmitting ? (
               <>
@@ -762,9 +762,11 @@ function TagInput({ tags, onTagsChange, color, metadataKey, placeholder }: { tag
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Extract all relevant recommendations for this section
-  const recommendations = Object.values((metadata.tag_index as any)[metadataKey]).flatMap((group: any) =>
-    group.tags.map((t: string) => t.split(' (')[0].replace('#', ''))
-  );
+  const recommendations = Array.from(new Set(
+    Object.values((metadata.tag_index as any)[metadataKey]).flatMap((group: any) =>
+      group.tags.map((t: string) => t.split(' (')[0].replace('#', '').trim())
+    )
+  )).filter(Boolean) as string[];
 
   const filteredRecs = recommendations
     .filter(r => r.toLowerCase().includes(inputValue.toLowerCase()) && !tags.includes(r))

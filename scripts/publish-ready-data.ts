@@ -25,7 +25,7 @@ async function bulkPublishViaAPI() {
     const endpoint = `${API_URL}/api/admin/spirits/bulk-publish`;
 
     console.log(`\n📡 Calling: ${endpoint}`);
-    console.log('📦 Payload: { publishByStatus: "READY_FOR_CONFIRM", updateStatus: true }\n');
+    console.log('📦 Payload: { publishByStatus: "ENRICHED", updateStatus: true }\n');
 
     try {
         const response = await fetch(endpoint, {
@@ -34,7 +34,7 @@ async function bulkPublishViaAPI() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                publishByStatus: 'READY_FOR_CONFIRM',
+                publishByStatus: 'ENRICHED',
                 updateStatus: true
             })
         });

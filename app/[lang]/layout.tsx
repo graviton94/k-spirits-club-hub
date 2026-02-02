@@ -48,9 +48,14 @@ export const metadata: Metadata = {
     description: "대한민국 주류 데이터베이스: 위스키와 전통주의 모든 것. 전 세계 100만 개 이상의 증류주 정보를 탐색하고 리뷰를 공유하세요.",
   },
   icons: {
-    icon: '/icon.png',
+    icon: [
+      { url: '/icon.png', sizes: '32x32', type: 'image/png' },
+      { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+    ],
     shortcut: '/icon.png',
-    apple: '/icon.png',
+    apple: [
+      { url: '/icon.png', sizes: '180x180', type: 'image/png' },
+    ],
   },
 };
 
@@ -74,7 +79,6 @@ export default async function RootLayout({
     <html lang={lang}>
       <head>
         {/* Mixed Content 자동 업그레이드 (HTTP -> HTTPS) */}
-        <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
 
         <meta name="naver-site-verification" content="a29e8ca32e7a6029fbe5abe2683f86fff1127a30" />
 

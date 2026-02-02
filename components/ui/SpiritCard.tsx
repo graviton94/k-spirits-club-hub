@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import { Spirit } from "@/lib/db/schema";
 import { getTagStyle } from "@/lib/constants/tag-styles";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAuth } from "@/app/context/auth-context";
 import { addToCabinet, removeFromCabinet } from "@/app/actions/cabinet";
 import CabinetSelectionModal from "./CabinetSelectionModal";
@@ -16,14 +16,16 @@ import { UserReview } from "@/lib/utils/flavor-engine";
 import { toFlavorSpirit, triggerLoginModal } from "@/lib/utils/spirit-adapters";
 import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
 import SuccessToast from "./SuccessToast";
+import Image from 'next/image';
 
 interface SpiritCardProps {
   spirit: Spirit;
   onClick?: (spirit: Spirit) => void;
   onCabinetChange?: () => void;
+  index?: number; // Added for LCP priority control
 }
 
-export function SpiritCard({ spirit, onClick, onCabinetChange }: SpiritCardProps) {
+export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10 }: SpiritCardProps) {
   const pathname = usePathname() || "";
   const lang = pathname.split('/')[1] === 'en' ? 'en' : 'ko';
   const { user } = useAuth();
@@ -34,9 +36,36 @@ export function SpiritCard({ spirit, onClick, onCabinetChange }: SpiritCardProps
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
 
+  // Image Error Fallback State
+  const [imgSrc, setImgSrc] = useState(
+    spirit.imageUrl ? getOptimizedImageUrl(spirit.imageUrl, 200) : getCategoryFallbackImage(spirit.category)
+  );
+
+  // Sync image source with prop changes
+  useEffect(() => {
+    setImgSrc(spirit.imageUrl ? getOptimizedImageUrl(spirit.imageUrl, 200) : getCategoryFallbackImage(spirit.category));
+  }, [spirit.imageUrl, spirit.category]);
+
+  const observerRef = useRef<HTMLDivElement>(null);
+  const [hasBeenVisible, setHasBeenVisible] = useState(false);
+
+  // Intersection Observer to stagger status checks
+  useEffect(() => {
+    if (hasBeenVisible || !user) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        setHasBeenVisible(true);
+      }
+    }, { rootMargin: '200px' });
+
+    if (observerRef.current) observer.observe(observerRef.current);
+    return () => observer.disconnect();
+  }, [user, hasBeenVisible]);
+
   // Check cabinet status on mount
   useEffect(() => {
-    if (user) {
+    if (user && hasBeenVisible) {
       fetch(`/api/cabinet/check?uid=${user.uid}&sid=${spirit.id}`)
         .then(res => res.json())
         .then(({ isOwned, isWishlist }) => {
@@ -44,7 +73,7 @@ export function SpiritCard({ spirit, onClick, onCabinetChange }: SpiritCardProps
         })
         .catch(err => console.error('Failed to check status:', err));
     }
-  }, [user, spirit.id]);
+  }, [user, spirit.id, hasBeenVisible]);
 
   // Generic handler for adding (cabinet or wishlist)
   const handleAdd = async (isWishlist: boolean, review?: any) => {
@@ -135,33 +164,23 @@ export function SpiritCard({ spirit, onClick, onCabinetChange }: SpiritCardProps
 
   const content = (
     <motion.div
+      ref={observerRef}
       className="group flex gap-3 p-3 rounded-2xl bg-white/60 dark:bg-slate-900/40 backdrop-blur-md border border-white/40 dark:border-white/10 hover:bg-white/80 dark:hover:bg-slate-900/60 transition-all cursor-pointer shadow-sm"
       whileHover={{ scale: 0.99 }}
       transition={{ type: "spring", stiffness: 400, damping: 17 }}
       onClick={() => onClick?.(spirit)}
     >
       {/* Left: 80x80 Thumbnail */}
-      <div className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-muted border border-border">
-        {spirit.imageUrl ? (
-          <img
-            src={getOptimizedImageUrl(spirit.imageUrl, 160)}
-            alt={spirit.name}
-            loading="lazy"
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-            onError={(e) => {
-              // On error, use category fallback image
-              const target = e.target as HTMLImageElement;
-              target.src = getCategoryFallbackImage(spirit.category);
-              target.classList.add('opacity-50');
-            }}
-          />
-        ) : (
-          <img
-            src={getCategoryFallbackImage(spirit.category)}
-            alt={spirit.name}
-            className="w-full h-full object-cover opacity-50"
-          />
-        )}
+      <div className="relative shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-muted border border-border">
+        <Image
+          src={imgSrc}
+          alt={spirit.name}
+          fill
+          className="object-cover transition-transform duration-300 group-hover:scale-110"
+          sizes="(max-width: 768px) 25vw, 100px" // Optimized sizes
+          priority={index < 4} // LCP Boost
+          onError={() => setImgSrc(getCategoryFallbackImage(spirit.category))}
+        />
       </div>
 
       {/* Right: Content */}
@@ -232,7 +251,7 @@ export function SpiritCard({ spirit, onClick, onCabinetChange }: SpiritCardProps
 
       {/* Heart Icon */}
       <button
-        className={`flex-shrink-0 p-1 transition-colors ${isToggling
+        className={`shrink-0 p-1 transition-colors ${isToggling
           ? 'opacity-50 cursor-wait'
           : isInCabinet
             ? 'text-red-500'

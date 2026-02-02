@@ -127,12 +127,13 @@ function parseFirestoreFields(fields: any): any {
 }
 
 export const spiritsDb = {
-    async getAll(filter: SpiritFilter = {}): Promise<Spirit[]> {
+    async getAll(filter: SpiritFilter = {}, pagination?: { page: number, pageSize: number }): Promise<Spirit[]> {
         const token = await getServiceAccountToken();
         const runQueryUrl = `${BASE_URL}:runQuery`;
         const collectionPath = getAppPath().spirits;
 
         const filters: any[] = [];
+        const isSearchActive = !!filter.searchTerm; // If search is active, we cannot paginate at DB level easily
 
         // Apply filters based on the provided SpiritFilter
         // Note: Avoid using both status='PUBLISHED' AND isPublished=true together
@@ -170,6 +171,29 @@ export const spiritsDb = {
             });
         }
 
+        if (filter.category && (filter.category as string) !== 'ALL') {
+            // Smart Filter: Match either category OR subcategory (replicating legacy behavior)
+            filters.push({
+                compositeFilter: {
+                    op: 'OR',
+                    filters: [
+                        { fieldFilter: { field: { fieldPath: 'category' }, op: 'EQUAL', value: { stringValue: filter.category } } },
+                        { fieldFilter: { field: { fieldPath: 'subcategory' }, op: 'EQUAL', value: { stringValue: filter.category } } }
+                    ]
+                }
+            });
+        }
+
+        if (filter.country && (filter.country as string) !== 'ALL') {
+            filters.push({
+                fieldFilter: {
+                    field: { fieldPath: 'country' },
+                    op: 'EQUAL',
+                    value: { stringValue: filter.country }
+                }
+            });
+        }
+
         const structuredQuery: any = {
             from: [{ collectionId: 'spirits' }], // collectionId is just the last p
             // Wait, for deep collections, structuredQuery 'from' might need full path if it's a subcollection query?
@@ -178,8 +202,19 @@ export const spiritsDb = {
             // But we want specifically our new path.
             // When querying via runQuery, we should set the 'parent' field correctly.
             // parent: "projects/{projectId}/databases/(default)/documents/{parent_path}"
-            limit: 5000
+
+            // PAGINATION LOGIC:
+            // If NOT searching (which requires in-memory filtering), use DB pagination.
+            // If searching, fetch MAX (5000) to filter in memory.
+            limit: isSearchActive ? 5000 : (pagination ? pagination.pageSize : 5000)
         };
+
+        // Add Offset and OrderBy if paginating (and not searching)
+        if (pagination && !isSearchActive) {
+            structuredQuery.offset = (pagination.page - 1) * pagination.pageSize;
+            // Ensure consistent ordering for pagination
+            structuredQuery.orderBy = [{ field: { fieldPath: 'updatedAt' }, direction: 'DESCENDING' }];
+        }
 
         // Determine parent from collectionPath
         // collectionPath = "artifacts/k-spirits-club-hub/public/data/spirits"
@@ -242,7 +277,9 @@ export const spiritsDb = {
                 console.error('Failed to parse Firestore error:', errText);
             }
             console.error(`[Firestore REST] ${res.status} Error:`, errorMessage);
-            return [];
+
+            // THROW error so the caller (index.ts) can fallback to memory filtering
+            throw new Error(`Firestore Query Failed: ${errorMessage}`);
         }
 
         const json = await res.json();

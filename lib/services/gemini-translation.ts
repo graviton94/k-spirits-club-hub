@@ -3,8 +3,162 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 const API_KEY = process.env.GEMINI_API_KEY || '';
 const MODEL_ID = "gemini-2.0-flash";
 
-const genAI = new GoogleGenerativeAI(API_KEY);
-const model = genAI.getGenerativeModel({ model: MODEL_ID });
+const TERM_GUIDELINES = `
+- 'Makgeolli' for 막걸리
+- 'Distilled Soju' for 증류식 소주
+- 'Takju' for 탁주
+- 'Yakju' for 약주
+- 'Cheongju' for 청주
+`;
+
+export interface EnrichmentResult {
+    name_en: string;
+    description_en: string;
+    pairing_guide_en: string;
+    pairing_guide_ko: string;
+}
+
+export interface SpiritEnrichmentInput {
+    name: string;
+    category: string;
+    subcategory?: string;
+    distillery?: string;
+    abv?: number;
+    region?: string;
+    country?: string;
+    metadata?: {
+        tasting_note?: string;
+        description?: string;
+        nose_tags?: string[];
+        palate_tags?: string[];
+        finish_tags?: string[];
+        [key: string]: any;
+    };
+}
+
+/**
+ * Enriches spirit data with AI-generated content.
+ * Generates: name_en, description_en, pairing_guide_en, pairing_guide_ko
+ * EDGE-COMPATIBLE: Does not use 'fs' or 'path'.
+ */
+export async function enrichSpiritWithAI(spirit: SpiritEnrichmentInput): Promise<EnrichmentResult> {
+    if (!API_KEY) {
+        throw new Error("GEMINI_API_KEY is not set");
+    }
+
+    const genAI = new GoogleGenerativeAI(API_KEY);
+    const model = genAI.getGenerativeModel({ model: MODEL_ID });
+
+    // Extract tasting notes and other metadata
+    const tastingNote = spirit.metadata?.tasting_note || spirit.metadata?.description || '';
+    const noseTags = spirit.metadata?.nose_tags?.join(', ') || '';
+    const palateTags = spirit.metadata?.palate_tags?.join(', ') || '';
+    const finishTags = spirit.metadata?.finish_tags?.join(', ') || '';
+
+    // Determine location context (region preferred, fallback to country)
+    const location = spirit.region || spirit.country || 'Unknown';
+    const locationLabel = spirit.region ? 'Region' : 'Country';
+
+    const prompt = `
+You are an expert sommelier and translator specializing in Korean traditional spirits and global liquors.
+
+**Spirit Details:**
+- Product Name (Korean): ${spirit.name}
+- Distillery: ${spirit.distillery || 'Unknown'}
+- Category: ${spirit.category}
+- Detailed Subcategory: ${spirit.subcategory || 'Not specified'}
+- ${locationLabel}: ${location}
+- ABV: ${spirit.abv || 'Unknown'}%
+- Tasting Notes: ${tastingNote}
+- Nose: ${noseTags}
+- Palate: ${palateTags}
+- Finish: ${finishTags}
+
+**Your Tasks:**
+
+1. **name_en** - Translate the Korean name to English using these terminology rules:
+${TERM_GUIDELINES}
+   - Keep brand names as-is (romanized)
+   - Follow format: [Brand/Distillery] [Product Name] [Edition/Age]
+   - Use Title Case
+
+2. **description_en** - Create a compelling 2-3 sentence description in English that:
+   - Explains what this spirit is to someone unfamiliar with Korean spirits
+   - Highlights unique characteristics based on the category, subcategory, and tasting notes
+   - Mentions distillery heritage or regional significance if notable
+   - Uses specific sensory details (e.g., "oak-aged", "floral notes", "smooth finish")
+   - VARIES in structure and vocabulary - avoid repetitive phrasing
+   - NO medical claims or exaggerated marketing
+
+3. **pairing_guide_en** - IMPORTANT: Create BOLD, UNEXPECTED, and REGIONALLY-INSPIRED food pairing recommendations (2-3 sentences):
+   
+   **CRITICAL - Consider ALL of these factors:**
+   - Regional Heritage: If it's a Scotch, don't just say 'beef'. Think about smoked fish or specific Scottish delicacies. If it's Makgeolli, don't just say 'pancakes'. Think about spicy, fermented, or rich global dishes.
+   - Flavor Contrasts: Use the tasting notes (Nose, Palate, Finish) to find contrasting or complementary flavors (e.g., a peaty whisky with a sweet vanilla dessert, or a floral gin with spicy Thai basil).
+   - Sensory Science: Explain *why* it works (e.g., "The high acidity cuts through the fat of the pork belly" or "The botanical notes elevate the herbal complexity of the dish").
+   
+   **MAXIMUM CREATIVITY & AUTONOMY:**
+   - Avoid "Safe" Choices: Never suggest cheese, chocolate, or steak unless it's a very specific, unique preparation.
+   - Global Fusion: Be brave—pair a Korean Yakju with a Mexican Mole, or a Bourbon with a Japanese Umami-rich dish.
+   - Specificity: Use the exact name of a dish (e.g., "Bluefin Tuna Carpaccio with Truffle Oil" instead of "seafood").
+   
+   **FORBIDDEN PATTERNS:**
+   - No "Pairs well with..." or "Complement your meal with...". Start directly with the food or a sensory hook.
+   - No generic categories (meat, fruit, dessert).
+   - No repetitive advice across different spirits. Every response must feel like a custom-tailored recommendation.
+
+4. **pairing_guide_ko** - A vivid, professional Korean translation of pairing_guide_en. Use terms like '마리아주(Mariage)' or '페어링(Pairing)' naturally.
+
+**CRITICAL REQUIREMENTS:**
+✓ ACT AS a Michelin-star sommelier who is bored of standard advice.
+✓ Focus 50% of the reasoning on the ${locationLabel} (${location}) origin and 50% on the unique Tasting Notes.
+✓ Vary sentence structure, vocabulary, and creative approach dramatically
+✓ Use ALL provided details (name, subcategory, location, tasting notes) to inform suggestions
+✓ Be BOLD and CREATIVE - this is about culinary artistry, not safe suggestions
+✓ NO medical claims (e.g., "good for health", "aids digestion")
+✓ NO generic marketing language
+✓ Output ONLY valid JSON (no markdown formatting)
+
+**Output JSON Format:**
+{
+  "name_en": "English Name",
+  "description_en": "Detailed description...",
+  "pairing_guide_en": "Unique, creative food pairing recommendations...",
+  "pairing_guide_ko": "독특하고 창의적인 음식 페어링 추천..."
+}
+`;
+
+    try {
+        const result = await model.generateContent(prompt);
+        const response = result.response;
+        let text = response.text().trim();
+
+        // Clean up markdown formatting if present
+        if (text.startsWith('```json')) text = text.slice(7);
+        if (text.startsWith('```')) text = text.slice(3);
+        if (text.endsWith('```')) text = text.slice(0, -3);
+        text = text.trim();
+
+        // Extract JSON (non-greedy to handle edge cases)
+        const jsonMatch = text.match(/\{[\s\S]*?\}/);
+        if (!jsonMatch) {
+            throw new Error("No valid JSON found in AI response");
+        }
+
+        const enrichmentData: EnrichmentResult = JSON.parse(jsonMatch[0]);
+
+        // Validate required fields
+        if (!enrichmentData.name_en || !enrichmentData.description_en ||
+            !enrichmentData.pairing_guide_en || !enrichmentData.pairing_guide_ko) {
+            throw new Error("AI response missing required fields");
+        }
+
+        return enrichmentData;
+    } catch (error) {
+        console.error(`Gemini Enrichment Error for ${spirit.name}:`, error);
+        throw error;
+    }
+}
 
 /**
  * Translates spirit name and description to English specialized for the liquor industry.
@@ -15,6 +169,9 @@ export async function translateSpiritName(name: string, category: string, brewer
     if (!API_KEY) {
         throw new Error("GEMINI_API_KEY is not set");
     }
+
+    const genAI = new GoogleGenerativeAI(API_KEY);
+    const model = genAI.getGenerativeModel({ model: MODEL_ID });
 
     const prompt = `
 당신은 고급 주류 전문 번역가이자 SEO 전문가입니다. 
