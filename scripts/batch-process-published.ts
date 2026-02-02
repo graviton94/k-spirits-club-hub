@@ -1,7 +1,7 @@
 
 
 const API_BASE = 'http://localhost:3000';
-const BATCH_SIZE = 5; // Safe batch size for AI operations
+const BATCH_SIZE = 2; // Reduced to 2 for stability
 
 async function main() {
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');

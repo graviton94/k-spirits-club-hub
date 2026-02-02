@@ -563,7 +563,7 @@ export default function AdminDashboard() {
                       if (!confirm(`${selectedIds.size}건에 대해 [AI 분석 + 데이터 정규화]를 통합 실행하시겠습니까?\n(영문명/설명 생성 + 증류소/지역 표준화)`)) return;
                       setIsProcessing(true);
 
-                      const BATCH_SIZE = 5;
+                      const BATCH_SIZE = 2; // Reduced from 5 to 2 to prevent Cloudflare 503 timeouts
                       const allIds = Array.from(selectedIds);
                       let totalProcessed = 0;
                       let errorCount = 0;
@@ -593,6 +593,8 @@ export default function AdminDashboard() {
                             errorCount += batch.length;
                             console.error(`Batch error:`, err);
                           }
+                          // Add small delay between batches to reduce server load
+                          await new Promise(resolve => setTimeout(resolve, 500));
                         }
 
                         alert(`✅ 총 ${totalProcessed}건 통합 처리 완료 (실패: ${errorCount}건)`);
