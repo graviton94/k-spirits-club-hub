@@ -20,6 +20,7 @@ export async function PATCH(req: NextRequest) {
         let updatedCount = 0;
         let enrichedCount = 0;
         let normalizedCount = 0;
+        const enrichmentErrors: any[] = [];
 
         for (const spirit of targets) {
             try {
@@ -51,8 +52,9 @@ export async function PATCH(req: NextRequest) {
                             }
                         };
                         enrichedCount++;
-                    } catch (e) {
+                    } catch (e: any) {
                         console.error(`Enrichment failed for ${spirit.id}`, e);
+                        enrichmentErrors.push({ id: spirit.id, error: e.message || String(e) });
                     }
                 }
 
@@ -76,6 +78,7 @@ export async function PATCH(req: NextRequest) {
             updatedCount,
             enrichedCount,
             normalizedCount,
+            enrichmentErrors,
             message: `Successfully processed ${updatedCount} spirits (${enrichedCount} enriched, ${normalizedCount} normalized)`
         });
     } catch (error: any) {

@@ -13,7 +13,8 @@
     "pipe": "python scripts/run_pipeline.py",
     "fetch": "python scripts/fetch_food_safety.py",
     "audit": "python scripts/audit_database.py",
-    "analyze": "npx tsx scripts/analyze_published_data.ts"
+    "analyze": "npx tsx scripts/analyze_published_data.ts",
+    "process:published": "npx tsx scripts/batch-process-published.ts"
   },
   "keywords": [],
   "author": "",

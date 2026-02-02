@@ -211,24 +211,44 @@ export default function AdminDashboard() {
     const doExtra = confirm("발행 전 'AI 분석' 및 '데이터 정규화'를 함께 진행하시겠습니까?\n(영문명 생성, 지역/증류소 통일 등)");
 
     setIsProcessing(true);
-    try {
-      const res = await fetch('/api/admin/spirits/bulk-patch/', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          spiritIds: Array.from(selectedIds),
-          enrich: doExtra,
-          normalize: doExtra,
-          updates: { status: 'PUBLISHED', isPublished: true, reviewedBy: 'ADMIN', reviewedAt: new Date().toISOString() }
-        })
-      });
 
-      if (res.ok) {
-        const data = await res.json();
-        await loadSpirits(); // Reload from server
-        alert(doExtra ? `✅ ${data.updatedCount}건 분석 후 발행 완료` : '✅ 일괄 발행 완료');
-        setSelectedIds(new Set());
+    // Use small batch size if enriching (heavy AI ops), larger otherwise
+    const BATCH_SIZE = doExtra ? 5 : 50;
+    const allIds = Array.from(selectedIds);
+    let totalUpdated = 0;
+    let errorCount = 0;
+
+    try {
+      for (let i = 0; i < allIds.length; i += BATCH_SIZE) {
+        const batch = allIds.slice(i, i + BATCH_SIZE);
+        try {
+          const res = await fetch('/api/admin/spirits/bulk-patch/', {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              spiritIds: batch,
+              enrich: doExtra,
+              normalize: doExtra,
+              updates: { status: 'PUBLISHED', isPublished: true, reviewedBy: 'ADMIN', reviewedAt: new Date().toISOString() }
+            })
+          });
+
+          if (res.ok) {
+            const data = await res.json();
+            totalUpdated += data.updatedCount || 0;
+          } else {
+            errorCount += batch.length;
+            console.error(`Batch ${i / BATCH_SIZE + 1} failed`);
+          }
+        } catch (err) {
+          errorCount += batch.length;
+          console.error(`Batch ${i / BATCH_SIZE + 1} error:`, err);
+        }
       }
+
+      await loadSpirits(); // Reload from server
+      alert(doExtra ? `✅ ${totalUpdated}건 분석 후 발행 완료 (실패: ${errorCount}건)` : `✅ ${totalUpdated}건 일괄 발행 완료 (실패: ${errorCount}건)`);
+      if (errorCount === 0) setSelectedIds(new Set());
     } catch (e) {
       alert('오류가 발생했습니다.');
     } finally {
@@ -489,23 +509,45 @@ export default function AdminDashboard() {
                     onClick={async () => {
                       if (!confirm(`${selectedIds.size}건에 대해 AI 분석(영문명, 소개글, 페어링 가이드 생성)을 진행하시겠습니까?`)) return;
                       setIsProcessing(true);
+
+                      const BATCH_SIZE = 5;
+                      const allIds = Array.from(selectedIds);
+                      let processedCount = 0;
+                      let totalEnriched = 0;
+                      let errorCount = 0;
+
                       try {
-                        const res = await fetch('/api/admin/spirits/bulk-patch/', {
-                          method: 'PATCH',
-                          headers: { 'Content-Type': 'application/json' },
-                          body: JSON.stringify({
-                            spiritIds: Array.from(selectedIds),
-                            enrich: true,
-                            updates: { status: 'ENRICHED' }
-                          })
-                        });
-                        if (res.ok) {
-                          const data = await res.json();
-                          alert(`✅ ${data.enrichedCount}건 AI 분석 완료`);
-                          await loadSpirits();
+                        for (let i = 0; i < allIds.length; i += BATCH_SIZE) {
+                          const batch = allIds.slice(i, i + BATCH_SIZE);
+                          try {
+                            const res = await fetch('/api/admin/spirits/bulk-patch/', {
+                              method: 'PATCH',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({
+                                spiritIds: batch,
+                                enrich: true,
+                                updates: { status: 'ENRICHED' }
+                              })
+                            });
+
+                            if (res.ok) {
+                              const data = await res.json();
+                              totalEnriched += data.enrichedCount || 0;
+                            } else {
+                              errorCount += batch.length;
+                              console.error(`Batch ${i / BATCH_SIZE + 1} failed`);
+                            }
+                          } catch (err) {
+                            errorCount += batch.length;
+                            console.error(`Batch ${i / BATCH_SIZE + 1} error:`, err);
+                          }
+                          processedCount += batch.length;
                         }
+
+                        alert(`✅ 총 ${totalEnriched}건 AI 분석 완료 (실패: ${errorCount}건)`);
+                        await loadSpirits();
                       } catch (e) {
-                        alert('오류가 발생했습니다.');
+                        alert('처리 중 심각한 오류가 발생했습니다.');
                       } finally {
                         setIsProcessing(false);
                       }
@@ -514,6 +556,59 @@ export default function AdminDashboard() {
                   >
                     🚀 선택 항목 AI 분석
                   </button>
+
+                  <button
+                    disabled={!selectedIds.size || isProcessing}
+                    onClick={async () => {
+                      if (!confirm(`${selectedIds.size}건에 대해 [AI 분석 + 데이터 정규화]를 통합 실행하시겠습니까?\n(영문명/설명 생성 + 증류소/지역 표준화)`)) return;
+                      setIsProcessing(true);
+
+                      const BATCH_SIZE = 5;
+                      const allIds = Array.from(selectedIds);
+                      let totalProcessed = 0;
+                      let errorCount = 0;
+
+                      try {
+                        for (let i = 0; i < allIds.length; i += BATCH_SIZE) {
+                          const batch = allIds.slice(i, i + BATCH_SIZE);
+                          try {
+                            const res = await fetch('/api/admin/spirits/bulk-patch/', {
+                              method: 'PATCH',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({
+                                spiritIds: batch,
+                                enrich: true,
+                                normalize: true,
+                                updates: { status: 'ENRICHED' }
+                              })
+                            });
+
+                            if (res.ok) {
+                              const data = await res.json();
+                              totalProcessed += data.updatedCount || 0;
+                            } else {
+                              errorCount += batch.length;
+                            }
+                          } catch (err) {
+                            errorCount += batch.length;
+                            console.error(`Batch error:`, err);
+                          }
+                        }
+
+                        alert(`✅ 총 ${totalProcessed}건 통합 처리 완료 (실패: ${errorCount}건)`);
+                        await loadSpirits();
+                        if (errorCount === 0) setSelectedIds(new Set());
+                      } catch (e) {
+                        alert('처리 중 심각한 오류가 발생했습니다.');
+                      } finally {
+                        setIsProcessing(false);
+                      }
+                    }}
+                    className="bg-indigo-600 text-white px-4 py-2 rounded-xl text-xs font-bold disabled:opacity-30 hover:bg-indigo-500 transition-colors border border-indigo-400/30"
+                  >
+                    ⚡ AI + 정규화 (통합)
+                  </button>
+
                   <button
                     disabled={!selectedIds.size || isProcessing}
                     onClick={async () => {
