@@ -17,9 +17,9 @@ from datetime import datetime
 from typing import Dict, List, Optional
 import argparse
 
-# Firebase Admin SDK
-from google.cloud import firestore
-from google.oauth2 import service_account
+# Firebase Admin SDK (Lazy Loader)
+# from google.cloud import firestore
+# from google.oauth2 import service_account
 
 # Google Gemini AI (새 SDK)
 from google import genai
@@ -30,24 +30,34 @@ from dotenv import load_dotenv
 load_dotenv('.env.local')
 load_dotenv()
 
-# ==================== Configuration ====================
-GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
-FIREBASE_PROJECT_ID = os.getenv('FIREBASE_PROJECT_ID')
-FIREBASE_PRIVATE_KEY = os.getenv('FIREBASE_PRIVATE_KEY', '').replace('\\n', '\n')
-FIREBASE_CLIENT_EMAIL = os.getenv('FIREBASE_CLIENT_EMAIL')
-
-# Firestore 초기화
-credentials = service_account.Credentials.from_service_account_info({
-    'type': 'service_account',
-    'project_id': FIREBASE_PROJECT_ID,
-    'private_key': FIREBASE_PRIVATE_KEY,
-    'client_email': FIREBASE_CLIENT_EMAIL,
-    'token_uri': 'https://oauth2.googleapis.com/token',
-})
-
-db = firestore.Client(credentials=credentials, project=FIREBASE_PROJECT_ID)
+def get_db_client():
+    """Firestore 클라이언트를 지연 초기화합니다."""
+    global _db
+    if '_db' in globals():
+        return _db
+        
+    from google.cloud import firestore
+    from google.oauth2 import service_account
+    
+    # 환경 변수 로드
+    FIREBASE_PROJECT_ID = os.getenv('FIREBASE_PROJECT_ID')
+    FIREBASE_PRIVATE_KEY = os.getenv('FIREBASE_PRIVATE_KEY', '').replace('\\n', '\n')
+    FIREBASE_CLIENT_EMAIL = os.getenv('FIREBASE_CLIENT_EMAIL')
+    
+    # Credentials 생성
+    credentials = service_account.Credentials.from_service_account_info({
+        'type': 'service_account',
+        'project_id': FIREBASE_PROJECT_ID,
+        'private_key': FIREBASE_PRIVATE_KEY,
+        'client_email': FIREBASE_CLIENT_EMAIL,
+        'token_uri': 'https://oauth2.googleapis.com/token',
+    })
+    
+    _db = firestore.Client(credentials=credentials, project=FIREBASE_PROJECT_ID)
+    return _db
 
 # Gemini AI 클라이언트 초기화
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
 client = genai.Client(api_key=GEMINI_API_KEY)
 
 # ==================== AI Configuration ====================
@@ -190,6 +200,7 @@ JSON only, no extra text:"""
 def fetch_all_spirits(limit: Optional[int] = None) -> List[Dict]:
     """Firestore에서 모든 데이터 가져오기 (published + unpublished)"""
     print("🔍 Fetching ALL spirits from Firestore (published + unpublished)...")
+    db = get_db_client()
     
     try:
         # 모든 spirits 조회 (isPublished 필터 없음)
@@ -226,6 +237,7 @@ def fetch_all_spirits(limit: Optional[int] = None) -> List[Dict]:
 def fetch_published_spirits(limit: Optional[int] = None) -> List[Dict]:
     """Firestore에서 published 데이터 가져오기"""
     print("🔍 Fetching published spirits from Firestore...")
+    db = get_db_client()
     
     try:
         # isPublished=True 또는 status=PUBLISHED 조건으로 쿼리
@@ -360,6 +372,7 @@ def apply_normalization(spirit_id: str, normalized: Dict, dry_run: bool = False)
         print(f"  [DRY RUN] Would update {spirit_id}")
         return
     
+    db = get_db_client()
     try:
         # metadata 병합
         update_data = {

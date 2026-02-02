@@ -1,0 +1,15 @@
+=== 진모 한라산 21 ===
+```json
+{
+  "pairing_guide_en": "Hanlasan 21, with its impeccably clean profile and subtle grain notes, finds its perfect foil in dishes that offer both textural and aromatic complexity. Consider seared Hokkaido scallops, their delicate sweetness amplified by a brown butter and yuzu emulsion, where the lipid richness contrasts beautifully with the spirit's dryness. The scallop's inherent umami also harmonizes with the refined grain character, creating a truly elegant pairing that transcends simple refreshment.",
+  "pairing_guide_ko": "진모 한라산 21의 깔끔하고 은은한 곡물 향은 질감과 향이 복합적인 요리와 완벽한 조화를 이룹니다. 살짝 구운 홋카이도산 가리비와 브라운 버터, 유자 에멀젼을 곁들여 보세요. 가리비의 섬세한 단맛은 더욱 풍부해지고, 한라산 21의 드라이함과는 아름다운 대비를 이룹니다. 또한, 가리비 고유의 감칠맛은 정제된 곡물 풍미와 조화를 이루어 단순한 상쾌함을 넘어선 우아한 페어링을 선사합니다."
+}
+```
+
+=== 라가불린 16년 ===
+```json
+{
+  "pairing_guide_en": "Lagavulin 16, a titan of Islay, finds its structural soulmate not in expected sweetness, but in the austere elegance of lightly smoked Icelandic cod. The cod's delicate, flaky protein mirrors the whisky's inherent salinity, while the subtle smoke, redolent of distant hearth fires, subtly amplifies the Lagavulin's peat without overwhelming the palate. A finishing drizzle of brown butter, imbued with the faintest whisper of lemon zest, provides a necessary lipid bridge, harmonizing the complex tapestry of flavors into a singular, unforgettable experience.",
+  "pairing_guide_ko": "아일라의 거인, 라가불린 16년은 예상되는 단맛이 아닌, 은은하게 훈제된 아이슬란드 대구의 절제된 우아함에서 구조적인 영혼의 동반자를 찾습니다. 대구의 섬세하고 얇은 단백질은 위스키의 본질적인 염분과 공명하며, 멀리 떨어진 난로의 희미한 향기가 나는 미묘한 훈제 향은 라가불린의 피트를 압도하지 않으면서도 미묘하게 증폭시킵니다. 레몬 제스트의 희미한 속삭임이 스며든 브라운 버터의 마무리 톡톡은 필수적인 지질적 다리가 되어 복잡한 풍미의 태피스트리를 단일하고 잊을 수 없는 경험으로 조화시킵니다."
+}
+```

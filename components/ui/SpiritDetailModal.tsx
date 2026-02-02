@@ -179,7 +179,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
     return (
         <AnimatePresence>
             <motion.div
-                className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-black/60 backdrop-blur-sm"
+                className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center sm:p-4 bg-black/60 backdrop-blur-sm"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -193,7 +193,8 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                     transition={{ type: "spring", damping: 25, stiffness: 300 }}
                     onClick={(e) => e.stopPropagation()}
                 >
-                    {/* 1. Header Image (Fixed Aspect Ratio to verify CLS fix) */}
+                    {/* ... (Header Image code remains unchanged) ... */}
+                    {/* (Omitted for brevity, but it's part of the replacement block) */}
                     <div className="relative aspect-square w-full bg-zinc-800">
                         {/* Close Button */}
                         <button
@@ -230,7 +231,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                     </div>
 
                     {/* 2. Actions & Detailed Info */}
-                    <div className="p-6 space-y-6 max-h-[50vh] overflow-y-auto custom-scrollbar bg-neutral-900 text-white">
+                    <div className="p-6 space-y-6 max-h-[70vh] sm:max-h-[80vh] overflow-y-auto custom-scrollbar bg-neutral-900 text-white pb-32 sm:pb-6">
 
                         {/* Action Buttons */}
                         <div className="flex gap-2">

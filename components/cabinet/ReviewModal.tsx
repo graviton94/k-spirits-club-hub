@@ -167,7 +167,7 @@ text - [10px] sm: text - xs px - 2 sm: px - 3 py - 1 sm: py - 1.5 rounded - full
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto"
+                className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4 overflow-y-auto"
                 onClick={onClose}
             >
                 <motion.div
@@ -197,7 +197,7 @@ text - [10px] sm: text - xs px - 2 sm: px - 3 py - 1 sm: py - 1.5 rounded - full
                     </div>
 
                     {/* Body - Scrollable */}
-                    <div className="p-4 sm:p-6 space-y-8 overflow-y-auto custom-scrollbar flex-1">
+                    <div className="p-4 sm:p-6 space-y-8 overflow-y-auto custom-scrollbar flex-1 pb-32 sm:pb-6">
 
                         {/* Nose Section */}
                         <div className="space-y-3">

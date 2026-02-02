@@ -67,16 +67,16 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 async function processSpiritWithAI(spirit: any): Promise<ProcessingResult | null> {
     // Extract detailed metadata for better prompts
     const tastingNote = spirit.metadata?.tasting_note || spirit.metadata?.description || '';
-    const noseTags = spirit.metadata?.nose_tags?.join(', ') || '';
-    const palateTags = spirit.metadata?.palate_tags?.join(', ') || '';
-    const finishTags = spirit.metadata?.finish_tags?.join(', ') || '';
-    
+    const noseTags = (spirit.metadata?.nose_tags || []).join(', ');
+    const palateTags = (spirit.metadata?.palate_tags || []).join(', ');
+    const finishTags = (spirit.metadata?.finish_tags || []).join(', ');
+
     // Determine location context (region preferred, fallback to country)
     const location = spirit.region || spirit.country || 'Unknown';
     const locationLabel = spirit.region ? 'Region' : 'Country';
 
     const prompt = `
-You are an expert sommelier and translator specializing in Korean traditional spirits and global liquors.
+You are an expert sommelier and gastronomy critic specializing in global spirits.
 
 **Spirit Details:**
 - Product Name (Korean): ${spirit.name}
@@ -92,70 +92,45 @@ You are an expert sommelier and translator specializing in Korean traditional sp
 
 **Your Tasks:**
 
-1. **name_en** - Translate the Korean name to English using these terminology rules:
+1. **name_en** - Translate the Korean name to English:
 ${TERM_GUIDELINES}
-   - Keep brand names as-is (romanized)
    - Follow format: [Brand/Distillery] [Product Name] [Edition/Age]
    - Use Title Case
 
-2. **description_en** - Create a compelling 2-3 sentence description in English that:
-   - Explains what this spirit is to someone unfamiliar with Korean spirits
-   - Highlights unique characteristics based on the category, subcategory, and tasting notes
-   - Mentions distillery heritage or regional significance if notable
-   - Uses specific sensory details (e.g., "oak-aged", "floral notes", "smooth finish")
-   - VARIES in structure and vocabulary - avoid repetitive phrasing
-   - NO medical claims or exaggerated marketing
+2. **description_en** - Create a compelling 3-4 sentence masterpiece for a luxury spirits catalog.
+   - Capture the 'soul' of the liquid. Use evocative language.
+   - Explain the technical process's impact on flavor.
 
-3. **pairing_guide_en** - IMPORTANT: Create UNIQUE and CREATIVE food pairing recommendations (2-3 sentences):
+3. **pairing_guide_en** - Create AUTHENTIC and STRUCTURALLY LOGICAL food pairing recommendations (3-4 sentences):
    
-   **CRITICAL - Consider ALL of these factors:**
-   - Product name and brand identity (e.g., "Teeling" suggests Irish character)
-   - Detailed subcategory (e.g., "Single Grain Scotch Whisky" vs "Blended Malt")
-   - ${locationLabel} (${location}) - Regional food culture and traditions
-   - ABV level (${spirit.abv}%) - Higher ABV → richer, bolder foods
-   - ALL tasting notes (Nose, Palate, Finish) - Match or contrast flavors
+   **CULINARY METHODOLOGY (First Principles):**
+   - **Autonomous Selection**: You have full creative freedom. Do NOT rely on a fixed list of common pairings. Explore the entire global culinary map—from obscure regional specialties to modern fine dining.
+   - **Lipid Affinity**: How does the spirit interact with fats (dairy, animal fat, oil)? (e.g., High ABV needs high fat).
+   - **Protein Structure**: Does it complement delicate proteins or stand up to heavy, gamey meats?
+   - **Aromatic Bridge**: Find an ingredient that shares a molecular aroma with the spirit's specific profile.
+   - **Textural Contrast**: Match or contrast the liquid's viscosity with food textures.
    
-   **MAXIMUM CREATIVITY & AUTONOMY:**
-   - Think OUTSIDE the box - surprise with unexpected but logical pairings
-   - Draw from GLOBAL cuisines (Asian, European, Latin American, Middle Eastern, etc.)
-   - Consider cooking methods (grilled, smoked, fried, raw, braised, etc.)
-   - Include specific dishes, not just food categories (e.g., "Korean LA galbi" not just "BBQ")
-   - Explain the SCIENCE behind the pairing (fat cuts alcohol, sweetness balances spice, etc.)
-   - Make each recommendation DISTINCTLY different from others
-   - Use vivid, sensory language that makes readers want to try the pairing
-   
-   **FORBIDDEN:**
-   - Generic phrases like "pairs well with", "goes great with"
-   - Common pairings everyone suggests (e.g., "cheese and crackers")
-   - Vague categories without specifics (just "seafood", just "meat")
-   - Medical claims or health benefits
+   **ANTI-REPETITION PROTOCOL:**
+   - **NO CLICHÉS**: ABSOLUTELY NO "Moroccan Tagine", "Generic Fruit/Cheese", or "Dark Chocolate".
+   - **Unique DNA**: If the spirit is a Highland Scotch, don't just say "Haggis". If it's a Soju, don't just say "Samgyeopsal". Be bespoke.
+   - **Logic**: Explain the "Synergy." Does the acidity cut fat? Does the heat bridge with spice?
    
    **STYLE:**
-   - Be confident, specific, and adventurous
-   - Write as if you're a creative chef designing a tasting menu
-   - Each spirit deserves a COMPLETELY UNIQUE pairing experience
+   - Write as a World-Class Gastronomy Columnist.
+   - Talk about how the specific flavor tags (${noseTags}, ${palateTags}, ${finishTags}) actively interact with the food's components (salt, fat, acid, heat).
 
-4. **pairing_guide_ko** - Korean translation of pairing_guide_en that:
-   - Maintains the EXACT same food recommendations (don't change to Korean foods)
-   - Uses natural, conversational Korean with vivid sensory language
-   - Accurately conveys the reasoning and excitement behind pairings
-   - Preserves all specific dish names and culinary terms
+4. **pairing_guide_ko** - A highly sophisticated Korean translation that captures the nuance of a high-end food column.
 
 **CRITICAL REQUIREMENTS:**
 ✓ Each spirit is UNIQUE - no two spirits should have similar pairing recommendations
-✓ Vary sentence structure, vocabulary, and creative approach dramatically
-✓ Use ALL provided details (name, subcategory, location, tasting notes) to inform suggestions
-✓ Be BOLD and CREATIVE - this is about culinary artistry, not safe suggestions
-✓ NO medical claims (e.g., "good for health", "aids digestion")
-✓ NO generic marketing language
+✓ NO cliches or repetitive "statistical comfort zone" dishes
 ✓ Output ONLY valid JSON (no markdown formatting)
 
-**Output JSON Format:**
 {
-  "name_en": "English Name",
-  "description_en": "Detailed description...",
-  "pairing_guide_en": "Food pairing recommendations...",
-  "pairing_guide_ko": "음식 페어링 추천..."
+  "name_en": "string",
+  "description_en": "string",
+  "pairing_guide_en": "string",
+  "pairing_guide_ko": "string"
 }
     `;
 
@@ -163,24 +138,19 @@ ${TERM_GUIDELINES}
         try {
             const result = await model.generateContent(prompt);
             const response = result.response;
-            const text = response.text();
+            const text = response.text().trim().replace(/```json|```/g, '');
 
-            // Extract JSON
             const jsonMatch = text.match(/\{[\s\S]*\}/);
             if (!jsonMatch) throw new Error("No JSON found in response");
 
             const data = JSON.parse(jsonMatch[0]) as ProcessingResult;
-
-            // Basic validation
             if (!data.name_en || !data.pairing_guide_en || !data.description_en || !data.pairing_guide_ko) throw new Error("Missing fields in JSON");
 
             return data;
         } catch (e: any) {
             console.warn(`    ⚠️ Attempt ${attempt} failed for ${spirit.name}: ${e.message}`);
-            if (e.message.includes('404')) console.warn('        (Model not found? Check model name)');
-            // console.dir(e, { depth: null }); 
             if (attempt === MAX_RETRIES) return null;
-            await delay(1000 * attempt); // Exponential backoffish
+            await delay(1000 * attempt);
         }
     }
     return null;
@@ -230,11 +200,13 @@ async function bulkProcessor() {
                 const data = doc.data();
 
                 // Skip condition
+                /*
                 if (data.metadata?.pairing_guide_en && data.name_en) {
                     skippedCount++;
                     // console.log(`⏩ Skipping ${data.name} (Already processed)`);
                     return;
                 }
+                */
 
                 console.log(`🤖 Processing: ${data.name}...`);
                 const aiResult = await processSpiritWithAI(data);

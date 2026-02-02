@@ -103,17 +103,23 @@ Analyze the **description_en** you just wrote.
 - Ensure the tags capture technical nuances (e.g., "Rancio," "Petrichor," "Viscous," "Esoteric Spices").
 
 ### STEP 4: GASTRONOMY COLUMNIST'S PAIRING GUIDE (Based on Step 3)
-Adopt the persona of a world-renowned food critic. Your goal is to find the perfect structural harmony between the spirit and a dish.
-- **Priority**: The spirit's specific notes (Nose, Palate, Finish) and texture (Viscosity, Heat) must be the primary driver of the pairing.
-- **Context**: Respect the spirit's regional origins (terroir) while suggesting an adventurous, world-class culinary companion.
+Adopt the persona of a world-renowned food critic. Your goal is to find the perfect structural harmony between the spirit and a dish. 
+
+- **Autonomous Selection**: You have full creative freedom. Do NOT rely on a fixed list of common pairings. Explore the entire global culinary map—from obscure regional specialties to modern molecular gastronomy.
+- **Methodology (First Principles)**: Every pairing must be a logical derivation of the spirit's chemical properties:
+  - **Lipid Affinity**: How does the spirit interact with fats (dairy, animal fat, oils)?
+  - **Protein Structure**: Does it complement delicate white meats or stand up to heavy, gamey proteins?
+  - **Aromatic Bridge**: Find an ingredient that shares a molecular aroma with the spirit (e.g., stone fruit notes in a brandy bridge with a specific spice or herb).
+  - **Textural Contrast**: Does the liquid's viscosity need a crunch, or a velvety emulsion?
+- **Anti-Repetition Protocol**: Consciously avoid your own "statistical comfort zones." If you find yourself frequently suggesting the same few dishes (even if they are high-end), pivot to a different culinary culture or a different structural approach.
 - **Logic**: Explain the "Synergy." Does the spirit's acidity cut through fat? Does its smokiness bridge with a charred element? 
-- **pairing_guide_en**: 3-4 sentences of sophisticated prose. Talk about how the specific flavor tags from Step 3 actively interact with the food's components (salt, fat, acid, heat). Avoid generic "pairs well with" phrasing.
+- **pairing_guide_en**: 3-4 sentences of sophisticated prose. Talk about how the specific flavor tags from Step 3 actively interact with the food's components (salt, fat, acid, heat).
 - **pairing_guide_ko**: An equally sophisticated Korean translation that captures the nuance of a high-end food column.
 
 ---
 ### CRITICAL OUTPUT RULES:
-- **BALANCED EXPERTISE**: Be adventurous but realistic. The pairing must make physical sense based on the flavor profile.
-- **NO CLICHÉS**: Avoid "fruit and cheese" unless justifying a very specific, technical interaction.
+- **UNIQUE PAIRINGS**: Each recommendation must feel bespoke to *this specific spirit*. 
+- **NO CLICHÉS**: Avoid "fruit and cheese" or repetitive "exotic" tropes.
 - **TONE**: Authoritative, analytical, and elegantly descriptive.
 
 ---
