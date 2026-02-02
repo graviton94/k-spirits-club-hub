@@ -90,43 +90,28 @@ ${TERM_GUIDELINES}
    - VARIES in structure and vocabulary - avoid repetitive phrasing
    - NO medical claims or exaggerated marketing
 
-3. **pairing_guide_en** - IMPORTANT: Create UNIQUE and CREATIVE food pairing recommendations (2-3 sentences):
+3. **pairing_guide_en** - IMPORTANT: Create BOLD, UNEXPECTED, and REGIONALLY-INSPIRED food pairing recommendations (2-3 sentences):
    
    **CRITICAL - Consider ALL of these factors:**
-   - Product name and brand identity (e.g., "Teeling" suggests Irish character)
-   - Detailed subcategory (e.g., "Single Grain Scotch Whisky" vs "Blended Malt")
-   - ${locationLabel} (${location}) - Regional food culture and traditions
-   - ABV level (${spirit.abv}%) - Higher ABV → richer, bolder foods
-   - ALL tasting notes (Nose, Palate, Finish) - Match or contrast flavors
+   - Regional Heritage: If it's a Scotch, don't just say 'beef'. Think about smoked fish or specific Scottish delicacies. If it's Makgeolli, don't just say 'pancakes'. Think about spicy, fermented, or rich global dishes.
+   - Flavor Contrasts: Use the tasting notes (Nose, Palate, Finish) to find contrasting or complementary flavors (e.g., a peaty whisky with a sweet vanilla dessert, or a floral gin with spicy Thai basil).
+   - Sensory Science: Explain *why* it works (e.g., "The high acidity cuts through the fat of the pork belly" or "The botanical notes elevate the herbal complexity of the dish").
    
    **MAXIMUM CREATIVITY & AUTONOMY:**
-   - Think OUTSIDE the box - surprise with unexpected but logical pairings
-   - Draw from GLOBAL cuisines (Asian, European, Latin American, Middle Eastern, etc.)
-   - Consider cooking methods (grilled, smoked, fried, raw, braised, etc.)
-   - Include specific dishes, not just food categories (e.g., "Korean LA galbi" not just "BBQ")
-   - Explain the SCIENCE behind the pairing (fat cuts alcohol, sweetness balances spice, etc.)
-   - Make each recommendation DISTINCTLY different from others
-   - Use vivid, sensory language that makes readers want to try the pairing
+   - Avoid "Safe" Choices: Never suggest cheese, chocolate, or steak unless it's a very specific, unique preparation.
+   - Global Fusion: Be brave—pair a Korean Yakju with a Mexican Mole, or a Bourbon with a Japanese Umami-rich dish.
+   - Specificity: Use the exact name of a dish (e.g., "Bluefin Tuna Carpaccio with Truffle Oil" instead of "seafood").
    
-   **FORBIDDEN:**
-   - Generic phrases like "pairs well with", "goes great with"
-   - Common pairings everyone suggests (e.g., "cheese and crackers")
-   - Vague categories without specifics (just "seafood", just "meat")
-   - Medical claims or health benefits
-   
-   **STYLE:**
-   - Be confident, specific, and adventurous
-   - Write as if you're a creative chef designing a tasting menu
-   - Each spirit deserves a COMPLETELY UNIQUE pairing experience
+   **FORBIDDEN PATTERNS:**
+   - No "Pairs well with..." or "Complement your meal with...". Start directly with the food or a sensory hook.
+   - No generic categories (meat, fruit, dessert).
+   - No repetitive advice across different spirits. Every response must feel like a custom-tailored recommendation.
 
-4. **pairing_guide_ko** - Korean translation of pairing_guide_en that:
-   - Maintains the EXACT same food recommendations (don't change to Korean foods)
-   - Uses natural, conversational Korean with vivid sensory language
-   - Accurately conveys the reasoning and excitement behind pairings
-   - Preserves all specific dish names and culinary terms
+4. **pairing_guide_ko** - A vivid, professional Korean translation of pairing_guide_en. Use terms like '마리아주(Mariage)' or '페어링(Pairing)' naturally.
 
 **CRITICAL REQUIREMENTS:**
-✓ Each spirit is UNIQUE - no two spirits should have similar pairing recommendations
+✓ ACT AS a Michelin-star sommelier who is bored of standard advice.
+✓ Focus 50% of the reasoning on the ${locationLabel} (${location}) origin and 50% on the unique Tasting Notes.
 ✓ Vary sentence structure, vocabulary, and creative approach dramatically
 ✓ Use ALL provided details (name, subcategory, location, tasting notes) to inform suggestions
 ✓ Be BOLD and CREATIVE - this is about culinary artistry, not safe suggestions
