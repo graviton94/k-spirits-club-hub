@@ -1,7 +1,6 @@
 
-
 const API_BASE = 'http://localhost:3000';
-const BATCH_SIZE = 2; // Reduced to 2 for stability
+const BATCH_SIZE = 1; // Ultra-safe mode: 1 item per request
 
 async function main() {
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
@@ -44,16 +43,16 @@ async function main() {
         let processed = 0;
         let successes = 0;
         let failures = 0;
+        const totalBatches = Math.ceil(allIds.length / BATCH_SIZE);
 
         for (let i = 0; i < allIds.length; i += BATCH_SIZE) {
             const batch = allIds.slice(i, i + BATCH_SIZE);
             const batchNum = Math.floor(i / BATCH_SIZE) + 1;
-            const totalBatches = Math.ceil(allIds.length / BATCH_SIZE);
 
             process.stdout.write(`⏳ Batch ${batchNum}/${totalBatches} (${batch.length} items)... `);
 
             try {
-                const res = await fetch(`${API_BASE}/api/admin/spirits/bulk-patch/`, {
+                const res = await fetch(`${API_BASE}/api/admin/spirits/bulk-patch`, {
                     method: 'PATCH',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({

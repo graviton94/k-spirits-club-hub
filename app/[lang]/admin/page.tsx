@@ -212,8 +212,8 @@ export default function AdminDashboard() {
 
     setIsProcessing(true);
 
-    // Use small batch size if enriching (heavy AI ops), larger otherwise
-    const BATCH_SIZE = doExtra ? 5 : 50;
+    // Use batch size of 1 for AI operations to absolutely ensure no timeouts
+    const BATCH_SIZE = doExtra ? 1 : 50;
     const allIds = Array.from(selectedIds);
     let totalUpdated = 0;
     let errorCount = 0;
@@ -222,7 +222,8 @@ export default function AdminDashboard() {
       for (let i = 0; i < allIds.length; i += BATCH_SIZE) {
         const batch = allIds.slice(i, i + BATCH_SIZE);
         try {
-          const res = await fetch('/api/admin/spirits/bulk-patch/', {
+          // REMOVED TRAILING SLASH
+          const res = await fetch('/api/admin/spirits/bulk-patch', {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -510,7 +511,7 @@ export default function AdminDashboard() {
                       if (!confirm(`${selectedIds.size}건에 대해 AI 분석(영문명, 소개글, 페어링 가이드 생성)을 진행하시겠습니까?`)) return;
                       setIsProcessing(true);
 
-                      const BATCH_SIZE = 5;
+                      const BATCH_SIZE = 1; // Ultra-safe mode
                       const allIds = Array.from(selectedIds);
                       let processedCount = 0;
                       let totalEnriched = 0;
@@ -520,7 +521,8 @@ export default function AdminDashboard() {
                         for (let i = 0; i < allIds.length; i += BATCH_SIZE) {
                           const batch = allIds.slice(i, i + BATCH_SIZE);
                           try {
-                            const res = await fetch('/api/admin/spirits/bulk-patch/', {
+                            // REMOVED TRAILING SLASH
+                            const res = await fetch('/api/admin/spirits/bulk-patch', {
                               method: 'PATCH',
                               headers: { 'Content-Type': 'application/json' },
                               body: JSON.stringify({
@@ -563,7 +565,7 @@ export default function AdminDashboard() {
                       if (!confirm(`${selectedIds.size}건에 대해 [AI 분석 + 데이터 정규화]를 통합 실행하시겠습니까?\n(영문명/설명 생성 + 증류소/지역 표준화)`)) return;
                       setIsProcessing(true);
 
-                      const BATCH_SIZE = 2; // Reduced from 5 to 2 to prevent Cloudflare 503 timeouts
+                      const BATCH_SIZE = 1; // Ultra-safe mode: 1 item per request to completely avoid timeouts
                       const allIds = Array.from(selectedIds);
                       let totalProcessed = 0;
                       let errorCount = 0;
@@ -572,7 +574,8 @@ export default function AdminDashboard() {
                         for (let i = 0; i < allIds.length; i += BATCH_SIZE) {
                           const batch = allIds.slice(i, i + BATCH_SIZE);
                           try {
-                            const res = await fetch('/api/admin/spirits/bulk-patch/', {
+                            // REMOVED TRAILING SLASH to prevent 308 Redirects
+                            const res = await fetch('/api/admin/spirits/bulk-patch', {
                               method: 'PATCH',
                               headers: { 'Content-Type': 'application/json' },
                               body: JSON.stringify({

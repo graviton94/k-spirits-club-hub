@@ -14,8 +14,12 @@ export async function PATCH(req: NextRequest) {
             return NextResponse.json({ error: 'Missing spiritIds' }, { status: 400 });
         }
 
-        const spirits = await db.getSpirits({}, { page: 1, pageSize: 1000 });
-        const targets = spirits.data.filter(s => spiritIds.includes(s.id));
+        // Optimize: Fetch only target spirits instead of loading 1000 items
+        const targets: any[] = [];
+        for (const id of spiritIds) {
+            const s = await db.getSpirit(id);
+            if (s) targets.push(s);
+        }
 
         let updatedCount = 0;
         let enrichedCount = 0;
