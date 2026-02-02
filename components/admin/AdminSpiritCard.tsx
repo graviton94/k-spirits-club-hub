@@ -11,8 +11,15 @@ interface AdminSpiritCardProps {
 interface EnrichmentResult {
   name_en?: string;
   description_en?: string;
+  nose_tags?: string[];
+  palate_tags?: string[];
+  finish_tags?: string[];
   pairing_guide_en?: string;
   pairing_guide_ko?: string;
+  distillery?: string;
+  region?: string;
+  country?: string;
+  abv?: number;
 }
 
 interface SpiritUpdateData {
@@ -22,6 +29,10 @@ interface SpiritUpdateData {
   reviewedAt?: Date;
   name_en?: string | null;
   description_en?: string;
+  abv?: number;
+  distillery?: string | null;
+  region?: string | null;
+  country?: string | null;
   metadata?: any;
 }
 
@@ -93,7 +104,12 @@ export default function AdminSpiritCard({ spirit }: AdminSpiritCardProps) {
         isReviewed: true,
         reviewedBy: 'ADMIN',
         reviewedAt: new Date(),
-        name_en: enrichedData?.name_en || nameEn || null
+        name_en: enrichedData?.name_en || nameEn || null,
+        // AI Corrected Metadata
+        abv: enrichedData?.abv ?? spirit.abv,
+        distillery: enrichedData?.distillery ?? spirit.distillery,
+        region: enrichedData?.region ?? spirit.region,
+        country: enrichedData?.country ?? spirit.country
       };
 
       // Add description_en if generated
@@ -101,19 +117,22 @@ export default function AdminSpiritCard({ spirit }: AdminSpiritCardProps) {
         updateData.description_en = enrichedData.description_en;
       }
 
-      // Add pairing guides to metadata if generated
-      if (enrichedData?.pairing_guide_en || enrichedData?.pairing_guide_ko) {
+      // Add pairing guides and tags to metadata if generated
+      if (enrichedData?.pairing_guide_en || enrichedData?.pairing_guide_ko || enrichedData?.nose_tags) {
         updateData.metadata = {
           ...spirit.metadata,
           pairing_guide_en: enrichedData?.pairing_guide_en || spirit.metadata?.pairing_guide_en,
-          pairing_guide_ko: enrichedData?.pairing_guide_ko || spirit.metadata?.pairing_guide_ko
+          pairing_guide_ko: enrichedData?.pairing_guide_ko || spirit.metadata?.pairing_guide_ko,
+          nose_tags: enrichedData?.nose_tags || spirit.metadata?.nose_tags,
+          palate_tags: enrichedData?.palate_tags || spirit.metadata?.palate_tags,
+          finish_tags: enrichedData?.finish_tags || spirit.metadata?.finish_tags
         };
       }
 
       await db.updateSpirit(spirit.id, updateData);
       console.log('[Publish] ✓ Spirit published successfully');
       setStatus('published');
-      
+
       // Clear error after a few seconds if publish succeeded
       if (errorMessage) {
         setTimeout(() => setErrorMessage(null), 5000);

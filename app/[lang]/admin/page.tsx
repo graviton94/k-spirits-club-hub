@@ -905,7 +905,10 @@ export default function AdminDashboard() {
                               country: editForm.country,
                               metadata: {
                                 tasting_note: editForm.tasting_note,
-                                description: editForm.description
+                                description: editForm.description,
+                                nose_tags: editForm.nose_tags.split(',').filter(Boolean).map(t => t.trim()),
+                                palate_tags: editForm.palate_tags.split(',').filter(Boolean).map(t => t.trim()),
+                                finish_tags: editForm.finish_tags.split(',').filter(Boolean).map(t => t.trim())
                               }
                             })
                           });
@@ -915,6 +918,9 @@ export default function AdminDashboard() {
                             ...editForm,
                             name_en: data.name_en || editForm.name_en,
                             description_en: data.description_en || editForm.description_en,
+                            nose_tags: (data.nose_tags || []).join(', '),
+                            palate_tags: (data.palate_tags || []).join(', '),
+                            finish_tags: (data.finish_tags || []).join(', '),
                             pairing_guide_en: data.pairing_guide_en || editForm.pairing_guide_en,
                             pairing_guide_ko: data.pairing_guide_ko || editForm.pairing_guide_ko
                           });
