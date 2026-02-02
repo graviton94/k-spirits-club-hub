@@ -101,23 +101,27 @@ ${TERM_GUIDELINES}
    - Capture the 'soul' of the liquid. Use evocative language.
    - Explain the technical process's impact on flavor.
 
-3. **pairing_guide_en** - IMPORTANT: Create exactly TWO distinct pairing recommendations (4-5 sentences total):
+3. **pairing_guide_en** - IMPORTANT: Create exactly TWO distinct, non-repetitive pairing recommendations (4-5 sentences total):
    
-   **1. The Terroir Choice (Heritage Pairing):**
+   **[GLOBAL BAN LIST - ABSOLUTELY NO EXCEPTIONS]**
+   ❌ Cullen Skink, ❌ Haggis, ❌ Moroccan Tagine, ❌ Generic Fruit/Cheese, ❌ Generic Dark Chocolate, ❌ Roast Lamb/Beef without a unique technique, ❌ Any dish you have recently repeated for this region.
+
+   **1. The Terroir Choice (Obscure Heritage Pairing):**
    - **Requirement**: A sophisticated, authentic dish from the spirit's EXACT country or region of origin (${locationLabel}: ${location}).
-   - **Focus**: Cultural harmony and why they have traditionally evolved to complement each other.
+   - **Diversity Directive**: Avoid the "Top 3" most famous dishes from this region. Instead, seek out hyper-regional specialties, seasonal game, or traditional preservation techniques (fermenting, curing, pickling) that are lesser-known globally but deeply rooted locally.
+   - **Focus**: Why does *this specific bottling's* unique profile (from Step 3) require *this specific* regional ingredient?
    
-   **2. The Global Adventure (Structural Harmony):**
+   **2. The Global Adventure (Molecular Cross-Pollination):**
    - **Requirement**: An adventurous, world-class pairing from a culinary culture OUTSIDE the spirit's origin.
-   - **Methodology**: Based on molecular bridges, lipid affinity, and textural contrast.
+   - **Methodology**: Rooted in pure chemistry—molecular bridges, lipid affinity, and volatile aromatic compounds. 
+   - **Focus**: Surprise the reader with a logical but high-variance connection (e.g., a peated malt with a specific fermented Thai condiment rather than "barbecue").
    
    **ANTI-REPETITION PROTOCOL:**
-   - **NO CLICHÉS**: ABSOLUTELY NO "Moroccan Tagine", "Generic Fruit/Cheese", or "Dark Chocolate".
+   - **BESPOKE DNA**: Each spirit must have a UNIQUE recommendation. If you suggested a dish for a previous item in this batch, you MUST NOT suggest it again.
    - **Logic**: Explain the "Synergy" for BOTH choices. How do the specific flavor tags (${noseTags}, ${palateTags}, ${finishTags}) interact with salt, fat, acid, and heat?
    
    **STYLE:**
-   - Write as a World-Class Gastronomy Columnist.
-   - Be authoritative, analytical, and elegantly descriptive.
+   - Write as a World-Class Gastronomy Columnist. Use authoritative, analytical, and elegantly descriptive language.
 
 4. **pairing_guide_ko** - A highly sophisticated Korean translation that captures the nuance of a high-end food column.
 

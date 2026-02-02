@@ -51,17 +51,20 @@ You are a World-Class Gastronomy Columnist.
 - ABV: ${spirit.abv}%
 - Tags: ${[...spirit.metadata.nose_tags, ...spirit.metadata.palate_tags, ...spirit.metadata.finish_tags].join(', ')}
 
-**Task:** Create exactly TWO food pairing recommendations.
+**Task:** Create exactly TWO distinct food pairing recommendations.
+
+**[GLOBAL BAN LIST - ABSOLUTELY NO EXCEPTIONS]**
+❌ Cullen Skink, ❌ Haggis, ❌ Moroccan Tagine, ❌ Generic Fruit/Cheese, ❌ Generic Dark Chocolate, ❌ Any dish you have recently repeated.
 
 **Principles:**
-1. **The Terroir Choice (Heritage Pairing)**: A sophisticated, authentic dish from the spirit's EXACT country or region of origin.
-2. **The Global Adventure (Structural Harmony)**: A creative pairing from a different culinary culture based on flavor science.
-3. **Anti-Repetition**: NO "Moroccan Tagine", "Fruit/Cheese", or "Dark Chocolate".
+1. **The Terroir Choice (Obscure Heritage)**: A sophisticated, non-obvious dish from the spirit's exact origin. Avoid the Top 3 most famous dishes.
+2. **The Global Adventure (Molecular Cross-Pollination)**: A high-variance pairing from a different culinary culture using molecular/aromatic bridges.
+3. **BESPOKE DNA**: No two spirits can share the same pairing.
 
 **Output JSON:**
 {
-  "pairing_guide_en": "Narrative prose combining both recommendations (4-5 sentences)...",
-  "pairing_guide_ko": "두 가지 추천을 포함한 고급스러운 한국어 설명..."
+  "pairing_guide_en": "4-5 sentences of sophisticated narrative...",
+  "pairing_guide_ko": "고급스러운 한국어 설명..."
 }
 `;
         try {

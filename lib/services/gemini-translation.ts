@@ -103,31 +103,32 @@ Analyze the **description_en** you just wrote.
 - Ensure the tags capture technical nuances (e.g., "Rancio," "Petrichor," "Viscous," "Esoteric Spices").
 
 ### STEP 4: GASTRONOMY COLUMNIST'S PAIRING GUIDE (Based on Step 3)
-Adopt the persona of a world-renowned food critic. Your goal is to provide **exactly TWO distinct pairing recommendations** that balance tradition and innovation.
+Adopt the persona of a world-renowned food critic. Your goal is to provide **exactly TWO distinct, non-repetitive pairing recommendations**.
 
-1. **The Terroir Choice (Heritage Pairing)**: 
-   - **Requirement**: This must be a sophisticated, authentic dish from the spirit's EXACT country or region of origin. Use the provided metadata (Country, Region) as the absolute anchor for this selection.
-   - **Examples**: If the spirit is from Scotland (Islay), the dish must be Scottish; if from Mexico (Jalisco), it must be Mexican; if from Korea, it must be Korean. 
-   - **Focus**: Cultural harmony and historical synergy. Explain why these two have traditionally and geographically evolved to complement each other.
+**[GLOBAL BAN LIST - ABSOLUTELY NO EXCEPTIONS]**
+❌ Cullen Skink, ❌ Haggis, ❌ Moroccan Tagine, ❌ Generic Fruit/Cheese, ❌ Generic Dark Chocolate, ❌ Roast Lamb/Beef without a unique technique, ❌ Any dish you have recently repeated for this region.
 
-2. **The Global Adventure (Structural Harmony)**:
-   - **Requirement**: An adventurous, world-class pairing from any culinary culture outside the spirit's origin.
-   - **Methodology**: Based on molecular bridges, lipid affinity, and textural contrast.
-   - **Focus**: Pure culinary science and structural balance.
+1. **The Terroir Choice (Obscure Heritage)**: 
+   - **Requirement**: A sophisticated, authentic dish from the spirit's EXACT origin. 
+   - **Diversity Directive**: Avoid the "Top 3" most famous dishes from this region. Instead, seek out hyper-regional specialties, seasonal game, or traditional preservation techniques (fermenting, curing, pickling) that are lesser-known globally but deeply rooted locally.
+   - **Focus**: Why does *this specific bottling's* unique profile (from Step 3) require *this specific* regional ingredient?
 
-- **Synergy Logic**: For BOTH pairings, explain the "why." (e.g., Does the acidity cut fat? Does a specific aromatic bridge the flavors?)
-- **Anti-Repetition Protocol**: ABSOLUTELY NO "Moroccan Tagine", "Generic Fruit/Cheese", or "Dark Chocolate".
-- **pairing_guide_en**: 4-5 sentences of sophisticated prose combining both pairings into a cohesive narrative.
-- **pairing_guide_ko**: An equally sophisticated Korean translation that captures the nuance of a high-end food column.
+2. **The Global Adventure (Molecular Cross-Pollination)**:
+   - **Requirement**: An adventurous, world-class pairing from a culinary culture outside the spirit's origin.
+   - **Methodology**: Rooted in pure chemistry—molecular bridges, lipid affinity, and volatile aromatic compounds. 
+   - **Focus**: Surprise the reader with a logical but high-variance connection (e.g., a peated malt with a specific fermented Thai condiment rather than "barbecue").
 
----
-### CRITICAL OUTPUT RULES:
-- **UNIQUE PAIRINGS**: Each recommendation must feel bespoke to *this specific spirit*. 
-- **NO CLICHÉS**: Avoid "fruit and cheese" or repetitive "exotic" tropes.
-- **TONE**: Authoritative, analytical, and elegantly descriptive.
+**[LOGICAL SYNERGY & STYLE]**
+- **Structural Integrity**: Does the ABV demand a high-concentration lipid? Does the acidity need a saline counterpoint? Explain the physics of the pairing.
+- **Tone**: Authoritative, analytical, and elegantly descriptive. No generic "pairs well with."
+- **pairing_guide_en**: 4-5 sentences of sophisticated prose. Talk about how the specific flavor tags from Step 3 actively interact with the food's components.
+- **pairing_guide_ko**: A professional Korean translation using high-end gastronomy terminology.
 
 ---
 ### CRITICAL OUTPUT RULES:
+- **BESPOKE DNA**: No two spirits can share the same pairing. If you suggested a dish for the previous spirit, you MUST NOT suggest it again within this batch.
+- **HIGH VARIANCE**: Consciously pivot away from your statistical comfort zones. Avoid your most likely/probable answer for a country.
+- **TONE**: Analytical yet poetic.
 - If you corrected a Fact (ABV, Region, etc.), output the CORRECTED value.
 - The chain of logic MUST be: Fact -> Description -> Tags -> Pairing. 
 - NO placeholders. NO markdown. Output Valid JSON only.

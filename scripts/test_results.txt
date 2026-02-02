@@ -1,15 +1,15 @@
 === 진모 한라산 21 ===
 ```json
 {
-  "pairing_guide_en": "Jinmo Hallasan 21, with its clean, refined profile and subtle grain notes, is remarkably versatile. For a true taste of Jeju, pair it with **돔베고기 (Dombe Gogi)**, boiled pork belly served sliced with kimchi and salted shrimp; the soju's dryness cuts beautifully through the richness of the pork. Venturing beyond Korea, consider **Ceviche Clásico** from Peru. The bright acidity of the lime in the ceviche contrasts perfectly with the soju's smooth texture, while the delicate fish complements its refined character, creating a vibrant and refreshing culinary experience.",
-  "pairing_guide_ko": "진모 한라산 21은 깔끔하고 정제된 맛과 은은한 곡물 향 덕분에 다양한 음식과 잘 어울립니다. 제주도의 풍미를 제대로 느끼고 싶다면 **돔베고기**와 함께 드셔 보세요. 삶은 돼지고기 수육을 김치와 젓갈에 곁들여 먹는 돔베고기는 소주의 드라이한 맛이 돼지고기의 풍부한 기름기를 산뜻하게 잡아줍니다. 한국을 넘어 페루의 **세비체 클라시코**는 어떠신가요? 세비체의 상큼한 라임 산미는 소주의 매끄러운 질감과 완벽하게 대조를 이루며 섬세한 생선은 소주의 세련된 특징을 보완하여 활기차고 상쾌한 미식 경험을 선사합니다."
+  "pairing_guide_en": "Jinro Hallasan 21, with its crispness and subtle grain notes, demands equally refined pairings. For a taste of Jeju's hidden culinary heritage, consider pairing it with *Momguk*, a traditional seaweed soup thickened with buckwheat flour. The subtly nutty, marine flavors of the *Momguk* find resonance in the spirit's delicate character, offering a unique textural and flavor contrast. Alternatively, for a more avant-garde experience, explore pan-seared scallops with a yuzu-kosho vinaigrette; the bright acidity and citrusy spice cutting through the spirit's smoothness while highlighting its underlying dryness.",
+  "pairing_guide_ko": "진모 한라산 21의 깔끔함과 은은한 곡물 향은 세련된 음식과의 조화를 필요로 합니다. 제주도의 숨겨진 요리 유산을 맛보려면 메밀가루로 걸쭉하게 만든 전통적인 해초국인 *몸국*과 함께 드셔보세요. *몸국*의 은은한 견과류 향과 해산물 풍미는 소주의 섬세한 특성과 공명하여 독특한 질감과 풍미의 대비를 선사합니다. 또는 좀 더 아방가르드한 경험을 위해 유자 고쇼 비네그레트를 곁들인 팬에 구운 가리비를 맛보세요. 밝은 산미와 시트러스 향신료가 소주의 부드러움을 뚫고 지나가면서 은은한 드라이함을 강조합니다."
 }
 ```
 
 === 라가불린 16년 ===
 ```json
 {
-  "pairing_guide_en": "Lagavulin 16, a quintessential Islay Scotch, demands pairings that can stand up to its smoky intensity. For a taste of home, consider **Arbroath Smokies with a dollop of horseradish cream**. The smokiness of the fish echoes the whisky's peat, while the horseradish cuts through the richness. Alternatively, embark on a global adventure with **Grilled Octopus with Romesco Sauce**. The char on the octopus mirrors the smoky notes, while the nutty, slightly sweet romesco sauce balances the whisky's salinity and peat.",
-  "pairing_guide_ko": "라가불린 16년은 아일라 스카치 위스키의 정수를 보여주는 술로, 그 강렬한 스모키 향에 어울리는 페어링이 필요합니다. 고향의 맛을 느껴보시려면 **아브로스 스모키와 홀스래디쉬 크림**을 곁들여 보세요. 훈제 생선의 스모키함이 위스키의 피트 향을 더욱 강조하며, 홀스래디쉬는 풍부한 맛을 중화시켜 줍니다. 또는, **구운 문어와 로메스코 소스**로 미식 여행을 떠나보시는 건 어떠신가요? 문어의 탄 맛이 위스키의 스모키 노트와 어우러지고, 견과류의 고소함과 은은한 단맛이 감도는 로메스코 소스는 위스키의 짠맛과 피트 향의 균형을 맞춰줍니다."
+  "pairing_guide_en": "Lagavulin 16, a titan of Islay peat, demands pairings of equal gravitas. For a taste of its birthplace, consider **Arbroath Smokies Pâté with Oatcakes.** The smokiness of the Arbroath Smokies echoes Lagavulin's peat, while the saltiness complements its maritime character. The creamy pâté and nutty oatcakes temper the whisky's intensity. For a global counterpoint, explore **Japanese Kabayaki Unagi (Grilled Eel) with Sansho Pepper.** The sweet-savory glaze on the eel finds harmony with the whisky's subtle vanilla notes, while the tingling Sansho pepper mirrors the peaty intensity, creating a surprising, yet elegant, balance.",
+  "pairing_guide_ko": "라가불린 16년은 아일라 피트 위스키의 대표 주자로, 그 위상에 걸맞은 페어링이 필요합니다. 고향의 맛을 느끼려면 **아브로스 스모키 파테와 오트케이크**를 추천합니다. 아브로스 스모키의 훈제 향은 라가불린의 피트 향과 공명하고, 짠맛은 해안가의 특징을 보완합니다. 크리미한 파테와 고소한 오트케이크는 위스키의 강렬함을 부드럽게 완화시켜줍니다. 세계적인 풍미를 더하고 싶다면 **산초를 곁들인 일본식 가바야키 우나기 (장어 구이)**를 시도해 보세요. 장어의 달콤 짭짤한 글레이즈는 위스키의 은은한 바닐라 향과 조화를 이루고, 얼얼한 산초는 피트의 강렬함을 반영하여 놀랍고도 우아한 균형을 선사합니다."
 }
 ```
