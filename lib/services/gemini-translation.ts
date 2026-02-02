@@ -95,8 +95,11 @@ Using the 'Absolute Truth' from Step 1:
 - Mention technical specs (e.g., "vacuum distilled", "aged in oak").
 
 ### STEP 3: FLAVOR DNA EXTRACTION (Based on Step 2)
-Analyze the **description_en** you just wrote.
-- Extract 9-12 tags (nose, palate, finish).
+Analyze the **description_en** you just wrote and the knowledge base.
+- Extract a rich set of tags for each category:
+  1. **nose_tags**: 5-8 descriptive aroma tags.
+  2. **palate_tags**: 5-8 descriptive taste/texture tags.
+  3. **finish_tags**: 4-6 descriptive aftertaste tags.
 - These tags MUST be a direct logical consequence of the description and metadata established above.
 - NO hashtags (#).
 

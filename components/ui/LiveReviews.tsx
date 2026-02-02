@@ -21,12 +21,16 @@ interface LiveReview {
   createdAt: string;
 }
 
-export function LiveReviews() {
+interface LiveReviewsProps {
+  initialReviews?: LiveReview[];
+}
+
+export function LiveReviews({ initialReviews = [] }: LiveReviewsProps) {
   const pathname = usePathname() || "";
   const lang = pathname.split('/')[1] === 'en' ? 'en' : 'ko';
 
-  const [reviews, setReviews] = useState<LiveReview[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [reviews, setReviews] = useState<LiveReview[]>(initialReviews);
+  const [loading, setLoading] = useState(initialReviews.length === 0);
 
   useEffect(() => {
     async function fetchReviews() {
