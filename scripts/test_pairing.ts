@@ -51,17 +51,17 @@ You are a World-Class Gastronomy Columnist.
 - ABV: ${spirit.abv}%
 - Tags: ${[...spirit.metadata.nose_tags, ...spirit.metadata.palate_tags, ...spirit.metadata.finish_tags].join(', ')}
 
-**Task:** Create a food pairing guide based on the 'Culinary Methodology' of structural harmony.
+**Task:** Create exactly TWO food pairing recommendations.
 
 **Principles:**
-1. Autonomous Selection: Full creative freedom. No common clichés.
-2. Structural Match: Lipid affinity, Protein structure, Aromatic bridges.
-3. Anti-Repetition: NO "Moroccan Tagine", "Fruit/Cheese", or "Dark Chocolate".
+1. **The Terroir Choice (Heritage Pairing)**: A sophisticated, authentic dish from the spirit's EXACT country or region of origin.
+2. **The Global Adventure (Structural Harmony)**: A creative pairing from a different culinary culture based on flavor science.
+3. **Anti-Repetition**: NO "Moroccan Tagine", "Fruit/Cheese", or "Dark Chocolate".
 
 **Output JSON:**
 {
-  "pairing_guide_en": "3-4 sentences of sophisticated prose...",
-  "pairing_guide_ko": "고급스러운 한국어 설명..."
+  "pairing_guide_en": "Narrative prose combining both recommendations (4-5 sentences)...",
+  "pairing_guide_ko": "두 가지 추천을 포함한 고급스러운 한국어 설명..."
 }
 `;
         try {

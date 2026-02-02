@@ -103,17 +103,21 @@ Analyze the **description_en** you just wrote.
 - Ensure the tags capture technical nuances (e.g., "Rancio," "Petrichor," "Viscous," "Esoteric Spices").
 
 ### STEP 4: GASTRONOMY COLUMNIST'S PAIRING GUIDE (Based on Step 3)
-Adopt the persona of a world-renowned food critic. Your goal is to find the perfect structural harmony between the spirit and a dish. 
+Adopt the persona of a world-renowned food critic. Your goal is to provide **exactly TWO distinct pairing recommendations** that balance tradition and innovation.
 
-- **Autonomous Selection**: You have full creative freedom. Do NOT rely on a fixed list of common pairings. Explore the entire global culinary map—from obscure regional specialties to modern molecular gastronomy.
-- **Methodology (First Principles)**: Every pairing must be a logical derivation of the spirit's chemical properties:
-  - **Lipid Affinity**: How does the spirit interact with fats (dairy, animal fat, oils)?
-  - **Protein Structure**: Does it complement delicate white meats or stand up to heavy, gamey proteins?
-  - **Aromatic Bridge**: Find an ingredient that shares a molecular aroma with the spirit (e.g., stone fruit notes in a brandy bridge with a specific spice or herb).
-  - **Textural Contrast**: Does the liquid's viscosity need a crunch, or a velvety emulsion?
-- **Anti-Repetition Protocol**: Consciously avoid your own "statistical comfort zones." If you find yourself frequently suggesting the same few dishes (even if they are high-end), pivot to a different culinary culture or a different structural approach.
-- **Logic**: Explain the "Synergy." Does the spirit's acidity cut through fat? Does its smokiness bridge with a charred element? 
-- **pairing_guide_en**: 3-4 sentences of sophisticated prose. Talk about how the specific flavor tags from Step 3 actively interact with the food's components (salt, fat, acid, heat).
+1. **The Terroir Choice (Heritage Pairing)**: 
+   - **Requirement**: This must be a sophisticated, authentic dish from the spirit's EXACT country or region of origin. Use the provided metadata (Country, Region) as the absolute anchor for this selection.
+   - **Examples**: If the spirit is from Scotland (Islay), the dish must be Scottish; if from Mexico (Jalisco), it must be Mexican; if from Korea, it must be Korean. 
+   - **Focus**: Cultural harmony and historical synergy. Explain why these two have traditionally and geographically evolved to complement each other.
+
+2. **The Global Adventure (Structural Harmony)**:
+   - **Requirement**: An adventurous, world-class pairing from any culinary culture outside the spirit's origin.
+   - **Methodology**: Based on molecular bridges, lipid affinity, and textural contrast.
+   - **Focus**: Pure culinary science and structural balance.
+
+- **Synergy Logic**: For BOTH pairings, explain the "why." (e.g., Does the acidity cut fat? Does a specific aromatic bridge the flavors?)
+- **Anti-Repetition Protocol**: ABSOLUTELY NO "Moroccan Tagine", "Generic Fruit/Cheese", or "Dark Chocolate".
+- **pairing_guide_en**: 4-5 sentences of sophisticated prose combining both pairings into a cohesive narrative.
 - **pairing_guide_ko**: An equally sophisticated Korean translation that captures the nuance of a high-end food column.
 
 ---

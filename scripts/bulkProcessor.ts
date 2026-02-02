@@ -101,23 +101,23 @@ ${TERM_GUIDELINES}
    - Capture the 'soul' of the liquid. Use evocative language.
    - Explain the technical process's impact on flavor.
 
-3. **pairing_guide_en** - Create AUTHENTIC and STRUCTURALLY LOGICAL food pairing recommendations (3-4 sentences):
+3. **pairing_guide_en** - IMPORTANT: Create exactly TWO distinct pairing recommendations (4-5 sentences total):
    
-   **CULINARY METHODOLOGY (First Principles):**
-   - **Autonomous Selection**: You have full creative freedom. Do NOT rely on a fixed list of common pairings. Explore the entire global culinary map—from obscure regional specialties to modern fine dining.
-   - **Lipid Affinity**: How does the spirit interact with fats (dairy, animal fat, oil)? (e.g., High ABV needs high fat).
-   - **Protein Structure**: Does it complement delicate proteins or stand up to heavy, gamey meats?
-   - **Aromatic Bridge**: Find an ingredient that shares a molecular aroma with the spirit's specific profile.
-   - **Textural Contrast**: Match or contrast the liquid's viscosity with food textures.
+   **1. The Terroir Choice (Heritage Pairing):**
+   - **Requirement**: A sophisticated, authentic dish from the spirit's EXACT country or region of origin (${locationLabel}: ${location}).
+   - **Focus**: Cultural harmony and why they have traditionally evolved to complement each other.
+   
+   **2. The Global Adventure (Structural Harmony):**
+   - **Requirement**: An adventurous, world-class pairing from a culinary culture OUTSIDE the spirit's origin.
+   - **Methodology**: Based on molecular bridges, lipid affinity, and textural contrast.
    
    **ANTI-REPETITION PROTOCOL:**
    - **NO CLICHÉS**: ABSOLUTELY NO "Moroccan Tagine", "Generic Fruit/Cheese", or "Dark Chocolate".
-   - **Unique DNA**: If the spirit is a Highland Scotch, don't just say "Haggis". If it's a Soju, don't just say "Samgyeopsal". Be bespoke.
-   - **Logic**: Explain the "Synergy." Does the acidity cut fat? Does the heat bridge with spice?
+   - **Logic**: Explain the "Synergy" for BOTH choices. How do the specific flavor tags (${noseTags}, ${palateTags}, ${finishTags}) interact with salt, fat, acid, and heat?
    
    **STYLE:**
    - Write as a World-Class Gastronomy Columnist.
-   - Talk about how the specific flavor tags (${noseTags}, ${palateTags}, ${finishTags}) actively interact with the food's components (salt, fat, acid, heat).
+   - Be authoritative, analytical, and elegantly descriptive.
 
 4. **pairing_guide_ko** - A highly sophisticated Korean translation that captures the nuance of a high-end food column.
 

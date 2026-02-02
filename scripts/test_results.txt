@@ -1,15 +1,15 @@
 === 진모 한라산 21 ===
 ```json
 {
-  "pairing_guide_en": "Hanlasan 21, with its impeccably clean profile and subtle grain notes, finds its perfect foil in dishes that offer both textural and aromatic complexity. Consider seared Hokkaido scallops, their delicate sweetness amplified by a brown butter and yuzu emulsion, where the lipid richness contrasts beautifully with the spirit's dryness. The scallop's inherent umami also harmonizes with the refined grain character, creating a truly elegant pairing that transcends simple refreshment.",
-  "pairing_guide_ko": "진모 한라산 21의 깔끔하고 은은한 곡물 향은 질감과 향이 복합적인 요리와 완벽한 조화를 이룹니다. 살짝 구운 홋카이도산 가리비와 브라운 버터, 유자 에멀젼을 곁들여 보세요. 가리비의 섬세한 단맛은 더욱 풍부해지고, 한라산 21의 드라이함과는 아름다운 대비를 이룹니다. 또한, 가리비 고유의 감칠맛은 정제된 곡물 풍미와 조화를 이루어 단순한 상쾌함을 넘어선 우아한 페어링을 선사합니다."
+  "pairing_guide_en": "Jinmo Hallasan 21, with its clean, refined profile and subtle grain notes, is remarkably versatile. For a true taste of Jeju, pair it with **돔베고기 (Dombe Gogi)**, boiled pork belly served sliced with kimchi and salted shrimp; the soju's dryness cuts beautifully through the richness of the pork. Venturing beyond Korea, consider **Ceviche Clásico** from Peru. The bright acidity of the lime in the ceviche contrasts perfectly with the soju's smooth texture, while the delicate fish complements its refined character, creating a vibrant and refreshing culinary experience.",
+  "pairing_guide_ko": "진모 한라산 21은 깔끔하고 정제된 맛과 은은한 곡물 향 덕분에 다양한 음식과 잘 어울립니다. 제주도의 풍미를 제대로 느끼고 싶다면 **돔베고기**와 함께 드셔 보세요. 삶은 돼지고기 수육을 김치와 젓갈에 곁들여 먹는 돔베고기는 소주의 드라이한 맛이 돼지고기의 풍부한 기름기를 산뜻하게 잡아줍니다. 한국을 넘어 페루의 **세비체 클라시코**는 어떠신가요? 세비체의 상큼한 라임 산미는 소주의 매끄러운 질감과 완벽하게 대조를 이루며 섬세한 생선은 소주의 세련된 특징을 보완하여 활기차고 상쾌한 미식 경험을 선사합니다."
 }
 ```
 
 === 라가불린 16년 ===
 ```json
 {
-  "pairing_guide_en": "Lagavulin 16, a titan of Islay, finds its structural soulmate not in expected sweetness, but in the austere elegance of lightly smoked Icelandic cod. The cod's delicate, flaky protein mirrors the whisky's inherent salinity, while the subtle smoke, redolent of distant hearth fires, subtly amplifies the Lagavulin's peat without overwhelming the palate. A finishing drizzle of brown butter, imbued with the faintest whisper of lemon zest, provides a necessary lipid bridge, harmonizing the complex tapestry of flavors into a singular, unforgettable experience.",
-  "pairing_guide_ko": "아일라의 거인, 라가불린 16년은 예상되는 단맛이 아닌, 은은하게 훈제된 아이슬란드 대구의 절제된 우아함에서 구조적인 영혼의 동반자를 찾습니다. 대구의 섬세하고 얇은 단백질은 위스키의 본질적인 염분과 공명하며, 멀리 떨어진 난로의 희미한 향기가 나는 미묘한 훈제 향은 라가불린의 피트를 압도하지 않으면서도 미묘하게 증폭시킵니다. 레몬 제스트의 희미한 속삭임이 스며든 브라운 버터의 마무리 톡톡은 필수적인 지질적 다리가 되어 복잡한 풍미의 태피스트리를 단일하고 잊을 수 없는 경험으로 조화시킵니다."
+  "pairing_guide_en": "Lagavulin 16, a quintessential Islay Scotch, demands pairings that can stand up to its smoky intensity. For a taste of home, consider **Arbroath Smokies with a dollop of horseradish cream**. The smokiness of the fish echoes the whisky's peat, while the horseradish cuts through the richness. Alternatively, embark on a global adventure with **Grilled Octopus with Romesco Sauce**. The char on the octopus mirrors the smoky notes, while the nutty, slightly sweet romesco sauce balances the whisky's salinity and peat.",
+  "pairing_guide_ko": "라가불린 16년은 아일라 스카치 위스키의 정수를 보여주는 술로, 그 강렬한 스모키 향에 어울리는 페어링이 필요합니다. 고향의 맛을 느껴보시려면 **아브로스 스모키와 홀스래디쉬 크림**을 곁들여 보세요. 훈제 생선의 스모키함이 위스키의 피트 향을 더욱 강조하며, 홀스래디쉬는 풍부한 맛을 중화시켜 줍니다. 또는, **구운 문어와 로메스코 소스**로 미식 여행을 떠나보시는 건 어떠신가요? 문어의 탄 맛이 위스키의 스모키 노트와 어우러지고, 견과류의 고소함과 은은한 단맛이 감도는 로메스코 소스는 위스키의 짠맛과 피트 향의 균형을 맞춰줍니다."
 }
 ```
