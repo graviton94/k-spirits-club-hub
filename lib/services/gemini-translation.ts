@@ -93,23 +93,28 @@ Compare the input data with your internal global liquor database.
 ### STEP 2: GLOBAL IDENTITY & BRANDING (Based on Step 1)
 Using the 'Absolute Truth' from Step 1:
 1. **name_en**: Professional English name.
-2. **description_en**: 2-3 sentence masterpiece in English. This text is the SOLE foundation for flavor analysis in the next step.
-- Mention technical specs (e.g., "vacuum distilled", "aged in oak").
+2. **description_en**: A 3-4 sentence masterpiece for a luxury spirits catalog. 
+   - Capture the 'soul' of the liquid. Use evocative language (e.g., "haunting smoke," "velvety opulence," "structural precision"). 
+   - Explain the technical process's impact on flavor.
 
 ### STEP 3: FLAVOR DNA EXTRACTION (Based on Step 2)
-Analyze the **description_en** you just wrote and the knowledge base.
-- Extract a rich set of tags for each category:
-  1. **nose_tags**: 5-8 descriptive aroma tags.
-  2. **palate_tags**: 5-8 descriptive taste/texture tags.
-  3. **finish_tags**: 4-6 descriptive aftertaste tags.
-- These tags MUST be a direct logical consequence of the description and metadata established above.
-- NO hashtags (#).
+Analyze the **description_en** you just wrote.
+- Extract a rich set of tags (5-8 for Nose/Palate, 4-6 for Finish).
+- Ensure the tags capture technical nuances (e.g., "Rancio," "Petrichor," "Viscous," "Esoteric Spices").
 
-### STEP 4: CULINARY PAIRING (Based on Step 3)
-Look *only* at the **tags** from Step 3.
-- Design a pairing guide that uses these tags as a bridge to a specific dish.
-- **pairing_guide_en**: 2-3 sentences. (No hashtags).
-- **pairing_guide_ko**: Professional Korean sommelier translation.
+### STEP 4: GASTRONOMY COLUMNIST'S PAIRING GUIDE (Based on Step 3)
+Adopt the persona of a world-renowned food critic. Your goal is to find the perfect structural harmony between the spirit and a dish.
+- **Priority**: The spirit's specific notes (Nose, Palate, Finish) and texture (Viscosity, Heat) must be the primary driver of the pairing.
+- **Context**: Respect the spirit's regional origins (terroir) while suggesting an adventurous, world-class culinary companion.
+- **Logic**: Explain the "Synergy." Does the spirit's acidity cut through fat? Does its smokiness bridge with a charred element? 
+- **pairing_guide_en**: 3-4 sentences of sophisticated prose. Talk about how the specific flavor tags from Step 3 actively interact with the food's components (salt, fat, acid, heat). Avoid generic "pairs well with" phrasing.
+- **pairing_guide_ko**: An equally sophisticated Korean translation that captures the nuance of a high-end food column.
+
+---
+### CRITICAL OUTPUT RULES:
+- **BALANCED EXPERTISE**: Be adventurous but realistic. The pairing must make physical sense based on the flavor profile.
+- **NO CLICHÉS**: Avoid "fruit and cheese" unless justifying a very specific, technical interaction.
+- **TONE**: Authoritative, analytical, and elegantly descriptive.
 
 ---
 ### CRITICAL OUTPUT RULES:

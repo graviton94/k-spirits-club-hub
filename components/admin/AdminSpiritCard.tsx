@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 
 interface AdminSpiritCardProps {
   spirit: Spirit;
+  onRefresh?: () => void;
 }
 
 interface EnrichmentResult {
@@ -36,12 +37,55 @@ interface SpiritUpdateData {
   metadata?: any;
 }
 
-export default function AdminSpiritCard({ spirit }: AdminSpiritCardProps) {
+export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardProps) {
   const [status, setStatus] = useState(spirit.isPublished ? 'published' : 'pending');
   const [isLoading, setIsLoading] = useState(false);
   const [isTranslating, setIsTranslating] = useState(false);
   const [nameEn, setNameEn] = useState(spirit.name_en || '');
+  // Local states for metadata preview/edit
+  const [distillery, setDistillery] = useState(spirit.distillery || '');
+  const [region, setRegion] = useState(spirit.region || '');
+  const [country, setCountry] = useState(spirit.country || 'South Korea');
+  const [abv, setAbv] = useState(spirit.abv || 0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const handleEnrich = async () => {
+    if (!spirit.name) return;
+    setIsTranslating(true);
+    setErrorMessage(null);
+    try {
+      const response = await fetch('/api/admin/spirits/enrich', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: spirit.name,
+          category: spirit.category,
+          subcategory: spirit.subcategory,
+          distillery: distillery || spirit.distillery,
+          abv: abv || spirit.abv,
+          region: region || spirit.region,
+          country: country || spirit.country,
+          metadata: spirit.metadata
+        })
+      });
+
+      if (!response.ok) throw new Error('Enrichment failed');
+      const data: EnrichmentResult = await response.json();
+
+      if (data.name_en) setNameEn(data.name_en);
+      if (data.distillery) setDistillery(data.distillery);
+      if (data.region) setRegion(data.region);
+      if (data.country) setCountry(data.country);
+      if (data.abv !== undefined) setAbv(data.abv);
+
+      alert('✨ AI 데이터 분석/교정 완료!');
+    } catch (error: any) {
+      console.error("Enrichment failed:", error);
+      setErrorMessage(`Enrichment failed: ${error.message}`);
+    } finally {
+      setIsTranslating(false);
+    }
+  };
 
   const handleTranslate = async () => {
     if (!spirit.name) return;
@@ -106,10 +150,10 @@ export default function AdminSpiritCard({ spirit }: AdminSpiritCardProps) {
         reviewedAt: new Date(),
         name_en: enrichedData?.name_en || nameEn || null,
         // AI Corrected Metadata
-        abv: enrichedData?.abv ?? spirit.abv,
-        distillery: enrichedData?.distillery ?? spirit.distillery,
-        region: enrichedData?.region ?? spirit.region,
-        country: enrichedData?.country ?? spirit.country
+        abv: enrichedData?.abv ?? abv ?? spirit.abv,
+        distillery: enrichedData?.distillery ?? distillery ?? spirit.distillery,
+        region: enrichedData?.region ?? region ?? spirit.region,
+        country: enrichedData?.country ?? country ?? spirit.country
       };
 
       // Add description_en if generated
@@ -132,6 +176,7 @@ export default function AdminSpiritCard({ spirit }: AdminSpiritCardProps) {
       await db.updateSpirit(spirit.id, updateData);
       console.log('[Publish] ✓ Spirit published successfully');
       setStatus('published');
+      if (onRefresh) onRefresh();
 
       // Clear error after a few seconds if publish succeeded
       if (errorMessage) {
@@ -172,8 +217,8 @@ export default function AdminSpiritCard({ spirit }: AdminSpiritCardProps) {
           <p className="text-sm text-muted-foreground mb-2">{spirit.distillery}</p>
 
           <div className="flex flex-wrap gap-2 text-sm">
-            <span className="px-2 py-1 rounded bg-secondary">도수 {spirit.abv}%</span>
-            <span className="px-2 py-1 rounded bg-secondary">{spirit.country}</span>
+            <span className="px-2 py-1 rounded bg-secondary font-bold">도수 {abv}%</span>
+            <span className="px-2 py-1 rounded bg-secondary font-bold">{region}, {country}</span>
             <span className="px-2 py-1 rounded bg-secondary">{spirit.category}</span>
             <span className={`px-2 py-1 rounded ${spirit.source === 'food_safety_korea' ? 'bg-green-100 dark:bg-green-900' :
               spirit.source === 'online' ? 'bg-blue-100 dark:bg-blue-900' :
@@ -195,11 +240,11 @@ export default function AdminSpiritCard({ spirit }: AdminSpiritCardProps) {
                   className="flex-1 px-3 py-1.5 text-sm border border-border rounded bg-background focus:outline-none focus:ring-1 focus:ring-primary"
                 />
                 <button
-                  onClick={handleTranslate}
+                  onClick={handleEnrich}
                   disabled={isTranslating || isLoading}
-                  className="px-3 py-1.5 bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400 border border-blue-100 dark:border-blue-800 rounded text-xs font-bold hover:bg-blue-100 disabled:opacity-50 flex items-center gap-1"
+                  className="px-3 py-1.5 bg-purple-50 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400 border border-purple-100 dark:border-purple-800 rounded text-xs font-bold hover:bg-purple-100 disabled:opacity-50 flex items-center gap-1 transition-all"
                 >
-                  {isTranslating ? '...' : '🤖 AI 번역'}
+                  {isTranslating ? '...' : '✨ AI 분석'}
                 </button>
               </div>
               {/* Error message display */}

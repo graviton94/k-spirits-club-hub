@@ -914,22 +914,24 @@ export default function AdminDashboard() {
                           });
                           if (!res.ok) throw new Error('Enrichment failed');
                           const data = await res.json();
+                          console.log('[AI Enrichment] Received Data:', data);
+
                           setEditForm({
                             ...editForm,
-                            name_en: data.name_en || editForm.name_en,
-                            description_en: data.description_en || editForm.description_en,
+                            name_en: data.name_en ?? editForm.name_en,
+                            description_en: data.description_en ?? editForm.description_en,
                             nose_tags: (data.nose_tags || []).join(', '),
                             palate_tags: (data.palate_tags || []).join(', '),
                             finish_tags: (data.finish_tags || []).join(', '),
-                            pairing_guide_en: data.pairing_guide_en || editForm.pairing_guide_en,
-                            pairing_guide_ko: data.pairing_guide_ko || editForm.pairing_guide_ko,
-                            // Apply AI-Corrected Metadata
-                            distillery: data.distillery || editForm.distillery,
-                            region: data.region || editForm.region,
-                            country: data.country || editForm.country,
-                            abv: data.abv || editForm.abv
+                            pairing_guide_en: data.pairing_guide_en ?? editForm.pairing_guide_en,
+                            pairing_guide_ko: data.pairing_guide_ko ?? editForm.pairing_guide_ko,
+                            // Apply AI-Corrected Metadata (Prioritize AI data)
+                            distillery: data.distillery ?? editForm.distillery,
+                            region: data.region ?? editForm.region,
+                            country: data.country ?? editForm.country,
+                            abv: data.abv ?? editForm.abv
                           });
-                          alert('✨ AI 자동 생성 성공!');
+                          alert('✨ AI 데이터 분석 및 메타데이터 교정 완료!');
                         } catch (e: any) {
                           alert(`AI 분석 중 오류: ${e.message}`);
                         } finally {
