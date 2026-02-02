@@ -14,19 +14,16 @@ export async function PATCH(req: NextRequest) {
             return NextResponse.json({ error: 'Missing spiritIds' }, { status: 400 });
         }
 
-        // Optimize: Fetch only target spirits instead of loading 1000 items
-        const targets: any[] = [];
-        for (const id of spiritIds) {
-            const s = await db.getSpirit(id);
-            if (s) targets.push(s);
-        }
+        // Optimize: Parallel fetch for target spirits (much faster than sequential)
+        const targets = (await Promise.all(spiritIds.map((id: string) => db.getSpirit(id)))).filter((s): s is any => !!s);
 
         let updatedCount = 0;
         let enrichedCount = 0;
         let normalizedCount = 0;
         const enrichmentErrors: any[] = [];
 
-        for (const spirit of targets) {
+        // Optimize: Process all updates in parallel
+        await Promise.all(targets.map(async (spirit) => {
             try {
                 let currentUpdates = { ...updates };
 
@@ -52,7 +49,7 @@ export async function PATCH(req: NextRequest) {
                             metadata: {
                                 ...spirit.metadata,
                                 ...currentUpdates.metadata,
-                                name_en: enrichmentData.name_en // Sync in metadata too for legacy
+                                name_en: enrichmentData.name_en
                             }
                         };
                         enrichedCount++;
@@ -75,7 +72,7 @@ export async function PATCH(req: NextRequest) {
             } catch (e) {
                 console.error(`Failed to update spirit ${spirit.id}`, e);
             }
-        }
+        }));
 
         return NextResponse.json({
             success: true,

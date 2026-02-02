@@ -90,14 +90,15 @@ export const db = {
 
     await spiritsDb.upsert(id, updates);
 
-    // If spirit was published, sync the new arrivals cache
-    if (updates.isPublished === true) {
+    // If spirit was published (or is currently published), sync the new arrivals cache
+    // This ensures updates like Image URL changes are reflected in the cache immediately
+    const finalState = await spiritsDb.getById(id);
+    if (finalState?.isPublished) {
       const { newArrivalsDb } = await import('./firestore-rest');
       try {
         await newArrivalsDb.syncCache();
       } catch (error) {
         console.error('Failed to sync new arrivals cache:', error);
-        // Don't fail the update if cache sync fails
       }
     }
 

@@ -212,8 +212,8 @@ export default function AdminDashboard() {
 
     setIsProcessing(true);
 
-    // Use batch size of 1 for AI operations to absolutely ensure no timeouts
-    const BATCH_SIZE = doExtra ? 1 : 50;
+    // Use batch size of 1 for AI operations, 10 for standard publish (safer than 50)
+    const BATCH_SIZE = doExtra ? 1 : 10;
     const allIds = Array.from(selectedIds);
     let totalUpdated = 0;
     let errorCount = 0;
