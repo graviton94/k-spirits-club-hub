@@ -277,7 +277,9 @@ export const spiritsDb = {
                 console.error('Failed to parse Firestore error:', errText);
             }
             console.error(`[Firestore REST] ${res.status} Error:`, errorMessage);
-            return [];
+
+            // THROW error so the caller (index.ts) can fallback to memory filtering
+            throw new Error(`Firestore Query Failed: ${errorMessage}`);
         }
 
         const json = await res.json();

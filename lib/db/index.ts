@@ -21,66 +21,71 @@ export const db = {
 
     if (!requiresMemoryFiltering) {
       // --- SERVER SIDE MODE (FAST) ---
-      // Pass pagination directly to DB. 
-      // Firestore 'getAll' now supports: Status, Category (OR), Subcategory, Country, and Limit/Offset.
+      try {
+        // Pass pagination directly to DB. 
+        // Firestore 'getAll' now supports: Status, Category (OR), Subcategory, Country, and Limit/Offset.
 
-      // Note: We cannot easily get "Total Count" from a filtered Firestore query without reading all docs (costly).
-      // Strategy: 
-      // 1. Fetch requested page.
-      // 2. Estimate total? Or just fetch a large limit?
-      // Actually, standard admin tables need "Total" for pagination controls.
-      // Firestore aggregation queries exist but are separate calls.
-      // For now, to keep the UI valid, we might assume there are more pages or just report "Many".
+        // Note: We cannot easily get "Total Count" from a filtered Firestore query without reading all docs (costly).
+        // Strategy: 
+        // 1. Fetch requested page.
+        // 2. Estimate total? Or just fetch a large limit?
+        // Actually, standard admin tables need "Total" for pagination controls.
+        // Firestore aggregation queries exist but are separate calls.
+        // For now, to keep the UI valid, we might assume there are more pages or just report "Many".
 
-      // Compromise for "Dramatic optimization" requested:
-      // While we ideally want Total Count, calculating it requires reading index entries (Aggregation Query).
-      // Given the urgency, we will do a separate count query OR just fetch the page.
-      // Admin dashboard relies on 'total' to show page numbers.
-      // If we return total=50 (result length), pagination breaks (shows 1 page).
+        // Compromise for "Dramatic optimization" requested:
+        // While we ideally want Total Count, calculating it requires reading index entries (Aggregation Query).
+        // Given the urgency, we will do a separate count query OR just fetch the page.
+        // Admin dashboard relies on 'total' to show page numbers.
+        // If we return total=50 (result length), pagination breaks (shows 1 page).
 
-      // Improvement: Use Firestore Aggregation to get count (count() query).
-      // `firestore-rest` doesn't support aggregation helper yet.
-      // Fallback: For THIS sprint, we will stick to fetching the specific page for data,
-      // BUT we still need a total count.
-      // If we skip total count, the UI might vanish the "Next" button.
+        // Improvement: Use Firestore Aggregation to get count (count() query).
+        // `firestore-rest` doesn't support aggregation helper yet.
+        // Fallback: For THIS sprint, we will stick to fetching the specific page for data,
+        // BUT we still need a total count.
+        // If we skip total count, the UI might vanish the "Next" button.
 
-      // Let's implement a 'light' fetch for total? No, too expensive.
-      // Let's rely on the fact that if we get `pageSize` items, there *might* be more.
-      // Providing a fake 'total' ensuring at least one more page exists?
-      // Or, since user wants optimization, maybe they accept slightly loose pagination counts?
+        // Let's implement a 'light' fetch for total? No, too expensive.
+        // Let's rely on the fact that if we get `pageSize` items, there *might* be more.
+        // Providing a fake 'total' ensuring at least one more page exists?
+        // Or, since user wants optimization, maybe they accept slightly loose pagination counts?
 
-      // WAIT. The previous implementation loaded EVERYTHING just to get the count. 
-      // That is precisely what was slow.
-      // If we want 452 items, reading 452 document IDs is cheap-ish. Reading 452 full docs is slower.
-      // But reading 5000 docs is very slow.
+        // WAIT. The previous implementation loaded EVERYTHING just to get the count. 
+        // That is precisely what was slow.
+        // If we want 452 items, reading 452 document IDs is cheap-ish. Reading 452 full docs is slower.
+        // But reading 5000 docs is very slow.
 
-      // Let's try to implement the data fetch efficiently. 
-      // For the total count, we can cheat:
-      // If we are on page 1 and get 20 items, total is at least 20.
-      // To properly fix this, we need an Aggregation API. 
-      // For now, let's keep it simple: Just get the data. 
-      // Provide a placeholder total (e.g. 1000) or check if we got full page.
+        // Let's try to implement the data fetch efficiently. 
+        // For the total count, we can cheat:
+        // If we are on page 1 and get 20 items, total is at least 20.
+        // To properly fix this, we need an Aggregation API. 
+        // For now, let's keep it simple: Just get the data. 
+        // Provide a placeholder total (e.g. 1000) or check if we got full page.
 
-      const data = await spiritsDb.getAll(filter, pagination);
+        const data = await spiritsDb.getAll(filter, pagination);
 
-      // Heuristic for Total to keep UI working without full scan
-      // If we returned full page, assume there's more.
-      const estimatedTotal = data.length === pagination.pageSize ? (pagination.page * pagination.pageSize) + pagination.pageSize : (pagination.page - 1) * pagination.pageSize + data.length;
-      // This is "Infinite Scroll" style logic adapted for Table. 
-      // Better: Just return a fixed large number (e.g. 5000) if likely more, 
-      // or implement `getCount` later. 
+        // Heuristic for Total to keep UI working without full scan
+        // If we returned full page, assume there's more.
+        const estimatedTotal = data.length === pagination.pageSize ? (pagination.page * pagination.pageSize) + pagination.pageSize : (pagination.page - 1) * pagination.pageSize + data.length;
+        // This is "Infinite Scroll" style logic adapted for Table. 
+        // Better: Just return a fixed large number (e.g. 5000) if likely more, 
+        // or implement `getCount` later. 
 
-      return {
-        data,
-        total: estimatedTotal < 100 ? 5000 : estimatedTotal, // Hack: Force UI to show pages if likely more. Real count requires aggregation.
-        page: pagination.page,
-        pageSize: pagination.pageSize,
-        totalPages: Math.ceil(5000 / pagination.pageSize) // Temp fake
-      };
+        return {
+          data,
+          total: estimatedTotal < 100 ? 5000 : estimatedTotal, // Hack: Force UI to show pages if likely more. Real count requires aggregation.
+          page: pagination.page,
+          pageSize: pagination.pageSize,
+          totalPages: Math.ceil(5000 / pagination.pageSize) // Temp fake
+        };
+      } catch (error) {
+        console.warn('[DB Adapter] Server-side query failed (likely missing index). Falling back to Memory Filtering.', error);
+        // Fallback: Proceed to Legacy Mode below
+      }
     }
 
     // --- LEGACY MODE (SLOW BUT POWERFUL) ---
-    // Used when SearchTerm is present (requires text scanning)
+    // Used when SearchTerm is present OR when Server-Side Mode fails
 
     let allItems = await spiritsDb.getAll(filter); // Fetches up to 5000
 
