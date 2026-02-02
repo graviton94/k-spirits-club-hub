@@ -922,7 +922,12 @@ export default function AdminDashboard() {
                             palate_tags: (data.palate_tags || []).join(', '),
                             finish_tags: (data.finish_tags || []).join(', '),
                             pairing_guide_en: data.pairing_guide_en || editForm.pairing_guide_en,
-                            pairing_guide_ko: data.pairing_guide_ko || editForm.pairing_guide_ko
+                            pairing_guide_ko: data.pairing_guide_ko || editForm.pairing_guide_ko,
+                            // Apply AI-Corrected Metadata
+                            distillery: data.distillery || editForm.distillery,
+                            region: data.region || editForm.region,
+                            country: data.country || editForm.country,
+                            abv: data.abv || editForm.abv
                           });
                           alert('✨ AI 자동 생성 성공!');
                         } catch (e: any) {

@@ -84,9 +84,11 @@ You MUST process the following spirit data using a **Strict 4-Step Sequential Re
 ---
 ### STEP 1: KNOWLEDGE STUDY & METADATA AUDIT
 Compare the input data with your internal global liquor database. 
-- **Verify Distillery & Region**: If the input is 'Seoul' but this distillery is in 'Andong', the truth is 'Andong'.
-- **Verify ABV**: If the input says 10% but this specific spirit is legally 40%, the truth is 40%.
-- **Action**: Determine the 'Absolute Truth' for distillery, region, country, and abv.
+- **Verify Distillery (KO)**: Ensure the distillery name is correct in Korean.
+- **Verify Region (KO)**: Standardize the location to Korean administrative regions (e.g., '전라남도', '경상북도', '제주도', '경기도'). 
+  - If the input is 'Seoul' or '서울' but this distillery is strategically located in 'Andong', the truth is '경상북도'.
+- **Verify ABV**: If the input says 10% but this specific spirit is legally 40%, the truth is 40.0.
+- **Action**: Determine the 'Absolute Truth' in Korean for distillery and region.
 
 ### STEP 2: GLOBAL IDENTITY & BRANDING (Based on Step 1)
 Using the 'Absolute Truth' from Step 1:
