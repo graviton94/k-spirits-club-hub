@@ -21,7 +21,16 @@ export default function ExploreContent() {
   const [selectedSubCategory, setSelectedSubCategory] = useState('');
   const [displayLimit, setDisplayLimit] = useState(24);
 
-  // Constant timestamp to avoid recreating Date objects on every render
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
+
+  // Debounce search term update
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 300);
+    return () => clearTimeout(handler);
+  }, [searchTerm]);
+
   const fallbackTimestamp = useMemo(() => new Date(), []);
 
   // [SYSTEM_CHECK] 데이터 가시성 최종 리포트 로그
@@ -44,8 +53,8 @@ export default function ExploreContent() {
       results = results.filter(s => s.sc === selectedSubCategory);
     }
 
-    if (searchTerm) {
-      const lowerSearch = searchTerm.toLowerCase();
+    if (debouncedSearchTerm) {
+      const lowerSearch = debouncedSearchTerm.toLowerCase();
       results = results.filter(s =>
         (s.n && s.n.toLowerCase().includes(lowerSearch)) ||
         (s.en && s.en.toLowerCase().includes(lowerSearch)) ||
@@ -55,7 +64,7 @@ export default function ExploreContent() {
     }
 
     return results.slice(0, displayLimit);
-  }, [searchIndex, searchTerm, selectedCategory, selectedSubCategory, displayLimit]);
+  }, [searchIndex, debouncedSearchTerm, selectedCategory, selectedSubCategory, displayLimit]);
 
   // Get unique subcategories based on selected category from actual data
   const availableSubcategories = useMemo(() => {
@@ -112,7 +121,7 @@ export default function ExploreContent() {
               setSelectedCategory(e.target.value);
               setSelectedSubCategory(''); // Reset subcategory on main category change
             }}
-            className="px-4 py-3 pr-10 rounded-2xl bg-white text-black dark:bg-black dark:text-white border border-border outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 min-w-[140px] appearance-none bg-no-repeat bg-[length:1.5em] bg-[right_0.5rem_center] [background-image:url('data:image/svg+xml;charset=UTF-8,%3csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3cpath%20d%3D%22M7%207l3-3%203%203m0%206l-3%203-3-3%22%20stroke%3D%22%23000000%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3c%2fsvg%3E')] dark:[background-image:url('data:image/svg+xml;charset=UTF-8,%3csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3cpath%20d%3D%22M7%207l3-3%203%203m0%206l-3%203-3-3%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3c%2fsvg%3E')]"
+            className="px-4 py-3 pr-10 rounded-2xl bg-white text-black dark:bg-black dark:text-white border border-border outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 min-w-[140px] appearance-none bg-no-repeat bg-size-[1.5em] bg-position-[right_0.5rem_center] bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3cpath%20d%3D%22M7%207l3-3%203%203m0%206l-3%203-3-3%22%20stroke%3D%22%23000000%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3c%2fsvg%3E')] dark:bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3cpath%20d%3D%22M7%207l3-3%203%203m0%206l-3%203-3-3%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3c%2fsvg%3E')]"
           >
             <option value="" className="bg-white text-black dark:bg-black dark:text-white">
               {isEn ? "All Categories" : "모든 주종"}
@@ -132,7 +141,7 @@ export default function ExploreContent() {
             value={selectedSubCategory}
             onChange={(e) => setSelectedSubCategory(e.target.value)}
             disabled={!selectedCategory || availableSubcategories.length === 0}
-            className="px-4 py-3 pr-10 rounded-2xl bg-white text-black dark:bg-black dark:text-white border border-border outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 min-w-[140px] disabled:opacity-50 disabled:bg-muted appearance-none bg-no-repeat bg-[length:1.5em] bg-[right_0.5rem_center] [background-image:url('data:image/svg+xml;charset=UTF-8,%3csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3cpath%20d%3D%22M7%207l3-3%203%203m0%206l-3%203-3-3%22%20stroke%3D%22%23000000%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3c%2fsvg%3E')] dark:[background-image:url('data:image/svg+xml;charset=UTF-8,%3csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3cpath%20d%3D%22M7%207l3-3%203%203m0%206l-3%203-3-3%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3c%2fsvg%3E')]"
+            className="px-4 py-3 pr-10 rounded-2xl bg-white text-black dark:bg-black dark:text-white border border-border outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 min-w-[140px] disabled:opacity-50 disabled:bg-muted appearance-none bg-no-repeat bg-size-[1.5em] bg-position-[right_0.5rem_center] bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3cpath%20d%3D%22M7%207l3-3%203%203m0%206l-3%203-3-3%22%20stroke%3D%22%23000000%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3c%2fsvg%3E')] dark:bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3cpath%20d%3D%22M7%207l3-3%203%203m0%206l-3%203-3-3%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3c%2fsvg%3E')]"
           >
             <option value="" className="bg-white text-black dark:bg-black dark:text-white">
               {isEn ? "Subcategory" : "상세 분류"}
@@ -190,6 +199,8 @@ export default function ExploreContent() {
                     reviewedAt: null,
                     name_en: item.en || null,
                     description_en: item.m?.description_en || null,
+                    pairing_guide_ko: null,
+                    pairing_guide_en: null,
                     metadata: item.m || {}, // Pass metadata for tags
                     createdAt: fallbackTimestamp,
                     updatedAt: fallbackTimestamp,

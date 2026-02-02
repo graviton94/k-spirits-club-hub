@@ -65,11 +65,17 @@ export default function AdminDashboard() {
 
   // Filters - Default to ALL for better visibility of data in pipeline
   const [statusFilter, setStatusFilter] = useState<SpiritStatus | 'ALL'>('ALL');
+  const [localStatusFilter, setLocalStatusFilter] = useState<SpiritStatus | 'ALL'>('ALL');
   const [noImageOnly, setNoImageOnly] = useState(false);
-  const [level1Cat, setLevel1Cat] = useState<string>('ALL'); // Legal Category (e.g. 위스키)
-  const [level2Cat, setLevel2Cat] = useState<string>('ALL'); // Main Family (e.g. scotch) - Virtual
-  const [level3Cat, setLevel3Cat] = useState<string>('ALL'); // Sub Category (e.g. Single Malt)
+  const [localNoImageOnly, setLocalNoImageOnly] = useState(false);
+  const [level1Cat, setLevel1Cat] = useState<string>('ALL');
+  const [localLevel1Cat, setLocalLevel1Cat] = useState<string>('ALL');
+  const [level2Cat, setLevel2Cat] = useState<string>('ALL');
+  const [localLevel2Cat, setLocalLevel2Cat] = useState<string>('ALL');
+  const [level3Cat, setLevel3Cat] = useState<string>('ALL');
+  const [localLevel3Cat, setLocalLevel3Cat] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState('');
+  const [localSearchQuery, setLocalSearchQuery] = useState('');
 
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [isProcessing, setIsProcessing] = useState(false);
@@ -109,7 +115,7 @@ export default function AdminDashboard() {
     }
     return [];
   };
-  const level3Options = getLevel3Options(level1Cat, level2Cat);
+  const level3Options = getLevel3Options(localLevel1Cat, localLevel2Cat);
 
   // --- Load Spirits with Server-Side Filtering ---
   const loadSpirits = useCallback(async () => {
@@ -135,7 +141,17 @@ export default function AdminDashboard() {
     } finally {
       setLoading(false);
     }
-  }, [page, statusFilter, level1Cat, level3Cat, searchQuery]);
+  }, [page, statusFilter, level1Cat, level3Cat, noImageOnly, searchQuery]);
+
+  const handleSearch = () => {
+    setPage(1);
+    setSearchQuery(localSearchQuery);
+    setStatusFilter(localStatusFilter);
+    setLevel1Cat(localLevel1Cat);
+    setLevel2Cat(localLevel2Cat);
+    setLevel3Cat(localLevel3Cat);
+    setNoImageOnly(localNoImageOnly);
+  };
 
   useEffect(() => {
     loadSpirits();
@@ -400,7 +416,7 @@ export default function AdminDashboard() {
       <div className="container mx-auto px-4 py-8 max-w-[1600px]">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-black tracking-tight text-black dark:text-white">🏭 Club Hub Pipeline</h1>
-          <Link href="/" className="text-sm font-bold bg-gray-100 dark:bg-gray-900 px-4 py-2 rounded-xl hover:opacity-80 transition-all">홈으로</Link>
+          <Link href="/" prefetch={false} className="text-sm font-bold bg-gray-100 dark:bg-gray-900 px-4 py-2 rounded-xl hover:opacity-80 transition-all">홈으로</Link>
         </div>
 
         <div className="flex border-b border-gray-200 dark:border-gray-800 mb-8 overflow-x-auto">
@@ -439,7 +455,7 @@ export default function AdminDashboard() {
 
                   {/* Level 1 */}
                   <select className="px-3 py-2 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-800 bg-white dark:bg-black text-black dark:text-white"
-                    value={level1Cat} onChange={e => { setLevel1Cat(e.target.value); setLevel2Cat('ALL'); setLevel3Cat('ALL'); }}>
+                    value={localLevel1Cat} onChange={e => { setLocalLevel1Cat(e.target.value); setLocalLevel2Cat('ALL'); setLocalLevel3Cat('ALL'); }}>
                     <option value="ALL">📂 전체 카테고리</option>
                     {level1Options.map(c => <option key={c} value={c}>{c}</option>)}
                   </select>
@@ -449,7 +465,7 @@ export default function AdminDashboard() {
                     <>
                       <span className="text-gray-400">›</span>
                       <select className="px-3 py-2 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-800 bg-white dark:bg-black text-black dark:text-white"
-                        value={level2Cat} onChange={e => { setLevel2Cat(e.target.value); setLevel3Cat('ALL'); }}>
+                        value={localLevel2Cat} onChange={e => { setLocalLevel2Cat(e.target.value); setLocalLevel3Cat('ALL'); }}>
                         <option value="ALL">📁 세부 분류 (전체)</option>
                         {level2Options.map(c => <option key={c} value={c}>{c}</option>)}
                       </select>
@@ -461,7 +477,7 @@ export default function AdminDashboard() {
                     <>
                       <span className="text-gray-400">›</span>
                       <select className="px-3 py-2 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-800 bg-white dark:bg-black text-black dark:text-white"
-                        value={level3Cat} onChange={e => setLevel3Cat(e.target.value)}>
+                        value={localLevel3Cat} onChange={e => setLocalLevel3Cat(e.target.value)}>
                         <option value="ALL">📑 제품 종류 (전체)</option>
                         {level3Options.map(c => <option key={c} value={c}>{c}</option>)}
                       </select>
@@ -473,8 +489,8 @@ export default function AdminDashboard() {
                 <div className="flex flex-wrap gap-4 items-center">
                   <div className="flex bg-gray-100 dark:bg-gray-900 rounded-lg p-1">
                     {(['ALL', 'ENRICHED', 'READY_FOR_CONFIRM', 'IMAGE_FAILED', 'PUBLISHED'] as const).map(f => (
-                      <button key={f} onClick={() => setStatusFilter(f)}
-                        className={`px-3 py-1.5 rounded-md text-[10px] font-bold transition-all ${statusFilter === f ? 'bg-white dark:bg-black shadow text-amber-600 dark:text-amber-400' : 'text-gray-500 dark:text-gray-400'}`}>
+                      <button key={f} onClick={() => setLocalStatusFilter(f)}
+                        className={`px-3 py-1.5 rounded-md text-[10px] font-bold transition-all ${localStatusFilter === f ? 'bg-white dark:bg-black shadow text-amber-600 dark:text-amber-400' : 'text-gray-500 dark:text-gray-400'}`}>
                         {f === 'ALL' ? '전체' : f === 'PUBLISHED' ? '공개됨' : f === 'ENRICHED' ? 'AI분석' : f === 'IMAGE_FAILED' ? '이미지실패' : '검수대기'}
                       </button>
                     ))}
@@ -485,15 +501,26 @@ export default function AdminDashboard() {
                     <input
                       type="checkbox"
                       className="w-3.5 h-3.5 accent-amber-500"
-                      checked={noImageOnly}
-                      onChange={e => setNoImageOnly(e.target.checked)}
+                      checked={localNoImageOnly}
+                      onChange={e => setLocalNoImageOnly(e.target.checked)}
                     />
                     <span className="text-[10px] font-bold text-gray-600 dark:text-gray-400">이미지 없음</span>
                   </label>
 
-                  <div className="relative">
-                    <input placeholder="이름 검색..." className="bg-gray-100 dark:bg-gray-950 px-4 py-2 rounded-xl text-xs font-bold w-48 border border-transparent focus:border-amber-500 focus:outline-none text-black dark:text-white placeholder:text-gray-400"
-                      value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
+                  <div className="relative flex items-center gap-2">
+                    <input
+                      placeholder="이름 검색..."
+                      className="bg-gray-100 dark:bg-gray-950 px-4 py-2 rounded-xl text-xs font-bold w-48 border border-transparent focus:border-amber-500 focus:outline-none text-black dark:text-white placeholder:text-gray-400"
+                      value={localSearchQuery}
+                      onChange={e => setLocalSearchQuery(e.target.value)}
+                      onKeyDown={e => e.key === 'Enter' && handleSearch()}
+                    />
+                    <button
+                      onClick={handleSearch}
+                      className="bg-amber-500 text-white px-3 py-2 rounded-xl text-xs font-bold hover:bg-amber-600 transition-colors shadow-lg shadow-amber-500/10"
+                    >
+                      검색
+                    </button>
                   </div>
                 </div>
               </div>

@@ -48,14 +48,15 @@ export default function MyCabinet({
                             initial="hidden"
                             animate="visible"
                             variants={{
-                                visible: { transition: { staggerChildren: 0.05 } }
+                                visible: { transition: { staggerChildren: spirits.length > 50 ? 0.01 : 0.03 } }
                             }}
                             className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2 sm:gap-3"
                         >
-                            {spirits.map((spirit) => (
+                            {spirits.map((spirit, index) => (
                                 <CabinetSpiritCard
                                     key={spirit.id}
                                     spirit={spirit}
+                                    index={index}
                                     onReviewClick={onReviewClick}
                                     onInfoClick={onInfoClick}
                                 />

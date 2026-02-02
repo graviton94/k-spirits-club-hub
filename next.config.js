@@ -73,6 +73,16 @@ const nextConfig = {
           },
         ],
       },
+      {
+        source: '/:all*(svg|jpg|jpeg|png|webp|avif|woff|woff2|ttf|otf|ico)',
+        locale: false,
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          }
+        ],
+      },
     ];
   },
 };

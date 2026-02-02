@@ -35,39 +35,38 @@ export default function AdSlot({
     if (!isMounted) return null;
 
     // Placeholder styles based on variant
-    const getPlaceholderStyle = () => {
+    // Base height classes to prevent CLS
+    const getHeightClass = () => {
         switch (variant) {
-            case 'in-feed':
-                return 'h-[120px] sm:h-[160px] w-full';
-            case 'display':
-                return 'h-[250px] w-[300px] mx-auto';
-            default: // responsive
-                return 'h-[100px] w-full';
+            case 'display': return 'min-h-[280px]'; // Standard MPU height
+            case 'in-feed': return 'min-h-[150px]'; // Typical Native Ad height
+            case 'responsive': return 'min-h-[280px] sm:min-h-[90px]'; // Mobile box vs Desktop banner
+            default: return 'min-h-[250px]';
         }
     };
 
     if (!showAds) {
-        return (
-            <div
-                className={`bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-lg flex flex-col items-center justify-center text-slate-400 text-xs uppercase tracking-widest ${getPlaceholderStyle()} ${className}`}
-                style={style}
-            >
-                <span>{label}</span>
-                <span className="text-[10px] mt-1 opacity-50">(Sponsored Placeholder)</span>
-            </div>
-        );
+        // ... (placeholder logic kept for dev/hidden mode) ...
+        return null; // Or keep placeholder if you want dev feedback
     }
 
     return (
-        <div className={`overflow-hidden my-4 flex justify-center ${className}`} style={{ minHeight: '100px', ...style }}>
-            <div className="text-[10px] text-center text-gray-400 mb-1 uppercase tracking-wider">{label}</div>
-            <GoogleAd
-                client={client}
-                slot={slot}
-                format={variant === 'in-feed' ? 'fluid' : 'auto'}
-                responsive={variant !== 'display'} // Display might be fixed size
-                style={{ display: 'block', width: '100%' }}
-            />
+        <div
+            className={`overflow-hidden my-4 w-full flex flex-col items-center justify-center bg-gray-50 dark:bg-slate-900/30 ${getHeightClass()} ${className}`}
+            style={style}
+        >
+            <div className="text-[10px] text-center text-gray-300 dark:text-slate-600 mb-1 uppercase tracking-wider select-none">
+                {label} (Sponsored)
+            </div>
+            <div className="w-full flex justify-center">
+                <GoogleAd
+                    client={client}
+                    slot={slot}
+                    format={variant === 'in-feed' ? 'fluid' : 'auto'}
+                    responsive={variant !== 'display'}
+                    style={{ display: 'block', width: '100%' }}
+                />
+            </div>
         </div>
     );
 }
