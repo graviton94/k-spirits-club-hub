@@ -250,7 +250,7 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
 
             {/* 1. Header: Image Left, Info Right */}
             <div className="flex flex-row gap-6 mb-8 items-start">
-                <div className="w-32 sm:w-48 flex-shrink-0">
+                <div className="w-32 sm:w-48 shrink-0">
                     <ExpandableImage imageUrl={spirit.imageUrl} name={spirit.name} category={spirit.category} />
                 </div>
 
@@ -355,20 +355,28 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                 </div>
             )}
 
+            {/* DNA Section */}
+            <div className="mb-8">
+                <div className="flex items-center gap-4 mb-4">
+                    <h3 className="text-xs font-black tracking-[0.2em] text-transparent bg-clip-text bg-linear-to-r from-amber-500 to-orange-500 uppercase">Flavor DNA</h3>
+                    <div className="h-px flex-1 bg-linear-to-r from-amber-500/20 to-transparent"></div>
+                </div>
+            </div>
+
             {/* AI Global Pairing Guide */}
-            {((isEn ? (spirit.metadata as any)?.pairing_guide_en : (spirit.metadata as any)?.pairing_guide_ko) || (spirit.metadata as any)?.pairing_guide_en) && (
-                <div className="mb-10 p-[1px] rounded-3xl bg-gradient-to-br from-purple-500/30 via-pink-500/30 to-orange-500/30">
+            {(spirit.pairing_guide_en || spirit.pairing_guide_ko || (spirit.metadata as any)?.pairing_guide_en) && (
+                <div className="mb-10 p-px rounded-3xl bg-linear-to-br from-purple-500/30 via-pink-500/30 to-orange-500/30">
                     <div className="bg-card/95 backdrop-blur-xl p-6 rounded-3xl h-full">
                         <div className="flex items-center gap-2 mb-4">
-                            <span className="text-xs font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 uppercase tracking-widest flex items-center gap-1">
+                            <span className="text-xs font-black text-transparent bg-clip-text bg-linear-to-r from-purple-500 to-pink-500 uppercase tracking-widest flex items-center gap-1">
                                 ✨ {isEn ? 'Pairing Guide' : '페어링 추천'}
                             </span>
                             <div className="h-px flex-1 bg-border"></div>
                         </div>
                         <p className="text-base text-card-foreground leading-relaxed font-medium">
                             {isEn
-                                ? (spirit.metadata as any).pairing_guide_en
-                                : ((spirit.metadata as any).pairing_guide_ko || (spirit.metadata as any).pairing_guide_en)}
+                                ? (spirit.pairing_guide_en || (spirit.metadata as any)?.pairing_guide_en)
+                                : (spirit.pairing_guide_ko || (spirit.metadata as any)?.pairing_guide_ko || spirit.pairing_guide_en || (spirit.metadata as any)?.pairing_guide_en)}
                         </p>
                     </div>
                 </div>
@@ -382,7 +390,7 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                     className={`flex-1 py-4 px-6 font-black rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed
                         ${isInCabinet
                             ? 'bg-red-500 hover:bg-red-600 text-white shadow-red-500/20'
-                            : 'bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white shadow-amber-500/20 hover:scale-[1.02] active:scale-[0.98]'
+                            : 'bg-linear-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white shadow-amber-500/20 hover:scale-[1.02] active:scale-[0.98]'
                         }`}
                 >
                     <span>{isInCabinet ? '🗑️' : '🥃'}</span>
@@ -461,6 +469,16 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                 message={successMessage}
                 onClose={() => setShowSuccessToast(false)}
             />
+
+            {/* Scroll Top Button */}
+            <button
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                className="fixed bottom-10 right-10 z-100 w-12 h-12 bg-amber-500 text-white rounded-full shadow-2xl shadow-amber-500/40 flex items-center justify-center hover:scale-110 active:scale-95 transition-all opacity-0 pointer-events-none group-[.scrolled]:opacity-100 group-[.scrolled]:pointer-events-auto"
+            >
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                </svg>
+            </button>
         </div>
     );
 }
@@ -510,7 +528,7 @@ function ExpandableImage({ imageUrl, name, category }: { imageUrl: string | null
     return (
         <>
             <motion.div
-                className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-secondary border border-border cursor-pointer shadow-md group"
+                className="relative aspect-3/4 rounded-2xl overflow-hidden bg-secondary border border-border cursor-pointer shadow-md group"
                 whileHover={{ y: -4 }}
                 onClick={() => setIsExpanded(true)}
             >
@@ -539,7 +557,7 @@ function ExpandableImage({ imageUrl, name, category }: { imageUrl: string | null
             <AnimatePresence>
                 {isExpanded && (
                     <motion.div
-                        className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4"
+                        className="fixed inset-0 z-100 bg-black/95 backdrop-blur-xl flex items-center justify-center p-4"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}

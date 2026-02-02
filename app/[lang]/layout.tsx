@@ -74,7 +74,6 @@ export default async function RootLayout({
     <html lang={lang}>
       <head>
         {/* Mixed Content 자동 업그레이드 (HTTP -> HTTPS) */}
-        <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
 
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />

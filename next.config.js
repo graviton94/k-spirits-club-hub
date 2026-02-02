@@ -16,8 +16,10 @@ const nextConfig = {
   // 빌드 시 타입 체크 오류 무시
   typescript: { ignoreBuildErrors: true },
   webpack: (config, { isServer }) => {
-    // Disable webpack cache to prevent large cache files (>25MB) on Cloudflare Pages
-    config.cache = false;
+    // Disable webpack cache ONLY in production to prevent large cache files (>25MB) on Cloudflare Pages
+    if (process.env.NODE_ENV === 'production') {
+      config.cache = false;
+    }
 
     if (!isServer) {
       config.resolve.fallback = {
@@ -58,6 +60,19 @@ const nextConfig = {
         destination: '/ko/contents/:path*',
         permanent: true,
       }
+    ];
+  },
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Cross-Origin-Opener-Policy',
+            value: 'same-origin-allow-popups',
+          },
+        ],
+      },
     ];
   },
 };

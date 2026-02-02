@@ -3,9 +3,6 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 const API_KEY = process.env.GEMINI_API_KEY || '';
 const MODEL_ID = "gemini-2.0-flash";
 
-const genAI = new GoogleGenerativeAI(API_KEY);
-const model = genAI.getGenerativeModel({ model: MODEL_ID });
-
 const TERM_GUIDELINES = `
 - 'Makgeolli' for 막걸리
 - 'Distilled Soju' for 증류식 소주
@@ -49,12 +46,15 @@ export async function enrichSpiritWithAI(spirit: SpiritEnrichmentInput): Promise
         throw new Error("GEMINI_API_KEY is not set");
     }
 
+    const genAI = new GoogleGenerativeAI(API_KEY);
+    const model = genAI.getGenerativeModel({ model: MODEL_ID });
+
     // Extract tasting notes and other metadata
     const tastingNote = spirit.metadata?.tasting_note || spirit.metadata?.description || '';
     const noseTags = spirit.metadata?.nose_tags?.join(', ') || '';
     const palateTags = spirit.metadata?.palate_tags?.join(', ') || '';
     const finishTags = spirit.metadata?.finish_tags?.join(', ') || '';
-    
+
     // Determine location context (region preferred, fallback to country)
     const location = spirit.region || spirit.country || 'Unknown';
     const locationLabel = spirit.region ? 'Region' : 'Country';
@@ -163,7 +163,7 @@ ${TERM_GUIDELINES}
         const enrichmentData: EnrichmentResult = JSON.parse(jsonMatch[0]);
 
         // Validate required fields
-        if (!enrichmentData.name_en || !enrichmentData.description_en || 
+        if (!enrichmentData.name_en || !enrichmentData.description_en ||
             !enrichmentData.pairing_guide_en || !enrichmentData.pairing_guide_ko) {
             throw new Error("AI response missing required fields");
         }
@@ -184,6 +184,9 @@ export async function translateSpiritName(name: string, category: string, brewer
     if (!API_KEY) {
         throw new Error("GEMINI_API_KEY is not set");
     }
+
+    const genAI = new GoogleGenerativeAI(API_KEY);
+    const model = genAI.getGenerativeModel({ model: MODEL_ID });
 
     const prompt = `
 당신은 고급 주류 전문 번역가이자 SEO 전문가입니다. 

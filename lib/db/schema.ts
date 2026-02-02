@@ -58,6 +58,8 @@ export interface Spirit {
   volume: number | null;
   category: string; // whisky, vodka, gin, rum, etc. (Legal/Wide classification)
   description_en: string | null;
+  pairing_guide_ko: string | null;
+  pairing_guide_en: string | null;
   mainCategory: string | null; // Structured grouping (e.g. whisky for bourbon) from metadata
   subcategory: string | null; // single malt, blended, etc.
   country: string | null;

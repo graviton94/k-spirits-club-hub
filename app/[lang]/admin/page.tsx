@@ -25,6 +25,9 @@ interface EditFormState {
   volume: number;
   tasting_note: string;
   description: string;
+  description_en: string;
+  pairing_guide_ko: string;
+  pairing_guide_en: string;
   nose_tags: string;
   palate_tags: string;
   finish_tags: string;
@@ -71,12 +74,14 @@ export default function AdminDashboard() {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [isProcessing, setIsProcessing] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [auditResult, setAuditResult] = useState<{ status: string, issues: string[], suggestions: any, reasoning: string } | null>(null);
 
   // Edit Form State (Kept same)
   const [editForm, setEditForm] = useState<EditFormState>({
     name: '', abv: 0, imageUrl: '', name_en: '', category: '', subcategory: '',
     country: '', region: '', distillery: '', bottler: '', volume: 700,
-    tasting_note: '', description: '', nose_tags: '', palate_tags: '', finish_tags: ''
+    tasting_note: '', description: '', description_en: '', pairing_guide_ko: '', pairing_guide_en: '',
+    nose_tags: '', palate_tags: '', finish_tags: ''
   });
 
   // Metadata Helpers for 3-Level Hierarchy
@@ -199,7 +204,11 @@ export default function AdminDashboard() {
 
   const handleBulkPublish = async () => {
     if (selectedIds.size === 0) return;
-    if (!confirm(`${selectedIds.size}건을 최종 공개하시겠습니까?`)) return;
+
+    const choice = confirm(`${selectedIds.size}건을 최종 공개하시겠습니까?\n\n[확인] - 그냥 발행\n[취소] - 중단`);
+    if (!choice) return;
+
+    const doExtra = confirm("발행 전 'AI 분석' 및 '데이터 정규화'를 함께 진행하시겠습니까?\n(영문명 생성, 지역/증류소 통일 등)");
 
     setIsProcessing(true);
     try {
@@ -208,13 +217,16 @@ export default function AdminDashboard() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           spiritIds: Array.from(selectedIds),
+          enrich: doExtra,
+          normalize: doExtra,
           updates: { status: 'PUBLISHED', isPublished: true, reviewedBy: 'ADMIN', reviewedAt: new Date().toISOString() }
         })
       });
 
       if (res.ok) {
+        const data = await res.json();
         await loadSpirits(); // Reload from server
-        alert('✅ 일괄 발행 완료');
+        alert(doExtra ? `✅ ${data.updatedCount}건 분석 후 발행 완료` : '✅ 일괄 발행 완료');
         setSelectedIds(new Set());
       }
     } catch (e) {
@@ -262,13 +274,22 @@ export default function AdminDashboard() {
 
   const startEdit = (spirit: Spirit) => {
     setEditingId(spirit.id);
+    setAuditResult(null); // Reset audit
     // ... populate form (same as before) ...
     setEditForm({
       name: spirit.name, abv: spirit.abv, imageUrl: spirit.imageUrl || '',
-      name_en: spirit.metadata?.name_en || '', category: spirit.category || '', subcategory: spirit.subcategory || '',
+      name_en: spirit.metadata?.name_en || spirit.name_en || '',
+      category: spirit.category || '', subcategory: spirit.subcategory || '',
       country: spirit.country || '', region: spirit.region || '', distillery: spirit.distillery || '', bottler: spirit.bottler || '',
-      volume: spirit.volume || 700, tasting_note: spirit.metadata?.tasting_note || '', description: spirit.metadata?.description || '',
-      nose_tags: (spirit.metadata?.nose_tags || []).join(', '), palate_tags: (spirit.metadata?.palate_tags || []).join(', '), finish_tags: (spirit.metadata?.finish_tags || []).join(', ')
+      volume: spirit.volume || 700,
+      tasting_note: spirit.metadata?.tasting_note || '',
+      description: spirit.metadata?.description || '',
+      description_en: spirit.description_en || '',
+      pairing_guide_ko: spirit.pairing_guide_ko || (spirit.metadata as any)?.pairing_guide_ko || '',
+      pairing_guide_en: spirit.pairing_guide_en || (spirit.metadata as any)?.pairing_guide_en || '',
+      nose_tags: (spirit.metadata?.nose_tags || []).join(', '),
+      palate_tags: (spirit.metadata?.palate_tags || []).join(', '),
+      finish_tags: (spirit.metadata?.finish_tags || []).join(', ')
     });
   };
 
@@ -288,6 +309,9 @@ export default function AdminDashboard() {
         distillery: editForm.distillery,
         bottler: editForm.bottler,
         volume: Number(editForm.volume) || 700,
+        description_en: editForm.description_en,
+        pairing_guide_ko: editForm.pairing_guide_ko,
+        pairing_guide_en: editForm.pairing_guide_en,
         metadata: {
           name_en: editForm.name_en,
           tasting_note: editForm.tasting_note,
@@ -460,6 +484,66 @@ export default function AdminDashboard() {
                   {selectedIds.size > 0 && <span className="ml-4 text-black dark:text-white">({selectedIds.size}개 선택됨)</span>}
                 </div>
                 <div className="flex gap-2">
+                  <button
+                    disabled={!selectedIds.size || isProcessing}
+                    onClick={async () => {
+                      if (!confirm(`${selectedIds.size}건에 대해 AI 분석(영문명, 소개글, 페어링 가이드 생성)을 진행하시겠습니까?`)) return;
+                      setIsProcessing(true);
+                      try {
+                        const res = await fetch('/api/admin/spirits/bulk-patch/', {
+                          method: 'PATCH',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({
+                            spiritIds: Array.from(selectedIds),
+                            enrich: true,
+                            updates: { status: 'ENRICHED' }
+                          })
+                        });
+                        if (res.ok) {
+                          const data = await res.json();
+                          alert(`✅ ${data.enrichedCount}건 AI 분석 완료`);
+                          await loadSpirits();
+                        }
+                      } catch (e) {
+                        alert('오류가 발생했습니다.');
+                      } finally {
+                        setIsProcessing(false);
+                      }
+                    }}
+                    className="bg-purple-600 text-white px-4 py-2 rounded-xl text-xs font-bold disabled:opacity-30 hover:bg-purple-500 transition-colors"
+                  >
+                    🚀 선택 항목 AI 분석
+                  </button>
+                  <button
+                    disabled={!selectedIds.size || isProcessing}
+                    onClick={async () => {
+                      if (!confirm(`${selectedIds.size}건에 대해 데이터 정규화(증류소명, 지역 통일 등)를 진행하시겠습니까?`)) return;
+                      setIsProcessing(true);
+                      try {
+                        const res = await fetch('/api/admin/spirits/bulk-patch/', {
+                          method: 'PATCH',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({
+                            spiritIds: Array.from(selectedIds),
+                            normalize: true,
+                            updates: {}
+                          })
+                        });
+                        if (res.ok) {
+                          const data = await res.json();
+                          alert(`✅ ${data.normalizedCount}건 데이터 정규화 완료`);
+                          await loadSpirits();
+                        }
+                      } catch (e) {
+                        alert('오류가 발생했습니다.');
+                      } finally {
+                        setIsProcessing(false);
+                      }
+                    }}
+                    className="bg-blue-600 text-white px-4 py-2 rounded-xl text-xs font-bold disabled:opacity-30 hover:bg-blue-500 transition-colors"
+                  >
+                    📊 선택 항목 정규화
+                  </button>
                   <button disabled={!selectedIds.size || isProcessing} onClick={handleBulkPublish} className="bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold disabled:opacity-30 hover:bg-amber-500 transition-colors">선택 항목 발행</button>
                   <button disabled={!selectedIds.size || isProcessing} onClick={handleBulkDelete} className="bg-red-600 text-white px-4 py-2 rounded-xl text-xs font-bold disabled:opacity-30 hover:bg-red-500 transition-colors">선택 삭제</button>
                 </div>
@@ -632,14 +716,94 @@ export default function AdminDashboard() {
         {/* Expanded Edit Modal with High Z-Index to cover Bottom Nav */}
         {
           editingId && (
-            <div className="fixed inset-0 bg-black/60 dark:bg-black/90 backdrop-blur-sm z-[9999] flex items-start justify-center p-4 overflow-y-auto pt-12">
+            <div className="fixed inset-0 bg-black/60 dark:bg-black/90 backdrop-blur-sm z-9999 flex items-start justify-center p-4 overflow-y-auto pt-12">
               <div className="bg-white dark:bg-black w-full max-w-7xl rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-800 p-8 md:p-12 animate-in zoom-in-95 duration-200 flex flex-col h-fit my-8">
                 <div className="flex justify-between items-center mb-8 pb-6 border-b border-gray-100 dark:border-gray-900">
                   <div>
                     <h2 className="text-3xl font-black text-black dark:text-white">데이터 클린룸 (Deep Edit)</h2>
                     <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">ID: {editingId}</p>
+                    {auditResult && (
+                      <div className={`mt-2 inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-black ${auditResult.status === 'PASS' ? 'bg-green-100 text-green-700' :
+                        auditResult.status === 'WARNING' ? 'bg-yellow-100 text-yellow-700' :
+                          'bg-red-100 text-red-700'
+                        }`}>
+                        🛡️ AI Audit: {auditResult.status} {auditResult.issues.length > 0 && `(${auditResult.issues.length} 이슈)`}
+                      </div>
+                    )}
                   </div>
-                  <button onClick={() => setEditingId(null)} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-900 text-2xl">✕</button>
+                  <div className="flex items-center gap-4">
+                    <button
+                      disabled={isProcessing}
+                      onClick={async () => {
+                        setIsProcessing(true);
+                        try {
+                          const res = await fetch('/api/admin/spirits/audit', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ spirit: editForm })
+                          });
+                          if (!res.ok) throw new Error('Audit failed');
+                          const data = await res.json();
+                          setAuditResult(data);
+                          if (data.status === 'PASS') {
+                            alert('✅ 데이터가 완벽해 보입니다!');
+                          } else {
+                            alert(`⚠️ 이슈 발견: ${data.issues.join(', ')}\n\n제안사항을 확인하세요.`);
+                          }
+                        } catch (e: any) {
+                          alert(`AI 감사 중 오류: ${e.message}`);
+                        } finally {
+                          setIsProcessing(false);
+                        }
+                      }}
+                      className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-900 text-black dark:text-white text-xs font-black rounded-xl hover:bg-gray-200 transition-all border border-gray-200 dark:border-gray-800"
+                    >
+                      🛡️ AI 데이터 검출
+                    </button>
+                    <button
+                      disabled={isProcessing}
+                      onClick={async () => {
+                        setIsProcessing(true);
+                        try {
+                          const res = await fetch('/api/admin/spirits/enrich', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                              name: editForm.name,
+                              category: editForm.category,
+                              subcategory: editForm.subcategory,
+                              distillery: editForm.distillery,
+                              abv: editForm.abv,
+                              region: editForm.region,
+                              country: editForm.country,
+                              metadata: {
+                                tasting_note: editForm.tasting_note,
+                                description: editForm.description
+                              }
+                            })
+                          });
+                          if (!res.ok) throw new Error('Enrichment failed');
+                          const data = await res.json();
+                          setEditForm({
+                            ...editForm,
+                            name_en: data.name_en || editForm.name_en,
+                            description_en: data.description_en || editForm.description_en,
+                            pairing_guide_en: data.pairing_guide_en || editForm.pairing_guide_en,
+                            pairing_guide_ko: data.pairing_guide_ko || editForm.pairing_guide_ko
+                          });
+                          alert('✨ AI 자동 생성 성공!');
+                        } catch (e: any) {
+                          alert(`AI 분석 중 오류: ${e.message}`);
+                        } finally {
+                          setIsProcessing(false);
+                        }
+                      }}
+                      className="flex items-center gap-2 px-4 py-2 bg-linear-to-r from-purple-600 to-indigo-600 text-white text-xs font-black rounded-xl hover:scale-105 active:scale-95 transition-all shadow-lg shadow-purple-500/20 disabled:opacity-50"
+                    >
+                      ✨ {isProcessing ? 'AI 분석 중...' : 'AI 데이터 생성'}
+                    </button>
+                    <button onClick={() => setEditingId(null)} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-900 text-2xl">✕</button>
+                  </div>
                 </div>
 
                 <div className="space-y-10">
@@ -727,11 +891,31 @@ export default function AdminDashboard() {
                       </section>
                     </div>
 
-                    {/* Right Column: Visuals (Fixed Width) */}
-                    <div className="w-full xl:w-96 shrink-0 space-y-6 bg-gray-50 dark:bg-gray-950/50 p-6 rounded-3xl border border-gray-200 dark:border-gray-800">
-                      <div className="space-y-3">
+                    {/* Right Column: Visuals + Suggestions */}
+                    <div className="w-full xl:w-96 shrink-0 space-y-6">
+                      {auditResult && auditResult.status !== 'PASS' && (
+                        <div className="bg-yellow-50 dark:bg-yellow-900/10 border border-yellow-200 dark:border-yellow-900/30 p-6 rounded-3xl space-y-4">
+                          <h4 className="text-xs font-black text-yellow-700 dark:text-yellow-500 uppercase flex items-center gap-2">💡 AI Suggestions</h4>
+                          <div className="text-[11px] text-yellow-800 dark:text-yellow-400 space-y-2">
+                            {Object.entries(auditResult.suggestions).map(([key, value]: [string, any]) => value && (
+                              <div key={key} className="flex justify-between items-center bg-white/50 dark:bg-black/50 p-2 rounded-lg">
+                                <span className="opacity-60">{key}:</span>
+                                <button
+                                  onClick={() => setEditForm(prev => ({ ...prev, [key]: value }))}
+                                  className="font-bold hover:text-amber-600 transition-colors"
+                                >
+                                  {String(value)} ↵
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                          <p className="text-[10px] text-yellow-600 font-medium italic">{auditResult.reasoning}</p>
+                        </div>
+                      )}
+
+                      <div className="bg-gray-50 dark:bg-gray-950/50 p-6 rounded-3xl border border-gray-200 dark:border-gray-800 space-y-3">
                         <label className="text-[10px] font-black uppercase text-gray-400 dark:text-gray-500">제품 이미지</label>
-                        <div className="aspect-[3/4] bg-white rounded-2xl border-2 border-dashed border-gray-200 dark:border-gray-800 flex items-center justify-center overflow-hidden relative group shadow-sm">
+                        <div className="aspect-3/4 bg-white rounded-2xl border-2 border-dashed border-gray-200 dark:border-gray-800 flex items-center justify-center overflow-hidden relative group shadow-sm">
                           {editForm.imageUrl ? (
                             <img src={getOptimizedImageUrl(editForm.imageUrl, 400)} className="w-full h-full object-contain p-4 transition-transform group-hover:scale-105" alt="Preview" />
                           ) : <span className="text-5xl opacity-20 text-black dark:text-white">🥃</span>}
@@ -742,11 +926,37 @@ export default function AdminDashboard() {
                     </div>
                   </div>
 
-                  {/* Description Block (Full Width) */}
-                  <section className="space-y-4 pt-4 border-t border-gray-100 dark:border-gray-900">
-                    <label className="text-[10px] font-black uppercase text-gray-400 dark:text-gray-500">소개/설명 (Description)</label>
-                    <textarea rows={5} className="w-full mt-1 px-4 py-3 border border-gray-200 dark:border-gray-800 rounded-xl font-medium bg-white dark:bg-black text-black dark:text-white text-sm leading-relaxed focus:ring-2 focus:ring-amber-500/50 outline-none"
-                      value={editForm.description} onChange={e => setEditForm({ ...editForm, description: e.target.value })} />
+                  {/* AI Content Block */}
+                  <section className="bg-purple-500/5 dark:bg-purple-500/10 p-8 rounded-3xl border border-purple-200 dark:border-purple-900/40 space-y-6">
+                    <h3 className="text-lg font-black text-purple-700 dark:text-purple-400 flex items-center gap-2">✨ AI Generated Content</h3>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      <div className="space-y-4">
+                        <div>
+                          <label className="text-[10px] font-black uppercase text-purple-400 dark:text-purple-500">English Description</label>
+                          <textarea rows={4} className="w-full mt-1 px-4 py-3 border border-purple-100 dark:border-purple-900/20 rounded-xl font-medium bg-white dark:bg-black text-black dark:text-white text-sm leading-relaxed focus:ring-2 focus:ring-purple-500/50 outline-none"
+                            value={editForm.description_en} onChange={e => setEditForm({ ...editForm, description_en: e.target.value })} />
+                        </div>
+                        <div>
+                          <label className="text-[10px] font-black uppercase text-purple-400 dark:text-purple-500">Introduction (KO)</label>
+                          <textarea rows={4} className="w-full mt-1 px-4 py-3 border border-gray-200 dark:border-gray-800 rounded-xl font-medium bg-white dark:bg-black text-black dark:text-white text-sm leading-relaxed focus:ring-2 focus:ring-amber-500/50 outline-none"
+                            value={editForm.description} onChange={e => setEditForm({ ...editForm, description: e.target.value })} />
+                        </div>
+                      </div>
+
+                      <div className="space-y-4">
+                        <div>
+                          <label className="text-[10px] font-black uppercase text-purple-400 dark:text-purple-500">Pairing Guide (KO)</label>
+                          <textarea rows={4} className="w-full mt-1 px-4 py-3 border border-purple-100 dark:border-purple-900/20 rounded-xl font-medium bg-white dark:bg-black text-black dark:text-white text-sm leading-relaxed focus:ring-2 focus:ring-purple-500/50 outline-none"
+                            value={editForm.pairing_guide_ko} onChange={e => setEditForm({ ...editForm, pairing_guide_ko: e.target.value })} />
+                        </div>
+                        <div>
+                          <label className="text-[10px] font-black uppercase text-purple-400 dark:text-purple-500">Pairing Guide (EN)</label>
+                          <textarea rows={4} className="w-full mt-1 px-4 py-3 border border-purple-100 dark:border-purple-900/20 rounded-xl font-medium bg-white dark:bg-black text-black dark:text-white text-sm leading-relaxed focus:ring-2 focus:ring-purple-500/50 outline-none"
+                            value={editForm.pairing_guide_en} onChange={e => setEditForm({ ...editForm, pairing_guide_en: e.target.value })} />
+                        </div>
+                      </div>
+                    </div>
                   </section>
 
                   {/* Flavor DNA Section (Horizontal) */}
@@ -785,7 +995,7 @@ export default function AdminDashboard() {
                 <div className="mt-12 pt-8 border-t border-gray-100 dark:border-gray-900 flex gap-4">
                   <button onClick={() => setEditingId(null)} className="flex-1 py-4 font-bold bg-gray-100 dark:bg-gray-900 text-black dark:text-white rounded-2xl hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors">닫기 (취소)</button>
                   <button disabled={isProcessing} onClick={() => saveEdit(false)} className="flex-1 py-4 font-bold bg-amber-50 dark:bg-amber-900/10 text-amber-700 dark:text-amber-500 border-2 border-amber-200 dark:border-amber-900/30 rounded-2xl hover:bg-amber-100 dark:hover:bg-amber-900/20 transition-colors">단순 저장</button>
-                  <button disabled={isProcessing} onClick={() => saveEdit(true)} className="flex-[2] py-4 font-bold bg-amber-600 hover:bg-amber-500 text-white rounded-2xl shadow-xl shadow-amber-500/20 hover:scale-[1.01] active:scale-95 transition-all">
+                  <button disabled={isProcessing} onClick={() => saveEdit(true)} className="flex-2 py-4 font-bold bg-amber-600 hover:bg-amber-500 text-white rounded-2xl shadow-xl shadow-amber-500/20 hover:scale-[1.01] active:scale-95 transition-all">
                     {isProcessing ? '처리 중...' : '✨ 저장 및 최종 승인 (공개)'}
                   </button>
                 </div>
