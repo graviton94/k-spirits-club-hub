@@ -76,6 +76,8 @@ export default async function RootLayout({
         {/* Mixed Content 자동 업그레이드 (HTTP -> HTTPS) */}
         <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
 
+        <meta name="naver-site-verification" content="a29e8ca32e7a6029fbe5abe2683f86fff1127a30" />
+
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
 
