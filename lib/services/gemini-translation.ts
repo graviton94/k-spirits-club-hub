@@ -39,6 +39,7 @@ export interface SpiritEnrichmentInput {
     abv?: number;
     region?: string;
     country?: string;
+    description_en?: string; // High-quality source for translation
     metadata?: {
         tasting_note?: string;
         description?: string;
@@ -68,6 +69,8 @@ export async function enrichSpiritWithAI(spirit: SpiritEnrichmentInput): Promise
         ...(spirit.metadata?.finish_tags || [])
     ].join(', ');
 
+    const sourceDescriptionEn = spirit.description_en || '';
+
     const prompt = `
 You are a World-Class Spirit Auditor and Master Sommelier. 
 You MUST process the following spirit data using a **Strict 4-Step Sequential Reasoning Chain**. 
@@ -80,6 +83,7 @@ You MUST process the following spirit data using a **Strict 4-Step Sequential Re
 - Raw Location: ${spirit.region}, ${spirit.country}
 - Raw ABV: ${spirit.abv}%
 - Tasting Notes: ${tastingNote}
+- Existing English Description (Source): ${sourceDescriptionEn}
 - Current Tags: ${existingTags}
 
 ---
@@ -94,15 +98,21 @@ Compare the input data with your internal global liquor database.
 ### STEP 2: GLOBAL IDENTITY & BRANDING (Based on Step 1)
 Using the 'Absolute Truth' from Step 1:
 1. **name_en**: Professional English name.
-2. **description_ko**: A 3-4 sentence masterpiece in Korean for domestic SEO.
-   - Focus: Capture the 'soul' of the liquid. Use evocative, premium language.
+2. **description_ko**: 
+   - [IF SOURCE DESCRIPTION EN EXISTS]: Perform a **'Semantic Context-Preserving Translation'** of the provided English description. 
+     - **Constraint**: Maintain a **1:1 sentence count parity** with the English source. If the English has 4 sentences, the Korean MUST have 4 sentences.
+     - **Persona**: Write as a top-tier Korean master sommelier/liquor professional. Use elegant, fluid, and professional Korean prose.
+     - **Keywords**: Naturally integrate terms such as '페어링' (pairing), '안주 추천' (food recommendation), and '테이스팅' (tasting) within the flow.
+     - **Legacy Note**: Ignore any existing short descriptions (e.g., "감자술"). This new masterpiece is the new primary source.
+   - [IF NO SOURCE]: Create a 3-4 sentence masterpiece in Korean for domestic SEO. Capture the 'soul' of the liquid.
    - SEO: Naturally include product name, category, and tasting note keywords.
-3. **description_en**: A 3-4 sentence masterpiece in English for global luxury branding.
+3. **description_en**: 
+   - If Source English Description exists and is high quality, use/refine it. Maintain the tone and technical depth.
+   - Otherwise, create a 3-4 sentence masterpiece in English for global luxury branding.
    - Content must be equivalent to **description_ko**.
-   - Explain the technical process's impact on flavor.
 
 ### STEP 3: FLAVOR DNA EXTRACTION (Based on Step 2)
-Analyze the **description_en** you just wrote.
+Analyze the **description_en** you just wrote/refined.
 - Extract a rich set of tags (5-8 for Nose/Palate, 4-6 for Finish).
 - Ensure the tags capture technical nuances (e.g., "Rancio," "Petrichor," "Viscous," "Esoteric Spices").
 

@@ -14,7 +14,7 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "sw
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit", display: "swap" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://k-spirits.club'),
+  metadataBase: new URL('https://kspiritsclub.com'),
   title: {
     default: "K-Spirits Club | 대한민국 대표 주류 데이터베이스(DB) & 리뷰",
     template: "%s | K-Spirits Club",

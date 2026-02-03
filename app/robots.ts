@@ -11,21 +11,34 @@ import { MetadataRoute } from 'next';
  * - Disallow authentication endpoints (/api/auth/) for security
  */
 export default function robots(): MetadataRoute.Robots {
-  // Get base URL from environment or default to production URL
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://k-spirits-club-hub.pages.dev';
+  // Ensure production domain is used for robots.txt sitemap reference
+  const baseUrl = 'https://kspiritsclub.com';
 
   return {
-    rules: {
-      userAgent: '*',
-      allow: '/',
-      disallow: [
-        '/admin/',
-        '/cabinet/',
-        '/api/admin/',
-        '/api/cabinet/',
-        '/api/auth/',
-      ],
-    },
+    rules: [
+      {
+        userAgent: ['Googlebot', 'Yeti'],
+        allow: '/',
+        disallow: [
+          '/admin/',
+          '/cabinet/',
+          '/api/admin/',
+          '/api/cabinet/',
+          '/api/auth/',
+        ],
+      },
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: [
+          '/admin/',
+          '/cabinet/',
+          '/api/admin/',
+          '/api/cabinet/',
+          '/api/auth/',
+        ],
+      }
+    ],
     sitemap: `${baseUrl}/sitemap.xml`,
   };
 }

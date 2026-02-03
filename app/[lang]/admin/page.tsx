@@ -346,14 +346,13 @@ export default function AdminDashboard() {
         distillery: editForm.distillery,
         bottler: editForm.bottler,
         volume: Number(editForm.volume) || 700,
+        name_en: editForm.name_en,
         description_ko: editForm.description_ko,
         description_en: editForm.description_en,
         pairing_guide_ko: editForm.pairing_guide_ko,
         pairing_guide_en: editForm.pairing_guide_en,
         metadata: {
-          name_en: editForm.name_en,
           tasting_note: editForm.tasting_note,
-          description_ko: editForm.description_ko,
           nose_tags: editForm.nose_tags.split(',').filter(Boolean).map(t => t.trim()),
           palate_tags: editForm.palate_tags.split(',').filter(Boolean).map(t => t.trim()),
           finish_tags: editForm.finish_tags.split(',').filter(Boolean).map(t => t.trim())
@@ -904,6 +903,7 @@ export default function AdminDashboard() {
                               abv: editForm.abv,
                               region: editForm.region,
                               country: editForm.country,
+                              description_en: editForm.description_en, // Pass original for translation
                               metadata: {
                                 tasting_note: editForm.tasting_note,
                                 description_ko: editForm.description_ko,

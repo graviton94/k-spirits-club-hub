@@ -2,9 +2,10 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import * as admin from 'firebase-admin';
 import dotenv from 'dotenv';
 import path from 'path';
+import { generateSpiritSearchKeywords } from '../lib/utils/search-keywords';
 
 // Environmental variables setup
-dotenv.config({ path: '.env.local' });
+dotenv.config({ path: '.env.local', override: true });
 dotenv.config();
 
 // --- Configuration ---
@@ -168,10 +169,144 @@ ${TERM_GUIDELINES}
 // --- CLI Arguments ---
 const args = process.argv.slice(2);
 const isDryRun = args.includes('--dry-run');
+const isSyncNames = args.includes('--sync-names');
+const isTranslateMissing = args.includes('--translate-missing');
 const limitArgIndex = args.indexOf('--limit');
 const limitVal = limitArgIndex !== -1 ? parseInt(args[limitArgIndex + 1]) : 0;
 
+async function translateMissing() {
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('🌐 Data 보강: Semantic Translation (EN -> KO)');
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+
+    // Filter: Published spirits where description_en exists but description_ko is missing or too short
+    const snapshot = await db.collection('spirits').where('isPublished', '==', true).get();
+    const targets = snapshot.docs.filter(doc => {
+        const d = doc.data();
+        const hasEn = d.description_en && d.description_en.length > 20;
+        const missingKo = !d.description_ko || d.description_ko.length <= 10;
+        return hasEn && missingKo;
+    });
+
+    console.log(`📊 Targets for translation: ${targets.length}`);
+    if (limitVal > 0) console.log(`🛑 Limit: ${limitVal}`);
+
+    const subset = limitVal > 0 ? targets.slice(0, limitVal) : targets;
+
+    let successCount = 0;
+    for (const doc of subset) {
+        const data = doc.data();
+        console.log(`🤖 Translating description for: ${data.name}...`);
+
+        try {
+            // Using the existing AI enrichment logic which is now translation-aware
+            const aiResult = await processSpiritWithAI({
+                ...data,
+                // Pass existing description_en as source
+                description_en: data.description_en
+            });
+
+            if (aiResult) {
+                if (isDryRun) {
+                    console.log(`    [DRY] Result: ${aiResult.description_ko.substring(0, 50)}...`);
+                } else {
+                    const optimizedKeywords = generateSpiritSearchKeywords({
+                        name: data.name,
+                        name_en: data.name_en || aiResult.name_en,
+                        distillery: data.distillery,
+                        category: data.category,
+                        subcategory: data.subcategory,
+                        region: data.region,
+                        country: data.country,
+                        metadata: data.metadata
+                    });
+
+                    await doc.ref.update({
+                        description_ko: aiResult.description_ko,
+                        searchKeywords: optimizedKeywords,
+                        updatedAt: new Date().toISOString()
+                    });
+                    console.log(`    ✅ Updated description_ko for ${data.name}`);
+                }
+                successCount++;
+            }
+        } catch (e: any) {
+            console.error(`    ❌ Failed: ${e.message}`);
+        }
+
+        await delay(500); // Small breathing room
+    }
+
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log(`✅ Patch completed: ${successCount} translated`);
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+}
+
+async function syncNames() {
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('🔄 Data Correction: Integrated Sync & Optimization');
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+
+    // Only process published spirits as requested
+    const snapshot = await db.collection('spirits').where('isPublished', '==', true).get();
+    console.log(`📊 Published spirits to process: ${snapshot.docs.length}`);
+
+    let updatedCount = 0;
+    for (const doc of snapshot.docs) {
+        const data = doc.data();
+        const metadata = data.metadata || {};
+
+        // 1. Sync critical fields to top-level
+        const nameEn = data.name_en || metadata.name_en;
+        const descriptionKo = data.description_ko || metadata.description_ko || metadata.description;
+
+        // 2. Prepare cleaned metadata (Data Diet)
+        const cleanedMetadata = { ...metadata };
+        delete cleanedMetadata.name_en;
+        delete cleanedMetadata.description_ko;
+        delete cleanedMetadata.description;
+
+        // 3. Regenerate Keywords (Optimization)
+        const optimizedKeywords = generateSpiritSearchKeywords({
+            name: data.name,
+            name_en: nameEn,
+            distillery: data.distillery,
+            category: data.category,
+            subcategory: data.subcategory,
+            region: data.region,
+            country: data.country,
+            metadata: cleanedMetadata
+        });
+
+        console.log(`🛠️ Patching: ${data.name} -> (Keywords: ${optimizedKeywords.length})`);
+
+        if (!isDryRun) {
+            await doc.ref.update({
+                name_en: nameEn || null,
+                description_ko: descriptionKo || null,
+                metadata: cleanedMetadata,
+                searchKeywords: optimizedKeywords,
+                updatedAt: new Date().toISOString()
+            });
+        }
+        updatedCount++;
+    }
+
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log(`✅ Integrated patch completed: ${updatedCount} updated`);
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+}
+
 async function bulkProcessor() {
+    if (isSyncNames) {
+        await syncNames();
+        return;
+    }
+    if (isTranslateMissing) {
+        await translateMissing();
+        return;
+    }
+
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
     console.log('🚀 Bulk Data Processor (AI Enrichment)');
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
@@ -205,7 +340,7 @@ async function bulkProcessor() {
         // Process in batches
         for (let i = 0; i < docs.length; i += BATCH_SIZE) {
             const batch = docs.slice(i, i + BATCH_SIZE);
-            const batchPromises = batch.map(async (doc) => {
+            const batchPromises = batch.map(async (doc: admin.firestore.QueryDocumentSnapshot) => {
                 const data = doc.data();
 
                 // Skip condition

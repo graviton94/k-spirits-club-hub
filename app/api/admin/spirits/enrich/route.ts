@@ -15,7 +15,10 @@ import { enrichSpiritWithAI, type SpiritEnrichmentInput } from '@/lib/services/g
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
-        const { name, category, subcategory, distillery, abv, region, country, metadata } = body;
+        const {
+            name, category, subcategory, distillery, abv, region, country, metadata,
+            description_en // Accept as direct input for translation source
+        } = body;
 
         if (!name || !category) {
             return NextResponse.json(
@@ -32,6 +35,7 @@ export async function POST(req: NextRequest) {
             abv,
             region,
             country,
+            description_en,
             metadata
         };
 
@@ -41,9 +45,9 @@ export async function POST(req: NextRequest) {
     } catch (error: any) {
         console.error('[enrich] Error:', error);
         return NextResponse.json(
-            { 
+            {
                 error: 'Failed to enrich spirit data',
-                details: error.message 
+                details: error.message
             },
             { status: 500 }
         );

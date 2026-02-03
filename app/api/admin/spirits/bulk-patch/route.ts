@@ -55,8 +55,6 @@ export async function PATCH(req: NextRequest) {
                             metadata: {
                                 ...spirit.metadata,
                                 ...currentUpdates.metadata,
-                                name_en: enrichmentData.name_en ?? spirit.metadata?.name_en,
-                                description_ko: enrichmentData.description_ko ?? spirit.metadata?.description_ko,
                                 nose_tags: enrichmentData.nose_tags ?? spirit.metadata?.nose_tags,
                                 palate_tags: enrichmentData.palate_tags ?? spirit.metadata?.palate_tags,
                                 finish_tags: enrichmentData.finish_tags ?? spirit.metadata?.finish_tags

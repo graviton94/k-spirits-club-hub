@@ -67,6 +67,7 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
           abv: abv || spirit.abv,
           region: region || spirit.region,
           country: country || spirit.country,
+          description_en: spirit.description_en, // Pass original for translation
           metadata: spirit.metadata
         })
       });
@@ -130,6 +131,7 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
           abv: spirit.abv,
           region: spirit.region,
           country: spirit.country,
+          description_en: spirit.description_en, // Pass original for translation
           metadata: spirit.metadata
         })
       });

@@ -49,78 +49,77 @@ export function generateNGrams(text: string, minLength: number = 2, maxLength: n
   return Array.from(keywords);
 }
 
-/**
- * Generates search keywords for a spirit.
- * Includes keywords from name, English name, and distillery.
- * 
- * @param spirit - Partial spirit object with name and metadata
- * @returns Array of unique search keywords
- * 
- * @example
- * generateSpiritSearchKeywords({ 
- *   name: "발베니 12년", 
- *   distillery: "Balvenie",
- *   metadata: { name_en: "Balvenie 12 Year" }
- * })
- */
 export function generateSpiritSearchKeywords(spirit: {
   name: string;
   name_en?: string | null;
   distillery?: string | null;
-  description_ko?: string | null;
-  description_en?: string | null;
-  pairing_guide_ko?: string | null;
-  pairing_guide_en?: string | null;
+  category?: string | null;
+  subcategory?: string | null;
+  region?: string | null;
+  country?: string | null;
   metadata?: {
     name_en?: string;
-    description_ko?: string;
-    description?: string;
-    pairing_guide_ko?: string;
-    pairing_guide_en?: string;
+    nose_tags?: string[];
+    palate_tags?: string[];
+    finish_tags?: string[];
     [key: string]: any;
   };
 }): string[] {
   const allKeywords = new Set<string>();
 
-  // Add keywords from Korean name
+  // 1. Essential Fields (Full N-Grams for partial matching)
+  // Korean name
   if (spirit.name) {
-    const nameKeywords = generateNGrams(spirit.name);
-    nameKeywords.forEach(k => allKeywords.add(k));
+    generateNGrams(spirit.name).forEach(k => allKeywords.add(k));
   }
 
-  // Add keywords from English name (prioritize top-level, fallback to metadata)
+  // English name
   const enName = spirit.name_en || spirit.metadata?.name_en;
   if (enName) {
-    const enNameKeywords = generateNGrams(enName);
-    enNameKeywords.forEach(k => allKeywords.add(k));
+    generateNGrams(enName).forEach(k => allKeywords.add(k));
   }
 
-  // Add keywords from distillery
+  // Distillery
   if (spirit.distillery) {
-    const distilleryKeywords = generateNGrams(spirit.distillery);
-    distilleryKeywords.forEach(k => allKeywords.add(k));
+    generateNGrams(spirit.distillery).forEach(k => allKeywords.add(k));
   }
 
-  // SEO Enhancement: Add keywords from descriptions and pairing guides
-  const descriptionKo = spirit.description_ko || spirit.metadata?.description_ko || spirit.metadata?.description;
-  if (descriptionKo) {
-    generateNGrams(descriptionKo).forEach(k => allKeywords.add(k));
-  }
+  // 2. Classification & Location (Full words only)
+  const categoryFields = [
+    spirit.category,
+    spirit.subcategory,
+    spirit.region,
+    spirit.country
+  ];
 
-  const descriptionEn = spirit.description_en;
-  if (descriptionEn) {
-    generateNGrams(descriptionEn).forEach(k => allKeywords.add(k));
-  }
+  categoryFields.forEach(field => {
+    if (field) {
+      field.toLowerCase().split(/\s+/).forEach(word => {
+        if (word.length >= 2) allKeywords.add(word);
+      });
+    }
+  });
 
-  const pairingKo = spirit.pairing_guide_ko || spirit.metadata?.pairing_guide_ko;
-  if (pairingKo) {
-    generateNGrams(pairingKo).forEach(k => allKeywords.add(k));
-  }
+  // 3. Flavor DNA (Tags) - Critical for SEO
+  const tags = [
+    ...(spirit.metadata?.nose_tags || []),
+    ...(spirit.metadata?.palate_tags || []),
+    ...(spirit.metadata?.finish_tags || [])
+  ];
 
-  const pairingEn = spirit.pairing_guide_en || spirit.metadata?.pairing_guide_en;
-  if (pairingEn) {
-    generateNGrams(pairingEn).forEach(k => allKeywords.add(k));
-  }
+  tags.forEach(tag => {
+    if (tag) {
+      const normalizedTag = tag.toLowerCase().trim();
+      if (normalizedTag.length >= 2) {
+        allKeywords.add(normalizedTag);
+        // Also add first 2+ chars for partial match on long tags
+        if (normalizedTag.length > 3) {
+          allKeywords.add(normalizedTag.substring(0, 2));
+          allKeywords.add(normalizedTag.substring(0, 3));
+        }
+      }
+    }
+  });
 
   return Array.from(allKeywords).sort();
 }
