@@ -117,26 +117,60 @@ Analyze the **description_en** you just wrote/refined.
 - Ensure the tags capture technical nuances (e.g., "Rancio," "Petrichor," "Viscous," "Esoteric Spices").
 
 ### STEP 4: GASTRONOMY COLUMNIST'S PAIRING GUIDE (Based on Step 3)
-Adopt the persona of a world-renowned food critic. Your goal is to provide **exactly TWO distinct, non-repetitive pairing recommendations**.
+Adopt the persona of a **Master Sommelier & Renowned Food Columnist** who has mastered both global food culture and fine spirits.
+Your writing must be **immersive, evocative, and appetizing**, allowing the reader to vividly imagine the combination of flavors in their mouth.
 
-**[GLOBAL BAN LIST - ABSOLUTELY NO EXCEPTIONS]**
-❌ Cullen Skink, ❌ Haggis, ❌ Moroccan Tagine, ❌ Generic Fruit/Cheese, ❌ Generic Dark Chocolate, ❌ Roast Lamb/Beef without a unique technique, ❌ Any dish you have recently repeated for this region.
+**[LOGIC CHAIN FOR RECOMMENDATION]**
+You must mentally follow this sequence before generating the output:
+1. **Spirit Category**: What is the fundamental base? (e.g., Single Malt, Rum, Soju)
+2. **Product Character**: What are the specific Nose/Palate/Finish tags from Step 3? (e.g., Sherry bomb, saline, grassy)
+3. **Origin Context**: Where is it from? (Country -> Region).
+4. **Synthesis**: How does the Region + Spirit Category interact? (e.g., Islay + Peat = Maritime; Kentucky + Bourbon = Sweet Oak).
+5. **Recommendation**: Propose **exactly TWO distinct pairings** based on **Character & Flavor Harmony**.
 
-1. **The Terroir Choice (Heritage Synergy)**: 
-   - **Requirement**: A sophisticated, authentic dish from the spirit's specific region OR its broader national culinary heritage. 
-   - **Diversity Directive**: Focus on hyper-regional specialties or unique national dishes that offer a deep cultural connection. Avoid the "Top 3" most clichéd tourist dishes. Seek out seasonal ingredients or traditional preservation techniques (fermenting, curing, pickling) that are uniquely rooted in the spirit's homeland.
-   - **Focus**: Why does *this specific bottling's* profile (from Step 3) require *this specific* regional or national pairing?
+**[PAIRING SELECTION CRITERIA]**
+1. **The Regional Classic (Terroir & Tradition)**:
+   - A dish that represents the spirit's **specific region or country**.
+   - Explain how the local ingredients or cooking methods complement the spirit's character.
+   - Example: A saline Islay whisky with fresh Oysters; A spicy Rye with smoked brisket.
 
-2. **The Global Adventure (Molecular Cross-Pollination)**:
-   - **Requirement**: An adventurous, world-class pairing from a culinary culture outside the spirit's origin.
-   - **Methodology**: Rooted in pure chemistry—molecular bridges, lipid affinity, and volatile aromatic compounds. 
-   - **Focus**: Surprise the reader with a logical but high-variance connection (e.g., a peated malt with a specific fermented Thai condiment rather than "barbecue").
+2. **The Gastronomic Twist (Flavor Bridge)**:
+   - A creative, often international, pairing that works on a **molecular/flavor level**.
+   - Ignore geography; focus on **texture, contrast, and complementary flavors**.
+   - Example: A floral Gin with a citrus-cured ceviche; A rich Cognac with dark chocolate truffle.
 
-**[LOGICAL SYNERGY & STYLE]**
-- **Structural Integrity**: Does the ABV demand a high-concentration lipid? Does the acidity need a saline counterpoint? Explain the physics of the pairing.
-- **Tone**: Authoritative, analytical, and elegantly descriptive. No generic "pairs well with."
-- **pairing_guide_en**: 4-5 sentences of sophisticated prose. Talk about how the specific flavor tags from Step 3 actively interact with the food's components.
-- **pairing_guide_ko**: A professional Korean translation using high-end gastronomy terminology.
+**[WRITING STYLE & TONE]**
+- **Immersive & Descriptive**: Don't just list food. Describe the **texture, temperature, and specific flavors** of the dish.
+- **Explain the "Why"**: Connect the spirit's specific notes (Step 3) to the dish's elements. "The acidity of the wine cuts through the richness of the..."
+- **No Generic Lists**: Avoid "Cheese, fruit, chocolate." be specific: "Aged Comté," "Poached pear," "70% Ecuadorian dark chocolate."
+- **pairing_guide_en**: 4-5 sentences of sophisticated, appetizing prose. Make the reader hungry.
+- **pairing_guide_ko**: A professional, elegant Korean translation. Use terms that evoke appetite and sophistication (e.g., "마리아주", "풍미의 조화", "입안을 감싸는").
+
+**[GLOBAL BAN LIST - STRICT ENFORCEMENT]**
+❌ **Generic Terms**: "Steak", "Pasta", "Pizza" without specific details.
+❌ **Lazy Tropes**: **Absolutely NO "Seared Scallops", "Carpaccio", "Yuzu Vinaigrette", "Moroccan Tagine", "Spring Rolls", or "Gỏi cuốn"** (These are currently overused).
+❌ **Phrasing**: "Pairs well with...", "Perfect match" (Use more creative transitions).
+❌ **Repetition**: Do NOT repeat the same main ingredient (e.g., Pork, Seafood) across the two pairings.
+
+**[GLOBAL TWIST MATRIX LOGIC]**
+Instead of random guessing, follow this strict decision tree:
+
+**STEP 1: ANALYZE SPIRIT CHARACTER**
+Determine if the spirit is primarily:
+- **(A) Light/Crisp/Fruity/Floral** (e.g., Gin, Vodka, White Wine, Makgeolli)
+- **(B) Rich/Dark/Spicy/Oaky** (e.g., Whisky, Cognac, Aged Rum, Soju 40%+)
+
+**STEP 2: SELECT INGREDIENT & STYLE (From Matrix)**
+Based on Step 1, select *one* cell from this matrix (do not stick to the first option):
+- **If (A)**: [White Fish / Shellfish / Poultry / Soft Cheese] x [Cured / Fried / Steamed / Herbaceous]
+- **If (B)**: [Red Meat / Game / Hard Cheese / Chocolate] x [Braised / Grilled / Roasted / Creamy]
+
+**STEP 3: APPLY CULTURAL VARIANCE (Virtual D2 Roll)**
+Apply a cultural filter to your selection from Step 2:
+- **Odd (ODD)**: **Western Twist** (Mediterranean, Nordic, Latin, French) -> *e.g., Ceviche, Tartare, Ragout*
+- **Even (EVEN)**: **Eastern Twist** (Japanese, Thai, Indian, Cantonese) -> *e.g., Tataki, Yakitori, Curry*
+
+*Example: Spirit is Light (A) -> Ingredient: Poultry -> Style: Fried -> Roll: Eastern = "Chicken Karaage with Yuzu Mayo"*
 
 ---
 ### CRITICAL OUTPUT RULES:
