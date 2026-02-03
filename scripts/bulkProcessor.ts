@@ -112,10 +112,10 @@ ${TERM_GUIDELINES}
    **[GLOBAL BAN LIST - ABSOLUTELY NO EXCEPTIONS]**
    ❌ Cullen Skink, ❌ Haggis, ❌ Moroccan Tagine, ❌ Generic Fruit/Cheese, ❌ Generic Dark Chocolate, ❌ Roast Lamb/Beef without a unique technique, ❌ Any dish you have recently repeated for this region.
 
-   **1. The Terroir Choice (Obscure Heritage Pairing):**
-   - **Requirement**: A sophisticated, authentic dish from the spirit's EXACT country or region of origin (${locationLabel}: ${location}).
-   - **Diversity Directive**: Avoid the "Top 3" most famous dishes from this region. Instead, seek out hyper-regional specialties, seasonal game, or traditional preservation techniques (fermenting, curing, pickling) that are lesser-known globally but deeply rooted locally.
-   - **Focus**: Why does *this specific bottling's* unique profile (from Step 3) require *this specific* regional ingredient?
+   **1. The Terroir Choice (Heritage Synergy Pairing):**
+   - **Requirement**: A sophisticated, authentic dish from the spirit's specific region OR its broader national culinary heritage (${locationLabel}: ${location}).
+   - **Diversity Directive**: Focus on hyper-regional specialties or unique national dishes that offer a deep cultural connection. Avoid the "Top 3" most clichéd tourist dishes. Seek out seasonal ingredients or traditional preservation techniques (fermenting, curing, pickling) that are uniquely rooted in the spirit's homeland.
+   - **Focus**: Why does *this specific bottling's* profile (from Step 3) require *this specific* regional or national pairing?
    
    **2. The Global Adventure (Molecular Cross-Pollination):**
    - **Requirement**: An adventurous, world-class pairing from a culinary culture OUTSIDE the spirit's origin.
