@@ -37,8 +37,8 @@ export function Header() {
                     {user ? (
                         <Link href={`/${lang}/me`} className="flex items-center gap-3 pl-4 py-1 rounded-full hover:bg-secondary transition-colors">
                             <div className="text-right hidden sm:block">
-                                <p className="text-xs text-muted-foreground">Welcome back,</p>
-                                <p className="text-sm font-bold leading-none text-primary">{displayName}님</p>
+                                <p className="text-xs text-muted-foreground">{lang === 'en' ? 'Welcome back,' : '안녕하세요,'}</p>
+                                <p className="text-sm font-bold leading-none text-primary">{displayName}{lang === 'ko' ? '님' : ''}</p>
                             </div>
                             <div className="relative w-9 h-9 rounded-full overflow-hidden border-2 border-primary/50 shadow-sm flex items-center justify-center bg-secondary">
                                 {profileImage ? (
@@ -58,7 +58,7 @@ export function Header() {
                             className="flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-amber-500 to-orange-600 text-white text-sm font-bold hover:from-amber-600 hover:to-orange-700 transition-all shadow-lg shadow-primary/20"
                         >
                             <LogIn className="w-4 h-4" />
-                            <span>Login</span>
+                            <span>{lang === 'en' ? 'Login' : '로그인'}</span>
                         </Link>
                     )}
                 </div>

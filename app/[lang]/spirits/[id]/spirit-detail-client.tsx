@@ -71,11 +71,27 @@ const UI_TEXT = {
     }
 };
 
+import metadata from "@/lib/constants/spirits-metadata.json";
+
 export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClientProps) {
     const router = useRouter();
     const pathname = usePathname();
     const isEn = pathname?.startsWith('/en');
     const t = isEn ? UI_TEXT.en : UI_TEXT.ko;
+
+    // Helpers for localized display
+    const displayName = isEn ? (spirit.metadata?.name_en || spirit.name_en || spirit.name) : spirit.name;
+    const displayDistillery = isEn ? (spirit.metadata?.distillery_en || spirit.distillery) : spirit.distillery;
+
+    const getLocalizedCategory = (cat: string) => {
+        if (!cat) return '';
+        const displayNames = isEn ? (metadata as any).display_names_en : metadata.display_names;
+        return displayNames[cat] || cat;
+    };
+
+    const displayDescription = isEn
+        ? (spirit.description_en || spirit.metadata?.description_en || spirit.description_ko || spirit.metadata?.description_ko)
+        : (spirit.description_ko || spirit.metadata?.description_ko || spirit.description_en || spirit.metadata?.description_en);
 
     const { user } = useAuth();
     const [isInCabinet, setIsInCabinet] = useState(false);
@@ -251,25 +267,33 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
             {/* 1. Header: Image Left, Info Right */}
             <div className="flex flex-row gap-6 mb-8 items-start">
                 <div className="w-32 sm:w-48 shrink-0">
-                    <ExpandableImage imageUrl={spirit.imageUrl} name={spirit.name} category={spirit.category} />
+                    <ExpandableImage imageUrl={spirit.imageUrl} name={displayName} category={spirit.category} />
                 </div>
 
                 <div className="flex-1 min-w-0 pt-2">
                     <h1 className="text-2xl sm:text-4xl font-black mb-1 leading-tight text-foreground uppercase tracking-tight">
-                        {spirit.name}
+                        {displayName}
                     </h1>
-                    {spirit.metadata?.name_en && (
-                        <p className="text-lg text-muted-foreground font-medium mb-3 italic">
-                            {spirit.metadata.name_en}
-                        </p>
+                    {isEn ? (
+                        spirit.name_en && spirit.name !== spirit.name_en && (
+                            <p className="text-lg text-muted-foreground font-medium mb-3 italic">
+                                {spirit.name}
+                            </p>
+                        )
+                    ) : (
+                        spirit.metadata?.name_en && (
+                            <p className="text-lg text-muted-foreground font-medium mb-3 italic">
+                                {spirit.metadata.name_en}
+                            </p>
+                        )
                     )}
-                    {(spirit as any).description_en && (
-                        <p className="text-sm text-foreground/80 leading-relaxed max-w-xl mb-4">
-                            {(spirit as any).description_en}
+                    {displayDescription && (
+                        <p className="text-sm text-foreground/80 leading-relaxed max-w-xl mb-4 line-clamp-6">
+                            {displayDescription}
                         </p>
                     )}
                     <div className="flex flex-col gap-1">
-                        <p className="text-amber-500 font-bold tracking-wider">{spirit.distillery}</p>
+                        <p className="text-amber-500 font-bold tracking-wider">{displayDistillery}</p>
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
                             <span className="px-2 py-0.5 bg-secondary rounded-md border border-border">
                                 {spirit.abv}% ABV
@@ -292,18 +316,18 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                     <div className="space-y-2">
                         <div className="flex justify-between items-center text-sm">
                             <span className="text-muted-foreground">{t.category}</span>
-                            <span className="font-bold">{CATEGORY_NAME_MAP[spirit.category] || spirit.category}</span>
+                            <span className="font-bold">{getLocalizedCategory(spirit.category)}</span>
                         </div>
                         {spirit.mainCategory && (
                             <div className="flex justify-between items-center text-sm">
                                 <span className="text-muted-foreground">{t.main}</span>
-                                <span className="font-bold">{CATEGORY_NAME_MAP[spirit.mainCategory] || spirit.mainCategory}</span>
+                                <span className="font-bold">{getLocalizedCategory(spirit.mainCategory)}</span>
                             </div>
                         )}
                         {spirit.subcategory && (
                             <div className="flex justify-between items-center text-sm">
                                 <span className="text-muted-foreground">{t.sub}</span>
-                                <span className="font-bold text-amber-500">{CATEGORY_NAME_MAP[spirit.subcategory] || spirit.subcategory}</span>
+                                <span className="font-bold text-amber-500">{getLocalizedCategory(spirit.subcategory)}</span>
                             </div>
                         )}
                     </div>

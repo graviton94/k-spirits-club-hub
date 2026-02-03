@@ -72,14 +72,15 @@ export function LiveReviews({ initialReviews = [] }: LiveReviewsProps) {
   }, []);
 
   const getTimeAgo = (dateString: string) => {
+    const isEn = lang === 'en';
     const date = new Date(dateString);
     const now = new Date();
     const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
-    if (seconds < 60) return `${seconds}초 전`;
-    if (seconds < 3600) return `${Math.floor(seconds / 60)}분 전`;
-    if (seconds < 86400) return `${Math.floor(seconds / 3600)}시간 전`;
-    return `${Math.floor(seconds / 86400)}일 전`;
+    if (seconds < 60) return isEn ? `${seconds}s ago` : `${seconds}초 전`;
+    if (seconds < 3600) return isEn ? `${Math.floor(seconds / 60)}m ago` : `${Math.floor(seconds / 60)}분 전`;
+    if (seconds < 86400) return isEn ? `${Math.floor(seconds / 3600)}h ago` : `${Math.floor(seconds / 3600)}시간 전`;
+    return isEn ? `${Math.floor(seconds / 86400)}d ago` : `${Math.floor(seconds / 86400)}일 전`;
   };
 
   if (loading) {
@@ -100,19 +101,20 @@ export function LiveReviews({ initialReviews = [] }: LiveReviewsProps) {
   }
 
   if (reviews.length === 0) {
+    const isEn = lang === 'en';
     return (
       <div className="text-center py-12 text-muted-foreground">
-        <p>아직 작성된 리뷰가 없습니다.</p>
-        <p className="text-sm mt-2">첫 번째 리뷰를 작성해보세요!</p>
+        <p>{isEn ? "No reviews yet." : "아직 작성된 리뷰가 없습니다."}</p>
+        <p className="text-sm mt-2">{isEn ? "Be the first to leave a review!" : "첫 번째 리뷰를 작성해보세요!"}</p>
       </div>
     );
   }
 
   return (
     <div className="space-y-4">
-      {reviews.map((review) => (
+      {reviews.map((review, index) => (
         <Link
-          key={review.id}
+          key={`${review.id}-${index}`}
           href={`/${lang}/spirits/${review.spiritId}`}
           className="block group"
         >

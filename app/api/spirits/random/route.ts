@@ -21,6 +21,7 @@ export async function GET() {
         return NextResponse.json({
             id: spirit.id,
             name: spirit.name,
+            name_en: spirit.name_en || spirit.metadata?.name_en || null,
             category: spirit.category,
         });
     } catch (error) {

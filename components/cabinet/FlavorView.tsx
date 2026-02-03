@@ -70,7 +70,7 @@ export default function FlavorView() {
 
     const handleAnalyze = async () => {
         if (!user) {
-            setToastMessage('로그인이 필요합니다.');
+            setToastMessage(isEn ? 'Login is required.' : '로그인이 필요합니다.');
             setToastVariant('error');
             setShowToast(true);
             return;
@@ -88,7 +88,10 @@ export default function FlavorView() {
             const response = await fetch('/api/analyze-taste', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userId: user.uid })
+                body: JSON.stringify({
+                    userId: user.uid,
+                    lang: isEn ? 'en' : 'ko'
+                })
             });
 
             if (!response.ok) {
@@ -162,8 +165,10 @@ export default function FlavorView() {
         try {
             if (navigator.share) {
                 await navigator.share({
-                    title: '🧬 나의 미각 DNA 리포트',
-                    text: `AI가 분석한 나의 주류 취향은 [${profile?.persona.title}]! 당신의 취향도 확인해보세요.`,
+                    title: isEn ? '🧬 My Taste DNA Report' : '🧬 나의 미각 DNA 리포트',
+                    text: isEn
+                        ? `AI analyzed my taste as [${profile?.persona.title}]! Check out your taste DNA too.`
+                        : `AI가 분석한 나의 주류 취향은 [${profile?.persona.title}]! 당신의 취향도 확인해보세요.`,
                     url: shareUrl
                 });
             } else {

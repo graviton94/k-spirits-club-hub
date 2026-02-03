@@ -29,6 +29,7 @@ export interface UserTasteProfile {
     spiritId: string;
     name: string;
     matchRate: number;   // 일치도 (예: 98)
+    reason?: string;     // 추천 사유 (AI 생성)
     linkUrl?: string;    // 제휴/구매 링크
   } | null;
 }

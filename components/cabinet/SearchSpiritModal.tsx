@@ -53,7 +53,7 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
 
     const handleAdd = async (item: any, isWishlist: boolean) => {
         if (!user) {
-            setToastMessage('로그인이 필요합니다.');
+            setToastMessage(isEn ? 'Login required.' : '로그인이 필요합니다.');
             setToastVariant('error');
             setShowToast(true);
             return;
@@ -69,10 +69,13 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
                 category: item.c,
                 // abv: item.a 
             });
-            onSuccess(isWishlist ? "위시리스트에 담겼습니다! 🔖" : "성공적으로 술장에 담겼습니다! 🥃");
+            onSuccess(isEn
+                ? (isWishlist ? "Added to wishlist! 🔖" : "Saved to cabinet! 🥃")
+                : (isWishlist ? "위시리스트에 담겼습니다! 🔖" : "성공적으로 술장에 담겼습니다! 🥃")
+            );
         } catch (e) {
             console.error(e);
-            setToastMessage('오류가 발생했습니다.');
+            setToastMessage(isEn ? 'An error occurred.' : '오류가 발생했습니다.');
             setToastVariant('error');
             setShowToast(true);
         } finally {
@@ -104,7 +107,7 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
                     <div className="p-6 sm:p-8 border-b border-white/5 relative z-10">
                         <div className="flex justify-between items-center mb-6">
                             <div>
-                                <h2 className="text-2xl font-black text-white tracking-tight">콜렉션 추가</h2>
+                                <h2 className="text-2xl font-black text-white tracking-tight">{isEn ? 'Add Collection' : '콜렉션 추가'}</h2>
                                 <p className="text-xs text-muted-foreground mt-1 font-bold uppercase tracking-widest opacity-60">Search & Add to Cabinet</p>
                             </div>
                             <button
@@ -117,7 +120,7 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
                         <div className="relative">
                             <input
                                 autoFocus
-                                placeholder="어떤 술을 찾고 계신가요?"
+                                placeholder={isEn ? "What are you looking for?" : "어떤 술을 찾고 계신가요?"}
                                 className="w-full pl-12 pr-4 py-4 rounded-2xl border border-white/10 bg-white/5 text-white placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 transition-all font-medium text-lg"
                                 value={query}
                                 onChange={e => setQuery(e.target.value)}
@@ -134,19 +137,19 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
                         {isLoading && (
                             <div className="flex flex-col items-center justify-center py-20 text-muted-foreground gap-4">
                                 <Loader2 className="w-10 h-10 animate-spin text-amber-500" />
-                                <p className="font-bold text-sm">데이터를 불러오는 중입니다...</p>
+                                <p className="font-bold text-sm">{isEn ? "Loading data..." : "데이터를 불러오는 중입니다..."}</p>
                             </div>
                         )}
                         {!isLoading && results.length === 0 && query && (
                             <div className="flex flex-col items-center justify-center py-20 text-muted-foreground opacity-50">
                                 <p className="text-4xl mb-4">🔍</p>
-                                <p className="font-bold">검색 결과가 없습니다.</p>
+                                <p className="font-bold">{isEn ? "No search results found." : "검색 결과가 없습니다."}</p>
                             </div>
                         )}
                         {!isLoading && !query && (
                             <div className="flex flex-col items-center justify-center py-20 text-muted-foreground opacity-50">
                                 <p className="text-4xl mb-4">🥃</p>
-                                <p className="font-bold">제품명을 정확하게 입력해보세요.</p>
+                                <p className="font-bold">{isEn ? "Try searching for a spirit name." : "제품명을 정확하게 입력해보세요."}</p>
                             </div>
                         )}
 
@@ -154,6 +157,7 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
                             {results.map(item => {
                                 const isAdded = existingIds.has(item.i);
                                 const isProcessing = processingId === item.i;
+                                const displayName = isEn ? (item.en || item.n) : item.n;
 
                                 return (
                                     <motion.div
@@ -164,7 +168,7 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
                                         <div className="w-12 h-12 rounded-xl overflow-hidden bg-slate-900 shrink-0 border border-white/10">
                                             <img
                                                 src={getOptimizedImageUrl((item.t && item.t.trim()) ? item.t : getCategoryFallbackImage(item.c), 120)}
-                                                alt={item.n}
+                                                alt={displayName}
                                                 loading="lazy"
                                                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                                 onError={(e) => {
@@ -173,7 +177,7 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
                                             />
                                         </div>
                                         <div className="flex-1 min-w-0 flex flex-col justify-center">
-                                            <div className="font-black text-sm text-white leading-tight line-clamp-2 whitespace-normal">{item.n}</div>
+                                            <div className="font-black text-sm text-white leading-tight line-clamp-2 whitespace-normal">{displayName}</div>
                                             <div className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest opacity-60 whitespace-normal mt-0.5">
                                                 {getLocalizedCategory(item.c)} {item.d ? `| ${item.d}` : ''}
                                             </div>
@@ -190,7 +194,7 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
                                                         disabled={isProcessing}
                                                         onClick={() => handleAdd(item, false)}
                                                         className="w-9 h-9 rounded-xl bg-amber-500 hover:bg-amber-600 text-white flex items-center justify-center transition-all shadow-lg shadow-amber-500/20 active:scale-90 disabled:opacity-50"
-                                                        title="술장에 추가"
+                                                        title={isEn ? "Add to cabinet" : "술장에 추가"}
                                                     >
                                                         {isProcessing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-5 h-5" />}
                                                     </button>
@@ -198,7 +202,7 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
                                                         disabled={isProcessing}
                                                         onClick={() => handleAdd(item, true)}
                                                         className="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center transition-all border border-white/10 active:scale-90 disabled:opacity-50"
-                                                        title="위시리스트"
+                                                        title={isEn ? "Add to wishlist" : "위시리스트"}
                                                     >
                                                         {isProcessing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Bookmark className="w-4 h-4" />}
                                                     </button>

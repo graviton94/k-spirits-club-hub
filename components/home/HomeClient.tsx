@@ -20,12 +20,31 @@ interface HomeClientProps {
     initialReviews: any[];
 }
 
+const UI_TEXT = {
+    ko: {
+        newArrivals: "최신 입고",
+        trending: "오늘의 인기 제품",
+        viewAll: "전체보기",
+        noNew: "아직 새로운 상품이 없습니다.",
+        liveReviews: "⚡️ 실시간 리뷰",
+    },
+    en: {
+        newArrivals: "New Arrivals",
+        trending: "Today's Trending",
+        viewAll: "View All",
+        noNew: "No new arrivals yet.",
+        liveReviews: "⚡️ Live Reviews",
+    }
+};
+
 export default function HomeClient({ lang, initialNewArrivals, initialTrending, initialReviews }: HomeClientProps) {
     const { publishedSpirits, isLoading: isCacheLoading } = useSpiritsCache();
 
     // Use state with initial data for instant render
     const [trendingSpirits] = useState<any[]>(initialTrending);
     const [newArrivals] = useState<any[]>(initialNewArrivals);
+    const isEn = lang === 'en';
+    const t = UI_TEXT[isEn ? 'en' : 'ko'];
 
     // Compute final display spirits (trending or fallback to recent)
     const displaySpirits = useMemo(() => {
@@ -71,7 +90,7 @@ export default function HomeClient({ lang, initialNewArrivals, initialTrending, 
 
                     <div className="w-full max-w-lg mx-auto animate-fade-in-up delay-200 relative z-30">
                         <SearchBar isHero={true} />
-                        <DailyPick />
+                        <DailyPick lang={lang} />
                     </div>
                 </div>
             </section>
@@ -79,13 +98,13 @@ export default function HomeClient({ lang, initialNewArrivals, initialTrending, 
             {/* 2. New Arrivals Auto-Scroll Carousel */}
             <section className="container max-w-4xl mx-auto px-4 mt-12 relative z-20 mb-20">
                 <div className="flex items-center gap-2 mb-6">
-                    <Sparkles className="w-5 h-5 text-amber-500" />
-                    <h2 className="text-xl font-black tracking-tight">New Arrivals</h2>
+                    <Sparkles className="w-5 h-5 text-amber-500 fill-amber-500/20" />
+                    <h2 className="text-xl font-black tracking-tight">{t.newArrivals}</h2>
                 </div>
 
-                <div className="relative overflow-hidden py-4">
+                <div className="relative overflow-hidden w-full h-56">
                     {newArrivals.length > 0 ? (
-                        <div className={`flex gap-6 ${styles['animate-scroll-rtl']}`}>
+                        <div className={`flex items-start gap-6 absolute whitespace-nowrap ${styles.marquee}`} style={{ animationDuration: '40s' }}>
                             {/* Duplicate items for infinite scroll effect */}
                             {[...newArrivals, ...newArrivals].map((spirit, index) => (
                                 <Link
@@ -107,7 +126,7 @@ export default function HomeClient({ lang, initialNewArrivals, initialTrending, 
                                             )}
                                         </div>
                                         <span className="font-bold text-xs text-center line-clamp-2 px-1 text-foreground group-hover:text-amber-600 transition-colors">
-                                            {spirit.name}
+                                            {isEn ? (spirit.name_en || spirit.metadata?.name_en || spirit.name) : spirit.name}
                                         </span>
                                     </div>
                                 </Link>
@@ -115,54 +134,45 @@ export default function HomeClient({ lang, initialNewArrivals, initialTrending, 
                         </div>
                     ) : (
                         <div className="text-center py-8 text-muted-foreground">
-                            <p>아직 새로운 상품이 없습니다.</p>
+                            <p>{t.noNew}</p>
                         </div>
                     )}
                 </div>
             </section>
 
-            {/* 3. Personalized / Trending Feed */}
+            {/* 3. Today's Trending spirits */}
             <section className="container max-w-4xl mx-auto px-4 mb-20">
                 <div className="flex items-center justify-between mb-8">
                     <div className="flex items-center gap-2">
-                        <Flame className="w-6 h-6 text-orange-500" />
-                        <h2 className="text-2xl font-bold">Today's Trending</h2>
+                        <Flame className="w-6 h-6 text-orange-600 fill-orange-600/20" />
+                        <h2 className="text-2xl font-black tracking-tight">{t.trending}</h2>
                     </div>
-                    <Link href={`/${lang}/explore`} className="text-sm text-muted-foreground hover:text-amber-500 flex items-center gap-1 transition-colors">
-                        View All <ArrowRight className="w-4 h-4" />
+                    <Link
+                        href={`/${lang}/explore`}
+                        className="text-xs font-bold text-muted-foreground hover:text-primary flex items-center gap-1 transition-colors"
+                    >
+                        {t.viewAll} <ArrowRight className="w-3 h-3" />
                     </Link>
                 </div>
 
-                <div className="flex flex-col gap-4">
-                    {isLoading ? (
-                        Array.from({ length: 3 }).map((_, i) => (
-                            <div key={i} className="h-24 bg-card/50 animate-pulse rounded-2xl" />
-                        ))
-                    ) : (
-                        <>
-                            {displaySpirits.map((spirit) => (
-                                <SpiritCard key={spirit.id} spirit={spirit} />
-                            ))}
-
-                            {/* Fallback Mock Items if no data */}
-                            {displaySpirits.length === 0 && (
-                                <div className="col-span-full py-20 text-center text-muted-foreground bg-secondary/20 rounded-2xl border border-dashed border-border">
-                                    <Sparkles className="w-10 h-10 mx-auto mb-3 text-amber-500/50" />
-                                    <p>No trending spirits available yet.</p>
-                                    <p className="text-sm">Check back soon!</p>
-                                </div>
-                            )}
-                        </>
-                    )}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4">
+                    {displaySpirits.map((spirit) => (
+                        <SpiritCard
+                            key={spirit.id}
+                            spirit={spirit}
+                            size="compact"
+                            lang={lang}
+                        />
+                    ))}
                 </div>
             </section>
 
-            {/* 4. Live Reviews */}
-            <section className="bg-secondary py-16 border-y border-border">
-                <div className="container max-w-4xl mx-auto px-4">
-                    <h2 className="text-2xl font-bold mb-8 text-left text-foreground">✍️ Live Reviews</h2>
-                    <LiveReviews initialReviews={initialReviews} />
+            {/* 4. Live Reviews Grid */}
+            <section className="container max-w-4xl mx-auto px-4 mb-20">
+                <div className="flex items-center justify-between mb-8">
+                    <h2 className="text-2xl font-black tracking-tight">{t.liveReviews}</h2>
                 </div>
+                <LiveReviews initialReviews={initialReviews} />
             </section>
 
         </div>

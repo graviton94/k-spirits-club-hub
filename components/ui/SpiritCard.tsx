@@ -17,17 +17,20 @@ import { toFlavorSpirit, triggerLoginModal } from "@/lib/utils/spirit-adapters";
 import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
 import SuccessToast from "./SuccessToast";
 import Image from 'next/image';
+import metadata from "@/lib/constants/spirits-metadata.json";
 
 interface SpiritCardProps {
   spirit: Spirit;
   onClick?: (spirit: Spirit) => void;
   onCabinetChange?: () => void;
   index?: number; // Added for LCP priority control
+  size?: 'default' | 'compact';
+  lang?: string;
 }
 
-export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10 }: SpiritCardProps) {
+export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size = 'default', lang: propLang }: SpiritCardProps) {
   const pathname = usePathname() || "";
-  const lang = pathname.split('/')[1] === 'en' ? 'en' : 'ko';
+  const lang = propLang || (pathname.split('/')[1] === 'en' ? 'en' : 'ko');
   const { user } = useAuth();
   const [isInCabinet, setIsInCabinet] = useState(false);
   const [isToggling, setIsToggling] = useState(false);
@@ -35,6 +38,7 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10 }: Spi
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+  const isEn = lang === 'en';
 
   // Image Error Fallback State
   const [imgSrc, setImgSrc] = useState(
@@ -96,10 +100,10 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10 }: Spi
       // Notify parent to refresh if needed
       onCabinetChange?.();
 
-      if (isWishlist) setSuccessMessage('🔖 위시리스트에 추가되었습니다!');
-      else setSuccessMessage('🥃 술장에 저장되었습니다!');
+      if (isWishlist) setSuccessMessage(isEn ? '🔖 Added to wishlist!' : '🔖 위시리스트에 추가되었습니다!');
+      else setSuccessMessage(isEn ? '🥃 Saved to cabinet!' : '🥃 술장에 저장되었습니다!');
 
-      if (review) setSuccessMessage('✅ 리뷰와 함께 술장에 저장되었습니다!');
+      if (review) setSuccessMessage(isEn ? '✅ Saved with review!' : '✅ 리뷰와 함께 술장에 저장되었습니다!');
 
       setShowSuccessToast(true);
 
@@ -196,21 +200,21 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10 }: Spi
                 }[spirit.category] || "🍾"
               }
             </span>
-            {spirit.name}
+            {isEn ? (spirit.name_en || spirit.metadata?.name_en || spirit.name) : spirit.name}
           </h3>
 
           <p className="text-xs font-medium text-muted-foreground flex items-center gap-1">
             <span>📂</span>
             <span>
-              {spirit.category}
-              {spirit.subcategory && ` · ${spirit.subcategory}`}
+              {isEn ? ((metadata as any).display_names_en?.[spirit.category] || spirit.category) : spirit.category}
+              {spirit.subcategory && ` · ${isEn ? ((metadata as any).display_names_en?.[spirit.subcategory] || spirit.subcategory) : spirit.subcategory}`}
               {spirit.abv > 0 && ` · ${spirit.abv}%`}
             </span>
           </p>
 
           {spirit.distillery && (
             <p className="text-xs text-muted-foreground/80 mt-0.5 max-w-full truncate">
-              🏭 {spirit.distillery}
+              🏭 {isEn ? (spirit.metadata?.distillery_en || spirit.distillery) : spirit.distillery}
             </p>
           )}
         </div>

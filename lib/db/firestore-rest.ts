@@ -417,7 +417,7 @@ export const spiritsDb = {
         return validSpirits.map(spirit => ({
             i: spirit.id,
             n: spirit.name,
-            en: spirit.name_en ?? spirit.metadata?.name_en ?? null,
+            en: spirit.name_en || spirit.metadata?.name_en || null,
             c: spirit.category,
             mc: spirit.mainCategory ?? null,
             sc: spirit.subcategory ?? null,
@@ -1184,14 +1184,15 @@ export const newArrivalsDb = {
                 const minifiedSpirit: Partial<Spirit> = {
                     id: spirit.id,
                     name: spirit.name,
+                    name_en: spirit.name_en || spirit.metadata?.name_en || null,
                     imageUrl: spirit.imageUrl,
                     thumbnailUrl: spirit.thumbnailUrl,
                     category: spirit.category, // Required for fallback image
                     subcategory: spirit.subcategory,
+                    metadata: spirit.metadata || {},
                     updatedAt: spirit.updatedAt,
                     createdAt: spirit.createdAt
                 };
-
                 const body = toFirestore(minifiedSpirit);
 
                 // CRITICAL FIX: Inject the real Spirit ID into the fields

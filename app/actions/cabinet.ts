@@ -225,3 +225,34 @@ export async function checkCabinetStatus(userId: string, spiritId: string) {
     return { isOwned: false, isWishlist: false, data: null };
   }
 }
+
+/**
+ * Get IDs of spirits in the user's cabinet and wishlist
+ * Used for batch checking in explore page
+ */
+export async function getCabinetStatusInfo(userId: string) {
+  if (!userId) {
+    return { ownedIds: [], wishlistIds: [] };
+  }
+
+  try {
+    const items = await cabinetDb.getAll(userId);
+    const ownedIds: string[] = [];
+    const wishlistIds: string[] = [];
+
+    items.forEach((item: any) => {
+      if (item.id) {
+        if (item.isWishlist) {
+          wishlistIds.push(item.id);
+        } else {
+          ownedIds.push(item.id);
+        }
+      }
+    });
+
+    return { ownedIds, wishlistIds };
+  } catch (error) {
+    console.error('Error getting cabinet status info:', error);
+    return { ownedIds: [], wishlistIds: [] };
+  }
+}

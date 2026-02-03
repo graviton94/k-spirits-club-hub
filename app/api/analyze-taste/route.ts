@@ -153,8 +153,12 @@ export async function POST(req: NextRequest) {
             }, { status: 400 });
         }
 
+        // 0. Detect Language
+        const lang = body.lang || 'ko';
+        const isEn = lang === 'en';
+
         // 4. Call AI
-        console.log('[Analyze Taste] Initializing Gemini Model: gemini-2.0-flash');
+        console.log(`[Analyze Taste] Initializing Gemini Model: gemini-2.0-flash (Lang: ${lang})`);
         const genAI = new GoogleGenerativeAI(API_KEY);
 
         const systemInstruction = `
@@ -164,6 +168,10 @@ export async function POST(req: NextRequest) {
         
         IMPORTANT: Your recommendation MUST be high-variance and diverse. Do NOT just recommend the most famous or obvious bottles. Seek out high-quality, distinctive spirits that align with the user's flavor DNA but might be outside their current experience.
         
+        LANGUAGE REQUIREMENT: 
+        - Your response (description and recommendation reason) MUST be in ${isEn ? 'English' : 'professional, elegant Korean (polite tone)'}.
+        - Description should strictly be 4-5 sentences long, providing deep analytical insight.
+
         REQUIRED FORMAT: Return ONLY valid JSON.
         
         Output Structure:
@@ -178,13 +186,13 @@ export async function POST(req: NextRequest) {
             },
             "persona": {
                 "title": "A unique, creative title (e.g. 'The Esoteric Peat Hunter')",
-                "description": "2-3 sentences of deep analytical insight into their taste profile in professional, elegant Korean (polite tone).",
+                "description": "4-5 sentences of deep analytical insight into their taste profile.",
                 "keywords": ["#Tag1", "#Tag2", "#Tag3"]
             },
             "recommendation": {
                 "name": "Full professional name of a recommended spirit (Global)",
                 "matchRate": 80-99,
-                "reason": "An authoritative explanation (in Korean) of why this specific bottle's molecular profile matches the user's detected preferences."
+                "reason": "An authoritative explanation of why this specific bottle's molecular profile matches the user's detected preferences."
             }
         }
         `;

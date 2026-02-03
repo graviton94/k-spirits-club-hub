@@ -20,57 +20,57 @@ import metadata from "@/lib/constants/spirits-metadata.json";
 interface ExploreCardProps {
   spirit: Spirit;
   onClick?: (spirit: Spirit) => void;
+  onStatusChange?: (id: string, type: 'cabinet' | 'wishlist', status: boolean) => void;
+  isEn?: boolean;
+  isOwned?: boolean;
+  isWishlisted?: boolean;
 }
 
-function ExploreCardComponent({ spirit, onClick }: ExploreCardProps) {
+function ExploreCardComponent({
+  spirit,
+  onClick,
+  onStatusChange,
+  isEn: propIsEn,
+  isOwned = false,
+  isWishlisted = false
+}: ExploreCardProps) {
   const pathname = usePathname() || "";
   const lang = pathname.split('/')[1] === 'en' ? 'en' : 'ko';
-  const isEn = lang === 'en';
+  const isEn = propIsEn ?? (lang === 'en');
 
-  // Helper to get localized category name
+  // Helpers for localized display
+  const displayName = isEn ? (spirit.name_en || spirit.name) : spirit.name;
+
   const getLocalizedCategory = (cat: string) => {
     if (!cat) return '';
     const displayNames = isEn ? (metadata as any).display_names_en : metadata.display_names;
     return displayNames[cat] || cat;
   };
 
+  const displayCategory = getLocalizedCategory(spirit.category);
+  const displaySubCategory = isEn
+    ? (spirit.metadata?.subcategory_en || getLocalizedCategory(spirit.subcategory || '') || displayCategory)
+    : (spirit.subcategory || displayCategory);
+
+  const displayDistillery = isEn
+    ? (spirit.metadata?.distillery_en || spirit.distillery)
+    : spirit.distillery;
+
   const { user } = useAuth();
-  const [isInCabinet, setIsInCabinet] = useState(false);
-  const [isWishlist, setIsWishlist] = useState(false);
-  const [isLoadingStatus, setIsLoadingStatus] = useState(true);
+  const [isInCabinet, setIsInCabinet] = useState(isOwned);
+  const [isWishlist, setIsWishlist] = useState(isWishlisted);
+  const [isLoadingStatus, setIsLoadingStatus] = useState(false);
   const [isToggling, setIsToggling] = useState(false);
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
 
+  // Update internal state if props change (e.g. after batch fetch in parent)
+  useEffect(() => {
+    setIsInCabinet(isOwned);
+    setIsWishlist(isWishlisted);
+  }, [isOwned, isWishlisted]);
+
   const observerRef = useRef<HTMLDivElement>(null);
-  const [hasBeenVisible, setHasBeenVisible] = useState(false);
-
-  // Intersection Observer to stagger status checks
-  useEffect(() => {
-    if (hasBeenVisible || !user) return;
-
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        setHasBeenVisible(true);
-      }
-    }, { rootMargin: '200px' });
-
-    if (observerRef.current) observer.observe(observerRef.current);
-    return () => observer.disconnect();
-  }, [user, hasBeenVisible]);
-
-  // Check cabinet status when visible
-  useEffect(() => {
-    if (user && hasBeenVisible) {
-      checkCabinetStatus(user.uid, spirit.id).then(({ isOwned, isWishlist }) => {
-        setIsInCabinet(isOwned);
-        setIsWishlist(isWishlist);
-        setIsLoadingStatus(false);
-      });
-    } else if (!user) {
-      setIsLoadingStatus(false);
-    }
-  }, [user, spirit.id, hasBeenVisible]);
 
   const handleCabinetAction = async (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -81,13 +81,18 @@ function ExploreCardComponent({ spirit, onClick }: ExploreCardProps) {
       return;
     }
 
+    // Optimistic UI Update
+    const previousState = isInCabinet;
+    const previousWishlist = isWishlist;
+    setIsInCabinet(!isInCabinet);
+    if (!isInCabinet) setIsWishlist(false);
     setIsToggling(true);
+
     try {
-      if (isInCabinet) {
+      if (previousState) {
         // Remove from cabinet
         await removeFromCabinet(user.uid, spirit.id);
-        setIsInCabinet(false);
-        setSuccessMessage('🗑️ 술장에서 제거되었습니다.');
+        setSuccessMessage(isEn ? '🗑️ Removed from cabinet.' : '🗑️ 술장에서 제거되었습니다.');
       } else {
         // Add to cabinet
         await addToCabinet(user.uid, spirit.id, {
@@ -98,14 +103,16 @@ function ExploreCardComponent({ spirit, onClick }: ExploreCardProps) {
           category: spirit.category,
           abv: spirit.abv
         });
-        setIsInCabinet(true);
-        setIsWishlist(false); // If it was in wishlist, it's now owned
-        setSuccessMessage('🥃 술장에 저장되었습니다!');
+        setSuccessMessage(isEn ? '🥃 Saved to cabinet!' : '🥃 술장에 저장되었습니다!');
       }
+      onStatusChange?.(spirit.id, 'cabinet', !previousState);
       setShowSuccessToast(true);
     } catch (error: any) {
+      // Rollback on error
+      setIsInCabinet(previousState);
+      setIsWishlist(previousWishlist);
       console.error('Failed to update cabinet:', error);
-      setSuccessMessage(`❌ ${error.message || '작업 실패'}`);
+      setSuccessMessage(`❌ ${error.message || (isEn ? 'Action failed' : '작업 실패')}`);
       setShowSuccessToast(true);
     } finally {
       setIsToggling(false);
@@ -121,13 +128,18 @@ function ExploreCardComponent({ spirit, onClick }: ExploreCardProps) {
       return;
     }
 
+    // Optimistic UI Update
+    const previousState = isWishlist;
+    const previousCabinet = isInCabinet;
+    setIsWishlist(!isWishlist);
+    if (!isWishlist) setIsInCabinet(false);
     setIsToggling(true);
+
     try {
-      if (isWishlist) {
+      if (previousState) {
         // Remove from wishlist
         await removeFromCabinet(user.uid, spirit.id);
-        setIsWishlist(false);
-        setSuccessMessage('🗑️ 위시리스트에서 제거되었습니다.');
+        setSuccessMessage(isEn ? '🗑️ Removed from wishlist.' : '🗑️ 위시리스트에서 제거되었습니다.');
       } else {
         // Add to wishlist
         await addToCabinet(user.uid, spirit.id, {
@@ -138,14 +150,16 @@ function ExploreCardComponent({ spirit, onClick }: ExploreCardProps) {
           category: spirit.category,
           abv: spirit.abv
         });
-        setIsWishlist(true);
-        setIsInCabinet(false); // Can't be both
-        setSuccessMessage('🔖 위시리스트에 추가되었습니다!');
+        setSuccessMessage(isEn ? '🔖 Added to wishlist!' : '🔖 위시리스트에 추가되었습니다!');
       }
+      onStatusChange?.(spirit.id, 'wishlist', !previousState);
       setShowSuccessToast(true);
     } catch (error: any) {
+      // Rollback on error
+      setIsWishlist(previousState);
+      setIsInCabinet(previousCabinet);
       console.error('Failed to update wishlist:', error);
-      setSuccessMessage(`❌ ${error.message || '작업 실패'}`);
+      setSuccessMessage(`❌ ${error.message || (isEn ? 'Action failed' : '작업 실패')}`);
       setShowSuccessToast(true);
     } finally {
       setIsToggling(false);
@@ -167,8 +181,8 @@ function ExploreCardComponent({ spirit, onClick }: ExploreCardProps) {
     >
       <div className="shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-muted border border-border relative">
         <Image
-          src={spirit.imageUrl && spirit.imageUrl.trim() ? getOptimizedImageUrl(spirit.imageUrl, 160) : getCategoryFallbackImage(spirit.category)}
-          alt={spirit.name}
+          src={spirit.imageUrl && spirit.imageUrl.trim() ? getOptimizedImageUrl(spirit.imageUrl, 120, 60) : getCategoryFallbackImage(spirit.category)}
+          alt={displayName}
           fill
           className={`object-cover transition-transform duration-300 group-hover:scale-110 ${!spirit.imageUrl || !spirit.imageUrl.trim() ? 'opacity-50 grayscale' : 'opacity-100'}`}
           sizes="80px"
@@ -191,18 +205,18 @@ function ExploreCardComponent({ spirit, onClick }: ExploreCardProps) {
               }[spirit.category] || "🍾"
             }
           </span>
-          {spirit.name_en && isEn ? spirit.name_en : spirit.name}
+          {displayName}
         </h3>
 
         <div className="text-[10px] font-bold text-muted-foreground flex items-center gap-1.5 flex-wrap">
-          <span className="uppercase tracking-widest opacity-70">{spirit.subcategory || spirit.category}</span>
+          <span className="uppercase tracking-widest opacity-70">{displaySubCategory}</span>
           {spirit.abv > 0 && <span className="opacity-40">|</span>}
           {spirit.abv > 0 && <span className="opacity-70">{spirit.abv}%</span>}
         </div>
 
-        {spirit.distillery && (
+        {displayDistillery && (
           <p className="text-[10px] text-muted-foreground/60 mt-0.5 truncate">
-            {spirit.distillery}
+            {displayDistillery}
           </p>
         )}
       </div>

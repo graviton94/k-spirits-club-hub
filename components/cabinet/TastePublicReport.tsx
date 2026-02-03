@@ -5,6 +5,7 @@ import { Sparkles, ShoppingBag, ExternalLink, Download, Share2, ChevronLeft } fr
 import TasteRadar from './TasteRadar';
 import { UserTasteProfile } from '@/lib/db/schema';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 interface TastePublicReportProps {
     profile: UserTasteProfile;
@@ -12,6 +13,8 @@ interface TastePublicReportProps {
 }
 
 export default function TastePublicReport({ profile, isPublic = false }: TastePublicReportProps) {
+    const pathname = usePathname() || "";
+    const isEn = pathname.split('/')[1] === 'en';
     const analyzedAt = new Date(profile.analyzedAt);
 
     const getChartData = (stats: any) => [
@@ -33,12 +36,12 @@ export default function TastePublicReport({ profile, isPublic = false }: TastePu
         >
             {isPublic && (
                 <div className="flex items-center gap-4 mb-8">
-                    <Link href="/" className="p-2 bg-neutral-900 border border-neutral-800 rounded-xl text-neutral-400 hover:text-white transition-colors">
+                    <Link href={`/${isEn ? 'en' : 'ko'}`} className="p-2 bg-neutral-900 border border-neutral-800 rounded-xl text-neutral-400 hover:text-white transition-colors">
                         <ChevronLeft className="w-5 h-5" />
                     </Link>
                     <div>
-                        <h1 className="text-xl font-bold text-white">미각 DNA 리포트</h1>
-                        <p className="text-xs text-neutral-500">AI가 분석한 취향 결과입니다</p>
+                        <h1 className="text-xl font-bold text-white">{isEn ? 'Taste DNA Report' : '미각 DNA 리포트'}</h1>
+                        <p className="text-xs text-neutral-500">{isEn ? 'Analyzed by AI' : 'AI가 분석한 취향 결과입니다'}</p>
                     </div>
                 </div>
             )}
@@ -107,11 +110,23 @@ export default function TastePublicReport({ profile, isPublic = false }: TastePu
                                 </div>
 
                                 <Link
-                                    href={`/explore?q=${encodeURIComponent(profile.recommendation.name)}`}
-                                    className="w-full mt-2 bg-white text-black py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-neutral-200 transition-all active:scale-[0.98]"
+                                    href={`/${isEn ? 'en' : 'ko'}/explore?q=${encodeURIComponent(profile.recommendation.name)}`}
+                                    className="w-full mt-2 bg-white text-black py-4 rounded-xl font-black text-sm flex flex-col items-center justify-center gap-1 hover:bg-neutral-200 transition-all active:scale-[0.98] shadow-lg shadow-white/5"
                                 >
-                                    제품 상세 정보 확인하기 <ExternalLink className="w-3 h-3 opacity-60" />
+                                    <div className="flex items-center gap-2">
+                                        {isEn ? 'View Product Details' : '제품 상세 정보 확인하기'}
+                                        <ExternalLink className="w-4 h-4" />
+                                    </div>
+                                    <span className="text-[10px] text-neutral-500 font-bold uppercase opacity-80">
+                                        {isEn ? 'Under development' : '개발 중인 페이지입니다'}
+                                    </span>
                                 </Link>
+
+                                {profile.recommendation.reason && (
+                                    <p className="mt-4 text-xs text-neutral-400 leading-relaxed font-medium bg-black/20 p-3 rounded-lg border border-white/5">
+                                        {profile.recommendation.reason}
+                                    </p>
+                                )}
                             </div>
                         )}
                     </div>
@@ -121,15 +136,19 @@ export default function TastePublicReport({ profile, isPublic = false }: TastePu
             {isPublic && (
                 <div className="text-center space-y-6 pt-4">
                     <div className="flex flex-col items-center gap-2">
-                        <p className="text-neutral-400 text-sm font-medium">당신의 인생 술을 찾고 계신가요?</p>
-                        <h3 className="text-2xl font-black text-white tracking-tighter">K-Spirits에서 미각 DNA를 분석해보세요</h3>
+                        <p className="text-neutral-400 text-sm font-medium">
+                            {isEn ? 'Looking for your perfect spirit?' : '당신의 인생 술을 찾고 계신가요?'}
+                        </p>
+                        <h3 className="text-2xl font-black text-white tracking-tighter">
+                            {isEn ? 'Analyze your taste DNA at K-Spirits' : 'K-Spirits에서 미각 DNA를 분석해보세요'}
+                        </h3>
                     </div>
 
                     <Link
-                        href="/"
+                        href={`/${isEn ? 'en' : 'ko'}`}
                         className="inline-flex items-center gap-2 px-8 py-4 bg-pink-600 hover:bg-pink-500 text-white font-black rounded-2xl transition-all shadow-xl shadow-pink-600/20 active:scale-95"
                     >
-                        나도 분석하러 가기 <Sparkles className="w-5 h-5" />
+                        {isEn ? 'Analyze My Taste' : '나도 분석하러 가기'} <Sparkles className="w-5 h-5" />
                     </Link>
                 </div>
             )}
