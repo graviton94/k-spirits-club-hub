@@ -90,8 +90,8 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
     };
 
     const displayDescription = isEn
-        ? (spirit.description_en || spirit.metadata?.description_en || spirit.description_ko || spirit.metadata?.description_ko)
-        : (spirit.description_ko || spirit.metadata?.description_ko || spirit.description_en || spirit.metadata?.description_en);
+        ? (spirit.metadata?.description_en || spirit.description_en || spirit.metadata?.description_ko || spirit.description_ko)
+        : (spirit.metadata?.description_ko || spirit.description_ko || spirit.metadata?.description_en || spirit.description_en);
 
     const { user } = useAuth();
     const [isInCabinet, setIsInCabinet] = useState(false);
@@ -358,22 +358,21 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
             </div>
 
             {/* 3. Flavor Profile with Dynamic Colors */}
-            {((spirit.metadata as any)?.nose_tags || (spirit.metadata as any)?.palate_tags || (spirit.metadata as any)?.finish_tags) && (
+            {(spirit.nose_tags || spirit.palate_tags || spirit.finish_tags || (spirit.metadata as any)?.nose_tags) && (
                 <div className="mb-10 p-6 bg-secondary/30 rounded-3xl border border-dashed border-border">
                     <h2 className="text-xl font-black mb-6 flex items-center gap-2">
                         <span className="w-2 h-6 bg-amber-500 rounded-full"></span>
                         {t.flavor}
                     </h2>
-                    {/* ... flavor sections ... */}
                     <div className="space-y-6">
-                        {(spirit.metadata as any).nose_tags && (
-                            <FlavorSection title="NOSE" tags={(spirit.metadata as any).nose_tags} />
+                        {(spirit.nose_tags || (spirit.metadata as any)?.nose_tags) && (
+                            <FlavorSection title="NOSE" tags={spirit.nose_tags || (spirit.metadata as any).nose_tags} />
                         )}
-                        {(spirit.metadata as any).palate_tags && (
-                            <FlavorSection title="PALATE" tags={(spirit.metadata as any).palate_tags} />
+                        {(spirit.palate_tags || (spirit.metadata as any)?.palate_tags) && (
+                            <FlavorSection title="PALATE" tags={spirit.palate_tags || (spirit.metadata as any).palate_tags} />
                         )}
-                        {(spirit.metadata as any).finish_tags && (
-                            <FlavorSection title="FINISH" tags={(spirit.metadata as any).finish_tags} />
+                        {(spirit.finish_tags || (spirit.metadata as any)?.finish_tags) && (
+                            <FlavorSection title="FINISH" tags={spirit.finish_tags || (spirit.metadata as any).finish_tags} />
                         )}
                     </div>
                 </div>
@@ -388,7 +387,7 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
             </div>
 
             {/* AI Global Pairing Guide */}
-            {(spirit.pairing_guide_en || spirit.pairing_guide_ko || (spirit.metadata as any)?.pairing_guide_en) && (
+            {(spirit.metadata?.pairing_guide_en || spirit.metadata?.pairing_guide_ko || spirit.pairing_guide_en || spirit.pairing_guide_ko) && (
                 <div className="mb-10 p-px rounded-3xl bg-linear-to-br from-purple-500/30 via-pink-500/30 to-orange-500/30">
                     <div className="bg-card/95 backdrop-blur-xl p-6 rounded-3xl h-full">
                         <div className="flex items-center gap-2 mb-4">
@@ -399,8 +398,8 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                         </div>
                         <p className="text-base text-card-foreground leading-relaxed font-medium">
                             {isEn
-                                ? (spirit.pairing_guide_en || (spirit.metadata as any)?.pairing_guide_en)
-                                : (spirit.pairing_guide_ko || (spirit.metadata as any)?.pairing_guide_ko || spirit.pairing_guide_en || (spirit.metadata as any)?.pairing_guide_en)}
+                                ? (spirit.metadata?.pairing_guide_en || spirit.pairing_guide_en)
+                                : (spirit.metadata?.pairing_guide_ko || spirit.pairing_guide_ko || spirit.metadata?.pairing_guide_en || spirit.pairing_guide_en)}
                         </p>
                     </div>
                 </div>

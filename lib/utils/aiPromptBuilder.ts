@@ -11,6 +11,12 @@ export interface AnalysisInputItem {
     subcategory?: string;     // 선택 (원본에만 있을 수 있음)
     isWishlist?: boolean;     // 필수
 
+    // Spirit-level flavor DNA
+    nose_tags?: string[];
+    palate_tags?: string[];
+    finish_tags?: string[];
+    tasting_note?: string;
+
     // 조립된 리뷰 데이터
     userReview?: {
         ratingOverall: number;
@@ -22,6 +28,14 @@ export interface AnalysisInputItem {
         tagsF?: string[];
         comment?: string;
     } | null;
+
+    metadata?: {
+        tasting_note?: string;
+        nose_tags?: string[];
+        palate_tags?: string[];
+        finish_tags?: string[];
+        [key: string]: any;
+    };
 }
 
 /**
@@ -57,7 +71,18 @@ export function buildTasteAnalysisPrompt(items: AnalysisInputItem[]): string {
             entry.spec = specParts.join(', ');
         }
 
-        // (4) 리뷰 데이터 처리
+        // (4) Inherent Flavor DNA (System data)
+        const inherentTags = [
+            ...(item.nose_tags || item.metadata?.nose_tags || []),
+            ...(item.palate_tags || item.metadata?.palate_tags || []),
+            ...(item.finish_tags || item.metadata?.finish_tags || [])
+        ];
+        const inherentNote = item.tasting_note || item.metadata?.tasting_note;
+
+        if (inherentTags.length > 0) entry.inherentFlavor = inherentTags.join(', ');
+        if (inherentNote) entry.inherentNote = inherentNote;
+
+        // (5) 리뷰 데이터 처리
         if (item.userReview) {
             const r = item.userReview;
 

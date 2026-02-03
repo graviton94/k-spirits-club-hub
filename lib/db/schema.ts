@@ -58,10 +58,17 @@ export interface Spirit {
   abv: number;
   volume: number | null;
   category: string; // whisky, vodka, gin, rum, etc. (Legal/Wide classification)
-  description_ko: string | null;
-  description_en: string | null;
-  pairing_guide_ko: string | null;
-  pairing_guide_en: string | null;
+  // These are now legacy at root and moved to metadata
+  description_ko?: string | null;
+  description_en?: string | null;
+  pairing_guide_ko?: string | null;
+  pairing_guide_en?: string | null;
+
+  // New Root Flavor DNA (Moved from metadata for performance)
+  nose_tags?: string[];
+  palate_tags?: string[];
+  finish_tags?: string[];
+  tasting_note?: string;
   mainCategory: string | null; // Structured grouping (e.g. whisky for bourbon) from metadata
   subcategory: string | null; // single malt, blended, etc.
   country: string | null;
@@ -82,15 +89,16 @@ export interface Spirit {
 
   // Metadata (Enriched fields)
   metadata: {
-    name_en?: string;
+    // New Location for heavy content
+    description_ko?: string;
+    description_en?: string;
+    pairing_guide_ko?: string;
+    pairing_guide_en?: string;
+    enriched_at?: string;
+
+    // Original/Raw metadata
     raw_category?: string;
     importer?: string;
-    description_ko?: string;
-    description?: string; // Legacy field
-    nose_tags?: string[];
-    palate_tags?: string[];
-    finish_tags?: string[];
-    tasting_note?: string;
     [key: string]: any;
   };
 

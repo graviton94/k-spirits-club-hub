@@ -31,12 +31,24 @@ export interface Spirit {
   userReview?: UserReview;
   name_en?: string | null;
   description_en?: string | null;
+  description_ko?: string | null;
+
+  // Root Flavor DNA
+  nose_tags?: string[];
+  palate_tags?: string[];
+  finish_tags?: string[];
+  tasting_note?: string;
+
   metadata?: {
     tasting_note?: string;
+    description_ko?: string;
+    description_en?: string;
+    pairing_guide_ko?: string;
+    pairing_guide_en?: string;
     nose?: string;
     palate?: string;
     finish?: string;
-    pairing_guide_en?: string;
+    [key: string]: any;
   };
 }
 
@@ -255,21 +267,25 @@ function generateFlavorNodes(
   const keywordToSpirits = new Map<string, string[]>();
 
   spirits.forEach(spirit => {
-    if (!spirit.metadata) return;
+    const rootTags = [
+      ...(spirit.nose_tags || []),
+      ...(spirit.palate_tags || []),
+      ...(spirit.finish_tags || [])
+    ].join(', ');
 
-    const allText = [
+    const metadataText = spirit.metadata ? [
       spirit.metadata.tasting_note,
       spirit.metadata.nose,
       spirit.metadata.palate,
       spirit.metadata.finish,
-    ]
-      .filter(Boolean)
-      .join(', ');
+    ].filter(Boolean).join(', ') : '';
+
+    const allText = [spirit.tasting_note, rootTags, metadataText].filter(Boolean).join(', ');
 
     const keywords = allText
-      .split(',')
+      .split(/[,\s#]+/)
       .map(k => k.trim())
-      .filter(k => k.length > 0);
+      .filter(k => k.length > 0 && k !== '');
 
     keywords.forEach(keyword => {
       if (!keywordToSpirits.has(keyword)) {
@@ -391,50 +407,54 @@ function generateHierarchicalNodes(spirits: Spirit[]): HierarchicalNode[] {
       nodes[0].connections.push(productId);
 
       // Layer 3: Tag nodes for this product
-      if (spirit.metadata) {
-        const allText = [
-          spirit.metadata.tasting_note,
-          spirit.metadata.nose,
-          spirit.metadata.palate,
-          spirit.metadata.finish,
-        ]
-          .filter(Boolean)
-          .join(', ');
+      const rootTags = [
+        ...(spirit.nose_tags || []),
+        ...(spirit.palate_tags || []),
+        ...(spirit.finish_tags || [])
+      ].join(', ');
 
-        const tags = allText
-          .split(',')
-          .map(t => t.trim())
-          .filter(t => t.length > 0)
-          .slice(0, 3); // Limit to top 3 tags per product
+      const metadataText = spirit.metadata ? [
+        spirit.metadata.tasting_note,
+        spirit.metadata.nose,
+        spirit.metadata.palate,
+        spirit.metadata.finish,
+      ].filter(Boolean).join(', ') : '';
 
-        const tagRadius = 230;
-        const tagAngleSpread = sectorSize * 0.6; // Tags spread within 60% of sector
-        const tagAngleStep = tagAngleSpread / (tags.length + 1);
+      const allText = [spirit.tasting_note, rootTags, metadataText].filter(Boolean).join(', ');
 
-        tags.forEach((tag, tagIndex) => {
-          const tagAngle = angle - tagAngleSpread / 2 + tagAngleStep * (tagIndex + 1);
-          const tagId = `tag-${spirit.id}-${tagIndex}`;
+      const tags = allText
+        .split(/[,\s#]+/)
+        .map(t => t.trim())
+        .filter(t => t.length > 0)
+        .slice(0, 3); // Limit to top 3 tags per product
 
-          nodes.push({
-            id: tagId,
-            type: 'tag',
-            label: tag,
-            category: spirit.category,
-            position: {
-              x: Math.cos(tagAngle) * tagRadius,
-              y: Math.sin(tagAngle) * tagRadius,
-            },
-            connections: [productId],
-            size: 32,
-          });
+      const tagRadius = 230;
+      const tagAngleSpread = sectorSize * 0.6; // Tags spread within 60% of sector
+      const tagAngleStep = tagAngleSpread / (tags.length + 1);
 
-          // Connect product to this tag
-          const productNode = nodes.find(n => n.id === productId);
-          if (productNode) {
-            productNode.connections.push(tagId);
-          }
+      tags.forEach((tag, tagIndex) => {
+        const tagAngle = angle - tagAngleSpread / 2 + tagAngleStep * (tagIndex + 1);
+        const tagId = `tag-${spirit.id}-${tagIndex}`;
+
+        nodes.push({
+          id: tagId,
+          type: 'tag',
+          label: tag,
+          category: spirit.category,
+          position: {
+            x: Math.cos(tagAngle) * tagRadius,
+            y: Math.sin(tagAngle) * tagRadius,
+          },
+          connections: [productId],
+          size: 32,
         });
-      }
+
+        // Connect product to this tag
+        const productNode = nodes.find(n => n.id === productId);
+        if (productNode) {
+          productNode.connections.push(tagId);
+        }
+      });
     });
   });
 
@@ -448,21 +468,24 @@ function extractKeywords(spirits: Spirit[]): Map<string, number> {
   const keywordMap = new Map<string, number>();
 
   spirits.forEach(spirit => {
-    if (!spirit.metadata) return;
+    const rootTags = [
+      ...(spirit.nose_tags || []),
+      ...(spirit.palate_tags || []),
+      ...(spirit.finish_tags || [])
+    ].join(', ');
 
-    // Combine all metadata fields
-    const allText = [
+    const metadataText = spirit.metadata ? [
       spirit.metadata.tasting_note,
       spirit.metadata.nose,
       spirit.metadata.palate,
       spirit.metadata.finish,
-    ]
-      .filter(Boolean)
-      .join(', ');
+    ].filter(Boolean).join(', ') : '';
 
-    // Split by comma and trim
+    const allText = [spirit.tasting_note, rootTags, metadataText].filter(Boolean).join(', ');
+
+    // Split by comma, space, or hashtag
     const keywords = allText
-      .split(',')
+      .split(/[,\s#]+/)
       .map(k => k.trim())
       .filter(k => k.length > 0);
 

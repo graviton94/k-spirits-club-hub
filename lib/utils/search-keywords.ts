@@ -57,6 +57,10 @@ export function generateSpiritSearchKeywords(spirit: {
   subcategory?: string | null;
   region?: string | null;
   country?: string | null;
+  nose_tags?: string[];
+  palate_tags?: string[];
+  finish_tags?: string[];
+  tasting_note?: string;
   metadata?: {
     name_en?: string;
     nose_tags?: string[];
@@ -100,12 +104,22 @@ export function generateSpiritSearchKeywords(spirit: {
     }
   });
 
-  // 3. Flavor DNA (Tags) - Critical for SEO
+  // 3. Flavor DNA (Tags & Tasting Notes) - Critical for SEO
   const tags = [
-    ...(spirit.metadata?.nose_tags || []),
-    ...(spirit.metadata?.palate_tags || []),
-    ...(spirit.metadata?.finish_tags || [])
+    ...(spirit.nose_tags || spirit.metadata?.nose_tags || []),
+    ...(spirit.palate_tags || spirit.metadata?.palate_tags || []),
+    ...(spirit.finish_tags || spirit.metadata?.finish_tags || [])
   ];
+
+  // Include tasting note keywords if available (Root/Metadata)
+  const tastingNote = spirit.tasting_note || spirit.metadata?.tasting_note;
+  if (tastingNote) {
+    // Extract hashtags or common flavor words
+    tastingNote.split(/[,\s#]+/).forEach((word: string) => {
+      const clean = word.toLowerCase().trim();
+      if (clean.length >= 2) allKeywords.add(clean);
+    });
+  }
 
   tags.forEach(tag => {
     if (tag) {

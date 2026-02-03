@@ -29,6 +29,7 @@ export interface EnrichmentResult {
     // Stage 3: Pairing (From Stage 2 Tags)
     pairing_guide_en: string;
     pairing_guide_ko: string;
+    tasting_note: string;
 }
 
 export interface SpiritEnrichmentInput {
@@ -146,6 +147,15 @@ You must mentally follow this sequence before generating the output:
 - **pairing_guide_en**: 4-5 sentences of sophisticated, appetizing prose. Make the reader hungry.
 - **pairing_guide_ko**: A professional, elegant Korean translation. Use terms that evoke appetite and sophistication (e.g., "마리아주", "풍미의 조화", "입안을 감싸는").
 
+**[ASIAN SPIRIT TERMINOLOGY - STRICT RULES]**
+When describing Asian spirits in Korean, NEVER use "Rice Wine" or "Wine". Always use the specific cultural term followed by the broad category in parentheses if needed:
+- **Takju/Makgeolli** -> "탁주(막걸리)"
+- **Yakju/Cheongju** -> "약주" or "청주" (Not "Rice Wine")
+- **Soju** -> "소주" or "증류식 소주"
+- **Baijiu** -> "백주(고량주)"
+- **Sake** -> "사케(청주)"
+- **Fruit Wine** -> "과실주" (Not just "Wine")
+
 **[GLOBAL BAN LIST - STRICT ENFORCEMENT]**
 ❌ **Generic Terms**: "Steak", "Pasta", "Pizza" without specific details.
 ❌ **Lazy Tropes**: **Absolutely NO "Seared Scallops", "Carpaccio", "Yuzu Vinaigrette", "Moroccan Tagine", "Spring Rolls", or "Gỏi cuốn"** (These are currently overused).
@@ -194,7 +204,8 @@ Apply a cultural filter to your selection from Step 2:
   "palate_tags": ["string"],
   "finish_tags": ["string"],
   "pairing_guide_en": "string",
-  "pairing_guide_ko": "string"
+  "pairing_guide_ko": "string",
+  "tasting_note": "string (One-line hashtag summary, e.g., #Oak #Vanilla)"
 }
 `;
 

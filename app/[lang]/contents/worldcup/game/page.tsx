@@ -118,9 +118,9 @@ export default function WorldCupGamePage() {
                         country: data.country || null,
                         region: data.region || null,
                         tags: [
-                            ...(data.metadata?.nose_tags || []),
-                            ...(data.metadata?.palate_tags || []),
-                            ...(data.metadata?.finish_tags || []),
+                            ...(data.nose_tags || data.metadata?.nose_tags || []),
+                            ...(data.palate_tags || data.metadata?.palate_tags || []),
+                            ...(data.finish_tags || data.metadata?.finish_tags || []),
                             ...(data.tags || [])
                         ]
                             .filter((v, i, a) => v && a.indexOf(v) === i)

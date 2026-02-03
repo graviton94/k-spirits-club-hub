@@ -161,10 +161,26 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
     await handleAdd(false, review); // Add to cabinet with review
   };
 
-  // Extract first 2 tags from tasting_note
-  const tastingTags = spirit.metadata?.tasting_note
-    ? spirit.metadata.tasting_note.split(',').slice(0, 2).map(tag => tag.trim())
-    : [];
+  // Extract first 2-3 tags from tasting_note or nose_tags
+  const tastingTags = (() => {
+    // 1. Try Root Tasting Note (New)
+    if (spirit.tasting_note) {
+      return spirit.tasting_note
+        .split(' ')
+        .filter(t => t.startsWith('#'))
+        .map(t => t.substring(1))
+        .slice(0, 3);
+    }
+    // 2. Try Metadata Tasting Note (Legacy)
+    if (spirit.metadata?.tasting_note) {
+      return spirit.metadata.tasting_note.split(',').slice(0, 2).map((tag: string) => tag.trim());
+    }
+    // 3. Fallback to Root Nose Tags (New Performance Path)
+    if (spirit.nose_tags && spirit.nose_tags.length > 0) {
+      return spirit.nose_tags.slice(0, 3);
+    }
+    return [];
+  })();
 
   const content = (
     <motion.div
@@ -221,7 +237,7 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
 
         {tastingTags.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mt-2">
-            {tastingTags.map((tag, index) => {
+            {tastingTags.map((tag: string, index: number) => {
               const styles = getTagStyle(tag);
               return (
                 <span

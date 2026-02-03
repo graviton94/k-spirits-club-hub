@@ -147,39 +147,31 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
       }
 
       // Step 2: Update spirit with enriched data
-      const updateData: SpiritUpdateData = {
+      // Step 2: Update spirit with enriched data
+      const updateData: any = {
         isPublished: true,
         isReviewed: true,
         reviewedBy: 'ADMIN',
         reviewedAt: new Date(),
         name_en: enrichedData?.name_en || nameEn || null,
-        // AI Corrected Metadata
         abv: enrichedData?.abv ?? abv ?? spirit.abv,
         distillery: enrichedData?.distillery ?? distillery ?? spirit.distillery,
         region: enrichedData?.region ?? region ?? spirit.region,
-        country: enrichedData?.country ?? country ?? spirit.country
-      };
+        country: enrichedData?.country ?? country ?? spirit.country,
 
-      // Add description_ko and description_en if generated
-      if (enrichedData?.description_ko) {
-        updateData.description_ko = enrichedData.description_ko;
-      }
-      if (enrichedData?.description_en) {
-        updateData.description_en = enrichedData.description_en;
-      }
+        nose_tags: enrichedData?.nose_tags || spirit.nose_tags || [],
+        palate_tags: enrichedData?.palate_tags || spirit.palate_tags || [],
+        finish_tags: enrichedData?.finish_tags || spirit.finish_tags || [],
 
-      // Add pairing guides and tags to metadata if generated
-      if (enrichedData?.pairing_guide_en || enrichedData?.pairing_guide_ko || enrichedData?.nose_tags) {
-        updateData.metadata = {
+        metadata: {
           ...spirit.metadata,
-          pairing_guide_en: enrichedData?.pairing_guide_en || spirit.metadata?.pairing_guide_en,
-          pairing_guide_ko: enrichedData?.pairing_guide_ko || spirit.metadata?.pairing_guide_ko,
           description_ko: enrichedData?.description_ko || spirit.metadata?.description_ko,
-          nose_tags: enrichedData?.nose_tags || spirit.metadata?.nose_tags,
-          palate_tags: enrichedData?.palate_tags || spirit.metadata?.palate_tags,
-          finish_tags: enrichedData?.finish_tags || spirit.metadata?.finish_tags
-        };
-      }
+          description_en: enrichedData?.description_en || spirit.metadata?.description_en,
+          pairing_guide_ko: enrichedData?.pairing_guide_ko || spirit.metadata?.pairing_guide_ko,
+          pairing_guide_en: enrichedData?.pairing_guide_en || spirit.metadata?.pairing_guide_en,
+          enriched_at: new Date().toISOString()
+        }
+      };
 
       await db.updateSpirit(spirit.id, updateData);
       console.log('[Publish] ✓ Spirit published successfully');

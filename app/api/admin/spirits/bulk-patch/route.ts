@@ -43,21 +43,24 @@ export async function PATCH(req: NextRequest) {
                         currentUpdates = {
                             ...currentUpdates,
                             name_en: enrichmentData.name_en,
-                            description_ko: enrichmentData.description_ko,
-                            description_en: enrichmentData.description_en,
-                            pairing_guide_ko: enrichmentData.pairing_guide_ko,
-                            pairing_guide_en: enrichmentData.pairing_guide_en,
-                            // Apply AI-Corrected Metadata (Prioritize AI data even if falsy)
                             distillery: enrichmentData.distillery ?? spirit.distillery,
                             region: enrichmentData.region ?? spirit.region,
                             country: enrichmentData.country ?? spirit.country,
                             abv: enrichmentData.abv ?? spirit.abv,
+
+                            // Root Tags
+                            nose_tags: enrichmentData.nose_tags || spirit.nose_tags || [],
+                            palate_tags: enrichmentData.palate_tags || spirit.palate_tags || [],
+                            finish_tags: enrichmentData.finish_tags || spirit.finish_tags || [],
+
                             metadata: {
                                 ...spirit.metadata,
                                 ...currentUpdates.metadata,
-                                nose_tags: enrichmentData.nose_tags ?? spirit.metadata?.nose_tags,
-                                palate_tags: enrichmentData.palate_tags ?? spirit.metadata?.palate_tags,
-                                finish_tags: enrichmentData.finish_tags ?? spirit.metadata?.finish_tags
+                                description_ko: enrichmentData.description_ko || spirit.metadata?.description_ko,
+                                description_en: enrichmentData.description_en || spirit.metadata?.description_en,
+                                pairing_guide_ko: enrichmentData.pairing_guide_ko || spirit.metadata?.pairing_guide_ko,
+                                pairing_guide_en: enrichmentData.pairing_guide_en || spirit.metadata?.pairing_guide_en,
+                                enriched_at: new Date().toISOString()
                             }
                         };
                         enrichedCount++;

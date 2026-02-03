@@ -309,12 +309,12 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                             )}
                         </div>
 
-                        {/* Description (EN) */}
-                        {(localSpirit as any).description_en && (
+                        {/* Description */}
+                        {(isEn ? localSpirit.metadata?.description_en : localSpirit.metadata?.description_ko) && (
                             <div className="mb-2">
                                 <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">{t.description}</h3>
                                 <p className="text-sm text-gray-200 leading-relaxed font-light">
-                                    {(localSpirit as any).description_en}
+                                    {isEn ? localSpirit.metadata?.description_en : localSpirit.metadata?.description_ko}
                                 </p>
                             </div>
                         )}
@@ -343,14 +343,14 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
 
                             <div className="space-y-5">
                                 {/* Nose */}
-                                {((localSpirit.userReview?.tagsN?.length || 0) > 0 || (localSpirit.metadata as any)?.nose_tags) && (
+                                {(localSpirit.userReview?.tagsN?.length || localSpirit.nose_tags?.length) && (
                                     <div>
                                         <div className="flex items-center gap-2 mb-2">
                                             <span className="text-xs font-bold text-white">👃 Aroma</span>
                                             <div className="h-px flex-1 bg-white/20"></div>
                                         </div>
                                         <div className="flex flex-wrap gap-1.5">
-                                            {(localSpirit.userReview?.tagsN || (localSpirit.metadata as any)?.nose_tags || []).map((tag: any, i: number) => {
+                                            {(localSpirit.userReview?.tagsN || localSpirit.nose_tags || []).map((tag: string, i: number) => {
                                                 const color = getTagColor(tag);
                                                 return (
                                                     <span key={i} className={`inline-block text-[10px] px-2.5 py-1 rounded-md border font-bold ${color.bg} ${color.text} ${color.border}`}>
@@ -363,14 +363,14 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                 )}
 
                                 {/* Palate */}
-                                {((localSpirit.userReview?.tagsP?.length || 0) > 0 || (localSpirit.metadata as any)?.palate_tags) && (
+                                {(localSpirit.userReview?.tagsP?.length || localSpirit.palate_tags?.length) && (
                                     <div>
                                         <div className="flex items-center gap-2 mb-2">
                                             <span className="text-xs font-bold text-white">👅 Palate</span>
                                             <div className="h-px flex-1 bg-white/20"></div>
                                         </div>
                                         <div className="flex flex-wrap gap-1.5">
-                                            {(localSpirit.userReview?.tagsP || (localSpirit.metadata as any)?.palate_tags || []).map((tag: any, i: number) => {
+                                            {(localSpirit.userReview?.tagsP || localSpirit.palate_tags || []).map((tag: string, i: number) => {
                                                 const color = getTagColor(tag);
                                                 return (
                                                     <span key={i} className={`inline-block text-[10px] px-2.5 py-1 rounded-md border font-bold ${color.bg} ${color.text} ${color.border}`}>
@@ -383,14 +383,14 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                 )}
 
                                 {/* Finish */}
-                                {((localSpirit.userReview?.tagsF?.length || 0) > 0 || (localSpirit.metadata as any)?.finish_tags) && (
+                                {(localSpirit.userReview?.tagsF?.length || localSpirit.finish_tags?.length) && (
                                     <div>
                                         <div className="flex items-center gap-2 mb-2">
                                             <span className="text-xs font-bold text-white">🏁 Finish</span>
                                             <div className="h-px flex-1 bg-white/20"></div>
                                         </div>
                                         <div className="flex flex-wrap gap-1.5">
-                                            {(localSpirit.userReview?.tagsF || (localSpirit.metadata as any)?.finish_tags || []).map((tag: any, i: number) => {
+                                            {(localSpirit.userReview?.tagsF || localSpirit.finish_tags || []).map((tag: string, i: number) => {
                                                 const color = getTagColor(tag);
                                                 return (
                                                     <span key={i} className={`inline-block text-[10px] px-2.5 py-1 rounded-md border font-bold ${color.bg} ${color.text} ${color.border}`}>
@@ -412,7 +412,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                 <div className="h-24 w-full bg-gray-800 rounded-2xl animate-pulse" />
                             </div>
                         ) : (
-                            ((isEn ? localSpirit.metadata?.pairing_guide_en : (localSpirit.metadata as any)?.pairing_guide_ko) || localSpirit.metadata?.pairing_guide_en) && (
+                            ((isEn ? localSpirit.metadata?.pairing_guide_en : localSpirit.metadata?.pairing_guide_ko) || localSpirit.metadata?.pairing_guide_en) && (
                                 <div className="mt-6">
                                     <div className="flex items-center gap-2 mb-3">
                                         <span className="text-[10px] font-black text-transparent bg-clip-text bg-linear-to-r from-purple-400 to-pink-400 uppercase tracking-widest flex items-center gap-1">
@@ -426,7 +426,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                             <p className="text-sm text-gray-200 leading-relaxed wrap-break-word font-medium">
                                                 {isEn
                                                     ? localSpirit.metadata?.pairing_guide_en
-                                                    : ((localSpirit.metadata as any)?.pairing_guide_ko || localSpirit.metadata?.pairing_guide_en)}
+                                                    : (localSpirit.metadata?.pairing_guide_ko || localSpirit.metadata?.pairing_guide_en)}
                                             </p>
                                         </div>
                                     </div>
