@@ -112,6 +112,7 @@ def fetch_category_data(category_name: str, category_code: str):
                 results.append({
                     "id": f"mfds-{report_no}",
                     "name": name_ko,
+                    "name_en": name_en,
                     "distillery": distillery,
                     "bottler": None,
                     "abv": 0,
@@ -126,8 +127,18 @@ def fetch_category_data(category_name: str, category_code: str):
                     "reviewedAt": None,
                     "createdAt": date_created,
                     "updatedAt": datetime.now().isoformat(),
+
+                    # New Schema: Tags at root
+                    "nose_tags": [],
+                    "palate_tags": [],
+                    "finish_tags": [],
+                    "tasting_note": "",
+
                     "metadata": {
-                        "name_en": name_en,
+                        "description_ko": None,
+                        "description_en": None,
+                        "pairing_guide_ko": None,
+                        "pairing_guide_en": None,
                         "raw_category": row.get('itmNm') or row.get('rpsntItmNm'),
                         "importer": importer
                     }

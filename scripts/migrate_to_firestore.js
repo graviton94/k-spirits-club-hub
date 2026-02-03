@@ -124,19 +124,47 @@ async function migrate() {
         // Use the new nested path
         const docRef = db.collection(collectionPath).doc(spirit.id);
 
-        // Convert Dates
+        // Convert Dates & Enforce Schema
         const prepareData = {
             ...spirit,
             createdAt: spirit.createdAt ? new Date(spirit.createdAt) : new Date(),
             updatedAt: spirit.updatedAt ? new Date(spirit.updatedAt) : new Date(),
             reviewedAt: spirit.reviewedAt ? new Date(spirit.reviewedAt) : null,
+
+            // Strictly at ROOT
             name_en: spirit.name_en || (spirit.metadata && spirit.metadata.name_en) || null,
-            description_en: spirit.description_en || (spirit.metadata && spirit.metadata.description_en) || null,
-            metadata: spirit.metadata || {}
+            nose_tags: spirit.nose_tags || (spirit.metadata && spirit.metadata.nose_tags) || [],
+            palate_tags: spirit.palate_tags || (spirit.metadata && spirit.metadata.palate_tags) || [],
+            finish_tags: spirit.finish_tags || (spirit.metadata && spirit.metadata.finish_tags) || [],
+            tasting_note: spirit.tasting_note || (spirit.metadata && spirit.metadata.tasting_note) || "",
+
+            // Strictly in METADATA
+            metadata: {
+                ...(spirit.metadata || {}),
+                description_ko: spirit.metadata?.description_ko || spirit.description_ko || spirit.description || null,
+                description_en: spirit.metadata?.description_en || spirit.description_en || null,
+                pairing_guide_ko: spirit.metadata?.pairing_guide_ko || spirit.pairing_guide_ko || null,
+                pairing_guide_en: spirit.metadata?.pairing_guide_en || spirit.pairing_guide_en || null,
+            }
         };
+
+        // Remove Legacy Root Fields
+        delete prepareData.description;
+        delete prepareData.description_ko;
+        delete prepareData.description_en;
+        delete prepareData.pairing_guide_ko;
+        delete prepareData.pairing_guide_en;
+
+        // Cleanup Metadata Redundancy
+        delete prepareData.metadata.nose_tags;
+        delete prepareData.metadata.palate_tags;
+        delete prepareData.metadata.finish_tags;
+        delete prepareData.metadata.tasting_note;
+        delete prepareData.metadata.name_en;
 
         // Remove undefined
         Object.keys(prepareData).forEach(key => prepareData[key] === undefined && delete prepareData[key]);
+        Object.keys(prepareData.metadata).forEach(key => prepareData.metadata[key] === undefined && delete prepareData.metadata[key]);
 
         batch.set(docRef, prepareData);
         currentBatchIds.push(spirit.id);

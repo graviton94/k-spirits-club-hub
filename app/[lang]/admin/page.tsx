@@ -319,14 +319,14 @@ export default function AdminDashboard() {
       category: spirit.category || '', subcategory: spirit.subcategory || '',
       country: spirit.country || '', region: spirit.region || '', distillery: spirit.distillery || '', bottler: spirit.bottler || '',
       volume: spirit.volume || 700,
-      tasting_note: spirit.metadata?.tasting_note || '',
-      description_ko: spirit.description_ko || spirit.metadata?.description_ko || spirit.metadata?.description || '',
-      description_en: spirit.description_en || '',
-      pairing_guide_ko: spirit.pairing_guide_ko || (spirit.metadata as any)?.pairing_guide_ko || '',
-      pairing_guide_en: spirit.pairing_guide_en || (spirit.metadata as any)?.pairing_guide_en || '',
-      nose_tags: (spirit.metadata?.nose_tags || []).join(', '),
-      palate_tags: (spirit.metadata?.palate_tags || []).join(', '),
-      finish_tags: (spirit.metadata?.finish_tags || []).join(', ')
+      tasting_note: spirit.tasting_note || spirit.metadata?.tasting_note || '',
+      description_ko: spirit.metadata?.description_ko || '',
+      description_en: spirit.metadata?.description_en || '',
+      pairing_guide_ko: spirit.metadata?.pairing_guide_ko || '',
+      pairing_guide_en: spirit.metadata?.pairing_guide_en || '',
+      nose_tags: (spirit.nose_tags || []).join(', '),
+      palate_tags: (spirit.palate_tags || []).join(', '),
+      finish_tags: (spirit.finish_tags || []).join(', ')
     });
   };
 
@@ -347,15 +347,15 @@ export default function AdminDashboard() {
         bottler: editForm.bottler,
         volume: Number(editForm.volume) || 700,
         name_en: editForm.name_en,
-        description_ko: editForm.description_ko,
-        description_en: editForm.description_en,
-        pairing_guide_ko: editForm.pairing_guide_ko,
-        pairing_guide_en: editForm.pairing_guide_en,
+        tasting_note: editForm.tasting_note,
+        nose_tags: editForm.nose_tags.split(',').filter(Boolean).map(t => t.trim()),
+        palate_tags: editForm.palate_tags.split(',').filter(Boolean).map(t => t.trim()),
+        finish_tags: editForm.finish_tags.split(',').filter(Boolean).map(t => t.trim()),
         metadata: {
-          tasting_note: editForm.tasting_note,
-          nose_tags: editForm.nose_tags.split(',').filter(Boolean).map(t => t.trim()),
-          palate_tags: editForm.palate_tags.split(',').filter(Boolean).map(t => t.trim()),
-          finish_tags: editForm.finish_tags.split(',').filter(Boolean).map(t => t.trim())
+          description_ko: editForm.description_ko,
+          description_en: editForm.description_en,
+          pairing_guide_ko: editForm.pairing_guide_ko,
+          pairing_guide_en: editForm.pairing_guide_en,
         },
         updatedAt: new Date().toISOString()
       };
@@ -716,8 +716,8 @@ export default function AdminDashboard() {
                         </td>
                         <td className="p-4">
                           <div className="max-w-[240px] flex flex-wrap gap-1">
-                            {(spirit.metadata?.nose_tags || []).slice(0, 3).map(t => <span key={t} className="text-[9px] bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-gray-500 dark:text-gray-400">{t}</span>)}
-                            {(spirit.metadata?.nose_tags?.length || 0) > 3 && <span className="text-[9px] text-gray-400">...</span>}
+                            {(spirit.nose_tags || []).slice(0, 3).map(t => <span key={t} className="text-[9px] bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-gray-500 dark:text-gray-400">{t}</span>)}
+                            {(spirit.nose_tags?.length || 0) > 3 && <span className="text-[9px] text-gray-400">...</span>}
                           </div>
                         </td>
                         <td className="p-4">

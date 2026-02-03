@@ -74,19 +74,13 @@ export async function GET(request: NextRequest) {
     const searchIndex: SpiritSearchIndex[] = filteredResults.map(s => ({
       i: s.id,
       n: s.name || '이름 없음',
-      en: s.name_en || s.metadata?.name_en || null,
+      en: s.name_en || null,
       c: s.category || '기타',
-      mc: s.mainCategory || null,
       sc: s.subcategory || null,
       t: s.thumbnailUrl || s.imageUrl || null,
       a: s.abv || 0,
       d: s.distillery || null,
-      cre: s.createdAt ? (typeof s.createdAt === 'string' ? s.createdAt : s.createdAt.toISOString()) : null,
-      m: s.metadata ? {
-        tasting_note: s.metadata.tasting_note
-          ? s.metadata.tasting_note.split(',').slice(0, 2).join(',')
-          : null
-      } : {}
+      tn: s.tasting_note || null, // Strictly use root tasting_note
     }));
 
     const indexSize = JSON.stringify(searchIndex).length;

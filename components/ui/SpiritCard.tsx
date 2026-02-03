@@ -161,21 +161,16 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
     await handleAdd(false, review); // Add to cabinet with review
   };
 
-  // Extract first 2-3 tags from tasting_note or nose_tags
+  // Extract first 2-3 tags (Strict Schema)
   const tastingTags = (() => {
-    // 1. Try Root Tasting Note (New)
+    // 1. Try Root Tasting Note (New hashtag-style)
     if (spirit.tasting_note) {
       return spirit.tasting_note
-        .split(' ')
-        .filter(t => t.startsWith('#'))
-        .map(t => t.substring(1))
+        .split(/[,\s#]+/)
+        .filter(t => t.length > 0 && !t.startsWith('#')) // Handle both with/without #
         .slice(0, 3);
     }
-    // 2. Try Metadata Tasting Note (Legacy)
-    if (spirit.metadata?.tasting_note) {
-      return spirit.metadata.tasting_note.split(',').slice(0, 2).map((tag: string) => tag.trim());
-    }
-    // 3. Fallback to Root Nose Tags (New Performance Path)
+    // 2. Strict Fallback to Root Nose Tags
     if (spirit.nose_tags && spirit.nose_tags.length > 0) {
       return spirit.nose_tags.slice(0, 3);
     }
@@ -216,7 +211,7 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
                 }[spirit.category] || "🍾"
               }
             </span>
-            {isEn ? (spirit.name_en || spirit.metadata?.name_en || spirit.name) : spirit.name}
+            {isEn ? (spirit.metadata?.name_en || spirit.name_en || spirit.name) : spirit.name}
           </h3>
 
           <p className="text-xs font-medium text-muted-foreground flex items-center gap-1">

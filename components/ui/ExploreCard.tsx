@@ -166,10 +166,16 @@ function ExploreCardComponent({
     }
   };
 
-  // Extract first 2 tags from tasting_note
-  const tastingTags = spirit.metadata?.tasting_note
-    ? spirit.metadata.tasting_note.split(',').slice(0, 2).map(tag => tag.trim())
-    : [];
+  // Extract first 2 tags (Strict Schema)
+  const tastingTags = (() => {
+    if (spirit.tasting_note) {
+      return spirit.tasting_note.split(/[,\s#]+/).filter(Boolean).slice(0, 2);
+    }
+    if (spirit.nose_tags && spirit.nose_tags.length > 0) {
+      return spirit.nose_tags.slice(0, 2);
+    }
+    return [];
+  })();
 
   const content = (
     <motion.div

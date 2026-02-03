@@ -79,7 +79,7 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
     const isEn = pathname?.startsWith('/en');
     const t = isEn ? UI_TEXT.en : UI_TEXT.ko;
 
-    // Helpers for localized display
+    // Helpers for localized display (Strict Schema)
     const displayName = isEn ? (spirit.metadata?.name_en || spirit.name_en || spirit.name) : spirit.name;
     const displayDistillery = isEn ? (spirit.metadata?.distillery_en || spirit.distillery) : spirit.distillery;
 
@@ -90,8 +90,8 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
     };
 
     const displayDescription = isEn
-        ? (spirit.metadata?.description_en || spirit.description_en || spirit.metadata?.description_ko || spirit.description_ko)
-        : (spirit.metadata?.description_ko || spirit.description_ko || spirit.metadata?.description_en || spirit.description_en);
+        ? (spirit.metadata?.description_en || spirit.metadata?.description_ko)
+        : (spirit.metadata?.description_ko || spirit.metadata?.description_en);
 
     const { user } = useAuth();
     const [isInCabinet, setIsInCabinet] = useState(false);
@@ -274,18 +274,10 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                     <h1 className="text-2xl sm:text-4xl font-black mb-1 leading-tight text-foreground uppercase tracking-tight">
                         {displayName}
                     </h1>
-                    {isEn ? (
-                        spirit.name_en && spirit.name !== spirit.name_en && (
-                            <p className="text-lg text-muted-foreground font-medium mb-3 italic">
-                                {spirit.name}
-                            </p>
-                        )
-                    ) : (
-                        spirit.metadata?.name_en && (
-                            <p className="text-lg text-muted-foreground font-medium mb-3 italic">
-                                {spirit.metadata.name_en}
-                            </p>
-                        )
+                    {spirit.metadata?.name_en && (
+                        <p className="text-lg text-muted-foreground font-medium mb-3 italic">
+                            {spirit.metadata.name_en}
+                        </p>
                     )}
                     {displayDescription && (
                         <p className="text-sm text-foreground/80 leading-relaxed max-w-xl mb-4 line-clamp-6">
@@ -365,14 +357,14 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                         {t.flavor}
                     </h2>
                     <div className="space-y-6">
-                        {(spirit.nose_tags || (spirit.metadata as any)?.nose_tags) && (
-                            <FlavorSection title="NOSE" tags={spirit.nose_tags || (spirit.metadata as any).nose_tags} />
+                        {spirit.nose_tags && spirit.nose_tags.length > 0 && (
+                            <FlavorSection title="NOSE" tags={spirit.nose_tags} />
                         )}
-                        {(spirit.palate_tags || (spirit.metadata as any)?.palate_tags) && (
-                            <FlavorSection title="PALATE" tags={spirit.palate_tags || (spirit.metadata as any).palate_tags} />
+                        {spirit.palate_tags && spirit.palate_tags.length > 0 && (
+                            <FlavorSection title="PALATE" tags={spirit.palate_tags} />
                         )}
-                        {(spirit.finish_tags || (spirit.metadata as any)?.finish_tags) && (
-                            <FlavorSection title="FINISH" tags={spirit.finish_tags || (spirit.metadata as any).finish_tags} />
+                        {spirit.finish_tags && spirit.finish_tags.length > 0 && (
+                            <FlavorSection title="FINISH" tags={spirit.finish_tags} />
                         )}
                     </div>
                 </div>
@@ -387,7 +379,7 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
             </div>
 
             {/* AI Global Pairing Guide */}
-            {(spirit.metadata?.pairing_guide_en || spirit.metadata?.pairing_guide_ko || spirit.pairing_guide_en || spirit.pairing_guide_ko) && (
+            {(spirit.metadata?.pairing_guide_en || spirit.metadata?.pairing_guide_ko) && (
                 <div className="mb-10 p-px rounded-3xl bg-linear-to-br from-purple-500/30 via-pink-500/30 to-orange-500/30">
                     <div className="bg-card/95 backdrop-blur-xl p-6 rounded-3xl h-full">
                         <div className="flex items-center gap-2 mb-4">
@@ -398,8 +390,8 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                         </div>
                         <p className="text-base text-card-foreground leading-relaxed font-medium">
                             {isEn
-                                ? (spirit.metadata?.pairing_guide_en || spirit.pairing_guide_en)
-                                : (spirit.metadata?.pairing_guide_ko || spirit.pairing_guide_ko || spirit.metadata?.pairing_guide_en || spirit.pairing_guide_en)}
+                                ? spirit.metadata.pairing_guide_en
+                                : (spirit.metadata.pairing_guide_ko || spirit.metadata.pairing_guide_en)}
                         </p>
                     </div>
                 </div>

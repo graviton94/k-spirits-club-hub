@@ -107,7 +107,7 @@ export async function generateMetadata({
   }
 
   const koName = spirit.name;
-  const enName = spirit.name_en || spirit.metadata?.name_en;
+  const enName = spirit.metadata?.name_en || spirit.name_en;
 
   // Title based on language
   let title = '';
@@ -126,8 +126,9 @@ export async function generateMetadata({
 
   const baseDescription = descriptionParts.join(' · ');
 
-  // Localized summary
-  const spiritDesc = (lang === 'en' ? spirit.description_en : null) || spirit.metadata?.description;
+  // Localized summary (Strict Schema)
+  const isEn = lang === 'en';
+  const spiritDesc = isEn ? spirit.metadata?.description_en : spirit.metadata?.description_ko;
   const extendedDescription = spiritDesc
     ? `${baseDescription} - ${truncateDescription(spiritDesc, DESCRIPTION_MAX_LENGTH)}`
     : baseDescription;
@@ -204,7 +205,7 @@ export default async function SpiritDetailPage({
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: spirit.name || "Unknown Spirit",
-    description: spirit.metadata?.description || `${spirit.name} - ${spirit.category} 상세 정보 및 리뷰`,
+    description: spirit.metadata?.description_ko || spirit.metadata?.description_en || `${spirit.name} - ${spirit.category} 상세 정보 및 리뷰`,
     // 이미지가 없으면 기본 로고라도 배열로 넘김 (에러 방지)
     image: spirit.imageUrl ? [spirit.imageUrl] : ["https://kspiritsclub.com/logo.png"],
     brand: {

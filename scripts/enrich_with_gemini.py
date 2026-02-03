@@ -165,7 +165,11 @@ def enrich_batch(batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     "distillery_refined": "공식 제조소 명칭",
     "nose_tags": ["#태그1"],
     "palate_tags": ["#태그2"],
-    "finish_tags": ["#태그3"]
+    "finish_tags": ["#태그3"],
+    "description_ko": "제품의 역사, 특징, 맛의 상세한 설명 (한국어)",
+    "description_en": "Detailed description in English",
+    "pairing_guide_ko": "어울리는 안주 및 페어링 가이드 (한국어)",
+    "pairing_guide_en": "Food pairing guide in English"
   }}
 ]
 """
@@ -198,20 +202,25 @@ def enrich_batch(batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
                     if res.get('region'): item['region'] = res['region']
                     if res.get('subcategory'): item['subcategory'] = res['subcategory']
                     if res.get('distillery_refined'): item['distillery'] = res['distillery_refined']
+                    if res.get('name_en'): item['name_en'] = res['name_en']
+                    
+                    # New Schema: Tags at ROOT
+                    item['nose_tags'] = res.get('nose_tags', [])
+                    item['palate_tags'] = res.get('palate_tags', [])
+                    item['finish_tags'] = res.get('finish_tags', [])
+                    
+                    all_tags = (item.get('nose_tags') or []) + (item.get('palate_tags') or []) + (item.get('finish_tags') or [])
+                    if all_tags:
+                         item['tasting_note'] = ', '.join(all_tags)
                     
                     if 'metadata' not in item: item['metadata'] = {}
                     
-                    # 해시태그 및 설명 저장
-                    item['metadata']['nose_tags'] = res.get('nose_tags', [])
-                    item['metadata']['palate_tags'] = res.get('palate_tags', [])
-                    item['metadata']['finish_tags'] = res.get('finish_tags', [])
-                    # item['metadata']['description'] = res.get('description', '') # Removed as per user request
+                    # New Schema: Localized Descriptions/Pairings in METADATA
+                    item['metadata']['description_ko'] = res.get('description_ko') or item['metadata'].get('description_ko')
+                    item['metadata']['description_en'] = res.get('description_en') or item['metadata'].get('description_en')
+                    item['metadata']['pairing_guide_ko'] = res.get('pairing_guide_ko') or item['metadata'].get('pairing_guide_ko')
+                    item['metadata']['pairing_guide_en'] = res.get('pairing_guide_en') or item['metadata'].get('pairing_guide_en')
                     
-                    # 태그를 합쳐서 tasting_note 생성 (간단 버전)
-                    all_tags = res.get('nose_tags', []) + res.get('palate_tags', []) + res.get('finish_tags', [])
-                    if all_tags:
-                         item['metadata']['tasting_note'] = ', '.join(all_tags)
-
                     item['isReviewed'] = True
                     item['status'] = 'ENRICHED' # 상태 업데이트
                     item['updatedAt'] = datetime.now().isoformat()

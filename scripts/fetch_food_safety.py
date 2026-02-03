@@ -141,6 +141,7 @@ def fetch_spirits_by_type(spirit_type: str) -> List[Dict[str, Any]]:
                 mapped_item = {
                     "id": f"fsk-{row.get('PRDLST_REPORT_NO', 'unknown')}", # 품목보고번호를 ID로 활용
                     "name": name_raw,
+                    "name_en": None,
                     "distillery": row.get('BSSH_NM'),
                     "bottler": None,
                     "abv": 0, # API에서 도수 정보가 불확실하므로 기본값 0 (추후 파싱 필요)
@@ -159,7 +160,18 @@ def fetch_spirits_by_type(spirit_type: str) -> List[Dict[str, Any]]:
                     "reviewedAt": None,
                     "createdAt": datetime.now().isoformat(),
                     "updatedAt": datetime.now().isoformat(),
+                    
+                    # New Schema: Tags at root
+                    "nose_tags": [],
+                    "palate_tags": [],
+                    "finish_tags": [],
+                    "tasting_note": "",
+
                     "metadata": {
+                        "description_ko": None,
+                        "description_en": None,
+                        "pairing_guide_ko": None,
+                        "pairing_guide_en": None,
                         "expiry": row.get('POG_DAYCNT'),
                         "raw_category": row.get('PRDLST_DCNM')
                     }

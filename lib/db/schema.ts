@@ -37,16 +37,13 @@ export interface UserTasteProfile {
 export interface SpiritSearchIndex {
   i: string;           // id
   n: string;           // name
-  en: string | null;   // name_en (English name from metadata)
+  en: string | null;   // name_en (English name)
   c: string;           // category
-  mc: string | null;   // mainCategory
   sc: string | null;   // subcategory
   t: string | null;    // thumbnailUrl
-  a: number;           // abv (alcohol by volume)
+  a: number;           // abv
   d: string | null;    // distillery
-  cre: string | null;  // createdAt (for new/trending)
-  m?: any;             // metadata (optional, minimized)
-  s?: string;          // status (only for admin)
+  tn: string | null;   // tasting_note (Root)
 }
 
 export interface Spirit {
