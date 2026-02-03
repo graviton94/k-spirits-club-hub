@@ -31,11 +31,11 @@ const THUMBNAIL_TEMPLATES = [
     },
     {
         id: 'flavor-dna',
-        title: 'AI Taste DNA',
-        description: 'AI가 분석해주는 당신만의 미각 프로필',
-        bgColor: 'from-[#0f172a] via-[#4c1d95] to-[#0f172a]',
-        accentColor: 'text-purple-500',
-        glow: 'bg-purple-500/20'
+        title: 'AI Flavor DNA',
+        description: 'Collect, Review and Discover your profile!',
+        bgColor: 'from-[#0f172a] via-[#451a03] to-[#0f172a]',
+        accentColor: 'text-amber-500',
+        glow: 'bg-amber-500/30'
     }
 ];
 
@@ -109,6 +109,22 @@ export default function ThumbnailGenerator() {
                         >
                             {/* Decorative Background Elements */}
                             <div className={`absolute top-0 left-0 w-full h-full ${t.glow} blur-[120px] rounded-full scale-150 opacity-50`} />
+
+                            {/* Radar Chart Background for Flavor DNA */}
+                            {t.id === 'flavor-dna' && (
+                                <div className="absolute inset-0 flex items-center justify-center opacity-20 scale-150 pointer-events-none">
+                                    <div className="w-96 h-96 border border-amber-500/50 rounded-full flex items-center justify-center">
+                                        <div className="w-72 h-72 border border-amber-500/40 rounded-full flex items-center justify-center">
+                                            <div className="w-48 h-48 border border-amber-500/30 rounded-full" />
+                                        </div>
+                                        {/* Radar Axis lines */}
+                                        {[0, 60, 120, 180, 240, 300].map(deg => (
+                                            <div key={deg} className="absolute w-px h-[400px] bg-amber-500/20" style={{ transform: `rotate(${deg}deg)` }} />
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
                             <div className="absolute inset-0 bg-black/20" />
 
                             {/* Content */}

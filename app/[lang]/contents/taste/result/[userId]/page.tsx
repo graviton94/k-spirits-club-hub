@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: { userId: string } 
     const description = `${profile.persona.keywords.join(' ')} | AI가 분석한 나의 주류 취향을 확인해보세요.`;
 
     // 카카오톡 캐시를 방지하고 최신 이미지를 불러오기 위해 유저 ID 기반 쿼리 추가
-    const image = `/og-taste-dna.png?v=${params.userId}`;
+    const image = `/cabinet.jpg?v=${params.userId}`;
 
     return {
         title: `${profile.persona.title} - 미각 DNA 리포트`,
