@@ -16,7 +16,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Static routes with priority and changeFrequency for each locale
   const staticRoutes: MetadataRoute.Sitemap = [];
 
-  const staticPathnames = ['', '/explore', '/reviews'];
+  // Automatically collected from app/[lang] structure
+  const staticPathnames = [
+    '',
+    '/explore',
+    // Content Hub Pages
+    '/contents',
+    '/contents/perfect-pour',
+    '/contents/worldcup',
+    // Filter out: /admin, /cabinet, /login, /me (User private/Admin pages)
+  ];
 
   staticPathnames.forEach(pathname => {
     locales.forEach(locale => {
