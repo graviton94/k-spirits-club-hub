@@ -47,6 +47,7 @@ const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 // --- Types ---
 interface ProcessingResult {
     name_en: string;
+    description_ko: string;
     description_en: string;
     pairing_guide_en: string;
     pairing_guide_ko: string;
@@ -97,11 +98,15 @@ ${TERM_GUIDELINES}
    - Follow format: [Brand/Distillery] [Product Name] [Edition/Age]
    - Use Title Case
 
-2. **description_en** - Create a compelling 3-4 sentence masterpiece for a luxury spirits catalog.
+2. **description_ko** - Create a compelling 3-4 sentence masterpiece in Korean for domestic SEO.
+   - Focus: Capture the 'soul' of the liquid. Use evocative, premium language.
+   - SEO: Naturally include product name, category, and tasting note keywords.
+
+3. **description_en** - Create an equivalent 3-4 sentence masterpiece in English for a luxury spirits catalog.
    - Capture the 'soul' of the liquid. Use evocative language.
    - Explain the technical process's impact on flavor.
 
-3. **pairing_guide_en** - IMPORTANT: Create exactly TWO distinct, non-repetitive pairing recommendations (4-5 sentences total):
+4. **pairing_guide_en** - IMPORTANT: Create exactly TWO distinct, non-repetitive pairing recommendations (4-5 sentences total):
    
    **[GLOBAL BAN LIST - ABSOLUTELY NO EXCEPTIONS]**
    ❌ Cullen Skink, ❌ Haggis, ❌ Moroccan Tagine, ❌ Generic Fruit/Cheese, ❌ Generic Dark Chocolate, ❌ Roast Lamb/Beef without a unique technique, ❌ Any dish you have recently repeated for this region.
@@ -123,7 +128,7 @@ ${TERM_GUIDELINES}
    **STYLE:**
    - Write as a World-Class Gastronomy Columnist. Use authoritative, analytical, and elegantly descriptive language.
 
-4. **pairing_guide_ko** - A highly sophisticated Korean translation that captures the nuance of a high-end food column.
+5. **pairing_guide_ko** - A highly sophisticated Korean translation that captures the nuance of a high-end food column.
 
 **CRITICAL REQUIREMENTS:**
 ✓ Each spirit is UNIQUE - no two spirits should have similar pairing recommendations
@@ -132,17 +137,17 @@ ${TERM_GUIDELINES}
 
 {
   "name_en": "string",
+  "description_ko": "string",
   "description_en": "string",
   "pairing_guide_en": "string",
   "pairing_guide_ko": "string"
 }
-    `;
-
+`;
     for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
         try {
             const result = await model.generateContent(prompt);
             const response = result.response;
-            const text = response.text().trim().replace(/```json|```/g, '');
+            const text = response.text().trim();
 
             const jsonMatch = text.match(/\{[\s\S]*\}/);
             if (!jsonMatch) throw new Error("No JSON found in response");
@@ -152,7 +157,7 @@ ${TERM_GUIDELINES}
 
             return data;
         } catch (e: any) {
-            console.warn(`    ⚠️ Attempt ${attempt} failed for ${spirit.name}: ${e.message}`);
+            console.warn(`    ⚠️ Attempt ${attempt} failed for ${spirit.name}: ${e.message} `);
             if (attempt === MAX_RETRIES) return null;
             await delay(1000 * attempt);
         }
@@ -170,7 +175,7 @@ async function bulkProcessor() {
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
     console.log('🚀 Bulk Data Processor (AI Enrichment)');
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-    console.log(`🔧 Mode: ${isDryRun ? 'DRY RUN (No Writes)' : 'PRODUCTION (Writes Enabled)'}`);
+    console.log(`🔧 Mode: ${isDryRun ? 'DRY RUN (No Writes)' : 'PRODUCTION (Writes Enabled)'} `);
     console.log(`🎯 Target: Published Spirits only`);
     if (limitVal > 0) console.log(`🛑 Limit: ${limitVal} spirits`);
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
@@ -207,7 +212,7 @@ async function bulkProcessor() {
                 /*
                 if (data.metadata?.pairing_guide_en && data.name_en) {
                     skippedCount++;
-                    // console.log(`⏩ Skipping ${data.name} (Already processed)`);
+                    // console.log(`⏩ Skipping ${ data.name } (Already processed)`);
                     return;
                 }
                 */
@@ -217,43 +222,47 @@ async function bulkProcessor() {
 
                 if (aiResult) {
                     if (isDryRun) {
-                        console.log(`    [DRY-RUN] Would update ${data.name}:`);
+                        console.log(`    [DRY - RUN] Would update ${data.name}: `);
                         console.log(`      + name_en: "${aiResult.name_en}"`);
                         console.log(`      + pairing_guide_en: "${aiResult.pairing_guide_en}"`);
                     } else {
                         // Update Firestore
                         await doc.ref.set({
                             name_en: data.name_en || aiResult.name_en,
+                            description_ko: data.description_ko || aiResult.description_ko,
                             description_en: data.description_en || aiResult.description_en,
+                            pairing_guide_ko: data.pairing_guide_ko || aiResult.pairing_guide_ko,
+                            pairing_guide_en: data.pairing_guide_en || aiResult.pairing_guide_en,
                             metadata: {
                                 ...data.metadata,
                                 pairing_guide_en: aiResult.pairing_guide_en,
-                                pairing_guide_ko: aiResult.pairing_guide_ko
+                                pairing_guide_ko: aiResult.pairing_guide_ko,
+                                description_ko: aiResult.description_ko
                             },
                             updatedAt: new Date().toISOString()
                         }, { merge: true });
-                        console.log(`    ✅ Updated ${data.name}`);
+                        console.log(`    ✅ Updated ${data.name} `);
                     }
                     processedCount++;
                 } else {
                     failedCount++;
-                    console.error(`    ❌ Failed to process ${data.name}`);
+                    console.error(`    ❌ Failed to process ${data.name} `);
                 }
             });
 
             await Promise.all(batchPromises);
 
             if (i + BATCH_SIZE < docs.length) {
-                console.log(`⏳ Batch done. Sleeping for ${DELAY_MS}ms...`);
+                console.log(`⏳ Batch done.Sleeping for ${DELAY_MS}ms...`);
                 await delay(DELAY_MS);
             }
         }
 
         console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
         console.log('✅ PROCESSING COMPLETED');
-        console.log(`   Processed: ${processedCount}`);
-        console.log(`   Skipped: ${skippedCount}`);
-        console.log(`   Failed: ${failedCount}`);
+        console.log(`   Processed: ${processedCount} `);
+        console.log(`   Skipped: ${skippedCount} `);
+        console.log(`   Failed: ${failedCount} `);
         console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
 
     } catch (error) {

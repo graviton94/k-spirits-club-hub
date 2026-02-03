@@ -67,8 +67,16 @@ export function generateSpiritSearchKeywords(spirit: {
   name: string;
   name_en?: string | null;
   distillery?: string | null;
+  description_ko?: string | null;
+  description_en?: string | null;
+  pairing_guide_ko?: string | null;
+  pairing_guide_en?: string | null;
   metadata?: {
     name_en?: string;
+    description_ko?: string;
+    description?: string;
+    pairing_guide_ko?: string;
+    pairing_guide_en?: string;
     [key: string]: any;
   };
 }): string[] {
@@ -91,6 +99,27 @@ export function generateSpiritSearchKeywords(spirit: {
   if (spirit.distillery) {
     const distilleryKeywords = generateNGrams(spirit.distillery);
     distilleryKeywords.forEach(k => allKeywords.add(k));
+  }
+
+  // SEO Enhancement: Add keywords from descriptions and pairing guides
+  const descriptionKo = spirit.description_ko || spirit.metadata?.description_ko || spirit.metadata?.description;
+  if (descriptionKo) {
+    generateNGrams(descriptionKo).forEach(k => allKeywords.add(k));
+  }
+
+  const descriptionEn = spirit.description_en;
+  if (descriptionEn) {
+    generateNGrams(descriptionEn).forEach(k => allKeywords.add(k));
+  }
+
+  const pairingKo = spirit.pairing_guide_ko || spirit.metadata?.pairing_guide_ko;
+  if (pairingKo) {
+    generateNGrams(pairingKo).forEach(k => allKeywords.add(k));
+  }
+
+  const pairingEn = spirit.pairing_guide_en || spirit.metadata?.pairing_guide_en;
+  if (pairingEn) {
+    generateNGrams(pairingEn).forEach(k => allKeywords.add(k));
   }
 
   return Array.from(allKeywords).sort();

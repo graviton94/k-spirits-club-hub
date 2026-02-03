@@ -57,6 +57,7 @@ export interface Spirit {
   abv: number;
   volume: number | null;
   category: string; // whisky, vodka, gin, rum, etc. (Legal/Wide classification)
+  description_ko: string | null;
   description_en: string | null;
   pairing_guide_ko: string | null;
   pairing_guide_en: string | null;
@@ -83,7 +84,8 @@ export interface Spirit {
     name_en?: string;
     raw_category?: string;
     importer?: string;
-    description?: string;
+    description_ko?: string;
+    description?: string; // Legacy field
     nose_tags?: string[];
     palate_tags?: string[];
     finish_tags?: string[];

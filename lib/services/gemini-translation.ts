@@ -14,6 +14,7 @@ const TERM_GUIDELINES = `
 export interface EnrichmentResult {
     // Stage 1: Identity & Audit
     name_en: string;
+    description_ko: string;
     description_en: string;
     distillery: string;  // Corrected/Normalized Distillery Name (KO)
     region: string;      // Corrected/Normalized Region Name (KO)
@@ -93,8 +94,11 @@ Compare the input data with your internal global liquor database.
 ### STEP 2: GLOBAL IDENTITY & BRANDING (Based on Step 1)
 Using the 'Absolute Truth' from Step 1:
 1. **name_en**: Professional English name.
-2. **description_en**: A 3-4 sentence masterpiece for a luxury spirits catalog. 
-   - Capture the 'soul' of the liquid. Use evocative language (e.g., "haunting smoke," "velvety opulence," "structural precision"). 
+2. **description_ko**: A 3-4 sentence masterpiece in Korean for domestic SEO.
+   - Focus: Capture the 'soul' of the liquid. Use evocative, premium language.
+   - SEO: Naturally include product name, category, and tasting note keywords.
+3. **description_en**: A 3-4 sentence masterpiece in English for global luxury branding.
+   - Content must be equivalent to **description_ko**.
    - Explain the technical process's impact on flavor.
 
 ### STEP 3: FLAVOR DNA EXTRACTION (Based on Step 2)
@@ -136,6 +140,7 @@ Adopt the persona of a world-renowned food critic. Your goal is to provide **exa
 ### OUTPUT JSON SCHEMA:
 {
   "name_en": "string",
+  "description_ko": "string",
   "description_en": "string",
   "distillery": "string (Corrected KO)",
   "region": "string (Corrected KO)",

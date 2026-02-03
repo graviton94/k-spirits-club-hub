@@ -24,7 +24,7 @@ interface EditFormState {
   bottler: string;
   volume: number;
   tasting_note: string;
-  description: string;
+  description_ko: string;
   description_en: string;
   pairing_guide_ko: string;
   pairing_guide_en: string;
@@ -86,7 +86,7 @@ export default function AdminDashboard() {
   const [editForm, setEditForm] = useState<EditFormState>({
     name: '', abv: 0, imageUrl: '', name_en: '', category: '', subcategory: '',
     country: '', region: '', distillery: '', bottler: '', volume: 700,
-    tasting_note: '', description: '', description_en: '', pairing_guide_ko: '', pairing_guide_en: '',
+    tasting_note: '', description_ko: '', description_en: '', pairing_guide_ko: '', pairing_guide_en: '',
     nose_tags: '', palate_tags: '', finish_tags: ''
   });
 
@@ -320,7 +320,7 @@ export default function AdminDashboard() {
       country: spirit.country || '', region: spirit.region || '', distillery: spirit.distillery || '', bottler: spirit.bottler || '',
       volume: spirit.volume || 700,
       tasting_note: spirit.metadata?.tasting_note || '',
-      description: spirit.metadata?.description || '',
+      description_ko: spirit.description_ko || spirit.metadata?.description_ko || spirit.metadata?.description || '',
       description_en: spirit.description_en || '',
       pairing_guide_ko: spirit.pairing_guide_ko || (spirit.metadata as any)?.pairing_guide_ko || '',
       pairing_guide_en: spirit.pairing_guide_en || (spirit.metadata as any)?.pairing_guide_en || '',
@@ -346,13 +346,14 @@ export default function AdminDashboard() {
         distillery: editForm.distillery,
         bottler: editForm.bottler,
         volume: Number(editForm.volume) || 700,
+        description_ko: editForm.description_ko,
         description_en: editForm.description_en,
         pairing_guide_ko: editForm.pairing_guide_ko,
         pairing_guide_en: editForm.pairing_guide_en,
         metadata: {
           name_en: editForm.name_en,
           tasting_note: editForm.tasting_note,
-          description: editForm.description,
+          description_ko: editForm.description_ko,
           nose_tags: editForm.nose_tags.split(',').filter(Boolean).map(t => t.trim()),
           palate_tags: editForm.palate_tags.split(',').filter(Boolean).map(t => t.trim()),
           finish_tags: editForm.finish_tags.split(',').filter(Boolean).map(t => t.trim())
@@ -905,7 +906,7 @@ export default function AdminDashboard() {
                               country: editForm.country,
                               metadata: {
                                 tasting_note: editForm.tasting_note,
-                                description: editForm.description,
+                                description_ko: editForm.description_ko,
                                 nose_tags: editForm.nose_tags.split(',').filter(Boolean).map(t => t.trim()),
                                 palate_tags: editForm.palate_tags.split(',').filter(Boolean).map(t => t.trim()),
                                 finish_tags: editForm.finish_tags.split(',').filter(Boolean).map(t => t.trim())
@@ -914,18 +915,17 @@ export default function AdminDashboard() {
                           });
                           if (!res.ok) throw new Error('Enrichment failed');
                           const data = await res.json();
-                          console.log('[AI Enrichment] Received Data:', data);
 
                           setEditForm({
                             ...editForm,
                             name_en: data.name_en ?? editForm.name_en,
+                            description_ko: data.description_ko ?? editForm.description_ko,
                             description_en: data.description_en ?? editForm.description_en,
                             nose_tags: (data.nose_tags || []).join(', '),
                             palate_tags: (data.palate_tags || []).join(', '),
                             finish_tags: (data.finish_tags || []).join(', '),
                             pairing_guide_en: data.pairing_guide_en ?? editForm.pairing_guide_en,
                             pairing_guide_ko: data.pairing_guide_ko ?? editForm.pairing_guide_ko,
-                            // Apply AI-Corrected Metadata (Prioritize AI data)
                             distillery: data.distillery ?? editForm.distillery,
                             region: data.region ?? editForm.region,
                             country: data.country ?? editForm.country,
@@ -1080,7 +1080,7 @@ export default function AdminDashboard() {
                         <div>
                           <label className="text-[10px] font-black uppercase text-purple-400 dark:text-purple-500">Introduction (KO)</label>
                           <textarea rows={4} className="w-full mt-1 px-4 py-3 border border-gray-200 dark:border-gray-800 rounded-xl font-medium bg-white dark:bg-black text-black dark:text-white text-sm leading-relaxed focus:ring-2 focus:ring-amber-500/50 outline-none"
-                            value={editForm.description} onChange={e => setEditForm({ ...editForm, description: e.target.value })} />
+                            value={editForm.description_ko} onChange={e => setEditForm({ ...editForm, description_ko: e.target.value })} />
                         </div>
                       </div>
 

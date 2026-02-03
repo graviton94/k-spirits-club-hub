@@ -11,6 +11,7 @@ interface AdminSpiritCardProps {
 
 interface EnrichmentResult {
   name_en?: string;
+  description_ko?: string;
   description_en?: string;
   nose_tags?: string[];
   palate_tags?: string[];
@@ -29,6 +30,7 @@ interface SpiritUpdateData {
   reviewedBy?: string;
   reviewedAt?: Date;
   name_en?: string | null;
+  description_ko?: string;
   description_en?: string;
   abv?: number;
   distillery?: string | null;
@@ -156,7 +158,10 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
         country: enrichedData?.country ?? country ?? spirit.country
       };
 
-      // Add description_en if generated
+      // Add description_ko and description_en if generated
+      if (enrichedData?.description_ko) {
+        updateData.description_ko = enrichedData.description_ko;
+      }
       if (enrichedData?.description_en) {
         updateData.description_en = enrichedData.description_en;
       }
@@ -167,6 +172,7 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
           ...spirit.metadata,
           pairing_guide_en: enrichedData?.pairing_guide_en || spirit.metadata?.pairing_guide_en,
           pairing_guide_ko: enrichedData?.pairing_guide_ko || spirit.metadata?.pairing_guide_ko,
+          description_ko: enrichedData?.description_ko || spirit.metadata?.description_ko,
           nose_tags: enrichedData?.nose_tags || spirit.metadata?.nose_tags,
           palate_tags: enrichedData?.palate_tags || spirit.metadata?.palate_tags,
           finish_tags: enrichedData?.finish_tags || spirit.metadata?.finish_tags
@@ -208,7 +214,7 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
   return (
     <div className="border border-border rounded-lg p-4 hover:shadow-md transition-shadow">
       <div className="flex gap-4">
-        <div className="w-20 h-20 bg-gradient-to-br from-amber-100 to-amber-200 dark:from-amber-900 dark:to-amber-800 rounded flex items-center justify-center flex-shrink-0">
+        <div className="w-20 h-20 bg-linear-to-br from-amber-100 to-amber-200 dark:from-amber-900 dark:to-amber-800 rounded flex items-center justify-center shrink-0">
           <span className="text-3xl">🥃</span>
         </div>
 
@@ -263,7 +269,7 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
           )}
         </div>
 
-        <div className="flex flex-col gap-2 flex-shrink-0">
+        <div className="flex flex-col gap-2 shrink-0">
           {status === 'pending' && (
             <>
               <button
