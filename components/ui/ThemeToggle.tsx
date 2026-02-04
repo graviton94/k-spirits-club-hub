@@ -4,30 +4,40 @@ import { useEffect, useState } from 'react';
 import { Moon, Sun } from 'lucide-react';
 
 export function ThemeToggle() {
-    const [theme, setTheme] = useState<'light' | 'dark' | undefined>(undefined); // Initialize as undefined to prevent hydration mismatch
+    const [theme, setTheme] = useState<'light' | 'dark'>('light');
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
-        setMounted(true);
+        // Get theme from localStorage or default to light
         const stored = localStorage.getItem('theme') as 'light' | 'dark' | null;
         const initial = stored || 'light';
         setTheme(initial);
-        document.documentElement.classList.toggle('dark', initial === 'dark');
+        
+        // Apply theme immediately
+        if (initial === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        
+        setMounted(true);
     }, []);
 
     const toggleTheme = () => {
-        // Only toggle if theme is already set (i.e., not undefined)
-        if (theme !== undefined) {
-            const newTheme = theme === 'light' ? 'dark' : 'light';
-            setTheme(newTheme);
-            localStorage.setItem('theme', newTheme);
-            document.documentElement.classList.toggle('dark', newTheme === 'dark');
+        const newTheme = theme === 'light' ? 'dark' : 'light';
+        setTheme(newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        if (newTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
         }
     };
 
-    // Render nothing or a placeholder until theme is determined on the client
-    if (!mounted || theme === undefined) {
-        return <div className="w-9 h-9" />;
+    // Prevent hydration mismatch by rendering placeholder until mounted
+    if (!mounted) {
+        return <div className="w-10 h-10" />;
     }
 
     return (
