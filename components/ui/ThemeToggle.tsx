@@ -4,8 +4,7 @@ import { useEffect, useState } from 'react';
 import { Moon, Sun } from 'lucide-react';
 
 export function ThemeToggle() {
-    const [theme, setTheme] = useState<'light' | 'dark'>('light');
-    const [mounted, setMounted] = useState(false);
+    const [theme, setTheme] = useState<'light' | 'dark' | null>(null);
 
     useEffect(() => {
         // Get theme from localStorage or default to light
@@ -19,11 +18,11 @@ export function ThemeToggle() {
         } else {
             document.documentElement.classList.remove('dark');
         }
-        
-        setMounted(true);
     }, []);
 
     const toggleTheme = () => {
+        if (!theme) return; // Guard against clicks before theme is loaded
+        
         const newTheme = theme === 'light' ? 'dark' : 'light';
         setTheme(newTheme);
         localStorage.setItem('theme', newTheme);
@@ -36,7 +35,7 @@ export function ThemeToggle() {
     };
 
     // Prevent hydration mismatch by rendering placeholder until mounted
-    if (!mounted) {
+    if (!theme) {
         return <div className="w-10 h-10" />;
     }
 
