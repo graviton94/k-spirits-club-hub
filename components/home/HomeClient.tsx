@@ -104,7 +104,7 @@ export default function HomeClient({ lang, initialNewArrivals, initialTrending, 
 
                 <div className="relative overflow-hidden w-full h-56">
                     {newArrivals.length > 0 ? (
-                        <div className={`flex items-start gap-6 absolute whitespace-nowrap ${styles.marquee}`} style={{ animationDuration: '40s' }}>
+                        <div className={`flex items-start gap-6 absolute ${styles.marquee}`}>
                             {/* Duplicate items for infinite scroll effect */}
                             {[...newArrivals, ...newArrivals].map((spirit, index) => (
                                 <Link
@@ -125,7 +125,7 @@ export default function HomeClient({ lang, initialNewArrivals, initialTrending, 
                                                 <span className="text-3xl">🍾</span>
                                             )}
                                         </div>
-                                        <span className="font-bold text-xs text-center line-clamp-2 px-1 text-foreground group-hover:text-amber-600 transition-colors">
+                                        <span className="font-bold text-xs text-center line-clamp-2 w-full px-1 text-foreground group-hover:text-amber-600 transition-colors">
                                             {isEn ? (spirit.name_en || spirit.metadata?.name_en || spirit.name) : spirit.name}
                                         </span>
                                     </div>

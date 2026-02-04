@@ -8,11 +8,11 @@
     }
 }
 
-.animate-scroll-rtl {
-    animation: scroll-rtl 30s linear infinite;
+.marquee {
+    animation: scroll-rtl 40s linear infinite;
     width: fit-content;
 }
 
-.animate-scroll-rtl:hover {
+.marquee:hover {
     animation-play-state: paused;
 }
