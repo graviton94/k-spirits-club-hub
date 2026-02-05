@@ -193,7 +193,7 @@ function ExploreCardComponent({
           alt={displayName}
           fill
           className={`object-cover transition-transform duration-300 group-hover:scale-110 ${!spirit.imageUrl || !spirit.imageUrl.trim() ? 'opacity-50 grayscale' : 'opacity-100'}`}
-          sizes="(max-width: 640px) 80px, (max-width: 1024px) 80px, 80px"
+          sizes="80px"
           priority={priority}
           onError={(e) => {
             const target = e.target as HTMLImageElement;

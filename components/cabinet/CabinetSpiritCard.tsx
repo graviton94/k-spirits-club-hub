@@ -56,7 +56,7 @@ function CabinetSpiritCardComponent({
                         alt={spirit.name}
                         fill
                         className={`object-cover transition-transform duration-700 group-hover:scale-110 ${!spirit.imageUrl || !spirit.imageUrl.trim() ? 'opacity-30 blur-sm' : 'opacity-100'} group-hover:opacity-90`}
-                        sizes="(max-width: 640px) 33vw, (max-width: 1024px) 20vw, 150px"
+                        sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 150px"
                         priority={index < 6}
                         onError={() => setImgSrc(getCategoryFallbackImage(spirit.category))}
                     />
