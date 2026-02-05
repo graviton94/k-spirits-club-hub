@@ -13,53 +13,70 @@ import StickyFooterAd from '@/components/ui/StickyFooterAd';
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit", display: "swap" });
 
-export const metadata: Metadata = {
-  metadataBase: new URL('https://kspiritsclub.com'),
-  title: {
-    default: "K-Spirits Club | 대한민국 대표 주류 데이터베이스(DB) & 리뷰",
-    template: "%s | K-Spirits Club",
-  },
-  description: "전 세계 100만 개 이상의 위스키, 증류주 정보를 탐색하고 저장하며 리뷰를 공유하세요. 나만의 주류 캐비닛을 만들어보세요.",
-  verification: {
-    google: "EztyFtmuOluuqxjs6wbD0Xx1DPSJwO3FXcY8Nz3CQ_o",
-  },
-  keywords: [
-    "위스키", "증류주", "술", "증류소", "리뷰", "대한민국", "K-Spirits", "술 정보",
-    "주류 검색", "전통주", "Whisky", "soju", "위스키 검색", "주류 DB", "주류 데이터베이스",
-    "한국 술 정보", "전통주 정보", "전통주 테이스팅 노트", "위스키 리뷰",
-    "Whisky Database", "Korean Spirits", "Korean Traditional Liquor"
-  ],
-  manifest: "/manifest.json",
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: "default",
-    title: "K-Spirits Club",
-  },
-  openGraph: {
-    title: "K-Spirits Club | 위스키, 전통주, 글로벌 주류 데이터베이스 & 리뷰",
-    description: "대한민국 주류 데이터베이스: 위스키와 전통주의 모든 것. 전 세계 100만 개 이상의 증류주 정보를 탐색하고 리뷰를 공유하세요.",
-    type: "website",
-    locale: "ko_KR",
-    siteName: "K-Spirits Club",
-    images: [{ url: '/main.jpg' }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "K-Spirits Club | 위스키, 전통주, 글로벌 주류 데이터베이스 & 리뷰",
-    description: "대한민국 주류 데이터베이스: 위스키와 전통주의 모든 것. 전 세계 100만 개 이상의 증류주 정보를 탐색하고 리뷰를 공유하세요.",
-    images: ['/main.jpg'],
-  },
-  icons: {
-    icon: [
-      { url: '/icon.png', sizes: '32x32', type: 'image/png' },
-      { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params;
+  const isEn = lang === 'en';
+
+  return {
+    metadataBase: new URL('https://kspiritsclub.com'),
+    title: {
+      default: isEn
+        ? "K-Spirits Club | Global Spirits Database & Reviews"
+        : "K-Spirits Club | 대한민국 대표 주류 데이터베이스(DB) & 리뷰",
+      template: "%s | K-Spirits Club",
+    },
+    description: isEn
+      ? "Explore over 1 million whiskies and spirits. Save your favorites and share reviews. Create your own spirit cabinet."
+      : "전 세계 100만 개 이상의 위스키, 증류주 정보를 탐색하고 저장하며 리뷰를 공유하세요. 나만의 주류 캐비닛을 만들어보세요.",
+    verification: {
+      google: "EztyFtmuOluuqxjs6wbD0Xx1DPSJwO3FXcY8Nz3CQ_o",
+    },
+    keywords: [
+      "위스키", "증류주", "술", "증류소", "리뷰", "대한민국", "K-Spirits", "술 정보",
+      "주류 검색", "전통주", "Whisky", "soju", "위스키 검색", "주류 DB", "주류 데이터베이스",
+      "한국 술 정보", "전통주 정보", "전통주 테이스팅 노트", "위스키 리뷰",
+      "Whisky Database", "Korean Spirits", "Korean Traditional Liquor"
     ],
-    shortcut: '/icon.png',
-    apple: [
-      { url: '/icon.png', sizes: '180x180', type: 'image/png' },
-    ],
-  },
-};
+    manifest: "/manifest.json",
+    appleWebApp: {
+      capable: true,
+      statusBarStyle: "default",
+      title: "K-Spirits Club",
+    },
+    openGraph: {
+      title: isEn
+        ? "K-Spirits Club | Whiskies, Traditional Spirits, Global Database"
+        : "K-Spirits Club | 위스키, 전통주, 글로벌 주류 데이터베이스 & 리뷰",
+      description: isEn
+        ? "Global Spirits Database: Everything about whiskies and traditional spirits."
+        : "대한민국 주류 데이터베이스: 위스키와 전통주의 모든 것. 전 세계 100만 개 이상의 증류주 정보를 탐색하고 리뷰를 공유하세요.",
+      type: "website",
+      locale: isEn ? "en_US" : "ko_KR",
+      siteName: "K-Spirits Club",
+      images: [{ url: '/main.jpg' }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: isEn
+        ? "K-Spirits Club | Whiskies, Traditional Spirits, Global Database"
+        : "K-Spirits Club | 위스키, 전통주, 글로벌 주류 데이터베이스 & 리뷰",
+      description: isEn
+        ? "Global Spirits Database: Everything about whiskies and traditional spirits."
+        : "대한민국 주류 데이터베이스: 위스키와 전통주의 모든 것. 전 세계 100만 개 이상의 증류주 정보를 탐색하고 리뷰를 공유하세요.",
+      images: ['/main.jpg'],
+    },
+    icons: {
+      icon: [
+        { url: '/icon.png', sizes: '32x32', type: 'image/png' },
+        { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+      ],
+      shortcut: '/icon.png',
+      apple: [
+        { url: '/icon.png', sizes: '180x180', type: 'image/png' },
+      ],
+    },
+  };
+}
 
 export const viewport: Viewport = {
   width: "device-width",

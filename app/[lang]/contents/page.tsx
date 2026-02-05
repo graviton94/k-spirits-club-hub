@@ -9,7 +9,8 @@ import {
   BarChart3,
   ChevronRight,
   Sparkles,
-  Beer
+  Beer,
+  Fingerprint
 } from "lucide-react";
 
 interface ContentsPageProps {
@@ -46,6 +47,15 @@ export default async function ContentsPage({ params }: ContentsPageProps) {
       status: "OPEN",
       gradient: "from-amber-500/20 to-orange-600/20",
       borderHover: "group-hover:border-amber-500/50"
+    },
+    {
+      title: isEn ? "Spirit MBTI" : "내 술 취향 MBTI",
+      description: isEn ? "Find your alcohol ego! Character analysis." : "12가지 질문으로 알아보는 나의 알코올 자아 찾기.",
+      icon: <Fingerprint className="w-8 h-8 text-pink-500" />,
+      link: `/${lang}/contents/mbti`,
+      status: "OPEN",
+      gradient: "from-pink-500/20 to-rose-600/20",
+      borderHover: "group-hover:border-pink-500/50"
     },
     {
       title: isEn ? "Golden Ratio Master" : "황금 비율 마스터",
