@@ -126,6 +126,79 @@ function parseFirestoreFields(fields: any): any {
     return obj;
 }
 
+/**
+ * Get all spirit IDs from Firestore using pagination
+ * Optimized for sitemap generation - fetches only document IDs
+ * Uses Firestore REST API list endpoint with pageToken pagination
+ * 
+ * @returns Array of spirit document IDs
+ * @throws Error if API request fails
+ */
+export async function getAllSpiritIds(): Promise<string[]> {
+    const token = await getServiceAccountToken();
+    const collectionPath = getAppPath().spirits;
+    const baseUrl = `${BASE_URL}/${collectionPath}`;
+    
+    const allIds: string[] = [];
+    let pageToken: string | undefined = undefined;
+    const pageSize = 300;
+    
+    try {
+        do {
+            // Build URL with query parameters
+            const params = new URLSearchParams({
+                pageSize: pageSize.toString(),
+                'mask.fieldPaths': '__name__', // Only fetch document name/ID
+            });
+            
+            if (pageToken) {
+                params.append('pageToken', pageToken);
+            }
+            
+            const url = `${baseUrl}?${params.toString()}`;
+            
+            const res = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            
+            if (!res.ok) {
+                const errText = await res.text();
+                console.error(`[getAllSpiritIds] Failed to fetch spirit IDs:`, errText);
+                throw new Error(`Failed to fetch spirit IDs: ${res.status} ${errText}`);
+            }
+            
+            const json = await res.json();
+            
+            // Extract IDs from documents
+            if (json.documents && Array.isArray(json.documents)) {
+                for (const doc of json.documents) {
+                    // Extract ID from document name (last segment of path)
+                    if (doc.name) {
+                        const id = doc.name.split('/').pop();
+                        if (id) {
+                            allIds.push(id);
+                        }
+                    }
+                }
+            }
+            
+            // Get next page token
+            pageToken = json.nextPageToken;
+            
+            console.log(`[getAllSpiritIds] Fetched ${allIds.length} IDs so far...`);
+        } while (pageToken);
+        
+        console.log(`[getAllSpiritIds] Total spirit IDs fetched: ${allIds.length}`);
+        return allIds;
+    } catch (error) {
+        console.error('[getAllSpiritIds] Error fetching spirit IDs:', error);
+        throw error;
+    }
+}
+
 export const spiritsDb = {
     async getAll(filter: SpiritFilter = {}, pagination?: { page: number, pageSize: number }): Promise<Spirit[]> {
         const token = await getServiceAccountToken();
