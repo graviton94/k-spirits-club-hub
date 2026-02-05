@@ -223,6 +223,7 @@ export default function ExploreContent() {
               isOwned={cabinetStatus.ownedIds.has(item.i)}
               isWishlisted={cabinetStatus.wishlistIds.has(item.i)}
               onStatusChange={handleStatusChange}
+              priority={index < 6}
             />
           ))}
 
