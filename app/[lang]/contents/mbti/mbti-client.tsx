@@ -25,6 +25,21 @@ export function MBTIClient({ lang }: { lang: string }) {
     const [showToast, setShowToast] = useState(false);
     const resultRef = useRef<HTMLDivElement>(null);
 
+    // Preload Game Images
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const imagesToPreload = [
+                ...MBTI_QUESTIONS.map(q => q.imagePath).filter(Boolean),
+                ...Object.values(MBTI_RESULTS).map(r => r.imagePath)
+            ];
+
+            imagesToPreload.forEach(src => {
+                const img = new (window as any).Image();
+                img.src = src;
+            });
+        }
+    }, []);
+
     useEffect(() => {
         // Handle global bottom nav positioning
         const bottomNav = document.querySelector('nav')?.parentElement;
@@ -292,7 +307,7 @@ export function MBTIClient({ lang }: { lang: string }) {
                                 </div>
 
                                 <div className="bg-amber-50 dark:bg-amber-900/10 p-5 rounded-2xl border border-amber-100 dark:border-amber-900/30">
-                                    <p className="text-lg leading-relaxed text-foreground/90 whitespace-pre-line text-left md:text-center">
+                                    <p className="text-lg leading-relaxed text-foreground/90 whitespace-pre-line text-center">
                                         {isEn ? MBTI_RESULTS[resultType].description_en : MBTI_RESULTS[resultType].description_ko}
                                     </p>
                                 </div>
@@ -403,7 +418,7 @@ export function MBTIClient({ lang }: { lang: string }) {
             {/* Success Toast for Sharing */}
             <SuccessToast
                 isVisible={showToast}
-                message={isEn ? "Link copied to clipboard!" : "링크가 클립보드에 복사되었습니다!"}
+                message={isEn ? "Link copied to clipboard!" : "링크가 복사되었습니다!"}
                 onClose={() => setShowToast(false)}
             />
         </div >

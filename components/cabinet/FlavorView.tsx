@@ -173,7 +173,7 @@ export default function FlavorView() {
                 });
             } else {
                 await navigator.clipboard.writeText(shareUrl);
-                setToastMessage(isEn ? 'Link copied to clipboard!' : '🔗공유 링크가 클립보드에 복사되었습니다!');
+                setToastMessage(isEn ? 'Link copied to clipboard!' : '🔗링크가 복사되었습니다!');
                 setToastVariant('success');
                 setShowToast(true);
             }

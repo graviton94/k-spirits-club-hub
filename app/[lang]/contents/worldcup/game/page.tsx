@@ -346,7 +346,7 @@ export default function WorldCupGamePage() {
                 await navigator.share(shareData);
             } else {
                 await navigator.clipboard.writeText(shareUrl);
-                alert('🔗공유 링크가 클립보드에 복사되었습니다!');
+                alert('🔗링크가 복사되었습니다!');
             }
         } catch (err) {
             console.error('Share failed', err);
