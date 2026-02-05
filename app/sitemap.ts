@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { getAllSpiritIds } from '@/lib/db/firestore-rest';
+import { getPublishedSpiritIds } from '@/lib/db/firestore-rest';
 
 export const runtime = 'edge';
 export const revalidate = 3600; // 1시간마다 갱신
@@ -10,8 +10,8 @@ export const revalidate = 3600; // 1시간마다 갱신
  * Compatible with Edge Runtime (uses Firestore REST API)
  * 
  * Optimized for SEO:
- * - Fetches ALL spirit IDs using pagination (no limits)
- * - Uses mask.fieldPaths=id for minimal network usage
+ * - Fetches ALL published spirit IDs using pagination (no limits)
+ * - Uses mask.fieldPaths=__name__ for minimal network usage
  * - Generates complete sitemap for search engine indexing
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -34,12 +34,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   });
 
   try {
-    // Fetch all spirit IDs using pagination
-    const spiritIds = await getAllSpiritIds();
+    // Fetch all published spirit IDs using pagination
+    const spiritIds = await getPublishedSpiritIds();
 
-    console.log(`[Sitemap] Fetched ${spiritIds.length} spirit IDs`);
+    console.log(`[Sitemap] Fetched ${spiritIds.length} published spirit IDs`);
 
-    // Generate dynamic routes for all spirits in each locale
+    // Generate dynamic routes for all published spirits in each locale
     spiritIds.forEach(id => {
       locales.forEach(locale => {
         routes.push({
