@@ -8,6 +8,7 @@ export interface MBTIQuestion {
     id: number;
     question_ko: string;
     question_en: string;
+    imagePath?: string;
     options: {
         text_ko: string;
         text_en: string;
@@ -33,6 +34,7 @@ export const MBTI_QUESTIONS: MBTIQuestion[] = [
         id: 1,
         question_ko: "주말 저녁, 당신의 기분을 좋게 하는 행동은?",
         question_en: "What makes you feel better on a weekend evening?",
+        imagePath: "/MBTI/q1.webp",
         options: [
             { text_ko: "시끌벅적한 술자리에 합류한다", text_en: "Joining a lively drinking party", type: 'E', score: 1 },
             { text_ko: "조용한 바에서 혼술을 즐기거나 집에서 쉰다", text_en: "Enjoying a drink alone at a quiet bar or resting at home", type: 'I', score: 1 }
@@ -42,6 +44,7 @@ export const MBTI_QUESTIONS: MBTIQuestion[] = [
         id: 2,
         question_ko: "술을 고를 때 당신의 기준은?",
         question_en: "What is your criteria when choosing an alcoholic drink?",
+        imagePath: "/MBTI/q2.webp",
         options: [
             { text_ko: "실패 없는 베스트셀러나 익숙한 것", text_en: "Proven bestsellers or something familiar", type: 'S', score: 1 },
             { text_ko: "새로운 한정판이나 독특한 스토리의 술", text_en: "New limited editions or drinks with unique stories", type: 'N', score: 1 }
@@ -51,6 +54,7 @@ export const MBTI_QUESTIONS: MBTIQuestion[] = [
         id: 3,
         question_ko: "술자리에서 누군가 고민을 털어놓는다면?",
         question_en: "If someone shares their worries at a drinking party?",
+        imagePath: "/MBTI/q3.webp",
         options: [
             { text_ko: "상황을 분석하고 현실적인 조언을 건넨다", text_en: "Analyzing the situation and giving practical advice", type: 'T', score: 1 },
             { text_ko: "상대방의 마음에 깊이 공감해주며 함께 마셔준다", text_en: "Empathizing deeply and drinking together", type: 'F', score: 1 }
@@ -60,6 +64,7 @@ export const MBTI_QUESTIONS: MBTIQuestion[] = [
         id: 4,
         question_ko: "마실 술을 정하는 방식은?",
         question_en: "How do you decide what to drink?",
+        imagePath: "/MBTI/q4.webp",
         options: [
             { text_ko: "미리 맛집과 술 리스트를 철저히 조사해둔다", text_en: "Thoroughly researching bars and drink lists in advance", type: 'J', score: 1 },
             { text_ko: "가게에 가서 메뉴판을 보고 끌리는 걸 고른다", text_en: "Going to the store and picking what looks good on the menu", type: 'P', score: 1 }
@@ -70,6 +75,7 @@ export const MBTI_QUESTIONS: MBTIQuestion[] = [
         id: i + 5,
         question_ko: `임시 질문 ${i + 5} (나중에 채워질 예정)`,
         question_en: `Placeholder Question ${i + 5} (To be filled later)`,
+        imagePath: `/MBTI/q${i + 5}.webp`,
         options: [
             { text_ko: "선택지 A", text_en: "Option A", type: (['E', 'N', 'T', 'J'][i % 4] as any), score: 1 },
             { text_ko: "선택지 B", text_en: "Option B", type: (['I', 'S', 'F', 'P'][i % 4] as any), score: 1 }

@@ -163,7 +163,18 @@ export function MBTIClient({ lang }: { lang: string }) {
                         </div>
 
                         {/* Question Card */}
-                        <div className="bg-card border p-8 md:p-12 rounded-3xl shadow-sm text-center space-y-12">
+                        <div className="bg-card border p-6 md:p-12 rounded-3xl shadow-sm text-center space-y-8">
+                            {MBTI_QUESTIONS[currentIdx].imagePath && (
+                                <div className="relative w-full aspect-[4/3] md:aspect-[16/9] rounded-2xl overflow-hidden mb-8">
+                                    <Image
+                                        src={MBTI_QUESTIONS[currentIdx].imagePath}
+                                        alt="Question"
+                                        fill
+                                        className="object-cover"
+                                        priority
+                                    />
+                                </div>
+                            )}
                             <h2 className="text-2xl md:text-3xl font-bold leading-tight">
                                 {isEn ? MBTI_QUESTIONS[currentIdx].question_en : MBTI_QUESTIONS[currentIdx].question_ko}
                             </h2>
