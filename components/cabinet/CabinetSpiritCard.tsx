@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useState, memo } from "react";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import Image from 'next/image';
@@ -15,7 +15,7 @@ interface CabinetSpiritCardProps {
     index?: number;
 }
 
-export default function CabinetSpiritCard({
+function CabinetSpiritCardComponent({
     spirit,
     onReviewClick,
     onInfoClick,
@@ -47,7 +47,7 @@ export default function CabinetSpiritCard({
                 </div>
             )}
 
-            <div className="relative aspect-2/3 rounded-2xl overflow-hidden bg-white dark:bg-slate-800/50 p-px shadow-sm transition-all duration-500 group-hover:shadow-amber-500/20">
+            <div className="relative rounded-2xl overflow-hidden bg-white dark:bg-slate-800/50 p-px shadow-sm transition-all duration-500 group-hover:shadow-amber-500/20" style={{ aspectRatio: '2/3' }}>
                 <div className="absolute inset-0 bg-linear-to-br from-amber-500/10 via-orange-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
 
                 <div className="relative h-full rounded-xl overflow-hidden bg-slate-50 dark:bg-slate-900 group-hover:blur-[1px] group-hover:scale-[0.98] transition-all duration-500">
@@ -56,8 +56,8 @@ export default function CabinetSpiritCard({
                         alt={spirit.name}
                         fill
                         className={`object-cover transition-transform duration-700 group-hover:scale-110 ${!spirit.imageUrl || !spirit.imageUrl.trim() ? 'opacity-30 blur-sm' : 'opacity-100'} group-hover:opacity-90`}
-                        sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 150px"
-                        priority={index < 8}
+                        sizes="(max-width: 640px) 33vw, (max-width: 1024px) 20vw, 150px"
+                        priority={index < 6}
                         onError={() => setImgSrc(getCategoryFallbackImage(spirit.category))}
                     />
 
@@ -79,3 +79,6 @@ export default function CabinetSpiritCard({
         </motion.div>
     );
 }
+
+const CabinetSpiritCard = memo(CabinetSpiritCardComponent);
+export default CabinetSpiritCard;

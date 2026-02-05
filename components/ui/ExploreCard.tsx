@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, memo, useRef } from "react";
+import React, { useState, useEffect, memo, useRef, useMemo } from "react";
 import { motion } from "framer-motion";
 import Image from 'next/image';
 import Link from "next/link";
@@ -24,6 +24,7 @@ interface ExploreCardProps {
   isEn?: boolean;
   isOwned?: boolean;
   isWishlisted?: boolean;
+  priority?: boolean;
 }
 
 function ExploreCardComponent({
@@ -32,7 +33,8 @@ function ExploreCardComponent({
   onStatusChange,
   isEn: propIsEn,
   isOwned = false,
-  isWishlisted = false
+  isWishlisted = false,
+  priority = false
 }: ExploreCardProps) {
   const pathname = usePathname() || "";
   const lang = pathname.split('/')[1] === 'en' ? 'en' : 'ko';
@@ -166,8 +168,8 @@ function ExploreCardComponent({
     }
   };
 
-  // Extract first 2 tags (Strict Schema)
-  const tastingTags = (() => {
+  // Extract first 2 tags (Strict Schema) - Memoized for performance
+  const tastingTags = useMemo(() => {
     if (spirit.tasting_note) {
       return spirit.tasting_note.split(/[,\s#]+/).filter(Boolean).slice(0, 2);
     }
@@ -175,7 +177,7 @@ function ExploreCardComponent({
       return spirit.nose_tags.slice(0, 2);
     }
     return [];
-  })();
+  }, [spirit.tasting_note, spirit.nose_tags]);
 
   const content = (
     <motion.div
@@ -185,13 +187,14 @@ function ExploreCardComponent({
       transition={{ type: "spring", stiffness: 400, damping: 17 }}
       onClick={() => onClick?.(spirit)}
     >
-      <div className="shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-muted border border-border relative">
+      <div className="shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-muted border border-border relative" style={{ aspectRatio: '1/1' }}>
         <Image
           src={spirit.imageUrl && spirit.imageUrl.trim() ? getOptimizedImageUrl(spirit.imageUrl, 120, 60) : getCategoryFallbackImage(spirit.category)}
           alt={displayName}
           fill
           className={`object-cover transition-transform duration-300 group-hover:scale-110 ${!spirit.imageUrl || !spirit.imageUrl.trim() ? 'opacity-50 grayscale' : 'opacity-100'}`}
-          sizes="80px"
+          sizes="(max-width: 640px) 80px, (max-width: 1024px) 80px, 80px"
+          priority={priority}
           onError={(e) => {
             const target = e.target as HTMLImageElement;
             target.src = getCategoryFallbackImage(spirit.category);
