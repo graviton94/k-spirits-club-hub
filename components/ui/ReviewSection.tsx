@@ -773,9 +773,17 @@ function TagInput({ tags, onTagsChange, color, metadataKey, placeholder }: { tag
     .slice(0, 10);
 
   const addTag = (tag: string) => {
-    const cleanTag = tag.trim().replace('#', '');
-    if (cleanTag && !tags.includes(cleanTag)) {
-      onTagsChange([...tags, cleanTag]);
+    // Split by comma or space to handle multiple tags at once
+    const rawTags = tag.split(/[,\s]+/).map(t => t.trim().replace('#', '')).filter(Boolean);
+
+    if (rawTags.length > 0) {
+      const newTags = [...tags];
+      rawTags.forEach(t => {
+        if (!newTags.includes(t)) {
+          newTags.push(t);
+        }
+      });
+      onTagsChange(newTags);
     }
     setInputValue('');
   };
@@ -785,7 +793,7 @@ function TagInput({ tags, onTagsChange, color, metadataKey, placeholder }: { tag
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' || e.key === ',' || e.key === ' ') {
+    if (e.key === 'Enter') {
       e.preventDefault();
       addTag(inputValue);
     } else if (e.key === 'Backspace' && !inputValue && tags.length > 0) {
@@ -816,7 +824,16 @@ function TagInput({ tags, onTagsChange, color, metadataKey, placeholder }: { tag
           ref={inputRef}
           type="text"
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={(e) => {
+            const val = e.target.value;
+            // If the input contains a comma or space, treat it as a trigger
+            if (val.includes(',') || val.includes(' ')) {
+              addTag(val);
+            } else {
+              setInputValue(val);
+              setShowSuggestions(true);
+            }
+          }}
           onKeyDown={handleKeyDown}
           onBlur={handleBlur}
           onFocus={() => setShowSuggestions(true)}
