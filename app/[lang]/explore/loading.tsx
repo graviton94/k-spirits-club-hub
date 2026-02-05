@@ -9,7 +9,7 @@ function ExploreCardSkeleton() {
   return (
     <div className="flex gap-3 p-3 rounded-2xl bg-white/60 dark:bg-slate-900/40 backdrop-blur-md border border-white/40 dark:border-white/10 animate-pulse">
       {/* Image skeleton - exact match to ExploreCard */}
-      <div className="shrink-0 w-20 h-20 rounded-lg bg-muted/50" style={{ aspectRatio: '1/1' }} />
+      <div className="shrink-0 w-20 h-20 rounded-lg bg-muted/50" />
       
       {/* Content skeleton */}
       <div className="flex-1 min-w-0 flex flex-col justify-center py-0.5 gap-2">

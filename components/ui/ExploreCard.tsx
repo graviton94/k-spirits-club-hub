@@ -187,7 +187,7 @@ function ExploreCardComponent({
       transition={{ type: "spring", stiffness: 400, damping: 17 }}
       onClick={() => onClick?.(spirit)}
     >
-      <div className="shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-muted border border-border relative" style={{ aspectRatio: '1/1' }}>
+      <div className="shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-muted border border-border relative">
         <Image
           src={spirit.imageUrl && spirit.imageUrl.trim() ? getOptimizedImageUrl(spirit.imageUrl, 120, 60) : getCategoryFallbackImage(spirit.category)}
           alt={displayName}

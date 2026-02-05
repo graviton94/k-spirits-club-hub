@@ -7,7 +7,7 @@ const SPIRIT_EMOJIS = ['🍶', '🥃', '🍺', '🍷', '🍾', '🥂', '🍹'];
 // Skeleton card that matches CabinetSpiritCard dimensions exactly
 function CabinetSpiritCardSkeleton() {
     return (
-        <div className="relative rounded-2xl overflow-hidden bg-white dark:bg-slate-800/50 p-px shadow-sm animate-pulse" style={{ aspectRatio: '2/3' }}>
+        <div className="relative aspect-[2/3] rounded-2xl overflow-hidden bg-white dark:bg-slate-800/50 p-px shadow-sm animate-pulse">
             <div className="relative h-full rounded-xl overflow-hidden bg-slate-50 dark:bg-slate-900">
                 {/* Image placeholder with same aspect ratio */}
                 <div className="absolute inset-0 bg-muted/30" />
