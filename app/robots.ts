@@ -1,46 +1,42 @@
 import { MetadataRoute } from 'next';
 
-/**
- * Robots.txt Configuration - Global SEO Parity
- * 전략:
- * 1. 주요 봇(Google, Naver, Daum)에게 상세 페이지와 탐색 페이지 명시적 허용
- * 2. 모든 봇에 대해 관리자/개인 페이지 및 검색 필터(query params) 크롤링 제한
- * 3. API의 경우 관리/개인화 API만 차단하고 공용 데이터 접근은 유연하게 유지
- */
 export default function robots(): MetadataRoute.Robots {
   const baseUrl = 'https://kspiritsclub.com';
 
   return {
     rules: [
       {
-        // 구글, 네이버, 다음/카카오 등 모든 주요 검색 엔진 공통 적용
+        // 1. 주요 검색 엔진 (Google, Naver, Daum, Bing)
         userAgent: ['Googlebot', 'Yeti', 'Daumoa', 'bingbot'],
         allow: [
           '/',
-          '/ko/',
-          '/en/',
-          '/spirits/', // 주류 상세 데이터 (가장 중요)
-          '/explore',   // 주류 탐색 리스트
-          '/contents',  // 월드컵 등 콘텐츠 페이지
+          '/spirits/',
+          '/explore',
+          '/contents',
+          // ⚠️ 중요: Next.js 이미지 최적화 및 정적 리소스 허용
+          '/_next/', 
+          '/images/',
+          '/public/',
         ],
         disallow: [
           '/admin/',
-          '/api/admin/',
+          '/api/',       // API 전체 차단 (보안 및 리소스 절약)
           '/cabinet/',
-          '/api/cabinet/',
           '/login',
-          '/*?*', // 쿼리 스트링 차단: 100만 건의 중복 인덱싱 방지 (SEO 핵심)
+          '/me',         // 마이페이지 차단
+          '/*?*',        // 쿼리 스트링 차단 (검색 필터 중복 방지)
         ],
       },
       {
-        // 기타 일반 봇
+        // 2. 기타 봇 (보수적으로 접근)
         userAgent: '*',
-        allow: '/',
+        allow: ['/', '/_next/'], // 여기도 _next는 허용해야 사이트가 깨져 보이지 않음
         disallow: [
           '/admin/',
           '/cabinet/',
-          '/api/admin/',
-          '/api/cabinet/',
+          '/api/',
+          '/login',
+          '/me',
           '/*?*',
         ],
       }
