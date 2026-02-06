@@ -186,3 +186,40 @@ export async function generatePairingGuide(spirit: SpiritEnrichmentInput): Promi
     const result = await model.generateContent(prompt);
     return JSON.parse(result.response.text());
 }
+
+/**
+ * BACKWARD COMPATIBILITY WRAPPER
+ * Runs all 3 steps sequentially for bulk operations or full enrichment.
+ */
+export async function enrichSpiritWithAI(spirit: SpiritEnrichmentInput) {
+    // Stage 1: Audit
+    const auditData = await auditSpiritInfo(spirit);
+
+    // Stage 2: Sensory
+    const sensoryData = await generateSensoryData({
+        ...spirit,
+        ...auditData
+    });
+
+    // Stage 3: Pairing
+    const pairingData = await generatePairingGuide({
+        ...spirit,
+        ...auditData,
+        ...sensoryData
+    });
+
+    return {
+        ...auditData,
+        ...sensoryData,
+        ...pairingData
+    };
+}
+
+/**
+ * BACKWARD COMPATIBILITY WRAPPER
+ * Just translates the name using the Audit logic.
+ */
+export async function translateSpiritName(name: string, category: string, distillery?: string) {
+    const result = await auditSpiritInfo({ name, category, distillery });
+    return { name_en: result.name_en };
+}
