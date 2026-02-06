@@ -3,6 +3,8 @@ import { NextResponse } from 'next/server';
 import { fetchNewsForCollection, CollectedNewsItem } from '@/lib/api/news';
 import { newsDb } from '@/lib/db/firestore-rest';
 
+export const runtime = 'edge';
+
 export async function GET(request: Request) {
     try {
         // Basic authorization check (e.g. check for header 'x-admin-key' if needed)
