@@ -8,13 +8,14 @@ import Link from "next/link";
 import { Sparkles, Flame, ArrowRight } from "lucide-react";
 import styles from "@/app/[lang]/page.module.css";
 import { RandomBackground } from "@/components/ui/RandomBackground";
-import { useSpiritsCache } from "@/app/context/spirits-cache-context";
+import { useSpiritsCache } from "@/app/[lang]/context/spirits-cache-context";
 import { useMemo, useState, useEffect } from "react";
 import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
 import { Spirit } from "@/lib/db/schema";
 
 interface HomeClientProps {
     lang: string;
+    dict: any;
     initialNewArrivals: Spirit[];
     initialTrending: any[];
     initialReviews: any[];
@@ -37,7 +38,7 @@ const UI_TEXT = {
     }
 };
 
-export default function HomeClient({ lang, initialNewArrivals, initialTrending, initialReviews }: HomeClientProps) {
+export default function HomeClient({ lang, dict, initialNewArrivals, initialTrending, initialReviews }: HomeClientProps) {
     const { publishedSpirits, isLoading: isCacheLoading } = useSpiritsCache();
 
     // Use state with initial data for instant render
@@ -78,10 +79,10 @@ export default function HomeClient({ lang, initialNewArrivals, initialTrending, 
                 <div className="relative z-30 w-full max-w-4xl px-4 text-center space-y-8">
                     <div className="space-y-2">
                         <p className="text-amber-500 font-bold uppercase tracking-widest text-sm animate-fade-in-up">
-                            Discover Your Taste
+                            {dict.heroSubtitle}
                         </p>
                         <h1 className="text-5xl md:text-7xl font-black text-white leading-tight animate-fade-in-up delay-100 drop-shadow-2xl">
-                            Find the Perfect <br />
+                            {dict.heroTitle} <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-600">
                                 Spirit
                             </span>
@@ -89,7 +90,7 @@ export default function HomeClient({ lang, initialNewArrivals, initialTrending, 
                     </div>
 
                     <div className="w-full max-w-lg mx-auto animate-fade-in-up delay-200 relative z-30">
-                        <SearchBar isHero={true} />
+                        <SearchBar isHero={true} dict={dict} />
                         <DailyPick lang={lang} />
                     </div>
                 </div>
@@ -99,7 +100,7 @@ export default function HomeClient({ lang, initialNewArrivals, initialTrending, 
             <section className="container max-w-4xl mx-auto px-4 mt-12 relative z-20 mb-20">
                 <div className="flex items-center gap-2 mb-6">
                     <Sparkles className="w-5 h-5 text-amber-500 fill-amber-500/20" />
-                    <h2 className="text-xl font-black tracking-tight">{t.newArrivals}</h2>
+                    <h2 className="text-xl font-black tracking-tight">{dict.newArrivals}</h2>
                 </div>
 
                 <div className="relative overflow-hidden w-full h-56">
@@ -145,13 +146,13 @@ export default function HomeClient({ lang, initialNewArrivals, initialTrending, 
                 <div className="flex items-center justify-between mb-8">
                     <div className="flex items-center gap-2">
                         <Flame className="w-6 h-6 text-orange-600 fill-orange-600/20" />
-                        <h2 className="text-2xl font-black tracking-tight">{t.trending}</h2>
+                        <h2 className="text-2xl font-black tracking-tight">{dict.trending}</h2>
                     </div>
                     <Link
                         href={`/${lang}/explore`}
                         className="text-xs font-bold text-muted-foreground hover:text-primary flex items-center gap-1 transition-colors"
                     >
-                        {t.viewAll} <ArrowRight className="w-3 h-3" />
+                        {dict.more} <ArrowRight className="w-3 h-3" />
                     </Link>
                 </div>
 
@@ -170,7 +171,7 @@ export default function HomeClient({ lang, initialNewArrivals, initialTrending, 
             {/* 4. Live Reviews Grid */}
             <section className="container max-w-4xl mx-auto px-4 mb-20">
                 <div className="flex items-center justify-between mb-8">
-                    <h2 className="text-2xl font-black tracking-tight">{t.liveReviews}</h2>
+                    <h2 className="text-2xl font-black tracking-tight">{dict.recentReviews}</h2>
                 </div>
                 <LiveReviews initialReviews={initialReviews} />
             </section>

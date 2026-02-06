@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 export const runtime = 'edge';
-import { useAuth } from '@/app/context/auth-context';
+import { useAuth } from '@/app/[lang]/context/auth-context';
 import { useRouter } from 'next/navigation';
 import { getCategoryFallbackImage } from '@/lib/utils/image-fallback';
 import { getOptimizedImageUrl } from '@/lib/utils/image-optimization';

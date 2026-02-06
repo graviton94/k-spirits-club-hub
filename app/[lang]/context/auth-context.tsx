@@ -32,8 +32,8 @@ interface AuthContextType {
     loading: boolean;
     theme: 'light' | 'dark';
     setTheme: (theme: 'light' | 'dark') => void;
-    loginWithGoogle: () => Promise<void>;
-    logout: () => Promise<void>;
+    loginWithGoogle: (redirectPath?: string) => Promise<void>;
+    logout: (redirectPath?: string) => Promise<void>;
     updateProfile: (data: Partial<UserProfile>) => Promise<void>;
 }
 
@@ -44,8 +44,8 @@ const AuthContext = createContext<AuthContextType>({
     loading: true,
     theme: 'light',
     setTheme: () => { },
-    loginWithGoogle: async () => { },
-    logout: async () => { },
+    loginWithGoogle: async (redirectPath?: string) => { },
+    logout: async (redirectPath?: string) => { },
     updateProfile: async () => { },
 });
 
@@ -163,20 +163,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         }
     };
 
-    const loginWithGoogle = async () => {
+    const loginWithGoogle = async (redirectPath?: string) => {
         try {
             const provider = new GoogleAuthProvider();
             await signInWithPopup(auth, provider);
-            router.push('/');
+            router.push(redirectPath || '/');
         } catch (error) {
             console.error('Login Failed', error);
             alert('로그인에 실패했습니다.');
         }
     };
 
-    const logout = async () => {
+    const logout = async (redirectPath?: string) => {
         await signOut(auth);
-        router.push('/');
+        router.push(redirectPath || '/');
     };
 
     return (

@@ -191,8 +191,9 @@ interface UserCabinet {
   rating: number | null;   // 개인 평점 (1-5)
   isFavorite: boolean;     // 즐겨찾기
   
-  // 타임스탬프
+  // 타임스탬프 (AI 취향 분석용)
   addedAt: Date;           // 추가 시각
+  lastActivityAt?: Date;   // 마지막 활동 시각 (review createdAt || addedAt)
 }
 ```
 
@@ -228,9 +229,14 @@ interface Review {
   isActive?: boolean;      // 활성화 여부 (삭제 처리)
   isPublished: boolean;    // 발행 여부
   
-  // 타임스탬프
+  // 타임스탬프 (AI 취향 분석용)
   createdAt: Date;
   updatedAt: Date;
+  
+  // 사용자 리뷰에서 참조할 경우
+  userReview?: {
+    createdAt?: Date;      // 리뷰 작성 시간 (recency tracking)
+  } | null;
 }
 ```
 
@@ -310,7 +316,41 @@ interface WorldCupResult {
 
 ---
 
-### **7. ModificationRequest (수정 요청)**
+### **7. MbtiResult (MBTI 성향 테스트 결과)**
+```typescript
+interface MbtiResult {
+  id: string;              // 고유 ID
+  userId?: string;         // 사용자 UID (비회원 가능)
+  
+  // MBTI 타입
+  type: string;            // 4글자 코드 (e.g., "ENFP", "ISTJ")
+  
+  // 결과 데이터
+  result: {
+    titleKo: string;       // 타입 제목 (한글)
+    titleEn: string;       // 타입 제목 (영문)
+    descriptionKo: string; // 설명 (한글)
+    descriptionEn: string; // 설명 (영문)
+    traits: string[];      // 특성 리스트
+    recommendedSpirits: string[]; // 추천 주류
+    icon: string;          // 이모티콘
+  };
+  
+  // 답변 기록
+  answers: string[];       // 15개 답변 배열 (e.g., ["E", "I", ...])
+  
+  // 타임스탬프
+  completedAt: Date;       // 테스트 완료 시각
+}
+```
+
+**Path**: `mbti_results/{resultId}` (optional storage)
+
+> **Note**: MBTI 결과는 현재 Firestore에 저장하지 않고 클라이언트 사이드에서만 처리합니다. 추후 통계 분석을 위해 저장 기능을 추가할 수 있습니다.
+
+---
+
+### **8. ModificationRequest (수정 요청)**
 ```typescript
 interface ModificationRequest {
   id: string;
@@ -448,5 +488,5 @@ const fuseOptions = {
 
 ---
 
-**Last Updated**: 2026-02-01  
+**Last Updated**: 2026-02-06  
 **Schema Version**: 1.0.0

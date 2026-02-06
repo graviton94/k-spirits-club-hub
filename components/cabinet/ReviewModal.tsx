@@ -13,6 +13,8 @@ interface ReviewModalProps {
     isOpen: boolean;
     onClose: () => void;
     onSubmit: (review: UserReview) => void;
+    dict?: any;
+    lang?: string;
 }
 
 type TagCategory = 'nose' | 'palate' | 'finish';
@@ -22,7 +24,8 @@ const getMetadataTags = (category: TagCategory) => {
     return SPIRITS_METADATA.tag_index[category] as Record<string, { colors: any, tags: string[] }>;
 };
 
-export default function ReviewModal({ spirit, isOpen, onClose, onSubmit }: ReviewModalProps) {
+export default function ReviewModal({ spirit, isOpen, onClose, onSubmit, dict, lang }: ReviewModalProps) {
+    const isEn = lang === 'en';
     // Ratings
     const [ratingN, setRatingN] = useState(spirit.userReview?.ratingN || 3.0);
     const [ratingP, setRatingP] = useState(spirit.userReview?.ratingP || 3.0);
@@ -302,11 +305,11 @@ text - [10px] sm: text - xs px - 2 sm: px - 3 py - 1 sm: py - 1.5 rounded - full
 
                         {/* Comment */}
                         <div>
-                            <h3 className="text-sm font-bold text-foreground mb-3">📝 총평</h3>
+                            <h3 className="text-sm font-bold text-foreground mb-3">📝 {dict?.summary || (isEn ? "Summary" : "총평")}</h3>
                             <textarea
                                 value={comment}
                                 onChange={(e) => setComment(e.target.value)}
-                                placeholder="전체적인 감상평을 남겨주세요."
+                                placeholder={dict?.summaryPlaceholder || (isEn ? "Leave your overall impressions..." : "전체적인 감상평을 남겨주세요.")}
                                 className="w-full h-24 p-4 rounded-xl border-2 border-border bg-input text-sm text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none resize-none"
                             />
                         </div>
@@ -315,7 +318,7 @@ text - [10px] sm: text - xs px - 2 sm: px - 3 py - 1 sm: py - 1.5 rounded - full
                     {/* Footer - Fixed */}
                     <div className="p-4 sm:p-6 bg-secondary border-t border-border shrink-0 flex justify-between items-center">
                         <div className="flex flex-col">
-                            <span className="text-xs text-muted-foreground">Average Rating</span>
+                            <span className="text-xs text-muted-foreground">{dict?.averageRating || "Average Rating"}</span>
                             <div className="text-2xl font-black text-primary flex items-center gap-1">
                                 ★ {ratingOverall.toFixed(1)}
                             </div>
@@ -326,13 +329,13 @@ text - [10px] sm: text - xs px - 2 sm: px - 3 py - 1 sm: py - 1.5 rounded - full
                                 onClick={onClose}
                                 className="px-6 py-3 rounded-xl font-bold text-foreground hover:bg-muted transition-colors"
                             >
-                                취소
+                                {dict?.cancel || (isEn ? "Cancel" : "취소")}
                             </button>
                             <button
                                 onClick={handleSubmit}
                                 className="px-8 py-3 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold rounded-xl shadow-lg hover:shadow-primary/25 active:scale-95 transition-all"
                             >
-                                저장하기
+                                {dict?.save || (isEn ? "Save" : "저장하기")}
                             </button>
                         </div>
                     </div>

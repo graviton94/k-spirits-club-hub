@@ -3,6 +3,8 @@ import { Metadata } from "next";
 import SpiritDetailClient from "./spirit-detail-client";
 import { db } from "@/lib/db/index";
 import { reviewsDb } from "@/lib/db/firestore-rest";
+import { getDictionary } from "@/lib/get-dictionary";
+import { Locale } from "@/i18n-config";
 
 export const runtime = 'edge';
 
@@ -193,24 +195,24 @@ export default async function SpiritDetailPage({
   // --- [SEO 최적화된 JSON-LD 구조화 데이터] ---
 
   const realReviewCount = reviews.length;
-  
+
   // Build rich description with tasting notes and pairing information
   const buildRichDescription = () => {
     const baseDescription = spirit.metadata?.description_ko || spirit.metadata?.description_en || `${spirit.name} - ${spirit.category} 상세 정보`;
     const parts = [baseDescription];
-    
+
     // Add tasting note if available
     const tastingNote = spirit.tasting_note || spirit.metadata?.tasting_note;
     if (tastingNote) {
       parts.push(`[Tasting Note]: ${tastingNote}`);
     }
-    
+
     // Add pairing guide if available
     const pairingGuide = spirit.metadata?.pairing_guide_ko || spirit.metadata?.pairing_guide_en || spirit.pairing_guide_ko || spirit.pairing_guide_en;
     if (pairingGuide) {
       parts.push(`[Best Pairing]: ${pairingGuide}`);
     }
-    
+
     return parts.join('. ');
   };
 
@@ -261,7 +263,7 @@ export default async function SpiritDetailPage({
       bestRating: "5",
       worstRating: "1"
     };
-    
+
     // Add actual reviews
     jsonLd.review = reviews.slice(0, 5).map((r) => ({
       '@type': 'Review',
@@ -280,13 +282,15 @@ export default async function SpiritDetailPage({
     }));
   }
 
+  const dictionary = await getDictionary(lang as Locale);
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <SpiritDetailClient spirit={spirit} reviews={reviews} />
+      <SpiritDetailClient spirit={spirit} reviews={reviews} lang={lang as Locale} dict={dictionary.detail} />
     </>
   );
 }

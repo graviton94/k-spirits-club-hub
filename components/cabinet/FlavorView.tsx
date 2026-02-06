@@ -5,14 +5,14 @@ import { motion } from 'framer-motion';
 import { Sparkles, RefreshCw, ShoppingBag, ExternalLink, Download, Share2 } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { toPng } from 'html-to-image';
-import { useAuth } from '@/app/context/auth-context';
+import { useAuth } from '@/app/[lang]/context/auth-context';
 import TasteRadar from './TasteRadar';
 import TastePublicReport from './TastePublicReport';
 import SuccessToast from '@/components/ui/SuccessToast';
 import { UserTasteProfile } from '@/lib/db/schema';
 
-export default function FlavorView() {
-    const [profile, setProfile] = useState<UserTasteProfile | null>(null); // 초기엔 null
+export default function FlavorView({ dict }: { dict?: any }) {
+    const [profile, setProfile] = useState<UserTasteProfile | null>(null);
     const [isAnalyzing, setIsAnalyzing] = useState(false);
     const [usage, setUsage] = useState<{ count: number, remaining: number } | null>(null);
     const [showToast, setShowToast] = useState(false);
@@ -192,17 +192,17 @@ export default function FlavorView() {
                 <div className="w-24 h-24 bg-neutral-900 rounded-full flex items-center justify-center mb-6 shadow-inner shadow-pink-500/20">
                     <Sparkles className="w-10 h-10 text-pink-500" />
                 </div>
-                <h2 className="text-2xl font-bold mb-3">{isEn ? "No taste analysis yet" : "아직 분석된 취향이 없습니다"}</h2>
+                <h2 className="text-2xl font-bold mb-3">{dict.flavor?.empty || (isEn ? "No taste analysis yet" : "아직 분석된 취향이 없습니다")}</h2>
                 <p className="text-neutral-400 max-w-md mb-8">
-                    {isEn
+                    {dict.flavor?.emptyDesc || (isEn
                         ? "AI analyzes your taste DNA based on spirits in your cabinet and your reviews."
-                        : <>보관함에 있는 술과 남기신 리뷰를 바탕으로<br />AI가 당신의 미각 DNA를 분석해드립니다.</>}
+                        : "보관함에 있는 술과 남기신 리뷰를 바탕으로 AI가 당신의 미각 DNA를 분석해드립니다.")}
                 </p>
                 <button
                     onClick={handleAnalyze}
                     className="px-8 py-3 bg-gradient-to-r from-pink-600 to-purple-600 rounded-full font-bold text-white hover:opacity-90 transition-all transform hover:scale-105 shadow-lg shadow-pink-900/50 flex items-center gap-2"
                 >
-                    <Sparkles className="w-5 h-5" /> {isEn ? "Start Analysis" : "내 취향 분석 시작하기"}
+                    <Sparkles className="w-5 h-5" /> {dict.flavor?.start || (isEn ? "Start Analysis" : "내 취향 분석 시작하기")}
                 </button>
             </motion.div>
         );
@@ -236,7 +236,7 @@ export default function FlavorView() {
                         />
                     </motion.div>
                 </div>
-                <p className="text-lg font-medium animate-pulse">{isEn ? "Finding your perfect taste match..." : "당신에게 딱 맞는 취향을 찾는 중..."}</p>
+                <p className="text-lg font-medium animate-pulse">{dict.flavor?.analyzing || (isEn ? "Finding your perfect taste match..." : "당신에게 딱 맞는 취향을 찾는 중...")}</p>
             </div>
         );
     }
@@ -255,14 +255,14 @@ export default function FlavorView() {
                     className="mt-6 w-full py-3 bg-neutral-800 hover:bg-neutral-700 text-neutral-300 font-bold rounded-xl transition-colors flex items-center justify-center gap-2 text-sm"
                 >
                     <RefreshCw className="w-4 h-4" />
-                    {isEn ? `Re-analyze (Remaining: ${usage.remaining})` : `취향 재분석 (오늘 남은 횟수: ${usage.remaining}회)`}
+                    {dict.flavor?.reanalyze ? `${dict.flavor.reanalyze} (Today: ${usage.remaining})` : (isEn ? `Re-analyze (Remaining: ${usage.remaining})` : `취향 재분석 (오늘 남은 횟수: ${usage.remaining}회)`)}
                 </button>
             );
         } else {
             return (
                 <div className="mt-6 w-full py-4 bg-neutral-800/50 border border-neutral-800 text-neutral-500 font-medium rounded-xl text-center text-sm">
-                    {isEn ? "Daily limit reached😢 (3/day)" : "분석 횟수가 소진되었습니다😢 (일 3회)"}<br />
-                    <span className="text-xs opacity-70">{isEn ? "See you tomorrow!" : "내일 다시 만나요!"}</span>
+                    {dict.flavor?.limitReached || (isEn ? "Daily limit reached😢 (3/day)" : "분석 횟수가 소진되었습니다😢 (일 3회)")}<br />
+                    <span className="text-xs opacity-70">{dict.flavor?.seeYouTomorrow || (isEn ? "See you tomorrow!" : "내일 다시 만나요!")}</span>
                 </div>
             );
         }
@@ -292,14 +292,14 @@ export default function FlavorView() {
                     className="flex items-center justify-center gap-2 py-4 bg-neutral-800 hover:bg-neutral-700 text-white rounded-2xl font-bold transition-all transform active:scale-95 border border-neutral-700 shadow-lg"
                 >
                     <Download className="w-5 h-5 text-pink-500" />
-                    {isEn ? "Save Image" : "이미지 저장"}
+                    {dict.flavor?.saveImage || (isEn ? "Save Image" : "이미지 저장")}
                 </button>
                 <button
                     onClick={handleCopyUrl}
                     className="flex items-center justify-center gap-2 py-4 bg-neutral-800 hover:bg-neutral-700 text-white rounded-2xl font-bold transition-all transform active:scale-95 border border-neutral-700 shadow-lg"
                 >
                     <Share2 className="w-5 h-5 text-purple-500" />
-                    {isEn ? "Share" : "친구에게 공유"}
+                    {dict.flavor?.share || (isEn ? "Share" : "친구에게 공유")}
                 </button>
             </div>
 

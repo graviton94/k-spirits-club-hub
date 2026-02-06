@@ -4,7 +4,7 @@ import type { Review } from '@/lib/db/schema';
 import { useState, useEffect, useRef } from 'react';
 import { Star, MessageSquare, Wind, Utensils, Zap, Quote, X, Check, Edit2, Trash2, Heart } from 'lucide-react';
 import metadata from '@/lib/constants/spirits-metadata.json';
-import { useAuth } from '@/app/context/auth-context';
+import { useAuth } from '@/app/[lang]/context/auth-context';
 import SuccessToast from '@/components/ui/SuccessToast';
 
 interface ExtendedReview extends Review {
@@ -18,9 +18,12 @@ interface ReviewSectionProps {
   spiritName: string;
   spiritImageUrl?: string | null;
   reviews: ExtendedReview[];
+  lang?: string;
+  dict?: any;
 }
 
-export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, reviews }: ReviewSectionProps) {
+export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, reviews, lang = 'ko', dict }: ReviewSectionProps) {
+  const isEn = lang === 'en';
   const { user } = useAuth();
   const [showForm, setShowForm] = useState(false);
   const [liveReviews, setLiveReviews] = useState<ExtendedReview[]>(reviews);
@@ -97,15 +100,15 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div>
           <h2 className="text-2xl font-black flex items-center gap-2">
-            리뷰 <span className="text-amber-500">{liveReviews.length}</span>
+            {dict?.reviews || (isEn ? "Reviews" : "리뷰")} <span className="text-amber-500">{liveReviews.length}</span>
           </h2>
-          <p className="text-sm text-muted-foreground">시음 경험을 공유해주세요</p>
+          <p className="text-sm text-muted-foreground">{isEn ? "Share your tasting experience" : "시음 경험을 공유해주세요"}</p>
         </div>
         <button
           id="review-form-anchor"
           onClick={() => {
             if (!showForm && hasReviewed && !editingReview) {
-              setToast({ message: '이미 제품에 대한 리뷰를 작성하셨습니다. 한 제품에는 하나의 리뷰만 작성 가능합니다.', variant: 'error' });
+              setToast({ message: isEn ? 'You have already reviewed this product. Only one review per product is allowed.' : '이미 제품에 대한 리뷰를 작성하셨습니다. 한 제품에는 하나의 리뷰만 작성 가능합니다.', variant: 'error' });
               return;
             }
             if (showForm) {
@@ -117,7 +120,7 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
           }}
           className={`px-6 py-2.5 rounded-xl font-bold transition-all shadow-lg ${hasReviewed && !showForm ? 'bg-secondary text-muted-foreground cursor-not-allowed' : 'text-white bg-linear-to-r from-amber-500 to-orange-600 hover:shadow-primary/30'}`}
         >
-          {showForm ? '취소하기' : hasReviewed ? '리뷰 작성 완료' : '+ 리뷰 작성하기'}
+          {showForm ? (isEn ? 'Cancel' : '취소하기') : hasReviewed ? (isEn ? 'Review Completed' : '리뷰 작성 완료') : (dict?.writeReview || (isEn ? '+ Write Review' : '+ 리뷰 작성하기'))}
         </button>
       </div>
 
@@ -143,6 +146,8 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
           }}
           onSubmitted={handleReviewSubmitted}
           onToast={(message, variant) => setToast({ message, variant })}
+          lang={lang}
+          dict={dict}
         />
       )}
 
@@ -161,8 +166,11 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
           <div className="text-center py-20 bg-secondary/20 rounded-3xl border border-dashed border-border">
             <MessageSquare className="w-12 h-12 mx-auto mb-4 text-muted-foreground/30" />
             <p className="text-muted-foreground font-medium">
-              아직 작성된 리뷰가 없습니다.<br />
-              소중한 첫 리뷰를 작성해보세요!
+              {isEn ? (
+                <>No reviews yet.<br />Be the first to share your experience!</>
+              ) : (
+                <>아직 작성된 리뷰가 없습니다.<br />소중한 첫 리뷰를 작성해보세요!</>
+              )}
             </p>
           </div>
         )}
@@ -408,7 +416,7 @@ function ReviewMetricsItem({ title, rating, tags, icon, color }: { title: string
   );
 }
 
-function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitted, initialData, onToast }: {
+function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitted, initialData, onToast, lang, dict }: {
   spiritId: string;
   spiritName: string;
   spiritImageUrl?: string | null;
@@ -416,7 +424,10 @@ function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitte
   onSubmitted: (review: ExtendedReview) => void;
   initialData?: ExtendedReview | null;
   onToast?: (message: string, variant: 'success' | 'error') => void;
+  lang?: string;
+  dict?: any;
 }) {
+  const isEn = lang === 'en';
   const { user, profile } = useAuth();
   const [formData, setFormData] = useState({
     content: initialData?.content || '',
@@ -532,10 +543,10 @@ function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitte
       <div className="mb-6">
         <h3 className="text-xl font-black flex items-center gap-2 mb-1">
           <span className="w-2 h-6 bg-primary rounded-full"></span>
-          {initialData ? '리뷰 수정하기' : '리뷰 작성하기'}
+          {initialData ? (isEn ? 'Edit Review' : '리뷰 수정하기') : (dict?.writeReview || (isEn ? 'Write Review' : '리뷰 작성하기'))}
         </h3>
         <p className="text-xs text-muted-foreground font-medium ml-4">
-          (점수 클릭 시 0.1점 단위로 조정 가능합니다!)
+          ({isEn ? 'Click/drag stars to adjust by 0.1!' : '점수 클릭 시 0.1점 단위로 조정 가능합니다!'})
         </p>
       </div>
 
@@ -543,9 +554,9 @@ function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitte
         {/* N / P / F Sequential Flow */}
         <div className="space-y-6">
           <RatingSection
-            label="향기와 맛(Nose&Flavor)"
+            label={isEn ? "Nose & Flavor" : "향기와 맛(Nose&Flavor)"}
             shortLabel="Nose"
-            placeholder="어떤 향기가 느껴졌나요?"
+            placeholder={isEn ? "What scents did you notice?" : "어떤 향기가 느껴졌나요?"}
             rating={formData.noseRating}
             tags={formData.nose}
             onRatingChange={(r) => setFormData({ ...formData, noseRating: r })}
@@ -553,11 +564,13 @@ function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitte
             color="blue"
             icon={<Wind className="w-4 h-4" />}
             metadataKey="nose"
+            isEn={isEn}
+            dict={dict}
           />
           <RatingSection
-            label="바디감과 질감(Palate)"
+            label={isEn ? "Palate" : "바디감과 질감(Palate)"}
             shortLabel="Palate"
-            placeholder="머금었을 때는 어떤 느낌인가요?"
+            placeholder={isEn ? "How does it feel on the palate?" : "머금었을 때는 어떤 느낌인가요?"}
             rating={formData.palateRating}
             tags={formData.palate}
             onRatingChange={(r) => setFormData({ ...formData, palateRating: r })}
@@ -565,11 +578,13 @@ function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitte
             color="orange"
             icon={<Utensils className="w-4 h-4" />}
             metadataKey="palate"
+            isEn={isEn}
+            dict={dict}
           />
           <RatingSection
-            label="여운과 끝맛(Finish)"
+            label={isEn ? "Finish" : "여운과 끝맛(Finish)"}
             shortLabel="Finish"
-            placeholder="피니시는 어땠나요?"
+            placeholder={isEn ? "How was the finish?" : "피니시는 어땠나요?"}
             rating={formData.finishRating}
             tags={formData.finish}
             onRatingChange={(r) => setFormData({ ...formData, finishRating: r })}
@@ -577,12 +592,16 @@ function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitte
             color="purple"
             icon={<Zap className="w-4 h-4" />}
             metadataKey="finish"
+            isEn={isEn}
+            dict={dict}
           />
         </div>
 
         <div className="pt-6 border-t border-border space-y-6">
           <div className="flex flex-col items-center justify-center p-4 bg-secondary/30 rounded-3xl border border-border/50">
-            <label className="text-xs font-black tracking-widest text-muted-foreground uppercase mb-2">종합 평점 (자동 계산)</label>
+            <label className="text-xs font-black tracking-widest text-muted-foreground uppercase mb-2">
+              {isEn ? "Overall Rating (Auto-calculated)" : "종합 평점 (자동 계산)"}
+            </label>
             <div className="flex items-center gap-4">
               <div className="text-4xl font-black text-foreground">{formData.rating.toFixed(2)}</div>
               <div className="flex gap-1">
@@ -607,13 +626,15 @@ function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitte
           </div>
 
           <div className="space-y-2">
-            <label className="text-xs font-black tracking-widest text-muted-foreground uppercase">총평</label>
+            <label className="text-xs font-black tracking-widest text-muted-foreground uppercase">
+              {isEn ? "General Comments" : "총평"}
+            </label>
             <textarea
               required
               value={formData.content}
               onChange={(e) => setFormData({ ...formData, content: e.target.value })}
               className="w-full px-6 py-4 bg-secondary/50 border border-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary font-medium min-h-[120px] text-lg"
-              placeholder="후기를 자유롭게 적어주세요!"
+              placeholder={isEn ? "Feel free to share your thoughts!" : "후기를 자유롭게 적어주세요!"}
             />
           </div>
         </div>
@@ -649,7 +670,7 @@ function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitte
   );
 }
 
-function RatingSection({ label, shortLabel, rating, tags, onRatingChange, onTagsChange, color, icon, metadataKey, placeholder }: {
+function RatingSection({ label, shortLabel, rating, tags, onRatingChange, onTagsChange, color, icon, metadataKey, placeholder, isEn, dict }: {
   label: string;
   shortLabel: string;
   rating: number;
@@ -660,6 +681,8 @@ function RatingSection({ label, shortLabel, rating, tags, onRatingChange, onTags
   icon: any;
   metadataKey: string;
   placeholder: string;
+  isEn: boolean;
+  dict: any;
 }) {
   const [hoverRating, setHoverRating] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);

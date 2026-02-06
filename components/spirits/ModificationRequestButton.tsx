@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AlertCircle, X, Send, CheckCircle2 } from 'lucide-react';
 import { submitModificationRequest } from '@/lib/actions/modification-actions';
-import { useAuth } from '@/app/context/auth-context';
+import { useAuth } from '@/app/[lang]/context/auth-context';
 
 interface ModificationRequestButtonProps {
     spiritId: string;

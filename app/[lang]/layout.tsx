@@ -3,31 +3,34 @@ import Script from "next/script";
 import { Inter, Outfit } from "next/font/google";
 import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google'; // ✅ 공식 라이브러리 추가
 import "./globals.css";
-import { AuthProvider } from '../context/auth-context';
-import { SpiritsCacheProvider } from '../context/spirits-cache-context';
+import { AuthProvider } from './context/auth-context';
+import { SpiritsCacheProvider } from './context/spirits-cache-context';
 import OnboardingModal from '../components/auth/onboarding-modal';
+import { i18n, type Locale } from '@/i18n-config';
 import { Header } from '@/components/layout/Header';
 import { BottomNav } from "@/components/layout/BottomNav";
 import StickyFooterAd from '@/components/ui/StickyFooterAd';
+import { getDictionary } from '@/lib/get-dictionary';
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit", display: "swap" });
 
-export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+export async function generateStaticParams() {
+  return i18n.locales.map((locale) => ({ lang: locale }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
   const { lang } = await params;
+  const dict = await getDictionary(lang);
   const isEn = lang === 'en';
 
   return {
     metadataBase: new URL('https://kspiritsclub.com'),
     title: {
-      default: isEn
-        ? "K-Spirits Club | Global Spirits Database & Reviews"
-        : "K-Spirits Club | 대한민국 대표 주류 데이터베이스(DB) & 리뷰",
+      default: dict.meta.title,
       template: "%s | K-Spirits Club",
     },
-    description: isEn
-      ? "Explore over 1 million whiskies and spirits. Save your favorites and share reviews. Create your own spirit cabinet."
-      : "전 세계 100만 개 이상의 위스키, 증류주 정보를 탐색하고 저장하며 리뷰를 공유하세요. 나만의 주류 캐비닛을 만들어보세요.",
+    description: dict.meta.description,
     verification: {
       google: "EztyFtmuOluuqxjs6wbD0Xx1DPSJwO3FXcY8Nz3CQ_o",
     },
@@ -44,12 +47,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       title: "K-Spirits Club",
     },
     openGraph: {
-      title: isEn
-        ? "K-Spirits Club | Whiskies, Traditional Spirits, Global Database"
-        : "K-Spirits Club | 위스키, 전통주, 글로벌 주류 데이터베이스 & 리뷰",
-      description: isEn
-        ? "Global Spirits Database: Everything about whiskies and traditional spirits."
-        : "대한민국 주류 데이터베이스: 위스키와 전통주의 모든 것. 전 세계 100만 개 이상의 증류주 정보를 탐색하고 리뷰를 공유하세요.",
+      title: dict.meta.title,
+      description: dict.meta.description,
       type: "website",
       locale: isEn ? "en_US" : "ko_KR",
       siteName: "K-Spirits Club",
@@ -57,12 +56,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     },
     twitter: {
       card: "summary_large_image",
-      title: isEn
-        ? "K-Spirits Club | Whiskies, Traditional Spirits, Global Database"
-        : "K-Spirits Club | 위스키, 전통주, 글로벌 주류 데이터베이스 & 리뷰",
-      description: isEn
-        ? "Global Spirits Database: Everything about whiskies and traditional spirits."
-        : "대한민국 주류 데이터베이스: 위스키와 전통주의 모든 것. 전 세계 100만 개 이상의 증류주 정보를 탐색하고 리뷰를 공유하세요.",
+      title: dict.meta.title,
+      description: dict.meta.description,
       images: ['/main.jpg'],
     },
     icons: {
@@ -89,11 +84,13 @@ export const viewport: Viewport = {
 export default async function RootLayout({
   children,
   params,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-  params: Promise<{ lang: string }>;
-}>) {
+  params: Promise<{ lang: Locale }>;
+}) {
   const { lang } = await params;
+  const dictionary = await getDictionary(lang);
+
   return (
     <html lang={lang}>
       <head>
@@ -116,7 +113,7 @@ export default async function RootLayout({
         </Script>
       </head>
 
-      <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`}>
+      <body className={`${inter.variable} ${outfit.variable} font-sans antialiased bg-background text-foreground`}>
         {/* ✅ 1 & 2. Google Analytics & Tag Manager (공식 라이브러리)
           - body 태그 내부에 위치시켜도 Next.js가 최적의 위치로 자동 렌더링합니다.
           - GA4와 GTM을 함께 사용하는 경우, 데이터 정합성을 위해 둘 다 명시하는 것이 좋습니다.
@@ -131,15 +128,16 @@ export default async function RootLayout({
           strategy="lazyOnload"
         />
 
-        <main className="relative min-h-screen pb-32">
-          <AuthProvider>
-            <SpiritsCacheProvider>
-              <Header />
-              <OnboardingModal />
+        <AuthProvider>
+          <SpiritsCacheProvider>
+            <Header lang={lang} dict={dictionary.nav} />
+            <OnboardingModal />
+            <main className="relative min-h-screen pb-20 md:pb-0">
               {children}
-            </SpiritsCacheProvider>
-          </AuthProvider>
-        </main>
+            </main>
+            <BottomNav lang={lang} dict={dictionary.nav} />
+          </SpiritsCacheProvider>
+        </AuthProvider>
 
         {/* Footer */}
         <footer className="bg-slate-50 dark:bg-neutral-950 border-t border-slate-200 dark:border-white/5 py-8 pb-32">
@@ -186,8 +184,6 @@ export default async function RootLayout({
             slot={process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT}
           />
         )}
-
-        <BottomNav />
       </body>
     </html>
   );

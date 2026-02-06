@@ -8,8 +8,8 @@ import { usePathname } from "next/navigation";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import { Spirit } from "@/lib/db/schema";
 import { getTagStyle } from "@/lib/constants/tag-styles";
-import { useAuth } from "@/app/context/auth-context";
-import { addToCabinet, removeFromCabinet, checkCabinetStatus } from "@/app/actions/cabinet";
+import { useAuth } from "@/app/[lang]/context/auth-context";
+import { addToCabinet, removeFromCabinet, checkCabinetStatus } from "@/app/[lang]/actions/cabinet";
 import { triggerLoginModal } from "@/lib/utils/spirit-adapters";
 import SuccessToast from "./SuccessToast";
 
@@ -187,7 +187,7 @@ function ExploreCardComponent({
       transition={{ type: "spring", stiffness: 400, damping: 17 }}
       onClick={() => onClick?.(spirit)}
     >
-      <div className="shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-muted border border-border relative">
+      <div className="shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-muted border border-border relative aspect-square">
         <Image
           src={spirit.imageUrl && spirit.imageUrl.trim() ? getOptimizedImageUrl(spirit.imageUrl, 120, 60) : getCategoryFallbackImage(spirit.category)}
           alt={displayName}

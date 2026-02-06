@@ -3,11 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, Search, Library, Gamepad2, User } from "lucide-react";
+import { Locale } from "@/i18n-config";
 
-export function BottomNav() {
+export function BottomNav({ lang, dict }: { lang: Locale, dict: any }) {
   const pathname = usePathname() || "";
-  const segments = pathname.split('/');
-  const lang = (segments[1] === 'en' || segments[1] === 'ko') ? segments[1] : 'ko';
   const isEn = lang === 'en';
 
   const isActive = (path: string) => {
@@ -19,11 +18,11 @@ export function BottomNav() {
   };
 
   const navItems = [
-    { href: "/explore", icon: Search, label: isEn ? "Explore" : "탐색" },
-    { href: "/cabinet", icon: Library, label: isEn ? "Cabinet" : "캐비닛" },
-    { href: "/", icon: Home, label: isEn ? "Home" : "홈" },
-    { href: "/contents", icon: Gamepad2, label: isEn ? "Contents" : "컨텐츠" },
-    { href: "/me", icon: User, label: isEn ? "My" : "내 정보" },
+    { href: "/explore", icon: Search, label: dict.explore },
+    { href: "/cabinet", icon: Library, label: dict.cabinet },
+    { href: "/", icon: Home, label: dict.home },
+    { href: "/contents", icon: Gamepad2, label: "Contents" }, // Dictionary doesn't have "contents", using hardcoded for now or keeping as is if user didn't specify
+    { href: "/me", icon: User, label: dict.profile },
   ];
 
   return (

@@ -189,6 +189,9 @@ x-user-id: string (required)
   nose?: string;
   palate?: string;
   finish?: string;
+  tagsN?: string[];      // Nose tags (enhanced input system)
+  tagsP?: string[];      // Palate tags (enhanced input system)
+  tagsF?: string[];      // Finish tags (enhanced input system)
 }
 ```
 
@@ -312,6 +315,11 @@ AI 취향 분석을 실행합니다.
 - `500`: AI 분석 실패
 
 **Processing Time:** 약 5-15초
+
+**AI Enhancements (2026-02)**:
+- **Recency Weighting**: 최근 7일 내 추가/리뷰한 술을 더 높게 반영
+- **Temperature 0.7**: 다양하고 독창적인 추천을 위한 생성 파라미터 상향
+- **Dynamic Profile Detection**: 최근 활동이 기존 취향과 다를 경우 변화를 감지 및 반영
 
 ---
 
@@ -601,5 +609,5 @@ const review = await fetch('/api/reviews', {
 
 ---
 
-**Last Updated**: 2026-02-01  
+**Last Updated**: 2026-02-06  
 **API Version**: 1.0.0

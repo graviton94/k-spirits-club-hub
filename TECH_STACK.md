@@ -17,6 +17,7 @@ K-Spirits Club은 Next.js 15 기반의 풀스택 웹 애플리케이션으로, C
 | **Framer Motion** | 12.29.0 | 애니메이션 및 인터랙션 |
 | **Lucide React** | 0.563.0 | 아이콘 시스템 |
 | **Recharts** | 3.7.0 | 데이터 시각화 (Taste DNA 차트) |
+| **html-to-image** | 1.11.11 | 결과 이미지 생성 (MBTI, World Cup) |
 
 ### **Backend & Infrastructure**
 | Technology | Version | Purpose |
@@ -95,6 +96,20 @@ K-Spirits Club은 Next.js 15 기반의 풀스택 웹 애플리케이션으로, C
 ```
 k-spirits-club-hub/
 ├── app/                          # Next.js App Router
+│   ├── [lang]/                   # 다국어 라우팅 (ko/en)
+│   │   ├── (features)/           # 주요 기능 페이지
+│   │   │   ├── admin/            # 관리자 대시보드
+│   │   │   ├── cabinet/          # 나의 술장
+│   │   │   ├── explore/          # 리스트 탐색
+│   │   │   ├── spirits/[id]/     # 제품 상세
+│   │   │   ├── me/               # 마이페이지
+│   │   │   └── contents/         # 특별 콘텐츠
+│   │   │       ├── worldcup/     # 주류 월드컵
+│   │   │       ├── perfect-pour/ # 소맥 게임
+│   │   │       ├── mbti/         # MBTI 주류 성향 테스트
+│   │   │       └── taste/result/ # AI 취향 분석 결과
+│   │   ├── layout.tsx            # 언어별 레이아웃
+│   │   └── page.tsx              # 언어별 홈페이지
 │   ├── api/                      # Edge API Routes
 │   │   ├── spirits/              # 주류 데이터 CRUD
 │   │   ├── reviews/              # 리뷰 시스템
@@ -107,18 +122,6 @@ k-spirits-club-hub/
 │   ├── context/                  # React Contexts
 │   │   ├── auth-context.tsx      # 인증 상태 관리
 │   │   └── spirits-cache-context.tsx # 검색 인덱스 캐싱
-│   ├── (features)/               # 주요 기능 페이지
-│   │   ├── admin/                # 관리자 대시보드
-│   │   ├── cabinet/              # 나의 술장
-│   │   ├── explore/              # 리스트 탐색
-│   │   ├── spirits/[id]/         # 제품 상세
-│   │   ├── me/                   # 마이페이지
-│   │   └── contents/             # 특별 콘텐츠
-│   │       ├── worldcup/         # 주류 월드컵
-│   │       ├── perfect-pour/     # 소맥 게임
-│   │       └── taste/result/     # AI 취향 분석 결과
-│   ├── layout.tsx                # 전역 레이아웃
-│   ├── page.tsx                  # 홈페이지
 │   └── globals.css               # 글로벌 스타일
 │
 ├── components/                   # React 컴포넌트
@@ -149,8 +152,11 @@ k-spirits-club-hub/
 │   │   ├── image-optimization.ts # 이미지 최적화 (wsrv.nl)
 │   │   ├── image-fallback.ts     # 카테고리별 폴백 이미지
 │   │   ├── spirit-adapters.ts    # 데이터 어댑터
-│   │   └── aiPromptBuilder.ts    # AI 프롬프트 생성
+│   │   ├── aiPromptBuilder.ts    # AI 프롬프트 생성
+│   │   └── ui-text.ts           # 다국어 UI 텍스트
 │   ├── constants/                # 상수 정의
+│   │   ├── mbti-data.ts          # MBTI 질문 및 결과 데이터
+│   │   └── categories.ts         # 카테고리 상수
 │   └── hooks/                    # Custom React Hooks
 │
 ├── scripts/                      # Python 데이터 파이프라인
@@ -250,6 +256,7 @@ Instant Results (no server call)
 - **Resume Capability**: 중단된 배치부터 자동 재개
 - **Smart Image Search**: 제품명 분석 후 공식 이미지 자동 수집
 - **AI Rate Limiting**: Gemini API 호출 속도 제한 (10 RPM)
+- **AI Temperature Optimization**: 취향 분석 시 0.7로 설정하여 다양성 확보
 
 ---
 
@@ -266,6 +273,12 @@ Instant Results (no server call)
 - **CORS**: Cloudflare Pages 도메인만 허용
 - **Rate Limiting**: AI 분석 API는 사용자당 일일 3회 제한
 - **Data Validation**: TypeScript 스키마 검증 (`lib/db/schema.ts`)
+
+### **Multi-Language Support**
+- **Dynamic Routing**: URL 기반 언어 전환 (`/ko/*`, `/en/*`)
+- **Metadata Generation**: `generateMetadata` 함수로 언어별 SEO 최적화
+- **UI Text Dictionary**: `lib/utils/ui-text.ts`의 `UI_TEXT` 객체로 모든 레이블 관리
+- **Middleware**: 브라우저 언어 감지 후 자동 리다이렉트
 
 ---
 
@@ -327,5 +340,5 @@ npx wrangler pages deploy .next/out
 
 ---
 
-**Last Updated**: 2026-02-01  
-**Version**: 1.0.0 (MVP)
+**Last Updated**: 2026-02-06  
+**Version**: 1.0.0 (Production)

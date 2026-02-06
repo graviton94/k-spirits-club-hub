@@ -2,16 +2,17 @@
 
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
-import { useSpiritsCache } from '@/app/context/spirits-cache-context';
-import { useAuth } from '@/app/context/auth-context';
-import { getCabinetStatusInfo } from '@/app/actions/cabinet';
+import { useSpiritsCache } from '@/app/[lang]/context/spirits-cache-context';
+import { useAuth } from '@/app/[lang]/context/auth-context';
+import { getCabinetStatusInfo } from '@/app/[lang]/actions/cabinet';
 import { ExploreCard } from './ExploreCard';
+import { ExploreGridSkeleton } from './ExploreSkeleton';
 import { Search, Loader2, AlertCircle, RefreshCw, Filter } from 'lucide-react';
 import AdSlot from '@/components/common/AdSlot';
 import metadata from '@/lib/constants/spirits-metadata.json';
 import { SpiritSearchIndex } from '@/lib/db/schema';
 
-export default function ExploreContent() {
+export default function ExploreContent({ dict }: { dict?: any }) {
   const pathname = usePathname() || "";
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -122,7 +123,7 @@ export default function ExploreContent() {
       <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
         <div className="flex flex-col">
           <h1 className="text-3xl font-extrabold text-foreground tracking-tight">
-            {isEn ? "Explore spirits" : "전체 둘러보기"}
+            {dict?.title || (isEn ? "Explore spirits" : "전체 둘러보기")}
           </h1>
           <p className="text-muted-foreground text-sm mt-1">
             {isEn ? (isSearching ? "Searching..." : `Found ${displaySpirits.length} spirits.`) : (isSearching ? "검색 중..." : `총 ${displaySpirits.length}개의 주종이 검색되었습니다.`)}
@@ -139,10 +140,10 @@ export default function ExploreContent() {
             }}
             className="w-full sm:w-auto px-4 py-3 pr-10 rounded-2xl bg-white text-black dark:bg-black dark:text-white border border-border outline-none focus:ring-2 focus:ring-indigo-500 min-w-[140px] appearance-none"
           >
-            <option value="">{isEn ? "All Categories" : "모든 주종"}</option>
+            <option value="">{dict?.filters?.all || (isEn ? "All Categories" : "모든 주종")}</option>
             {Object.keys(metadata.categories).map((cat) => (
               <option key={cat} value={cat}>
-                {(isEn ? (metadata as any).display_names_en[cat] : (metadata as any).display_names[cat]) || cat}
+                {dict?.filters?.[cat] || (isEn ? (metadata as any).display_names_en[cat] : (metadata as any).display_names[cat]) || cat}
               </option>
             ))}
           </select>
@@ -168,7 +169,7 @@ export default function ExploreContent() {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
               <input
                 type="text"
-                placeholder={isEn ? "Search spirit..." : "이름, 증류소 검색..."}
+                placeholder={dict?.filters?.searchPlaceholder || (isEn ? "Search spirit..." : "이름, 증류소 검색...")}
                 className="w-full pl-12 pr-4 py-3 rounded-2xl bg-background border border-border shadow-sm focus:ring-2 focus:ring-indigo-500 outline-none"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -188,7 +189,9 @@ export default function ExploreContent() {
       </div>
 
       {/* Grid */}
-      {displaySpirits.length > 0 ? (
+      {isInitialLoading || (isSearching && displaySpirits.length === 0) ? (
+        <ExploreGridSkeleton count={12} />
+      ) : displaySpirits.length > 0 ? (
         <div className="grid grid-cols-1 gap-4">
           {displaySpirits.slice(0, displayLimit).map((item, index) => (
             <ExploreCard

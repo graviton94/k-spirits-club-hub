@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Status](https://img.shields.io/badge/Status-Beta_v0.9-blue)
+![Status](https://img.shields.io/badge/Status-Production_v1.0-green)
 ![Tech](https://img.shields.io/badge/Stack-Next.js_|_Cloudflare_|_Python-black)
 ![AI](https://img.shields.io/badge/AI-Gemini_2.0_Flash-purple)
 ![License](https://img.shields.io/badge/License-MIT-green)
@@ -48,23 +48,34 @@
 - AI가 분석하는 나만의 **미각 DNA**
 - 6차원 레이더 차트로 취향 시각화 (우디, 피티, 플로럴, 프루티, 너티, 리치니스)
 - 개인화된 추천 및 페르소나 생성
+- **최신 활동 우선순위 분석** - 최근 7일 내 추가/리뷰한 술을 더 높게 반영
 - **일일 3회 무료** 분석 제공
 
-### **5. 🏆 World Cup (주류 월드컵)**
+### **5. 🎭 MBTI Spirit Quiz (주류 성향 테스트)**
+- **16가지 주류 성향 유형** - 나에게 맞는 술 스타일 진단
+- **양자택일 질문** - 15개의 선택지를 통한 정확한 성향 분석
+- **비주얼 결과 카드** - SNS 공유용 이미지 자동 생성 (html-to-image)
+- **맞춤 추천** - 성향별 어울리는 주류 및 테이스팅 노트 제공
+- **다국어 지원** - 한국어/영어 완벽 지원
+
+### **6. 🏆 World Cup (주류 월드컵)**
 - 토너먼트 방식으로 나의 최애 술 찾기
 - 16강 / 32강 / 64강 라운드 선택
 - 카테고리별, 서브카테고리별 게임 생성
 - 결과 이미지 다운로드 및 SNS 공유
+- **이미지 프리로딩** - 게임 시작 전 모든 이미지 사전 로드로 끊김 없는 플레이
 
-### **6. 🍻 Perfect Pour (소맥 제조 게임)**
+### **7. 🍻 Perfect Pour (소맥 제조 게임)**
 - 황금 비율 소맥을 만드는 미니 게임
-- 실시간 물리 엔진 기반 부어따르기 시뮬레이션
+- **2단계 따르기 시뮬레이션** - 소주 → 맥주 순차 주입
+- **정밀 점수 시스템** - 총량(70-90ml)과 비율(소주 30% ±10%) 기반 채점
 - 리더보드 및 점수 공유 기능
 
-### **7. 🌍 Globalization**
-- **Bilingual Interface**: Seamless Korean/English UI switching (URL based)
-- **Localized Content**: AI-generated English name, descriptions & pairing guides
-- **Context-Aware**: Dynamic UI labels via `UI_TEXT` dictionary
+### **8. 🌍 Multi-Language Support**
+- **완전 이중언어 인터페이스** - URL 기반 한국어/영어 자동 전환 (`/ko`, `/en`)
+- **동적 메타데이터** - 언어별 SEO 최적화 및 소셜 공유 미리보기
+- **AI 번역 콘텐츠** - 영문명, 설명, 페어링 가이드 자동 생성
+- **컨텍스트 기반 UI** - `UI_TEXT` 딕셔너리로 모든 레이블 동적 처리
 
 ---
 
@@ -362,3 +373,8 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 ⭐ Star us on GitHub if you find this project useful!
 
 </div>
+
+---
+
+**Last Updated**: 2026-02-06  
+**Version**: 1.0.0 (Production)

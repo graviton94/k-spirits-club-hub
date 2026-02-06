@@ -3,13 +3,13 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter, usePathname } from "next/navigation";
-import { useAuth } from "@/app/context/auth-context";
+import { useAuth } from "@/app/[lang]/context/auth-context";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import { getTagColor } from "@/lib/constants/tag-colors";
 import type { Spirit, UserReview } from "@/lib/utils/flavor-engine";
 import ReviewModal from "@/components/cabinet/ReviewModal";
 import { Bookmark, Plus, Pencil, Check, Loader2, X } from "lucide-react";
-import { addToCabinet } from "@/app/actions/cabinet";
+import { addToCabinet } from "@/app/[lang]/actions/cabinet";
 import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
 import metadata from "@/lib/constants/spirits-metadata.json";
 
@@ -208,7 +208,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                 >
                     {/* ... (Header Image code remains unchanged) ... */}
                     {/* (Omitted for brevity, but it's part of the replacement block) */}
-                    <div className="relative h-[28vh] w-full bg-zinc-800 shrink-0">
+                    <div className="relative h-[28vh] w-full bg-zinc-800 shrink-0 aspect-[16/9] overflow-hidden">
                         {/* Close Button (Top Left) */}
                         <button
                             onClick={onClose}
@@ -219,9 +219,10 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
 
                         {localSpirit.imageUrl ? (
                             <img
-                                src={getOptimizedImageUrl(localSpirit.imageUrl, 600)}
+                                src={getOptimizedImageUrl(localSpirit.imageUrl, 800)}
                                 alt={localSpirit.name}
                                 className="w-full h-full object-cover object-center"
+                                loading="eager"
                             />
                         ) : (
                             <div className="w-full h-full flex items-center justify-center text-6xl">
@@ -264,7 +265,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                                 if (!confirm(t.confirm_remove_wishlist)) return;
                                                 setIsProcessing(true);
                                                 try {
-                                                    await import('@/app/actions/cabinet').then(({ removeFromCabinet }) =>
+                                                    await import('@/app/[lang]/actions/cabinet').then(({ removeFromCabinet }) =>
                                                         removeFromCabinet(user!.uid, spirit.id)
                                                     );
                                                     setCabinetStatus({ isOwned: false, isWishlist: false });
@@ -293,7 +294,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                             if (!confirm(t.confirm_remove_cabinet)) return;
                                             setIsProcessing(true);
                                             try {
-                                                await import('@/app/actions/cabinet').then(({ removeFromCabinet }) =>
+                                                await import('@/app/[lang]/actions/cabinet').then(({ removeFromCabinet }) =>
                                                     removeFromCabinet(user!.uid, spirit.id)
                                                 );
                                                 setCabinetStatus({ isOwned: false, isWishlist: false });

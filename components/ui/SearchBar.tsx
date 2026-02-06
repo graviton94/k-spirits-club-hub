@@ -4,15 +4,15 @@ import { Search, Plus, Bookmark } from "lucide-react";
 import { useState, KeyboardEvent, useMemo, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter, usePathname } from "next/navigation";
-import { useSpiritsCache } from "@/app/context/spirits-cache-context";
+import { useSpiritsCache } from "@/app/[lang]/context/spirits-cache-context";
 import SuccessToast from "@/components/ui/SuccessToast";
-import { useAuth } from "@/app/context/auth-context";
-import { addToCabinet } from "@/app/actions/cabinet";
+import { useAuth } from "@/app/[lang]/context/auth-context";
+import { addToCabinet } from "@/app/[lang]/actions/cabinet";
 import Link from "next/link";
 
 const BLUR_DELAY_MS = 200; // Delay to allow clicking dropdown results before blur
 
-export function SearchBar({ isHero = false }: { isHero?: boolean }) {
+export function SearchBar({ isHero = false, dict }: { isHero?: boolean, dict?: any }) {
   const [isFocused, setIsFocused] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const router = useRouter();
@@ -100,7 +100,7 @@ export function SearchBar({ isHero = false }: { isHero?: boolean }) {
         <Search className="w-5 h-5 text-primary shrink-0" />
         <input
           type="text"
-          placeholder="Search spirits, distilleries..."
+          placeholder={dict?.searchPlaceholder || "Search spirits, distilleries..."}
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           onKeyDown={handleKeyDown}

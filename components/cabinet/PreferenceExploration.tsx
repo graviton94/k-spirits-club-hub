@@ -8,12 +8,14 @@ interface PreferenceExplorationProps {
     flavorAnalysis: any;
     profile: any;
     loading: boolean;
+    dict?: any;
 }
 
 export default function PreferenceExploration({
-    flavorAnalysis, // Not used in new FlavorView, kept for interface compat for now
+    flavorAnalysis,
     profile,
-    loading
+    loading,
+    dict
 }: PreferenceExplorationProps) {
     return (
         <motion.div
@@ -28,7 +30,7 @@ export default function PreferenceExploration({
             )}
 
             {/* New Taste Analysis View */}
-            <FlavorView />
+            <FlavorView dict={dict} />
         </motion.div>
     );
 }

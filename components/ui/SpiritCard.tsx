@@ -8,8 +8,8 @@ import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import { Spirit } from "@/lib/db/schema";
 import { getTagStyle } from "@/lib/constants/tag-styles";
 import { useState, useEffect, useRef } from "react";
-import { useAuth } from "@/app/context/auth-context";
-import { addToCabinet, removeFromCabinet } from "@/app/actions/cabinet";
+import { useAuth } from "@/app/[lang]/context/auth-context";
+import { addToCabinet, removeFromCabinet } from "@/app/[lang]/actions/cabinet";
 import CabinetSelectionModal from "./CabinetSelectionModal";
 import ReviewModal from "@/components/cabinet/ReviewModal";
 import { UserReview } from "@/lib/utils/flavor-engine";
@@ -186,13 +186,13 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
       onClick={() => onClick?.(spirit)}
     >
       {/* Left: 80x80 Thumbnail */}
-      <div className="relative shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-muted border border-border">
+      <div className="relative shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-muted border border-border aspect-square">
         <Image
           src={imgSrc}
           alt={spirit.name}
           fill
           className="object-cover transition-transform duration-300 group-hover:scale-110"
-          sizes="(max-width: 768px) 25vw, 100px" // Optimized sizes
+          sizes="80px" // Optimized sizes for 80x80
           priority={index < 4} // LCP Boost
           onError={() => setImgSrc(getCategoryFallbackImage(spirit.category))}
         />

@@ -1,6 +1,6 @@
 'use client';
 
-import { useAuth } from '@/app/context/auth-context';
+import { useAuth } from '@/app/[lang]/context/auth-context';
 import { motion } from 'framer-motion';
 
 interface ThemeSwitcherProps {

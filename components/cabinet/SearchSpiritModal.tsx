@@ -3,9 +3,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Spirit } from "@/lib/db/schema";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
-import { useSpiritsCache } from "@/app/context/spirits-cache-context";
-import { useAuth } from "@/app/context/auth-context";
-import { addToCabinet } from "@/app/actions/cabinet";
+import { useSpiritsCache } from "@/app/[lang]/context/spirits-cache-context";
+import { useAuth } from "@/app/[lang]/context/auth-context";
+import { addToCabinet } from "@/app/[lang]/actions/cabinet";
 import { Plus, Bookmark, Loader2 } from "lucide-react";
 import SuccessToast from "@/components/ui/SuccessToast";
 import { usePathname } from "next/navigation";
@@ -16,9 +16,11 @@ interface SearchSpiritModalProps {
     onClose: () => void;
     onSuccess: (message: string) => void;
     existingIds: Set<string>;
+    dict?: any;
+    lang?: string;
 }
 
-export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existingIds }: SearchSpiritModalProps) {
+export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existingIds, dict, lang }: SearchSpiritModalProps) {
     const [query, setQuery] = useState("");
     const pathname = usePathname() || "";
     const isEn = pathname.split('/')[1] === 'en';
@@ -194,7 +196,7 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
                                                         disabled={isProcessing}
                                                         onClick={() => handleAdd(item, false)}
                                                         className="w-9 h-9 rounded-xl bg-amber-500 hover:bg-amber-600 text-white flex items-center justify-center transition-all shadow-lg shadow-amber-500/20 active:scale-90 disabled:opacity-50"
-                                                        title={isEn ? "Add to cabinet" : "술장에 추가"}
+                                                        title={dict?.addCabinet || (isEn ? "Add to cabinet" : "술장에 추가")}
                                                     >
                                                         {isProcessing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-5 h-5" />}
                                                     </button>
@@ -202,7 +204,7 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
                                                         disabled={isProcessing}
                                                         onClick={() => handleAdd(item, true)}
                                                         className="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center transition-all border border-white/10 active:scale-90 disabled:opacity-50"
-                                                        title={isEn ? "Add to wishlist" : "위시리스트"}
+                                                        title={dict?.addWishlist || (isEn ? "Add to wishlist" : "위시리스트")}
                                                     >
                                                         {isProcessing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Bookmark className="w-4 h-4" />}
                                                     </button>

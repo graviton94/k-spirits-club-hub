@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { Spirit, SpiritSearchIndex } from '@/lib/db/schema';
+import Fuse from 'fuse.js';
 
 interface SpiritsCacheContextType {
   publishedSpirits: Spirit[];
@@ -151,23 +152,36 @@ export const SpiritsCacheProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
   const refreshCache = () => loadData(true);
 
-  // fuse.js or simple filter based search
+  // fuse.js based search
   const searchSpirits = useCallback((query: string) => {
     if (!query || !searchIndex.length) return [];
 
-    const lowerQuery = query.toLowerCase();
-
-    // Search across multiple fields: name, English name, distillery, and category
-    const results = searchIndex.filter(item => {
-      const nameMatch = item.n && item.n.toLowerCase().includes(lowerQuery);
-      const enMatch = item.en && item.en.toLowerCase().includes(lowerQuery);
-      const distilleryMatch = item.d && item.d.toLowerCase().includes(lowerQuery);
-      const categoryMatch = item.c && item.c.toLowerCase().includes(lowerQuery);
-      return nameMatch || enMatch || distilleryMatch || categoryMatch;
+    const fuse = new Fuse(searchIndex, {
+      keys: [
+        { name: 'n', weight: 1.0 },    // name (Korean)
+        { name: 'en', weight: 0.9 },   // name (English)
+        { name: 'd', weight: 0.5 },    // distillery
+        { name: 'c', weight: 0.3 },    // category
+        { name: 'tne', weight: 0.4 },  // tasting_note_en
+      ],
+      threshold: 0.3,
+      distance: 100,
+      ignoreLocation: true,
     });
 
-    // Sort alphabetically (Korean > English)
-    return results.sort((a, b) => a.n.localeCompare(b.n, 'ko-KR'));
+    const results = fuse.search(query).map(result => result.item);
+
+    // Sort: Matches starting with query first, then alphabetical
+    const lowerQuery = query.toLowerCase();
+    return results.sort((a, b) => {
+      const aStarts = a.n.toLowerCase().startsWith(lowerQuery) || (a.en?.toLowerCase().startsWith(lowerQuery));
+      const bStarts = b.n.toLowerCase().startsWith(lowerQuery) || (b.en?.toLowerCase().startsWith(lowerQuery));
+
+      if (aStarts && !bStarts) return -1;
+      if (!aStarts && bStarts) return 1;
+
+      return a.n.localeCompare(b.n, 'ko-KR');
+    });
   }, [searchIndex]);
 
   return (

@@ -224,11 +224,17 @@ POST /api/analyze-taste
     ├─→ Fetch user's reviews
     │   └─→ reviewsDb.getAllForUser(userId)
     ├─→ Merge data (reviews join cabinet)
+    │   ├─→ Extract timestamps: addedAt, lastActivityAt
+    │   └─→ Mark recent items (last 7 days): isRecentlyAdded, isRecentActivity
     ├─→ Build AI prompt
     │   └─→ lib/utils/aiPromptBuilder.ts
+    │       ├─→ Sort by recency (newest first)
+    │       ├─→ Flag recent activity in prompt
+    │       └─→ Instruct AI to prioritize current tastes
     ├─→ Call Gemini 2.0 Flash
     │   ├─→ Model: gemini-2.0-flash
     │   ├─→ Response format: JSON
+    │   ├─→ Temperature: 0.7 (다양성 확보)
     │   └─→ Parse result
     ├─→ Save profile
     │   └─→ users/{userId}/taste_data/profile
@@ -343,7 +349,155 @@ Winner Screen
 
 ---
 
-## 7️⃣ Data Pipeline (Python → Firestore)
+## 8️⃣ MBTI Spirit Quiz Flow
+
+### **Flow Diagram**
+```
+User visits /[lang]/contents/mbti
+    ↓
+Select Language (ko/en)
+    ↓
+Click "START QUIZ" / "테스트 시작"
+    ↓
+app/[lang]/contents/mbti/mbti-client.tsx
+    ↓
+Load Question Set
+    ├→ lib/constants/mbti-data.ts
+    │   ├→ MBTI_QUESTIONS (15 binary questions)
+    │   └→ MBTI_TYPES (16 result types)
+    ↓
+Question Loop (15 questions)
+    ├→ Display current question
+    │   ├→ Question text (bilingual)
+    │   └→ Two options (A/B)
+    ├→ User selects option
+    ├→ Record answer
+    │   └→ answers: string[] (e.g., ["E", "I", "N", ...]
+    ├→ Progress to next question
+    └→ Repeat until all 15 answered
+    ↓
+Calculate MBTI Type
+    ├→ Tally answers by dimension:
+    │   ├→ E/I (Extrovert/Introvert)
+    │   ├→ N/S (Intuition/Sensing)
+    │   ├→ F/T (Feeling/Thinking)
+    │   └→ J/P (Judging/Perceiving)
+    ├→ Determine majority for each dimension
+    └→ resultType = combination (e.g., "ENFP")
+    ↓
+Load Result Data
+    ├→ MBTI_TYPES[resultType]
+    │   ├→ title (국/영)
+    │   ├→ description (국/영)
+    │   ├→ traits[]
+    │   ├→ recommendedSpirits[]
+    │   └→ icon
+    ↓
+Display Result Screen
+    ├→ Type Icon & Title
+    ├→ Description
+    ├→ Traits List
+    ├→ Recommended Spirits
+    └→ Share/Download Buttons
+    ↓
+Generate Result Image (html-to-image)
+    ├→ Capture result card as PNG
+    ├→ User downloads or shares
+    └→ Social media sharing
+```
+
+### **Code References**
+- **MBTI Client**: `app/[lang]/contents/mbti/mbti-client.tsx`
+- **Data Constants**: `lib/constants/mbti-data.ts`
+- **UI Text**: `lib/utils/ui-text.ts` (bilingual labels)
+
+### **Key Functions**
+```typescript
+// app/[lang]/contents/mbti/mbti-client.tsx
+export default function MbtiClient({ lang }: { lang: Language }) {
+  const [answers, setAnswers] = useState<string[]>([]);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [resultType, setResultType] = useState<string | null>(null);
+
+  // Handle answer selection
+  function handleAnswer(choice: 'A' | 'B') {
+    const newAnswers = [...answers, MBTI_QUESTIONS[currentQuestion][choice]];
+    setAnswers(newAnswers);
+    
+    if (currentQuestion < MBTI_QUESTIONS.length - 1) {
+      setCurrentQuestion(prev => prev + 1);
+    } else {
+      calculateResult(newAnswers);
+    }
+  }
+
+  // Calculate MBTI type from answers
+  function calculateResult(finalAnswers: string[]) {
+    const dimensions = {
+      EI: finalAnswers.filter(a => ['E', 'I'].includes(a)),
+      NS: finalAnswers.filter(a => ['N', 'S'].includes(a)),
+      FT: finalAnswers.filter(a => ['F', 'T'].includes(a)),
+      JP: finalAnswers.filter(a => ['J', 'P'].includes(a))
+    };
+
+    const type = [
+      dimensions.EI.filter(a => a === 'E').length >= dimensions.EI.filter(a => a === 'I').length ? 'E' : 'I',
+      dimensions.NS.filter(a => a === 'N').length >= dimensions.NS.filter(a => a === 'S').length ? 'N' : 'S',
+      dimensions.FT.filter(a => a === 'F').length >= dimensions.FT.filter(a => a === 'T').length ? 'F' : 'T',
+      dimensions.JP.filter(a => a === 'J').length >= dimensions.JP.filter(a => a === 'P').length ? 'J' : 'P'
+    ].join('');
+
+    setResultType(type);
+  }
+
+  // Download result as image
+  async function downloadResult() {
+    const element = document.getElementById('result-card');
+    const dataUrl = await toPng(element, { quality: 1.0, pixelRatio: 2 });
+    
+    const link = document.createElement('a');
+    link.download = `mbti-result-${resultType}.png`;
+    link.href = dataUrl;
+    link.click();
+  }
+}
+```
+
+### **MBTI Data Structure**
+```typescript
+// lib/constants/mbti-data.ts
+export const MBTI_QUESTIONS: MbtiQuestion[] = [
+  {
+    id: 1,
+    questionKo: "친구들과 술자리를 가질 때...",
+    questionEn: "When drinking with friends...",
+    A: "E",  // Extrovert
+    B: "I",  // Introvert
+    choiceAKo: "시끌벅적한 분위기가 좋다",
+    choiceAEn: "I prefer a lively atmosphere",
+    choiceBKo: "조용히 이야기 나누는 게 좋다",
+    choiceBEn: "I prefer quiet conversation"
+  },
+  // ... 14 more questions
+];
+
+export const MBTI_TYPES: Record<string, MbtiType> = {
+  ENFP: {
+    titleKo: "모험가 (The Adventurer)",
+    titleEn: "The Adventurer",
+    descriptionKo: "새로운 술을 탐험하며 ...",
+    descriptionEn: "You love exploring new spirits...",
+    traits: ["Curious", "Spontaneous", "Enthusiastic"],
+    recommendedSpirits: ["Craft Beer", "Flavored Gin", "Mezcal"],
+    icon: "🌈"
+  },
+  // ... 15 more types
+};
+```
+
+---
+
+## 9️⃣ Data Pipeline (Python → Firestore)
 
 ### **Flow Diagram**
 ```
@@ -509,5 +663,5 @@ app/spirits/[id]/page.tsx
 
 ---
 
-**Last Updated**: 2026-02-01  
+**Last Updated**: 2026-02-06  
 **Version**: 1.0.0

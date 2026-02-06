@@ -64,6 +64,8 @@ NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 ```
 
+> **중요**: `.env` 파일은 반드시 `KEY=VALUE` 형식을 따라야 합니다. JavaScript 객체 타입 (`const obj = { ... }`) 이나 다른 코드 문법을 포함하면 `python-dotenv` 파싱 에러가 발생합니다. 이 문제는 2026-02-06에 해결되었습니다.
+
 ### **4. Start Development Server**
 ```bash
 npm run dev
@@ -252,6 +254,20 @@ components/cabinet/
    ```bash
    npx tsx scripts/migrate-new-field.ts
    ```
+
+### **MBTI Development Notes**
+1. **Image Generation**
+   - MBTI 결과 카드는 `html-to-image` 라이브러리를 사용하여 PNG로 변환
+   - `toPng()` 함수는 클라이언트 사이드에서만 동작 (DOM 접근 필요)
+   - 결과 카드의 `id="result-card"` 속성을 반드시 유지해야 함
+   
+2. **다국어 지원**
+   - 모든 MBTI 데이터는 `lib/constants/mbti-data.ts`에 한글/영문 병행 저장
+   - UI 텍스트는 `lib/utils/ui-text.ts`의 `UI_TEXT` 객체 사용
+   
+3. **테스트 데이터**
+   - 16가지 MBTI 타입이 모두 정의되어 있는지 확인
+   - 15개 질문의 A/B 매핑이 올바른지 검증 (E/I, N/S, F/T, J/P)
 
 ---
 
@@ -502,5 +518,5 @@ Closes #123
 
 ---
 
-**Last Updated**: 2026-02-01  
+**Last Updated**: 2026-02-06  
 **Version**: 1.0.0

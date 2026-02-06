@@ -1,17 +1,14 @@
 'use client';
 
 import Link from "next/link";
-import { useAuth } from "@/app/context/auth-context";
+import { useAuth } from "@/app/[lang]/context/auth-context";
 import { User, LogIn } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
-import { usePathname } from "next/navigation";
+import { Locale } from "@/i18n-config";
 
-export function Header() {
+export function Header({ lang, dict }: { lang: Locale, dict: any }) {
     const { user, profile } = useAuth();
-    const pathname = usePathname() || "";
-    const segments = pathname.split('/');
-    const lang = (segments[1] === 'en' || segments[1] || 'ko') === 'en' ? 'en' : 'ko';
 
     // Display Name logic: Nickname -> DisplayName -> "Guest"
     const displayName = user
@@ -37,7 +34,7 @@ export function Header() {
                     {user ? (
                         <Link href={`/${lang}/me`} className="flex items-center gap-2 md:gap-3 pl-2 md:pl-4 py-1 rounded-full hover:bg-secondary transition-colors flex-shrink-0">
                             <div className="text-right hidden sm:block whitespace-nowrap">
-                                <p className="text-xs text-muted-foreground">{lang === 'en' ? 'Welcome back,' : '안녕하세요,'}</p>
+                                <p className="text-xs text-muted-foreground">{dict.welcome || (lang === 'en' ? 'Welcome back,' : '안녕하세요,')}</p>
                                 <p className="text-sm font-bold leading-none text-primary">{displayName}{lang === 'ko' ? '님' : ''}</p>
                             </div>
                             <div className="relative w-9 h-9 rounded-full overflow-hidden border-2 border-primary/50 shadow-sm flex items-center justify-center bg-secondary flex-shrink-0">

@@ -125,8 +125,16 @@ export async function POST(req: NextRequest) {
         // 3. Merge Data (데이터 병합)
         const spiritsForAnalysis = cabinetItems.map((item: any) => {
             const review = userReviews.find((r: any) => r.spiritId === item.spiritId || r.spiritName === item.name);
+
+            // 활동 날짜 집계
+            const reviewDate = review?.createdAt || review?.updatedAt || null;
+            const addedDate = item.addedAt || null;
+            const lastActivityAt = reviewDate || addedDate;
+
             return {
                 ...item,
+                addedAt: addedDate,
+                lastActivityAt: lastActivityAt,
                 userReview: review ? {
                     ratingOverall: review.rating,
                     ratingN: review.ratingN || 0,
@@ -135,9 +143,10 @@ export async function POST(req: NextRequest) {
                     tagsN: review.tagsN ? [review.tagsN] : [],
                     tagsP: review.tagsP ? [review.tagsP] : [],
                     tagsF: review.tagsF ? [review.tagsF] : [],
-                    comment: review.notes
+                    comment: review.notes,
+                    createdAt: reviewDate
                 } : null,
-                isWishlist: false // 기본값
+                isWishlist: false
             };
         });
 
@@ -166,7 +175,7 @@ export async function POST(req: NextRequest) {
         
         Analyze the user's spirit preferences based on the provided data with clinical precision and poetic insight.
         
-        IMPORTANT: Your recommendation MUST be high-variance and diverse. Do NOT just recommend the most famous or obvious bottles. Seek out high-quality, distinctive spirits that align with the user's flavor DNA but might be outside their current experience.
+        IMPORTANT: Your recommendation MUST be high-variance and diverse. Do NOT just recommend the most famous or obvious bottles. Seek out high-quality, distinctive spirits that align with the user's flavor DNA but might be outside their current experience or represent a sophisticated shift in their taste journey.
         
         LANGUAGE REQUIREMENT: 
         - Your response (description and recommendation reason) MUST be in ${isEn ? 'English' : 'professional, elegant Korean (polite tone)'}.
@@ -186,13 +195,13 @@ export async function POST(req: NextRequest) {
             },
             "persona": {
                 "title": "A unique, creative title (e.g. 'The Esoteric Peat Hunter')",
-                "description": "4-5 sentences of deep analytical insight into their taste profile.",
+                "description": "4-5 sentences of deep analytical insight into their taste profile, acknowledging any recent trends or shifts in their collection.",
                 "keywords": ["#Tag1", "#Tag2", "#Tag3"]
             },
             "recommendation": {
                 "name": "Full professional name of a recommended spirit (Global)",
                 "matchRate": 80-99,
-                "reason": "An authoritative explanation of why this specific bottle's molecular profile matches the user's detected preferences."
+                "reason": "An authoritative explanation of why this specific bottle's molecular profile matches the user's detected preferences, especially considering their recent activity."
             }
         }
         `;
@@ -201,7 +210,7 @@ export async function POST(req: NextRequest) {
             model: "gemini-2.0-flash",
             generationConfig: {
                 responseMimeType: "application/json",
-                temperature: 0.3,
+                temperature: 0.7,
                 topP: 0.8,
                 topK: 40
             }

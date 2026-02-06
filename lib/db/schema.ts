@@ -44,11 +44,16 @@ export interface SpiritSearchIndex {
   a: number;           // abv
   d: string | null;    // distillery
   tn: string | null;   // tasting_note (Root)
+  tne: string | null;  // tasting_note_en (Search Optimized)
+  mc?: string | null;  // mainCategory (Optional in index)
+  m?: any;             // metadata snippet
+  cre?: string | number | Date; // createdAt
 }
 
 export interface Spirit {
   id: string;
   name: string;
+  /** [Global] Product Name (English) - Moved to Root for Search */
   name_en: string | null;
   distillery: string | null;
   bottler: string | null;
@@ -85,25 +90,31 @@ export interface Spirit {
   reviewedAt: Date | null;
 
   // Metadata (Enriched fields)
-  metadata: {
-    // New Location for heavy content
-    description_ko?: string;
-    description_en?: string;
-    pairing_guide_ko?: string;
-    pairing_guide_en?: string;
-    enriched_at?: string;
-
-    // Original/Raw metadata
-    raw_category?: string;
-    importer?: string;
-    [key: string]: any;
-  };
+  metadata: SpiritMetadata;
 
   // Search optimization
   searchKeywords?: string[]; // N-gram keywords for efficient searching
 
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface SpiritMetadata {
+  // New Location for heavy content
+  description_ko?: string;
+  pairing_guide_ko?: string;
+
+  /** [Global] Localized Content */
+  description_en?: string | null;
+  tasting_note_en?: string | null;
+  pairing_guide_en?: string | null;
+
+  enriched_at?: string;
+
+  // Original/Raw metadata
+  raw_category?: string;
+  importer?: string;
+  [key: string]: any;
 }
 
 export interface UserCabinet {

@@ -44,6 +44,10 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
   const [isLoading, setIsLoading] = useState(false);
   const [isTranslating, setIsTranslating] = useState(false);
   const [nameEn, setNameEn] = useState(spirit.name_en || '');
+  const [descEn, setDescEn] = useState(spirit.metadata?.description_en || '');
+  const [noteEn, setNoteEn] = useState(spirit.metadata?.tasting_note_en || '');
+  const [pairingEn, setPairingEn] = useState(spirit.metadata?.pairing_guide_en || '');
+
   // Local states for metadata preview/edit
   const [distillery, setDistillery] = useState(spirit.distillery || '');
   const [region, setRegion] = useState(spirit.region || '');
@@ -67,15 +71,19 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
           abv: abv || spirit.abv,
           region: region || spirit.region,
           country: country || spirit.country,
-          description_en: spirit.description_en, // Pass original for translation
+          description_en: descEn,
           metadata: spirit.metadata
         })
       });
 
       if (!response.ok) throw new Error('Enrichment failed');
-      const data: EnrichmentResult = await response.json();
+      const data: any = await response.json();
 
       if (data.name_en) setNameEn(data.name_en);
+      if (data.description_en) setDescEn(data.description_en);
+      if (data.tasting_note_en) setNoteEn(data.tasting_note_en);
+      if (data.pairing_guide_en) setPairingEn(data.pairing_guide_en);
+
       if (data.distillery) setDistillery(data.distillery);
       if (data.region) setRegion(data.region);
       if (data.country) setCountry(data.country);
@@ -90,98 +98,32 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
     }
   };
 
-  const handleTranslate = async () => {
-    if (!spirit.name) return;
-    setIsTranslating(true);
-    try {
-      const response = await fetch('/api/admin/translate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: spirit.name,
-          category: spirit.category,
-          distillery: spirit.distillery
-        })
-      });
-      const data = await response.json();
-      if (data.name_en) {
-        setNameEn(data.name_en);
-      }
-    } catch (error) {
-      console.error("Translation failed:", error);
-    } finally {
-      setIsTranslating(false);
-    }
-  };
-
   const handlePublish = async () => {
     setIsLoading(true);
     setErrorMessage(null);
     try {
-      // Step 1: Call AI enrichment API to generate name_en, description_en, and pairing guides
-      console.log('[Publish] Starting AI enrichment for:', spirit.name);
-      const enrichResponse = await fetch('/api/admin/spirits/enrich', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: spirit.name,
-          category: spirit.category,
-          subcategory: spirit.subcategory,
-          distillery: spirit.distillery,
-          abv: spirit.abv,
-          region: spirit.region,
-          country: spirit.country,
-          description_en: spirit.description_en, // Pass original for translation
-          metadata: spirit.metadata
-        })
-      });
-
-      let enrichedData: EnrichmentResult | null = null;
-      if (enrichResponse.ok) {
-        enrichedData = await enrichResponse.json();
-        console.log('[Publish] ✓ AI enrichment successful:', enrichedData);
-      } else {
-        const errorData = await enrichResponse.json().catch(() => ({ error: 'Unknown error' }));
-        console.error('[Publish] ✗ AI enrichment failed:', errorData);
-        setErrorMessage(`AI enrichment failed: ${errorData.error || errorData.details || 'Unknown error'}. Publishing without AI content.`);
-      }
-
-      // Step 2: Update spirit with enriched data
-      // Step 2: Update spirit with enriched data
       const updateData: any = {
         isPublished: true,
         isReviewed: true,
         reviewedBy: 'ADMIN',
         reviewedAt: new Date(),
-        name_en: enrichedData?.name_en || nameEn || null,
-        abv: enrichedData?.abv ?? abv ?? spirit.abv,
-        distillery: enrichedData?.distillery ?? distillery ?? spirit.distillery,
-        region: enrichedData?.region ?? region ?? spirit.region,
-        country: enrichedData?.country ?? country ?? spirit.country,
-
-        nose_tags: enrichedData?.nose_tags || spirit.nose_tags || [],
-        palate_tags: enrichedData?.palate_tags || spirit.palate_tags || [],
-        finish_tags: enrichedData?.finish_tags || spirit.finish_tags || [],
-
+        name_en: nameEn || null,
+        abv: abv,
+        distillery: distillery,
+        region: region,
+        country: country,
         metadata: {
           ...spirit.metadata,
-          description_ko: enrichedData?.description_ko || spirit.metadata?.description_ko,
-          description_en: enrichedData?.description_en || spirit.metadata?.description_en,
-          pairing_guide_ko: enrichedData?.pairing_guide_ko || spirit.metadata?.pairing_guide_ko,
-          pairing_guide_en: enrichedData?.pairing_guide_en || spirit.metadata?.pairing_guide_en,
+          description_en: descEn,
+          tasting_note_en: noteEn,
+          pairing_guide_en: pairingEn,
           enriched_at: new Date().toISOString()
         }
       };
 
       await db.updateSpirit(spirit.id, updateData);
-      console.log('[Publish] ✓ Spirit published successfully');
       setStatus('published');
       if (onRefresh) onRefresh();
-
-      // Clear error after a few seconds if publish succeeded
-      if (errorMessage) {
-        setTimeout(() => setErrorMessage(null), 5000);
-      }
     } catch (error) {
       console.error("Failed to publish:", error);
       setErrorMessage(`Failed to publish: ${error instanceof Error ? error.message : 'Unknown error'}`);
@@ -214,40 +156,68 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
 
         <div className="flex-1 min-w-0">
           <h3 className="font-semibold text-lg mb-1 truncate">{spirit.name}</h3>
-          <p className="text-sm text-muted-foreground mb-2">{spirit.distillery}</p>
 
-          <div className="flex flex-wrap gap-2 text-sm">
+          <div className="flex flex-wrap gap-2 text-sm mb-3">
             <span className="px-2 py-1 rounded bg-secondary font-bold">도수 {abv}%</span>
             <span className="px-2 py-1 rounded bg-secondary font-bold">{region}, {country}</span>
             <span className="px-2 py-1 rounded bg-secondary">{spirit.category}</span>
-            <span className={`px-2 py-1 rounded ${spirit.source === 'food_safety_korea' ? 'bg-green-100 dark:bg-green-900' :
-              spirit.source === 'online' ? 'bg-blue-100 dark:bg-blue-900' :
-                'bg-gray-100 dark:bg-gray-800'
-              }`}>
-              {spirit.source}
-            </span>
           </div>
 
-          {/* 영문명 편집 및 AI 번역 영역 */}
           {status === 'pending' && (
-            <div className="mt-3 flex flex-col gap-2">
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  value={nameEn}
-                  onChange={(e) => setNameEn(e.target.value)}
-                  placeholder="English Name (AI 번역 가능)"
-                  className="flex-1 px-3 py-1.5 text-sm border border-border rounded bg-background focus:outline-none focus:ring-1 focus:ring-primary"
-                />
-                <button
-                  onClick={handleEnrich}
-                  disabled={isTranslating || isLoading}
-                  className="px-3 py-1.5 bg-purple-50 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400 border border-purple-100 dark:border-purple-800 rounded text-xs font-bold hover:bg-purple-100 disabled:opacity-50 flex items-center gap-1 transition-all"
-                >
-                  {isTranslating ? '...' : '✨ AI 분석'}
-                </button>
+            <div className="mt-4 space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-muted-foreground uppercase">English Name</label>
+                  <input
+                    type="text"
+                    value={nameEn}
+                    onChange={(e) => setNameEn(e.target.value)}
+                    placeholder="e.g. Jinro Is Back"
+                    className="w-full px-3 py-1.5 text-sm border border-border rounded bg-background"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-muted-foreground uppercase">Tasting Note (EN)</label>
+                  <input
+                    type="text"
+                    value={noteEn}
+                    onChange={(e) => setNoteEn(e.target.value)}
+                    placeholder="Evocative summary"
+                    className="w-full px-3 py-1.5 text-sm border border-border rounded bg-background"
+                  />
+                </div>
               </div>
-              {/* Error message display */}
+
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold text-muted-foreground uppercase">Description (EN)</label>
+                <textarea
+                  value={descEn}
+                  onChange={(e) => setDescEn(e.target.value)}
+                  placeholder="Sommelier-style description"
+                  rows={2}
+                  className="w-full px-3 py-1.5 text-sm border border-border rounded bg-background resize-none"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold text-muted-foreground uppercase">Pairing Guide (EN)</label>
+                <textarea
+                  value={pairingEn}
+                  onChange={(e) => setPairingEn(e.target.value)}
+                  placeholder="Appetizing pairing recommendations"
+                  rows={2}
+                  className="w-full px-3 py-1.5 text-sm border border-border rounded bg-background resize-none"
+                />
+              </div>
+
+              <button
+                onClick={handleEnrich}
+                disabled={isTranslating || isLoading}
+                className="w-full py-2 bg-purple-600/10 text-purple-600 dark:bg-purple-900/20 dark:text-purple-400 border border-purple-200 dark:border-purple-800 rounded text-sm font-bold hover:bg-purple-600/20 disabled:opacity-50 flex items-center justify-center gap-2"
+              >
+                {isTranslating ? '...' : '✨ AI 데이터 분석 및 영문 생성'}
+              </button>
+
               {errorMessage && (
                 <div className="text-xs text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 px-2 py-1 rounded">
                   ⚠️ {errorMessage}
@@ -269,16 +239,16 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
               <button
                 onClick={handlePublish}
                 disabled={isLoading}
-                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50 text-sm"
+                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50 text-sm font-bold"
               >
-                ✓ 발행
+                발행하기
               </button>
               <button
                 onClick={handleReject}
                 disabled={isLoading}
-                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50 text-sm"
+                className="px-4 py-2 bg-background border border-border text-muted-foreground rounded hover:bg-secondary disabled:opacity-50 text-sm"
               >
-                ✗ 거절
+                취소
               </button>
             </>
           )}

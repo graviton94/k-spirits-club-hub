@@ -9,12 +9,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Search, ArrowLeft } from "lucide-react";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import { useRouter, usePathname } from "next/navigation";
-import { useAuth } from "@/app/context/auth-context";
-import { addToCabinet } from "@/app/actions/cabinet";
+import { useAuth } from "@/app/[lang]/context/auth-context";
+import { addToCabinet } from "@/app/[lang]/actions/cabinet";
 import ReviewModal from "@/components/cabinet/ReviewModal";
 import { UserReview } from "@/lib/utils/flavor-engine";
 import { toFlavorSpirit, triggerLoginModal } from "@/lib/utils/spirit-adapters";
 import SuccessToast from "@/components/ui/SuccessToast";
+import { Locale } from "@/i18n-config";
 
 import { Spirit } from "@/lib/db/schema";
 import { getTagStyle } from "@/lib/constants/tag-styles";
@@ -24,6 +25,8 @@ import { CATEGORY_NAME_MAP } from "@/lib/constants/categories";
 interface SpiritDetailClientProps {
     spirit: Spirit;
     reviews: any[];
+    lang: Locale;
+    dict: any;
 }
 
 const UI_TEXT = {
@@ -46,7 +49,13 @@ const UI_TEXT = {
         source: "데이터 출처",
         source_manual: "운영진 수동 등록",
         source_external: "기타 외부 데이터",
-        disclaimer: "본 데이터는 각 출처의 공공데이터 및 AI로 수집된 정보를 바탕으로 제공되며, 실제 제품의 정보와 차이가 있을 수 있습니다. 잘못된 정보가 있다면 위의 버튼을 통해 제보 부탁드립니다."
+        disclaimer: "본 데이터는 각 출처의 공공데이터 및 AI로 수집된 정보를 바탕으로 제공되며, 실제 제품의 정보와 차이가 있을 수 있습니다. 잘못된 정보가 있다면 위의 버튼을 통해 제보 부탁드립니다.",
+        specs: "제품 스펙",
+        tastingNote: "테이스팅 노트",
+        pairing: "추천 페어링",
+        reviews: "리뷰",
+        writeReview: "리뷰 쓰기",
+        noDescription: "설명이 없습니다."
     },
     en: {
         back: "Back",
@@ -67,16 +76,22 @@ const UI_TEXT = {
         source: "Data Source",
         source_manual: "Manual Entry",
         source_external: "External Data",
-        disclaimer: "This data is provided based on public data and information from various sources include AI, and may differ from the actual product information. If there is incorrect information, please report it via the button above."
+        disclaimer: "This data is provided based on public data and information from various sources include AI, and may differ from the actual product information. If there is incorrect information, please report it via the button above.",
+        specs: "Specifications",
+        tastingNote: "Tasting Notes",
+        pairing: "Best Pairing",
+        reviews: "Reviews",
+        writeReview: "Write Review",
+        noDescription: "No description available."
     }
 };
 
 import metadata from "@/lib/constants/spirits-metadata.json";
 
-export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClientProps) {
+export default function SpiritDetailClient({ spirit, reviews, lang, dict }: SpiritDetailClientProps) {
     const router = useRouter();
     const pathname = usePathname();
-    const isEn = pathname?.startsWith('/en');
+    const isEn = lang === 'en';
     const t = isEn ? UI_TEXT.en : UI_TEXT.ko;
 
     // Helpers for localized display (Strict Schema)
@@ -90,8 +105,8 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
     };
 
     const displayDescription = isEn
-        ? (spirit.metadata?.description_en || spirit.metadata?.description_ko)
-        : (spirit.metadata?.description_ko || spirit.metadata?.description_en);
+        ? (spirit.metadata?.description_en || spirit.metadata?.description_ko || dict?.noDescription || UI_TEXT.en.noDescription)
+        : (spirit.metadata?.description_ko || spirit.metadata?.description_en || dict?.noDescription || UI_TEXT.ko.noDescription);
 
     const { user } = useAuth();
     const [isInCabinet, setIsInCabinet] = useState(false);
@@ -140,14 +155,14 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
         try {
             if (isInCabinet) {
                 // Remove from cabinet
-                await import('@/app/actions/cabinet').then(({ removeFromCabinet }) =>
+                await import('@/app/[lang]/actions/cabinet').then(({ removeFromCabinet }) =>
                     removeFromCabinet(user.uid, spirit.id)
                 );
                 setIsInCabinet(false);
                 setSuccessMessage(t.remove_cabinet + ' 🗑️');
             } else {
                 // Add to cabinet
-                await import('@/app/actions/cabinet').then(({ addToCabinet }) =>
+                await import('@/app/[lang]/actions/cabinet').then(({ addToCabinet }) =>
                     addToCabinet(user.uid, spirit.id, {
                         isWishlist: false,
                         name: spirit.name,
@@ -188,14 +203,14 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
         try {
             if (isWishlist) {
                 // Remove from wishlist
-                await import('@/app/actions/cabinet').then(({ removeFromCabinet }) =>
+                await import('@/app/[lang]/actions/cabinet').then(({ removeFromCabinet }) =>
                     removeFromCabinet(user.uid, spirit.id)
                 );
                 setIsWishlist(false);
                 setSuccessMessage(t.remove_wishlist + ' 🗑️');
             } else {
                 // Add to wishlist
-                await import('@/app/actions/cabinet').then(({ addToCabinet }) =>
+                await import('@/app/[lang]/actions/cabinet').then(({ addToCabinet }) =>
                     addToCabinet(user.uid, spirit.id, {
                         isWishlist: true,
                         name: spirit.name,
@@ -304,7 +319,7 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
                 {/* Category Card */}
                 <div className="p-4 bg-card border border-border rounded-2xl shadow-sm">
-                    <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-3">{t.classification}</h3>
+                    <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-3">{dict?.specs || t.specs}</h3>
                     <div className="space-y-2">
                         <div className="flex justify-between items-center text-sm">
                             <span className="text-muted-foreground">{t.category}</span>
@@ -354,7 +369,7 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                 <div className="mb-10 p-6 bg-secondary/30 rounded-3xl border border-dashed border-border">
                     <h2 className="text-xl font-black mb-6 flex items-center gap-2">
                         <span className="w-2 h-6 bg-amber-500 rounded-full"></span>
-                        {t.flavor}
+                        {dict?.tastingNote || t.tastingNote || t.flavor}
                     </h2>
                     <div className="space-y-6">
                         {spirit.nose_tags && spirit.nose_tags.length > 0 && (
@@ -384,14 +399,14 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
                     <div className="bg-card/95 backdrop-blur-xl p-6 rounded-3xl h-full">
                         <div className="flex items-center gap-2 mb-4">
                             <span className="text-xs font-black text-transparent bg-clip-text bg-linear-to-r from-purple-500 to-pink-500 uppercase tracking-widest flex items-center gap-1">
-                                ✨ {isEn ? 'Pairing Guide' : '페어링 추천'}
+                                ✨ {dict?.pairing || (isEn ? 'Pairing Guide' : '페어링 추천')}
                             </span>
                             <div className="h-px flex-1 bg-border"></div>
                         </div>
                         <p className="text-base text-card-foreground leading-relaxed font-medium">
                             {isEn
-                                ? spirit.metadata.pairing_guide_en
-                                : (spirit.metadata.pairing_guide_ko || spirit.metadata.pairing_guide_en)}
+                                ? (spirit.metadata?.pairing_guide_en || spirit.metadata?.pairing_guide_ko)
+                                : (spirit.metadata?.pairing_guide_ko || spirit.metadata?.pairing_guide_en)}
                         </p>
                     </div>
                 </div>
@@ -435,7 +450,15 @@ export default function SpiritDetailClient({ spirit, reviews }: SpiritDetailClie
             </div>
 
             {/* ... ReviewSection (passed prop? No, ReviewSection might handle its own logic, or I need to pass lang) */}
-            <ReviewSection spiritId={spirit.id} spiritName={spirit.name} spiritImageUrl={spirit.imageUrl} reviews={reviews} />
+            {/* ... ReviewSection */}
+            <ReviewSection
+                spiritId={spirit.id}
+                spiritName={spirit.name}
+                spiritImageUrl={spirit.imageUrl}
+                reviews={reviews}
+                lang={lang}
+                dict={dict}
+            />
 
             {/* 5. Data Source */}
             <div className="mt-12 p-6 bg-secondary/20 rounded-2xl border border-border">
