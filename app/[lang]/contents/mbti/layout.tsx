@@ -4,7 +4,7 @@ export default function MBTILayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="relative">
+        <div className="relative bg-neutral-900 min-h-screen">
             {children}
         </div>
     );

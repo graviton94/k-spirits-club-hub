@@ -152,7 +152,7 @@ export function MBTIClient({ lang }: { lang: string }) {
     };
 
     return (
-        <div className="max-w-2xl mx-auto px-4 py-8 md:py-16 min-h-[80vh] flex flex-col items-center">
+        <div className="max-w-2xl mx-auto px-4 py-8 md:py-16 min-h-[80vh] flex flex-col items-center bg-neutral-900 text-white">
             <AnimatePresence mode="wait">
                 {step === 'intro' && (
                     <motion.div
@@ -163,17 +163,17 @@ export function MBTIClient({ lang }: { lang: string }) {
                         className="text-center space-y-8"
                     >
                         <div className="space-y-4">
-                            <h1 className="text-4xl md:text-5xl font-black text-foreground tracking-tight">
+                            <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight">
                                 {t.titlePrefix}<br /><span className="text-amber-500">MBTI{t.titleSuffix}</span>
                             </h1>
-                            <p className="text-muted-foreground text-lg">
+                            <p className="text-neutral-300 text-lg">
                                 {t.subtitle}
                             </p>
                         </div>
 
                         <div className="relative w-72 h-64 mx-auto flex items-center justify-center">
                             {/* Subtle decorative glow */}
-                            <div className="absolute w-40 h-40 bg-amber-500/10 dark:bg-amber-500/5 rounded-full blur-3xl" />
+                            <div className="absolute w-40 h-40 bg-amber-500/10 rounded-full blur-3xl" />
 
                             {/* Static Container (No bounce) */}
                             <div className="relative z-10 w-32 h-32 flex items-center justify-center">
@@ -225,7 +225,7 @@ export function MBTIClient({ lang }: { lang: string }) {
                         </div>
 
                         {/* Question Card */}
-                        <div className="bg-card border p-5 md:p-6 rounded-3xl shadow-sm text-center space-y-4">
+                        <div className="bg-neutral-800 border border-white/10 p-5 md:p-6 rounded-3xl shadow-sm text-center space-y-4">
                             {MBTI_QUESTIONS[currentIdx].imagePath && (
                                 <div className="relative w-full aspect-[4/3] md:aspect-[16/9] rounded-2xl overflow-hidden mb-4">
                                     <Image
@@ -237,7 +237,7 @@ export function MBTIClient({ lang }: { lang: string }) {
                                     />
                                 </div>
                             )}
-                            <h2 className="text-xl md:text-2xl font-bold leading-tight whitespace-pre-line">
+                            <h2 className="text-xl md:text-2xl font-bold leading-tight whitespace-pre-line text-white">
                                 {isEn ? MBTI_QUESTIONS[currentIdx].question_en : MBTI_QUESTIONS[currentIdx].question_ko}
                             </h2>
 
@@ -246,7 +246,7 @@ export function MBTIClient({ lang }: { lang: string }) {
                                     <button
                                         key={i}
                                         onClick={() => handleAnswer(ans.value)}
-                                        className="w-full p-4 text-base md:text-lg border-2 border-amber-100 dark:border-amber-900/30 bg-amber-50/30 dark:bg-amber-900/5 hover:border-amber-500 hover:bg-amber-50 dark:hover:bg-amber-900/20 rounded-2xl transition-all active:scale-98 text-center whitespace-pre-line"
+                                        className="w-full p-4 text-base md:text-lg border-2 border-amber-900/30 bg-amber-900/10 hover:border-amber-500 hover:bg-amber-900/20 rounded-2xl transition-all active:scale-98 text-center whitespace-pre-line text-white"
                                     >
                                         {isEn ? ans.text_en : ans.text_ko}
                                     </button>
@@ -269,8 +269,8 @@ export function MBTIClient({ lang }: { lang: string }) {
                             <span className="absolute inset-0 flex items-center justify-center text-2xl">🧊</span>
                         </div>
                         <div className="text-center space-y-2">
-                            <h3 className="text-2xl font-bold">{t.loadingTitle}</h3>
-                            <p className="text-muted-foreground animate-pulse">
+                            <h3 className="text-2xl font-bold text-white">{t.loadingTitle}</h3>
+                            <p className="text-neutral-300 animate-pulse">
                                 {t.loadingSub}
                             </p>
                         </div>
@@ -292,12 +292,12 @@ export function MBTIClient({ lang }: { lang: string }) {
                             {/* Result Profile */}
                             <div className="text-center space-y-4">
                                 <div className="space-y-1">
-                                    <h2 className="text-3xl md:text-4xl font-black">
+                                    <h2 className="text-3xl md:text-4xl font-black text-white">
                                         {isEn ? MBTI_RESULTS[resultType].title_en : MBTI_RESULTS[resultType].title_ko}
                                     </h2>
                                 </div>
 
-                                <div className="relative w-full aspect-video rounded-3xl overflow-hidden bg-gray-100 dark:bg-gray-800 shadow-xl border">
+                                <div className="relative w-full aspect-video rounded-3xl overflow-hidden bg-neutral-800 shadow-xl border border-white/10">
                                     <Image
                                         src={MBTI_RESULTS[resultType].imagePath}
                                         alt={resultType}
@@ -306,8 +306,8 @@ export function MBTIClient({ lang }: { lang: string }) {
                                     />
                                 </div>
 
-                                <div className="bg-amber-50 dark:bg-amber-900/10 p-5 rounded-2xl border border-amber-100 dark:border-amber-900/30">
-                                    <p className="text-lg leading-relaxed text-foreground/90 whitespace-pre-line text-center">
+                                <div className="bg-amber-900/10 p-5 rounded-2xl border border-amber-900/30">
+                                    <p className="text-lg leading-relaxed text-neutral-200 whitespace-pre-line text-center">
                                         {isEn ? MBTI_RESULTS[resultType].description_en : MBTI_RESULTS[resultType].description_ko}
                                     </p>
                                 </div>
@@ -374,7 +374,7 @@ export function MBTIClient({ lang }: { lang: string }) {
                                             "{(isEn ? MBTI_RESULTS[resultType].title_en : MBTI_RESULTS[resultType].title_ko)
                                                 .replace(/[\uD83C-\uDBFF\uDC00-\uDFFF]+/g, '').trim()}"
                                         </span>
-                                        <span className="text-[11px] font-bold text-foreground/50 mt-1 uppercase tracking-widest">
+                                        <span className="text-[11px] font-bold text-neutral-400 mt-1 uppercase tracking-widest">
                                             {isEn ? "right now!" : "보러가기"}
                                         </span>
                                     </div>
