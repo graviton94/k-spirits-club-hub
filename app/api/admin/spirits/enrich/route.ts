@@ -1,55 +1,41 @@
-export const runtime = 'edge';
-
 import { NextRequest, NextResponse } from 'next/server';
-import { enrichSpiritWithAI, type SpiritEnrichmentInput } from '@/lib/services/gemini-translation';
+import {
+    auditSpiritInfo,
+    generateSensoryData,
+    generatePairingGuide,
+    type SpiritEnrichmentInput
+} from '@/lib/services/gemini-translation';
 
-/**
- * POST /api/admin/spirits/enrich
- * 
- * Generates AI-powered enrichment for a spirit including:
- * - name_en: English name translation
- * - description_en: English description
- * - pairing_guide_en: Global food pairing recommendations
- * - pairing_guide_ko: Korean food pairing recommendations
- */
 export async function POST(req: NextRequest) {
+    let stage = 'unknown';
     try {
         const body = await req.json();
-        const {
-            name, category, subcategory, distillery, abv, region, country, metadata,
-            description_en // Accept as direct input for translation source
-        } = body;
+        const { stage: bodyStage, ...spiritInput } = body;
+        stage = bodyStage;
 
-        if (!name || !category) {
-            return NextResponse.json(
-                { error: 'Name and category are required' },
-                { status: 400 }
-            );
+        if (!spiritInput.name || !spiritInput.category) {
+            return NextResponse.json({ error: 'Name and category are required' }, { status: 400 });
         }
 
-        const spiritInput: SpiritEnrichmentInput = {
-            name,
-            category,
-            subcategory,
-            distillery,
-            abv,
-            region,
-            country,
-            description_en,
-            metadata
-        };
+        let result;
+        switch (stage) {
+            case 'audit':
+                result = await auditSpiritInfo(spiritInput);
+                break;
+            case 'sensory':
+                result = await generateSensoryData(spiritInput);
+                break;
+            case 'pairing':
+                result = await generatePairingGuide(spiritInput);
+                break;
+            default:
+                return NextResponse.json({ error: 'Invalid stage' }, { status: 400 });
+        }
 
-        const enrichmentData = await enrichSpiritWithAI(spiritInput);
-        return NextResponse.json(enrichmentData);
+        return NextResponse.json(result);
 
     } catch (error: any) {
-        console.error('[enrich] Error:', error);
-        return NextResponse.json(
-            {
-                error: 'Failed to enrich spirit data',
-                details: error.message
-            },
-            { status: 500 }
-        );
+        console.error(`[enrich:${stage}] Error:`, error);
+        return NextResponse.json({ error: 'Enrichment failed', details: error.message }, { status: 500 });
     }
 }

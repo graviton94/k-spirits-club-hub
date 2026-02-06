@@ -44,7 +44,6 @@ export interface SpiritSearchIndex {
   a: number;           // abv
   d: string | null;    // distillery
   tn: string | null;   // tasting_note (Root)
-  tne: string | null;  // tasting_note_en (Search Optimized)
   mc?: string | null;  // mainCategory (Optional in index)
   m?: any;             // metadata snippet
   cre?: string | number | Date; // createdAt
@@ -106,7 +105,6 @@ export interface SpiritMetadata {
 
   /** [Global] Localized Content */
   description_en?: string | null;
-  tasting_note_en?: string | null;
   pairing_guide_en?: string | null;
 
   enriched_at?: string;

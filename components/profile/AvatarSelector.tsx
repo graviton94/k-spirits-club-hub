@@ -20,7 +20,9 @@ export default function AvatarSelector({ selectedAvatar, onSelect }: AvatarSelec
     return (
         <div>
             <label className="text-xs text-muted-foreground block mb-3 text-left">
-                프로필 아바타 선택
+                {typeof window !== 'undefined' && window.location.pathname.startsWith('/en')
+                    ? "Select Profile Avatar"
+                    : "프로필 아바타 선택"}
             </label>
 
             <div className="grid grid-cols-4 gap-3">

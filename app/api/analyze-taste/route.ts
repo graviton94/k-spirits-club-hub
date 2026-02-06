@@ -150,7 +150,10 @@ export async function POST(req: NextRequest) {
             };
         });
 
-        const promptData = buildTasteAnalysisPrompt(spiritsForAnalysis);
+        const lang = body.lang || 'ko';
+        const isEn = lang === 'en';
+
+        const promptData = buildTasteAnalysisPrompt(spiritsForAnalysis, isEn);
         console.log(`[Analyze Taste] Prompt generated (Length: ${promptData?.length})`);
 
         // 프롬프트가 너무 짧으면(분석할 술이 없으면) 에러 처리
@@ -161,10 +164,6 @@ export async function POST(req: NextRequest) {
                 message: 'AI에게 전달할 데이터가 부족합니다. 최소 1개 이상의 술을 술장에 넣어주세요!'
             }, { status: 400 });
         }
-
-        // 0. Detect Language
-        const lang = body.lang || 'ko';
-        const isEn = lang === 'en';
 
         // 4. Call AI
         console.log(`[Analyze Taste] Initializing Gemini Model: gemini-2.0-flash (Lang: ${lang})`);

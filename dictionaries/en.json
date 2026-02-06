@@ -27,7 +27,11 @@
     },
     "common": {
         "loading": "Loading...",
-        "searchPlaceholder": "Search for spirits..."
+        "loadingData": "Collecting spirit data...",
+        "searchPlaceholder": "Search for spirits...",
+        "back": "Go Back",
+        "errorData": "An error occurred while loading data.",
+        "notEnoughSpirits": "Not enough spirits found for the criteria. (Min 2 required)"
     },
     "explore": {
         "title": "Explore Spirits",
@@ -132,5 +136,21 @@
         "welcome": "Welcome to K-Spirits Club.",
         "google": "Continue with Google",
         "policy": "By continuing, you agree to our Terms and Privacy Policy."
+    },
+    "worldcup": {
+        "title": "Spirits World Cup",
+        "champion": "Your Final Choice is!",
+        "winner": "Is it {name}?",
+        "vs": "VS",
+        "round": "Round of {round}",
+        "final": "Finals",
+        "nextRound": "Moving to next round!",
+        "saveResult": "Save Result",
+        "shareResult": "Share with Friends",
+        "playAgain": "Play Other World Cup",
+        "restart": "Restart (With these settings)",
+        "shareText": "My best pick is [{winner}]! Check out your taste too.",
+        "copyLink": "🔗 Link copied!",
+        "saveError": "Failed to generate image. Please try again in a moment."
     }
 }

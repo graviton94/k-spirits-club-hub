@@ -1,0 +1,16 @@
+{
+  "total": 1034,
+  "perfectCount": 1034,
+  "perfectPercentage": "100.0%",
+  "issues": {
+    "missingNameEn": 0,
+    "missingRootTags": 0,
+    "missingDescEn": 0,
+    "missingPairingEn": 0
+  },
+  "samples": {
+    "missingNameEn": [],
+    "missingRootTags": [],
+    "missingDescEn": []
+  }
+}

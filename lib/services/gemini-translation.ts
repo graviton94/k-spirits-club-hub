@@ -20,21 +20,28 @@ const CLICHE_BAN_LIST = `
 - For Wine/Brandy: NO "Charcuterie Board", "Brie Cheese"
 `;
 
-export interface EnrichmentResult {
+export interface EnrichmentAuditResult {
     name_en: string;
     distillery: string;
     region: string;
     country: string;
     abv: number;
+    category: string;
+    subcategory?: string;
+}
+
+export interface EnrichmentSensoryResult {
     description_ko: string;
     description_en: string;
-    tasting_note_en: string;
     nose_tags: string[];
     palate_tags: string[];
     finish_tags: string[];
+    tasting_note: string;
+}
+
+export interface EnrichmentPairingResult {
     pairing_guide_ko: string;
     pairing_guide_en: string;
-    tasting_note: string;
 }
 
 export interface SpiritEnrichmentInput {
@@ -45,117 +52,137 @@ export interface SpiritEnrichmentInput {
     abv?: number;
     region?: string;
     country?: string;
+    name_en?: string;
     description_en?: string;
+    description_ko?: string;
+    nose_tags?: string[];
+    palate_tags?: string[];
+    finish_tags?: string[];
     metadata?: {
         tasting_note?: string;
         description?: string;
-        nose_tags?: string[];
-        palate_tags?: string[];
-        finish_tags?: string[];
         [key: string]: any;
     };
 }
 
-export async function enrichSpiritWithAI(spirit: SpiritEnrichmentInput): Promise<EnrichmentResult> {
+/**
+ * STEP 1: AUDIT & IDENTITY
+ * Corrects basic info and verifies product details.
+ */
+export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<EnrichmentAuditResult> {
     if (!API_KEY) throw new Error("GEMINI_API_KEY is not set");
-
     const genAI = new GoogleGenerativeAI(API_KEY);
-
-    const model = genAI.getGenerativeModel({
-        model: MODEL_ID,
-        generationConfig: {
-            responseMimeType: "application/json",
-            temperature: 0.85 // 창의성을 위해 온도를 약간 높임 (0.7 -> 0.85)
-        }
-    });
-
-    const inputContext = {
-        raw_name: spirit.name,
-        raw_category: `${spirit.category} / ${spirit.subcategory || ''}`,
-        raw_abv: spirit.abv,
-        existing_notes: spirit.metadata?.tasting_note || spirit.metadata?.description || '',
-        existing_tags: [
-            ...(spirit.metadata?.nose_tags || []),
-            ...(spirit.metadata?.palate_tags || []),
-            ...(spirit.metadata?.finish_tags || [])
-        ].join(', ')
-    };
+    const model = genAI.getGenerativeModel({ model: MODEL_ID, generationConfig: { responseMimeType: "application/json", temperature: 0.2 } });
 
     const prompt = `
-You are an Avant-Garde Gastronomy Consultant and Master Sommelier.
-Your goal is to provide **novel, scientifically grounded, and exciting** data for a liquor database.
-You hate clichés. You love unexpected flavor bridges.
+    You are a meticulous liquor database auditor.
+    Your goal is to verify and correct the basic identity of a spirit.
+    
+    ### INPUT:
+    - Name: ${spirit.name}
+    - Category: ${spirit.category} / ${spirit.subcategory || ''}
+    - ABV: ${spirit.abv}
+    - Distillery: ${spirit.distillery}
+    - Region: ${spirit.region}
+    - Country: ${spirit.country}
 
-### 0. STRICT RULES:
-${TERM_GUIDELINES_TEXT}
+    ### INSTRUCTIONS:
+    1. **English Name**: Create the OFFICIAL English product name (Title Case).
+    2. **Audit**: Verify and correct Distillery, Country, Region, and ABV. Search web if needed.
+    3. **Category**: Ensure category matches international standards.
 
-### 1. BAN LIST (DO NOT SUGGEST THESE):
-${CLICHE_BAN_LIST}
-*If you suggest anything from the Ban List, the user will be bored and leave the site.*
-
-### 2. INPUT DATA:
-${JSON.stringify(inputContext, null, 2)}
-
----
-
-### INSTRUCTION: EXECUTE THIS REASONING CHAIN
-
-#### STEP 1: AUDIT & IDENTITY
-- **English Name**: Create the OFFICIAL English product name (Title Case).
-- **Audit**: Fix Distillery/Country/Region spellings. Verify ABV if possible.
-
-#### STEP 2: SENSORY ANALYSIS (The Hook)
-- **tasting_note_en**: Summarize the profile in 1 sentence. Focus on the *dominant molecule* (e.g., Lactic acid, Vanillin, Peat, Esters).
-- **Tags**: Extract 5-6 specific tags for Nose/Palate/Finish. (e.g., instead of "Fruity", use "Overripe Pineapple" or "Dried Apricot").
-
-#### STEP 3: CREATIVE PAIRING ENGINE (The Core Value)
-Generate exactly TWO pairings using the rules below.
-
-**Concept A: The "Flavor Bridge" (Scientific Resonance)**
-- Find a dish that shares a *dominant flavor compound* with the spirit, but from a DIFFERENT cuisine.
-- *Logic*: "This Makgeolli has lactic acid (yogurt notes) -> Pair with spicy Indian Tandoori Chicken (yogurt marinade)."
-- *Logic*: "This Bourbon has vanillin -> Pair with Cantonese Char Siu (sweet glaze)."
-- **Avoid matching Country to Country.** Cross the borders.
-
-**Concept B: The "Textural Contrast" (The Cut)**
-- Find a dish where the spirit solves a problem in the food (Cuts fat, soothes heat, cleanses palate).
-- *Logic*: "This high-proof Rye cuts through the richness of a Truffle Risotto."
-- *Logic*: "This oily Mezcal stands up to the funk of Blue Cheese Gnocchi."
-
-**Writing the Guide (pairing_guide_en/ko):**
-- Combine A and B into a cohesive, appetizing paragraph (4-5 sentences).
-- Do not use bullet points in the text. Write like a food columnist.
-- Explain *WHY* it works (The Bridge or The Cut).
-- **Korean Tone**: "미식가의 노트", "뜻밖의 조화", "풍미의 층위" (Sophisticated).
-
----
-
-### OUTPUT JSON SCHEMA:
-{
-  "name_en": "string",
-  "distillery": "string",
-  "region": "string",
-  "country": "string",
-  "abv": number,
-  "description_ko": "string",
-  "description_en": "string",
-  "tasting_note_en": "string",
-  "nose_tags": ["string"],
-  "palate_tags": ["string"],
-  "finish_tags": ["string"],
-  "pairing_guide_en": "string",
-  "pairing_guide_ko": "string",
-  "tasting_note": "string (Hashtag summary)"
-}
-`;
-
-    try {
-        const result = await model.generateContent(prompt);
-        const data = JSON.parse(result.response.text());
-        if (typeof data.abv !== 'number') data.abv = Number(spirit.abv) || 0;
-        return data;
-    } catch (error) {
-        console.error(`Gemini Enrichment Error for ${spirit.name}:`, error);
-        throw error;
+    ### OUTPUT JSON SCHEMA:
+    {
+      "name_en": "string",
+      "distillery": "string",
+      "region": "string",
+      "country": "string",
+      "abv": number,
+      "category": "string",
+      "subcategory": "string"
     }
+    `;
+
+    const result = await model.generateContent(prompt);
+    return JSON.parse(result.response.text());
+}
+
+/**
+ * STEP 2: SENSORY ANALYSIS
+ * Generates Description and 3-5+ Tags for Nose, Palate, and Finish.
+ */
+export async function generateSensoryData(spirit: SpiritEnrichmentInput): Promise<EnrichmentSensoryResult> {
+    if (!API_KEY) throw new Error("GEMINI_API_KEY is not set");
+    const genAI = new GoogleGenerativeAI(API_KEY);
+    const model = genAI.getGenerativeModel({ model: MODEL_ID, generationConfig: { responseMimeType: "application/json", temperature: 0.7 } });
+
+    const prompt = `
+    You are a world-class Sommelier and Sensory Scientist.
+    Generate a deep sensory analysis based on the audited product info.
+    
+    ### PRODUCT INFO:
+    - Name: ${spirit.name} (${spirit.name_en})
+    - Category: ${spirit.category}
+    - ABV: ${spirit.abv}%
+
+    ### MANDATORY REQUIREMENTS:
+    1. **Description**: Write a evocative, sommelier-style description in both KO and EN (2-3 sentences each).
+    2. **Tags**: Generate MINIMUM 3, MAXIMUM 6 specific flavor tags for each category:
+       - nose_tags: Aromatic components
+       - palate_tags: Taste and mouthfeel
+       - finish_tags: Aftertaste and persistence
+       - *Example*: Use "Zesty Lemon" instead of "Citrus".
+    3. **Tasting Note**: A short hashtag summary (e.g., "#Peaty #Oily #SeaSalt").
+
+    ### OUTPUT JSON SCHEMA:
+    {
+      "description_ko": "string",
+      "description_en": "string",
+      "nose_tags": ["string"],
+      "palate_tags": ["string"],
+      "finish_tags": ["string"],
+      "tasting_note": "string"
+    }
+    `;
+
+    const result = await model.generateContent(prompt);
+    return JSON.parse(result.response.text());
+}
+
+/**
+ * STEP 3: CREATIVE PAIRING ENGINE
+ * Generates food pairings based on product info and sensory data.
+ */
+export async function generatePairingGuide(spirit: SpiritEnrichmentInput): Promise<EnrichmentPairingResult> {
+    if (!API_KEY) throw new Error("GEMINI_API_KEY is not set");
+    const genAI = new GoogleGenerativeAI(API_KEY);
+    const model = genAI.getGenerativeModel({ model: MODEL_ID, generationConfig: { responseMimeType: "application/json", temperature: 0.85 } });
+
+    const prompt = `
+    You are an Avant-Garde Gastronomy Consultant.
+    Generate two logical pairings based on sensory data. Do not use clichés from the Ban List.
+
+    ### BAN LIST:
+    ${CLICHE_BAN_LIST}
+
+    ### INPUT DATA:
+    - Name: ${spirit.name}
+    - Category: ${spirit.category}
+    - Sensory: ${spirit.description_en}
+    - Tags: ${[...(spirit.nose_tags || []), ...(spirit.palate_tags || []), ...(spirit.finish_tags || [])].join(', ')}
+
+    ### PAIRING STRATEGY:
+    1. **The Flavor Bridge**: Shared molecular compounds.
+    2. **The Textural Contrast**: Opposing but harmonious elements.
+    *Cross-cultural suggestions only.*
+
+    ### OUTPUT JSON SCHEMA:
+    {
+      "pairing_guide_ko": "string (4-5 cohesive sentences)",
+      "pairing_guide_en": "string (4-5 cohesive sentences)"
+    }
+    `;
+
+    const result = await model.generateContent(prompt);
+    return JSON.parse(result.response.text());
 }

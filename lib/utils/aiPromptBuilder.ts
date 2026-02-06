@@ -46,7 +46,9 @@ export interface AnalysisInputItem {
  * 유저의 술장 데이터를 바탕으로 AI 분석용 프롬프트를 생성합니다.
  * 데이터가 누락된 필드는 안전하게 제외하며, 최신 활동에 우선순위를 둡니다.
  */
-export function buildTasteAnalysisPrompt(items: AnalysisInputItem[]): string {
+export function buildTasteAnalysisPrompt(items: AnalysisInputItem[], isEn: boolean = false): string {
+    const langSuffix = isEn ? "English" : "Korean";
+    const toneSuffix = isEn ? "enlightening & professional" : "warm & professional";
 
     // 1. 마신 술만 필터링 (위시리스트 제외)
     const consumedSpirits = items.filter(s => !s.isWishlist);
@@ -162,14 +164,14 @@ ${JSON.stringify(cleanData, null, 2)}
 {
   "stats": { "woody": 0, "peaty": 0, "floral": 0, "fruity": 0, "nutty": 0, "richness": 0 },
   "persona": {
-    "title": "A creative and fitting title (Korean)",
-    "description": "2-3 insightful sentences about their taste journey (Korean, warm & professional)",
+    "title": "A creative and fitting title (${langSuffix})",
+    "description": "2-3 insightful sentences about their taste journey (${langSuffix}, ${toneSuffix})",
     "keywords": ["#SignatureFlavor", "#Exploration", "#Nuance"]
   },
   "recommendation": {
     "name": "Recommended Spirit Name (can be ANY category - whisky, rum, gin, sake, traditional spirits, etc.)",
     "matchRate": 0,
-    "reason": "Detailed reasoning as a bar owner, explaining the flavor connection and why this expands their collection (Korean)"
+    "reason": "Detailed reasoning as a bar owner, explaining the flavor connection and why this expands their collection (${langSuffix})"
   }
 }
 `;

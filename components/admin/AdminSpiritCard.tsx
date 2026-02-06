@@ -9,50 +9,31 @@ interface AdminSpiritCardProps {
   onRefresh?: () => void;
 }
 
-interface EnrichmentResult {
-  name_en?: string;
-  description_ko?: string;
-  description_en?: string;
-  nose_tags?: string[];
-  palate_tags?: string[];
-  finish_tags?: string[];
-  pairing_guide_en?: string;
-  pairing_guide_ko?: string;
-  distillery?: string;
-  region?: string;
-  country?: string;
-  abv?: number;
-}
-
-interface SpiritUpdateData {
-  isPublished?: boolean;
-  isReviewed?: boolean;
-  reviewedBy?: string;
-  reviewedAt?: Date;
-  name_en?: string | null;
-  description_ko?: string;
-  description_en?: string;
-  abv?: number;
-  distillery?: string | null;
-  region?: string | null;
-  country?: string | null;
-  metadata?: any;
-}
-
 export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardProps) {
   const [status, setStatus] = useState(spirit.isPublished ? 'published' : 'pending');
   const [isLoading, setIsLoading] = useState(false);
   const [isTranslating, setIsTranslating] = useState(false);
+  const [enrichStep, setEnrichStep] = useState<'idle' | 'audit' | 'sensory' | 'pairing'>('idle');
+
   const [nameEn, setNameEn] = useState(spirit.name_en || '');
-  const [descEn, setDescEn] = useState(spirit.metadata?.description_en || '');
-  const [noteEn, setNoteEn] = useState(spirit.metadata?.tasting_note_en || '');
-  const [pairingEn, setPairingEn] = useState(spirit.metadata?.pairing_guide_en || '');
+  const [descKo, setDescKo] = useState(spirit.metadata?.description_ko || spirit.description_ko || '');
+  const [descEn, setDescEn] = useState(spirit.metadata?.description_en || spirit.description_en || '');
+  const [pairingKo, setPairingKo] = useState(spirit.metadata?.pairing_guide_ko || spirit.pairing_guide_ko || '');
+  const [pairingEn, setPairingEn] = useState(spirit.metadata?.pairing_guide_en || spirit.pairing_guide_en || '');
+
+  // Sensory Tags
+  const [noseTags, setNoseTags] = useState<string[]>(spirit.nose_tags || spirit.metadata?.nose_tags || []);
+  const [palateTags, setPalateTags] = useState<string[]>(spirit.palate_tags || spirit.metadata?.palate_tags || []);
+  const [finishTags, setFinishTags] = useState<string[]>(spirit.finish_tags || spirit.metadata?.finish_tags || []);
+  const [tastingNote, setTastingNote] = useState(spirit.tasting_note || spirit.metadata?.tasting_note || '');
 
   // Local states for metadata preview/edit
   const [distillery, setDistillery] = useState(spirit.distillery || '');
   const [region, setRegion] = useState(spirit.region || '');
   const [country, setCountry] = useState(spirit.country || 'South Korea');
   const [abv, setAbv] = useState(spirit.abv || 0);
+  const [category, setCategory] = useState(spirit.category || '');
+  const [subcategory, setSubcategory] = useState(spirit.subcategory || '');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleEnrich = async () => {
@@ -60,39 +41,79 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
     setIsTranslating(true);
     setErrorMessage(null);
     try {
-      const response = await fetch('/api/admin/spirits/enrich', {
+      // STEP 1: AUDIT
+      setEnrichStep('audit');
+      const auditRes = await fetch('/api/admin/spirits/enrich', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          stage: 'audit',
           name: spirit.name,
-          category: spirit.category,
-          subcategory: spirit.subcategory,
+          category: category || spirit.category,
+          subcategory: subcategory || spirit.subcategory,
           distillery: distillery || spirit.distillery,
           abv: abv || spirit.abv,
           region: region || spirit.region,
-          country: country || spirit.country,
-          description_en: descEn,
-          metadata: spirit.metadata
+          country: country || spirit.country
         })
       });
+      if (!auditRes.ok) throw new Error('Audit failed');
+      const auditData = await auditRes.json();
+      if (auditData.name_en) setNameEn(auditData.name_en);
+      if (auditData.distillery) setDistillery(auditData.distillery);
+      if (auditData.region) setRegion(auditData.region);
+      if (auditData.country) setCountry(auditData.country);
+      if (auditData.abv !== undefined) setAbv(auditData.abv);
+      if (auditData.category) setCategory(auditData.category);
+      if (auditData.subcategory) setSubcategory(auditData.subcategory);
 
-      if (!response.ok) throw new Error('Enrichment failed');
-      const data: any = await response.json();
+      // STEP 2: SENSORY
+      setEnrichStep('sensory');
+      const sensoryRes = await fetch('/api/admin/spirits/enrich', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          stage: 'sensory',
+          name: spirit.name,
+          name_en: auditData.name_en || nameEn,
+          category: auditData.category || category || spirit.category,
+          abv: auditData.abv || abv || spirit.abv
+        })
+      });
+      if (!sensoryRes.ok) throw new Error('Sensory data generation failed');
+      const sensoryData = await sensoryRes.json();
+      if (sensoryData.description_ko) setDescKo(sensoryData.description_ko);
+      if (sensoryData.description_en) setDescEn(sensoryData.description_en);
+      if (sensoryData.nose_tags) setNoseTags(sensoryData.nose_tags);
+      if (sensoryData.palate_tags) setPalateTags(sensoryData.palate_tags);
+      if (sensoryData.finish_tags) setFinishTags(sensoryData.finish_tags);
+      if (sensoryData.tasting_note) setTastingNote(sensoryData.tasting_note);
 
-      if (data.name_en) setNameEn(data.name_en);
-      if (data.description_en) setDescEn(data.description_en);
-      if (data.tasting_note_en) setNoteEn(data.tasting_note_en);
-      if (data.pairing_guide_en) setPairingEn(data.pairing_guide_en);
+      // STEP 3: PAIRING
+      setEnrichStep('pairing');
+      const pairingRes = await fetch('/api/admin/spirits/enrich', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          stage: 'pairing',
+          name: spirit.name,
+          category: auditData.category || category || spirit.category,
+          description_en: sensoryData.description_en,
+          nose_tags: sensoryData.nose_tags,
+          palate_tags: sensoryData.palate_tags,
+          finish_tags: sensoryData.finish_tags
+        })
+      });
+      if (!pairingRes.ok) throw new Error('Pairing guide generation failed');
+      const pairingData = await pairingRes.json();
+      if (pairingData.pairing_guide_ko) setPairingKo(pairingData.pairing_guide_ko);
+      if (pairingData.pairing_guide_en) setPairingEn(pairingData.pairing_guide_en);
 
-      if (data.distillery) setDistillery(data.distillery);
-      if (data.region) setRegion(data.region);
-      if (data.country) setCountry(data.country);
-      if (data.abv !== undefined) setAbv(data.abv);
-
-      alert('✨ AI 데이터 분석/교정 완료!');
+      setEnrichStep('idle');
+      alert('✨ AI 데이터 순차 생성 완료!');
     } catch (error: any) {
       console.error("Enrichment failed:", error);
-      setErrorMessage(`Enrichment failed: ${error.message}`);
+      setErrorMessage(`Enrichment failed at [${enrichStep}]: ${error.message}`);
     } finally {
       setIsTranslating(false);
     }
@@ -112,10 +133,17 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
         distillery: distillery,
         region: region,
         country: country,
+        category: category,
+        subcategory: subcategory,
+        nose_tags: noseTags,
+        palate_tags: palateTags,
+        finish_tags: finishTags,
+        tasting_note: tastingNote,
         metadata: {
           ...spirit.metadata,
+          description_ko: descKo,
           description_en: descEn,
-          tasting_note_en: noteEn,
+          pairing_guide_ko: pairingKo,
           pairing_guide_en: pairingEn,
           enriched_at: new Date().toISOString()
         }
@@ -155,12 +183,14 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
         </div>
 
         <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-lg mb-1 truncate">{spirit.name}</h3>
+          <div className="flex justify-between items-start mb-1">
+            <h3 className="font-semibold text-lg truncate">{spirit.name}</h3>
+            <span className="text-[10px] font-bold px-2 py-0.5 bg-secondary rounded uppercase tracking-widest">{spirit.category}</span>
+          </div>
 
           <div className="flex flex-wrap gap-2 text-sm mb-3">
             <span className="px-2 py-1 rounded bg-secondary font-bold">도수 {abv}%</span>
             <span className="px-2 py-1 rounded bg-secondary font-bold">{region}, {country}</span>
-            <span className="px-2 py-1 rounded bg-secondary">{spirit.category}</span>
           </div>
 
           {status === 'pending' && (
@@ -176,47 +206,89 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
                     className="w-full px-3 py-1.5 text-sm border border-border rounded bg-background"
                   />
                 </div>
-                <div className="space-y-1">
-                  <label className="text-[10px] font-bold text-muted-foreground uppercase">Tasting Note (EN)</label>
-                  <input
-                    type="text"
-                    value={noteEn}
-                    onChange={(e) => setNoteEn(e.target.value)}
-                    placeholder="Evocative summary"
-                    className="w-full px-3 py-1.5 text-sm border border-border rounded bg-background"
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold text-muted-foreground uppercase">Description (KO / EN)</label>
+                <div className="grid grid-cols-2 gap-2">
+                  <textarea
+                    value={descKo}
+                    onChange={(e) => setDescKo(e.target.value)}
+                    placeholder="Korean description"
+                    rows={3}
+                    className="w-full px-3 py-1.5 text-xs border border-border rounded bg-background resize-none"
+                  />
+                  <textarea
+                    value={descEn}
+                    onChange={(e) => setDescEn(e.target.value)}
+                    placeholder="English description"
+                    rows={3}
+                    className="w-full px-3 py-1.5 text-xs border border-border rounded bg-background resize-none"
                   />
                 </div>
               </div>
 
-              <div className="space-y-1">
-                <label className="text-[10px] font-bold text-muted-foreground uppercase">Description (EN)</label>
-                <textarea
-                  value={descEn}
-                  onChange={(e) => setDescEn(e.target.value)}
-                  placeholder="Sommelier-style description"
-                  rows={2}
-                  className="w-full px-3 py-1.5 text-sm border border-border rounded bg-background resize-none"
-                />
+              {/* Tags Section */}
+              <div className="grid grid-cols-3 gap-2">
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-muted-foreground uppercase text-pink-500">Nose Tags</label>
+                  <div className="text-[10px] bg-secondary/50 p-2 rounded min-h-[40px] border border-border/50">
+                    {noseTags.join(', ') || 'No tags'}
+                  </div>
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-muted-foreground uppercase text-amber-500">Palate Tags</label>
+                  <div className="text-[10px] bg-secondary/50 p-2 rounded min-h-[40px] border border-border/50">
+                    {palateTags.join(', ') || 'No tags'}
+                  </div>
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-muted-foreground uppercase text-blue-500">Finish Tags</label>
+                  <div className="text-[10px] bg-secondary/50 p-2 rounded min-h-[40px] border border-border/50">
+                    {finishTags.join(', ') || 'No tags'}
+                  </div>
+                </div>
               </div>
 
               <div className="space-y-1">
-                <label className="text-[10px] font-bold text-muted-foreground uppercase">Pairing Guide (EN)</label>
-                <textarea
-                  value={pairingEn}
-                  onChange={(e) => setPairingEn(e.target.value)}
-                  placeholder="Appetizing pairing recommendations"
-                  rows={2}
-                  className="w-full px-3 py-1.5 text-sm border border-border rounded bg-background resize-none"
-                />
+                <label className="text-[10px] font-bold text-muted-foreground uppercase">Pairing Guide (KO / EN)</label>
+                <div className="grid grid-cols-2 gap-2">
+                  <textarea
+                    value={pairingKo}
+                    onChange={(e) => setPairingKo(e.target.value)}
+                    placeholder="Korean pairing guide"
+                    rows={3}
+                    className="w-full px-3 py-1.5 text-xs border border-border rounded bg-background resize-none"
+                  />
+                  <textarea
+                    value={pairingEn}
+                    onChange={(e) => setPairingEn(e.target.value)}
+                    placeholder="English pairing guide"
+                    rows={3}
+                    className="w-full px-3 py-1.5 text-xs border border-border rounded bg-background resize-none"
+                  />
+                </div>
               </div>
 
-              <button
-                onClick={handleEnrich}
-                disabled={isTranslating || isLoading}
-                className="w-full py-2 bg-purple-600/10 text-purple-600 dark:bg-purple-900/20 dark:text-purple-400 border border-purple-200 dark:border-purple-800 rounded text-sm font-bold hover:bg-purple-600/20 disabled:opacity-50 flex items-center justify-center gap-2"
-              >
-                {isTranslating ? '...' : '✨ AI 데이터 분석 및 영문 생성'}
-              </button>
+              <div className="flex flex-col gap-2">
+                <div className="flex justify-between text-[10px] font-black uppercase tracking-tighter">
+                  <span className={enrichStep === 'audit' ? 'text-purple-500 scale-110' : 'opacity-30'}>1. Audit</span>
+                  <span className={enrichStep === 'sensory' ? 'text-purple-500 scale-110' : 'opacity-30'}>2. Sensory</span>
+                  <span className={enrichStep === 'pairing' ? 'text-purple-500 scale-110' : 'opacity-30'}>3. Pairing</span>
+                </div>
+                <button
+                  onClick={handleEnrich}
+                  disabled={isTranslating || isLoading}
+                  className="w-full py-3 bg-purple-600 shadow-lg shadow-purple-500/20 text-white rounded-xl text-sm font-black hover:bg-purple-700 disabled:opacity-50 flex items-center justify-center gap-2 transition-all active:scale-95"
+                >
+                  {isTranslating ? (
+                    <>
+                      <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      AI Generating {enrichStep}...
+                    </>
+                  ) : '✨ AI 데이터 순차 생성 (Audit > Sensory > Pairing)'}
+                </button>
+              </div>
 
               {errorMessage && (
                 <div className="text-xs text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 px-2 py-1 rounded">

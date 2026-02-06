@@ -1,0 +1,14 @@
+﻿[dotenv@17.2.3] injecting env (9) from .env -- tip: ?뵎 add access controls to secrets: https://dotenvx.com/ops
+[dotenv@17.2.3] injecting env (7) from .env.local -- tip: ?숋툘  load multiple .env files with { path: ['.env.local', '.env'] }
+?㈉ [Health Check] ?곗씠?곕쿋?댁뒪 吏꾨떒???쒖옉?⑸땲??..
+
+?뱤 珥?遺꾩꽍 ??? 1034媛?臾몄꽌
+---------------------------------------------------
+
+???꾨꼍???곗씠??(Perfect): 0媛?(0.0%)
+
+?뱄툘 [Minor] ?곷Ц ?곸꽭 ?댁슜(?명듃/?ㅻ챸) ?쇰? ?꾨씫: 1034媛?   ?몛 ?덉떆: ?쒖＜, LUDOVIC XIII, 肄쒗궧??..
+   ?몛 議곗튂: ?곸꽭 ?섏씠吏媛 ?쒓뎅?대줈 ?섏삤嫄곕굹 鍮꾩뼱 蹂댁엯?덈떎. (Admin?먯꽌 AI ?앹꽦 ?꾩슂)
+
+---------------------------------------------------
+?뵩 ?쇰? ?곗씠?곗뿉 留덉씠洹몃젅?댁뀡???꾩슂?⑸땲??

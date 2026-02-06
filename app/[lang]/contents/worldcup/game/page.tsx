@@ -36,16 +36,18 @@ import confetti from 'canvas-confetti';
 interface Spirit {
     id: string;
     name: string;
+    name_en?: string | null;
     distillery: string | null;
     imageUrl: string | null;
     thumbnailUrl: string | null;
     category: string;
+    category_en?: string | null;
     subcategory: string | null;
     tags: string[];
     abv: number | null;
     country: string | null;
     region: string | null;
-    preloadedImageUrl?: string;  // ✅ 프리로드된 최종 이미지 URL
+    preloadedImageUrl?: string;
     metadata?: {
         nose_tags?: string[];
         palate_tags?: string[];
@@ -53,9 +55,24 @@ interface Spirit {
     };
 }
 
-export default function WorldCupGamePage() {
+import { getDictionary } from "@/lib/get-dictionary";
+import { Locale } from "@/i18n-config";
+
+export default function WorldCupGamePage({ params }: { params: Promise<{ lang: string }> }) {
     const router = useRouter();
     const searchParams = useSearchParams();
+    const [lang, setLang] = useState<Locale>('ko');
+    const [dict, setDict] = useState<any>(null);
+
+    // Get params
+    useEffect(() => {
+        params.then(p => {
+            setLang(p.lang as Locale);
+            getDictionary(p.lang as Locale).then(d => setDict(d));
+        });
+    }, [params]);
+
+    const isEn = lang === 'en';
 
     // Params
     const cat = searchParams.get('cat') || 'ALL';
@@ -109,10 +126,12 @@ export default function WorldCupGamePage() {
                     return {
                         id: doc.id,
                         name: data.name,
+                        name_en: data.name_en || null,
                         distillery: data.distillery || null,
                         imageUrl: data.imageUrl || null,
                         thumbnailUrl: data.thumbnailUrl || null,
                         category: data.category,
+                        category_en: data.category_en || null,
                         subcategory: data.subcategory || null,
                         abv: data.abv !== undefined ? Number(data.abv) : null,
                         country: data.country || null,
@@ -124,12 +143,12 @@ export default function WorldCupGamePage() {
                             ...(data.tags || [])
                         ]
                             .filter((v, i, a) => v && a.indexOf(v) === i)
-                            .map(tag => tag.startsWith('#') ? tag.slice(1) : tag) // Remove leading # if exists
+                            .map(tag => tag.startsWith('#') ? tag.slice(1) : tag)
                     };
-                }).filter(s => s.imageUrl || s.thumbnailUrl); // Only spirits with images
+                }).filter(s => s.imageUrl || s.thumbnailUrl);
 
                 if (fetchedData.length < 2) {
-                    setError('조건에 맞는 술이 충분하지 않습니다. (최소 2개 필요)');
+                    setError(dict?.common?.notEnoughSpirits || (isEn ? 'Not enough spirits found (Min 2 required)' : '조건에 맞는 술이 충분하지 않습니다. (최소 2개 필요)'));
                     return;
                 }
 
@@ -152,7 +171,7 @@ export default function WorldCupGamePage() {
                 setTotalRound(finalRound);
             } catch (err) {
                 console.error(err);
-                setError('데이터를 불러오는 중 오류가 발생했습니다.');
+                setError(dict?.common?.errorData || (isEn ? 'Error loading data.' : '데이터를 불러오는 중 오류가 발생했습니다.'));
             } finally {
                 setLoading(false);
             }
@@ -317,12 +336,12 @@ export default function WorldCupGamePage() {
             });
 
             const link = document.createElement('a');
-            link.download = `k-spirits-worldcup-${winner?.name || 'result'}.png`;
+            link.download = `k-spirits-worldcup-${(isEn ? winner?.name_en : winner?.name) || 'result'}.png`;
             link.href = dataUrl;
             link.click();
         } catch (err) {
             console.error('Failed to save image', err);
-            alert('이미지 생성 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+            alert(dict?.worldcup?.saveError || (isEn ? 'Error saving image.' : '이미지 생성 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.'));
         }
     }, [winner]);
 
@@ -336,8 +355,8 @@ export default function WorldCupGamePage() {
             : window.location.href;
 
         const shareData = {
-            title: '주류 취향 월드컵 🏆',
-            text: `나의 최고의 선택은 [${winner.name}]! 당신의 취향도 확인해보세요.`,
+            title: dict?.worldcup?.title || '주류 취향 월드컵 🏆',
+            text: (dict?.worldcup?.shareText || (isEn ? "My best pick is [{winner}]!" : "나의 최고의 선택은 [{winner}]!")).replace('{winner}', (isEn ? winner.name_en : winner.name) || winner.name),
             url: shareUrl,
         };
 
@@ -346,7 +365,7 @@ export default function WorldCupGamePage() {
                 await navigator.share(shareData);
             } else {
                 await navigator.clipboard.writeText(shareUrl);
-                alert('🔗링크가 복사되었습니다!');
+                alert(dict?.worldcup?.copyLink || '🔗링크가 복사되었습니다!');
             }
         } catch (err) {
             console.error('Share failed', err);
@@ -354,11 +373,11 @@ export default function WorldCupGamePage() {
     }, [winner, resultId]);
 
     // Loading Screen
-    if (loading) {
+    if (loading || !dict) {
         return (
             <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-background">
                 <Loader2 className="w-12 h-12 text-amber-500 animate-spin mb-4" />
-                <p className="text-muted-foreground font-bold animate-pulse">주류 데이터를 수집 중입니다...</p>
+                <p className="text-muted-foreground font-bold animate-pulse">{dict?.common?.loadingData || "주류 데이터를 수집 중입니다..."}</p>
             </div>
         );
     }
@@ -373,7 +392,7 @@ export default function WorldCupGamePage() {
                     onClick={() => router.back()}
                     className="mt-6 px-8 py-3 bg-card border border-border text-foreground rounded-2xl font-bold hover:bg-muted transition-all"
                 >
-                    돌아가기
+                    {dict?.common?.back || "돌아가기"}
                 </button>
             </div>
         );
@@ -396,7 +415,7 @@ export default function WorldCupGamePage() {
                         <span className="text-amber-500 text-xs font-black uppercase tracking-widest">Grand Champion</span>
                     </div>
 
-                    <h2 className="text-3xl font-black text-foreground mb-8 tracking-tighter">당신의 최종 선택은!</h2>
+                    <h2 className="text-3xl font-black text-foreground mb-8 tracking-tighter">{dict?.worldcup?.champion || "당신의 최종 선택은!"}</h2>
 
                     {/* Winner Card Container for Capture - Forced Light Theme for Image Export */}
                     <div
@@ -436,7 +455,7 @@ export default function WorldCupGamePage() {
                                     {/* 1단. Category / Subcategory Capsules */}
                                     <div className="flex flex-wrap justify-center gap-1.5">
                                         <span className="px-2 py-0.5 bg-amber-500 text-white text-[10px] font-black rounded-full uppercase tracking-wider">
-                                            {winner.category}
+                                            {(isEn && winner.category_en) ? winner.category_en : winner.category}
                                         </span>
                                         {winner.subcategory && (
                                             <span className="px-2 py-0.5 bg-slate-100 text-slate-500 text-[10px] font-bold rounded-full uppercase tracking-tighter">
@@ -512,23 +531,23 @@ export default function WorldCupGamePage() {
                                 className="py-3.5 bg-card border border-border text-foreground text-sm font-bold rounded-2xl hover:bg-muted transition-all flex flex-col items-center justify-center gap-1.5 active:scale-95"
                             >
                                 <Download className="w-5 h-5 text-pink-500" />
-                                <span>결과 저장</span>
+                                <span>{dict?.worldcup?.saveResult || "결과 저장"}</span>
                             </button>
                             <button
                                 onClick={handleShare}
                                 className="py-3.5 bg-card border border-border text-foreground text-sm font-bold rounded-2xl hover:bg-muted transition-all flex flex-col items-center justify-center gap-1.5 active:scale-95"
                             >
                                 <Share2 className="w-5 h-5 text-purple-500" />
-                                <span>친구에게 공유</span>
+                                <span>{dict?.worldcup?.shareResult || "친구에게 공유"}</span>
                             </button>
                         </div>
 
                         {/* 2. Explore More */}
                         <button
-                            onClick={() => router.push('/contents/worldcup')}
+                            onClick={() => router.push(`/${lang}/contents/worldcup`)}
                             className="w-full py-4 bg-amber-500 hover:bg-amber-400 text-white font-black rounded-2xl flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg shadow-amber-500/20"
                         >
-                            <Gamepad2 className="w-5 h-5" /> 다른 월드컵 하러 가기
+                            <Gamepad2 className="w-5 h-5" /> {dict?.worldcup?.playAgain || "다른 월드컵 하러 가기"}
                         </button>
 
                         {/* 3. Restart */}
@@ -536,7 +555,7 @@ export default function WorldCupGamePage() {
                             onClick={() => window.location.reload()}
                             className="mt-2 py-2 text-muted-foreground text-xs font-bold hover:text-foreground transition-colors flex items-center justify-center gap-1.5 underline underline-offset-4"
                         >
-                            <RotateCcw className="w-3.5 h-3.5" /> 대결 다시하기 (이 설정으로)
+                            <RotateCcw className="w-3.5 h-3.5" /> {dict?.worldcup?.restart || "대결 다시하기 (이 설정으로)"}
                         </button>
                     </div>
                 </motion.div>
@@ -567,9 +586,9 @@ export default function WorldCupGamePage() {
                             exit={{ scale: 1.05, opacity: 0 }}
                             className="text-center"
                         >
-                            <div className="text-amber-500 text-[10px] font-black uppercase tracking-[0.4em] mb-2 opacity-80">Next Round</div>
+                            <div className="text-amber-500 text-[10px] font-black uppercase tracking-[0.4em] mb-2 opacity-80">{dict?.worldcup?.nextRound || "Next Round"}</div>
                             <h2 className="text-6xl md:text-8xl font-black text-foreground tracking-tighter italic">
-                                {totalRound / 2 === 2 ? '결승전' : `${totalRound / 2}강`}
+                                {totalRound / 2 === 1 ? (dict?.worldcup?.final || '결승전') : (dict?.worldcup?.round?.replace('{round}', (totalRound / 2).toString()) || `${totalRound / 2}강`)}
                             </h2>
                         </motion.div>
                     </motion.div>
@@ -586,7 +605,7 @@ export default function WorldCupGamePage() {
                     </button>
                     <div className="flex flex-col items-center px-4 py-2 bg-card/80 backdrop-blur-md border border-border rounded-2xl shadow-sm">
                         <h2 className="text-xl font-black text-amber-500 tracking-tighter drop-shadow-md">
-                            {totalRound === 2 ? '결승전' : `${totalRound}강`}
+                            {totalRound === 2 ? (dict?.worldcup?.final || '결승전') : (dict?.worldcup?.round?.replace('{round}', totalRound.toString()) || `${totalRound}강`)}
                         </h2>
                         <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest px-2 py-0.5 mt-0.5">
                             Game {Math.floor(currentIndex / 2) + 1} / {currentRoundItems.length / 2}
@@ -607,7 +626,7 @@ export default function WorldCupGamePage() {
             {/* VS Badge */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none md:top-[55%]">
                 <div className="w-12 h-12 md:w-20 md:h-20 bg-background/60 backdrop-blur-xl border-2 border-amber-500 rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(245,158,11,0.4)]">
-                    <span className="text-xl md:text-3xl font-black italic text-amber-500">VS</span>
+                    <span className="text-xl md:text-3xl font-black italic text-amber-500">{dict?.worldcup?.vs || "VS"}</span>
                 </div>
             </div>
 
@@ -649,7 +668,7 @@ function ChoiceCard({ item, onClick, pos }: { item: Spirit, onClick: () => void,
                 {/* 1단. Category / Subcategory Capsules */}
                 <div className="flex flex-wrap justify-center gap-1.5 md:gap-2">
                     <span className="px-2 md:px-3 py-1 bg-amber-500 text-white text-[10px] md:text-[11px] font-black rounded-full uppercase tracking-wider">
-                        {item.category}
+                        {(isEn && item.category_en) ? item.category_en : item.category}
                     </span>
                     {item.subcategory && (
                         <span className="px-2 md:px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-[10px] md:text-[11px] font-bold rounded-full uppercase tracking-tighter">
@@ -660,7 +679,7 @@ function ChoiceCard({ item, onClick, pos }: { item: Spirit, onClick: () => void,
 
                 {/* 2단. Product Name */}
                 <h3 className="text-sm md:text-2xl font-black text-foreground leading-tight line-clamp-2 md:line-clamp-3">
-                    {item.name}
+                    {typeof window !== 'undefined' && window.location.pathname.startsWith('/en') && item.name_en ? item.name_en : item.name}
                 </h3>
 
                 {/* 3단. Country / Region Capsules */}

@@ -162,7 +162,6 @@ export const SpiritsCacheProvider: React.FC<{ children: React.ReactNode }> = ({ 
         { name: 'en', weight: 0.9 },   // name (English)
         { name: 'd', weight: 0.5 },    // distillery
         { name: 'c', weight: 0.3 },    // category
-        { name: 'tne', weight: 0.4 },  // tasting_note_en
       ],
       threshold: 0.3,
       distance: 100,

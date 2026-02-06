@@ -23,6 +23,7 @@ export interface Spirit {
   id: string;
   name: string;
   category: string;
+  category_en?: string | null;
   subcategory?: string;
   abv: number;
   imageUrl?: string;

@@ -79,8 +79,10 @@ export default function CabinetClient({ lang, dict }: CabinetClientProps) {
                 const indexItem = searchIndex.find(s => s.i === item.id);
                 return {
                     ...item,
+                    name_en: item.name_en || indexItem?.en || null,
                     thumbnailUrl: item.thumbnailUrl || indexItem?.t || item.imageUrl,
                     imageUrl: item.imageUrl || indexItem?.t,
+                    category: item.category || indexItem?.c,
                 };
             });
 

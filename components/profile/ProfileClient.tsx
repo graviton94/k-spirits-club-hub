@@ -88,7 +88,7 @@ export default function ProfileClient({ lang, dict }: ProfileClientProps) {
     if (loading) return (
         <div className="flex flex-col items-center justify-center py-20 text-muted-foreground animate-pulse">
             <span className="text-4xl mb-4">🥃</span>
-            <p className="font-bold">{isEn ? "Checking account information..." : "계정 정보를 확인하는 중입니다..."}</p>
+            <p className="font-bold">{isEn ? "Checking account details..." : "계정 정보를 확인하는 중입니다..."}</p>
         </div>
     );
 
@@ -183,7 +183,7 @@ export default function ProfileClient({ lang, dict }: ProfileClientProps) {
                                 </div>
                                 {formattedDate && (
                                     <p className="text-[10px] text-muted-foreground">
-                                        {dict.joined || "Joined"}: {formattedDate}
+                                        {dict?.joined || (isEn ? "Joined" : "가입일")}: {formattedDate}
                                     </p>
                                 )}
                             </div>
@@ -200,12 +200,12 @@ export default function ProfileClient({ lang, dict }: ProfileClientProps) {
                                     <Link href={`/${lang}/me/reviews`} className="bg-secondary/30 p-4 rounded-2xl flex flex-col items-center hover:bg-secondary/50 transition-colors">
                                         <span className="text-2xl mb-1">📝</span>
                                         <span className="text-lg font-black">{isLoadingStats ? '...' : reviewCount}</span>
-                                        <span className="text-xs text-muted-foreground">{dict.reviews || "Reviews"}</span>
+                                        <span className="text-xs text-muted-foreground">{dict?.reviews || (isEn ? "Reviews" : "리뷰")}</span>
                                     </Link>
                                     <div className="bg-secondary/30 p-4 rounded-2xl flex flex-col items-center">
                                         <span className="text-2xl mb-1">❤️</span>
                                         <span className="text-lg font-black">{isLoadingStats ? '...' : likesReceived}</span>
-                                        <span className="text-xs text-muted-foreground">{dict.likes || "Likes"}</span>
+                                        <span className="text-xs text-muted-foreground">{dict?.likes || (isEn ? "Likes" : "좋아요")}</span>
                                     </div>
                                     <Link href={`/${lang}/cabinet`} className="bg-secondary/30 p-4 rounded-2xl flex flex-col items-center hover:bg-secondary/50 transition-colors">
                                         <span className="text-2xl mb-1">🥃</span>
@@ -246,7 +246,7 @@ export default function ProfileClient({ lang, dict }: ProfileClientProps) {
                                             onClick={logout}
                                             className="w-full py-3 border border-destructive/20 text-destructive font-bold rounded-xl hover:bg-destructive/10 transition-all"
                                         >
-                                            {dict.logout || (isEn ? "Log Out" : "로그아웃")}
+                                            {dict?.logout || (isEn ? "Log Out" : "로그아웃")}
                                         </button>
                                     </>
                                 )}
