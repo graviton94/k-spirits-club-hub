@@ -243,7 +243,7 @@ export default function ProfileClient({ lang, dict }: ProfileClientProps) {
                                         )}
 
                                         <button
-                                            onClick={logout}
+                                            onClick={() => logout()}
                                             className="w-full py-3 border border-destructive/20 text-destructive font-bold rounded-xl hover:bg-destructive/10 transition-all"
                                         >
                                             {dict?.logout || (isEn ? "Log Out" : "로그아웃")}
