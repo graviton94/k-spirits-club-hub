@@ -1,65 +1,89 @@
 import Link from 'next/link';
-import { getGlobalSpiritsNews } from '@/lib/api/news';
+import { newsDb } from '@/lib/db/firestore-rest';
 
 export default async function NewsSection({ lang }: { lang: string }) {
-    const news = await getGlobalSpiritsNews(lang);
-    if (!news || news.length === 0) return null;
+    const rawNews = await newsDb.getLatest(3);
+
+    if (!rawNews || rawNews.length === 0) return null;
+
+    const news = rawNews.map((item: any) => {
+        const t = item.translations?.[lang] || item.translations?.['en'] || {};
+        const tags = item.tags?.[lang] || item.tags?.['en'] || [];
+        return {
+            title: t.title || item.originalTitle,
+            link: item.link,
+            snippet: t.snippet || item.originalSnippet,
+            source: item.source,
+            date: item.date,
+            tags: tags.slice(0, 2) // Take top 2 tags
+        };
+    });
 
     const title = lang === 'ko' ? '글로벌 주류 트렌드' : 'Global Spirits Trends';
-    const subtitle = lang === 'ko'
-        ? '전 세계 매거진과 면세점에서 엄선한 최신 소식 (AI 번역)'
-        : 'Curated news from top magazines & duty-free shops (AI Translated)';
-
-    // 날짜 포맷팅 함수 (안전하게 처리)
-    const formatDate = (dateStr: string) => {
-        if (!dateStr || dateStr === 'Recent') return 'Recent';
-        try {
-            return dateStr.split('T')[0];
-        } catch (e) {
-            return dateStr;
-        }
-    };
+    const subtitle = lang === 'ko' ? '최신 소식' : 'Latest News';
 
     return (
-        <section className="py-16 bg-gray-50 border-t border-gray-100">
-            <div className="container mx-auto px-4 md:px-6">
-                <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
-                    <div>
-                        <h2 className="text-3xl font-bold tracking-tight text-gray-900">🗞️ {title}</h2>
-                        <p className="mt-2 text-gray-600">{subtitle}</p>
-                    </div>
-                    <div className="text-xs text-gray-400">Powered by Google & Gemini</div>
-                </div>
+        <section className="container max-w-4xl mx-auto px-4 mb-12 lg:mb-16">
+            <div className="flex items-center gap-2 mb-4 border-b border-border pb-3">
+                <span className="text-xl">📰</span>
+                <h2 className="text-lg font-black tracking-tight text-foreground">{title}</h2>
+            </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {news.map((item, index) => (
-                        <Link
-                            key={index}
-                            href={item.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group flex flex-col bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 hover:-translate-y-1"
-                        >
-                            <div className="relative h-48 bg-gray-200 overflow-hidden">
-                                {item.thumbnail ? (
-                                    /* eslint-disable-next-line @next/next/no-img-element */
-                                    <img src={item.thumbnail} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                                ) : (
-                                    <div className="flex items-center justify-center h-full text-gray-400 bg-gray-100"><span className="text-4xl">🥃</span></div>
-                                )}
-                                <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase">{item.source}</div>
-                            </div>
-                            <div className="flex flex-col flex-1 p-5">
-                                <h3 className="font-bold text-lg text-gray-900 line-clamp-2 mb-3 group-hover:text-amber-600 transition-colors">{item.title}</h3>
-                                <p className="text-sm text-gray-500 line-clamp-3 mb-4 flex-1">{item.snippet}</p>
-                                <div className="text-xs text-gray-400 border-t pt-3 mt-auto flex justify-between">
-                                    <span>{formatDate(item.date)}</span>
-                                    <span className="group-hover:translate-x-1 transition-transform">Read more →</span>
+            <div className="flex flex-col divide-y divide-border border-t border-b border-border">
+                {news.map((item, index) => (
+                    <Link
+                        key={index}
+                        href={item.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group relative block py-2 px-1 hover:bg-accent/50 transition-colors"
+                    >
+                        {/* Top Row: Badges (NEW + Tags) + Date */}
+                        <div className="flex items-center gap-2 mb-1.5 h-5 w-full">
+                            <span className="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-sm shadow-sm animate-pulse flex-shrink-0">
+                                NEW
+                            </span>
+
+                            {item.tags && item.tags.length > 0 && (
+                                <div className="flex items-center gap-1.5 overflow-hidden">
+                                    {item.tags.map((tag: string, i: number) => (
+                                        <span key={i} className="text-[10px] font-medium text-amber-700 bg-amber-50 border border-amber-100 px-1.5 py-0.5 rounded-full whitespace-nowrap">
+                                            {tag}
+                                        </span>
+                                    ))}
                                 </div>
-                            </div>
-                        </Link>
-                    ))}
-                </div>
+                            )}
+
+                            {/* Date (Right Aligned) */}
+                            <span className="ml-auto text-[10px] text-muted-foreground font-medium whitespace-nowrap flex-shrink-0">
+                                {new Date(item.date).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\.$/, '')}
+                            </span>
+                        </div>
+
+                        {/* Title */}
+                        <h3 className="font-bold text-sm text-foreground group-hover:text-amber-600 transition-colors mb-1 truncate">
+                            {item.title}
+                        </h3>
+
+                        {/* Snippet + More */}
+                        <div className="text-xs text-muted-foreground leading-relaxed overflow-hidden">
+                            <p className="line-clamp-1 md:line-clamp-1">
+                                {item.snippet}
+                                <span className="text-muted-foreground/60 ml-1 group-hover:text-amber-500 font-medium transition-colors whitespace-nowrap">
+                                    {lang === 'ko' ? '...더보기' : '...More'}
+                                </span>
+                            </p>
+                        </div>
+                    </Link>
+                ))}
+            </div>
+
+            <div className="mt-2 text-right">
+                <p className="text-[10px] text-muted-foreground/50 tracking-tight">
+                    {lang === 'ko'
+                        ? '* AI 번역 및 요약으로, 실제 기사 내용과 다를 수 있습니다.'
+                        : '* Content is AI-summarized and may contain inaccuracies.'}
+                </p>
             </div>
         </section>
     );

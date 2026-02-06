@@ -82,10 +82,10 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialRevi
             </section>
 
             {/* 2. New Arrivals Auto-Scroll Carousel */}
-            <section className="container max-w-4xl mx-auto px-4 mt-12 relative z-20 mb-20">
-                <div className="flex items-center gap-2 mb-6">
-                    <Sparkles className="w-5 h-5 text-amber-500 fill-amber-500/20" />
-                    <h2 className="text-xl font-black tracking-tight">{dict.newArrivals}</h2>
+            <section className="container max-w-4xl mx-auto px-4 mt-12 relative z-20 mb-8 md:mb-12">
+                <div className="flex items-center gap-2 mb-4 border-b border-border pb-3">
+                    <span className="text-xl">✨</span>
+                    <h2 className="text-lg font-black tracking-tight text-foreground">{dict.newArrivals}</h2>
                 </div>
 
                 <div className="relative overflow-hidden w-full h-56">
@@ -131,8 +131,9 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialRevi
 
             {/* 4. Live Reviews Grid */}
             <section className="container max-w-4xl mx-auto px-4 mb-20">
-                <div className="flex items-center justify-between mb-8">
-                    <h2 className="text-2xl font-black tracking-tight">{dict.recentReviews}</h2>
+                <div className="flex items-center gap-2 mb-4 border-b border-border pb-3">
+                    <span className="text-xl">💬</span>
+                    <h2 className="text-lg font-black tracking-tight text-foreground">{dict.recentReviews}</h2>
                 </div>
                 <LiveReviews initialReviews={initialReviews} />
             </section>

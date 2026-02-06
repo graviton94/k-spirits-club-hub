@@ -138,11 +138,11 @@ export async function getAllSpiritIds(): Promise<string[]> {
     const token = await getServiceAccountToken();
     const collectionPath = getAppPath().spirits;
     const baseUrl = `${BASE_URL}/${collectionPath}`;
-    
+
     const allIds: string[] = [];
     let pageToken: string | undefined;
     const pageSize = 300;
-    
+
     try {
         do {
             // Build URL with query parameters
@@ -150,28 +150,28 @@ export async function getAllSpiritIds(): Promise<string[]> {
                 pageSize: pageSize.toString(),
                 'mask.fieldPaths': '__name__', // Only fetch document name/ID
             });
-            
+
             if (pageToken) {
                 params.append('pageToken', pageToken);
             }
-            
+
             const url = `${baseUrl}?${params.toString()}`;
-            
+
             const res = await fetch(url, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            
+
             if (!res.ok) {
                 const errText = await res.text();
                 console.error(`[getAllSpiritIds] Failed to fetch spirit IDs:`, errText);
                 throw new Error(`Failed to fetch spirit IDs: ${res.status} ${errText}`);
             }
-            
+
             const json = await res.json();
-            
+
             // Extract IDs from documents
             if (json.documents && Array.isArray(json.documents)) {
                 for (const doc of json.documents) {
@@ -184,13 +184,13 @@ export async function getAllSpiritIds(): Promise<string[]> {
                     }
                 }
             }
-            
+
             // Get next page token
             pageToken = json.nextPageToken;
-            
+
             console.log(`[getAllSpiritIds] Fetched ${allIds.length} IDs so far...`);
         } while (pageToken);
-        
+
         console.log(`[getAllSpiritIds] Total spirit IDs fetched: ${allIds.length}`);
         return allIds;
     } catch (error) {
@@ -211,20 +211,20 @@ export async function getPublishedSpiritIds(): Promise<string[]> {
     const token = await getServiceAccountToken();
     const runQueryUrl = `${BASE_URL}:runQuery`;
     const collectionPath = getAppPath().spirits;
-    
+
     // Determine parent from collectionPath
     const segments = collectionPath.split('/');
     const collectionId = segments.pop();
     const parentPath = segments.join('/');
     const parent = `projects/${PROJECT_ID}/databases/(default)/documents/${parentPath}`;
-    
+
     const allIds: string[] = [];
     let offset = 0;
     const pageSize = 5000; // Max limit for runQuery
-    
+
     try {
         let hasMore = true;
-        
+
         while (hasMore) {
             const structuredQuery: any = {
                 from: [{ collectionId }],
@@ -241,7 +241,7 @@ export async function getPublishedSpiritIds(): Promise<string[]> {
                 limit: pageSize,
                 offset: offset
             };
-            
+
             const res = await fetch(runQueryUrl, {
                 method: 'POST',
                 headers: {
@@ -253,16 +253,16 @@ export async function getPublishedSpiritIds(): Promise<string[]> {
                     structuredQuery
                 })
             });
-            
+
             if (!res.ok) {
                 const errText = await res.text();
                 console.error(`[getPublishedSpiritIds] Failed to fetch published spirit IDs:`, errText);
                 throw new Error(`Failed to fetch published spirit IDs: ${res.status} ${errText}`);
             }
-            
+
             const json = await res.json();
             const results = json.filter((r: any) => r.document);
-            
+
             // Extract IDs from documents
             for (const result of results) {
                 if (result.document && result.document.name) {
@@ -272,9 +272,9 @@ export async function getPublishedSpiritIds(): Promise<string[]> {
                     }
                 }
             }
-            
+
             console.log(`[getPublishedSpiritIds] Fetched ${allIds.length} published IDs so far...`);
-            
+
             // Check if we got a full page (meaning there might be more)
             if (results.length < pageSize) {
                 hasMore = false;
@@ -282,7 +282,7 @@ export async function getPublishedSpiritIds(): Promise<string[]> {
                 offset += pageSize;
             }
         }
-        
+
         console.log(`[getPublishedSpiritIds] Total published spirit IDs fetched: ${allIds.length}`);
         return allIds;
     } catch (error) {
@@ -589,6 +589,7 @@ export const spiritsDb = {
             t: spirit.thumbnailUrl ?? spirit.imageUrl ?? null, // Fallback to imageUrl if thumbnailUrl missing
             a: spirit.abv ?? 0,
             d: spirit.distillery ?? null,
+            tn: spirit.tasting_note || null,
             cre: spirit.createdAt ? (spirit.createdAt instanceof Date ? spirit.createdAt.toISOString() : (spirit.createdAt as any)) : null
         }));
     }
@@ -899,19 +900,15 @@ export const reviewsDb = {
 
     async getById(spiritId: string, userId: string): Promise<any | null> {
         const token = await getServiceAccountToken();
-        const reviewId = `${spiritId}_${userId}`;
-        const reviewsPath = getAppPath().reviews;
-        const url = `${BASE_URL}/${reviewsPath}/${reviewId}`;
+        const path = `${getAppPath().reviews}/${spiritId}_${userId}`;
+        const url = `${BASE_URL}/${path}`;
 
         const res = await fetch(url, {
             headers: { Authorization: `Bearer ${token}` }
         });
 
         if (res.status === 404) return null;
-        if (!res.ok) {
-            console.error('Failed to get review:', await res.text());
-            return null;
-        }
+        if (!res.ok) return null;
 
         const doc = await res.json();
         return parseFirestoreFields(doc.fields || {});
@@ -1664,6 +1661,67 @@ export const modificationDb = {
         }
 
         console.log(`[modificationDb] Updated request ${id} to status: ${status}`);
+    }
+};
+
+export const newsDb = {
+    async upsert(id: string, data: any) {
+        const token = await getServiceAccountToken();
+        const newsPath = getAppPath().news;
+        const url = `${BASE_URL}/${newsPath}/${id}`;
+
+        const payload = {
+            ...data,
+            id,
+            updatedAt: new Date().toISOString()
+        };
+
+        const converted = toFirestore(payload);
+
+        // Use PATCH with update mask to merge or create
+        const fieldKeys = Object.keys(converted.fields);
+        const queryParams = new URLSearchParams();
+        fieldKeys.forEach(key => queryParams.append('updateMask.fieldPaths', key));
+
+        const patchUrl = `${url}?${queryParams.toString()}`;
+
+        const res = await fetch(patchUrl, {
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(converted)
+        });
+
+        if (!res.ok) {
+            const errorText = await res.text();
+            throw new Error(`Failed to upsert news: ${errorText}`);
+        }
+    },
+
+    async getLatest(limit: number = 6): Promise<any[]> {
+        const token = await getServiceAccountToken();
+        const collectionPath = getAppPath().news;
+        const url = `${BASE_URL}/${collectionPath}?pageSize=${limit}&orderBy=date desc`;
+
+        const res = await fetch(url, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (!res.ok) {
+            console.error('[newsDb] getLatest failed:', await res.text());
+            return [];
+        }
+
+        const json = await res.json();
+        if (!json.documents) return [];
+
+        return json.documents.map((doc: any) => {
+            const data = parseFirestoreFields(doc.fields || {});
+            data.id = doc.name.split('/').pop();
+            return data;
+        });
     }
 };
 

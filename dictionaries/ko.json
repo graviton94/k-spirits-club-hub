@@ -19,9 +19,8 @@
     "home": {
         "heroTitle": "Discover Your",
         "heroSubtitle": "당신의 취향을 찾아보세요.",
-        "newArrivals": "🔥 이번 주 신상 술",
-        "trending": "📈 실시간 트렌드",
-        "recentReviews": "💬 생생한 최신 리뷰",
+        "newArrivals": " 이번 주 신상 술",
+        "recentReviews": " 생생한 최신 리뷰",
         "more": "더 보기",
         "searchPlaceholder": "어떤 술을 찾으시나요?"
     },
