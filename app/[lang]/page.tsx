@@ -1,7 +1,8 @@
 export const runtime = 'edge';
 
-import { newArrivalsDb, trendingDb, spiritsDb, reviewsDb } from "@/lib/db/firestore-rest";
+import { newArrivalsDb, reviewsDb } from "@/lib/db/firestore-rest";
 import HomeClient from "@/components/home/HomeClient";
+import NewsSection from "@/components/home/NewsSection";
 import { Locale } from "@/i18n-config";
 import { getDictionary } from "@/lib/get-dictionary";
 
@@ -15,25 +16,19 @@ export default async function HomePage({ params }: PageProps) {
 
   // 1. Parallel fetch essential home page data on the server
   // This eliminates client-side waterfall and shows content instantly
-  const [newArrivals, trendingList, recentReviews] = await Promise.all([
+  const [newArrivals, recentReviews] = await Promise.all([
     newArrivalsDb.getAll().catch(() => []),
-    trendingDb.getTopTrending(5).catch(() => []),
     reviewsDb.getRecent().catch(() => [])
   ]);
-
-  // 2. Fetch full trending spirit details if any exist
-  const trendingIds = trendingList.map(t => t.spiritId);
-  const trendingSpirits = trendingIds.length > 0
-    ? await spiritsDb.getByIds(trendingIds).catch(() => [])
-    : [];
 
   return (
     <HomeClient
       lang={lang}
       dict={dictionary.home}
       initialNewArrivals={newArrivals}
-      initialTrending={trendingSpirits}
+      initialTrending={[]} // Deprecated
       initialReviews={recentReviews}
+      newsSection={<NewsSection lang={lang} />}
     />
   );
 }

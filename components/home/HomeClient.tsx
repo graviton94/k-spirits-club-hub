@@ -38,32 +38,17 @@ const UI_TEXT = {
     }
 };
 
-export default function HomeClient({ lang, dict, initialNewArrivals, initialTrending, initialReviews }: HomeClientProps) {
-    const { publishedSpirits, isLoading: isCacheLoading } = useSpiritsCache();
+export default function HomeClient({ lang, dict, initialNewArrivals, initialReviews, newsSection }: HomeClientProps & { newsSection: React.ReactNode }) {
+    // const { publishedSpirits, isLoading: isCacheLoading } = useSpiritsCache(); // Cache might still be used for other things or removed if only for trending
+    // Actually, let's keep it simple. Remove trending logic.
 
     // Use state with initial data for instant render
-    const [trendingSpirits] = useState<any[]>(initialTrending);
+    // const [trendingSpirits] = useState<any[]>(initialTrending); // REMOVED
     const [newArrivals] = useState<any[]>(initialNewArrivals);
     const isEn = lang === 'en';
     const t = UI_TEXT[isEn ? 'en' : 'ko'];
 
-    // Compute final display spirits (trending or fallback to recent)
-    const displaySpirits = useMemo(() => {
-        if (trendingSpirits.length > 0) return trendingSpirits;
-
-        // Fallback: Show most recent spirits from cache
-        if (!publishedSpirits.length) return [];
-        return [...publishedSpirits]
-            .filter(s => s.imageUrl)
-            .sort((a, b) => {
-                const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
-                const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
-                return dateB - dateA;
-            })
-            .slice(0, 5);
-    }, [trendingSpirits, publishedSpirits]);
-
-    const isLoading = isCacheLoading && trendingSpirits.length === 0;
+    // Compute final display spirits (trending or fallback to recent) - REMOVED
 
     return (
         <div className="min-h-screen bg-background text-foreground pb-20">
@@ -141,32 +126,8 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialTren
                 </div>
             </section>
 
-            {/* 3. Today's Trending spirits */}
-            <section className="container max-w-4xl mx-auto px-4 mb-20">
-                <div className="flex items-center justify-between mb-8">
-                    <div className="flex items-center gap-2">
-                        <Flame className="w-6 h-6 text-orange-600 fill-orange-600/20" />
-                        <h2 className="text-2xl font-black tracking-tight">{dict.trending}</h2>
-                    </div>
-                    <Link
-                        href={`/${lang}/explore`}
-                        className="text-xs font-bold text-muted-foreground hover:text-primary flex items-center gap-1 transition-colors"
-                    >
-                        {dict.more} <ArrowRight className="w-3 h-3" />
-                    </Link>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4">
-                    {displaySpirits.map((spirit) => (
-                        <SpiritCard
-                            key={spirit.id}
-                            spirit={spirit}
-                            size="compact"
-                            lang={lang}
-                        />
-                    ))}
-                </div>
-            </section>
+            {/* 3. Global News Feed (Replaces Trending) */}
+            {newsSection}
 
             {/* 4. Live Reviews Grid */}
             <section className="container max-w-4xl mx-auto px-4 mb-20">
