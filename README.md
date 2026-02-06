@@ -2,12 +2,12 @@
 
 <div align="center">
 
-![Status](https://img.shields.io/badge/Status-Production_v1.0-green)
-![Tech](https://img.shields.io/badge/Stack-Next.js_|_Cloudflare_|_Python-black)
-![AI](https://img.shields.io/badge/AI-Gemini_2.0_Flash-purple)
-![License](https://img.shields.io/badge/License-MIT-green)
+![Status](https://img.shields.io/badge/Status-v1.0.0_Production_Global-green)
+![Tech](https://img.shields.io/badge/Stack-Next.js_15_|_Cloudflare_|_Tailwind_4-black)
+![AI](https://img.shields.io/badge/AI-Gemini_2.0_Flash_Sommelier-purple)
+![Performance](https://img.shields.io/badge/Performance-CLS_0_|_LCP_Optimized-orange)
 
-**대한민국 대표 주류 데이터베이스 & 커뮤니티 플랫폼**
+**대한민국 대표 주류 데이터베이스 & 커뮤니티 플랫폼 (Global Standard)**
 
 [🌐 Live Demo](https://k-spirits.club) | [📖 Docs](./TECH_STACK.md) | [🚀 Getting Started](#-quick-start)
 
@@ -20,10 +20,11 @@
 **K-Spirits Club**은 전 세계 주류 정보를 집대성하고, 사용자에게 개인화된 "디지털 술장" 경험을 제공하는 풀스택 웹 애플리케이션입니다.
 
 ### **핵심 가치**
-- 🇰🇷 **공공 데이터 기반**: 식품안전나라의 신뢰성 있는 데이터를 기반으로 구축
-- 🤖 **AI 데이터 보강**: Google Gemini 2.0 Flash를 활용한 자동 카테고리 분류 및 테이스팅 노트 생성
-- 📱 **모바일 퍼스트**: 모든 UI는 모바일 환경에 최적화된 반응형 디자인
-- ⚡ **Edge Computing**: Cloudflare Pages의 글로벌 CDN으로 빠른 응답 속도 보장
+- 🌍 **Global Localization**: Next.js 15 Middleware 기반 다국어 라우팅 및 딕셔너리 주입
+- 🤖 **AI Sommelier**: Gemini 2.0 Flash를 활용한 순차적 데이터 보강 (Audit -> Sensory -> Pairing)
+- ⚡ **Zero Layout Shift**: Skeleton UI 및 최적화된 이미지 로딩으로 CLS 0 달성
+- 📱 **Mobile First**: PWA 수준의 부드러운 모바일 UX 및 터치 인터랙션
+- 🚀 **Edge Runtime**: Cloudflare Pages의 글로벌 엣지 네트워크에서 초고속 API 처리
 
 ---
 
@@ -137,19 +138,14 @@ npm run dev
 
 ## 📊 Project Status
 
-### **Current Phase: Data Population (v0.9 Beta)**
+### **Current Phase: Production Stable (v1.0.0)**
 ✅ **Completed:**
-- [x] Core infrastructure (Cloudflare Pages, Firebase)
-- [x] User authentication (Google Login, Guest Mode)
-- [x] Smart search with fuzzy matching
-- [x] Cabinet management system
-- [x] Review system with dual-path architecture
-- [x] AI Taste Analysis with Gemini 2.0 Flash
-- [x] World Cup game with image preloading
-- [x] Perfect Pour mini-game
-- [x] Data pipeline with AI enrichment
-- [x] Admin dashboard for data management
-- [x] Mobile-first responsive design
+- [x] Next.js 15 Migration & i18n Routing (`app/[lang]`)
+- [x] Gemini 2.0 Flash Sequential Data Enrichment (Step-by-step)
+- [x] Performance Optimization (CLS 0, Skeleton UI)
+- [x] Global Search Indexing with Multi-language support
+- [x] User Cabinet & Review System with Dual-path consistency
+- [x] MBTI & World Cup Games with bilingual support
 
 🚧 **In Progress:**
 - [ ] Scale-up data collection (targeting 500K+ spirits)
@@ -169,15 +165,12 @@ npm run dev
 
 ```
 k-spirits-club-hub/
-├── app/                    # Next.js App Router
+├── app/                    # Next.js 15 App Router
+│   ├── [lang]/             # i18n Localized Routing (ko/en)
 │   ├── api/                # Edge API Routes
-│   ├── actions/            # Server Actions
-│   ├── context/            # React Contexts (Auth, Cache)
-│   ├── contents/           # Special features (World Cup, AI Taste)
-│   ├── cabinet/            # My Cabinet page
-│   ├── explore/            # Browse & Search
-│   ├── spirits/[id]/       # Spirit detail pages
-│   └── admin/              # Admin dashboard
+│   ├── actions/            # Server Actions for DB Mutations
+│   ├── context/            # React Context Providers
+│   └── middleware.ts       # i18n Language Detection Middleware
 │
 ├── components/             # React Components
 │   ├── layout/             # Header, Footer, Nav
@@ -376,5 +369,5 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ---
 
-**Last Updated**: 2026-02-06  
-**Version**: 1.0.0 (Production)
+**Last Updated**: 2026-02-07  
+**Version**: 1.0.0 (Production Global)

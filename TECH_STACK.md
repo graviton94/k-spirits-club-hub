@@ -10,14 +10,12 @@ K-Spirits Club은 Next.js 15 기반의 풀스택 웹 애플리케이션으로, C
 ### **Frontend**
 | Technology | Version | Purpose |
 |-----------|---------|---------|
-| **Next.js** | 15.1.4 | React 메타 프레임워크 (App Router) |
-| **React** | 19.2.3 | UI 컴포넌트 라이브러리 |
-| **TypeScript** | 5.9.3 | 타입 안정성 및 개발 생산성 |
-| **Tailwind CSS** | 4.1.18 | 유틸리티 기반 스타일링 |
-| **Framer Motion** | 12.29.0 | 애니메이션 및 인터랙션 |
-| **Lucide React** | 0.563.0 | 아이콘 시스템 |
-| **Recharts** | 3.7.0 | 데이터 시각화 (Taste DNA 차트) |
-| **html-to-image** | 1.11.11 | 결과 이미지 생성 (MBTI, World Cup) |
+| **Next.js** | 15.1.x | 메타 프레임워크 (App Router, i18n) |
+| **React** | 19.x | UI 컴포넌트 라이브러리 (Server Actions) |
+| **TypeScript** | 5.x | 타입 안정성 및 IntelliSense |
+| **Tailwind CSS** | 4.x | 차세대 유틸리티 기반 스타일링 |
+| **Negotiator** | 0.6.3 | 언어 감지 및 Content Negotiation |
+| **Intl Matcher** | 0.5.x | i18n Locale 매칭 로직 |
 
 ### **Backend & Infrastructure**
 | Technology | Version | Purpose |
@@ -31,10 +29,10 @@ K-Spirits Club은 Next.js 15 기반의 풀스택 웹 애플리케이션으로, C
 ### **AI & Data Processing**
 | Technology | Version | Purpose |
 |-----------|---------|---------|
-| **Google Gemini 2.0 Flash** | Latest | AI 데이터 보강 및 취향 분석 |
-| **Python** | 3.x | 데이터 파이프라인 스크립트 |
-| **Axios** | 1.13.2 | HTTP 클라이언트 (이미지 검색) |
-| **Cheerio** | 1.2.0 | HTML 파싱 (웹 스크레이핑) |
+| **Google GenAI** | Latest | Gemini 2.0 Flash API (v1 SDK) |
+| **Python** | 3.10+ | 데이터 수립 및 자동 보강 스크립트 |
+| **Fuse.js** | 7.x | 클라이언트 사이드 퍼지 검색 (i18n 지원) |
+| **Cheerio** | 1.x | HTML 파싱 및 웹 스크레이핑 |
 
 ### **Developer Tools**
 | Tool | Purpose |
@@ -203,7 +201,12 @@ Admin Dashboard (검수 및 승인)
     ↓
 publish-ready-data.ts (일괄 발행)
     ↓
-Firestore (isPublished: true) + search_index
+Firestore (isPublished: true) + search_index (including name_en)
+```
+
+### **2. i18n Data Isolation Strategy**
+- **Root Fields**: 검색 및 핵심 식별에 필요한 필드 (`name_en`, `category_en`, `abv`, `distillery`)는 문서 루트에 저장하여 검색 인덱스 효율성 극대화.
+- **Metadata Fields**: 상세 설명 및 가이드 (`description_en`, `pairing_guide_en`, `nose_tags`)는 `metadata` 오브젝트 내부에 저장하여 제품 상세 조회 시에만 로드.
 ```
 
 ### **2. 사용자 요청 처리 (Next.js App)**
@@ -340,5 +343,5 @@ npx wrangler pages deploy .next/out
 
 ---
 
-**Last Updated**: 2026-02-06  
-**Version**: 1.0.0 (Production)
+**Last Updated**: 2026-02-07  
+**Version**: 1.0.0 (Production Global)

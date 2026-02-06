@@ -56,6 +56,10 @@ interface Spirit {
   source: 'food_safety_korea' | 'imported_food_maru' | 'online' | 'manual' | 'other';
   externalId: string | null;    // 외부 시스템 ID
   
+  // 글로벌 대응 Root 필드 (검색/필터링 최적화용)
+  name_en: string | null;       // 영문 제품명 (Title Case)
+  category_en: string | null;   // 영문 카테고리 (e.g. "Whisky")
+  
   // 발행 상태
   status: SpiritStatus;         // RAW | ENRICHED | READY_FOR_CONFIRM | PUBLISHED | ERROR
   isPublished: boolean;         // 사용자에게 노출 여부
@@ -68,15 +72,17 @@ interface Spirit {
     name_en?: string;           // 영문명
     raw_category?: string;      // 원본 카테고리명
     importer?: string;          // 수입사
-    description?: string;       // AI 생성 설명 (한글)
+    description_ko?: string;    // AI 생성 설명 (국문)
     description_en?: string;    // AI 생성 설명 (영문)
-    pairing_guide_en?: string;  // 페어링 가이드 (영문)
     pairing_guide_ko?: string;  // 페어링 가이드 (국문)
-    nose_tags?: string[];       // 향 태그 (예: ["바닐라", "오크"])
-    palate_tags?: string[];     // 맛 태그
-    finish_tags?: string[];     // 피니시 태그
-    tasting_note?: string;      // 통합 테이스팅 노트
-    [key: string]: any;         // 확장 가능한 필드
+    pairing_guide_en?: string;  // 페어링 가이드 (영문)
+    nose_tags?: string[];       // 향 태그 (3-6개)
+    palate_tags?: string[];     // 맛 태그 (3-6개)
+    finish_tags?: string[];     // 피니시 태그 (3-6개)
+    tasting_note?: string;      // 통합 태그 요약 (#Peaty #HighProof)
+    tasting_note_en?: never;    // [DEPRECATED] 더 이상 사용되지 않음
+    [key: string]: any;
+  };
   };
   
   // 검색 최적화
@@ -488,5 +494,5 @@ const fuseOptions = {
 
 ---
 
-**Last Updated**: 2026-02-06  
-**Schema Version**: 1.0.0
+**Last Updated**: 2026-02-07  
+**Schema Version**: 1.0.0 (Global i18n Split)

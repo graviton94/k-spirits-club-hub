@@ -71,7 +71,7 @@ GET /api/spirits?category=위스키&page=1&pageSize=20
 **Response:**
 ```typescript
 {
-  index: SpiritSearchIndex[];
+  index: SpiritSearchIndex[]; // [{ i, n, en, c, sc, a, d, cre }, ...]
   timestamp: string;
 }
 ```
@@ -372,8 +372,37 @@ x-user-id: string (required, admin role)
   abv?: number;
   status?: SpiritStatus;
   isPublished?: boolean;
-  // 기타 수정 가능 필드
+  nose_tags?: string[];
+  palate_tags?: string[];
+  finish_tags?: string[];
+  metadata?: {
+    description_ko?: string;
+    description_en?: string;
+    pairing_guide_ko?: string;
+    pairing_guide_en?: string;
+  }
 }
+```
+
+---
+
+### `POST /api/admin/spirits/enrich`
+AI를 사용하여 주류 데이터를 보강합니다 (순차적 3단계).
+
+**Body:**
+```typescript
+{
+  stage: 'audit' | 'sensory' | 'pairing';
+  name: string;
+  category?: string;
+  // stage에 따라 이전 단계의 결과물을 포함해야 함
+}
+```
+
+**Workflow:**
+1. **audit**: 영문명 교정, 도수/증류소 검증
+2. **sensory**: 테이스팅 노트 및 태그 생성
+3. **pairing**: 페어링 가이드 생성
 ```
 
 ---
@@ -609,5 +638,5 @@ const review = await fetch('/api/reviews', {
 
 ---
 
-**Last Updated**: 2026-02-06  
-**API Version**: 1.0.0
+**Last Updated**: 2026-02-07  
+**API Version**: 1.0.0 (Sequential AI Support)

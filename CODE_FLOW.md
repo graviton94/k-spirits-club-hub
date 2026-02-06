@@ -11,20 +11,20 @@
 ```
 User visits site
     ↓
-app/layout.tsx (Root Layout)
+app/[lang]/layout.tsx (Root Layout)
     ↓
-AuthProvider initialization
-    ├─→ Firebase Auth 초기화
-    ├─→ onAuthStateChanged 리스너 등록
-    └─→ Guest Mode 지원
+Middleware (middleware.ts)
+    ├─→ Browser Language 감지 (Accept-Language)
+    ├─→ Locale 매칭 (ko/en)
+    └─→ Redirect to /[lang]/ (e.g., / -> /ko/)
     ↓
-SpiritsCacheProvider initialization
-    ├─→ GET /api/spirits/search
-    ├─→ Fetch compressed search index (~100KB)
-    ├─→ Store in React Context
-    └─→ Initialize Fuse.js instance
+getDictionary(lang)
+    ├─→ Load dictionaries/ko.json or en.json
+    └─→ Pass to Server Components
     ↓
-App Ready
+AuthProvider & CacheProvider initialization
+    ↓
+App Ready with Localized Content
 ```
 
 ### **Code References**
@@ -34,31 +34,18 @@ App Ready
 
 ### **Key Functions**
 ```typescript
-// app/context/spirits-cache-context.tsx
-export function SpiritsCacheProvider({ children }: { children: ReactNode }) {
-  const [searchIndex, setSearchIndex] = useState<SpiritSearchIndex[]>([]);
-  const [fuse, setFuse] = useState<Fuse<SpiritSearchIndex> | null>(null);
+// lib/get-dictionary.ts
+const dictionaries = {
+  ko: () => import('@/dictionaries/ko.json').then((module) => module.default),
+  en: () => import('@/dictionaries/en.json').then((module) => module.default),
+}
 
-  useEffect(() => {
-    async function loadIndex() {
-      const res = await fetch('/api/spirits/search');
-      const { index } = await res.json();
-      setSearchIndex(index);
-      
-      const fuseInstance = new Fuse(index, {
-        keys: ['n', 'en', 'd', 'c'],
-        threshold: 0.3
-      });
-      setFuse(fuseInstance);
-    }
-    loadIndex();
-  }, []);
+export const getDictionary = async (locale: Locale) => dictionaries[locale]();
 
-  return (
-    <SpiritsCacheContext.Provider value={{ index: searchIndex, fuse }}>
-      {children}
-    </SpiritsCacheContext.Provider>
-  );
+// Example Usage in Page (Server Component)
+export default async function Page({ params }: { params: { lang: Locale } }) {
+  const dict = await getDictionary(params.lang);
+  return <ClientComponent dict={dict} />;
 }
 ```
 
@@ -663,5 +650,5 @@ app/spirits/[id]/page.tsx
 
 ---
 
-**Last Updated**: 2026-02-06  
-**Version**: 1.0.0
+**Last Updated**: 2026-02-07  
+**Version**: 1.0.0 (i18n & Next 15 Optimized)
