@@ -32,7 +32,7 @@ export function LanguageSwitcher() {
         >
             <Languages className="w-3.5 h-3.5 text-amber-500" />
             <span className="uppercase tracking-tighter">
-                {currentLang === 'ko' ? 'English' : '한국어'}
+                {currentLang === 'ko' ? 'EN' : 'KO'}
             </span>
         </button>
     );
