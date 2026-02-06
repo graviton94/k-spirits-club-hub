@@ -190,39 +190,51 @@ export default async function SpiritDetailPage({
     console.error('Failed to fetch reviews:', error);
   }
 
-  // --- [데이터가 없는 수천 개 페이지 구제 로직] ---
+  // --- [SEO 최적화된 JSON-LD 구조화 데이터] ---
 
   const realReviewCount = reviews.length;
-  // 리뷰가 없어도 기본 5.0점으로 셋팅 (Fallback)
-  const ratingValue = realReviewCount > 0
-    ? (reviews.reduce((acc, r) => acc + r.rating, 0) / realReviewCount).toFixed(1)
-    : "5.0";
-
-  // 리뷰가 0개면 구글 에러가 나므로, 가상으로 1개라고 알려줌 (Fallback)
-  const displayReviewCount = realReviewCount > 0 ? realReviewCount : 1;
+  
+  // Build rich description with tasting notes and pairing information
+  const buildRichDescription = () => {
+    const baseDescription = spirit.metadata?.description_ko || spirit.metadata?.description_en || `${spirit.name} - ${spirit.category} 상세 정보`;
+    const parts = [baseDescription];
+    
+    // Add tasting note if available
+    const tastingNote = spirit.tasting_note || spirit.metadata?.tasting_note;
+    if (tastingNote) {
+      parts.push(`[Tasting Note]: ${tastingNote}`);
+    }
+    
+    // Add pairing guide if available
+    const pairingGuide = spirit.metadata?.pairing_guide_ko || spirit.metadata?.pairing_guide_en || spirit.pairing_guide_ko || spirit.pairing_guide_en;
+    if (pairingGuide) {
+      parts.push(`[Best Pairing]: ${pairingGuide}`);
+    }
+    
+    return parts.join('. ');
+  };
 
   const jsonLd: any = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: spirit.name || "Unknown Spirit",
-    description: spirit.metadata?.description_ko || spirit.metadata?.description_en || `${spirit.name} - ${spirit.category} 상세 정보 및 리뷰`,
-    // 이미지가 없으면 기본 로고라도 배열로 넘김 (에러 방지)
+    // Global SEO: English name for international search
+    ...(spirit.name_en && { alternateName: spirit.name_en }),
+    description: buildRichDescription(),
+    // Image array format for rich snippet
     image: spirit.imageUrl ? [spirit.imageUrl] : ["https://kspiritsclub.com/logo.png"],
     brand: {
       '@type': 'Brand',
-      name: spirit.distillery || 'K-Spirits',
+      name: spirit.distillery || 'K-Spirits Club',
     },
     category: spirit.category,
 
-    // ✅ [해결] offers를 완전히 제거하여 lowPrice, offerCount 에러 원천 차단
-
-    // ✅ [해결] DB에 데이터가 없어도 무조건 생성하여 aggregateRating 누락 에러 해결
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: ratingValue,
-      reviewCount: displayReviewCount,
-      bestRating: "5",
-      worstRating: "1"
+    // Required offer schema to help Google recognize this as a product page
+    offers: {
+      '@type': 'Offer',
+      price: "0",
+      priceCurrency: "KRW",
+      availability: "https://schema.org/InStock"
     },
 
     additionalProperty: [
@@ -239,8 +251,18 @@ export default async function SpiritDetailPage({
     ],
   };
 
-  // ✅ [해결] 실제 리뷰가 없으면 에러가 나므로 가짜 리뷰 1개라도 생성 (review 누락 해결)
+  // Only add aggregateRating if real reviews exist (NO FAKE DATA)
   if (realReviewCount > 0) {
+    const ratingValue = (reviews.reduce((acc, r) => acc + r.rating, 0) / realReviewCount).toFixed(1);
+    jsonLd.aggregateRating = {
+      '@type': 'AggregateRating',
+      ratingValue: ratingValue,
+      reviewCount: realReviewCount,
+      bestRating: "5",
+      worstRating: "1"
+    };
+    
+    // Add actual reviews
     jsonLd.review = reviews.slice(0, 5).map((r) => ({
       '@type': 'Review',
       reviewRating: {
@@ -253,17 +275,9 @@ export default async function SpiritDetailPage({
         '@type': 'Person',
         name: r.userName || 'Member'
       },
-      datePublished: r.createdAt ? new Date(r.createdAt).toISOString().split('T')[0] : '2024-01-01',
+      datePublished: r.createdAt ? new Date(r.createdAt).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
       reviewBody: r.content || 'Great spirit.'
     }));
-  } else {
-    jsonLd.review = [{
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: "5", bestRating: "5", worstRating: "1" },
-      author: { '@type': 'Person', name: "K-Spirits Bot" },
-      datePublished: "2024-01-01",
-      reviewBody: "이 제품의 첫 번째 리뷰어가 되어보세요!"
-    }];
   }
 
   return (
