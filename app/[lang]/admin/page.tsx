@@ -532,6 +532,33 @@ export default function AdminDashboard() {
                   {selectedIds.size > 0 && <span className="ml-4 text-black dark:text-white">({selectedIds.size}개 선택됨)</span>}
                 </div>
                 <div className="flex gap-2">
+                  {/* 뉴스 업데이트 버튼 */}
+                  <button
+                    disabled={isProcessing}
+                    onClick={async () => {
+                      if (!confirm('최신 글로벌 주류 뉴스를 수집하시겠습니까? (Gemini AI 분석 포함, 약 20~30초 소요)')) return;
+                      setIsProcessing(true);
+                      try {
+                        const res = await fetch('/api/admin/news/collect', {
+                          method: 'POST'
+                        });
+                        const data = await res.json();
+                        if (data.success) {
+                          alert(`✅ 뉴스 수집 완료! (${data.count}건)`);
+                        } else {
+                          alert(`❌ 실패: ${data.error || data.message || '알 수 없는 오류'}`);
+                        }
+                      } catch (e) {
+                        alert('뉴스 수집 요청 중 에러가 발생했습니다.');
+                        console.error(e);
+                      } finally {
+                        setIsProcessing(false);
+                      }
+                    }}
+                    className="bg-cyan-600 text-white px-4 py-2 rounded-xl text-xs font-bold disabled:opacity-30 hover:bg-cyan-500 transition-colors"
+                  >
+                    📰 뉴스 수집/업데이트
+                  </button>
                   <button
                     disabled={!selectedIds.size || isProcessing}
                     onClick={async () => {
