@@ -43,6 +43,8 @@ export async function PATCH(req: NextRequest) {
                         currentUpdates = {
                             ...currentUpdates,
                             name_en: enrichmentData.name_en,
+                            category: enrichmentData.category ?? spirit.category,
+                            subcategory: enrichmentData.subcategory ?? spirit.subcategory,
                             distillery: enrichmentData.distillery ?? spirit.distillery,
                             region: enrichmentData.region ?? spirit.region,
                             country: enrichmentData.country ?? spirit.country,

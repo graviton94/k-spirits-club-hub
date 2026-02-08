@@ -292,5 +292,6 @@ export async function enrichSpiritWithAI(spirit: SpiritEnrichmentInput): Promise
     }
 }
 
-// Export for backwards compatibility
+// Export aliases for backward compatibility
+export const generateSensoryData = generateSensoryProfile;
 export { enrichSpiritWithAI as default };
