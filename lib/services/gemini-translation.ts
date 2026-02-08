@@ -150,15 +150,37 @@ export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<En
     - If you cannot find a field, return the original input value
     - DO NOT invent, guess, or hallucinate any information
     
+    ### CRITICAL OUTPUT FORMAT RULES:
+    
+    ⚠️ **name_en MUST BE IN ENGLISH ONLY - NO KOREAN CHARACTERS ALLOWED**
+    ✅ Good: "Glenfiddich 12 Year Old Single Malt Scotch Whisky"
+    ❌ Bad: "글렌피딕 12년산 싱글몰트 스카치 위스키"
+    
+    ⚠️ **subcategory MUST BE EXACT MATCH from the valid list above**
+    ✅ Good: "Red Wine" (for Spanish red wines)
+    ❌ Bad: "레드 와인" or "Red wine" or "red wine" (case-sensitive!)
+    
     ### OUTPUT JSON SCHEMA:
     {
-      "name_en": "Official English Product Name (from web search)",
+      "name_en": "ENGLISH ONLY - Official English Product Name (Title Case)",
       "category": "${spirit.category}",
-      "subcategory": "From valid list, based on web search",
+      "subcategory": "EXACT MATCH from valid subcategories list above",
       "distillery": "Full producer name (from web search)",
       "region": "Specific region (from web search)",
       "country": "Country (from web search)",
       "abv": ABV as number (from web search)
+    }
+    
+    ### EXAMPLE OUTPUT:
+    For a Spanish red wine "Vi de Taula Negre":
+    {
+      "name_en": "Vi de Taula Negre",
+      "category": "과실주",
+      "subcategory": "Red Wine",
+      "distillery": "Celler de Capcanes",
+      "region": "Montsant",
+      "country": "Spain",
+      "abv": 13.5
     }
     `;
 
@@ -171,9 +193,50 @@ export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<En
         const parsed = JSON.parse(cleanJson);
 
         // Handle if Gemini returns an array instead of a single object
-        const data = Array.isArray(parsed) ? parsed[0] : parsed;
+        let data = Array.isArray(parsed) ? parsed[0] : parsed;
+
+        // ⚠️ CRITICAL VALIDATION: Enforce output rules
+
+        // 1. Validate name_en is actually English (no Korean characters)
+        const koreanRegex = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+        if (data.name_en && koreanRegex.test(data.name_en)) {
+            console.warn('[Gemini Identity] ⚠️ name_en contains Korean! Auto-translating...');
+            console.warn('[Gemini Identity] Original:', data.name_en);
+
+            // Auto-translate Korean to English
+            try {
+                const translateModel = genAI.getGenerativeModel({
+                    model: MODEL_ID,
+                    generationConfig: { responseMimeType: "text/plain", temperature: 0.1 }
+                });
+                const translatePrompt = `Translate this Korean product name to English. Return ONLY the English name, nothing else:\n\n"${data.name_en}"`;
+                const translateResult = await translateModel.generateContent(translatePrompt);
+                const englishName = translateResult.response.text().trim().replace(/["""]/g, '');
+
+                data.name_en = englishName;
+                console.log('[Gemini Identity] ✅ Auto-translated to:', englishName);
+            } catch (err) {
+                console.error('[Gemini Identity] ❌ Translation failed, using original Korean name');
+                // Keep the Korean name as last resort
+            }
+        }
+
+        // 2. Validate subcategory is from valid list
+        if (data.subcategory && validSubcategories.length > 0) {
+            if (!validSubcategories.includes(data.subcategory)) {
+                console.error('[Gemini Identity] ❌ Invalid subcategory:', data.subcategory);
+                console.error('[Gemini Identity] Valid options:', validSubcategories);
+                // Keep original subcategory
+                data.subcategory = spirit.subcategory;
+            }
+        }
+
+        // 3. Ensure category is locked
+        data.category = spirit.category;
 
         console.log('[Gemini Identity] subcategory:', data.subcategory, '| region:', data.region, '| country:', data.country);
+        console.log('[Gemini Identity] name_en:', data.name_en);
+
         return data;
     } catch (e: any) {
         console.error('[Gemini Identity] ❌ Error:', e);
@@ -221,25 +284,39 @@ export async function generateSensoryProfile(spirit: SpiritEnrichmentInput): Pro
     
     **IMPORTANT**: Tags MUST be in English, based on actual user reviews, NOT made up!
     
-    **STEP 3: WRITE DESCRIPTIONS**
-    Based on the reviews you found:
-    - **description_en**: 2-3 sentences summarizing common themes from reviews (English)
-    - **description_ko**: Same content, translated to Korean (professional tone)
-    - **tasting_note**: More detailed 4-5 sentence tasting note in Korean, synthesizing multiple reviews
+    **STEP 3: WRITE RICH, DETAILED DESCRIPTIONS**
+    Based on the reviews you found, create comprehensive descriptions:
+    
+    **description_en (4-5 sentences in English)**:
+    - Sentence 1: Production method, origin, or unique characteristics
+    - Sentence 2-3: Key flavor profile and tasting notes from reviews
+    - Sentence 4: Mouthfeel, texture, or finish characteristics
+    - Sentence 5: Overall impression or recommended drinking style
+    
+    **description_ko (4-5 sentences in Korean)**:
+    - Same structure as English, translated with professional tone
+    - Use rich vocabulary and descriptive language
+    
+    **tasting_note (5-6 sentences in Korean)**:
+    - More detailed expansion of the description
+    - Include specific tasting journey: appearance → nose → palate → finish
+    - Mention any unique production processes or aging
+    - Professional sommelier tone
     
     ### OUTPUT RULES:
     - ALL flavor tags must come from actual reviews you found
-    - Descriptions must reflect real user/professional opinions, not your imagination
-    - If you cannot find reviews, use generic tasting notes for the spirit type
+    - Descriptions must be RICH and DETAILED (minimum 4-5 sentences each)
+    - Use specific, evocative language - avoid generic phrases
+    - If you cannot find reviews, research the spirit type and create educated tasting notes based on category characteristics
     
     ### OUTPUT JSON SCHEMA:
     {
-      "description_ko": "Korean description (2-3 sentences)",
-      "description_en": "English description (2-3 sentences)",
+      "description_ko": "Detailed Korean description (4-5 sentences, rich vocabulary)",
+      "description_en": "Detailed English description (4-5 sentences, professional)",
       "nose_tags": ["Tag1", "Tag2", "Tag3"],
       "palate_tags": ["Tag1", "Tag2", "Tag3"],
       "finish_tags": ["Tag1", "Tag2", "Tag3"],
-      "tasting_note": "Detailed Korean tasting note (4-5 sentences)"
+      "tasting_note": "Comprehensive Korean tasting note (5-6 sentences, sommelier tone)"
     }
     `;
 
