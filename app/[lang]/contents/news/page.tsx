@@ -241,37 +241,65 @@ export default function NewsContentPage() {
 
                         {/* Pagination Numbers */}
                         {!searchQuery && totalPages > 1 && (
-                            <div className="flex justify-center items-center gap-2 mt-12 pb-8">
-                                <button
-                                    onClick={() => fetchPage(currentPage - 1)}
-                                    disabled={currentPage === 1}
-                                    className="p-2 rounded-xl bg-card border border-border hover:bg-muted disabled:opacity-20 transition-all"
-                                >
-                                    <ChevronLeft className="w-5 h-5" />
-                                </button>
+                            <div className="flex flex-col items-center gap-6 mt-12 pb-12">
+                                <div className="flex justify-center items-center gap-2">
+                                    <button
+                                        onClick={() => fetchPage(1)}
+                                        disabled={currentPage === 1}
+                                        className="p-2 rounded-xl bg-card border border-border hover:bg-muted disabled:opacity-20 transition-all group"
+                                        title={isEn ? "First Page" : "첫 페이지"}
+                                    >
+                                        <ChevronLeft className="w-5 h-5 -mr-3" />
+                                        <ChevronLeft className="w-5 h-5" />
+                                    </button>
 
-                                {Array.from({ length: totalPages }, (_, i) => i + 1)
-                                    .filter(p => p >= currentPage - 2 && p <= currentPage + 2)
-                                    .map(num => (
-                                        <button
-                                            key={num}
-                                            onClick={() => fetchPage(num)}
-                                            className={`w-10 h-10 rounded-xl text-sm font-black transition-all ${currentPage === num
-                                                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/30'
-                                                : 'bg-card border border-border text-muted-foreground hover:bg-muted font-bold'
-                                                }`}
-                                        >
-                                            {num}
-                                        </button>
-                                    ))}
+                                    <button
+                                        onClick={() => fetchPage(currentPage - 1)}
+                                        disabled={currentPage === 1}
+                                        className="p-2 rounded-xl bg-card border border-border hover:bg-muted disabled:opacity-20 transition-all"
+                                    >
+                                        <ChevronLeft className="w-5 h-5" />
+                                    </button>
 
-                                <button
-                                    onClick={() => fetchPage(currentPage + 1)}
-                                    disabled={currentPage === totalPages}
-                                    className="p-2 rounded-xl bg-card border border-border hover:bg-muted disabled:opacity-20 transition-all"
-                                >
-                                    <ChevronRight className="w-5 h-5" />
-                                </button>
+                                    {Array.from({ length: totalPages }, (_, i) => i + 1)
+                                        .filter(p => p >= currentPage - 2 && p <= currentPage + 2)
+                                        .map(num => (
+                                            <button
+                                                key={num}
+                                                onClick={() => fetchPage(num)}
+                                                className={`w-10 h-10 rounded-xl text-sm font-black transition-all ${currentPage === num
+                                                    ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/30'
+                                                    : 'bg-card border border-border text-muted-foreground hover:bg-muted font-bold'
+                                                    }`}
+                                            >
+                                                {num}
+                                            </button>
+                                        ))}
+
+                                    <button
+                                        onClick={() => fetchPage(currentPage + 1)}
+                                        disabled={currentPage === totalPages}
+                                        className="p-2 rounded-xl bg-card border border-border hover:bg-muted disabled:opacity-20 transition-all"
+                                    >
+                                        <ChevronRight className="w-5 h-5" />
+                                    </button>
+
+                                    <button
+                                        onClick={() => fetchPage(totalPages)}
+                                        disabled={currentPage === totalPages}
+                                        className="p-2 rounded-xl bg-card border border-border hover:bg-muted disabled:opacity-20 transition-all flex items-center"
+                                        title={isEn ? "Last Page" : "마지막 페이지"}
+                                    >
+                                        <ChevronRight className="w-5 h-5" />
+                                        <ChevronRight className="w-5 h-5 -ml-3" />
+                                    </button>
+                                </div>
+
+                                <p className="text-[10px] sm:text-xs text-muted-foreground/60 font-medium text-center italic">
+                                    {isEn
+                                        ? "※ News summaries are generated by AI and may contain inaccuracies. Please check the original source for critical information."
+                                        : "※ AI가 원문 뉴스를 요약 및 번역한 정보로, 실제 내용과 차이가 있을 수 있습니다. 정확한 정보는 원문을 통해 확인하시기 바랍니다."}
+                                </p>
                             </div>
                         )}
                     </div>
