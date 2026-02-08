@@ -247,25 +247,50 @@ export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<En
             }
         }
 
-        // 3. Clean up distillery name if it's too formal or all caps
+        // 3. AI-Powered Distillery Brand Verification
         if (data.distillery) {
-            // Convert ALL CAPS to Title Case
-            if (data.distillery === data.distillery.toUpperCase() && data.distillery.length > 3) {
-                console.warn('[Gemini Identity] ⚠️ Distillery in ALL CAPS, converting to Title Case');
-                data.distillery = data.distillery
-                    .toLowerCase()
-                    .split(' ')
-                    .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
-                    .join(' ');
-            }
+            console.log('[Gemini Identity] 🔍 Verifying distillery brand name:', data.distillery);
+            try {
+                const brandModel = genAI.getGenerativeModel({
+                    model: MODEL_ID,
+                    generationConfig: { responseMimeType: "text/plain", temperature: 0.1 }
+                });
 
-            // Remove common legal suffixes
-            const legalSuffixes = [', Ltd', ', Inc', ', GmbH', ', KG', ', S.A.', ', Co.', 'Ltd.', 'Inc.'];
-            legalSuffixes.forEach((suffix: string) => {
-                if (data.distillery.includes(suffix)) {
-                    data.distillery = data.distillery.replace(suffix, '').trim();
+                const brandPrompt = `
+                You are a global spirits brand expert. 
+                Extract the CLEAN, RECOGNIZABLE consumer BRAND name from this producer/company name: "${data.distillery}".
+
+                RULES:
+                1. Remove ALL legal suffixes (GmbH, Ltd, Inc, KG, S.A., Co., etc.)
+                2. Remove family initials or formal prefixes (e.g., "G. Schneider & Sohn", "W. & J.")
+                3. Remove "Brauerei", "Distillery", "Distillers" unless it's a core part of the brand.
+                4. Use Title Case (e.g., Macallan, not MACALLAN).
+                5. RETURN ONLY THE BRAND NAME. NO PUNCTUATION.
+
+                Examples:
+                - "Brauerei Schneider Weisse G. Schneider & Sohn" -> "Schneider Weisse"
+                - "THE MACALLAN DISTILLERS LTD" -> "Macallan"
+                - "WILLIAM GRANT & SONS LTD" -> "William Grant & Sons"
+                - "CHATEAU LAFITE ROTHSCHILD" -> "Chateau Lafite Rothschild"
+                
+                Product Context: ${data.name_en || spirit.name}
+                Current Input: "${data.distillery}"
+                `;
+
+                const brandResult = await brandModel.generateContent(brandPrompt);
+                const cleanBrand = brandResult.response.text().trim().replace(/["""]/g, '');
+
+                if (cleanBrand && cleanBrand !== 'Unknown' && cleanBrand !== data.distillery) {
+                    console.log('[Gemini Identity] ✅ Distillery Brand Verified:', data.distillery, '->', cleanBrand);
+                    data.distillery = cleanBrand;
                 }
-            });
+            } catch (err) {
+                console.error('[Gemini Identity] ❌ Distillery brand verification failed, falling back to basic cleanup');
+                // Basic fallback cleaning if AI fails
+                data.distillery = data.distillery
+                    .replace(/,?\s+(Ltd|Inc|GmbH|KG|S\.A\.|Co\.)\.?/gi, '')
+                    .trim();
+            }
         }
 
         // 4. Validate region is not Unknown when distillery is known
