@@ -24,9 +24,18 @@ export default async function NewsSection({ lang }: { lang: string }) {
 
     return (
         <section className="container max-w-4xl mx-auto px-4 mb-12 lg:mb-16">
-            <div className="flex items-center gap-2 mb-4 border-b border-border pb-3">
-                <span className="text-xl">📰</span>
-                <h2 className="text-lg font-black tracking-tight text-foreground">{title}</h2>
+            <div className="flex items-center justify-between mb-4 border-b border-border pb-3">
+                <div className="flex items-center gap-2">
+                    <span className="text-xl">📰</span>
+                    <h2 className="text-lg font-black tracking-tight text-foreground">{title}</h2>
+                </div>
+                <Link
+                    href={`/${lang}/contents/news`}
+                    className="text-xs font-bold text-muted-foreground hover:text-amber-500 transition-colors flex items-center gap-1 group/link"
+                >
+                    {lang === 'ko' ? '전체 보러가기' : 'View All'}
+                    <span className="group-hover/link:translate-x-1 transition-transform">→</span>
+                </Link>
             </div>
 
             <div className="flex flex-col divide-y divide-border border-t border-b border-border">

@@ -10,7 +10,8 @@ import {
   ChevronRight,
   Sparkles,
   Beer,
-  Fingerprint
+  Fingerprint,
+  Newspaper
 } from "lucide-react";
 
 interface ContentsPageProps {
@@ -76,13 +77,13 @@ export default async function ContentsPage({ params }: ContentsPageProps) {
       borderHover: "group-hover:border-blue-500/50"
     },
     {
-      title: isEn ? "Hall of Fame (🚧Dev)" : "명예의 전당(🚧개발 중)",
-      description: isEn ? "Best members of the month & Popular spirits." : "이달의 베스트 멤버와 인기 주류 랭킹.",
-      icon: <BarChart3 className="w-8 h-8 text-emerald-500" />,
-      link: "#",
-      status: "Ready",
-      gradient: "from-emerald-500/20 to-teal-600/20",
-      borderHover: "group-hover:border-emerald-500/50"
+      title: isEn ? "Global Spirits News" : "글로벌 주류 뉴스",
+      description: isEn ? "Latest trends and in-depth reports analyzed by AI." : "AI가 분석한 글로벌 주류 트렌드와 심층 리포트.",
+      icon: <Newspaper className="w-8 h-8 text-indigo-500" />,
+      link: `/${lang}/contents/news`,
+      status: "OPEN",
+      gradient: "from-indigo-500/20 to-purple-600/20",
+      borderHover: "group-hover:border-indigo-500/50"
     }
   ];
 
