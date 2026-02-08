@@ -250,8 +250,23 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
 
             const prompt = `
             You are a senior editor for a premium liquor magazine.
-            Analyze these news items and generate TWO versions for each (English and Korean).
-            CRITICAL: You MUST include the exact "tempId" for each item in your response to maintain data integrity.
+            Analyze these news items and:
+            1. Determine if each item is DIRECTLY related to alcoholic beverages, spirits, or the liquor industry
+            2. Generate TWO versions for relevant items (English and Korean)
+            
+            IMPORTANT: Set "isAlcoholRelated" to TRUE only if the news is about:
+            - New products, limited editions, awards
+            - Distillery/brewery news, events, tastings
+            - Industry trends, production techniques
+            - Traditional liquor culture
+            
+            Set "isAlcoholRelated" to FALSE if the news is about:
+            - General business (stocks, earnings) unless specifically about spirits
+            - Health warnings, drunk driving
+            - Unrelated food/beverage
+            - Generic lifestyle/entertainment
+            
+            CRITICAL: You MUST include the exact "tempId" for each item.
 
             Input Data: ${JSON.stringify(batch.map(b => ({
                 tempId: b.tempId,
@@ -263,6 +278,7 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
             Structure: [
               {
                 "tempId": "...",
+                "isAlcoholRelated": true/false,
                 "en": { "title": "...", "snippet": "...", "content": "..." },
                 "ko": { "title": "...", "snippet": "...", "content": "..." },
                 "tags_en": ["#Tag1", "#Tag2"],
@@ -289,8 +305,19 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
         }
 
         // Final assembly using the map to ensure NO MISMATCHES
+        // FILTER by isAlcoholRelated flag from Gemini
         const finalItems = itemsToProcess
-            .filter(item => processedMap.has(item.tempId)) // Only keep items successfully processed by Gemini
+            .filter(item => {
+                if (!processedMap.has(item.tempId)) return false;
+                const proc = processedMap.get(item.tempId)!;
+
+                // Only keep alcohol-related items
+                if (proc.isAlcoholRelated === false) {
+                    console.log('[News Collection] 🚫 AI filtered out non-alcohol news:', item.title);
+                    return false;
+                }
+                return true;
+            })
             .map(item => {
                 const proc = processedMap.get(item.tempId)!;
                 return {

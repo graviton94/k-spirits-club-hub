@@ -19,6 +19,22 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         }
     }, [user, role, loading, router]);
 
+    // Hide BottomNav on admin pages
+    useEffect(() => {
+        const bottomNav = document.querySelector('nav[class*="fixed"][class*="bottom"]');
+        const originalDisplay = bottomNav instanceof HTMLElement ? bottomNav.style.display : '';
+
+        if (bottomNav instanceof HTMLElement) {
+            bottomNav.style.display = 'none';
+        }
+
+        return () => {
+            if (bottomNav instanceof HTMLElement) {
+                bottomNav.style.display = originalDisplay;
+            }
+        };
+    }, []);
+
     if (loading || !user || role !== 'ADMIN') {
         return (
             <div className="min-h-screen flex items-center justify-center bg-background">
