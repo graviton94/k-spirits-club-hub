@@ -6,8 +6,8 @@ import { collection, query, orderBy, limit, getDocs, startAfter, getCountFromSer
 import { useAuth } from '@/app/[lang]/context/auth-context';
 import { getAppPath } from '@/lib/db/paths';
 import Link from 'next/link';
-import { Search, Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useParams } from 'next/navigation';
+import { Search, Loader2, ChevronLeft, ChevronRight, ArrowLeft, Trash2 } from 'lucide-react';
+import { useParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 
 export const runtime = 'edge';
@@ -100,8 +100,8 @@ export default function NewsContentPage() {
         if (!searchQuery.trim()) return news;
         const lowQuery = searchQuery.toLowerCase();
         return news.filter(item => {
-            const title = (item.title?.[lang] || item.title?.ko || item.originalTitle || '').toLowerCase();
-            const content = (item.content?.[lang] || item.content?.ko || item.snippet?.[lang] || item.snippet?.ko || '').toLowerCase();
+            const title = (item.translations?.[lang]?.title || item.translations?.ko?.title || item.originalTitle || '').toLowerCase();
+            const content = (item.translations?.[lang]?.content || item.translations?.ko?.content || item.translations?.[lang]?.snippet || item.translations?.ko?.snippet || '').toLowerCase();
             return title.includes(lowQuery) || content.includes(lowQuery);
         });
     }, [news, searchQuery, lang]);
@@ -127,9 +127,19 @@ export default function NewsContentPage() {
         }
     };
 
+    const router = useRouter();
+
     return (
-        <div className="min-h-screen bg-background text-foreground pt-24 pb-12 px-4 transition-colors duration-300">
+        <div className="min-h-screen bg-background text-foreground pt-16 pb-12 px-4 transition-colors duration-300">
             <div className="max-w-3xl mx-auto">
+                {/* Back Button */}
+                <button
+                    onClick={() => router.back()}
+                    className="mb-6 flex items-center gap-2 text-muted-foreground hover:text-foreground transition-all group"
+                >
+                    <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+                    <span className="text-sm font-bold">{isEn ? 'Back' : '뒤로가기'}</span>
+                </button>
                 {/* Header */}
                 <div className="mb-8 flex justify-between items-end">
                     <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
@@ -180,9 +190,10 @@ export default function NewsContentPage() {
                                 {isAdmin && (
                                     <button
                                         onClick={() => handleDelete(item.id)}
-                                        className="absolute top-4 right-4 bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white px-3 py-1.5 rounded-xl text-[10px] font-bold transition-all z-10"
+                                        className="absolute top-6 right-6 p-2.5 text-rose-500/40 hover:text-rose-500 hover:bg-rose-500/10 rounded-xl transition-all z-20 group/del"
+                                        title={t.deleteBtn}
                                     >
-                                        {t.deleteBtn}
+                                        <Trash2 className="w-5 h-5 group-hover/del:scale-110 transition-transform" />
                                     </button>
                                 )}
 
@@ -196,25 +207,27 @@ export default function NewsContentPage() {
                                 </div>
 
                                 <Link href={item.link} target="_blank">
-                                    <h2 className="text-2xl font-bold mb-6 hover:text-indigo-600 transition-colors leading-tight">
-                                        {String(item.title?.[lang] || item.title?.ko || item.originalTitle || '')}
+                                    <h2 className="text-xl md:text-2xl font-bold mb-4 hover:text-indigo-600 transition-colors leading-tight">
+                                        {String(item.translations?.[lang]?.title || item.translations?.ko?.title || item.originalTitle || '')}
                                     </h2>
                                 </Link>
 
-                                <div className="text-muted-foreground leading-relaxed space-y-4 whitespace-pre-wrap text-base md:text-lg font-medium">
-                                    {String(item.content?.[lang] || item.content?.ko || item.snippet?.[lang] || item.snippet?.ko || item.originalSnippet || '')}
+                                <div className="text-muted-foreground leading-relaxed space-y-4 whitespace-pre-wrap text-sm md:text-base font-medium mb-6">
+                                    {String(item.translations?.[lang]?.content || item.translations?.ko?.content || item.translations?.[lang]?.snippet || item.translations?.ko?.snippet || item.originalSnippet || '')}
                                 </div>
 
-                                <div className="mt-8 flex flex-wrap gap-2">
-                                    {(item.tags?.[lang] || item.tags?.ko)?.map((tag: string, i: number) => (
-                                        <span key={i} className="text-xs font-bold text-muted-foreground/60 bg-muted px-3 py-1 rounded-full border border-border uppercase tracking-tighter">
-                                            #{tag}
-                                        </span>
-                                    ))}
-                                </div>
-
-                                <div className="mt-6 pt-6 border-t border-border flex justify-end">
-                                    <Link href={item.link} target="_blank" className="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline">
+                                <div className="mt-6 pt-6 border-t border-border flex items-center justify-between">
+                                    <div className="flex gap-2">
+                                        {(item.tags?.[lang] || item.tags?.ko || [])?.slice(0, 2).map((tag: string, i: number) => {
+                                            const cleanTag = tag.startsWith('#') ? tag.substring(1) : tag;
+                                            return (
+                                                <span key={i} className="text-[10px] font-bold text-indigo-500/60 transition-colors">
+                                                    #{cleanTag}
+                                                </span>
+                                            );
+                                        })}
+                                    </div>
+                                    <Link href={item.link} target="_blank" className="text-[10px] sm:text-xs font-black text-indigo-600 dark:text-indigo-400 hover:underline flex items-center">
                                         {t.viewOriginal}
                                     </Link>
                                 </div>

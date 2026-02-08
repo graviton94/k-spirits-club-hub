@@ -3,9 +3,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MBTI_QUESTIONS, MBTI_RESULTS, MBTI_TYPE, MBTIResult } from '@/lib/constants/mbti-data';
-import { Share2, RefreshCw, Search, Loader2, Download } from 'lucide-react';
+import { Share2, RefreshCw, Search, Loader2, Download, ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { toPng } from 'html-to-image';
 import SuccessToast from '@/components/ui/SuccessToast';
 
@@ -151,8 +152,18 @@ export function MBTIClient({ lang }: { lang: string }) {
         linkCopied: isEn ? "Link copied!" : "링크가 복사되었습니다!"
     };
 
+    const router = useRouter();
+
     return (
-        <div className="max-w-2xl mx-auto px-4 py-8 md:py-16 min-h-[80vh] flex flex-col items-center bg-neutral-900 text-white">
+        <div className="max-w-2xl mx-auto px-4 py-8 md:py-12 min-h-[80vh] flex flex-col items-center bg-neutral-900 text-white relative">
+            {/* Back Button */}
+            <button
+                onClick={() => router.back()}
+                className="absolute top-6 left-6 flex items-center gap-2 text-neutral-500 hover:text-white transition-all group z-50"
+            >
+                <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+                <span className="text-sm font-bold">{isEn ? 'Back' : '뒤로가기'}</span>
+            </button>
             <AnimatePresence mode="wait">
                 {step === 'intro' && (
                     <motion.div

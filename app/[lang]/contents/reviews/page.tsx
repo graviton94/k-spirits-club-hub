@@ -8,10 +8,10 @@ import { getAppPath } from '@/lib/db/paths';
 import { getCategoryFallbackImage } from '@/lib/utils/image-fallback';
 import { getOptimizedImageUrl } from '@/lib/utils/image-optimization';
 import Link from 'next/link';
-import { Search, Loader2, ChevronLeft, ChevronRight, Star, Trash2, User, MessageSquare, Quote } from 'lucide-react';
+import { Search, Loader2, ChevronLeft, ChevronRight, Star, Trash2, User, MessageSquare, Quote, ArrowLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SuccessToast from '@/components/ui/SuccessToast';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 export const runtime = 'edge';
 
@@ -176,9 +176,19 @@ export default function ReviewBoardPage() {
         }
     };
 
+    const router = useRouter();
+
     return (
-        <div className="min-h-screen bg-background text-foreground pt-24 pb-12 px-4 transition-colors duration-300">
+        <div className="min-h-screen bg-background text-foreground pt-16 pb-12 px-4 transition-colors duration-300">
             <div className="max-w-4xl mx-auto">
+                {/* Back Button */}
+                <button
+                    onClick={() => router.back()}
+                    className="mb-6 flex items-center gap-2 text-muted-foreground hover:text-foreground transition-all group"
+                >
+                    <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+                    <span className="text-sm font-bold">{isEn ? 'Back' : '뒤로가기'}</span>
+                </button>
                 {/* Header */}
                 <div className="mb-8">
                     <div className="flex items-center gap-3 mb-2">

@@ -25,10 +25,10 @@ export interface CollectedNewsItem {
 
 export async function fetchNewsForCollection(): Promise<CollectedNewsItem[]> {
     // 1. 구글 뉴스 RSS Fetch (기존 동일)
-    const keywords = '(Whisky OR Liquor OR Spirits OR "New Release" OR "Limited Edition")';
+    const keywords = '(Whisky OR Liquor OR Spirits OR New Release OR Limited Edition OR 전통주 OR 위스키 OR 증류식 소주 OR 전통주연구소 OR 가양주연구소 OR 전통주갤러리 OR 증류소 OR 우리술)';
     const siteFilter = TRUSTED_SOURCES.map(site => `site:${site}`).join(' OR ');
     const finalQuery = `${keywords} AND (${siteFilter})`;
-    const rssUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(finalQuery)}&hl=en-US&gl=US&ceid=US:en`;
+    const rssUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(finalQuery)}&hl=ko-KR&gl=KR&ceid=KR:ko`;
 
     try {
         const res = await fetch(rssUrl, { cache: 'no-store' });
@@ -41,7 +41,8 @@ export async function fetchNewsForCollection(): Promise<CollectedNewsItem[]> {
         // 3. 1차 필터링: 제품/출시 관련이 아니거나 부정적인 뉴스 제거
         const NEGATIVE_KEYWORDS = [
             '음주운전', '사망', '실명', '반신마비', '사고', '범죄', '주가', '증권', 'VI 발동', '실적발표',
-            '오늘의 운세', '인사', '부고', 'today-paper', '지면'
+            '오늘의 운세', '인사', '부고', 'today-paper', '지면',
+            'DUI', 'accident', 'crime', 'stock price', 'obituary', 'fortune', 'quarterly results'
         ];
 
         const rawItems = (Array.isArray(items) ? items : [items]).map((item: any) => ({
