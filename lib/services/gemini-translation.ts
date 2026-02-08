@@ -177,9 +177,9 @@ export async function generateSensoryProfile(spirit: SpiritEnrichmentInput): Pro
     ### INSTRUCTIONS:
     1. Write **description_ko**: Korean description (2-3 sentences, professional tone)
     2. Write **description_en**: English description (2-3 sentences, professional tone)
-    3. Generate **nose_tags**: 3-5 aroma tags (Korean only, e.g., "바닐라", "꿀", "오크")
-    4. Generate **palate_tags**: 3-5 taste tags (Korean only)
-    5. Generate **finish_tags**: 3-5 finish tags (Korean only)
+    3. Generate **nose_tags**: 3-5 aroma tags (English only, e.g., "Vanilla", "Honey", "Oak")
+    4. Generate **palate_tags**: 3-5 taste tags (English only)
+    5. Generate **finish_tags**: 3-5 finish tags (English only)
     6. Write **tasting_note**: Comprehensive tasting note in Korean (4-5 sentences)
 
     ### OUTPUT JSON SCHEMA:

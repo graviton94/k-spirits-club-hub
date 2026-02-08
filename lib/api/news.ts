@@ -1,4 +1,3 @@
-import { XMLParser } from 'fast-xml-parser';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
@@ -6,7 +5,6 @@ const genAI = new GoogleGenerativeAI(GEMINI_API_KEY || '');
 if (!GEMINI_API_KEY) {
     console.error('[Gemini News] 🔴 ERROR: GEMINI_API_KEY is missing!');
 }
-const parser = new XMLParser({ ignoreAttributes: false });
 
 const TRUSTED_SOURCES = [
     'thespiritsbusiness.com', 'whiskyadvocate.com', 'decanter.com',
@@ -24,6 +22,58 @@ export interface CollectedNewsItem {
         ko: { title: string; snippet: string; content: string };
     };
     tags: { en: string[]; ko: string[] };
+}
+
+// Simple XML parser for Edge Runtime compatibility
+function parseRSSFeed(xmlText: string): any[] {
+    const items: any[] = [];
+
+    // Extract all <item> elements using regex
+    const itemRegex = /<item>([\s\S]*?)<\/item>/g;
+    let match;
+
+    while ((match = itemRegex.exec(xmlText)) !== null) {
+        const itemXml = match[1];
+
+        // Extract fields from each item
+        const titleMatch = /<title>([\s\S]*?)<\/title>/.exec(itemXml);
+        const linkMatch = /<link>([\s\S]*?)<\/link>/.exec(itemXml);
+        const descMatch = /<description>([\s\S]*?)<\/description>/.exec(itemXml);
+        const pubDateMatch = /<pubDate>([\s\S]*?)<\/pubDate>/.exec(itemXml);
+        const sourceMatch = /<source[^>]*>([\s\S]*?)<\/source>/.exec(itemXml);
+
+        if (titleMatch && linkMatch) {
+            items.push({
+                title: decodeHTMLEntities(titleMatch[1].trim()),
+                link: linkMatch[1].trim(),
+                description: descMatch ? decodeHTMLEntities(descMatch[1].trim()) : '',
+                pubDate: pubDateMatch ? pubDateMatch[1].trim() : '',
+                source: sourceMatch ? decodeHTMLEntities(sourceMatch[1].trim()) : 'Curated News'
+            });
+        }
+    }
+
+    return items;
+}
+
+// Helper to decode HTML entities
+function decodeHTMLEntities(text: string): string {
+    return text
+        .replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'")
+        .replace(/&apos;/g, "'")
+        .replace(/&nbsp;/g, ' ')
+        .replace(/&hellip;/g, '...')
+        .replace(/&ndash;/g, '-')
+        .replace(/&mdash;/g, '—')
+        .replace(/&rsquo;/g, "'")
+        .replace(/&lsquo;/g, "'")
+        .replace(/&rdquo;/g, '"')
+        .replace(/&ldquo;/g, '"')
+        .replace(/<[^>]+>/g, ''); // Remove HTML tags
 }
 
 export async function fetchNewsForCollection(existingLinks?: Set<string>): Promise<CollectedNewsItem[]> {
@@ -74,18 +124,13 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
                     }
 
                     const xmlText = await res.text();
-                    const jsonObj = parser.parse(xmlText);
-                    const rawItems = jsonObj?.rss?.channel?.item || [];
-                    const itemsArray = Array.isArray(rawItems) ? rawItems : (rawItems ? [rawItems] : []);
+                    const items = parseRSSFeed(xmlText);
+                    const limitedItems = items.slice(0, 10);
 
-                    // Manually slice to 10 items for quality over quantity
-                    const items = itemsArray.slice(0, 10);
-                    const count = items.length;
-
-                    console.log(`[News Collection] ✅ ${type} "${query}": ${count} items`);
+                    console.log(`[News Collection] ✅ ${type} "${query}": ${limitedItems.length} items`);
 
                     return {
-                        items,
+                        items: limitedItems,
                         type,
                         query
                     };
@@ -120,39 +165,12 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
             '채용', '인사이동', '임원', 'hiring', 'CEO', 'appointment', '파산', 'bankruptcy'
         ];
 
-        // Helper to clean HTML and decode entities
-        const cleanText = (text: any): string => {
-            if (!text) return '';
-            const str = typeof text === 'object' ? (text['#text'] || '') : String(text);
-            return str
-                .replace(/<[^>]*>?/gm, ' ') // Remove HTML tags
-                .replace(/&nbsp;/g, ' ')
-                .replace(/&amp;/g, '&')
-                .replace(/&quot;/g, '"')
-                .replace(/&lt;/g, '<')
-                .replace(/&gt;/g, '>')
-                .replace(/&#39;/g, "'")
-                .replace(/&apos;/g, "'")
-                .replace(/&hellip;/g, '...')
-                .replace(/&ndash;/g, '-')
-                .replace(/&mdash;/g, '-')
-                .replace(/&rsquo;/g, "'")
-                .replace(/&lsquo;/g, "'")
-                .replace(/&rdquo;/g, '"')
-                .replace(/&ldquo;/g, '"')
-                .replace(/\s+/g, ' ') // Collapse whitespace
-                .trim();
-        };
-
         const allItems = (Array.isArray(items) ? items : [items]).map((item: any) => {
-            const cleanedTitle = cleanText(item.title);
-            const cleanedSnippet = cleanText(item.description);
-
             return {
-                title: cleanedTitle,
+                title: item.title,
                 link: item.link,
-                snippet: cleanedSnippet ? (cleanedSnippet.substring(0, 200) + '...') : '',
-                source: typeof item.source === 'object' ? (item.source?.['#text'] || 'Curated News') : (item.source || 'Curated News'),
+                snippet: item.description ? (item.description.substring(0, 200) + '...') : '',
+                source: item.source || 'Curated News',
                 pubDate: item.pubDate,
             };
         });

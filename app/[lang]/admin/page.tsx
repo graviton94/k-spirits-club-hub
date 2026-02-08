@@ -259,18 +259,23 @@ export default function AdminDashboard() {
                 const updatedSpirit = await spiritRes.json();
                 setEditForm({
                     ...editForm,
+                    // Identity fields
                     name_en: updatedSpirit.name_en ?? editForm.name_en,
+                    category: updatedSpirit.category ?? editForm.category,
+                    subcategory: updatedSpirit.subcategory ?? editForm.subcategory,
+                    distillery: updatedSpirit.distillery ?? editForm.distillery,
+                    region: updatedSpirit.region ?? editForm.region,
+                    country: updatedSpirit.country ?? editForm.country,
+                    abv: updatedSpirit.abv ?? editForm.abv,
+                    // Sensory fields
                     description_ko: updatedSpirit.metadata?.description_ko ?? editForm.description_ko,
                     description_en: updatedSpirit.metadata?.description_en ?? editForm.description_en,
                     nose_tags: (updatedSpirit.nose_tags || []).join(', '),
                     palate_tags: (updatedSpirit.palate_tags || []).join(', '),
                     finish_tags: (updatedSpirit.finish_tags || []).join(', '),
+                    // Pairing fields
                     pairing_guide_en: updatedSpirit.metadata?.pairing_guide_en ?? editForm.pairing_guide_en,
-                    pairing_guide_ko: updatedSpirit.metadata?.pairing_guide_ko ?? editForm.pairing_guide_ko,
-                    distillery: updatedSpirit.distillery ?? editForm.distillery,
-                    region: updatedSpirit.region ?? editForm.region,
-                    country: updatedSpirit.country ?? editForm.country,
-                    abv: updatedSpirit.abv ?? editForm.abv
+                    pairing_guide_ko: updatedSpirit.metadata?.pairing_guide_ko ?? editForm.pairing_guide_ko
                 });
             }
 
@@ -406,8 +411,8 @@ export default function AdminDashboard() {
                                         </td>
                                         <td className="p-3 md:p-4">
                                             <span className={`px-2 py-1 rounded text-[9px] md:text-[10px] font-black ${spirit.isPublished
-                                                    ? 'bg-green-100 text-green-700'
-                                                    : 'bg-gray-100 text-gray-700'
+                                                ? 'bg-green-100 text-green-700'
+                                                : 'bg-gray-100 text-gray-700'
                                                 }`}>
                                                 {spirit.isPublished ? '✅ 발행' : '❌ 미발행'}
                                             </span>
