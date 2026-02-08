@@ -200,116 +200,93 @@ export default function ReviewsPage() {
         </div>
       ) : (
         <div className="space-y-4">
-          {spirits.map((spirit) => (
+          {spirits.map((spirit, idx) => (
             <motion.div
-              key={spirit.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="group relative"
+              key={`${spirit.id}-${idx}`}
+              initial={{ opacity: 0, scale: 0.98, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ delay: idx * 0.05 }}
+              className="group relative bg-card border border-border rounded-[2.5rem] p-5 sm:p-7 hover:border-amber-500/30 hover:shadow-xl transition-all mb-6"
             >
-              <div className="flex items-start gap-4 p-4 rounded-xl bg-card border border-border hover:border-amber-500/50 transition-all shadow-sm">
-
-                {/* 1. Spirit Image (Left) */}
-                <Link href={`/spirits/${spirit.id}`} className="flex-shrink-0 pt-1">
-                  <div className="w-16 h-20 sm:w-20 sm:h-24 rounded-lg bg-secondary overflow-hidden border border-border flex items-center justify-center">
+              {/* Row 1 & 2: Image + Meta */}
+              <div className="flex gap-4 sm:gap-6 mb-5">
+                {/* Spirit Image */}
+                <Link href={`/spirits/${spirit.id}`} className="shrink-0">
+                  <div className="w-20 h-24 sm:w-28 sm:h-36 rounded-2xl bg-secondary overflow-hidden border border-border flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
                     <img
-                      src={getOptimizedImageUrl(spirit.imageUrl || getCategoryFallbackImage(spirit.category), 160)}
+                      src={getOptimizedImageUrl(spirit.imageUrl || getCategoryFallbackImage(spirit.category), 200)}
                       alt={spirit.name}
-                      loading="lazy"
                       className="w-full h-full object-cover"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = getCategoryFallbackImage(spirit.category);
-                      }}
                     />
                   </div>
                 </Link>
 
-                {/* 2. Content (Center) */}
-                <div className="flex-1 min-w-0 flex flex-col gap-1.5">
-                  {/* Row 1: Spirit Name (Top Priority) */}
+                {/* Info Right */}
+                <div className="flex-1 flex flex-col justify-center min-w-0">
                   <Link
                     href={`/spirits/${spirit.id}`}
-                    className="text-base sm:text-lg font-bold text-foreground hover:text-amber-500 transition-colors line-clamp-1 leading-tight"
+                    className="text-xl sm:text-2xl font-black hover:text-amber-600 transition-colors truncate mb-3"
                   >
                     {spirit.name}
                   </Link>
 
-                  {/* Row 2: Metadata (Date | Category) */}
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <span className="font-medium bg-secondary px-1.5 py-0.5 rounded text-[10px] uppercase tracking-wider">
+                  <div className="flex flex-wrap items-center gap-2">
+                    {/* Category Capsule */}
+                    <div className="px-3 py-1.5 bg-secondary/80 border border-border rounded-full text-[10px] font-black text-muted-foreground uppercase tracking-widest">
                       {spirit.category}
-                    </span>
-                    <span>•</span>
-                    <span>
-                      {spirit.userReview?.createdAt ? new Date(spirit.userReview.createdAt).toLocaleDateString() : ''}
-                    </span>
-                  </div>
-
-                  {/* Row 3: Comment */}
-                  {spirit.userReview?.comment && (
-                    <p className="text-sm text-foreground/80 line-clamp-2 italic leading-relaxed">
-                      "{spirit.userReview.comment}"
-                    </p>
-                  )}
-
-                  {/* Row 4: Flavor Tags (Pills) */}
-                  {/* We now check tagsN, tagsP, tagsF from the API */}
-                  {spirit.userReview && (
-                    <div className="flex flex-wrap gap-1.5 mt-1">
-                      {/* Combine all tags into a single list for cleaner display, or separate them? 
-                          User asked for tagsF, tagsN, tagsP as pills. 
-                          The API returns 'ratingN' (number) but also 'nose' (string tags) in '/api/reviews'.
-                          Let's verify what 'userReview' object actually holds from 'loadReviews'.
-                       */}
-                      {/* Checking loadReviews mapping: 
-                           ratingN: review.ratingN || review.noseRating 
-                           But we need TAGS. 
-                           I will update loadReviews in the next step to ensure tags are mapped. 
-                           For now, assuming spirit.userReview has 'tags' property.
-                       */}
-
-                      {(spirit.userReview as any).tags && (spirit.userReview as any).tags.length > 0 ? (
-                        (spirit.userReview as any).tags.map((tag: string, idx: number) => (
-                          <span key={idx} className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-400 font-medium whitespace-nowrap">
-                            #{tag}
-                          </span>
-                        ))
-                      ) : null}
                     </div>
-                  )}
-                </div>
 
-                {/* 3. Score (Right) */}
-                {spirit.userReview && (
-                  <div className="shrink-0 flex flex-col items-end gap-3 pt-1">
-                    {(() => {
-                      const score = spirit.userReview.ratingOverall;
-                      const colorClass = score >= 4.0
-                        ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
-                        : score >= 2.5
-                          ? "bg-amber-500/10 text-amber-600 border-amber-500/20"
-                          : "bg-rose-500/10 text-rose-600 border-rose-500/20";
+                    {/* Rating Capsule */}
+                    <div className="px-3 py-1.5 bg-amber-500/10 border border-amber-500/20 rounded-full text-[10px] font-black text-amber-600 dark:text-amber-400">
+                      ★ {spirit.userReview?.ratingOverall.toFixed(1)}
+                    </div>
 
-                      return (
-                        <div className={`flex flex-col items-center justify-center px-3 py-2 sm:px-4 sm:py-3 rounded-xl border ${colorClass} min-w-[60px] sm:min-w-[72px]`}>
-                          <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-wider opacity-70">Overall</span>
-                          <span className="text-lg sm:text-xl font-black leading-none">{score.toFixed(1)}</span>
-                        </div>
-                      );
-                    })()}
-
-                    {/* Delete Button (Restored) */}
-                    <button
-                      onClick={() => setDeleteTarget(spirit)}
-                      className="p-2 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-full transition-colors"
-                      title="리뷰 삭제"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
+                    {/* Date Capsule */}
+                    <div className="px-3 py-1.5 bg-slate-500/10 border border-slate-500/20 rounded-full text-[10px] font-black text-muted-foreground whitespace-nowrap">
+                      {spirit.userReview?.createdAt ? new Date(spirit.userReview.createdAt).toLocaleDateString() : ''}
+                    </div>
                   </div>
-                )}
+                </div>
               </div>
+
+              {/* Row 3: Flavor Tags (Colorful) */}
+              {(spirit.userReview as any)?.tags && (spirit.userReview as any).tags.length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-5 pt-4 border-t border-border/50">
+                  {(spirit.userReview as any).tags.slice(0, 6).map((tag: string, i: number) => {
+                    const colors = [
+                      'bg-blue-500/10 text-blue-600 border-blue-500/20',
+                      'bg-orange-500/10 text-orange-600 border-orange-500/20',
+                      'bg-purple-500/10 text-purple-600 border-purple-500/20',
+                      'bg-emerald-500/10 text-emerald-600 border-emerald-500/20',
+                      'bg-rose-500/10 text-rose-600 border-rose-500/20',
+                      'bg-indigo-500/10 text-indigo-600 border-indigo-500/20'
+                    ];
+                    return (
+                      <span key={i} className={`text-[9px] sm:text-[10px] px-3 py-1 rounded-full border font-black uppercase tracking-tight ${colors[i % colors.length]}`}>
+                        #{tag}
+                      </span>
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* Row 4: Review Comment */}
+              {spirit.userReview?.comment && (
+                <div className="bg-secondary/20 p-5 rounded-3xl border border-border/50 transition-colors group-hover:bg-secondary/40">
+                  <p className="text-sm sm:text-base leading-relaxed text-foreground font-medium italic">
+                    "{spirit.userReview.comment}"
+                  </p>
+                </div>
+              )}
+
+              {/* Delete Button */}
+              <button
+                onClick={() => setDeleteTarget(spirit)}
+                className="absolute top-5 right-5 p-2 text-muted-foreground/30 hover:text-rose-500 hover:bg-rose-500/10 rounded-xl transition-all opacity-0 group-hover:opacity-100"
+                title="리뷰 삭제"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
             </motion.div>
           ))}
         </div>

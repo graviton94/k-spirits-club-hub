@@ -188,7 +188,7 @@ export default function NewsContentPage() {
 
                                 <div className="flex items-center gap-2 mb-4">
                                     <span className="px-2.5 py-1 bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-[10px] font-bold rounded-lg uppercase tracking-wider">
-                                        {item.source}
+                                        {typeof item.source === 'object' ? (item.source?.['#text'] || 'News') : (item.source || 'News')}
                                     </span>
                                     <span className="text-muted-foreground text-[10px] font-medium">
                                         {item.date?.split('T')[0]}
@@ -197,12 +197,12 @@ export default function NewsContentPage() {
 
                                 <Link href={item.link} target="_blank">
                                     <h2 className="text-2xl font-bold mb-6 hover:text-indigo-600 transition-colors leading-tight">
-                                        {item.title?.[lang] || item.title?.ko || item.originalTitle}
+                                        {String(item.title?.[lang] || item.title?.ko || item.originalTitle || '')}
                                     </h2>
                                 </Link>
 
                                 <div className="text-muted-foreground leading-relaxed space-y-4 whitespace-pre-wrap text-base md:text-lg font-medium">
-                                    {item.content?.[lang] || item.content?.ko || item.snippet?.[lang] || item.snippet?.ko || item.originalSnippet}
+                                    {String(item.content?.[lang] || item.content?.ko || item.snippet?.[lang] || item.snippet?.ko || item.originalSnippet || '')}
                                 </div>
 
                                 <div className="mt-8 flex flex-wrap gap-2">

@@ -48,7 +48,7 @@ export async function fetchNewsForCollection(): Promise<CollectedNewsItem[]> {
             title: item.title,
             link: item.link,
             snippet: item.description?.replace(/<[^>]*>?/gm, '').substring(0, 200) + '...',
-            source: item.source || 'Curated News',
+            source: typeof item.source === 'object' ? (item.source?.['#text'] || 'Curated News') : (item.source || 'Curated News'),
             pubDate: item.pubDate,
         })).filter(item => {
             const fullText = (item.title + item.snippet).toLowerCase();

@@ -42,12 +42,12 @@ export default function ReviewBoardPage() {
     // UI Dictionary
     const t = {
         title: isEn ? "Review Board" : "리뷰 보드",
-        desc: isEn ? "Live comments and professional analysis reports from spirits enthusiasts." : "주류 애호가들의 생생한 한줄평과 전문적인 분석 리포트",
-        searchPlaceholder: isEn ? "Search spirits, authors, or content..." : "술 이름, 작성자, 또는 내용을 검색하세요...",
+        desc: isEn ? "Live comments and professional analysis reports from spirits enthusiasts." : "유저들의 생생한 리뷰와 분석",
+        searchPlaceholder: isEn ? "Search spirits, authors, or content..." : "술 이름 또는 내용으로 검색",
         searchBtn: isEn ? "Search" : "검색",
-        loading: isEn ? "Fetching tastes..." : "취향을 불러오는 중...",
+        loading: isEn ? "Fetching tastes..." : "불러오는 중...",
         noResult: isEn ? "No search results found." : "검색 결과가 없습니다.",
-        noReviews: isEn ? "No reviews registered yet." : "아직 등록된 리뷰가 없습니다.",
+        noReviews: isEn ? "No reviews registered yet." : "등록된 리뷰가 없습니다.",
         score: isEn ? "SCORE" : "평점",
         deleteTitle: isEn ? "Delete Review" : "리뷰 삭제",
         deleteConfirm: isEn ? "Are you sure you want to delete this review? Deleted reviews cannot be undone." : "이 리뷰를 삭제하시겠습니까? 삭제된 리뷰는 복구할 수 없습니다.",
@@ -362,30 +362,41 @@ export default function ReviewBoardPage() {
                             initial={{ scale: 0.9, opacity: 0, y: 20 }}
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.9, opacity: 0, y: 20 }}
-                            className="bg-card w-full max-w-sm rounded-[2.5rem] shadow-2xl overflow-hidden border border-border"
+                            className="bg-white dark:bg-zinc-900 w-full max-w-sm rounded-[2.5rem] shadow-2xl overflow-hidden border border-border relative"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <div className="p-8 flex flex-col items-center text-center">
-                                <div className="w-20 h-20 bg-rose-500/10 rounded-full flex items-center justify-center mb-6 border border-rose-500/20">
+                            {/* Decorative Header Background */}
+                            <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-br from-rose-500/10 to-orange-500/10 z-0" />
+
+                            <div className="relative z-10 p-8 flex flex-col items-center text-center">
+                                {/* Icon Bubble */}
+                                <div className="w-20 h-20 bg-rose-50 dark:bg-rose-900/20 rounded-full flex items-center justify-center mb-6 shadow-inner ring-1 ring-rose-500/20">
                                     <Trash2 className="w-10 h-10 text-rose-500" />
                                 </div>
-                                <h2 className="text-2xl font-black mb-2">{t.deleteTitle}</h2>
-                                <p className="text-muted-foreground text-sm font-medium mb-8">
-                                    <span className="text-foreground font-black">"{deleteTarget.spiritName}"</span><br />
+
+                                <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2">
+                                    {t.deleteTitle}
+                                </h2>
+
+                                <p className="text-slate-500 dark:text-slate-400 mb-8 text-sm leading-relaxed font-medium">
+                                    <span className="font-black text-slate-900 dark:text-white block text-base mb-1">
+                                        "{deleteTarget.spiritName}"
+                                    </span>
                                     {t.deleteConfirm}
                                 </p>
+
                                 <div className="flex gap-3 w-full">
                                     <button
                                         onClick={() => setDeleteTarget(null)}
                                         disabled={isDeleting}
-                                        className="flex-1 py-4 bg-muted hover:bg-muted/80 text-foreground font-black rounded-2xl transition-all"
+                                        className="flex-1 py-4 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-black rounded-2xl transition-all active:scale-[0.98]"
                                     >
                                         {t.cancel}
                                     </button>
                                     <button
                                         onClick={handleDeleteReview}
                                         disabled={isDeleting}
-                                        className="flex-1 py-4 bg-rose-600 hover:bg-rose-700 text-white font-black rounded-2xl transition-all shadow-lg shadow-rose-600/20"
+                                        className="flex-1 py-4 bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 text-white shadow-lg shadow-rose-500/30 font-black rounded-2xl transition-all active:scale-[0.98]"
                                     >
                                         {isDeleting ? <Loader2 className="w-5 h-5 animate-spin mx-auto" /> : t.delete}
                                     </button>
