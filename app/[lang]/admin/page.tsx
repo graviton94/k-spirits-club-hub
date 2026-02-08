@@ -542,15 +542,26 @@ export default function AdminDashboard() {
                         const res = await fetch('/api/admin/news/collect', {
                           method: 'POST'
                         });
-                        const data = await res.json();
-                        if (data.success) {
-                          alert(`✅ 뉴스 수집 완료! (${data.count}건)`);
-                        } else {
-                          alert(`❌ 실패: ${data.error || data.message || '알 수 없는 오류'}`);
+
+                        if (!res.ok) {
+                          const errorText = await res.text();
+                          console.error('News collection failed:', errorText);
+                          throw new Error(`HTTP ${res.status}: ${errorText}`);
                         }
-                      } catch (e) {
-                        alert('뉴스 수집 요청 중 에러가 발생했습니다.');
-                        console.error(e);
+
+                        const data = await res.json();
+                        console.log('News collection response:', data);
+
+                        if (data.success) {
+                          const count = data.count ?? 0;
+                          alert(`✅ 뉴스 수집 완료! (${count}건)`);
+                        } else {
+                          const errorMsg = data.error || data.message || '알 수 없는 오류';
+                          alert(`❌ 실패: ${errorMsg}`);
+                        }
+                      } catch (e: any) {
+                        console.error('News collection error:', e);
+                        alert(`뉴스 수집 중 에러: ${e.message || e.toString()}`);
                       } finally {
                         setIsProcessing(false);
                       }
@@ -917,50 +928,55 @@ export default function AdminDashboard() {
                     <button
                       disabled={isProcessing}
                       onClick={async () => {
+                        if (!editingId) return;
                         setIsProcessing(true);
                         try {
-                          const res = await fetch('/api/admin/spirits/enrich', {
-                            method: 'POST',
+                          const res = await fetch('/api/admin/spirits/bulk-patch', {
+                            method: 'PATCH',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
-                              name: editForm.name,
-                              category: editForm.category,
-                              subcategory: editForm.subcategory,
-                              distillery: editForm.distillery,
-                              abv: editForm.abv,
-                              region: editForm.region,
-                              country: editForm.country,
-                              description_en: editForm.description_en, // Pass original for translation
-                              metadata: {
-                                tasting_note: editForm.tasting_note,
-                                description_ko: editForm.description_ko,
-                                nose_tags: editForm.nose_tags.split(',').filter(Boolean).map(t => t.trim()),
-                                palate_tags: editForm.palate_tags.split(',').filter(Boolean).map(t => t.trim()),
-                                finish_tags: editForm.finish_tags.split(',').filter(Boolean).map(t => t.trim())
-                              }
+                              spiritIds: [editingId],
+                              enrich: true,
+                              updates: {}
                             })
                           });
-                          if (!res.ok) throw new Error('Enrichment failed');
+
+                          if (!res.ok) {
+                            const errorData = await res.json();
+                            throw new Error(errorData.error || 'Enrichment failed');
+                          }
+
                           const data = await res.json();
 
-                          setEditForm({
-                            ...editForm,
-                            name_en: data.name_en ?? editForm.name_en,
-                            description_ko: data.description_ko ?? editForm.description_ko,
-                            description_en: data.description_en ?? editForm.description_en,
-                            nose_tags: (data.nose_tags || []).join(', '),
-                            palate_tags: (data.palate_tags || []).join(', '),
-                            finish_tags: (data.finish_tags || []).join(', '),
-                            pairing_guide_en: data.pairing_guide_en ?? editForm.pairing_guide_en,
-                            pairing_guide_ko: data.pairing_guide_ko ?? editForm.pairing_guide_ko,
-                            distillery: data.distillery ?? editForm.distillery,
-                            region: data.region ?? editForm.region,
-                            country: data.country ?? editForm.country,
-                            abv: data.abv ?? editForm.abv
-                          });
+                          if (data.enrichmentErrors && data.enrichmentErrors.length > 0) {
+                            throw new Error(data.enrichmentErrors[0].error);
+                          }
+
+                          // Reload spirit data to get enriched values
+                          const spiritRes = await fetch(`/api/admin/spirits/${editingId}`);
+                          if (spiritRes.ok) {
+                            const updatedSpirit = await spiritRes.json();
+                            setEditForm({
+                              ...editForm,
+                              name_en: updatedSpirit.name_en ?? editForm.name_en,
+                              description_ko: updatedSpirit.metadata?.description_ko ?? editForm.description_ko,
+                              description_en: updatedSpirit.metadata?.description_en ?? editForm.description_en,
+                              nose_tags: (updatedSpirit.nose_tags || []).join(', '),
+                              palate_tags: (updatedSpirit.palate_tags || []).join(', '),
+                              finish_tags: (updatedSpirit.finish_tags || []).join(', '),
+                              pairing_guide_en: updatedSpirit.metadata?.pairing_guide_en ?? editForm.pairing_guide_en,
+                              pairing_guide_ko: updatedSpirit.metadata?.pairing_guide_ko ?? editForm.pairing_guide_ko,
+                              distillery: updatedSpirit.distillery ?? editForm.distillery,
+                              region: updatedSpirit.region ?? editForm.region,
+                              country: updatedSpirit.country ?? editForm.country,
+                              abv: updatedSpirit.abv ?? editForm.abv
+                            });
+                          }
+
                           alert('✨ AI 데이터 분석 및 메타데이터 교정 완료!');
                         } catch (e: any) {
                           alert(`AI 분석 중 오류: ${e.message}`);
+                          console.error('Enrichment error:', e);
                         } finally {
                           setIsProcessing(false);
                         }
