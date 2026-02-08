@@ -24,6 +24,13 @@ function getLocale(request: NextRequest): string | undefined {
 
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
+  const host = request.headers.get('host');
+
+  // 0. Domain Redirect (pages.dev -> custom domain)
+  if (host === 'k-spirits-club-hub.pages.dev') {
+    const newUrl = new URL(request.nextUrl.pathname + request.nextUrl.search, 'https://kspiritsclub.com');
+    return NextResponse.redirect(newUrl, { status: 301 });
+  }
 
   // 1. Exclude public assets, API routes, and hidden files
   // Matcher in config already handles most of these, but we keep this as extra layer

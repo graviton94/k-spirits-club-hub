@@ -77,13 +77,17 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
 
                     const xmlText = await res.text();
                     const jsonObj = parser.parse(xmlText);
-                    const items = jsonObj?.rss?.channel?.item || [];
-                    const count = Array.isArray(items) ? items.length : (items ? 1 : 0);
+                    const rawItems = jsonObj?.rss?.channel?.item || [];
+                    const itemsArray = Array.isArray(rawItems) ? rawItems : (rawItems ? [rawItems] : []);
+
+                    // Manually slice to 20 items as Google News RSS often ignores the &num parameter
+                    const items = itemsArray.slice(0, 20);
+                    const count = items.length;
 
                     console.log(`[News Collection] ✅ ${type} "${query}": ${count} items`);
 
                     return {
-                        items: Array.isArray(items) ? items : (items ? [items] : []),
+                        items,
                         type,
                         query
                     };

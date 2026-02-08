@@ -85,6 +85,18 @@ export default function ProfileClient({ lang, dict }: ProfileClientProps) {
         }
     };
 
+    // Date formatting - MUST BE CALLED BEFORE ANY EARLY RETURN
+    const joinedAt = user?.metadata?.creationTime;
+    const formattedDate = useMemo(() => {
+        if (!joinedAt) return null;
+        const date = new Date(joinedAt);
+        if (isEn) {
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
+        } else {
+            return date.toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '.').replace(/ /g, '');
+        }
+    }, [joinedAt, isEn]);
+
     if (loading) return (
         <div className="flex flex-col items-center justify-center py-20 text-muted-foreground animate-pulse">
             <span className="text-4xl mb-4">🥃</span>
@@ -97,18 +109,6 @@ export default function ProfileClient({ lang, dict }: ProfileClientProps) {
     const roleBadge = user ? (role === 'ADMIN' ? (isEn ? "👑 Admin" : "👑 관리자") : (isEn ? "🥂 Club Member" : "🥂 클럽 멤버")) : (isEn ? "👀 Viewer" : "👀 구경꾼");
 
     const personaBadge = user ? { emoji: "🥃", title: isEn ? "Whisky Lover" : "위스키 애호가" } : null;
-
-    // Date formatting
-    const joinedAt = user?.metadata?.creationTime;
-    const formattedDate = useMemo(() => {
-        if (!joinedAt) return null;
-        const date = new Date(joinedAt);
-        if (isEn) {
-            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
-        } else {
-            return date.toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '.').replace(/ /g, '');
-        }
-    }, [joinedAt, isEn]);
 
     const handleSave = async () => {
         setIsSaving(true);
