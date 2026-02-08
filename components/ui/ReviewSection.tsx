@@ -7,6 +7,7 @@ import metadata from '@/lib/constants/spirits-metadata.json';
 import { useAuth } from '@/app/[lang]/context/auth-context';
 import SuccessToast from '@/components/ui/SuccessToast';
 import { motion, AnimatePresence } from 'framer-motion';
+import { getRatingColor } from '@/lib/utils/rating-colors';
 
 interface ExtendedReview extends Review {
   noseRating?: number;
@@ -362,10 +363,15 @@ function ReviewCard({ review, isOwner, onEdit, onDelete, onToast }: {
             <span className="text-xs font-black text-foreground">{review.userName}</span>
           </div>
 
-          {/* Rating Capsule */}
-          <div className="px-4 py-2 bg-amber-500/10 border border-amber-500/20 rounded-full text-xs font-black text-amber-600 dark:text-amber-400">
-            ★ {review.rating.toFixed(1)}
-          </div>
+          {/* Rating Capsule - Color Coded */}
+          {(() => {
+            const ratingColors = getRatingColor(review.rating);
+            return (
+              <div className={`px-4 py-2 ${ratingColors.bg} border ${ratingColors.border} rounded-full text-xs font-black ${ratingColors.text}`}>
+                ★ {review.rating.toFixed(1)}
+              </div>
+            );
+          })()}
 
           {/* Date Capsule */}
           <div className="px-4 py-2 bg-slate-500/10 border border-slate-500/20 rounded-full text-[10px] font-black text-muted-foreground">

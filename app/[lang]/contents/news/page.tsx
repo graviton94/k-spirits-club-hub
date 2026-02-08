@@ -34,10 +34,10 @@ export default function NewsContentPage() {
     // UI Dictionary
     const t = {
         title: isEn ? "Global Spirits News" : "글로벌 주류 뉴스",
-        desc: isEn ? "In-depth spirits industry reports analyzed by AI." : "AI가 엄선하고 분석한 주류 업계 심층 리포트",
-        searchPlaceholder: isEn ? "Search news titles or content..." : "뉴스 제목이나 내용을 검색해보세요...",
+        desc: isEn ? "Global spirits industry news and insights." : "글로벌 주류업계 주요 뉴스 및 인사이트",
+        searchPlaceholder: isEn ? "Search news titles or content." : "원하는 키워드를 검색해보세요.",
         searchBtn: isEn ? "Search" : "검색",
-        loading: isEn ? "Fetching latest news..." : "소식을 불러오는 중...",
+        loading: isEn ? "Fetching latest news" : "소식을 불러오는 중",
         noResult: isEn ? "No search results found." : "검색 결과가 없습니다.",
         noNews: isEn ? "No news collected yet." : "수집된 뉴스가 없습니다.",
         deleteBtn: isEn ? "🗑️ Delete" : "🗑️ 삭제",

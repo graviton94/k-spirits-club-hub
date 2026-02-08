@@ -5,6 +5,7 @@ import { Star } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { getOptimizedImageUrl } from '@/lib/utils/image-optimization';
+import { getRatingColor } from '@/lib/utils/rating-colors';
 
 interface LiveReview {
   id: string;
@@ -147,10 +148,15 @@ export function LiveReviews({ initialReviews = [] }: LiveReviewsProps) {
                     <span className="truncate max-w-[80px]">{review.userName}</span>
                   </div>
 
-                  {/* Rating Capsule */}
-                  <div className="px-3 py-1 bg-amber-500/10 border border-amber-500/20 rounded-full text-[10px] font-black text-amber-600 dark:text-amber-400">
-                    ★ {review.rating.toFixed(1)}
-                  </div>
+                  {/* Rating Capsule - Color Coded */}
+                  {(() => {
+                    const ratingColors = getRatingColor(review.rating);
+                    return (
+                      <div className={`px-3 py-1 ${ratingColors.bg} border ${ratingColors.border} rounded-full text-[10px] font-black ${ratingColors.text}`}>
+                        ★ {review.rating.toFixed(1)}
+                      </div>
+                    );
+                  })()}
 
                   {/* Date Capsule */}
                   <div className="px-3 py-1 bg-slate-500/10 border border-slate-500/20 rounded-full text-[10px] font-black text-muted-foreground">
