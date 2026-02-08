@@ -3,6 +3,23 @@ import { db } from '@/lib/db';
 
 export const runtime = 'edge';
 
+// GET /api/admin/spirits/[id]
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+    try {
+        const { id } = await params;
+        const spirit = await db.getSpirit(id);
+
+        if (!spirit) {
+            return NextResponse.json({ error: 'Spirit not found' }, { status: 404 });
+        }
+
+        return NextResponse.json(spirit);
+    } catch (error) {
+        console.error(`API Get Error for ${(await params).id}:`, error);
+        return NextResponse.json({ error: 'Failed to get spirit' }, { status: 500 });
+    }
+}
+
 // PATCH /api/admin/spirits/[id]
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
     try {

@@ -111,7 +111,15 @@ export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<En
         const result = await model.generateContent(prompt);
         const text = result.response.text();
         console.log('[Gemini Identity] Response:', text);
-        return JSON.parse(text.replace(/```json|```/g, '').trim());
+
+        const cleanJson = text.replace(/```json|```/g, '').trim();
+        const parsed = JSON.parse(cleanJson);
+
+        // Handle if Gemini returns an array instead of a single object
+        const data = Array.isArray(parsed) ? parsed[0] : parsed;
+
+        console.log('[Gemini Identity] Parsed data:', data);
+        return data;
     } catch (e: any) {
         console.error('[Gemini Identity] ❌ Error:', e);
         throw new Error(`Identity audit failed: ${e.message}`);
@@ -129,15 +137,23 @@ export async function generateSensoryData(spirit: SpiritEnrichmentInput): Promis
 
     const prompt = `
     You are a world-class Sommelier and Sensory Scientist.
-    Generate a deep sensory analysis based on the audited product info.
+    Generate a deep sensory analysis based on the VERIFIED product information below.
     
-    ### PRODUCT INFO:
-    - Name: ${spirit.name} (${spirit.name_en})
-    - Category: ${spirit.category}
+    ### VERIFIED PRODUCT INFO (from Audit):
+    - Name: ${spirit.name} ${spirit.name_en ? `(${spirit.name_en})` : ''}
+    - Category: ${spirit.category} ${spirit.subcategory ? `/ ${spirit.subcategory}` : ''}
+    - Distillery: ${spirit.distillery || 'Unknown'}
+    - Country: ${spirit.country || 'Unknown'}
+    - Region: ${spirit.region || 'N/A'}
     - ABV: ${spirit.abv}%
-
+    
+    **CRITICAL**: Base your sensory analysis STRICTLY on the country and category above. 
+    Do NOT make assumptions about origin or style that contradict the verified information.
+    
     ### MANDATORY REQUIREMENTS:
-    1. **Description**: Write a evocative, sommelier-style description in both KO and EN (2-3 sentences each).
+    1. **Description**: Write an evocative, sommelier-style description in both KO and EN (2-3 sentences each).
+       - Reflect the VERIFIED country and distillery heritage in your description.
+       - Example: If country is "India", describe Indian whisky characteristics, NOT Irish or Scottish.
     2. **Tags**: Generate MINIMUM 3, MAXIMUM 6 specific flavor tags for each category:
        - nose_tags: Aromatic components
        - palate_tags: Taste and mouthfeel
@@ -160,7 +176,13 @@ export async function generateSensoryData(spirit: SpiritEnrichmentInput): Promis
         const result = await model.generateContent(prompt);
         const text = result.response.text();
         console.log('[Gemini Sensory] Response:', text);
-        return JSON.parse(text.replace(/```json|```/g, '').trim());
+
+        const cleanJson = text.replace(/```json|```/g, '').trim();
+        const parsed = JSON.parse(cleanJson);
+        const data = Array.isArray(parsed) ? parsed[0] : parsed;
+
+        console.log('[Gemini Sensory] Parsed data:', data);
+        return data;
     } catch (e: any) {
         console.error('[Gemini Sensory] ❌ Error:', e);
         throw new Error(`Sensory analysis failed: ${e.message}`);
@@ -178,37 +200,72 @@ export async function generatePairingGuide(spirit: SpiritEnrichmentInput): Promi
 
     const prompt = `
     You are an Avant-Garde Gastronomy Consultant.
-    Generate two logical pairings based on sensory data. Do not use clichés from the Ban List.
+    Create TWO distinct food pairings based on verified product information and sensory data.
+    
+    ### VERIFIED PRODUCT INFO:
+    - Name: ${spirit.name} ${spirit.name_en ? `(${spirit.name_en})` : ''}
+    - Category: ${spirit.category} ${spirit.subcategory ? `/ ${spirit.subcategory}` : ''}
+    - Distillery: ${spirit.distillery || 'Unknown'}
+    - Country of Origin: ${spirit.country || 'Unknown'}
+    - Region: ${spirit.region || 'N/A'}
+    - ABV: ${spirit.abv}%
+    
+    ### SENSORY PROFILE:
+    - Description: ${spirit.description_en || spirit.description_ko || 'N/A'}
+    - Aroma: ${(spirit.nose_tags || []).join(', ')}
+    - Palate: ${(spirit.palate_tags || []).join(', ')}
+    - Finish: ${(spirit.finish_tags || []).join(', ')}
 
-    ### BAN LIST:
+    ### BAN LIST (Never suggest these):
     ${CLICHE_BAN_LIST}
 
-    ### INPUT DATA:
-    - Name: ${spirit.name}
-    - Category: ${spirit.category}
-    - Sensory: ${spirit.description_en}
-    - Tags: ${[...(spirit.nose_tags || []), ...(spirit.palate_tags || []), ...(spirit.finish_tags || [])].join(', ')}
-
-    ### PAIRING STRATEGY:
-    1. **The Flavor Bridge**: Shared molecular compounds.
-    2. **The Textural Contrast**: Opposing but harmonious elements.
-    *Cross-cultural suggestions only.*
-
+    ### PAIRING STRATEGY (MANDATORY):
+    
+    **Pairing #1 - Terroir Choice (REQUIRED)**:
+    - MUST be a traditional dish from the spirit's country of origin (${spirit.country})
+    - Explain how the spirit's regional characteristics harmonize with local cuisine
+    - Use specific dish names, not generic categories
+    - Example: If country is "India", suggest Indian cuisine like "Hyderabadi Biryani" or "Goan Fish Curry"
+    
+    **Pairing #2 - Global Adventure**:
+    - A creative pairing from a DIFFERENT global cuisine (NOT ${spirit.country})
+    - Focus on molecular/structural harmony (Flavor Bridge, Textural Contrast)
+    - Avoid clichés from the ban list
+    
     ### OUTPUT JSON SCHEMA:
-    {
-      "pairing_guide_ko": "string (4-5 cohesive sentences)",
-      "pairing_guide_en": "string (4-5 cohesive sentences)"
-    }
+    Return an array with exactly 2 pairing objects:
+    [
+      {
+        "pairing_guide_ko": "상세한 한국어 페어링 가이드 (3-4 문장)",
+        "pairing_guide_en": "Detailed English pairing guide (3-4 sentences)"
+      },
+      {
+        "pairing_guide_ko": "상세한 한국어 페어링 가이드 (3-4 문장)",
+        "pairing_guide_en": "Detailed English pairing guide (3-4 sentences)"
+      }
+    ]
     `;
 
     try {
         const result = await model.generateContent(prompt);
         const text = result.response.text();
         console.log('[Gemini Pairing] Response:', text);
-        return JSON.parse(text.replace(/```json|```/g, '').trim());
+
+        const cleanJson = text.replace(/```json|```/g, '').trim();
+        const parsed = JSON.parse(cleanJson);
+
+        // Pairing returns an array of pairing guides, extract the fields we need
+        if (Array.isArray(parsed) && parsed.length > 0) {
+            return {
+                pairing_guide_ko: parsed.map(p => p.pairing_guide_ko).join('\n\n'),
+                pairing_guide_en: parsed.map(p => p.pairing_guide_en).join('\n\n')
+            };
+        }
+
+        return parsed;
     } catch (e: any) {
         console.error('[Gemini Pairing] ❌ Error:', e);
-        throw new Error(`Pairing generation failed: ${e.message}`);
+        throw new Error(`Pairing guide failed: ${e.message}`);
     }
 }
 
@@ -217,27 +274,52 @@ export async function generatePairingGuide(spirit: SpiritEnrichmentInput): Promi
  * Runs all 3 steps sequentially for bulk operations or full enrichment.
  */
 export async function enrichSpiritWithAI(spirit: SpiritEnrichmentInput) {
-    // Stage 1: Audit
-    const auditData = await auditSpiritInfo(spirit);
+    console.log('[Enrichment] 🚀 Starting enrichment for:', spirit.name);
 
-    // Stage 2: Sensory
-    const sensoryData = await generateSensoryData({
-        ...spirit,
-        ...auditData
-    });
+    try {
+        // Stage 1: Audit
+        console.log('[Enrichment] 📋 Stage 1: Audit & Identity...');
+        const auditData = await auditSpiritInfo(spirit);
+        console.log('[Enrichment] ✅ Audit complete:', {
+            name_en: auditData.name_en,
+            distillery: auditData.distillery,
+            country: auditData.country
+        });
 
-    // Stage 3: Pairing
-    const pairingData = await generatePairingGuide({
-        ...spirit,
-        ...auditData,
-        ...sensoryData
-    });
+        // Stage 2: Sensory
+        console.log('[Enrichment] 👃 Stage 2: Sensory Analysis...');
+        const sensoryData = await generateSensoryData({
+            ...spirit,
+            ...auditData
+        });
+        console.log('[Enrichment] ✅ Sensory complete:', {
+            nose_tags: sensoryData.nose_tags?.length || 0,
+            palate_tags: sensoryData.palate_tags?.length || 0,
+            finish_tags: sensoryData.finish_tags?.length || 0
+        });
 
-    return {
-        ...auditData,
-        ...sensoryData,
-        ...pairingData
-    };
+        // Stage 3: Pairing
+        console.log('[Enrichment] 🍽️ Stage 3: Pairing Guide...');
+        const pairingData = await generatePairingGuide({
+            ...spirit,
+            ...auditData,
+            ...sensoryData
+        });
+        console.log('[Enrichment] ✅ Pairing complete');
+
+        const finalData = {
+            ...auditData,
+            ...sensoryData,
+            ...pairingData
+        };
+
+        console.log('[Enrichment] 🎉 All stages complete for:', spirit.name);
+        return finalData;
+    } catch (e: any) {
+        console.error('[Enrichment] ❌ CRITICAL ERROR for', spirit.name, ':', e);
+        console.error('[Enrichment] ❌ Error stack:', e.stack);
+        throw e;
+    }
 }
 
 /**
