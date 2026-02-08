@@ -276,13 +276,23 @@ export async function generateSensoryProfile(spirit: SpiritEnrichmentInput): Pro
     - Whisky Advocate, Wine Enthusiast, Vivino, Distiller, Master of Malt
     - Reddit, user forums, rating sites
     
-    **STEP 2: EXTRACT FLAVOR TAGS**
-    From user reviews and professional notes, identify the TOP 3-5 most commonly mentioned flavors for:
-    - **Nose (향)**: Aroma descriptors (e.g., "Vanilla", "Caramel", "Oak", "Citrus", "Honey")
-    - **Palate (맛)**: Taste descriptors (e.g., "Chocolate", "Spice", "Fruit", "Smoke")
-    - **Finish (여운)**: Aftertaste descriptors (e.g., "Long", "Sweet", "Peppery", "Smooth")
+    **STEP 2: EXTRACT RICH FLAVOR TAGS**
+    From user reviews and professional notes, identify the TOP 5-7 most commonly mentioned flavors for EACH category:
     
-    **IMPORTANT**: Tags MUST be in English, based on actual user reviews, NOT made up!
+    - **Nose (향)**: 5-7 specific aroma descriptors
+      Examples: "Vanilla Pod", "Dark Caramel", "Toasted Oak", "Lemon Zest", "Wildflower Honey", "Green Apple", "Cinnamon"
+    
+    - **Palate (맛)**: 5-7 specific taste descriptors  
+      Examples: "Dark Chocolate", "Black Pepper", "Dried Apricot", "Toffee", "Charred Wood", "Sea Salt", "Almond"
+    
+    - **Finish (여운)**: 5-7 specific aftertaste descriptors
+      Examples: "Long", "Warming", "Sweet Spice", "Dry Oak", "Peppery Heat", "Smooth Vanilla", "Lingering Smoke"
+    
+    **CRITICAL RULES FOR TAGS**:
+    - Be SPECIFIC: "Vanilla Pod" not just "Vanilla", "Dark Chocolate" not just "Chocolate"
+    - Use 5-7 tags per category (not just 3)
+    - Tags MUST be in English, based on actual user reviews
+    - Include variety: primary flavors + secondary nuances + texture/mouthfeel descriptors
     
     **STEP 3: WRITE RICH, DETAILED DESCRIPTIONS**
     Based on the reviews you found, create comprehensive descriptions:
