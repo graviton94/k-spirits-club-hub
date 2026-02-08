@@ -130,9 +130,25 @@ export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<En
     From official sources, find and verify:
     - ✅ **Official English Name**: Exact product name as written on the label
     - ✅ **ABV (Alcohol %)**: Exact percentage from the label/website
-    - ✅ **Producer/Distillery**: Full legal name of the producer
-    - ✅ **Region**: Specific production region (e.g., "Speyside", "Napa Valley", "Jeju Island")
+    - ✅ **Producer/Distillery**: Clean brand name (see rules below)
+    - ✅ **Region**: Specific production region (see rules below)
     - ✅ **Country**: Country of production
+    
+    **CRITICAL RULES FOR DISTILLERY NAME**:
+    - Use the SHORT, CLEAN brand name - NOT the full legal company name
+    - Remove legal entities: "Ltd", "Inc", "GmbH", "KG", "G. SCHNEIDER & SOHN", etc.
+    - Use Title Case, NOT ALL CAPS
+    - Examples:
+      ✅ Good: "Schneider Weisse" 
+      ❌ Bad: "BRAUEREI SCHNEIDER WEISSE, G. SCHNEIDER & SOHN"
+      ✅ Good: "Glenfiddich"
+      ❌ Bad: "WILLIAM GRANT & SONS LTD"
+    
+    **CRITICAL RULES FOR REGION**:
+    - If you found the distillery/brewery, you MUST also find its location
+    - Region = City or production area (e.g., "Kelheim", "Speyside", "Jeju Island")
+    - DO NOT return "Unknown" if you know the producer - that's impossible!
+    - Search: "[Producer name] + location" to find the region
     
     **STEP 3: DETERMINE SUBCATEGORY**
     
@@ -231,11 +247,54 @@ export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<En
             }
         }
 
-        // 3. Ensure category is locked
+        // 3. Clean up distillery name if it's too formal or all caps
+        if (data.distillery) {
+            // Convert ALL CAPS to Title Case
+            if (data.distillery === data.distillery.toUpperCase() && data.distillery.length > 3) {
+                console.warn('[Gemini Identity] ⚠️ Distillery in ALL CAPS, converting to Title Case');
+                data.distillery = data.distillery
+                    .toLowerCase()
+                    .split(' ')
+                    .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ');
+            }
+
+            // Remove common legal suffixes
+            const legalSuffixes = [', Ltd', ', Inc', ', GmbH', ', KG', ', S.A.', ', Co.', 'Ltd.', 'Inc.'];
+            legalSuffixes.forEach((suffix: string) => {
+                if (data.distillery.includes(suffix)) {
+                    data.distillery = data.distillery.replace(suffix, '').trim();
+                }
+            });
+        }
+
+        // 4. Validate region is not Unknown when distillery is known
+        if (data.distillery && (data.region === 'Unknown' || !data.region)) {
+            console.warn('[Gemini Identity] ⚠️ Region is Unknown but distillery is known. Searching for brewery location...');
+            try {
+                const regionModel = genAI.getGenerativeModel({
+                    model: MODEL_ID,
+                    generationConfig: { responseMimeType: "text/plain", temperature: 0.1 }
+                });
+                const regionPrompt = `What city or region is "${data.distillery}" located in? Return ONLY the city/region name, nothing else.`;
+                const regionResult = await regionModel.generateContent(regionPrompt);
+                const foundRegion = regionResult.response.text().trim().replace(/["""]/g, '');
+
+                if (foundRegion && foundRegion !== 'Unknown') {
+                    data.region = foundRegion;
+                    console.log('[Gemini Identity] ✅ Found region:', foundRegion);
+                }
+            } catch (err) {
+                console.error('[Gemini Identity] ❌ Region search failed');
+            }
+        }
+
+        // 5. Ensure category is locked
         data.category = spirit.category;
 
         console.log('[Gemini Identity] subcategory:', data.subcategory, '| region:', data.region, '| country:', data.country);
         console.log('[Gemini Identity] name_en:', data.name_en);
+        console.log('[Gemini Identity] distillery:', data.distillery);
 
         return data;
     } catch (e: any) {
