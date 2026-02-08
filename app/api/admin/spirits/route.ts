@@ -4,13 +4,12 @@ import { SpiritStatus } from '@/lib/db/schema';
 
 export const runtime = 'edge';
 
-// GET /api/admin/spirits?status=...
+// GET /api/admin/spirits?category=...&distillery=...&isPublished=...
 export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
-    const status = searchParams.get('status');
     const category = searchParams.get('category');
-    const subcategory = searchParams.get('subcategory');
-    const noImage = searchParams.get('noImage') === 'true';
+    const distillery = searchParams.get('distillery');
+    const isPublished = searchParams.get('isPublished');
 
     // Pagination Params
     const page = parseInt(searchParams.get('page') || '1');
@@ -18,21 +17,17 @@ export async function GET(req: NextRequest) {
 
     try {
         const filter: any = {};
-        // CRITICAL FIX: Only apply status filter if explicitly provided and not 'ALL'
-        // Admin dashboard needs to see ALL spirits for management purposes (review, edit, publish).
-        // Unlike public queries (which filter by isPublished=true), admin queries should not
-        // filter by isPublished so that unpublished content is visible for moderation.
-        if (status && status !== 'ALL') {
-            filter.status = status as SpiritStatus;
-        }
-        // Note: Do NOT add isPublished filter for admin view - admin should see everything
 
+        // Category filter
         if (category && category !== 'ALL') filter.category = category;
-        if (subcategory && subcategory !== 'ALL') filter.subcategory = subcategory;
-        if (noImage) filter.noImage = true;
 
-        const search = searchParams.get('search');
-        if (search) filter.searchTerm = search;
+        // Distillery filter
+        if (distillery && distillery !== 'ALL') filter.distillery = distillery;
+
+        // isPublished filter - admin can filter by published status
+        if (isPublished !== null && isPublished !== undefined && isPublished !== 'ALL') {
+            filter.isPublished = isPublished === 'true';
+        }
 
         console.log('[API /api/admin/spirits] Fetching with filter:', JSON.stringify(filter));
         const spirits = await db.getSpirits(filter, { page, pageSize });

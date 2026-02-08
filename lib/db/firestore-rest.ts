@@ -359,6 +359,16 @@ export const spiritsDb = {
             });
         }
 
+        if (filter.distillery && (filter.distillery as string) !== 'ALL') {
+            filters.push({
+                fieldFilter: {
+                    field: { fieldPath: 'distillery' },
+                    op: 'EQUAL',
+                    value: { stringValue: filter.distillery }
+                }
+            });
+        }
+
         const structuredQuery: any = {
             from: [{ collectionId: 'spirits' }], // collectionId is just the last p
             // Wait, for deep collections, structuredQuery 'from' might need full path if it's a subcollection query?
