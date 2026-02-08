@@ -20,17 +20,23 @@ export async function POST(request: Request) {
 
         console.log('[Collect API] 🚀 수집 프로세스 시작 (Edge Runtime)');
 
-        // 2. RSS 데이터 가져오기 (Gemini 포함된 수집 함수)
-        const newsItems = await fetchNewsForCollection();
+        // 2. 기존 뉴스 링크 목록 가져오기 (중복 체크용 - 최근 100개)
+        console.log('[Collect API] 📋 Fetching existing news links...');
+        const existingNews = await newsDb.getLatest(100);
+        const existingLinks = new Set(existingNews.map((news: any) => news.link));
+        console.log('[Collect API] 📋 Found', existingLinks.size, 'existing news items');
 
-        console.log('[Collect API] 📊 수집 완료:', newsItems.length, '건');
+        // 3. RSS 데이터 가져오기 (중복 제외하고 Gemini 처리)
+        const newsItems = await fetchNewsForCollection(existingLinks);
+
+        console.log('[Collect API] 📊 수집 완료:', newsItems.length, '건 (새로운 뉴스만)');
 
         if (!newsItems || newsItems.length === 0) {
-            console.warn('[Collect API] ⚠️ 수집된 뉴스 없음');
+            console.warn('[Collect API] ⚠️ 수집된 새로운 뉴스 없음');
             return NextResponse.json({ success: true, count: 0, message: '수집된 새로운 뉴스 없음' });
         }
 
-        // 3. Firestore REST API를 이용해 중복 확인 및 저장
+        // 4. Firestore REST API를 이용해 저장
         let savedCount = 0;
         for (const item of newsItems) {
             const docId = generateSafeId(item.link);

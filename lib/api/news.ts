@@ -26,39 +26,72 @@ export interface CollectedNewsItem {
     tags: { en: string[]; ko: string[] };
 }
 
-export async function fetchNewsForCollection(): Promise<CollectedNewsItem[]> {
+export async function fetchNewsForCollection(existingLinks?: Set<string>): Promise<CollectedNewsItem[]> {
     console.log('[News Collection] 🚀 Starting news collection process...');
 
     try {
-        // 1. 구글 뉴스 RSS Fetch
+        // 1. 구글 뉴스 RSS Fetch (한국 + 글로벌)
         const keywords = '(Whisky OR Liquor OR Spirits OR New Release OR Limited Edition OR 전통주 OR 위스키 OR 증류식 소주 OR 전통주연구소 OR 가양주연구소 OR 전통주갤러리 OR 증류소 OR 우리술)';
-        const siteFilter = TRUSTED_SOURCES.map(site => `site:${site}`).join(' OR ');
-        const finalQuery = `${keywords} AND (${siteFilter})`;
-        const rssUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(finalQuery)}&hl=ko-KR&gl=KR&ceid=KR:ko`;
 
-        console.log('[News Collection] 📡 Fetching RSS from Google News...');
-        const res = await fetch(rssUrl, { cache: 'no-store' });
-        if (!res.ok) {
-            console.error('[News Collection] ❌ RSS fetch failed:', res.status, res.statusText);
-            throw new Error(`RSS Fetch Failed: ${res.status}`);
+        // Site filter temporarily disabled to increase news coverage
+        // Re-enable if needed by uncommenting the lines below
+        // const siteFilter = TRUSTED_SOURCES.map(site => `site:${site}`).join(' OR ');
+        // const finalQuery = `${keywords} AND (${siteFilter})`;
+
+        const finalQuery = keywords; // Search all sites, filter by NEGATIVE_KEYWORDS
+
+        // Fetch from both Korean and Global Google News
+        const koreanRssUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(finalQuery)}&hl=ko-KR&gl=KR&ceid=KR:ko`;
+        const globalRssUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(finalQuery)}&hl=en&gl=US&ceid=US:en`;
+
+        console.log('[News Collection] 📡 Fetching RSS from Google News (Korean + Global)...');
+
+        // Fetch both RSS feeds in parallel
+        const [koreanRes, globalRes] = await Promise.all([
+            fetch(koreanRssUrl, { cache: 'no-store' }),
+            fetch(globalRssUrl, { cache: 'no-store' })
+        ]);
+
+        if (!koreanRes.ok) {
+            console.error('[News Collection] ❌ Korean RSS fetch failed:', koreanRes.status);
+            throw new Error(`Korean RSS Fetch Failed: ${koreanRes.status}`);
         }
 
-        const xmlText = await res.text();
-        console.log('[News Collection] 📄 XML fetched, length:', xmlText.length);
-        console.log('[News Collection] 🔍 XML preview (first 500 chars):', xmlText.substring(0, 500));
-
-        const jsonObj = parser.parse(xmlText);
-        console.log('[News Collection] 🔍 Parsed JSON structure:', JSON.stringify(jsonObj, null, 2).substring(0, 1000));
-
-        const items = jsonObj?.rss?.channel?.item || [];
-        console.log('[News Collection] 📦 Raw items from RSS:', Array.isArray(items) ? items.length : 1);
-
-        if (!items || (Array.isArray(items) && items.length === 0)) {
-            console.warn('[News Collection] ⚠️ No items found in RSS. Checking alternative paths...');
-            console.log('[News Collection] 🔍 jsonObj keys:', Object.keys(jsonObj || {}));
-            console.log('[News Collection] 🔍 rss keys:', Object.keys(jsonObj?.rss || {}));
-            console.log('[News Collection] 🔍 channel keys:', Object.keys(jsonObj?.rss?.channel || {}));
+        if (!globalRes.ok) {
+            console.error('[News Collection] ❌ Global RSS fetch failed:', globalRes.status);
+            throw new Error(`Global RSS Fetch Failed: ${globalRes.status}`);
         }
+
+        const [koreanXml, globalXml] = await Promise.all([
+            koreanRes.text(),
+            globalRes.text()
+        ]);
+
+        console.log('[News Collection] 📄 Korean XML fetched, length:', koreanXml.length);
+        console.log('[News Collection] � Global XML fetched, length:', globalXml.length);
+
+        // Parse both XMLs
+        const koreanJson = parser.parse(koreanXml);
+        const globalJson = parser.parse(globalXml);
+
+        const koreanItems = koreanJson?.rss?.channel?.item || [];
+        const globalItems = globalJson?.rss?.channel?.item || [];
+
+        const koreanCount = Array.isArray(koreanItems) ? koreanItems.length : (koreanItems ? 1 : 0);
+        const globalCount = Array.isArray(globalItems) ? globalItems.length : (globalItems ? 1 : 0);
+
+        console.log('[News Collection] 📦 Korean RSS items:', koreanCount);
+        console.log('[News Collection] � Global RSS items:', globalCount);
+
+        // Merge both item arrays
+        const allRssItems = [
+            ...(Array.isArray(koreanItems) ? koreanItems : (koreanItems ? [koreanItems] : [])),
+            ...(Array.isArray(globalItems) ? globalItems : (globalItems ? [globalItems] : []))
+        ];
+
+        console.log('[News Collection] � Total merged items:', allRssItems.length);
+
+        const items = allRssItems;
 
         // 2. 1차 필터링
         const NEGATIVE_KEYWORDS = [
@@ -67,18 +100,42 @@ export async function fetchNewsForCollection(): Promise<CollectedNewsItem[]> {
             'DUI', 'accident', 'crime', 'stock price', 'obituary', 'fortune', 'quarterly results'
         ];
 
-        const rawItems = (Array.isArray(items) ? items : [items]).map((item: any) => ({
+        const allItems = (Array.isArray(items) ? items : [items]).map((item: any) => ({
             title: item.title,
             link: item.link,
             snippet: item.description?.replace(/<[^>]*>?/gm, '').substring(0, 200) + '...',
             source: typeof item.source === 'object' ? (item.source?.['#text'] || 'Curated News') : (item.source || 'Curated News'),
             pubDate: item.pubDate,
-        })).filter(item => {
-            const fullText = (item.title + item.snippet).toLowerCase();
-            return !NEGATIVE_KEYWORDS.some(kw => fullText.includes(kw));
-        }).slice(0, 5);
+        }));
 
-        console.log('[News Collection] ✅ After filtering:', rawItems.length, 'items');
+        console.log('[News Collection] 🔢 Total items before filtering:', allItems.length);
+
+        const filteredItems = allItems.filter(item => {
+            const fullText = (item.title + item.snippet).toLowerCase();
+            const hasNegativeKeyword = NEGATIVE_KEYWORDS.some(kw => fullText.includes(kw.toLowerCase()));
+            if (hasNegativeKeyword) {
+                console.log('[News Collection] 🚫 Filtered out:', item.title);
+            }
+            return !hasNegativeKeyword;
+        });
+
+        console.log('[News Collection] ✅ After NEGATIVE_KEYWORDS filter:', filteredItems.length, 'items');
+
+        // Filter out duplicates (already in database)
+        const newItems = existingLinks
+            ? filteredItems.filter(item => {
+                const isDuplicate = existingLinks.has(item.link);
+                if (isDuplicate) {
+                    console.log('[News Collection] 🔄 Duplicate (skipping Gemini):', item.title);
+                }
+                return !isDuplicate;
+            })
+            : filteredItems;
+
+        console.log('[News Collection] 📝 New items to process:', newItems.length, 'items');
+
+        // Use all new items instead of limiting
+        const rawItems = newItems;
 
         if (rawItems.length === 0) {
             console.warn('[News Collection] ⚠️ No items after filtering');

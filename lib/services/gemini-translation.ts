@@ -196,10 +196,11 @@ export async function generateSensoryData(spirit: SpiritEnrichmentInput): Promis
 export async function generatePairingGuide(spirit: SpiritEnrichmentInput): Promise<EnrichmentPairingResult> {
     if (!API_KEY) throw new Error("GEMINI_API_KEY is not set");
     const genAI = new GoogleGenerativeAI(API_KEY);
-    const model = genAI.getGenerativeModel({ model: MODEL_ID, generationConfig: { responseMimeType: "application/json", temperature: 0.85 } });
+    // Increase temperature for more diversity (0.85 → 1.2)
+    const model = genAI.getGenerativeModel({ model: MODEL_ID, generationConfig: { responseMimeType: "application/json", temperature: 1.2 } });
 
     const prompt = `
-    You are an Avant-Garde Gastronomy Consultant.
+    You are an Avant-Garde Gastronomy Consultant specializing in UNCOMMON and CREATIVE pairings.
     Create TWO distinct food pairings based on verified product information and sensory data.
     
     ### VERIFIED PRODUCT INFO:
@@ -210,38 +211,83 @@ export async function generatePairingGuide(spirit: SpiritEnrichmentInput): Promi
     - Region: ${spirit.region || 'N/A'}
     - ABV: ${spirit.abv}%
     
-    ### SENSORY PROFILE:
-    - Description: ${spirit.description_en || spirit.description_ko || 'N/A'}
-    - Aroma: ${(spirit.nose_tags || []).join(', ')}
-    - Palate: ${(spirit.palate_tags || []).join(', ')}
-    - Finish: ${(spirit.finish_tags || []).join(', ')}
+    ### SENSORY PROFILE (USE THESE AS PAIRING ANCHORS):
+    - **Aroma Notes**: ${(spirit.nose_tags || []).join(', ')}
+    - **Palate Notes**: ${(spirit.palate_tags || []).join(', ')}
+    - **Finish Notes**: ${(spirit.finish_tags || []).join(', ')}
+    - **Description**: ${spirit.description_en || spirit.description_ko || 'N/A'}
+    
+    **CRITICAL**: Each pairing MUST directly reference and build upon AT LEAST 2-3 specific sensory tags above.
+    - Example: If "Green Apple" + "Toasted Almond" tags exist → suggest a dish with apple and almonds
+    - Example: If "Smoky Bacon" + "Maple Syrup" → suggest a dish that mirrors these flavors
+    - Example: If "Oceanic Brine" + "Citrus Zest" → suggest seafood with citrus marinade
 
-    ### BAN LIST (Never suggest these):
+    ### BAN LIST (NEVER suggest these overused pairings):
     ${CLICHE_BAN_LIST}
-
+    
+    **ADDITIONAL BANNED PAIRINGS** (too common, avoid at all costs):
+    - Ceviche, Peruvian/Mexican Ceviche
+    - Moroccan Tagine, any tagine dishes
+    - Haggis, Scottish Haggis
+    - Haddock, Smoked Haddock
+    - Duck Breast, Roasted Duck
+    - Lamb Chops, Grilled Lamb
+    - Pork Belly, any belly dishes
+    - Oysters, raw oysters
+    - Truffle anything, foie gras
+    - Chocolate desserts, dark chocolate
+    - Swedish Meatballs, any meatball dishes
+    - Cheese platters, charcuterie boards
+    - Sushi, sashimi
+    - BBQ ribs, pulled pork
+    - Beef Wellington, beef tartare
+    - 닭갈비, 삼겹살, 불고기, 갈비찜 (Korean clichés)
+    
     ### PAIRING STRATEGY (MANDATORY):
+    
+    **CRITICAL DIVERSITY RULES**:
+    1. **TAG-DRIVEN PAIRING**: Each dish MUST echo 2-3 specific sensory tags from the profile above
+       - If tags include "Honeyed Malt" + "Green Apple" → find a dish with honey and apple
+       - If tags include "Spicy Ginger" + "Tropical Fruit" → suggest a dish with ginger and mango/pineapple
+    2. **BE UNCONVENTIONAL**: Avoid obvious tourist foods or national stereotypes
+    3. **REGIONAL SPECIFICITY**: Instead of broad categories, pick hyper-local specialties
+       - ❌ "Indian curry", "Korean BBQ", "Japanese ramen"
+       - ✅ "Konkani Sol Kadhi", "Andong Jjimdak", "Okinawan Rafute"
+    4. **ROTATE CUISINES**: Do not default to the same 5 cuisines (Peru, Morocco, Japan, Korea, Scotland)
+    5. **EXPLORE LESSER-KNOWN DISHES**: Think beyond restaurant menus
     
     **Pairing #1 - Terroir Choice (REQUIRED)**:
     - MUST be a traditional dish from the spirit's country of origin (${spirit.country})
-    - Explain how the spirit's regional characteristics harmonize with local cuisine
-    - Use specific dish names, not generic categories
-    - Example: If country is "India", suggest Indian cuisine like "Hyderabadi Biryani" or "Goan Fish Curry"
+    - **DO NOT** use the most famous dish from that country
+    - Choose a REGIONAL SPECIALTY or lesser-known traditional preparation
+    - **INGREDIENT MATCHING**: The dish MUST contain ingredients that mirror the sensory tags
+      - Example: "Honeyed Malt" tag → dish with honey or malt-based ingredients
+      - Example: "Citrus Zest" tag → dish with lemon, yuzu, or lime
+    - For Scotland: avoid haggis, haddock → try Cullen Skink, Stovies, Clootie Dumpling
+    - For Korea: avoid 삼겹살, 갈비 → try 추어탕, 간장게장, 보쌈김치
+    - For Japan: avoid sushi, ramen → try Natto, Hoba Miso, Kusaya
+    - Explain which specific sensory tags the dish complements
     
     **Pairing #2 - Global Adventure**:
     - A creative pairing from a DIFFERENT global cuisine (NOT ${spirit.country})
-    - Focus on molecular/structural harmony (Flavor Bridge, Textural Contrast)
-    - Avoid clichés from the ban list
+    - **AVOID** the usual suspects (Peru, Morocco, Scotland, France, Japan)
+    - **EXPLORE**: Vietnamese, Filipino, Ethiopian, Georgian, Turkish, Nordic, Eastern European cuisines
+    - **SENSORY BRIDGE**: Explain which 2-3 sensory tags from the profile are mirrored in the dish
+      - Example: "Creamy Texture" + "Caramel Sweetness" → Georgian Satsivi (walnut cream sauce)
+      - Example: "Smoky" + "Earthy" → Filipino Pinapaitan (bitter goat soup)
+    - Focus on molecular harmony (Flavor Bridge) or Textural Contrast
+    - Explain the scientific/structural reasoning based on specific tags
     
     ### OUTPUT JSON SCHEMA:
     Return an array with exactly 2 pairing objects:
     [
       {
-        "pairing_guide_ko": "상세한 한국어 페어링 가이드 (3-4 문장)",
-        "pairing_guide_en": "Detailed English pairing guide (3-4 sentences)"
+        "pairing_guide_ko": "상세한 한국어 페어링 가이드 (3-4 문장). 반드시 2-3개의 구체적인 sensory tag를 언급하며, 해당 음식의 재료/조리법이 어떻게 그 태그와 연결되는지 설명.",
+        "pairing_guide_en": "Detailed English pairing guide (3-4 sentences). MUST mention 2-3 specific sensory tags and explain how the dish's ingredients/preparation mirror those tags."
       },
       {
-        "pairing_guide_ko": "상세한 한국어 페어링 가이드 (3-4 문장)",
-        "pairing_guide_en": "Detailed English pairing guide (3-4 sentences)"
+        "pairing_guide_ko": "상세한 한국어 페어링 가이드 (3-4 문장). 반드시 2-3개의 구체적인 sensory tag를 언급하며, 해당 음식의 재료/조리법이 어떻게 그 태그와 연결되는지 설명.",
+        "pairing_guide_en": "Detailed English pairing guide (3-4 sentences). MUST mention 2-3 specific sensory tags and explain how the dish's ingredients/preparation mirror those tags."
       }
     ]
     `;
