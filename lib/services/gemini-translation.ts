@@ -1,5 +1,4 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import metadata from '@/lib/constants/spirits-metadata.json';
 
 const API_KEY = process.env.GEMINI_API_KEY || '';
 const MODEL_ID = "gemini-2.0-flash";
@@ -7,6 +6,22 @@ const MODEL_ID = "gemini-2.0-flash";
 if (!API_KEY) {
     console.error('[Gemini] 🔴 ERROR: GEMINI_API_KEY is missing from environment variables.');
 }
+
+// Category -> Subcategories mapping (inline to avoid JSON import issues in Edge Runtime)
+const CATEGORY_SUBCATEGORIES: Record<string, string[]> = {
+    "소주": ["희석식 소주", "증류식 소주", "혼카쿠 쇼추", "코루이 쇼추", "오토루이 쇼추", "이모 쇼추", "무기 쇼추", "코메 쇼추", "소바 쇼추", "아와모리", "숙성 아와모리"],
+    "위스키": ["싱글 몰트 스카치 위스키", "블렌디드 스카치 위스키", "싱글 그레인 스카치 위스키", "블렌디드 몰트 스카치 위스키", "버번 위스키", "테네시 위스키", "라이 위스키", "콘 위스키", "아이리쉬 위스키", "일본 위스키", "캐나다 위스키", "타이완 위스키", "한국 위스키", "인도 위스키", "아우스트리아 위스키", "유럽 대륙 위스키"],
+    "맥주": ["필스너", "헬레스", "듄켈", "복", "메르첸", "페일에일", "IPA", "잉글랜드 IPA", "벨지안 에일", "세종", "스타우트", "포터", "슈바르츠비어", "발틱 포터", "사워", "밀맥주", "오크 숙성 맥주", "가향 가당 맥주", "기타 맥주"],
+    "일반증류주": ["런던 드라이 진", "플리머스 진", "올드 톰 진", "네이비 스트렝스 진", "제네버", "뉴 웨스턴 / 컨템포러리 진", "슬로 진", "스페니시 스타일 럼", "잉글리시 스타일 럼", "프렌치 스타일 럼(럼 아그리콜)", "오버프루프 럼", "스파이스드 럼", "카샤사", "블랑코", "레포사도", "아네호", "엑스트라 아네호", "크리스탈리노", "메즈칼", "오리지널 보드카", "플레이버드 보드카", "농향형", "장향형", "청향형", "미향형", "겸향형", "이과두주", "분주", "서봉주"],
+    "탁주": ["탁주", "막걸리", "동동주"],
+    "약주": ["약주", "청주", "한국 청주"],
+    "사케": ["사케(니혼슈)", "준마이", "긴조", "다이긴조"],
+    "포도주": ["와인", "스파클링 와인"],
+    "과실주": ["과실주", "사이더", "미드(벌꿀주)"],
+    "브랜디": ["코냑", "아르마냑", "깔바도스", "피스코", "그라파", "과일 브랜디"],
+    "리큐르": ["우메슈", "과일 리큐르", "크림 리큐르", "커피 리큐르", "허브 리큐르", "향신료 리큐르", "비터스"]
+};
+
 
 // ✅ 1. 용어 가이드 (기존 유지)
 const TERM_GUIDELINES_TEXT = `
@@ -80,14 +95,9 @@ export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<En
     const genAI = new GoogleGenerativeAI(API_KEY);
     const model = genAI.getGenerativeModel({ model: MODEL_ID, generationConfig: { responseMimeType: "application/json", temperature: 0.2 } });
 
-    // Generate valid subcategories for the given category
-    const categoryData = metadata.categories as any;
+    // Get valid subcategories for the given category
     const categoryKey = spirit.category;
-    let validSubcategories: string[] = [];
-
-    if (categoryData[categoryKey]) {
-        validSubcategories = Object.values(categoryData[categoryKey]).flat() as string[];
-    }
+    const validSubcategories = CATEGORY_SUBCATEGORIES[categoryKey] || [];
 
     const subcategoryGuidance = validSubcategories.length > 0
         ? `\n### VALID SUBCATEGORIES for "${categoryKey}":\n${validSubcategories.join(', ')}\n\nYou MUST choose the most appropriate subcategory from this list based on the product name and characteristics. If unsure, use the first one.`

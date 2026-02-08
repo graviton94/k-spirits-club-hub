@@ -30,17 +30,15 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
     console.log('[News Collection] 🚀 Starting news collection process...');
 
     try {
-        // 1. 배치 쿼리 정의 (6개 쿼리로 분할하여 더 많은 결과 수집)
+        // 1. 배치 쿼리 정의 - 핵심 키워드만 사용 (품질 위주)
         const englishQueries = [
-            'Whisky OR Whiskey OR "Single Malt" OR Scotch',
-            'Spirits OR Liquor OR Distillery OR Brewery',
-            'Bourbon Whisky OR Rum OR Gin OR Vodka OR Tequila OR Cognac'
+            '(Whisky OR Whiskey) AND (new OR release OR award OR distillery)',
+            'Spirits AND (industry OR craft OR limited edition)'
         ];
 
         const koreanQueries = [
-            '위스키 OR 전통주 OR 증류식소주 OR 막걸리',
-            '증류소 OR 양조장 OR 우리술 OR 가양주',
-            '(위스키 OR 전통주 OR 소주 OR 증류주) AND (신제품 OR 한정판)'
+            '(위스키 OR 전통주) AND (신제품 OR 출시 OR 수상)',
+            '증류소 AND (업계 OR 한정판 OR 크래프트)'
         ];
 
         console.log('[News Collection] 📡 Fetching RSS from multiple queries...');
@@ -51,13 +49,13 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
         const allRssUrls = [
             // English queries (Global RSS)
             ...englishQueries.map(query => ({
-                url: `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=en&gl=US&ceid=US:en&num=20`,
+                url: `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=en&gl=US&ceid=US:en&num=10`,
                 type: 'Global',
                 query: query
             })),
             // Korean queries (Korean RSS)
             ...koreanQueries.map(query => ({
-                url: `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=ko-KR&gl=KR&ceid=KR:ko&num=20`,
+                url: `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=ko-KR&gl=KR&ceid=KR:ko&num=10`,
                 type: 'Korean',
                 query: query
             }))
@@ -80,8 +78,8 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
                     const rawItems = jsonObj?.rss?.channel?.item || [];
                     const itemsArray = Array.isArray(rawItems) ? rawItems : (rawItems ? [rawItems] : []);
 
-                    // Manually slice to 20 items as Google News RSS often ignores the &num parameter
-                    const items = itemsArray.slice(0, 20);
+                    // Manually slice to 10 items for quality over quantity
+                    const items = itemsArray.slice(0, 10);
                     const count = items.length;
 
                     console.log(`[News Collection] ✅ ${type} "${query}": ${count} items`);
@@ -113,11 +111,13 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
         const items = Array.from(uniqueItemsMap.values());
         console.log('[News Collection] 🔗 After deduplication by link:', items.length, 'unique items');
 
-        // 2. 1차 필터링
+        // 2. 1차 필터링 - 강화된 네거티브 키워드
         const NEGATIVE_KEYWORDS = [
             '음주운전', '사망', '실명', '논란', '사고', '범죄', '주가', '증권', 'VI 발동', '실적발표', '위생', '세금', '세무조사', '세무당국',
             '오늘의 운세', '인사', '부고', 'today-paper', '지면', '중독', '건강', 'judge', '판별', '판결',
-            'DUI', 'accident', 'crime', 'death', 'stock price', 'obituary', 'fortune', 'quarterly results', 'misuse', 'disorder', 'health'
+            'DUI', 'accident', 'crime', 'death', 'stock price', 'obituary', 'fortune', 'quarterly results', 'misuse', 'disorder', 'health',
+            '코스피', '코스닥', 'IPO', '공모', '매출', '영업이익', '순이익', 'earnings', 'revenue', 'profit', 'merger', 'acquisition',
+            '채용', '인사이동', '임원', 'hiring', 'CEO', 'appointment', '파산', 'bankruptcy'
         ];
 
         // Helper to clean HTML and decode entities
@@ -159,9 +159,9 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
 
         console.log('[News Collection] 🔢 Total items before filtering:', allItems.length);
 
-        // Filter by date first (last 365 days = 1 year)
-        const oneYearAgo = new Date();
-        oneYearAgo.setDate(oneYearAgo.getDate() - 365);
+        // Filter by date first (last 90 days = 3 months for recent focus)
+        const ninetyDaysAgo = new Date();
+        ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
 
         const recentItems = allItems.filter(item => {
             if (!item.pubDate) {
@@ -170,7 +170,7 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
             }
 
             const pubDate = new Date(item.pubDate);
-            const isRecent = pubDate >= oneYearAgo;
+            const isRecent = pubDate >= ninetyDaysAgo;
 
             if (!isRecent) {
                 console.log('[News Collection] 📅 Too old (filtering out):', item.title, '- Published:', pubDate.toISOString().split('T')[0]);
@@ -179,7 +179,7 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
             return isRecent;
         });
 
-        console.log('[News Collection] ✅ After date filter (last 1 year):', recentItems.length, 'items');
+        console.log('[News Collection] ✅ After date filter (last 90 days):', recentItems.length, 'items');
 
         // Then filter by NEGATIVE_KEYWORDS
         const filteredItems = recentItems.filter(item => {
@@ -250,21 +250,28 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
 
             const prompt = `
             You are a senior editor for a premium liquor magazine.
-            Analyze these news items and:
-            1. Determine if each item is DIRECTLY related to alcoholic beverages, spirits, or the liquor industry
-            2. Generate TWO versions for relevant items (English and Korean)
+            Analyze these news items with STRICT criteria:
+            1. Determine if each item is DIRECTLY and SPECIFICALLY about spirits/alcohol products or industry
+            2. Generate TWO versions ONLY for highly relevant items (English and Korean)
             
-            IMPORTANT: Set "isAlcoholRelated" to TRUE only if the news is about:
-            - New products, limited editions, awards
-            - Distillery/brewery news, events, tastings
-            - Industry trends, production techniques
-            - Traditional liquor culture
+            CRITICAL FILTERING RULES:
+            Set "isAlcoholRelated" to TRUE ONLY if the news is SPECIFICALLY about:
+            ✅ NEW PRODUCTS: Limited editions, new releases, special casks, collaborations
+            ✅ AWARDS & COMPETITIONS: Industry awards, tasting competitions, quality recognition
+            ✅ CRAFT & PRODUCTION: Distillery openings, production techniques, aging processes, barrels
+            ✅ CULTURAL HERITAGE: Traditional spirits, cultural significance, heritage brands
+            ✅ INDUSTRY EVENTS: Tastings, festivals, masterclasses, brand experiences
             
-            Set "isAlcoholRelated" to FALSE if the news is about:
-            - General business (stocks, earnings) unless specifically about spirits
-            - Health warnings, drunk driving
-            - Unrelated food/beverage
-            - Generic lifestyle/entertainment
+            Set "isAlcoholRelated" to FALSE if:
+            ❌ General business news (earnings, mergers, stock performance, executive changes)
+            ❌ Retail/distribution news unless about unique/limited products
+            ❌ Promotional marketing campaigns or general brand advertising
+            ❌ Celebrity endorsements or lifestyle features (unless directly about product launch)
+            ❌ Health warnings, regulations, drunk driving, alcohol abuse
+            ❌ Unrelated food/beverage or general hospitality news
+            
+            QUALITY THRESHOLD: Only include news that would genuinely interest a spirits enthusiast or industry professional.
+            If in doubt, mark as FALSE. We want quality over quantity.
             
             CRITICAL: You MUST include the exact "tempId" for each item.
 
