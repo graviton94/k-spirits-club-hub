@@ -3,6 +3,9 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY || '');
+if (!GEMINI_API_KEY) {
+    console.error('[Gemini News] 🔴 ERROR: GEMINI_API_KEY is missing!');
+}
 const parser = new XMLParser({ ignoreAttributes: false });
 
 const TRUSTED_SOURCES = [
@@ -24,13 +27,13 @@ export interface CollectedNewsItem {
 }
 
 export async function fetchNewsForCollection(): Promise<CollectedNewsItem[]> {
-    // 1. 구글 뉴스 RSS Fetch (기존 동일)
-    const keywords = '(Whisky OR Liquor OR Spirits OR New Release OR Limited Edition OR 전통주 OR 위스키 OR 증류식 소주 OR 전통주연구소 OR 가양주연구소 OR 전통주갤러리 OR 증류소 OR 우리술)';
-    const siteFilter = TRUSTED_SOURCES.map(site => `site:${site}`).join(' OR ');
-    const finalQuery = `${keywords} AND (${siteFilter})`;
-    const rssUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(finalQuery)}&hl=ko-KR&gl=KR&ceid=KR:ko`;
-
     try {
+        // 1. 구글 뉴스 RSS Fetch
+        const keywords = '(Whisky OR Liquor OR Spirits OR New Release OR Limited Edition OR 전통주 OR 위스키 OR 증류식 소주 OR 전통주연구소 OR 가양주연구소 OR 전통주갤러리 OR 증류소 OR 우리술)';
+        const siteFilter = TRUSTED_SOURCES.map(site => `site:${site}`).join(' OR ');
+        const finalQuery = `${keywords} AND (${siteFilter})`;
+        const rssUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(finalQuery)}&hl=ko-KR&gl=KR&ceid=KR:ko`;
+
         const res = await fetch(rssUrl, { cache: 'no-store' });
         if (!res.ok) throw new Error(`RSS Fetch Failed: ${res.status}`);
 
@@ -38,7 +41,7 @@ export async function fetchNewsForCollection(): Promise<CollectedNewsItem[]> {
         const jsonObj = parser.parse(xmlText);
         const items = jsonObj?.rss?.channel?.item || [];
 
-        // 3. 1차 필터링: 제품/출시 관련이 아니거나 부정적인 뉴스 제거
+        // 2. 1차 필터링
         const NEGATIVE_KEYWORDS = [
             '음주운전', '사망', '실명', '반신마비', '사고', '범죄', '주가', '증권', 'VI 발동', '실적발표',
             '오늘의 운세', '인사', '부고', 'today-paper', '지면',
@@ -54,12 +57,15 @@ export async function fetchNewsForCollection(): Promise<CollectedNewsItem[]> {
         })).filter(item => {
             const fullText = (item.title + item.snippet).toLowerCase();
             return !NEGATIVE_KEYWORDS.some(kw => fullText.includes(kw));
-        }).slice(0, 5); // 최종 5개만
+        }).slice(0, 5);
 
         if (rawItems.length === 0) return [];
 
-        // 2. Gemini에게 "요약"과 "해설 기사" 둘 다 요청
-        const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+        // 3. AI 분석 요청
+        const model = genAI.getGenerativeModel({
+            model: 'gemini-2.0-flash',
+            generationConfig: { responseMimeType: "application/json" }
+        });
 
         const prompt = `
         You are a senior editor for a premium liquor magazine.
@@ -75,12 +81,12 @@ export async function fetchNewsForCollection(): Promise<CollectedNewsItem[]> {
             "en": { 
                 "title": "...", 
                 "snippet": "Short summary...", 
-                "content": "Full article with professional insights..." 
+                "content": "Full article..." 
             },
             "ko": { 
                 "title": "...", 
                 "snippet": "짧은 요약...", 
-                "content": "전문적인 식견이 담긴 3~4문단의 상세 해설 기사..." 
+                "content": "상세 해설 기사..." 
             },
             "tags_en": ["#Tag1", "#Tag2"],
             "tags_ko": ["#태그1", "#태그2"]
@@ -89,12 +95,12 @@ export async function fetchNewsForCollection(): Promise<CollectedNewsItem[]> {
         `;
 
         const result = await model.generateContent(prompt);
-        const response = result.response.text();
-        const cleanJson = response.replace(/```json|```/g, '').trim();
-        const processedData = JSON.parse(cleanJson);
+        const text = result.response.text();
+        const cleanJson = text.replace(/```json|```/g, '').trim();
+        const processedList = JSON.parse(cleanJson);
 
-        return rawItems.map((item: any, index: number) => {
-            const proc = processedData[index] || {};
+        return rawItems.map((item, idx) => {
+            const proc = processedList[idx] || {};
             return {
                 link: item.link,
                 source: item.source,

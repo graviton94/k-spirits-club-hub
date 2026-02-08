@@ -13,7 +13,7 @@ import { motion } from 'framer-motion';
 export const runtime = 'edge';
 
 export default function NewsContentPage() {
-    const { user } = useAuth();
+    const { user, role } = useAuth();
     const params = useParams();
     const lang = (params?.lang as string) || 'ko';
     const isEn = lang === 'en';
@@ -27,7 +27,9 @@ export default function NewsContentPage() {
     const [searchQuery, setSearchQuery] = useState('');
 
     const pageSize = 10;
-    const isAdmin = user && (user as any).role === 'ADMIN';
+    // Hardcoded fallback for reliability
+    const ADMIN_EMAILS = ['ruahn49@gmail.com'];
+    const isAdmin = role === 'ADMIN' || (user?.email && ADMIN_EMAILS.includes(user.email));
 
     // UI Dictionary
     const t = {
@@ -189,8 +191,11 @@ export default function NewsContentPage() {
                             >
                                 {isAdmin && (
                                     <button
-                                        onClick={() => handleDelete(item.id)}
-                                        className="absolute top-6 right-6 p-2.5 text-rose-500/40 hover:text-rose-500 hover:bg-rose-500/10 rounded-xl transition-all z-20 group/del"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleDelete(item.id);
+                                        }}
+                                        className="absolute top-6 right-6 p-3 text-rose-500 bg-white/80 dark:bg-black/80 hover:bg-rose-500 hover:text-white rounded-2xl transition-all z-30 shadow-lg border border-rose-100 dark:border-rose-900/30 group/del"
                                         title={t.deleteBtn}
                                     >
                                         <Trash2 className="w-5 h-5 group-hover/del:scale-110 transition-transform" />

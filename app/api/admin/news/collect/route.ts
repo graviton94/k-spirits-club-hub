@@ -16,6 +16,11 @@ export async function POST(request: Request) {
         // 여기서는 형님이 말씀하신 'role == ADMIN' 체크를 위해 서버측 인증 로직이 필요하나,
         // Edge Runtime 호환을 위해 Firestore REST API로 유저 권한을 직접 확인하는 방식을 사용합니다.
 
+        if (!process.env.GEMINI_API_KEY) {
+            console.error('[Collect API] ❌ GEMINI_API_KEY is missing');
+            return NextResponse.json({ success: false, error: 'GEMINI_API_KEY가 설정되지 않았습니다.' }, { status: 500 });
+        }
+
         console.log('[Collect API] 🚀 수집 프로세스 시작 (Edge Runtime)');
 
         // 2. RSS 데이터 가져오기 (Gemini 포함된 수집 함수)

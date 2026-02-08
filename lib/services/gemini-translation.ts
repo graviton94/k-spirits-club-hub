@@ -3,6 +3,10 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 const API_KEY = process.env.GEMINI_API_KEY || '';
 const MODEL_ID = "gemini-2.0-flash";
 
+if (!API_KEY) {
+    console.error('[Gemini] 🔴 ERROR: GEMINI_API_KEY is missing from environment variables.');
+}
+
 // ✅ 1. 용어 가이드 (기존 유지)
 const TERM_GUIDELINES_TEXT = `
 - 'Makgeolli' for 막걸리/탁주 (Do not use Rice Wine)
@@ -103,8 +107,15 @@ export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<En
     }
     `;
 
-    const result = await model.generateContent(prompt);
-    return JSON.parse(result.response.text());
+    try {
+        const result = await model.generateContent(prompt);
+        const text = result.response.text();
+        console.log('[Gemini Identity] Response:', text);
+        return JSON.parse(text.replace(/```json|```/g, '').trim());
+    } catch (e: any) {
+        console.error('[Gemini Identity] ❌ Error:', e);
+        throw new Error(`Identity audit failed: ${e.message}`);
+    }
 }
 
 /**
@@ -145,8 +156,15 @@ export async function generateSensoryData(spirit: SpiritEnrichmentInput): Promis
     }
     `;
 
-    const result = await model.generateContent(prompt);
-    return JSON.parse(result.response.text());
+    try {
+        const result = await model.generateContent(prompt);
+        const text = result.response.text();
+        console.log('[Gemini Sensory] Response:', text);
+        return JSON.parse(text.replace(/```json|```/g, '').trim());
+    } catch (e: any) {
+        console.error('[Gemini Sensory] ❌ Error:', e);
+        throw new Error(`Sensory analysis failed: ${e.message}`);
+    }
 }
 
 /**
@@ -183,8 +201,15 @@ export async function generatePairingGuide(spirit: SpiritEnrichmentInput): Promi
     }
     `;
 
-    const result = await model.generateContent(prompt);
-    return JSON.parse(result.response.text());
+    try {
+        const result = await model.generateContent(prompt);
+        const text = result.response.text();
+        console.log('[Gemini Pairing] Response:', text);
+        return JSON.parse(text.replace(/```json|```/g, '').trim());
+    } catch (e: any) {
+        console.error('[Gemini Pairing] ❌ Error:', e);
+        throw new Error(`Pairing generation failed: ${e.message}`);
+    }
 }
 
 /**

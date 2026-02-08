@@ -16,7 +16,7 @@ import { useParams, useRouter } from 'next/navigation';
 export const runtime = 'edge';
 
 export default function ReviewBoardPage() {
-    const { user } = useAuth();
+    const { user, role } = useAuth();
     const params = useParams();
     const lang = (params?.lang as string) || 'ko';
     const isEn = lang === 'en';
@@ -29,15 +29,17 @@ export default function ReviewBoardPage() {
     const [searchInput, setSearchInput] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
 
-    // UI States
+    // Modal & Toast states
     const [deleteTarget, setDeleteTarget] = useState<any | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
     const [toastVariant, setToastVariant] = useState<'success' | 'error'>('success');
 
-    const pageSize = 10;
-    const isAdmin = user && (user as any).role === 'ADMIN';
+    const pageSize = 12;
+    // Hardcoded fallback for reliability
+    const ADMIN_EMAILS = ['ruahn49@gmail.com'];
+    const isAdmin = role === 'ADMIN' || (user?.email && ADMIN_EMAILS.includes(user.email));
 
     // UI Dictionary
     const t = {
