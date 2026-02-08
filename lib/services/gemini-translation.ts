@@ -17,7 +17,7 @@ const CATEGORY_SUBCATEGORIES: Record<string, string[]> = {
     "약주": ["약주", "청주", "한국 청주"],
     "사케": ["사케(니혼슈)", "준마이", "긴조", "다이긴조"],
     "포도주": ["와인", "스파클링 와인"],
-    "과실주": ["과실주", "사이더", "미드(벌꿀주)"],
+    "과실주": ["Red Wine", "White Wine", "Rosé Wine", "Sparkling Wine", "Dessert Wine", "Fortified Wine", "과실주", "사이더", "미드(벌꿀주)"],
     "브랜디": ["코냑", "아르마냑", "깔바도스", "피스코", "그라파", "과일 브랜디"],
     "리큐르": ["우메슈", "과일 리큐르", "크림 리큐르", "커피 리큐르", "허브 리큐르", "향신료 리큐르", "비터스"]
 };
@@ -104,34 +104,61 @@ export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<En
         : '';
 
     const prompt = `
-    You are a meticulous liquor database auditor.
-    Your goal is to verify and correct the basic identity of a spirit.
+    🔍 **CRITICAL: YOU MUST SEARCH THE WEB FOR ALL INFORMATION BELOW**
     
-    ### INPUT:
-    - Name: ${spirit.name}
-    - Category: ${spirit.category} (⚠️ YOU MUST RETURN THIS EXACT VALUE - DO NOT CHANGE)
-    - Current Subcategory: ${spirit.subcategory || 'Not set'}
-    - ABV: ${spirit.abv}
-    - Distillery: ${spirit.distillery}
-    - Region: ${spirit.region}
-    - Country: ${spirit.country}
+    You are a spirits database auditor. You MUST use web search to find factual, objective data.
+    DO NOT make up or guess any information. If you cannot find data via web search, return the original value.
+    
+    ### PRODUCT TO RESEARCH:
+    - Product Name: "${spirit.name}"
+    - Current Category: ${spirit.category} (⚠️ LOCKED - return exactly as is)
+    - Current Subcategory: ${spirit.subcategory || 'Unknown'}
+    - Current ABV: ${spirit.abv}%
+    - Current Producer: ${spirit.distillery || 'Unknown'}
+    - Current Region: ${spirit.region || 'Unknown'}
+    - Current Country: ${spirit.country || 'Unknown'}
+    
     ${subcategoryGuidance}
 
-    ### INSTRUCTIONS:
-    1. **English Name**: Create the OFFICIAL English product name (Title Case).
-    2. **Category**: Return "${spirit.category}" EXACTLY. DO NOT MODIFY OR TRANSLATE IT.
-    3. **Subcategory**: Select the MOST APPROPRIATE subcategory from the valid list below.
-    4. **Distillery/Region/Country/ABV**: Verify and correct these fields. Search web if needed.
-
+    ### MANDATORY WEB SEARCH STEPS:
+    
+    **STEP 1: SEARCH THE PRODUCT**
+    - Google: "${spirit.name}" + "spirits" OR "wine" OR "whisky"
+    - Find OFFICIAL product pages (distillery/winery website, Master of Malt, Wine-Searcher, Vivino, etc.)
+    
+    **STEP 2: EXTRACT OBJECTIVE DATA**
+    From official sources, find and verify:
+    - ✅ **Official English Name**: Exact product name as written on the label
+    - ✅ **ABV (Alcohol %)**: Exact percentage from the label/website
+    - ✅ **Producer/Distillery**: Full legal name of the producer
+    - ✅ **Region**: Specific production region (e.g., "Speyside", "Napa Valley", "Jeju Island")
+    - ✅ **Country**: Country of production
+    
+    **STEP 3: DETERMINE SUBCATEGORY**
+    
+    **FOR WINES (Category "과실주"):**
+    - Check wine color: Red/White/Rosé/Sparkling/Dessert/Fortified
+    - Spanish/French/Italian/Chilean wines = grape wines → MUST use wine color subcategories
+    - ONLY use "과실주"/"사이더" for fruit wines made from apples/plums/berries (NOT grapes)
+    
+    **FOR ALL OTHER SPIRITS:**
+    - Match the product type to the most specific subcategory from the valid list
+    - Use official product descriptions and classifications
+    
+    ### OUTPUT RULES:
+    - Return ONLY data you found via web search
+    - If you cannot find a field, return the original input value
+    - DO NOT invent, guess, or hallucinate any information
+    
     ### OUTPUT JSON SCHEMA:
     {
-      "name_en": "string",
-      "distillery": "string",
-      "region": "string",
-      "country": "string",
-      "abv": number,
-      "category": "string",
-      "subcategory": "string"
+      "name_en": "Official English Product Name (from web search)",
+      "category": "${spirit.category}",
+      "subcategory": "From valid list, based on web search",
+      "distillery": "Full producer name (from web search)",
+      "region": "Specific region (from web search)",
+      "country": "Country (from web search)",
+      "abv": ABV as number (from web search)
     }
     `;
 
@@ -166,32 +193,53 @@ export async function generateSensoryProfile(spirit: SpiritEnrichmentInput): Pro
     const existingTastingNote = spirit.metadata?.tasting_note || spirit.metadata?.description || '';
 
     const prompt = `
-    You are a sommelier and spirits expert.
-    Create detailed tasting notes and flavor tags for this product.
-
-    ### PRODUCT DETAILS:
-    - Name: ${spirit.name}
-    - Category: ${spirit.category} / ${spirit.subcategory || ''}
+    🔍 **CRITICAL: SEARCH THE WEB FOR USER REVIEWS & PROFESSIONAL TASTING NOTES**
+    
+    You are a spirits critic compiling objective data from real sources.
+    DO NOT create fictional tasting notes. Find REAL reviews and flavor descriptors.
+    
+    ### PRODUCT TO RESEARCH:
+    - Product: "${spirit.name}"
+    - Type: ${spirit.category} / ${spirit.subcategory || ''}
     - ABV: ${spirit.abv}%
     - Region: ${spirit.region || 'Unknown'}
     - Existing Notes: ${existingTastingNote || 'None'}
 
-    ### INSTRUCTIONS:
-    1. Write **description_ko**: Korean description (2-3 sentences, professional tone)
-    2. Write **description_en**: English description (2-3 sentences, professional tone)
-    3. Generate **nose_tags**: 3-5 aroma tags (English only, e.g., "Vanilla", "Honey", "Oak")
-    4. Generate **palate_tags**: 3-5 taste tags (English only)
-    5. Generate **finish_tags**: 3-5 finish tags (English only)
-    6. Write **tasting_note**: Comprehensive tasting note in Korean (4-5 sentences)
-
+    ### MANDATORY WEB SEARCH STEPS:
+    
+    **STEP 1: SEARCH FOR REVIEWS**
+    Search these sources:
+    - Google: "${spirit.name}" + "review" OR "tasting notes"
+    - Whisky Advocate, Wine Enthusiast, Vivino, Distiller, Master of Malt
+    - Reddit, user forums, rating sites
+    
+    **STEP 2: EXTRACT FLAVOR TAGS**
+    From user reviews and professional notes, identify the TOP 3-5 most commonly mentioned flavors for:
+    - **Nose (향)**: Aroma descriptors (e.g., "Vanilla", "Caramel", "Oak", "Citrus", "Honey")
+    - **Palate (맛)**: Taste descriptors (e.g., "Chocolate", "Spice", "Fruit", "Smoke")
+    - **Finish (여운)**: Aftertaste descriptors (e.g., "Long", "Sweet", "Peppery", "Smooth")
+    
+    **IMPORTANT**: Tags MUST be in English, based on actual user reviews, NOT made up!
+    
+    **STEP 3: WRITE DESCRIPTIONS**
+    Based on the reviews you found:
+    - **description_en**: 2-3 sentences summarizing common themes from reviews (English)
+    - **description_ko**: Same content, translated to Korean (professional tone)
+    - **tasting_note**: More detailed 4-5 sentence tasting note in Korean, synthesizing multiple reviews
+    
+    ### OUTPUT RULES:
+    - ALL flavor tags must come from actual reviews you found
+    - Descriptions must reflect real user/professional opinions, not your imagination
+    - If you cannot find reviews, use generic tasting notes for the spirit type
+    
     ### OUTPUT JSON SCHEMA:
     {
-      "description_ko": "string",
-      "description_en": "string",
-      "nose_tags": ["string"],
-      "palate_tags": ["string"],
-      "finish_tags": ["string"],
-      "tasting_note": "string"
+      "description_ko": "Korean description (2-3 sentences)",
+      "description_en": "English description (2-3 sentences)",
+      "nose_tags": ["Tag1", "Tag2", "Tag3"],
+      "palate_tags": ["Tag1", "Tag2", "Tag3"],
+      "finish_tags": ["Tag1", "Tag2", "Tag3"],
+      "tasting_note": "Detailed Korean tasting note (4-5 sentences)"
     }
     `;
 
@@ -226,33 +274,43 @@ export async function generatePairingGuide(spirit: SpiritEnrichmentInput): Promi
     ].filter(Boolean);
 
     const prompt = `
-    You are a world-class culinary expert and sommelier.
-    Create TWO unique food pairing suggestions for this spirit.
-
-    ### PRODUCT:
-    - Name: ${spirit.name}
-    - Category: ${spirit.category} / ${spirit.subcategory || ''}
+    🔍 **SEARCH THE WEB FOR REAL FOOD PAIRING RECOMMENDATIONS**
+    
+    You are a sommelier compiling expert pairing suggestions.
+    Find REAL pairing recommendations from sommeliers, not fictional ones.
+    
+    ### PRODUCT TO RESEARCH:
+    - Product: "${spirit.name}"
+    - Type: ${spirit.category} / ${spirit.subcategory || ''}
     - Region: ${spirit.region || 'Unknown'}
     - Country: ${spirit.country || 'Unknown'}
-
-    ### EXISTING PAIRINGS (MUST NOT REPEAT):
+    
+    ### EXISTING PAIRINGS (DO NOT REPEAT):
     ${existingPairings?.join('\n') || 'None'}
     
-    **CRITICAL**: Do NOT suggest any dishes that appear in the existing pairings list above.
-
     ### BANNED CLICHÉS:
     ${CLICHE_BAN_LIST}
 
-    ### PAIRING STRATEGY:
-    1. **First Pairing (Terroir Choice)**: A traditional dish from the spirit's country/region of origin
-    2. **Second Pairing (Global Adventure)**: A creative pairing from a different cuisine that complements the flavor profile
-
-    Write in a sophisticated, editorial tone. Each pairing should be 2-3 sentences explaining WHY it works.
-
+    ### WEB SEARCH STEPS:
+    
+    **STEP 1: SEARCH FOR PAIRING RECOMMENDATIONS**
+    - Google: "${spirit.name}" + "food pairing" OR "what to eat with"
+    - Check sommelier blogs, distillery websites, wine pairing guides
+    - Reddit threads, food & wine magazines
+    
+    **STEP 2: SELECT TWO PAIRINGS**
+    From your web search, select TWO unique pairings:
+    1. **Terroir Pairing**: Traditional dish from the spirit's region/country (if available)
+    2. **Creative Pairing**: Innovative pairing recommended by sommeliers/experts
+    
+    - DO NOT repeat any dishes from "EXISTING PAIRINGS" above
+    - DO NOT use banned clichés
+    - Explain WHY each pairing works (2-3 sentences each)
+    
     ### OUTPUT JSON SCHEMA:
     {
-      "pairing_guide_ko": "string (2 pairings, Korean)",
-      "pairing_guide_en": "string (2 pairings, English)"
+      "pairing_guide_ko": "Two pairings in Korean (professional tone)",
+      "pairing_guide_en": "Two pairings in English (professional tone)"
     }
     `;
 
