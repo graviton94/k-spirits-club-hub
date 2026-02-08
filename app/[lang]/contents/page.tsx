@@ -11,7 +11,8 @@ import {
   Sparkles,
   Beer,
   Fingerprint,
-  Newspaper
+  Newspaper,
+  MessageSquare
 } from "lucide-react";
 
 interface ContentsPageProps {
@@ -68,11 +69,11 @@ export default async function ContentsPage({ params }: ContentsPageProps) {
       borderHover: "group-hover:border-amber-400/50"
     },
     {
-      title: isEn ? "Tasting Notes (🚧Dev)" : "시음 노트(🚧개발 중)",
-      description: isEn ? "Community to share your tasting experiences." : "서로의 미각을 공유하는 커뮤니티 공간.",
-      icon: <PenTool className="w-8 h-8 text-blue-500" />,
-      link: "#",
-      status: "Ready",
+      title: isEn ? "Review Board" : "리뷰 보드",
+      description: isEn ? "Check and share real tasting reviews from other users." : "다른 사용자들의 리얼한 시음평을 확인하고 공유해보세요.",
+      icon: <MessageSquare className="w-8 h-8 text-blue-500" />,
+      link: `/${lang}/contents/reviews`,
+      status: "OPEN",
       gradient: "from-blue-500/20 to-cyan-600/20",
       borderHover: "group-hover:border-blue-500/50"
     },

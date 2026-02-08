@@ -7,9 +7,17 @@ import { useAuth } from '@/app/[lang]/context/auth-context';
 import { getAppPath } from '@/lib/db/paths';
 import Link from 'next/link';
 import { Search, Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useParams } from 'next/navigation';
+import { motion } from 'framer-motion';
+
+export const runtime = 'edge';
 
 export default function NewsContentPage() {
     const { user } = useAuth();
+    const params = useParams();
+    const lang = (params?.lang as string) || 'ko';
+    const isEn = lang === 'en';
+
     const [news, setNews] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
@@ -20,7 +28,23 @@ export default function NewsContentPage() {
     const pageSize = 10;
     const isAdmin = user && (user as any).role === 'ADMIN';
 
-    // 1. 전체 뉴스 개수 가져오기
+    // UI Dictionary
+    const t = {
+        title: isEn ? "Global Spirits News" : "글로벌 주류 뉴스",
+        desc: isEn ? "In-depth spirits industry reports analyzed by AI." : "AI가 엄선하고 분석한 주류 업계 심층 리포트",
+        searchPlaceholder: isEn ? "Search news titles or content..." : "뉴스 제목이나 내용을 검색해보세요...",
+        loading: isEn ? "Fetching latest news..." : "소식을 불러오는 중...",
+        noResult: isEn ? "No search results found." : "검색 결과가 없습니다.",
+        noNews: isEn ? "No news collected yet." : "수집된 뉴스가 없습니다.",
+        deleteBtn: isEn ? "🗑️ Delete" : "🗑️ 삭제",
+        deleteConfirm: isEn ? "Are you sure you want to delete this news? This cannot be undone." : "진짜 삭제합니까? 되돌릴 수 없습니다.",
+        deleteSuccess: isEn ? "Deleted successfully." : "삭제되었습니다.",
+        source: isEn ? "Source" : "출처",
+        viewOriginal: isEn ? "View Original →" : "원문 보러가기 →",
+        page: isEn ? "Page" : "페이지",
+        of: isEn ? "of" : "/",
+    };
+
     const fetchTotalCount = async () => {
         try {
             const newsPath = getAppPath().news;
@@ -31,7 +55,6 @@ export default function NewsContentPage() {
         }
     };
 
-    // 2. 특정 페이지 데이터 가져오기
     const fetchPage = async (page: number) => {
         try {
             setLoading(true);
@@ -45,7 +68,6 @@ export default function NewsContentPage() {
                 if (prevDoc) {
                     q = query(collection(db, newsPath), orderBy('publishedAt', 'desc'), startAfter(prevDoc), limit(pageSize));
                 } else {
-                    // 마커가 없는 페이지로 점프할 경우 (데이터가 아주 많지 않으므로 전체 쿼리 후 슬라이싱)
                     q = query(collection(db, newsPath), orderBy('publishedAt', 'desc'), limit(page * pageSize));
                 }
             }
@@ -53,12 +75,10 @@ export default function NewsContentPage() {
             const snapshot = await getDocs(q);
             const docs = snapshot.docs;
 
-            // 만약 마커 없이 통째로 가져온 경우라면 해당 페이지 분량만 필터링
             const targetDocs = (page > 1 && !pageMarkers[page - 1]) ? docs.slice(-pageSize) : docs;
             const data = targetDocs.map(doc => ({ id: doc.id, ...doc.data() }));
 
             setNews(data);
-            // 다음 페이지를 위한 마커 저장
             setPageMarkers(prev => ({ ...prev, [page]: docs[docs.length - 1] }));
             setCurrentPage(page);
         } catch (error) {
@@ -73,25 +93,24 @@ export default function NewsContentPage() {
         fetchPage(1);
     }, []);
 
-    // 3. 검색 필터링 (클라이언트 사이드)
     const filteredNews = useMemo(() => {
         if (!searchQuery.trim()) return news;
         const lowQuery = searchQuery.toLowerCase();
         return news.filter(item => {
-            const title = (item.title?.ko || item.originalTitle || '').toLowerCase();
-            const content = (item.content?.ko || item.snippet?.ko || '').toLowerCase();
+            const title = (item.title?.[lang] || item.title?.ko || item.originalTitle || '').toLowerCase();
+            const content = (item.content?.[lang] || item.content?.ko || item.snippet?.[lang] || item.snippet?.ko || '').toLowerCase();
             return title.includes(lowQuery) || content.includes(lowQuery);
         });
-    }, [news, searchQuery]);
+    }, [news, searchQuery, lang]);
 
     const totalPages = Math.ceil(totalCount / pageSize);
 
     const handleDelete = async (id: string) => {
-        if (!confirm('진짜 삭제합니까? 되돌릴 수 없습니다.')) return;
+        if (!confirm(t.deleteConfirm)) return;
         try {
             const res = await fetch(`/api/admin/news/delete?id=${id}`, { method: 'DELETE' });
             if (res.ok) {
-                alert('삭제되었습니다.');
+                alert(t.deleteSuccess);
                 setNews(prev => prev.filter(item => item.id !== id));
                 setTotalCount(prev => prev - 1);
             }
@@ -105,10 +124,10 @@ export default function NewsContentPage() {
             <div className="max-w-3xl mx-auto">
                 {/* Header */}
                 <div className="mb-8 flex justify-between items-end">
-                    <div>
-                        <h1 className="text-3xl font-black mb-2 text-indigo-600 dark:text-indigo-400 tracking-tight">Global Spirits News</h1>
-                        <p className="text-muted-foreground font-medium">AI가 엄선하고 분석한 주류 업계 심층 리포트</p>
-                    </div>
+                    <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
+                        <h1 className="text-3xl font-black mb-2 text-indigo-600 dark:text-indigo-400 tracking-tight">{t.title}</h1>
+                        <p className="text-muted-foreground font-medium">{t.desc}</p>
+                    </motion.div>
                 </div>
 
                 {/* Search Bar */}
@@ -116,7 +135,7 @@ export default function NewsContentPage() {
                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-indigo-500 transition-colors" />
                     <input
                         type="text"
-                        placeholder="뉴스 제목이나 내용을 검색해보세요..."
+                        placeholder={t.searchPlaceholder}
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="w-full bg-card/50 backdrop-blur-sm border border-border rounded-2xl py-3.5 pl-11 pr-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all shadow-sm"
@@ -126,17 +145,20 @@ export default function NewsContentPage() {
                 {loading ? (
                     <div className="flex flex-col items-center justify-center py-20 gap-4">
                         <Loader2 className="w-8 h-8 text-indigo-500 animate-spin" />
-                        <p className="text-sm font-bold text-muted-foreground">소식을 불러오는 중...</p>
+                        <p className="text-sm font-bold text-muted-foreground">{t.loading}</p>
                     </div>
                 ) : filteredNews.length === 0 ? (
                     <div className="text-center py-20 bg-muted/30 rounded-3xl border border-dashed border-border text-muted-foreground font-bold">
-                        {searchQuery ? `'${searchQuery}'에 대한 검색 결과가 없습니다.` : '수집된 뉴스가 없습니다.'}
+                        {searchQuery ? t.noResult : t.noNews}
                     </div>
                 ) : (
                     <div className="space-y-12">
-                        {filteredNews.map((item) => (
-                            <article
+                        {filteredNews.map((item, idx) => (
+                            <motion.article
                                 key={item.id}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: idx * 0.05 }}
                                 className="bg-card/40 backdrop-blur-sm border border-border rounded-3xl p-6 md:p-8 relative group hover:border-indigo-500 transition-all shadow-sm"
                             >
                                 {isAdmin && (
@@ -144,7 +166,7 @@ export default function NewsContentPage() {
                                         onClick={() => handleDelete(item.id)}
                                         className="absolute top-4 right-4 bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white px-3 py-1.5 rounded-xl text-[10px] font-bold transition-all z-10"
                                     >
-                                        🗑️ 삭제
+                                        {t.deleteBtn}
                                     </button>
                                 )}
 
@@ -159,17 +181,17 @@ export default function NewsContentPage() {
 
                                 <Link href={item.link} target="_blank">
                                     <h2 className="text-2xl font-bold mb-6 hover:text-indigo-600 transition-colors leading-tight">
-                                        {item.title?.ko || item.originalTitle}
+                                        {item.title?.[lang] || item.title?.ko || item.originalTitle}
                                     </h2>
                                 </Link>
 
                                 <div className="text-muted-foreground leading-relaxed space-y-4 whitespace-pre-wrap text-base md:text-lg font-medium">
-                                    {item.content?.ko ? item.content.ko : (item.snippet?.ko || item.originalSnippet)}
+                                    {item.content?.[lang] || item.content?.ko || item.snippet?.[lang] || item.snippet?.ko || item.originalSnippet}
                                 </div>
 
                                 <div className="mt-8 flex flex-wrap gap-2">
-                                    {item.tags?.ko?.map((tag: string, i: number) => (
-                                        <span key={i} className="text-xs font-bold text-muted-foreground/60 bg-muted px-3 py-1 rounded-full border border-border">
+                                    {(item.tags?.[lang] || item.tags?.ko)?.map((tag: string, i: number) => (
+                                        <span key={i} className="text-xs font-bold text-muted-foreground/60 bg-muted px-3 py-1 rounded-full border border-border uppercase tracking-tighter">
                                             #{tag}
                                         </span>
                                     ))}
@@ -177,10 +199,10 @@ export default function NewsContentPage() {
 
                                 <div className="mt-6 pt-6 border-t border-border flex justify-end">
                                     <Link href={item.link} target="_blank" className="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline">
-                                        원문 보러가기 →
+                                        {t.viewOriginal}
                                     </Link>
                                 </div>
-                            </article>
+                            </motion.article>
                         ))}
 
                         {/* Pagination Numbers */}
@@ -194,18 +216,20 @@ export default function NewsContentPage() {
                                     <ChevronLeft className="w-5 h-5" />
                                 </button>
 
-                                {Array.from({ length: totalPages }, (_, i) => i + 1).map(num => (
-                                    <button
-                                        key={num}
-                                        onClick={() => fetchPage(num)}
-                                        className={`w-10 h-10 rounded-xl text-sm font-black transition-all ${currentPage === num
+                                {Array.from({ length: totalPages }, (_, i) => i + 1)
+                                    .filter(p => p >= currentPage - 2 && p <= currentPage + 2)
+                                    .map(num => (
+                                        <button
+                                            key={num}
+                                            onClick={() => fetchPage(num)}
+                                            className={`w-10 h-10 rounded-xl text-sm font-black transition-all ${currentPage === num
                                                 ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/30'
                                                 : 'bg-card border border-border text-muted-foreground hover:bg-muted font-bold'
-                                            }`}
-                                    >
-                                        {num}
-                                    </button>
-                                ))}
+                                                }`}
+                                        >
+                                            {num}
+                                        </button>
+                                    ))}
 
                                 <button
                                     onClick={() => fetchPage(currentPage + 1)}

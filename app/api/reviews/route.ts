@@ -141,15 +141,47 @@ export async function GET(request: NextRequest) {
 // DELETE /api/reviews - Delete a review
 export async function DELETE(request: NextRequest) {
   try {
-    const userId = request.headers.get('x-user-id');
+    const requestUserId = request.headers.get('x-user-id');
     const { searchParams } = new URL(request.url);
     const spiritId = searchParams.get('spiritId');
+    const targetUserId = searchParams.get('userId'); // The owner of the review
 
-    if (!userId || !spiritId) {
-      return NextResponse.json({ error: 'Unauthorized or Missing SpiritId' }, { status: 401 });
+    if (!requestUserId || !spiritId || !targetUserId) {
+      return NextResponse.json({ error: 'Missing required parameters' }, { status: 400 });
     }
 
-    await reviewsDb.delete(spiritId, userId);
+    // 1. Permission Check
+    let hasPermission = false;
+
+    // Check if requester is the owner
+    if (requestUserId === targetUserId) {
+      hasPermission = true;
+    } else {
+      // Check if requester is an admin
+      const { getServiceAccountToken } = await import('@/lib/auth/service-account');
+      const token = await getServiceAccountToken();
+      const PROJECT_ID = process.env.FIREBASE_PROJECT_ID;
+      const userUrl = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/users/${requestUserId}`;
+
+      const userRes = await fetch(userUrl, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      if (userRes.ok) {
+        const userData = await userRes.json();
+        const role = userData.fields?.role?.stringValue;
+        if (role === 'ADMIN') {
+          hasPermission = true;
+        }
+      }
+    }
+
+    if (!hasPermission) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    }
+
+    // 2. Perform deletion in all 3 locations via reviewsDb
+    await reviewsDb.delete(spiritId, targetUserId);
 
     return NextResponse.json({
       success: true,
