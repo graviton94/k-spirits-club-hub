@@ -40,10 +40,11 @@ export async function PATCH(req: NextRequest) {
                             metadata: spirit.metadata
                         });
 
+                        console.log('[Bulk Patch] Enrichment data - subcategory:', enrichmentData.subcategory, '| region:', enrichmentData.region);
                         currentUpdates = {
                             ...currentUpdates,
                             name_en: enrichmentData.name_en,
-                            category: enrichmentData.category ?? spirit.category,
+                            // Category is LOCKED - never update from AI
                             subcategory: enrichmentData.subcategory ?? spirit.subcategory,
                             distillery: enrichmentData.distillery ?? spirit.distillery,
                             region: enrichmentData.region ?? spirit.region,

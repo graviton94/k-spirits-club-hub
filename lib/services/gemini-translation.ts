@@ -109,7 +109,8 @@ export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<En
     
     ### INPUT:
     - Name: ${spirit.name}
-    - Category: ${spirit.category} / ${spirit.subcategory || ''}
+    - Category: ${spirit.category} (⚠️ YOU MUST RETURN THIS EXACT VALUE - DO NOT CHANGE)
+    - Current Subcategory: ${spirit.subcategory || 'Not set'}
     - ABV: ${spirit.abv}
     - Distillery: ${spirit.distillery}
     - Region: ${spirit.region}
@@ -118,8 +119,9 @@ export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<En
 
     ### INSTRUCTIONS:
     1. **English Name**: Create the OFFICIAL English product name (Title Case).
-    2. **Audit**: Verify and correct Distillery, Country, Region, and ABV. Search web if needed.
-    3. **Category & Subcategory**: Ensure category matches international standards. IMPORTANT: Select the correct subcategory from the provided list based on the product name and type.
+    2. **Category**: Return "${spirit.category}" EXACTLY. DO NOT MODIFY OR TRANSLATE IT.
+    3. **Subcategory**: Select the MOST APPROPRIATE subcategory from the valid list below.
+    4. **Distillery/Region/Country/ABV**: Verify and correct these fields. Search web if needed.
 
     ### OUTPUT JSON SCHEMA:
     {
@@ -136,7 +138,7 @@ export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<En
     try {
         const result = await model.generateContent(prompt);
         const text = result.response.text();
-        console.log('[Gemini Identity] Response:', text);
+        console.log('[Gemini Identity] ===== RAW RESPONSE =====', text);
 
         const cleanJson = text.replace(/```json|```/g, '').trim();
         const parsed = JSON.parse(cleanJson);
@@ -144,7 +146,7 @@ export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<En
         // Handle if Gemini returns an array instead of a single object
         const data = Array.isArray(parsed) ? parsed[0] : parsed;
 
-        console.log('[Gemini Identity] Parsed data:', data);
+        console.log('[Gemini Identity] subcategory:', data.subcategory, '| region:', data.region, '| country:', data.country);
         return data;
     } catch (e: any) {
         console.error('[Gemini Identity] ❌ Error:', e);

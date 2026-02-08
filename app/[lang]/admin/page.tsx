@@ -261,7 +261,7 @@ export default function AdminDashboard() {
                     ...editForm,
                     // Identity fields
                     name_en: updatedSpirit.name_en ?? editForm.name_en,
-                    category: updatedSpirit.category ?? editForm.category,
+                    // Category is LOCKED - never update from AI
                     subcategory: updatedSpirit.subcategory ?? editForm.subcategory,
                     distillery: updatedSpirit.distillery ?? editForm.distillery,
                     region: updatedSpirit.region ?? editForm.region,
