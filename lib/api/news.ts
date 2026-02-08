@@ -212,53 +212,55 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
 
         console.log('[News Collection] 📝 Sample item:', rawItems[0]?.title);
 
-        // 3. AI 분석 요청 (배치 처리 - 50개씩)
+        // 3. AI 분석 요청 (배치 처리)
         if (!GEMINI_API_KEY) {
             console.error('[News Collection] ❌ GEMINI_API_KEY is missing!');
             throw new Error('GEMINI_API_KEY is not configured');
         }
 
-        const BATCH_SIZE = 10; // Reduced for stability and to avoid response length limits
+        // Add IDs to each item to prevent mismatching
+        const itemsToProcess = rawItems.map((item, idx) => ({
+            ...item,
+            tempId: `news_${Date.now()}_${idx}`
+        }));
+
+        const BATCH_SIZE = 10;
         const batches = [];
-        for (let i = 0; i < rawItems.length; i += BATCH_SIZE) {
-            batches.push(rawItems.slice(i, i + BATCH_SIZE));
+        for (let i = 0; i < itemsToProcess.length; i += BATCH_SIZE) {
+            batches.push(itemsToProcess.slice(i, i + BATCH_SIZE));
         }
 
-        console.log('[News Collection] 🤖 Processing', rawItems.length, 'items in', batches.length, 'batches of', BATCH_SIZE);
+        console.log('[News Collection] 🤖 Processing', itemsToProcess.length, 'items in', batches.length, 'batches...');
 
         const model = genAI.getGenerativeModel({
             model: 'gemini-2.0-flash',
             generationConfig: { responseMimeType: "application/json" }
         });
 
-        const allProcessedItems: any[] = [];
-        const successfulRawItems: typeof rawItems = []; // Track which raw items were successfully processed
+        // Store results in a map for indexed-lookup
+        const processedMap = new Map<string, any>();
 
         for (let batchIdx = 0; batchIdx < batches.length; batchIdx++) {
             const batch = batches[batchIdx];
-            console.log(`[News Collection] 🤖 Processing batch ${batchIdx + 1}/${batches.length} (${batch.length} items)...`);
+            console.log(`[News Collection] 🤖 Batch ${batchIdx + 1}/${batches.length} (${batch.length} items)...`);
 
             const prompt = `
             You are a senior editor for a premium liquor magazine.
-            Analyze these news items and generate TWO versions for each:
-            1. "snippet": A short, catchy summary (max 2 sentences) for the home page.
-            2. "content": A concise "Mini-Article" (2-3 paragraphs). Explain context, market impact, and professional opinion.
+            Analyze these news items and generate TWO versions for each (English and Korean).
+            CRITICAL: You MUST include the exact "tempId" for each item in your response to maintain data integrity.
 
-            Input Data: ${JSON.stringify(batch)}
+            Input Data: ${JSON.stringify(batch.map(b => ({
+                tempId: b.tempId,
+                title: b.title,
+                snippet: b.snippet
+            })))}
 
             Output Format: JSON Array ONLY.
             Structure: [
               {
-                "en": {
-                    "title": "...",
-                    "snippet": "Short summary...",
-                    "content": "Full article..."
-                },
-                "ko": {
-                    "title": "...",
-                    "snippet": "짧은 요약...",
-                    "content": "상세 해설 기사..."
-                },
+                "tempId": "...",
+                "en": { "title": "...", "snippet": "...", "content": "..." },
+                "ko": { "title": "...", "snippet": "...", "content": "..." },
                 "tags_en": ["#Tag1", "#Tag2"],
                 "tags_ko": ["#태그1", "#태그2"]
               }
@@ -268,46 +270,42 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
             try {
                 const result = await model.generateContent(prompt);
                 const text = result.response.text();
-                console.log(`[News Collection] ✅ Batch ${batchIdx + 1} response received, length:`, text.length);
-
                 const cleanJson = text.replace(/```json|```/g, '').trim();
                 const processedList = JSON.parse(cleanJson);
-                console.log(`[News Collection] ✅ Batch ${batchIdx + 1} parsed:`, processedList.length, 'items');
 
-                // Only add to results if processing succeeded
-                allProcessedItems.push(...processedList);
-                successfulRawItems.push(...batch); // Track successful raw items
-                console.log(`[News Collection] ✅ Batch ${batchIdx + 1} added to results`);
+                processedList.forEach((proc: any) => {
+                    if (proc.tempId) {
+                        processedMap.set(proc.tempId, proc);
+                    }
+                });
+                console.log(`[News Collection] ✅ Batch ${batchIdx + 1} processed: ${processedList.length}/${batch.length} items match`);
             } catch (error) {
                 console.error(`[News Collection] ❌ Batch ${batchIdx + 1} failed:`, error);
-                console.log(`[News Collection] ⚠️ Skipping ${batch.length} items from failed batch ${batchIdx + 1}`);
-                // Continue with next batch instead of failing entirely
             }
         }
 
-        console.log('[News Collection] ✅ All batches processed:', allProcessedItems.length, 'successful items');
-        console.log('[News Collection] 📊 Success rate:', `${successfulRawItems.length}/${rawItems.length} (${((successfulRawItems.length / rawItems.length) * 100).toFixed(1)}%)`);
+        // Final assembly using the map to ensure NO MISMATCHES
+        const finalItems = itemsToProcess
+            .filter(item => processedMap.has(item.tempId)) // Only keep items successfully processed by Gemini
+            .map(item => {
+                const proc = processedMap.get(item.tempId)!;
+                return {
+                    link: item.link,
+                    source: item.source,
+                    date: new Date(item.pubDate).toISOString(),
+                    originalTitle: item.title,
+                    translations: {
+                        en: proc.en,
+                        ko: proc.ko
+                    },
+                    tags: {
+                        en: proc.tags_en || [],
+                        ko: proc.tags_ko || []
+                    }
+                };
+            });
 
-        // Only create finalItems for successfully processed items
-        const finalItems = successfulRawItems.map((item, idx) => {
-            const proc = allProcessedItems[idx] || {};
-            return {
-                link: item.link,
-                source: item.source,
-                date: new Date(item.pubDate).toISOString(),
-                originalTitle: item.title,
-                translations: {
-                    en: proc.en || { title: item.title, snippet: item.snippet, content: item.snippet },
-                    ko: proc.ko || { title: item.title, snippet: item.snippet, content: item.snippet }
-                },
-                tags: {
-                    en: proc.tags_en || [],
-                    ko: proc.tags_ko || []
-                }
-            };
-        });
-
-        console.log('[News Collection] 🎉 Successfully processed', finalItems.length, 'news items');
+        console.log('[News Collection] 🎉 Final assembly complete:', finalItems.length, 'items');
         return finalItems;
 
     } catch (error: any) {
