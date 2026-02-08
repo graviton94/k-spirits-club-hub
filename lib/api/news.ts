@@ -34,7 +34,7 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
         const englishQueries = [
             'Whisky OR Whiskey OR "Single Malt" OR Scotch',
             'Spirits OR Liquor OR Distillery OR Brewery',
-            'Bourbon OR Rum OR Gin OR Vodka OR Tequila OR Cognac'
+            'Bourbon Whisky OR Rum OR Gin OR Vodka OR Tequila OR Cognac'
         ];
 
         const koreanQueries = [
@@ -51,13 +51,13 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
         const allRssUrls = [
             // English queries (Global RSS)
             ...englishQueries.map(query => ({
-                url: `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=en&gl=US&ceid=US:en&num=100`,
+                url: `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=en&gl=US&ceid=US:en&num=20`,
                 type: 'Global',
                 query: query
             })),
             // Korean queries (Korean RSS)
             ...koreanQueries.map(query => ({
-                url: `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=ko-KR&gl=KR&ceid=KR:ko&num=100`,
+                url: `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=ko-KR&gl=KR&ceid=KR:ko&num=20`,
                 type: 'Korean',
                 query: query
             }))
@@ -111,18 +111,47 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
 
         // 2. 1차 필터링
         const NEGATIVE_KEYWORDS = [
-            '음주운전', '사망', '실명', '반신마비', '사고', '범죄', '주가', '증권', 'VI 발동', '실적발표',
-            '오늘의 운세', '인사', '부고', 'today-paper', '지면', '중독', '건강',
-            'DUI', 'accident', 'crime', 'stock price', 'obituary', 'fortune', 'quarterly results', 'misuse', 'disorder', 'health'
+            '음주운전', '사망', '실명', '논란', '사고', '범죄', '주가', '증권', 'VI 발동', '실적발표', '위생', '세금', '세무조사', '세무당국',
+            '오늘의 운세', '인사', '부고', 'today-paper', '지면', '중독', '건강', 'judge', '판별', '판결',
+            'DUI', 'accident', 'crime', 'death', 'stock price', 'obituary', 'fortune', 'quarterly results', 'misuse', 'disorder', 'health'
         ];
 
-        const allItems = (Array.isArray(items) ? items : [items]).map((item: any) => ({
-            title: item.title,
-            link: item.link,
-            snippet: item.description?.replace(/<[^>]*>?/gm, '').substring(0, 200) + '...',
-            source: typeof item.source === 'object' ? (item.source?.['#text'] || 'Curated News') : (item.source || 'Curated News'),
-            pubDate: item.pubDate,
-        }));
+        // Helper to clean HTML and decode entities
+        const cleanText = (text: any): string => {
+            if (!text) return '';
+            const str = typeof text === 'object' ? (text['#text'] || '') : String(text);
+            return str
+                .replace(/<[^>]*>?/gm, ' ') // Remove HTML tags
+                .replace(/&nbsp;/g, ' ')
+                .replace(/&amp;/g, '&')
+                .replace(/&quot;/g, '"')
+                .replace(/&lt;/g, '<')
+                .replace(/&gt;/g, '>')
+                .replace(/&#39;/g, "'")
+                .replace(/&apos;/g, "'")
+                .replace(/&hellip;/g, '...')
+                .replace(/&ndash;/g, '-')
+                .replace(/&mdash;/g, '-')
+                .replace(/&rsquo;/g, "'")
+                .replace(/&lsquo;/g, "'")
+                .replace(/&rdquo;/g, '"')
+                .replace(/&ldquo;/g, '"')
+                .replace(/\s+/g, ' ') // Collapse whitespace
+                .trim();
+        };
+
+        const allItems = (Array.isArray(items) ? items : [items]).map((item: any) => {
+            const cleanedTitle = cleanText(item.title);
+            const cleanedSnippet = cleanText(item.description);
+
+            return {
+                title: cleanedTitle,
+                link: item.link,
+                snippet: cleanedSnippet ? (cleanedSnippet.substring(0, 200) + '...') : '',
+                source: typeof item.source === 'object' ? (item.source?.['#text'] || 'Curated News') : (item.source || 'Curated News'),
+                pubDate: item.pubDate,
+            };
+        });
 
         console.log('[News Collection] 🔢 Total items before filtering:', allItems.length);
 

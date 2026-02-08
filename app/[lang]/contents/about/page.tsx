@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { ArrowLeft, Target, Database, Brain, Globe } from 'lucide-react';
 import { ABOUT_CONTENT, ABOUT_SECTIONS } from '@/lib/constants/about-content';
 
+export const runtime = 'edge';
+
 export const metadata = {
     title: 'About Us',
 };

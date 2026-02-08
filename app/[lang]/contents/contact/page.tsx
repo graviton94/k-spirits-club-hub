@@ -2,6 +2,8 @@ import { Locale } from '@/i18n-config';
 import Link from 'next/link';
 import { ArrowLeft, Mail, MessageSquare, AlertTriangle } from 'lucide-react';
 
+export const runtime = 'edge';
+
 export const metadata = {
     title: 'Contact Us',
 };
