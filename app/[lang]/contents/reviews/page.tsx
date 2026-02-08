@@ -26,6 +26,7 @@ export default function ReviewBoardPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalCount, setTotalCount] = useState(0);
     const [pageMarkers, setPageMarkers] = useState<Record<number, QueryDocumentSnapshot<DocumentData> | null>>({});
+    const [searchInput, setSearchInput] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
 
     // UI States
@@ -43,6 +44,7 @@ export default function ReviewBoardPage() {
         title: isEn ? "Review Board" : "리뷰 보드",
         desc: isEn ? "Live comments and professional analysis reports from spirits enthusiasts." : "주류 애호가들의 생생한 한줄평과 전문적인 분석 리포트",
         searchPlaceholder: isEn ? "Search spirits, authors, or content..." : "술 이름, 작성자, 또는 내용을 검색하세요...",
+        searchBtn: isEn ? "Search" : "검색",
         loading: isEn ? "Fetching tastes..." : "취향을 불러오는 중...",
         noResult: isEn ? "No search results found." : "검색 결과가 없습니다.",
         noReviews: isEn ? "No reviews registered yet." : "아직 등록된 리뷰가 없습니다.",
@@ -135,6 +137,11 @@ export default function ReviewBoardPage() {
         });
     }, [reviews, searchQuery]);
 
+    const handleSearch = (e?: React.FormEvent) => {
+        e?.preventDefault();
+        setSearchQuery(searchInput);
+    };
+
     const totalPages = Math.ceil(totalCount / pageSize);
 
     const handleDeleteReview = async () => {
@@ -184,17 +191,25 @@ export default function ReviewBoardPage() {
                     </p>
                 </div>
 
-                {/* Search Bar */}
-                <div className="relative mb-12 group">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-blue-500 transition-colors" />
-                    <input
-                        type="text"
-                        placeholder={t.searchPlaceholder}
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full bg-card/50 backdrop-blur-md border border-border rounded-[2rem] py-4 pl-12 pr-6 text-sm font-bold focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all shadow-sm"
-                    />
-                </div>
+                {/* Search Bar - Changed from live to button-triggered */}
+                <form onSubmit={handleSearch} className="relative mb-12 flex gap-3">
+                    <div className="relative flex-1 group">
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-blue-500 transition-colors" />
+                        <input
+                            type="text"
+                            placeholder={t.searchPlaceholder}
+                            value={searchInput}
+                            onChange={(e) => setSearchInput(e.target.value)}
+                            className="w-full bg-card/50 backdrop-blur-md border border-border rounded-[2rem] py-4 pl-12 pr-6 text-sm font-bold focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all shadow-sm"
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        className="px-8 py-4 bg-blue-600 text-white rounded-[2rem] font-black text-sm hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20 active:scale-95 whitespace-nowrap"
+                    >
+                        {t.searchBtn}
+                    </button>
+                </form>
 
                 {loading ? (
                     <div className="flex flex-col items-center justify-center py-20 gap-4">
@@ -219,10 +234,10 @@ export default function ReviewBoardPage() {
                                 transition={{ delay: idx * 0.05 }}
                                 className="group relative bg-card/60 backdrop-blur-sm border border-border rounded-[2rem] p-6 hover:border-blue-500/30 hover:bg-card transition-all shadow-sm hover:shadow-xl"
                             >
-                                <div className="flex flex-col sm:flex-row items-start gap-6">
-                                    {/* Spirit Image */}
-                                    <Link href={`/spirits/${review.spiritId}`} className="shrink-0 mx-auto sm:mx-0">
-                                        <div className="w-24 h-32 rounded-2xl bg-secondary overflow-hidden border border-border flex items-center justify-center group-hover:scale-105 transition-transform duration-500 shadow-inner">
+                                <div className="flex flex-row sm:flex-row items-start gap-4 sm:gap-6">
+                                    {/* Spirit Image - Smaller on mobile */}
+                                    <Link href={`/spirits/${review.spiritId}`} className="shrink-0">
+                                        <div className="w-16 h-20 sm:w-24 sm:h-32 rounded-xl sm:rounded-2xl bg-secondary overflow-hidden border border-border flex items-center justify-center group-hover:scale-105 transition-transform duration-500 shadow-inner">
                                             <img
                                                 src={getOptimizedImageUrl(review.imageUrl || getCategoryFallbackImage(review.category), 160)}
                                                 alt={review.spiritName}
@@ -233,26 +248,28 @@ export default function ReviewBoardPage() {
 
                                     {/* Content Area */}
                                     <div className="flex-1 min-w-0 w-full">
-                                        <div className="flex justify-between items-start mb-3">
+                                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
                                             <div>
-                                                <Link href={`/spirits/${review.spiritId}`} className="text-xl font-black hover:text-blue-500 transition-colors block leading-none mb-2">
+                                                <Link href={`/spirits/${review.spiritId}`} className="text-lg sm:text-xl font-black hover:text-blue-500 transition-colors block leading-none mb-1 shadow-sm">
                                                     {review.spiritName}
                                                 </Link>
-                                                <div className="flex flex-wrap items-center gap-2">
-                                                    <div className="flex items-center gap-1.5 text-[11px] font-black text-blue-600 dark:text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded-full border border-blue-500/20">
-                                                        <User className="w-3 h-3" />
-                                                        {review.userName || t.anonymous}
+                                                <div className="flex items-center gap-2 mt-1">
+                                                    <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-black text-blue-600 dark:text-blue-400 bg-blue-500/10 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full border border-blue-500/20">
+                                                        <User className="w-2.5 h-2.5" />
+                                                        <span className="truncate max-w-[80px] sm:max-w-none">
+                                                            {review.userName || t.anonymous}
+                                                        </span>
                                                     </div>
-                                                    <span className="text-[10px] text-muted-foreground font-bold bg-secondary px-2 py-1 rounded-lg">
+                                                    <span className="text-[9px] sm:text-[10px] text-muted-foreground/60 font-bold whitespace-nowrap">
                                                         {new Date(review.createdAt).toLocaleDateString()}
                                                     </span>
                                                 </div>
                                             </div>
 
-                                            {/* Score Display */}
-                                            <div className="shrink-0 flex flex-col items-center justify-center w-14 h-14 bg-gradient-to-br from-amber-400/20 to-orange-500/20 rounded-2xl border border-amber-500/20">
-                                                <div className="text-[9px] font-black text-amber-600 dark:text-amber-400 leading-none mb-0.5">{t.score}</div>
-                                                <div className="text-xl font-black text-amber-700 dark:text-amber-300">{(review.rating || 0).toFixed(1)}</div>
+                                            {/* Score Display - Compact on all screens */}
+                                            <div className="shrink-0 flex sm:flex-col items-center justify-center px-3 py-1.5 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 rounded-xl sm:rounded-2xl border border-blue-500/10 self-start sm:self-center gap-2 sm:gap-0">
+                                                <div className="text-[9px] font-black text-blue-600 dark:text-blue-400 leading-none sm:mb-0.5">{t.score}</div>
+                                                <div className="text-base sm:text-xl font-black text-indigo-700 dark:text-indigo-300">{(review.rating || 0).toFixed(1)}</div>
                                             </div>
                                         </div>
 

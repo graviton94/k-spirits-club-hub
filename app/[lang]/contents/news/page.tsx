@@ -23,6 +23,7 @@ export default function NewsContentPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalCount, setTotalCount] = useState(0);
     const [pageMarkers, setPageMarkers] = useState<Record<number, QueryDocumentSnapshot<DocumentData> | null>>({});
+    const [searchInput, setSearchInput] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
 
     const pageSize = 10;
@@ -33,6 +34,7 @@ export default function NewsContentPage() {
         title: isEn ? "Global Spirits News" : "글로벌 주류 뉴스",
         desc: isEn ? "In-depth spirits industry reports analyzed by AI." : "AI가 엄선하고 분석한 주류 업계 심층 리포트",
         searchPlaceholder: isEn ? "Search news titles or content..." : "뉴스 제목이나 내용을 검색해보세요...",
+        searchBtn: isEn ? "Search" : "검색",
         loading: isEn ? "Fetching latest news..." : "소식을 불러오는 중...",
         noResult: isEn ? "No search results found." : "검색 결과가 없습니다.",
         noNews: isEn ? "No news collected yet." : "수집된 뉴스가 없습니다.",
@@ -61,14 +63,15 @@ export default function NewsContentPage() {
             const newsPath = getAppPath().news;
             let q;
 
+            // Note: Using 'date' as per newsDb.getLatest implementation
             if (page === 1) {
-                q = query(collection(db, newsPath), orderBy('publishedAt', 'desc'), limit(pageSize));
+                q = query(collection(db, newsPath), orderBy('date', 'desc'), limit(pageSize));
             } else {
                 const prevDoc = pageMarkers[page - 1];
                 if (prevDoc) {
-                    q = query(collection(db, newsPath), orderBy('publishedAt', 'desc'), startAfter(prevDoc), limit(pageSize));
+                    q = query(collection(db, newsPath), orderBy('date', 'desc'), startAfter(prevDoc), limit(pageSize));
                 } else {
-                    q = query(collection(db, newsPath), orderBy('publishedAt', 'desc'), limit(page * pageSize));
+                    q = query(collection(db, newsPath), orderBy('date', 'desc'), limit(page * pageSize));
                 }
             }
 
@@ -103,6 +106,11 @@ export default function NewsContentPage() {
         });
     }, [news, searchQuery, lang]);
 
+    const handleSearch = (e?: React.FormEvent) => {
+        e?.preventDefault();
+        setSearchQuery(searchInput);
+    };
+
     const totalPages = Math.ceil(totalCount / pageSize);
 
     const handleDelete = async (id: string) => {
@@ -130,17 +138,25 @@ export default function NewsContentPage() {
                     </motion.div>
                 </div>
 
-                {/* Search Bar */}
-                <div className="relative mb-12 group">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-indigo-500 transition-colors" />
-                    <input
-                        type="text"
-                        placeholder={t.searchPlaceholder}
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full bg-card/50 backdrop-blur-sm border border-border rounded-2xl py-3.5 pl-11 pr-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all shadow-sm"
-                    />
-                </div>
+                {/* Search Bar - Changed from live to button-triggered */}
+                <form onSubmit={handleSearch} className="relative mb-12 flex gap-2">
+                    <div className="relative flex-1 group">
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-indigo-500 transition-colors" />
+                        <input
+                            type="text"
+                            placeholder={t.searchPlaceholder}
+                            value={searchInput}
+                            onChange={(e) => setSearchInput(e.target.value)}
+                            className="w-full bg-card/50 backdrop-blur-sm border border-border rounded-2xl py-3.5 pl-11 pr-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all shadow-sm"
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        className="px-6 py-3.5 bg-indigo-600 text-white rounded-2xl font-black text-sm hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-500/20 active:scale-95 whitespace-nowrap"
+                    >
+                        {t.searchBtn}
+                    </button>
+                </form>
 
                 {loading ? (
                     <div className="flex flex-col items-center justify-center py-20 gap-4">
@@ -175,7 +191,7 @@ export default function NewsContentPage() {
                                         {item.source}
                                     </span>
                                     <span className="text-muted-foreground text-[10px] font-medium">
-                                        {item.publishedAt?.split('T')[0]}
+                                        {item.date?.split('T')[0]}
                                     </span>
                                 </div>
 

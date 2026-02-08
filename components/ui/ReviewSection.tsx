@@ -69,7 +69,7 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
     if (!confirm('정말로 이 리뷰를 삭제하시겠습니까?')) return;
 
     try {
-      const response = await fetch(`/api/reviews?spiritId=${spiritId}`, {
+      const response = await fetch(`/api/reviews?spiritId=${spiritId}&userId=${review.userId}`, {
         method: 'DELETE',
         headers: {
           'x-user-id': user.uid
@@ -77,14 +77,25 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
       });
 
       if (response.ok) {
-        setLiveReviews(prev => prev.filter(r => r.userId !== user.uid));
-        setToast({ message: '리뷰가 삭제되었습니다.', variant: 'success' });
+        setLiveReviews(prev => prev.filter(r => r.userId !== review.userId));
+        setToast({
+          message: isEn ? 'Review deleted successfully.' : '리뷰가 삭제되었습니다.',
+          variant: 'success'
+        });
+        // Dispatch event to sync other components
+        window.dispatchEvent(new CustomEvent('reviewDeleted'));
       } else {
-        setToast({ message: '리뷰 삭제에 실패했습니다.', variant: 'error' });
+        setToast({
+          message: isEn ? 'Failed to delete review.' : '리뷰 삭제에 실패했습니다.',
+          variant: 'error'
+        });
       }
     } catch (error) {
       console.error('Delete review error:', error);
-      setToast({ message: '오류가 발생했습니다.', variant: 'error' });
+      setToast({
+        message: isEn ? 'An error occurred.' : '오류가 발생했습니다.',
+        variant: 'error'
+      });
     }
   };
 

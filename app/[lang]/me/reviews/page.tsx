@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 export const runtime = 'edge';
 import { useAuth } from '@/app/[lang]/context/auth-context';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { getCategoryFallbackImage } from '@/lib/utils/image-fallback';
 import { getOptimizedImageUrl } from '@/lib/utils/image-optimization';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -29,6 +29,10 @@ interface SpiritWithReview {
 export default function ReviewsPage() {
   const { user, loading } = useAuth();
   const router = useRouter();
+  const params = useParams();
+  const lang = (params?.lang as string) || 'ko';
+  const isEn = lang === 'en';
+
   const [spirits, setSpirits] = useState<SpiritWithReview[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [deleteTarget, setDeleteTarget] = useState<SpiritWithReview | null>(null);
@@ -103,7 +107,7 @@ export default function ReviewsPage() {
     setIsDeleting(true);
     try {
       // Use the review API endpoint to delete the review properly
-      const response = await fetch(`/api/reviews?spiritId=${deleteTarget.id}`, {
+      const response = await fetch(`/api/reviews?spiritId=${deleteTarget.id}&userId=${user.uid}`, {
         method: 'DELETE',
         headers: {
           'x-user-id': user.uid
@@ -122,12 +126,12 @@ export default function ReviewsPage() {
       // Dispatch event to notify LiveReviews component to refresh
       window.dispatchEvent(new CustomEvent('reviewDeleted'));
 
-      setToastMessage('리뷰가 삭제되었습니다.');
+      setToastMessage(isEn ? 'Review deleted successfully.' : '리뷰가 삭제되었습니다.');
       setToastVariant('success');
       setShowToast(true);
     } catch (error) {
       console.error('Failed to delete review:', error);
-      setToastMessage('삭제에 실패했습니다. 다시 시도해주세요.');
+      setToastMessage(isEn ? 'Failed to delete. Please try again.' : '삭제에 실패했습니다. 다시 시도해주세요.');
       setToastVariant('error');
       setShowToast(true);
     } finally {
@@ -140,43 +144,58 @@ export default function ReviewsPage() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="text-4xl mb-4">🥃</div>
-          <p className="text-muted-foreground">로딩 중...</p>
+          <p className="text-muted-foreground">{isEn ? 'Loading...' : '로딩 중...'}</p>
         </div>
       </div>
     );
   }
+
+  const t = {
+    back: isEn ? 'Back' : '뒤로가기',
+    title: isEn ? 'My Reviews' : '내가 쓴 리뷰',
+    totalPrefix: isEn ? 'Total' : '총',
+    totalSuffix: isEn ? 'reviews' : '개의 리뷰',
+    emptyTitle: isEn ? 'No reviews found' : '작성한 리뷰가 없습니다',
+    emptyDesc: isEn ? 'Start your first spirit review!' : '술을 마시고 첫 리뷰를 작성해보세요!',
+    explore: isEn ? 'Explore Spirits →' : '술 탐색하기 →',
+    deleteTitle: isEn ? 'Delete Review' : '리뷰 삭제',
+    deleteConfirm: isEn ? 'Are you sure you want to delete this review? This cannot be undone.' : '이 리뷰를 삭제하시겠습니까? 삭제된 리뷰는 복구할 수 없습니다.',
+    cancel: isEn ? 'Cancel' : '취소',
+    delete: isEn ? 'Delete' : '삭제하기',
+    deleting: isEn ? 'Deleting...' : '삭제 중...'
+  };
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl">
       {/* Header */}
       <div className="mb-8">
         <Link
-          href="/me"
+          href={`/${lang}/me`}
           className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-4"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span className="text-sm font-bold">뒤로가기</span>
+          <span className="text-sm font-bold">{t.back}</span>
         </Link>
 
         <h1 className="text-3xl font-black mb-2 bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">
-          내가 쓴 리뷰
+          {t.title}
         </h1>
-        <p className="text-muted-foreground">총 {spirits.length}개의 리뷰</p>
+        <p className="text-muted-foreground">{t.totalPrefix} {spirits.length}{t.totalSuffix}</p>
       </div>
 
       {/* Reviews List */}
       {spirits.length === 0 ? (
         <div className="text-center py-20">
           <div className="text-6xl mb-4">📝</div>
-          <h2 className="text-xl font-bold mb-2">작성한 리뷰가 없습니다</h2>
+          <h2 className="text-xl font-bold mb-2">{t.emptyTitle}</h2>
           <p className="text-muted-foreground mb-6">
-            술을 마시고 첫 리뷰를 작성해보세요!
+            {t.emptyDesc}
           </p>
           <Link
-            href="/explore"
+            href={`/${lang}/explore`}
             className="inline-block px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold rounded-xl transition-all shadow-lg"
           >
-            술 탐색하기 →
+            {t.explore}
           </Link>
         </div>
       ) : (
@@ -323,15 +342,14 @@ export default function ReviewsPage() {
                 </div>
 
                 <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2">
-                  리뷰 삭제
+                  {t.deleteTitle}
                 </h2>
 
                 <p className="text-slate-500 dark:text-slate-400 mb-8 text-sm leading-relaxed">
                   <span className="font-bold text-slate-900 dark:text-white block text-base mb-1">
                     "{deleteTarget.name}"
                   </span>
-                  이 리뷰를 삭제하시겠습니까?<br />
-                  삭제된 리뷰는 복구할 수 없습니다.
+                  {t.deleteConfirm}
                 </p>
 
                 <div className="flex gap-3 w-full">
@@ -340,14 +358,14 @@ export default function ReviewsPage() {
                     disabled={isDeleting}
                     className="flex-1 py-3.5 px-4 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-2xl transition-all active:scale-[0.98]"
                   >
-                    취소
+                    {t.cancel}
                   </button>
                   <button
                     onClick={handleDeleteReview}
                     disabled={isDeleting}
                     className="flex-1 py-3.5 px-4 bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 text-white shadow-lg shadow-rose-500/30 font-bold rounded-2xl transition-all active:scale-[0.98]"
                   >
-                    {isDeleting ? '삭제 중...' : '삭제하기'}
+                    {isDeleting ? t.deleting : t.delete}
                   </button>
                 </div>
               </div>
