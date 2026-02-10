@@ -85,6 +85,13 @@ export interface SpiritEnrichmentInput {
 }
 
 /**
+ * Helper to strip Markdown code blocks
+ */
+function cleanJsonText(text: string): string {
+    return text.replace(/```json|```/g, '').trim();
+}
+
+/**
  * STEP 1: AUDIT & IDENTITY
  * Uses Google Search to verify official product details.
  */
@@ -92,11 +99,11 @@ export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<En
     if (!API_KEY) throw new Error("GEMINI_API_KEY is not set");
     const genAI = new GoogleGenerativeAI(API_KEY);
     
-    // ✅ ENABLE SEARCH TOOL
+    // ✅ ENABLE SEARCH TOOL + REMOVE strict JSON config
     const model = genAI.getGenerativeModel({ 
         model: MODEL_ID, 
         tools: [{ googleSearch: {} }],
-        generationConfig: { responseMimeType: "application/json", temperature: 0.1 } 
+        generationConfig: { temperature: 0.1 } // Removed responseMimeType
     });
 
     const validSubcategories = CATEGORY_SUBCATEGORIES[spirit.category] || [];
@@ -107,30 +114,20 @@ export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<En
     const prompt = `
     🔍 **STRICT AUDIT PROTOCOL: OFFICIAL VERIFICATION REQUIRED**
     
-    You are a Data Compliance Officer for a global spirits database.
-    Your mandate is to verify product metadata against OFFICIAL SOURCES using Google Search.
+    You are a Data Compliance Officer. Verify metadata using Google Search.
     
-    ### TARGET PRODUCT:
-    - Name: "${spirit.name}"
-    - Category: ${spirit.category}
-    - Input Subcategory: ${spirit.subcategory || 'Unknown'}
-    - Input Producer: ${spirit.distillery || 'Unknown'}
+    TARGET: "${spirit.name}" (${spirit.category})
+    INPUTS: Subcat=${spirit.subcategory || 'Unknown'}, Producer=${spirit.distillery || 'Unknown'}
     
     ${subcategoryGuidance}
 
-    ### SEARCH EXECUTION STEPS:
-    1. **Identify the Official Entity**: Search for the official distillery/brewery website.
-    2. **Verify Brand Name**: Find the clean consumer brand name (e.g., "Macallan" not "The Macallan Distillers Ltd").
-    3. **Locate Origin**: Find the specific City/Region of production (e.g., "Speyside", "Kyoto").
-    4. **Subcategory Match**: Align the product with the *Valid Subcategories* list based on technical classification.
+    TASKS:
+    1. Find official distillery website.
+    2. Get clean brand name and specific region (City/District).
+    3. Match Subcategory strictly.
     
-    ### OUTPUT RULES:
-    - **name_en**: MUST be English. No Korean. Official label name.
-    - **distillery**: Remove legal suffixes (Ltd, Inc, Co). Use Title Case.
-    - **region**: Specific region (e.g., "Bordeaux", "Highlands"), not just "France" or "Scotland".
-    - **subcategory**: Must exactly match a valid option if applicable.
-    
-    ### OUTPUT JSON SCHEMA:
+    OUTPUT FORMAT:
+    Return ONLY a valid JSON object. No Markdown. No Preamble.
     {
       "name_en": "Official English Name",
       "category": "${spirit.category}",
@@ -145,13 +142,11 @@ export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<En
     try {
         const result = await model.generateContent(prompt);
         const text = result.response.text();
-        const cleanJson = text.replace(/```json|```/g, '').trim();
-        const parsed = JSON.parse(cleanJson);
-        const data = Array.isArray(parsed) ? parsed[0] : parsed;
+        const cleanJson = cleanJsonText(text);
+        const data = JSON.parse(cleanJson);
 
         // Validation: Ensure name_en has no Korean
         if (data.name_en && /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(data.name_en)) {
-             // Fallback cleanup if search returned Korean
              data.name_en = data.name_en.replace(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, '').trim();
         }
 
@@ -163,7 +158,6 @@ export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<En
         return data;
     } catch (e: any) {
         console.error('[Gemini Identity] ❌ Error:', e);
-        // Fallback to input data on failure
         return {
             name_en: spirit.name_en || spirit.name,
             category: spirit.category,
@@ -184,38 +178,31 @@ export async function generateSensoryProfile(spirit: SpiritEnrichmentInput): Pro
     if (!API_KEY) throw new Error("GEMINI_API_KEY is not set");
     const genAI = new GoogleGenerativeAI(API_KEY);
     
-    // ✅ ENABLE SEARCH TOOL
+    // ✅ ENABLE SEARCH TOOL + REMOVE strict JSON config
     const model = genAI.getGenerativeModel({ 
         model: MODEL_ID, 
         tools: [{ googleSearch: {} }],
-        generationConfig: { responseMimeType: "application/json", temperature: 0.3 } 
+        generationConfig: { temperature: 0.3 } 
     });
 
     const prompt = `
-    🔍 **GLOBAL SENSORY CONSENSUS: AGGREGATE REAL REVIEWS**
+    🔍 **GLOBAL SENSORY CONSENSUS**
     
-    You are a Master Blender aggregating sensory data from global platforms (Vivino, Distiller, Whisky Advocate, RateBeer).
-    Do NOT hallucinate. You must find the *consensus* of flavors from real user and professional reviews.
+    Aggregate reviews for: "${spirit.name}" (${spirit.category})
+    Source: Vivino, Distiller, Whisky Advocate, RateBeer.
     
-    TARGET PRODUCT: "${spirit.name}" (${spirit.category})
+    TASKS:
+    1. Find consensus on flavors (ignore outliers).
+    2. Extract 5-7 distinct tags for Nose, Palate, Finish.
     
-    ### ANALYSIS PROTOCOL:
-    1. **Search**: Query for "${spirit.name} tasting notes", "flavor profile", and "reviews".
-    2. **Consensus**: Identify descriptors mentioned by *multiple* sources. Ignore outliers.
-    3. **Tags**: Extract 5-7 distinct tags for Nose, Palate, and Finish. Use specific adjectives (e.g., "Burnt Sugar" vs "Sugar").
-    
-    ### WRITING REQUIREMENTS:
-    - **description_en**: Professional summary (4 sentences). Origin -> Key Flavors -> Texture -> Finish.
-    - **description_ko**: High-quality Korean translation using sommelier vocabulary (e.g., "풍부한", "복합적인").
-    - **tasting_note**: A narrative Korean tasting guide (Appearance -> Nose -> Palate -> Finish).
-    
-    ### OUTPUT JSON SCHEMA:
+    OUTPUT FORMAT:
+    Return ONLY a valid JSON object. No Markdown.
     {
-      "description_ko": "Korean Description",
-      "description_en": "English Description",
-      "nose_tags": ["Tag1", "Tag2", ...],
-      "palate_tags": ["Tag1", "Tag2", ...],
-      "finish_tags": ["Tag1", "Tag2", ...],
+      "description_ko": "Korean Description (4 sentences)",
+      "description_en": "English Description (4 sentences)",
+      "nose_tags": ["Tag1", "Tag2"],
+      "palate_tags": ["Tag1", "Tag2"],
+      "finish_tags": ["Tag1", "Tag2"],
       "tasting_note": "Narrative Tasting Note in Korean"
     }
     `;
@@ -223,9 +210,8 @@ export async function generateSensoryProfile(spirit: SpiritEnrichmentInput): Pro
     try {
         const result = await model.generateContent(prompt);
         const text = result.response.text();
-        const cleanJson = text.replace(/```json|```/g, '').trim();
-        const parsed = JSON.parse(cleanJson);
-        return Array.isArray(parsed) ? parsed[0] : parsed;
+        const cleanJson = cleanJsonText(text);
+        return JSON.parse(cleanJson);
     } catch (e: any) {
         console.error('[Gemini Sensory] ❌ Error:', e);
         throw new Error(`Sensory analysis failed: ${e.message}`);
@@ -240,42 +226,39 @@ export async function generatePairingGuide(spirit: SpiritEnrichmentInput): Promi
     if (!API_KEY) throw new Error("GEMINI_API_KEY is not set");
     const genAI = new GoogleGenerativeAI(API_KEY);
     
-    // ✅ ENABLE SEARCH TOOL
+    // ✅ ENABLE SEARCH TOOL + REMOVE strict JSON config
     const model = genAI.getGenerativeModel({ 
         model: MODEL_ID, 
         tools: [{ googleSearch: {} }],
-        generationConfig: { responseMimeType: "application/json", temperature: 0.5 } 
+        generationConfig: { temperature: 0.5 } 
     });
 
     const prompt = `
-    🔍 **GASTRONOMIC PAIRING ENGINE: NO CLICHES ALLOWED**
+    🔍 **GASTRONOMIC PAIRING ENGINE**
     
-    You are a Michelin-star Sommelier.
-    Generate specific pairings based on FLAVOR CHEMISTRY and REGIONAL TRADITION.
+    Generate pairings for: "${spirit.name}" (${spirit.category})
+    Region: ${spirit.region || 'Unknown'}
     
-    TARGET: "${spirit.name}" (${spirit.category})
-    REGION: ${spirit.region || 'Unknown'}
-    
-    ### STRICT PROHIBITIONS:
+    STRICT PROHIBITIONS:
     ${CLICHE_BAN_LIST}
     
-    ### PAIRING LOGIC (SEARCH REQUIRED):
-    1. **Regional Match (Terroir)**: A specific dish from the spirit's exact origin region (e.g., "Haggis" for Highland Scotch, not just "Meat").
-    2. **Flavor Bridge (Modern)**: A pairing that contrasts or complements the dominant notes found in the sensory analysis.
+    TASKS:
+    1. Pairing A: Regional/Terroir match (Specific dish from origin).
+    2. Pairing B: Flavor Bridge (Modern/Contrast).
     
-    ### OUTPUT JSON SCHEMA:
+    OUTPUT FORMAT:
+    Return ONLY a valid JSON object. No Markdown.
     {
-      "pairing_guide_ko": "Detailed explanation of 2 distinct pairings in Korean. Explain WHY they work.",
-      "pairing_guide_en": "Detailed explanation of 2 distinct pairings in English."
+      "pairing_guide_ko": "Detailed explanation in Korean",
+      "pairing_guide_en": "Detailed explanation in English"
     }
     `;
 
     try {
         const result = await model.generateContent(prompt);
         const text = result.response.text();
-        const cleanJson = text.replace(/```json|```/g, '').trim();
-        const parsed = JSON.parse(cleanJson);
-        return Array.isArray(parsed) ? parsed[0] : parsed;
+        const cleanJson = cleanJsonText(text);
+        return JSON.parse(cleanJson);
     } catch (e: any) {
         console.error('[Gemini Pairing] ❌ Error:', e);
         throw new Error(`Pairing guide generation failed: ${e.message}`);
