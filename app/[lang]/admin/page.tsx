@@ -288,6 +288,54 @@ export default function AdminDashboard() {
         }
     };
 
+    const generatePairingOnly = async () => {
+        if (!editingId) return;
+        setIsProcessing(true);
+        try {
+            const res = await fetch('/api/admin/spirits/ai/pairing', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: editForm.name,
+                    category: editForm.category,
+                    subcategory: editForm.subcategory,
+                    distillery: editForm.distillery,
+                    abv: editForm.abv,
+                    region: editForm.region,
+                    country: editForm.country,
+                    name_en: editForm.name_en,
+                    nose_tags: editForm.nose_tags.split(',').map(t => t.trim()).filter(Boolean),
+                    palate_tags: editForm.palate_tags.split(',').map(t => t.trim()).filter(Boolean),
+                    finish_tags: editForm.finish_tags.split(',').map(t => t.trim()).filter(Boolean),
+                    pairing_guide_ko: editForm.pairing_guide_ko,
+                    pairing_guide_en: editForm.pairing_guide_en
+                })
+            });
+
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.error || 'Pairing generation failed');
+            }
+
+            const data = await res.json();
+            if (data.success && data.pairingData) {
+                setEditForm({
+                    ...editForm,
+                    pairing_guide_ko: data.pairingData.pairing_guide_ko,
+                    pairing_guide_en: data.pairingData.pairing_guide_en
+                });
+                alert('✨ 페어링 가이드 생성 완료!');
+            } else {
+                throw new Error(data.error || 'Unknown error');
+            }
+        } catch (e: any) {
+            alert(`페어링 생성 중 오류: ${e.message}`);
+            console.error('Pairing error:', e);
+        } finally {
+            setIsProcessing(false);
+        }
+    };
+
     const totalPages = Math.ceil(totalCount / pageSize);
 
     return (
@@ -686,7 +734,16 @@ export default function AdminDashboard() {
 
                             {/* Pairing Guide */}
                             <section className="space-y-3 pt-4 border-t">
-                                <h3 className="text-sm font-bold bg-gray-100 dark:bg-gray-900 px-3 py-1 rounded-lg inline-block">페어링 가이드</h3>
+                                <div className="flex justify-between items-center">
+                                    <h3 className="text-sm font-bold bg-gray-100 dark:bg-gray-900 px-3 py-1 rounded-lg inline-block">페어링 가이드</h3>
+                                    <button
+                                        disabled={isProcessing}
+                                        onClick={generatePairingOnly}
+                                        className="text-[10px] font-black bg-purple-600 text-white px-3 py-1 rounded-lg hover:bg-purple-500 disabled:opacity-30"
+                                    >
+                                        ✨ 페어링만 생성 (현재 정보 기반)
+                                    </button>
+                                </div>
                                 <div>
                                     <label className="text-[10px] font-black uppercase text-gray-400">한글</label>
                                     <textarea
