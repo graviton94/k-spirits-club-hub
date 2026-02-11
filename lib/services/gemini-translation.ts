@@ -532,13 +532,20 @@ export async function generatePairingGuide(spirit: SpiritEnrichmentInput): Promi
     - Region: ${spirit.region || 'Unknown'}
     - Country: ${spirit.country || 'Unknown'}
     
+    ${spirit.description_en || spirit.description_ko ? `
     ### PRODUCT DESCRIPTION (USE THIS AS PRIMARY REFERENCE):
-    ${spirit.description_en || spirit.description_ko || 'No description available'}
+    ${spirit.description_en || spirit.description_ko}
     
-    ### FLAVOR PROFILE:
+    ### FLAVOR PROFILE (SECONDARY REFERENCE):
     - Nose: ${spirit.nose_tags?.join(', ') || 'Unknown'}
     - Palate: ${spirit.palate_tags?.join(', ') || 'Unknown'}
     - Finish: ${spirit.finish_tags?.join(', ') || 'Unknown'}
+    ` : `
+    ### FLAVOR PROFILE (PRIMARY REFERENCE):
+    - Nose: ${spirit.nose_tags?.join(', ') || 'Unknown'}
+    - Palate: ${spirit.palate_tags?.join(', ') || 'Unknown'}
+    - Finish: ${spirit.finish_tags?.join(', ') || 'Unknown'}
+    `}
     
     ### EXISTING PAIRINGS (DO NOT REPEAT):
     ${existingPairings?.join('\n') || 'None'}
@@ -548,6 +555,7 @@ export async function generatePairingGuide(spirit: SpiritEnrichmentInput): Promi
 
     ### WEB SEARCH STEPS:
     
+    ${spirit.description_en || spirit.description_ko ? `
     **STEP 1: ANALYZE THE DESCRIPTION**
     - Read the product description carefully to understand the flavor profile
     - Identify key flavor notes, texture, and characteristics mentioned
@@ -568,6 +576,28 @@ export async function generatePairingGuide(spirit: SpiritEnrichmentInput): Promi
     - DO NOT use banned clichés
     - Explain WHY each pairing works based on the description's flavor notes (2-3 sentences each)
     - Reference specific flavors from the description when explaining pairings
+    ` : `
+    **STEP 1: ANALYZE THE FLAVOR PROFILE**
+    - Study the flavor tags carefully to understand the spirit's characteristics
+    - Identify key flavor notes from nose, palate, and finish
+    - Use these as your PRIMARY guide for pairing recommendations
+    
+    **STEP 2: SEARCH FOR PAIRING RECOMMENDATIONS**
+    - Google: "${spirit.name}" + "food pairing" OR "what to eat with"
+    - Check sommelier blogs, distillery websites, wine pairing guides
+    - Reddit threads, food & wine magazines
+    - Find pairings that complement the flavor profile
+    
+    **STEP 3: SELECT TWO PAIRINGS**
+    From your web search, select TWO unique pairings based on the flavor tags:
+    1. **Terroir Pairing**: Traditional dish from the spirit's region/country (if available)
+    2. **Creative Pairing**: Innovative pairing recommended by sommeliers/experts that complements the flavor profile
+    
+    - DO NOT repeat any dishes from "EXISTING PAIRINGS" above
+    - DO NOT use banned clichés
+    - Explain WHY each pairing works based on the flavor tags (2-3 sentences each)
+    - Reference specific flavors from the tags when explaining pairings
+    `}
     
     ### OUTPUT JSON SCHEMA:
     {
