@@ -336,6 +336,52 @@ export default function AdminDashboard() {
         }
     };
 
+    const generateDescriptionOnly = async () => {
+        if (!editingId) return;
+        setIsProcessing(true);
+        try {
+            const res = await fetch('/api/admin/spirits/ai/description', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: editForm.name,
+                    category: editForm.category,
+                    subcategory: editForm.subcategory,
+                    distillery: editForm.distillery,
+                    abv: editForm.abv,
+                    region: editForm.region,
+                    country: editForm.country,
+                    name_en: editForm.name_en,
+                    nose_tags: editForm.nose_tags.split(',').map(t => t.trim()).filter(Boolean),
+                    palate_tags: editForm.palate_tags.split(',').map(t => t.trim()).filter(Boolean),
+                    finish_tags: editForm.finish_tags.split(',').map(t => t.trim()).filter(Boolean)
+                })
+            });
+
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.error || 'Description generation failed');
+            }
+
+            const data = await res.json();
+            if (data.success && data.descriptionData) {
+                setEditForm({
+                    ...editForm,
+                    description_ko: data.descriptionData.description_ko,
+                    description_en: data.descriptionData.description_en
+                });
+                alert('✨ 설명 생성 완료!');
+            } else {
+                throw new Error(data.error || 'Unknown error');
+            }
+        } catch (e: any) {
+            alert(`설명 생성 중 오류: ${e.message}`);
+            console.error('Description error:', e);
+        } finally {
+            setIsProcessing(false);
+        }
+    };
+
     const totalPages = Math.ceil(totalCount / pageSize);
 
     return (
@@ -711,7 +757,16 @@ export default function AdminDashboard() {
 
                             {/* Descriptions */}
                             <section className="space-y-3 pt-4 border-t">
-                                <h3 className="text-sm font-bold bg-gray-100 dark:bg-gray-900 px-3 py-1 rounded-lg inline-block">설명</h3>
+                                <div className="flex justify-between items-center">
+                                    <h3 className="text-sm font-bold bg-gray-100 dark:bg-gray-900 px-3 py-1 rounded-lg inline-block">설명</h3>
+                                    <button
+                                        disabled={isProcessing}
+                                        onClick={generateDescriptionOnly}
+                                        className="text-[10px] font-black bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-500 disabled:opacity-30"
+                                    >
+                                        ✨ 설명만 생성 (현재 정보 기반)
+                                    </button>
+                                </div>
                                 <div>
                                     <label className="text-[10px] font-black uppercase text-gray-400">한글 설명</label>
                                     <textarea
