@@ -5,6 +5,7 @@ import {
     auditSpiritInfo,
     generateSensoryData,
     generatePairingGuide,
+    generateDescriptionOnly,
     type SpiritEnrichmentInput
 } from '@/lib/services/gemini-translation';
 
@@ -29,6 +30,9 @@ export async function POST(req: NextRequest) {
                 break;
             case 'pairing':
                 result = await generatePairingGuide(spiritInput);
+                break;
+            case 'description':
+                result = await generateDescriptionOnly(spiritInput);
                 break;
             default:
                 return NextResponse.json({ error: 'Invalid stage' }, { status: 400 });
