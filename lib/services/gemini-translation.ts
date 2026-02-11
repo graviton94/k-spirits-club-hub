@@ -430,6 +430,82 @@ export async function generateSensoryProfile(spirit: SpiritEnrichmentInput): Pro
 }
 
 /**
+ * NEW: DESCRIPTION ONLY GENERATION
+ * Generates only Korean and English descriptions based on current product info.
+ */
+export async function generateDescriptionOnly(spirit: SpiritEnrichmentInput): Promise<{ description_ko: string; description_en: string }> {
+    if (!API_KEY) throw new Error("GEMINI_API_KEY is not set");
+    const genAI = new GoogleGenerativeAI(API_KEY);
+    const model = genAI.getGenerativeModel({ model: MODEL_ID, generationConfig: { responseMimeType: "application/json", temperature: 0.8 } });
+
+    const prompt = `
+    🔍 **SEARCH THE WEB FOR USER REVIEWS & PRODUCT INFORMATION**
+    
+    You are a spirits critic compiling objective descriptions from real sources.
+    
+    ### PRODUCT TO RESEARCH:
+    - Product: "${spirit.name}"
+    - Type: ${spirit.category} / ${spirit.subcategory || ''}
+    - ABV: ${spirit.abv}%
+    - Distillery: ${spirit.distillery || 'Unknown'}
+    - Region: ${spirit.region || 'Unknown'}
+    - Country: ${spirit.country || 'Unknown'}
+    - Flavor Tags (Nose): ${spirit.nose_tags?.join(', ') || 'None'}
+    - Flavor Tags (Palate): ${spirit.palate_tags?.join(', ') || 'None'}
+    - Flavor Tags (Finish): ${spirit.finish_tags?.join(', ') || 'None'}
+
+    ### MANDATORY WEB SEARCH STEPS:
+    
+    **STEP 1: SEARCH FOR REVIEWS & INFORMATION**
+    Search these sources:
+    - Google: "${spirit.name}" + "review" OR "tasting notes"
+    - Official distillery/winery websites, product pages
+    - Whisky Advocate, Wine Enthusiast, Vivino, Distiller, Master of Malt
+    - Reddit, user forums, rating sites
+    
+    **STEP 2: WRITE RICH, DETAILED DESCRIPTIONS**
+    Based on the reviews and information you found, create comprehensive descriptions:
+    
+    **description_en (4-5 sentences in English)**:
+    - Sentence 1: Production method, origin, or unique characteristics
+    - Sentence 2-3: Key flavor profile incorporating the provided flavor tags
+    - Sentence 4: Mouthfeel, texture, or finish characteristics
+    - Sentence 5: Overall impression or recommended drinking style
+    
+    **description_ko (4-5 sentences in Korean)**:
+    - Same structure as English, translated with professional tone
+    - Use rich vocabulary and descriptive language
+    - Incorporate the flavor tags naturally into the description
+    
+    ### OUTPUT RULES:
+    - Descriptions must be RICH and DETAILED (minimum 4-5 sentences each)
+    - Use specific, evocative language - avoid generic phrases
+    - Naturally incorporate the provided flavor tags into the descriptions
+    - If you cannot find reviews, research the spirit type and create educated descriptions based on category characteristics
+    
+    ### OUTPUT JSON SCHEMA:
+    {
+      "description_ko": "Detailed Korean description (4-5 sentences, rich vocabulary)",
+      "description_en": "Detailed English description (4-5 sentences, professional)"
+    }
+    `;
+
+    try {
+        const result = await model.generateContent(prompt);
+        const text = result.response.text();
+        const cleanJson = text.replace(/```json|```/g, '').trim();
+        const parsed = JSON.parse(cleanJson);
+        const data = Array.isArray(parsed) ? parsed[0] : parsed;
+
+        console.log('[Gemini Description] Generated descriptions:', data);
+        return data;
+    } catch (e: any) {
+        console.error('[Gemini Description] ❌ Error:', e);
+        throw new Error(`Description generation failed: ${e.message}`);
+    }
+}
+
+/**
  * STEP 3: PAIRING GUIDE
  * Generates food pairing recommendations.
  */
@@ -456,6 +532,14 @@ export async function generatePairingGuide(spirit: SpiritEnrichmentInput): Promi
     - Region: ${spirit.region || 'Unknown'}
     - Country: ${spirit.country || 'Unknown'}
     
+    ### PRODUCT DESCRIPTION (USE THIS AS PRIMARY REFERENCE):
+    ${spirit.description_en || spirit.description_ko || 'No description available'}
+    
+    ### FLAVOR PROFILE:
+    - Nose: ${spirit.nose_tags?.join(', ') || 'Unknown'}
+    - Palate: ${spirit.palate_tags?.join(', ') || 'Unknown'}
+    - Finish: ${spirit.finish_tags?.join(', ') || 'Unknown'}
+    
     ### EXISTING PAIRINGS (DO NOT REPEAT):
     ${existingPairings?.join('\n') || 'None'}
     
@@ -464,19 +548,26 @@ export async function generatePairingGuide(spirit: SpiritEnrichmentInput): Promi
 
     ### WEB SEARCH STEPS:
     
-    **STEP 1: SEARCH FOR PAIRING RECOMMENDATIONS**
+    **STEP 1: ANALYZE THE DESCRIPTION**
+    - Read the product description carefully to understand the flavor profile
+    - Identify key flavor notes, texture, and characteristics mentioned
+    - Use this as your PRIMARY guide for pairing recommendations
+    
+    **STEP 2: SEARCH FOR PAIRING RECOMMENDATIONS**
     - Google: "${spirit.name}" + "food pairing" OR "what to eat with"
     - Check sommelier blogs, distillery websites, wine pairing guides
     - Reddit threads, food & wine magazines
+    - Find pairings that complement the flavors described in the PRODUCT DESCRIPTION
     
-    **STEP 2: SELECT TWO PAIRINGS**
-    From your web search, select TWO unique pairings:
+    **STEP 3: SELECT TWO PAIRINGS**
+    From your web search, select TWO unique pairings that align with the description:
     1. **Terroir Pairing**: Traditional dish from the spirit's region/country (if available)
-    2. **Creative Pairing**: Innovative pairing recommended by sommeliers/experts
+    2. **Creative Pairing**: Innovative pairing recommended by sommeliers/experts that complements the flavor profile described
     
     - DO NOT repeat any dishes from "EXISTING PAIRINGS" above
     - DO NOT use banned clichés
-    - Explain WHY each pairing works (2-3 sentences each)
+    - Explain WHY each pairing works based on the description's flavor notes (2-3 sentences each)
+    - Reference specific flavors from the description when explaining pairings
     
     ### OUTPUT JSON SCHEMA:
     {

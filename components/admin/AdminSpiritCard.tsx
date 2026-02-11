@@ -13,6 +13,7 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
   const [status, setStatus] = useState(spirit.isPublished ? 'published' : 'pending');
   const [isLoading, setIsLoading] = useState(false);
   const [isTranslating, setIsTranslating] = useState(false);
+  const [isGeneratingDescription, setIsGeneratingDescription] = useState(false);
   const [enrichStep, setEnrichStep] = useState<'idle' | 'audit' | 'sensory' | 'pairing'>('idle');
 
   const [nameEn, setNameEn] = useState(spirit.name_en || '');
@@ -99,6 +100,7 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
           name: spirit.name,
           category: auditData.category || category || spirit.category,
           description_en: sensoryData.description_en,
+          description_ko: sensoryData.description_ko,
           nose_tags: sensoryData.nose_tags,
           palate_tags: sensoryData.palate_tags,
           finish_tags: sensoryData.finish_tags
@@ -116,6 +118,42 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
       setErrorMessage(`Enrichment failed at [${enrichStep}]: ${error.message}`);
     } finally {
       setIsTranslating(false);
+    }
+  };
+
+  const handleGenerateDescription = async () => {
+    if (!spirit.name) return;
+    setIsGeneratingDescription(true);
+    setErrorMessage(null);
+    try {
+      const descRes = await fetch('/api/admin/spirits/enrich', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          stage: 'description',
+          name: spirit.name,
+          category: category || spirit.category,
+          subcategory: subcategory || spirit.subcategory,
+          distillery: distillery || spirit.distillery,
+          abv: abv || spirit.abv,
+          region: region || spirit.region,
+          country: country || spirit.country,
+          nose_tags: noseTags,
+          palate_tags: palateTags,
+          finish_tags: finishTags
+        })
+      });
+      if (!descRes.ok) throw new Error('Description generation failed');
+      const descData = await descRes.json();
+      if (descData.description_ko) setDescKo(descData.description_ko);
+      if (descData.description_en) setDescEn(descData.description_en);
+      
+      alert('✨ 설명 생성 완료!');
+    } catch (error: any) {
+      console.error("Description generation failed:", error);
+      setErrorMessage(`Description generation failed: ${error.message}`);
+    } finally {
+      setIsGeneratingDescription(false);
     }
   };
 
@@ -226,6 +264,18 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
                     className="w-full px-3 py-1.5 text-xs border border-border rounded bg-background resize-none"
                   />
                 </div>
+                <button
+                  onClick={handleGenerateDescription}
+                  disabled={isGeneratingDescription || isTranslating || isLoading}
+                  className="w-full py-2 bg-blue-600 shadow-md shadow-blue-500/20 text-white rounded-lg text-xs font-bold hover:bg-blue-700 disabled:opacity-50 flex items-center justify-center gap-2 transition-all active:scale-95"
+                >
+                  {isGeneratingDescription ? (
+                    <>
+                      <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      AI Generating...
+                    </>
+                  ) : '✨ 설명만 생성 (현재 정보 기반)'}
+                </button>
               </div>
 
               {/* Tags Section */}
