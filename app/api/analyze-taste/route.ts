@@ -287,8 +287,15 @@ export async function POST(req: NextRequest) {
         // 6. Save & Response
         console.log('[Analyze Taste] Saving results to DB...');
         
-        // Update previousRecommendations array (limit to last 10)
-        const updatedPreviousRecommendations = previousRecommendations.slice(-9); // Keep last 9
+        // Update previousRecommendations array
+        // Add current recommendation and keep last 10 total
+        const newRecommendation = analysisResult.recommendation?.name;
+        let updatedPreviousRecommendations = [...previousRecommendations];
+        if (newRecommendation) {
+            updatedPreviousRecommendations.push(newRecommendation);
+        }
+        // Keep only the last 10 recommendations
+        updatedPreviousRecommendations = updatedPreviousRecommendations.slice(-10);
         
         const profile = {
             userId,
