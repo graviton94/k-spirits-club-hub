@@ -160,10 +160,6 @@ export async function POST(req: NextRequest) {
             if (existingProfile?.previousRecommendations) {
                 previousRecommendations = existingProfile.previousRecommendations;
             }
-            // Also add current recommendation to the list
-            if (existingProfile?.recommendation?.name) {
-                previousRecommendations = [...previousRecommendations, existingProfile.recommendation.name];
-            }
             console.log(`[Analyze Taste] Previous recommendations: ${previousRecommendations.length} items`);
         } catch (e) {
             console.warn('[Analyze Taste] Could not fetch previous recommendations:', e);
