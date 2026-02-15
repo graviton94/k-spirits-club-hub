@@ -26,12 +26,13 @@ export interface UserTasteProfile {
     keywords: string[];  // 예: ["#피트", "#CS", "#독병"]
   };
   recommendation: {
-    spiritId: string;
+    spiritId?: string;   // Optional: AI 추천시에는 없을 수 있음
     name: string;
     matchRate: number;   // 일치도 (예: 98)
     reason?: string;     // 추천 사유 (AI 생성)
     linkUrl?: string;    // 제휴/구매 링크
   } | null;
+  previousRecommendations?: string[]; // 이전 추천 이름 목록 (중복 방지용)
 }
 
 export interface SpiritSearchIndex {

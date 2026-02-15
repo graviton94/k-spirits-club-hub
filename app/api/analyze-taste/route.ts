@@ -153,7 +153,23 @@ export async function POST(req: NextRequest) {
         const lang = body.lang || 'ko';
         const isEn = lang === 'en';
 
-        const promptData = buildTasteAnalysisPrompt(spiritsForAnalysis, isEn);
+        // Fetch existing profile to get previous recommendations
+        let previousRecommendations: string[] = [];
+        try {
+            const existingProfile = await tasteProfileDb.get(userId);
+            if (existingProfile?.previousRecommendations) {
+                previousRecommendations = existingProfile.previousRecommendations;
+            }
+            // Also add current recommendation to the list
+            if (existingProfile?.recommendation?.name) {
+                previousRecommendations = [...previousRecommendations, existingProfile.recommendation.name];
+            }
+            console.log(`[Analyze Taste] Previous recommendations: ${previousRecommendations.length} items`);
+        } catch (e) {
+            console.warn('[Analyze Taste] Could not fetch previous recommendations:', e);
+        }
+
+        const promptData = buildTasteAnalysisPrompt(spiritsForAnalysis, isEn, previousRecommendations);
         console.log(`[Analyze Taste] Prompt generated (Length: ${promptData?.length})`);
 
         // 프롬프트가 너무 짧으면(분석할 술이 없으면) 에러 처리
@@ -224,21 +240,28 @@ export async function POST(req: NextRequest) {
             ]);
         } catch (aiError: any) {
             console.error('[Analyze Taste] Gemini API Critical Error:', aiError);
+            console.error('[Analyze Taste] Error details:', JSON.stringify(aiError, null, 2));
             return NextResponse.json({
                 error: 'AI Generation Failed',
-                details: aiError.message
+                details: aiError.message || 'Unknown AI error',
+                message: isEn 
+                    ? 'Failed to generate taste analysis. Please try again later.' 
+                    : 'AI 분석 생성에 실패했습니다. 나중에 다시 시도해주세요.'
             }, { status: 500 });
         }
 
         let responseText = '';
         try {
             responseText = result.response.text();
-            console.log('[Analyze Taste] AI Response received (Length: ${responseText.length})');
+            console.log(`[Analyze Taste] AI Response received (Length: ${responseText.length})`);
         } catch (textError: any) {
             console.error('[Analyze Taste] Error extracting text from Gemini response:', textError);
             return NextResponse.json({
                 error: 'AI Output Extraction Failed',
-                details: textError.message
+                details: textError.message,
+                message: isEn 
+                    ? 'Failed to extract AI response. Please try again.' 
+                    : 'AI 응답 추출에 실패했습니다. 다시 시도해주세요.'
             }, { status: 500 });
         }
 
@@ -248,20 +271,30 @@ export async function POST(req: NextRequest) {
             const cleanJson = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
             analysisResult = JSON.parse(cleanJson);
             console.log('[Analyze Taste] JSON Parsing Successful');
+            console.log('[Analyze Taste] Recommended:', analysisResult.recommendation?.name);
         } catch (parseError: any) {
-            console.error('[Analyze Taste] JSON Parse Failed. Raw text samples:', responseText.substring(0, 100));
+            console.error('[Analyze Taste] JSON Parse Failed. Raw text sample:', responseText.substring(0, 200));
+            console.error('[Analyze Taste] Parse error:', parseError.message);
             return NextResponse.json({
                 error: 'AI output format error',
-                details: parseError.message
+                details: parseError.message,
+                message: isEn 
+                    ? 'Failed to parse AI analysis results. Please try again.' 
+                    : 'AI 분석 결과 파싱에 실패했습니다. 다시 시도해주세요.'
             }, { status: 500 });
         }
 
         // 6. Save & Response
         console.log('[Analyze Taste] Saving results to DB...');
+        
+        // Update previousRecommendations array (limit to last 10)
+        const updatedPreviousRecommendations = previousRecommendations.slice(-9); // Keep last 9
+        
         const profile = {
             userId,
             analyzedAt: new Date().toISOString(),
-            ...analysisResult
+            ...analysisResult,
+            previousRecommendations: updatedPreviousRecommendations
         };
 
         try {

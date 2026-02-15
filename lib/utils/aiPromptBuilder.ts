@@ -46,7 +46,11 @@ export interface AnalysisInputItem {
  * 유저의 술장 데이터를 바탕으로 AI 분석용 프롬프트를 생성합니다.
  * 데이터가 누락된 필드는 안전하게 제외하며, 최신 활동에 우선순위를 둡니다.
  */
-export function buildTasteAnalysisPrompt(items: AnalysisInputItem[], isEn: boolean = false): string {
+export function buildTasteAnalysisPrompt(
+    items: AnalysisInputItem[], 
+    isEn: boolean = false, 
+    previousRecommendations: string[] = []
+): string {
     const langSuffix = isEn ? "English" : "Korean";
     const toneSuffix = isEn ? "enlightening & professional" : "warm & professional";
 
@@ -130,13 +134,17 @@ export function buildTasteAnalysisPrompt(items: AnalysisInputItem[], isEn: boole
     });
 
     // 3. 세계 주류 바 사장 프롬프트 구성
+    const exclusionList = previousRecommendations.length > 0
+        ? `\n### Previously Recommended (DO NOT recommend these again):\n${previousRecommendations.map(name => `- ${name}`).join('\n')}\n`
+        : '';
+
     return `
 You are the owner of a prestigious global spirits bar that carries everything from whisky to traditional Korean spirits, rum, gin, vodka, sake, and more.
 Your expertise spans ALL categories of spirits worldwide. You analyze customer preferences and recommend diverse options that match their taste profile.
 
 ### Customer Data (Purchase & Tasting History):
 ${JSON.stringify(cleanData, null, 2)}
-
+${exclusionList}
 ### Professional Analysis Guidelines:
 1. **Dynamic Profile Detection**: Pay close attention to items marked with 'isRecentlyAdded' or 'isRecentActivity'. These represent the customer's *current* interests and potential shifts in their taste profile.
    - If recent reviews (ratings/notes) differ from the historical baseline, prioritize the recent data as it indicates an evolving palate.
@@ -153,6 +161,7 @@ ${JSON.stringify(cleanData, null, 2)}
 4. **Recommendation Strategy**:
    - **Explore Different Categories**: Don't just recommend similar items. If they like Islay whisky, consider peated rum, smoky mezcal, or aged baijiu.
    - **Freshness First**: Do NOT recommend things the user already owns or has reviewed unless it's a significant upgrade/variation.
+   - **CRITICAL**: NEVER recommend spirits from the "Previously Recommended" list above. Always suggest something NEW and different.
    - **Introduce New Experiences**: Recommend spirits that complement their collection while expanding their horizons.
    - **Reasoning**: In your reasoning, explicitly mention why this choice is relevant to their *current* taste journey, referencing recent additions or high-rated items if applicable.
 
