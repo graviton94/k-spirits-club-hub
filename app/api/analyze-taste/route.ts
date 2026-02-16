@@ -219,7 +219,6 @@ export async function POST(req: NextRequest) {
 
         const model = genAI.getGenerativeModel({
             model: "gemini-2.0-flash",
-            systemInstruction: systemInstruction,
             generationConfig: {
                 responseMimeType: "application/json",
                 temperature: 0.7,
@@ -231,7 +230,7 @@ export async function POST(req: NextRequest) {
         console.log('[Analyze Taste] Generating content with Gemini...');
         let result;
         try {
-            result = await model.generateContent(promptData);
+            result = await model.generateContent(systemInstruction + "\n\n" + promptData);
         } catch (aiError: any) {
             console.error('[Analyze Taste] Gemini API Critical Error:', aiError);
             console.error('[Analyze Taste] Error details:', JSON.stringify(aiError, null, 2));

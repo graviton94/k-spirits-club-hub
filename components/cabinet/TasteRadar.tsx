@@ -5,7 +5,6 @@ import {
     RadarChart,
     PolarGrid,
     PolarAngleAxis,
-    ResponsiveContainer,
     PolarRadiusAxis
 } from 'recharts';
 
@@ -25,26 +24,24 @@ export default function TasteRadar({ data, isBackground = false }: TasteRadarPro
     const opacity = isBackground ? 0.2 : 0.6;
 
     return (
-        <div className={`w-full h-full min-h-[280px] sm:min-h-[300px] ${isBackground ? 'blur-md opacity-30 scale-110' : ''}`}>
-            <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
-                <RadarChart cx="50%" cy="50%" outerRadius="70%" data={data}>
-                    <PolarGrid stroke="#404040" />
-                    <PolarAngleAxis
-                        dataKey="subject"
-                        tick={{ fill: '#9ca3af', fontSize: 12, fontWeight: 'bold' }}
-                    />
-                    {/* 축 범위를 0~100으로 고정 */}
-                    <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
-                    <Radar
-                        name="My Taste"
-                        dataKey="A"
-                        stroke={strokeColor}
-                        strokeWidth={isBackground ? 1 : 3}
-                        fill={fillColor}
-                        fillOpacity={opacity}
-                    />
-                </RadarChart>
-            </ResponsiveContainer>
+        <div className={`w-full flex items-center justify-center ${isBackground ? 'blur-md opacity-30 scale-110' : ''}`}>
+            <RadarChart width={300} height={300} cx="50%" cy="50%" outerRadius="70%" data={data}>
+                <PolarGrid stroke="#404040" />
+                <PolarAngleAxis
+                    dataKey="subject"
+                    tick={{ fill: '#9ca3af', fontSize: 12, fontWeight: 'bold' }}
+                />
+                {/* 축 범위를 0~100으로 고정 */}
+                <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
+                <Radar
+                    name="My Taste"
+                    dataKey="A"
+                    stroke={strokeColor}
+                    strokeWidth={isBackground ? 1 : 3}
+                    fill={fillColor}
+                    fillOpacity={opacity}
+                />
+            </RadarChart>
         </div>
     );
 }
