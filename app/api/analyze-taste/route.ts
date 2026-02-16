@@ -219,6 +219,7 @@ export async function POST(req: NextRequest) {
 
         const model = genAI.getGenerativeModel({
             model: "gemini-2.0-flash",
+            systemInstruction: systemInstruction,
             generationConfig: {
                 responseMimeType: "application/json",
                 temperature: 0.7,
@@ -230,18 +231,15 @@ export async function POST(req: NextRequest) {
         console.log('[Analyze Taste] Generating content with Gemini...');
         let result;
         try {
-            result = await model.generateContent([
-                systemInstruction,
-                promptData
-            ]);
+            result = await model.generateContent(promptData);
         } catch (aiError: any) {
             console.error('[Analyze Taste] Gemini API Critical Error:', aiError);
             console.error('[Analyze Taste] Error details:', JSON.stringify(aiError, null, 2));
             return NextResponse.json({
                 error: 'AI Generation Failed',
                 details: aiError.message || 'Unknown AI error',
-                message: isEn 
-                    ? 'Failed to generate taste analysis. Please try again later.' 
+                message: isEn
+                    ? 'Failed to generate taste analysis. Please try again later.'
                     : 'AI 분석 생성에 실패했습니다. 나중에 다시 시도해주세요.'
             }, { status: 500 });
         }
@@ -255,8 +253,8 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({
                 error: 'AI Output Extraction Failed',
                 details: textError.message,
-                message: isEn 
-                    ? 'Failed to extract AI response. Please try again.' 
+                message: isEn
+                    ? 'Failed to extract AI response. Please try again.'
                     : 'AI 응답 추출에 실패했습니다. 다시 시도해주세요.'
             }, { status: 500 });
         }
@@ -274,15 +272,15 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({
                 error: 'AI output format error',
                 details: parseError.message,
-                message: isEn 
-                    ? 'Failed to parse AI analysis results. Please try again.' 
+                message: isEn
+                    ? 'Failed to parse AI analysis results. Please try again.'
                     : 'AI 분석 결과 파싱에 실패했습니다. 다시 시도해주세요.'
             }, { status: 500 });
         }
 
         // 6. Save & Response
         console.log('[Analyze Taste] Saving results to DB...');
-        
+
         // Update previousRecommendations array
         // Add current recommendation and keep last 10 total
         const newRecommendation = analysisResult.recommendation?.name;
@@ -292,7 +290,7 @@ export async function POST(req: NextRequest) {
         }
         // Keep only the last 10 recommendations
         updatedPreviousRecommendations = updatedPreviousRecommendations.slice(-10);
-        
+
         const profile = {
             userId,
             analyzedAt: new Date().toISOString(),

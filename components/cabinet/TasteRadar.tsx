@@ -26,7 +26,7 @@ export default function TasteRadar({ data, isBackground = false }: TasteRadarPro
 
     return (
         <div className={`w-full h-full min-h-[280px] sm:min-h-[300px] ${isBackground ? 'blur-md opacity-30 scale-110' : ''}`}>
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                 <RadarChart cx="50%" cy="50%" outerRadius="70%" data={data}>
                     <PolarGrid stroke="#404040" />
                     <PolarAngleAxis
