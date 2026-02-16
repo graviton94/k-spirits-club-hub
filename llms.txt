@@ -1,0 +1,105 @@
+# K-Spirits Club Hub
+
+## Project Summary
+K-Spirits Club is a production-grade global spirits database and community platform featuring 100,000+ spirits with advanced search, personal collection management ("Cabinet"), AI-powered taste analysis using Gemini 2.0 Flash, community reviews with sensory analysis, and interactive games (MBTI Quiz, World Cup, Perfect Pour). Built on Next.js 15 with Firebase Firestore backend, deployed on Cloudflare Pages edge network, supporting full internationalization (Korean/English) with middleware-based routing. Target users: spirits enthusiasts, bartenders, and collectors worldwide.
+
+## File Map
+
+### Core Application (Next.js App Router)
+app/[lang]/                         - Internationalized page routes (ko/en)
+app/[lang]/page.tsx                 - Homepage with featured spirits and search
+app/[lang]/explore/page.tsx         - Main search/filter interface for 100K+ spirits
+app/[lang]/cabinet/page.tsx         - Personal collection manager (owned/wishlist)
+app/[lang]/contents/mbti/           - MBTI Spirit Quiz game
+app/[lang]/contents/worldcup/       - Spirit World Cup tournament game
+app/[lang]/contents/perfect-pour/   - Perfect Pour pouring simulator
+app/[lang]/admin/page.tsx           - Admin dashboard for data management
+app/api/analyze-taste/route.ts      - AI taste analysis endpoint (Gemini 2.0)
+app/api/reviews/route.ts            - Review CRUD operations
+app/api/spirits/route.ts            - Spirit data fetching endpoint
+middleware.ts                       - i18n language detection and routing
+
+### Components
+components/cabinet/                 - Cabinet UI components (collection, wishlist)
+components/admin/                   - Admin dashboard components
+components/ui/                      - Reusable UI components (LiveReviews, Search, etc.)
+components/layout/                  - Layout components (Header, Footer)
+
+### Library Layer
+lib/db/firestore-rest.ts            - Firestore REST API abstraction (edge-compatible)
+lib/firebase/config.ts              - Firebase client configuration
+lib/firebase/admin.ts               - Firebase Admin SDK setup
+lib/utils/imageOptimizer.ts         - Image proxy for WebP conversion and resizing
+lib/utils/aiPromptBuilder.ts        - Gemini prompt engineering for taste analysis
+lib/utils/uiText.ts                 - UI text utilities and formatting
+lib/constants/categories.ts         - Spirit categories and subcategories
+lib/constants/mbti-data.ts          - MBTI quiz questions and personality data
+lib/actions/cabinet.ts              - Server actions for cabinet operations
+lib/contexts/SearchContext.tsx      - Search index caching in React Context
+lib/get-dictionary.ts               - i18n dictionary loader
+
+### Data Pipeline (Python)
+scripts/fetch_food_safety.py        - Fetch raw spirit data from public API
+scripts/run_pipeline.py             - AI enrichment and search index generation
+scripts/publish-ready-data.ts       - Admin approval and publishing workflow
+scripts/audit_database.py           - Database health checks and validation
+scripts/batch-process-published.ts  - Batch processing for published spirits
+
+### Internationalization
+dictionaries/ko.json                - Korean translations
+dictionaries/en.json                - English translations
+i18n-config.ts                      - Locale configuration (ko, en)
+
+### Configuration
+next.config.js                      - Next.js config with Cloudflare optimization
+firestore.rules                     - Firestore security rules
+firestore.indexes.json              - Firestore composite indexes
+tsconfig.json                       - TypeScript configuration (strict mode)
+tailwind.config.ts                  - Tailwind CSS configuration
+
+### Documentation
+README.md                           - Project overview and setup instructions
+TECH_STACK.md                       - Detailed technology stack documentation
+CODE_FLOW.md                        - Code flow diagrams and explanations
+DATA_SCHEMA.md                      - Database schema documentation
+DEVELOPMENT.md                      - Development guidelines
+
+## Tech Stack
+
+### Frontend
+- Next.js 15.1.4 (App Router, Server Components, React 19)
+- TypeScript 5.9.3 (strict mode)
+- Tailwind CSS 4.1.18 (utility-first styling)
+- Framer Motion 12.29.0 (animations)
+- Recharts 3.7.0 (data visualization - radar charts)
+- Fuse.js 7.1.0 (client-side fuzzy search)
+- html-to-image 1.11.13 (generate shareable result images)
+- lucide-react 0.563.0 (icon library)
+- canvas-confetti 1.9.4 (celebration effects)
+
+### Backend & Infrastructure
+- Cloudflare Pages (Edge Network CDN, global hosting)
+- Firebase 12.8.0 (client SDK)
+- Firebase Admin 13.6.0 (server SDK)
+- Firestore (NoSQL database - 100K+ documents)
+- Firebase Auth (Google OAuth + Guest mode)
+- Edge Runtime (Serverless API processing)
+
+### AI & Data Processing
+- Google Generative AI 0.24.1 (Gemini 2.0 Flash API)
+- Python 3.10+ (data pipeline)
+- Cheerio 1.2.0 (HTML parsing/scraping)
+- Fast XML Parser 5.3.4 (XML processing)
+- Axios 1.13.2 (HTTP requests)
+
+### Developer Tools
+- ESLint 9.39.2 (linting with Next.js config)
+- Sharp 0.34.5 (image optimization)
+- @cloudflare/next-on-pages 1.13.16 (Cloudflare adapter)
+- dotenv 17.2.3 (environment variables)
+- tsx (TypeScript execution for scripts)
+
+### Languages
+- TypeScript (primary - all application code)
+- Python (data pipeline scripts)
+- JavaScript (configuration files)
