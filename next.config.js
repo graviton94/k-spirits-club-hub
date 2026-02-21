@@ -59,6 +59,22 @@ const nextConfig = {
         source: '/contents/:path*',
         destination: '/ko/contents/:path*',
         permanent: true,
+      },
+      // Legacy Route Redirects
+      {
+        source: '/reviews',
+        destination: '/ko/contents/reviews',
+        permanent: true,
+      },
+      {
+        source: '/worldcup',
+        destination: '/ko/contents/worldcup',
+        permanent: true,
+      },
+      {
+        source: '/perfect-pour',
+        destination: '/ko/contents/perfect-pour',
+        permanent: true,
       }
     ];
   },

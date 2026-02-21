@@ -26,8 +26,8 @@ export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const host = request.headers.get('host');
 
-  // 0. Domain Redirect (pages.dev -> custom domain)
-  if (host === 'k-spirits-club-hub.pages.dev') {
+  // 0. Domain Redirect (pages.dev -> custom domain, www -> non-www)
+  if (host === 'k-spirits-club-hub.pages.dev' || host === 'www.kspiritsclub.com') {
     const newUrl = new URL(request.nextUrl.pathname + request.nextUrl.search, 'https://kspiritsclub.com');
     return NextResponse.redirect(newUrl, { status: 301 });
   }

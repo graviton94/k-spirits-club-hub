@@ -881,6 +881,8 @@ function RatingSection({ label, shortLabel, rating, tags, onRatingChange, onTags
             onPointerMove={handlePointer}
             onPointerLeave={() => setHoverRating(null)}
             onPointerDown={handlePointer}
+            onMouseDown={(e) => e.preventDefault()}
+            onTouchStart={(e) => e.preventDefault()}
             className="flex justify-between gap-1 px-3 py-2 rounded-xl bg-secondary/30 cursor-pointer touch-none select-none hover:bg-secondary/50 transition-colors"
           >
             {[1, 2, 3, 4, 5].map((s) => {
@@ -902,16 +904,14 @@ function RatingSection({ label, shortLabel, rating, tags, onRatingChange, onTags
 
           {/* Rating Value Number */}
           <input
-            type="number"
-            step="0.1"
-            min="0"
-            max="5"
+            type="text"
+            inputMode="decimal"
             value={activeRating > 0 ? activeRating : ""}
             onChange={(e) => {
               const val = parseFloat(e.target.value);
               if (!isNaN(val)) {
                 onRatingChange(Math.min(5, Math.max(0, Math.round(val * 10) / 10)));
-              } else {
+              } else if (e.target.value === "") {
                 onRatingChange(0);
               }
             }}

@@ -29,6 +29,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         lastModified: new Date(),
         changeFrequency: 'weekly' as const,
         priority: pathname === '' ? 1.0 : (pathname === '/explore' ? 0.9 : 0.6),
+        alternates: {
+          languages: {
+            'ko': `${baseUrl}/ko${pathname}`,
+            'en': `${baseUrl}/en${pathname}`,
+          }
+        }
       });
     });
   });
@@ -47,6 +53,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           lastModified: new Date(),
           changeFrequency: 'weekly' as const,
           priority: 0.6,
+          alternates: {
+            languages: {
+              'ko': `${baseUrl}/ko/spirits/${id}`,
+              'en': `${baseUrl}/en/spirits/${id}`,
+            }
+          }
         });
       });
     });
@@ -65,6 +77,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           lastModified: new Date(),
           changeFrequency: 'weekly' as const,
           priority: pathname === '' ? 1.0 : (pathname === '/explore' ? 0.9 : 0.6),
+          alternates: {
+            languages: {
+              'ko': `${baseUrl}/ko${pathname}`,
+              'en': `${baseUrl}/en${pathname}`,
+            }
+          }
         });
       });
     });

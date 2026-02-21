@@ -61,6 +61,13 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Loc
       description: dict.meta.description,
       images: ['/main.jpg'],
     },
+    alternates: {
+      canonical: `https://kspiritsclub.com/${lang}`,
+      languages: {
+        'ko': 'https://kspiritsclub.com/ko',
+        'en': 'https://kspiritsclub.com/en',
+      },
+    },
     icons: {
       icon: [
         { url: '/icon.png', sizes: '32x32', type: 'image/png' },
