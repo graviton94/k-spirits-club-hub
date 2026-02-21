@@ -52,13 +52,13 @@ export default function AdSlot({
 
     return (
         <div
-            className={`overflow-hidden my-4 w-full flex flex-col items-center justify-center bg-gray-50 dark:bg-slate-900/30 ${getHeightClass()} ${className}`}
-            style={style}
+            className={`overflow-hidden my-4 w-full block bg-gray-50 dark:bg-slate-900/30 ${getHeightClass()} ${className}`}
+            style={{ minWidth: '100%', ...style }}
         >
-            <div className="text-[10px] text-center text-gray-300 dark:text-slate-600 mb-1 uppercase tracking-wider select-none">
+            <div className="text-[10px] text-center text-gray-300 dark:text-slate-600 mb-2 mt-1 uppercase tracking-wider select-none">
                 {label} (Sponsored)
             </div>
-            <div className="w-full flex justify-center">
+            <div className="w-full block">
                 <GoogleAd
                     client={client}
                     slot={slot}
