@@ -219,7 +219,9 @@ export async function POST(req: NextRequest) {
 
         const model = genAI.getGenerativeModel({
             model: "gemini-2.0-flash",
+            systemInstruction: systemInstruction,
             generationConfig: {
+                responseMimeType: "application/json",
                 temperature: 0.7,
                 topP: 0.8,
                 topK: 40
@@ -229,7 +231,7 @@ export async function POST(req: NextRequest) {
         console.log('[Analyze Taste] Generating content with Gemini...');
         let result;
         try {
-            result = await model.generateContent(systemInstruction + "\n\n" + promptData);
+            result = await model.generateContent(promptData);
         } catch (aiError: any) {
             console.error('[Analyze Taste] Gemini API Critical Error:', aiError);
             console.error('[Analyze Taste] Error details:', JSON.stringify(aiError, null, 2));
@@ -237,8 +239,8 @@ export async function POST(req: NextRequest) {
                 error: 'AI Generation Failed',
                 details: aiError.message || 'Unknown AI error',
                 message: isEn
-                    ? 'Failed to generate taste analysis. Please try again later.'
-                    : 'AI 분석 생성에 실패했습니다. 나중에 다시 시도해주세요.'
+                    ? `Failed to generate taste analysis: ${aiError.message}`
+                    : `AI 분석 생성에 실패했습니다: ${aiError.message}`
             }, { status: 500 });
         }
 
