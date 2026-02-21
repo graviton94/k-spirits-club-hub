@@ -363,7 +363,7 @@ export default function SpiritDetailClient({ spirit, reviews, lang, dict }: Spir
             {displayDescription && (
                 <div className="mb-8 p-6 bg-secondary/10 border border-border rounded-3xl shadow-sm">
                     <p className="text-sm sm:text-base text-foreground/90 leading-relaxed md:leading-loose whitespace-pre-wrap">
-                        {displayDescription}
+                        <FormattedText text={displayDescription} />
                     </p>
                 </div>
             )}
@@ -407,10 +407,10 @@ export default function SpiritDetailClient({ spirit, reviews, lang, dict }: Spir
                             </span>
                             <div className="h-px flex-1 bg-border"></div>
                         </div>
-                        <p className="text-base text-card-foreground leading-relaxed font-medium">
-                            {isEn
+                        <p className="text-sm sm:text-base text-card-foreground leading-relaxed font-medium whitespace-pre-wrap">
+                            <FormattedText text={isEn
                                 ? (spirit.metadata?.pairing_guide_en || spirit.metadata?.pairing_guide_ko)
-                                : (spirit.metadata?.pairing_guide_ko || spirit.metadata?.pairing_guide_en)}
+                                : (spirit.metadata?.pairing_guide_ko || spirit.metadata?.pairing_guide_en)} />
                         </p>
                     </div>
                 </div>
@@ -636,6 +636,27 @@ function ExpandableImage({ imageUrl, name, category }: { imageUrl: string | null
                     </motion.div>
                 )}
             </AnimatePresence>
+        </>
+    );
+}
+
+// Helper component to format basic markdown-style text 
+// (e.g., **bold** and handles typoes like *&bold**)
+function FormattedText({ text }: { text?: string | null }) {
+    if (!text) return null;
+
+    // Split by **bold** or *&bold** (typo tolerance)
+    const parts = text.split(/(\*\*.*?\*\*|\*\&.*?\*\*)/g);
+
+    return (
+        <>
+            {parts.map((part, i) => {
+                if ((part.startsWith('**') || part.startsWith('*&')) && part.endsWith('**')) {
+                    const content = part.slice(2, -2);
+                    return <strong key={i} className="text-amber-600 dark:text-amber-500 font-bold">{content}</strong>;
+                }
+                return <span key={i}>{part}</span>;
+            })}
         </>
     );
 }
