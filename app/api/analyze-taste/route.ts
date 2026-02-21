@@ -111,7 +111,7 @@ export async function POST(req: NextRequest) {
         try {
             [cabinetItems, userReviews] = await Promise.all([
                 cabinetDb.getAll(userId),
-                reviewsDb.getAllForUser(userId)
+                reviewsDb.getAllForUser(userId, true) // skipEnrichment = true to prevent N+1 fetch hitting 50 subreq limit
             ]);
             console.log(`[Analyze Taste] Fetched ${cabinetItems.length} cabinet items and ${userReviews.length} reviews`);
         } catch (dbError: any) {

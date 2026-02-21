@@ -949,7 +949,7 @@ export const reviewsDb = {
         });
     },
 
-    async getAllForUser(userId: string): Promise<any[]> {
+    async getAllForUser(userId: string, skipEnrichment: boolean = false): Promise<any[]> {
         const token = await getServiceAccountToken();
         const reviewsPath = getAppPath().userReviews(userId);
         const url = `${BASE_URL}/${reviewsPath}`;
@@ -974,30 +974,32 @@ export const reviewsDb = {
 
         // Optimization: Fetch all related spirits to get authoritative Image URL and Name
         // This fixes the issue where review documents might have missing or outdated image URLs
-        const spiritIds = [...new Set(reviews.map((r: any) => r.spiritId))].filter(Boolean);
+        if (!skipEnrichment) {
+            const spiritIds = [...new Set(reviews.map((r: any) => r.spiritId))].filter(Boolean);
 
-        if (spiritIds.length > 0) {
-            try {
-                // Fix: Call spiritsDb directly, not 'this'
-                const spirits = await spiritsDb.getByIds(spiritIds as string[]);
-                const spiritMap = new Map(spirits.map((s: Spirit) => [s.id, s]));
+            if (spiritIds.length > 0) {
+                try {
+                    // Fix: Call spiritsDb directly, not 'this'
+                    const spirits = await spiritsDb.getByIds(spiritIds as string[]);
+                    const spiritMap = new Map(spirits.map((s: Spirit) => [s.id, s]));
 
-                // Merge spirit data into review
-                return reviews.map((r: any) => {
-                    const spirit = spiritMap.get(r.spiritId);
-                    if (spirit) {
-                        return {
-                            ...r,
-                            imageUrl: spirit.thumbnailUrl || spirit.imageUrl || r.imageUrl, // Prefer Spirit Image
-                            spiritName: spirit.name || r.spiritName, // Prefer Spirit Name
-                            category: spirit.category // Useful for fallbacks
-                        };
-                    }
-                    return r;
-                });
-            } catch (error) {
-                console.error('Failed to enrich reviews with spirit data:', error);
-                return reviews; // Fallback to existing data
+                    // Merge spirit data into review
+                    return reviews.map((r: any) => {
+                        const spirit = spiritMap.get(r.spiritId);
+                        if (spirit) {
+                            return {
+                                ...r,
+                                imageUrl: spirit.thumbnailUrl || spirit.imageUrl || r.imageUrl, // Prefer Spirit Image
+                                spiritName: spirit.name || r.spiritName, // Prefer Spirit Name
+                                category: spirit.category // Useful for fallbacks
+                            };
+                        }
+                        return r;
+                    });
+                } catch (error) {
+                    console.error('Failed to enrich reviews with spirit data:', error);
+                    return reviews; // Fallback to existing data
+                }
             }
         }
 
