@@ -38,7 +38,9 @@ export default function AdminDashboard() {
     }, []);
 
     // State
+    const [activeTab, setActiveTab] = useState<'spirits' | 'requests'>('spirits');
     const [spirits, setSpirits] = useState<Spirit[]>([]);
+    const [requests, setRequests] = useState<ModificationRequest[]>([]);
     const [loading, setLoading] = useState(false);
     const [totalCount, setTotalCount] = useState(0);
     const [page, setPage] = useState(1);
@@ -103,15 +105,48 @@ export default function AdminDashboard() {
         setSearchQuery(localSearchQuery);
     };
 
+    const loadRequests = useCallback(async () => {
+        setLoading(true);
+        try {
+            const response = await fetch('/api/admin/modifications');
+            const data = await response.json();
+            setRequests(data.data || []);
+        } catch (error) {
+            console.error('Failed to load requests:', error);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
     useEffect(() => {
-        loadSpirits();
-    }, [loadSpirits]);
+        if (activeTab === 'spirits') {
+            loadSpirits();
+        } else if (activeTab === 'requests') {
+            loadRequests();
+        }
+    }, [activeTab, loadSpirits, loadRequests]);
 
     useEffect(() => {
         setPage(1);
     }, [categoryFilter, distilleryFilter, isPublishedFilter, searchQuery]);
 
     // Actions
+    const updateRequestStatus = async (id: string, status: 'pending' | 'checked' | 'resolved') => {
+        try {
+            const res = await fetch('/api/admin/modifications', {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id, status })
+            });
+            if (res.ok) {
+                await loadRequests();
+            } else {
+                alert('상태 업데이트 실패');
+            }
+        } catch (e) {
+            alert('상태 업데이트 에러 발생');
+        }
+    };
     const publishSpirit = async (id: string) => {
         try {
             const res = await fetch(`/api/admin/spirits/${id}`, {
@@ -395,188 +430,264 @@ export default function AdminDashboard() {
                     </Link>
                 </div>
 
-                {/* Filters */}
-                <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-2xl p-4 md:p-6 shadow-xl mb-6">
-                    <div className="space-y-4">
-                        {/* Filter Controls */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                            <select
-                                className="px-3 py-2 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-800 bg-white dark:bg-black"
-                                value={localCategoryFilter}
-                                onChange={e => setLocalCategoryFilter(e.target.value)}
-                            >
-                                <option value="ALL">📂 전체 카테고리</option>
-                                {categoryOptions.map(c => <option key={c} value={c}>{c}</option>)}
-                            </select>
-
-                            <select
-                                className="px-3 py-2 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-800 bg-white dark:bg-black"
-                                value={localDistilleryFilter}
-                                onChange={e => setLocalDistilleryFilter(e.target.value)}
-                            >
-                                <option value="ALL">🏭 전체 증류소</option>
-                                {distilleryOptions.slice(0, 200).map((d: string) => <option key={d} value={d}>{d}</option>)}
-                            </select>
-
-                            <select
-                                className="px-3 py-2 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-800 bg-white dark:bg-black"
-                                value={localIsPublishedFilter}
-                                onChange={e => setLocalIsPublishedFilter(e.target.value)}
-                            >
-                                <option value="ALL">📋 발행 상태 (전체)</option>
-                                <option value="true">✅ 발행됨</option>
-                                <option value="false">❌ 미발행</option>
-                            </select>
-
-                            <input
-                                placeholder="제품명 검색..."
-                                className="px-3 py-2 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-800 bg-white dark:bg-black"
-                                value={localSearchQuery}
-                                onChange={e => setLocalSearchQuery(e.target.value)}
-                                onKeyDown={e => e.key === 'Enter' && handleApplyFilters()}
-                            />
-                        </div>
-
-                        {/* Action Buttons */}
-                        <div className="flex flex-wrap gap-2">
-                            <button
-                                onClick={handleApplyFilters}
-                                className="bg-amber-500 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-amber-600"
-                            >
-                                🔍 필터 적용
-                            </button>
-
-                            <button
-                                disabled={isProcessing}
-                                onClick={async () => {
-                                    if (!confirm('최신 글로벌 주류 뉴스를 수집하시겠습니까?')) return;
-                                    setIsProcessing(true);
-                                    try {
-                                        const res = await fetch('/api/admin/news/collect', { method: 'POST' });
-                                        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                                        const data = await res.json();
-                                        if (data.success) {
-                                            alert(`✅ 뉴스 수집 완료! (${data.count ?? 0}건)`);
-                                        } else {
-                                            alert(`❌ 실패: ${data.error || '알 수 없는 오류'}`);
-                                        }
-                                    } catch (e: any) {
-                                        alert(`뉴스 수집 중 에러: ${e.message}`);
-                                    } finally {
-                                        setIsProcessing(false);
-                                    }
-                                }}
-                                className="bg-cyan-600 text-white px-4 py-2 rounded-xl text-xs font-bold disabled:opacity-30 hover:bg-cyan-500"
-                            >
-                                📰 뉴스 수집
-                            </button>
-                        </div>
-
-                        {/* Count */}
-                        <div className="text-xs font-bold text-gray-500 pt-3 border-t border-gray-100 dark:border-gray-900">
-                            총 <span className="text-amber-600 dark:text-amber-400 text-base mx-1">{totalCount.toLocaleString()}</span>건
-                            (현재 페이지: {spirits.length}건)
-                        </div>
-                    </div>
+                {/* Tabs */}
+                <div className="flex gap-4 mb-6 border-b border-gray-200 dark:border-gray-800 pb-2">
+                    <button
+                        onClick={() => setActiveTab('spirits')}
+                        className={`text-lg font-bold pb-2 border-b-2 transition-colors ${activeTab === 'spirits' ? 'border-amber-500 text-amber-500' : 'border-transparent text-gray-400 hover:text-gray-500 dark:hover:text-gray-300'}`}
+                    >
+                        주류 관리
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('requests')}
+                        className={`text-lg font-bold pb-2 border-b-2 transition-colors ${activeTab === 'requests' ? 'border-amber-500 text-amber-500' : 'border-transparent text-gray-400 hover:text-gray-500 dark:hover:text-gray-300'}`}
+                    >
+                        정보 수정 요청
+                    </button>
                 </div>
 
-                {/* Data Table */}
-                <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-2xl shadow-sm overflow-hidden">
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-left text-sm border-collapse min-w-[600px]">
-                            <thead className="bg-gray-50 dark:bg-gray-900 text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-800">
-                                <tr>
-                                    <th className="p-3 md:p-4">주류 정보</th>
-                                    <th className="p-3 md:p-4">상태</th>
-                                    <th className="p-3 md:p-4 hidden sm:table-cell">이미지</th>
-                                    <th className="p-3 md:p-4">작업</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-gray-100 dark:divide-gray-900">
-                                {spirits.map(spirit => (
-                                    <tr key={spirit.id} className="hover:bg-amber-500/5">
-                                        <td className="p-3 md:p-4">
-                                            <div className="font-bold text-sm md:text-base max-w-[200px] md:max-w-[300px] truncate">
-                                                {spirit.name}
-                                            </div>
-                                            <div className="text-[10px] md:text-[11px] text-gray-500">
-                                                {spirit.distillery || '-'} | {spirit.abv}% | {spirit.category}
-                                            </div>
-                                        </td>
-                                        <td className="p-3 md:p-4">
-                                            <span className={`px-2 py-1 rounded text-[9px] md:text-[10px] font-black ${spirit.isPublished
-                                                ? 'bg-green-100 text-green-700'
-                                                : 'bg-gray-100 text-gray-700'
-                                                }`}>
-                                                {spirit.isPublished ? '✅ 발행' : '❌ 미발행'}
-                                            </span>
-                                        </td>
-                                        <td className="p-3 md:p-4 hidden sm:table-cell">
-                                            {spirit.imageUrl ? (
-                                                <img src={getOptimizedImageUrl(spirit.imageUrl, 80)}
-                                                    className="w-8 h-8 md:w-10 md:h-10 object-contain bg-white rounded-lg border"
-                                                    alt="Bottle" />
-                                            ) : (
-                                                <div className="w-8 h-8 md:w-10 md:h-10 bg-gray-100 dark:bg-gray-900 rounded-lg border border-dashed" />
-                                            )}
-                                        </td>
-                                        <td className="p-3 md:p-4">
-                                            <div className="flex gap-1 md:gap-2">
-                                                <button
-                                                    onClick={() => startEdit(spirit)}
-                                                    className="px-2 md:px-3 py-1 md:py-1.5 bg-white dark:bg-black border text-[10px] md:text-xs font-bold rounded-lg hover:bg-gray-100 dark:hover:bg-gray-900"
-                                                >
-                                                    편집
-                                                </button>
-                                                {!spirit.isPublished && (
-                                                    <button
-                                                        onClick={() => publishSpirit(spirit.id)}
-                                                        className="px-2 md:px-3 py-1 md:py-1.5 bg-green-500/10 border border-green-500/20 text-green-600 text-[10px] md:text-xs font-bold rounded-lg"
-                                                    >
-                                                        발행
-                                                    </button>
-                                                )}
-                                                <button
-                                                    onClick={() => deleteSpirit(spirit.id)}
-                                                    className="px-2 md:px-3 py-1 md:py-1.5 bg-red-500/10 border border-red-500/20 text-red-600 text-[10px] md:text-xs font-bold rounded-lg"
-                                                >
-                                                    삭제
-                                                </button>
-                                            </div>
-                                        </td>
+                {activeTab === 'spirits' ? (
+                    <>
+                        {/* Filters */}
+                        <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-2xl p-4 md:p-6 shadow-xl mb-6">
+                            <div className="space-y-4">
+                                {/* Filter Controls */}
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                                    <select
+                                        className="px-3 py-2 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-800 bg-white dark:bg-black"
+                                        value={localCategoryFilter}
+                                        onChange={e => setLocalCategoryFilter(e.target.value)}
+                                    >
+                                        <option value="ALL">📂 전체 카테고리</option>
+                                        {categoryOptions.map(c => <option key={c} value={c}>{c}</option>)}
+                                    </select>
+
+                                    <select
+                                        className="px-3 py-2 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-800 bg-white dark:bg-black"
+                                        value={localDistilleryFilter}
+                                        onChange={e => setLocalDistilleryFilter(e.target.value)}
+                                    >
+                                        <option value="ALL">🏭 전체 증류소</option>
+                                        {distilleryOptions.slice(0, 200).map((d: string) => <option key={d} value={d}>{d}</option>)}
+                                    </select>
+
+                                    <select
+                                        className="px-3 py-2 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-800 bg-white dark:bg-black"
+                                        value={localIsPublishedFilter}
+                                        onChange={e => setLocalIsPublishedFilter(e.target.value)}
+                                    >
+                                        <option value="ALL">📋 발행 상태 (전체)</option>
+                                        <option value="true">✅ 발행됨</option>
+                                        <option value="false">❌ 미발행</option>
+                                    </select>
+
+                                    <input
+                                        placeholder="제품명 검색..."
+                                        className="px-3 py-2 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-800 bg-white dark:bg-black"
+                                        value={localSearchQuery}
+                                        onChange={e => setLocalSearchQuery(e.target.value)}
+                                        onKeyDown={e => e.key === 'Enter' && handleApplyFilters()}
+                                    />
+                                </div>
+
+                                {/* Action Buttons */}
+                                <div className="flex flex-wrap gap-2">
+                                    <button
+                                        onClick={handleApplyFilters}
+                                        className="bg-amber-500 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-amber-600"
+                                    >
+                                        🔍 필터 적용
+                                    </button>
+
+                                    <button
+                                        disabled={isProcessing}
+                                        onClick={async () => {
+                                            if (!confirm('최신 글로벌 주류 뉴스를 수집하시겠습니까?')) return;
+                                            setIsProcessing(true);
+                                            try {
+                                                const res = await fetch('/api/admin/news/collect', { method: 'POST' });
+                                                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                                                const data = await res.json();
+                                                if (data.success) {
+                                                    alert(`✅ 뉴스 수집 완료! (${data.count ?? 0}건)`);
+                                                } else {
+                                                    alert(`❌ 실패: ${data.error || '알 수 없는 오류'}`);
+                                                }
+                                            } catch (e: any) {
+                                                alert(`뉴스 수집 중 에러: ${e.message}`);
+                                            } finally {
+                                                setIsProcessing(false);
+                                            }
+                                        }}
+                                        className="bg-cyan-600 text-white px-4 py-2 rounded-xl text-xs font-bold disabled:opacity-30 hover:bg-cyan-500"
+                                    >
+                                        📰 뉴스 수집
+                                    </button>
+                                </div>
+
+                                {/* Count */}
+                                <div className="text-xs font-bold text-gray-500 pt-3 border-t border-gray-100 dark:border-gray-900">
+                                    총 <span className="text-amber-600 dark:text-amber-400 text-base mx-1">{totalCount.toLocaleString()}</span>건
+                                    (현재 페이지: {spirits.length}건)
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Data Table */}
+                        <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-2xl shadow-sm overflow-hidden">
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-left text-sm border-collapse min-w-[600px]">
+                                    <thead className="bg-gray-50 dark:bg-gray-900 text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-800">
+                                        <tr>
+                                            <th className="p-3 md:p-4">주류 정보</th>
+                                            <th className="p-3 md:p-4">상태</th>
+                                            <th className="p-3 md:p-4 hidden sm:table-cell">이미지</th>
+                                            <th className="p-3 md:p-4">작업</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-gray-100 dark:divide-gray-900">
+                                        {spirits.map(spirit => (
+                                            <tr key={spirit.id} className="hover:bg-amber-500/5">
+                                                <td className="p-3 md:p-4">
+                                                    <div className="font-bold text-sm md:text-base max-w-[200px] md:max-w-[300px] truncate">
+                                                        {spirit.name}
+                                                    </div>
+                                                    <div className="text-[10px] md:text-[11px] text-gray-500">
+                                                        {spirit.distillery || '-'} | {spirit.abv}% | {spirit.category}
+                                                    </div>
+                                                </td>
+                                                <td className="p-3 md:p-4">
+                                                    <span className={`px-2 py-1 rounded text-[9px] md:text-[10px] font-black ${spirit.isPublished
+                                                        ? 'bg-green-100 text-green-700'
+                                                        : 'bg-gray-100 text-gray-700'
+                                                        }`}>
+                                                        {spirit.isPublished ? '✅ 발행' : '❌ 미발행'}
+                                                    </span>
+                                                </td>
+                                                <td className="p-3 md:p-4 hidden sm:table-cell">
+                                                    {spirit.imageUrl ? (
+                                                        <img src={getOptimizedImageUrl(spirit.imageUrl, 80)}
+                                                            className="w-8 h-8 md:w-10 md:h-10 object-contain bg-white rounded-lg border"
+                                                            alt="Bottle" />
+                                                    ) : (
+                                                        <div className="w-8 h-8 md:w-10 md:h-10 bg-gray-100 dark:bg-gray-900 rounded-lg border border-dashed" />
+                                                    )}
+                                                </td>
+                                                <td className="p-3 md:p-4">
+                                                    <div className="flex gap-1 md:gap-2">
+                                                        <button
+                                                            onClick={() => startEdit(spirit)}
+                                                            className="px-2 md:px-3 py-1 md:py-1.5 bg-white dark:bg-black border text-[10px] md:text-xs font-bold rounded-lg hover:bg-gray-100 dark:hover:bg-gray-900"
+                                                        >
+                                                            편집
+                                                        </button>
+                                                        {!spirit.isPublished && (
+                                                            <button
+                                                                onClick={() => publishSpirit(spirit.id)}
+                                                                className="px-2 md:px-3 py-1 md:py-1.5 bg-green-500/10 border border-green-500/20 text-green-600 text-[10px] md:text-xs font-bold rounded-lg"
+                                                            >
+                                                                발행
+                                                            </button>
+                                                        )}
+                                                        <button
+                                                            onClick={() => deleteSpirit(spirit.id)}
+                                                            className="px-2 md:px-3 py-1 md:py-1.5 bg-red-500/10 border border-red-500/20 text-red-600 text-[10px] md:text-xs font-bold rounded-lg"
+                                                        >
+                                                            삭제
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                        {spirits.length === 0 && !loading && (
+                                            <tr><td colSpan={4} className="p-12 text-center text-gray-500">조건에 맞는 데이터가 없습니다.</td></tr>
+                                        )}
+                                        {loading && (
+                                            <tr><td colSpan={4} className="p-12 text-center text-amber-500 animate-pulse font-bold">로딩 중...</td></tr>
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            {/* Pagination */}
+                            <div className="p-4 border-t border-gray-200 dark:border-gray-800 flex justify-center items-center gap-4">
+                                <button
+                                    disabled={page === 1}
+                                    onClick={() => setPage(p => p - 1)}
+                                    className="px-3 md:px-4 py-2 rounded-lg border hover:bg-gray-50 dark:hover:bg-gray-900 disabled:opacity-30 font-bold text-xs md:text-sm"
+                                >
+                                    이전
+                                </button>
+                                <div className="text-xs md:text-sm font-bold text-gray-500">
+                                    Page <span className="text-black dark:text-white">{page}</span> of {Math.max(1, totalPages)}
+                                </div>
+                                <button
+                                    disabled={page >= totalPages}
+                                    onClick={() => setPage(p => p + 1)}
+                                    className="px-3 md:px-4 py-2 rounded-lg border hover:bg-gray-50 dark:hover:bg-gray-900 disabled:opacity-30 font-bold text-xs md:text-sm"
+                                >
+                                    다음
+                                </button>
+                            </div>
+                        </div>
+                    </>
+                ) : (
+                    /* Modification Requests View */
+                    <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-2xl shadow-sm overflow-hidden">
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-left text-sm border-collapse min-w-[800px]">
+                                <thead className="bg-gray-50 dark:bg-gray-900 text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-800">
+                                    <tr>
+                                        <th className="p-3 md:p-4">대상 주류명</th>
+                                        <th className="p-3 md:p-4">요청 제목 & 내용</th>
+                                        <th className="p-3 md:p-4">접수된 날짜</th>
+                                        <th className="p-3 md:p-4">상태 (클릭하여 변경)</th>
                                     </tr>
-                                ))}
-                                {spirits.length === 0 && !loading && (
-                                    <tr><td colSpan={4} className="p-12 text-center text-gray-500">조건에 맞는 데이터가 없습니다.</td></tr>
-                                )}
-                                {loading && (
-                                    <tr><td colSpan={4} className="p-12 text-center text-amber-500 animate-pulse font-bold">로딩 중...</td></tr>
-                                )}
-                            </tbody>
-                        </table>
-                    </div>
-
-                    {/* Pagination */}
-                    <div className="p-4 border-t border-gray-200 dark:border-gray-800 flex justify-center items-center gap-4">
-                        <button
-                            disabled={page === 1}
-                            onClick={() => setPage(p => p - 1)}
-                            className="px-3 md:px-4 py-2 rounded-lg border hover:bg-gray-50 dark:hover:bg-gray-900 disabled:opacity-30 font-bold text-xs md:text-sm"
-                        >
-                            이전
-                        </button>
-                        <div className="text-xs md:text-sm font-bold text-gray-500">
-                            Page <span className="text-black dark:text-white">{page}</span> of {Math.max(1, totalPages)}
+                                </thead>
+                                <tbody className="divide-y divide-gray-100 dark:divide-gray-900">
+                                    {requests.map(req => (
+                                        <tr key={req.id} className="hover:bg-amber-500/5">
+                                            <td className="p-3 md:p-4 font-bold text-sm">
+                                                <a href={`/ko/spirits/${req.spiritId}`} target="_blank" className="hover:underline text-indigo-500">
+                                                    {req.spiritName}
+                                                </a>
+                                            </td>
+                                            <td className="p-3 md:p-4 w-1/2">
+                                                <div className="font-bold text-sm mb-1">{req.title}</div>
+                                                <div className="text-xs text-gray-600 dark:text-gray-400 whitespace-pre-wrap">{req.content}</div>
+                                            </td>
+                                            <td className="p-3 md:p-4 text-xs">
+                                                {req.createdAt ? new Date(req.createdAt).toLocaleString() : '-'}
+                                            </td>
+                                            <td className="p-3 md:p-4">
+                                                <div className="flex flex-wrap gap-2">
+                                                    <button
+                                                        onClick={() => updateRequestStatus(req.id, 'pending')}
+                                                        className={`px-2 py-1 rounded text-xs font-bold border ${req.status === 'pending' ? 'bg-amber-100 text-amber-700 border-amber-200' : 'bg-transparent text-gray-400'}`}
+                                                    >대기중</button>
+                                                    <button
+                                                        onClick={() => updateRequestStatus(req.id, 'checked')}
+                                                        className={`px-2 py-1 rounded text-xs font-bold border ${req.status === 'checked' ? 'bg-blue-100 text-blue-700 border-blue-200' : 'bg-transparent text-gray-400'}`}
+                                                    >확인중</button>
+                                                    <button
+                                                        onClick={() => updateRequestStatus(req.id, 'resolved')}
+                                                        className={`px-2 py-1 rounded text-xs font-bold border ${req.status === 'resolved' ? 'bg-green-100 text-green-700 border-green-200' : 'bg-transparent text-gray-400'}`}
+                                                    >완료</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                    {requests.length === 0 && !loading && (
+                                        <tr><td colSpan={4} className="p-12 text-center text-gray-500">접수된 정보 수정 요청이 없습니다.</td></tr>
+                                    )}
+                                    {loading && (
+                                        <tr><td colSpan={4} className="p-12 text-center text-amber-500 animate-pulse font-bold">로딩 중...</td></tr>
+                                    )}
+                                </tbody>
+                            </table>
                         </div>
-                        <button
-                            disabled={page >= totalPages}
-                            onClick={() => setPage(p => p + 1)}
-                            className="px-3 md:px-4 py-2 rounded-lg border hover:bg-gray-50 dark:hover:bg-gray-900 disabled:opacity-30 font-bold text-xs md:text-sm"
-                        >
-                            다음
-                        </button>
                     </div>
-                </div>
+                )}
             </div>
 
             {/* Edit Modal */}
