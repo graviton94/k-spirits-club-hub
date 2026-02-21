@@ -300,6 +300,15 @@ export default function ReviewBoardPage() {
                                     )}
                                 </div>
 
+                                {/* Attached Images */}
+                                {review.imageUrls && review.imageUrls.length > 0 && (
+                                    <div className="flex gap-2 mt-4 overflow-x-auto pb-2 custom-scrollbar">
+                                        {review.imageUrls.map((url: string, i: number) => (
+                                            <img key={i} src={url} alt={`Review photo ${i + 1}`} className="h-32 w-auto object-cover rounded-xl border border-border/50 shrink-0" />
+                                        ))}
+                                    </div>
+                                )}
+
                                 {/* Flavor Tags and Date */}
                                 {review.tags && review.tags.length > 0 && (
                                     <div className="flex flex-wrap gap-1.5 pt-4 mt-4 border-t border-border/50 relative">

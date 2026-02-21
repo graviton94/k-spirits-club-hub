@@ -12,6 +12,7 @@ interface LiveReview {
   spiritId: string;
   spiritName: string;
   imageUrl?: string;
+  imageUrls?: string[];
   nose?: string;
   palate?: string;
   finish?: string;
@@ -124,7 +125,14 @@ export function LiveReviews({ initialReviews = [] }: LiveReviewsProps) {
             <div className="flex gap-4 sm:gap-6 mb-4">
               {/* Product Image */}
               <div className="w-16 h-20 sm:w-20 sm:h-24 rounded-2xl bg-secondary overflow-hidden flex-shrink-0 border border-border">
-                {review.imageUrl ? (
+                {review.imageUrls && review.imageUrls.length > 0 ? (
+                  <img
+                    src={review.imageUrls[0]}
+                    alt={review.spiritName}
+                    loading="lazy"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                ) : review.imageUrl ? (
                   <img
                     src={getOptimizedImageUrl(review.imageUrl, 160)}
                     alt={review.spiritName}

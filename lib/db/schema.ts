@@ -143,6 +143,7 @@ export interface Review {
   likes?: number;
   likedBy?: string[];
   isPublished: boolean;
+  imageUrls?: string[]; // Up to 3 user-uploaded images
 }
 
 export interface DataImportLog {

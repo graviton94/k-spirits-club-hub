@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { spiritId, spiritName, imageUrl, rating, noseRating, palateRating, finishRating, content, nose, palate, finish, userName } = body;
+    const { spiritId, spiritName, imageUrl, imageUrls, rating, noseRating, palateRating, finishRating, content, nose, palate, finish, userName } = body;
 
     // Validate required fields
     if (!spiritId || !spiritName || rating === undefined || !content) {
@@ -24,6 +24,7 @@ export async function POST(request: NextRequest) {
       spiritId,
       spiritName,
       imageUrl: imageUrl || '',
+      imageUrls: imageUrls || [],
       userId,
       userName: userName || 'Anonymous',
       rating: Number(rating),
@@ -83,7 +84,8 @@ export async function GET(request: NextRequest) {
           content: r.notes,
           nose: r.tagsN,
           palate: r.tagsP,
-          finish: r.tagsF
+          finish: r.tagsF,
+          imageUrls: r.imageUrls || []
         }))
       }, { status: 200 });
     }
@@ -103,7 +105,8 @@ export async function GET(request: NextRequest) {
           content: r.notes,
           nose: r.tagsN,
           palate: r.tagsP,
-          finish: r.tagsF
+          finish: r.tagsF,
+          imageUrls: r.imageUrls || []
         }))
       }, { status: 200 });
     }
@@ -123,7 +126,8 @@ export async function GET(request: NextRequest) {
           content: r.notes,
           nose: r.tagsN,
           palate: r.tagsP,
-          finish: r.tagsF
+          finish: r.tagsF,
+          imageUrls: r.imageUrls || []
         }))
       }, { status: 200 });
     }

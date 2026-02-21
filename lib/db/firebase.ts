@@ -1,5 +1,6 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 // Firebase configuration using environment variables
 // Use NEXT_PUBLIC_ prefix to allow access from the browser
@@ -17,3 +18,6 @@ const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 
 // Export Firestore instance
 export const db = getFirestore(app);
+
+// Export Storage instance
+export const storage = getStorage(app);

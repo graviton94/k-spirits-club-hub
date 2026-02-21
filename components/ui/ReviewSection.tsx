@@ -2,17 +2,21 @@
 
 import type { Review } from '@/lib/db/schema';
 import { useState, useEffect, useRef } from 'react';
-import { Star, MessageSquare, Wind, Utensils, Zap, Quote, X, Check, Edit2, Trash2, Heart } from 'lucide-react';
+import { Star, MessageSquare, Wind, Utensils, Zap, Quote, X, Check, Edit2, Trash2, Heart, Camera } from 'lucide-react';
 import metadata from '@/lib/constants/spirits-metadata.json';
 import { useAuth } from '@/app/[lang]/context/auth-context';
 import SuccessToast from '@/components/ui/SuccessToast';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getRatingColor } from '@/lib/utils/rating-colors';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '@/lib/db/firebase';
+import imageCompression from 'browser-image-compression';
 
 interface ExtendedReview extends Review {
   noseRating?: number;
   palateRating?: number;
   finishRating?: number;
+  imageUrls?: string[];
 }
 
 interface ReviewSectionProps {
@@ -416,6 +420,15 @@ function ReviewCard({ review, isOwner, onEdit, onDelete, onToast }: {
         </p>
       </div>
 
+      {/* Attached Images */}
+      {review.imageUrls && review.imageUrls.length > 0 && (
+        <div className="flex gap-2 mb-6 overflow-x-auto pb-2 custom-scrollbar">
+          {review.imageUrls.map((url, i) => (
+            <img key={i} src={url} alt={`Review photo ${i + 1}`} className="h-32 w-auto object-cover rounded-xl border border-border/50 shrink-0" />
+          ))}
+        </div>
+      )}
+
       {/* Row 3: Flavor Tags (Colorful Capsules) */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-border/50">
         <ReviewMetricsItem
@@ -508,6 +521,10 @@ function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitte
     finish: initialData?.finish ? initialData.finish.split(',').map(t => t.trim()).filter(Boolean) : [] as string[],
     finishRating: initialData?.finishRating || initialData?.rating || 0
   });
+  const [images, setImages] = useState<File[]>([]);
+  const [imageUrls, setImageUrls] = useState<string[]>(initialData?.imageUrls || []);
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Automatically calculate overall rating whenever component ratings change
@@ -535,12 +552,29 @@ function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitte
     }
 
     setIsSubmitting(true);
+    let finalImageUrls = [...imageUrls];
 
     try {
+      if (images.length > 0) {
+        setIsUploading(true);
+        for (let i = 0; i < images.length; i++) {
+          const file = images[i];
+          const options = { maxSizeMB: 1, maxWidthOrHeight: 1000, useWebWorker: true, fileType: 'image/webp' };
+          const compressedFile = await imageCompression(file, options);
+          const fileName = `${Date.now()}_${i}.webp`;
+          const storageRef = ref(storage, `reviews/${user.uid}/${fileName}`);
+          await uploadBytes(storageRef, compressedFile);
+          const url = await getDownloadURL(storageRef);
+          finalImageUrls.push(url);
+        }
+        setIsUploading(false);
+      }
+
       const reviewPayload = {
         spiritId,
         spiritName,
         imageUrl: spiritImageUrl || '',
+        imageUrls: finalImageUrls,
         rating: formData.rating,
         noseRating: formData.noseRating,
         palateRating: formData.palateRating,
@@ -582,6 +616,7 @@ function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitte
         nose: formData.nose.join(', '),
         palate: formData.palate.join(', '),
         finish: formData.finish.join(', '),
+        imageUrls: finalImageUrls,
         createdAt: new Date(),
         updatedAt: new Date(),
         isPublished: true
@@ -706,6 +741,55 @@ function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitte
               placeholder={isEn ? "Feel free to share your thoughts!" : "후기를 자유롭게 적어주세요!"}
             />
           </div>
+
+          <div className="space-y-2">
+            <label className="text-xs font-black tracking-widest text-muted-foreground uppercase flex justify-between">
+              <span>{isEn ? "Photos (Optional)" : "사진 첨부 (선택)"}</span>
+              <span>{images.length + imageUrls.length} / 3</span>
+            </label>
+            <div className="flex gap-2 flex-wrap">
+              {imageUrls.map((url, i) => (
+                <div key={url} className="relative w-24 h-24 rounded-xl overflow-hidden border border-border">
+                  <img src={url} alt="Review" className="w-full h-full object-cover" />
+                  <button type="button" onClick={() => setImageUrls(imageUrls.filter((_, idx) => idx !== i))} className="absolute top-1 right-1 bg-black/50 rounded-full p-1 text-white hover:bg-black/80">
+                    <X className="w-3 h-3" />
+                  </button>
+                </div>
+              ))}
+              {images.map((file, i) => (
+                <div key={i} className="relative w-24 h-24 rounded-xl overflow-hidden border border-border">
+                  <img src={URL.createObjectURL(file)} alt="Preview" className="w-full h-full object-cover" />
+                  <button type="button" onClick={() => setImages(images.filter((_, idx) => idx !== i))} className="absolute top-1 right-1 bg-black/50 rounded-full p-1 text-white hover:bg-black/80">
+                    <X className="w-3 h-3" />
+                  </button>
+                </div>
+              ))}
+              {(images.length + imageUrls.length) < 3 && (
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="w-24 h-24 rounded-xl border-2 border-dashed border-border flex flex-col items-center justify-center text-muted-foreground hover:border-primary/50 hover:text-primary transition-colors bg-secondary/20 shrink-0"
+                >
+                  <Camera className="w-6 h-6 mb-1" />
+                  <span className="text-[10px] font-bold">{isEn ? "Add Photo" : "사진 첨부"}</span>
+                </button>
+              )}
+            </div>
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              className="hidden"
+              ref={fileInputRef}
+              onChange={(e) => {
+                if (e.target.files) {
+                  const newFiles = Array.from(e.target.files);
+                  const remainingSlots = 3 - (images.length + imageUrls.length);
+                  setImages([...images, ...newFiles.slice(0, remainingSlots)]);
+                }
+              }}
+            />
+          </div>
         </div>
 
         <div className="flex gap-4 pt-4">
@@ -725,7 +809,7 @@ function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitte
             {isSubmitting ? (
               <>
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                제출 중...
+                {isUploading ? (isEn ? "Uploading..." : "이미지 업로드 중...") : (isEn ? "Submitting..." : "제출 중...")}
               </>
             ) : (
               <>
