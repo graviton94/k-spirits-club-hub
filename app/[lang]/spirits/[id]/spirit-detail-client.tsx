@@ -363,7 +363,7 @@ export default function SpiritDetailClient({ spirit, reviews, lang, dict }: Spir
             {displayDescription && (
                 <div className="mb-8 p-6 bg-secondary/10 border border-border rounded-3xl shadow-sm">
                     <p className="text-sm sm:text-base text-foreground/90 leading-relaxed md:leading-loose whitespace-pre-wrap">
-                        <FormattedText text={displayDescription} />
+                        <FormattedText text={displayDescription} highlightClass="text-foreground" />
                     </p>
                 </div>
             )}
@@ -399,20 +399,18 @@ export default function SpiritDetailClient({ spirit, reviews, lang, dict }: Spir
 
             {/* AI Global Pairing Guide */}
             {(spirit.metadata?.pairing_guide_en || spirit.metadata?.pairing_guide_ko) && (
-                <div className="mb-10 p-px rounded-3xl bg-linear-to-br from-purple-500/30 via-pink-500/30 to-orange-500/30">
-                    <div className="bg-card/95 backdrop-blur-xl p-6 rounded-3xl h-full">
-                        <div className="flex items-center gap-2 mb-4">
-                            <span className="text-xs font-black text-transparent bg-clip-text bg-linear-to-r from-purple-500 to-pink-500 uppercase tracking-widest flex items-center gap-1">
-                                ✨ {dict?.pairing || (isEn ? 'Pairing Guide' : '페어링 추천')}
-                            </span>
-                            <div className="h-px flex-1 bg-border"></div>
-                        </div>
-                        <p className="text-sm sm:text-base text-card-foreground leading-relaxed font-medium whitespace-pre-wrap">
-                            <FormattedText text={isEn
-                                ? (spirit.metadata?.pairing_guide_en || spirit.metadata?.pairing_guide_ko)
-                                : (spirit.metadata?.pairing_guide_ko || spirit.metadata?.pairing_guide_en)} />
-                        </p>
+                <div className="mb-10 p-6 rounded-3xl bg-secondary/20 border border-border shadow-sm">
+                    <div className="flex items-center gap-2 mb-4">
+                        <span className="text-xs font-black text-amber-500 uppercase tracking-widest flex items-center gap-1">
+                            ✨ {dict?.pairing || (isEn ? 'Pairing Guide' : '페어링 추천')}
+                        </span>
+                        <div className="h-px flex-1 bg-border"></div>
                     </div>
+                    <p className="text-sm sm:text-base text-foreground/90 leading-relaxed font-medium whitespace-pre-wrap">
+                        <FormattedText text={isEn
+                            ? (spirit.metadata?.pairing_guide_en || spirit.metadata?.pairing_guide_ko)
+                            : (spirit.metadata?.pairing_guide_ko || spirit.metadata?.pairing_guide_en)} />
+                    </p>
                 </div>
             )}
 
@@ -642,7 +640,7 @@ function ExpandableImage({ imageUrl, name, category }: { imageUrl: string | null
 
 // Helper component to format basic markdown-style text 
 // (e.g., **bold** and handles typoes like *&bold**)
-function FormattedText({ text }: { text?: string | null }) {
+function FormattedText({ text, highlightClass = "text-amber-600 dark:text-amber-500" }: { text?: string | null, highlightClass?: string }) {
     if (!text) return null;
 
     // Split by **bold** or *&bold** (typo tolerance)
@@ -653,7 +651,7 @@ function FormattedText({ text }: { text?: string | null }) {
             {parts.map((part, i) => {
                 if ((part.startsWith('**') || part.startsWith('*&')) && part.endsWith('**')) {
                     const content = part.slice(2, -2);
-                    return <strong key={i} className="text-amber-600 dark:text-amber-500 font-bold">{content}</strong>;
+                    return <strong key={i} className={`${highlightClass} font-bold`}>{content}</strong>;
                 }
                 return <span key={i}>{part}</span>;
             })}
