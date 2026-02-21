@@ -67,7 +67,19 @@ export default function CabinetClient({ lang, dict }: CabinetClientProps) {
             return;
         }
 
-        setIsLoadingCabinet(true);
+        const cacheKey = `cabinet_data_${user.uid}`;
+        const cachedData = localStorage.getItem(cacheKey);
+
+        if (cachedData) {
+            try {
+                setSpirits(JSON.parse(cachedData));
+            } catch (e) {
+                console.error('Failed to parse cabinet cache', e);
+            }
+        } else {
+            setIsLoadingCabinet(true); // Show initial loader only if no cache exists
+        }
+
         try {
             const response = await fetch(`/api/cabinet/list?uid=${user.uid}`);
             if (!response.ok) {
@@ -86,10 +98,12 @@ export default function CabinetClient({ lang, dict }: CabinetClientProps) {
                 };
             });
 
-            setSpirits(enrichedData as Spirit[]);
+            const enrichedSpirits = enrichedData as Spirit[];
+            setSpirits(enrichedSpirits);
+            localStorage.setItem(cacheKey, JSON.stringify(enrichedSpirits));
         } catch (error) {
             console.error('Failed to fetch cabinet:', error);
-            setSpirits([]);
+            if (!cachedData) setSpirits([]);
         } finally {
             setIsLoadingCabinet(false);
         }
@@ -99,7 +113,7 @@ export default function CabinetClient({ lang, dict }: CabinetClientProps) {
         if (loading) return;
         fetchCabinet();
         fetchUserStats();
-    }, [loading, fetchCabinet]);
+    }, [loading, fetchCabinet, searchIndex]);
 
     const fetchUserStats = async () => {
         if (!user) {
@@ -168,7 +182,7 @@ export default function CabinetClient({ lang, dict }: CabinetClientProps) {
 
     const flavorAnalysis = analyzeCellar(spirits);
 
-    if (!loading && spirits.length === 0) {
+    if (!loading && !isLoadingCabinet && spirits.length === 0) {
         return (
             <div className="container mx-auto px-4 py-12 max-w-6xl">
                 <motion.div
