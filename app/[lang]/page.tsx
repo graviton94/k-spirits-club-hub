@@ -1,4 +1,5 @@
 export const runtime = 'edge';
+export const revalidate = 60;
 
 import { newArrivalsDb, reviewsDb } from "@/lib/db/firestore-rest";
 import HomeClient from "@/components/home/HomeClient";
