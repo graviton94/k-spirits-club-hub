@@ -280,12 +280,12 @@ export default function SpiritDetailClient({ spirit, reviews, lang, dict }: Spir
             </button>
 
             {/* 1. Header: Image Left, Info Right */}
-            <div className="flex flex-row gap-6 mb-8 items-start">
-                <div className="w-32 sm:w-48 shrink-0">
+            <div className="flex flex-col sm:flex-row gap-6 mb-8 items-start">
+                <div className="w-40 sm:w-56 shrink-0 mx-auto sm:mx-0">
                     <ExpandableImage imageUrl={spirit.imageUrl} name={displayName} category={spirit.category} />
                 </div>
 
-                <div className="flex-1 min-w-0 pt-2">
+                <div className="flex-1 w-full min-w-0 pt-2">
                     <h1 className="text-2xl sm:text-4xl font-black mb-1 leading-tight text-foreground uppercase tracking-tight">
                         {displayName}
                     </h1>
@@ -294,12 +294,7 @@ export default function SpiritDetailClient({ spirit, reviews, lang, dict }: Spir
                             {spirit.metadata.name_en}
                         </p>
                     )}
-                    {displayDescription && (
-                        <p className="text-sm text-foreground/80 leading-relaxed max-w-xl mb-4 line-clamp-6">
-                            {displayDescription}
-                        </p>
-                    )}
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-1 mb-6">
                         <p className="text-amber-500 font-bold tracking-wider">{displayDistillery}</p>
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
                             <span className="px-2 py-0.5 bg-secondary rounded-md border border-border">
@@ -312,57 +307,66 @@ export default function SpiritDetailClient({ spirit, reviews, lang, dict }: Spir
                             )}
                         </div>
                     </div>
+
+                    {/* 2. Enhanced Info Grid moved inside Right Header on larger screens */}
+                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                        {/* Category Card */}
+                        <div className="p-4 bg-card border border-border rounded-2xl shadow-sm">
+                            <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-3">{dict?.specs || t.specs}</h3>
+                            <div className="space-y-2">
+                                <div className="flex justify-between items-center text-sm">
+                                    <span className="text-muted-foreground">{t.category}</span>
+                                    <span className="font-bold">{getLocalizedCategory(spirit.category)}</span>
+                                </div>
+                                {spirit.mainCategory && (
+                                    <div className="flex justify-between items-center text-sm">
+                                        <span className="text-muted-foreground">{t.main}</span>
+                                        <span className="font-bold">{getLocalizedCategory(spirit.mainCategory)}</span>
+                                    </div>
+                                )}
+                                {spirit.subcategory && (
+                                    <div className="flex justify-between items-center text-sm">
+                                        <span className="text-muted-foreground">{t.sub}</span>
+                                        <span className="font-bold text-amber-500">{getLocalizedCategory(spirit.subcategory)}</span>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Origin Card */}
+                        <div className="p-4 bg-card border border-border rounded-2xl shadow-sm">
+                            <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-3">{t.origin}</h3>
+                            <div className="space-y-2">
+                                <div className="flex justify-between items-center text-sm">
+                                    <span className="text-muted-foreground">{t.country}</span>
+                                    <span className="font-bold">{spirit.country || "Unknown"}</span>
+                                </div>
+                                {spirit.region && (
+                                    <div className="flex justify-between items-center text-sm">
+                                        <span className="text-muted-foreground">{t.region}</span>
+                                        <span className="font-bold">{spirit.region}</span>
+                                    </div>
+                                )}
+                                {spirit.bottler && (
+                                    <div className="flex justify-between items-center text-sm">
+                                        <span className="text-muted-foreground">{t.bottler}</span>
+                                        <span className="font-bold">{spirit.bottler}</span>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            {/* 2. Enhanced Info Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                {/* Category Card */}
-                <div className="p-4 bg-card border border-border rounded-2xl shadow-sm">
-                    <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-3">{dict?.specs || t.specs}</h3>
-                    <div className="space-y-2">
-                        <div className="flex justify-between items-center text-sm">
-                            <span className="text-muted-foreground">{t.category}</span>
-                            <span className="font-bold">{getLocalizedCategory(spirit.category)}</span>
-                        </div>
-                        {spirit.mainCategory && (
-                            <div className="flex justify-between items-center text-sm">
-                                <span className="text-muted-foreground">{t.main}</span>
-                                <span className="font-bold">{getLocalizedCategory(spirit.mainCategory)}</span>
-                            </div>
-                        )}
-                        {spirit.subcategory && (
-                            <div className="flex justify-between items-center text-sm">
-                                <span className="text-muted-foreground">{t.sub}</span>
-                                <span className="font-bold text-amber-500">{getLocalizedCategory(spirit.subcategory)}</span>
-                            </div>
-                        )}
-                    </div>
+            {/* Description Section (Full Width) */}
+            {displayDescription && (
+                <div className="mb-8 p-6 bg-secondary/10 border border-border rounded-3xl shadow-sm">
+                    <p className="text-sm sm:text-base text-foreground/90 leading-relaxed md:leading-loose whitespace-pre-wrap">
+                        {displayDescription}
+                    </p>
                 </div>
-
-                {/* Origin Card */}
-                <div className="p-4 bg-card border border-border rounded-2xl shadow-sm">
-                    <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-3">{t.origin}</h3>
-                    <div className="space-y-2">
-                        <div className="flex justify-between items-center text-sm">
-                            <span className="text-muted-foreground">{t.country}</span>
-                            <span className="font-bold">{spirit.country || "Unknown"}</span>
-                        </div>
-                        {spirit.region && (
-                            <div className="flex justify-between items-center text-sm">
-                                <span className="text-muted-foreground">{t.region}</span>
-                                <span className="font-bold">{spirit.region}</span>
-                            </div>
-                        )}
-                        {spirit.bottler && (
-                            <div className="flex justify-between items-center text-sm">
-                                <span className="text-muted-foreground">{t.bottler}</span>
-                                <span className="font-bold">{spirit.bottler}</span>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </div>
+            )}
 
             {/* 3. Flavor Profile with Dynamic Colors */}
             {(spirit.nose_tags || spirit.palate_tags || spirit.finish_tags || (spirit.metadata as any)?.nose_tags) && (

@@ -633,16 +633,16 @@ export default function WorldCupGamePage({ params }: { params: Promise<{ lang: s
             {/* Choice Section - Relative z-20 for clear click area, pt-44 to avoid header overlap */}
             <div className="flex-1 flex flex-row items-center justify-center pt-44 pb-8 px-3 gap-3 max-w-4xl mx-auto w-full mb-12 relative z-20">
                 {/* Left Side */}
-                <ChoiceCard item={leftItem} onClick={() => selectWinner(leftItem)} pos="left" />
+                <ChoiceCard item={leftItem} onClick={() => selectWinner(leftItem)} pos="left" isEn={isEn} />
 
                 {/* Right Side */}
-                <ChoiceCard item={rightItem} onClick={() => selectWinner(rightItem)} pos="right" />
+                <ChoiceCard item={rightItem} onClick={() => selectWinner(rightItem)} pos="right" isEn={isEn} />
             </div>
         </div>
     );
 }
 
-function ChoiceCard({ item, onClick, pos }: { item: Spirit, onClick: () => void, pos: 'left' | 'right' }) {
+function ChoiceCard({ item, onClick, pos, isEn }: { item: Spirit, onClick: () => void, pos: 'left' | 'right', isEn: boolean }) {
     return (
         <motion.button
             onClick={onClick}

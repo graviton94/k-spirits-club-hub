@@ -106,7 +106,7 @@ export default function WorldCupSelectionPage() {
                     <ChevronLeft className="w-5 h-5 text-foreground" />
                 </button>
                 <div>
-                    <h1 className="text-2xl font-black text-white tracking-tighter flex items-center gap-2">
+                    <h1 className="text-2xl font-black text-foreground tracking-tighter flex items-center gap-2">
                         <Trophy className="w-6 h-6 text-amber-500" />
                         {isEn ? "Spirit World Cup" : "주류 취향 월드컵"}
                     </h1>

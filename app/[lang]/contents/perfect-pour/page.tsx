@@ -290,7 +290,7 @@ export default function PerfectPourPage() {
                 >
                     <ChevronLeft className="w-5 h-5 text-foreground" />
                 </Link>
-                <h1 className="text-2xl font-black text-white">{isEn ? "Somaek Master" : "소맥 마스터"}</h1>
+                <h1 className="text-2xl font-black text-foreground">{isEn ? "Somaek Master" : "소맥 마스터"}</h1>
             </div>
 
             <div className="flex-1 flex flex-col items-center justify-center">
