@@ -204,13 +204,13 @@ export default async function SpiritDetailPage({
     // Add tasting note if available
     const tastingNote = spirit.tasting_note || spirit.metadata?.tasting_note;
     if (tastingNote) {
-      parts.push(`[Tasting Note]: ${tastingNote}`);
+      parts.push(`Tasting Notes: ${tastingNote}`);
     }
 
     // Add pairing guide if available
     const pairingGuide = spirit.metadata?.pairing_guide_ko || spirit.metadata?.pairing_guide_en || spirit.pairing_guide_ko || spirit.pairing_guide_en;
     if (pairingGuide) {
-      parts.push(`[Best Pairing]: ${pairingGuide}`);
+      parts.push(`Best Pairing Tips: ${pairingGuide}`);
     }
 
     return parts.join('. ');
@@ -231,13 +231,8 @@ export default async function SpiritDetailPage({
     },
     category: spirit.category,
 
-    // Required offer schema to help Google recognize this as a product page
-    offers: {
-      '@type': 'Offer',
-      price: "0",
-      priceCurrency: "KRW",
-      availability: "https://schema.org/InStock"
-    },
+    // Offers property is intentionally omitted. As a review site, including fake prices
+    // or availability (e.g. price: 0) violates Google's Structured Data guidelines.
 
     additionalProperty: [
       ...(formatAbv(spirit.abv) ? [{
@@ -265,21 +260,27 @@ export default async function SpiritDetailPage({
     };
 
     // Add actual reviews
-    jsonLd.review = reviews.slice(0, 5).map((r) => ({
-      '@type': 'Review',
-      reviewRating: {
-        '@type': 'Rating',
-        ratingValue: r.rating,
-        bestRating: "5",
-        worstRating: "1"
-      },
-      author: {
-        '@type': 'Person',
-        name: r.userName || 'Member'
-      },
-      datePublished: r.createdAt ? new Date(r.createdAt).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
-      reviewBody: r.content || 'Great spirit.'
-    }));
+    jsonLd.review = reviews.slice(0, 5).map((r) => {
+      const tags = [r.nose, r.palate, r.finish].filter(Boolean).join(', ');
+      const reviewText = r.content ? r.content : '';
+      const reviewBody = tags ? `${reviewText} (Tasting Tags: ${tags})` : (reviewText || 'Great spirit.');
+
+      return {
+        '@type': 'Review',
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: r.rating,
+          bestRating: "5",
+          worstRating: "1"
+        },
+        author: {
+          '@type': 'Person',
+          name: r.userName || 'Member'
+        },
+        datePublished: r.createdAt ? new Date(r.createdAt).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+        reviewBody: reviewBody
+      };
+    });
   }
 
   const dictionary = await getDictionary(lang as Locale);
