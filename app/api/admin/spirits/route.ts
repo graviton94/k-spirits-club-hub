@@ -10,6 +10,7 @@ export async function GET(req: NextRequest) {
     const category = searchParams.get('category');
     const distillery = searchParams.get('distillery');
     const isPublished = searchParams.get('isPublished');
+    const searchTerm = searchParams.get('search');
 
     // Pagination Params
     const page = parseInt(searchParams.get('page') || '1');
@@ -28,6 +29,9 @@ export async function GET(req: NextRequest) {
         if (isPublished !== null && isPublished !== undefined && isPublished !== 'ALL') {
             filter.isPublished = isPublished === 'true';
         }
+
+        // SearchTerm filter
+        if (searchTerm) filter.searchTerm = searchTerm;
 
         console.log('[API /api/admin/spirits] Fetching with filter:', JSON.stringify(filter));
         const spirits = await db.getSpirits(filter, { page, pageSize });
