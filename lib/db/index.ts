@@ -103,11 +103,15 @@ export const db = {
     if (filter.searchTerm) {
       const lowerTerm = filter.searchTerm.toLowerCase();
       allItems = allItems.filter(s => {
-        if (s.searchKeywords && s.searchKeywords.length > 0) {
-          return s.searchKeywords.some(keyword => keyword.includes(lowerTerm));
-        }
-        return s.name.toLowerCase().includes(lowerTerm) ||
-          (s.metadata?.name_en && s.metadata.name_en.toLowerCase().includes(lowerTerm));
+        const matchesKeyword = s.searchKeywords && s.searchKeywords.length > 0
+          ? s.searchKeywords.some(keyword => typeof keyword === 'string' && keyword.toLowerCase().includes(lowerTerm))
+          : false;
+
+        const matchesName = !!s.name && s.name.toLowerCase().includes(lowerTerm);
+        const matchesEnName = (!!s.name_en && s.name_en.toLowerCase().includes(lowerTerm)) ||
+          (!!s.metadata?.name_en && s.metadata.name_en.toLowerCase().includes(lowerTerm));
+
+        return matchesKeyword || matchesName || matchesEnName;
       });
     }
 
