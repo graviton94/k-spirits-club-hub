@@ -142,6 +142,20 @@ export async function generateMetadata({
   const fullDescription = buildSeoDescription(extendedDescription, seoSuffix);
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://k-spirits.club';
 
+  // Build Dynamic OG Image URL
+  const searchParams = new URLSearchParams();
+  searchParams.set('title', isEn ? (spirit.name_en || spirit.name) : spirit.name);
+  searchParams.set('category', spirit.category || 'Spirits');
+  if (spirit.imageUrl) searchParams.set('image', spirit.imageUrl);
+
+  const tagsData = spirit.tasting_note ? spirit.tasting_note.split(/[,\s]+/) : (spirit.nose_tags || []);
+  const validTags = tagsData.filter(Boolean).slice(0, 3);
+  if (validTags.length > 0) {
+    searchParams.set('tags', validTags.join(','));
+  }
+
+  const ogImageUrl = `${baseUrl}/api/og/spirit?${searchParams.toString()}`;
+
   return {
     title,
     description: fullDescription,
@@ -154,7 +168,7 @@ export async function generateMetadata({
     openGraph: {
       title: `${title} | K-Spirits Club`,
       description: fullDescription,
-      images: spirit.imageUrl ? [spirit.imageUrl] : [],
+      images: [ogImageUrl],
       type: 'website',
       locale: lang === 'ko' ? 'ko_KR' : 'en_US',
       siteName: 'K-Spirits Club',
@@ -163,7 +177,7 @@ export async function generateMetadata({
       card: 'summary_large_image',
       title: `${title} | K-Spirits Club`,
       description: fullDescription,
-      images: spirit.imageUrl ? [spirit.imageUrl] : [],
+      images: [ogImageUrl],
     },
   };
 }
