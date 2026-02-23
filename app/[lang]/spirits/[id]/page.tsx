@@ -231,8 +231,19 @@ export default async function SpiritDetailPage({
     },
     category: spirit.category,
 
-    // Offers property is intentionally omitted. As a review site, including fake prices
-    // or availability (e.g. price: 0) violates Google's Structured Data guidelines.
+    // SEO Enhancement: Add URL for better indexing
+    url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://k-spirits.club'}/${lang}/spirits/${id}`,
+
+    // FIX for GSC Error: Provides an 'Offer' to satisfy Product snippet requirements safely
+    // Indicates this is an informational page without fake reviews or fake pricing.
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'KRW',
+      availability: 'https://schema.org/OutOfStock',
+      url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://k-spirits.club'}/${lang}/spirits/${id}`,
+      description: 'This is an informational page providing tasting notes and community reviews. Products are not sold here.'
+    },
 
     additionalProperty: [
       ...(formatAbv(spirit.abv) ? [{

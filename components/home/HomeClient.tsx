@@ -5,6 +5,7 @@ import DailyPick from "@/components/home/DailyPick";
 import { SpiritCard } from "@/components/ui/SpiritCard";
 import { LiveReviews } from "@/components/ui/LiveReviews";
 import Link from "next/link";
+import Image from "next/image";
 import { Sparkles, Flame, ArrowRight } from "lucide-react";
 import styles from "@/app/[lang]/page.module.css";
 import { RandomBackground } from "@/components/ui/RandomBackground";
@@ -68,7 +69,7 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialRevi
                         </p>
                         <h1 className="text-5xl md:text-7xl font-black text-white leading-tight animate-fade-in-up delay-100 drop-shadow-2xl">
                             {dict.heroTitle} <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-600">
+                            <span className="text-transparent bg-clip-text bg-linear-to-r from-amber-400 to-orange-600">
                                 Spirit
                             </span>
                         </h1>
@@ -96,16 +97,18 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialRevi
                                 <Link
                                     href={`/${lang}/spirits/${spirit.id}`}
                                     key={`${spirit.id}-${index}`}
-                                    className="flex-shrink-0 group"
+                                    className="shrink-0 group"
                                 >
                                     <div className="w-32 flex flex-col items-center gap-3 transition-transform duration-300 group-hover:scale-105">
                                         <div className="relative w-28 h-36 rounded-2xl bg-card border border-border shadow-md overflow-hidden flex items-center justify-center p-2 group-hover:border-amber-500/50 transition-colors">
                                             {spirit.thumbnailUrl || spirit.imageUrl ? (
-                                                <img
-                                                    src={getOptimizedImageUrl(spirit.thumbnailUrl || spirit.imageUrl, 240)}
+                                                <Image
+                                                    src={spirit.thumbnailUrl || spirit.imageUrl}
                                                     alt={spirit.name}
                                                     loading="lazy"
-                                                    className="w-full h-full object-contain"
+                                                    fill
+                                                    sizes="(max-width: 768px) 112px, 112px"
+                                                    className="object-contain p-2"
                                                 />
                                             ) : (
                                                 <span className="text-3xl">🍾</span>

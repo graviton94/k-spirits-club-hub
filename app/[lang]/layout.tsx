@@ -12,6 +12,8 @@ import { Header } from '@/components/layout/Header';
 import { BottomNav } from "@/components/layout/BottomNav";
 import StickyFooterAd from '@/components/ui/StickyFooterAd';
 import { getDictionary } from '@/lib/get-dictionary';
+import { PwaProvider } from './context/pwa-context';
+import { PwaInstallPrompt } from '@/components/ui/PwaInstallPrompt';
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit", display: "swap" });
@@ -138,12 +140,15 @@ export default async function RootLayout({
 
         <AuthProvider>
           <SpiritsCacheProvider>
-            <Header lang={lang} dict={dictionary.nav} />
-            <OnboardingModal />
-            <main className="relative min-h-screen pb-20 md:pb-0">
-              {children}
-            </main>
-            <BottomNav lang={lang} dict={dictionary.nav} />
+            <PwaProvider>
+              <Header lang={lang} dict={dictionary.nav} />
+              <PwaInstallPrompt />
+              <OnboardingModal />
+              <main className="relative min-h-screen pb-20 md:pb-0">
+                {children}
+              </main>
+              <BottomNav lang={lang} dict={dictionary.nav} />
+            </PwaProvider>
           </SpiritsCacheProvider>
         </AuthProvider>
 

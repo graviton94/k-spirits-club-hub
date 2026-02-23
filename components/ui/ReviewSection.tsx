@@ -215,7 +215,7 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-md z-[100] flex items-center justify-center p-4 transition-all"
+            className="fixed inset-0 bg-black/60 backdrop-blur-md z-100 flex items-center justify-center p-4 transition-all"
             onClick={() => !isDeleting && setDeleteTarget(null)}
           >
             <motion.div
@@ -226,7 +226,7 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
               onClick={(e) => e.stopPropagation()}
             >
               {/* Decorative Header Background */}
-              <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-br from-rose-500/10 to-orange-500/10 z-0" />
+              <div className="absolute top-0 left-0 w-full h-32 bg-linear-to-br from-rose-500/10 to-orange-500/10 z-0" />
 
               <div className="relative z-10 p-8 flex flex-col items-center text-center">
                 {/* Icon Bubble */}
@@ -255,7 +255,7 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
                   <button
                     onClick={handleDeleteReview}
                     disabled={isDeleting}
-                    className="flex-1 py-4 bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 text-white shadow-lg shadow-rose-500/30 font-black rounded-2xl transition-all active:scale-[0.98] flex items-center justify-center"
+                    className="flex-1 py-4 bg-linear-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 text-white shadow-lg shadow-rose-500/30 font-black rounded-2xl transition-all active:scale-[0.98] flex items-center justify-center"
                   >
                     {isDeleting ? (
                       <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />

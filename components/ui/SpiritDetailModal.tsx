@@ -192,7 +192,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
     return (
         <AnimatePresence>
             <motion.div
-                className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/70 backdrop-blur-md"
+                className="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-6 bg-black/70 backdrop-blur-md"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -208,7 +208,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                 >
                     {/* ... (Header Image code remains unchanged) ... */}
                     {/* (Omitted for brevity, but it's part of the replacement block) */}
-                    <div className="relative h-[28vh] w-full bg-zinc-800 shrink-0 aspect-[16/9] overflow-hidden">
+                    <div className="relative h-[28vh] w-full bg-zinc-800 shrink-0 aspect-video overflow-hidden">
                         {/* Close Button (Top Left) */}
                         <button
                             onClick={onClose}
