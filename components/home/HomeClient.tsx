@@ -103,7 +103,7 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialRevi
                                         <div className="relative w-28 h-36 rounded-2xl bg-card border border-border shadow-md overflow-hidden flex items-center justify-center p-2 group-hover:border-amber-500/50 transition-colors">
                                             {spirit.thumbnailUrl || spirit.imageUrl ? (
                                                 <Image
-                                                    src={spirit.thumbnailUrl || spirit.imageUrl}
+                                                    src={getOptimizedImageUrl(spirit.thumbnailUrl || spirit.imageUrl, 112)}
                                                     alt={spirit.name}
                                                     loading="lazy"
                                                     fill
