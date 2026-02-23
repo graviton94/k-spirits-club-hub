@@ -10,6 +10,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: '**.googleapis.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'wsrv.nl',
+      },
     ],
   },
   // 빌드 시 타입 체크 오류 무시
