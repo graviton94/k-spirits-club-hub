@@ -291,6 +291,89 @@ export async function getPublishedSpiritIds(): Promise<string[]> {
     }
 }
 
+/**
+ * Get published spirit IDs + updatedAt timestamps for sitemap generation.
+ * Fetches __name__ + updatedAt in a single runQuery call.
+ */
+export async function getPublishedSpiritMeta(): Promise<{ id: string; updatedAt: string | null }[]> {
+    const token = await getServiceAccountToken();
+    const runQueryUrl = `${BASE_URL}:runQuery`;
+    const collectionPath = getAppPath().spirits;
+
+    const segments = collectionPath.split('/');
+    const collectionId = segments.pop();
+    const parentPath = segments.join('/');
+    const parent = `projects/${PROJECT_ID}/databases/(default)/documents/${parentPath}`;
+
+    const allMeta: { id: string; updatedAt: string | null }[] = [];
+    let offset = 0;
+    const pageSize = 5000;
+
+    try {
+        let hasMore = true;
+
+        while (hasMore) {
+            const structuredQuery: any = {
+                from: [{ collectionId }],
+                where: {
+                    fieldFilter: {
+                        field: { fieldPath: 'isPublished' },
+                        op: 'EQUAL',
+                        value: { booleanValue: true }
+                    }
+                },
+                select: {
+                    fields: [
+                        { fieldPath: '__name__' },
+                        { fieldPath: 'updatedAt' },
+                    ]
+                },
+                limit: pageSize,
+                offset,
+            };
+
+            const res = await fetch(runQueryUrl, {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ parent, structuredQuery })
+            });
+
+            if (!res.ok) {
+                const errText = await res.text();
+                console.error(`[getPublishedSpiritMeta] Failed:`, errText);
+                throw new Error(`Failed to fetch spirit meta: ${res.status}`);
+            }
+
+            const json = await res.json();
+            const results = json.filter((r: any) => r.document);
+
+            for (const result of results) {
+                const doc = result.document;
+                if (!doc?.name) continue;
+                const id = doc.name.split('/').pop();
+                const updatedAtRaw = doc.fields?.updatedAt;
+                const updatedAt = updatedAtRaw?.timestampValue || updatedAtRaw?.stringValue || null;
+                if (id) allMeta.push({ id, updatedAt });
+            }
+
+            if (results.length < pageSize) {
+                hasMore = false;
+            } else {
+                offset += pageSize;
+            }
+        }
+
+        console.log(`[getPublishedSpiritMeta] Fetched ${allMeta.length} spirit meta entries`);
+        return allMeta;
+    } catch (error) {
+        console.error('[getPublishedSpiritMeta] Error:', error);
+        throw error;
+    }
+}
+
 export const spiritsDb = {
     async getAll(filter: SpiritFilter = {}, pagination?: { page: number, pageSize: number }): Promise<Spirit[]> {
         const token = await getServiceAccountToken();
