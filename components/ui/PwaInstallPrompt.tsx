@@ -4,22 +4,24 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Download, Star } from 'lucide-react';
 import { usePwa } from '@/app/[lang]/context/pwa-context';
+import { useAuth } from '@/app/[lang]/context/auth-context';
 import { usePathname } from 'next/navigation';
 
 export function PwaInstallPrompt() {
     const { isInstallable, hasInteractedEnough, promptInstall, dismissPrompt, isInstalled } = usePwa();
+    const { user, loading } = useAuth();
     const [isVisible, setIsVisible] = useState(false);
     const pathname = usePathname();
     const isEn = pathname?.startsWith('/en');
 
     useEffect(() => {
-        // Only show if installable (Chromium/Android) AND user engaged enough
-        if (isInstallable && hasInteractedEnough && !isInstalled) {
+        // Only show if installable (Chromium/Android) AND user engaged enough AND user is NOT logged in.
+        if (isInstallable && hasInteractedEnough && !isInstalled && !loading && !user) {
             setIsVisible(true);
         } else {
             setIsVisible(false);
         }
-    }, [isInstallable, hasInteractedEnough, isInstalled]);
+    }, [isInstallable, hasInteractedEnough, isInstalled, loading, user]);
 
     // Fallback check for iOS (Safari doesn't fire beforeinstallprompt)
     const [isIosPromptTracker, setIsIosPromptTracker] = useState(false);
@@ -29,9 +31,8 @@ export function PwaInstallPrompt() {
         const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
         const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (navigator as any).standalone;
 
-        // If it's iOS Safari, not already installed, and hasn't been dismissed recently
-        // we can show a bespoke manual instruction prompt.
-        if (isIos && !isStandalone && hasInteractedEnough && !isInstallable && !isInstalled) {
+        // If it's iOS Safari, not already installed, hasn't been dismissed recently AND user is NOT logged in.
+        if (isIos && !isStandalone && hasInteractedEnough && !isInstallable && !isInstalled && !loading && !user) {
             const dismissed = localStorage.getItem('kspirits_ios_pwa_dismissed');
             const now = new Date().getTime();
             if (!dismissed || (now - parseInt(dismissed) > 7 * 24 * 60 * 60 * 1000)) {
@@ -40,7 +41,7 @@ export function PwaInstallPrompt() {
         } else {
             setIsIosPromptTracker(false);
         }
-    }, [hasInteractedEnough, isInstallable, isInstalled]);
+    }, [hasInteractedEnough, isInstallable, isInstalled, loading, user]);
 
     // Prevent rendering anything if neither Android/Chrome prompt nor iOS prompt is needed
     if (!isVisible && !isIosPromptTracker) return null;
