@@ -15,12 +15,17 @@ import { rum } from './wiki/rum'
 import { vodka } from './wiki/vodka'
 import { tequila } from './wiki/tequila'
 import { wine } from './wiki/wine'
-import { champagne } from './wiki/champagne'
-import { cognac } from './wiki/cognac'
+import { redWine } from './wiki/red-wine'
+import { whiteWine } from './wiki/white-wine'
+import { mezcal } from './wiki/mezcal'
+import { liqueur } from './wiki/liqueur'
 import { brandy } from './wiki/brandy'
 import { baijiu } from './wiki/baijiu'
 import { beer } from './wiki/beer'
+import { yakju } from './wiki/yakju'
 import { makgeolli } from './wiki/makgeolli'
+import { shochu } from './wiki/shochu'
+import { singleMalt } from './wiki/single-malt'
 import { oakBarrel } from './wiki/oak-barrel'
 
 // 타입 재수출 (하위 호환성 유지)
@@ -48,12 +53,17 @@ export const SPIRIT_CATEGORIES: SpiritCategory[] = [
     vodka,
     tequila,
     wine,
-    champagne,
-    cognac,
+    redWine,
+    whiteWine,
+    mezcal,
+    liqueur,
     brandy,
     baijiu,
     beer,
+    yakju,
     makgeolli,
+    shochu,
+    singleMalt,
     oakBarrel
 ]
 

@@ -18,6 +18,7 @@ export interface SpiritClassification {
     name: string
     criteria: string
     description: string
+    flavorTags?: SpiritFlavorTag[]
 }
 
 export interface SpiritSensoryMetric {
@@ -42,6 +43,7 @@ export interface SpiritProcess {
 export interface SpiritServingGuideline {
     recommendedGlass?: string
     optimalTemperatures?: { temp: string; description: string }[]
+    methods?: { name: string; description: string }[]
     decantingNeeded?: boolean
 }
 
