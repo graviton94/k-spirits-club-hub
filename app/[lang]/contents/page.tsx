@@ -12,7 +12,8 @@ import {
   Beer,
   Fingerprint,
   Newspaper,
-  MessageSquare
+  MessageSquare,
+  BookOpen
 } from "lucide-react";
 
 interface ContentsPageProps {
@@ -85,6 +86,15 @@ export default async function ContentsPage({ params }: ContentsPageProps) {
       status: "OPEN",
       gradient: "from-indigo-500/20 to-purple-600/20",
       borderHover: "group-hover:border-indigo-500/50"
+    },
+    {
+      title: isEn ? "Spirits Wiki" : "주류 백과사전",
+      description: isEn ? "Explore definitions, history, and pairing tips for every spirit." : "위스키부터 고량주까지 — 세계 주류의 정의, 역사, 페어링을 한눈에.",
+      icon: <BookOpen className="w-8 h-8 text-emerald-500" />,
+      link: `/${lang}/contents/wiki`,
+      status: "NEW",
+      gradient: "from-emerald-500/20 to-teal-600/20",
+      borderHover: "group-hover:border-emerald-500/50"
     }
   ];
 

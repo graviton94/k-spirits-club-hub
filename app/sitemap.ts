@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import { getPublishedSpiritMeta } from '@/lib/db/firestore-rest';
+import { SPIRIT_CATEGORIES } from '@/lib/constants/spirits-guide-data';
 
 export const runtime = 'edge';
 
@@ -36,6 +37,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: '/contents/perfect-pour', priority: 0.7, freq: 'monthly' },
     { path: '/contents/news', priority: 0.6, freq: 'daily' },
     { path: '/contents/about', priority: 0.5, freq: 'yearly' },
+    // 주류 백과사전 허브
+    { path: '/contents/wiki', priority: 0.8, freq: 'monthly' },
+    // 주류 백과사전 카테고리 서브페이지
+    ...SPIRIT_CATEGORIES.map(cat => ({
+      path: `/contents/wiki/${cat.slug}` as const,
+      priority: 0.75,
+      freq: 'monthly' as MetadataRoute.Sitemap[0]['changeFrequency'],
+    })),
   ];
 
   for (const page of staticPages) {
