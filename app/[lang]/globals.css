@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+/**
+ * Safelist: spirits-guide-data.ts의 flavorTags에서 런타임에 동적으로 조합하는
+ * bg-{color}-{shade} 클래스가 빌드 시 purge되지 않도록 강제 보존합니다.
+ * (Tailwind v4 방식: @source inline)
+ */
+@source inline("{bg-amber,bg-rose,bg-sky,bg-cyan,bg-emerald,bg-orange,bg-blue,bg-lime,bg-purple,bg-yellow,bg-red,bg-stone,bg-green,bg-pink,bg-violet}-{400,500,600,700}");
+
+
+
 @layer base {
   :root {
     --background: 0 0% 100%;

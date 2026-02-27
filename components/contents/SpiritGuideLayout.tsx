@@ -40,7 +40,7 @@ function Section({
 }) {
     const c = COLOR_MAP[color] ?? COLOR_MAP.amber
     return (
-        <section className={`rounded-2xl border ${c.border} bg-white/3 p-6 backdrop-blur-sm`}>
+        <section className={`rounded-2xl border ${c.border} bg-{color}/3 p-6 backdrop-blur-sm`}>
             <h2 className={`flex items-center gap-2 text-lg font-bold ${c.text} mb-4`}>
                 {icon}
                 {title}
