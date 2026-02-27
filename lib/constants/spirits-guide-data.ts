@@ -19,18 +19,64 @@ export interface SpiritFlavorTag {
     color: string
 }
 
+export interface SpiritClassification {
+    name: string
+    criteria: string
+    description: string
+}
+
+export interface SpiritSensoryMetric {
+    metric: string
+    label: string
+    value: string
+    description: string
+}
+
+export interface SpiritIngredient {
+    type: string
+    name: string
+    description: string
+}
+
+export interface SpiritProcess {
+    step: string
+    name: string
+    description: string
+}
+
+export interface SpiritServingGuideline {
+    recommendedGlass?: string
+    optimalTemperatures?: { temp: string; description: string }[]
+    decantingNeeded?: boolean
+}
+
 export interface SpiritSection {
     /** "XX란 무엇인가?" */
     definition?: string
     /** 역사 / 원산지 */
     history?: string
-    /** 종류·분류 */
+
+    // --- 1. 체계화된 확장 필드 (신규) ---
+    /** 1. 주종별 등급 및 분류 체계 (기존 subtypes를 대체·확장) */
+    classifications?: SpiritClassification[]
+    /** 2. 객관적 맛/향 지표 (SMV, IBU, 당도/산도 등) */
+    sensoryMetrics?: SpiritSensoryMetric[]
+    /** 3. 핵심 원재료 및 발효제 (쌀/효모/물, 포도품종, 맥아/홉 등) */
+    coreIngredients?: SpiritIngredient[]
+    /** 4. 특수 제조 및 가공 공정 (발효 방식, 오크 숙성, 여과 등) */
+    manufacturingProcess?: SpiritProcess[]
+    /** 5. 최적의 음용 가이드 (제시 권장 온도, 글라스, 디캔팅) */
+    servingGuidelines?: SpiritServingGuideline
+    // ------------------------------------
+
+    /** 기존 레거시(or 간이) 렌더링용 필드들 */
+    /** 종류·분류 (단순 목록형 - classifications으로 대체 권장) */
     subtypes?: SpiritSubtype[]
     /** 맛·향 특징 태그 */
     flavorTags?: SpiritFlavorTag[]
-    /** 제조 방법 */
+    /** 제조 방법 (단문 - manufacturingProcess로 상세화 가능) */
     production?: string
-    /** 즐기는 법 (온더락, 니트, 칵테일 등) */
+    /** 즐기는 법 (단문 - servingGuidelines로 대체 권장) */
     howToEnjoy?: string[]
     /** 푸드 페어링 추천 */
     foodPairing?: string[]
