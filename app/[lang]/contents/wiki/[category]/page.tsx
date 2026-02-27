@@ -10,13 +10,6 @@ interface CategoryPageProps {
     params: Promise<{ lang: string; category: string }>
 }
 
-// 모든 카테고리 slug를 정적으로 사전 생성 (ko + en)
-export async function generateStaticParams() {
-    return SPIRIT_CATEGORIES.flatMap((cat) => [
-        { lang: 'ko', category: cat.slug },
-        { lang: 'en', category: cat.slug },
-    ])
-}
 
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
     const { lang, category: slug } = await params
