@@ -40,7 +40,7 @@ function Section({
 }) {
     const c = COLOR_MAP[color] ?? COLOR_MAP.amber
     return (
-        <section className={`rounded-2xl border ${c.border} ${c.bg} p-6 backdrop-blur-sm`}>
+        <section className={`rounded-2xl border ${c.border} bg-white/3 p-6 backdrop-blur-sm`}>
             <h2 className={`flex items-center gap-2 text-lg font-bold ${c.text} mb-4`}>
                 {icon}
                 {title}
@@ -167,11 +167,15 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
             <Section icon={<Droplets className="w-5 h-5" />} title={isEn ? 'Flavor Profile' : '맛 & 향 특징'} color={category.color}>
                 {s?.flavorTags && s.flavorTags.length > 0 ? (
                     <div className="flex flex-wrap gap-2">
-                        {s.flavorTags.map((tag) => (
-                            <span key={tag.label} className={`px-3 py-1 rounded-full text-xs font-semibold ${tag.color}`}>
-                                {tag.label}
-                            </span>
-                        ))}
+                        {s.flavorTags.map((tag) => {
+                            // tag.color 에서 배경 클래스만 추출 (e.g. bg-amber-500)
+                            const bgClass = tag.color.split(' ').find(c => c.startsWith('bg-'))?.replace('/20', '') ?? 'bg-neutral-600'
+                            return (
+                                <span key={tag.label} className={`px-3 py-1.5 rounded-full text-xs font-bold text-white shadow-sm ${bgClass}`}>
+                                    {tag.label}
+                                </span>
+                            )
+                        })}
                     </div>
                 ) : (
                     <ComingSoon label={isEn ? 'Flavor Profile' : '맛·향 특징'} />
