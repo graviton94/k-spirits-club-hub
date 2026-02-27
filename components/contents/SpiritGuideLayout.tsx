@@ -42,7 +42,7 @@ function Section({
 }) {
     const c = COLOR_MAP[color] ?? COLOR_MAP.amber
     return (
-        <section id={id} className={`rounded-2xl border ${c.border} bg-white dark:bg-zinc-900/30 p-6 shadow-sm`}>
+        <section id={id} className={`rounded-2xl border ${c.border} bg-white/3 p-6 backdrop-blur-sm`}>
             <h2 className={`flex items-center gap-2 text-lg font-bold ${c.text} mb-4`}>
                 {icon}
                 {title}
@@ -128,13 +128,13 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                 {s?.classifications && s.classifications.length > 0 ? (
                     <div className="space-y-4">
                         {s.classifications.map((cls) => (
-                            <div key={cls.name} className="rounded-xl border border-border/50 bg-zinc-50 dark:bg-zinc-900/50 p-5">
+                            <div key={cls.name} className="rounded-xl border border-border/30 bg-background/30 p-5">
                                 <div className="flex flex-col gap-1 mb-3">
-                                    <h3 className="font-bold text-zinc-950 dark:text-foreground text-sm uppercase tracking-tight">{cls.name}</h3>
-                                    <span className="text-[10px] font-bold text-zinc-600 dark:text-muted-foreground">{cls.criteria}</span>
+                                    <h3 className="font-bold text-foreground text-sm uppercase tracking-tight">{cls.name}</h3>
+                                    <span className="text-[10px] font-bold text-zinc-500 dark:text-zinc-500">{cls.criteria}</span>
                                 </div>
                                 <div className="border-t border-border/10 pt-3">
-                                    <p className="text-zinc-900 dark:text-zinc-400 text-xs leading-relaxed mb-3">{cls.description}</p>
+                                    <p className="text-zinc-950 dark:text-zinc-400 text-xs leading-relaxed mb-3">{cls.description}</p>
 
                                     {cls.flavorTags && cls.flavorTags.length > 0 && (
                                         <div className="flex flex-wrap gap-1.5 mt-2">
@@ -157,9 +157,9 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                 ) : s?.subtypes && s.subtypes.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {s.subtypes.map((sub) => (
-                            <div key={sub.name} className="rounded-xl border border-border/50 bg-zinc-50 dark:bg-zinc-900/50 p-4">
-                                <h3 className="font-semibold text-zinc-950 dark:text-foreground text-sm mb-1">{sub.name}</h3>
-                                <p className="text-zinc-900 dark:text-zinc-400 text-xs leading-relaxed">{sub.description}</p>
+                            <div key={sub.name} className="rounded-xl border border-border/30 bg-background/30 p-4">
+                                <h3 className="font-semibold text-foreground text-sm mb-1">{sub.name}</h3>
+                                <p className="text-zinc-950 dark:text-zinc-400 text-xs leading-relaxed">{sub.description}</p>
                                 {sub.examples && sub.examples.length > 0 && (
                                     <p className="mt-2 text-xs text-zinc-500 dark:text-zinc-500">예: {sub.examples.join(', ')}</p>
                                 )}
@@ -244,15 +244,15 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                                 <div className="pb-2 pt-1">
                                     <div className="flex items-center gap-2 mb-1.5">
                                         <span className={`text-[10px] font-bold ${c.text} uppercase`}>{proc.step}</span>
-                                        <p className="font-semibold text-sm text-zinc-950 dark:text-foreground">{proc.name}</p>
+                                        <p className="font-semibold text-sm text-foreground">{proc.name}</p>
                                     </div>
-                                    <p className="text-xs text-zinc-900 dark:text-zinc-400 leading-relaxed">{proc.description}</p>
+                                    <p className="text-xs text-zinc-950 dark:text-zinc-400 leading-relaxed">{proc.description}</p>
                                 </div>
                             </div>
                         ))}
                     </div>
                 ) : s?.production ? (
-                    <p className="text-zinc-900 dark:text-zinc-400 text-sm leading-relaxed whitespace-pre-line">{s.production}</p>
+                    <p className="text-zinc-950 dark:text-zinc-400 text-sm leading-relaxed whitespace-pre-line">{s.production}</p>
                 ) : (
                     <ComingSoon label={isEn ? 'Production' : '제조 방법'} />
                 )}
@@ -286,12 +286,12 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                                 <p className="font-bold text-xs text-zinc-950 dark:text-muted-foreground uppercase mb-4 tracking-wide">{isEn ? 'Optimal Temperatures:' : '온도에 따른 향의 발현:'}</p>
                                 <div className="space-y-3">
                                     {s.servingGuidelines.optimalTemperatures.map((t, idx) => (
-                                        <div key={idx} className="flex flex-col gap-2 rounded-xl border border-border/50 p-4 bg-zinc-50 dark:bg-background/20">
-                                            <div className={`self-start flex items-center px-2 py-1 rounded text-[10px] font-black ${c.badge}`}>
+                                        <div key={idx} className="flex flex-col gap-2 rounded-xl border border-border/20 p-4 bg-background/20">
+                                            <div className={`self-start flex items-center px-2 py-1 rounded text-[10px] font-black ${c.badge} !text-zinc-950 dark:!text-inherit`}>
                                                 <Thermometer className="w-3.5 h-3.5 mr-1" />
                                                 {t.temp}
                                             </div>
-                                            <p className="text-zinc-900 dark:text-zinc-400 text-xs leading-relaxed">{t.description}</p>
+                                            <p className="text-zinc-950 dark:text-zinc-400 text-xs leading-relaxed">{t.description}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -303,12 +303,12 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                                 <p className="font-bold text-xs text-zinc-950 dark:text-muted-foreground uppercase mb-4 tracking-wide">{isEn ? 'Recommended Methods:' : '추천 음용 방식:'}</p>
                                 <div className="space-y-3">
                                     {s.servingGuidelines.methods.map((m, idx) => (
-                                        <div key={idx} className="flex flex-col gap-2 rounded-xl border border-border/50 p-4 bg-zinc-50 dark:bg-background/20">
-                                            <div className={`self-start flex items-center px-2 py-1 rounded text-[10px] font-black ${c.badge}`}>
+                                        <div key={idx} className="flex flex-col gap-2 rounded-xl border border-border/20 p-4 bg-background/20">
+                                            <div className={`self-start flex items-center px-2 py-1 rounded text-[10px] font-black ${c.badge} !text-zinc-950 dark:!text-inherit`}>
                                                 <Droplets className="w-3.5 h-3.5 mr-1" />
                                                 {m.name}
                                             </div>
-                                            <p className="text-zinc-900 dark:text-zinc-400 text-xs leading-relaxed">{m.description}</p>
+                                            <p className="text-zinc-950 dark:text-zinc-400 text-xs leading-relaxed">{m.description}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -334,7 +334,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                 {s?.foodPairing && s.foodPairing.length > 0 ? (
                     <div className="flex flex-col gap-2">
                         {s.foodPairing.map((food) => (
-                            <div key={food} className="px-4 py-2.5 rounded-lg bg-zinc-50 dark:bg-zinc-900/40 border border-border/50 text-xs font-bold text-zinc-900 dark:text-foreground flex items-center gap-2">
+                            <div key={food} className="px-4 py-2.5 rounded-lg bg-background/40 border border-border/20 text-xs font-bold text-zinc-950 dark:text-foreground flex items-center gap-2">
                                 <div className={`w-1 h-1 rounded-full ${c.text.replace('text-', 'bg-')} animate-pulse`} />
                                 {food}
                             </div>
