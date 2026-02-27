@@ -28,11 +28,13 @@ const COLOR_MAP: Record<string, { bg: string; border: string; text: string; badg
 // ─── 섹션 래퍼 ──────────────────────────────────────────────────────────────
 
 function Section({
+    id,
     icon,
     title,
     color,
     children,
 }: {
+    id?: string
     icon: React.ReactNode
     title: string
     color: string
@@ -40,7 +42,7 @@ function Section({
 }) {
     const c = COLOR_MAP[color] ?? COLOR_MAP.amber
     return (
-        <section className={`rounded-2xl border ${c.border} bg-white/3 p-6 backdrop-blur-sm`}>
+        <section id={id} className={`rounded-2xl border ${c.border} bg-white/3 p-6 backdrop-blur-sm`}>
             <h2 className={`flex items-center gap-2 text-lg font-bold ${c.text} mb-4`}>
                 {icon}
                 {title}
@@ -70,7 +72,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
     const s = category.sections
 
     return (
-        <div className="container mx-auto px-4 py-6 max-w-3xl pb-24 space-y-6">
+        <article className="container mx-auto px-4 py-6 max-w-3xl pb-24 space-y-6">
 
             {/* ── 1. Hero ── */}
             <div className={`relative rounded-2xl overflow-hidden border ${c.border} ${c.bg} p-8 text-center`}>
@@ -99,7 +101,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
             </div>
 
             {/* ── 2. 정의 ── */}
-            <Section icon={<BookOpen className="w-5 h-5" />} title={isEn ? `What is ${category.nameEn}?` : `${category.nameKo}란?`} color={category.color}>
+            <Section id="definition" icon={<BookOpen className="w-5 h-5" />} title={isEn ? `What is ${category.nameEn}?` : `${category.nameKo}란?`} color={category.color}>
                 {s?.definition ? (
                     <p className="text-muted-foreground text-sm leading-relaxed whitespace-pre-line">{s.definition}</p>
                 ) : (
@@ -108,7 +110,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
             </Section>
 
             {/* ── 3. 역사 ── */}
-            <Section icon={<Clock className="w-5 h-5" />} title={isEn ? 'History & Origin' : '역사 & 원산지'} color={category.color}>
+            <Section id="history" icon={<Clock className="w-5 h-5" />} title={isEn ? 'History & Origin' : '역사 & 원산지'} color={category.color}>
                 {s?.history ? (
                     <p className="text-muted-foreground text-sm leading-relaxed whitespace-pre-line">{s.history}</p>
                 ) : (
@@ -117,13 +119,18 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
             </Section>
 
             {/* ── 4. 종류·분류 / Classifications ── */}
-            <Section icon={<Layers className="w-5 h-5" />} title={isEn ? 'Types & Classification' : '등급 및 분류'} color={category.color}>
+            <Section
+                id="classifications"
+                icon={<Layers className="w-5 h-5" />}
+                title={isEn ? 'Types & Classification' : '등급 및 분류'}
+                color={category.color}
+            >
                 {s?.classifications && s.classifications.length > 0 ? (
                     <div className="space-y-4">
                         {s.classifications.map((cls) => (
                             <div key={cls.name} className="rounded-xl border border-border/30 bg-background/30 p-5">
                                 <div className="flex flex-col gap-1 mb-3">
-                                    <p className="font-bold text-foreground text-sm uppercase tracking-tight">{cls.name}</p>
+                                    <h3 className="font-bold text-foreground text-sm uppercase tracking-tight">{cls.name}</h3>
                                     <span className="text-[10px] font-medium text-muted-foreground">{cls.criteria}</span>
                                 </div>
                                 <div className="border-t border-border/10 pt-3">
@@ -151,7 +158,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {s.subtypes.map((sub) => (
                             <div key={sub.name} className="rounded-xl border border-border/30 bg-background/30 p-4">
-                                <p className="font-semibold text-foreground text-sm mb-1">{sub.name}</p>
+                                <h3 className="font-semibold text-foreground text-sm mb-1">{sub.name}</h3>
                                 <p className="text-muted-foreground text-xs leading-relaxed">{sub.description}</p>
                                 {sub.examples && sub.examples.length > 0 && (
                                     <p className="mt-2 text-xs text-muted-foreground/50">예: {sub.examples.join(', ')}</p>
@@ -166,7 +173,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
 
             {/* ── 5. 맛·향 지표 (신규) ── */}
             {s?.sensoryMetrics && s.sensoryMetrics.length > 0 && (
-                <Section icon={<Activity className="w-5 h-5" />} title={isEn ? 'Sensory Metrics' : '맛과 향 지표'} color={category.color}>
+                <Section id="sensory" icon={<Activity className="w-5 h-5" />} title={isEn ? 'Sensory Metrics' : '맛과 향 지표'} color={category.color}>
                     <div className="grid grid-cols-1 gap-4">
                         {s?.sensoryMetrics?.map((metric) => (
                             <div key={metric.label} className="rounded-xl border border-border/30 bg-background/30 p-5 flex flex-col">
@@ -183,7 +190,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
             )}
 
             {/* ── 6. 맛·향 특징 태그 ── */}
-            <Section icon={<Droplets className="w-5 h-5" />} title={isEn ? 'Flavor Profile' : '맛 & 향 특징'} color={category.color}>
+            <Section id="flavor" icon={<Droplets className="w-5 h-5" />} title={isEn ? 'Flavor Profile' : '맛 & 향 특징'} color={category.color}>
                 {s?.flavorTags && s.flavorTags.length > 0 ? (
                     <div className="flex flex-wrap gap-2">
                         {s.flavorTags.map((tag) => {
@@ -205,7 +212,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
 
             {/* ── 7. 핵심 원재료 (신규) ── */}
             {s?.coreIngredients && s.coreIngredients.length > 0 && (
-                <Section icon={<Leaf className="w-5 h-5" />} title={isEn ? 'Core Ingredients' : '핵심 원재료'} color={category.color}>
+                <Section id="ingredients" icon={<Leaf className="w-5 h-5" />} title={isEn ? 'Core Ingredients' : '핵심 원재료'} color={category.color}>
                     <div className="grid grid-cols-1 gap-4">
                         {s?.coreIngredients?.map((ing) => (
                             <div key={ing.name} className="flex flex-col gap-1 p-5 rounded-xl border border-border/20 bg-background/20">
@@ -214,7 +221,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                                 </div>
                                 <p className="font-bold text-sm text-foreground">{ing.name}</p>
                                 <div className="border-t border-border/10 pt-3 mt-1">
-                                    <p className="text-xs text-muted-foreground leading-relaxed">{ing.description}</p>
+                                    <p className="text-xs text-zinc-900 dark:text-zinc-400 leading-relaxed">{ing.description}</p>
                                 </div>
                             </div>
                         ))}
@@ -223,7 +230,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
             )}
 
             {/* ── 8. 제조 방법 ── */}
-            <Section icon={<FlaskConical className="w-5 h-5" />} title={isEn ? 'Production Method' : '제조 공정'} color={category.color}>
+            <Section id="production" icon={<FlaskConical className="w-5 h-5" />} title={isEn ? 'Production Method' : '제조 공정'} color={category.color}>
                 {s?.manufacturingProcess && s.manufacturingProcess.length > 0 ? (
                     <div className="space-y-4">
                         {s.manufacturingProcess.map((proc, i) => (
@@ -252,7 +259,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
             </Section>
 
             {/* ── 9. 즐기는 법 / Serving Guide ── */}
-            <Section icon={<GlassWater className="w-5 h-5" />} title={isEn ? 'Serving Guidelines' : '최적의 음용 가이드'} color={category.color}>
+            <Section id="serving" icon={<GlassWater className="w-5 h-5" />} title={isEn ? 'Serving Guidelines' : '최적의 음용 가이드'} color={category.color}>
                 {s?.servingGuidelines ? (
                     <div className="space-y-6">
                         <div className="grid grid-cols-1 gap-4">
@@ -284,7 +291,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                                                 <Thermometer className="w-3.5 h-3.5 mr-1" />
                                                 {t.temp}
                                             </div>
-                                            <p className="text-muted-foreground text-xs leading-relaxed">{t.description}</p>
+                                            <p className="text-zinc-900 dark:text-zinc-400 text-xs leading-relaxed">{t.description}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -301,7 +308,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                                                 <Droplets className="w-3.5 h-3.5 mr-1" />
                                                 {m.name}
                                             </div>
-                                            <p className="text-muted-foreground text-xs leading-relaxed">{m.description}</p>
+                                            <p className="text-zinc-900 dark:text-zinc-400 text-xs leading-relaxed">{m.description}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -323,7 +330,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
             </Section>
 
             {/* ── 8. 푸드 페어링 ── */}
-            <Section icon={<Utensils className="w-5 h-5" />} title={isEn ? 'Food Pairing' : '푸드 페어링'} color={category.color}>
+            <Section id="pairing" icon={<Utensils className="w-5 h-5" />} title={isEn ? 'Food Pairing' : '푸드 페어링'} color={category.color}>
                 {s?.foodPairing && s.foodPairing.length > 0 ? (
                     <div className="flex flex-col gap-2">
                         {s.foodPairing.map((food) => (
@@ -339,7 +346,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
             </Section>
 
             {/* ── 9. K-Spirits Club 추천 제품 ── */}
-            <Section icon={<ShoppingBag className="w-5 h-5" />} title={isEn ? 'Featured on K-Spirits Club' : 'K-Spirits Club 추천 제품'} color={category.color}>
+            <Section id="recommended" icon={<ShoppingBag className="w-5 h-5" />} title={isEn ? 'Featured on K-Spirits Club' : 'K-Spirits Club 추천 제품'} color={category.color}>
                 {featuredSpirits.length > 0 ? (
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                         {featuredSpirits.map((spirit) => (
@@ -374,7 +381,6 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                     </div>
                 )}
             </Section>
-
-        </div>
+        </article>
     )
 }

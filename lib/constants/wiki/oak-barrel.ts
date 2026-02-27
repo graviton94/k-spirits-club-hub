@@ -3,7 +3,7 @@ import { SpiritCategory } from './types'
 export const oakBarrel: SpiritCategory = {
     slug: 'oak-barrel',
     emoji: '🪵',
-    nameKo: '오크통 (캐스크) 도감',
+    nameKo: '오크통 (캐스크)',
     nameEn: 'The Cask Guide',
     taglineKo: '나무의 수종과 시간이 빚어내는 스피리츠의 영혼',
     taglineEn: 'The soul of spirits, shaped by wood species and time',

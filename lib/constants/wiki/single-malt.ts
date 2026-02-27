@@ -3,132 +3,135 @@ import { SpiritCategory } from './types'
 export const singleMalt: SpiritCategory = {
     slug: 'single-malt',
     emoji: '🥃',
-    nameKo: '싱글 몰트 위스키',
+    nameKo: '싱글 몰트 위스키 (Single Malt)',
     nameEn: 'Single Malt Whisky',
     taglineKo: '단일 증류소의 테루아와 장인정신이 빚어낸 액체 예술',
     taglineEn: 'The liquid art of a single distillery and its unique terroir',
     color: 'amber',
     sections: {
-        definition: "싱글 몰트 위스키는 단 하나의 증류소(Single)에서 100% 보리 맥아(Malt)만을 사용해 증류하여 오크통에서 숙성시킨 위스키를 의미한다. 증류소마다 다른 물, 증류기의 형태, 숙성 환경이 그대로 맛에 투영되어 가장 개성적이고 복합적인 풍미를 보여준다.",
-        history: "스코틀랜드 농가에서 시작된 몰트 위스키 증류는 19세기 밀주 시대를 거치며 정교한 기술로 발전했다. 20세기 중반까지 블렌디드 위스키의 핵심 원액으로만 쓰였으나, 현재는 개별 증류소 고유의 개성을 즐기는 프리미엄 주류 시장의 주인공으로 자리 잡았다.",
+        definition: "싱글몰트 위스키란 하나의 증류소에서 100% 맥아 보리(malted barley)만을 원료로 당화·발효한 워트를 포트 스틸(pot still)로 증류하고, 오크 캐스크에서 숙성해 병입한 몰트 위스키를 말한다. ‘싱글(single)’은 단일 증류소를 뜻하며, 여러 증류소 원액을 섞는 블렌디드 위스키와 구분된다.",
+        history: "몰트 위스키의 기원은 스코틀랜드와 아일랜드의 중세 증류 전통에서 출발해, 18~19세기 과세·면허 제도와 증류 기술의 정착을 거치며 현대적 형태로 발전했다. 1960년대 이후 증류소 브랜드가 ‘싱글몰트’라는 정체성을 전면에 내세우며 프리미엄 카테고리로 성장했으며, 현재는 캐스크 실험과 고도수/싱글캐스크 등 다양성이 핵심 매력으로 자리 잡았다.",
         classifications: [
             {
-                name: "스카치 싱글 몰트 (Scotch)",
-                criteria: "스코틀랜드 생산, 단식 증류기 사용, 최소 3년 이상 오크 숙성",
-                description: "가장 엄격한 규정과 오랜 전통을 자랑한다. 하이랜드, 스페이사이드, 아일라 등 지역별로 뚜렷한 풍미 지도를 가지며 전 세계 위스키의 기준점이 된다."
+                name: "싱글 몰트 스카치 위스키 (Single Malt Scotch)",
+                criteria: "스코틀랜드 내 단일 증류소, 100% 맥아 보리, 포트 스틸 증류, 최소 3년 이상 오크 숙성",
+                description: "가장 대표적인 기준입니다. 지역(스페이사이드, 하이랜드, 아일라 등)과 증류기 형태, 캐스크 전략에 따라 향미 스펙트럼이 매우 넓게 나타납니다."
             },
             {
                 name: "캐스크 스트렝스 (Cask Strength / CS)",
-                criteria: "숙성 후 물을 섞어 도수를 낮추지 않고 그대로 병입",
-                description: "원액 그대로의 폭발적인 아로마와 묵직한 바디감을 느낄 수 있다. 마시는 사람의 취향에 따라 물 몇 방울을 더해 향을 열어가는 재미가 있다."
+                criteria: "원액을 물로 희석하지 않고 캐스크에서 나온 도수 그대로 병입 (보통 55~65% ABV)",
+                description: "향 성분이 농축되어 강렬한 아로마와 무게감이 특징입니다. 물 몇 방울로 향을 ‘열어’ 밸런스를 찾는 재미가 큰 스타일입니다."
             },
             {
                 name: "싱글 캐스크 (Single Cask)",
-                criteria: "단 하나의 오크통에서 나온 원액만을 블렌딩 없이 병입",
-                description: "다른 통과 섞이지 않아 해당 오크통이 가진 유일무이한 개성과 시간을 온전히 경험할 수 있는 극도의 희소성을 지닌 제품이다."
+                criteria: "단 하나의 캐스크에서 나온 원액만 병입 (다른 캐스크와 바팅 없음)",
+                description: "캐스크 개별 차이가 그대로 드러나는 유일무이한 배치입니다. 동일 제품이라도 캐스크마다 향미가 달라 수집과 탐구 가치가 높습니다."
             },
             {
-                name: "셰리 캐스크 숙성 (Sherry Cask)",
-                criteria: "셰리 와인을 담았던 오크통(올로로소/PX 등)에서 숙성",
-                description: "건포도, 다크 초콜릿, 견과류, 스파이시한 풍미가 특징이다. 농밀한 질감과 짙은 호박색 빛깔이 시각적인 즐거움까지 선사한다."
+                name: "피티드 위스키 (Peated)",
+                criteria: "맥아 건조 과정에서 피트(이탄) 연기를 사용해 스모크 성분 부여",
+                description: "스모키, 메디시널, 해풍 같은 인상이 강화됩니다. PPM 수치는 맥아의 페놀량을 나타내며 스타일을 가늠하는 유용한 단서가 됩니다."
             },
             {
-                name: "버번 캐스크 숙성 (Bourbon Cask)",
-                criteria: "미국 버번 위스키를 담았던 오크통에서 숙성",
-                description: "바닐라, 카라멜, 코코넛, 산뜻한 과일 향이 주를 이룬다. 상대적으로 정교하고 화사한 무드를 보여주며 원주 본연의 개성을 잘 드러낸다."
+                name: "캐스크 피니시 (Cask Finish)",
+                criteria: "주요 숙성 후 다른 종류의 캐스크(셰리, 와인, 럼 등)로 옮겨 추가 숙성",
+                description: "전(前) 내용물의 잔향을 입혀 풍미 레이어를 확장합니다. 짧은 기간에 독특한 캐릭터를 덧칠할 수 있는 세밀한 공정입니다."
             }
         ],
         sensoryMetrics: [
             {
-                metric: "피트 강도 (Smoke)",
-                label: "PPM Level",
-                value: "None to 50+ (Heavy)",
-                description: "맥아를 건조할 때 배어든 훈제향, 약재, 해풍의 뉘앙스다. 수치가 높을수록 강력한 스모키함과 요오드 향이 원물을 지배한다."
+                metric: "알코올 도수 (ABV)",
+                label: "Strength",
+                value: "40~46% (표준), 50~65% (CS)",
+                description: "도수가 높을수록 향이 강렬하게 휘발되지만 자극도 커집니다. 46% 이상에서는 가수 시 향의 변화가 더욱 드라마틱합니다."
             },
             {
-                metric: "질감/오일리함",
-                label: "Mouthfeel",
-                value: "Clean to Waxy",
-                description: "증류기 형태와 냉각 여과 여부에 따라 결정된다. 고품질 몰트 위스키는 입안을 코팅하는 듯한 매끄럽고 묵직한 질감을 선사한다."
+                metric: "피트 스모크 (PPM)",
+                label: "Peatiness",
+                value: "0 (Unpeated) ~ 50+ (Heavy Peat)",
+                description: "수치가 높을수록 훈제향과 약취가 강해집니다. 증류 커트와 숙성 방식에 따라 ‘달콤한 스모크’부터 ‘드라이한 연기’까지 다양하게 표현됩니다."
             },
             {
-                metric: "알코올 수렴도",
-                label: "Alcohol Integration",
-                value: "Gentle to Intense (CS)",
-                description: "숙성 연수가 높을수록 알코올의 공격성이 줄고 나무 성분과 하나로 통합되어 정교하고 우아한 목넘김을 완성한다."
+                metric: "숙성 정보",
+                label: "Age Statement",
+                value: "NAS / 10~18년 / 21년+",
+                description: "숙성은 오크 성분을 부여하고 거친 성분을 다듬습니다. 연수는 신뢰할 만한 지표이나, 캐스크 품질이 최종 맛의 더 큰 변수가 되기도 합니다."
+            },
+            {
+                metric: "캐스크 영향도",
+                label: "Cask Influence",
+                value: "First-fill / Refill",
+                description: "퍼스트필은 오크의 풍미(바닐라, 스파이스)가 진하게 배어 나오며, 리필은 증류소 본연의 과실 에스터를 더 깔끔하게 보여줍니다."
             }
         ],
         coreIngredients: [
             {
                 type: "주원료",
-                name: "100% 보리 맥아 (Malted Barley)",
-                description: "위스키의 곡물 향과 단맛, 그리고 발효 루틴에서 생성되는 과실 에스터의 근본적인 원천이다."
+                name: "맥아 보리 (Malted Barley)",
+                description: "비스킷, 시리얼, 견과 같은 몰트 바탕을 만듭니다. 킬닝 방식에 따라 고소함과 스모크의 성격이 결정됩니다."
             },
             {
-                type: "향미 요소",
-                name: "피트 (Peat) 및 수원지 물",
-                description: "스코틀랜드의 대지와 물의 개성이 위스키에 투영되어 해풍의 짭짤함이나 대지의 훈연 향을 형성한다."
+                type: "발효제",
+                name: "효모 (Yeast) & 양조수",
+                description: "발효 중 과실 향(에스터)을 만들어내며, 물의 미네랄 성분은 증류주에 섬세한 질감 차이를 부여합니다."
             },
             {
                 type: "숙성 도구",
-                name: "시즈닝 오크 캐스크",
-                description: "셰리, 와인, 럼 등 이전에 담았던 술의 잔향이 몰트와 만나 수만 가지의 다층적인 향미 레이어를 창조한다."
+                name: "오크 캐스크 (Oak Cask)",
+                description: "바닐린, 락톤, 탄닌을 제공합니다. 버번, 셰리 등 이전 내용물의 성격이 위스키에 다층적인 향미를 입힙니다."
             }
         ],
         manufacturingProcess: [
-            {
-                step: "제국/당화",
-                name: "몰팅 및 매싱",
-                description: "보리에 싹을 틔워 전분을 당으로 바꾸고(몰팅), 따뜻한 물로 당액을 추출하여 풍미의 정수를 준비한다."
-            },
-            {
-                step: "증류",
-                name: "단식 증류 (Pot Still)",
-                description: "구리 증류기에서 두 번 끓여 맑고 높은 도수의 원액을 얻는다. 증류기의 길이나 목의 각도가 향의 농축도를 결정한다."
-            },
-            {
-                step: "숙성",
-                name: "장기 캐스크 숙성",
-                description: "원액이 오크통 속에서 숨을 쉬며 나무의 풍미를 흡수하고, 시간이 흐르며 복합적인 3차 향미를 완성해 나간다."
-            }
+            { step: "몰팅/당화", name: "제국 & 매싱", description: "보리를 발아시켜 효소를 활성화하고, 뜨거운 물로 당액(워트)을 추출하여 발효를 준비한다." },
+            { step: "발효", name: "워시백 발효", description: "효모가 당을 알코올로 바꾸며 과실과 꽃 향의 전구체인 에스터를 생성하는 핵심 단계다." },
+            { step: "증류", name: "팟 스틸 이중 증류", description: "구리 증류기에서 두 번 증류하여 순수한 하트(Hearts)만을 채취한다. 증류기 형태가 무게감을 좌우한다." },
+            { step: "숙성/완성", name: "캐스크 숙성 & 바팅", description: "오크통에서 긴 시간을 보내며 성분을 안정화하고, 여러 통의 원액을 조합하여 하우스 스타일을 완성한다." }
         ],
         servingGuidelines: {
-            recommendedGlass: "글렌캐런 글라스 또는 노징 튤립 잔",
+            recommendedGlass: "글렌캐런(Glencairn) 또는 튤립형 노징 글라스",
             optimalTemperatures: [
                 {
-                    temp: "18~22℃ (상온)",
-                    description: "알코올이 부드럽게 휘발되며 복합적인 아로마의 레이어가 가장 화려하게 펼쳐지는 온도다."
+                    temp: "18~22℃ (실온)",
+                    description: "과실 향과 오크 풍미가 가장 균형 있게 휘발되며 스타일 차이가 선명하게 드러납니다."
+                },
+                {
+                    temp: "18~22℃ + 가수",
+                    description: "알코올 자극이 줄고 닫혀 있던 섬세한 꽃과 꿀 향이 열려 복합미가 살아납니다."
                 }
             ],
             methods: [
                 {
-                    name: "니트 테이스팅 (Neat)",
-                    description: "잔에 따라 향을 먼저 맡고(Nosing), 소량을 머금어 혀 전체로 질감과 풍미를 느끼는 정석적인 음용법이다."
+                    name: "니트 (Neat)",
+                    description: "첨가물 없이 잔에 따라 향(Nosing)을 먼저 즐기고, 소량을 머금어 혀 전체로 질감과 피니시를 느끼는 가장 정석적인 방법이다."
                 },
                 {
-                    name: "가수 (Adding Water)",
-                    description: "상온의 생수를 한두 방울 떨어뜨리면 표면 장력이 깨지며 감춰진 섬세한 꽃과 과실 향이 폭발적으로 개방된다."
+                    name: "가수 (Water Addition)",
+                    description: "상온의 생수를 한두 방울 떨어뜨리면 위스키의 표면장력이 깨지며 감춰진 에스터 성분이 폭발적으로 피어오르는 경험을 할 수 있다."
                 },
                 {
-                    name: "브리딩 (Breathing)",
-                    description: "잔에 따른 뒤 10~20분 정도 기다리면 거친 알코올 기운이 정돈되고 캐스크 유래의 깊은 숙성 향이 돋보이게 된다."
+                    name: "하이볼 (Highball)",
+                    description: "얼음과 탄산수를 1:3 비율로 섞어 몰트 본연의 고소함과 시트러스한 청량감을 가볍게 즐기는 방식으로, 식사와의 궁합이 뛰어나다."
+                },
+                {
+                    name: "온더락 (On the Rocks)",
+                    description: "커다란 구형 얼음 위에 부어 마시면 낮은 온도로 인해 알코올의 각이 줄어들고 부드러운 단맛과 묵직한 질감이 강조된다."
                 }
             ]
         },
         flavorTags: [
-            { label: "스모키/피트", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" },
-            { label: "건과일/셰리", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
             { label: "바닐라/카라멜", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "꿀/꽃향기", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "해풍/요오드", color: "bg-sky-500/20 text-zinc-950 dark:text-sky-300" },
-            { label: "시나몬/스파이스", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" }
+            { label: "건포도/셰리", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
+            { label: "청사과/배", color: "bg-emerald-400/20 text-zinc-950 dark:text-emerald-300" },
+            { label: "꿀/플로럴", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-300" },
+            { label: "스모키/피트", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" },
+            { label: "해풍/브인", color: "bg-sky-500/20 text-zinc-950 dark:text-sky-300" }
         ],
         foodPairing: [
-            "훈제 연어 및 굴 요리 (피트 스타일)",
-            "다크 초콜릿 및 말린 무화과",
+            "훈제 연어 및 신선한 굴",
             "스테이크 및 양갈비 구이",
-            "블루 치즈 및 고다 치즈",
-            "견과류 정과 및 타르트"
+            "숙성 체다 및 블루 치즈",
+            "다크 초콜릿 및 테라미수",
+            "견과류와 건과일 플래터"
         ],
         dbCategories: ['whisky', 'single-malt']
     }

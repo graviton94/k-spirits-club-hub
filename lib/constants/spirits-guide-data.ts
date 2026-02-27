@@ -6,7 +6,9 @@
  */
 
 import { SpiritCategory } from './wiki/types'
-import { whisky } from './wiki/whisky'
+import { blendedWhisky } from './wiki/blended-whisky'
+import { cognac } from './wiki/cognac'
+import { champagne } from './wiki/champagne'
 import { sake } from './wiki/sake'
 import { sojuDistilled } from './wiki/soju-distilled'
 import { sojuDiluted } from './wiki/soju-diluted'
@@ -44,26 +46,41 @@ export type {
 // ─── 카테고리 목록 ──────────────────────────────────────────────────────────
 
 export const SPIRIT_CATEGORIES: SpiritCategory[] = [
-    whisky,
-    sake,
-    sojuDistilled,
-    sojuDiluted,
-    gin,
-    rum,
-    vodka,
-    tequila,
-    wine,
+    // 1. Whisky Group
+    singleMalt,
+    blendedWhisky,
+
+    // 2. Brandy Group
+    cognac,
+    brandy,
+
+    // 3. Wine Group
+    champagne,
     redWine,
     whiteWine,
+    wine, // Rosé & Sparkling
+
+    // 4. White Spirits (Global)
+    gin,
+    vodka,
+    rum,
+    tequila,
     mezcal,
-    liqueur,
-    brandy,
-    baijiu,
-    beer,
+
+    // 5. Traditional East Asian
+    sojuDistilled,
+    sojuDiluted,
     yakju,
     makgeolli,
+    sake,
     shochu,
-    singleMalt,
+    baijiu,
+
+    // 6. Others
+    beer,
+    liqueur,
+
+    // 7. Technical Guide
     oakBarrel
 ]
 
