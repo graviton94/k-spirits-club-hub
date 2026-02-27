@@ -10,14 +10,16 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: '*',
         allow: [
           '/',
-          '/spirits/',
-          '/explore',
-          '/contents',
-          // ✅ 핵심 수정: Next.js 이미지 최적화 경로는 쿼리 스트링이 있어도 무조건 허용
+          // 언어별 spirits 상세 페이지 명시적 허용 (실제 URL: /ko/spirits/xxx, /en/spirits/xxx)
+          '/ko/spirits/',
+          '/en/spirits/',
+          '/ko/explore',
+          '/en/explore',
+          '/ko/contents',
+          '/en/contents',
+          // Next.js 이미지 최적화 경로
           '/_next/image*',
-          '/_next/',
-          '/images/',
-          '/public/',
+          '/_next/static/',
         ],
         disallow: [
           '/admin/',
