@@ -12,17 +12,17 @@ interface SpiritGuideLayoutProps {
 // ─── 색상 맵 ────────────────────────────────────────────────────────────────
 
 const COLOR_MAP: Record<string, { bg: string; border: string; text: string; badge: string }> = {
-    amber: { bg: 'bg-amber-500/10', border: 'border-amber-500/30', text: 'text-amber-400', badge: 'bg-amber-500/20 text-zinc-950 dark:text-amber-300' },
-    rose: { bg: 'bg-rose-500/10', border: 'border-rose-500/30', text: 'text-rose-400', badge: 'bg-rose-500/20 text-zinc-950 dark:text-rose-300' },
-    sky: { bg: 'bg-sky-500/10', border: 'border-sky-500/30', text: 'text-sky-400', badge: 'bg-sky-500/20 text-zinc-950 dark:text-sky-300' },
-    cyan: { bg: 'bg-cyan-500/10', border: 'border-cyan-500/30', text: 'text-cyan-400', badge: 'bg-cyan-500/20 text-zinc-950 dark:text-cyan-300' },
-    emerald: { bg: 'bg-emerald-500/10', border: 'border-emerald-500/30', text: 'text-emerald-400', badge: 'bg-emerald-500/20 text-zinc-950 dark:text-emerald-300' },
-    orange: { bg: 'bg-orange-500/10', border: 'border-orange-500/30', text: 'text-orange-400', badge: 'bg-orange-500/20 text-zinc-950 dark:text-orange-300' },
-    blue: { bg: 'bg-blue-500/10', border: 'border-blue-500/30', text: 'text-blue-400', badge: 'bg-blue-500/20 text-zinc-950 dark:text-blue-300' },
-    lime: { bg: 'bg-lime-500/10', border: 'border-lime-500/30', text: 'text-lime-400', badge: 'bg-lime-500/20 text-zinc-950 dark:text-lime-300' },
-    purple: { bg: 'bg-purple-500/10', border: 'border-purple-500/30', text: 'text-purple-400', badge: 'bg-purple-500/20 text-zinc-950 dark:text-purple-300' },
-    yellow: { bg: 'bg-yellow-500/10', border: 'border-yellow-500/30', text: 'text-yellow-400', badge: 'bg-yellow-500/20 text-zinc-950 dark:text-yellow-300' },
-    red: { bg: 'bg-red-500/10', border: 'border-red-500/30', text: 'text-red-400', badge: 'bg-red-500/20 text-zinc-950 dark:text-red-300' },
+    amber: { bg: 'bg-amber-500/10', border: 'border-amber-500/30', text: 'text-amber-400', badge: 'bg-amber-500/20 text-zinc-900 dark:text-amber-300' },
+    rose: { bg: 'bg-rose-500/10', border: 'border-rose-500/30', text: 'text-rose-400', badge: 'bg-rose-500/20 text-zinc-900 dark:text-rose-300' },
+    sky: { bg: 'bg-sky-500/10', border: 'border-sky-500/30', text: 'text-sky-400', badge: 'bg-sky-500/20 text-zinc-900 dark:text-sky-300' },
+    cyan: { bg: 'bg-cyan-500/10', border: 'border-cyan-500/30', text: 'text-cyan-400', badge: 'bg-cyan-500/20 text-zinc-900 dark:text-cyan-300' },
+    emerald: { bg: 'bg-emerald-500/10', border: 'border-emerald-500/30', text: 'text-emerald-400', badge: 'bg-emerald-500/20 text-zinc-900 dark:text-emerald-300' },
+    orange: { bg: 'bg-orange-500/10', border: 'border-orange-500/30', text: 'text-orange-400', badge: 'bg-orange-500/20 text-zinc-900 dark:text-orange-300' },
+    blue: { bg: 'bg-blue-500/10', border: 'border-blue-500/30', text: 'text-blue-400', badge: 'bg-blue-500/20 text-zinc-900 dark:text-blue-300' },
+    lime: { bg: 'bg-lime-500/10', border: 'border-lime-500/30', text: 'text-lime-400', badge: 'bg-lime-500/20 text-zinc-900 dark:text-lime-300' },
+    purple: { bg: 'bg-purple-500/10', border: 'border-purple-500/30', text: 'text-purple-400', badge: 'bg-purple-500/20 text-zinc-900 dark:text-purple-300' },
+    yellow: { bg: 'bg-yellow-500/10', border: 'border-yellow-500/30', text: 'text-yellow-400', badge: 'bg-yellow-500/20 text-zinc-900 dark:text-yellow-300' },
+    red: { bg: 'bg-red-500/10', border: 'border-red-500/30', text: 'text-red-400', badge: 'bg-red-500/20 text-zinc-900 dark:text-red-300' },
 }
 
 // ─── 섹션 래퍼 ──────────────────────────────────────────────────────────────
@@ -216,7 +216,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                     <div className="grid grid-cols-1 gap-4">
                         {s?.coreIngredients?.map((ing) => (
                             <div key={ing.name} className="flex flex-col gap-1 p-5 rounded-xl border border-border/20 bg-background/20">
-                                <div className={`self-start px-2 py-0.5 rounded text-[10px] font-bold ${c.badge} mb-1`}>
+                                <div className={`self-start px-2 py-0.5 rounded text-[10px] font-bold ${c.badge} text-zinc-900 dark:text-current mb-1`}>
                                     {ing.type}
                                 </div>
                                 <p className="font-bold text-sm text-foreground">{ing.name}</p>
@@ -287,7 +287,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                                 <div className="space-y-3">
                                     {s.servingGuidelines.optimalTemperatures.map((t, idx) => (
                                         <div key={idx} className="flex flex-col gap-2 rounded-xl border border-border/20 p-4 bg-background/20">
-                                            <div className={`self-start flex items-center px-2 py-1 rounded text-[10px] font-bold ${c.badge}`}>
+                                            <div className={`self-start flex items-center px-2 py-1 rounded text-[10px] font-bold ${c.badge} text-zinc-900 dark:text-current`}>
                                                 <Thermometer className="w-3.5 h-3.5 mr-1" />
                                                 {t.temp}
                                             </div>
@@ -304,7 +304,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                                 <div className="space-y-3">
                                     {s.servingGuidelines.methods.map((m, idx) => (
                                         <div key={idx} className="flex flex-col gap-2 rounded-xl border border-border/20 p-4 bg-background/20">
-                                            <div className={`self-start flex items-center px-2 py-1 rounded text-[10px] font-bold ${c.badge}`}>
+                                            <div className={`self-start flex items-center px-2 py-1 rounded text-[10px] font-bold ${c.badge} text-zinc-900 dark:text-current`}>
                                                 <Droplets className="w-3.5 h-3.5 mr-1" />
                                                 {m.name}
                                             </div>
