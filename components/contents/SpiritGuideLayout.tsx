@@ -12,17 +12,17 @@ interface SpiritGuideLayoutProps {
 // ─── 색상 맵 ────────────────────────────────────────────────────────────────
 
 const COLOR_MAP: Record<string, { bg: string; border: string; text: string; badge: string }> = {
-    amber: { bg: 'bg-amber-500/10', border: 'border-amber-500/30', text: 'text-amber-400', badge: 'bg-amber-500/10 !text-black dark:text-amber-300' },
-    rose: { bg: 'bg-rose-500/10', border: 'border-rose-500/30', text: 'text-rose-400', badge: 'bg-rose-500/10 !text-black dark:text-rose-300' },
-    sky: { bg: 'bg-sky-500/10', border: 'border-sky-500/30', text: 'text-sky-400', badge: 'bg-sky-500/10 !text-black dark:text-sky-300' },
-    cyan: { bg: 'bg-cyan-500/10', border: 'border-cyan-500/30', text: 'text-cyan-400', badge: 'bg-cyan-500/10 !text-black dark:text-cyan-300' },
-    emerald: { bg: 'bg-emerald-500/10', border: 'border-emerald-500/30', text: 'text-emerald-400', badge: 'bg-emerald-500/10 !text-black dark:text-emerald-300' },
-    orange: { bg: 'bg-orange-500/10', border: 'border-orange-500/30', text: 'text-orange-400', badge: 'bg-orange-500/10 !text-black dark:text-orange-300' },
-    blue: { bg: 'bg-blue-500/10', border: 'border-blue-500/30', text: 'text-blue-400', badge: 'bg-blue-500/10 !text-black dark:text-blue-300' },
-    lime: { bg: 'bg-lime-500/10', border: 'border-lime-500/30', text: 'text-lime-400', badge: 'bg-lime-500/10 !text-black dark:text-lime-300' },
-    purple: { bg: 'bg-purple-500/10', border: 'border-purple-500/30', text: 'text-purple-400', badge: 'bg-purple-500/10 !text-black dark:text-purple-300' },
-    yellow: { bg: 'bg-yellow-500/10', border: 'border-yellow-500/30', text: 'text-yellow-400', badge: 'bg-yellow-500/10 !text-black dark:text-yellow-300' },
-    red: { bg: 'bg-red-500/10', border: 'border-red-500/30', text: 'text-red-400', badge: 'bg-red-500/10 !text-black dark:text-red-300' },
+    amber: { bg: 'bg-amber-500/10', border: 'border-amber-500/30', text: 'text-amber-400', badge: 'bg-amber-500/10 text-zinc-950 dark:text-amber-400' },
+    rose: { bg: 'bg-rose-500/10', border: 'border-rose-500/30', text: 'text-rose-400', badge: 'bg-rose-500/10 text-zinc-950 dark:text-rose-400' },
+    sky: { bg: 'bg-sky-500/10', border: 'border-sky-500/30', text: 'text-sky-400', badge: 'bg-sky-500/10 text-zinc-950 dark:text-sky-400' },
+    cyan: { bg: 'bg-cyan-500/10', border: 'border-cyan-500/30', text: 'text-cyan-400', badge: 'bg-cyan-500/10 text-zinc-950 dark:text-cyan-400' },
+    emerald: { bg: 'bg-emerald-500/10', border: 'border-emerald-500/30', text: 'text-emerald-400', badge: 'bg-emerald-500/10 text-zinc-950 dark:text-emerald-400' },
+    orange: { bg: 'bg-orange-500/10', border: 'border-orange-500/30', text: 'text-orange-400', badge: 'bg-orange-500/10 text-zinc-950 dark:text-orange-400' },
+    blue: { bg: 'bg-blue-500/10', border: 'border-blue-500/30', text: 'text-blue-400', badge: 'bg-blue-500/10 text-zinc-950 dark:text-blue-400' },
+    lime: { bg: 'bg-lime-500/10', border: 'border-lime-500/30', text: 'text-lime-400', badge: 'bg-lime-500/10 text-zinc-950 dark:text-lime-400' },
+    purple: { bg: 'bg-purple-500/10', border: 'border-purple-500/30', text: 'text-purple-400', badge: 'bg-purple-500/10 text-zinc-950 dark:text-purple-400' },
+    yellow: { bg: 'bg-yellow-500/10', border: 'border-yellow-500/30', text: 'text-yellow-400', badge: 'bg-yellow-500/10 text-zinc-950 dark:text-yellow-400' },
+    red: { bg: 'bg-red-500/10', border: 'border-red-500/30', text: 'text-red-400', badge: 'bg-red-500/10 text-zinc-950 dark:text-red-400' },
 }
 
 // ─── 섹션 래퍼 ──────────────────────────────────────────────────────────────
@@ -84,7 +84,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                         {isEn ? category.nameEn : category.nameKo}
                     </h1>
                     {!isEn && (
-                        <p className="text-sm font-semibold text-muted-foreground/60 mb-3">{category.nameEn}</p>
+                        <p className="text-sm font-semibold text-zinc-600 dark:text-zinc-500 mb-3">{category.nameEn}</p>
                     )}
                     <p className="text-zinc-700 dark:text-zinc-400 text-sm leading-relaxed max-w-md mx-auto">
                         {isEn ? category.taglineEn : category.taglineKo}
@@ -101,9 +101,9 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
             </div>
 
             {/* ── 2. 정의 ── */}
-            <Section id="definition" icon={<BookOpen className="w-5 h-5" />} title={isEn ? `What is ${category.nameEn}?` : `${category.nameKo}란?`} color={category.color}>
+            <Section id="definition" icon={<BookOpen className="w-5 h-5" />} title={isEn ? `What is ${category.nameEn}?` : `${category.nameKo}(이)란?`} color={category.color}>
                 {s?.definition ? (
-                    <p className="text-zinc-900 dark:text-zinc-400 text-sm leading-relaxed whitespace-pre-line">{s.definition}</p>
+                    <p className="text-zinc-950 dark:text-zinc-300 text-sm leading-relaxed whitespace-pre-line">{s.definition}</p>
                 ) : (
                     <ComingSoon label={isEn ? 'Definition' : '정의'} />
                 )}
@@ -112,7 +112,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
             {/* ── 3. 역사 ── */}
             <Section id="history" icon={<Clock className="w-5 h-5" />} title={isEn ? 'History & Origin' : '역사 & 원산지'} color={category.color}>
                 {s?.history ? (
-                    <p className="text-zinc-900 dark:text-zinc-400 text-sm leading-relaxed whitespace-pre-line">{s.history}</p>
+                    <p className="text-zinc-950 dark:text-zinc-300 text-sm leading-relaxed whitespace-pre-line">{s.history}</p>
                 ) : (
                     <ComingSoon label={isEn ? 'History' : '역사'} />
                 )}
@@ -130,11 +130,11 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                         {s.classifications.map((cls) => (
                             <div key={cls.name} className="rounded-xl border border-border/30 bg-background/30 p-5">
                                 <div className="flex flex-col gap-1 mb-3">
-                                    <h3 className="font-bold text-foreground text-sm uppercase tracking-tight">{cls.name}</h3>
-                                    <span className="text-[10px] font-bold text-zinc-500 dark:text-zinc-500">{cls.criteria}</span>
+                                    <h3 className="font-bold text-zinc-950 dark:text-zinc-100 text-sm uppercase tracking-tight">{cls.name}</h3>
+                                    <span className="text-[10px] font-bold text-zinc-600 dark:text-zinc-400">{cls.criteria}</span>
                                 </div>
                                 <div className="border-t border-border/10 pt-3">
-                                    <p className="text-zinc-950 dark:text-zinc-400 text-xs leading-relaxed mb-3">{cls.description}</p>
+                                    <p className="text-zinc-950 dark:text-zinc-300 text-xs leading-relaxed mb-3">{cls.description}</p>
 
                                     {cls.flavorTags && cls.flavorTags.length > 0 && (
                                         <div className="flex flex-wrap gap-1.5 mt-2">
@@ -180,8 +180,8 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                                 <span className="text-sm font-bold text-foreground mb-1">{metric.label}</span>
                                 <span className={`text-2xl font-black ${c.text} mb-3 leading-none`}>{metric.value}</span>
                                 <div className="border-t border-border/10 pt-3">
-                                    <span className={`text-[10px] font-bold text-zinc-500 dark:text-muted-foreground/60 block mb-1 uppercase tracking-wider`}>{metric.metric}</span>
-                                    <p className="text-xs text-zinc-900 dark:text-muted-foreground leading-relaxed">{metric.description}</p>
+                                    <span className={`text-[10px] font-bold text-zinc-600 dark:text-zinc-400 block mb-1 uppercase tracking-wider`}>{metric.metric}</span>
+                                    <p className="text-xs text-zinc-950 dark:text-zinc-300 leading-relaxed">{metric.description}</p>
                                 </div>
                             </div>
                         ))}
@@ -219,9 +219,9 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                                 <div className={`self-start px-2 py-0.5 rounded text-[10px] font-black ${c.badge} mb-1`}>
                                     {ing.type}
                                 </div>
-                                <p className="font-bold text-sm text-foreground">{ing.name}</p>
+                                <p className="font-bold text-sm text-zinc-950 dark:text-zinc-100">{ing.name}</p>
                                 <div className="border-t border-border/10 pt-3 mt-1">
-                                    <p className="text-xs text-zinc-900 dark:text-zinc-400 leading-relaxed">{ing.description}</p>
+                                    <p className="text-xs text-zinc-950 dark:text-zinc-300 leading-relaxed">{ing.description}</p>
                                 </div>
                             </div>
                         ))}
@@ -244,15 +244,15 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                                 <div className="pb-2 pt-1">
                                     <div className="flex items-center gap-2 mb-1.5">
                                         <span className={`text-[10px] font-bold ${c.text} uppercase`}>{proc.step}</span>
-                                        <p className="font-semibold text-sm text-foreground">{proc.name}</p>
+                                        <p className="font-bold text-sm text-zinc-950 dark:text-zinc-100">{proc.name}</p>
                                     </div>
-                                    <p className="text-xs text-zinc-950 dark:text-zinc-400 leading-relaxed">{proc.description}</p>
+                                    <p className="text-xs text-zinc-950 dark:text-zinc-300 leading-relaxed">{proc.description}</p>
                                 </div>
                             </div>
                         ))}
                     </div>
                 ) : s?.production ? (
-                    <p className="text-zinc-950 dark:text-zinc-400 text-sm leading-relaxed whitespace-pre-line">{s.production}</p>
+                    <p className="text-zinc-950 dark:text-zinc-300 text-sm leading-relaxed whitespace-pre-line">{s.production}</p>
                 ) : (
                     <ComingSoon label={isEn ? 'Production' : '제조 방법'} />
                 )}
@@ -287,11 +287,11 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                                 <div className="space-y-3">
                                     {s.servingGuidelines.optimalTemperatures.map((t, idx) => (
                                         <div key={idx} className="flex flex-col gap-2 rounded-xl border border-border/20 p-4 bg-background/20">
-                                            <div className={`self-start flex items-center px-2 py-1 rounded text-[10px] font-black ${c.badge} !text-zinc-950 dark:!text-inherit`}>
+                                            <div className={`self-start flex items-center px-2 py-1 rounded text-[10px] font-black ${c.badge}`}>
                                                 <Thermometer className="w-3.5 h-3.5 mr-1" />
                                                 {t.temp}
                                             </div>
-                                            <p className="text-zinc-950 dark:text-zinc-400 text-xs leading-relaxed">{t.description}</p>
+                                            <p className="text-zinc-950 dark:text-zinc-300 text-xs leading-relaxed">{t.description}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -304,11 +304,11 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                                 <div className="space-y-3">
                                     {s.servingGuidelines.methods.map((m, idx) => (
                                         <div key={idx} className="flex flex-col gap-2 rounded-xl border border-border/20 p-4 bg-background/20">
-                                            <div className={`self-start flex items-center px-2 py-1 rounded text-[10px] font-black ${c.badge} !text-zinc-950 dark:!text-inherit`}>
+                                            <div className={`self-start flex items-center px-2 py-1 rounded text-[10px] font-black ${c.badge}`}>
                                                 <Droplets className="w-3.5 h-3.5 mr-1" />
                                                 {m.name}
                                             </div>
-                                            <p className="text-zinc-950 dark:text-zinc-400 text-xs leading-relaxed">{m.description}</p>
+                                            <p className="text-zinc-950 dark:text-zinc-300 text-xs leading-relaxed">{m.description}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -318,7 +318,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                 ) : s?.howToEnjoy && s.howToEnjoy.length > 0 ? (
                     <ul className="space-y-2">
                         {s.howToEnjoy.map((tip, i) => (
-                            <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
+                            <li key={i} className="flex items-start gap-2 text-sm text-zinc-950 dark:text-zinc-300">
                                 <span className={`mt-0.5 text-xs font-bold ${c.text}`}>·</span>
                                 {tip}
                             </li>
@@ -372,7 +372,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                     </div>
                 ) : (
                     <div className="flex flex-col items-center justify-center py-10 rounded-xl border border-dashed border-border/40 gap-2">
-                        <p className="text-muted-foreground/40 text-sm font-medium">
+                        <p className="text-zinc-600 dark:text-zinc-500 text-sm font-medium">
                             {isEn ? 'No products registered yet' : '조건에 맞는 주류를 검색해보세요!'}
                         </p>
                         <Link href={`/${lang}/explore`} className={`text-xs font-semibold ${c.text} hover:underline`}>
