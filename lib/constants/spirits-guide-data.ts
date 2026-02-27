@@ -20,6 +20,8 @@ import { cognac } from './wiki/cognac'
 import { brandy } from './wiki/brandy'
 import { baijiu } from './wiki/baijiu'
 import { beer } from './wiki/beer'
+import { makgeolli } from './wiki/makgeolli'
+import { oakBarrel } from './wiki/oak-barrel'
 
 // 타입 재수출 (하위 호환성 유지)
 export type {
@@ -50,7 +52,9 @@ export const SPIRIT_CATEGORIES: SpiritCategory[] = [
     cognac,
     brandy,
     baijiu,
-    beer
+    beer,
+    makgeolli,
+    oakBarrel
 ]
 
 /** slug로 카테고리 조회 */

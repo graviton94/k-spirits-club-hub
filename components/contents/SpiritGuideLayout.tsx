@@ -119,14 +119,16 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
             {/* ── 4. 종류·분류 / Classifications ── */}
             <Section icon={<Layers className="w-5 h-5" />} title={isEn ? 'Types & Classification' : '등급 및 분류'} color={category.color}>
                 {s?.classifications && s.classifications.length > 0 ? (
-                    <div className="space-y-3">
+                    <div className="space-y-4">
                         {s.classifications.map((cls) => (
-                            <div key={cls.name} className="rounded-xl border border-border/30 bg-background/30 p-4">
-                                <div className="flex items-center justify-between mb-1">
-                                    <p className="font-semibold text-foreground text-sm">{cls.name}</p>
-                                    <span className="text-[10px] font-medium text-muted-foreground bg-muted px-2 py-0.5 rounded">{cls.criteria}</span>
+                            <div key={cls.name} className="rounded-xl border border-border/30 bg-background/30 p-5">
+                                <div className="flex flex-col gap-1 mb-3">
+                                    <p className="font-bold text-foreground text-sm uppercase tracking-tight">{cls.name}</p>
+                                    <span className="text-[10px] font-medium text-muted-foreground">{cls.criteria}</span>
                                 </div>
-                                <p className="text-muted-foreground text-xs leading-relaxed">{cls.description}</p>
+                                <div className="border-t border-border/10 pt-3">
+                                    <p className="text-muted-foreground text-xs leading-relaxed">{cls.description}</p>
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -150,13 +152,15 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
             {/* ── 5. 맛·향 지표 (신규) ── */}
             {s?.sensoryMetrics && s.sensoryMetrics.length > 0 && (
                 <Section icon={<Activity className="w-5 h-5" />} title={isEn ? 'Sensory Metrics' : '맛과 향 지표'} color={category.color}>
-                    <div className="grid grid-cols-2 gap-3">
-                        {s.sensoryMetrics.map((metric) => (
-                            <div key={metric.label} className="rounded-xl border border-border/30 bg-background/30 p-4 flex flex-col items-center text-center">
-                                <span className={`text-[10px] font-bold text-muted-foreground mb-1 uppercase tracking-wider`}>{metric.metric}</span>
-                                <span className={`text-xl font-black ${c.text} mb-1 leading-none`}>{metric.value}</span>
-                                <span className="text-xs font-semibold text-foreground mb-1">{metric.label}</span>
-                                <p className="text-[10px] text-muted-foreground/60 leading-tight">{metric.description}</p>
+                    <div className="grid grid-cols-1 gap-4">
+                        {s?.sensoryMetrics?.map((metric) => (
+                            <div key={metric.label} className="rounded-xl border border-border/30 bg-background/30 p-5 flex flex-col">
+                                <span className="text-sm font-bold text-foreground mb-1">{metric.label}</span>
+                                <span className={`text-2xl font-black ${c.text} mb-3 leading-none`}>{metric.value}</span>
+                                <div className="border-t border-border/10 pt-3">
+                                    <span className={`text-[10px] font-bold text-muted-foreground/60 block mb-1 uppercase tracking-wider`}>{metric.metric}</span>
+                                    <p className="text-xs text-muted-foreground leading-relaxed">{metric.description}</p>
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -187,15 +191,15 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
             {/* ── 7. 핵심 원재료 (신규) ── */}
             {s?.coreIngredients && s.coreIngredients.length > 0 && (
                 <Section icon={<Leaf className="w-5 h-5" />} title={isEn ? 'Core Ingredients' : '핵심 원재료'} color={category.color}>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        {s.coreIngredients.map((ing) => (
-                            <div key={ing.name} className="flex gap-3 items-start p-3 rounded-lg border border-border/20 bg-background/20">
-                                <div className={`px-2 py-1 rounded text-[10px] font-bold ${c.badge} whitespace-nowrap`}>
+                    <div className="grid grid-cols-1 gap-4">
+                        {s?.coreIngredients?.map((ing) => (
+                            <div key={ing.name} className="flex flex-col gap-1 p-5 rounded-xl border border-border/20 bg-background/20">
+                                <div className={`self-start px-2 py-0.5 rounded text-[10px] font-bold ${c.badge} mb-1`}>
                                     {ing.type}
                                 </div>
-                                <div>
-                                    <p className="font-semibold text-sm text-foreground">{ing.name}</p>
-                                    <p className="text-xs text-muted-foreground mt-0.5">{ing.description}</p>
+                                <p className="font-bold text-sm text-foreground">{ing.name}</p>
+                                <div className="border-t border-border/10 pt-3 mt-1">
+                                    <p className="text-xs text-muted-foreground leading-relaxed">{ing.description}</p>
                                 </div>
                             </div>
                         ))}
@@ -235,37 +239,40 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
             {/* ── 9. 즐기는 법 / Serving Guide ── */}
             <Section icon={<GlassWater className="w-5 h-5" />} title={isEn ? 'Serving Guidelines' : '최적의 음용 가이드'} color={category.color}>
                 {s?.servingGuidelines ? (
-                    <div className="space-y-4">
-                        {s.servingGuidelines.recommendedGlass && (
-                            <div className="flex items-center gap-2 text-sm">
-                                <span className="font-semibold text-foreground">{isEn ? 'Recommended Glass:' : '추천 글라스:'}</span>
-                                <span className="text-muted-foreground">{s.servingGuidelines.recommendedGlass}</span>
-                            </div>
-                        )}
-                        {s.servingGuidelines.decantingNeeded !== undefined && (
-                            <div className="flex items-center gap-2 text-sm">
-                                <span className="font-semibold text-foreground">{isEn ? 'Decanting:' : '디캔팅 여부:'}</span>
-                                <span className="text-muted-foreground text-xs bg-muted px-2 py-0.5 rounded">
-                                    {s.servingGuidelines.decantingNeeded
-                                        ? (isEn ? 'Recommended' : '권장함')
-                                        : (isEn ? 'Not necessary' : '필요 없음')}
-                                </span>
-                            </div>
-                        )}
+                    <div className="space-y-6">
+                        <div className="grid grid-cols-1 gap-4">
+                            {s.servingGuidelines.recommendedGlass && (
+                                <div className="flex flex-col gap-1">
+                                    <span className="text-[10px] font-bold text-muted-foreground uppercase opacity-70">{isEn ? 'Recommended Glass:' : '추천 글라스:'}</span>
+                                    <span className="text-foreground font-semibold text-sm">{s.servingGuidelines.recommendedGlass}</span>
+                                </div>
+                            )}
+                            {s.servingGuidelines.decantingNeeded !== undefined && (
+                                <div className="flex flex-col gap-1">
+                                    <span className="text-[10px] font-bold text-muted-foreground uppercase opacity-70">{isEn ? 'Decanting:' : '디캔팅 여부:'}</span>
+                                    <span className="text-foreground font-semibold text-sm">
+                                        {s.servingGuidelines.decantingNeeded
+                                            ? (isEn ? 'Recommended' : '권장함')
+                                            : (isEn ? 'Not necessary' : '필요 없음')}
+                                    </span>
+                                </div>
+                            )}
+                        </div>
+
                         {s.servingGuidelines.optimalTemperatures && s.servingGuidelines.optimalTemperatures.length > 0 && (
-                            <div className="mt-4">
-                                <p className="font-semibold text-sm text-foreground mb-3">{isEn ? 'Optimal Temperatures:' : '온도에 따른 향의 발현:'}</p>
-                                <ul className="space-y-2">
+                            <div className="border-t border-border/10 pt-5">
+                                <p className="font-bold text-xs text-muted-foreground uppercase mb-4 opacity-70 tracking-wide">{isEn ? 'Optimal Temperatures:' : '온도에 따른 향의 발현:'}</p>
+                                <div className="space-y-3">
                                     {s.servingGuidelines.optimalTemperatures.map((t, idx) => (
-                                        <li key={idx} className="flex gap-3 text-sm rounded-lg border border-border/20 p-3 bg-background/20 items-center">
-                                            <div className={`flex items-center justify-center px-2 py-1.5 rounded text-xs font-bold ${c.badge} whitespace-nowrap shadow-sm`}>
-                                                <Thermometer className="w-3.5 h-3.5 mr-1.5" />
+                                        <div key={idx} className="flex flex-col gap-2 rounded-xl border border-border/20 p-4 bg-background/20">
+                                            <div className={`self-start flex items-center px-2 py-1 rounded text-[10px] font-bold ${c.badge}`}>
+                                                <Thermometer className="w-3.5 h-3.5 mr-1" />
                                                 {t.temp}
                                             </div>
-                                            <span className="text-muted-foreground text-xs leading-relaxed flex-1 pt-0.5">{t.description}</span>
-                                        </li>
+                                            <p className="text-muted-foreground text-xs leading-relaxed">{t.description}</p>
+                                        </div>
                                     ))}
-                                </ul>
+                                </div>
                             </div>
                         )}
                     </div>
@@ -286,11 +293,12 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
             {/* ── 8. 푸드 페어링 ── */}
             <Section icon={<Utensils className="w-5 h-5" />} title={isEn ? 'Food Pairing' : '푸드 페어링'} color={category.color}>
                 {s?.foodPairing && s.foodPairing.length > 0 ? (
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-col gap-2">
                         {s.foodPairing.map((food) => (
-                            <span key={food} className="px-3 py-1 rounded-full bg-background/50 border border-border/30 text-xs font-medium text-muted-foreground">
+                            <div key={food} className="px-4 py-2.5 rounded-lg bg-background/40 border border-border/20 text-xs font-medium text-foreground flex items-center gap-2">
+                                <div className={`w-1 h-1 rounded-full ${c.bg.replace('/10', '/60')} animate-pulse`} />
                                 {food}
-                            </span>
+                            </div>
                         ))}
                     </div>
                 ) : (
