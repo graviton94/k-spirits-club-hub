@@ -190,6 +190,7 @@ export default async function SpiritDetailPage({
   params: Promise<{ id: string; lang: string }>;
 }) {
   const { id, lang } = await params;
+  const isEn = lang === 'en';
   const spirit = await db.getSpirit(id);
 
   if (!spirit) {
@@ -266,8 +267,6 @@ export default async function SpiritDetailPage({
       availability: 'https://schema.org/OutOfStock',
       url: pageUrl,
       description: 'This is an informational page providing tasting notes and community reviews. Products are not sold here.',
-      // GSC 필수 항목: hasMerchantReturnPolicy
-      // 비판매 정보 페이지이므로 반품 정책 해당 없음을 명시
       hasMerchantReturnPolicy: {
         '@type': 'MerchantReturnPolicy',
         applicableCountry: 'KR',
@@ -276,9 +275,6 @@ export default async function SpiritDetailPage({
         returnMethod: 'https://schema.org/ReturnByMail',
         returnFees: 'https://schema.org/FreeReturn',
       },
-      // GSC 필수 항목: shippingDetails
-      // 직접 배송 없는 정보 페이지임을 명시
-      // doesNotShip: true 사용 시 shippingRate 제거 (함께 명시하면 GSC 충돌 오류)
       shippingDetails: {
         '@type': 'OfferShippingDetails',
         shippingDestination: {
@@ -289,9 +285,7 @@ export default async function SpiritDetailPage({
       },
     },
 
-    // GSC 필수: aggregateRating
-    // 리뷰 없을 때 ratingCount/reviewCount 0 출력 시 GSC 오류 발생
-    // → 실 유저 리뷰가 있을 때만 포함, 없으면 필드 자체 제거
+    // GSC 필수: aggregateRating은 실제 리뷰 있을 때만 포함
     ...(realReviewCount > 0 && {
       aggregateRating: {
         '@type': 'AggregateRating',
@@ -305,15 +299,46 @@ export default async function SpiritDetailPage({
 
     additionalProperty: [
       ...(formatAbv(spirit.abv) ? [{
-        '@type': 'PropertyValue' as const,
+        '@type': 'PropertyValue',
         name: 'Alcohol By Volume',
         value: formatAbv(spirit.abv),
       }] : []),
       ...(spirit.country ? [{
-        '@type': 'PropertyValue' as const,
+        '@type': 'PropertyValue',
         name: 'Country',
         value: spirit.country,
       }] : []),
+    ],
+  };
+  // --- Breadcrumb Schema ---
+  const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: isEn ? 'Home' : '홈',
+        item: `${baseUrl}/${lang}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: isEn ? 'Spirits' : '주류 검색',
+        item: `${baseUrl}/${lang}/spirits`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: spirit.category,
+        item: `${baseUrl}/${lang}/spirits?category=${encodeURIComponent(spirit.category)}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 4,
+        name: spirit.name,
+        item: pageUrl,
+      },
     ],
   };
 
@@ -416,6 +441,10 @@ export default async function SpiritDetailPage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
       <SpiritDetailClient spirit={spirit} reviews={reviews} lang={lang as Locale} dict={dictionary.detail} />
     </>

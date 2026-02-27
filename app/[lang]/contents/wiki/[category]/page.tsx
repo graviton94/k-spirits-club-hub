@@ -1,10 +1,12 @@
 export const runtime = 'edge';
+export const revalidate = 0; // Force fetching dynamically so latest spirits always show
 
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import { SPIRIT_CATEGORIES, getSpiritCategory } from '@/lib/constants/spirits-guide-data'
 import { db } from '@/lib/db/index'
 import SpiritGuideLayout from '@/components/contents/SpiritGuideLayout'
+import GoogleAd from '@/components/ui/GoogleAd'
 
 interface CategoryPageProps {
     params: Promise<{ lang: string; category: string }>
@@ -34,12 +36,14 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
     ]
 
     const title = isEn
-        ? `${cat.nameEn} Wiki: History, Types, Serving Temperature & Pairing | K-Spirits Club`
-        : `${cat.nameKo} 백과사전: 역사, 등급, 종류, 최적 온도 및 음용법 | K-Spirits Club`
+        ? `Everything about ${cat.nameEn}: History, Serving, & Food Pairing | K-Spirits Club Wiki`
+        : `${cat.nameKo} 완벽 가이드: 역사, 종류, 최적 시음 온도 및 안주 추천 | 주류 백과사전`
 
-    const description = definition.length > 155
-        ? definition.substring(0, 152) + '...'
-        : definition
+    const description = isEn
+        ? `Learn all about ${cat.nameEn}. Professional guide including historical origins, production methods, optimal serving temperatures, and food pairings.`
+        : `${cat.nameKo}의 모든 것: 유래, 제조 공정, 가장 맛있는 시음 온도와 어울리는 안주까지 전문가가 정리한 가이드입니다.`
+
+    const ogDescription = tagline || description
 
     // 복합 JSON-LD 구성
     const jsonLd = {
@@ -85,6 +89,27 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
                     name: m.name,
                     text: m.description,
                 })) || [],
+            },
+            {
+                '@type': 'FAQPage',
+                mainEntity: [
+                    cat.sections?.servingGuidelines?.optimalTemperatures?.[0] && {
+                        '@type': 'Question',
+                        name: isEn ? `What is the best temperature for ${cat.nameEn}?` : `${cat.nameKo}의 최적 시음 온도는?`,
+                        acceptedAnswer: {
+                            '@type': 'Answer',
+                            text: cat.sections.servingGuidelines.optimalTemperatures[0].description
+                        }
+                    },
+                    cat.sections?.servingGuidelines?.recommendedGlass && {
+                        '@type': 'Question',
+                        name: isEn ? `What glass should I use for ${cat.nameEn}?` : `${cat.nameKo}를 마실 때 추천하는 잔은?`,
+                        acceptedAnswer: {
+                            '@type': 'Answer',
+                            text: cat.sections.servingGuidelines.recommendedGlass
+                        }
+                    }
+                ].filter(Boolean)
             }
         ]
     }
@@ -120,24 +145,81 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
     if (!cat) notFound()
 
     // 해당 카테고리의 추천 제품 조회 (최대 6개)
-    // dbCategories가 정의된 경우에만 조회, 없으면 빈 배열
     let featuredSpirits: { id: string; name: string; category: string; imageUrl?: string }[] = []
-    if (cat.sections?.dbCategories && cat.sections.dbCategories.length > 0) {
+
+    if (slug !== 'oak-barrel') {
+        const categoryMap: Record<string, string> = {
+            'single-malt': '위스키',
+            'blended-whisky': '위스키',
+            'cognac': '브랜디',
+            'brandy': '브랜디',
+            'champagne': '과실주',
+            'red-wine': '과실주',
+            'white-wine': '과실주',
+            'wine': '과실주',
+            'gin': '일반증류주',
+            'vodka': '일반증류주',
+            'rum': '일반증류주',
+            'tequila': '일반증류주',
+            'mezcal': '일반증류주',
+            'baijiu': '일반증류주',
+            'soju-distilled': '소주',
+            'soju-diluted': '소주',
+            'shochu': '소주',
+            'yakju': '약주',
+            'sake': '청주',
+            'makgeolli': '탁주',
+            'beer': '맥주',
+            'liqueur': '리큐르'
+        };
+
+        const dbCategory = categoryMap[slug];
+
         try {
-            const result = await db.getSpirits(
-                { category: cat.sections.dbCategories[0], status: 'PUBLISHED' },
-                { page: 1, pageSize: 6 },
-            )
-            featuredSpirits = result.data.map((s: any) => ({
-                id: s.id,
-                name: s.name,
-                category: s.category,
-                imageUrl: s.imageUrl,
-            }))
+            if (dbCategory) {
+                // Now using direct, robust fetch logic ensuring updatedAt DESC and isPublished = true
+                const result = await db.getLatestFeatured(dbCategory, 6)
+                featuredSpirits = result.map((s: any) => ({
+                    id: s.id,
+                    name: s.name,
+                    category: s.category,
+                    imageUrl: s.imageUrl,
+                }))
+            }
+
+            // 만약 결과가 없으면 전체에서 최신 순으로 6개 (회생 대책 - 임시로 아무 카테고리나 가져오되 isPublished 조건 추가)
+            if (featuredSpirits.length === 0) {
+                const fallback = await db.getSpirits({ status: 'PUBLISHED', isPublished: true }, { page: 1, pageSize: 6 })
+                featuredSpirits = fallback.data.map((s: any) => ({
+                    id: s.id,
+                    name: s.name,
+                    category: s.category,
+                    imageUrl: s.imageUrl,
+                }))
+            }
         } catch {
-            // 조회 실패해도 페이지는 정상 렌더링
+            // 무시
         }
     }
 
-    return <SpiritGuideLayout category={cat} lang={lang} featuredSpirits={featuredSpirits} />
+    return (
+        <>
+            <SpiritGuideLayout category={cat} lang={lang} featuredSpirits={featuredSpirits} />
+
+            {/* 하단 수익화 영역 (수수료 회생 대책) */}
+            <div className="container mx-auto max-w-3xl px-4 pb-12">
+                <div className="rounded-2xl border border-dashed border-border/60 p-4 bg-muted/5">
+                    <p className="text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest text-center mb-4">Advertisement</p>
+                    {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && (
+                        <GoogleAd
+                            client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT}
+                            slot="3222851412" // Wiki 전용 하단 슬롯 (임시 ID)
+                            format="auto"
+                            responsive={true}
+                        />
+                    )}
+                </div>
+            </div>
+        </>
+    )
 }

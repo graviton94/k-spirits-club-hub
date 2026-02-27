@@ -86,18 +86,32 @@ export const db = {
 
     // --- LEGACY MODE (SLOW BUT POWERFUL) ---
     // Used when SearchTerm is present OR when Server-Side Mode fails
+    // Note: We use listAll() which uses the simple GET endpoint to bypass ONLY filtering issues.
+    let allItems: Spirit[] = [];
+    try {
+      allItems = await spiritsDb.listAll();
+    } catch (err) {
+      console.error('[DB Adapter] Ultimate fallback failed:', err);
+      return { data: [], total: 0, page: pagination.page, pageSize: pagination.pageSize, totalPages: 0 };
+    }
 
-    let allItems = await spiritsDb.getAll(filter); // Fetches up to 5000
+    // 1. Initial filter for basic status (if not searching everything)
+    if (filter.status && (filter.status as string) !== 'ALL') {
+      allItems = allItems.filter(s => s.status === filter.status);
+    }
+    if (filter.isPublished !== undefined) {
+      allItems = allItems.filter(s => s.isPublished === filter.isPublished);
+    }
 
     // 2. Memory Filters (for fields requiring custom logic)
-    if (filter.category) {
+    if (filter.category && (filter.category as string) !== 'ALL') {
       allItems = allItems.filter(s =>
         s.category === filter.category ||
         s.subcategory === filter.category
       );
     }
     if (filter.subcategory) allItems = allItems.filter(s => s.subcategory === filter.subcategory);
-    if (filter.country) allItems = allItems.filter(s => s.country === filter.country);
+    if (filter.country && (filter.country as string) !== 'ALL') allItems = allItems.filter(s => s.country === filter.country);
     if (filter.noImage) allItems = allItems.filter(s => !s.imageUrl);
 
     if (filter.searchTerm) {
@@ -128,8 +142,12 @@ export const db = {
       total,
       page: pagination.page,
       pageSize: pagination.pageSize,
-      totalPages: Math.ceil(total / pagination.pageSize)
+      totalPages: Math.ceil(total / pagination.pageSize) || 1
     };
+  },
+
+  async getLatestFeatured(category: string, limit: number = 6): Promise<Spirit[]> {
+    return spiritsDb.getLatestFeatured(category, limit);
   },
 
   async getSpirit(id: string): Promise<Spirit | null> {

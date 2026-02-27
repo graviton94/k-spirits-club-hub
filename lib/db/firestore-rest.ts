@@ -521,20 +521,13 @@ export const spiritsDb = {
 
                 // CRITICAL: Look for Index Creation Link
                 if (errText.includes('index') || res.status === 400) {
-                    console.error(' [FIRESTORE INDEX ERROR] ');
-                    console.error('The current query requires a composite index.');
-                    console.error('Please visit this link to create it:');
+                    console.warn('[Firestore REST] Index check: The requested query may require a composite index.');
                     const match = errText.match(/https:\/\/console\.firebase\.google\.com[^\s"]+/);
                     if (match) {
-                        console.error('👉', match[0]);
-                    } else {
-                        console.error('Full Error Body:', errText);
+                        console.warn('Click here to create the index 👉', match[0]);
                     }
                 }
-            } catch (e) {
-                console.error('Failed to parse Firestore error:', errText);
-            }
-            console.error(`[Firestore REST] ${res.status} Error:`, errorMessage);
+            } catch (e) { /* ignore parse error */ }
 
             // THROW error so the caller (index.ts) can fallback to memory filtering
             throw new Error(`Firestore Query Failed: ${errorMessage}`);
@@ -565,6 +558,86 @@ export const spiritsDb = {
         return results;
     },
 
+    /**
+     * Get the latest published spirits for a specific exact category.
+     * Uses explicit updatedAt sorting. If index is missing, logs link and falls back gracefully.
+     */
+    async getLatestFeatured(category: string, limit: number = 6): Promise<Spirit[]> {
+        const token = await getServiceAccountToken();
+        const runQueryUrl = `${BASE_URL}:runQuery`;
+        const collectionPath = getAppPath().spirits;
+
+        const segments = collectionPath.split('/');
+        const collectionId = segments.pop();
+        const parentPath = segments.join('/');
+        const parent = `projects/${PROJECT_ID}/databases/(default)/documents/${parentPath}`;
+
+        const structuredQuery: any = {
+            from: [{ collectionId }],
+            where: {
+                compositeFilter: {
+                    op: 'AND',
+                    filters: [
+                        { fieldFilter: { field: { fieldPath: 'category' }, op: 'EQUAL', value: { stringValue: category } } },
+                        { fieldFilter: { field: { fieldPath: 'isPublished' }, op: 'EQUAL', value: { booleanValue: true } } }
+                    ]
+                }
+            },
+            orderBy: [{ field: { fieldPath: 'updatedAt' }, direction: 'DESCENDING' }],
+            limit
+        };
+
+        const res = await fetch(runQueryUrl, {
+            method: 'POST',
+            headers: { Authorization: `Bearer ${token}` },
+            body: JSON.stringify({ parent, structuredQuery })
+        });
+
+        if (!res.ok) {
+            const errText = await res.text();
+            if (errText.includes('index') || res.status === 400) {
+                const match = errText.match(/https:\/\/console\.firebase\.google\.com[^\s"]+/);
+                if (match) {
+                    console.warn('\n\n======================================================');
+                    console.warn('[안내] 복합 인덱스 생성이 필요할 수 있습니다 (위키 추천 제품 용)');
+                    console.warn('위키 페이지가 현재 폴백 모드(전체 조회 후 메모리 정렬)로 동작 중입니다.');
+                    console.warn('DB 차원에서 최적화된 조회를 원하시면 아래 링크를 열고 인덱스를 생성해주세요:');
+                    console.warn(match[0]);
+                    console.warn('======================================================\n\n');
+                }
+            }
+
+            // Fallback: Fetch a batch of items exactly matching the category and sort in memory by updatedAt
+            console.warn(`[Wiki Featured] Firebase raw index failed or missing for category: ${category}. Safely falling back to memory sort for correctness.`);
+            const fallbackQuery = {
+                from: [{ collectionId }],
+                where: structuredQuery.where,
+                limit: 500 // Search deeply within *just* this category to ensure we catch latest records
+            };
+            const fallbackRes = await fetch(runQueryUrl, {
+                method: 'POST',
+                headers: { Authorization: `Bearer ${token}` },
+                body: JSON.stringify({ parent, structuredQuery: fallbackQuery })
+            });
+
+            if (!fallbackRes.ok) throw new Error('[Wiki Featured] Deep fallback query also failed.');
+            const fallbackJson = await fallbackRes.json();
+            const results = fallbackJson
+                .filter((r: any) => r.document)
+                .map((r: any) => fromFirestore(r.document));
+
+            results.sort((a: Spirit, b: Spirit) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+            const finalResults = results.slice(0, limit);
+            console.log(`[Wiki Featured] Fallback query returned ${finalResults.length} exact category '${category}' matches, latest updatedAt.`);
+            return finalResults;
+        }
+
+        const json = await res.json();
+        const mainResults = json.filter((r: any) => r.document).map((r: any) => fromFirestore(r.document));
+        console.log(`[Wiki Featured] Primary index query returned ${mainResults.length} exact category '${category}' matches, latest updatedAt.`);
+        return mainResults;
+    },
+
     async getById(id: string): Promise<Spirit | null> {
         const token = await getServiceAccountToken();
         const collectionPath = getAppPath().spirits;
@@ -584,6 +657,30 @@ export const spiritsDb = {
 
         const doc = await res.json();
         return fromFirestore(doc);
+    },
+
+    // A simple, bulletproof list method that NEVER requires indexes (uses GET instead of POST runQuery)
+    async listAll(): Promise<Spirit[]> {
+        const token = await getServiceAccountToken();
+        const collectionPath = getAppPath().spirits;
+        // Fetch a large-ish number of docs without filtering/ordering
+        const url = `${BASE_URL}/${collectionPath}?pageSize=1000`;
+
+        console.log(`[Firestore] ULTIMATE FALLBACK: Listing up to 1000 documents via basic GET`);
+
+        const res = await fetch(url, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (!res.ok) {
+            console.error('[Firestore REST] listAll failed:', await res.text());
+            return [];
+        }
+
+        const json = await res.json();
+        if (!json.documents) return [];
+
+        return json.documents.map((doc: any) => fromFirestore(doc));
     },
 
     async getByIds(ids: string[]): Promise<Spirit[]> {

@@ -1,6 +1,9 @@
+'use client';
 import Link from 'next/link'
-import { BookOpen, Clock, Layers, Droplets, FlaskConical, GlassWater, Utensils, ShoppingBag, Activity, Leaf, Thermometer } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { BookOpen, Clock, Layers, Droplets, FlaskConical, GlassWater, Utensils, ShoppingBag, Activity, Leaf, Thermometer, Search } from 'lucide-react'
 import type { SpiritCategory } from '@/lib/constants/spirits-guide-data'
+import { getCategoryFallbackImage } from '@/lib/utils/image-fallback'
 
 interface SpiritGuideLayoutProps {
     category: SpiritCategory
@@ -12,17 +15,17 @@ interface SpiritGuideLayoutProps {
 // ─── 색상 맵 ────────────────────────────────────────────────────────────────
 
 const COLOR_MAP: Record<string, { bg: string; border: string; text: string; badge: string }> = {
-    amber: { bg: 'bg-amber-500/10', border: 'border-amber-500/30', text: 'text-amber-600 dark:text-amber-400', badge: 'bg-amber-500/10 text-black dark:text-amber-300' },
-    rose: { bg: 'bg-rose-500/10', border: 'border-rose-500/30', text: 'text-rose-600 dark:text-rose-400', badge: 'bg-rose-500/10 text-black dark:text-rose-300' },
-    sky: { bg: 'bg-sky-500/10', border: 'border-sky-500/30', text: 'text-sky-600 dark:text-sky-400', badge: 'bg-sky-500/10 text-black dark:text-sky-300' },
-    cyan: { bg: 'bg-cyan-500/10', border: 'border-cyan-500/30', text: 'text-cyan-600 dark:text-cyan-400', badge: 'bg-cyan-500/10 text-black dark:text-cyan-300' },
-    emerald: { bg: 'bg-emerald-500/10', border: 'border-emerald-500/30', text: 'text-emerald-600 dark:text-emerald-400', badge: 'bg-emerald-500/10 text-black dark:text-emerald-300' },
-    orange: { bg: 'bg-orange-500/10', border: 'border-orange-500/30', text: 'text-orange-600 dark:text-orange-400', badge: 'bg-orange-500/10 text-black dark:text-orange-300' },
-    blue: { bg: 'bg-blue-500/10', border: 'border-blue-500/30', text: 'text-blue-600 dark:text-blue-400', badge: 'bg-blue-500/10 text-black dark:text-blue-300' },
-    lime: { bg: 'bg-lime-500/10', border: 'border-lime-500/30', text: 'text-lime-600 dark:text-lime-400', badge: 'bg-lime-500/10 text-black dark:text-lime-300' },
-    purple: { bg: 'bg-purple-500/10', border: 'border-purple-500/30', text: 'text-purple-600 dark:text-purple-400', badge: 'bg-purple-500/10 text-black dark:text-purple-300' },
+    amber: { bg: 'bg-amber-500/10', border: 'border-amber-500/30', text: 'text-amber-900 dark:text-amber-400', badge: 'bg-amber-500/10 text-black dark:text-amber-300' },
+    rose: { bg: 'bg-rose-500/10', border: 'border-rose-500/30', text: 'text-rose-900 dark:text-rose-400', badge: 'bg-rose-500/10 text-black dark:text-rose-300' },
+    sky: { bg: 'bg-sky-500/10', border: 'border-sky-500/30', text: 'text-sky-900 dark:text-sky-400', badge: 'bg-sky-500/10 text-black dark:text-sky-300' },
+    cyan: { bg: 'bg-cyan-500/10', border: 'border-cyan-500/30', text: 'text-cyan-900 dark:text-cyan-400', badge: 'bg-cyan-500/10 text-black dark:text-cyan-300' },
+    emerald: { bg: 'bg-emerald-500/10', border: 'border-emerald-500/30', text: 'text-emerald-900 dark:text-emerald-400', badge: 'bg-emerald-500/10 text-black dark:text-emerald-300' },
+    orange: { bg: 'bg-orange-500/10', border: 'border-orange-500/30', text: 'text-orange-900 dark:text-orange-400', badge: 'bg-orange-500/10 text-black dark:text-orange-300' },
+    blue: { bg: 'bg-blue-500/10', border: 'border-blue-500/30', text: 'text-blue-900 dark:text-blue-400', badge: 'bg-blue-500/10 text-black dark:text-blue-300' },
+    lime: { bg: 'bg-lime-500/10', border: 'border-lime-500/30', text: 'text-lime-900 dark:text-lime-400', badge: 'bg-lime-500/10 text-black dark:text-lime-300' },
+    purple: { bg: 'bg-purple-500/10', border: 'border-purple-500/30', text: 'text-purple-900 dark:text-purple-400', badge: 'bg-purple-500/10 text-black dark:text-purple-300' },
     yellow: { bg: 'bg-yellow-500/10', border: 'border-yellow-500/30', text: 'text-yellow-700 dark:text-yellow-400', badge: 'bg-yellow-500/10 text-black dark:text-yellow-300' },
-    red: { bg: 'bg-red-500/10', border: 'border-red-500/30', text: 'text-red-600 dark:text-red-400', badge: 'bg-red-500/10 text-black dark:text-red-300' },
+    red: { bg: 'bg-red-500/10', border: 'border-red-500/30', text: 'text-red-900 dark:text-red-400', badge: 'bg-red-500/10 text-black dark:text-red-300' },
 }
 
 // ─── 섹션 래퍼 ──────────────────────────────────────────────────────────────
@@ -67,6 +70,7 @@ function ComingSoon({ label }: { label: string }) {
 // ─── 메인 레이아웃 ──────────────────────────────────────────────────────────
 
 export default function SpiritGuideLayout({ category, lang, featuredSpirits = [] }: SpiritGuideLayoutProps) {
+    const router = useRouter()
     const c = COLOR_MAP[category.color] ?? COLOR_MAP.amber
     const isEn = lang === 'en'
     const s = category.sections
@@ -84,11 +88,38 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                         {isEn ? category.nameEn : category.nameKo}
                     </h1>
                     {!isEn && (
-                        <p className="text-sm font-semibold text-zinc-600 dark:text-zinc-500 mb-3">{category.nameEn}</p>
+                        <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-500 mb-3">{category.nameEn}</p>
                     )}
                     <p className="text-foreground text-sm leading-relaxed max-w-md mx-auto font-medium">
                         {isEn ? category.taglineEn : category.taglineKo}
                     </p>
+
+                    {/* ── 카테고리별 쇼핑 통합 검색 (회생 대책: 구매 연결 강화) ── */}
+                    {category.slug !== 'oak-barrel' && (
+                        <div className="mt-6 flex flex-wrap justify-center gap-2">
+                            <a
+                                href={`https://search.shopping.naver.com/search/all?query=${encodeURIComponent((isEn ? category.nameEn : category.nameKo))}`}
+                                target="_blank" rel="noopener noreferrer"
+                                className="px-3 py-1.5 rounded-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 text-[10px] font-bold text-emerald-600 dark:text-emerald-400 hover:border-emerald-500 transition-colors flex items-center gap-1.5 shadow-sm"
+                            >
+                                <span className="font-black">N</span> {isEn ? 'Naver Shopping' : '네이버 쇼핑'}
+                            </a>
+                            <a
+                                href={`https://www.google.com/search?q=${encodeURIComponent((isEn ? category.nameEn : category.nameKo))}&tbm=shop`}
+                                target="_blank" rel="noopener noreferrer"
+                                className="px-3 py-1.5 rounded-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 text-[10px] font-bold text-blue-600 dark:text-blue-400 hover:border-blue-500 transition-colors flex items-center gap-1.5 shadow-sm"
+                            >
+                                <Search className="w-3 h-3 text-blue-500" /> {isEn ? 'Google Shopping' : '구글 쇼핑'}
+                            </a>
+                            <a
+                                href={`https://dailyshot.co/m/search/result?q=${encodeURIComponent((isEn ? category.nameEn : category.nameKo))}`}
+                                target="_blank" rel="noopener noreferrer"
+                                className="px-3 py-1.5 rounded-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 text-[10px] font-bold text-purple-600 dark:text-purple-400 hover:border-purple-500 transition-colors flex items-center gap-1.5 shadow-sm"
+                            >
+                                <Activity className="w-3 h-3 text-purple-500" /> {isEn ? 'Dailyshot' : '데일리샷 검색'}
+                            </a>
+                        </div>
+                    )}
                     {/* breadcrumb */}
                     <nav className="mt-4 text-xs text-zinc-500 dark:text-zinc-500 flex justify-center gap-1">
                         <Link href={`/${lang}/contents/wiki`} className="hover:text-zinc-800 dark:hover:text-zinc-300 transition-colors">
@@ -139,7 +170,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                                     {cls.flavorTags && cls.flavorTags.length > 0 && (
                                         <div className="flex flex-wrap gap-1.5 mt-2">
                                             {cls.flavorTags.map((tag) => {
-                                                const bgPart = tag.color.split(' ').find(c => c.startsWith('bg-'))?.replace('/20', '') ?? 'bg-neutral-600'
+                                                const bgPart = tag.color.split(' ').find(c => c.startsWith('bg-'))?.replace('/20', '') ?? 'bg-neutral-900'
                                                 const shade = parseInt(bgPart.match(/(\d+)$/)?.[1] ?? '500')
                                                 const textColor = shade < 500 ? 'text-gray-900' : 'text-white'
                                                 return (
@@ -194,7 +225,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                 {s?.flavorTags && s.flavorTags.length > 0 ? (
                     <div className="flex flex-wrap gap-2">
                         {s.flavorTags.map((tag) => {
-                            const bgPart = tag.color.split(' ').find(c => c.startsWith('bg-'))?.replace('/20', '') ?? 'bg-neutral-600'
+                            const bgPart = tag.color.split(' ').find(c => c.startsWith('bg-'))?.replace('/20', '') ?? 'bg-neutral-900'
                             // shade 숫자 추출: 낮을수록 밝은 색. 500 미만이면 어두운 텍스트 사용
                             const shade = parseInt(bgPart.match(/(\d+)$/)?.[1] ?? '500')
                             const textColor = shade < 500 ? 'text-gray-900' : 'text-white'
@@ -346,41 +377,62 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
             </Section>
 
             {/* ── 9. K-Spirits Club 추천 제품 ── */}
-            <Section id="recommended" icon={<ShoppingBag className="w-5 h-5" />} title={isEn ? 'Featured on K-Spirits Club' : 'K-Spirits Club 추천 제품'} color={category.color}>
-                {featuredSpirits.length > 0 ? (
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        {featuredSpirits.map((spirit) => (
-                            <Link
-                                key={spirit.id}
-                                href={`/${lang}/spirits/${spirit.id}`}
-                                className="group rounded-xl border border-border/30 bg-background/30 p-3 hover:border-border/70 hover:bg-background/60 transition-all duration-200"
-                            >
-                                {spirit.imageUrl && (
-                                    // eslint-disable-next-line @next/next/no-img-element
+            {category.slug !== 'oak-barrel' && (
+                <Section id="recommended" icon={<ShoppingBag className="w-5 h-5" />} title={isEn ? 'Featured on K-Spirits Club' : 'K-Spirits Club 추천 제품'} color={category.color}>
+                    {featuredSpirits.length > 0 ? (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                            {featuredSpirits.map((spirit) => (
+                                <div
+                                    key={spirit.id}
+                                    onClick={() => router.push(`/${lang}/spirits/${spirit.id}`)}
+                                    className="group rounded-xl border border-border/30 bg-background/30 p-3 hover:border-border/70 hover:bg-background/60 transition-all duration-200 cursor-pointer"
+                                >
                                     <img
-                                        src={spirit.imageUrl}
+                                        src={spirit.imageUrl || getCategoryFallbackImage(spirit.category)}
                                         alt={spirit.name}
-                                        className="w-full aspect-square object-contain mb-2 rounded-lg"
+                                        className={`w-full aspect-square object-contain mb-2 rounded-lg ${!spirit.imageUrl ? 'opacity-30 grayscale' : ''}`}
                                     />
-                                )}
-                                <p className="text-xs font-semibold text-zinc-950 dark:text-zinc-100 group-hover:text-amber-500 transition-colors line-clamp-2">
-                                    {spirit.name}
-                                </p>
-                                <p className="text-[10px] text-zinc-600 dark:text-zinc-500 mt-0.5">{spirit.category}</p>
+                                    <p className="text-xs font-semibold text-foreground group-hover:text-amber-500 transition-colors line-clamp-1">
+                                        {spirit.name}
+                                    </p>
+                                    <div className="flex items-center justify-between mt-1">
+                                        <p className="text-[10px] text-muted-foreground">{spirit.category}</p>
+                                        <div className="flex gap-2">
+                                            <a
+                                                href={`https://search.shopping.naver.com/search/all?query=${encodeURIComponent(spirit.name)}`}
+                                                target="_blank" rel="noopener noreferrer"
+                                                onClick={(e) => e.stopPropagation()}
+                                                className="p-1 hover:text-emerald-500 transition-colors"
+                                                title="Naver Search"
+                                            >
+                                                <span className="text-[8px] font-black">N</span>
+                                            </a>
+                                            <a
+                                                href={`https://www.google.com/search?q=${encodeURIComponent(spirit.name)}&tbm=shop`}
+                                                target="_blank" rel="noopener noreferrer"
+                                                onClick={(e) => e.stopPropagation()}
+                                                className="p-1 hover:text-blue-500 transition-colors"
+                                                title="Google Search"
+                                            >
+                                                <Search className="w-2.5 h-2.5" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="flex flex-col items-center justify-center py-10 rounded-xl border border-dashed border-border/40 gap-2">
+                            <p className="text-zinc-900 dark:text-zinc-500 text-sm font-medium">
+                                {isEn ? 'No products registered yet' : '조건에 맞는 주류를 검색해보세요!'}
+                            </p>
+                            <Link href={`/${lang}/explore`} className={`text-xs font-semibold ${c.text} hover:underline`}>
+                                {isEn ? 'Browse all spirits →' : '전체 주류 탐색하기 →'}
                             </Link>
-                        ))}
-                    </div>
-                ) : (
-                    <div className="flex flex-col items-center justify-center py-10 rounded-xl border border-dashed border-border/40 gap-2">
-                        <p className="text-zinc-600 dark:text-zinc-500 text-sm font-medium">
-                            {isEn ? 'No products registered yet' : '조건에 맞는 주류를 검색해보세요!'}
-                        </p>
-                        <Link href={`/${lang}/explore`} className={`text-xs font-semibold ${c.text} hover:underline`}>
-                            {isEn ? 'Browse all spirits →' : '전체 주류 탐색하기 →'}
-                        </Link>
-                    </div>
-                )}
-            </Section>
+                        </div>
+                    )}
+                </Section>
+            )}
         </article>
     )
 }

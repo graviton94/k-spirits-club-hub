@@ -6,7 +6,7 @@ import ReviewSection from "@/components/ui/ReviewSection";
 import AdSlot from "@/components/common/AdSlot";
 import ModificationRequestButton from "@/components/spirits/ModificationRequestButton";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Search, ArrowLeft } from "lucide-react";
+import { X, Search, ArrowLeft, ShoppingBag, Activity } from "lucide-react";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "@/app/[lang]/context/auth-context";
@@ -55,7 +55,14 @@ const UI_TEXT = {
         pairing: "추천 페어링",
         reviews: "리뷰",
         writeReview: "리뷰 쓰기",
-        noDescription: "설명이 없습니다."
+        noDescription: "설명이 없습니다.",
+        whereToBuy: "구매처 찾기",
+        buyInfo: "현재 본 사이트에서는 직접 판매를 하지 않습니다. 아래 링크를 통해 판매 정보를 확인해보세요.",
+        searchNaver: "네이버 쇼핑 검색",
+        searchGoogle: "구글 쇼핑 검색",
+        searchWineSearcher: "Wine-Searcher",
+        searchDailyshot: "데일리샷 검색",
+        viewDetail: "상세보기"
     },
     en: {
         back: "Back",
@@ -82,7 +89,14 @@ const UI_TEXT = {
         pairing: "Best Pairing",
         reviews: "Reviews",
         writeReview: "Write Review",
-        noDescription: "No description available."
+        noDescription: "No description available.",
+        whereToBuy: "Where to Buy & Compare Prices",
+        buyInfo: "We do not sell spirits directly. Check the links below for the best prices and availability.",
+        searchNaver: "Search on Naver",
+        searchGoogle: "Search on Google",
+        searchWineSearcher: "Wine-Searcher",
+        searchDailyshot: "Search on Dailyshot",
+        viewDetail: "View Details"
     }
 };
 
@@ -415,7 +429,7 @@ export default function SpiritDetailClient({ spirit, reviews, lang, dict }: Spir
             )}
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 mb-12">
+            <div className="flex flex-col sm:flex-row gap-3 mb-10">
                 <button
                     onClick={handleCabinetAction}
                     disabled={isToggling || isLoadingStatus}
@@ -440,6 +454,46 @@ export default function SpiritDetailClient({ spirit, reviews, lang, dict }: Spir
                     <span>{isWishlist ? '🗑️' : '🔖'}</span>
                     {isToggling ? t.processing : (isWishlist ? t.remove_wishlist : t.add_wishlist)}
                 </button>
+            </div>
+
+            {/* Price Search / Buying Guide (회생 대책 - 수익성 연결고리) */}
+            <div className="mb-12 p-6 rounded-3xl border border-amber-200/50 dark:border-amber-500/20 shadow-sm">
+                <h3 className="text-sm font-black text-amber-600 dark:text-amber-500 uppercase tracking-widest mb-2 flex items-center gap-2">
+                    <ShoppingBag className="w-4 h-4" />
+                    {t.whereToBuy}
+                </h3>
+                <p className="text-xs text-muted-foreground mb-6 leading-relaxed">
+                    {t.buyInfo}
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <a
+                        href={`https://search.shopping.naver.com/search/all?query=${encodeURIComponent(spirit.name.replace(/\([^)]*\)/g, '').trim())}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-transparent border border-border hover:border-emerald-500 transition-colors text-xs font-bold"
+                    >
+                        <span className="text-emerald-500 font-black">N</span>
+                        {t.searchNaver}
+                    </a>
+                    <a
+                        href={`https://dailyshot.co/m/search/result?q=${encodeURIComponent(spirit.name.replace(/\([^)]*\)/g, '').trim())}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-transparent border border-border hover:border-purple-500 transition-colors text-xs font-bold"
+                    >
+                        <Activity className="w-3.5 h-3.5 text-purple-500" />
+                        {t.searchDailyshot}
+                    </a>
+                    <a
+                        href={`https://www.wine-searcher.com/find/${encodeURIComponent((spirit.metadata?.name_en || spirit.name_en || spirit.name).replace(/\([^)]*\)/g, '').trim())}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-transparent border border-border hover:border-amber-500 transition-colors text-xs font-bold"
+                    >
+                        <span className="text-amber-500 font-black">W</span>
+                        {t.searchWineSearcher}
+                    </a>
+                </div>
             </div>
 
             {/* Middle Ad - Between Info and Reviews */}
