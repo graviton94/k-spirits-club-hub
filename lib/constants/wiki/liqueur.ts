@@ -157,6 +157,6 @@ export const liqueur: SpiritCategory = {
             "블루 치즈 및 숙성 하드 치즈",
             "훈제 햄 및 사퀴테리 (비터 계열)"
         ],
-        dbCategories: ['liqueur']
+        dbCategories: ['리큐르']
     }
 }

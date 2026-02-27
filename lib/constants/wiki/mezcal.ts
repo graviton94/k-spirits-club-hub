@@ -146,6 +146,6 @@ export const mezcal: SpiritCategory = {
             "과카몰리와 나초",
             "다크 초콜릿 및 견과류"
         ],
-        dbCategories: ['mezcal']
+        dbCategories: ['일반증류주']
     }
 }

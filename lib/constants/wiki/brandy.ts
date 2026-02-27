@@ -140,6 +140,6 @@ export const brandy: SpiritCategory = {
             "푸아그라 및 무거운 소스의 스테이크",
             "사과 타르트 및 크렘 브륄레"
         ],
-        dbCategories: ['brandy', 'cognac', 'armagnac', 'calvados', 'pisco']
+        dbCategories: ['브랜디']
     }
 }

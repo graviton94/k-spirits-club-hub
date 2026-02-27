@@ -164,6 +164,6 @@ export const champagne: SpiritCategory = {
             "브리/카망베르 등 소프트 치즈",
             "과일 타르트 및 디저트"
         ],
-        dbCategories: ['champagne', 'sparkling-wine', 'wine']
+        dbCategories: ['과실주']
     }
 }

@@ -140,6 +140,6 @@ export const redWine: SpiritCategory = {
             "오리 가슴살 및 로스트 치킨",
             "갈비찜 및 불고기"
         ],
-        dbCategories: ['wine', 'red-wine']
+        dbCategories: ['과실주']
     }
 }

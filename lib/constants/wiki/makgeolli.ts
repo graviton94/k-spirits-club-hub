@@ -152,6 +152,6 @@ export const makgeolli: SpiritCategory = {
             "브리/고다 치즈와 견과류",
             "바삭한 후라이드 치킨"
         ],
-        dbCategories: ['makgeolli', 'takju']
+        dbCategories: ['탁주']
     }
 }

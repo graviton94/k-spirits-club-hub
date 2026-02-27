@@ -133,6 +133,6 @@ export const singleMalt: SpiritCategory = {
             "다크 초콜릿 및 테라미수",
             "견과류와 건과일 플래터"
         ],
-        dbCategories: ['whisky', 'single-malt']
+        dbCategories: ['위스키']
     }
 }

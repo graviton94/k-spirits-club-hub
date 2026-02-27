@@ -137,6 +137,6 @@ export const blendedWhisky: SpiritCategory = {
             "다크 초콜릿 및 브라우니",
             "치킨 및 생선 튀김 요리 (하이볼)"
         ],
-        dbCategories: ['whisky', 'blended-whisky']
+        dbCategories: ['위스키']
     }
 }

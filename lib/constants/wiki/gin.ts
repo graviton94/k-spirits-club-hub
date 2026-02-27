@@ -149,6 +149,6 @@ export const gin: SpiritCategory = {
             "올리브 및 치즈 플래터",
             "레몬 또는 유자 파운드 케이크"
         ],
-        dbCategories: ['gin', 'london-dry-gin', 'distilled-gin', 'old-tom-gin', 'navy-strength-gin', 'genever']
+        dbCategories: ['일반증류주']
     }
 }

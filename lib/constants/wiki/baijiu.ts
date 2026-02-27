@@ -184,6 +184,6 @@ export const baijiu: SpiritCategory = {
             "짭짤한 건해산물 안주",
             "사천식 매운 볶음 요리"
         ],
-        dbCategories: ['baijiu']
+        dbCategories: ['일반증류주']
     }
 }

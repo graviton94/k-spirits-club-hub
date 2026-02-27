@@ -248,6 +248,6 @@ export const cognac: SpiritCategory = {
             "견과류/말린 과일 플래터",
             "커피/에스프레소 기반 디저트(티라미수 등)"
         ],
-        dbCategories: ['cognac', 'brandy']
+        dbCategories: ['브랜디']
     }
 }

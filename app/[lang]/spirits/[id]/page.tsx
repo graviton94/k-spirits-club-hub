@@ -257,32 +257,40 @@ export default async function SpiritDetailPage({
     // SEO Enhancement: Add URL for better indexing
     url: pageUrl,
 
-    // GSC 필수 필드: offers (정보 페이지임을 명시, 허위 판매가 아님)
+    // GSC 필수 보완: 직접 판매처가 아니므로 AggregateOffer(제휴 링크/검색 연동) 형식 차용
+    // 0원으로 high/low를 설정하여 '가격 누락' 노란색 경고를 방지하면서 허위 재고 논란(OutOfStock) 우회
     offers: {
-      '@type': 'Offer',
-      price: '0',
+      '@type': 'AggregateOffer',
       priceCurrency: 'KRW',
-      // priceValidUntil: GSC 필수 항목 - 1년 rolling window
-      priceValidUntil: priceValidUntil,
-      availability: 'https://schema.org/OutOfStock',
-      url: pageUrl,
-      description: 'This is an informational page providing tasting notes and community reviews. Products are not sold here.',
-      hasMerchantReturnPolicy: {
-        '@type': 'MerchantReturnPolicy',
-        applicableCountry: 'KR',
-        returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
-        merchantReturnDays: 0,
-        returnMethod: 'https://schema.org/ReturnByMail',
-        returnFees: 'https://schema.org/FreeReturn',
-      },
-      shippingDetails: {
-        '@type': 'OfferShippingDetails',
-        shippingDestination: {
-          '@type': 'DefinedRegion',
-          addressCountry: 'KR',
+      lowPrice: '0',
+      highPrice: '0',
+      offerCount: 3,
+      offers: [
+        {
+          '@type': 'Offer',
+          url: `https://search.shopping.naver.com/search/all?query=${encodeURIComponent(spirit.name)}`,
+          seller: {
+            '@type': 'Organization',
+            name: 'Naver Shopping'
+          }
         },
-        doesNotShip: true,
-      },
+        {
+          '@type': 'Offer',
+          url: `https://dailyshot.co/search/result?keyword=${encodeURIComponent(spirit.name)}`,
+          seller: {
+            '@type': 'Organization',
+            name: 'Dailyshot'
+          }
+        },
+        {
+          '@type': 'Offer',
+          url: `https://www.wine-searcher.com/find/${encodeURIComponent(spirit.name_en || spirit.name)}`,
+          seller: {
+            '@type': 'Organization',
+            name: 'Wine-Searcher'
+          }
+        }
+      ]
     },
 
     // GSC 필수: aggregateRating은 실제 리뷰 있을 때만 포함

@@ -149,6 +149,6 @@ export const beer: SpiritCategory = {
             "소시지 및 샤퀴테리",
             "다크 초콜릿 및 티라미수"
         ],
-        dbCategories: ['beer', 'ale', 'lager', 'ipa', 'stout']
+        dbCategories: ['맥주']
     }
 }

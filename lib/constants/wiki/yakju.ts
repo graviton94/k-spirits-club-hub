@@ -151,6 +151,6 @@ export const yakju: SpiritCategory = {
             "간장게장 및 장아찌류",
             "한과/약과 또는 크림치즈 디저트"
         ],
-        dbCategories: ['yakju', 'cheongju', 'korean-wine']
+        dbCategories: ['약주']
     }
 }

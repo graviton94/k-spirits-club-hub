@@ -138,6 +138,6 @@ export const whisky: SpiritCategory = {
             "말린 과일 및 피칸 파이",
             "돈카츠 등 기름진 튀김 요리 (하이볼)"
         ],
-        dbCategories: ['whisky']
+        dbCategories: ['위스키']
     }
 }

@@ -150,6 +150,6 @@ export const tequila: SpiritCategory = {
             "숙성된 치즈 (만체고, 고다)",
             "다크 초콜릿 및 견과류"
         ],
-        dbCategories: ['tequila', 'mezcal']
+        dbCategories: ['일반증류주']
     }
 }

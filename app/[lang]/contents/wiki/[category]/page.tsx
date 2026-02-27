@@ -149,6 +149,7 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
 
     if (slug !== 'oak-barrel') {
         const categoryMap: Record<string, string> = {
+            'whisky': '위스키',
             'single-malt': '위스키',
             'blended-whisky': '위스키',
             'cognac': '브랜디',
@@ -163,6 +164,7 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
             'tequila': '일반증류주',
             'mezcal': '일반증류주',
             'baijiu': '일반증류주',
+            'soju': '소주',
             'soju-distilled': '소주',
             'soju-diluted': '소주',
             'shochu': '소주',
@@ -180,17 +182,6 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
                 // Now using direct, robust fetch logic ensuring updatedAt DESC and isPublished = true
                 const result = await db.getLatestFeatured(dbCategory, 6)
                 featuredSpirits = result.map((s: any) => ({
-                    id: s.id,
-                    name: s.name,
-                    category: s.category,
-                    imageUrl: s.imageUrl,
-                }))
-            }
-
-            // 만약 결과가 없으면 전체에서 최신 순으로 6개 (회생 대책 - 임시로 아무 카테고리나 가져오되 isPublished 조건 추가)
-            if (featuredSpirits.length === 0) {
-                const fallback = await db.getSpirits({ status: 'PUBLISHED', isPublished: true }, { page: 1, pageSize: 6 })
-                featuredSpirits = fallback.data.map((s: any) => ({
                     id: s.id,
                     name: s.name,
                     category: s.category,

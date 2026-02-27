@@ -123,6 +123,6 @@ export const sojuDiluted: SpiritCategory = {
             "생선회 및 해산물 안주",
             "각종 마른안주 및 과일"
         ],
-        dbCategories: ['soju']
+        dbCategories: ['소주']
     }
 }

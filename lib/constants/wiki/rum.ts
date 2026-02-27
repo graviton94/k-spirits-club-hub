@@ -150,6 +150,6 @@ export const rum: SpiritCategory = {
             "바나나 브레드 및 견과류 정과",
             "훈제 치즈 및 숙성 체다 치즈"
         ],
-        dbCategories: ['rum', 'white-rum', 'dark-rum', 'spiced-rum']
+        dbCategories: ['일반증류주']
     }
 }

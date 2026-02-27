@@ -128,6 +128,6 @@ export const wine: SpiritCategory = {
             "브리 치즈와 견과류",
             "딸기 크림 디저트"
         ],
-        dbCategories: ['wine', 'sparkling', 'champagne', 'rose-wine']
+        dbCategories: ['과실주']
     }
 }

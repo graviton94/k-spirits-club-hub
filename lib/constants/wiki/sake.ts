@@ -148,6 +148,6 @@ export const sake: SpiritCategory = {
             "야키토리 (소금구이/타레)",
             "샤브샤브 및 나베 요리"
         ],
-        dbCategories: ['sake', 'junmai', 'ginjo', 'daiginjo']
+        dbCategories: ['청주']
     }
 }

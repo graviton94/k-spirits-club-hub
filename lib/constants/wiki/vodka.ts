@@ -129,6 +129,6 @@ export const vodka: SpiritCategory = {
             "호밀빵과 블리니",
             "짭짤한 하드 치즈"
         ],
-        dbCategories: ['vodka']
+        dbCategories: ['일반증류주']
     }
 }

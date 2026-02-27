@@ -149,6 +149,6 @@ export const shochu: SpiritCategory = {
             "짭조름한 명란젓 및 젓갈류",
             "구운 생선 및 스테이크"
         ],
-        dbCategories: ['shochu', 'japanese-spirits']
+        dbCategories: ['소주']
     }
 }

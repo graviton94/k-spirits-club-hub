@@ -149,6 +149,6 @@ export const sojuDistilled: SpiritCategory = {
             "장어 구이 및 기름진 생선 요리",
             "다양한 전류 (해물파전, 육전)"
         ],
-        dbCategories: ['soju-distilled', 'korean-soju']
+        dbCategories: ['소주']
     }
 }

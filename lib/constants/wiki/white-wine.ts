@@ -125,6 +125,6 @@ export const whiteWine: SpiritCategory = {
             "크림 파스타 및 리조또",
             "태국/베트남식 매콤한 요리"
         ],
-        dbCategories: ['wine', 'white-wine']
+        dbCategories: ['과실주']
     }
 }
