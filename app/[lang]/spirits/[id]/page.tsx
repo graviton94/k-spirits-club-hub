@@ -278,13 +278,9 @@ export default async function SpiritDetailPage({
       },
       // GSC 필수 항목: shippingDetails
       // 직접 배송 없는 정보 페이지임을 명시
+      // doesNotShip: true 사용 시 shippingRate 제거 (함께 명시하면 GSC 충돌 오류)
       shippingDetails: {
         '@type': 'OfferShippingDetails',
-        shippingRate: {
-          '@type': 'MonetaryAmount',
-          value: '0',
-          currency: 'KRW',
-        },
         shippingDestination: {
           '@type': 'DefinedRegion',
           addressCountry: 'KR',
@@ -294,30 +290,18 @@ export default async function SpiritDetailPage({
     },
 
     // GSC 필수: aggregateRating
-    // 리뷰 없을 때도 ratingCount:0으로 명시 (Google 정책상 허용)
-    // 리뷰 있을 때는 실제 평점 계산
-    aggregateRating: (() => {
-      if (realReviewCount > 0) {
-        const ratingValue = (reviews.reduce((acc, r) => acc + r.rating, 0) / realReviewCount).toFixed(1);
-        return {
-          '@type': 'AggregateRating',
-          ratingValue: ratingValue,
-          reviewCount: realReviewCount,
-          ratingCount: realReviewCount,
-          bestRating: '5',
-          worstRating: '1',
-        };
-      }
-      // 리뷰 0개: ratingCount:0 명시로 "아직 평가 없음" 상태 표현
-      return {
+    // 리뷰 없을 때 ratingCount/reviewCount 0 출력 시 GSC 오류 발생
+    // → 실 유저 리뷰가 있을 때만 포함, 없으면 필드 자체 제거
+    ...(realReviewCount > 0 && {
+      aggregateRating: {
         '@type': 'AggregateRating',
-        ratingValue: '0',
-        reviewCount: 0,
-        ratingCount: 0,
+        ratingValue: (reviews.reduce((acc, r) => acc + r.rating, 0) / realReviewCount).toFixed(1),
+        reviewCount: realReviewCount,
+        ratingCount: realReviewCount,
         bestRating: '5',
         worstRating: '1',
-      };
-    })(),
+      },
+    }),
 
     additionalProperty: [
       ...(formatAbv(spirit.abv) ? [{
@@ -375,12 +359,14 @@ export default async function SpiritDetailPage({
     return parts.join(' | ');
   };
 
-  const editorialReviewBody = buildEditorialReviewBody();
+  // description/note 없는 제품도 fallback으로 편집부 리뷰 본문 생성
+  // → review 필드 누락 GSC 오류 방지 (reviewRating 없음: aggregateRating 오염 방지)
+  const editorialReviewBody = buildEditorialReviewBody()
+    || `${spirit.name}${spirit.name_en ? ` (${spirit.name_en})` : ''}${spirit.category ? ` · ${spirit.category}` : ''} - K-Spirits Club 큐레이션 주류.`;
 
-  // 편집부 리뷰: description 또는 tasting note 중 하나라도 있으면 항상 포함
-  const editorialReview = editorialReviewBody ? {
+  // 편집부 리뷰: 항상 포함 (reviewRating 없음: 점수를 매기지 않음)
+  const editorialReview = {
     '@type': 'Review',
-    // reviewRating 없음: 편집부는 점수 매기지 않음 → aggregateRating 수치 오염 방지
     author: {
       '@type': 'Organization',
       name: 'K-Spirits Club',
@@ -390,7 +376,7 @@ export default async function SpiritDetailPage({
       ? new Date(spirit.createdAt).toISOString().split('T')[0]
       : new Date().toISOString().split('T')[0],
     reviewBody: editorialReviewBody,
-  } : null;
+  };
 
   // review 배열: 편집부 리뷰 + 실 유저 리뷰 병합
   const userReviews = reviews.slice(0, 5).map((r) => {
@@ -415,14 +401,13 @@ export default async function SpiritDetailPage({
     };
   });
 
+  // 편집부 리뷰는 항상 포함되므로 allReviews는 최소 1개 보장
   const allReviews = [
-    ...(editorialReview ? [editorialReview] : []),
+    editorialReview,
     ...userReviews,
   ];
 
-  if (allReviews.length > 0) {
-    jsonLd.review = allReviews;
-  }
+  jsonLd.review = allReviews;
 
   const dictionary = await getDictionary(lang as Locale);
 
