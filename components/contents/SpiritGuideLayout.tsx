@@ -40,7 +40,7 @@ function Section({
 }) {
     const c = COLOR_MAP[color] ?? COLOR_MAP.amber
     return (
-        <section className={`rounded-2xl border ${c.border} bg-{color}/3 p-6 backdrop-blur-sm`}>
+        <section className={`rounded-2xl border ${c.border} bg-white/3 p-6 backdrop-blur-sm`}>
             <h2 className={`flex items-center gap-2 text-lg font-bold ${c.text} mb-4`}>
                 {icon}
                 {title}
@@ -168,10 +168,12 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                 {s?.flavorTags && s.flavorTags.length > 0 ? (
                     <div className="flex flex-wrap gap-2">
                         {s.flavorTags.map((tag) => {
-                            // tag.color 에서 배경 클래스만 추출 (e.g. bg-amber-500)
-                            const bgClass = tag.color.split(' ').find(c => c.startsWith('bg-'))?.replace('/20', '') ?? 'bg-neutral-600'
+                            const bgPart = tag.color.split(' ').find(c => c.startsWith('bg-'))?.replace('/20', '') ?? 'bg-neutral-600'
+                            // shade 숫자 추출: 낮을수록 밝은 색. 500 미만이면 어두운 텍스트 사용
+                            const shade = parseInt(bgPart.match(/(\d+)$/)?.[1] ?? '500')
+                            const textColor = shade < 500 ? 'text-gray-900' : 'text-white'
                             return (
-                                <span key={tag.label} className={`px-3 py-1.5 rounded-full text-xs font-bold text-white shadow-sm ${bgClass}`}>
+                                <span key={tag.label} className={`px-3 py-1.5 rounded-full text-xs font-bold shadow-sm ${bgPart} ${textColor}`}>
                                     {tag.label}
                                 </span>
                             )
