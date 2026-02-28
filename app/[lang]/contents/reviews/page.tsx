@@ -77,6 +77,10 @@ export default function ReviewBoardPage() {
     const fetchPage = async (page: number) => {
         try {
             setLoading(true);
+
+            // React State 기반 페이징 전환 시 강제 최상단 스크롤
+            window.scrollTo({ top: 0, behavior: 'auto' });
+
             const reviewsPath = getAppPath().reviews;
             let q;
 
@@ -345,11 +349,11 @@ export default function ReviewBoardPage() {
                                     )}
                                 </motion.div>
 
-                                {/* 4번째 리뷰 아이템 뒤에 인피드 광고 진정한 삽입 (페이지네이션 대응) */}
-                                {idx === 3 && (
+                                {/* 4번째마다 뉴스 아이템 이후 인피드 광고 반복 삽입 (페이지네이션 대응) */}
+                                {(idx + 1) % 4 === 0 && (
                                     <div className="w-full my-8">
                                         <GoogleAd
-                                            key={`ad-review-${currentPage}`}
+                                            key={`ad-review-${currentPage}-${idx}`}
                                             client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
                                             slot={process.env.NEXT_PUBLIC_ADSENSE_INFEED_SLOT || ''}
                                             format="fluid"

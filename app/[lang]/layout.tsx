@@ -14,6 +14,7 @@ import GoogleAd from '@/components/ui/GoogleAd';
 import { getDictionary } from '@/lib/get-dictionary';
 import { PwaProvider } from './context/pwa-context';
 import { PwaInstallPrompt } from '@/components/ui/PwaInstallPrompt';
+import { ScrollToTop } from '@/components/layout/ScrollToTop';
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit", display: "swap" });
@@ -140,6 +141,7 @@ export default async function RootLayout({
           <SpiritsCacheProvider>
             <PwaProvider>
               <Header lang={lang} dict={dictionary.nav} />
+              <ScrollToTop />
               <PwaInstallPrompt />
               <OnboardingModal />
               <main className="relative min-h-screen pb-20 md:pb-0">
