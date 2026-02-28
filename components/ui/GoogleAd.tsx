@@ -55,28 +55,32 @@ export default function GoogleAd({
   const adRef = useRef<HTMLModElement>(null);
 
   useEffect(() => {
-    // Load AdSense script if not already loaded
-    if (!document.querySelector('script[src*="adsbygoogle.js"]')) {
+    // 1. Load AdSense script once globally
+    const scriptId = 'google-adsense-script';
+    if (!document.getElementById(scriptId)) {
       const script = document.createElement('script');
+      script.id = scriptId;
       script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${client}`;
       script.async = true;
       script.crossOrigin = 'anonymous';
       document.head.appendChild(script);
     }
 
-    // Push ad to AdSense queue after a short delay to ensure element is mounted
+    // 2. Push ad initialization exactly once per component instance
     const timer = setTimeout(() => {
-      try {
-        if (adRef.current && !adRef.current.hasAttribute('data-adsbygoogle-status')) {
+      if (adRef.current && !adRef.current.getAttribute('data-ad-pushed')) {
+        try {
+          adRef.current.setAttribute('data-ad-pushed', 'true');
           (window.adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (error) {
+          console.error('AdSense push error:', error);
+          adRef.current.removeAttribute('data-ad-pushed');
         }
-      } catch (error) {
-        console.error('AdSense error:', error);
       }
-    }, 100);
+    }, 150);
 
     return () => clearTimeout(timer);
-  }, [client, slot]);
+  }, [client, slot, format, layoutKey]);
 
   return (
     <ins
