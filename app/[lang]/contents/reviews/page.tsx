@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { db } from '@/lib/db/firebase';
 import { collection, query, orderBy, limit, getDocs, startAfter, getCountFromServer, DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
 import { useAuth } from '@/app/[lang]/context/auth-context';
@@ -241,123 +241,125 @@ export default function ReviewBoardPage() {
                 ) : (
                     <div className="space-y-6">
                         {filteredReviews.map((review, idx) => (
-                            <motion.div
-                                key={review.id}
-                                initial={{ opacity: 0, scale: 0.98, y: 20 }}
-                                animate={{ opacity: 1, scale: 1, y: 0 }}
-                                transition={{ delay: idx * 0.05 }}
-                                className="group relative bg-card border border-border rounded-2xl p-5 hover:border-blue-500/30 hover:shadow-xl transition-all"
-                            >
-                                {/* Header: Spirit Name + Author + Rating */}
-                                <div className="flex flex-wrap items-center gap-2 mb-5">
-                                    {/* Spirit Name Link */}
-                                    <Link
-                                        href={`/${lang}/spirits/${review.spiritId}`}
-                                        className="text-lg sm:text-xl font-black hover:text-blue-500 transition-colors"
-                                    >
-                                        {review.spiritName}
-                                    </Link>
-
-                                    {/* Author Capsule - Compact */}
-                                    <div className="flex items-center gap-1.5 px-2.5 py-1 bg-secondary/50 border border-border rounded-full shadow-inner">
-                                        <div className="w-4 h-4 rounded-full bg-blue-500 flex items-center justify-center text-[8px] text-white font-black">
-                                            {(review.userName || t.anonymous).substring(0, 1).toUpperCase()}
-                                        </div>
-                                        <span className="text-[10px] font-black text-foreground">{review.userName || t.anonymous}</span>
-                                    </div>
-
-                                    {/* Rating Capsule - Color Coded */}
-                                    {(() => {
-                                        const ratingColors = getRatingColor(review.rating || 0);
-                                        return (
-                                            <div className={`px-3 py-1 ${ratingColors.bg} border ${ratingColors.border} rounded-full text-xs font-black ${ratingColors.text}`}>
-                                                ★ {(review.rating || 0).toFixed(1)}
-                                            </div>
-                                        );
-                                    })()}
-                                </div>
-
-                                <div className="flex justify-between items-start gap-4">
-
-                                    <div className="flex-1">
-                                        {/* Tasting Note (Comment) */}
-                                        <div className="relative">
-                                            <Quote className="absolute -top-2 -left-2 w-6 h-6 text-blue-500/10" />
-                                            <p className="text-sm sm:text-base text-foreground leading-relaxed font-medium italic relative z-10 pl-2">
-                                                "{review.notes || review.content}"
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    {/* Delete for Admin or Owner */}
-                                    {(isAdmin || (user && user.uid === review.userId)) && (
-                                        <button
-                                            onClick={() => setDeleteTarget(review)}
-                                            className="p-2 rounded-full bg-secondary/50 text-muted-foreground hover:text-rose-500 hover:bg-rose-500/10 transition-all border border-border/50 self-start"
-                                            title={isEn ? "Delete Review" : "리뷰 삭제"}
+                            <React.Fragment key={review.id}>
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.98, y: 20 }}
+                                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                                    transition={{ delay: idx * 0.05 }}
+                                    className="group relative bg-card border border-border rounded-2xl p-5 hover:border-blue-500/30 hover:shadow-xl transition-all"
+                                >
+                                    {/* Header: Spirit Name + Author + Rating */}
+                                    <div className="flex flex-wrap items-center gap-2 mb-5">
+                                        {/* Spirit Name Link */}
+                                        <Link
+                                            href={`/${lang}/spirits/${review.spiritId}`}
+                                            className="text-lg sm:text-xl font-black hover:text-blue-500 transition-colors"
                                         >
-                                            <Trash2 className="w-3.5 h-3.5" />
-                                        </button>
-                                    )}
-                                </div>
+                                            {review.spiritName}
+                                        </Link>
 
-                                {/* Attached Images */}
-                                {review.imageUrls && review.imageUrls.length > 0 && (
-                                    <div className="flex gap-2 mt-4 overflow-x-auto pb-2 custom-scrollbar">
-                                        {review.imageUrls.map((url: string, i: number) => (
-                                            <img key={i} src={url} alt={`Review photo ${i + 1}`} className="h-32 w-auto object-cover rounded-xl border border-border/50 shrink-0" />
-                                        ))}
-                                    </div>
-                                )}
+                                        {/* Author Capsule - Compact */}
+                                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-secondary/50 border border-border rounded-full shadow-inner">
+                                            <div className="w-4 h-4 rounded-full bg-blue-500 flex items-center justify-center text-[8px] text-white font-black">
+                                                {(review.userName || t.anonymous).substring(0, 1).toUpperCase()}
+                                            </div>
+                                            <span className="text-[10px] font-black text-foreground">{review.userName || t.anonymous}</span>
+                                        </div>
 
-                                {/* Flavor Tags and Date */}
-                                {review.tags && review.tags.length > 0 && (
-                                    <div className="flex flex-wrap gap-1.5 pt-4 mt-4 border-t border-border/50 relative">
-                                        {review.tags.slice(0, 8).map((tag: string, i: number) => {
-                                            const colors = [
-                                                'bg-blue-500/10 text-blue-600 border-blue-500/20',
-                                                'bg-orange-500/10 text-orange-600 border-orange-500/20',
-                                                'bg-purple-500/10 text-purple-600 border-purple-500/20',
-                                                'bg-emerald-500/10 text-emerald-600 border-emerald-500/20',
-                                                'bg-rose-500/10 text-rose-600 border-rose-500/20',
-                                                'bg-indigo-500/10 text-indigo-600 border-indigo-500/20'
-                                            ];
+                                        {/* Rating Capsule - Color Coded */}
+                                        {(() => {
+                                            const ratingColors = getRatingColor(review.rating || 0);
                                             return (
-                                                <span key={i} className={`text-[9px] px-2.5 py-1 rounded-full border font-black uppercase tracking-tight ${colors[i % colors.length]}`}>
-                                                    #{tag}
-                                                </span>
+                                                <div className={`px-3 py-1 ${ratingColors.bg} border ${ratingColors.border} rounded-full text-xs font-black ${ratingColors.text}`}>
+                                                    ★ {(review.rating || 0).toFixed(1)}
+                                                </div>
                                             );
-                                        })}
-                                        {/* Date in bottom-right */}
-                                        <span className="ml-auto text-[9px] text-muted-foreground/60 font-medium">
-                                            {new Date(review.createdAt).toLocaleDateString()}
-                                        </span>
+                                        })()}
                                     </div>
-                                )}
 
-                                {/* Date fallback if no tags */}
-                                {(!review.tags || review.tags.length === 0) && (
-                                    <div className="flex justify-end pt-4 mt-4 border-t border-border/50">
-                                        <span className="text-[9px] text-muted-foreground/60 font-medium">
-                                            {new Date(review.createdAt).toLocaleDateString()}
-                                        </span>
+                                    <div className="flex justify-between items-start gap-4">
+
+                                        <div className="flex-1">
+                                            {/* Tasting Note (Comment) */}
+                                            <div className="relative">
+                                                <Quote className="absolute -top-2 -left-2 w-6 h-6 text-blue-500/10" />
+                                                <p className="text-sm sm:text-base text-foreground leading-relaxed font-medium italic relative z-10 pl-2">
+                                                    "{review.notes || review.content}"
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        {/* Delete for Admin or Owner */}
+                                        {(isAdmin || (user && user.uid === review.userId)) && (
+                                            <button
+                                                onClick={() => setDeleteTarget(review)}
+                                                className="p-2 rounded-full bg-secondary/50 text-muted-foreground hover:text-rose-500 hover:bg-rose-500/10 transition-all border border-border/50 self-start"
+                                                title={isEn ? "Delete Review" : "리뷰 삭제"}
+                                            >
+                                                <Trash2 className="w-3.5 h-3.5" />
+                                            </button>
+                                        )}
+                                    </div>
+
+                                    {/* Attached Images */}
+                                    {review.imageUrls && review.imageUrls.length > 0 && (
+                                        <div className="flex gap-2 mt-4 overflow-x-auto pb-2 custom-scrollbar">
+                                            {review.imageUrls.map((url: string, i: number) => (
+                                                <img key={i} src={url} alt={`Review photo ${i + 1}`} className="h-32 w-auto object-cover rounded-xl border border-border/50 shrink-0" />
+                                            ))}
+                                        </div>
+                                    )}
+
+                                    {/* Flavor Tags and Date */}
+                                    {review.tags && review.tags.length > 0 && (
+                                        <div className="flex flex-wrap gap-1.5 pt-4 mt-4 border-t border-border/50 relative">
+                                            {review.tags.slice(0, 8).map((tag: string, i: number) => {
+                                                const colors = [
+                                                    'bg-blue-500/10 text-blue-600 border-blue-500/20',
+                                                    'bg-orange-500/10 text-orange-600 border-orange-500/20',
+                                                    'bg-purple-500/10 text-purple-600 border-purple-500/20',
+                                                    'bg-emerald-500/10 text-emerald-600 border-emerald-500/20',
+                                                    'bg-rose-500/10 text-rose-600 border-rose-500/20',
+                                                    'bg-indigo-500/10 text-indigo-600 border-indigo-500/20'
+                                                ];
+                                                return (
+                                                    <span key={i} className={`text-[9px] px-2.5 py-1 rounded-full border font-black uppercase tracking-tight ${colors[i % colors.length]}`}>
+                                                        #{tag}
+                                                    </span>
+                                                );
+                                            })}
+                                            {/* Date in bottom-right */}
+                                            <span className="ml-auto text-[9px] text-muted-foreground/60 font-medium">
+                                                {new Date(review.createdAt).toLocaleDateString()}
+                                            </span>
+                                        </div>
+                                    )}
+
+                                    {/* Date fallback if no tags */}
+                                    {(!review.tags || review.tags.length === 0) && (
+                                        <div className="flex justify-end pt-4 mt-4 border-t border-border/50">
+                                            <span className="text-[9px] text-muted-foreground/60 font-medium">
+                                                {new Date(review.createdAt).toLocaleDateString()}
+                                            </span>
+                                        </div>
+                                    )}
+                                </motion.div>
+
+                                {/* 4번째 리뷰 아이템 뒤에 인피드 광고 진정한 삽입 (페이지네이션 대응) */}
+                                {idx === 3 && (
+                                    <div className="w-full my-8">
+                                        <GoogleAd
+                                            key={`ad-review-${currentPage}`}
+                                            client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
+                                            slot={process.env.NEXT_PUBLIC_ADSENSE_INFEED_SLOT || ''}
+                                            format="fluid"
+                                            layoutKey="-fb+5w+4e-db+86"
+                                            className="rounded-2xl overflow-hidden border border-border bg-card"
+                                        />
                                     </div>
                                 )}
-                            </motion.div>
+                            </React.Fragment>
                         ))}
-
-                        {/* 4번째 리뷰 모듈 이후 인피드 광고 컴포넌트 삽입 */}
-                        {filteredReviews.length >= 4 && (
-                            <div className="w-full my-8">
-                                <GoogleAd
-                                    client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
-                                    slot={process.env.NEXT_PUBLIC_ADSENSE_INFEED_SLOT || ''}
-                                    format="fluid"
-                                    layoutKey="-fb+5w+4e-db+86"
-                                    className="rounded-2xl overflow-hidden border border-border bg-card"
-                                />
-                            </div>
-                        )}
 
                         {/* Pagination */}
                         {!searchQuery && totalPages > 1 && (

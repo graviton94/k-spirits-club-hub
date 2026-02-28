@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { db } from '@/lib/db/firebase';
 import { collection, query, orderBy, limit, getDocs, startAfter, getCountFromServer, DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
 import { useAuth } from '@/app/[lang]/context/auth-context';
@@ -183,75 +183,77 @@ export default function NewsContentPage() {
                 ) : (
                     <div className="space-y-12">
                         {filteredNews.map((item, idx) => (
-                            <motion.article
-                                key={item.id}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: idx * 0.05 }}
-                                className="bg-card/40 backdrop-blur-sm border border-border rounded-3xl p-6 md:p-8 relative group hover:border-indigo-500 transition-all shadow-sm"
-                            >
-                                {isAdmin && (
-                                    <button
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            handleDelete(item.id);
-                                        }}
-                                        className="absolute top-6 right-6 p-3 text-rose-500 bg-white/80 dark:bg-black/80 hover:bg-rose-500 hover:text-white rounded-2xl transition-all z-30 shadow-lg border border-rose-100 dark:border-rose-900/30 group/del"
-                                        title={t.deleteBtn}
-                                    >
-                                        <Trash2 className="w-5 h-5 group-hover/del:scale-110 transition-transform" />
-                                    </button>
-                                )}
+                            <React.Fragment key={item.id}>
+                                <motion.article
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: idx * 0.05 }}
+                                    className="bg-card/40 backdrop-blur-sm border border-border rounded-3xl p-6 md:p-8 relative group hover:border-indigo-500 transition-all shadow-sm"
+                                >
+                                    {isAdmin && (
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleDelete(item.id);
+                                            }}
+                                            className="absolute top-6 right-6 p-3 text-rose-500 bg-white/80 dark:bg-black/80 hover:bg-rose-500 hover:text-white rounded-2xl transition-all z-30 shadow-lg border border-rose-100 dark:border-rose-900/30 group/del"
+                                            title={t.deleteBtn}
+                                        >
+                                            <Trash2 className="w-5 h-5 group-hover/del:scale-110 transition-transform" />
+                                        </button>
+                                    )}
 
-                                <div className="flex items-center gap-2 mb-4">
-                                    <span className="px-2.5 py-1 bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-[10px] font-bold rounded-lg uppercase tracking-wider">
-                                        {typeof item.source === 'object' ? (item.source?.['#text'] || 'News') : (item.source || 'News')}
-                                    </span>
-                                    <span className="text-muted-foreground text-[10px] font-medium">
-                                        {item.date?.split('T')[0]}
-                                    </span>
-                                </div>
-
-                                <Link href={item.link} target="_blank">
-                                    <h2 className="text-xl md:text-2xl font-bold mb-4 hover:text-indigo-600 transition-colors leading-tight">
-                                        {String(item.translations?.[lang]?.title || item.translations?.ko?.title || item.originalTitle || '')}
-                                    </h2>
-                                </Link>
-
-                                <div className="text-muted-foreground leading-relaxed space-y-4 whitespace-pre-wrap text-sm md:text-base font-medium mb-6">
-                                    {String(item.translations?.[lang]?.content || item.translations?.ko?.content || item.translations?.[lang]?.snippet || item.translations?.ko?.snippet || item.originalSnippet || '')}
-                                </div>
-
-                                <div className="mt-6 pt-6 border-t border-border flex items-center justify-between">
-                                    <div className="flex gap-2">
-                                        {(item.tags?.[lang] || item.tags?.ko || [])?.slice(0, 2).map((tag: string, i: number) => {
-                                            const cleanTag = tag.startsWith('#') ? tag.substring(1) : tag;
-                                            return (
-                                                <span key={i} className="text-[10px] font-bold text-indigo-500/60 transition-colors">
-                                                    #{cleanTag}
-                                                </span>
-                                            );
-                                        })}
+                                    <div className="flex items-center gap-2 mb-4">
+                                        <span className="px-2.5 py-1 bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-[10px] font-bold rounded-lg uppercase tracking-wider">
+                                            {typeof item.source === 'object' ? (item.source?.['#text'] || 'News') : (item.source || 'News')}
+                                        </span>
+                                        <span className="text-muted-foreground text-[10px] font-medium">
+                                            {item.date?.split('T')[0]}
+                                        </span>
                                     </div>
-                                    <Link href={item.link} target="_blank" className="text-[10px] sm:text-xs font-black text-indigo-600 dark:text-indigo-400 hover:underline flex items-center">
-                                        {t.viewOriginal}
-                                    </Link>
-                                </div>
-                            </motion.article>
-                        ))}
 
-                        {/* 4번째 뉴스 아이템 이후 인피드 광고 삽입 */}
-                        {filteredNews.length >= 4 && (
-                            <div className="w-full my-8">
-                                <GoogleAd
-                                    client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
-                                    slot={process.env.NEXT_PUBLIC_ADSENSE_INFEED_SLOT || ''}
-                                    format="fluid"
-                                    layoutKey="-fb+5w+4e-db+86"
-                                    className="rounded-3xl overflow-hidden border border-border bg-card/40 backdrop-blur-sm"
-                                />
-                            </div>
-                        )}
+                                    <Link href={item.link} target="_blank">
+                                        <h2 className="text-xl md:text-2xl font-bold mb-4 hover:text-indigo-600 transition-colors leading-tight">
+                                            {String(item.translations?.[lang]?.title || item.translations?.ko?.title || item.originalTitle || '')}
+                                        </h2>
+                                    </Link>
+
+                                    <div className="text-muted-foreground leading-relaxed space-y-4 whitespace-pre-wrap text-sm md:text-base font-medium mb-6">
+                                        {String(item.translations?.[lang]?.content || item.translations?.ko?.content || item.translations?.[lang]?.snippet || item.translations?.ko?.snippet || item.originalSnippet || '')}
+                                    </div>
+
+                                    <div className="mt-6 pt-6 border-t border-border flex items-center justify-between">
+                                        <div className="flex gap-2">
+                                            {(item.tags?.[lang] || item.tags?.ko || [])?.slice(0, 2).map((tag: string, i: number) => {
+                                                const cleanTag = tag.startsWith('#') ? tag.substring(1) : tag;
+                                                return (
+                                                    <span key={i} className="text-[10px] font-bold text-indigo-500/60 transition-colors">
+                                                        #{cleanTag}
+                                                    </span>
+                                                );
+                                            })}
+                                        </div>
+                                        <Link href={item.link} target="_blank" className="text-[10px] sm:text-xs font-black text-indigo-600 dark:text-indigo-400 hover:underline flex items-center">
+                                            {t.viewOriginal}
+                                        </Link>
+                                    </div>
+                                </motion.article>
+
+                                {/* 4번째 뉴스 아이템 이후 인피드 광고 진정한 삽입 (페이지네이션 대응) */}
+                                {idx === 3 && (
+                                    <div className="w-full my-8">
+                                        <GoogleAd
+                                            key={`ad-news-${currentPage}`}
+                                            client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
+                                            slot={process.env.NEXT_PUBLIC_ADSENSE_INFEED_SLOT || ''}
+                                            format="fluid"
+                                            layoutKey="-fb+5w+4e-db+86"
+                                            className="rounded-3xl overflow-hidden border border-border bg-card/40 backdrop-blur-sm"
+                                        />
+                                    </div>
+                                )}
+                            </React.Fragment>
+                        ))}
 
                         {/* Pagination Numbers */}
                         {!searchQuery && totalPages > 1 && (
