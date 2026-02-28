@@ -346,13 +346,15 @@ export default function ReviewBoardPage() {
                             </motion.div>
                         ))}
 
-                        {/* 4번째 리뷰 모듈 이후 광고 컴포넌트 삽입 */}
+                        {/* 4번째 리뷰 모듈 이후 인피드 광고 컴포넌트 삽입 */}
                         {filteredReviews.length >= 4 && (
                             <div className="w-full my-8">
                                 <GoogleAd
                                     client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
-                                    slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || ''}
+                                    slot={process.env.NEXT_PUBLIC_ADSENSE_INFEED_SLOT || ''}
                                     format="fluid"
+                                    layoutKey="-fb+5w+4e-db+86"
+                                    className="rounded-2xl overflow-hidden border border-border bg-card"
                                 />
                             </div>
                         )}

@@ -230,13 +230,15 @@ export default function ExploreContent({ dict }: { dict?: any }) {
                 priority={index < 6}
               />
 
-              {/* 8번째 카드 뒤에 광고 삽입 (index 7) */}
+              {/* 8번째 카드 뒤에 인피드 광고 삽입 (index 7) */}
               {index === 7 && (
                 <div className="w-full my-6">
                   <GoogleAd
                     client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
-                    slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || ''}
+                    slot={process.env.NEXT_PUBLIC_ADSENSE_INFEED_SLOT || ''}
                     format="fluid"
+                    layoutKey="-fb+5w+4e-db+86"
+                    className="rounded-3xl overflow-hidden shadow-sm"
                   />
                 </div>
               )}

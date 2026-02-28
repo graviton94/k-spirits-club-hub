@@ -49,7 +49,7 @@ export function getRandomWikiSnippet(lang: string): WikiSnippet | null {
     // If you prefer strictly random per request, omit the date seeding.
     // We'll use a simple daily hash.
     const today = new Date();
-    const dateString = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
+    const dateString = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}-${today.getHours()}`;
 
     // Simple hash function for the date string
     let hash = 0;

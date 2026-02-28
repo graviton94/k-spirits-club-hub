@@ -12,9 +12,13 @@ interface GoogleAdProps {
    */
   slot: string;
   /**
-   * Ad format (default: "auto")
+   * Ad format (default: "auto", or "fluid" for in-feed ads)
    */
   format?: string;
+  /**
+   * Layout key for in-feed ads (e.g., "-fb+5w+4e-db+86")
+   */
+  layoutKey?: string;
   /**
    * Enable responsive ads (default: true)
    */
@@ -43,6 +47,7 @@ export default function GoogleAd({
   client,
   slot,
   format = 'auto',
+  layoutKey,
   responsive = true,
   style = { display: 'block' },
   className = '',
@@ -81,6 +86,7 @@ export default function GoogleAd({
       data-ad-client={client}
       data-ad-slot={slot}
       data-ad-format={format}
+      {...(layoutKey ? { 'data-ad-layout-key': layoutKey } : {})}
       data-full-width-responsive={responsive ? 'true' : 'false'}
     />
   );

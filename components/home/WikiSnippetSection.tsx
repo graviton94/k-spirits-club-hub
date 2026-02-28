@@ -16,7 +16,7 @@ export default function WikiSnippetSection({ lang, initialSnippet }: { lang: str
                 <div className="flex items-center gap-2">
                     <BookOpen className="w-5 h-5 text-emerald-500" />
                     <h2 className="text-lg font-black tracking-tight text-foreground">
-                        {isEn ? 'Spirits Wiki Knowledge' : '주류 백과사전 한 토막 (FAQ)'}
+                        {isEn ? 'Spirits Wiki Knowledge' : '오늘의 주류 백과사전 한 토막 (FAQ)'}
                     </h2>
                 </div>
             </div>
