@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import { BookOpen, Clock, Layers, Droplets, FlaskConical, GlassWater, Utensils, ShoppingBag, Activity, Leaf, Thermometer, Search } from 'lucide-react'
 import type { SpiritCategory } from '@/lib/constants/spirits-guide-data'
 import { getCategoryFallbackImage } from '@/lib/utils/image-fallback'
+import BackButton from '@/components/ui/BackButton'
 
 interface SpiritGuideLayoutProps {
     category: SpiritCategory
@@ -77,6 +78,8 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
 
     return (
         <article className="container mx-auto px-4 py-6 max-w-3xl pb-24 space-y-6">
+
+            <BackButton fallbackUrl={`/${lang}/contents/wiki`} label={isEn ? 'Back to Wiki' : '위키 목록으로'} />
 
             {/* ── 1. Hero ── */}
             <div className={`relative rounded-2xl overflow-hidden border ${c.border} ${c.bg} p-8 text-center`}>

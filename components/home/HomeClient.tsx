@@ -13,6 +13,7 @@ import { useSpiritsCache } from "@/app/[lang]/context/spirits-cache-context";
 import { useMemo, useState, useEffect } from "react";
 import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
 import { Spirit } from "@/lib/db/schema";
+import WikiSnippetSection from "@/components/home/WikiSnippetSection";
 
 interface HomeClientProps {
     lang: string;
@@ -20,6 +21,7 @@ interface HomeClientProps {
     initialNewArrivals: Spirit[];
     initialTrending: any[];
     initialReviews: any[];
+    dailySnippet: import('@/lib/utils/wiki-snippet').WikiSnippet | null;
 }
 
 const UI_TEXT = {
@@ -39,7 +41,7 @@ const UI_TEXT = {
     }
 };
 
-export default function HomeClient({ lang, dict, initialNewArrivals, initialReviews, newsSection }: HomeClientProps & { newsSection: React.ReactNode }) {
+export default function HomeClient({ lang, dict, initialNewArrivals, initialReviews, newsSection, dailySnippet }: HomeClientProps & { newsSection: React.ReactNode }) {
     // const { publishedSpirits, isLoading: isCacheLoading } = useSpiritsCache(); // Cache might still be used for other things or removed if only for trending
     // Actually, let's keep it simple. Remove trending logic.
 
@@ -134,12 +136,24 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialRevi
 
             {/* 4. Live Reviews Grid */}
             <section className="container max-w-4xl mx-auto px-4 mb-20">
-                <div className="flex items-center gap-2 mb-4 border-b border-border pb-3">
-                    <span className="text-xl">💬</span>
-                    <h2 className="text-lg font-black tracking-tight text-foreground">{dict.recentReviews}</h2>
+                <div className="flex items-center justify-between mb-4 border-b border-border pb-3">
+                    <div className="flex items-center gap-2">
+                        <span className="text-xl">💬</span>
+                        <h2 className="text-lg font-black tracking-tight text-foreground">{dict.recentReviews || t.liveReviews}</h2>
+                    </div>
+                    <Link
+                        href={`/${lang}/contents/reviews`}
+                        className="text-xs font-bold text-muted-foreground hover:text-amber-500 transition-colors flex items-center gap-1 group/link"
+                    >
+                        {isEn ? 'View All' : '전체 보러가기'}
+                        <span className="group-hover/link:translate-x-1 transition-transform">→</span>
+                    </Link>
                 </div>
                 <LiveReviews initialReviews={initialReviews} />
             </section>
+
+            {/* 5. Random Wiki Snippet */}
+            <WikiSnippetSection lang={lang} initialSnippet={dailySnippet} />
 
         </div>
     );

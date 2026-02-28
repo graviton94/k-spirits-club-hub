@@ -240,6 +240,6 @@ export const bourbon: SpiritCategory = {
             "버섯구이·트러플 풍미 요리",
             "훈제 연어 또는 훈제 오리"
         ],
-        dbCategories: ['위스키', '버번 위스키']
+        dbCategories: ['위스키']
     }
 }

@@ -3,6 +3,7 @@ export const runtime = 'edge';
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { BookOpen, ChevronRight } from 'lucide-react'
+import BackButton from '@/components/ui/BackButton'
 import { SPIRIT_CATEGORIES } from '@/lib/constants/spirits-guide-data'
 import GoogleAd from '@/components/ui/GoogleAd'
 
@@ -59,6 +60,8 @@ export default async function WikiHubPage({ params }: WikiHubPageProps) {
 
     return (
         <div className="container mx-auto px-4 py-6 max-w-5xl pb-24">
+
+            <BackButton fallbackUrl={`/${lang}/contents`} label={isEn ? 'Back' : '뒤로가기'} />
 
             {/* Header */}
             <div className="mb-8 relative text-center">
