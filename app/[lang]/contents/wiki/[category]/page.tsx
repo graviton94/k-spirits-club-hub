@@ -24,8 +24,8 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
     const tagline = isEn ? cat.taglineEn : cat.taglineKo
     const definition = cat.sections?.definition || tagline
 
-    // 롱테일 키워드 추출 (분류 이름, 맛 태그 등)
-    const keywords = [
+    // 롱테일 키워드 추출 (분류 이름, 맛 태그 등) 및 질문형 자동 확장
+    const baseKeywords = [
         name,
         slug,
         ...(cat.sections?.classifications?.map(c => c.name) || []),
@@ -34,6 +34,16 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
         isEn ? 'Drinking Temperature' : '시음 온도',
         isEn ? 'Food Pairing' : '푸드 페어링',
     ]
+
+    const longTailClassifications = cat.sections?.classifications?.flatMap(c =>
+        isEn ? [`What is ${c.name}`, `${c.name} meaning`, `${c.name} vs`] : [`${c.name}란`, `${c.name} 특징`, `${c.name} 차이`]
+    ) || [];
+
+    const longTailMetrics = cat.sections?.sensoryMetrics?.flatMap(m =>
+        isEn ? [`What is ${m.metric}`, `${m.metric} meaning`] : [`${m.metric} 뜻`, `${m.metric} 의미`]
+    ) || [];
+
+    const keywords = [...baseKeywords, ...longTailClassifications, ...longTailMetrics]
 
     const title = isEn
         ? `Everything about ${cat.nameEn}: History, Serving, & Food Pairing | K-Spirits Club Wiki`
@@ -108,7 +118,23 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
                             '@type': 'Answer',
                             text: cat.sections.servingGuidelines.recommendedGlass
                         }
-                    }
+                    },
+                    ...(cat.sections?.classifications?.map(c => ({
+                        '@type': 'Question',
+                        name: isEn ? `What is ${c.name}?` : `${c.name}란? (분류/특징)`,
+                        acceptedAnswer: {
+                            '@type': 'Answer',
+                            text: `${c.criteria ? c.criteria + ' - ' : ''}${c.description}`
+                        }
+                    })) || []),
+                    ...(cat.sections?.sensoryMetrics?.map(m => ({
+                        '@type': 'Question',
+                        name: isEn ? `What is ${m.label} (${m.metric})?` : `${m.metric} (${m.label})(이)란?`,
+                        acceptedAnswer: {
+                            '@type': 'Answer',
+                            text: m.description
+                        }
+                    })) || [])
                 ].filter(Boolean)
             }
         ]

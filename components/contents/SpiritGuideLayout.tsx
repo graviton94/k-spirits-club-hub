@@ -157,14 +157,16 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                 color={category.color}
             >
                 {s?.classifications && s.classifications.length > 0 ? (
-                    <div className="space-y-4">
+                    <dl className="space-y-4">
                         {s.classifications.map((cls) => (
                             <div key={cls.name} className="rounded-xl border border-border/30 bg-background/30 p-5">
-                                <div className="flex flex-col gap-1 mb-3">
-                                    <h3 className="font-black text-foreground text-sm uppercase tracking-tight">{cls.name}</h3>
+                                <dt className="flex flex-col gap-1 mb-3">
+                                    <h3 className="font-black text-foreground text-sm uppercase tracking-tight">
+                                        {isEn ? `What is ${cls.name}?` : `${cls.name}란?`}
+                                    </h3>
                                     <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{cls.criteria}</span>
-                                </div>
-                                <div className="border-t border-border/10 pt-3">
+                                </dt>
+                                <dd className="border-t border-border/10 pt-3">
                                     <p className="text-foreground text-xs leading-relaxed mb-3 font-medium">{cls.description}</p>
 
                                     {cls.flavorTags && cls.flavorTags.length > 0 && (
@@ -181,22 +183,28 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                                             })}
                                         </div>
                                     )}
-                                </div>
+                                </dd>
                             </div>
                         ))}
-                    </div>
+                    </dl>
                 ) : s?.subtypes && s.subtypes.length > 0 ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <dl className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {s.subtypes.map((sub) => (
                             <div key={sub.name} className="rounded-2xl border border-white/20 dark:border-white/5 bg-background/50 p-4 transition-all hover:bg-background/80">
-                                <h3 className="font-bold text-foreground text-sm mb-1">{sub.name}</h3>
-                                <p className="text-foreground/90 text-xs leading-relaxed font-medium">{sub.description}</p>
-                                {sub.examples && sub.examples.length > 0 && (
-                                    <p className="mt-2 text-[10px] font-bold text-muted-foreground">예: {sub.examples.join(', ')}</p>
-                                )}
+                                <dt>
+                                    <h3 className="font-bold text-foreground text-sm mb-1">
+                                        {isEn ? `What is ${sub.name}?` : `${sub.name}란?`}
+                                    </h3>
+                                </dt>
+                                <dd>
+                                    <p className="text-foreground/90 text-xs leading-relaxed font-medium">{sub.description}</p>
+                                    {sub.examples && sub.examples.length > 0 && (
+                                        <p className="mt-2 text-[10px] font-bold text-muted-foreground">예: {sub.examples.join(', ')}</p>
+                                    )}
+                                </dd>
                             </div>
                         ))}
-                    </div>
+                    </dl>
                 ) : (
                     <ComingSoon label={isEn ? 'Types' : '종류'} />
                 )}
@@ -205,18 +213,22 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
             {/* ── 5. 맛·향 지표 (신규) ── */}
             {s?.sensoryMetrics && s.sensoryMetrics.length > 0 && (
                 <Section id="sensory" icon={<Activity className="w-5 h-5" />} title={isEn ? 'Sensory Metrics' : '맛과 향 지표'} color={category.color}>
-                    <div className="grid grid-cols-1 gap-4">
+                    <dl className="grid grid-cols-1 gap-4">
                         {s?.sensoryMetrics?.map((metric) => (
                             <div key={metric.label} className="rounded-xl border border-border/30 bg-background/30 p-5 flex flex-col">
-                                <span className="text-xs font-black text-muted-foreground mb-1 uppercase tracking-widest">{metric.label}</span>
-                                <span className={`text-2xl font-black ${c.text} mb-3 leading-none tracking-tighter`}>{metric.value}</span>
-                                <div className="border-t border-border/10 pt-3">
-                                    <span className={`text-[10px] font-bold text-muted-foreground block mb-1 uppercase tracking-wider`}>{metric.metric}</span>
+                                <dt className="flex flex-col mb-3">
+                                    <span className="text-xs font-black text-muted-foreground mb-1 uppercase tracking-widest">{metric.label}</span>
+                                    <span className={`text-2xl font-black ${c.text} leading-none tracking-tighter`}>{metric.value}</span>
+                                </dt>
+                                <dd className="border-t border-border/10 pt-3">
+                                    <h3 className={`text-[10px] font-bold text-muted-foreground block mb-1 uppercase tracking-wider`}>
+                                        {isEn ? `What is ${metric.metric}?` : `${metric.metric}(이)란?`}
+                                    </h3>
                                     <p className="text-xs text-foreground font-medium leading-relaxed">{metric.description}</p>
-                                </div>
+                                </dd>
                             </div>
                         ))}
-                    </div>
+                    </dl>
                 </Section>
             )}
 
