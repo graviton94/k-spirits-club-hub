@@ -131,12 +131,10 @@ export default async function RootLayout({
         <GoogleTagManager gtmId="GTM-NDF5RKBN" />
         <GoogleAnalytics gaId="G-0QF9WTQFF2" />
 
-        {/* Google Adsense - 성능을 위해 지연 로드(lazyOnload) 적용 */}
-        <Script
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5574169833640769"
-          crossOrigin="anonymous"
-          strategy="lazyOnload"
-        />
+        {/* Google Adsense 
+            주의: 개별 <GoogleAd /> 컴포넌트 단위에서 adsbygoogle.js를 직접 로드하고 있습니다.
+            여기서 전역으로 client 파라미터와 함께 로드하면 Auto Ads(전면광고/앵커광고)가 원치 않게 사이트 전체를 덮을 수 있어 비활성화합니다.
+        */}
 
         <AuthProvider>
           <SpiritsCacheProvider>
