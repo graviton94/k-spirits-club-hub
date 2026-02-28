@@ -17,6 +17,9 @@ export default function robots(): MetadataRoute.Robots {
           '/en/explore',
           '/ko/contents',
           '/en/contents',
+          // 위키 페이지 허용
+          '/ko/contents/wiki/',
+          '/en/contents/wiki/',
           // Next.js 이미지 최적화 경로
           '/_next/image*',
           '/_next/static/',

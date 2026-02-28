@@ -162,7 +162,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                             <div key={cls.name} className="rounded-xl border border-border/30 bg-background/30 p-5">
                                 <dt className="flex flex-col gap-1 mb-3">
                                     <h3 className="font-black text-foreground text-sm uppercase tracking-tight">
-                                        {isEn ? `What is ${cls.name}?` : `${cls.name}란?`}
+                                        {isEn ? `What is ${cls.name}?` : `${cls.name}(이)란?`}
                                     </h3>
                                     <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{cls.criteria}</span>
                                 </dt>
@@ -193,7 +193,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                             <div key={sub.name} className="rounded-2xl border border-white/20 dark:border-white/5 bg-background/50 p-4 transition-all hover:bg-background/80">
                                 <dt>
                                     <h3 className="font-bold text-foreground text-sm mb-1">
-                                        {isEn ? `What is ${sub.name}?` : `${sub.name}란?`}
+                                        {isEn ? `What is ${sub.name}?` : `${sub.name}(이)란?`}
                                     </h3>
                                 </dt>
                                 <dd>

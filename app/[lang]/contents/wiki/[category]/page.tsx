@@ -121,7 +121,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
                     },
                     ...(cat.sections?.classifications?.map(c => ({
                         '@type': 'Question',
-                        name: isEn ? `What is ${c.name}?` : `${c.name}란? (분류/특징)`,
+                        name: isEn ? `What is ${c.name}?` : `${c.name}(이)란? (분류/특징)`,
                         acceptedAnswer: {
                             '@type': 'Answer',
                             text: `${c.criteria ? c.criteria + ' - ' : ''}${c.description}`

@@ -7,6 +7,9 @@
 
 import { SpiritCategory } from './wiki/types'
 import { blendedWhisky } from './wiki/blended-whisky'
+import { singleMalt } from './wiki/single-malt'
+import { bourbon } from './wiki/bourbon'
+import { grainWhisky } from './wiki/grain-whisky'
 import { cognac } from './wiki/cognac'
 import { champagne } from './wiki/champagne'
 import { sake } from './wiki/sake'
@@ -27,7 +30,6 @@ import { beer } from './wiki/beer'
 import { yakju } from './wiki/yakju'
 import { makgeolli } from './wiki/makgeolli'
 import { shochu } from './wiki/shochu'
-import { singleMalt } from './wiki/single-malt'
 import { oakBarrel } from './wiki/oak-barrel'
 
 // 타입 재수출 (하위 호환성 유지)
@@ -48,6 +50,8 @@ export type {
 export const SPIRIT_CATEGORIES: SpiritCategory[] = [
     // 1. Whisky Group
     singleMalt,
+    bourbon,
+    grainWhisky,
     blendedWhisky,
 
     // 2. Brandy Group

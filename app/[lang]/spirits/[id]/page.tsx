@@ -142,6 +142,21 @@ export async function generateMetadata({
   const fullDescription = buildSeoDescription(extendedDescription, seoSuffix);
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://kspiritsclub.com';
 
+  // 롱테일 키워드 펌핑 (동적 조합)
+  const baseKeywords = [
+    koName,
+    enName,
+    spirit.category,
+    spirit.distillery,
+    isEn ? 'Spirits Review' : '주류 리뷰',
+  ].filter(Boolean) as string[];
+
+  const longTailKeywords = isEn
+    ? [`${enName || koName} tasting notes`, `buy ${enName || koName}`, `${enName || koName} review`, `${spirit.distillery} ${spirit.category}`]
+    : [`${koName} 테이스팅 노트`, `${koName} 가격`, `${koName} 후기`, `${koName} 파는곳`, `${spirit.distillery} ${spirit.category}`];
+
+  const keywords = [...baseKeywords, ...longTailKeywords].filter(Boolean);
+
   // Build Dynamic OG Image URL
   const searchParams = new URLSearchParams();
   searchParams.set('title', isEn ? (spirit.name_en || spirit.name) : spirit.name);
@@ -159,6 +174,7 @@ export async function generateMetadata({
   return {
     title,
     description: fullDescription,
+    keywords: keywords.join(', '),
     alternates: {
       languages: {
         'ko-KR': `${baseUrl}/ko/spirits/${id}`,
@@ -318,6 +334,50 @@ export default async function SpiritDetailPage({
       }] : []),
     ],
   };
+
+  // --- FAQ Schema (롱테일 질문/답변 타겟) ---
+  const faqQuestions = [];
+
+  const tastingNote = spirit.tasting_note || spirit.metadata?.tasting_note;
+  if (tastingNote || spirit.nose_tags?.length) {
+    faqQuestions.push({
+      '@type': 'Question',
+      name: isEn ? `What are the tasting notes of ${spirit.name_en || spirit.name}?` : `${spirit.name}의 맛(테이스팅 노트)은 어떤가요?`,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: tastingNote || `Nose: ${spirit.nose_tags?.join(', ')} / Palate: ${spirit.palate_tags?.join(', ')} / Finish: ${spirit.finish_tags?.join(', ')}`
+      }
+    });
+  }
+
+  const pairingGuide = spirit.metadata?.pairing_guide_ko || spirit.metadata?.pairing_guide_en || spirit.pairing_guide_ko || spirit.pairing_guide_en;
+  if (pairingGuide) {
+    faqQuestions.push({
+      '@type': 'Question',
+      name: isEn ? `What is a good food pairing for ${spirit.name_en || spirit.name}?` : `${spirit.name}에 잘 어울리는 안주(푸드 페어링)는 무엇인가요?`,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: pairingGuide
+      }
+    });
+  }
+
+  if (spirit.abv) {
+    faqQuestions.push({
+      '@type': 'Question',
+      name: isEn ? `What is the ABV (alcohol content) of ${spirit.name_en || spirit.name}?` : `${spirit.name}의 도수는 몇 도인가요?`,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: isEn ? `The ABV of ${spirit.name_en || spirit.name} is ${spirit.abv}%.` : `${spirit.name}의 알코올 도수는 ${spirit.abv}% 입니다.`
+      }
+    });
+  }
+
+  const faqLd = faqQuestions.length > 0 ? {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqQuestions
+  } : null;
   // --- Breadcrumb Schema ---
   const breadcrumbLd = {
     '@context': 'https://schema.org',
@@ -454,6 +514,12 @@ export default async function SpiritDetailPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
+      {faqLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+        />
+      )}
       <SpiritDetailClient spirit={spirit} reviews={reviews} lang={lang as Locale} dict={dictionary.detail} />
     </>
   );

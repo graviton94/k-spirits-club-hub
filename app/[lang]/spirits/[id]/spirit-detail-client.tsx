@@ -327,47 +327,47 @@ export default function SpiritDetailClient({ spirit, reviews, lang, dict }: Spir
                         {/* Category Card */}
                         <div className="p-4 bg-card border border-border rounded-2xl shadow-sm">
                             <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-3">{dict?.specs || t.specs}</h3>
-                            <div className="space-y-2">
+                            <dl className="space-y-2">
                                 <div className="flex justify-between items-center text-sm">
-                                    <span className="text-muted-foreground">{t.category}</span>
-                                    <span className="font-bold">{getLocalizedCategory(spirit.category)}</span>
+                                    <dt className="text-muted-foreground">{t.category}</dt>
+                                    <dd className="font-bold">{getLocalizedCategory(spirit.category)}</dd>
                                 </div>
                                 {spirit.mainCategory && (
                                     <div className="flex justify-between items-center text-sm">
-                                        <span className="text-muted-foreground">{t.main}</span>
-                                        <span className="font-bold">{getLocalizedCategory(spirit.mainCategory)}</span>
+                                        <dt className="text-muted-foreground">{t.main}</dt>
+                                        <dd className="font-bold">{getLocalizedCategory(spirit.mainCategory)}</dd>
                                     </div>
                                 )}
                                 {spirit.subcategory && (
                                     <div className="flex justify-between items-center text-sm">
-                                        <span className="text-muted-foreground">{t.sub}</span>
-                                        <span className="font-bold text-amber-500">{getLocalizedCategory(spirit.subcategory)}</span>
+                                        <dt className="text-muted-foreground">{t.sub}</dt>
+                                        <dd className="font-bold text-amber-500">{getLocalizedCategory(spirit.subcategory)}</dd>
                                     </div>
                                 )}
-                            </div>
+                            </dl>
                         </div>
 
                         {/* Origin Card */}
                         <div className="p-4 bg-card border border-border rounded-2xl shadow-sm">
                             <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-3">{t.origin}</h3>
-                            <div className="space-y-2">
+                            <dl className="space-y-2">
                                 <div className="flex justify-between items-center text-sm">
-                                    <span className="text-muted-foreground">{t.country}</span>
-                                    <span className="font-bold">{spirit.country || "Unknown"}</span>
+                                    <dt className="text-muted-foreground">{t.country}</dt>
+                                    <dd className="font-bold">{spirit.country || "Unknown"}</dd>
                                 </div>
                                 {spirit.region && (
                                     <div className="flex justify-between items-center text-sm">
-                                        <span className="text-muted-foreground">{t.region}</span>
-                                        <span className="font-bold">{spirit.region}</span>
+                                        <dt className="text-muted-foreground">{t.region}</dt>
+                                        <dd className="font-bold">{spirit.region}</dd>
                                     </div>
                                 )}
                                 {spirit.bottler && (
                                     <div className="flex justify-between items-center text-sm">
-                                        <span className="text-muted-foreground">{t.bottler}</span>
-                                        <span className="font-bold">{spirit.bottler}</span>
+                                        <dt className="text-muted-foreground">{t.bottler}</dt>
+                                        <dd className="font-bold">{spirit.bottler}</dd>
                                     </div>
                                 )}
-                            </div>
+                            </dl>
                         </div>
                     </div>
                 </div>
