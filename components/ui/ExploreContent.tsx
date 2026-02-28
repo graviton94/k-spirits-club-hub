@@ -9,6 +9,7 @@ import { ExploreCard } from './ExploreCard';
 import { ExploreGridSkeleton } from './ExploreSkeleton';
 import { Search, Loader2, AlertCircle, RefreshCw, Filter } from 'lucide-react';
 import AdSlot from '@/components/common/AdSlot';
+import GoogleAd from '@/components/ui/GoogleAd';
 import metadata from '@/lib/constants/spirits-metadata.json';
 import { SpiritSearchIndex } from '@/lib/db/schema';
 
@@ -194,40 +195,52 @@ export default function ExploreContent({ dict }: { dict?: any }) {
       ) : displaySpirits.length > 0 ? (
         <div className="grid grid-cols-1 gap-4">
           {displaySpirits.slice(0, displayLimit).map((item, index) => (
-            <ExploreCard
-              key={`${item.i}-${index}`}
-              spirit={{
-                id: item.i,
-                name: item.n,
-                category: item.c,
-                subcategory: item.sc,
-                imageUrl: item.t,
-                thumbnailUrl: item.t,
-                abv: item.a || 0,
-                volume: null,
-                distillery: item.d || null,
-                bottler: null,
-                mainCategory: item.mc,
-                country: null,
-                region: null,
-                source: 'online',
-                externalId: null,
-                status: 'PUBLISHED',
-                isPublished: true,
-                isReviewed: false,
-                reviewedBy: null,
-                reviewedAt: null,
-                name_en: item.en || null,
-                metadata: item.m || {},
-                createdAt: item.cre ? new Date(item.cre) : new Date(),
-                updatedAt: new Date()
-              } as any}
-              isEn={isEn}
-              isOwned={cabinetStatus.ownedIds.has(item.i)}
-              isWishlisted={cabinetStatus.wishlistIds.has(item.i)}
-              onStatusChange={handleStatusChange}
-              priority={index < 6}
-            />
+            <React.Fragment key={`${item.i}-${index}`}>
+              <ExploreCard
+                spirit={{
+                  id: item.i,
+                  name: item.n,
+                  category: item.c,
+                  subcategory: item.sc,
+                  imageUrl: item.t,
+                  thumbnailUrl: item.t,
+                  abv: item.a || 0,
+                  volume: null,
+                  distillery: item.d || null,
+                  bottler: null,
+                  mainCategory: item.mc,
+                  country: null,
+                  region: null,
+                  source: 'online',
+                  externalId: null,
+                  status: 'PUBLISHED',
+                  isPublished: true,
+                  isReviewed: false,
+                  reviewedBy: null,
+                  reviewedAt: null,
+                  name_en: item.en || null,
+                  metadata: item.m || {},
+                  createdAt: item.cre ? new Date(item.cre) : new Date(),
+                  updatedAt: new Date()
+                } as any}
+                isEn={isEn}
+                isOwned={cabinetStatus.ownedIds.has(item.i)}
+                isWishlisted={cabinetStatus.wishlistIds.has(item.i)}
+                onStatusChange={handleStatusChange}
+                priority={index < 6}
+              />
+
+              {/* 8번째 카드 뒤에 광고 삽입 (index 7) */}
+              {index === 7 && (
+                <div className="w-full my-6">
+                  <GoogleAd
+                    client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
+                    slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || ''}
+                    format="fluid"
+                  />
+                </div>
+              )}
+            </React.Fragment>
           ))}
 
           {displayLimit < displaySpirits.length && (

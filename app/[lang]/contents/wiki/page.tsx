@@ -4,6 +4,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { BookOpen, ChevronRight } from 'lucide-react'
 import { SPIRIT_CATEGORIES } from '@/lib/constants/spirits-guide-data'
+import GoogleAd from '@/components/ui/GoogleAd'
 
 interface WikiHubPageProps {
     params: Promise<{ lang: string }>
@@ -126,6 +127,13 @@ export default async function WikiHubPage({ params }: WikiHubPageProps) {
                 <p className="text-muted-foreground/40 text-[10px] font-medium uppercase tracking-widest">
                     {isEn ? 'More categories coming soon' : '더 많은 카테고리가 추가될 예정입니다'}
                 </p>
+                <div className="mt-8 flex justify-center w-full">
+                    <GoogleAd
+                        client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
+                        slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || ''}
+                        format="horizontal"
+                    />
+                </div>
             </div>
         </div>
     )

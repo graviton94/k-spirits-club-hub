@@ -10,6 +10,7 @@ import {
     ChevronRight,
     Info
 } from 'lucide-react';
+import GoogleAd from '@/components/ui/GoogleAd';
 export const runtime = 'edge';
 import metadata from "@/lib/constants/spirits-metadata.json";
 
@@ -212,9 +213,17 @@ export default function WorldCupSelectionPage() {
                         <span className="text-lg">{isEn ? "Start World Cup" : "월드컵 시작하기"}</span>
                         <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </button>
-                    <p className="mt-4 text-center text-[10px] text-neutral-500 font-medium">
+                    <p className="mt-4 text-center text-[10px] text-neutral-500 font-medium pb-8">
                         {isEn ? "※ Game may not start if not enough spirits match." : "※ 선택한 조건에 맞는 술이 부족할 경우 게임이 시작되지 않을 수 있습니다."}
                     </p>
+                    {/* 구글 광고 배너 (월드컵 시작 전) */}
+                    <div className="w-full mt-4 flex justify-center">
+                        <GoogleAd
+                            client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
+                            slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || ''}
+                            format="horizontal"
+                        />
+                    </div>
                 </section>
             </div>
         </div>

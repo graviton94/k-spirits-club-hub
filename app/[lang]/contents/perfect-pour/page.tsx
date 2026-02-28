@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import confetti from 'canvas-confetti';
 import SuccessToast from '@/components/ui/SuccessToast';
+import GoogleAd from '@/components/ui/GoogleAd';
 export const runtime = 'edge';
 
 export default function PerfectPourPage() {
@@ -412,6 +413,15 @@ export default function PerfectPourPage() {
                             </div>
                         </motion.div>
                     )}
+                </div>
+
+                <div className="w-full mt-12 flex justify-center pb-8 border-b-0">
+                    {/* PC/모바일 하단 안내 겸 수익화를 위한 배너 추가 */}
+                    <GoogleAd
+                        client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
+                        slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || ''}
+                        format="horizontal"
+                    />
                 </div>
             </div>
             <SuccessToast

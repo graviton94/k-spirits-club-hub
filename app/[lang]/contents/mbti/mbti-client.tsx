@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { toPng } from 'html-to-image';
 import SuccessToast from '@/components/ui/SuccessToast';
+import GoogleAd from '@/components/ui/GoogleAd';
 
 type GameStep = 'intro' | 'quiz' | 'loading' | 'result';
 
@@ -209,6 +210,14 @@ export function MBTIClient({ lang }: { lang: string }) {
                         >
                             {t.startBtn}
                         </button>
+
+                        <div className="w-full mt-10 flex justify-center">
+                            <GoogleAd
+                                client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
+                                slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || ''}
+                                format="horizontal"
+                            />
+                        </div>
                     </motion.div>
                 )}
 
@@ -421,6 +430,14 @@ export function MBTIClient({ lang }: { lang: string }) {
                             >
                                 <RefreshCw size={20} /> {t.retryBtn}
                             </button>
+                        </div>
+
+                        <div className="w-full mt-8 flex justify-center">
+                            <GoogleAd
+                                client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
+                                slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || ''}
+                                format="horizontal"
+                            />
                         </div>
                     </motion.div>
                 )}

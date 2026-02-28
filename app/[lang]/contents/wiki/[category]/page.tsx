@@ -230,9 +230,8 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
                     {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && (
                         <GoogleAd
                             client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT}
-                            slot="3222851412" // Wiki 전용 하단 슬롯 (임시 ID)
-                            format="auto"
-                            responsive={true}
+                            slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || ''}
+                            format="horizontal"
                         />
                     )}
                 </div>

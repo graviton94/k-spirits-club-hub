@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { Search, Loader2, ChevronLeft, ChevronRight, ArrowLeft, Trash2 } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
+import GoogleAd from '@/components/ui/GoogleAd';
 
 export const runtime = 'edge';
 
@@ -238,6 +239,17 @@ export default function NewsContentPage() {
                                 </div>
                             </motion.article>
                         ))}
+
+                        {/* 4번째 뉴스 아이템 이후 광고 컴포넌트 삽입 */}
+                        {filteredNews.length >= 4 && (
+                            <div className="w-full my-8">
+                                <GoogleAd
+                                    client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
+                                    slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || ''}
+                                    format="fluid"
+                                />
+                            </div>
+                        )}
 
                         {/* Pagination Numbers */}
                         {!searchQuery && totalPages > 1 && (

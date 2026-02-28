@@ -13,6 +13,7 @@ import { getRatingColor } from '@/lib/utils/rating-colors';
 import { motion, AnimatePresence } from 'framer-motion';
 import SuccessToast from '@/components/ui/SuccessToast';
 import { useParams, useRouter } from 'next/navigation';
+import GoogleAd from '@/components/ui/GoogleAd';
 
 export const runtime = 'edge';
 
@@ -344,6 +345,17 @@ export default function ReviewBoardPage() {
                                 )}
                             </motion.div>
                         ))}
+
+                        {/* 4번째 리뷰 모듈 이후 광고 컴포넌트 삽입 */}
+                        {filteredReviews.length >= 4 && (
+                            <div className="w-full my-8">
+                                <GoogleAd
+                                    client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
+                                    slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || ''}
+                                    format="fluid"
+                                />
+                            </div>
+                        )}
 
                         {/* Pagination */}
                         {!searchQuery && totalPages > 1 && (

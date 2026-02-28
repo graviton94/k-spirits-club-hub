@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import SaveButton from "@/components/ui/SaveButton";
 import ReviewSection from "@/components/ui/ReviewSection";
-import AdSlot from "@/components/common/AdSlot";
+import GoogleAd from "@/components/ui/GoogleAd";
 import ModificationRequestButton from "@/components/spirits/ModificationRequestButton";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Search, ArrowLeft, ShoppingBag, Activity } from "lucide-react";
@@ -497,11 +497,11 @@ export default function SpiritDetailClient({ spirit, reviews, lang, dict }: Spir
             </div>
 
             {/* Middle Ad - Between Info and Reviews */}
-            <div className="mb-10">
-                <AdSlot
-                    slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || "0000000000"}
-                    variant="responsive"
-                    className="rounded-xl overflow-hidden shadow-sm bg-secondary/10"
+            <div className="mb-10 flex justify-center w-full">
+                <GoogleAd
+                    client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
+                    slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || ''}
+                    format="horizontal"
                 />
             </div>
 
@@ -541,11 +541,11 @@ export default function SpiritDetailClient({ spirit, reviews, lang, dict }: Spir
 
 
             {/* Bottom Ad */}
-            <div className="mt-12 mb-6">
-                <AdSlot
-                    slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || "0000000000"}
-                    variant="responsive"
-                    className="rounded-2xl overflow-hidden border border-border"
+            <div className="mt-12 mb-6 flex justify-center w-full">
+                <GoogleAd
+                    client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
+                    slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || ''}
+                    format="horizontal"
                 />
             </div>
 
