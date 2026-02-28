@@ -52,7 +52,7 @@ export default function GoogleAd({
   style = { display: 'block' },
   className = '',
 }: GoogleAdProps) {
-  const adRef = useRef<HTMLElement>(null);
+  const adRef = useRef<HTMLModElement>(null);
 
   useEffect(() => {
     // Load AdSense script if not already loaded
