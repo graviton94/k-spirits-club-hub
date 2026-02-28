@@ -26,24 +26,24 @@ export default function StickyFooterAd({ client, slot }: StickyFooterAdProps) {
 
   return (
     <div className="fixed left-0 right-0 z-40 bg-neutral-900/95 backdrop-blur-lg border-t border-white/10 shadow-2xl" style={{ bottom: '96px' }}>
-      <div className="relative container mx-auto max-w-4xl px-4 py-2">
+      <div className="relative container mx-auto max-w-4xl px-2 py-1">
         {/* Close Button */}
         <button
           onClick={() => setIsVisible(false)}
-          className="absolute top-1 right-1 p-1 text-gray-400 hover:text-white transition-colors z-10 bg-black/50 rounded-full"
+          className="absolute -top-3 -right-1 p-1 text-gray-400 hover:text-white transition-colors z-[100] bg-neutral-800 rounded-full border border-white/20 shadow-lg"
           aria-label="Close ad"
         >
           <X className="w-4 h-4" />
         </button>
 
-        {/* Ad Container */}
-        <div className="flex items-center justify-center min-h-[50px]">
+        {/* Ad Container: Force maximum height to prevent layout shift & covering the screen */}
+        <div className="flex items-center justify-center w-full h-[60px] md:h-[90px] overflow-hidden">
           <GoogleAd
             client={client}
             slot={slot}
-            format="auto"
+            format="horizontal"
             responsive={true}
-            style={{ display: 'block', width: '100%', minHeight: '50px' }}
+            style={{ display: 'inline-block', width: '100%', height: '100%' }}
           />
         </div>
       </div>
