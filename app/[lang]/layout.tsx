@@ -10,7 +10,7 @@ import OnboardingModal from '../components/auth/onboarding-modal';
 import { i18n, type Locale } from '@/i18n-config';
 import { Header } from '@/components/layout/Header';
 import { BottomNav } from "@/components/layout/BottomNav";
-import StickyFooterAd from '@/components/ui/StickyFooterAd';
+import GoogleAd from '@/components/ui/GoogleAd';
 import { getDictionary } from '@/lib/get-dictionary';
 import { PwaProvider } from './context/pwa-context';
 import { PwaInstallPrompt } from '@/components/ui/PwaInstallPrompt';
@@ -150,6 +150,22 @@ export default async function RootLayout({
           </SpiritsCacheProvider>
         </AuthProvider>
 
+        {/* Static Footer Ad Banner (Replaces Sticky Footer Ad) */}
+        {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT && (
+          <div className="w-full bg-slate-50 dark:bg-neutral-950 border-t border-slate-200 dark:border-white/5 py-6 flex justify-center">
+            <div className="container max-w-4xl mx-auto px-4 overflow-hidden">
+              <GoogleAd
+                client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT}
+                slot={process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT}
+                format="horizontal"
+                responsive={true}
+                className="mx-auto rounded-xl"
+                style={{ display: 'block', width: '100%', minHeight: '90px' }}
+              />
+            </div>
+          </div>
+        )}
+
         {/* Footer */}
         <footer className="bg-slate-50 dark:bg-neutral-950 border-t border-slate-200 dark:border-white/5 py-12 pb-32">
           <div className="container max-w-6xl mx-auto px-4">
@@ -245,13 +261,6 @@ export default async function RootLayout({
           </div>
         </footer>
 
-        {/* Sticky Footer Ad */}
-        {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT && (
-          <StickyFooterAd
-            client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT}
-            slot={process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT}
-          />
-        )}
       </body>
     </html>
   );
