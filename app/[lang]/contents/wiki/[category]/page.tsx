@@ -9,14 +9,6 @@ import SpiritGuideLayout from '@/components/contents/SpiritGuideLayout'
 import GoogleAd from '@/components/ui/GoogleAd'
 import { redirect } from 'next/navigation'
 
-const EN_TO_KO_MAP: Record<string, string> = {
-    'soju-guide': '소주-가이드',
-    'makgeolli-guide': '막걸리-가이드',
-    'korean-whisky': '한국-위스키-증류소',
-    'korean-traditional-spirits': '전통주-종류-정리',
-    'korean-spirits-by-abv': '도수별-증류주',
-};
-
 const KO_TO_EN_MAP: Record<string, string> = {
     '소주-가이드': 'soju-guide',
     '막걸리-가이드': 'makgeolli-guide',
@@ -34,12 +26,9 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
     const { lang, category: slug } = await params
     const decodedSlug = decodeURIComponent(slug)
 
-    // Handle cross-locales switching (prevent mixed language content)
-    if (lang === 'ko' && EN_TO_KO_MAP[decodedSlug]) {
-        redirect(`/ko/contents/wiki/${EN_TO_KO_MAP[decodedSlug]}`)
-    }
-    if (lang === 'en' && KO_TO_EN_MAP[decodedSlug]) {
-        redirect(`/en/contents/wiki/${KO_TO_EN_MAP[decodedSlug]}`)
+    // Unified Slug Policy: Always redirect Korean slugs to English slugs for stability
+    if (KO_TO_EN_MAP[decodedSlug]) {
+        redirect(`/${lang}/contents/wiki/${KO_TO_EN_MAP[decodedSlug]}`)
     }
 
     const cat = getSpiritCategory(decodedSlug) || getSpiritCategory(slug)
@@ -182,8 +171,8 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
         keywords: keywords.join(', '),
         alternates: {
             languages: {
-                'ko-KR': `${baseUrl}/ko/contents/wiki/${slug}`,
-                'en-US': `${baseUrl}/en/contents/wiki/${slug}`,
+                'ko-KR': `${baseUrl}/ko/contents/wiki/${cat.slug}`,
+                'en-US': `${baseUrl}/en/contents/wiki/${cat.slug}`,
             },
         },
         openGraph: {
@@ -202,9 +191,6 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
             description,
             images: [ogImageUrl],
         },
-        other: {
-            'application/ld+json': JSON.stringify(jsonLd),
-        },
     }
 }
 
@@ -212,12 +198,9 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
     const { lang, category: slug } = await params
     const decodedSlug = decodeURIComponent(slug)
 
-    // Handle cross-locales switching (prevent mixed language content)
-    if (lang === 'ko' && EN_TO_KO_MAP[decodedSlug]) {
-        redirect(`/ko/contents/wiki/${EN_TO_KO_MAP[decodedSlug]}`)
-    }
-    if (lang === 'en' && KO_TO_EN_MAP[decodedSlug]) {
-        redirect(`/en/contents/wiki/${KO_TO_EN_MAP[decodedSlug]}`)
+    // Unified Slug Policy: Always redirect Korean slugs to English slugs for stability
+    if (KO_TO_EN_MAP[decodedSlug]) {
+        redirect(`/${lang}/contents/wiki/${KO_TO_EN_MAP[decodedSlug]}`)
     }
 
     const cat = getSpiritCategory(decodedSlug) || getSpiritCategory(slug)
@@ -225,12 +208,13 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
     if (!cat) {
         notFound()
     }
-    // 해당 카테고리의 추천 제품 조회 (최대 6개)
-    let featuredSpirits: { id: string; name: string; category: string; imageUrl?: string }[] = []
 
     const isEn = lang === 'en'
     const section = isEn ? (cat.sectionsEn || cat.sections) : cat.sections
     const dbCategories = section?.dbCategories
+
+    // 해당 카테고리의 추천 제품 조회 (최대 6개)
+    let featuredSpirits: { id: string; name: string; category: string; imageUrl?: string }[] = []
 
     if (slug !== 'oak-barrel' && dbCategories && dbCategories.length > 0) {
         try {
@@ -247,8 +231,61 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
         }
     }
 
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://kspiritsclub.com'
+    const title = isEn
+        ? `${cat.nameEn} Guide — Spirits Wiki | K-Spirits Club`
+        : `${cat.nameKo} 가이드 — 주류 백과사전 | K-Spirits Club`
+
+    // 복합 JSON-LD 구성
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@graph': [
+            {
+                '@type': 'WebPage',
+                '@id': `${baseUrl}/${lang}/contents/wiki/${slug}`,
+                url: `${baseUrl}/${lang}/contents/wiki/${slug}`,
+                name: title,
+                description: isEn ? cat.taglineEn : cat.taglineKo,
+                inLanguage: isEn ? 'en' : 'ko',
+            },
+            {
+                '@type': 'Article',
+                headline: isEn
+                    ? `${cat.nameEn} Guide: Everything You Need to Know`
+                    : `${cat.nameKo} 완벽 가이드: 정의부터 테이스팅 방법까지`,
+                description: isEn ? cat.taglineEn : cat.taglineKo,
+                image: `${baseUrl}/default-og.jpg`,
+                author: {
+                    '@type': 'Organization',
+                    name: 'K-Spirits Club',
+                },
+                publisher: {
+                    '@type': 'Organization',
+                    name: 'K-Spirits Club',
+                },
+                datePublished: '2024-01-01',
+                dateModified: new Date().toISOString().split('T')[0],
+            },
+            {
+                '@type': 'HowTo',
+                name: isEn ? `How to Enjoy ${cat.nameEn}` : `${cat.nameKo} 최적으로 즐기는 법`,
+                description: isEn ? `Professional serving guide for ${cat.nameEn}` : `${cat.nameKo}의 맛을 극대화하는 전문가 음용 가이드`,
+                step: section?.servingGuidelines?.methods?.map((m, idx) => ({
+                    '@type': 'HowToStep',
+                    position: idx + 1,
+                    name: m.name,
+                    text: m.description,
+                })) || [],
+            }
+        ]
+    }
+
     return (
         <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <SpiritGuideLayout category={cat} lang={lang} featuredSpirits={featuredSpirits} />
 
             {/* 하단 수익화 영역 (수수료 회생 대책) */}

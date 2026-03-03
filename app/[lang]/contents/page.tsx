@@ -191,11 +191,11 @@ export default async function ContentsPage({ params }: ContentsPageProps) {
             </>
           ) : (
             <>
-              <Link href="/ko/contents/wiki/소주-가이드" className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">소주 가이드</Link>
-              <Link href="/ko/contents/wiki/막걸리-가이드" className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">막걸리 가이드</Link>
-              <Link href="/ko/contents/wiki/한국-위스키-증류소" className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">한국 위스키 증류소</Link>
-              <Link href="/ko/contents/wiki/전통주-종류-정리" className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">전통주 종류 정리</Link>
-              <Link href="/ko/contents/wiki/도수별-증류주" className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">도수별 증류주 추천</Link>
+              <Link href="/ko/contents/wiki/soju-guide" className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">소주 가이드</Link>
+              <Link href="/ko/contents/wiki/makgeolli-guide" className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">막걸리 가이드</Link>
+              <Link href="/ko/contents/wiki/korean-whisky" className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">한국 위스키 증류소</Link>
+              <Link href="/ko/contents/wiki/korean-traditional-spirits" className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">전통주 종류 정리</Link>
+              <Link href="/ko/contents/wiki/korean-spirits-by-abv" className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">도수별 증류주 추천</Link>
             </>
           )}
         </div>
