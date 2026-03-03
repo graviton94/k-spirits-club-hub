@@ -269,3 +269,74 @@ After Phase 1 verification passes:
 2. Request re-crawl of key pages
 3. Monitor duplicate URL issues in GSC Coverage report
 4. Track canonical tag appearance in indexed pages (takes 1-2 weeks)
+
+---
+
+## Phase 1.5 Hotfix: Ko Locale 404 Fix
+
+### Issue Summary
+After Phase 1 deployment, `/ko` and all `/ko/*` routes returned 404 while `/en` worked correctly. This was caused by missing explicit locale routing configuration.
+
+### Root Cause
+The `[lang]` dynamic route did not have explicit `dynamicParams` configuration, which could cause Next.js/Cloudflare Pages to reject certain locales during static generation or runtime routing.
+
+### Fix Applied
+1. Added `export const dynamicParams = true` in `app/[lang]/layout.tsx` to explicitly allow both static and dynamic locale params
+2. Added locale validation in `RootLayout` to reject invalid locales while accepting 'ko' and 'en'
+3. Ensured `generateStaticParams()` returns both locales: `{lang: 'ko'}` and `{lang: 'en'}`
+
+### Verification Steps
+
+#### Test 1: Ko locale routes return 200
+```bash
+# Production verification
+curl -I https://kspiritsclub.com/ko
+curl -I https://kspiritsclub.com/ko/explore
+```
+
+**Expected Result**:
+- `/ko`: Status `200 OK` (or `308 → /ko/ → 200`)
+- `/ko/explore`: Status `200 OK`
+
+#### Test 2: En locale still works
+```bash
+curl -I https://kspiritsclub.com/en
+curl -I https://kspiritsclub.com/en/explore
+```
+
+**Expected Result**:
+- Status `200 OK` for both routes
+
+#### Test 3: Canonical links intact
+```bash
+curl https://kspiritsclub.com/ko | grep -i "canonical"
+curl https://kspiritsclub.com/ko/explore | grep -i "canonical"
+```
+
+**Expected Output**:
+```html
+<link rel="canonical" href="https://kspiritsclub.com/ko"/>
+<link rel="canonical" href="https://kspiritsclub.com/ko/explore"/>
+```
+
+#### Test 4: Google Search Console URL Inspection
+1. Go to GSC > URL Inspection
+2. Test URL: `https://kspiritsclub.com/ko`
+3. Verify status is not 404
+4. Verify canonical URL is `https://kspiritsclub.com/ko`
+
+### P1.5 Checklist
+- [ ] `/ko` returns 200 (not 404)
+- [ ] `/ko/explore` returns 200 (not 404)
+- [ ] `/en` still works (200)
+- [ ] `/en/explore` still works (200)
+- [ ] Canonical links for ko pages are correct
+- [ ] No redirect loops introduced
+- [ ] GSC URL inspection shows ko as indexable
+
+### Deployment Notes
+- Changes affect: `app/[lang]/layout.tsx` only
+- Impact: Minimal - only adds explicit locale routing config
+- Risk: Low - does not change existing routing logic
+- Testing: Verify both locales work in production after deployment
+
