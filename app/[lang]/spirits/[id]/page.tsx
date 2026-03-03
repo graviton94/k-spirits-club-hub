@@ -6,6 +6,7 @@ import { reviewsDb } from "@/lib/db/firestore-rest";
 import { getDictionary } from "@/lib/get-dictionary";
 import { Locale } from "@/i18n-config";
 import { getCanonicalUrl, getHreflangAlternates } from "@/lib/utils/seo-url";
+import { getSpiritRobotsMeta } from "@/lib/utils/indexable-tier";
 
 export const runtime = 'edge';
 
@@ -178,10 +179,15 @@ export async function generateMetadata({
   // Hreflang alternates (both ko and en versions)
   const hreflangAlternates = getHreflangAlternates(`/spirits/${id}`);
 
+  // SEO Phase 2: Apply Tier-based robots meta
+  const robotsMeta = getSpiritRobotsMeta(spirit);
+
   return {
     title,
     description: fullDescription,
     keywords: keywords.join(', '),
+    // Apply robots meta for Tier B spirits (noindex, follow)
+    ...(robotsMeta && { robots: robotsMeta }),
     alternates: {
       canonical: canonicalUrl,
       languages: hreflangAlternates,
