@@ -3,6 +3,7 @@ import Script from "next/script";
 import Link from "next/link";
 import { Inter, Outfit } from "next/font/google";
 import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google'; // ✅ 공식 라이브러리 추가
+import { notFound } from "next/navigation";
 import "./globals.css";
 import { AuthProvider } from './context/auth-context';
 import { SpiritsCacheProvider } from './context/spirits-cache-context';
@@ -22,6 +23,9 @@ const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit", display: 
 export async function generateStaticParams() {
   return i18n.locales.map((locale) => ({ lang: locale }));
 }
+
+// Explicitly allow dynamic params for locale routing
+export const dynamicParams = true;
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
   const { lang } = await params;
@@ -100,6 +104,12 @@ export default async function RootLayout({
   params: Promise<{ lang: Locale }>;
 }) {
   const { lang } = await params;
+
+  // Validate that the locale is supported
+  if (!i18n.locales.includes(lang as any)) {
+    notFound();
+  }
+
   const dictionary = await getDictionary(lang);
 
   return (
