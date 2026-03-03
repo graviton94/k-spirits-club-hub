@@ -62,14 +62,10 @@ export async function GET(request: NextRequest) {
     }
 
     // OPTIMIZATION: If no search filters are provided and we are in index mode, 
-    // limit results to 100 items to reduce initial metadata payload.
-    // This significantly reduces the first load size while still providing enough data for DailyPick/etc.
-    const isInitialLoad = !searchTerm && !category && !subcategory && !country;
-    if (isInitialLoad && mode === 'index') {
-      filteredResults = filteredResults.slice(0, 100);
-      console.log(`[OPTIMIZATION] Capping initial index to 100 items to reduce payload.`);
-    }
-
+    // we used to limit to 100, but now we send the full index (lightweight) 
+    // to allow instant client-side searching across all products.
+    const indexSizePreMap = JSON.stringify(filteredResults.map(s => ({ i: s.id }))).length; // Placeholder for size calculation before full map
+    console.log(`[API] Preparing search index for ${filteredResults.length} items.`);
     // Create minimized search index
     const searchIndex: SpiritSearchIndex[] = filteredResults.map(s => ({
       i: s.id,

@@ -14,8 +14,8 @@ export const spiritsDb = restSpiritsDb;
 export const db = {
   async getSpirits(filter: SpiritFilter = {}, pagination: PaginationParams = { page: 1, pageSize: 20 }): Promise<PaginatedResponse<Spirit>> {
     // Optimization Strategy:
-    // 1. "Server-Side Mode": If only filtering by Status, Category, Subcategory, or Country -> Offload to Firestore DB.
-    // 2. "Legacy Mode": If filtering by SearchTerm or NoImage -> Must fetch all to filter in memory (Firestore REST limits).
+    // 1. "Server-Side Mode": If only filtering by Status, Category, Subcategory, Country, or SearchTerm -> Offload to Firestore DB.
+    // 2. "Legacy Mode": If filtering by NoImage -> Must fetch all to filter in memory (Firestore REST limits).
 
     const requiresMemoryFiltering = !!filter.searchTerm || !!filter.noImage;
 
@@ -85,11 +85,21 @@ export const db = {
     }
 
     // --- LEGACY MODE (SLOW BUT POWERFUL) ---
-    // Used when SearchTerm is present OR when Server-Side Mode fails
-    // Note: We use listAll() which uses the simple GET endpoint to bypass ONLY filtering issues.
+    // Used when SearchTerm or noImage is present OR when Server-Side Mode fails
+    // Note: We try to use getAll() which now supports array-contains, falling back to listAll() if needed.
     let allItems: Spirit[] = [];
     try {
-      allItems = await spiritsDb.listAll();
+      if (filter.searchTerm || filter.category || filter.country) {
+        // Use optimized query (up to 5000 matches) instead of absolute everything
+        try {
+          allItems = await spiritsDb.getAll(filter);
+        } catch (e) {
+          console.warn('[DB Adapter] Optimized getAll failed, falling back to full listAll scan.');
+          allItems = await spiritsDb.listAll();
+        }
+      } else {
+        allItems = await spiritsDb.listAll();
+      }
     } catch (err) {
       console.error('[DB Adapter] Ultimate fallback failed:', err);
       return { data: [], total: 0, page: pagination.page, pageSize: pagination.pageSize, totalPages: 0 };

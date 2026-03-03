@@ -1,6 +1,7 @@
 import { Spirit, SpiritStatus, SpiritFilter, SpiritSearchIndex, ModificationRequest } from '../db/schema';
 import { getServiceAccountToken } from '../auth/service-account';
 import { getAppPath, APP_ID } from './paths';
+import { extractSearchKeyword } from '../utils/search-keywords';
 
 const PROJECT_ID = process.env.FIREBASE_PROJECT_ID;
 const BASE_URL = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
@@ -602,6 +603,22 @@ export const spiritsDb = {
                     value: { stringValue: filter.distillery }
                 }
             });
+        }
+
+        // --- SEARCH OPTIMIZATION (ARRAY CONTAINS) ---
+        // If searchTerm is provided, we use the pre-generated searchKeywords array
+        // to filter at the database level instead of fetching everything.
+        if (filter.searchTerm) {
+            const keyword = extractSearchKeyword(filter.searchTerm);
+            if (keyword) {
+                filters.push({
+                    fieldFilter: {
+                        field: { fieldPath: 'searchKeywords' },
+                        op: 'ARRAY_CONTAINS',
+                        value: { stringValue: keyword }
+                    }
+                });
+            }
         }
 
         const structuredQuery: any = {

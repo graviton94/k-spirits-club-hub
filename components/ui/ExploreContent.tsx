@@ -20,7 +20,7 @@ export default function ExploreContent({ dict }: { dict?: any }) {
   const lang = pathname.split('/')[1] === 'en' ? 'en' : 'ko';
   const isEn = lang === 'en';
 
-  const { publishedSpirits: initialSpirits, isLoading: isInitialLoading } = useSpiritsCache();
+  const { searchIndex, isLoading: isInitialLoading, searchSpirits } = useSpiritsCache();
   const { user } = useAuth();
 
   // Search States
@@ -31,6 +31,7 @@ export default function ExploreContent({ dict }: { dict?: any }) {
   const [isSearching, setIsSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
 
+  // Pagination & Display
   const [displayLimit, setDisplayLimit] = useState(24);
   const [cabinetStatus, setCabinetStatus] = useState<{ ownedIds: Set<string>, wishlistIds: Set<string> }>({
     ownedIds: new Set(),
@@ -77,37 +78,55 @@ export default function ExploreContent({ dict }: { dict?: any }) {
   };
 
   /**
-   * Perform server-side search
+   * Perform instant client-side search using the cached search index
    */
   const performSearch = useCallback(async (isInitial = false) => {
+    if (!searchIndex || searchIndex.length === 0) return;
+
     setIsSearching(true);
     setHasSearched(true);
+    setDisplayLimit(24); // Reset display limit on new search
 
-    try {
-      const params = new URLSearchParams();
-      params.append('mode', 'index');
-      if (searchTerm) params.append('q', searchTerm);
-      if (selectedCategory) params.append('category', selectedCategory);
-      if (selectedSubCategory) params.append('subcategory', selectedSubCategory);
+    // Small delay to allow UI to breathe
+    setTimeout(() => {
+      let results = [...searchIndex];
 
-      const response = await fetch(`/api/spirits?${params.toString()}`);
-      if (response.ok) {
-        const data = await response.json();
-        setSearchResults(data.searchIndex || []);
+      // 1. Text Search (using Fuse.js from cache context)
+      if (searchTerm.trim()) {
+        results = searchSpirits(searchTerm);
       }
-    } catch (error) {
-      console.error('Search failed:', error);
-    } finally {
-      setIsSearching(false);
-    }
-  }, [searchTerm, selectedCategory, selectedSubCategory]);
 
-  // Initial search if search params exist
+      // 2. Category Filter
+      if (selectedCategory && selectedCategory !== 'ALL') {
+        results = results.filter(s =>
+          s.c === selectedCategory ||
+          s.sc === selectedCategory ||
+          s.mc === selectedCategory
+        );
+      }
+
+      // 3. Subcategory Filter
+      if (selectedSubCategory) {
+        results = results.filter(s => s.sc === selectedSubCategory);
+      }
+
+      setSearchResults(results);
+      setIsSearching(false);
+    }, 50);
+  }, [searchTerm, selectedCategory, selectedSubCategory, searchIndex, searchSpirits]);
+
+  // Initial search or search whenever index is loaded
   useEffect(() => {
-    if (searchParams.get('search') || searchParams.get('category')) {
-      performSearch(true);
+    if (searchIndex.length > 0) {
+      if (searchParams.get('search') || searchParams.get('category')) {
+        performSearch();
+      } else if (!hasSearched) {
+        // If no search params, just show all initially but marked as searched
+        setSearchResults(searchIndex);
+        setHasSearched(true);
+      }
     }
-  }, []);
+  }, [searchIndex.length, searchParams, performSearch, setSearchResults, setHasSearched]);
 
   const availableSubcategories = useMemo(() => {
     if (!selectedCategory) return [];
