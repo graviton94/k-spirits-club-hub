@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { getPublishedSpiritMeta } from '@/lib/db/firestore-rest';
+import { getPublishedSpiritMetaWithQuality } from '@/lib/db/firestore-rest';
 import { SPIRIT_CATEGORIES } from '@/lib/constants/spirits-guide-data';
 
 export const runtime = 'edge';
@@ -12,13 +12,49 @@ export const runtime = 'edge';
 export const revalidate = 86400;
 
 /**
- * Dynamic Sitemap Generation
+ * SEO Phase 2: Indexable Tier Classification
  *
- * 개선 사항:
- * - lastModified: new Date() → 실제 updatedAt 사용 (크롤 예산 절감)
- * - changeFrequency: 정적/동적 페이지별 적절한 값 적용
- * - priority: 페이지 중요도에 따라 차별화
- * - 새 항목은 updatedAt이 최근이면 Googlebot이 우선 크롤링함
+ * Tier A (Indexable): Spirits with high-quality content
+ * - name, abv, category, image, description >= 300 chars
+ *
+ * Tier B (Non-indexable): Thin content spirits
+ * - Excluded from sitemap, marked with noindex on page
+ *
+ * This prevents "Discovered - currently not indexed" issues in GSC
+ */
+function isIndexableSpiritMeta(spirit: {
+  name: string;
+  abv: number | null;
+  category: string | null;
+  imageUrl: string | null;
+  thumbnailUrl: string | null;
+  descriptionKoLength: number;
+  descriptionEnLength: number;
+}): boolean {
+  const hasName = !!spirit.name;
+  const hasAbv = typeof spirit.abv === 'number';
+  const hasCategory = !!spirit.category;
+  const hasImage = !!(spirit.imageUrl || spirit.thumbnailUrl);
+  const hasDescription = spirit.descriptionKoLength >= 300 || spirit.descriptionEnLength >= 300;
+
+  return hasName && hasAbv && hasCategory && hasImage && hasDescription;
+}
+
+/**
+ * Dynamic Sitemap Generation - Phase 2
+ *
+ * Includes ONLY:
+ * - Canonical URLs (with locale prefix)
+ * - High-quality Tier A spirit pages
+ * - Core indexable pages (explore, wiki, etc.)
+ *
+ * Excludes:
+ * - Private pages (cabinet, me, admin)
+ * - Tier B spirits (thin content)
+ * - Query strings
+ * - Dynamic filter combinations
+ *
+ * This focused approach helps Google concentrate crawl budget on quality content.
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://kspiritsclub.com';
@@ -27,25 +63,32 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
   // ──────────────────────────────────────────────
-  // 정적 페이지
+  // Static Indexable Pages (Tier A)
   // ──────────────────────────────────────────────
   const staticPages: { path: string; priority: number; freq: MetadataRoute.Sitemap[0]['changeFrequency'] }[] = [
-    { path: '', priority: 1.0, freq: 'daily' }, // 홈
-    { path: '/explore', priority: 0.9, freq: 'daily' }, // 탐색
+    { path: '', priority: 1.0, freq: 'daily' }, // Homepage
+    { path: '/explore', priority: 0.9, freq: 'daily' }, // Search/Explore
     { path: '/contents/mbti', priority: 0.7, freq: 'monthly' },
     { path: '/contents/worldcup', priority: 0.7, freq: 'monthly' },
     { path: '/contents/perfect-pour', priority: 0.7, freq: 'monthly' },
     { path: '/contents/news', priority: 0.6, freq: 'daily' },
     { path: '/contents/about', priority: 0.5, freq: 'yearly' },
-    // 주류 백과사전 허브
+    // Spirit Encyclopedia Hub
     { path: '/contents/wiki', priority: 0.8, freq: 'monthly' },
-    // 주류 백과사전 카테고리 서브페이지
+    // Spirit Encyclopedia Category Pages
     ...SPIRIT_CATEGORIES.map(cat => ({
       path: `/contents/wiki/${cat.slug}` as const,
       priority: 0.75,
       freq: 'monthly' as MetadataRoute.Sitemap[0]['changeFrequency'],
     })),
   ];
+
+  // NON-INDEXABLE PAGES (Excluded from sitemap):
+  // - /cabinet (personal collections, user-specific)
+  // - /me (user profile, user-specific)
+  // - /admin (admin dashboard, restricted)
+  // - Search result pages with query strings
+  // - Filter combination URLs
 
   for (const page of staticPages) {
     for (const locale of locales) {
@@ -65,38 +108,42 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   // ──────────────────────────────────────────────
-  // 동적 spirit 페이지
+  // Dynamic Spirit Pages (Tier A Only)
   // ──────────────────────────────────────────────
   try {
-    const spiritMeta = await getPublishedSpiritMeta();
+    const spiritMeta = await getPublishedSpiritMetaWithQuality();
     console.log(`[Sitemap] Fetched ${spiritMeta.length} published spirit entries`);
 
-    for (const { id, updatedAt } of spiritMeta) {
-      // 실제 업데이트 시각 사용 → 새로 발행된 항목은 최신 날짜 → Googlebot이 우선 크롤링
-      const lastModified = updatedAt ? new Date(updatedAt) : now;
+    // Filter for Tier A (indexable) spirits only
+    const indexableSpirits = spiritMeta.filter(isIndexableSpiritMeta);
+    const tierBCount = spiritMeta.length - indexableSpirits.length;
+
+    console.log(`[Sitemap] Tier A (indexable): ${indexableSpirits.length}, Tier B (excluded): ${tierBCount}`);
+
+    for (const spirit of indexableSpirits) {
+      const lastModified = spirit.updatedAt ? new Date(spirit.updatedAt) : now;
 
       for (const locale of locales) {
         routes.push({
-          url: `${baseUrl}/${locale}/spirits/${id}`,
+          url: `${baseUrl}/${locale}/spirits/${spirit.id}`,
           lastModified,
-          // 술 정보 자체는 자주 안 바뀌므로 monthly
-          // → Googlebot이 크롤 예산을 새 페이지에 더 집중
           changeFrequency: 'monthly',
           priority: 0.7,
           alternates: {
             languages: {
-              ko: `${baseUrl}/ko/spirits/${id}`,
-              en: `${baseUrl}/en/spirits/${id}`,
+              ko: `${baseUrl}/ko/spirits/${spirit.id}`,
+              en: `${baseUrl}/en/spirits/${spirit.id}`,
             },
           },
         });
       }
     }
 
-    console.log(`[Sitemap] Generated ${spiritMeta.length * locales.length} spirit routes`);
+    console.log(`[Sitemap] Generated ${indexableSpirits.length * locales.length} spirit routes (Tier A only)`);
   } catch (error) {
     console.error('[Sitemap] Failed to fetch spirit meta, falling back to static only:', error);
   }
 
+  console.log(`[Sitemap] Total routes: ${routes.length}`);
   return routes;
 }

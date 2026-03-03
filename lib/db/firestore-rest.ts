@@ -374,6 +374,158 @@ export async function getPublishedSpiritMeta(): Promise<{ id: string; updatedAt:
     }
 }
 
+/**
+ * Get published spirit metadata with quality fields for sitemap generation.
+ * Fetches fields needed to determine indexability tier (name, abv, category, image, description length).
+ *
+ * @returns Array of spirit metadata with quality indicators
+ */
+export async function getPublishedSpiritMetaWithQuality(): Promise<{
+    id: string;
+    updatedAt: string | null;
+    name: string;
+    abv: number | null;
+    category: string | null;
+    imageUrl: string | null;
+    thumbnailUrl: string | null;
+    descriptionKoLength: number;
+    descriptionEnLength: number;
+}[]> {
+    const token = await getServiceAccountToken();
+    const runQueryUrl = `${BASE_URL}:runQuery`;
+    const collectionPath = getAppPath().spirits;
+
+    const segments = collectionPath.split('/');
+    const collectionId = segments.pop();
+    const parentPath = segments.join('/');
+    const parent = `projects/${PROJECT_ID}/databases/(default)/documents/${parentPath}`;
+
+    const allMeta: {
+        id: string;
+        updatedAt: string | null;
+        name: string;
+        abv: number | null;
+        category: string | null;
+        imageUrl: string | null;
+        thumbnailUrl: string | null;
+        descriptionKoLength: number;
+        descriptionEnLength: number;
+    }[] = [];
+    let offset = 0;
+    const pageSize = 5000;
+
+    try {
+        let hasMore = true;
+
+        while (hasMore) {
+            const structuredQuery: any = {
+                from: [{ collectionId }],
+                where: {
+                    fieldFilter: {
+                        field: { fieldPath: 'isPublished' },
+                        op: 'EQUAL',
+                        value: { booleanValue: true }
+                    }
+                },
+                select: {
+                    fields: [
+                        { fieldPath: '__name__' },
+                        { fieldPath: 'updatedAt' },
+                        { fieldPath: 'name' },
+                        { fieldPath: 'abv' },
+                        { fieldPath: 'category' },
+                        { fieldPath: 'imageUrl' },
+                        { fieldPath: 'thumbnailUrl' },
+                        { fieldPath: 'description_ko' },
+                        { fieldPath: 'description_en' },
+                        { fieldPath: 'metadata' },
+                    ]
+                },
+                limit: pageSize,
+                offset,
+            };
+
+            const res = await fetch(runQueryUrl, {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ parent, structuredQuery })
+            });
+
+            if (!res.ok) {
+                const errText = await res.text();
+                console.error(`[getPublishedSpiritMetaWithQuality] Failed:`, errText);
+                throw new Error(`Failed to fetch spirit meta with quality: ${res.status}`);
+            }
+
+            const json = await res.json();
+            const results = json.filter((r: any) => r.document);
+
+            for (const result of results) {
+                const doc = result.document;
+                if (!doc?.name) continue;
+
+                const id = doc.name.split('/').pop();
+                const fields = doc.fields || {};
+
+                const updatedAtRaw = fields.updatedAt;
+                const updatedAt = updatedAtRaw?.timestampValue || updatedAtRaw?.stringValue || null;
+
+                const name = fromFirestoreValue(fields.name) || '';
+                const abv = fromFirestoreValue(fields.abv);
+                const category = fromFirestoreValue(fields.category);
+                const imageUrl = fromFirestoreValue(fields.imageUrl);
+                const thumbnailUrl = fromFirestoreValue(fields.thumbnailUrl);
+
+                // Get description from root fields or metadata
+                const descKoRoot = fromFirestoreValue(fields.description_ko) || '';
+                const descEnRoot = fromFirestoreValue(fields.description_en) || '';
+
+                // Extract metadata descriptions
+                let descKoMeta = '';
+                let descEnMeta = '';
+                if (fields.metadata?.mapValue?.fields) {
+                    const metaFields = fields.metadata.mapValue.fields;
+                    descKoMeta = fromFirestoreValue(metaFields.description_ko) || '';
+                    descEnMeta = fromFirestoreValue(metaFields.description_en) || '';
+                }
+
+                // Use whichever description is longer
+                const descKo = descKoRoot.length > descKoMeta.length ? descKoRoot : descKoMeta;
+                const descEn = descEnRoot.length > descEnMeta.length ? descEnRoot : descEnMeta;
+
+                if (id) {
+                    allMeta.push({
+                        id,
+                        updatedAt,
+                        name,
+                        abv,
+                        category,
+                        imageUrl,
+                        thumbnailUrl,
+                        descriptionKoLength: descKo.length,
+                        descriptionEnLength: descEn.length,
+                    });
+                }
+            }
+
+            if (results.length < pageSize) {
+                hasMore = false;
+            } else {
+                offset += pageSize;
+            }
+        }
+
+        console.log(`[getPublishedSpiritMetaWithQuality] Fetched ${allMeta.length} spirit meta entries with quality fields`);
+        return allMeta;
+    } catch (error) {
+        console.error('[getPublishedSpiritMetaWithQuality] Error:', error);
+        throw error;
+    }
+}
+
 export const spiritsDb = {
     async getAll(filter: SpiritFilter = {}, pagination?: { page: number, pageSize: number }): Promise<Spirit[]> {
         const token = await getServiceAccountToken();
