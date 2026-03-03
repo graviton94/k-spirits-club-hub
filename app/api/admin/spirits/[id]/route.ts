@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import { db } from '@/lib/db';
 
 export const runtime = 'edge';
@@ -35,6 +36,9 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
         // Update spirit in DB
         const updated = await db.updateSpirit(id, body);
 
+        // Invalidate caching for related spirits
+        revalidateTag('related-spirits');
+
         return NextResponse.json(updated);
     } catch (error) {
         console.error(`API Update Error for ${params.id}:`, error);
@@ -51,6 +55,9 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
         if (!success) {
             return NextResponse.json({ error: 'Spirit not found' }, { status: 404 });
         }
+
+        // Invalidate caching for related spirits
+        revalidateTag('related-spirits');
 
         return NextResponse.json({ success: true });
     } catch (error) {

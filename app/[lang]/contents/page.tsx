@@ -23,6 +23,9 @@ interface ContentsPageProps {
 export async function generateMetadata({ params }: ContentsPageProps): Promise<Metadata> {
   const { lang } = await params;
   const isEn = lang === 'en';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://kspiritsclub.com';
+  const ogImageUrl = `${baseUrl}/images/default-og.jpg`;
+
   return {
     title: isEn ? "K-Spirits Club | Contents Hub" : "K-Spirits Club | 컨텐츠 허브",
     description: isEn
@@ -33,7 +36,14 @@ export async function generateMetadata({ params }: ContentsPageProps): Promise<M
       description: isEn ? "Enjoy various spirits contents and events." : "다양한 주류 컨텐츠와 이벤트를 즐겨보세요.",
       type: "website",
       siteName: "K-Spirits Club",
+      images: [ogImageUrl]
     },
+    twitter: {
+      card: "summary_large_image",
+      title: isEn ? "K-Spirits Club | Contents Hub" : "K-Spirits Club | 컨텐츠 허브",
+      description: isEn ? "Enjoy various spirits contents and events." : "다양한 주류 컨텐츠와 이벤트를 즐겨보세요.",
+      images: [ogImageUrl]
+    }
   };
 }
 
@@ -158,6 +168,37 @@ export default async function ContentsPage({ params }: ContentsPageProps) {
             </div>
           </Link>
         ))}
+      </div>
+
+      {/* SEO Hub Links (1-Hop indexing from contents) */}
+      <div className="mt-16 max-w-4xl mx-auto relative z-10 px-4">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="h-px flex-1 bg-border/50"></div>
+          <h2 className="text-sm font-bold text-muted-foreground uppercase tracking-widest whitespace-nowrap">
+            {isEn ? "Featured Spirit Guides" : "인기 주류 가이드"}
+          </h2>
+          <div className="h-px flex-1 bg-border/50"></div>
+        </div>
+
+        <div className="flex flex-wrap justify-center gap-3">
+          {isEn ? (
+            <>
+              <Link href="/en/contents/wiki/korean-soju" className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">Korean Soju Guide</Link>
+              <Link href="/en/contents/wiki/makgeolli-guide" className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">Makgeolli Guide</Link>
+              <Link href="/en/contents/wiki/korean-whisky" className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">Korean Whisky Guide</Link>
+              <Link href="/en/contents/wiki/korean-traditional-spirits" className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">Traditional Spirits</Link>
+              <Link href="/en/contents/wiki/korean-spirits-by-abv" className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">Spirits by ABV</Link>
+            </>
+          ) : (
+            <>
+              <Link href="/ko/contents/wiki/소주-가이드" className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">소주 가이드</Link>
+              <Link href="/ko/contents/wiki/막걸리-가이드" className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">막걸리 가이드</Link>
+              <Link href="/ko/contents/wiki/한국-위스키-증류소" className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">한국 위스키 증류소</Link>
+              <Link href="/ko/contents/wiki/전통주-종류-정리" className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">전통주 종류 정리</Link>
+              <Link href="/ko/contents/wiki/도수별-증류주" className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">도수별 증류주 추천</Link>
+            </>
+          )}
+        </div>
       </div>
 
       {/* Footer Text */}

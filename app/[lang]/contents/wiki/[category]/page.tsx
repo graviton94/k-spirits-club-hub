@@ -45,9 +45,15 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 
     const keywords = [...baseKeywords, ...longTailClassifications, ...longTailMetrics]
 
-    const title = isEn
+    let title = isEn
         ? `Everything about ${cat.nameEn}: History, Serving, & Food Pairing | K-Spirits Club Wiki`
         : `${cat.nameKo} 완벽 가이드: 역사, 종류, 최적 시음 온도 및 안주 추천 | 주류 백과사전`
+
+    if (isEn && title.length > 70) {
+        title = `${cat.nameEn} Guide: Serving & Pairing | K-Spirits Club`;
+    } else if (!isEn && title.length > 60) {
+        title = `${cat.nameKo} 완벽 가이드: 시음 및 페어링 | K-Spirits`;
+    }
 
     const description = isEn
         ? `Learn all about ${cat.nameEn}. Professional guide including historical origins, production methods, optimal serving temperatures, and food pairings.`
@@ -140,6 +146,8 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
         ]
     }
 
+    const ogImageUrl = `${baseUrl}/images/default-og.jpg`;
+
     return {
         title,
         description,
@@ -158,6 +166,13 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
             type: 'article',
             siteName: 'K-Spirits Club',
             url: `${baseUrl}/${lang}/contents/wiki/${slug}`,
+            images: [ogImageUrl],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title,
+            description,
+            images: [ogImageUrl],
         },
         other: {
             'application/ld+json': JSON.stringify(jsonLd),

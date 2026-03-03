@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import { db } from '@/lib/db';
 import { enrichSpiritWithAI, type SpiritEnrichmentInput } from '@/lib/services/gemini-translation';
 
@@ -66,13 +67,13 @@ export async function POST(req: NextRequest) {
 
         for (const spirit of spiritsToPublish) {
             try {
-                const updateData: any = { 
+                const updateData: any = {
                     isPublished: true,
                     isReviewed: true,
                     reviewedBy: 'ADMIN',
                     reviewedAt: new Date().toISOString()
                 };
-                
+
                 // Only update status to PUBLISHED if explicitly requested (default: true)
                 if (updateStatus) {
                     updateData.status = 'PUBLISHED';
@@ -94,7 +95,7 @@ export async function POST(req: NextRequest) {
                         };
 
                         const enrichmentData = await enrichSpiritWithAI(spiritInput);
-                        
+
                         // Add enriched data to update
                         updateData.name_en = enrichmentData.name_en;
                         updateData.description_en = enrichmentData.description_en;
@@ -103,7 +104,7 @@ export async function POST(req: NextRequest) {
                             pairing_guide_en: enrichmentData.pairing_guide_en,
                             pairing_guide_ko: enrichmentData.pairing_guide_ko
                         };
-                        
+
                         results.enriched.push(spirit.id);
                         console.log(`[bulk-publish] ✓ Enriched: ${spirit.id}`);
                     } catch (enrichError: any) {
@@ -112,7 +113,7 @@ export async function POST(req: NextRequest) {
                         // Continue with publish even if enrichment fails
                     }
                 }
-                
+
                 await db.updateSpirit(spirit.id, updateData);
                 results.success.push(spirit.id);
                 console.log(`[bulk-publish] ✓ Published: ${spirit.id} - ${spirit.name} (enriched: ${!skipEnrichment && results.enriched.includes(spirit.id)})`);
@@ -120,6 +121,10 @@ export async function POST(req: NextRequest) {
                 results.failed.push({ id: spirit.id, error: error.message });
                 console.error(`[bulk-publish] ✗ Failed to publish ${spirit.id}:`, error);
             }
+        }
+
+        if (results.success.length > 0) {
+            revalidateTag('related-spirits');
         }
 
         return NextResponse.json({
@@ -138,10 +143,10 @@ export async function POST(req: NextRequest) {
     } catch (error: any) {
         console.error('[bulk-publish] Error during bulk publish:', error);
         return NextResponse.json(
-            { 
-                error: 'Failed to bulk publish', 
-                details: error.message 
-            }, 
+            {
+                error: 'Failed to bulk publish',
+                details: error.message
+            },
             { status: 500 }
         );
     }

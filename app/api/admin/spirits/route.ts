@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import { db } from '@/lib/db';
 import { SpiritStatus } from '@/lib/db/schema';
 
@@ -67,6 +68,10 @@ export async function DELETE(req: NextRequest) {
         for (const id of spiritIds) {
             const success = await db.deleteSpirit(id);
             if (success) deletedCount++;
+        }
+
+        if (deletedCount > 0) {
+            revalidateTag('related-spirits');
         }
 
         return NextResponse.json({ success: true, deletedCount });

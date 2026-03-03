@@ -6,14 +6,16 @@ import { reviewsDb } from "@/lib/db/firestore-rest";
 import { getDictionary } from "@/lib/get-dictionary";
 import { Locale } from "@/i18n-config";
 import { getCanonicalUrl, getHreflangAlternates } from "@/lib/utils/seo-url";
-import { getSpiritRobotsMeta } from "@/lib/utils/indexable-tier";
+import { getSpiritRobotsMeta, isIndexableSpirit } from "@/lib/utils/indexable-tier";
+import { getRelatedSpirits } from "@/lib/utils/related-spirits";
 
 export const runtime = 'edge';
 
-const DESCRIPTION_MAX_LENGTH = 100;
+const DESCRIPTION_MAX_LENGTH = 140;
 
 // SEO suffix for spirit descriptions
-const SEO_SUFFIX = "주류 리뷰, 테이스팅 노트 정보를 K-Spirits Club에서 확인하세요.";
+const SEO_SUFFIX_KO = "K-Spirits Club";
+const SEO_SUFFIX_EN = "K-Spirits Club";
 
 // Regex pattern for detecting ending punctuation
 const ENDING_PUNCTUATION_REGEX = /[.!?…。！？]$/;
@@ -71,28 +73,6 @@ function transformReviewData(reviewsData: DbReview[]): TransformedReview[] {
   }));
 }
 
-function truncateDescription(description: string, maxLength: number): string {
-  if (!description || description.length <= maxLength) {
-    return description || "";
-  }
-  const truncated = description.substring(0, maxLength);
-  const lastSpace = truncated.lastIndexOf(' ');
-  return (lastSpace > 0 ? truncated.substring(0, lastSpace) : truncated) + '...';
-}
-
-function formatAbv(abv: number | null | undefined): string | null {
-  if (typeof abv === 'number' && abv >= 0 && abv <= 100) {
-    return `${abv}% ABV`;
-  }
-  return null;
-}
-
-function buildSeoDescription(baseDescription: string, suffix: string): string {
-  if (!baseDescription) return suffix;
-  const hasEndingPunctuation = ENDING_PUNCTUATION_REGEX.test(baseDescription);
-  return `${baseDescription}${hasEndingPunctuation ? '' : '.'} ${suffix}`;
-}
-
 // --- Metadata Generation ---
 
 export async function generateMetadata({
@@ -101,7 +81,13 @@ export async function generateMetadata({
   params: Promise<{ id: string; lang: string }>;
 }): Promise<Metadata> {
   const { id, lang } = await params;
-  const spirit = await db.getSpirit(id);
+  const isEn = lang === 'en';
+
+  // Need reviews for the new "X reviews" snippet feature
+  const [spirit, reviewsData] = await Promise.all([
+    db.getSpirit(id),
+    reviewsDb.getAllForSpirit(id).catch(() => [])
+  ]);
 
   if (!spirit) {
     return {
@@ -110,38 +96,79 @@ export async function generateMetadata({
     };
   }
 
-  const koName = spirit.name;
-  const enName = spirit.metadata?.name_en || spirit.name_en;
+  const isIndexable = isIndexableSpirit(spirit);
+  const koName = spirit.name || '';
+  const enName = spirit.metadata?.name_en || spirit.name_en || '';
+  const brand = spirit.distillery || '';
+  const abv = typeof spirit.abv === 'number' ? `${spirit.abv}` : '';
+  const type = spirit.category || '';
+  const reviewCount = Array.isArray(reviewsData) ? reviewsData.length : 0;
 
-  // Title based on language
+  // Title Building
   let title = '';
-  if (lang === 'en') {
-    title = enName ? `${enName} Info & Reviews` : `${koName} Info & Reviews`;
+  if (isEn) {
+    // EN: {Brand} {Name} {ABV}% {Type} Review & Tasting Notes | K-Spirits Club
+    const displayName = enName || koName;
+    const typeLabel = type ? type : 'Korean Spirit';
+    const brandPrefix = brand ? `${brand} ` : '';
+    const abvStr = abv ? ` ${abv}% ` : ' ';
+
+    let baseReviewTitle = `${brandPrefix}${displayName}${abvStr}${typeLabel} Review & Tasting Notes | K-Spirits Club`;
+
+    // Length optimization rules
+    if (baseReviewTitle.length > 75) {
+      baseReviewTitle = `${brandPrefix}${displayName}${abvStr}${typeLabel} Review | K-Spirits Club`;
+    }
+    if (baseReviewTitle.length > 65 && brandPrefix) {
+      baseReviewTitle = `${displayName}${abvStr}${typeLabel} Review | K-Spirits Club`;
+    }
+
+    title = baseReviewTitle;
   } else {
-    title = enName ? `${koName} (${enName}) 정보 및 리뷰` : `${koName} 정보 및 리뷰`;
+    // KO: {브랜드} {제품명} ({원어명}) {ABV}% {주종} 시음노트·리뷰 | K-Spirits Club
+    const brandPrefix = brand ? `${brand} ` : '';
+    const namePart = enName ? `${koName} (${enName})` : koName;
+    const abvStr = abv ? ` ${abv}% ` : ' ';
+    const typeLabel = type ? `${type} ` : '';
+
+    let baseReviewTitle = `${brandPrefix}${namePart}${abvStr}${typeLabel}시음노트·리뷰 | K-Spirits Club`;
+
+    // KO Length optimization
+    if (baseReviewTitle.length > 65 && brandPrefix) {
+      baseReviewTitle = `${namePart}${abvStr}${typeLabel}시음노트·리뷰 | K-Spirits Club`;
+    }
+
+    title = baseReviewTitle;
   }
 
-  const descriptionParts = [
-    spirit.category,
-    spirit.distillery,
-    spirit.country,
-    formatAbv(spirit.abv),
-  ].filter(Boolean);
+  // Meta Description Building
+  let fullDescription = '';
 
-  const baseDescription = descriptionParts.join(' · ');
+  if (!isIndexable) {
+    // Tier B: Minimize DB calls and logic, simple fallback description.
+    fullDescription = isEn
+      ? `Korean Spirit ${enName || koName} information on K-Spirits Club.`
+      : `${brand} ${koName} 주류 정보. K-Spirits Club.`;
+  } else {
+    // Tier A: Build the robust CTR-optimized snippet
+    const tagsData = spirit.tasting_note ? spirit.tasting_note.split(/[,\s#]+/) : (spirit.nose_tags || []);
+    const validTags = tagsData.filter(t => t && t.trim().length > 0).slice(0, 3);
+    const tagsString = validTags.join(', ');
 
-  // Localized summary (Strict Schema)
-  const isEn = lang === 'en';
-  const spiritDesc = isEn ? spirit.metadata?.description_en : spirit.metadata?.description_ko;
-  const extendedDescription = spiritDesc
-    ? `${baseDescription} - ${truncateDescription(spiritDesc, DESCRIPTION_MAX_LENGTH)}`
-    : baseDescription;
-
-  const seoSuffix = lang === 'en'
-    ? "Check out liquor reviews and tasting notes on K-Spirits Club."
-    : SEO_SUFFIX;
-
-  const fullDescription = buildSeoDescription(extendedDescription, seoSuffix);
+    if (isEn) {
+      const typeStr = type || 'spirit';
+      const abvStr = abv ? `ABV ${abv}%. ` : '';
+      const notesStr = validTags.length > 0 ? `Notes: ${tagsString}. ` : '';
+      const reviewStr = reviewCount > 0 ? `(${reviewCount} reviews). ` : '';
+      fullDescription = `${abvStr}${typeStr} from Korea. ${notesStr}Pairing tips + similar spirits. ${reviewStr}`;
+    } else {
+      const abvStr = abv ? `${abv}% ` : '';
+      const typeStr = type ? `${type}. ` : '';
+      const notesStr = validTags.length > 0 ? `향/맛 키워드: ${tagsString}. ` : '';
+      const reviewStr = reviewCount > 0 ? `(리뷰 ${reviewCount}개) ` : '';
+      fullDescription = `${abvStr}${typeStr}${notesStr}페어링·유사한 술 추천까지. ${reviewStr}`;
+    }
+  }
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://kspiritsclub.com';
 
   // 롱테일 키워드 펌핑 (동적 조합)
@@ -159,19 +186,21 @@ export async function generateMetadata({
 
   const keywords = [...baseKeywords, ...longTailKeywords].filter(Boolean);
 
-  // Build Dynamic OG Image URL
-  const searchParams = new URLSearchParams();
-  searchParams.set('title', isEn ? (spirit.name_en || spirit.name) : spirit.name);
-  searchParams.set('category', spirit.category || 'Spirits');
-  if (spirit.imageUrl) searchParams.set('image', spirit.imageUrl);
+  // Build Dynamic OG Image URL ONLY if indexable
+  let ogImageUrl = `${baseUrl}/images/default-og.jpg`; // Fallback asset
+  if (isIndexable) {
+    const searchParams = new URLSearchParams();
+    searchParams.set('title', isEn ? (enName || koName) : koName);
+    searchParams.set('category', spirit.category || 'Spirits');
+    if (spirit.imageUrl) searchParams.set('image', spirit.imageUrl);
 
-  const tagsData = spirit.tasting_note ? spirit.tasting_note.split(/[,\s]+/) : (spirit.nose_tags || []);
-  const validTags = tagsData.filter(Boolean).slice(0, 3);
-  if (validTags.length > 0) {
-    searchParams.set('tags', validTags.join(','));
+    const tagsData = spirit.tasting_note ? spirit.tasting_note.split(/[,\s#]+/) : (spirit.nose_tags || []);
+    const validTags = tagsData.filter(Boolean).slice(0, 3);
+    if (validTags.length > 0) {
+      searchParams.set('tags', validTags.join(','));
+    }
+    ogImageUrl = `${baseUrl}/api/og/spirit?${searchParams.toString()}`;
   }
-
-  const ogImageUrl = `${baseUrl}/api/og/spirit?${searchParams.toString()}`;
 
   // Canonical URL (current language version, without query strings)
   const canonicalUrl = getCanonicalUrl(`/${lang}/spirits/${id}`);
@@ -183,7 +212,7 @@ export async function generateMetadata({
   const robotsMeta = getSpiritRobotsMeta(spirit);
 
   return {
-    title,
+    title: title, // Handled within logic above
     description: fullDescription,
     keywords: keywords.join(', '),
     // Apply robots meta for Tier B spirits (noindex, follow)
@@ -193,16 +222,17 @@ export async function generateMetadata({
       languages: hreflangAlternates,
     },
     openGraph: {
-      title: `${title} | K-Spirits Club`,
+      title: title,
       description: fullDescription,
       images: [ogImageUrl],
       type: 'website',
+      url: canonicalUrl, // Absolute URL for OG
       locale: lang === 'ko' ? 'ko_KR' : 'en_US',
       siteName: 'K-Spirits Club',
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${title} | K-Spirits Club`,
+      title: title,
       description: fullDescription,
       images: [ogImageUrl],
     },
@@ -232,6 +262,14 @@ export default async function SpiritDetailPage({
     }
   } catch (error) {
     console.error('Failed to fetch reviews:', error);
+  }
+
+  // --- Fetch Related Spirits Server Side ---
+  // Save DB and cache costs: Only fetch related items if this page is indexable (Tier A)
+  const isIndexable = isIndexableSpirit(spirit);
+  let relatedSpirits: any[] = [];
+  if (isIndexable) {
+    relatedSpirits = await getRelatedSpirits(spirit.category, spirit.subcategory || undefined, spirit.abv, id);
   }
 
   // --- [SEO 최적화된 JSON-LD 구조화 데이터] ---
@@ -333,10 +371,10 @@ export default async function SpiritDetailPage({
     }),
 
     additionalProperty: [
-      ...(formatAbv(spirit.abv) ? [{
+      ...(typeof spirit.abv === 'number' && spirit.abv >= 0 ? [{
         '@type': 'PropertyValue',
         name: 'Alcohol By Volume',
-        value: formatAbv(spirit.abv),
+        value: `${spirit.abv}%`,
       }] : []),
       ...(spirit.country ? [{
         '@type': 'PropertyValue',
@@ -531,7 +569,7 @@ export default async function SpiritDetailPage({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
         />
       )}
-      <SpiritDetailClient spirit={spirit} reviews={reviews} lang={lang as Locale} dict={dictionary.detail} />
+      <SpiritDetailClient spirit={spirit} reviews={reviews} relatedSpirits={relatedSpirits} lang={lang as Locale} dict={dictionary.detail} />
     </>
   );
 }

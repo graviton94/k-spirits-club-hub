@@ -1,32 +1,31 @@
 import fs from 'fs';
+import path from 'path';
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env.local' });
+dotenv.config({ path: '.env', override: false });
+process.env.FIREBASE_PROJECT_ID = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'k-spirits-club';
 
-interface SpiritData {
-    id: string;
-    description_ko?: string;
-    description_en?: string;
-    imageUrl?: string;
-}
+async function run() {
+    const { getPublishedSpiritMetaWithQuality } = await import('./lib/db/firestore-rest');
 
-function run() {
-    try {
-        const rawData = fs.readFileSync('scripts/normalization_results.json', 'utf8');
-        const data: Record<string, SpiritData> = JSON.parse(rawData);
+    // Fetch all meta straight from Firestore the same way sitemap does
+    const allMeta = await getPublishedSpiritMetaWithQuality();
 
-        const spirits = Object.values(data);
-        const thin = spirits.find(s => !s.description_ko || s.description_ko.length < 50);
+    const thin = allMeta.find(s => {
+        const descKoLen = s.descriptionKoLength || 0;
+        const descEnLen = s.descriptionEnLength || 0;
+        const maxLen = Math.max(descKoLen, descEnLen);
+        const hasImage = !!(s.imageUrl || s.thumbnailUrl);
+        const hasAbv = typeof s.abv === 'number';
 
-        if (thin) {
-            console.log(`Found thin spirit (Tier B): ${thin.id}`);
-            // Also log a normal spirit for Tier A
-            const thick = spirits.find(s => s.description_ko && s.description_ko.length >= 300 && s.imageUrl);
-            if (thick) {
-                console.log(`Found thick spirit (Tier A): ${thick.id}`);
-            }
-        } else {
-            console.log('No thin spirits found.');
-        }
-    } catch (err) {
-        console.error('Error reading JSON:', err);
+        return maxLen < 300 || !hasImage || !hasAbv;
+    });
+
+    if (thin) {
+        console.log('True Tier B Spirit:', thin.id);
+        console.log(`Details: maxLen=${Math.max(thin.descriptionKoLength, thin.descriptionEnLength)}, img=${!!(thin.imageUrl || thin.thumbnailUrl)}, abv=${typeof thin.abv === 'number'}`);
+    } else {
+        console.log('No Tier B spirits found in the entire DB!');
     }
 }
 

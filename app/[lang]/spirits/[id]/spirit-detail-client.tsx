@@ -25,6 +25,7 @@ import { CATEGORY_NAME_MAP } from "@/lib/constants/categories";
 interface SpiritDetailClientProps {
     spirit: Spirit;
     reviews: any[];
+    relatedSpirits?: any[];
     lang: Locale;
     dict: any;
 }
@@ -62,7 +63,8 @@ const UI_TEXT = {
         searchGoogle: "구글 쇼핑 검색",
         searchWineSearcher: "Wine-Searcher",
         searchDailyshot: "데일리샷 검색",
-        viewDetail: "상세보기"
+        viewDetail: "상세보기",
+        relatedSpirits: "이런 주류는 어때요?"
     },
     en: {
         back: "Back",
@@ -96,13 +98,15 @@ const UI_TEXT = {
         searchGoogle: "Search on Google",
         searchWineSearcher: "Wine-Searcher",
         searchDailyshot: "Search on Dailyshot",
-        viewDetail: "View Details"
+        viewDetail: "View Details",
+        relatedSpirits: "You Might Also Like"
     }
 };
 
 import metadata from "@/lib/constants/spirits-metadata.json";
+import Link from "next/link"; // added for crawlable internal linking
 
-export default function SpiritDetailClient({ spirit, reviews, lang, dict }: SpiritDetailClientProps) {
+export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [], lang, dict }: SpiritDetailClientProps) {
     const router = useRouter();
     const pathname = usePathname();
     const isEn = lang === 'en';
@@ -504,6 +508,63 @@ export default function SpiritDetailClient({ spirit, reviews, lang, dict }: Spir
                     format="horizontal"
                 />
             </div>
+
+            {/* Related Spirits (Internal Linking P3 Requirements) */}
+            {relatedSpirits && relatedSpirits.length > 0 && (
+                <div className="mb-12">
+                    <h2 className="text-xl font-black mb-6 flex items-center gap-2 text-foreground">
+                        <span className="w-2 h-6 bg-amber-500 rounded-full"></span>
+                        {t.relatedSpirits}
+                    </h2>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        {relatedSpirits.map((item: any) => {
+                            const itemName = isEn ? (item.name_en || item.name) : item.name;
+                            const fallbackImage = getCategoryFallbackImage(item.category);
+
+                            return (
+                                <Link
+                                    href={`/${lang}/spirits/${item.id}`}
+                                    key={item.id}
+                                    className="group block p-3 bg-card border border-border hover:border-amber-500 rounded-2xl transition-all hover:-translate-y-1 shadow-sm"
+                                >
+                                    <div className="aspect-square bg-secondary rounded-xl mb-3 overflow-hidden flex items-center justify-center relative">
+                                        {item.imageUrl ? (
+                                            <img
+                                                src={getOptimizedImageUrl(item.imageUrl, 200)}
+                                                alt={itemName}
+                                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                                onError={(e) => {
+                                                    const target = e.target as HTMLImageElement;
+                                                    target.src = fallbackImage;
+                                                    target.classList.add('opacity-50');
+                                                }}
+                                            />
+                                        ) : (
+                                            <img src={fallbackImage} className="w-1/2 h-1/2 object-contain opacity-20 grayscale" alt="placeholder" />
+                                        )}
+                                        {item.abv !== null && item.abv !== undefined && (
+                                            <div className="absolute top-2 right-2 bg-black/60 backdrop-blur-sm text-white text-[10px] font-bold px-1.5 py-0.5 rounded-md">
+                                                {item.abv}%
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="px-1">
+                                        <div className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold mb-1 truncate">
+                                            {getLocalizedCategory(item.subcategory || item.category)}
+                                        </div>
+                                        <h3 className="font-bold text-sm text-foreground line-clamp-1 group-hover:text-amber-500 transition-colors">
+                                            {itemName}
+                                        </h3>
+                                        {item.distillery && (
+                                            <p className="text-xs text-muted-foreground truncate mt-0.5">{item.distillery}</p>
+                                        )}
+                                    </div>
+                                </Link>
+                            );
+                        })}
+                    </div>
+                </div>
+            )}
 
             {/* ... ReviewSection (passed prop? No, ReviewSection might handle its own logic, or I need to pass lang) */}
             {/* ... ReviewSection */}

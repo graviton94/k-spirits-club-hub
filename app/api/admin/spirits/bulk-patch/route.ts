@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import { db } from '@/lib/db';
 import { enrichSpiritWithAI } from '@/lib/services/gemini-translation';
 import { normalizeSpiritData } from '@/lib/utils/normalization';
@@ -87,6 +88,10 @@ export async function PATCH(req: NextRequest) {
                 console.error(`Failed to update spirit ${spirit.id}`, e);
             }
         }));
+
+        if (updatedCount > 0) {
+            revalidateTag('related-spirits');
+        }
 
         return NextResponse.json({
             success: true,
