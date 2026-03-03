@@ -63,13 +63,13 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
     const keywords = [...baseKeywords, ...longTailClassifications, ...longTailMetrics]
 
     let title = isEn
-        ? `Everything about ${cat.nameEn}: History, Serving, & Food Pairing | K-Spirits Club Wiki`
-        : `${cat.nameKo} 완벽 가이드: 역사, 종류, 최적 시음 온도 및 안주 추천 | 주류 백과사전`
+        ? `Everything about ${cat.nameEn}: History, Serving, & Food Pairing`
+        : `${cat.nameKo} 완벽 가이드: 역사, 종류, 최적 시음 온도 및 안주 추천`;
 
     if (isEn && title.length > 70) {
-        title = `${cat.nameEn} Guide: Serving & Pairing | K-Spirits Club`;
+        title = `${cat.nameEn} Guide: Serving & Pairing`;
     } else if (!isEn && title.length > 60) {
-        title = `${cat.nameKo} 완벽 가이드: 시음 및 페어링 | K-Spirits`;
+        title = `${cat.nameKo} 완벽 가이드: 시음 및 페어링`;
     }
 
     const description = isEn
@@ -177,8 +177,8 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
         },
         openGraph: {
             title: isEn
-                ? `${cat.nameEn} — Professional Spirits Wiki | K-Spirits Club`
-                : `${cat.nameKo} - 전문가용 주류 백과사전 | K-Spirits Club`,
+                ? `${cat.nameEn} — Professional Spirits Wiki`
+                : `${cat.nameKo} - 전문가용 주류 백과사전`,
             description: tagline,
             type: 'article',
             siteName: 'K-Spirits Club',

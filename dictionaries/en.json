@@ -2,10 +2,10 @@
     "meta": {
         "title": "K-Spirits Club | Premium Korean Spirits Platform",
         "description": "A platform for spirits enthusiasts worldwide, providing curated information and personalized tasting notes for Korean and global spirits.",
-        "explore": "Explore | K-Spirits Club",
-        "cabinet": "My Cabinet | K-Spirits Club",
-        "profile": "My Profile | K-Spirits Club",
-        "login": "Login | K-Spirits Club"
+        "explore": "Explore",
+        "cabinet": "My Cabinet",
+        "profile": "My Profile",
+        "login": "Login"
     },
     "nav": {
         "home": "Home",

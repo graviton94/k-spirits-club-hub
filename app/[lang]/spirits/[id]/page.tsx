@@ -113,14 +113,14 @@ export async function generateMetadata({
     const brandPrefix = brand ? `${brand} ` : '';
     const abvStr = abv ? ` ${abv}% ` : ' ';
 
-    let baseReviewTitle = `${brandPrefix}${displayName}${abvStr}${typeLabel} Review & Tasting Notes | K-Spirits Club`;
+    let baseReviewTitle = `${brandPrefix}${displayName}${abvStr}${typeLabel} Review & Tasting Notes`;
 
     // Length optimization rules
     if (baseReviewTitle.length > 75) {
-      baseReviewTitle = `${brandPrefix}${displayName}${abvStr}${typeLabel} Review | K-Spirits Club`;
+      baseReviewTitle = `${brandPrefix}${displayName}${abvStr}${typeLabel} Review`;
     }
     if (baseReviewTitle.length > 65 && brandPrefix) {
-      baseReviewTitle = `${displayName}${abvStr}${typeLabel} Review | K-Spirits Club`;
+      baseReviewTitle = `${displayName}${abvStr}${typeLabel} Review`;
     }
 
     title = baseReviewTitle;
@@ -131,11 +131,11 @@ export async function generateMetadata({
     const abvStr = abv ? ` ${abv}% ` : ' ';
     const typeLabel = type ? `${type} ` : '';
 
-    let baseReviewTitle = `${brandPrefix}${namePart}${abvStr}${typeLabel}시음노트·리뷰 | K-Spirits Club`;
+    let baseReviewTitle = `${brandPrefix}${namePart}${abvStr}${typeLabel}시음노트·리뷰`;
 
     // KO Length optimization
     if (baseReviewTitle.length > 65 && brandPrefix) {
-      baseReviewTitle = `${namePart}${abvStr}${typeLabel}시음노트·리뷰 | K-Spirits Club`;
+      baseReviewTitle = `${namePart}${abvStr}${typeLabel}시음노트·리뷰`;
     }
 
     title = baseReviewTitle;

@@ -2,10 +2,10 @@
     "meta": {
         "title": "K-Spirits Club | 프리미엄 한국 주류 플랫폼",
         "description": "국내외 엄선된 주류 정보와 개인화된 테이스팅 노트를 제공하는 전 세계 한국 주류 애호가들을 위한 플랫폼입니다.",
-        "explore": "탐색 | K-Spirits Club",
-        "cabinet": "내 술장 | K-Spirits Club",
-        "profile": "프로필 | K-Spirits Club",
-        "login": "로그인 | K-Spirits Club"
+        "explore": "탐색",
+        "cabinet": "내 술장",
+        "profile": "프로필",
+        "login": "로그인"
     },
     "nav": {
         "home": "홈",

@@ -27,12 +27,12 @@ export async function generateMetadata({ params }: ContentsPageProps): Promise<M
   const ogImageUrl = `${baseUrl}/default-og.jpg`;
 
   return {
-    title: isEn ? "K-Spirits Club | Contents Hub" : "K-Spirits Club | 컨텐츠 허브",
+    title: isEn ? "Contents Hub" : "컨텐츠 허브",
     description: isEn
       ? "Enjoy various contents like Spirit World Cup, Mini Games, and Tasting Notes."
       : "술 취향 월드컵, 미니게임, 테이스팅 노트 등 K-Spirits Club의 다양한 즐길거리를 만나보세요.",
     openGraph: {
-      title: isEn ? "K-Spirits Club | Contents Hub" : "K-Spirits Club | 컨텐츠 허브",
+      title: isEn ? "Contents Hub" : "컨텐츠 허브",
       description: isEn ? "Enjoy various spirits contents and events." : "다양한 주류 컨텐츠와 이벤트를 즐겨보세요.",
       type: "website",
       siteName: "K-Spirits Club",
@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: ContentsPageProps): Promise<M
     },
     twitter: {
       card: "summary_large_image",
-      title: isEn ? "K-Spirits Club | Contents Hub" : "K-Spirits Club | 컨텐츠 허브",
+      title: isEn ? "Contents Hub" : "컨텐츠 허브",
       description: isEn ? "Enjoy various spirits contents and events." : "다양한 주류 컨텐츠와 이벤트를 즐겨보세요.",
       images: [ogImageUrl]
     }
