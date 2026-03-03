@@ -18,36 +18,20 @@ export default function robots(): MetadataRoute.Robots {
         // All bots: Unified rules
         userAgent: '*',
         allow: [
-          // Core indexable routes
           '/ko/',
           '/en/',
-          // Static assets
-          '/images/',
-          '/icons/',
-          '/fonts/',
-          // Next.js optimized images
-          '/_next/image',
-          '/_next/static/',
         ],
         disallow: [
           // Private/user-specific pages
-          '/admin/',
-          '/cabinet/',
-          '/me',
-          '/login',
-          '/private/',
+          '/ko/cabinet',
+          '/en/cabinet',
+          '/ko/me',
+          '/en/me',
+          '/ko/admin',
+          '/en/admin',
           // API routes (no indexing value)
           '/api/',
-          // Dynamic query strings (to prevent duplicate URLs)
-          '/*?*',
-          // Search result pages with filters
-          '/*/explore?*',
         ],
-      },
-      // Block AI training bots (optional - protects proprietary content)
-      {
-        userAgent: ['GPTBot', 'ChatGPT-User', 'CCBot', 'anthropic-ai', 'Claude-Web'],
-        disallow: ['/'],
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
