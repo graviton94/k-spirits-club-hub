@@ -1,6 +1,7 @@
 import { getDictionary } from "@/lib/get-dictionary";
 import { Locale } from "@/i18n-config";
 import CabinetClient from "@/components/cabinet/CabinetClient";
+import { getCanonicalUrl, getHreflangAlternates } from "@/lib/utils/seo-url";
 
 export const runtime = 'edge';
 
@@ -13,9 +14,17 @@ import { Metadata } from 'next';
 export async function generateMetadata({ params }: CabinetPageProps): Promise<Metadata> {
   const { lang } = await params;
   const dict = await getDictionary(lang as Locale);
+
+  const canonicalUrl = getCanonicalUrl(`/${lang}/cabinet`);
+  const hreflangAlternates = getHreflangAlternates('/cabinet');
+
   return {
     title: dict.meta.cabinet,
     description: dict.meta.description,
+    alternates: {
+      canonical: canonicalUrl,
+      languages: hreflangAlternates,
+    },
   };
 }
 

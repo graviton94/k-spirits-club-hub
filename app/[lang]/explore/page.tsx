@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import ExploreContent from "@/components/ui/ExploreContent";
 import { getDictionary } from "@/lib/get-dictionary";
 import { Locale } from "@/i18n-config";
+import { getCanonicalUrl, getHreflangAlternates } from "@/lib/utils/seo-url";
 
 export const runtime = 'edge';
 export const revalidate = 60;
@@ -17,12 +18,20 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     ? "Explore various spirits by category including Whisky, Soju, Makgeolli, and more. Search and compare spirits from Korea and around the world."
     : "위스키, 전통주, 증류주 등 다양한 주류를 카테고리별로 탐색하세요. 싱글몰트, 버번, 막걸리, 소주 등 한국과 전세계의 술을 검색하고 비교할 수 있습니다.";
 
+  // Canonical URL and hreflang alternates
+  const canonicalUrl = getCanonicalUrl(`/${lang}/explore`);
+  const hreflangAlternates = getHreflangAlternates('/explore');
+
   return {
     title,
     description,
     keywords: isEn
       ? ["Spirits Explorer", "Whisky Categories", "Korean Spirits Search", "Soju", "Makgeolli"]
       : ["주류 탐색", "위스키 카테고리", "전통주 검색", "증류주 종류", "싱글몰트", "버번", "막걸리", "소주"],
+    alternates: {
+      canonical: canonicalUrl,
+      languages: hreflangAlternates,
+    },
     openGraph: {
       title,
       description,

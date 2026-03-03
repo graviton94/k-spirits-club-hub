@@ -5,6 +5,7 @@ import { db } from "@/lib/db/index";
 import { reviewsDb } from "@/lib/db/firestore-rest";
 import { getDictionary } from "@/lib/get-dictionary";
 import { Locale } from "@/i18n-config";
+import { getCanonicalUrl, getHreflangAlternates } from "@/lib/utils/seo-url";
 
 export const runtime = 'edge';
 
@@ -171,15 +172,19 @@ export async function generateMetadata({
 
   const ogImageUrl = `${baseUrl}/api/og/spirit?${searchParams.toString()}`;
 
+  // Canonical URL (current language version, without query strings)
+  const canonicalUrl = getCanonicalUrl(`/${lang}/spirits/${id}`);
+
+  // Hreflang alternates (both ko and en versions)
+  const hreflangAlternates = getHreflangAlternates(`/spirits/${id}`);
+
   return {
     title,
     description: fullDescription,
     keywords: keywords.join(', '),
     alternates: {
-      languages: {
-        'ko-KR': `${baseUrl}/ko/spirits/${id}`,
-        'en-US': `${baseUrl}/en/spirits/${id}`,
-      },
+      canonical: canonicalUrl,
+      languages: hreflangAlternates,
     },
     openGraph: {
       title: `${title} | K-Spirits Club`,
