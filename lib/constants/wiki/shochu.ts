@@ -150,5 +150,148 @@ export const shochu: SpiritCategory = {
             "구운 생선 및 스테이크"
         ],
         dbCategories: ['소주']
+    },
+    sectionsEn: {
+        definition: "Shochu is a traditional Japanese distilled spirit produced by saccharifying and fermenting starchy or sugary raw materials—such as sweet potato, barley, rice, or brown sugar—using Koji (mold cultures) before distillation. It is categorized into 'Honkaku' (authentic) shochu, which preserves raw ingredient character, and 'Korui' shochu, known for its clean profile. It is widely enjoyed as a food-pairing spirit, often diluted with water or tea.",
+        history: "Production records date back to the mid-16th century, primarily in the Kyushu region of southern Japan. Along with Okinawa's 'Awamori,' it formed a distinct distillation culture. While the modern era introduced continuous stills for mass-market consumption, regional 'Honkaku' shochu utilizing local agriculture has successfully carved out a premium market based on craft and terroir.",
+        classifications: [
+            {
+                name: "Honkaku Shochu (Authentic)",
+                criteria: "Single-distilled in a pot still to preserve the essence of the raw ingredients.",
+                description: "The traditional method where the inherent aromas of sweet potato, barley, or rice—along with Koji fermentation characteristics—remain fully intact. It is enjoyed for its pure, additive-free flavor profile."
+            },
+            {
+                name: "Imo Shochu (Sweet Potato)",
+                criteria: "Primary ingredient: Sweet Potato (Satsuma-imo).",
+                description: "Characterized by a distinct earthy sweetness, savory depth, and heavy body. Atmospheric distillation emphasizes roasted notes, while vacuum distillation highlights citrusy aromas."
+            },
+            {
+                name: "Mugi Shochu (Barley)",
+                criteria: "Primary ingredient: Barley.",
+                description: "Centers on nutty, toasted, and cereal-like flavors. Styles vary from extremely clean (via vacuum distillation) to rich and oily (via atmospheric distillation)."
+            },
+            {
+                name: "Kome Shochu (Rice)",
+                criteria: "Primary ingredient: Rice.",
+                description: "Features delicate grain sweetness and vibrant 'Ginjo' florals similar to Sake. Its clean texture makes it an exceptional pairing for delicate Japanese cuisine."
+            },
+            {
+                name: "Awamori (Okinawan Style)",
+                criteria: "Traditional Okinawan method using only Black Koji and 100% Thai rice.",
+                description: "Known for a powerful body and deep Umami. Expressions aged for 3+ years are called 'Kousu' (vintage), developing dense aromas of vanilla and chocolate."
+            }
+        ],
+        sensoryMetrics: [
+            {
+                metric: "Alcohol by Volume",
+                label: "ABV (%)",
+                value: "20% ~ 25% (Standard) / 37%+ (Genshu)",
+                description: "The standard 25% is designed to release maximum aromatic lift when diluted. 'Genshu' (undiluted) offers a more powerful, concentrated impact."
+            },
+            {
+                metric: "Distillation Pressure",
+                label: "Pressure",
+                value: "Atmospheric / Vacuum",
+                description: "Atmospheric distillation yields rich, savory, traditional styles; vacuum distillation creates lighter, more aromatic, and modern profiles."
+            },
+            {
+                metric: "Koji Character",
+                label: "Koji Type",
+                value: "Black / White / Yellow",
+                description: "Black Koji provides a robust body; White Koji offers crispness and balance; Yellow Koji imparts floral, sake-like aromatics."
+            },
+            {
+                metric: "Aromatic Persistence",
+                label: "Finish Length",
+                value: "Clean to Long Savory",
+                description: "Ranges from a sharp, clean exit to a long-lasting savory finish depending on the ingredient texture and maturation period."
+            }
+        ],
+        coreIngredients: [
+            {
+                type: "Primary Material",
+                name: "Regional Agriculture (Sweet Potato, Barley, Rice, etc.)",
+                description: "Fresh, local ingredients reflecting the terroir of the production region define the core identity of Shochu."
+            },
+            {
+                type: "Fermentation Agent",
+                name: "Koji-kin (Mold Cultures)",
+                description: "Converts starch to sugar while producing organic acids that enhance Umami and ensure natural preservation."
+            },
+            {
+                type: "Maturation Vessel",
+                name: "Traditional Clay Pots (Kame) & Oak Casks",
+                description: "Kame aging creates a mellow, round mouthfeel; oak aging adds amber hues and layers of vanilla aromatics."
+            }
+        ],
+        manufacturingProcess: [
+            {
+                step: "Seiku",
+                name: "Koji Cultivation",
+                description: "Inoculating steamed grains with Koji mold to secure enzymes for fermentation and establish the aromatic backdrop."
+            },
+            {
+                step: "Fermentation",
+                name: "Primary & Secondary Fermentation",
+                description: "A two-stage process: first building a yeast starter, then adding the main ingredients to generate complex, ingredient-driven flavors."
+            },
+            {
+                step: "Distillation",
+                name: "Single Pot Distillation",
+                description: "Extracting clear alcohol while precisely designing aromatic density through pressure and temperature control."
+            }
+        ],
+        servingGuidelines: {
+            recommendedGlass: "Rock Glass, Ceramic Cup, or Tulip Nosing Glass",
+            optimalTemperatures: [
+                {
+                    temp: "5~10°C (Chilled/Rocks)",
+                    description: "Maximizes refreshment when mixed with soda or served over ice."
+                },
+                {
+                    temp: "15~25°C (Room Temp)",
+                    description: "Ideal for 'Mizuwari' (water-mixed) or drinking neat to appreciate delicate aromatic layers."
+                },
+                {
+                    temp: "40~45°C (Warm)",
+                    description: "The range where the savory 'nutty' notes of sweet potato or barley expand most brilliantly (Oyuwari)."
+                }
+            ],
+            methods: [
+                {
+                    name: "Oyuwari (Hot Water Mix)",
+                    description: "Pouring hot water first, then adding shochu (usually 6:4 ratio). The heat causes savory aromas to bloom elegantly."
+                },
+                {
+                    name: "On the Rocks",
+                    description: "Drinking over large ice cubes to enjoy the chilled texture and flavor evolution as the ice slowly melts."
+                },
+                {
+                    name: "Mizuwari (Cold Water Mix)",
+                    description: "Mixing with room-temp or cold water. Pre-mixing a day in advance (Maewari) results in exceptional smoothness."
+                },
+                {
+                    name: "Soda-wari (Highball)",
+                    description: "Mixing with carbonated water; highly popular for Barley Shochu due to its refreshing, crisp synergy."
+                }
+            ]
+        },
+        flavorTags: [
+            { label: "Savory Sweet Potato", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Toasty/Barley", color: "bg-yellow-600/20 text-zinc-950 dark:text-yellow-300" },
+            { label: "Floral Ginjo-ka", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-300" },
+            { label: "Clean/Mineral", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
+            { label: "Citrus/Lime", color: "bg-emerald-400/20 text-zinc-950 dark:text-emerald-300" },
+            { label: "Caramel/Vanilla", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" }
+        ],
+        foodPairing: [
+            "Yakitori (Grilled Chicken Skewers)",
+            "Braised Pork (Rafute / Kakuni)",
+            "Sashimi and Sushi (especially with Rice Shochu)",
+            "Karaage and Tempura",
+            "Salted Roe (Mentaiko) and Fermented Foods",
+            "Grilled Fish and Steaks"
+        ],
+        dbCategories: ['소주']
     }
 }

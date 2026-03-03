@@ -88,6 +88,8 @@ export interface SpiritCategory {
     taglineEn: string
     /** Tailwind 테마 색상 키 (amber, rose, sky …) */
     color: string
-    /** 본문 섹션 */
+    /** 본문 섹션 (기본/국문) */
     sections?: SpiritSection
+    /** 본문 섹션 (영문) */
+    sectionsEn?: SpiritSection
 }

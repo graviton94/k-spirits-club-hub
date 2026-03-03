@@ -165,5 +165,163 @@ export const champagne: SpiritCategory = {
             "과일 타르트 및 디저트"
         ],
         dbCategories: ['과실주']
+    },
+    sectionsEn: {
+        definition: "Champagne is a high-quality sparkling wine produced exclusively in the Champagne region of France under strict AOC regulations. It acquires its natural carbonation through a secondary fermentation in the bottle, a process known as the 'méthode traditionnelle' (traditional method).",
+        history: "Due to the cool climate of the Champagne region, base wines were historically high in acidity. In the 17th and 18th centuries, advancements in bottling, corks, and glass technology allowed in-bottle fermentation to become standardized. By the 19th century, processes such as 'remuage' (riddling) and 'dégorgement' (disgorgement) were refined to remove sediment efficiently, forming the foundation of modern production. In the 20th century, the AOC system was established to strictly regulate origin, production methods, and aging periods, making 'Champagne' a global symbol of prestige.",
+        classifications: [
+            {
+                name: "Non-Vintage (NV) / Brut Sans Année (BSA)",
+                criteria: "A blend of base wines from multiple vintages and reserve wines to maintain a consistent house style; aged for a minimum of 15 months.",
+                description: "The most definitive expression of a Champagne house's identity. It features a fine balance of acidity, fruit, and autolysis (brioche/toast). The ratio of reserve wines and the aging method dictate its unique profile."
+            },
+            {
+                name: "Vintage (Millésimé)",
+                criteria: "Made exclusively from grapes harvested in a single year; released only in exceptional years declared by the house; aged for a minimum of 36 months.",
+                description: "Reflects the specific climatic characteristics of the year and possesses significant structure. It is characterized by notes of nuts, bread, and cream from long yeast contact, alongside tertiary notes like honey, mushrooms, and spices developed over time."
+            },
+            {
+                name: "Blanc de Blancs",
+                criteria: "Made exclusively from white grape varieties (typically 100% Chardonnay).",
+                description: "Defined by Chardonnay's characteristic acidity, citrus notes, and chalky minerality. While linear and sharp in its youth, it develops deep flavors of toast and hazelnut with aging."
+            },
+            {
+                name: "Blanc de Noirs",
+                criteria: "Made exclusively from black grape varieties (Pinot Noir and/or Pinot Meunier).",
+                description: "Offers rich fruit density and body, with prominent red fruit (strawberry/cherry) and roasted nut nuances. Its broad versatility makes it an excellent pairing for meat dishes."
+            },
+            {
+                name: "Rosé Champagne",
+                criteria: "Produced either by blending (adding red wine) or the 'saignée' method (macerating skins).",
+                description: "Focused on red fruit aromas with good structure. The saignée method tends to produce deeper flavors and a more 'wine-like' texture."
+            },
+            {
+                name: "Prestige Cuvée",
+                criteria: "A selection of the house's finest base wines; undergoes ultra-long-term aging on lees.",
+                description: "Features exquisite effervescence (perlage), deep autolysis, and a long mineral finish. It is the pinnacle of Champagne, judged by its precision and length rather than raw power."
+            },
+            {
+                name: "Brut Nature / Dosage Zéro",
+                criteria: "Dosage (added sugar) of 0-3 g/L.",
+                description: "The driest style, where acidity and minerality are presented directly. Ideal for experiencing the pure maturity of the base wine."
+            },
+            {
+                name: "Extra Brut",
+                criteria: "Dosage of 0-6 g/L.",
+                description: "Very dry and crisp. Pairs perfectly with seafood, particularly oysters or sashimi."
+            },
+            {
+                name: "Brut",
+                criteria: "Dosage of 0-12 g/L.",
+                description: "The most popular style, offering a superb balance of acidity, fruit, and yeastiness. Highly versatile for everything from an aperitif to main courses."
+            },
+            {
+                name: "Demi-Sec",
+                criteria: "Dosage of 32-50 g/L.",
+                description: "Features a clear sweetness, optimized for dessert pairings. It leaves a soft and rounded impression on the palate."
+            }
+        ],
+        sensoryMetrics: [
+            {
+                metric: "Sweetness (Dosage)",
+                label: "Dosage",
+                value: "0-12 g/L (for Brut)",
+                description: "The final sugar level; lower dosage levels result in a drier profile with sharper minerality."
+            },
+            {
+                metric: "Effervescence (Pressure)",
+                label: "Internal Pressure",
+                value: "Approx. 5-6 bar",
+                description: "The high pressure creates an energetic sensation of bubbles, the fineness of which varies with glass shape and temperature."
+            },
+            {
+                metric: "Acidity (pH)",
+                label: "Acidity",
+                value: "pH 3.0-3.2",
+                description: "The high acidity derived from the cool climate creates the characteristic tension and refreshment of Champagne."
+            },
+            {
+                metric: "Lees Aging (Sur lie)",
+                label: "Autolytic Intensity",
+                value: "12-120+ months",
+                description: "Longer aging periods develop complex flavors of brioche, toast, and biscuit, while enhancing the creamy texture."
+            }
+        ],
+        coreIngredients: [
+            {
+                type: "Grape Varieties",
+                name: "Chardonnay / Pinot Noir / Pinot Meunier",
+                description: "The three primary grapes of Champagne, respectively responsible for acidity/structure, body/character, and fruitiness/approachability."
+            },
+            {
+                type: "Fermentation Agent",
+                name: "Liqueur de Tirage & Yeast",
+                description: "Key components that induce secondary fermentation, creating natural carbonation and autolytic flavors."
+            },
+            {
+                type: "House Asset",
+                name: "Reserve Wines",
+                description: "Wines from previous harvests kept in stock to ensure the consistency and complexity of Non-Vintage labels."
+            }
+        ],
+        manufacturingProcess: [
+            { step: "Winemaking", name: "Primary Fermentation & Assemblage", description: "Creating base wines and blending varieties and vintages to achieve the house's signature balance." },
+            { step: "Secondary Fermentation", name: "Tirage & In-Bottle Fermentation", description: "Adding sugar and yeast to the bottle to trap carbon dioxide, creating the sparkle." },
+            { step: "Aging/Riddling", name: "Lees Aging & Remuage", description: "Developing flavor through long-term aging and moving sediment toward the bottleneck." },
+            { step: "Finishing", name: "Dégorgement & Dosage", description: "Removing sediment, adjusting the final sweetness, and sealing with a cork." }
+        ],
+        servingGuidelines: {
+            recommendedGlass: "Tulip-shaped Champagne Glass or Medium-sized White Wine Glass",
+            optimalTemperatures: [
+                {
+                    temp: "6-8°C",
+                    description: "Suitable for Brut Nature or aperitif-style NVs. Bubbles and acidity become sharp and clear."
+                },
+                {
+                    temp: "8-10°C",
+                    description: "The ideal temperature for enjoying the balance of a standard Brut NV, where fruit and yeast aromas are harmonious."
+                },
+                {
+                    temp: "10-12°C",
+                    description: "Recommended for Vintage or Prestige Cuvées. Complex notes like brioche and nuts unfold beautifully."
+                }
+            ],
+            methods: [
+                {
+                    name: "Silent Opening (The Whisperer)",
+                    description: "A traditional method of opening the cork with a faint hiss rather than a loud pop, minimizing the loss of carbonation."
+                },
+                {
+                    name: "Slow Pouring",
+                    description: "Tilting the glass and pouring slowly to minimize surface area disturbance and preserve the bubbles for longer."
+                },
+                {
+                    name: "Chilling",
+                    description: "Immersion in an ice bucket with a 1:1 ratio of ice and water for 20-30 minutes for faster and more even cooling than a refrigerator."
+                },
+                {
+                    name: "Proper Glassware",
+                    description: "Choose a tulip glass for aroma or a white wine glass for complexity. Ensure no detergent residue remains, as it can inhibit bubble formation."
+                }
+            ]
+        },
+        flavorTags: [
+            { label: "Lemon/Grapefruit Citrus", color: "bg-yellow-400/20 text-zinc-950 dark:text-yellow-300" },
+            { label: "Green Apple/Pear", color: "bg-emerald-400/20 text-zinc-950 dark:text-emerald-300" },
+            { label: "White Flowers", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-300" },
+            { label: "Chalky/Mineral", color: "bg-stone-400/20 text-zinc-950 dark:text-stone-300" },
+            { label: "Brioche/Toast", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Biscuit/Bread", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Creamy Texture", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" }
+        ],
+        foodPairing: [
+            "Fresh Oysters and various Seafood",
+            "Sushi and Sashimi",
+            "Fried Chicken and Fried foods",
+            "Cream Pasta and Risotto",
+            "Soft Cheeses like Brie or Camembert",
+            "Fruit Tarts and Desserts"
+        ],
+        dbCategories: ['과실주']
     }
 }

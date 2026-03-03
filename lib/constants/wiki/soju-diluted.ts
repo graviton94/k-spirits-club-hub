@@ -124,5 +124,122 @@ export const sojuDiluted: SpiritCategory = {
             "각종 마른안주 및 과일"
         ],
         dbCategories: ['소주']
+    },
+    sectionsEn: {
+        definition: "Diluted Soju is a distilled spirit created by diluting highly refined neutral spirits (ethanol) with purified water and blending in sweeteners to adjust the flavor profile. Rather than focusing on the aromatics of raw ingredients, it emphasizes alcoholic clarity, a smooth throat-feel, and a subtle lingering sweetness. It is South Korea's most iconic mass-market beverage.",
+        history: "In the 1960s, grain distillation for spirits was banned due to food shortages, leading to the dominance of diluting high-purity spirits produced via continuous stills. As distilling technology advanced, ABV levels gradually decreased (low-ABV trend). Recently, the category has evolved to reflect modern health trends with 'Zero Sugar' and various 'Flavored' product lines.",
+        classifications: [
+            {
+                name: "Standard Soju (Regular)",
+                criteria: "High-purity neutral spirits + Purified water + Sweeteners / 16-17% ABV.",
+                description: "The most common form of Soju. Designed to reduce bitterness while adding a touch of savory depth and sweetness, it serves to cleanse the palate when paired with oily or spicy Korean dishes."
+            },
+            {
+                name: "Zero Sugar",
+                criteria: "Uses alternative sweeteners like enzymatically modified Stevia instead of fructose or sugar.",
+                description: "Designed with 0g of sugar to align with wellness trends. It features a drier, cleaner finish compared to standard soju, with less sticky residue on the palate."
+            },
+            {
+                name: "Flavored / Fruit Soju",
+                criteria: "Diluted soju base with added fruit juices or flavorings / 12-14% ABV.",
+                description: "Increases accessibility by adding refreshing aromas and sweetness from fruits like grapefruit, peach, and green grape. Ideal for beginners or casual social settings."
+            }
+        ],
+        sensoryMetrics: [
+            {
+                metric: "Crispness",
+                label: "Cleanliness",
+                value: "Neutral and Refreshing",
+                description: "Utilizes spirits free of off-flavors, resulting in an exceptionally clean aftertaste. This crispness is maximized when served ice-cold."
+            },
+            {
+                metric: "Sweetness Balance",
+                label: "Sweetness",
+                value: "Dry to Subtle Sweet",
+                description: "Subtle sweeteners added to offset alcohol bitterness make the throat-feel significantly smoother."
+            },
+            {
+                metric: "Body / Viscosity",
+                label: "Mouthfeel",
+                value: "Light and Smooth",
+                description: "Passes lightly over the tongue. Zero Sugar variants tend to have an even lighter and more ethereal texture."
+            }
+        ],
+        coreIngredients: [
+            {
+                type: "Primary Material",
+                name: "Neutral Spirits (Continuous Distillation)",
+                description: "The backbone of soju, distilled to over 95% purity regardless of the raw material to remove all odors and impurities."
+            },
+            {
+                type: "Water",
+                name: "Multi-Filtered Purified Water",
+                description: "Accounting for over 80% of the composition, it is the key factor in determining the smooth swallow and clean taste."
+            },
+            {
+                type: "Seasoning",
+                name: "Sweeteners (Stevia, Erythritol, etc.)",
+                description: "Refines the sharp edges of alcohol and imparts a savory 'Umami' quality to complete the signature mass-market flavor."
+            }
+        ],
+        manufacturingProcess: [
+            {
+                step: "Refinement",
+                name: "Spirit Purification & Dilution",
+                description: "Neutral spirits are filtered through activated carbon to eliminate off-tastes, then mixed with purified water to reach the target ABV."
+            },
+            {
+                step: "Blending",
+                name: "Precision Seasoning & Homogenization",
+                description: "Sweetening components are precisely added and circulated for a set period to ensure water and alcohol are perfectly integrated."
+            },
+            {
+                step: "Finishing",
+                name: "Final Filtration & Bottling",
+                description: "Micro-filtered to remove any remaining particles and bottled in transparent glass to maintain the product's image of purity."
+            }
+        ],
+        servingGuidelines: {
+            recommendedGlass: "Traditional Soju Glass (Shot Glass)",
+            optimalTemperatures: [
+                {
+                    temp: "4~8°C (Refrigerated)",
+                    description: "The 'Golden Temperature' where alcohol burn is suppressed and the refreshing, smooth throat-feel is maximized."
+                },
+                {
+                    temp: "-2~0°C (Slushy)",
+                    description: "A state just before freezing that minimizes alcohol aroma and provides a sharp, thrilling chill."
+                }
+            ],
+            methods: [
+                {
+                    name: "Chilled Shot",
+                    description: "The standard method: enjoying cold soju in a single shot or small sips to complement various side dishes."
+                },
+                {
+                    name: "Somaek (Soju + Beer)",
+                    description: "A popular Korean mixing culture (typically 1:3 ratio) that combines the carbonation of beer with the kick of soju, often yielding a whisky-like richness."
+                },
+                {
+                    name: "Soju Tonic",
+                    description: "Mixed with tonic water, ice, and a lemon slice. Enjoyed as a light, clean long drink similar to a Gin & Tonic."
+                }
+            ]
+        },
+        flavorTags: [
+            { label: "Clean/Neutral", color: "bg-sky-600/20 text-zinc-950 dark:text-sky-300" },
+            { label: "Subtle Sweetness", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Smooth Swallowing", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
+            { label: "Dry Finish", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" },
+            { label: "Clear Aftertaste", color: "bg-emerald-500/20 text-zinc-950 dark:text-emerald-300" }
+        ],
+        foodPairing: [
+            "Samgyeopsal (Grilled Pork Belly)",
+            "Kimchi-jjigae and Spicy Stews",
+            "Spicy Stir-fried Pork or Chicken Feet",
+            "Sashimi and Seafood Platters",
+            "Dried Snacks and Fruit"
+        ],
+        dbCategories: ['소주']
     }
 }

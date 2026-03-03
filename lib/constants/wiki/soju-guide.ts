@@ -1,12 +1,12 @@
 import { SpiritCategory } from './types'
 
-export const sojuGuideKo: SpiritCategory = {
-    slug: '소주-가이드',
+export const sojuGuide: SpiritCategory = {
+    slug: 'soju-guide',
     emoji: '🍶',
     nameKo: '소주 가이드',
     nameEn: 'Soju Guide',
     taglineKo: '국민 술 희석식부터 프리미엄 증류식까지 소주의 모든 것',
-    taglineEn: 'The ultimate guide to Korean Soju',
+    taglineEn: 'The ultimate guide to Korean Soju: from green bottles to premium craft',
     color: 'sky',
     sections: {
         definition: "소주는 크게 두 가지로 나뉩니다. 첫째는 우리가 흔히 접하는 초록색 병의 '희석식 소주'이며, 둘째는 쌀 등 곡물을 빚어 증류한 뒤 숙성하는 '증류식 소주'입니다.",
@@ -15,7 +15,7 @@ export const sojuGuideKo: SpiritCategory = {
             {
                 name: "희석식 소주 (초록병)",
                 criteria: "연속 증류한 주정에 물과 감미료를 희석하여 제조.",
-                description: "깔끔하고 시원한 목넘김, 비교적 저렴한 가격으로 삼겹살, 국밥 등 다양한 한식과 완벽한 궁합을 자랑합니다. 알코올 도수는 보통 16~17% 내외입니다."
+                description: "깔끔하고 시원한 목넘김, 비교적 저렴한 가격으로 삼겹살, 국밥 등 다양한 한식과 완벽한 합을 자랑합니다. 알코올 도수는 보통 16~17% 내외입니다."
             },
             {
                 name: "증류식 소주 (전통/프리미엄)",
@@ -74,6 +74,75 @@ export const sojuGuideKo: SpiritCategory = {
             "김치찌개 / 된장찌개",
             "모듬 회",
             "매운 족발 및 볶음 요리"
+        ],
+        dbCategories: ['소주']
+    },
+    sectionsEn: {
+        definition: "Soju is generally categorized into two types: the ubiquitous 'diluted soju' in green bottles, and 'distilled soju' crafted from grains and aged for depth.",
+        history: "Originating as traditional distilled spirits introduced from the Mongols during the Goryeo Dynasty, soju evolved into mass-market diluted versions during 20th-century grain shortages. Today, premium distilled soju is experiencing a modern revival.",
+        classifications: [
+            {
+                name: "Diluted Soju (Green Bottle)",
+                criteria: "Produced by diluting 95% pure ethanol with water and sweeteners.",
+                description: "Clean, light-bodied, and highly affordable. It is a cultural staple designed to pair with spicy and greasy Korean foods."
+            },
+            {
+                name: "Distilled Soju (Premium/Traditional)",
+                criteria: "Crafted by fermenting and distilling grains in a pot still.",
+                description: "Retains the rich, earthy flavors of the base ingredients. Offers a smooth, complex profile with varying ABV levels from 20% to over 50%."
+            }
+        ],
+        sensoryMetrics: [
+            {
+                metric: "Strength and Flavor",
+                label: "ABV Range",
+                value: "16% ~ 53%",
+                description: "Lower ABV diluted versions emphasize refreshment, while high-proof distilled versions focus on aromatic complexity."
+            }
+        ],
+        coreIngredients: [
+            {
+                type: "Base",
+                name: "Tapioca/Grain (Diluted) vs Rice/Grain (Distilled)",
+                description: "Diluted soju uses high-yield starch sources for purity; distilled soju highlights the terroir and quality of local grains."
+            }
+        ],
+        manufacturingProcess: [
+            {
+                step: "Distillation Method",
+                name: "Continuous vs Pot Still",
+                description: "Continuous stills produce high-purity neutral spirits, while traditional pot stills precisely capture the character of the raw ingredients."
+            }
+        ],
+        servingGuidelines: {
+            recommendedGlass: "Traditional soju cups or tulip-shaped tasting glasses for premium varieties.",
+            optimalTemperatures: [
+                {
+                    temp: "Chilled (4-8°C)",
+                    description: "Best for diluted soju to minimize alcohol burn and maximize crispness."
+                },
+                {
+                    temp: "Room Temperature (18-20°C)",
+                    description: "Ideal for premium distilled soju to allow complex aromas to unfurl."
+                }
+            ],
+            methods: [
+                {
+                    name: "Neat, Rocks, or Highball",
+                    description: "Enjoy chilled neat with meals, on the rocks in the evening, or as a refreshing highball with soda water."
+                }
+            ]
+        },
+        flavorTags: [
+            { label: "Clean Alcohol", color: "bg-sky-500/20 text-zinc-950 dark:text-sky-300" },
+            { label: "Subtle Sweetness", color: "bg-pink-500/20 text-zinc-950 dark:text-pink-300" },
+            { label: "Nutty Grain", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" }
+        ],
+        foodPairing: [
+            "Korean BBQ (Samgyeopsal)",
+            "Spicy Stews (Kimchi-jjigae)",
+            "Sashimi and Seafood",
+            "Spicy Korean Stir-fry Dishes"
         ],
         dbCategories: ['소주']
     }

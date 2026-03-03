@@ -249,5 +249,180 @@ export const cognac: SpiritCategory = {
             "커피/에스프레소 기반 디저트(티라미수 등)"
         ],
         dbCategories: ['브랜디']
+    },
+    sectionsEn: {
+        definition: "Cognac is a premium grape brandy produced in the Cognac AOC, spanning the Charente and Charente-Maritime departments of France. It is crafted by double-distilling high-acidity white wine in traditional Charentais copper pot stills, followed by aging in oak barrels and meticulous blending.",
+        history: "The Cognac region emerged as a hub for Atlantic trade in the 16th and 17th centuries. Dutch merchants encouraged distillation (brandy-making) to preserve wine for long-distance transport, sparking local technical growth. Over time, the 'double distillation' method, oak aging, and blending culture became standardized. Following the 19th-century phylloxera crisis, the vineyards were restructured around the high-acid Ugni Blanc grape. By the 20th century, the AOC system formalized quality controls, standardizing the grading (VS/VSOP/XO) and Cru concepts globally.",
+        classifications: [
+            {
+                name: "V.S (Very Special)",
+                criteria: "The youngest eau-de-vie in the blend is aged for a minimum of 2 years in oak.",
+                description: "Characterized by youthful, linear notes of green apple, grape, citrus, and white florals with subtle vanilla and toast. The alcohol edge and oak spice are distinct, making it ideal for cocktails like Highballs, Sours, or Sidecars, and perfect for understanding the archetypal fruit and distillate character of Cognac."
+            },
+            {
+                name: "V.S.O.P (Very Superior Old Pale)",
+                criteria: "The youngest eau-de-vie in the blend is aged for a minimum of 4 years in oak.",
+                description: "The fruit spectrum expands from fresh to dried, balanced by oak-derived notes of vanilla, caramel, cinnamon, and nuttiness. This is the entry point for sipping neat, and is widely regarded as the grade that most clearly reveals the differences between various Crus and House styles."
+            },
+            {
+                name: "X.O (Extra Old)",
+                criteria: "The youngest eau-de-vie in the blend is aged for a minimum of 10 years in oak.",
+                description: "Displays deep maturity through notes of dried apricot, fig, plum, nuts (walnut/hazelnut), dark chocolate, and leather. This stage introduces the complex 'Rancio' profile. The harshness of alcohol is significantly reduced as the oak integrates into a structured, oily texture and long finish."
+            },
+            {
+                name: "XXO (Extra Extra Old)",
+                criteria: "The youngest eau-de-vie in the blend is aged for a minimum of 14 years in oak.",
+                description: "Features luxurious oxidative notes (Rancio), sophisticated aromatic layers of spice, cedar, and dried flowers, and a silky texture. The fruit profile shifts from freshness to refined ripeness, optimized for slow tasting where aromas unfold in stages."
+            },
+            {
+                name: "Hors d’Âge",
+                criteria: "Typically consists of ultra-long-aged eaux-de-vie (often 10-50+ years), exceeding standard XO requirements.",
+                description: "Used to emphasize exceptional aging beyond official categories. It focuses on deep Rancio (walnut shell, mushroom, leather, polished wood), subtle spices, and a lingering finish, prioritizing oxidative depth over raw oak tannins."
+            },
+            {
+                name: "Grande Champagne Cru",
+                criteria: "The premier Cru of Cognac, characterized by high chalk and limestone content.",
+                description: "Possesses immense aging potential with delicate florals, minerality, and a high-acid structure. While it can seem lean in its youth, long-term aging produces the most elegant Rancio and serves as the 'backbone' of prestige blends."
+            },
+            {
+                name: "Petite Champagne Cru",
+                criteria: "A central Cru with limestone soils, though less porous than Grande Champagne.",
+                description: "Shares similar characteristics with Grande Champagne (florals/structure) but tends to mature into a rounded, mellow spirit slightly faster. It adds balance and volume to blends and offers excellent character in single-cru bottlings."
+            },
+            {
+                name: "Borderies Cru",
+                criteria: "The smallest Cru, featuring unique clay and flint soils.",
+                description: "Distinctive for its notes of violets, creamy nuts, and buttery toffee. It blooms relatively early, adding aromatic highlights and a smooth texture to medium-to-long-term aged blends."
+            },
+            {
+                name: "Fins Bois Cru",
+                criteria: "A large, diverse Cru with mixed sand and clay soils.",
+                description: "Produces rounded, full-bodied spirits with fresh fruit (pear/apple) and floral notes that emerge quickly. It is frequently used to provide a 'fruity core' to blends that are intended for moderate aging."
+            },
+            {
+                name: "Bons Bois Cru",
+                criteria: "An outer Cru with significant maritime influence.",
+                description: "Features rustic notes of herbs, wood, and intuitive fruit. Maturation is relatively rapid. While traditionally a blending component, single estate bottlings can reveal surprising and unique terroir personalities."
+            },
+            {
+                name: "Bois Ordinaires Cru",
+                criteria: "The coastal Cru most influenced by the Atlantic climate.",
+                description: "Often displays a maritime minerality or saltiness with a lighter body and rustic spice. Increasingly used in niche bottlings to highlight the unique 'oceanic terroir' of the region."
+            },
+            {
+                name: "Fine Champagne",
+                criteria: "A blend of Grande and Petite Champagne, with at least 50% Grande Champagne.",
+                description: "The classic 'premium blend,' combining the elegant structure of Grande Champagne with the rounded volume of Petite Champagne. It layers florals, citrus, and vanilla, evolving into dried fruits and Rancio with age."
+            },
+            {
+                name: "Millésimé / Vintage",
+                criteria: "Distilled from grapes of a single harvest year and aged separately under strict seal.",
+                description: "Unlike most Cognacs which are an 'art of blending,' vintages highlight the climate and distillation style of a specific year. They offer high collectible value as the aromatic profile varies significantly from year to year."
+            }
+        ],
+        sensoryMetrics: [
+            {
+                metric: "Aroma Volatility",
+                label: "ABV (% vol)",
+                value: "Usually 40% (up to 50%+ for Cask Strength)",
+                description: "Higher ABV increases volatility and intensity; a few drops of water can often 'open up' hidden layers. 40% offers balance and accessibility, while 45%+ increases density and texture at the cost of requiring more alcohol control."
+            },
+            {
+                metric: "Aging Grade",
+                label: "Aging Minimum (Youngest in Blend)",
+                value: "VS(2y+) / VSOP(4y+) / XO(10y+) / XXO(14y+)",
+                description: "Grades signify the age of the *youngest* eau-de-vie. Many components in an XO blend may be far older than 10 years; the grade is a legal minimum, not an average."
+            },
+            {
+                metric: "Oak Extraction",
+                label: "Oak/Tannin",
+                value: "Low ~ High",
+                description: "Lower levels favor fresh fruit and florals; higher levels introduce vanilla, toast, cinnamon, and cloves alongside increased dryness. This is influenced by cellar humidity, char levels, and use of new vs. seasoned oak."
+            },
+            {
+                metric: "Rancio Intensity",
+                label: "Rancio Level",
+                value: "Low ~ High",
+                description: "Refers to the complex oxidative notes of walnut, mushroom, leather, and truffle. This becomes more pronounced with extreme aging and concentration of older eaux-de-vie."
+            },
+            {
+                metric: "Fruit Spectrum",
+                label: "Fresh ↔ Dried Fruit",
+                value: "Fresh / Mixed / Dried",
+                description: "Young Cognacs focus on fresh apple, pear, and citrus. With age, this shifts toward dried apricot, fig, prune, and orange marmalade."
+            }
+        ],
+        coreIngredients: [
+            {
+                type: "Primary Grape",
+                name: "Ugni Blanc",
+                description: "Its high acidity and low sugar make it ideal for producing dry, low-ABV base wines. Its neutral aromatic profile serves as a clean canvas that supports the complexity of oak and oxidative aging over decades."
+            },
+            {
+                type: "Traditional Grape",
+                name: "Folle Blanche",
+                description: "A traditional variety that imparts delicate floral and fruit nuances. Difficult to cultivate, it is used selectively by producers seeking to add an elegant 'aromatic grain' to their blends."
+            },
+            {
+                type: "Supporting Grape",
+                name: "Colombard",
+                description: "Adds a crisp fruitiness and slight spicy/herbal lift, enhancing the aromatic direction and multi-dimensionality of an Ugni Blanc-based structure."
+            },
+            {
+                type: "Distillation Vessel",
+                name: "Charentais Copper Pot Still",
+                description: "Copper react with sulfur compounds to purify the spirit. The shape and size of the still, along with the precision of the 'cut' (separating heads/tails), are critical to the silky texture of the final eau-de-vie."
+            },
+            {
+                type: "Aging Vessel",
+                name: "French Oak (Limousin / Tronçais)",
+                description: "Limousin oak (wide grain) imparts tannins and structure quickly; Tronçais oak (fine grain) is favored for subtle vanilla and refined textures. The choice of wood dictates the final 'feel' of the Cognac."
+            }
+        ],
+        manufacturingProcess: [
+            { step: "Harvesting", name: "High-Acid Harvesting", description: "Grapes are harvested early to maintain high acidity and low sugar, essential for a clean distillation and long-term aging potential." },
+            { step: "Fermentation", name: "Dry Base Wine Fermentation", description: "Fermenting to a dry, low-ABV wine (8-10%) without added sulfites. Contact with 'lees' (yeast sediment) during this stage can add creaminess and complexity to the final distillate." },
+            { step: "Distillation", name: "Double Distillation (La Bonne Chauffe)", description: "A two-stage process in copper stills. The second distillation precisely isolates the 'heart' (cœur), creating a clear, silky eau-de-vie." },
+            { step: "Maturation", name: "Oak Barrel Aging", description: "The spirit interacts with wood and oxygen over decades, developing tertiary notes of dried fruit, cocoa, and leather while concentrating through evaporation (The Angel's Share)." },
+            { step: "Cellar Management", name: "Dry vs. Humid Cellars", description: "Dry cellars favor water evaporation (maintaining ABV and structure), while humid cellars favor alcohol evaporation (resulting in a rounder, mellower profile)." },
+            { step: "Blending", name: "Assemblage", description: "The Cellar Master combines different Crus and ages to create a consistent House style, designing a narrative from fresh fruit to deep Rancio." },
+            { step: "Reduction", name: "Gradual Hydration & Marriage", description: "Slowly adding water or 'petites eaux' to reach bottling strength, followed by a 'marriage' period to integrate all components harmoniously." }
+        ],
+        servingGuidelines: {
+            recommendedGlass: "Tulip-shaped Cognac Glass (or ISO/White Wine Glass)",
+            optimalTemperatures: [
+                { temp: "16-18°C", description: "Ideal for delicate, floral-forward Crus. Easters and citrus notes are most distinct at this range." },
+                { temp: "18-20°C (Room Temp)", description: "Best for XO/XXO. Promotes the depth of vanilla, spice, and Rancio while maximizing the rich texture." },
+                { temp: "4-8°C (Chilled)", description: "Suitable for VS/VSOP when used in Highballs or Sours to maintain crispness and refreshing balance." }
+            ],
+            methods: [
+                { name: "Neat", description: "Served at room temperature to allow the palm's heat to radiate complex Rancio and ripe fruit aromas." },
+                { name: "Water Addition", description: "A few drops of water can reduce alcohol burn and help 'bloom' hidden floral and ester notes." },
+                { name: "Cognac Highball", description: "Mixing VS or VSOP with soda or ginger ale (1:3 ratio) creates a refreshing, grape-forward aperitif." },
+                { name: "On the Rocks", description: "Large ice cubes mellow the alcohol and highlight the sweet, vanilla-driven oak aromas." }
+            ]
+        },
+        flavorTags: [
+            { label: "Vine Flower / White Florals", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-300" },
+            { label: "Green Apple / Pear", color: "bg-emerald-400/20 text-zinc-950 dark:text-emerald-300" },
+            { label: "Citrus / Orange Peel", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
+            { label: "Vanilla / Toffee", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Oak Spice / Cinnamon", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Dried Apricot / Fig", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
+            { label: "Walnut / Nutty", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
+            { label: "Chocolate / Cocoa", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" },
+            { label: "Leather / Tobacco", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" },
+            { label: "Rancio / Mushroom", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" }
+        ],
+        foodPairing: [
+            "Foie Gras / Terrine / Pâté",
+            "Duck Confit / Roasted Pork",
+            "Grilled Steaks and BBQ",
+            "Aged Cheeses (Comté, Gouda, Blue Cheese)",
+            "Dark Chocolate and Cocoa Desserts",
+            "Tarte Tatin / Caramel Desserts",
+            "Dried Fruit and Nut Platters"
+        ],
+        dbCategories: ['브랜디']
     }
 }

@@ -151,5 +151,149 @@ export const rum: SpiritCategory = {
             "훈제 치즈 및 숙성 체다 치즈"
         ],
         dbCategories: ['일반증류주']
+    },
+    sectionsEn: {
+        definition: "Rum is a distilled spirit made from sugarcane byproducts, such as molasses or fresh sugarcane juice, through fermentation and distillation. It encompasses a vast stylistic spectrum depending on aging, blending, distillation methods, and optional processing like sweetening, spicing, or coloring.",
+        history: "Rum originated in the 17th-century Caribbean sugarcane plantations from the practice of fermenting and distilling molasses. It carries a tumultuous history intertwined with Atlantic trade, piracy, and British Royal Navy rations. Today, it is being redefined as a premium spirit emphasizing geographic protection (GI) and the artistry of maturation.",
+        classifications: [
+            {
+                name: "Molasses-based Rum",
+                criteria: "Fermented and distilled from molasses (sugarcane byproduct).",
+                description: "The global standard style of rum. It features dense, sweet aromas of caramel, toffee, and brown sugar with spicy undertones. Versions with a high ratio of pot still distillate offer a heavier body."
+            },
+            {
+                name: "Rhum Agricole",
+                criteria: "Fermented and distilled directly from fresh sugarcane juice.",
+                description: "A traditional method primarily from French overseas territories (e.g., Martinique). It highlights grassy, herbal, and floral notes with a clean minerality rather than artificial sweetness."
+            },
+            {
+                name: "White / Silver Rum",
+                criteria: "Unaged or briefly aged and charcoal-filtered to remove color.",
+                description: "The lightest and most refreshing style. Dominated by subtle sugarcane sweetness and citrus, it is optimized as a base for cocktails like the Daiquiri and Mojito."
+            },
+            {
+                name: "Gold / Amber Rum",
+                criteria: "Acquires a natural golden hue through oak aging.",
+                description: "Adds notes of vanilla, toast, and light caramel. It can be enjoyed neat or used to provide character in highballs like a Rum Tonic or Rum & Coke."
+            },
+            {
+                name: "Dark / Black Rum",
+                criteria: "Long-term aging or color adjustment to achieve a deep brown shade.",
+                description: "Intense flavors of chocolate, coffee, and deep spices. It provides a heavy structural backbone for cocktails, and high-aged expressions are meant for slow sipping."
+            },
+            {
+                name: "High-Ester / Funky Rum",
+                criteria: "Utilizes long fermentation and the 'Dunder' system.",
+                description: "Known for powerful 'Funky' (Hogo) aromas of overripe pineapple, banana, and candy. This enthusiast-favorite style is most commonly associated with Jamaican rums."
+            },
+            {
+                name: "Spiced Rum",
+                criteria: "Rum infused with spices like cinnamon and vanilla.",
+                description: "Features prominent baking spices and high accessibility. It shows overwhelming flavor synergy when mixed with cola or ginger beer."
+            },
+            {
+                name: "Solera / Aged Blend",
+                criteria: "Fractional blending of spirits from various aging years.",
+                description: "Offers a smooth texture and a consistent house style. Dried fruits and toffee notes are rounded and integrated, making it approachable for beginners."
+            }
+        ],
+        sensoryMetrics: [
+            {
+                metric: "Ester Intensity (Funk)",
+                label: "Funky Level",
+                value: "None to High Pungency",
+                description: "Longer fermentation results in complex aromas of tropical and overripe fruits, directly correlating with ester counts—a key quality metric for rum."
+            },
+            {
+                metric: "Mouthfeel / Oiliness",
+                label: "Texture",
+                value: "Crisp to Velvety",
+                description: "Ranges from the crispness of Rhum Agricole to the velvety, oily texture of long-aged molasses rums, depending on distillation and maturation."
+            },
+            {
+                metric: "Maturation Density",
+                label: "Tropical Aging",
+                value: "High Intensity Maturation",
+                description: "The hot and humid Caribbean climate accelerates the interaction between the spirit and the oak, creating highly concentrated flavors in a shorter timeframe."
+            }
+        ],
+        coreIngredients: [
+            {
+                type: "Primary Material",
+                name: "Molasses or Sugarcane Juice",
+                description: "The root of rum's flavor profile. Molasses provides a heavy, sweet base, while juice offers a fresh, vibrant, and floral foundation."
+            },
+            {
+                type: "Fermentation Agent",
+                name: "Wild Yeast & Dunder",
+                description: "The Dunder technique—recycling previous fermentation byproducts—is essential for exploding the unique, characterful fermentation aromas of rum."
+            },
+            {
+                type: "Aging Vessel",
+                name: "American White Oak (Ex-Bourbon)",
+                description: "Complements the sugarcane sweetness with vanilla and coconut notes from bourbon casks, building a rich structural frame."
+            }
+        ],
+        manufacturingProcess: [
+            {
+                step: "Prep/Fermentation",
+                name: "Pre-processing & Long Fermentation",
+                description: "Managing microbial ecosystems based on the sugarcane type, accumulating complex flavors through fermentations that can last several days."
+            },
+            {
+                step: "Distillation",
+                name: "Pot Still & Column Still Distillation",
+                description: "Producing high-character pot still spirits and clean column still spirits, which are then balanced to achieve the desired profile."
+            },
+            {
+                step: "Aging/Blending",
+                name: "Tropical Maturation & Assemblage",
+                description: "Rapidly aging the spirit in tropical climates before a Master Blender combines various marks to complete the house style."
+            }
+        ],
+        servingGuidelines: {
+            recommendedGlass: "Tulip-shaped Nosing Glass or Highball Glass",
+            optimalTemperatures: [
+                {
+                    temp: "18~22°C (Room Temp)",
+                    description: "The optimal temperature for aged rums to fully open up their vanilla, caramel, and oak spice notes."
+                },
+                {
+                    temp: "4~10°C (Chilled)",
+                    description: "Highlights the refreshing sugarcane notes of white or light rums, ideal for cocktail bases."
+                }
+            ],
+            methods: [
+                {
+                    name: "Sipping Neat",
+                    description: "Drinking the spirit as-is allows for the full appreciation of the oily texture and unique funky aromas derived from aging."
+                },
+                {
+                    name: "A Drop of Water",
+                    description: "Adding a small amount of water to high-ABV or high-ester rums opens up aromatic layers and reduces alcohol heat."
+                },
+                {
+                    name: "Rum Highballs",
+                    description: "Mixing with cola (Cuba Libre), ginger beer (Dark 'n Stormy), or soda water to enjoy the sweet aromas in a refreshing way."
+                }
+            ]
+        },
+        flavorTags: [
+            { label: "Vanilla/Toffee", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Caramel/Brown Sugar", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Banana/Funky", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-300" },
+            { label: "Pineapple/Tropical", color: "bg-rose-500/20 text-zinc-950 dark:text-rose-300" },
+            { label: "Grassy/Sugarcane", color: "bg-emerald-400/20 text-zinc-950 dark:text-emerald-300" },
+            { label: "Spice/Cinnamon", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Smoky/Leather", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" }
+        ],
+        foodPairing: [
+            "Jerk Chicken and Spicy BBQ",
+            "Dark Chocolate and Tiramisu",
+            "Grilled Pineapple and Tropical Desserts",
+            "Banana Bread and Glazed Nuts",
+            "Smoked Cheese and Aged Cheddar"
+        ],
+        dbCategories: ['일반증류주']
     }
 }

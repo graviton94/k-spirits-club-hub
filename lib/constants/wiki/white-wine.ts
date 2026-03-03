@@ -126,5 +126,124 @@ export const whiteWine: SpiritCategory = {
             "태국/베트남식 매콤한 요리"
         ],
         dbCategories: ['과실주']
+    },
+    sectionsEn: {
+        definition: "White wine is a style of wine primarily produced by fermenting the juice of white grape varieties with minimal skin contact. Characterized by low tannins and a profile centered on high acidity, fresh fruit, and floral aromas, it spans a vast spectrum from bone-dry table wines to luscious, concentrated dessert wines.",
+        history: "Originating in the ancient Mediterranean civilizations, white wine evolved significantly in the late 20th century with the introduction of stainless steel tanks and temperature-controlled fermentation. This led to the popularity of the 'Modern Style'—crisp, clean, and aromatically vibrant. Today, premium white wines aged in oak or on lees (sur lie) are highly prized for their deep complexity.",
+        classifications: [
+            {
+                name: "Light & Dry",
+                criteria: "Minimal residual sugar and a light, ethereal body.",
+                description: "Emphasizes zestiness with notes of lemon, lime, and green apple, supported by high acidity and minerality. Key examples include Italian Pinot Grigio and early-harvest Chablis (Chardonnay)."
+            },
+            {
+                name: "Aromatic",
+                criteria: "Intense, distinctive varietal aromas of flowers, herbs, and tropical fruits.",
+                description: "Includes varieties like Riesling, Sauvignon Blanc, and Gewürztraminer. These wines possess powerful olfactory compounds that pair exceptionally well with spicy or ethnic cuisines."
+            },
+            {
+                name: "Full-bodied & Oaked",
+                criteria: "Creamy texture achieved through oak barrel fermentation and maturation.",
+                description: "Features a smooth, buttery texture with secondary notes of vanilla, toast, and nuts. California Chardonnay and Burgundian Meursault are quintessential examples of this rich style."
+            },
+            {
+                name: "Sweet / Dessert Style",
+                criteria: "Residual sugar retained through arrested fermentation or concentrated grapes.",
+                description: "Characterized by dense notes of honey and overripe fruits. Styles like Sauternes (Noble Rot) or Ice Wine balance their high sweetness with vibrant acidity for a harmonious finish."
+            }
+        ],
+        sensoryMetrics: [
+            {
+                metric: "Acidity",
+                label: "Acidity",
+                value: "High to Vibrant (pH 2.9~3.4)",
+                description: "The lifeblood of white wine. It cleanses the palate and stimulates salivation, acting as the structural backbone that provides freshness."
+            },
+            {
+                metric: "Sweetness Scale",
+                label: "Sweetness",
+                value: "Bone Dry ~ Luscious",
+                description: "Weight on the palate varies based on residual sugar. Note that high acidity can make a wine taste less sweet than its actual sugar content suggests."
+            },
+            {
+                metric: "Body & Texture",
+                label: "Body & Texture",
+                value: "Crisp to Creamy",
+                description: "Determined by variety and technique. Lighter styles feel 'Crisp' or 'Zesty,' while those with oak or lees aging feel 'Rich' and 'Weighty.'"
+            }
+        ],
+        coreIngredients: [
+            {
+                type: "Primary Material",
+                name: "White Grapes (Chardonnay, Sauvignon Blanc, Riesling, etc.)",
+                description: "Each variety contains unique aromatic compounds (Thiols, Terpenes) and an acid structure that defines the wine's identity."
+            },
+            {
+                type: "Fermentation Agent",
+                name: "Cold-fermenting Yeast Strains",
+                description: "Yeasts optimized for lower temperatures to preserve delicate floral and fruit-driven primary aromas."
+            }
+        ],
+        manufacturingProcess: [
+            {
+                step: "Extraction",
+                name: "Direct Pressing",
+                description: "Grapes harvested at cool temperatures are pressed immediately to separate clear juice from skins, preventing the extraction of harsh tannins."
+            },
+            {
+                step: "Fermentation",
+                name: "Low-Temperature Stainless Steel Fermentation",
+                description: "Fermenting slowly at 12–18°C to retain the maximum amount of volatile aromatics and vibrant acidity."
+            },
+            {
+                step: "Aging",
+                name: "Sur Lie & Batonnage",
+                description: "Aging the wine on its dead yeast cells (lees) and periodically stirring (batonnage) to enhance mouthfeel, richness, and savory complexity."
+            }
+        ],
+        servingGuidelines: {
+            recommendedGlass: "Small-bowled White Wine Glass with a Narrow Rim",
+            optimalTemperatures: [
+                {
+                    temp: "7~10°C",
+                    description: "Ideal for light, dry whites to maximize their refreshing acidity and crispness."
+                },
+                {
+                    temp: "10~13°C",
+                    description: "Suitable for fuller-bodied, oaked white wines to allow their complex layers of aroma to unfold."
+                }
+            ],
+            methods: [
+                {
+                    name: "Chilled Service",
+                    description: "Maintain temperature using an ice bucket, but avoid over-chilling as it can 'mute' the delicate aromatics."
+                },
+                {
+                    name: "Breathing",
+                    description: "High-quality white wines benefit from 10–15 minutes of air contact in the glass to open up their aromatic layers."
+                },
+                {
+                    name: "Wine Spritzer",
+                    description: "Lighter white wines can be mixed with soda water and fruit slices for a refreshing, low-alcohol alternative."
+                }
+            ]
+        },
+        flavorTags: [
+            { label: "Citrus/Lemon", color: "bg-yellow-400/20 text-zinc-950 dark:text-yellow-300" },
+            { label: "Green Apple/Pear", color: "bg-emerald-400/20 text-zinc-950 dark:text-emerald-300" },
+            { label: "Tropical/Mango", color: "bg-rose-500/20 text-zinc-950 dark:text-rose-400" },
+            { label: "White Floral", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-300" },
+            { label: "Grassy/Herbal", color: "bg-emerald-500/20 text-zinc-950 dark:text-emerald-300" },
+            { label: "Vanilla/Butter", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Mineral/Wet Stones", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" }
+        ],
+        foodPairing: [
+            "Fresh Sashimi and Raw Seafood",
+            "Grilled Chicken with Lemon and Herbs",
+            "Light Salads and Goat Cheese",
+            "Cream-based Pastas and Risotto",
+            "Spicy Thai or Vietnamese Cuisine"
+        ],
+        dbCategories: ['과실주']
     }
 }

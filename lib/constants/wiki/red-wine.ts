@@ -141,5 +141,139 @@ export const redWine: SpiritCategory = {
             "갈비찜 및 불고기"
         ],
         dbCategories: ['과실주']
+    },
+    sectionsEn: {
+        definition: "Red wine is produced by fermenting and macerating the skins, seeds, and pulp of dark-colored grapes to extract anthocyanins (color) and tannins (structure). It offers a vast spectrum of styles, from light-bodied to full-bodied, depending on the grape variety, region, and oak aging profile.",
+        history: "Originating in ancient Mesopotamia and the Mediterranean basin, red wine traditions were solidified within medieval monasteries and noble estates. Following the establishment of modern oenology in the 19th century and the rise of New World wines in the 20th century, the industry now thrives in an era that harmonizes scientific precision with the unique expression of terroir.",
+        classifications: [
+            {
+                name: "Varietal Wine",
+                criteria: "Wines containing 75-85% or more of a single specific grape variety.",
+                description: "Highlights the inherent aromas and structure of a specific grape, such as Cabernet Sauvignon or Pinot Noir. Ideal for exploring the fundamental characteristics of different cultivars."
+            },
+            {
+                name: "Blended Wine (Assemblage)",
+                criteria: "A mix of multiple grape varieties based on growing conditions and stylistic goals.",
+                description: "Aims for a perfect equilibrium of tannins, acidity, and fruit, exemplified by the Bordeaux style. Blending helps mitigate vintage variation and ensures consistent quality."
+            },
+            {
+                name: "Cru / Terroir Classifications",
+                criteria: "Classified by the quality and prestige of the vineyard (e.g., Grand Cru, Premier Cru).",
+                description: "In top-tier plots, geological and microclimatic influences are paramount. Long-term aging reveals overwhelming layers of tertiary aromas like forest floor, mushroom, and minerals."
+            },
+            {
+                name: "Bordeaux Grand Cru Classé",
+                criteria: "The historic 1855 classification system of the Médoc and Sauternes.",
+                description: "Characterized by powerful structure and immense aging potential. It remains the global benchmark for premium wines, offering elegant notes of cedar, leather, and graphite."
+            },
+            {
+                name: "Old World Aging Grades (e.g., Reserva)",
+                criteria: "Legal aging requirements specific to countries like Spain and Italy.",
+                description: "Emphasis is placed on 'matured beauty'; as aging progresses, fruit notes soften, and sophisticated flavors of tobacco, leather, and dried fruits take center stage."
+            }
+        ],
+        sensoryMetrics: [
+            {
+                metric: "Body",
+                label: "Weight",
+                value: "Light to Full Body",
+                description: "The perceived weight on the palate driven by alcohol and extract concentration. High-quality red wine balances this weight with vibrant acidity."
+            },
+            {
+                metric: "Tannin Structure",
+                label: "Structure",
+                value: "Soft to Grippy",
+                description: "The polyphenols that provide astringency and determine the wine's longevity. With age, harsh tannins evolve into a velvety, integrated texture."
+            },
+            {
+                metric: "Aging Layers",
+                label: "Complexity",
+                value: "Primary to Tertiary",
+                description: "The professional evaluation of aromatic evolution, moving from fresh fruit (primary) to oak influence (secondary) and finally to leather, mushroom, and nuts (tertiary)."
+            }
+        ],
+        coreIngredients: [
+            {
+                type: "Primary Material",
+                name: "Specific Grape Varieties (Vitis vinifera)",
+                description: "Varieties such as Cabernet Sauvignon, Pinot Noir, Merlot, and Syrah form the structural backbone and aromatic map of the wine."
+            },
+            {
+                type: "Fermentation Process",
+                name: "Maceration & Malolactic Fermentation (MLF)",
+                description: "Maceration extracts skin components, while MLF converts sharp malic acid into soft lactic acid, creating a supple mouthfeel."
+            },
+            {
+                type: "Aging Vessel",
+                name: "Oak Casks (French / American)",
+                description: "Essential for stabilizing tannins through micro-oxygenation and adding layers of vanilla, spice, and toast."
+            }
+        ],
+        manufacturingProcess: [
+            {
+                step: "Fermentation/Extraction",
+                name: "Alcoholic Fermentation & Skin Contact",
+                description: "Juice and skins are fermented together to extract color and tannins. Temperature control dictates the balance between elegance and intensity."
+            },
+            {
+                step: "Pressing/Aging",
+                name: "Malolactic Fermentation & Oak Aging",
+                description: "Softens acidity and develops structural complexity and tertiary aromas over months or years in the cellar."
+            },
+            {
+                step: "Completion",
+                name: "Blending & Bottle Aging",
+                description: "Following the final assemblage, the wine is bottled and rested to allow the flavors to stabilize and integrate perfectly."
+            }
+        ],
+        servingGuidelines: {
+            recommendedGlass: "Bordeaux or Burgundy Type Red Wine Glass",
+            optimalTemperatures: [
+                {
+                    temp: "14~16℃ (Light Reds)",
+                    description: "The ideal range for delicate varieties like Pinot Noir to showcase floral lift and bright red fruit."
+                },
+                {
+                    temp: "16~18℃ (General Reds)",
+                    description: "The 'sweet spot' for most medium-bodied wines to find harmony between tannins, acidity, and flavor."
+                },
+                {
+                    temp: "18~20℃ (Full-bodied Reds)",
+                    description: "Allows powerful tannin structures and oak-aged aromatics to fully expand while providing a pleasant alcoholic warmth."
+                }
+            ],
+            methods: [
+                {
+                    name: "Breathing",
+                    description: "Opening the bottle 30–60 minutes before serving to let the wine slowly oxygenate and awaken dormant aromas."
+                },
+                {
+                    name: "Decanting",
+                    description: "A professional technique used to separate sediment from aged wines or to rapidly soften tannins in young, tight wines."
+                },
+                {
+                    name: "Swirling",
+                    description: "Gently rotating the glass to increase surface area contact with air, causing hidden aromatic layers to bloom vividly."
+                }
+            ]
+        },
+        flavorTags: [
+            { label: "Blackberry/Cassis", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
+            { label: "Cherry/Raspberry", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-400" },
+            { label: "Vanilla/Toast", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Pepper/Spice", color: "bg-yellow-600/20 text-zinc-950 dark:text-yellow-300" },
+            { label: "Earthy/Mushroom", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
+            { label: "Leather/Tobacco", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" },
+            { label: "Minerality", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" }
+        ],
+        foodPairing: [
+            "Steak and Grilled Lamb Chops",
+            "BBQ and Grilled Meats",
+            "Tomato-based Pasta and Lasagna",
+            "Aged Hard Cheese Platters",
+            "Duck Breast and Roasted Chicken",
+            "Braised Beef (Galbi-jjim) and Bulgogi"
+        ],
+        dbCategories: ['과실주']
     }
 }

@@ -130,5 +130,128 @@ export const vodka: SpiritCategory = {
             "짭짤한 하드 치즈"
         ],
         dbCategories: ['일반증류주']
+    },
+    sectionsEn: {
+        definition: "Vodka is a colorless 'Neutral Spirit' produced by fermenting and distilling agricultural raw materials—such as grains, potatoes, or grapes—to a high proof to minimize impurities and aromatics. While its core philosophy is a clean and dry profile, subtle variations in texture and flavor emerge depending on the base material, distillation intensity, and filtration process.",
+        history: "Vodka's roots lie in the distillation cultures of Eastern Europe (Russia and Poland) that spread during the late Middle Ages. The development of continuous distillation in the 19th century perfected the modern 'low-aroma, ultra-clean' style. Since the mid-20th century, it has become the world's most consumed base spirit, fueled by the explosive growth of cocktail culture.",
+        classifications: [
+            {
+                name: "Grain Vodka",
+                criteria: "Based on starches from wheat, rye, or corn.",
+                description: "The most popular style. Wheat-based vodkas offer a creamy texture, rye-based versions provide a subtle peppery spice, and corn-based spirits lean toward a rounded, light sweetness."
+            },
+            {
+                name: "Potato Vodka",
+                criteria: "Fermentation and distillation of potato starch.",
+                description: "Features a heavier, more viscous mouthfeel with distinctive earthy or nutty undertones. Its textural appeal is best appreciated when served neat or on the rocks."
+            },
+            {
+                name: "Grape/Wine Vodka",
+                criteria: "Distilled from grapes or wine by-products.",
+                description: "Maintains neutrality while offering a silky texture and delicate floral or fruity echoes. It pairs exceptionally well as a base for dry Martinis."
+            },
+            {
+                name: "Flavored Vodka",
+                criteria: "Infused with natural or artificial flavorings and fruits.",
+                description: "Includes clear notes of lemon, vanilla, or berries, making cocktail preparation effortless. Body and sweetness vary significantly depending on whether sugar is added."
+            }
+        ],
+        sensoryMetrics: [
+            {
+                metric: "Alcohol by Volume",
+                label: "ABV (%)",
+                value: "37.5% ~ 40% (Standard)",
+                description: "40% is the standard proof for supporting cocktail structure. Premium vodkas are characterized by low alcoholic burn and a smooth finish even at higher proofs."
+            },
+            {
+                metric: "Neutrality",
+                label: "Neutrality",
+                value: "Extremely High",
+                description: "Repeated distillation and filtration remove impurities, creating a transparent character that doesn't interfere with the flavor of any mixer."
+            },
+            {
+                metric: "Mouthfeel/Body",
+                label: "Mouthfeel",
+                value: "Silky to Heavy",
+                description: "Texture is determined by the raw material and filtration method. The use of soft water contributes to an exceptionally smooth swallow."
+            }
+        ],
+        coreIngredients: [
+            {
+                type: "Primary Material",
+                name: "Agricultural Base (Wheat, Rye, Potato, Grape, etc.)",
+                description: "Starch-rich raw materials are fermented to produce alcohol. The choice of base dictates the final texture and subtle flavor nuances."
+            },
+            {
+                type: "Purification Agent",
+                name: "Activated Charcoal",
+                description: "Often derived from birch wood, charcoal adsorbs odors and impurities, imparting extreme purity and a polished texture."
+            },
+            {
+                type: "Dilution Water",
+                name: "Precision Filtered Soft Water",
+                description: "Since water accounts for over half of the bottle, its mineral profile is crucial for achieving a smooth, effortless throat-feel."
+            }
+        ],
+        manufacturingProcess: [
+            {
+                step: "Distillation",
+                name: "Continuous Rectification",
+                description: "Alcohol is rectified in column stills to over 95% purity to completely eliminate off-notes and aromas from the raw materials."
+            },
+            {
+                step: "Filtration",
+                name: "Charcoal Filtering",
+                description: "The distillate is passed through layers of activated charcoal multiple times to refine micro-impurities and soften the texture."
+            },
+            {
+                step: "Stabilization",
+                name: "Dilution & Resting",
+                description: "Purified water is added to reach the target proof, followed by a resting period to allow the water and alcohol molecules to bond perfectly."
+            }
+        ],
+        servingGuidelines: {
+            recommendedGlass: "Small Tulip Glass, Shot Glass, or Martini Glass",
+            optimalTemperatures: [
+                {
+                    temp: "-2~4°C (Ice Cold)",
+                    description: "Stored in the freezer, the vodka's texture becomes syrupy, reducing alcoholic bite and providing extreme refreshment."
+                },
+                {
+                    temp: "6~10°C",
+                    description: "Suitable for appreciating the subtle texture or delicate aromatics of high-quality premium vodkas."
+                }
+            ],
+            methods: [
+                {
+                    name: "Frosted Shot",
+                    description: "When drinking neat, both the glass and the bottle should be frozen. Sip to feel the texture rather than just downing the shot."
+                },
+                {
+                    name: "Vodka Martini",
+                    description: "Combined with vermouth to showcase the aesthetic of clean, dry spirits. The choice of garnish (olive or lemon) significantly alters the profile."
+                },
+                {
+                    name: "Vodka Tonic / Highball",
+                    description: "Mixing with soda or tonic water is the most popular way to enjoy vodka's refreshing and crisp nature."
+                }
+            ]
+        },
+        flavorTags: [
+            { label: "Clean/Neutral", color: "bg-sky-600/20 text-zinc-950 dark:text-sky-300" },
+            { label: "Smooth Texture", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
+            { label: "Subtle Sweetness", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" },
+            { label: "White Pepper", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
+            { label: "Creamy/Silky", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Minerality", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" }
+        ],
+        foodPairing: [
+            "Rich and Savory Snacks (Pork Belly, Smoked Duck)",
+            "Smoked Salmon and Caviar",
+            "Salted Pickles and Sauerkraut",
+            "Rye Bread and Blini",
+            "Salty Hard Cheeses"
+        ],
+        dbCategories: ['일반증류주']
     }
 }

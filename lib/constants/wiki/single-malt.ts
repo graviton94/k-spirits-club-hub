@@ -134,5 +134,148 @@ export const singleMalt: SpiritCategory = {
             "견과류와 건과일 플래터"
         ],
         dbCategories: ['위스키']
+    },
+    sectionsEn: {
+        definition: "Single Malt Whisky refers to malt whisky produced at a single distillery using 100% malted barley. The wort is fermented, distilled in copper pot stills, and matured in oak casks before bottling. The term 'single' denotes its origin from one distillery, distinguishing it from blended whiskies that combine spirits from multiple sources.",
+        history: "The origins of malt whisky lie in the medieval distillation traditions of Scotland and Ireland, evolving into its modern form through the establishment of taxation, licensing, and refining of distillation techniques in the 18th and 19th centuries. Since the 1960s, distilleries began marketing their brands under the 'Single Malt' identity, growing into a premium category defined by cask experimentation, high-proof bottlings, and single-cask diversity.",
+        classifications: [
+            {
+                name: "Single Malt Scotch Whisky",
+                criteria: "100% malted barley, distilled in pot stills at a single Scottish distillery, and aged in oak for at least 3 years.",
+                description: "The global gold standard. It features a vast flavor spectrum depending on regional characteristics (Speyside, Highland, Islay, etc.), still shapes, and maturation strategies."
+            },
+            {
+                name: "Cask Strength (CS)",
+                criteria: "Bottled directly from the cask without water dilution, typically ranging from 55% to 65% ABV.",
+                description: "Characterized by concentrated aromatic compounds and heavy texture. It offers the unique experience of 'opening up' the balance with a few drops of water."
+            },
+            {
+                name: "Single Cask",
+                criteria: "Bottled from one individual cask without vatting or blending with others.",
+                description: "A unique batch where the individual character of the cask is preserved. Highly valued by collectors as even the same product can vary significantly between casks."
+            },
+            {
+                name: "Peated Whisky",
+                criteria: "Malted barley is dried over peat fires to infuse smoky phenolic compounds.",
+                description: "Enhances notes of smoke, medicinal iodine, and sea breeze. The PPM (Phenol Parts Per Million) value serves as a useful clue to its stylistic intensity."
+            },
+            {
+                name: "Cask Finish",
+                criteria: "A spirit is moved to a secondary cask type (Sherry, Wine, Rum, etc.) for a final period of maturation.",
+                description: "Expands the flavor profile by layering residual aromas from the previous contents. A delicate process used to add unique character over a short duration."
+            }
+        ],
+        sensoryMetrics: [
+            {
+                metric: "Strength (ABV)",
+                label: "ABV Level",
+                value: "40~46% (Standard) / 55~65% (CS)",
+                description: "Higher proof increases aromatic volatility but also alcohol burn. Whiskies at 46% or higher show more dramatic profile shifts when water is added."
+            },
+            {
+                metric: "Peat Smoke (PPM)",
+                label: "Peatiness",
+                value: "0 (Unpeated) ~ 50+ (Heavy Peat)",
+                description: "Higher values indicate stronger smoky and medicinal notes. Depending on the distillation cut, this can range from 'sweet smoke' to 'dry ash.'"
+            },
+            {
+                metric: "Maturation Info",
+                label: "Age Statement",
+                value: "NAS / 10~18 Years / 21+ Years",
+                description: "Aging imparts oak character and mellows harsh spirits. While a reliable indicator of maturity, cask quality is often a more critical variable for the final taste."
+            },
+            {
+                metric: "Cask Influence",
+                label: "Cask Type",
+                value: "First-fill / Refill",
+                description: "First-fill casks provide intense oak flavors (vanilla, spice), while refill casks allow the distillery's core fruity esters to shine through more cleanly."
+            }
+        ],
+        coreIngredients: [
+            {
+                type: "Primary Material",
+                name: "Malted Barley",
+                description: "Creates the foundation of biscuit, cereal, and nutty notes. The kilning method determines the toastiness and smoky character."
+            },
+            {
+                type: "Fermentation Agent",
+                name: "Yeast & Brewing Water",
+                description: "Yeast generates fruity esters during fermentation, while the mineral content of the water provides subtle differences in texture."
+            },
+            {
+                type: "Aging Vessel",
+                name: "Oak Casks",
+                description: "Provides vanillin, lactones, and tannins. Previous contents like Bourbon or Sherry add multi-layered flavors to the whisky."
+            }
+        ],
+        manufacturingProcess: [
+            {
+                step: "Malting/Mashing",
+                name: "Germination & Extraction",
+                description: "Barley is germinated to activate enzymes, and hot water is used to extract the sugary liquid (wort) ready for fermentation."
+            },
+            {
+                step: "Fermentation",
+                name: "Washback Fermentation",
+                description: "Yeast converts sugar into alcohol, creating esters—the precursors to floral and fruity aromas—in this critical stage."
+            },
+            {
+                step: "Distillation",
+                name: "Double Pot Still Distillation",
+                description: "Distilled twice in copper stills to collect only the pure 'Hearts.' The shape of the still determines the weight and body of the spirit."
+            },
+            {
+                step: "Maturation",
+                name: "Cask Aging & Vatting",
+                description: "Spent over years in oak to stabilize components, then combined (vatted) to achieve the consistent house style."
+            }
+        ],
+        servingGuidelines: {
+            recommendedGlass: "Glencairn Glass or Tulip-shaped Nosing Glass",
+            optimalTemperatures: [
+                {
+                    temp: "18~22°C (Room Temp)",
+                    description: "The balance between fruity aromas and oak flavors is most prominent, clearly revealing stylistic differences."
+                },
+                {
+                    temp: "18~22°C + Water",
+                    description: "Reduces alcohol sting and 'unlocks' delicate floral and honey notes, enhancing complexity."
+                }
+            ],
+            methods: [
+                {
+                    name: "Neat",
+                    description: "The gold standard: enjoy the nose first, then take a small sip to feel the texture and finish across the entire palate."
+                },
+                {
+                    name: "Water Addition",
+                    description: "Dropping a few drops of room-temp water breaks the surface tension, causing hidden esters to bloom explosively."
+                },
+                {
+                    name: "Highball",
+                    description: "Mixed with ice and soda water (1:3). A refreshing way to enjoy the malt's nuttiness and citrus notes, great with meals."
+                },
+                {
+                    name: "On the Rocks",
+                    description: "Pouring over a large ice sphere mellows the alcohol heat and emphasizes soft sweetness and a heavy texture."
+                }
+            ]
+        },
+        flavorTags: [
+            { label: "Vanilla/Caramel", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Dried Fruit/Sherry", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
+            { label: "Green Apple/Pear", color: "bg-emerald-400/20 text-zinc-950 dark:text-emerald-300" },
+            { label: "Honey/Floral", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-300" },
+            { label: "Smoky/Peat", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" },
+            { label: "Brine/Sea Breeze", color: "bg-sky-500/20 text-zinc-950 dark:text-sky-300" }
+        ],
+        foodPairing: [
+            "Smoked Salmon and Fresh Oysters",
+            "Steak and Grilled Lamb Chops",
+            "Aged Cheddar and Blue Cheese",
+            "Dark Chocolate and Tiramisu",
+            "Nut and Dried Fruit Platters"
+        ],
+        dbCategories: ['위스키']
     }
 }

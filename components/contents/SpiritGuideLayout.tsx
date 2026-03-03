@@ -74,7 +74,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
     const router = useRouter()
     const c = COLOR_MAP[category.color] ?? COLOR_MAP.amber
     const isEn = lang === 'en'
-    const s = category.sections
+    const s = isEn && category.sectionsEn ? category.sectionsEn : category.sections
 
     return (
         <article className="container mx-auto px-4 py-6 max-w-3xl pb-24 space-y-6">

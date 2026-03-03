@@ -150,5 +150,148 @@ export const gin: SpiritCategory = {
             "레몬 또는 유자 파운드 케이크"
         ],
         dbCategories: ['일반증류주']
+    },
+    sectionsEn: {
+        definition: "Gin is a distilled spirit crafted by infusing agricultural neutral spirits with various botanicals, centered around the essential aroma of juniper berries. It serves as a foundational base for cocktails and maintains a strict identity where the flavor of juniper must be predominant.",
+        history: "The roots of Gin trace back to Genever, a 16th-17th century Dutch medicinal spirit. After spreading to England, it underwent a period of mass consumption in the 18th century (the 'Gin Craze'). The development of the column still in the 19th century allowed for more refined purification, establishing the clear, crisp 'Dry Gin' style prominent today.",
+        classifications: [
+            {
+                name: "London Dry Gin",
+                criteria: "No additives allowed after distillation except for water and a minute amount of sweetener.",
+                description: "The most traditional and standard form of Gin. Defined by piney juniper, citrus zest, and a bone-dry finish. It serves as the benchmark for cocktail recipes worldwide."
+            },
+            {
+                name: "Distilled Gin",
+                criteria: "Aroma is imparted by 're-distilling' the spirit with juniper and natural botanicals.",
+                description: "Features a smooth integration of flavors and an elegant texture. Unlike London Dry, certain flavorings or additives may be permitted after the second distillation."
+            },
+            {
+                name: "Contemporary / New Western",
+                criteria: "A style that emphasizes specific botanicals (flowers, herbs, etc.) over the traditional juniper-forward profile.",
+                description: "Highlights signature botanicals like cucumber, rose, yuzu, or green tea. These gins offer multi-layered flavor profiles that change dynamically depending on the Gin & Tonic garnish."
+            },
+            {
+                name: "Old Tom Gin",
+                criteria: "A traditional style with a rounder, sweeter profile than London Dry.",
+                description: "The bridge between London Dry and Genever. It features a soft body and subtle sweetness, making it the essential ingredient for the classic Tom Collins cocktail."
+            },
+            {
+                name: "Navy Strength Gin",
+                criteria: "Bottled at a high proof, typically around 57% ABV.",
+                description: "Thanks to its powerful alcohol volume, the aromatic presence remains robust and structured even when mixed with tonic water or heavy citrus juices."
+            },
+            {
+                name: "Genever / Jenever",
+                criteria: "Traditional Dutch spirit based on 'Malt Wine'.",
+                description: "The ancestor of modern Gin. Like whisky, it retains a malty grain character and a heavy body, providing a significant weight to any cocktail base."
+            },
+            {
+                name: "Barrel-Aged / Cask Gin",
+                criteria: "Gin that has undergone a period of maturation in oak casks.",
+                description: "Layers vanilla and oak spice over the juniper core, creating an intersection between Gin and Whisky. Excellent for sipping neat."
+            }
+        ],
+        sensoryMetrics: [
+            {
+                metric: "Juniper Dominance",
+                label: "Juniper Purity",
+                value: "4~5 (Highly Dominant)",
+                description: "Higher values indicate a clear core of pine and resin, maximizing a dry and refreshing sensation."
+            },
+            {
+                metric: "Alcohol Backbone",
+                label: "ABV Structure",
+                value: "37.5% ~ 57% (High)",
+                description: "Higher ABV often correlates with a higher concentration of botanical oils, leading to better viscosity and a longer finish."
+            },
+            {
+                metric: "Dryness Level",
+                label: "Dryness",
+                value: "Bone Dry to Mellow",
+                description: "Lower sweetness results in a cleaner finish, allowing the quinine in tonic or the zest of lemon garnishes to shine more clearly."
+            }
+        ],
+        coreIngredients: [
+            {
+                type: "Essential Ingredient",
+                name: "Juniper Berries",
+                description: "The legal identity of Gin. It provides the core resinous, piney, and peppery notes that define the spirit's dry refreshment."
+            },
+            {
+                type: "Aromatic Botanicals",
+                name: "Coriander Seeds & Citrus Peel",
+                description: "Adds bright citrus top notes and a warm spiciness, bringing vitality to the static aroma of juniper."
+            },
+            {
+                type: "Fixatives",
+                name: "Angelica & Orris Root",
+                description: "Acts as an anchor that binds the various botanicals together, adding earthy and floral base notes while increasing aromatic persistence."
+            }
+        ],
+        manufacturingProcess: [
+            {
+                step: "Extraction",
+                name: "Maceration & Vapor Infusion",
+                description: "Botanicals are either steeped in the spirit or placed in a basket where alcohol vapors pass through them. The method dictates the density and transparency of the aroma."
+            },
+            {
+                step: "Distillation",
+                name: "Pot Still Re-distillation",
+                description: "The spirit concentrated with botanical oils is distilled again to remove impurities, capturing only the clear and sophisticated essence."
+            },
+            {
+                step: "Stabilization",
+                name: "Marriage & Dilution",
+                description: "The spirit is rested to settle sharp aromas and then diluted with water to achieve the perfect balance for bottling."
+            }
+        ],
+        servingGuidelines: {
+            recommendedGlass: "Copa (Balloon) Glass, Highball Glass, or Tulip-shaped Glass",
+            optimalTemperatures: [
+                {
+                    temp: "4~8°C (Chilled)",
+                    description: "Maximizes refreshment and preserves carbonation when enjoyed as a Gin & Tonic."
+                },
+                {
+                    temp: "10~14°C (Tasting)",
+                    description: "The ideal range to perceive complex layers of juniper and root botanicals in a Martini or Neat pour."
+                },
+                {
+                    temp: "15~20°C (Aged Gin)",
+                    description: "Allows the oak profile and whisky-like nuances of Cask Gin to open up fully."
+                }
+            ],
+            methods: [
+                {
+                    name: "Gin & Tonic",
+                    description: "The most popular serve. Garnishes like lemon, lime, cucumber, or herbs are chosen to complement the gin's specific botanicals."
+                },
+                {
+                    name: "Gin Martini",
+                    description: "A classic method combining gin and vermouth to push the spirit's dry aesthetics to the limit."
+                },
+                {
+                    name: "Neat / Nosing",
+                    description: "A professional way to appreciate the subtle aromatic differences of premium or cask-aged gins."
+                }
+            ]
+        },
+        flavorTags: [
+            { label: "Juniper/Pine", color: "bg-emerald-600/20 text-zinc-950 dark:text-emerald-300" },
+            { label: "Citrus Zest", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-300" },
+            { label: "Herbal/Green", color: "bg-emerald-500/20 text-zinc-950 dark:text-emerald-300" },
+            { label: "Coriander/Pepper", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Floral", color: "bg-rose-500/20 text-zinc-950 dark:text-rose-300" },
+            { label: "Cucumber/Crisp", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
+            { label: "Earthy", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" }
+        ],
+        foodPairing: [
+            "Fresh Oysters and Sashimi",
+            "Smoked Salmon with Cream Cheese",
+            "Grilled Chicken with Herbs",
+            "Olive and Cheese Platters",
+            "Lemon or Yuzu Pound Cake"
+        ],
+        dbCategories: ['일반증류주']
     }
 }

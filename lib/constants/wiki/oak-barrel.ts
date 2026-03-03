@@ -240,6 +240,174 @@ export const oakBarrel: SpiritCategory = {
             "볶은 견과류 및 피칸 파이",
             "말린 무화과와 대추야자"
         ],
-        dbCategories: ['whisky', 'rum', 'brandy', 'wine']
+        dbCategories: ['위스키', '브랜디', '소주', '일반증류주']
+    },
+    sectionsEn: {
+        definition: "An oak cask (or barrel) is a maturation vessel made from the Quercus genus. Far more than a mere storage container, it acts as a 'biological reactor' that actively designs the chemical composition, aroma, color, and texture of the spirit. During maturation, the liquid extracts compounds from the wood (vanillin, oak lactones, spice phenols, tannins) while undergoing micro-oxidation through the wood's pores and evaporation (the 'Angel's Share'), resulting in a rounded, complex, and refined final product.",
+        history: "Originally utilized as practical vessels for transport and storage due to their superior strength and seal compared to clay amphorae, oak casks became the core of maturation technology as the flavor-enhancing properties of wood-liquid interaction were discovered. Since the 18th and 19th centuries, with the expansion of the whisky, brandy, and rum industries, the management of 'virgin vs. used oak,' 'cask size,' 'toasting/charring levels,' and 'previous contents' became highly systematized. Today, this has evolved into 'Cask Lifecycle Management,' encompassing sustainable forestry (FSC), wood traceability, and reconditioning (STR).",
+        classifications: [
+            {
+                name: "American White Oak (Quercus alba)",
+                criteria: "Heartwood-centric / Low tannin, High oak lactones / The Bourbon Standard",
+                description: "The dense grain structure provides excellent stability. It is rich in vanillin and oak lactones, creating bright sweetness with notes of coconut, vanilla, and honey. It excels at softening intense distillate notes like peat and smoke.",
+                flavorTags: [
+                    { label: "Vanilla", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
+                    { label: "Coconut (Lactone)", color: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30" },
+                    { label: "Toffee/Caramel", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
+                    { label: "Honey", color: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30" }
+                ]
+            },
+            {
+                name: "European Oak (Quercus robur)",
+                criteria: "High tannin content / Common in Sherry-seasoned casks",
+                description: "High tannin levels provide a robust body and a dry, astringent finish. Combined with oxidative maturation, it produces a deep mahogany color and a dark flavor spectrum of dried fruits, nuts, and leather.",
+                flavorTags: [
+                    { label: "Dried Fruits (Raisin)", color: "bg-rose-500/20 text-rose-300 border-rose-500/30" },
+                    { label: "Walnut/Nutty", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
+                    { label: "Leather/Woody", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" },
+                    { label: "Dark Chocolate", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" }
+                ]
+            },
+            {
+                name: "French Sessile Oak (Quercus petraea)",
+                criteria: "Tight grain / Medium-high tannins & spicy phenols",
+                description: "The exceptionally tight grain results in a slow extraction process, yielding sophisticated dryness with notes of baking spices, toasted almonds, and cocoa. It is prized for creating silky textures and complex aromatic layers.",
+                flavorTags: [
+                    { label: "Baking Spices", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
+                    { label: "Toasted Almond", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
+                    { label: "Cedar/Woody", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" },
+                    { label: "Cocoa", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" }
+                ]
+            },
+            {
+                name: "Mizunara Cask (Japanese Oak)",
+                criteria: "High porosity / Specialized for long-term maturation",
+                description: "Though the wood is soft and difficult to coop, long-term aging yields exotic aromas of sandalwood, agarwood (incense), and cloves. It shines brightest with delicate distillates that allow the Mizunara character to remain transparent.",
+                flavorTags: [
+                    { label: "Sandalwood", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" },
+                    { label: "Incense (Kara)", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" },
+                    { label: "Jasmine/Floral", color: "bg-rose-500/20 text-rose-300 border-rose-500/30" },
+                    { label: "Subtle Honey", color: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30" }
+                ]
+            },
+            {
+                name: "Ex-Bourbon (First Fill)",
+                criteria: "Barrel used once for Bourbon / Balanced extraction",
+                description: "Maintains sweet oak notes like vanilla and toffee but with reduced woody harshness. It enhances the distillery's character (fruit/floral) while adding essential texture and sweetness.",
+                flavorTags: [
+                    { label: "Vanilla Cream", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
+                    { label: "Citrus Peel", color: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30" },
+                    { label: "Toffee", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
+                    { label: "Light Oak", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" }
+                ]
+            },
+            {
+                name: "Ex-PX (Pedro Ximénez) Sherry",
+                criteria: "Cask previously holding ultra-sweet PX Sherry",
+                description: "Intense sweetness and dark color are rapidly infused. It quickly adds luscious dessert flavors like dates, fig jam, molasses, and chocolate syrup.",
+                flavorTags: [
+                    { label: "Dates", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
+                    { label: "Fig Jam", color: "bg-rose-500/20 text-rose-300 border-rose-500/30" },
+                    { label: "Molasses", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" },
+                    { label: "Chocolate Syrup", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" }
+                ]
+            },
+            {
+                name: "Refill Cask",
+                criteria: "Used multiple times / Minimal oak influence",
+                description: "While the direct oak aroma is subtle, the spirit's innate fruit, floral, and grain characters are preserved with clarity. It acts as an excellent canvas for building complexity during very long-term maturation.",
+                flavorTags: [
+                    { label: "Clean Fruit", color: "bg-rose-500/20 text-rose-300 border-rose-500/30" },
+                    { label: "Floral", color: "bg-rose-500/20 text-rose-300 border-rose-500/30" },
+                    { label: "Delicate Oak", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" },
+                    { label: "Mineral/Dry", color: "bg-sky-500/20 text-sky-300 border-sky-500/30" }
+                ]
+            },
+            {
+                name: "STR Cask (Reconditioned)",
+                criteria: "Shaved, Toasted, and Re-charred wine casks",
+                description: "A hybrid approach that revives used casks with the benefits of new oak (vanilla/caramel). It quickly imparts red fruit and roasted notes, often used for 'finishing' or NAS styles.",
+                flavorTags: [
+                    { label: "Red Fruit", color: "bg-rose-500/20 text-rose-300 border-rose-500/30" },
+                    { label: "Toasted Caramel", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
+                    { label: "Roasted", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" },
+                    { label: "Quick Finish", color: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30" }
+                ]
+            }
+        ],
+        sensoryMetrics: [
+            {
+                metric: "Tannic Structure",
+                label: "Tannin",
+                value: "L (American) → H (European/French)",
+                description: "Wood tannins build the 'skeleton' and dryness on the palate. European oak provides a sturdier structure and more pronounced astringent balance."
+            },
+            {
+                metric: "Oak Lactones & Vanillin",
+                label: "Lactone & Vanillin",
+                value: "High (American / Virgin)",
+                description: "The primary compounds for coconut and vanilla notes. American oak or virgin casks express these sweet aromatics most vibrantly."
+            },
+            {
+                metric: "Cask Volume",
+                label: "Surface Area / Volume",
+                value: "Octave > Barrel > Butt",
+                description: "Smaller casks have a higher surface-to-liquid ratio, accelerating extraction. Larger casks allow for stable oxidative maturation and long-term complexity."
+            }
+        ],
+        coreIngredients: [
+            {
+                type: "Wood Species",
+                name: "Oak (Quercus Genus)",
+                description: "Density and chemical profile (White, Robur, Petraea, etc.) dictate the fundamental aromatic direction of the spirit."
+            },
+            {
+                type: "Treatment",
+                name: "Toasting & Charring",
+                description: "Heat induces thermal decomposition, activating caramel, vanilla, and spice compounds while creating a carbon layer that filters impurities."
+            }
+        ],
+        manufacturingProcess: [
+            {
+                step: "Drying",
+                name: "Natural Seasoning",
+                description: "Staves are seasoned outdoors for years to leach out harsh tannins and stabilize flavor compounds through microbial action."
+            },
+            {
+                step: "Assembly",
+                name: "Coopering",
+                description: "Staves are meticulously fitted without nails. The precision of assembly determines the delicate balance of oxygen intake and evaporation."
+            },
+            {
+                step: "Maturation",
+                name: "Oxidation & Esterification",
+                description: "As the spirit breathes through the wood, extraction, oxidation, and esterification occur. Climate and humidity are the critical variables in this transformation."
+            }
+        ],
+        servingGuidelines: {
+            recommendedGlass: "Tulip-shaped Nosing Glass",
+            methods: [
+                {
+                    name: "Neat",
+                    description: "The purest way to experience cask-derived vanilla, nuts, spices, and oily textures."
+                },
+                {
+                    name: "Breathing",
+                    description: "Resting the spirit for 5–10 minutes allows the alcohol 'burn' to dissipate, revealing hidden aromatic layers."
+                },
+                {
+                    name: "A Drop of Water",
+                    description: "Reduces surface tension to 'unlock' volatile esters, often triggering an explosion of floral and fruit notes."
+                }
+            ]
+        },
+        foodPairing: [
+            "Dark Chocolate and Tiramisu",
+            "Smoked Steaks or BBQ",
+            "Aged Hard Cheeses (Cheddar, Gouda)",
+            "Roasted Nuts and Pecan Pie",
+            "Dried Figs and Dates"
+        ],
+        dbCategories: ['위스키', '브랜디', '소주', '일반증류주']
     }
 }

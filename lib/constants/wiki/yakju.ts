@@ -152,5 +152,154 @@ export const yakju: SpiritCategory = {
             "한과/약과 또는 크림치즈 디저트"
         ],
         dbCategories: ['약주']
+    },
+    sectionsEn: {
+        definition: "Korean Clear Rice Wine (Yakju/Cheongju) is a refined traditional spirit made by fermenting rice, water, and Nuruk (traditional starter), followed by a precise clarification or filtration process. While commonly called 'Cheongju' (clear wine), it is legally classified as 'Yakju' if the amount of traditional Nuruk used exceeds 1% of the rice weight, or 'Cheongju' if it is less than 1%—a distinction rooted in modern Korean liquor tax laws.",
+        history: "Historically, the clear liquid gathered by inserting a 'Yongsu' (wicker cylinder) into a fermented mash (Suldut) was prized as Cheongju. During the Joseon Dynasty, it was also called 'Yakju' (medicinal wine) and widely used for ancestral rites, royal tributes, and daily enjoyment. Modern regulations redefined Cheongju based on specific Nuruk ratios, leading to the current legal distinction. Recently, a revival of regional heritage and small-scale breweries has modernized these traditional styles through advanced filtration and maturation techniques.",
+        classifications: [
+            {
+                name: "Traditional Yakju Style",
+                criteria: "Rice/Sweet rice + Traditional Nuruk (Complex wild microbes) > 1%",
+                description: "The interaction of fungi, yeast, and lactic acid bacteria in traditional Nuruk creates a complex profile of toasted grain, earthy clay, and yogurt-like lactic notes. Long-term cold aging refines harsh aromas, introducing nuances of honey and nuts, making it the perfect 'meal-pairing clear wine.'"
+            },
+            {
+                name: "Koji-based Cheongju Style",
+                criteria: "Rice + Ipguk (Rice Koji) fermentation (Nuruk < 1%)",
+                description: "A clean, delicate style similar to Japanese Sake. It emphasizes fruity esters (pear, apple, banana), subtle floral notes, and a crisp finish. It focuses on the elegant sweetness and umami of the rice itself, with less of the intense funky aromatics found in traditional Nuruk."
+            },
+            {
+                name: "Sogokju",
+                criteria: "Multiple-stage brewing using small or specialized Nuruk starters.",
+                description: "Features a long fermentation and maturation period based on regional or family recipes. It is known for its high saccharification, resulting in a sweet, honey-like aroma, silky viscosity, and a relatively high ABV. Aging develops deep tones of grain syrup and nuts, pairing beautifully with rich Korean dishes like savory pancakes (Jeon) or boiled pork."
+            },
+            {
+                name: "Gwahaju",
+                criteria: "Fortified traditional wine where distilled spirits are added during/after fermentation.",
+                description: "A wisdom-born style developed to prevent spoilage during hot seasons. It exhibits a dense body with oxidative aging notes like dried fruits, caramel, and nuts. Its balance of sweetness and higher proof makes it an excellent pairing for desserts, jerky, or aged cheeses."
+            },
+            {
+                name: "Pasteurized Yakju",
+                criteria: "Heat-treated at 63°C or higher to inactivate microbes.",
+                description: "Ensures distribution stability by preventing secondary fermentation. While some delicate floral/fruit notes may be muted, the toasted grain character and maturation notes become more pronounced and stable over time."
+            },
+            {
+                name: "Raw / Fresh Yakju",
+                criteria: "Bottled without heat treatment, retaining live yeast and enzymes.",
+                description: "Requires strictly chilled distribution. It offers a vibrant experience with vivid aromas, subtle natural carbonation, and lively acidity. The flavor evolves over time in the bottle, so it is best enjoyed fresh."
+            }
+        ],
+        sensoryMetrics: [
+            {
+                metric: "Strength",
+                label: "ABV (%)",
+                value: "12% ~ 18% (Variable by style)",
+                description: "Higher ABV increases body and warmth, often enhancing the perception of sweetness and umami."
+            },
+            {
+                metric: "Clarity",
+                label: "Clarity",
+                value: "≤18 EBC (Ultra-clear to Slight Haze)",
+                description: "Lower values indicate higher transparency, which usually correlates with more delicate aromas and a lighter mouthfeel."
+            },
+            {
+                metric: "Residual Sugar",
+                label: "Residual Sugar",
+                value: "0~40 g/L (Dry ~ Semi-sweet)",
+                description: "Low sugar results in a dry profile where acidity shines; high sugar increases viscosity and a rounded, mellow sweetness."
+            },
+            {
+                metric: "Acidity",
+                label: "Acidity & pH",
+                value: "Acidity 3.0~7.0 / pH 3.4~4.2",
+                description: "Higher acidity provides a refreshing, appetite-stimulating quality, while lower pH ensures storage stability and a bright finish."
+            },
+            {
+                metric: "Umami",
+                label: "Amino Acidity",
+                value: "Low to High",
+                description: "Higher amino acid content increases savory richness and body, potentially developing notes of nuts, soy, or mushrooms during aging."
+            }
+        ],
+        coreIngredients: [
+            {
+                type: "Primary Material",
+                name: "Non-glutinous & Glutinous Rice",
+                description: "Non-glutinous rice provides a clean body, while glutinous (sweet) rice enhances the silky texture and honey-like sweetness."
+            },
+            {
+                type: "Fermentation Starter",
+                name: "Nuruk (Traditional) vs. Ipguk (Koji)",
+                description: "Traditional Nuruk provides complex, wild character; Ipguk (Koji) allows for a cleaner, more precisely controlled style."
+            },
+            {
+                type: "Water & Adjuncts",
+                name: "Brewing Water & Botanicals",
+                description: "Mineral content affects fermentation speed. Additions like pine needles or flowers add seasonal elegance and aromatic expansion."
+            }
+        ],
+        manufacturingProcess: [
+            {
+                step: "Pre-treatment/Fermentation",
+                name: "Steamed Rice & Multiple-stage Brewing",
+                description: "Rice is gelatinized (Godubap) and added in stages (Damyang) to reduce yeast stress and extract complex aromatic layers."
+            },
+            {
+                step: "Fermentation Control",
+                name: "Parallel Multiple Fermentation",
+                description: "Simultaneous saccharification and fermentation are carefully managed at low temperatures to preserve delicate esters and a clean finish."
+            },
+            {
+                step: "Clarification/Finishing",
+                name: "Clarification & Fine Filtration",
+                description: "Clear liquid is gathered using traditional methods or mechanical filtration, followed by cold maturation for flavor stabilization."
+            }
+        ],
+        servingGuidelines: {
+            recommendedGlass: "Small White Wine Glass or Specialty Sake Glass",
+            optimalTemperatures: [
+                {
+                    temp: "6~10°C (Chilled)",
+                    description: "Accentuates acidity and crispness, highlighting clean fruit and floral notes. Best for dry styles."
+                },
+                {
+                    temp: "12~15°C (Cool)",
+                    description: "The 'sweet spot' for most traditional Yakju, where rice sweetness and umami achieve perfect balance."
+                },
+                {
+                    temp: "18~20°C (Room Temp)",
+                    description: "Maximizes body, toasted notes, and aging nuances. Ideal for pairing with heavy Korean side dishes."
+                }
+            ],
+            methods: [
+                {
+                    name: "Neat",
+                    description: "The standard way to appreciate the clear color and multi-layered aromas through slow sipping."
+                },
+                {
+                    name: "Warming (Onju)",
+                    description: "Gently heating to 35–40°C expands the sweetness and umami while bringing the toasted Nuruk scent to the forefront."
+                },
+                {
+                    name: "Airing",
+                    description: "Swirling the glass helps release delicate fruit and floral notes that may have been 'locked' during cold storage."
+                }
+            ]
+        },
+        flavorTags: [
+            { label: "Steamed Rice", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Nuruk/Fermented", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
+            { label: "Pear/Apple/Floral", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-300" },
+            { label: "Yogurt/Lactic", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
+            { label: "Honey/Grain Syrup", color: "bg-yellow-600/20 text-zinc-950 dark:text-yellow-300" },
+            { label: "Umami/Savory", color: "bg-emerald-600/20 text-zinc-950 dark:text-emerald-300" }
+        ],
+        foodPairing: [
+            "White-fleshed Sashimi and Raw Seafood",
+            "Savory Korean Pancakes (Jeon) and Fritters",
+            "Boiled Pork (Suyuk) or Ginseng Chicken Soup",
+            "Soy-marinated Crab and Pickled Vegetables",
+            "Traditional Confections (Hangwa) or Cream Cheese"
+        ],
+        dbCategories: ['약주']
     }
 }

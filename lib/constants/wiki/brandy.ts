@@ -141,5 +141,139 @@ export const brandy: SpiritCategory = {
             "사과 타르트 및 크렘 브륄레"
         ],
         dbCategories: ['브랜디']
+    },
+    sectionsEn: {
+        definition: "Brandy is a distilled spirit produced by fermenting fruit juices—such as grapes, apples, or pears—into wine, which is then distilled and either aged in oak or bottled directly. It possesses a wide flavor spectrum, ranging from the essence of the raw fruit to complex notes of oak, vanilla, and 'Rancio' acquired through maturation.",
+        history: "The term originates from 'Brandewijn' (burnt wine), a method used in medieval Europe to concentrate wine for long-distance transport. With significant advancements in distillation and aging techniques centered in the Cognac and Armagnac regions of France, brandy has established itself as a premium spirit at the pinnacle of modern drinking culture.",
+        classifications: [
+            {
+                name: "Grape Brandy",
+                criteria: "Distilled from base wine made by fermenting grape juice.",
+                description: "The most classic form of brandy. Represented by Cognac and Armagnac, it is an elegant style where floral grape notes harmonize with aged dried fruits and nuts."
+            },
+            {
+                name: "Fruit Brandy (Eau-de-vie)",
+                criteria: "Distilled from fermented fruits other than grapes, such as apples, pears, or cherries.",
+                description: "Characterized by the vibrant, lively aroma of the source fruit. Calvados (apple) from France is a prime example; unaged styles offer a pure aromatic essence of the fruit."
+            },
+            {
+                name: "Pomace Brandy (Grappa)",
+                criteria: "Distilled from the grape skins, pulp, and seeds (pomace) left over after winemaking.",
+                description: "Represented by Italian Grappa. It features a unique phenolic texture with notes of herbs, hay, and nuts derived from the skins, offering an intense personality."
+            },
+            {
+                name: "Cognac AOC",
+                criteria: "Produced in the Charente region + double-distilled in copper pot stills.",
+                description: "Produced under strict regulations, it is world-renowned for its silky texture, floral top notes, and the sophistication of Rancio (notes of leather and mushroom) developed through long-term aging."
+            },
+            {
+                name: "Armagnac AOC",
+                criteria: "Produced in the Gascony region + distilled using traditional continuous stills.",
+                description: "Retains more aromatic compounds than Cognac, resulting in a more rustic, robust style with distinct terroir characteristics such as wild fruit, spice, and earthy tones."
+            },
+            {
+                name: "Brandy de Jerez",
+                criteria: "Produced in the Jerez region of Spain + aged using the Solera system.",
+                description: "Heavy sherry cask influence creates deep notes of nuts, caramel, and dried fruits. It is characterized by a rich, heavy, and sweet impression."
+            },
+            {
+                name: "V.S / V.S.O.S / X.O / Extra",
+                criteria: "Classified by the oak aging period of the youngest eau-de-vie (2 / 4 / 10+ years).",
+                description: "As aging progresses, the fruit's charm evolves into deep tertiary notes (chocolate, leather, nuts), with the complexity of flavor layers increasing exponentially."
+            }
+        ],
+        sensoryMetrics: [
+            {
+                metric: "Maturation Maturity",
+                label: "Maturation Path",
+                value: "Fruit → Spice → Rancio",
+                description: "Over time, the profile evolves from raw fruitiness through oak spices to Rancio—the pinnacle of long-aged brandy aroma."
+            },
+            {
+                metric: "Alcohol Integration",
+                label: "Mouthfeel",
+                value: "Velvety & Silky",
+                description: "High-quality brandies feel velvety and smooth on the palate despite high ABV; the expansion of aroma is more prominent than the alcoholic 'burn'."
+            },
+            {
+                metric: "Finish Persistence",
+                label: "Persistence",
+                value: "Very Short up to 30 mins",
+                description: "Extraordinarily well-aged products (XO and above) can leave lingering notes in the mouth and nose for dozens of minutes after a single sip."
+            }
+        ],
+        coreIngredients: [
+            {
+                type: "Primary Ingredient",
+                name: "High-Acid White Wine (e.g., Ugni Blanc)",
+                description: "High-acidity wines preserve the aromatic framework after distillation and provide the ideal foundation for developing complexity during long-term aging."
+            },
+            {
+                type: "Aging Vessel",
+                name: "French Oak (Limousin/Tronçais)",
+                description: "The grain density of the oak controls the extraction rate of tannins, imparting flavors of vanilla, cinnamon, and nuts to the brandy."
+            }
+        ],
+        manufacturingProcess: [
+            {
+                step: "Distillation",
+                name: "Double Pot Still Distillation (Cognac Method)",
+                description: "Slowly distilled twice in copper stills to precisely isolate the purest and most elegant heart of the spirit (Eau-de-vie)."
+            },
+            {
+                step: "Maturation",
+                name: "Barrel Aging and Oxidation",
+                description: "The spirit 'breathes' in oak barrels for years or decades, rounding off the alcohol's edge and creating aging esters to finalize aromatic depth."
+            },
+            {
+                step: "Blending",
+                name: "Assemblage",
+                description: "A Master Blender combines hundreds of different eaux-de-vie to achieve a consistent house style and create multi-dimensional flavor layers."
+            }
+        ],
+        servingGuidelines: {
+            recommendedGlass: "Tulip-shaped Brandy Glass or Snifter",
+            optimalTemperatures: [
+                {
+                    temp: "18~22°C (Room Temp)",
+                    description: "The temperature where the complex aromas of aged brandy bloom most harmoniously with appropriate alcohol integration."
+                },
+                {
+                    temp: "14~16°C (Slightly Cool)",
+                    description: "The temperature where the natural fruitiness of younger V.S. grades or fruit brandies is more crisply emphasized."
+                }
+            ],
+            methods: [
+                {
+                    name: "Neat / Sipping",
+                    description: "The standard method: pour into a glass, allow sufficient time for venting (aeration), and sip slowly to appreciate the evolution of aromas."
+                },
+                {
+                    name: "Hand Warming",
+                    description: "Cradling the bottom of a snifter glass with the palm transfers body heat, causing heavy aged notes and Rancio to radiate more vibrantly."
+                },
+                {
+                    name: "Brandy Highball (Sidecar Style)",
+                    description: "Mixing V.S.O.P grade brandy with sparkling water or ginger ale offers a refreshing way to enjoy the sophisticated sweetness unique to brandy."
+                }
+            ]
+        },
+        flavorTags: [
+            { label: "Dried Fruit / Raisin", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Vanilla / Caramel", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Oak / Toast", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
+            { label: "Cinnamon / Spice", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Nutty / Sherry-like", color: "bg-yellow-600/20 text-zinc-950 dark:text-yellow-300" },
+            { label: "White Flowers", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-300" },
+            { label: "Rancio / Leather", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" }
+        ],
+        foodPairing: [
+            "Dark Chocolate and Tiramisu",
+            "Roasted nuts such as Almonds and Walnuts",
+            "Aged Cheeses (Comté, Blue Cheese)",
+            "Foie Gras and Steaks with heavy sauces",
+            "Apple Tart and Crème Brûlée"
+        ],
+        dbCategories: ['브랜디']
     }
 }

@@ -147,5 +147,145 @@ export const mezcal: SpiritCategory = {
             "다크 초콜릿 및 견과류"
         ],
         dbCategories: ['일반증류주']
+    },
+    sectionsEn: {
+        definition: "Mezcal is a Mexican agave spirit produced by roasting, fermenting, and distilling the 'piña' (heart) of various agave species. It is renowned for its signature smokiness derived from traditional underground pit ovens and its profound expression of terroir. Unlike Tequila, which is primarily restricted to Blue Weber Agave and specific regions, Mezcal encompasses a vast array of agave varieties, production zones, and ancestral methods.",
+        history: "Agave-based beverage culture predates Spanish arrival (e.g., Pulque), but modern Mezcal took shape as distillation techniques were introduced during the colonial era. Centered in Oaxaca, the tradition of local 'palenques' (distilleries) has been preserved for centuries. While primarily for local consumption until the late 20th century, Mezcal has surged as a global premium spirit since the 1990s following the formalization of its Denomination of Origin (DO).",
+        classifications: [
+            {
+                name: "Mezcal (Standard Category)",
+                criteria: "Meets Mezcal DO standards; permits the use of modern industrial equipment.",
+                description: "The broadest category allowing for modern machinery to increase production efficiency. Mass-produced versions tend to have a cleaner, more streamlined balance of smoke and fermentation notes."
+            },
+            {
+                name: "Mezcal Artesanal",
+                criteria: "Roasting in pit ovens, open-air fermentation, and distillation in copper or clay pot stills.",
+                description: "Considered the 'aesthetic core' of Mezcal. Aromas of smoke and roasted agave from the pit, alongside lactic nuances from wild yeast fermentation, reflect the producer’s personality and the local environment."
+            },
+            {
+                name: "Mezcal Ancestral",
+                criteria: "Manual crushing, natural fermentation, and distillation exclusively in clay pots.",
+                description: "Features 'primordial' aromas of woodsmoke, earth, and minerals. Evaluation centers on its thick, oily texture and its raw revelation of specific soil and microbial environments."
+            },
+            {
+                name: "Blanco / Joven",
+                criteria: "Unaged; bottled directly after distillation or after resting in glass containers.",
+                description: "Provides the clearest expression of agave's natural sweetness, vegetal notes, and florals. Without oak interference, the layers of smoke are sharp and the finish remains dry."
+            },
+            {
+                name: "Madurado en Vidrio (Glass Aged)",
+                criteria: "Resting in glass containers for 12 months or more to stabilize flavors.",
+                description: "Softens alcohol heat and integrates aromas without adding oak flavor. This method preserves delicate floral and fruit notes while refining the spirit's overall texture."
+            },
+            {
+                name: "Mezcal de Pechuga",
+                criteria: "Redistilled with fruits, spices, and meat (typically poultry breast) hung inside the still.",
+                description: "Proteins and fats influence the steam flow, creating an exceptionally silky texture. It is a traditional ceremonial style resulting in an explosion of fruit and spice aromatics."
+            }
+        ],
+        sensoryMetrics: [
+            {
+                metric: "Alcohol Strength",
+                label: "ABV (%)",
+                value: "45% ~ 55% (Artesanal Standard)",
+                description: "Higher ABV enhances aromatic volatility and body. Premium Mezcal maintains its agave sweetness and complexity even at high proofs."
+            },
+            {
+                metric: "Smoke Intensity",
+                label: "Smoke Level",
+                value: "Heavy Smoke (2/5 ~ 5/5)",
+                description: "Derived from roasting in pit ovens. Depending on the wood used and roasting duration, it ranges from sweet woodsmoke to intense, tar-like aromas."
+            },
+            {
+                metric: "Vegetal/Herbal Tones",
+                label: "Vegetal Character",
+                value: "Green Pepper / Cactus",
+                description: "Notes of raw grass, green pepper, or cactus vary by agave species. Wild agaves often reveal more complex and dimensional vegetal terroir."
+            },
+            {
+                metric: "Minerality",
+                label: "Minerality",
+                value: "Wet Stone / Salinity",
+                description: "Characteristics of wet earth, stone dust, or saltiness resulting from clay stills, local water, and soil. This creates a dry, clean finish."
+            }
+        ],
+        coreIngredients: [
+            {
+                type: "Primary Ingredient",
+                name: "Wild and Cultivated Agave (Espadín, Tobalá, etc.)",
+                description: "Variety and environment dictate the flavor profile. Espadín offers balanced sweetness, while wild species like Tobalá contribute floral and mineral characters."
+            },
+            {
+                type: "Fermentation Agent",
+                name: "Local Wild Yeast & Indigenous Microbes",
+                description: "Microbes introduced during open-air fermentation create complex notes of tropical fruit, yogurt, and cheese, enhancing the spirit's texture."
+            },
+            {
+                type: "Processing Material",
+                name: "Firewood for Pit Roasting",
+                description: "The type of wood and stones used to heat the pit oven finalizes the specific smoky character of the Mezcal."
+            }
+        ],
+        manufacturingProcess: [
+            {
+                step: "Cooking",
+                name: "Pit Oven Roasting",
+                description: "Agave hearts are buried in underground pits and roasted for days. This process converts starches to sugars and infuses the seductive smoky aroma."
+            },
+            {
+                step: "Crushing/Fermentation",
+                name: "Traditional Milling & Natural Fermentation",
+                description: "Agaves are crushed using a stone wheel (Tahona) and naturally fermented in wood or stone vats to build layers of complexity."
+            },
+            {
+                step: "Distillation",
+                name: "Copper or Clay Pot Distillation",
+                description: "Copper stills emphasize clarity of aroma, while clay pots highlight oily textures and minerality. A third distillation (Pechuga) can be used for added refinement."
+            }
+        ],
+        servingGuidelines: {
+            recommendedGlass: "Mezcal Copita or Tulip-shaped Tasting Glass",
+            optimalTemperatures: [
+                {
+                    temp: "18~22°C (Room Temp)",
+                    description: "The standard temperature where layers of roasted agave, herbs, minerals, and smoke open in balance."
+                },
+                {
+                    temp: "14~16°C (Cool)",
+                    description: "Slightly reduces the alcohol sting of high-ABV batches to more smoothly integrate the flavors."
+                }
+            ],
+            methods: [
+                {
+                    name: "Sipping Neat",
+                    description: "The traditional way to enjoy Mezcal: nose the glass first, then take a small sip to slowly savor the essence of the agave."
+                },
+                {
+                    name: "Garnish Pairing (Sal de Gusano)",
+                    description: "Biting an orange slice sprinkled with worm salt after a sip dramatically highlights the smokiness and citrus notes."
+                },
+                {
+                    name: "Mezcal Cocktails",
+                    description: "Replacing Gin or Tequila with Mezcal adds incredible depth and 'edge' to classics like the Negroni or Margarita."
+                }
+            ]
+        },
+        flavorTags: [
+            { label: "Smoky/Roasted", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" },
+            { label: "Roasted Agave", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Earthy/Mineral", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" },
+            { label: "Herbal/Green Pepper", color: "bg-emerald-500/20 text-zinc-950 dark:text-emerald-300" },
+            { label: "Citrus/Orange", color: "bg-yellow-400/20 text-zinc-950 dark:text-yellow-300" },
+            { label: "Fermented Fruit/Yogurt", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-300" },
+            { label: "Peppery/Piquant", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" }
+        ],
+        foodPairing: [
+            "Rich Mole Sauce Dishes",
+            "BBQ and Grilled Meats",
+            "Smoked Seafood and Ceviche",
+            "Guacamole and Nachos",
+            "Dark Chocolate and Nuts"
+        ],
+        dbCategories: ['일반증류주']
     }
 }

@@ -150,5 +150,148 @@ export const sojuDistilled: SpiritCategory = {
             "다양한 전류 (해물파전, 육전)"
         ],
         dbCategories: ['소주']
+    },
+    sectionsEn: {
+        definition: "Traditional Distilled Soju is a Korean craft spirit produced by fermenting grain and starch—primarily rice—using traditional 'Nuruk' (starter culture) or Koji, then concentrating the alcohol and aromatics through pot distillation. Unlike mass-produced diluted soju, it preserves the savory grain notes and complex fermentation aromas of its raw materials.",
+        history: "Distillation technology was introduced to the Goryeo Dynasty from the Mongols in the 13th century, originally known as 'Arak.' It evolved into regional specialties across the peninsula. Today, it leads the premium spirits market through a revival of traditional pot-still methods combined with modern experiments like oak cask maturation.",
+        classifications: [
+            {
+                name: "Traditional Nuruk Soju",
+                criteria: "Distilling a wash fermented using traditional 'Nuruk' (wild fermentation starter).",
+                description: "Features a multi-layered profile with deep grain nuttiness, subtle acidity, and a full body. As it ages, it develops complex earthy and mushroom-like 'Umami' notes."
+            },
+            {
+                name: "Koji-based Soju",
+                criteria: "Precision fermentation using specific strains of Koji (molded grain).",
+                description: "A 'clean' style with a focused aromatic profile, often revealing bright fruit esters like pear or apple. This style dominates the modern premium soju market."
+            },
+            {
+                name: "Atmospheric Distillation",
+                criteria: "Distilled at normal atmospheric pressure to maximize ingredient extraction.",
+                description: "The high-heat process carries over compounds with high boiling points, resulting in a heavy texture, rich nutty aromas, and a powerful character."
+            },
+            {
+                name: "Vacuum Distillation",
+                criteria: "Distilled in a vacuum at low temperatures to eliminate off-flavors.",
+                description: "Preserves delicate, heat-sensitive floral notes and creates an exceptionally smooth throat-feel, catering to modern preferences for cleanliness."
+            },
+            {
+                name: "Aged / Cask Soju",
+                criteria: "Stabilized and aged in traditional Onggi (clay pots) or oak barrels.",
+                description: "Onggi aging provides a rounded, integrated mouthfeel through micro-oxidation, while oak aging adds whisky-like nuances of vanilla and spice."
+            }
+        ],
+        sensoryMetrics: [
+            {
+                metric: "Alcohol by Volume",
+                label: "ABV (%)",
+                value: "20% ~ 53% (Wide Spectrum)",
+                description: "High-proof traditional variants offer dense aromatic concentration, while lower-proof products are designed for smoothness and daily pairing."
+            },
+            {
+                metric: "Flavor Intensity",
+                label: "Flavor Intensity",
+                value: "Moderate to Very High",
+                description: "Determined by the rice polishing ratio and distillation method, ranging from a crisp white spirit to a heavy, savory Nuruk-driven profile."
+            },
+            {
+                metric: "Mouthfeel",
+                label: "Mouthfeel",
+                value: "Velvety ~ Oily",
+                description: "Atmospheric distillation increases viscosity and oiliness on the palate, leaving a profound, lingering finish."
+            },
+            {
+                metric: "Umami",
+                label: "Umami",
+                value: "Savory Grain Finish",
+                description: "Reflects the subtle, savory aftertaste provided by residual amino acids from the grain even after distillation."
+            }
+        ],
+        coreIngredients: [
+            {
+                type: "Primary Material",
+                name: "Domestic Rice (Non-glutinous / Glutinous)",
+                description: "The foundation of the spirit. The ratio of glutinous rice dictates the concentration of sweetness and alcoholic clarity."
+            },
+            {
+                type: "Fermentation Agent",
+                name: "Traditional Nuruk or Koji",
+                description: "The key element that breaks down starch into sugar while infusing floral, fruity, and savory fermented notes."
+            },
+            {
+                type: "Maturation Factor",
+                name: "Breathable Onggi (Clay Pots)",
+                description: "A traditional aging vessel that uses micro-oxygenation to 'shave off' the sharp edges of alcohol, rounding out the flavor."
+            }
+        ],
+        manufacturingProcess: [
+            {
+                step: "Mashing",
+                name: "Two-Stage Fermentation",
+                description: "Culturing yeast in a starter (Mitsul) before adding steamed rice for secondary fermentation to maximize esters and amino acids."
+            },
+            {
+                step: "Distillation",
+                name: "Pot Still Distillation (Sojugori)",
+                description: "Extracting the essence of the wash using traditional Sojugori or modern copper pot stills to capture the aromatic 'Heart' of the spirit."
+            },
+            {
+                step: "Maturation",
+                name: "Long-term Onggi Aging",
+                description: "Aged for at least 6 months to settle the harsh initial vapors, resulting in a deeper, more sophisticated flavor over time."
+            }
+        ],
+        servingGuidelines: {
+            recommendedGlass: "Small Tulip Tasting Glass or Traditional Soju Cup",
+            optimalTemperatures: [
+                {
+                    temp: "16~20°C (Room Temp)",
+                    description: "Ideal for Atmospheric Soju to fully express the savory rice notes and Nuruk complexity."
+                },
+                {
+                    temp: "8~12°C (Chilled)",
+                    description: "Best for Vacuum-distilled Soju to highlight its crisp and refreshing aromatic profile."
+                },
+                {
+                    temp: "40~45°C (Warm)",
+                    description: "Warming high-proof atmospheric soju explosively expands the grain and fermentation aromas."
+                }
+            ],
+            methods: [
+                {
+                    name: "Neat",
+                    description: "The purest way to appreciate the inherent rice aromas and the sophisticated complexity of the fermentation starter."
+                },
+                {
+                    name: "On the Rocks",
+                    description: "Dilution with ice mitigates high-proof heat while bringing hidden floral and fruity notes to the forefront."
+                },
+                {
+                    name: "Oyuwari (Hot Water Mix)",
+                    description: "Mixing with hot water (6:4 or 5:5) maximizes grain nuttiness, making it an excellent choice for cold weather."
+                },
+                {
+                    name: "Soju Highball",
+                    description: "Adding soda water and a lemon slice for a refreshing drink, especially suitable for vacuum-distilled variants."
+                }
+            ]
+        },
+        flavorTags: [
+            { label: "Savory Rice", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Bright Orchard Fruit", color: "bg-rose-500/20 text-zinc-950 dark:text-rose-300" },
+            { label: "Earthy Nuruk", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
+            { label: "Clean/Mineral", color: "bg-sky-500/20 text-zinc-950 dark:text-sky-300" },
+            { label: "Oily/Velvety", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" },
+            { label: "Vanilla/Woody", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" }
+        ],
+        foodPairing: [
+            "Grilled Pork Belly and Neck (Samgyeopsal)",
+            "Premium Hanwoo Beef and Bulgogi",
+            "White Fish Sashimi and Seafood (with Vacuum Soju)",
+            "Savory Doenjang-jjigae and Hot Pot Dishes",
+            "Grilled Eel and Oily Fish Dishes",
+            "Korean Pancakes (Jeon) like Seafood or Beef Pancake"
+        ],
+        dbCategories: ['소주']
     }
 }

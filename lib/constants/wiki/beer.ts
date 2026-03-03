@@ -150,5 +150,148 @@ export const beer: SpiritCategory = {
             "다크 초콜릿 및 티라미수"
         ],
         dbCategories: ['맥주']
+    },
+    sectionsEn: {
+        definition: "Beer is a fermented beverage made by saccharifying malted grains (such as barley), fermenting the resulting wort with yeast, and adding hops for bitterness, aroma, and preservative qualities. It encompasses a vast spectrum ranging from crisp lagers to robust ales depending on the brewing process.",
+        history: "As one of the oldest fermented beverages in human history, beer's modern styles were established through the development of brewing techniques in medieval monasteries, followed by modern refrigeration and yeast research. Recently, craft beer culture, utilizing diverse hops and adjuncts, has spread globally.",
+        classifications: [
+            {
+                name: "Lager (Bottom-Fermenting)",
+                criteria: "Uses bottom-fermenting yeast; fermented at low temperatures (8–13°C) and lagered (cold conditioned).",
+                description: "Characterized by a clean, crisp taste with fewer yeast byproducts. Representative styles include Pilsner, Helles, and Bock, balancing carbonation, malt sweetness, and subtle hop aromas."
+            },
+            {
+                name: "Ale (Top-Fermenting)",
+                criteria: "Uses top-fermenting yeast; fermented at room temperatures (15–24°C).",
+                description: "Rich in fruity esters and spicy phenol nuances. Features distinct styles like Pale Ale, IPA, and Stout, offering a wide range of flavor profiles."
+            },
+            {
+                name: "Hop-Forward (IPA / Pale Ale)",
+                criteria: "Emphasizes high hop usage and dry-hopping processes.",
+                description: "Known for distinct hop aromas—such as citrus, tropical fruit, and pine—and a sharp bitterness. Freshness of aroma is the key quality factor."
+            },
+            {
+                name: "Dark / Roasted (Stout / Porter)",
+                criteria: "Uses roasted malts or roasted barley.",
+                description: "Features notes of coffee, dark chocolate, toast, and nuts. It has a smooth texture and heavy body, pairing excellently with desserts."
+            },
+            {
+                name: "Wheat Beer",
+                criteria: "High wheat malt content, typically 30–70% or more.",
+                description: "Produces a thick head and creamy texture. Divided into Belgian style (orange/herb) and German style (banana/clove), with low bitterness for a smooth finish."
+            },
+            {
+                name: "Sour / Wild Fermentation (Sour & Lambic)",
+                criteria: "Fermented using lactic acid bacteria or wild yeast (Brettanomyces).",
+                description: "Offers unique flavors ranging from refreshing yogurt-like acidity to funky complexity like leather and hay. Requires blending skills as sophisticated as winemaking."
+            },
+            {
+                name: "Barrel-Aged",
+                criteria: "Long-term aging in oak barrels previously used for bourbon, whiskey, or wine.",
+                description: "A premium style where oak-derived vanilla and coconut notes, along with remnants of the previous spirit, create ultimate complexity and high ABV."
+            }
+        ],
+        sensoryMetrics: [
+            {
+                metric: "Bitterness Index",
+                label: "IBU",
+                value: "5 ~ 100+ (Extreme Range)",
+                description: "Higher values indicate stronger hop bitterness. However, high residual sugar and body can neutralize the perceived bitterness."
+            },
+            {
+                metric: "Color Rating",
+                label: "SRM / EBC",
+                value: "2 (Pale) ~ 40+ (Pitch Black)",
+                description: "Determined by the roast level of the malt, ranging from transparent gold to deep brown and pitch black."
+            },
+            {
+                metric: "Body / Texture",
+                label: "Mouthfeel",
+                value: "Light to Creamy",
+                description: "Provides various sensations from light crispness to heavy oiliness, depending on carbonation levels and malt protein content."
+            }
+        ],
+        coreIngredients: [
+            {
+                type: "Base Ingredient",
+                name: "Malt (Malted Barley / Wheat)",
+                description: "Creates the backbone of the beer's color, sweetness, and body. Forms diverse flavor curves depending on the roast level."
+            },
+            {
+                type: "Flavoring Agent",
+                name: "Hops",
+                description: "Responsible for bitterness, aroma, and preservation. Acts as the 'perfume' of beer with citrus, pine, and floral notes."
+            },
+            {
+                type: "Fermenting Agent",
+                name: "Brewing Yeast",
+                description: "The key driver that converts sugars into alcohol and CO2 while adding delicate fruity or spicy characters."
+            }
+        ],
+        manufacturingProcess: [
+            {
+                step: "Extraction/Boiling",
+                name: "Mashing & Boiling",
+                description: "The initial process where grain starches are converted to sugars, then boiled with hops to extract bitterness and sterilize the wort."
+            },
+            {
+                step: "Fermentation",
+                name: "Top/Bottom Fermentation",
+                description: "Fermenting at temperatures suited to the yeast strain to create the beer's unique flavor profile and carbonation."
+            },
+            {
+                step: "Finishing",
+                name: "Lagering & Conditioning",
+                description: "Removing off-flavors and refining the taste through cold maturation to ensure clarity and balance."
+            }
+        ],
+        servingGuidelines: {
+            recommendedGlass: "Tulip glass, Pint glass, or Weizen glass",
+            optimalTemperatures: [
+                {
+                    temp: "3~6°C (Lager)",
+                    description: "The temperature where carbonated crispness and citrusy hops are most sharp, refreshing the palate."
+                },
+                {
+                    temp: "8~12°C (Ale / IPA)",
+                    description: "The range where vibrant tropical fruit aromas from hops and complex esters begin to fully bloom."
+                },
+                {
+                    temp: "13~16°C (Stout / Aged Beer)",
+                    description: "The ideal temperature to enjoy roasted coffee notes and complex tertiary aromas from oak aging."
+                }
+            ],
+            methods: [
+                {
+                    name: "Proper Head Pouring",
+                    description: "Tilt the glass slightly while pouring, then straighten it at the end to create a 2–3cm head to trap aromas and prevent oxidation."
+                },
+                {
+                    name: "Drinking Bottle-Conditioned Beer",
+                    description: "For beers containing yeast, pour 90% gently, then lightly swirl the remaining liquid to include the yeast for added flavor."
+                },
+                {
+                    name: "Beer Mixing (Cocktails)",
+                    description: "Enjoying beer lightly by mixing crisp lagers with lemonade (Radler) or tomato juice is also an excellent option."
+                }
+            ]
+        },
+        flavorTags: [
+            { label: "Hop Citrus / Tropical Fruit", color: "bg-yellow-400/20 text-zinc-950 dark:text-yellow-300" },
+            { label: "Pine / Resin", color: "bg-emerald-600/20 text-zinc-950 dark:text-emerald-300" },
+            { label: "Malt Biscuit / Bread", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Roasted Coffee / Cacao", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" },
+            { label: "Banana / Clove", color: "bg-rose-500/20 text-zinc-950 dark:text-rose-300" },
+            { label: "Tart Acidity / Yogurt", color: "bg-sky-300/20 text-zinc-950 dark:text-sky-300" },
+            { label: "Oak / Vanilla", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" }
+        ],
+        foodPairing: [
+            "Fried Chicken and various fried foods",
+            "Pizza and dishes with cheese toppings",
+            "Steak and Barbecue",
+            "Sausage and Charcuterie",
+            "Dark Chocolate and Tiramisu"
+        ],
+        dbCategories: ['맥주']
     }
 }

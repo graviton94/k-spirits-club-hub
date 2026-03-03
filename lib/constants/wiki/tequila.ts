@@ -151,5 +151,149 @@ export const tequila: SpiritCategory = {
             "다크 초콜릿 및 견과류"
         ],
         dbCategories: ['일반증류주']
+    },
+    sectionsEn: {
+        definition: "Tequila is a world-renowned Mexican spirit produced by fermenting and distilling the sugars of the Blue Weber Agave, grown specifically within designated regions of Mexico. It is a strictly regulated category of Agave spirit protected by a Declaration of Origin.",
+        history: "Agave distillation techniques evolved during the Spanish colonial period and became commercially centered in the town of Tequila, Jalisco. Today, the industry is strictly governed by the 'Appellation of Origin (DO)' and 'NOM' (Norma Oficial Mexicana) standards, which ensure the authenticity of production regions and raw materials.",
+        classifications: [
+            {
+                name: "100% de Agave",
+                criteria: "Fermentable sugars are derived exclusively from 100% Blue Weber Agave.",
+                description: "The gold standard for premium Tequila. It showcases vivid notes of herbs, citrus, and pepper, offering the deep complexity of roasted agave rather than simple syrupy sweetness."
+            },
+            {
+                name: "Mixto",
+                criteria: "At least 51% agave sugars blended with other sugar sources.",
+                description: "Highly accessible and primarily used as a cocktail base. It features a simpler sweetness and lighter body compared to 100% agave versions."
+            },
+            {
+                name: "Blanco / Plata (Silver)",
+                criteria: "Unaged or rested for less than 2 months.",
+                description: "The purest expression of the agave plant. It delivers raw, wild flavors of herbs, citrus, and a signature spicy pepper kick."
+            },
+            {
+                name: "Reposado",
+                criteria: "Aged in oak containers for at least 2 months but less than 1 year.",
+                description: "Maintains the agave's character while introducing oak-derived notes of vanilla and caramel, resulting in a smoother, more balanced texture."
+            },
+            {
+                name: "Añejo",
+                criteria: "Aged in oak containers for at least 1 year but less than 3 years.",
+                description: "A sophisticated grade with dense flavors of chocolate, nuts, and deep spice, offering a complex profile reminiscent of fine whisky."
+            },
+            {
+                name: "Extra Añejo",
+                criteria: "Aged in oak containers for 3 years or more.",
+                description: "The rarest category. It features layers of dark chocolate, leather, and toffee, where the elegant influence of long-term wood aging is maximized."
+            },
+            {
+                name: "Cristalino",
+                criteria: "An aged tequila (Añejo or higher) that has been filtered to remove color.",
+                description: "A modern innovation that retains the silky oiliness of an aged spirit while presenting a crystal-clear appearance. It offers a surprising contrast between its clarity and its heavy, complex palate."
+            }
+        ],
+        sensoryMetrics: [
+            {
+                metric: "Agave Purity",
+                label: "Agave Purity",
+                value: "100% Agave / Mixto",
+                description: "Higher purity yields distinct terroir characteristics like herbal and earthy notes, whereas lower purity offers a lighter, more neutral impression."
+            },
+            {
+                metric: "Wood Influence",
+                label: "Oak Influence",
+                value: "None to Intense",
+                description: "Varies from the wild, raw energy of Blanco to the rich, woody texture of Extra Añejo, determined by the duration of oak contact."
+            },
+            {
+                metric: "Spiciness",
+                label: "Peppery Level",
+                value: "White Pepper / Jalapeño",
+                description: "The characteristic spicy tingle of agave on the tip of the tongue, which is most prominent and celebrated in the Blanco grade."
+            },
+            {
+                metric: "Sweetness Type",
+                label: "Agave Sweetness",
+                value: "Roasted Agave Honey",
+                description: "Distinct from sugar-based sweetness, this is a subtle, deep flavor akin to roasted honey or agave nectar (Aguamiel) after cooking."
+            }
+        ],
+        coreIngredients: [
+            {
+                type: "Primary Material",
+                name: "Blue Weber Agave",
+                description: "The soul of Tequila. Only 'Piñas' (the agave heart) aged for 6 to 8 years are used to provide the foundation for its complex profile."
+            },
+            {
+                type: "Fermentation Agent",
+                name: "Specific Yeast & Purified Water",
+                description: "Converts sugars into alcohol while imparting secondary aromas such as tropical fruit or yogurt-like lactic notes."
+            },
+            {
+                type: "Maturation Vessel",
+                name: "Ex-Bourbon or Wine Casks",
+                description: "Used to infuse flavors of vanilla, cinnamon, and nuts while mellowing the initial alcoholic bite during aging."
+            }
+        ],
+        manufacturingProcess: [
+            {
+                step: "Harvest/Cooking",
+                name: "Jima & Cooking",
+                description: "The leaves are removed (Jima) to reveal the Piña, which is then slow-cooked to convert starch into sugar. Traditional 'Hornos' (ovens) add significant depth to the sweetness."
+            },
+            {
+                step: "Extraction/Fermentation",
+                name: "Milling & Fermentation",
+                description: "Juice is extracted from the cooked agave and fermented with yeast. Using a traditional 'Tahona' (stone wheel) often preserves more earthy complexity."
+            },
+            {
+                step: "Distillation/Aging",
+                name: "Pot Distillation & Maturation",
+                description: "Double distillation produces a clear Blanco spirit, which is then either bottled or aged in oak barrels for months or years depending on the grade."
+            }
+        ],
+        servingGuidelines: {
+            recommendedGlass: "Tequila Copita or Tulip-shaped Tasting Glass",
+            optimalTemperatures: [
+                {
+                    temp: "14~16°C",
+                    description: "Best for Blanco to highlight fresh citrus and agave notes while keeping the alcohol burn in check."
+                },
+                {
+                    temp: "18~22°C",
+                    description: "Ideal for Añejo and higher grades to allow the complex aromas of caramel, chocolate, and oak spices to bloom."
+                }
+            ],
+            methods: [
+                {
+                    name: "Sipping Neat",
+                    description: "The most respected way to enjoy premium tequila: sipping slowly at room temperature to appreciate the agave's complexity."
+                },
+                {
+                    name: "Sangrita Pairing",
+                    description: "A traditional Mexican method of alternating sips of tequila with 'Sangrita,' a spicy tomato and fruit-based juice, to contrast the flavors."
+                },
+                {
+                    name: "Garnish Highball",
+                    description: "A refreshing long drink made with Blanco or Reposado, soda water, and plenty of lime slices for maximum crispness."
+                }
+            ]
+        },
+        flavorTags: [
+            { label: "Roasted Agave", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Lime/Citrus", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
+            { label: "White Pepper", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
+            { label: "Vanilla/Caramel", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Grass/Herbal", color: "bg-emerald-500/20 text-zinc-950 dark:text-emerald-300" },
+            { label: "Mineral", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" }
+        ],
+        foodPairing: [
+            "Ceviche with Lime and Fresh Seafood",
+            "Pork Tacos (Carnitas)",
+            "Spicy Grilled Meats and Steaks",
+            "Aged Cheeses (Manchego, Gouda)",
+            "Dark Chocolate and Nut Platters"
+        ],
+        dbCategories: ['일반증류주']
     }
 }

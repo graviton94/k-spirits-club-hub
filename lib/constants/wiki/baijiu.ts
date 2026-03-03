@@ -185,5 +185,183 @@ export const baijiu: SpiritCategory = {
             "사천식 매운 볶음 요리"
         ],
         dbCategories: ['일반증류주']
+    },
+    sectionsEn: {
+        definition: "Baijiu (White Liquor) is China's representative high-proof distilled spirit, made by solid-state fermentation of grains like sorghum using Qu (starter culture), followed by distillation. Depending on the region, Qu type, and fermentation environment, it has developed a unique classification system called 'Aroma Types (香型),' offering a diverse flavor spectrum.",
+        history: "The roots of Baijiu lie in China's ancient grain fermentation culture and the advancement of distillation technology. Over time, regional differences in raw materials, climate, and fermentation vessels have shaped distinct styles. Today, the industry has become highly systematized around these 'Aroma Types,' where major global brands and local prestigious distilleries coexist.",
+        classifications: [
+            {
+                name: "Sauce Aroma (Jiangxiang, 醬香型)",
+                criteria: "High-temperature Daqu + high-temperature piling and multi-round solid-state fermentation + long-term aging and blending.",
+                description: "Characterized by savory, fermented nuances of soy sauce, bean paste, roasted grains, and nuts. The aroma unfolds in layers with an exceptionally long finish. Moutai is the most representative brand."
+            },
+            {
+                name: "Strong Aroma (Nongxiang, 濃香型)",
+                criteria: "Solid-state fermentation in mud pits + strong ester character.",
+                description: "Features intense ester notes like pineapple and tropical fruits, complemented by sweet grain aromas. Older pits ('Laojiao') produce richer and rounder aromas. Wuliangye and Shuijingfang are classic examples."
+            },
+            {
+                name: "Light Aroma (Qingxiang, 淸香型)",
+                criteria: "Low fermentation temperature + clean fermentation environment (stone tanks or jars).",
+                description: "Known for its refreshing and clean notes of apple, pear, and white flowers. It has a light body and a dry, crisp finish. Fenjiu is the representative brand."
+            },
+            {
+                name: "Rice Aroma (Mixiang, 米香型)",
+                criteria: "Rice-based raw materials + Xiaoqu-driven fermentation.",
+                description: "Highlights the clean sweetness of rice with subtle floral and honey notes. Its low 'Qu' funk makes it a smooth, approachable choice recommended for beginners."
+            },
+            {
+                name: "Phoenix Aroma (Fengxiang, 鳳香型)",
+                criteria: "A hybrid style balancing the cleanliness of Light Aroma with the richness of Strong Aroma.",
+                description: "The core is the balance between vivid aromas and a solid body. It harmonizes fruity esters with the nuttiness of grains. Xifengjiu is the representative brand."
+            },
+            {
+                name: "Mixed Aroma (Jianxiang, 兼香型)",
+                criteria: "Combines elements of two or more aroma types through specific processes or blending.",
+                description: "Features multi-dimensional layering, such as starting with fruity esters and transitioning into the savory depth of Sauce Aroma."
+            },
+            {
+                name: "Sesame Aroma (Zimaxiang, 芝麻香형)",
+                criteria: "Increased high-temperature processing + roasted/nutty (sesame) flavor profiles.",
+                description: "Signature 'roasted' notes of sesame, toast, and light cacao. It pairs exceptionally well with meat dishes."
+            },
+            {
+                name: "Special Aroma (Texiang, 特香型)",
+                criteria: "Multi-grain Daqu blends + unique regional complex fermentation processes.",
+                description: "Possesses a unique flavor profile that cannot be easily categorized into a single aroma type. Each brand displays its own distinct character."
+            },
+            {
+                name: "Laobaigan Aroma (老白干香型)",
+                criteria: "Focused on high ABV + clean and powerful texture.",
+                description: "While the profile is clean, the texture is robust. It leaves a 'clear yet heavy' impression with a prominent alcohol presence."
+            },
+            {
+                name: "Daqu vs. Xiaoqu Classification",
+                criteria: "Categorized by the size and ingredients of the Qu (starter culture) used.",
+                description: "Daqu tends to produce complex fermented aromas and deep finishes, while Xiaoqu creates refreshing and transparent aromas."
+            }
+        ],
+        sensoryMetrics: [
+            {
+                metric: "Proof / Heat",
+                label: "ABV (%)",
+                value: "38~65% (52~53% is standard)",
+                description: "Higher ABV increases aroma density but may intensify alcohol heat. Well-aged Baijiu feels round and smooth even at high proofs."
+            },
+            {
+                metric: "Ester Intensity",
+                label: "Ester Intensity",
+                value: "Low to Extremely High",
+                description: "Indicates the concentration of fruit/candy nuances like pineapple and banana; a key quality metric particularly for Strong Aroma types."
+            },
+            {
+                metric: "Fermentation Umami",
+                label: "Fermentation Umami",
+                value: "Sauce / Nutty Notes",
+                description: "The intensity of savory, umami-rich aromas like soy sauce and roasted nuts, most prominent in Sauce Aroma types."
+            },
+            {
+                metric: "Body / Viscosity",
+                label: "Body Thickness",
+                value: "Light to Full Body",
+                description: "A full body provides an oily texture that expands in the mouth, while a light body leads to a refreshing, clean finish."
+            },
+            {
+                metric: "Finish Length",
+                label: "Finish Length",
+                value: "Short to Extra Long",
+                description: "High-quality Baijiu leaves a lingering afterglow of aroma rather than an alcohol sting, with flavors evolving in stages."
+            }
+        ],
+        coreIngredients: [
+            {
+                type: "Base Ingredient",
+                name: "Sorghum and Multi-grains (Rice, Corn, Wheat, etc.)",
+                description: "The backbone of Baijiu's flavor. Sorghum provides a clean character, while rice and corn add smooth sweetness and nuttiness."
+            },
+            {
+                type: "Fermenting Agent",
+                name: "Daqu / Xiaoqu",
+                description: "The stage where the microbial ecosystem is designed. The type of Qu used is a core variable that determines the Aroma Style."
+            },
+            {
+                type: "Fermentation Vessel",
+                name: "Mud Pits (Laojiao) & Ceramic Jars",
+                description: "Indigenous microbes living in the pits determine the aroma. Centuries-old 'Laojiao' are considered treasures for Strong Aroma Baijiu."
+            },
+            {
+                type: "Aging Vessel",
+                name: "Terra Cotta Jars (Ceramic Aging)",
+                description: "Removes the harshness of alcohol through micro-oxidation and adsorption, integrating the aromas into a rounded whole."
+            }
+        ],
+        manufacturingProcess: [
+            {
+                step: "Qu-Making",
+                name: "Qu Production & Inoculation",
+                description: "Crafting Qu from wheat or rice to generate flavor precursors and establish a microbial ecosystem."
+            },
+            {
+                step: "Fermentation",
+                name: "Solid-state Fermentation",
+                description: "Fermenting grains in a solid rather than liquid state to accumulate high concentrations of flavor compounds. Can last for several months depending on the aroma type."
+            },
+            {
+                step: "Distillation",
+                name: "Steam Distillation & Fractional Collection",
+                description: "Steaming the solid fermented mass to distill it. The 'heads,' 'hearts,' and 'tails' are strictly separated based on aroma clarity."
+            },
+            {
+                step: "Refinement",
+                name: "Aging & Blending (Goudiao, 勾兌)",
+                description: "Precisely blending base spirits aged for several years to achieve the house's signature aroma and consistent quality."
+            }
+        ],
+        servingGuidelines: {
+            recommendedGlass: "Traditional small Baijiu cups or tulip-shaped snifters",
+            optimalTemperatures: [
+                {
+                    temp: "18~22°C (Room Temperature)",
+                    description: "The standard temperature to best appreciate the evolution of flavors, from fruity esters to savory aged notes."
+                },
+                {
+                    temp: "10~15°C (Slightly Chilled)",
+                    description: "Reduces alcohol heat for easier entry and highlights the crispness of Light or Rice Aroma types."
+                }
+            ],
+            methods: [
+                {
+                    name: "Small Sips (Neat)",
+                    description: "Instead of shooting it all at once, it is best to roll small amounts over the tongue to savor the unfolding aromas."
+                },
+                {
+                    name: "Resting (Decanting)",
+                    description: "Letting high-proof Baijiu rest in the glass for 5–10 minutes reduces alcohol aggression and allows hidden aromas to emerge."
+                },
+                {
+                    name: "Chinese Cuisine Pairing",
+                    description: "When paired with oily or heavily spiced Chinese dishes, Baijiu's high proof effectively cleanses the palate."
+                }
+            ]
+        },
+        flavorTags: [
+            { label: "Pineapple / Tropical Fruit", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
+            { label: "Pear / Apple (Crisp)", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
+            { label: "Floral / White Flowers", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-300" },
+            { label: "Roasted Grain / Nutty", color: "bg-yellow-600/20 text-zinc-950 dark:text-yellow-300" },
+            { label: "Sesame / Toast", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-300" },
+            { label: "Soy Sauce / Savory (Jiang)", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
+            { label: "Earthy / Cellar Funk", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" },
+            { label: "Peppery / Sharp", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" }
+        ],
+        foodPairing: [
+            "Hot Pot and Mala (Spicy) dishes",
+            "Lamb Skewers and roasted meats",
+            "Dongpo Pork and soy-braised dishes",
+            "Peking Duck and roast duck",
+            "Salty dried seafood appetizers",
+            "Sichuan-style spicy stir-fries"
+        ],
+        dbCategories: ['일반증류주']
     }
 }

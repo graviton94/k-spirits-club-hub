@@ -153,5 +153,151 @@ export const makgeolli: SpiritCategory = {
             "바삭한 후라이드 치킨"
         ],
         dbCategories: ['탁주']
+    },
+    sectionsEn: {
+        definition: "Makgeolli is Korea's iconic cloudy rice wine (Takju) produced by saccharifying rice or other grains with Nuruk (traditional fermentation starter) and undergoing yeast and lactic acid fermentation. It retains fine grain particles, resulting in its characteristic milky appearance and creamy texture.",
+        history: "Makgeolli evolved from a long lineage of grain-based fermented liquors enjoyed in agrarian societies from the Three Kingdoms period through the Joseon Dynasty. Historically, diverse flavor spectrums formed based on local water, rice varieties, and Nuruk styles. While 'modernized' versions (pasteurized, diluted, and sweetened) became prevalent in the 20th century for mass distribution, recent years have seen a resurgence of premium 'single-batch' (Wonju) and additive-free styles using traditional methods.",
+        classifications: [
+            {
+                name: "Traditional Nuruk Makgeolli",
+                criteria: "Uses wheat/barley-based complex microbial Nuruk.",
+                description: "Exhibits complex layers of lactic acidity (yogurt-like), nutty grain notes, and herbal nuances. Often found in premium styles where the depth of flavor and regional 'artisanal touch' are highlighted."
+            },
+            {
+                name: "Modern Koji (Ip-guk) Makgeolli",
+                criteria: "Uses Koji (rice-based starter) or refined enzymes for controlled fermentation.",
+                description: "Known for high consistency and bright fruit esters like banana or pear. These are generally cleaner, lighter, and highly accessible to the general public."
+            },
+            {
+                name: "Fresh / Unpasteurized Makgeolli",
+                criteria: "Bottled without heat treatment, preserving live yeast and lactic acid bacteria.",
+                description: "A subtle secondary fermentation continues in the bottle, offering vivid carbonation and lively fermentation aromas. It characteristically becomes drier over time."
+            },
+            {
+                name: "Pasteurized Makgeolli",
+                criteria: "Microbial activity is suppressed via heat treatment for shelf stability at room temperature.",
+                description: "Stable flavor and long shelf life. The texture is more refined and organized compared to fresh versions, making it the standard for export and general restaurant supply."
+            }
+        ],
+        sensoryMetrics: [
+            {
+                metric: "Alcohol Strength",
+                label: "ABV (%)",
+                value: "6% ~ 16% (Spectrum)",
+                description: "Standard commercial versions are light and refreshing (6-8%), while premium 'Wonju' (undiluted) versions reach 12-16%, showing a heavy body and concentrated flavors."
+            },
+            {
+                metric: "Sweetness / Dryness",
+                label: "Residual Sugar",
+                value: "Dry to Sweet",
+                description: "Additive-free dry styles emphasize raw grain character, while styles with residual sugar or sweeteners offer a smooth, friendly impression."
+            },
+            {
+                metric: "Acidity",
+                label: "Vibrant Lactic Acid (pH 3.4 ~ 4.2)",
+                value: "High Lactic Note",
+                description: "Tangy, yogurt-like acidity provides structure and acts as a key element in balancing greasy or savory foods."
+            },
+            {
+                metric: "Carbonation",
+                label: "Natural CO2",
+                value: "None to High",
+                description: "Natural fizz in unpasteurized versions maximizes refreshing qualities, while stiller versions highlight the creamy mouthfeel."
+            },
+            {
+                metric: "Body / Viscosity",
+                label: "Mouthfeel",
+                value: "Light to Creamy/Chunky",
+                description: "Depending on grain solids, textures range from clear and juice-like to thick, dense, and cream-like."
+            }
+        ],
+        coreIngredients: [
+            {
+                type: "Primary Grain",
+                name: "Domestic Rice (Non-glutinous/Glutinous) & Mixed Grains",
+                description: "The source of sweetness and viscosity. A higher ratio of glutinous rice (Chapssal) results in a smoother finish and deeper sweetness."
+            },
+            {
+                type: "Fermentation Agent",
+                name: "Traditional Nuruk or Koji (Ip-guk)",
+                description: "The 'soul' of Makgeolli that drives saccharification and fermentation, creating complex aromas of banana, yogurt, nuts, and earthiness."
+            },
+            {
+                type: "Water",
+                name: "Brewing Water (Soft Water preferred)",
+                description: "Determines the soft texture; high-quality water ensures fermentation stability and a clean aftertaste."
+            }
+        ],
+        manufacturingProcess: [
+            {
+                step: "Preparation",
+                name: "Steaming (Godubap)",
+                description: "Rice is washed, soaked, and steamed. The degree of gelatinization determines the efficiency of enzyme saccharification."
+            },
+            {
+                step: "Fermentation",
+                name: "Multi-stage Brewing",
+                description: "Rice and fermentation starters are added in multiple stages to build dimensional aromas and safely reach higher ABV levels."
+            },
+            {
+                step: "Filtration",
+                name: "Jae-ju (Straining)",
+                description: "The fermented mash is strained through a coarse mesh to retain a specific amount of solids, which defines the body's density."
+            },
+            {
+                step: "Completion",
+                name: "Dilution (Ga-su) & Stabilization",
+                description: "Water is added to reach the target ABV, and the wine is rested at cold temperatures to harmonize the water and spirit."
+            }
+        ],
+        servingGuidelines: {
+            recommendedGlass: "Wide Bowl (Sabal) or Tulip-shaped White Wine Glass",
+            optimalTemperatures: [
+                {
+                    temp: "4~6℃",
+                    description: "Sharply highlights carbonation and acidity; best for enjoying standard fresh Makgeolli at its most refreshing."
+                },
+                {
+                    temp: "7~10℃",
+                    description: "The standard temperature where the balance between subtle rice sweetness and acidity is most stable."
+                },
+                {
+                    temp: "12~15℃",
+                    description: "Ideal for premium aged versions or Nuruk-based styles to allow complex aromas and creamy textures to expand."
+                }
+            ],
+            methods: [
+                {
+                    name: "Gently Shake",
+                    description: "Lightly mixing the settled solids to enjoy the full-bodied, rich texture unique to Makgeolli."
+                },
+                {
+                    name: "Clear Pour",
+                    description: "Pouring only the clear top layer without shaking to enjoy a clean, sharp grain profile similar to Yakju (Clear Rice Wine)."
+                },
+                {
+                    name: "Mak-Soda (Highball)",
+                    description: "Adding sparkling water and ice to thick premium Makgeolli to adjust density for a refreshing, chilled experience."
+                }
+            ]
+        },
+        flavorTags: [
+            { label: "Steamed Rice/Nutty", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Yogurt/Lactic Acid", color: "bg-emerald-500/20 text-zinc-950 dark:text-emerald-300" },
+            { label: "Banana/Pear", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
+            { label: "Milky/Creamy", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" },
+            { label: "Refreshing Fizz", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
+            { label: "Nuruk/Earthy", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Herbal/Grassy", color: "bg-emerald-600/20 text-zinc-950 dark:text-emerald-300" }
+        ],
+        foodPairing: [
+            "Various Jeon (Pajeon, Kimchijeon, Meat Jeon)",
+            "Tofu Kimchi and Bossam (Boiled Pork)",
+            "Spicy Tteokbokki and Jeyuk-bokkum (Spicy Pork)",
+            "Grilled Pork Belly (Samgyeopsal)",
+            "Brie/Gouda Cheese and Nuts",
+            "Crispy Fried Chicken"
+        ],
+        dbCategories: ['탁주']
     }
 }

@@ -183,7 +183,7 @@ export default async function ContentsPage({ params }: ContentsPageProps) {
         <div className="flex flex-wrap justify-center gap-3">
           {isEn ? (
             <>
-              <Link href="/en/contents/wiki/korean-soju" className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">Korean Soju Guide</Link>
+              <Link href="/en/contents/wiki/soju-guide" className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">Korean Soju Guide</Link>
               <Link href="/en/contents/wiki/makgeolli-guide" className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">Makgeolli Guide</Link>
               <Link href="/en/contents/wiki/korean-whisky" className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">Korean Whisky Guide</Link>
               <Link href="/en/contents/wiki/korean-traditional-spirits" className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">Traditional Spirits</Link>

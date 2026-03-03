@@ -32,17 +32,12 @@ import { makgeolli } from './wiki/makgeolli'
 import { shochu } from './wiki/shochu'
 import { oakBarrel } from './wiki/oak-barrel'
 
-// 10 SEO Hub Categories (Phase 3)
-import { koreanSoju } from './wiki/korean-soju'
+// SEO Hub Categories (Bilingual)
+import { sojuGuide } from './wiki/soju-guide'
 import { makgeolliGuide } from './wiki/makgeolli-guide'
 import { koreanWhisky } from './wiki/korean-whisky'
 import { koreanTraditionalSpirits } from './wiki/korean-traditional-spirits'
 import { koreanSpiritsByAbv } from './wiki/korean-spirits-by-abv'
-import { sojuGuideKo } from './wiki/soju-guide-ko'
-import { makgeolliGuideKo } from './wiki/makgeolli-guide-ko'
-import { koreanWhiskyDistilleries } from './wiki/korean-whisky-distilleries-ko'
-import { traditionalSpiritsKo } from './wiki/traditional-spirits-ko'
-import { spiritsByAbvKo } from './wiki/spirits-by-abv-ko'
 
 // 타입 재수출 (하위 호환성 유지)
 export type {
@@ -99,19 +94,12 @@ export const SPIRIT_CATEGORIES: SpiritCategory[] = [
     // 7. Technical Guide
     oakBarrel,
 
-    // 8. SEO Hubs (EN)
-    koreanSoju,
+    // 8. SEO Hubs (Bilingual)
+    sojuGuide,
     makgeolliGuide,
     koreanWhisky,
     koreanTraditionalSpirits,
-    koreanSpiritsByAbv,
-
-    // 9. SEO Hubs (KO)
-    sojuGuideKo,
-    makgeolliGuideKo,
-    koreanWhiskyDistilleries,
-    traditionalSpiritsKo,
-    spiritsByAbvKo
+    koreanSpiritsByAbv
 ]
 
 /** slug로 카테고리 조회 */

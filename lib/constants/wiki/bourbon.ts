@@ -241,5 +241,239 @@ export const bourbon: SpiritCategory = {
             "훈제 연어 또는 훈제 오리"
         ],
         dbCategories: ['위스키']
+    },
+    sectionsEn: {
+        definition: "Bourbon Whiskey is an American spirit produced from a grain mash containing at least 51% corn and aged in 'new charred American oak casks.' It is characterized by its bold, straightforward flavor profile, led by sweet notes of vanilla and caramel complemented by oak spices.",
+        history: "The origins of Bourbon trace back to the 18th and 19th centuries, primarily in Kentucky, where corn-based distillation became widespread. The name 'Bourbon' gained recognition as the spirit was distributed along the rivers. The 1897 Bottled-in-Bond Act ensured quality and authenticity, and federal standards established in the 20th century standardized production. Recently, the rise of premium and craft distilleries has expanded the style spectrum into small batches and single barrels.",
+        classifications: [
+            {
+                name: "Bourbon Whiskey",
+                criteria: "Produced in the USA; mash bill of 51%+ corn; distilled at no more than 160 proof (80% ABV); entered into new charred oak at no more than 125 proof (62.5% ABV); no additives except water; bottled at 80 proof (40% ABV) or higher.",
+                description: "The legal definition ensures a core structure of 'corn sweetness + oak vanilla/caramel + char-derived toast/spice.' Flavor profiles vary significantly based on mash bill (rye/wheat ratios), yeast strains, rickhouse conditions, and barrel management."
+            },
+            {
+                name: "Straight Bourbon",
+                criteria: "Meets Bourbon criteria + aged for a minimum of 2 years; no added coloring or flavoring; must state age if aged under 4 years.",
+                description: "The influence of maturation becomes distinct, revealing mature notes of oak spice, toffee, nuts, and leather/tobacco. Younger expressions (2–4 years) emphasize grain sweetness and fresh oak, while older ones (6–12 years) show a refined balance of wood and spice."
+            },
+            {
+                name: "Bottled-in-Bond (BiB)",
+                criteria: "Product of one distillery + one distilling season + aged in a federally bonded warehouse for at least 4 years + bottled at exactly 100 proof (50% ABV).",
+                description: "Offers a standardized, robust body and clear oak spices. The high proof and clarity of origin make it an excellent base for classic cocktails like the Old Fashioned or Manhattan."
+            },
+            {
+                name: "Single Barrel",
+                criteria: "Bottled from a individual, unique barrel without blending.",
+                description: "Maximizes the specific character of a single cask, influenced by its location in the rickhouse (high heat/evaporation at the top), wood variance, and entry proof. Ratios of vanilla, spice, and fruit can vary significantly even under the same label."
+            },
+            {
+                name: "Small Batch",
+                criteria: "No legal definition; generally refers to blending a limited number of selected barrels.",
+                description: "Aims to maintain a house style while allowing for subtle batch nuances. It provides a more consistent balance of sweetness and spice compared to single barrel offerings."
+            },
+            {
+                name: "Cask Strength / Barrel Proof",
+                criteria: "Bottled at the proof directly from the barrel (or with minimal dilution).",
+                description: "Features intense alcohol volume and concentrated flavors of oak, baking spices, and candied fruit. Adding a few drops of water often opens up hidden notes of vanilla and caramel."
+            },
+            {
+                name: "Wheated Bourbon",
+                criteria: "Uses wheat as the secondary 'flavor grain' instead of rye.",
+                description: "Reduces the peppery/herbal spice of rye, emphasizing soft sweetness like bread, biscuits, honey, and toffee. Known for a rounder, creamier mouthfeel, making it highly approachable for beginners."
+            },
+            {
+                name: "High-Rye Bourbon",
+                criteria: "Maintains 51% corn but features a significantly higher proportion of rye.",
+                description: "Brings forward 'baking spices' like black pepper, cinnamon, and cloves along with dry herbal tones. The spicy tension contrasts the corn sweetness, pairing exceptionally well with bitters and citrus in cocktails."
+            },
+            {
+                name: "Cask-Finished Bourbon",
+                criteria: "Bourbon that has undergone additional maturation (finishing) in a different type of cask after initial aging in new charred oak.",
+                description: "Layers secondary flavors (from wine, rum, sherry, or port casks) onto the traditional bourbon base. It amplifies sweetness and fruitiness, though balancing the finish with the original oak character is key."
+            }
+        ],
+        sensoryMetrics: [
+            {
+                metric: "Proof / Alcohol Volume",
+                label: "ABV/Proof",
+                value: "40~65% ABV (80~130 proof)",
+                description: "Higher proofs increase aromatic concentration and viscosity but also sensory intensity. 45-55% is often the 'sweet spot' for balance, while 55%+ benefits from a splash of water."
+            },
+            {
+                metric: "Corn Proportion",
+                label: "Mash Bill (Corn %)",
+                value: "51~80% (Typical Range)",
+                description: "Higher corn content bolsters sweet, round tones like honey and cornbread. Balance with oak tannins and spice is critical to prevent cloying sweetness."
+            },
+            {
+                metric: "Secondary Grain Character",
+                label: "Rye vs Wheat",
+                value: "Rye High / Balanced / Wheat Dominant",
+                description: "Rye provides a sharp outline with pepper and herbs; wheat creates a soft texture with biscuit and toffee notes. This grain choice dictates the spice intensity of the finish."
+            },
+            {
+                metric: "Barrel Char Level",
+                label: "Char Level (#1 to #4)",
+                value: "#3 to #4 (Commercial Standard)",
+                description: "Deeper char levels increase vanilla (from lignin), caramel (from sugar breakdown), and smoky/toasted notes. The char also acts as a filter to mellow harsh elements."
+            },
+            {
+                metric: "Age Statement",
+                label: "Age (Years)",
+                value: "2~12+ years",
+                description: "Increased age brings more wood-derived tannins, leather, and tobacco. However, over-aging can lead to dry wood bitterness, depending on the rickhouse microclimate."
+            },
+            {
+                metric: "Barrel Entry Proof",
+                label: "Entry Proof",
+                value: "50~62.5% ABV (Max 62.5%)",
+                description: "The proof at which the spirit enters the barrel affects the ratio of extracted components. Lower entry proofs can yield a sweeter, oilier texture, while higher proofs may sharpen spice and oak notes."
+            }
+        ],
+        coreIngredients: [
+            {
+                type: "Primary Grain",
+                name: "Corn",
+                description: "The legal and sensory heart of Bourbon. It forms a sweet base of honey and cornbread, acting as a canvas for the vanilla and toffee notes from the oak."
+            },
+            {
+                type: "Flavor Grain",
+                name: "Rye or Wheat",
+                description: "Rye provides structure through pepper and cloves; wheat enhances soft sweetness and creamy texture. This is the primary variable for a brand's house style."
+            },
+            {
+                type: "Enzyme Source",
+                name: "Malted Barley",
+                description: "Provides amylase enzymes to convert starches into fermentable sugars. It also adds subtle nutty and biscuity nuances."
+            },
+            {
+                type: "Fermenter",
+                name: "Yeast Strain",
+                description: "Dictates the direction of esters and higher alcohols, producing fruity (apple/cherry), floral, or spicy notes."
+            },
+            {
+                type: "Maturation Vessel",
+                name: "New Charred American Oak",
+                description: "The source of most bourbon flavors. Breakdown of wood components creates vanilla, caramel, coconut (oak lactones), and smoke."
+            },
+            {
+                type: "Process Aid",
+                name: "Sour Mash (Backset)",
+                description: "A portion of the previous distillation residue is reused to stabilize pH and prevent microbial contamination, ensuring consistency across batches."
+            }
+        ],
+        manufacturingProcess: [
+            {
+                step: "Milling",
+                name: "Grist Milling",
+                description: "Grains are ground to a specific particle size to optimize extraction efficiency. A balance is needed to prevent high viscosity and pumping issues."
+            },
+            {
+                step: "Cooking",
+                name: "Gelatinization",
+                description: "Corn is cooked at high temperatures to gelatinize starch, followed by step-cooling before adding other grains and malt."
+            },
+            {
+                step: "Mashing",
+                name: "Enzymatic Saccharification",
+                description: "Malt enzymes convert starches into sugars. The sugar composition influences the resulting fermentation products (esters/aldehydes)."
+            },
+            {
+                step: "Mash Design",
+                name: "Sour Mash Process",
+                description: "The backset stabilizes pH, maintaining a consistent fermentation environment and the distillery's unique profile over time."
+            },
+            {
+                step: "Fermentation",
+                name: "Fermentation (3–7 days)",
+                description: "Yeast converts sugars into alcohol and aromatic compounds. Careful management of temperature and time is key to controlling fruitiness vs. harshness."
+            },
+            {
+                step: "Distillation",
+                name: "Continuous Column Still + Doubler/Thumper",
+                description: "Continuous distillation ensures efficiency, while the doubler/thumper provides a secondary refinement. Distilling below 160 proof preserves grain character."
+            },
+            {
+                step: "Barreling",
+                name: "Entry Proof & Barreling",
+                description: "Spirit is diluted to no more than 62.5% ABV and put into new charred oak. This 'entry proof' is a critical lever for flavor balance and texture."
+            },
+            {
+                step: "Maturation",
+                name: "Rickhouse Maturation",
+                description: "Temperature fluctuations cause the whiskey to move in and out of the wood, gaining vanilla, caramel, and spice while oxidizing for complexity."
+            },
+            {
+                step: "Batching",
+                name: "Blending & Barrel Selection",
+                description: "Barrels are blended for small batches or a single stand-out cask is selected for bottling to meet specific flavor goals."
+            },
+            {
+                step: "Bottling",
+                name: "Proofing & Filtration",
+                description: "The whiskey is proofed with water (unless barrel proof) and filtered. Non-chill filtration is often preferred for retaining full texture and flavor oils."
+            }
+        ],
+        servingGuidelines: {
+            recommendedGlass: "Glencairn Glass or Old Fashioned Glass (for Rocks)",
+            optimalTemperatures: [
+                {
+                    temp: "18~22°C (Neat)",
+                    description: "Best for experiencing vivid vanilla, caramel, and oak spices with a long, viscous finish."
+                },
+                {
+                    temp: "18~22°C + Water",
+                    description: "A few drops of water break surface tension, allowing hidden esters and floral/fruit notes to bloom."
+                },
+                {
+                    temp: "0~4°C (On the Rocks)",
+                    description: "Reduces alcohol bite and highlights the round sweetness of the corn for a smooth, chilled experience."
+                }
+            ],
+            methods: [
+                {
+                    name: "Neat",
+                    description: "The standard way to appreciate the heavy body and direct oak profile without dilution or chilling."
+                },
+                {
+                    name: "With Water",
+                    description: "Recommended for high-proof or barrel-proof expressions to release complex aromas."
+                },
+                {
+                    name: "Cocktails",
+                    description: "The backbone of classics like the Old Fashioned, Manhattan, or Whiskey Sour. Also excellent in highballs where smokiness meets carbonation."
+                },
+                {
+                    name: "On the Rocks",
+                    description: "Serving over a large, clear ice sphere mellows the alcohol's edge, transitioning the drink into a softer, sweeter profile."
+                }
+            ]
+        },
+        flavorTags: [
+            { label: "Vanilla/Caramel", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Toffee/Brown Sugar", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-500" },
+            { label: "Maple/Honey", color: "bg-yellow-600/20 text-zinc-950 dark:text-yellow-300" },
+            { label: "Oak/Toasted", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
+            { label: "Coconut", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-200" },
+            { label: "Cinnamon Spice", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
+            { label: "Pepper/Rye", color: "bg-emerald-600/20 text-zinc-950 dark:text-emerald-300" },
+            { label: "Cherry/Stone Fruit", color: "bg-rose-500/20 text-zinc-950 dark:text-rose-400" },
+            { label: "Leather/Tobacco", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-400" },
+            { label: "Smoke/Char", color: "bg-stone-800/20 text-zinc-950 dark:text-stone-300" },
+            { label: "Mint/Herbal", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" }
+        ],
+        foodPairing: [
+            "BBQ (Brisket/Pulled Pork) with Smokey Sauce",
+            "Grilled Steak or Lamb",
+            "Spicy Fried Chicken",
+            "Bacon with Maple Glaze",
+            "Aged Cheeses (Cheddar, Gouda)",
+            "Pecan Pie or Caramel Desserts",
+            "Dark Chocolate (70%+) or Brownies",
+            "Roasted Nuts (Pecans, Almonds)",
+            "Grilled Mushrooms with Truffle Oil",
+            "Smoked Salmon or Duck"
+        ],
+        dbCategories: ['위스키']
     }
 }

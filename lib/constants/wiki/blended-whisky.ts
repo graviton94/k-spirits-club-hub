@@ -138,5 +138,136 @@ export const blendedWhisky: SpiritCategory = {
             "치킨 및 생선 튀김 요리 (하이볼)"
         ],
         dbCategories: ['위스키']
+    },
+    sectionsEn: {
+        definition: "Blended Whisky is a spirit created by intentionally blending different styles (malt and grain) or whiskies from various distilleries to achieve a balanced flavor and a consistent house style. Blenders combine the individual characteristics of the spirits—aroma, texture, oak influence, and peat—to design 'smoothness, complexity, and reproducibility.'",
+        history: "Blended whisky flourished in the mid-19th century with the advent of continuous distillation (column stills), which produced lighter, mass-producible grain whiskies that could be blended with robust malt whiskies for a smoother, more stable taste. As blending houses and brands grew, it became the mainstay of the 20th-century global whisky market. Recently, the category has diversified into premium segments including blended malts, world blends, and various cask finishes.",
+        classifications: [
+            {
+                name: "Blended Scotch Whisky",
+                criteria: "A blend of one or more single malt whiskies with one or more single grain whiskies, all produced in Scotland and aged in oak for at least 3 years.",
+                description: "Built on a smooth grain texture, layers of fruit, honey, oak, spice, and peat from the malts are added to create balance. It showcases the master blender's ability to reproduce a consistent house style year after year."
+            },
+            {
+                name: "Blended Malt Whisky",
+                criteria: "A blend of single malt whiskies from two or more different distilleries (contains no grain whisky).",
+                description: "Emphasizes the texture and aromatic depth of malt rather than the lightness of grain. It offers the unique charm of creating new complexity without overshadowing the individual character of each distillery's spirit."
+            },
+            {
+                name: "Blended Grain Whisky",
+                criteria: "A blend of single grain whiskies from two or more different distilleries.",
+                description: "Known for the clean and creamy texture characteristic of continuous distillation. It features flavors of vanilla, coconut, toffee, and cereal, performing excellently in highballs or as a cocktail base."
+            },
+            {
+                name: "Age Statement Blend",
+                criteria: "The age displayed on the label reflects the 'youngest' whisky in the blend.",
+                description: "As whisky ages, oak-derived vanilla and spice notes mature, and the alcohol burn subsides. While higher age statements generally suggest more complex layers, the quality of the base spirit and the blending design are more fundamental to the final quality."
+            },
+            {
+                name: "Cask Finish / Re-casking",
+                criteria: "Secondary maturation in different casks (e.g., Sherry, Wine, Rum) after initial aging.",
+                description: "A method of adding additional flavor layers to a finished blend. Sherry casks enhance dried fruit and chocolate notes, wine casks add red berries and tannins, and virgin oak reinforces intense vanilla and toast nuances."
+            }
+        ],
+        sensoryMetrics: [
+            {
+                metric: "Alcohol by Volume (ABV)",
+                label: "Strength",
+                value: "40~46% (Typical Range)",
+                description: "Around 40~43% is smooth and highball-friendly, while 46% and above is designed to more clearly showcase the flavor density and texture of the spirit."
+            },
+            {
+                metric: "Maturity Index",
+                label: "Maturity",
+                value: "NAS / 8~12Y / 18Y+",
+                description: "Over time, oak influences (vanilla, spice) deepen and the texture becomes silkier. The age statement serves as a key clue to predicting the style."
+            },
+            {
+                metric: "Peat Smoke (Phenols)",
+                label: "Peatiness",
+                value: "None to Medium (0~15+ ppm)",
+                description: "In a blend, peat acts as an aromatic accent. Higher ppm levels provide distinct smoky, tar, and sea breeze nuances, completing a complex impression."
+            },
+            {
+                metric: "Color and Processing",
+                label: "Treatment",
+                value: "Chill Filtered / Caramel Colored (Standard)",
+                description: "Most blended products undergo chill filtration and caramel coloring (E150a) to ensure visual stability and color consistency for uniform quality."
+            }
+        ],
+        coreIngredients: [
+            {
+                type: "Base Spirits",
+                name: "Malt and Grain Whiskies",
+                description: "Malts provide the aromatic framework (fruit, floral, peat), while grains offer a smooth texture and foundational sweetness to create overall harmony."
+            },
+            {
+                type: "Maturation",
+                name: "Diverse Oak Casks",
+                description: "A combination of Bourbon, Sherry, and Refill casks are used to build multi-layered flavor profiles including vanilla, nuts, and spices."
+            },
+            {
+                type: "Fermentation Agents",
+                name: "Distiller's Yeast and Water",
+                description: "Forms ester (fruity) precursors and determines the mouthfeel and aroma expression through final ABV adjustment before bottling."
+            }
+        ],
+        manufacturingProcess: [
+            { step: "Distillation", name: "Pot (Malt) & Column (Grain) Distillation", description: "Preparing the blending palette by extracting characterful malt spirits and clean grain spirits separately." },
+            { step: "Maturation", name: "Individual Cask Aging", description: "Precisely managing each spirit as it develops its unique aged character over several years in oak casks." },
+            { step: "Blending", name: "Vatting & Recipe Building", description: "The blender combines dozens of spirits to create a specific style (smooth, smoky, fruity, etc.) and ensure house consistency." },
+            { step: "Finishing", name: "Marrying & Bottling", description: "Resting the blended spirits for a certain period to allow the flavors to integrate before final adjustments and bottling." }
+        ],
+        servingGuidelines: {
+            recommendedGlass: "Glencairn Glass or Whisky Copita",
+            optimalTemperatures: [
+                {
+                    temp: "18~22°C (Neat)",
+                    description: "The ideal range where layers of vanilla, honey, and fruit unfold best. With low alcohol sting, it is the most comfortable style to enjoy neat."
+                },
+                {
+                    temp: "4~8°C (Highball)",
+                    description: "Emphasizes the creamy sweetness of the grain and the refreshing quality of the citrus. This maximizes its versatility for food pairing."
+                },
+                {
+                    temp: "0~2°C (On the Rocks)",
+                    description: "While the aroma may close up slightly, the texture becomes smoother and the alcohol edge is rounded off for a refreshing sip."
+                }
+            ],
+            methods: [
+                {
+                    name: "Neat",
+                    description: "Drinking at room temperature without water or ice to best experience the harmonious layers of honey, vanilla, and fruit characteristic of blended whisky."
+                },
+                {
+                    name: "Water Addition",
+                    description: "Adding a drop or two of room-temperature water breaks the surface tension, allowing 'closed' ester aromas to bloom for a more fragrant experience."
+                },
+                {
+                    name: "Highball",
+                    description: "The most popular method, mixing whisky with sparkling water in a 1:3 ratio. The clean flavors of blended whisky meet carbonation for maximum refreshment, making it a great meal accompaniment."
+                },
+                {
+                    name: "On the Rocks",
+                    description: "Pouring whisky over large ice cubes. As the temperature drops, the alcohol burn is reduced, highlighting the smooth texture and sweet oak aromas for easy sipping."
+                }
+            ]
+        },
+        flavorTags: [
+            { label: "Vanilla / Caramel", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Honey / Toffee", color: "bg-yellow-600/20 text-zinc-950 dark:text-yellow-300" },
+            { label: "Dried Fruit", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
+            { label: "Citrus / Lemon", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-300" },
+            { label: "Toasty / Cereal", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Smoky / Peat", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" }
+        ],
+        foodPairing: [
+            "Steak and Barbecue dishes",
+            "Grilled Pork Belly and seasoned Bulgogi",
+            "Hard Cheeses and assorted nuts",
+            "Dark Chocolate and Brownies",
+            "Fried Chicken or Fish and Chips (with Highball)"
+        ],
+        dbCategories: ['위스키']
     }
 }

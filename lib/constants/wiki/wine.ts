@@ -129,5 +129,127 @@ export const wine: SpiritCategory = {
             "딸기 크림 디저트"
         ],
         dbCategories: ['과실주']
+    },
+    sectionsEn: {
+        definition: "Rosé and Sparkling wines (including Champagne) are specialized categories defined by the precise control of grape skin maceration time (for Rosé) and the management of carbon dioxide generated during fermentation (for Sparkling). They are characterized by vibrant acidity, a diverse spectrum of hues, and the refined sensory pleasure of delicate bubbles.",
+        history: "Rosé is among the oldest wine styles, dating back to Ancient Greece. Sparkling wine gained global prominence in the 17th century when the 'Secondary Fermentation in the bottle' technique was perfected in the Champagne region of France, establishing it as the ultimate wine for celebration.",
+        classifications: [
+            {
+                name: "Traditional Method (Champagne Style)",
+                criteria: "Secondary fermentation and long-term aging on lees within the bottle",
+                description: "Represented by Champagne and Cava. It features exceptionally fine, persistent bubbles and layers of complex savory notes such as toasted bread, nuts, and biscuits earned through extended maturation."
+            },
+            {
+                name: "Charmat Method (Tank Method)",
+                criteria: "Secondary fermentation conducted in large pressure tanks",
+                description: "Represented by Prosecco. This style prioritizes the fresh, primary aromas of the grape and vibrant floral/fruit notes over yeast-driven complexity, resulting in a lively and approachable character."
+            },
+            {
+                name: "Rosé Wine",
+                criteria: "Brief maceration of red grape skins (minutes to hours)",
+                description: "Combines the crispness of white wine with the light structural elegance of red wine. It is celebrated for its refreshing notes of strawberry and raspberry, making it a highly versatile 'all-rounder' style."
+            },
+            {
+                name: "Pét-Nat (Pétillant Naturel / Ancestral)",
+                criteria: "Bottled before the primary fermentation finishes to trap natural CO2",
+                description: "The most primitive sparkling method. Often unfiltered, this Natural Wine style captures the 'funky' character of wild yeast and the raw, unadulterated vitality of the fruit."
+            },
+            {
+                name: "Sweetness Levels (Brut Nature to Demi-Sec)",
+                criteria: "The amount of residual sugar added during the final 'Dosage' stage",
+                description: "Ranges from 'Brut Nature' (bone-dry, no added sugar) to 'Demi-Sec' (noticeably sweet), the latter being ideal for desserts or spicy cuisines."
+            }
+        ],
+        sensoryMetrics: [
+            {
+                metric: "Perlage (Persistence of Bubbles)",
+                label: "Effervescence",
+                value: "Aggressive to Persistent",
+                description: "Smaller, consistently rising vertical bubbles indicate the precision of the traditional method and longer maturation periods."
+            },
+            {
+                metric: "Acidity & Freshness",
+                label: "Crispness",
+                value: "High (pH 2.9 ~ 3.4)",
+                description: "The lifeblood of sparkling wine. High acidity energizes the palate and cleanses the richness of food, inviting the next sip."
+            },
+            {
+                metric: "Autolysis (Yeast Character)",
+                label: "Yeasty Notes",
+                value: "Fresh Fruit to Brioche",
+                description: "Longer contact with lees shifts the profile from fresh fruit to luxurious notes of butter, toasted brioche, and roasted hazelnuts."
+            }
+        ],
+        coreIngredients: [
+            {
+                type: "Primary Varieties",
+                name: "Chardonnay / Pinot Noir / Pinot Meunier",
+                description: "The 'Big Three' of Champagne. Chardonnay provides elegance and structure, while the Pinot varieties offer red fruit richness and body."
+            },
+            {
+                type: "Aging Catalyst",
+                name: "Lees (Dead Yeast Cells)",
+                description: "The silent contributor that rests with the wine in the bottle, imparting complex flavors and a smooth, creamy texture."
+            }
+        ],
+        manufacturingProcess: [
+            {
+                step: "Creation",
+                name: "Base Wine & Assemblage",
+                description: "High-acid base wines are crafted. In Champagne, dozens of vintage wines are blended to create a consistent 'House Style'."
+            },
+            {
+                step: "Carbonation",
+                name: "Prise de Mousse (Secondary Fermentation)",
+                description: "Yeast and sugar are added to the sealed bottle or tank to ferment again, dissolving fine CO2 gas into the wine."
+            },
+            {
+                step: "Finishing",
+                name: "Disgorgement & Dosage",
+                description: "A precision process where yeast sediment is removed, and the final sweetness is adjusted by adding the 'Liqueur d'Expédition'."
+            }
+        ],
+        servingGuidelines: {
+            recommendedGlass: "Tulip-shaped Sparkling glass or a standard White Wine glass",
+            optimalTemperatures: [
+                {
+                    temp: "6~9°C (Chilled)",
+                    description: "The ideal range to maintain the sharp acidity and refreshing character of standard Sparkling and Rosé wines."
+                },
+                {
+                    temp: "10~13°C (Vintage Champagne)",
+                    description: "Recommended for premium sparkling wines to fully express complex autolytic aromas and rich textures."
+                }
+            ],
+            methods: [
+                {
+                    name: "Gentle Chilling",
+                    description: "Submerge in an ice bucket with water and ice for 20 minutes for the most stable and enjoyable serving temperature."
+                },
+                {
+                    name: "Silent Opening (The Whisper)",
+                    description: "It is proper etiquette to open a bottle with a gentle 'sigh' rather than a loud 'pop,' ensuring the cork is controlled slowly."
+                },
+                {
+                    name: "Rosé Garnish",
+                    description: "Floating a single raspberry or cherry in a Rosé glass enhances visual appeal and highlights its berry-forward profile."
+                }
+            ]
+        },
+        flavorTags: [
+            { label: "Strawberry/Raspberry", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
+            { label: "Green Apple/Lemon", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
+            { label: "Brioche/Biscuit", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Almond/Hazelnut", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Minerality", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" }
+        ],
+        foodPairing: [
+            "Fresh Oysters and Seafood",
+            "Fried Chicken (The Ultimate Pairing)",
+            "Salmon Sashimi and Sushi",
+            "Brie Cheese with Roasted Nuts",
+            "Strawberry Cream Desserts"
+        ],
+        dbCategories: ['과실주']
     }
 }

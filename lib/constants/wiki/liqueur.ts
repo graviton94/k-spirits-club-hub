@@ -158,5 +158,156 @@ export const liqueur: SpiritCategory = {
             "훈제 햄 및 사퀴테리 (비터 계열)"
         ],
         dbCategories: ['리큐르']
+    },
+    sectionsEn: {
+        definition: "Liqueur is a flavored spirit produced by adding aromatic ingredients—such as fruits, herbs, spices, nuts, coffee, or cream—and sweeteners to a neutral spirit or a distilled base (brandy, rum, whiskey, etc.). Generally used as both a standalone drink and a fundamental 'seasoning' to define the aroma, sweetness, and texture of cocktails.",
+        history: "The roots of liqueur lie in the medicinal elixirs and tonics crafted in medieval European monasteries and apothecaries using steeped herbs and spices. Between the 17th and 19th centuries, the availability of sugar and advancements in distillation led to the rise of commercial brands. With the expansion of cocktail culture in the 20th century, liqueurs became standardized globally.",
+        classifications: [
+            {
+                name: "Fruit Liqueurs",
+                criteria: "Fruit-based infusion and sweetening.",
+                description: "Features bold fruit profiles like berries, peaches, or cherries. The balance between acidity and sugar is key, making them popular for enhancing sparkling wines or highball cocktails."
+            },
+            {
+                name: "Citrus / Orange Liqueurs",
+                criteria: "Focus on orange peel oils (Triple Sec, Curaçao, etc.).",
+                description: "A core component of classic cocktails like the Margarita or Sidecar. Aromas expand explosively when combined with citrus juice; high-end versions often use a brandy base."
+            },
+            {
+                name: "Herbal & Bitter Liqueurs (Amaro)",
+                criteria: "Blends of numerous herbs, roots, seeds, and bitter botanicals.",
+                description: "Characterized by complex notes of menthol, resin, and medicinal herbs. Developed as digestifs, the harmony between sweetness and bitterness defines the finish."
+            },
+            {
+                name: "Anise Liqueurs",
+                criteria: "Distinct licorice notes from anise/fennel; Louche effect (turning cloudy when water is added).",
+                description: "Features strong licorice and cooling herbal aromas. Often enjoyed as a digestive aid, with a unique visual change where the texture becomes milky and soft upon dilution."
+            },
+            {
+                name: "Nut, Coffee & Cacao Liqueurs",
+                criteria: "Extracts derived from almonds, coffee beans, or cacao nibs.",
+                description: "Highlights deep flavors of marzipan, roasted notes, and chocolate. These exert an overwhelming presence in dessert cocktails."
+            },
+            {
+                name: "Cream Liqueurs",
+                criteria: "Dairy (cream) + Spirit + Sugar emulsification process.",
+                description: "Noted for rich viscosity and smooth sweetness. Chilling provides a cleaner texture; care must be taken during cocktail construction to avoid curdling with high-acid ingredients."
+            },
+            {
+                name: "‘Crème de …’ Style",
+                criteria: "High-sugar liqueurs meeting specific legal minimum sugar content requirements.",
+                description: "The term 'Crème' refers to the thick, silky texture rather than dairy content. Their concentrated flavor and high viscosity provide intense impact even in small quantities."
+            },
+            {
+                name: "Barrel-Aged Liqueurs",
+                criteria: "Secondary aging in oak casks after infusion or blending.",
+                description: "Oak-derived notes of vanilla and toast round out the sweetness. A robust style familiar to whiskey or brandy enthusiasts."
+            }
+        ],
+        sensoryMetrics: [
+            {
+                metric: "Alcohol Strength",
+                label: "ABV (%)",
+                value: "15~55% (Wide Range)",
+                description: "Higher ABV carries aromatic compounds more forcefully and builds a solid body; lower ABV emphasizes a dessert-like character."
+            },
+            {
+                metric: "Sweetness & Viscosity",
+                label: "Viscosity",
+                value: "High to Syrupy",
+                description: "Higher sugar content increases the palate-coating sensation. Chilling elevates the viscosity, making it feel heavier and richer."
+            },
+            {
+                metric: "Bitterness / Herbal Expression",
+                label: "Bitterness",
+                value: "Variable (High in Amari)",
+                description: "The balance between botanical bitterness and sweetness is the hallmark of premium quality. Bitterness increases in presence toward the digestif category."
+            }
+        ],
+        coreIngredients: [
+            {
+                type: "Base Spirit",
+                name: "Neutral Spirit or Aged Distillates (Brandy/Rum, etc.)",
+                description: "Forms the foundation of the liqueur. Aged bases add inherent depth and layers to the raw ingredients."
+            },
+            {
+                type: "Flavoring Agents",
+                name: "Fruits, Herbs, Spices, Nuts, etc.",
+                description: "Essences extracted through infusion and distillation define the identity of the liqueur."
+            },
+            {
+                type: "Sweeteners",
+                name: "Sugar, Syrup, Honey, etc.",
+                description: "Beyond sweetness, these aid in aroma diffusion and texture. Proper sugar levels reduce alcohol heat and highlight aromatics."
+            }
+        ],
+        manufacturingProcess: [
+            {
+                step: "Extraction",
+                name: "Maceration & Percolation",
+                description: "Ingredients are steeped in spirits or spirits are continuously passed through ingredients to extract flavor compounds."
+            },
+            {
+                step: "Refinement",
+                name: "Redistillation",
+                description: "The extract is redistilled to remove harsh edges and clarify bright top notes."
+            },
+            {
+                step: "Finishing",
+                name: "Blending & Stabilization",
+                description: "Sugar and alcohol levels are precisely adjusted; the liquid is filtered and rested to integrate the flavor profile."
+            }
+        ],
+        servingGuidelines: {
+            recommendedGlass: "Cordial Glass, Rocks Glass, or Cocktail Coupe",
+            optimalTemperatures: [
+                {
+                    temp: "6~10℃ (Chilled)",
+                    description: "Tames the sweetness; ideal for enjoying fruit or cream liqueurs with a clean dessert tone."
+                },
+                {
+                    temp: "18~22°C (Room Temp)",
+                    description: "Allows complex herbal and Amaro aromas to fully open, clarifying the bitter finish and spices."
+                }
+            ],
+            methods: [
+                {
+                    name: "Neat / Sipping",
+                    description: "Sipped slowly from a small glass to savor aromas; the preferred method for digestifs."
+                },
+                {
+                    name: "On the Rocks",
+                    description: "Poured over ice to mellow the ABV, thicken the texture, and settle the sweetness."
+                },
+                {
+                    name: "Pousse-Café",
+                    description: "Layering liqueurs by density to create a striking multi-colored visual effect."
+                },
+                {
+                    name: "Dessert Topping (Affogato Style)",
+                    description: "Drizzled over ice cream or added to espresso to create a synergistic dessert experience."
+                }
+            ]
+        },
+        flavorTags: [
+            { label: "Citrus/Orange", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-300" },
+            { label: "Berry/Fruit", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
+            { label: "Herbal/Botanical", color: "bg-emerald-600/20 text-zinc-950 dark:text-emerald-300" },
+            { label: "Mint/Cooling", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
+            { label: "Vanilla/Caramel", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Nut/Marzipan", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Coffee/Roasted", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" },
+            { label: "Dark Chocolate", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
+            { label: "Bitter/Medicinal", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" },
+            { label: "Creamy/Milky", color: "bg-amber-400/20 text-zinc-950 dark:text-amber-300" }
+        ],
+        foodPairing: [
+            "Dark Chocolate and Tiramisu",
+            "Vanilla Ice Cream and Espresso",
+            "Fruit Tarts and Sorbets",
+            "Blue Cheese and Aged Hard Cheeses",
+            "Smoked Ham and Charcuterie (for Bitter styles)"
+        ],
+        dbCategories: ['리큐르']
     }
 }

@@ -163,5 +163,161 @@ export const grainWhisky: SpiritCategory = {
             "사과 파이, 시나몬 롤"
         ],
         dbCategories: ['위스키']
+    },
+    sectionsEn: {
+        definition: "Grain Whisky is a distilled spirit produced from a mash of grains other than malted barley (such as corn, rye, or wheat), which is then saccharified, fermented, and matured in oak casks. Typically distilled using continuous column stills to high alcohol concentrations, it possesses a light body and clean character. This category also includes specific grain-led styles like Rye Whiskey.",
+        history: "The history of Grain Whisky is closely tied to the invention of the continuous still (e.g., Coffey Still) in the mid-19th century. This allowed for the efficient mass production of a 'lighter whiskey' that became the structural backbone of the Blended Whisky industry. In North America, Rye Whiskey established early roots, while in modern times, 'Single Grain' whiskies are being rediscovered as a standalone premium category.",
+        classifications: [
+            {
+                name: "Single Grain Scotch Whisky",
+                criteria: "Produced at a single distillery in Scotland; distilled from water and malted barley (required) plus other whole grains; distilled at less than 94.8% ABV; matured in oak casks for at least 3 years.",
+                description: "Characterized by the smooth texture of column distillation and a clean canvas of vanilla, toffee, and coconut derived from oak. Recent premium expressions with high age statements (15+ years) or unique finishes show remarkable complexity."
+            },
+            {
+                name: "Rye Whiskey (US Standard)",
+                criteria: "Mash bill of at least 51% rye; distilled at no more than 80% ABV; aged in new charred oak containers.",
+                description: "An icon of 'spicy grain whiskey' featuring distinct notes of black pepper, cloves, and cinnamon (baking spices) alongside dry herbs and mint. Its punchy character makes it a bartender favorite for classic cocktails."
+            },
+            {
+                name: "Corn Whiskey (US Standard)",
+                criteria: "Mash bill of at least 80% corn; unaged or aged in used or uncharred oak containers.",
+                description: "Lacks the intense spice/vanilla of new charred oak, instead showcasing the grain's natural sweetness like sweetcorn and cornbread. Known for a clean, round profile suitable for easy sipping or pairing with meals."
+            },
+            {
+                name: "Blended Grain",
+                criteria: "A blend of two or more Single Grain Whiskies from different distilleries.",
+                description: "Aims for ultimate smoothness and consistency by combining the strengths of various grain spirits. Its light body makes it exceptionally compatible with highballs and carbonated mixers."
+            },
+            {
+                name: "Canadian Whisky",
+                criteria: "Mashed, fermented, and distilled in Canada; aged in small oak for at least 3 years; frequently involves multi-grain blending.",
+                description: "Often colloquially referred to as 'Rye,' though the term describes a specific blending philosophy in Canada. Known for an extremely smooth texture, subtle spice, and light body."
+            }
+        ],
+        sensoryMetrics: [
+            {
+                metric: "Alcohol Strength (ABV)",
+                label: "Strength",
+                value: "40~50% (Standard) / 55~65% (Cask Strength)",
+                description: "Higher ABV concentrates aromatic compounds but increases sensory intensity. Grain whiskies often show a creamy texture at lower proofs, while high-proof versions benefit from water to open up tightly wound aromas."
+            },
+            {
+                metric: "Distillation Strength",
+                label: "Distillation Proof",
+                value: "65~80% (Pot Still) / 88~94% (Column Still)",
+                description: "Distilling to a higher proof yields a cleaner, lighter spirit by removing heavier congeners. Conversely, lower distillation proofs preserve more of the raw, bready grain character."
+            },
+            {
+                metric: "Grain Composition",
+                label: "Mash Bill",
+                value: "51%+ Primary Grain or Multi-grain",
+                description: "Increased rye content heightens spicy and dry herbal tones, while higher proportions of corn or wheat lead to a rounder, creamier sweetness."
+            },
+            {
+                metric: "Maturation Period",
+                label: "Maturity",
+                value: "NAS / 3~15 Years / Ultra-Aged (18+ Years)",
+                description: "For light column-still spirits, oak influence acts as a primary seasoning. Precise cask management is required as over-aging can easily lead to excessive wood bitterness."
+            }
+        ],
+        coreIngredients: [
+            {
+                type: "Primary Grain",
+                name: "Rye",
+                description: "Acts as the spice of the grain world, providing a tense backbone and a tingly texture with notes of cloves, pepper, and mint."
+            },
+            {
+                type: "Primary Grain",
+                name: "Corn",
+                description: "Acts as a sweetener, producing bright notes of creamy corn syrup, cornbread, and a smooth vanilla texture."
+            },
+            {
+                type: "Primary Grain",
+                name: "Wheat",
+                description: "Softens the edges of rye, adding gentle, bready sweetness reminiscent of scones or biscuits and a silky mouthfeel."
+            },
+            {
+                type: "Processing Agent",
+                name: "Malted Barley",
+                description: "Essential enzyme source for converting starches into fermentable sugars, while also contributing a subtle malty flavor."
+            },
+            {
+                type: "Maturation Vessel",
+                name: "Oak Cask",
+                description: "New oak provides bold spice and vanilla; used bourbon or wine barriques offer restrained, layered notes of fruit and chocolate."
+            }
+        ],
+        manufacturingProcess: [
+            {
+                step: "Design",
+                name: "Grain Bill Formulation",
+                description: "Designing the ideal ratio of grains to achieve the target profile, balancing sweetness against spice."
+            },
+            {
+                step: "Saccharification",
+                name: "Cooking & Mashing",
+                description: "Grains are cooked to gelatinize starch, then mixed with hot water and enzymes to create a fermentable sugary liquid."
+            },
+            {
+                step: "Distillation",
+                name: "Continuous Column Distillation",
+                description: "The fermented wash is repeatedly boiled and cooled through stacked plates to efficiently extract high-purity alcohol on a large scale."
+            },
+            {
+                step: "Maturation",
+                name: "Cask Aging & Finishing",
+                description: "The light spirit slowly absorbs color and aromatics (vanilla, nuts, tannins) from the oak over several years."
+            }
+        ],
+        servingGuidelines: {
+            recommendedGlass: "Glencairn Glass or Highball Glass",
+            optimalTemperatures: [
+                {
+                    temp: "18~22°C (Neat)",
+                    description: "Ideal for perceiving light vanilla and cereal tones, especially the sharp spices in Rye Whiskey."
+                },
+                {
+                    temp: "4~8°C (Highball)",
+                    description: "Refreshing creamy textures that harmonize perfectly with lemon/citrus garnishes and carbonation."
+                }
+            ],
+            methods: [
+                {
+                    name: "Highball",
+                    description: "The clean, light body of Grain Whisky delivers peak performance in highballs, making it an excellent versatile pairing for food."
+                },
+                {
+                    name: "Neat",
+                    description: "The best way to intuitively enjoy the delicate spice and honeyed notes of well-aged Single Grains or premium Rye."
+                },
+                {
+                    name: "Cocktail Base",
+                    description: "The herbal and peppery nuances of Rye are essential for anchoring classics like the Old Fashioned or Sazerac."
+                }
+            ]
+        },
+        flavorTags: [
+            { label: "Cereal/Grain", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Vanilla/Caramel", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-400" },
+            { label: "Honey/Maple", color: "bg-yellow-600/20 text-zinc-950 dark:text-yellow-300" },
+            { label: "Baking Spices", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
+            { label: "Pepper/Mint (Rye)", color: "bg-emerald-600/20 text-zinc-950 dark:text-emerald-300" },
+            { label: "Oak/Toasted", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
+            { label: "Citrus", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-200" },
+            { label: "Green Apple/Pear", color: "bg-emerald-400/20 text-zinc-950 dark:text-emerald-200" },
+            { label: "Coconut/Creamy", color: "bg-yellow-400/20 text-zinc-950 dark:text-yellow-300" },
+            { label: "Clean/Dry Finish", color: "bg-sky-500/20 text-zinc-950 dark:text-sky-300" }
+        ],
+        foodPairing: [
+            "Fried Foods (Chicken, Fries) in Highball",
+            "Crackers and Aged Gouda Cheese Board",
+            "Light Smoked Salmon Salad",
+            "BBQ Ribs (Best with Rye)",
+            "Pastrami or Deli Meat Sandwiches",
+            "Macadamia and Almond Platter",
+            "Dark Chocolate or Spicy Cocoa Desserts",
+            "Apple Pie and Cinnamon Rolls"
+        ],
+        dbCategories: ['위스키']
     }
 }

@@ -7,6 +7,23 @@ import { SPIRIT_CATEGORIES, getSpiritCategory } from '@/lib/constants/spirits-gu
 import { db } from '@/lib/db/index'
 import SpiritGuideLayout from '@/components/contents/SpiritGuideLayout'
 import GoogleAd from '@/components/ui/GoogleAd'
+import { redirect } from 'next/navigation'
+
+const EN_TO_KO_MAP: Record<string, string> = {
+    'soju-guide': '소주-가이드',
+    'makgeolli-guide': '막걸리-가이드',
+    'korean-whisky': '한국-위스키-증류소',
+    'korean-traditional-spirits': '전통주-종류-정리',
+    'korean-spirits-by-abv': '도수별-증류주',
+};
+
+const KO_TO_EN_MAP: Record<string, string> = {
+    '소주-가이드': 'soju-guide',
+    '막걸리-가이드': 'makgeolli-guide',
+    '한국-위스키-증류소': 'korean-whisky',
+    '전통주-종류-정리': 'korean-traditional-spirits',
+    '도수별-증류주': 'korean-spirits-by-abv',
+};
 
 interface CategoryPageProps {
     params: Promise<{ lang: string; category: string }>
@@ -15,31 +32,42 @@ interface CategoryPageProps {
 
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
     const { lang, category: slug } = await params
-    const cat = getSpiritCategory(slug)
+    const decodedSlug = decodeURIComponent(slug)
+
+    // Handle cross-locales switching (prevent mixed language content)
+    if (lang === 'ko' && EN_TO_KO_MAP[decodedSlug]) {
+        redirect(`/ko/contents/wiki/${EN_TO_KO_MAP[decodedSlug]}`)
+    }
+    if (lang === 'en' && KO_TO_EN_MAP[decodedSlug]) {
+        redirect(`/en/contents/wiki/${KO_TO_EN_MAP[decodedSlug]}`)
+    }
+
+    const cat = getSpiritCategory(decodedSlug) || getSpiritCategory(slug)
     if (!cat) return { title: 'Not Found' }
 
     const isEn = lang === 'en'
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://kspiritsclub.com'
     const name = isEn ? cat.nameEn : cat.nameKo
     const tagline = isEn ? cat.taglineEn : cat.taglineKo
-    const definition = cat.sections?.definition || tagline
+    const section = isEn ? (cat.sectionsEn || cat.sections) : cat.sections
+    const definition = section?.definition || tagline
 
     // 롱테일 키워드 추출 (분류 이름, 맛 태그 등) 및 질문형 자동 확장
     const baseKeywords = [
         name,
         slug,
-        ...(cat.sections?.classifications?.map(c => c.name) || []),
-        ...(cat.sections?.flavorTags?.map(t => t.label) || []),
+        ...(section?.classifications?.map(c => c.name) || []),
+        ...(section?.flavorTags?.map(t => t.label) || []),
         isEn ? 'Spirits Wiki' : '주류 백과사전',
         isEn ? 'Drinking Temperature' : '시음 온도',
         isEn ? 'Food Pairing' : '푸드 페어링',
     ]
 
-    const longTailClassifications = cat.sections?.classifications?.flatMap(c =>
+    const longTailClassifications = section?.classifications?.flatMap(c =>
         isEn ? [`What is ${c.name}`, `${c.name} meaning`, `${c.name} vs`] : [`${c.name}란`, `${c.name} 특징`, `${c.name} 차이`]
     ) || [];
 
-    const longTailMetrics = cat.sections?.sensoryMetrics?.flatMap(m =>
+    const longTailMetrics = section?.sensoryMetrics?.flatMap(m =>
         isEn ? [`What is ${m.metric}`, `${m.metric} meaning`] : [`${m.metric} 뜻`, `${m.metric} 의미`]
     ) || [];
 
@@ -99,7 +127,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
                 '@type': 'HowTo',
                 name: isEn ? `How to Enjoy ${cat.nameEn}` : `${cat.nameKo} 최적으로 즐기는 법`,
                 description: isEn ? `Professional serving guide for ${cat.nameEn}` : `${cat.nameKo}의 맛을 극대화하는 전문가 음용 가이드`,
-                step: cat.sections?.servingGuidelines?.methods?.map((m, idx) => ({
+                step: section?.servingGuidelines?.methods?.map((m, idx) => ({
                     '@type': 'HowToStep',
                     position: idx + 1,
                     name: m.name,
@@ -109,23 +137,23 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
             {
                 '@type': 'FAQPage',
                 mainEntity: [
-                    cat.sections?.servingGuidelines?.optimalTemperatures?.[0] && {
+                    section?.servingGuidelines?.optimalTemperatures?.[0] && {
                         '@type': 'Question',
                         name: isEn ? `What is the best temperature for ${cat.nameEn}?` : `${cat.nameKo}의 최적 시음 온도는?`,
                         acceptedAnswer: {
                             '@type': 'Answer',
-                            text: cat.sections.servingGuidelines.optimalTemperatures[0].description
+                            text: section.servingGuidelines.optimalTemperatures[0].description
                         }
                     },
-                    cat.sections?.servingGuidelines?.recommendedGlass && {
+                    section?.servingGuidelines?.recommendedGlass && {
                         '@type': 'Question',
                         name: isEn ? `What glass should I use for ${cat.nameEn}?` : `${cat.nameKo}를 마실 때 추천하는 잔은?`,
                         acceptedAnswer: {
                             '@type': 'Answer',
-                            text: cat.sections.servingGuidelines.recommendedGlass
+                            text: section.servingGuidelines.recommendedGlass
                         }
                     },
-                    ...(cat.sections?.classifications?.map(c => ({
+                    ...(section?.classifications?.map(c => ({
                         '@type': 'Question',
                         name: isEn ? `What is ${c.name}?` : `${c.name}(이)란? (분류/특징)`,
                         acceptedAnswer: {
@@ -133,7 +161,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
                             text: `${c.criteria ? c.criteria + ' - ' : ''}${c.description}`
                         }
                     })) || []),
-                    ...(cat.sections?.sensoryMetrics?.map(m => ({
+                    ...(section?.sensoryMetrics?.map(m => ({
                         '@type': 'Question',
                         name: isEn ? `What is ${m.label} (${m.metric})?` : `${m.metric} (${m.label})(이)란?`,
                         acceptedAnswer: {
@@ -182,53 +210,38 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 
 export default async function SpiritWikiCategoryPage({ params }: CategoryPageProps) {
     const { lang, category: slug } = await params
-    const cat = getSpiritCategory(slug)
-    if (!cat) notFound()
+    const decodedSlug = decodeURIComponent(slug)
 
+    // Handle cross-locales switching (prevent mixed language content)
+    if (lang === 'ko' && EN_TO_KO_MAP[decodedSlug]) {
+        redirect(`/ko/contents/wiki/${EN_TO_KO_MAP[decodedSlug]}`)
+    }
+    if (lang === 'en' && KO_TO_EN_MAP[decodedSlug]) {
+        redirect(`/en/contents/wiki/${KO_TO_EN_MAP[decodedSlug]}`)
+    }
+
+    const cat = getSpiritCategory(decodedSlug) || getSpiritCategory(slug)
+
+    if (!cat) {
+        notFound()
+    }
     // 해당 카테고리의 추천 제품 조회 (최대 6개)
     let featuredSpirits: { id: string; name: string; category: string; imageUrl?: string }[] = []
 
-    if (slug !== 'oak-barrel') {
-        const categoryMap: Record<string, string> = {
-            'whisky': '위스키',
-            'single-malt': '위스키',
-            'blended-whisky': '위스키',
-            'cognac': '브랜디',
-            'brandy': '브랜디',
-            'champagne': '과실주',
-            'red-wine': '과실주',
-            'white-wine': '과실주',
-            'wine': '과실주',
-            'gin': '일반증류주',
-            'vodka': '일반증류주',
-            'rum': '일반증류주',
-            'tequila': '일반증류주',
-            'mezcal': '일반증류주',
-            'baijiu': '일반증류주',
-            'soju': '소주',
-            'soju-distilled': '소주',
-            'soju-diluted': '소주',
-            'shochu': '소주',
-            'yakju': '약주',
-            'sake': '청주',
-            'makgeolli': '탁주',
-            'beer': '맥주',
-            'liqueur': '리큐르'
-        };
+    const isEn = lang === 'en'
+    const section = isEn ? (cat.sectionsEn || cat.sections) : cat.sections
+    const dbCategories = section?.dbCategories
 
-        const dbCategory = categoryMap[slug];
-
+    if (slug !== 'oak-barrel' && dbCategories && dbCategories.length > 0) {
         try {
-            if (dbCategory) {
-                // Now using direct, robust fetch logic ensuring updatedAt DESC and isPublished = true
-                const result = await db.getLatestFeatured(dbCategory, 6)
-                featuredSpirits = result.map((s: any) => ({
-                    id: s.id,
-                    name: s.name,
-                    category: s.category,
-                    imageUrl: s.imageUrl,
-                }))
-            }
+            // Use the first category in the list for featured spirits
+            const result = await db.getLatestFeatured(dbCategories[0], 6)
+            featuredSpirits = result.map((s: any) => ({
+                id: s.id,
+                name: s.name,
+                category: s.category,
+                imageUrl: s.imageUrl,
+            }))
         } catch {
             // 무시
         }

@@ -149,5 +149,147 @@ export const sake: SpiritCategory = {
             "샤브샤브 및 나베 요리"
         ],
         dbCategories: ['청주']
+    },
+    sectionsEn: {
+        definition: "Sake (Nihonshu) is a traditional Japanese brewed beverage made from rice, koji (mold cultures), and water. It is classified by the 'polishing ratio' (how much of the outer rice grain is removed) and whether distilled alcohol is added. It is characterized by delicate aromatics and dramatic flavor profiles that evolve with serving temperature.",
+        history: "Originating from ancient 'Kuchikamizake,' Sake was refined through the Nara and Edo periods into the sophisticated brewing technique (Multiple Parallel Fermentation) seen today. The combination of regional water, specialized rice, and the expertise of 'Toji' (master brewers) showcases a unique Japanese expression of terroir.",
+        classifications: [
+            {
+                name: "Junmai Daiginjo",
+                criteria: "Rice polishing ratio of 50% or less + only rice, koji, and water.",
+                description: "The pinnacle of Sake. High-speed polishing removes proteins and fats to eliminate off-flavors, resulting in an exquisite explosion of floral and fruity aromas (Ginjo-ka). It offers the most transparent and elegant texture."
+            },
+            {
+                name: "Daiginjo",
+                criteria: "Rice polishing ratio of 50% or less + trace amounts of distilled alcohol.",
+                description: "Tends to have a sharper and more vivid aromatic opening than Junmai Daiginjo. A technical premium Sake that emphasizes a crisp finish and high-impact initial aromatics."
+            },
+            {
+                name: "Junmai Ginjo",
+                criteria: "Rice polishing ratio of 60% or less + only rice, koji, and water.",
+                description: "The ideal balance between vibrant Ginjo aromas and the inherent savory depth (Umami) of rice. Its wide pairing range makes it the most beloved style globally."
+            },
+            {
+                name: "Ginjo",
+                criteria: "Rice polishing ratio of 60% or less + addition of distilled alcohol.",
+                description: "Brewed via low-temperature, long-term fermentation to preserve refreshing fruity aromas. The added alcohol results in a light, brisk, and crisp throat-feel."
+            },
+            {
+                name: "Junmai",
+                criteria: "Only rice, koji, and water (No minimum polishing requirement; typically around 70%).",
+                description: "Highlights the structural richness of rice, cereal sweetness, and acidity. Rather than flashy aromas, it charms with a sturdy body and mellow flavors that bloom when served warm."
+            },
+            {
+                name: "Honjozo",
+                criteria: "Rice polishing ratio of 70% or less + trace amounts of distilled alcohol.",
+                description: "A smooth, clean style with a refreshing 'Kire' (sharp finish). Highly versatile and suitable as a daily Sake that pairs effortlessly with a wide variety of foods."
+            },
+            {
+                name: "Tokubetsu (Special)",
+                criteria: "Junmai or Honjozo with a polishing ratio under 60% or a unique brewing method.",
+                description: "A designation given when a brewery uses proprietary techniques or special sake-grade rice, representing the 'Special' line that best showcases the house's identity."
+            }
+        ],
+        sensoryMetrics: [
+            {
+                metric: "Sake Meter Value (SMV)",
+                label: "SMV (Nihonshudo)",
+                value: "-15 (Sweet) ~ +10 (Dry)",
+                description: "Indicates sugar content based on water density. Higher negative values feel sweeter, while higher positive values feel drier."
+            },
+            {
+                metric: "Acidity",
+                label: "Acidity Level",
+                value: "1.0 (Soft) ~ 2.0 (Rich)",
+                description: "Provides the skeletal structure of the flavor. Higher acidity yields a rich and bold impression, while lower acidity feels soft and light."
+            },
+            {
+                metric: "Umami Level",
+                label: "Amino Acid Level",
+                value: "0.8 ~ 1.8",
+                description: "The metric for savoriness and body. Higher levels indicate a deeper 'flavor of rice' and greater aromatic complexity."
+            }
+        ],
+        coreIngredients: [
+            {
+                type: "Primary Material",
+                name: "Sake-Grade Rice (Saka Mai)",
+                description: "Specialized varieties like Yamada Nishiki with larger 'shinpaku' (starchy cores) and lower protein content than table rice, ensuring a clean taste."
+            },
+            {
+                type: "Fermentation Agent",
+                name: "Yellow Koji-kin",
+                description: "Provides enzymes to break down rice starch into sugar, forming the foundation of Sake's deep flavors and aromatic components."
+            },
+            {
+                type: "Water",
+                name: "Wamizu (Brewing Water)",
+                description: "Hard water (e.g., Nada) creates powerful, dry 'masculine' sake, while soft water (e.g., Fushimi) results in gentle, elegant 'feminine' sake."
+            }
+        ],
+        manufacturingProcess: [
+            {
+                step: "Rice Prep",
+                name: "Polishing & Soaking",
+                description: "Rice is polished, washed, and soaked. Higher grades require precise moisture management timed down to the minute."
+            },
+            {
+                step: "Fermentation",
+                name: "Multiple Parallel Fermentation",
+                description: "A rare, advanced process where saccharification and alcoholic fermentation occur simultaneously in the same vat, creating deep complexity."
+            },
+            {
+                step: "Finishing",
+                name: "Pressing & Filtration",
+                description: "The mash is pressed and heat-treated (pasteurized) for stability. Unfiltered raw sake (Namazake) highlights fresh, vivid vitality."
+            }
+        ],
+        servingGuidelines: {
+            recommendedGlass: "Wine Glass (for aroma) or Ochoko/Sakazuki (traditional)",
+            optimalTemperatures: [
+                {
+                    temp: "5~10°C (Chilled)",
+                    description: "Best for enjoying the floral aromatics and clean textures of Daiginjo and Ginjo grades."
+                },
+                {
+                    temp: "15~20°C (Room Temp)",
+                    description: "The range where the natural Umami and sweetness are softly revived, offering the most stable balance."
+                },
+                {
+                    temp: "40~45°C (Warm/Kan)",
+                    description: "Traditional serving temperature for Junmai or Honjozo to maximize rice flavors and provide a soothing warmth."
+                }
+            ],
+            methods: [
+                {
+                    name: "Hiya (Chilled)",
+                    description: "The popular method of chilling Sake to clearly perceive its signature freshness and fruity notes."
+                },
+                {
+                    name: "Kanzake (Warming)",
+                    description: "A professional method of heating Sake (usually via water bath) to soften alcohol heat and explode grain sweetness."
+                },
+                {
+                    name: "Wine Glass Service",
+                    description: "Using a tulip-shaped wine glass allows the delicate and brilliant Ginjo-ka to be experienced more dimensionally."
+                }
+            ]
+        },
+        flavorTags: [
+            { label: "Melon/Pear/Apple", color: "bg-emerald-400/20 text-zinc-950 dark:text-emerald-300" },
+            { label: "White Flowers", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-300" },
+            { label: "Umami/Savory", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
+            { label: "Supple Sweetness", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-300" },
+            { label: "Clean Acidity", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
+            { label: "Koji/Rice Aroma", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" }
+        ],
+        foodPairing: [
+            "Sashimi and Sushi (White-fleshed fish best)",
+            "Karaage and various Tempura",
+            "Grilled Fish and Seafood dishes",
+            "Yakitori (Salt or Tare)",
+            "Shabu-shabu and Nabe (Hot pot)"
+        ],
+        dbCategories: ['청주']
     }
 }
