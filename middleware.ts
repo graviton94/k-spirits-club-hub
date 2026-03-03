@@ -32,45 +32,62 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(newUrl, { status: 301 });
   }
 
-  // 1. Exclude public assets, API routes, and hidden files
-  // Matcher in config already handles most of these, but we keep this as extra layer
+  // 1. Exclude static assets, API routes, and special paths
+  // These should never be redirected or have locale prefix added
   if (
+    // File extensions (images, fonts, etc.)
     pathname.includes('.') ||
+    // API routes
     pathname.startsWith('/api') ||
+    // Next.js internals
     pathname.startsWith('/_next') ||
+    // Static asset directories
     pathname.startsWith('/images/') ||
     pathname.startsWith('/icons/') ||
-    pathname.startsWith('/fonts/')
+    pathname.startsWith('/fonts/') ||
+    // SEO files
+    pathname.startsWith('/robots') ||
+    pathname.startsWith('/sitemap') ||
+    // PWA manifest
+    pathname.startsWith('/manifest') ||
+    // Well-known URIs
+    pathname.startsWith('/.well-known/')
   ) {
     return;
   }
 
-  // 2. Check if the pathname already has a locale
+  // 2. Check if the pathname already has a locale prefix
   const pathnameHasLocale = i18n.locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );
 
-  // 3. Redirect if there is no locale
+  // 3. Permanent redirect if there is no locale prefix
   if (!pathnameHasLocale) {
-    // Priority: 1. Cookie, 2. Accept-Language header (via getLocale), 3. Default
+    // Determine locale with priority: 1. Cookie, 2. Accept-Language, 3. Default
     let locale = request.cookies.get('NEXT_LOCALE')?.value;
 
     if (!locale || !i18n.locales.includes(locale as any)) {
       locale = getLocale(request);
     }
 
-    return NextResponse.redirect(
-      new URL(
-        `/${locale}${pathname.startsWith('/') ? '' : '/'}${pathname}`,
-        request.url
-      )
-    );
+    // Build redirect URL with locale prefix
+    const redirectPath = `/${locale}${pathname.startsWith('/') ? '' : '/'}${pathname}`;
+    const redirectUrl = new URL(redirectPath + request.nextUrl.search, request.url);
+
+    // Prevent redirect loop: if somehow we're redirecting to the same URL, bail out
+    if (redirectUrl.pathname === pathname) {
+      return;
+    }
+
+    // Use 308 (Permanent Redirect) to maintain POST/PUT methods and signal permanence to search engines
+    return NextResponse.redirect(redirectUrl, { status: 308 });
   }
 }
 
 export const config = {
-  // Matcher ignoring `/_next/`, `/api/`, etc.
+  // Matcher ignoring static assets, API routes, and special files
+  // This provides first-level filtering before middleware logic
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico|images|icons|fonts|robots.txt|sitemap.xml).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|icon.png|images|icons|fonts|robots|sitemap|manifest|\\.well-known).*)',
   ],
 };
