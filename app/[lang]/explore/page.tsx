@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     : "위스키, 전통주, 증류주 등 다양한 주류를 카테고리별로 탐색하세요. 싱글몰트, 버번, 막걸리, 소주 등 한국과 전세계의 술을 검색하고 비교할 수 있습니다.";
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://kspiritsclub.com';
-  const ogImageUrl = `${baseUrl}/images/default-og.jpg`;
+  const ogImageUrl = `${baseUrl}/default-og.jpg`;
 
   // Canonical URL and hreflang alternates
   const canonicalUrl = getCanonicalUrl(`/${lang}/explore`);

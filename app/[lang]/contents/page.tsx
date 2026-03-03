@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: ContentsPageProps): Promise<M
   const { lang } = await params;
   const isEn = lang === 'en';
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://kspiritsclub.com';
-  const ogImageUrl = `${baseUrl}/images/default-og.jpg`;
+  const ogImageUrl = `${baseUrl}/default-og.jpg`;
 
   return {
     title: isEn ? "K-Spirits Club | Contents Hub" : "K-Spirits Club | 컨텐츠 허브",

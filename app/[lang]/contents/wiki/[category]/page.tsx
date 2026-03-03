@@ -146,7 +146,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
         ]
     }
 
-    const ogImageUrl = `${baseUrl}/images/default-og.jpg`;
+    const ogImageUrl = `${baseUrl}/default-og.jpg`;
 
     return {
         title,

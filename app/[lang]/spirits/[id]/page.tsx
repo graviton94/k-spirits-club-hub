@@ -187,7 +187,7 @@ export async function generateMetadata({
   const keywords = [...baseKeywords, ...longTailKeywords].filter(Boolean);
 
   // Build Dynamic OG Image URL ONLY if indexable
-  let ogImageUrl = `${baseUrl}/images/default-og.jpg`; // Fallback asset
+  let ogImageUrl = `${baseUrl}/default-og.jpg`; // Fallback asset
   if (isIndexable) {
     const searchParams = new URLSearchParams();
     searchParams.set('title', isEn ? (enName || koName) : koName);
