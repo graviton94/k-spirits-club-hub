@@ -109,8 +109,7 @@ const UI_TEXT = {
     }
 };
 
-import metadata from "@/lib/constants/spirits-metadata.json";
-import { localizeCountry, localizeDataSource } from "@/lib/utils/localize-field";
+import { formatSpiritFieldValue, localizeDataSource } from "@/lib/utils/localize-field";
 import Link from "next/link"; // added for crawlable internal linking
 
 export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [], lang, dict }: SpiritDetailClientProps) {
@@ -122,12 +121,6 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
     // Helpers for localized display (Strict Schema)
     const displayName = isEn ? (spirit.metadata?.name_en || spirit.name_en || spirit.name) : spirit.name;
     const displayDistillery = isEn ? (spirit.metadata?.distillery_en || spirit.distillery) : spirit.distillery;
-
-    const getLocalizedCategory = (cat: string) => {
-        if (!cat) return '';
-        const displayNames = isEn ? (metadata as any).display_names_en : metadata.display_names;
-        return displayNames[cat] || cat;
-    };
 
     const displayDescription = isEn
         ? (spirit.metadata?.description_en || spirit.metadata?.description_ko || dict?.noDescription || UI_TEXT.en.noDescription)
@@ -341,18 +334,18 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                             <dl className="space-y-2">
                                 <div className="flex justify-between items-center text-sm">
                                     <dt className="text-muted-foreground">{t.category}</dt>
-                                    <dd className="font-bold">{getLocalizedCategory(spirit.category)}</dd>
+                                    <dd className="font-bold">{formatSpiritFieldValue('category', spirit.category, lang)}</dd>
                                 </div>
                                 {spirit.mainCategory && (
                                     <div className="flex justify-between items-center text-sm">
                                         <dt className="text-muted-foreground">{t.main}</dt>
-                                        <dd className="font-bold">{getLocalizedCategory(spirit.mainCategory)}</dd>
+                                        <dd className="font-bold">{formatSpiritFieldValue('mainCategory', spirit.mainCategory, lang)}</dd>
                                     </div>
                                 )}
                                 {spirit.subcategory && (
                                     <div className="flex justify-between items-center text-sm">
                                         <dt className="text-muted-foreground">{t.sub}</dt>
-                                        <dd className="font-bold text-amber-500">{getLocalizedCategory(spirit.subcategory)}</dd>
+                                        <dd className="font-bold text-amber-500">{formatSpiritFieldValue('subcategory', spirit.subcategory, lang)}</dd>
                                     </div>
                                 )}
                             </dl>
@@ -364,7 +357,7 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                             <dl className="space-y-2">
                                 <div className="flex justify-between items-center text-sm">
                                     <dt className="text-muted-foreground">{t.country}</dt>
-                                    <dd className="font-bold">{localizeCountry(spirit.country, lang) || "Unknown"}</dd>
+                                    <dd className="font-bold">{formatSpiritFieldValue('country', spirit.country, lang) || "Unknown"}</dd>
                                 </div>
                                 {spirit.region && (
                                     <div className="flex justify-between items-center text-sm">
@@ -557,7 +550,7 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                                     </div>
                                     <div className="px-1">
                                         <div className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold mb-1 truncate">
-                                            {getLocalizedCategory(item.subcategory || item.category)}
+                                            {formatSpiritFieldValue('subcategory', item.subcategory || item.category, lang)}
                                         </div>
                                         <h3 className="font-bold text-sm text-foreground line-clamp-1 group-hover:text-amber-500 transition-colors">
                                             {itemName}
