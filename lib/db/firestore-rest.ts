@@ -1471,7 +1471,50 @@ export const reviewsDb = {
             console.error('[reviewsDb] getLatest error:', err);
             return [];
         }
-    }
+    },
+
+    async getPage(page: number, pageSize: number = 10): Promise<any[]> {
+        try {
+            const token = await getServiceAccountToken();
+            const reviewsPath = getAppPath().reviews;
+            const parent = `projects/${PROJECT_ID}/databases/(default)/documents/${reviewsPath.split('/').slice(0, -1).join('/')}`;
+            const collectionId = reviewsPath.split('/').pop();
+            const offset = (page - 1) * pageSize;
+
+            const res = await fetch(`${BASE_URL}:runQuery`, {
+                method: 'POST',
+                headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    parent,
+                    structuredQuery: {
+                        from: [{ collectionId }],
+                        orderBy: [{ field: { fieldPath: 'createdAt' }, direction: 'DESCENDING' }],
+                        limit: pageSize,
+                        offset,
+                    },
+                }),
+            });
+
+            if (!res.ok) {
+                console.error('[reviewsDb] getPage failed:', await res.text());
+                return [];
+            }
+
+            const json = await res.json();
+            if (!Array.isArray(json)) return [];
+
+            return json
+                .filter((r: any) => r.document)
+                .map((r: any) => {
+                    const data = parseFirestoreFields(r.document.fields || {});
+                    data.id = r.document.name.split('/').pop();
+                    return data;
+                });
+        } catch (err) {
+            console.error('[reviewsDb] getPage error:', err);
+            return [];
+        }
+    },
 };
 
 export const userDb = {
@@ -2112,6 +2155,49 @@ export const newsDb = {
             data.id = doc.name.split('/').pop();
             return data;
         });
-    }
+    },
+
+    async getPage(page: number, pageSize: number = 10): Promise<any[]> {
+        try {
+            const token = await getServiceAccountToken();
+            const collectionPath = getAppPath().news;
+            const parent = `projects/${PROJECT_ID}/databases/(default)/documents/${collectionPath.split('/').slice(0, -1).join('/')}`;
+            const collectionId = collectionPath.split('/').pop();
+            const offset = (page - 1) * pageSize;
+
+            const res = await fetch(`${BASE_URL}:runQuery`, {
+                method: 'POST',
+                headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    parent,
+                    structuredQuery: {
+                        from: [{ collectionId }],
+                        orderBy: [{ field: { fieldPath: 'date' }, direction: 'DESCENDING' }],
+                        limit: pageSize,
+                        offset,
+                    },
+                }),
+            });
+
+            if (!res.ok) {
+                console.error('[newsDb] getPage failed:', await res.text());
+                return [];
+            }
+
+            const json = await res.json();
+            if (!Array.isArray(json)) return [];
+
+            return json
+                .filter((r: any) => r.document)
+                .map((r: any) => {
+                    const data = parseFirestoreFields(r.document.fields || {});
+                    data.id = r.document.name.split('/').pop();
+                    return data;
+                });
+        } catch (err) {
+            console.error('[newsDb] getPage error:', err);
+            return [];
+        }
+    },
 };
 

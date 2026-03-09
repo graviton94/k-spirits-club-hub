@@ -12,7 +12,7 @@ import { motion } from 'framer-motion';
 import GoogleAd from '@/components/ui/GoogleAd';
 
 
-export default function NewsContentPage({ initialNews }: { initialNews?: any[] }) {
+export default function NewsContentPage({ initialNews, initialPage = 1 }: { initialNews?: any[]; initialPage?: number }) {
     const { user, role } = useAuth();
     const params = useParams();
     const lang = (params?.lang as string) || 'ko';
@@ -21,7 +21,7 @@ export default function NewsContentPage({ initialNews }: { initialNews?: any[] }
     const hasInitial = Array.isArray(initialNews) && initialNews.length > 0;
     const [news, setNews] = useState<any[]>(initialNews ?? []);
     const [loading, setLoading] = useState(!hasInitial);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(initialPage);
     const [totalCount, setTotalCount] = useState(0);
     const [pageMarkers, setPageMarkers] = useState<Record<number, QueryDocumentSnapshot<DocumentData> | null>>({});
     const [searchInput, setSearchInput] = useState('');
@@ -100,7 +100,10 @@ export default function NewsContentPage({ initialNews }: { initialNews?: any[] }
 
     useEffect(() => {
         fetchTotalCount();
-        fetchPage(1);
+        // Skip re-fetch if the server already provided initial data for this page
+        if (!hasInitial) {
+            fetchPage(initialPage);
+        }
     }, []);
 
     const filteredNews = useMemo(() => {
@@ -259,60 +262,65 @@ export default function NewsContentPage({ initialNews }: { initialNews?: any[] }
                             </React.Fragment>
                         ))}
 
-                        {/* Pagination Numbers */}
+                        {/* Pagination Numbers — links are crawlable <a href> for SEO; JS intercepts for SPA navigation */}
                         {!searchQuery && totalPages > 1 && (
                             <div className="flex flex-col items-center gap-6 mt-12 pb-12">
                                 <div className="flex justify-center items-center gap-2">
-                                    <button
-                                        onClick={() => fetchPage(1)}
-                                        disabled={currentPage === 1}
-                                        className="p-2 rounded-xl bg-card border border-border hover:bg-muted disabled:opacity-20 transition-all flex items-center"
+                                    <Link
+                                        href="?"
+                                        aria-disabled={currentPage === 1}
+                                        onClick={(e) => { e.preventDefault(); if (currentPage > 1) fetchPage(1); }}
+                                        className={`p-2 rounded-xl bg-card border border-border hover:bg-muted transition-all flex items-center ${currentPage === 1 ? 'pointer-events-none opacity-20' : ''}`}
                                         title={isEn ? "First Page" : "첫 페이지"}
                                     >
                                         <ChevronLeft className="w-5 h-5 -mr-3" />
                                         <ChevronLeft className="w-5 h-5" />
-                                    </button>
+                                    </Link>
 
-                                    <button
-                                        onClick={() => fetchPage(currentPage - 1)}
-                                        disabled={currentPage === 1}
-                                        className="p-2 rounded-xl bg-card border border-border hover:bg-muted disabled:opacity-20 transition-all"
+                                    <Link
+                                        href={currentPage > 2 ? `?page=${currentPage - 1}` : '?'}
+                                        aria-disabled={currentPage === 1}
+                                        onClick={(e) => { e.preventDefault(); if (currentPage > 1) fetchPage(currentPage - 1); }}
+                                        className={`p-2 rounded-xl bg-card border border-border hover:bg-muted transition-all ${currentPage === 1 ? 'pointer-events-none opacity-20' : ''}`}
                                     >
                                         <ChevronLeft className="w-5 h-5" />
-                                    </button>
+                                    </Link>
 
                                     {Array.from({ length: totalPages }, (_, i) => i + 1)
                                         .filter(p => p >= currentPage - 2 && p <= currentPage + 2)
                                         .map(num => (
-                                            <button
+                                            <Link
                                                 key={num}
-                                                onClick={() => fetchPage(num)}
-                                                className={`w-10 h-10 rounded-xl text-sm font-black transition-all ${currentPage === num
+                                                href={num === 1 ? '?' : `?page=${num}`}
+                                                onClick={(e) => { e.preventDefault(); fetchPage(num); }}
+                                                className={`w-10 h-10 rounded-xl text-sm font-black transition-all flex items-center justify-center ${currentPage === num
                                                     ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/30'
                                                     : 'bg-card border border-border text-muted-foreground hover:bg-muted font-bold'
                                                     }`}
                                             >
                                                 {num}
-                                            </button>
+                                            </Link>
                                         ))}
 
-                                    <button
-                                        onClick={() => fetchPage(currentPage + 1)}
-                                        disabled={currentPage === totalPages}
-                                        className="p-2 rounded-xl bg-card border border-border hover:bg-muted disabled:opacity-20 transition-all"
+                                    <Link
+                                        href={`?page=${currentPage + 1}`}
+                                        aria-disabled={currentPage === totalPages}
+                                        onClick={(e) => { e.preventDefault(); if (currentPage < totalPages) fetchPage(currentPage + 1); }}
+                                        className={`p-2 rounded-xl bg-card border border-border hover:bg-muted transition-all ${currentPage === totalPages ? 'pointer-events-none opacity-20' : ''}`}
                                     >
                                         <ChevronRight className="w-5 h-5" />
-                                    </button>
+                                    </Link>
 
-                                    <button
-                                        onClick={() => fetchPage(totalPages)}
-                                        disabled={currentPage === totalPages}
-                                        className="p-2 rounded-xl bg-card border border-border hover:bg-muted disabled:opacity-20 transition-all flex items-center"
+                                    <Link
+                                        href={`?page=${totalPages}`}
+                                        aria-disabled={currentPage === totalPages}
+                                        onClick={(e) => { e.preventDefault(); if (currentPage < totalPages) fetchPage(totalPages); }}
+                                        className={`p-2 rounded-xl bg-card border border-border hover:bg-muted transition-all flex items-center ${currentPage === totalPages ? 'pointer-events-none opacity-20' : ''}`}
                                         title={isEn ? "Last Page" : "마지막 페이지"}
                                     >
                                         <ChevronRight className="w-5 h-5" />
                                         <ChevronRight className="w-5 h-5 -ml-3" />
-                                    </button>
+                                    </Link>
                                 </div>
 
                                 <p className="text-[10px] sm:text-xs text-muted-foreground/60 font-medium text-center italic">
