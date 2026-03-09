@@ -31,17 +31,21 @@ export async function generateMetadata({ params }: ContentsPageProps): Promise<M
   const hreflangAlternates = getHreflangAlternates('/contents');
 
   return {
-    title: isEn ? "Contents Hub" : "컨텐츠 허브",
+    title: isEn
+      ? "Contents Hub | K-Spirits Club — Spirit MBTI, World Cup, Reviews & Wiki"
+      : "콘텐츠 허브 | K-Spirits Club — 주류 MBTI · 월드컵 · 리뷰 · 백과사전",
     description: isEn
-      ? "Enjoy various contents like Spirit World Cup, Mini Games, and Tasting Notes."
-      : "술 취향 월드컵, 미니게임, 테이스팅 노트 등 K-Spirits Club의 다양한 즐길거리를 만나보세요.",
+      ? "Discover your spirit personality with our MBTI test, vote in the Spirit World Cup, read community tasting reviews, follow AI-powered global spirits news, and explore the Spirits Wiki — all in one place."
+      : "주류 MBTI 테스트로 나의 취향을 분석하고, 술 취향 월드컵에서 최애 주류를 뽑고, 커뮤니티 리뷰를 읽고, AI가 분석한 글로벌 주류 뉴스와 주류 백과사전까지 — K-Spirits Club 콘텐츠 허브에서 모두 만나보세요.",
     alternates: {
       canonical: canonicalUrl,
       languages: hreflangAlternates,
     },
     openGraph: {
-      title: isEn ? "Contents Hub" : "컨텐츠 허브",
-      description: isEn ? "Enjoy various spirits contents and events." : "다양한 주류 컨텐츠와 이벤트를 즐겨보세요.",
+      title: isEn ? "Contents Hub | K-Spirits Club" : "콘텐츠 허브 | K-Spirits Club",
+      description: isEn
+        ? "Spirit MBTI, World Cup tournament, tasting reviews, AI news, and Spirits Wiki — explore all spirits contents in one place."
+        : "주류 MBTI, 월드컵 토너먼트, 시음 리뷰, AI 뉴스, 주류 백과사전 — 주류 콘텐츠의 모든 것.",
       type: "website",
       siteName: "K-Spirits Club",
       url: canonicalUrl,
@@ -49,8 +53,10 @@ export async function generateMetadata({ params }: ContentsPageProps): Promise<M
     },
     twitter: {
       card: "summary_large_image",
-      title: isEn ? "Contents Hub" : "컨텐츠 허브",
-      description: isEn ? "Enjoy various spirits contents and events." : "다양한 주류 컨텐츠와 이벤트를 즐겨보세요.",
+      title: isEn ? "Contents Hub | K-Spirits Club" : "콘텐츠 허브 | K-Spirits Club",
+      description: isEn
+        ? "Spirit MBTI, World Cup tournament, tasting reviews, AI news, and Spirits Wiki."
+        : "주류 MBTI, 월드컵 토너먼트, 시음 리뷰, AI 뉴스, 주류 백과사전.",
       images: [ogImageUrl]
     }
   };
@@ -126,10 +132,10 @@ export default async function ContentsPage({ params }: ContentsPageProps) {
 
         <div className="relative z-10">
           <h1 className="text-3xl md:text-4xl font-black mb-2 tracking-tighter bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent drop-shadow-sm">
-            Contents Hub
+            {isEn ? 'Contents Hub' : '콘텐츠 허브'}
           </h1>
           <p className="text-xs font-bold text-muted-foreground/60 tracking-widest uppercase flex items-center justify-center gap-1.5">
-            <Sparkles className="w-3 h-3" /> Playground for Drinkers
+            <Sparkles className="w-3 h-3" /> {isEn ? 'Playground for Spirits Enthusiasts' : '주류 애호가를 위한 놀이터'}
           </p>
         </div>
       </div>
@@ -179,7 +185,16 @@ export default async function ContentsPage({ params }: ContentsPageProps) {
         ))}
       </div>
 
-      {/* SEO Hub Links (1-Hop indexing from contents) */}
+      {/* Localized intro copy for SEO */}
+      <div className="mt-10 max-w-2xl mx-auto text-center relative z-10 px-4">
+        <p className="text-sm text-muted-foreground leading-relaxed">
+          {isEn
+            ? 'Welcome to the K-Spirits Club Contents Hub — your interactive gateway to the world of spirits. Uncover your drinking personality with our Spirit MBTI test, vote for your all-time favorite drink in the Spirit World Cup tournament, discover new bottles through authentic community tasting reviews, stay updated with AI-analyzed global spirits news, and dive deep into categories with our comprehensive Spirits Wiki.'
+            : 'K-Spirits Club 콘텐츠 허브에 오신 것을 환영합니다. 주류 MBTI 테스트로 나만의 음주 성격을 발견하고, 술 취향 월드컵에서 최애 주류를 가려보세요. 커뮤니티 시음 리뷰로 새로운 술을 발견하고, AI가 분석한 글로벌 주류 뉴스로 업계 트렌드를 따라가며, 주류 백과사전에서 위스키·소주·막걸리·데킬라 등 세계 주류의 모든 것을 탐구해보세요.'}
+        </p>
+      </div>
+
+
       <div className="mt-16 max-w-4xl mx-auto relative z-10 px-4">
         <div className="flex items-center gap-3 mb-6">
           <div className="h-px flex-1 bg-border/50"></div>

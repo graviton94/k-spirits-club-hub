@@ -20,7 +20,9 @@ export async function generateMetadata({ params }: WikiHubPageProps): Promise<Me
     const hreflangAlternates = getHreflangAlternates('/contents/wiki')
 
     return {
-        title: isEn ? 'Spirits Wiki' : '주류 백과사전',
+        title: isEn
+            ? 'Spirits Wiki — Complete Guide to Whisky, Soju, Makgeolli & More | K-Spirits Club'
+            : '주류 백과사전 — 위스키, 소주, 막걸리, 전통주 완벽 가이드 | K-Spirits Club',
         description: isEn
             ? 'Your complete guide to the world of spirits. Explore whisky, sake, gin, rum, tequila, and more — definitions, history, flavor profiles, and pairing tips.'
             : '위스키부터 사케, 진, 럼, 데킬라까지 — 세계의 주류를 한눈에. 정의, 역사, 맛·향 특징, 페어링 정보를 K-Spirits Club에서 확인하세요.',
@@ -29,7 +31,7 @@ export async function generateMetadata({ params }: WikiHubPageProps): Promise<Me
             languages: hreflangAlternates,
         },
         openGraph: {
-            title: isEn ? 'Spirits Wiki' : '주류 백과사전',
+            title: isEn ? 'Spirits Wiki | K-Spirits Club' : '주류 백과사전 | K-Spirits Club',
             description: isEn
                 ? 'Your complete guide to the world of spirits.'
                 : '세계의 주류를 한눈에 — 주류 백과사전',
@@ -79,6 +81,15 @@ export default async function WikiHubPage({ params }: WikiHubPageProps) {
                         {isEn ? 'Everything about the world of spirits' : '세계의 주류를 한눈에'}
                     </p>
                 </div>
+            </div>
+
+            {/* Localized intro copy for SEO */}
+            <div className="mb-8 max-w-2xl mx-auto text-center px-2">
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                    {isEn
+                        ? 'The K-Spirits Club Spirits Wiki is your authoritative reference for understanding and exploring the world of alcoholic beverages. Each category guide covers definition and origin, production methods, flavor profiles, optimal serving temperatures, food pairing recommendations, and key brands — all written for enthusiasts and curious beginners alike.'
+                        : 'K-Spirits Club 주류 백과사전은 세계의 주류를 이해하고 탐험하기 위한 전문 레퍼런스입니다. 각 카테고리 가이드는 정의와 역사, 제조 공정, 풍미 프로파일, 최적 시음 온도, 음식 페어링 추천, 주요 브랜드를 담고 있습니다 — 입문자부터 애호가까지 모두를 위해 쓰였습니다.'}
+                </p>
             </div>
 
             {/* Category Grid */}
