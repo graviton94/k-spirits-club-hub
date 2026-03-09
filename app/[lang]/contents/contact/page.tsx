@@ -6,6 +6,7 @@ export const runtime = 'edge';
 
 export const metadata = {
     title: 'Contact Us',
+    robots: { index: false, follow: true },
 };
 
 export default async function ContactPage({ params }: { params: Promise<{ lang: Locale }> }) {
