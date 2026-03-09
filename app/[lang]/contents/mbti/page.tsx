@@ -31,6 +31,14 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
             url: canonicalUrl,
             images: ['/MBTI/og-mbti.webp'],
         },
+        twitter: {
+            card: 'summary_large_image',
+            title: isEn ? 'Spirit MBTI Test | K-Spirits Club' : '내 술 취향 MBTI 테스트 | K-Spirits Club',
+            description: isEn
+                ? 'Find your drink personality type in 12 questions. Get personalized spirit recommendations matched to your taste.'
+                : '12가지 질문으로 나의 주류 성격 유형을 찾아보세요. 취향에 딱 맞는 술 추천을 받아보세요.',
+            images: ['/MBTI/og-mbti.webp'],
+        },
     };
 }
 

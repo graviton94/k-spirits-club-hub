@@ -62,12 +62,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Loc
       siteName: "K-Spirits Club",
       images: [{ url: '/main.jpg' }],
     },
-    twitter: {
-      card: "summary_large_image",
-      title: dict.meta.title,
-      description: dict.meta.description,
-      images: ['/main.jpg'],
-    },
     alternates: {
       canonical: `https://kspiritsclub.com/${lang}`,
       languages: {

@@ -36,6 +36,14 @@ export async function generateMetadata({ params }: WorldCupPageProps): Promise<M
       siteName: 'K-Spirits Club',
       url: canonicalUrl,
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: isEn ? 'Spirit World Cup | K-Spirits Club' : '술 취향 월드컵 | K-Spirits Club',
+      description: isEn
+        ? 'Pick your favorite spirit in a head-to-head tournament. Vote through every category until your ultimate favorite emerges.'
+        : '두 가지 술 중 더 좋아하는 쪽을 선택하는 토너먼트. 위스키, 소주, 막걸리 등 수백 가지 주류를 대결시켜 나만의 최애를 찾아보세요.',
+      images: ['https://kspiritsclub.com/default-og.jpg'],
+    },
   };
 }
 
