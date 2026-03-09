@@ -1474,6 +1474,7 @@ export const reviewsDb = {
     },
 
     async getPage(page: number, pageSize: number = 10): Promise<any[]> {
+        if (!Number.isInteger(page) || page < 1) return [];
         try {
             const token = await getServiceAccountToken();
             const reviewsPath = getAppPath().reviews;
@@ -2158,6 +2159,7 @@ export const newsDb = {
     },
 
     async getPage(page: number, pageSize: number = 10): Promise<any[]> {
+        if (!Number.isInteger(page) || page < 1) return [];
         try {
             const token = await getServiceAccountToken();
             const collectionPath = getAppPath().news;
