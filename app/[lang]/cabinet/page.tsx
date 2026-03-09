@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: CabinetPageProps): Promise<Me
   return {
     title: dict.meta.cabinet,
     description: dict.meta.description,
+    robots: { index: false, follow: true },
     alternates: {
       canonical: canonicalUrl,
       languages: hreflangAlternates,

@@ -16,6 +16,7 @@ export async function generateMetadata({ params }: MyPageProps): Promise<Metadat
     return {
         title: dict.meta.profile,
         description: dict.meta.description,
+        robots: { index: false, follow: true },
     };
 }
 

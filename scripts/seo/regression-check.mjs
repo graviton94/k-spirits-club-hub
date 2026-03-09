@@ -738,10 +738,17 @@ async function checkPrivateRouteSafety() {
   if (!cabinetSource) {
     warn('G', 'Cabinet page source not found — skipping');
   } else {
-    if (/robots.*index.*true/i.test(cabinetSource)) {
+    // Match only "index: true" (not "index: false" followed by "follow: true")
+    if (/index\s*:\s*true/i.test(cabinetSource) && !/index\s*:\s*false/i.test(cabinetSource)) {
       fail('G', 'Cabinet page — explicitly sets robots index:true (should not be publicly indexable)');
     } else {
       pass('G', 'Cabinet page — does not explicitly set robots index:true');
+    }
+    // G3b. Cabinet page should have explicit noindex
+    if (/index\s*:\s*false/i.test(cabinetSource)) {
+      pass('G', 'Cabinet page — has explicit robots noindex');
+    } else {
+      fail('G', 'Cabinet page — missing explicit robots noindex (private page must be noindex)');
     }
     // Cabinet page should not have public-style meta description (generic site desc is fine)
     if (/generateMetadata/i.test(cabinetSource)) {
@@ -760,10 +767,17 @@ async function checkPrivateRouteSafety() {
   if (!meSource) {
     warn('G', 'Me/profile page source not found — skipping');
   } else {
-    if (/robots.*index.*true/i.test(meSource)) {
+    // Match only "index: true" (not "index: false" followed by "follow: true")
+    if (/index\s*:\s*true/i.test(meSource) && !/index\s*:\s*false/i.test(meSource)) {
       fail('G', 'Me page — explicitly sets robots index:true (should not be publicly indexable)');
     } else {
       pass('G', 'Me page — does not explicitly set robots index:true');
+    }
+    // G4b. Me page should have explicit noindex
+    if (/index\s*:\s*false/i.test(meSource)) {
+      pass('G', 'Me page — has explicit robots noindex');
+    } else {
+      fail('G', 'Me page — missing explicit robots noindex (private page must be noindex)');
     }
   }
 
@@ -1078,6 +1092,95 @@ async function checkPhase72() {
     } else {
       warn('H', `${page} page — missing noindex (utility page may be unnecessarily indexed)`);
     }
+  }
+
+  // ── H11. Login page must have noindex ─────────────────────────────────────
+  const loginSource = readSourceFile('app/[lang]/login/page.tsx');
+  if (!loginSource) {
+    warn('H', 'Login page source not found — skipping noindex guard');
+  } else if (/index\s*:\s*false/i.test(loginSource)) {
+    pass('H', 'Login page — has explicit robots noindex');
+  } else {
+    fail('H', 'Login page — missing explicit robots noindex (auth page should not be indexed)');
+  }
+
+  // ── H12. Me/reviews must have noindex via layout or page metadata ──────────
+  const meReviewsLayout = readSourceFile('app/[lang]/me/reviews/layout.tsx');
+  const meReviewsPage = readSourceFile('app/[lang]/me/reviews/page.tsx');
+  const meReviewsNoindex =
+    (meReviewsLayout && /index\s*:\s*false/i.test(meReviewsLayout)) ||
+    (meReviewsPage && /index\s*:\s*false/i.test(meReviewsPage));
+  if (meReviewsNoindex) {
+    pass('H', 'Me/reviews — has explicit robots noindex');
+  } else {
+    fail('H', 'Me/reviews — missing robots noindex (private review page must be noindex)');
+  }
+
+  // ── H13. About page must have locale-aware generateMetadata ───────────────
+  const aboutSource = readSourceFile('app/[lang]/contents/about/page.tsx');
+  if (!aboutSource) {
+    warn('H', 'About page source not found — skipping locale-metadata guard');
+  } else {
+    // Must use a function (not static export const metadata) to be locale-aware
+    const hasGenerateMetadata = /generateMetadata/i.test(aboutSource);
+    // Must branch on locale (isEn pattern or direct lang comparison)
+    const hasLocaleBranch = /\bisEn\b/.test(aboutSource) || /lang\s*===\s*['"]en['"]/.test(aboutSource);
+    if (hasGenerateMetadata && hasLocaleBranch) {
+      pass('H', 'About page — uses locale-aware generateMetadata');
+    } else {
+      fail('H', 'About page — static metadata is not locale-aware (KO route gets English title)');
+    }
+  }
+
+  // ── H14. Spirit page JSON-LD fallback must be locale-aware on EN routes ────
+  const spiritPageSrcH14 = readSourceFile('app/[lang]/spirits/[id]/page.tsx');
+  if (!spiritPageSrcH14) {
+    warn('H', 'Spirit detail page source not found — skipping JSON-LD fallback check');
+  } else {
+    // The fallback editorialReviewBody must reference isEn (locale-conditional) and
+    // localizeCategory must be called with 'en' argument for the EN branch
+    const fallbackIsLocaleAware = /editorialReviewBody\s*=.*isEn/s.test(spiritPageSrcH14) ||
+      /isEn.*editorialReviewBody/s.test(spiritPageSrcH14);
+    const localizeCalledWithEn = /localizeCategory\([^)]*'en'\)/.test(spiritPageSrcH14);
+    if (fallbackIsLocaleAware || localizeCalledWithEn) {
+      pass('H', 'Spirit page — JSON-LD editorial review fallback is locale-aware');
+    } else {
+      warn('H', 'Spirit page — JSON-LD editorial review fallback may not be locale-aware');
+    }
+  }
+
+  // ── H15. WorldCup layout must not have static Korean-only metadata ─────────
+  const worldcupLayoutSrc = readSourceFile('app/[lang]/contents/worldcup/layout.tsx');
+  if (!worldcupLayoutSrc) {
+    warn('H', 'WorldCup layout source not found — skipping metadata conflict check');
+  } else if (/export const metadata/i.test(worldcupLayoutSrc)) {
+    fail('H', 'WorldCup layout — has static metadata that conflicts with locale-aware page metadata');
+  } else {
+    pass('H', 'WorldCup layout — no static metadata (page handles locale-aware title)');
+  }
+
+  // ── H16. WorldCup/game layout must use locale-aware generateMetadata ────────
+  const worldcupGameLayoutSrc = readSourceFile('app/[lang]/contents/worldcup/game/layout.tsx');
+  if (!worldcupGameLayoutSrc) {
+    warn('H', 'WorldCup/game layout source not found — skipping metadata locale check');
+  } else {
+    const hasGenerateMetadata = /generateMetadata/i.test(worldcupGameLayoutSrc);
+    const hasLocaleBranch = /\bisEn\b/.test(worldcupGameLayoutSrc) || /lang\s*===\s*['"]en['"]/.test(worldcupGameLayoutSrc);
+    if (hasGenerateMetadata && hasLocaleBranch) {
+      pass('H', 'WorldCup/game layout — uses locale-aware generateMetadata');
+    } else {
+      fail('H', 'WorldCup/game layout — has static Korean-only metadata (EN routes get Korean title)');
+    }
+  }
+
+  // ── H17. Perfect-pour layout must not have static Korean-only metadata ──────
+  const perfectPourLayoutSrc = readSourceFile('app/[lang]/contents/perfect-pour/layout.tsx');
+  if (!perfectPourLayoutSrc) {
+    warn('H', 'Perfect-pour layout source not found — skipping metadata conflict check');
+  } else if (/export const metadata/i.test(perfectPourLayoutSrc)) {
+    fail('H', 'Perfect-pour layout — has static metadata that conflicts with locale-aware page metadata');
+  } else {
+    pass('H', 'Perfect-pour layout — no static metadata (page handles locale-aware title)');
   }
 }
 
