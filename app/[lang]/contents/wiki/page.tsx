@@ -21,8 +21,8 @@ export async function generateMetadata({ params }: WikiHubPageProps): Promise<Me
 
     return {
         title: isEn
-            ? 'Spirits Wiki — Complete Guide to Whisky, Soju, Makgeolli & More | K-Spirits Club'
-            : '주류 백과사전 — 위스키, 소주, 막걸리, 전통주 완벽 가이드 | K-Spirits Club',
+            ? 'Spirits Wiki — Complete Guide to Whisky, Soju, Makgeolli & More'
+            : '주류 백과사전 — 위스키, 소주, 막걸리, 전통주 완벽 가이드',
         description: isEn
             ? 'Your complete guide to the world of spirits. Explore whisky, sake, gin, rum, tequila, and more — definitions, history, flavor profiles, and pairing tips.'
             : '위스키부터 사케, 진, 럼, 데킬라까지 — 세계의 주류를 한눈에. 정의, 역사, 맛·향 특징, 페어링 정보를 K-Spirits Club에서 확인하세요.',

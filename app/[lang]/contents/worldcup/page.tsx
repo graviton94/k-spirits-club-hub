@@ -18,8 +18,8 @@ export async function generateMetadata({ params }: WorldCupPageProps): Promise<M
 
   return {
     title: isEn
-      ? 'Spirit World Cup — Vote for Your Favorite Drink | K-Spirits Club'
-      : '술 취향 월드컵 — 나만의 최애 주류를 가려보세요 | K-Spirits Club',
+      ? 'Spirit World Cup — Vote for Your Favorite Drink'
+      : '술 취향 월드컵 — 나만의 최애 주류를 가려보세요',
     description: isEn
       ? 'Pick your favorite spirit in a head-to-head tournament. Choose between two drinks each round until your ultimate favorite emerges. Covers whisky, soju, makgeolli, wine, beer, and more.'
       : '두 가지 술 중 더 마시고 싶은 쪽을 선택하는 토너먼트 게임. 위스키, 소주, 막걸리, 와인, 맥주 등 수백 가지 주류를 대결시켜 나의 진짜 최애 주류를 찾아보세요.',

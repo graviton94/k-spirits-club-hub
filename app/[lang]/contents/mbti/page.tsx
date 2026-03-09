@@ -14,8 +14,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 
     return {
         title: isEn
-            ? 'Find Your Spirit MBTI — 12 Questions to Discover Your Drink Personality | K-Spirits Club'
-            : '내 술 취향 MBTI 찾기 — 12가지 질문으로 알아보는 나의 주류 성격 유형 | K-Spirits Club',
+            ? 'Find Your Spirit MBTI — 12 Questions to Discover Your Drink Personality'
+            : '내 술 취향 MBTI 찾기 — 12가지 질문으로 알아보는 나의 주류 성격 유형',
         description: isEn
             ? 'Take the Spirit MBTI test and discover which of 12 drink personality types matches you. Get personalized spirit recommendations based on your taste preferences and drinking style.'
             : '12가지 질문에 답하고 나만의 주류 성격 유형을 찾아보세요. 소주형, 위스키형, 막걸리형 등 12가지 유형 중 나와 딱 맞는 술과 취향 분석 결과를 확인하세요.',
