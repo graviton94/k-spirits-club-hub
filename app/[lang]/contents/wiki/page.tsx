@@ -6,6 +6,7 @@ import { BookOpen, ChevronRight } from 'lucide-react'
 import BackButton from '@/components/ui/BackButton'
 import { SPIRIT_CATEGORIES } from '@/lib/constants/spirits-guide-data'
 import GoogleAd from '@/components/ui/GoogleAd'
+import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url'
 
 interface WikiHubPageProps {
     params: Promise<{ lang: string }>
@@ -14,7 +15,9 @@ interface WikiHubPageProps {
 export async function generateMetadata({ params }: WikiHubPageProps): Promise<Metadata> {
     const { lang } = await params
     const isEn = lang === 'en'
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://kspiritsclub.com'
+
+    const canonicalUrl = getCanonicalUrl(`/${lang}/contents/wiki`)
+    const hreflangAlternates = getHreflangAlternates('/contents/wiki')
 
     return {
         title: isEn ? 'Spirits Wiki' : '주류 백과사전',
@@ -22,10 +25,8 @@ export async function generateMetadata({ params }: WikiHubPageProps): Promise<Me
             ? 'Your complete guide to the world of spirits. Explore whisky, sake, gin, rum, tequila, and more — definitions, history, flavor profiles, and pairing tips.'
             : '위스키부터 사케, 진, 럼, 데킬라까지 — 세계의 주류를 한눈에. 정의, 역사, 맛·향 특징, 페어링 정보를 K-Spirits Club에서 확인하세요.',
         alternates: {
-            languages: {
-                'ko-KR': `${baseUrl}/ko/contents/wiki`,
-                'en-US': `${baseUrl}/en/contents/wiki`,
-            },
+            canonical: canonicalUrl,
+            languages: hreflangAlternates,
         },
         openGraph: {
             title: isEn ? 'Spirits Wiki' : '주류 백과사전',
@@ -34,6 +35,7 @@ export async function generateMetadata({ params }: WikiHubPageProps): Promise<Me
                 : '세계의 주류를 한눈에 — 주류 백과사전',
             type: 'website',
             siteName: 'K-Spirits Club',
+            url: canonicalUrl,
         },
     }
 }

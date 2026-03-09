@@ -68,9 +68,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages: { path: string; priority: number; freq: MetadataRoute.Sitemap[0]['changeFrequency'] }[] = [
     { path: '', priority: 1.0, freq: 'daily' }, // Homepage
     { path: '/explore', priority: 0.9, freq: 'daily' }, // Search/Explore
+    { path: '/contents', priority: 0.8, freq: 'weekly' }, // Contents Hub
     { path: '/contents/mbti', priority: 0.7, freq: 'monthly' },
     { path: '/contents/worldcup', priority: 0.7, freq: 'monthly' },
     { path: '/contents/perfect-pour', priority: 0.7, freq: 'monthly' },
+    { path: '/contents/reviews', priority: 0.7, freq: 'weekly' },
     { path: '/contents/news', priority: 0.6, freq: 'daily' },
     { path: '/contents/about', priority: 0.5, freq: 'yearly' },
     // Spirit Encyclopedia Hub

@@ -8,6 +8,7 @@ import { db } from '@/lib/db/index'
 import SpiritGuideLayout from '@/components/contents/SpiritGuideLayout'
 import GoogleAd from '@/components/ui/GoogleAd'
 import { redirect } from 'next/navigation'
+import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url'
 
 const KO_TO_EN_MAP: Record<string, string> = {
     '소주-가이드': 'soju-guide',
@@ -165,15 +166,16 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 
     const ogImageUrl = `${baseUrl}/default-og.jpg`;
 
+    const canonicalUrl = getCanonicalUrl(`/${lang}/contents/wiki/${cat.slug}`)
+    const hreflangAlternates = getHreflangAlternates(`/contents/wiki/${cat.slug}`)
+
     return {
         title,
         description,
         keywords: keywords.join(', '),
         alternates: {
-            languages: {
-                'ko-KR': `${baseUrl}/ko/contents/wiki/${cat.slug}`,
-                'en-US': `${baseUrl}/en/contents/wiki/${cat.slug}`,
-            },
+            canonical: canonicalUrl,
+            languages: hreflangAlternates,
         },
         openGraph: {
             title: isEn
@@ -182,7 +184,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
             description: tagline,
             type: 'article',
             siteName: 'K-Spirits Club',
-            url: `${baseUrl}/${lang}/contents/wiki/${slug}`,
+            url: canonicalUrl,
             images: [ogImageUrl],
         },
         twitter: {

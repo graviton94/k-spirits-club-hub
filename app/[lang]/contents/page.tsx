@@ -15,6 +15,7 @@ import {
   MessageSquare,
   BookOpen
 } from "lucide-react";
+import { getCanonicalUrl, getHreflangAlternates } from "@/lib/utils/seo-url";
 
 interface ContentsPageProps {
   params: Promise<{ lang: string }>;
@@ -26,16 +27,24 @@ export async function generateMetadata({ params }: ContentsPageProps): Promise<M
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://kspiritsclub.com';
   const ogImageUrl = `${baseUrl}/default-og.jpg`;
 
+  const canonicalUrl = getCanonicalUrl(`/${lang}/contents`);
+  const hreflangAlternates = getHreflangAlternates('/contents');
+
   return {
     title: isEn ? "Contents Hub" : "컨텐츠 허브",
     description: isEn
       ? "Enjoy various contents like Spirit World Cup, Mini Games, and Tasting Notes."
       : "술 취향 월드컵, 미니게임, 테이스팅 노트 등 K-Spirits Club의 다양한 즐길거리를 만나보세요.",
+    alternates: {
+      canonical: canonicalUrl,
+      languages: hreflangAlternates,
+    },
     openGraph: {
       title: isEn ? "Contents Hub" : "컨텐츠 허브",
       description: isEn ? "Enjoy various spirits contents and events." : "다양한 주류 컨텐츠와 이벤트를 즐겨보세요.",
       type: "website",
       siteName: "K-Spirits Club",
+      url: canonicalUrl,
       images: [ogImageUrl]
     },
     twitter: {
