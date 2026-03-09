@@ -1,13 +1,31 @@
 import { Locale } from '@/i18n-config';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft, Target, Database, Brain, Globe } from 'lucide-react';
 import { ABOUT_CONTENT, ABOUT_SECTIONS } from '@/lib/constants/about-content';
+import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url';
 
 export const runtime = 'edge';
 
-export const metadata = {
-    title: 'About Us',
-};
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+    const { lang } = await params;
+    const isEn = lang === 'en';
+    const canonicalUrl = getCanonicalUrl(`/${lang}/contents/about`);
+    const hreflangAlternates = getHreflangAlternates('/contents/about');
+
+    return {
+        title: isEn
+            ? 'About K-Spirits Club — Global Spirits Database & Community'
+            : 'K-Spirits Club 소개 — 글로벌 주류 데이터베이스 & 커뮤니티',
+        description: isEn
+            ? 'Learn about K-Spirits Club — the global spirits database and community platform for Korean and international spirits enthusiasts, powered by data and AI.'
+            : 'K-Spirits Club은 데이터와 AI로 만드는 신뢰할 수 있는 주류 정보 플랫폼입니다. 한국 전통주와 세계 주류 정보를 제공하는 글로벌 주류 데이터베이스 및 커뮤니티.',
+        alternates: {
+            canonical: canonicalUrl,
+            languages: hreflangAlternates,
+        },
+    };
+}
 
 export default async function AboutPage({ params }: { params: Promise<{ lang: Locale }> }) {
     const { lang } = await params;

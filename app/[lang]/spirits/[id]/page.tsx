@@ -616,7 +616,9 @@ export default async function SpiritDetailPage({
   // description/note 없는 제품도 fallback으로 편집부 리뷰 본문 생성
   // → review 필드 누락 GSC 오류 방지 (reviewRating 없음: aggregateRating 오염 방지)
   const editorialReviewBody = buildEditorialReviewBody()
-    || `${spirit.name}${spirit.name_en ? ` (${spirit.name_en})` : ''}${spirit.category ? ` · ${spirit.category}` : ''} - K-Spirits Club 큐레이션 주류.`;
+    || (isEn
+      ? `${spirit.name_en || spirit.name}${spirit.name_en && spirit.name !== spirit.name_en ? ` (${spirit.name})` : ''}${spirit.category ? ` · ${localizeCategory(spirit.category, 'en')}` : ''} — K-Spirits Club curated spirit.`
+      : `${spirit.name}${spirit.name_en ? ` (${spirit.name_en})` : ''}${spirit.category ? ` · ${spirit.category}` : ''} - K-Spirits Club 큐레이션 주류.`);
 
   // 편집부 리뷰: 항상 포함 (reviewRating 없음: 점수를 매기지 않음)
   const editorialReview = {
