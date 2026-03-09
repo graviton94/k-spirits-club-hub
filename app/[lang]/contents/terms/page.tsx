@@ -6,6 +6,7 @@ export const runtime = 'edge';
 
 export const metadata = {
     title: 'Terms of Service',
+    robots: { index: false, follow: true },
 };
 
 export default async function TermsPage({ params }: { params: Promise<{ lang: Locale }> }) {
