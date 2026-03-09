@@ -1,13 +1,13 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import SpiritDetailClient from "./spirit-detail-client";
-import { db } from "@/lib/db/index";
 import { reviewsDb } from "@/lib/db/firestore-rest";
 import { getDictionary } from "@/lib/get-dictionary";
 import { Locale } from "@/i18n-config";
 import { getCanonicalUrl, getHreflangAlternates } from "@/lib/utils/seo-url";
-import { getSpiritRobotsMeta, isIndexableSpirit } from "@/lib/utils/indexable-tier";
+import { getSpiritRobotsMeta } from "@/lib/utils/indexable-tier";
 import { getRelatedSpirits } from "@/lib/utils/related-spirits";
+import { resolveSpiritPageState } from "@/lib/utils/spirit-page-resolver";
 
 export const runtime = 'edge';
 
@@ -83,20 +83,31 @@ export async function generateMetadata({
   const { id, lang } = await params;
   const isEn = lang === 'en';
 
-  // Need reviews for the new "X reviews" snippet feature
-  const [spirit, reviewsData] = await Promise.all([
-    db.getSpirit(id),
+  // Use the shared cached resolver — same fetch as the page component, zero double-fetching.
+  // Errors are caught inside resolveSpiritPageState; metadata never throws.
+  const [pageState, reviewsData] = await Promise.all([
+    resolveSpiritPageState(id),
     reviewsDb.getAllForSpirit(id).catch(() => [])
   ]);
 
-  if (!spirit) {
+  if (pageState.status === 'NOT_FOUND') {
     return {
       title: "Spirit Not Found",
       description: "The requested spirit could not be found.",
     };
   }
 
-  const isIndexable = isIndexableSpirit(spirit);
+  // For transient failures, return minimal metadata so the request does not throw.
+  if (pageState.status === 'TRANSIENT_FAILURE') {
+    return {
+      title: "Spirit | K-Spirits Club",
+      description: "Spirit information on K-Spirits Club.",
+      robots: { index: false, follow: true },
+    };
+  }
+
+  const spirit = pageState.spirit;
+  const isIndexable = pageState.status === 'FOUND_INDEXABLE';
   const koName = spirit.name || '';
   const enName = spirit.metadata?.name_en || spirit.name_en || '';
   const brand = spirit.distillery || '';
@@ -248,11 +259,27 @@ export default async function SpiritDetailPage({
 }) {
   const { id, lang } = await params;
   const isEn = lang === 'en';
-  const spirit = await db.getSpirit(id);
 
-  if (!spirit) {
+  // Shared resolver — deduplicates the Firestore fetch already issued by generateMetadata.
+  const pageState = await resolveSpiritPageState(id);
+
+  // Permanent absence → real 404 (or 410 if the resource was clearly removed).
+  if (pageState.status === 'NOT_FOUND') {
     notFound();
   }
+
+  // Transient backend/data failure → throw so Next.js returns 5xx, NOT a 200 loading shell.
+  // This keeps Google from treating an empty/broken page as a soft-404 or indexable content.
+  if (pageState.status === 'TRANSIENT_FAILURE') {
+    console.error(
+      `[SpiritPage] id=${id} Transient failure — throwing to trigger 5xx. error=${pageState.error}`
+    );
+    throw new Error(
+      `Spirit data temporarily unavailable for id=${id}. Please retry.`
+    );
+  }
+
+  const spirit = pageState.spirit;
 
   let reviews: TransformedReview[] = [];
   try {
@@ -266,10 +293,15 @@ export default async function SpiritDetailPage({
 
   // --- Fetch Related Spirits Server Side ---
   // Save DB and cache costs: Only fetch related items if this page is indexable (Tier A)
-  const isIndexable = isIndexableSpirit(spirit);
+  // Fails open — if related spirits fetch throws, the page still renders.
+  const isIndexable = pageState.status === 'FOUND_INDEXABLE';
   let relatedSpirits: any[] = [];
   if (isIndexable) {
-    relatedSpirits = await getRelatedSpirits(spirit.category, spirit.subcategory || undefined, spirit.abv, id);
+    try {
+      relatedSpirits = await getRelatedSpirits(spirit.category, spirit.subcategory || undefined, spirit.abv, id);
+    } catch (error) {
+      console.error(`[SpiritPage] id=${id} Failed to fetch related spirits:`, error);
+    }
   }
 
   // --- [SEO 최적화된 JSON-LD 구조화 데이터] ---
