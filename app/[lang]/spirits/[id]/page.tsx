@@ -705,3 +705,4 @@ export default async function SpiritDetailPage({
       </section>
     </>
   );
+}
