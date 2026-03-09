@@ -1148,6 +1148,40 @@ async function checkPhase72() {
       warn('H', 'Spirit page — JSON-LD editorial review fallback may not be locale-aware');
     }
   }
+
+  // ── H15. WorldCup layout must not have static Korean-only metadata ─────────
+  const worldcupLayoutSrc = readSourceFile('app/[lang]/contents/worldcup/layout.tsx');
+  if (!worldcupLayoutSrc) {
+    warn('H', 'WorldCup layout source not found — skipping metadata conflict check');
+  } else if (/export const metadata/i.test(worldcupLayoutSrc)) {
+    fail('H', 'WorldCup layout — has static metadata that conflicts with locale-aware page metadata');
+  } else {
+    pass('H', 'WorldCup layout — no static metadata (page handles locale-aware title)');
+  }
+
+  // ── H16. WorldCup/game layout must use locale-aware generateMetadata ────────
+  const worldcupGameLayoutSrc = readSourceFile('app/[lang]/contents/worldcup/game/layout.tsx');
+  if (!worldcupGameLayoutSrc) {
+    warn('H', 'WorldCup/game layout source not found — skipping metadata locale check');
+  } else {
+    const hasGenerateMetadata = /generateMetadata/i.test(worldcupGameLayoutSrc);
+    const hasLocaleBranch = /\bisEn\b/.test(worldcupGameLayoutSrc) || /lang\s*===\s*['"]en['"]/.test(worldcupGameLayoutSrc);
+    if (hasGenerateMetadata && hasLocaleBranch) {
+      pass('H', 'WorldCup/game layout — uses locale-aware generateMetadata');
+    } else {
+      fail('H', 'WorldCup/game layout — has static Korean-only metadata (EN routes get Korean title)');
+    }
+  }
+
+  // ── H17. Perfect-pour layout must not have static Korean-only metadata ──────
+  const perfectPourLayoutSrc = readSourceFile('app/[lang]/contents/perfect-pour/layout.tsx');
+  if (!perfectPourLayoutSrc) {
+    warn('H', 'Perfect-pour layout source not found — skipping metadata conflict check');
+  } else if (/export const metadata/i.test(perfectPourLayoutSrc)) {
+    fail('H', 'Perfect-pour layout — has static metadata that conflicts with locale-aware page metadata');
+  } else {
+    pass('H', 'Perfect-pour layout — no static metadata (page handles locale-aware title)');
+  }
 }
 
 
