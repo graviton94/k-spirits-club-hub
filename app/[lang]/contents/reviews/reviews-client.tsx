@@ -16,14 +16,15 @@ import { useParams, useRouter } from 'next/navigation';
 import GoogleAd from '@/components/ui/GoogleAd';
 
 
-export default function ReviewBoardPage() {
+export default function ReviewBoardPage({ initialReviews }: { initialReviews?: any[] }) {
     const { user, role } = useAuth();
     const params = useParams();
     const lang = (params?.lang as string) || 'ko';
     const isEn = lang === 'en';
 
-    const [reviews, setReviews] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
+    const hasInitial = Array.isArray(initialReviews) && initialReviews.length > 0;
+    const [reviews, setReviews] = useState<any[]>(initialReviews ?? []);
+    const [loading, setLoading] = useState(!hasInitial);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalCount, setTotalCount] = useState(0);
     const [pageMarkers, setPageMarkers] = useState<Record<number, QueryDocumentSnapshot<DocumentData> | null>>({});

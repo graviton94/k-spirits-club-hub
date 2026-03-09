@@ -4,6 +4,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url';
 import ReviewBoardPage from './reviews-client';
+import { reviewsDb } from '@/lib/db/firestore-rest';
 
 interface ReviewsPageProps {
   params: Promise<{ lang: string }>;
@@ -43,10 +44,10 @@ export default async function ReviewsPage({ params }: ReviewsPageProps) {
   const { lang } = await params;
   const isEn = lang === 'en';
 
+  const initialReviews = await reviewsDb.getLatest(10).catch(() => []);
+
   return (
     <>
-      <ReviewBoardPage />
-
       {/* SSR landing content — provides substantial indexed copy for both KO and EN */}
       <section className="bg-background border-t border-border/40 py-14 px-4">
         <div className="container mx-auto max-w-2xl space-y-10">
@@ -157,6 +158,8 @@ export default async function ReviewsPage({ params }: ReviewsPageProps) {
 
         </div>
       </section>
+
+      <ReviewBoardPage initialReviews={initialReviews} />
     </>
   );
 }

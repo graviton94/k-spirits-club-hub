@@ -1442,6 +1442,35 @@ export const reviewsDb = {
         const totalLikes = reviews.reduce((sum: number, review: any) => sum + (review.likes || 0), 0);
 
         return { reviewCount, totalLikes };
+    },
+
+    async getLatest(pageSize: number = 10): Promise<any[]> {
+        try {
+            const token = await getServiceAccountToken();
+            const reviewsPath = getAppPath().reviews;
+            const url = `${BASE_URL}/${reviewsPath}?pageSize=${pageSize}&orderBy=createdAt%20desc`;
+
+            const res = await fetch(url, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            if (!res.ok) {
+                console.error('[reviewsDb] getLatest failed:', await res.text());
+                return [];
+            }
+
+            const json = await res.json();
+            if (!json.documents) return [];
+
+            return json.documents.map((doc: any) => {
+                const data = parseFirestoreFields(doc.fields || {});
+                data.id = doc.name.split('/').pop();
+                return data;
+            });
+        } catch (err) {
+            console.error('[reviewsDb] getLatest error:', err);
+            return [];
+        }
     }
 };
 
