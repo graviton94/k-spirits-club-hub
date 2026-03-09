@@ -16,7 +16,7 @@ import { useParams, useRouter } from 'next/navigation';
 import GoogleAd from '@/components/ui/GoogleAd';
 
 
-export default function ReviewBoardPage({ initialReviews }: { initialReviews?: any[] }) {
+export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { initialReviews?: any[]; initialPage?: number }) {
     const { user, role } = useAuth();
     const params = useParams();
     const lang = (params?.lang as string) || 'ko';
@@ -25,7 +25,7 @@ export default function ReviewBoardPage({ initialReviews }: { initialReviews?: a
     const hasInitial = Array.isArray(initialReviews) && initialReviews.length > 0;
     const [reviews, setReviews] = useState<any[]>(initialReviews ?? []);
     const [loading, setLoading] = useState(!hasInitial);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(initialPage);
     const [totalCount, setTotalCount] = useState(0);
     const [pageMarkers, setPageMarkers] = useState<Record<number, QueryDocumentSnapshot<DocumentData> | null>>({});
     const [searchInput, setSearchInput] = useState('');
@@ -130,7 +130,10 @@ export default function ReviewBoardPage({ initialReviews }: { initialReviews?: a
 
     useEffect(() => {
         fetchTotalCount();
-        fetchPage(1);
+        // Skip re-fetch if the server already provided initial data for this page
+        if (!hasInitial) {
+            fetchPage(initialPage);
+        }
     }, []);
 
     // 3. 클라이언트 사이드 검색 필터링
@@ -365,41 +368,44 @@ export default function ReviewBoardPage({ initialReviews }: { initialReviews?: a
                             </React.Fragment>
                         ))}
 
-                        {/* Pagination */}
+                        {/* Pagination — links are crawlable <a href> for SEO; JS intercepts for SPA navigation */}
                         {!searchQuery && totalPages > 1 && (
                             <div className="flex justify-center items-center gap-3 mt-16 pb-12">
-                                <button
-                                    onClick={() => fetchPage(currentPage - 1)}
-                                    disabled={currentPage === 1}
-                                    className="p-3 rounded-2xl bg-card border border-border hover:bg-muted disabled:opacity-20 transition-all font-bold shadow-sm"
+                                <Link
+                                    href={currentPage > 2 ? `?page=${currentPage - 1}` : '?'}
+                                    aria-disabled={currentPage === 1}
+                                    onClick={(e) => { e.preventDefault(); if (currentPage > 1) fetchPage(currentPage - 1); }}
+                                    className={`p-3 rounded-2xl bg-card border border-border hover:bg-muted transition-all font-bold shadow-sm ${currentPage === 1 ? 'pointer-events-none opacity-20' : ''}`}
                                 >
                                     <ChevronLeft className="w-5 h-5" />
-                                </button>
+                                </Link>
 
                                 <div className="flex gap-2">
                                     {Array.from({ length: totalPages }, (_, i) => i + 1)
                                         .filter(p => p >= currentPage - 2 && p <= currentPage + 2)
                                         .map(num => (
-                                            <button
+                                            <Link
                                                 key={num}
-                                                onClick={() => fetchPage(num)}
-                                                className={`w-12 h-12 rounded-2xl text-sm font-black transition-all shadow-sm ${currentPage === num
+                                                href={num === 1 ? '?' : `?page=${num}`}
+                                                onClick={(e) => { e.preventDefault(); fetchPage(num); }}
+                                                className={`w-12 h-12 rounded-2xl text-sm font-black transition-all shadow-sm flex items-center justify-center ${currentPage === num
                                                     ? 'bg-blue-600 text-white shadow-blue-500/30 scale-110'
                                                     : 'bg-card border border-border text-muted-foreground hover:bg-muted font-bold'
                                                     }`}
                                             >
                                                 {num}
-                                            </button>
+                                            </Link>
                                         ))}
                                 </div>
 
-                                <button
-                                    onClick={() => fetchPage(currentPage + 1)}
-                                    disabled={currentPage === totalPages}
-                                    className="p-3 rounded-2xl bg-card border border-border hover:bg-muted disabled:opacity-20 transition-all shadow-sm"
+                                <Link
+                                    href={`?page=${currentPage + 1}`}
+                                    aria-disabled={currentPage === totalPages}
+                                    onClick={(e) => { e.preventDefault(); if (currentPage < totalPages) fetchPage(currentPage + 1); }}
+                                    className={`p-3 rounded-2xl bg-card border border-border hover:bg-muted transition-all shadow-sm ${currentPage === totalPages ? 'pointer-events-none opacity-20' : ''}`}
                                 >
                                     <ChevronRight className="w-5 h-5" />
-                                </button>
+                                </Link>
                             </div>
                         )}
                     </div>

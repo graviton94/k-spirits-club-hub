@@ -2,25 +2,54 @@ export const runtime = 'edge';
 
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url';
+import { notFound } from 'next/navigation';
+import { getCanonicalUrl, getHreflangAlternates, toAbsoluteUrl } from '@/lib/utils/seo-url';
 import ReviewBoardPage from './reviews-client';
 import { reviewsDb } from '@/lib/db/firestore-rest';
 
 interface ReviewsPageProps {
   params: Promise<{ lang: string }>;
+  searchParams: Promise<{ page?: string; q?: string; sort?: string; tag?: string; source?: string }>;
 }
 
-export async function generateMetadata({ params }: ReviewsPageProps): Promise<Metadata> {
+const PAGE_SIZE = 10;
+
+/** Returns true if any search/filter/sort variant is present (not just pagination). */
+function hasFilterParams(sp: { page?: string; q?: string; sort?: string; tag?: string; source?: string }): boolean {
+  return !!(sp.q || sp.sort || sp.tag || sp.source);
+}
+
+export async function generateMetadata({ params, searchParams }: ReviewsPageProps): Promise<Metadata> {
   const { lang } = await params;
+  const sp = await searchParams;
   const isEn = lang === 'en';
 
-  const canonicalUrl = getCanonicalUrl(`/${lang}/contents/reviews`);
+  const page = Math.max(1, parseInt(sp.page || '1', 10) || 1);
+  const basePath = `/${lang}/contents/reviews`;
+  const canonicalUrl = page > 1
+    ? toAbsoluteUrl(`${basePath}?page=${page}`)
+    : getCanonicalUrl(basePath);
   const hreflangAlternates = getHreflangAlternates('/contents/reviews');
 
+  // Search/filter variants → noindex to prevent index bloat
+  if (hasFilterParams(sp)) {
+    return {
+      title: isEn
+        ? 'Spirits Review Board — Search Results'
+        : '주류 리뷰 보드 — 검색 결과',
+      robots: { index: false, follow: true },
+      alternates: { canonical: getCanonicalUrl(basePath) },
+    };
+  }
+
   return {
-    title: isEn
-      ? 'Spirits Review Board — Authentic Tasting Notes from Real Drinkers'
-      : '주류 리뷰 보드 — 실제 음주자의 생생한 시음 노트',
+    title: page > 1
+      ? (isEn
+        ? `Spirits Review Board — Page ${page}`
+        : `주류 리뷰 보드 — ${page}페이지`)
+      : (isEn
+        ? 'Spirits Review Board — Authentic Tasting Notes from Real Drinkers'
+        : '주류 리뷰 보드 — 실제 음주자의 생생한 시음 노트'),
     description: isEn
       ? 'Read and share honest tasting reviews for whisky, soju, makgeolli, wine, and more. Community-driven spirits reviews with aroma, flavor, and finish notes from verified drinkers.'
       : '위스키, 소주, 막걸리, 와인 등 다양한 주류에 대한 솔직한 시음 리뷰를 읽고 공유하세요. 향, 맛, 여운을 담은 커뮤니티 기반의 진짜 주류 시음 노트.',
@@ -40,11 +69,21 @@ export async function generateMetadata({ params }: ReviewsPageProps): Promise<Me
   };
 }
 
-export default async function ReviewsPage({ params }: ReviewsPageProps) {
+export default async function ReviewsPage({ params, searchParams }: ReviewsPageProps) {
   const { lang } = await params;
+  const sp = await searchParams;
   const isEn = lang === 'en';
 
-  const initialReviews = await reviewsDb.getLatest(10).catch(() => []);
+  const page = Math.max(1, parseInt(sp.page || '1', 10) || 1);
+
+  const initialReviews = page === 1
+    ? await reviewsDb.getLatest(PAGE_SIZE).catch(() => [])
+    : await reviewsDb.getPage(page, PAGE_SIZE).catch(() => []);
+
+  // Invalid page: no results for page > 1 → 404 to avoid thin empty pages
+  if (page > 1 && initialReviews.length === 0) {
+    notFound();
+  }
 
   return (
     <>
@@ -160,7 +199,7 @@ export default async function ReviewsPage({ params }: ReviewsPageProps) {
         </div>
       </section>
 
-      <ReviewBoardPage initialReviews={initialReviews} />
+      <ReviewBoardPage key={`page-${page}`} initialReviews={initialReviews} initialPage={page} />
     </>
   );
 }

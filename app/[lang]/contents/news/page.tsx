@@ -2,25 +2,52 @@ export const runtime = 'edge';
 
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url';
+import { notFound } from 'next/navigation';
+import { getCanonicalUrl, getHreflangAlternates, toAbsoluteUrl } from '@/lib/utils/seo-url';
 import NewsContentPage from './news-client';
 import { newsDb } from '@/lib/db/firestore-rest';
 
 interface NewsPageProps {
   params: Promise<{ lang: string }>;
+  searchParams: Promise<{ page?: string; q?: string; sort?: string; tag?: string; source?: string }>;
 }
 
-export async function generateMetadata({ params }: NewsPageProps): Promise<Metadata> {
+const PAGE_SIZE = 10;
+
+function hasFilterParams(sp: { page?: string; q?: string; sort?: string; tag?: string; source?: string }): boolean {
+  return !!(sp.q || sp.sort || sp.tag || sp.source);
+}
+
+export async function generateMetadata({ params, searchParams }: NewsPageProps): Promise<Metadata> {
   const { lang } = await params;
+  const sp = await searchParams;
   const isEn = lang === 'en';
 
-  const canonicalUrl = getCanonicalUrl(`/${lang}/contents/news`);
+  const page = Math.max(1, parseInt(sp.page || '1', 10) || 1);
+  const basePath = `/${lang}/contents/news`;
+  const canonicalUrl = page > 1
+    ? toAbsoluteUrl(`${basePath}?page=${page}`)
+    : getCanonicalUrl(basePath);
   const hreflangAlternates = getHreflangAlternates('/contents/news');
 
+  if (hasFilterParams(sp)) {
+    return {
+      title: isEn
+        ? 'Global Spirits News — Search Results'
+        : '글로벌 주류 뉴스 — 검색 결과',
+      robots: { index: false, follow: true },
+      alternates: { canonical: getCanonicalUrl(basePath) },
+    };
+  }
+
   return {
-    title: isEn
-      ? 'Global Spirits News — AI-Analyzed Industry Updates'
-      : '글로벌 주류 뉴스 — AI가 분석한 주류 업계 최신 동향',
+    title: page > 1
+      ? (isEn
+        ? `Global Spirits News — Page ${page}`
+        : `글로벌 주류 뉴스 — ${page}페이지`)
+      : (isEn
+        ? 'Global Spirits News — AI-Analyzed Industry Updates'
+        : '글로벌 주류 뉴스 — AI가 분석한 주류 업계 최신 동향'),
     description: isEn
       ? 'Stay informed with the latest global spirits industry news — new distillery launches, award results, market trends, and in-depth reports analyzed by AI. Covers Korean spirits, Scotch, Japanese whisky, and more.'
       : '글로벌 주류 업계 최신 소식을 AI 분석과 함께 확인하세요. 신규 증류소, 수상 결과, 시장 트렌드, 심층 리포트 — 한국 전통주부터 스카치, 일본 위스키까지 세계 주류 뉴스를 한곳에서.',
@@ -40,11 +67,20 @@ export async function generateMetadata({ params }: NewsPageProps): Promise<Metad
   };
 }
 
-export default async function NewsPage({ params }: NewsPageProps) {
+export default async function NewsPage({ params, searchParams }: NewsPageProps) {
   const { lang } = await params;
+  const sp = await searchParams;
   const isEn = lang === 'en';
 
-  const initialNews = await newsDb.getLatest(10).catch(() => []);
+  const page = Math.max(1, parseInt(sp.page || '1', 10) || 1);
+
+  const initialNews = page === 1
+    ? await newsDb.getLatest(PAGE_SIZE).catch(() => [])
+    : await newsDb.getPage(page, PAGE_SIZE).catch(() => []);
+
+  if (page > 1 && initialNews.length === 0) {
+    notFound();
+  }
 
   return (
     <>
@@ -160,7 +196,7 @@ export default async function NewsPage({ params }: NewsPageProps) {
         </div>
       </section>
 
-      <NewsContentPage initialNews={initialNews} />
+      <NewsContentPage key={`page-${page}`} initialNews={initialNews} initialPage={page} />
     </>
   );
 }
