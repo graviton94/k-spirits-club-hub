@@ -42,6 +42,9 @@ const UI_TEXT = {
         region: "지역",
         bottler: "병입자",
         flavor: "맛과 향",
+        nose: "향",
+        palate: "맛",
+        finish: "피니시",
         add_cabinet: "내 술장에 담기",
         remove_cabinet: "내 술장에서 빼기",
         add_wishlist: "위시리스트에 담기",
@@ -77,6 +80,9 @@ const UI_TEXT = {
         region: "Region",
         bottler: "Bottler",
         flavor: "Flavor Notes",
+        nose: "NOSE",
+        palate: "PALATE",
+        finish: "FINISH",
         add_cabinet: "Add to Cabinet",
         remove_cabinet: "Remove",
         add_wishlist: "Add to Wishlist",
@@ -104,6 +110,7 @@ const UI_TEXT = {
 };
 
 import metadata from "@/lib/constants/spirits-metadata.json";
+import { localizeCountry, localizeDataSource } from "@/lib/utils/localize-field";
 import Link from "next/link"; // added for crawlable internal linking
 
 export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [], lang, dict }: SpiritDetailClientProps) {
@@ -357,7 +364,7 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                             <dl className="space-y-2">
                                 <div className="flex justify-between items-center text-sm">
                                     <dt className="text-muted-foreground">{t.country}</dt>
-                                    <dd className="font-bold">{spirit.country || "Unknown"}</dd>
+                                    <dd className="font-bold">{localizeCountry(spirit.country, lang) || "Unknown"}</dd>
                                 </div>
                                 {spirit.region && (
                                     <div className="flex justify-between items-center text-sm">
@@ -395,13 +402,13 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                     </h2>
                     <div className="space-y-6">
                         {spirit.nose_tags && spirit.nose_tags.length > 0 && (
-                            <FlavorSection title="NOSE" tags={spirit.nose_tags} />
+                            <FlavorSection title={t.nose} tags={spirit.nose_tags} />
                         )}
                         {spirit.palate_tags && spirit.palate_tags.length > 0 && (
-                            <FlavorSection title="PALATE" tags={spirit.palate_tags} />
+                            <FlavorSection title={t.palate} tags={spirit.palate_tags} />
                         )}
                         {spirit.finish_tags && spirit.finish_tags.length > 0 && (
-                            <FlavorSection title="FINISH" tags={spirit.finish_tags} />
+                            <FlavorSection title={t.finish} tags={spirit.finish_tags} />
                         )}
                     </div>
                 </div>
@@ -583,10 +590,7 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                     <div>
                         <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-1">{t.source}</h4>
                         <p className="text-sm font-medium text-foreground">
-                            {spirit.source === 'food_safety_korea' ? '식품의약품안전처 (공공데이터)' :
-                                spirit.source === 'imported_food_maru' ? '수입식품정보마루' :
-                                    spirit.source === 'online' ? 'online' :
-                                        spirit.source === 'manual' ? t.source_manual : t.source_external}
+                            {localizeDataSource(spirit.source, lang, t.source_manual, t.source_external)}
                         </p>
                     </div>
 

@@ -29,10 +29,11 @@ const UI_TEXT = {
         edit_review: "리뷰 수정하기",
         write_review: "리뷰 쓰기",
         master_review: "Master Review",
-        aroma: "👃 Aroma",
-        palate: "👅 Palate",
-        finish: "🏁 Finish",
-        description: "Description",
+        tastingProfile: "테이스팅 프로필",
+        aroma: "👃 향",
+        palate: "👅 맛",
+        finish: "🏁 피니시",
+        description: "설명",
         toast_login: "로그인이 필요한 기능입니다. 👤",
         toast_added: "성공적으로 술장에 담겼습니다! 🥃",
         toast_wishlist: "위시리스트에 담겼습니다! 🔖",
@@ -45,6 +46,7 @@ const UI_TEXT = {
         edit_review: "Edit Review",
         write_review: "Write Review",
         master_review: "Master Review",
+        tastingProfile: "Tasting Profile",
         aroma: "👃 Aroma",
         palate: "👅 Palate",
         finish: "🏁 Finish",
@@ -339,7 +341,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                         {/* Tasting Profile - N/P/F */}
                         <div>
                             <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4">
-                                Tasting Profile
+                                {t.tastingProfile}
                             </h3>
 
                             <div className="space-y-5">
@@ -347,7 +349,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                 {(localSpirit.userReview?.tagsN?.length || localSpirit.nose_tags?.length) && (
                                     <div>
                                         <div className="flex items-center gap-2 mb-2">
-                                            <span className="text-xs font-bold text-white">👃 Aroma</span>
+                                            <span className="text-xs font-bold text-white">{t.aroma}</span>
                                             <div className="h-px flex-1 bg-white/20"></div>
                                         </div>
                                         <div className="flex flex-wrap gap-1.5">
@@ -367,7 +369,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                 {(localSpirit.userReview?.tagsP?.length || localSpirit.palate_tags?.length) && (
                                     <div>
                                         <div className="flex items-center gap-2 mb-2">
-                                            <span className="text-xs font-bold text-white">👅 Palate</span>
+                                            <span className="text-xs font-bold text-white">{t.palate}</span>
                                             <div className="h-px flex-1 bg-white/20"></div>
                                         </div>
                                         <div className="flex flex-wrap gap-1.5">
@@ -387,7 +389,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                 {(localSpirit.userReview?.tagsF?.length || localSpirit.finish_tags?.length) && (
                                     <div>
                                         <div className="flex items-center gap-2 mb-2">
-                                            <span className="text-xs font-bold text-white">🏁 Finish</span>
+                                            <span className="text-xs font-bold text-white">{t.finish}</span>
                                             <div className="h-px flex-1 bg-white/20"></div>
                                         </div>
                                         <div className="flex flex-wrap gap-1.5">
