@@ -32,8 +32,8 @@ export async function generateMetadata({ params }: ContentsPageProps): Promise<M
 
   return {
     title: isEn
-      ? "Contents Hub | K-Spirits Club — Spirit MBTI, World Cup, Reviews & Wiki"
-      : "콘텐츠 허브 | K-Spirits Club — 주류 MBTI · 월드컵 · 리뷰 · 백과사전",
+      ? "Contents Hub — Spirit MBTI, World Cup, Reviews & Wiki"
+      : "콘텐츠 허브 — 주류 MBTI · 월드컵 · 리뷰 · 백과사전",
     description: isEn
       ? "Discover your spirit personality with our MBTI test, vote in the Spirit World Cup, read community tasting reviews, follow AI-powered global spirits news, and explore the Spirits Wiki — all in one place."
       : "주류 MBTI 테스트로 나의 취향을 분석하고, 술 취향 월드컵에서 최애 주류를 뽑고, 커뮤니티 리뷰를 읽고, AI가 분석한 글로벌 주류 뉴스와 주류 백과사전까지 — K-Spirits Club 콘텐츠 허브에서 모두 만나보세요.",

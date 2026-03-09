@@ -18,8 +18,8 @@ export async function generateMetadata({ params }: ReviewsPageProps): Promise<Me
 
   return {
     title: isEn
-      ? 'Spirits Review Board — Authentic Tasting Notes from Real Drinkers | K-Spirits Club'
-      : '주류 리뷰 보드 — 실제 음주자의 생생한 시음 노트 | K-Spirits Club',
+      ? 'Spirits Review Board — Authentic Tasting Notes from Real Drinkers'
+      : '주류 리뷰 보드 — 실제 음주자의 생생한 시음 노트',
     description: isEn
       ? 'Read and share honest tasting reviews for whisky, soju, makgeolli, wine, and more. Community-driven spirits reviews with aroma, flavor, and finish notes from verified drinkers.'
       : '위스키, 소주, 막걸리, 와인 등 다양한 주류에 대한 솔직한 시음 리뷰를 읽고 공유하세요. 향, 맛, 여운을 담은 커뮤니티 기반의 진짜 주류 시음 노트.',

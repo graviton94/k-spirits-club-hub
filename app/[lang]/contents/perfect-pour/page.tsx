@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: PerfectPourPageProps): Promis
   const hreflangAlternates = getHreflangAlternates('/contents/perfect-pour');
 
   return {
-    title: isEn ? 'Golden Ratio Master | K-Spirits Club' : '황금 비율 마스터 | K-Spirits Club',
+    title: isEn ? 'Golden Ratio Master' : '황금 비율 마스터',
     description: isEn
       ? 'Test your pouring skills! Can you hit the perfect Somaek ratio in this timing mini-game?'
       : '당신의 소맥 비율은 몇 점? 타이밍 미니게임으로 황금 비율에 도전해보세요.',

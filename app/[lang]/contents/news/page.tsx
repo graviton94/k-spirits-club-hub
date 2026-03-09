@@ -18,8 +18,8 @@ export async function generateMetadata({ params }: NewsPageProps): Promise<Metad
 
   return {
     title: isEn
-      ? 'Global Spirits News — AI-Analyzed Industry Updates | K-Spirits Club'
-      : '글로벌 주류 뉴스 — AI가 분석한 주류 업계 최신 동향 | K-Spirits Club',
+      ? 'Global Spirits News — AI-Analyzed Industry Updates'
+      : '글로벌 주류 뉴스 — AI가 분석한 주류 업계 최신 동향',
     description: isEn
       ? 'Stay informed with the latest global spirits industry news — new distillery launches, award results, market trends, and in-depth reports analyzed by AI. Covers Korean spirits, Scotch, Japanese whisky, and more.'
       : '글로벌 주류 업계 최신 소식을 AI 분석과 함께 확인하세요. 신규 증류소, 수상 결과, 시장 트렌드, 심층 리포트 — 한국 전통주부터 스카치, 일본 위스키까지 세계 주류 뉴스를 한곳에서.',
