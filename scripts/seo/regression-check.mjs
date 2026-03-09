@@ -1185,6 +1185,207 @@ async function checkPhase72() {
 }
 
 
+// ─────────────────────────────────────────────────────────────────────────────
+// I. SSR / hydration parity
+//
+// Verifies that the SSR HTML and the final hydrated DOM contain the same
+// localized field values — no raw Korean DB values on EN routes, no loading
+// shell text, and metadata language matches body language.
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Raw Korean country strings (DB abbreviations and full names) that must
+ * never appear as-is in EN route JSON-LD or visible body text.
+ * Shared by I4 (JSON-LD check) and I5 (body text check).
+ */
+const RAW_KO_COUNTRIES = ['일', '일본', '대한민국', '미국', '영국', '중국', '독일', '프랑스', '호주', '캐나다'];
+
+/** Pre-compiled boundary regexes for the RAW_KO_COUNTRIES list (I5 body text check). */
+const RAW_KO_COUNTRY_REGEXES = RAW_KO_COUNTRIES.map(ko => new RegExp(`(^|\\s|>)${ko}(\\s|<|$)`));
+
+async function checkSsrParity(isOnline) {
+  console.log('\n─── I. SSR / hydration parity ───');
+
+  // ── I1. Code guard: page.tsx must use localizeCountry in JSON-LD additionalProperty ──
+  const spiritPageSrc = readSourceFile('app/[lang]/spirits/[id]/page.tsx');
+  if (!spiritPageSrc) {
+    warn('I', 'Spirit page source not found — skipping SSR parity code guard');
+  } else {
+    // The additionalProperty block must NOT use raw spirit.country
+    if (/additionalProperty[\s\S]{0,400}value:\s*spirit\.country\b/.test(spiritPageSrc)) {
+      fail('I', 'Spirit page — JSON-LD additionalProperty.Country uses raw spirit.country (locale leak)',
+        'Replace with localizeCountry(spirit.country, lang)');
+    } else if (/additionalProperty[\s\S]{0,400}localizeCountry/.test(spiritPageSrc) ||
+               /additionalProperty[\s\S]{0,400}formatSpiritFieldValue/.test(spiritPageSrc)) {
+      pass('I', 'Spirit page — JSON-LD additionalProperty.Country is localized');
+    } else {
+      warn('I', 'Spirit page — could not confirm JSON-LD additionalProperty.Country localization');
+    }
+  }
+
+  // ── I2. Code guard: spirit-detail-client.tsx must use formatSpiritFieldValue ──
+  const clientSrc = readSourceFile('app/[lang]/spirits/[id]/spirit-detail-client.tsx');
+  if (!clientSrc) {
+    warn('I', 'spirit-detail-client.tsx not found — skipping spec table code guard');
+  } else {
+    if (/formatSpiritFieldValue/.test(clientSrc)) {
+      pass('I', 'spirit-detail-client — spec table uses formatSpiritFieldValue');
+    } else if (/getLocalizedCategory/.test(clientSrc)) {
+      fail('I', 'spirit-detail-client — uses local getLocalizedCategory instead of formatSpiritFieldValue',
+        'Replace getLocalizedCategory with formatSpiritFieldValue from localize-field.ts');
+    } else {
+      warn('I', 'spirit-detail-client — could not confirm spec table uses formatSpiritFieldValue');
+    }
+    // Must not import metadata directly for display_names (should go through formatSpiritFieldValue)
+    if (/import metadata from.*spirits-metadata/.test(clientSrc) &&
+        /display_names_en|display_names\b/.test(clientSrc)) {
+      warn('I', 'spirit-detail-client — still accessing spirits-metadata.json display_names directly; prefer formatSpiritFieldValue');
+    } else {
+      pass('I', 'spirit-detail-client — does not bypass formatSpiritFieldValue for display names');
+    }
+  }
+
+  // ── I3. Code guard: formatSpiritFieldValue is exported from localize-field.ts ──
+  const localizeSrc = readSourceFile('lib/utils/localize-field.ts');
+  if (!localizeSrc) {
+    fail('I', 'lib/utils/localize-field.ts not found');
+  } else {
+    if (/export function formatSpiritFieldValue/.test(localizeSrc)) {
+      pass('I', 'localize-field.ts exports formatSpiritFieldValue');
+    } else {
+      fail('I', 'localize-field.ts missing formatSpiritFieldValue export',
+        'Add the unified helper function so all consumers go through one entry-point');
+    }
+  }
+
+  if (!isOnline) {
+    warn('I', 'Server not reachable — skipping runtime SSR parity checks');
+    return;
+  }
+
+  // ── I4. Runtime: EN spirit JSON-LD additionalProperty.Country must be English ──
+  const indexableId = FIXTURES.indexableSpiritId;
+  const spiritEnResult = await fetchPage(`${BASE_URL}/en/spirits/${indexableId}`);
+  if (!spiritEnResult.ok || spiritEnResult.status !== 200) {
+    warn('I', `EN spirit (${indexableId}) SSR parity — skipped (status ${spiritEnResult.status})`);
+  } else {
+    const $ = parseHtml(spiritEnResult.html);
+    const jsonLdScripts = $('script[type="application/ld+json"]').map((_, el) => $(el).html()).get();
+
+    let countryRawKoFound = false;
+    let countryEnFound = false;
+
+    for (const scriptContent of jsonLdScripts) {
+      try {
+        const parsed = JSON.parse(scriptContent || '{}');
+        if (parsed.additionalProperty) {
+          for (const prop of parsed.additionalProperty) {
+            if (prop.name === 'Country') {
+              if (RAW_KO_COUNTRIES.includes(prop.value)) {
+                countryRawKoFound = true;
+              } else if (prop.value && /^[A-Za-z\s]+$/.test(prop.value)) {
+                countryEnFound = true;
+              }
+            }
+          }
+        }
+      } catch (e) {
+        // Ignore JSON parse errors in script blocks — malformed LD+JSON is
+        // reported by other checks (H4); here we only care about localization.
+      }
+    }
+
+    if (countryRawKoFound) {
+      fail('I', 'EN spirit — JSON-LD additionalProperty.Country contains raw Korean country code',
+        'Ensure localizeCountry(spirit.country, lang) is applied in JSON-LD generation');
+    } else if (countryEnFound) {
+      pass('I', 'EN spirit — JSON-LD additionalProperty.Country is English');
+    } else {
+      warn('I', 'EN spirit — could not verify JSON-LD additionalProperty.Country (field may be absent)');
+    }
+
+    // ── I5. Runtime: EN spirit body text must contain localized category/country values ──
+    $('script, style, [type="application/ld+json"]').remove();
+    const bodyText = $('body').text();
+
+    // Spot-check: raw Korean country abbreviations must not appear in the visible body
+    const rawKoInBody = RAW_KO_COUNTRY_REGEXES.some(re => re.test(bodyText));
+    if (rawKoInBody) {
+      warn('I', 'EN spirit — raw Korean country code found in visible body text');
+    } else {
+      pass('I', 'EN spirit — no raw Korean country codes in visible body text');
+    }
+  }
+
+  // ── I6. Runtime: Reviews archive must SSR at least one review item ──────────
+  const reviewsResult = await fetchPage(`${BASE_URL}/en/contents/reviews`);
+  if (!reviewsResult.ok || reviewsResult.status !== 200) {
+    warn('I', 'Reviews archive SSR — skipped (could not fetch)');
+  } else {
+    const $ = parseHtml(reviewsResult.html);
+    // Reviews render spirit links in the list
+    const spiritLinks = $('a[href*="/spirits/"]');
+    if (spiritLinks.length === 0) {
+      warn('I', 'Reviews archive — no spirit links found in SSR HTML (initialReviews may be empty or client-only)');
+    } else {
+      pass('I', 'Reviews archive — SSR contains spirit links', `${spiritLinks.length} links`);
+    }
+  }
+
+  // ── I7. Runtime: News archive must SSR at least one news item ───────────────
+  const newsResult = await fetchPage(`${BASE_URL}/en/contents/news`);
+  if (!newsResult.ok || newsResult.status !== 200) {
+    warn('I', 'News archive SSR — skipped (could not fetch)');
+  } else {
+    const $ = parseHtml(newsResult.html);
+    // News items render with article-style links
+    const newsLinks = $('a[href]').filter((_, el) => {
+      const href = $(el).attr('href') || '';
+      return href.includes('/news/') || href.includes('/contents/news');
+    });
+    if (newsLinks.length <= 1) {
+      warn('I', 'News archive — very few news links in SSR HTML (initialNews may be empty)');
+    } else {
+      pass('I', 'News archive — SSR contains news links', `${newsLinks.length} links`);
+    }
+  }
+
+  // ── I8. Runtime: Metadata language must match body language ─────────────────
+  const localePairs = [
+    { path: `/en/spirits/${FIXTURES.indexableSpiritId}`, lang: 'en', label: `EN spirit (${FIXTURES.indexableSpiritId})` },
+    { path: '/en/contents/reviews', lang: 'en', label: 'EN reviews' },
+    { path: '/en/contents/news', lang: 'en', label: 'EN news' },
+  ];
+
+  for (const { path, lang, label } of localePairs) {
+    const result = await fetchPage(`${BASE_URL}${path}`);
+    if (!result.ok || result.status !== 200) {
+      warn('I', `${label} metadata-body consistency — skipped (status ${result.status})`);
+      continue;
+    }
+    const $ = parseHtml(result.html);
+    const title = $('title').text().trim();
+    const htmlLang = $('html').attr('lang') || '';
+
+    // EN pages: html[lang] must be 'en' (or start with 'en')
+    if (lang === 'en') {
+      if (htmlLang.startsWith('en')) {
+        pass('I', `${label} — html[lang] is correctly set to "${htmlLang}"`);
+      } else if (htmlLang) {
+        warn('I', `${label} — html[lang]="${htmlLang}" may not match page locale`, 'Expected en or en-*');
+      } else {
+        warn('I', `${label} — html[lang] attribute missing`);
+      }
+      // Title must not be purely Korean characters
+      if (title && /^[가-힣\s·\-()]+$/.test(title)) {
+        fail('I', `${label} — title is Korean-only on an EN route (locale leak)`, title);
+      } else if (title) {
+        pass('I', `${label} — title language is consistent with EN route`);
+      }
+    }
+  }
+}
+
 function printSummary() {
   console.log('\n' + '═'.repeat(60));
   console.log('SEO Regression Check — Results');
@@ -1241,6 +1442,7 @@ async function main() {
     console.log(`\n⚠️  Server not reachable at ${BASE_URL}. Skipping HTTP checks, running code-only checks.\n`);
     await checkPrivateRouteSafety();
     await checkPhase72();
+    await checkSsrParity(false);
   } else {
     await checkPublicHtmlQuality();
     await checkMetadata();
@@ -1250,6 +1452,7 @@ async function main() {
     await checkCrawlableLinks();
     await checkPrivateRouteSafety();
     await checkPhase72();
+    await checkSsrParity(true);
   }
 
   printSummary();

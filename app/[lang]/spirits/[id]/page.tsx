@@ -9,7 +9,7 @@ import { getCanonicalUrl, getHreflangAlternates } from "@/lib/utils/seo-url";
 import { getSpiritRobotsMeta } from "@/lib/utils/indexable-tier";
 import { getRelatedSpirits } from "@/lib/utils/related-spirits";
 import { resolveSpiritPageState } from "@/lib/utils/spirit-page-resolver";
-import { localizeCategory } from "@/lib/utils/localize-field";
+import { localizeCategory, localizeCountry } from "@/lib/utils/localize-field";
 
 export const runtime = 'edge';
 
@@ -491,7 +491,7 @@ export default async function SpiritDetailPage({
       ...(spirit.country ? [{
         '@type': 'PropertyValue',
         name: 'Country',
-        value: spirit.country,
+        value: localizeCountry(spirit.country, lang),
       }] : []),
     ],
   };

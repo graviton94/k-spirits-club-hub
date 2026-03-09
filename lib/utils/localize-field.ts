@@ -192,3 +192,53 @@ export function localizeDataSource(
         default: return fallbackExternal;
     }
 }
+
+// ---------------------------------------------------------------------------
+// Unified field formatter
+// ---------------------------------------------------------------------------
+
+/**
+ * Routes a spirit field value through the appropriate localization helper.
+ *
+ * Use this as the single entry-point for all spirit field localization in:
+ *   - server-side page rendering
+ *   - metadata generation
+ *   - JSON-LD structured data
+ *   - breadcrumb names
+ *   - spec table cells
+ *
+ * This guarantees that SSR HTML and hydrated DOM see identical, localized
+ * values — preventing crawler-visible discrepancies.
+ */
+export type SpiritLocalizableField =
+    | 'category'
+    | 'subcategory'
+    | 'mainCategory'
+    | 'country'
+    | 'source';
+
+export function formatSpiritFieldValue(
+    field: SpiritLocalizableField,
+    value: string | null | undefined,
+    lang: string,
+    options?: { fallbackManual?: string; fallbackExternal?: string },
+): string {
+    if (!value) return '';
+    switch (field) {
+        case 'category':
+        case 'subcategory':
+        case 'mainCategory':
+            return localizeCategory(value, lang);
+        case 'country':
+            return localizeCountry(value, lang);
+        case 'source':
+            return localizeDataSource(
+                value,
+                lang,
+                options?.fallbackManual ?? '',
+                options?.fallbackExternal ?? '',
+            );
+        default:
+            return value;
+    }
+}
