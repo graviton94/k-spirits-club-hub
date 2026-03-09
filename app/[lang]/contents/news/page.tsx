@@ -183,7 +183,7 @@ export default async function NewsPage({ params, searchParams }: NewsPageProps) 
             <h2 className="text-base font-semibold text-muted-foreground uppercase tracking-widest text-sm">
               {isEn ? 'Explore Related Content' : '관련 콘텐츠 탐색'}
             </h2>
-            <ul className="flex flex-wrap gap-2 text-sm">
+            <ul className="flex flex-wrap gap-x-2 gap-y-3 text-sm">
               <li><Link href={`/${lang}/contents`} className="px-3 py-1.5 rounded-full border border-border hover:border-indigo-500/60 hover:text-indigo-500 transition-colors">{isEn ? 'Contents Hub' : '콘텐츠 허브'}</Link></li>
               <li><Link href={`/${lang}/contents/wiki`} className="px-3 py-1.5 rounded-full border border-border hover:border-indigo-500/60 hover:text-indigo-500 transition-colors">{isEn ? 'Spirits Wiki' : '주류 백과사전'}</Link></li>
               <li><Link href={`/${lang}/contents/wiki/korean-traditional-spirits`} className="px-3 py-1.5 rounded-full border border-border hover:border-indigo-500/60 hover:text-indigo-500 transition-colors">{isEn ? 'Korean Traditional Spirits' : '전통주 종류'}</Link></li>
