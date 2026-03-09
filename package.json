@@ -14,7 +14,8 @@
     "fetch": "python scripts/fetch_food_safety.py",
     "audit": "python scripts/audit_database.py",
     "analyze": "npx tsx scripts/analyze_published_data.ts",
-    "process:published": "npx tsx scripts/batch-process-published.ts"
+    "process:published": "npx tsx scripts/batch-process-published.ts",
+    "seo:check": "node scripts/seo/regression-check.mjs"
   },
   "keywords": [],
   "author": "",
