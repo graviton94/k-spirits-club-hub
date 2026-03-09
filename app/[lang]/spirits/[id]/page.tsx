@@ -8,6 +8,7 @@ import { getCanonicalUrl, getHreflangAlternates } from "@/lib/utils/seo-url";
 import { getSpiritRobotsMeta } from "@/lib/utils/indexable-tier";
 import { getRelatedSpirits } from "@/lib/utils/related-spirits";
 import { resolveSpiritPageState } from "@/lib/utils/spirit-page-resolver";
+import { localizeCategory } from "@/lib/utils/localize-field";
 
 export const runtime = 'edge';
 
@@ -120,7 +121,7 @@ export async function generateMetadata({
   if (isEn) {
     // EN: {Brand} {Name} {ABV}% {Type} Review & Tasting Notes | K-Spirits Club
     const displayName = enName || koName;
-    const typeLabel = type ? type : 'Korean Spirit';
+    const typeLabel = type ? localizeCategory(type, 'en') : 'Korean Spirit';
     const brandPrefix = brand ? `${brand} ` : '';
     const abvStr = abv ? ` ${abv}% ` : ' ';
 
@@ -167,7 +168,7 @@ export async function generateMetadata({
     const tagsString = validTags.join(', ');
 
     if (isEn) {
-      const typeStr = type || 'spirit';
+      const typeStr = type ? localizeCategory(type, 'en') : 'spirit';
       const abvStr = abv ? `ABV ${abv}%. ` : '';
       const notesStr = validTags.length > 0 ? `Notes: ${tagsString}. ` : '';
       const reviewStr = reviewCount > 0 ? `(${reviewCount} reviews). ` : '';
