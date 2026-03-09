@@ -12,17 +12,19 @@ export function getRandomWikiSnippet(lang: string): WikiSnippet | null {
 
     SPIRIT_CATEGORIES.forEach(cat => {
         const baseLink = `/${lang}/contents/wiki/${cat.slug}`;
+        // Use English sections when available for EN locale, fall back to Korean
+        const sec = (isEn && cat.sectionsEn) ? cat.sectionsEn : cat.sections;
 
-        if (cat.sections?.definition) {
+        if (sec?.definition) {
             possibleSnippets.push({
                 title: isEn ? `What is ${cat.nameEn}?` : `${cat.nameKo}(이)란?`,
-                content: cat.sections.definition,
+                content: sec.definition,
                 link: baseLink
             });
         }
 
-        if (cat.sections?.classifications) {
-            cat.sections.classifications.forEach(c => {
+        if (sec?.classifications) {
+            sec.classifications.forEach(c => {
                 possibleSnippets.push({
                     title: isEn ? `What is ${c.name}?` : `${c.name}(이)란?`,
                     content: c.description,
@@ -31,8 +33,8 @@ export function getRandomWikiSnippet(lang: string): WikiSnippet | null {
             });
         }
 
-        if (cat.sections?.servingGuidelines?.methods) {
-            cat.sections.servingGuidelines.methods.forEach(m => {
+        if (sec?.servingGuidelines?.methods) {
+            sec.servingGuidelines.methods.forEach(m => {
                 possibleSnippets.push({
                     title: isEn ? `How to enjoy ${cat.nameEn} - ${m.name}` : `${cat.nameKo} 즐기는 법 - ${m.name}`,
                     content: m.description,
