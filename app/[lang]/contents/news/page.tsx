@@ -148,10 +148,11 @@ export default async function NewsPage({ params }: NewsPageProps) {
               {isEn ? 'Explore Related Content' : '관련 콘텐츠 탐색'}
             </h2>
             <ul className="flex flex-wrap gap-2 text-sm">
+              <li><Link href={`/${lang}/contents`} className="px-3 py-1.5 rounded-full border border-border hover:border-indigo-500/60 hover:text-indigo-500 transition-colors">{isEn ? 'Contents Hub' : '콘텐츠 허브'}</Link></li>
               <li><Link href={`/${lang}/contents/wiki`} className="px-3 py-1.5 rounded-full border border-border hover:border-indigo-500/60 hover:text-indigo-500 transition-colors">{isEn ? 'Spirits Wiki' : '주류 백과사전'}</Link></li>
-              <li><Link href={`/${lang}/contents/wiki/korean-traditional-spirits`} className="px-3 py-1.5 rounded-full border border-border hover:border-indigo-500/60 hover:text-indigo-500 transition-colors">{isEn ? 'Traditional Spirits' : '전통주 종류'}</Link></li>
-              <li><Link href={`/${lang}/contents/wiki/korean-whisky`} className="px-3 py-1.5 rounded-full border border-border hover:border-indigo-500/60 hover:text-indigo-500 transition-colors">{isEn ? 'Korean Whisky' : '한국 위스키'}</Link></li>
-              <li><Link href={`/${lang}/contents/reviews`} className="px-3 py-1.5 rounded-full border border-border hover:border-indigo-500/60 hover:text-indigo-500 transition-colors">{isEn ? 'Community Reviews' : '커뮤니티 리뷰'}</Link></li>
+              <li><Link href={`/${lang}/contents/wiki/korean-traditional-spirits`} className="px-3 py-1.5 rounded-full border border-border hover:border-indigo-500/60 hover:text-indigo-500 transition-colors">{isEn ? 'Korean Traditional Spirits' : '전통주 종류'}</Link></li>
+              <li><Link href={`/${lang}/contents/wiki/korean-whisky`} className="px-3 py-1.5 rounded-full border border-border hover:border-indigo-500/60 hover:text-indigo-500 transition-colors">{isEn ? 'Korean Whisky Distilleries' : '한국 위스키'}</Link></li>
+              <li><Link href={`/${lang}/contents/reviews`} className="px-3 py-1.5 rounded-full border border-border hover:border-indigo-500/60 hover:text-indigo-500 transition-colors">{isEn ? 'Spirit Tasting Reviews' : '커뮤니티 리뷰'}</Link></li>
               <li><Link href={`/${lang}/explore`} className="px-3 py-1.5 rounded-full border border-border hover:border-indigo-500/60 hover:text-indigo-500 transition-colors">{isEn ? 'Explore Spirits' : '주류 탐색'}</Link></li>
             </ul>
           </div>

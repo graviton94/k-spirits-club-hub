@@ -148,11 +148,12 @@ export default async function ReviewsPage({ params }: ReviewsPageProps) {
               {isEn ? 'Explore Related Content' : '관련 콘텐츠 탐색'}
             </h2>
             <ul className="flex flex-wrap gap-2 text-sm">
+              <li><Link href={`/${lang}/contents`} className="px-3 py-1.5 rounded-full border border-border hover:border-blue-500/60 hover:text-blue-500 transition-colors">{isEn ? 'Contents Hub' : '콘텐츠 허브'}</Link></li>
               <li><Link href={`/${lang}/explore`} className="px-3 py-1.5 rounded-full border border-border hover:border-blue-500/60 hover:text-blue-500 transition-colors">{isEn ? 'Explore Spirits' : '주류 탐색'}</Link></li>
-              <li><Link href={`/${lang}/contents/wiki/soju-guide`} className="px-3 py-1.5 rounded-full border border-border hover:border-blue-500/60 hover:text-blue-500 transition-colors">{isEn ? 'Soju Guide' : '소주 가이드'}</Link></li>
+              <li><Link href={`/${lang}/contents/wiki/soju-guide`} className="px-3 py-1.5 rounded-full border border-border hover:border-blue-500/60 hover:text-blue-500 transition-colors">{isEn ? 'Korean Soju Guide' : '소주 가이드'}</Link></li>
               <li><Link href={`/${lang}/contents/wiki/makgeolli-guide`} className="px-3 py-1.5 rounded-full border border-border hover:border-blue-500/60 hover:text-blue-500 transition-colors">{isEn ? 'Makgeolli Guide' : '막걸리 가이드'}</Link></li>
               <li><Link href={`/${lang}/contents/mbti`} className="px-3 py-1.5 rounded-full border border-border hover:border-blue-500/60 hover:text-blue-500 transition-colors">{isEn ? 'Spirit MBTI Test' : '주류 MBTI 테스트'}</Link></li>
-              <li><Link href={`/${lang}/contents/news`} className="px-3 py-1.5 rounded-full border border-border hover:border-blue-500/60 hover:text-blue-500 transition-colors">{isEn ? 'Spirits News' : '주류 뉴스'}</Link></li>
+              <li><Link href={`/${lang}/contents/news`} className="px-3 py-1.5 rounded-full border border-border hover:border-blue-500/60 hover:text-blue-500 transition-colors">{isEn ? 'Global Spirits News' : '글로벌 주류 뉴스'}</Link></li>
             </ul>
           </div>
 

@@ -166,10 +166,11 @@ export default async function MbtiPage({ params }: { params: Promise<{ lang: str
                             {isEn ? 'Explore Related Content' : '관련 콘텐츠 탐색'}
                         </h2>
                         <ul className="flex flex-wrap gap-2 text-sm">
-                            <li><Link href={`/${lang}/contents/worldcup`} className="px-3 py-1.5 rounded-full border border-border hover:border-amber-500/60 hover:text-amber-500 transition-colors">{isEn ? 'Spirit World Cup' : '술 취향 월드컵'}</Link></li>
-                            <li><Link href={`/${lang}/contents/wiki/soju-guide`} className="px-3 py-1.5 rounded-full border border-border hover:border-amber-500/60 hover:text-amber-500 transition-colors">{isEn ? 'Soju Guide' : '소주 가이드'}</Link></li>
+                            <li><Link href={`/${lang}/contents`} className="px-3 py-1.5 rounded-full border border-border hover:border-amber-500/60 hover:text-amber-500 transition-colors">{isEn ? 'Contents Hub' : '콘텐츠 허브'}</Link></li>
+                            <li><Link href={`/${lang}/contents/worldcup`} className="px-3 py-1.5 rounded-full border border-border hover:border-amber-500/60 hover:text-amber-500 transition-colors">{isEn ? 'Spirit World Cup Tournament' : '술 취향 월드컵'}</Link></li>
+                            <li><Link href={`/${lang}/contents/wiki/soju-guide`} className="px-3 py-1.5 rounded-full border border-border hover:border-amber-500/60 hover:text-amber-500 transition-colors">{isEn ? 'Korean Soju Guide' : '소주 가이드'}</Link></li>
                             <li><Link href={`/${lang}/contents/wiki/makgeolli-guide`} className="px-3 py-1.5 rounded-full border border-border hover:border-amber-500/60 hover:text-amber-500 transition-colors">{isEn ? 'Makgeolli Guide' : '막걸리 가이드'}</Link></li>
-                            <li><Link href={`/${lang}/contents/wiki/korean-whisky`} className="px-3 py-1.5 rounded-full border border-border hover:border-amber-500/60 hover:text-amber-500 transition-colors">{isEn ? 'Korean Whisky' : '한국 위스키'}</Link></li>
+                            <li><Link href={`/${lang}/contents/wiki/korean-whisky`} className="px-3 py-1.5 rounded-full border border-border hover:border-amber-500/60 hover:text-amber-500 transition-colors">{isEn ? 'Korean Whisky Distilleries' : '한국 위스키'}</Link></li>
                             <li><Link href={`/${lang}/explore`} className="px-3 py-1.5 rounded-full border border-border hover:border-amber-500/60 hover:text-amber-500 transition-colors">{isEn ? 'Explore Spirits' : '주류 탐색'}</Link></li>
                         </ul>
                     </div>
