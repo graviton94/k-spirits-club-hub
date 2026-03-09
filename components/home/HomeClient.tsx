@@ -48,6 +48,16 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialRevi
     // Use state with initial data for instant render
     // const [trendingSpirits] = useState<any[]>(initialTrending); // REMOVED
     const [newArrivals] = useState<any[]>(initialNewArrivals);
+    // Carousel clone items — added client-side only to prevent duplicate content in SSR HTML.
+    // The clone is required for the CSS infinite-scroll animation (translate -50%).
+    const [carouselItems, setCarouselItems] = useState<Spirit[]>(initialNewArrivals);
+    useEffect(() => {
+        // Run once on mount; initialNewArrivals is a static server prop that does not change.
+        if (initialNewArrivals.length > 0) {
+            setCarouselItems([...initialNewArrivals, ...initialNewArrivals]);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     const isEn = lang === 'en';
     const t = UI_TEXT[isEn ? 'en' : 'ko'];
 
@@ -94,8 +104,8 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialRevi
                 <div className="relative overflow-hidden w-full h-56">
                     {newArrivals.length > 0 ? (
                         <div className={`flex items-start gap-6 absolute ${styles.marquee}`}>
-                            {/* Duplicate items for infinite scroll effect */}
-                            {[...newArrivals, ...newArrivals].map((spirit, index) => (
+                            {/* Duplicate items added client-side only (see useEffect) */}
+                            {carouselItems.map((spirit, index) => (
                                 <Link
                                     href={`/${lang}/spirits/${spirit.id}`}
                                     key={`${spirit.id}-${index}`}

@@ -44,24 +44,18 @@ export default function Loading() {
                     </div>
                 </div>
 
-                {/* Loading Typography with CSS-only animations */}
-                <div className="flex flex-col items-center gap-4">
-                    <p className="text-[10px] font-black uppercase tracking-[0.4em] text-amber-500/80">
-                        {/* Static text for zero layout shifts */}
-                        Loading Spirit Data
-                    </p>
-                    <div className="flex gap-2">
-                        {[0, 1, 2].map((i) => (
-                            <div
-                                key={i}
-                                className="w-1.5 h-1.5 bg-amber-500 rounded-full loading-dot"
-                                style={{
-                                    animation: 'loading-pulse 1.4s infinite ease-in-out both',
-                                    animationDelay: `${i * 0.16}s`
-                                }}
-                            />
-                        ))}
-                    </div>
+                {/* Loading indicators (CSS-only animations, no crawlable text) */}
+                <div className="flex gap-2" aria-hidden="true">
+                    {[0, 1, 2].map((i) => (
+                        <div
+                            key={i}
+                            className="w-1.5 h-1.5 bg-amber-500 rounded-full loading-dot"
+                            style={{
+                                animation: 'loading-pulse 1.4s infinite ease-in-out both',
+                                animationDelay: `${i * 0.16}s`
+                            }}
+                        />
+                    ))}
                 </div>
             </div>
 
