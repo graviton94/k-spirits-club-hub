@@ -325,7 +325,7 @@ export default async function ContentsPage({ params }: ContentsPageProps) {
             <span className="text-xs text-muted-foreground">{isEn ? 'Authentic nose, palate, and finish notes from real drinkers across whisky, soju, makgeolli, and more.' : '위스키, 소주, 막걸리 등 실제 음주자의 향·맛·여운 시음 노트 모음.'}</span>
           </Link>
           <Link href={`/${lang}/contents/news`} className="flex flex-col gap-1 p-4 rounded-xl border border-border bg-card/50 hover:border-indigo-500/50 hover:bg-indigo-500/5 transition-colors">
-            <span className="font-semibold text-foreground">{isEn ? 'AI-Analyzed Global Spirits News' : 'AI가 분석한 글로벌 주류 뉴스'}  </span>
+            <span className="font-semibold text-foreground">{isEn ? 'AI-Analyzed Global Spirits News' : 'AI가 분석한 글로벌 주류 뉴스'}</span>
             <span className="text-xs text-muted-foreground">{isEn ? 'New distillery launches, award results, and market trends — analyzed and contextualized by AI.' : '신규 증류소, 수상 결과, 시장 트렌드를 AI가 분석하고 맥락화한 주류 뉴스.'}</span>
           </Link>
         </div>

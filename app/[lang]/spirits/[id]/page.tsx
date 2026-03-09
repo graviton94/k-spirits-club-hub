@@ -22,6 +22,79 @@ const SEO_SUFFIX_EN = "K-Spirits Club";
 // Regex pattern for detecting ending punctuation
 const ENDING_PUNCTUATION_REGEX = /[.!?…。！？]$/;
 
+// Category-to-wiki-slug mappings for internal linking from spirit detail pages
+const CATEGORY_TO_WIKI_SLUG: Record<string, string> = {
+  '소주': 'soju-guide',
+  '막걸리': 'makgeolli-guide',
+  '약주': 'yakju',
+  '위스키': 'single-malt',
+  '버번': 'bourbon',
+  '진': 'gin',
+  '럼': 'rum',
+  '보드카': 'vodka',
+  '데킬라': 'tequila',
+  '메스칼': 'mezcal',
+  '사케': 'sake',
+  '쇼추': 'shochu',
+  '코냑': 'cognac',
+  '브랜디': 'brandy',
+  '와인': 'wine',
+  '레드와인': 'red-wine',
+  '화이트와인': 'white-wine',
+  '샴페인': 'champagne',
+  '맥주': 'beer',
+  '리큐어': 'liqueur',
+  '백주': 'baijiu',
+};
+
+const CATEGORY_TO_WIKI_LABEL_EN: Record<string, string> = {
+  '소주': 'Korean Soju Guide',
+  '막걸리': 'Makgeolli Guide',
+  '약주': 'Yakju — Premium Rice Wine Guide',
+  '위스키': 'Single Malt Whisky Guide',
+  '버번': 'Bourbon Whiskey Guide',
+  '진': 'Gin Distillation & Botanicals',
+  '럼': 'Rum Varieties & Origins',
+  '보드카': 'Vodka Production & Styles',
+  '데킬라': 'Tequila & Agave Spirits',
+  '메스칼': 'Mezcal Guide',
+  '사케': 'Japanese Sake Brewing Guide',
+  '쇼추': 'Shochu Guide',
+  '코냑': 'Cognac & Brandy Guide',
+  '브랜디': 'Cognac & Brandy Guide',
+  '와인': 'Wine Guide',
+  '레드와인': 'Red Wine Guide',
+  '화이트와인': 'White Wine Guide',
+  '샴페인': 'Champagne Guide',
+  '맥주': 'Beer Guide',
+  '리큐어': 'Liqueur Guide',
+  '백주': 'Baijiu Guide',
+};
+
+const CATEGORY_TO_WIKI_LABEL_KO: Record<string, string> = {
+  '소주': '소주 가이드',
+  '막걸리': '막걸리 가이드',
+  '약주': '약주 가이드',
+  '위스키': '싱글 몰트 위스키 가이드',
+  '버번': '버번 위스키 가이드',
+  '진': '진 가이드',
+  '럼': '럼 가이드',
+  '보드카': '보드카 가이드',
+  '데킬라': '데킬라 가이드',
+  '메스칼': '메스칼 가이드',
+  '사케': '일본 사케 가이드',
+  '쇼추': '쇼추 가이드',
+  '코냑': '코냑 & 브랜디 가이드',
+  '브랜디': '코냑 & 브랜디 가이드',
+  '와인': '와인 가이드',
+  '레드와인': '레드 와인 가이드',
+  '화이트와인': '화이트 와인 가이드',
+  '샴페인': '샴페인 가이드',
+  '맥주': '맥주 가이드',
+  '리큐어': '리큐어 가이드',
+  '백주': '바이주 가이드',
+};
+
 // --- Interfaces ---
 
 interface TransformedReview {
@@ -586,79 +659,6 @@ export default async function SpiritDetailPage({
   jsonLd.review = allReviews;
 
   const dictionary = await getDictionary(lang as Locale);
-
-  // Map spirit category to wiki slug for internal linking
-  const CATEGORY_TO_WIKI_SLUG: Record<string, string> = {
-    '소주': 'soju-guide',
-    '막걸리': 'makgeolli-guide',
-    '약주': 'yakju',
-    '위스키': 'single-malt',
-    '버번': 'bourbon',
-    '진': 'gin',
-    '럼': 'rum',
-    '보드카': 'vodka',
-    '데킬라': 'tequila',
-    '메스칼': 'mezcal',
-    '사케': 'sake',
-    '쇼추': 'shochu',
-    '코냑': 'cognac',
-    '브랜디': 'brandy',
-    '와인': 'wine',
-    '레드와인': 'red-wine',
-    '화이트와인': 'white-wine',
-    '샴페인': 'champagne',
-    '맥주': 'beer',
-    '리큐어': 'liqueur',
-    '백주': 'baijiu',
-  };
-
-  const CATEGORY_TO_WIKI_LABEL_EN: Record<string, string> = {
-    '소주': 'Korean Soju Guide',
-    '막걸리': 'Makgeolli Guide',
-    '약주': 'Yakju — Premium Rice Wine Guide',
-    '위스키': 'Single Malt Whisky Guide',
-    '버번': 'Bourbon Whiskey Guide',
-    '진': 'Gin Distillation & Botanicals',
-    '럼': 'Rum Varieties & Origins',
-    '보드카': 'Vodka Production & Styles',
-    '데킬라': 'Tequila & Agave Spirits',
-    '메스칼': 'Mezcal Guide',
-    '사케': 'Japanese Sake Brewing Guide',
-    '쇼추': 'Shochu Guide',
-    '코냑': 'Cognac & Brandy Guide',
-    '브랜디': 'Cognac & Brandy Guide',
-    '와인': 'Wine Guide',
-    '레드와인': 'Red Wine Guide',
-    '화이트와인': 'White Wine Guide',
-    '샴페인': 'Champagne Guide',
-    '맥주': 'Beer Guide',
-    '리큐어': 'Liqueur Guide',
-    '백주': 'Baijiu Guide',
-  };
-
-  const CATEGORY_TO_WIKI_LABEL_KO: Record<string, string> = {
-    '소주': '소주 가이드',
-    '막걸리': '막걸리 가이드',
-    '약주': '약주 가이드',
-    '위스키': '싱글 몰트 위스키 가이드',
-    '버번': '버번 위스키 가이드',
-    '진': '진 가이드',
-    '럼': '럼 가이드',
-    '보드카': '보드카 가이드',
-    '데킬라': '데킬라 가이드',
-    '메스칼': '메스칼 가이드',
-    '사케': '일본 사케 가이드',
-    '쇼추': '쇼추 가이드',
-    '코냑': '코냑 & 브랜디 가이드',
-    '브랜디': '코냑 & 브랜디 가이드',
-    '와인': '와인 가이드',
-    '레드와인': '레드 와인 가이드',
-    '화이트와인': '화이트 와인 가이드',
-    '샴페인': '샴페인 가이드',
-    '맥주': '맥주 가이드',
-    '리큐어': '리큐어 가이드',
-    '백주': '바이주 가이드',
-  };
 
   const category = spirit.category || '';
   const wikiSlug = CATEGORY_TO_WIKI_SLUG[category];
