@@ -4,6 +4,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url';
 import NewsContentPage from './news-client';
+import { newsDb } from '@/lib/db/firestore-rest';
 
 interface NewsPageProps {
   params: Promise<{ lang: string }>;
@@ -43,10 +44,10 @@ export default async function NewsPage({ params }: NewsPageProps) {
   const { lang } = await params;
   const isEn = lang === 'en';
 
+  const initialNews = await newsDb.getLatest(10).catch(() => []);
+
   return (
     <>
-      <NewsContentPage />
-
       {/* SSR landing content — provides substantial indexed copy for both KO and EN */}
       <section className="bg-background border-t border-border/40 py-14 px-4">
         <div className="container mx-auto max-w-2xl space-y-10">
@@ -157,6 +158,8 @@ export default async function NewsPage({ params }: NewsPageProps) {
 
         </div>
       </section>
+
+      <NewsContentPage initialNews={initialNews} />
     </>
   );
 }

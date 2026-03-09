@@ -12,14 +12,15 @@ import { motion } from 'framer-motion';
 import GoogleAd from '@/components/ui/GoogleAd';
 
 
-export default function NewsContentPage() {
+export default function NewsContentPage({ initialNews }: { initialNews?: any[] }) {
     const { user, role } = useAuth();
     const params = useParams();
     const lang = (params?.lang as string) || 'ko';
     const isEn = lang === 'en';
 
-    const [news, setNews] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
+    const hasInitial = Array.isArray(initialNews) && initialNews.length > 0;
+    const [news, setNews] = useState<any[]>(initialNews ?? []);
+    const [loading, setLoading] = useState(!hasInitial);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalCount, setTotalCount] = useState(0);
     const [pageMarkers, setPageMarkers] = useState<Record<number, QueryDocumentSnapshot<DocumentData> | null>>({});

@@ -8,6 +8,13 @@
  * - URL appears in sitemap
  * - Locale switcher links to sibling locale
  *
+ * Also verifies SSR landing quality for contents pages (issue: strengthen-seo-landing-quality):
+ * - MBTI and WorldCup pages contain substantial localized body copy (H1 + paragraphs)
+ * - Reviews page does not expose "Fetching tastes..." as main SSR content
+ * - News page does not expose "Fetching latest news" as main SSR content
+ * - Reviews and News pages include real list items in the SSR HTML
+ * - All target pages include localized internal links
+ *
  * Usage:
  *   BASE_URL=https://kspiritsclub.com node scripts/seo-verify.mjs
  *   BASE_URL=http://localhost:3000 node scripts/seo-verify.mjs
@@ -95,6 +102,46 @@ async function checkPage(path, lang, sitemapUrls) {
 
   // 6. In sitemap
   assert(sitemapUrls.has(url), `URL in sitemap: ${url}`);
+
+  // 7. SSR landing quality checks for specific contents pages
+  const hasRelatedContentsLinks = (excludePath) => {
+    const links = [...doc.querySelectorAll('a[href]')].map(a => a.getAttribute('href'));
+    return links.some(href => href && href.includes(`/${lang}/contents/`) && !href.includes(excludePath));
+  };
+
+  if (path === '/contents/mbti') {
+    const h1Text = doc.querySelector('h1')?.textContent || '';
+    assert(h1Text.length > 5, `MBTI H1 present: "${h1Text}"`);
+    const paragraphs = doc.querySelectorAll('p');
+    assert(paragraphs.length >= 2, `MBTI has at least 2 body paragraphs (found ${paragraphs.length})`);
+    assert(hasRelatedContentsLinks('/mbti'), `MBTI has internal links to related contents pages`);
+  }
+
+  if (path === '/contents/worldcup') {
+    const h1Text = doc.querySelector('h1')?.textContent || '';
+    assert(h1Text.length > 5, `WorldCup H1 present: "${h1Text}"`);
+    const paragraphs = doc.querySelectorAll('p');
+    assert(paragraphs.length >= 2, `WorldCup has at least 2 body paragraphs (found ${paragraphs.length})`);
+    assert(hasRelatedContentsLinks('/worldcup'), `WorldCup has internal links to related contents pages`);
+  }
+
+  if (path === '/contents/reviews') {
+    assert(!html.includes('Fetching tastes...'), `Reviews: no "Fetching tastes..." in SSR HTML`);
+    const articleCount = doc.querySelectorAll('article').length;
+    assert(articleCount >= 1, `Reviews: at least 1 review article rendered in SSR HTML (found ${articleCount})`);
+    const h1Text = doc.querySelector('h1')?.textContent || '';
+    assert(h1Text.length > 5, `Reviews H1 present: "${h1Text}"`);
+    assert(hasRelatedContentsLinks('/reviews'), `Reviews has internal links to related contents pages`);
+  }
+
+  if (path === '/contents/news') {
+    assert(!html.includes('Fetching latest news'), `News: no "Fetching latest news" in SSR HTML`);
+    const articleCount = doc.querySelectorAll('article').length;
+    assert(articleCount >= 1, `News: at least 1 news article rendered in SSR HTML (found ${articleCount})`);
+    const h1Text = doc.querySelector('h1')?.textContent || '';
+    assert(h1Text.length > 5, `News H1 present: "${h1Text}"`);
+    assert(hasRelatedContentsLinks('/news'), `News has internal links to related contents pages`);
+  }
 }
 
 async function main() {
