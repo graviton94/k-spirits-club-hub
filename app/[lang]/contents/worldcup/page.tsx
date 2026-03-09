@@ -145,9 +145,10 @@ export default async function WorldCupPage({ params }: WorldCupPageProps) {
               {isEn ? 'Explore Related Content' : '관련 콘텐츠 탐색'}
             </h2>
             <ul className="flex flex-wrap gap-2 text-sm">
+              <li><Link href={`/${lang}/contents`} className="px-3 py-1.5 rounded-full border border-border hover:border-amber-500/60 hover:text-amber-500 transition-colors">{isEn ? 'Contents Hub' : '콘텐츠 허브'}</Link></li>
               <li><Link href={`/${lang}/contents/mbti`} className="px-3 py-1.5 rounded-full border border-border hover:border-amber-500/60 hover:text-amber-500 transition-colors">{isEn ? 'Spirit MBTI Test' : '주류 MBTI 테스트'}</Link></li>
-              <li><Link href={`/${lang}/contents/wiki/soju-guide`} className="px-3 py-1.5 rounded-full border border-border hover:border-amber-500/60 hover:text-amber-500 transition-colors">{isEn ? 'Soju Guide' : '소주 가이드'}</Link></li>
-              <li><Link href={`/${lang}/contents/wiki/korean-traditional-spirits`} className="px-3 py-1.5 rounded-full border border-border hover:border-amber-500/60 hover:text-amber-500 transition-colors">{isEn ? 'Traditional Spirits' : '전통주 종류'}</Link></li>
+              <li><Link href={`/${lang}/contents/wiki/soju-guide`} className="px-3 py-1.5 rounded-full border border-border hover:border-amber-500/60 hover:text-amber-500 transition-colors">{isEn ? 'Korean Soju Guide' : '소주 가이드'}</Link></li>
+              <li><Link href={`/${lang}/contents/wiki/korean-traditional-spirits`} className="px-3 py-1.5 rounded-full border border-border hover:border-amber-500/60 hover:text-amber-500 transition-colors">{isEn ? 'Korean Traditional Spirits' : '전통주 종류'}</Link></li>
               <li><Link href={`/${lang}/contents/wiki`} className="px-3 py-1.5 rounded-full border border-border hover:border-amber-500/60 hover:text-amber-500 transition-colors">{isEn ? 'Spirits Wiki' : '주류 백과사전'}</Link></li>
               <li><Link href={`/${lang}/explore`} className="px-3 py-1.5 rounded-full border border-border hover:border-amber-500/60 hover:text-amber-500 transition-colors">{isEn ? 'Explore Spirits' : '주류 탐색'}</Link></li>
             </ul>

@@ -3,6 +3,7 @@ export const revalidate = 0; // Force fetching dynamically so latest spirits alw
 
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
+import Link from 'next/link'
 import { SPIRIT_CATEGORIES, getSpiritCategory } from '@/lib/constants/spirits-guide-data'
 import { db } from '@/lib/db/index'
 import SpiritGuideLayout from '@/components/contents/SpiritGuideLayout'
@@ -289,6 +290,22 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
             <SpiritGuideLayout category={cat} lang={lang} featuredSpirits={featuredSpirits} />
+
+            {/* Bidirectional navigation links */}
+            <div className="container mx-auto max-w-3xl px-4 pb-6">
+                <div className="space-y-3 pt-4 border-t border-border/40">
+                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">
+                        {isEn ? 'Explore Related Content' : '관련 콘텐츠 탐색'}
+                    </p>
+                    <ul className="flex flex-wrap gap-2 text-sm">
+                        <li><Link href={`/${lang}/contents/wiki`} className="px-3 py-1.5 rounded-full border border-border hover:border-emerald-500/60 hover:text-emerald-500 transition-colors">{isEn ? 'All Spirit Categories — Spirits Wiki' : '주류 백과사전 전체 카테고리'}</Link></li>
+                        <li><Link href={`/${lang}/contents`} className="px-3 py-1.5 rounded-full border border-border hover:border-emerald-500/60 hover:text-emerald-500 transition-colors">{isEn ? 'Contents Hub' : '콘텐츠 허브'}</Link></li>
+                        <li><Link href={`/${lang}/contents/reviews`} className="px-3 py-1.5 rounded-full border border-border hover:border-emerald-500/60 hover:text-emerald-500 transition-colors">{isEn ? 'Spirit Tasting Reviews' : '주류 시음 리뷰'}</Link></li>
+                        <li><Link href={`/${lang}/contents/mbti`} className="px-3 py-1.5 rounded-full border border-border hover:border-emerald-500/60 hover:text-emerald-500 transition-colors">{isEn ? 'Spirit MBTI Test' : '주류 MBTI 테스트'}</Link></li>
+                        <li><Link href={`/${lang}/explore`} className="px-3 py-1.5 rounded-full border border-border hover:border-emerald-500/60 hover:text-emerald-500 transition-colors">{isEn ? 'Explore Spirits' : '주류 탐색'}</Link></li>
+                    </ul>
+                </div>
+            </div>
 
             {/* 하단 수익화 영역 (수수료 회생 대책) */}
             <div className="container mx-auto max-w-3xl px-4 pb-12">
