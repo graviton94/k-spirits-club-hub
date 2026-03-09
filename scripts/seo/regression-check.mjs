@@ -1036,12 +1036,13 @@ async function checkPhase72() {
   if (!spiritPageSrc) {
     warn('H', 'Spirit detail page not found — skipping locale-leakage code guard');
   } else {
-    // JSON-LD category must use localizeCategory, not raw spirit.category
+    // JSON-LD category must use localizeCategory or formatSpiritFieldValue, not raw spirit.category
     if (/category:\s*spirit\.category\b/.test(spiritPageSrc)) {
       fail('H', 'Spirit page — JSON-LD category uses raw spirit.category (Korean leak on EN routes)',
-        'Use localizeCategory(spirit.category, lang) instead');
-    } else if (/category:\s*localizeCategory/.test(spiritPageSrc)) {
-      pass('H', 'Spirit page — JSON-LD category uses localizeCategory');
+        'Use formatSpiritFieldValue(\'category\', spirit.category, lang) instead');
+    } else if (/category:\s*localizeCategory/.test(spiritPageSrc) ||
+               /category:\s*formatSpiritFieldValue/.test(spiritPageSrc)) {
+      pass('H', 'Spirit page — JSON-LD category is localized');
     } else {
       warn('H', 'Spirit page — could not confirm JSON-LD category localization');
     }
@@ -1258,6 +1259,18 @@ async function checkSsrParity(isOnline) {
     }
   }
 
+  // ── I9. Code guard: page.tsx must import formatSpiritFieldValue ──────────────
+  const spiritPageSrcI9 = readSourceFile('app/[lang]/spirits/[id]/page.tsx');
+  if (!spiritPageSrcI9) {
+    warn('I', 'Spirit page source not found — skipping formatSpiritFieldValue import guard');
+  } else if (/import\s*\{[^}]*formatSpiritFieldValue[^}]*\}/.test(spiritPageSrcI9)) {
+    pass('I', 'Spirit page — imports formatSpiritFieldValue (unified localization helper)');
+  } else if (/localizeCategory/.test(spiritPageSrcI9) || /localizeCountry/.test(spiritPageSrcI9)) {
+    warn('I', 'Spirit page — uses localizeCategory/localizeCountry directly; migrate to formatSpiritFieldValue for SSR parity');
+  } else {
+    warn('I', 'Spirit page — could not confirm use of a localization helper in metadata/JSON-LD');
+  }
+
   if (!isOnline) {
     warn('I', 'Server not reachable — skipping runtime SSR parity checks');
     return;
@@ -1382,6 +1395,82 @@ async function checkSsrParity(isOnline) {
       } else if (title) {
         pass('I', `${label} — title language is consistent with EN route`);
       }
+    }
+  }
+
+  // ── I10. Runtime: EN spirit body must not contain raw Korean taxonomy values ─
+  /**
+   * Korean category/subcategory keys from the spirits taxonomy that must never
+   * appear untranslated in EN route body text. These map to English display names
+   * via formatSpiritFieldValue('category', ...) / localizeCategory().
+   */
+  const RAW_KO_TAXONOMY = ['소주', '막걸리', '위스키', '버번', '진', '럼', '보드카', '데킬라', '사케', '쇼추', '코냑', '브랜디', '약주', '와인', '맥주', '리큐어'];
+  /** Pre-compiled boundary regexes for RAW_KO_TAXONOMY (mirrors RAW_KO_COUNTRY_REGEXES pattern). */
+  const RAW_KO_TAXONOMY_REGEXES = RAW_KO_TAXONOMY.map(ko => new RegExp(`(^|\\s|>)${ko}(\\s|<|$)`));
+  if (!spiritEnResult.ok || spiritEnResult.status !== 200) {
+    warn('I', 'EN spirit taxonomy SSR check — skipped (could not fetch spirit page)');
+  } else {
+    const $tx = parseHtml(spiritEnResult.html);
+    $tx('script, style, [type="application/ld+json"]').remove();
+    const bodyTextTx = $tx('body').text();
+    const rawKoTaxonomyInBody = RAW_KO_TAXONOMY_REGEXES.some(re => re.test(bodyTextTx));
+    if (rawKoTaxonomyInBody) {
+      fail('I', 'EN spirit — raw Korean taxonomy category found in visible body text',
+        'Ensure formatSpiritFieldValue is applied to all category/subcategory fields on EN routes');
+    } else {
+      pass('I', 'EN spirit — no raw Korean taxonomy categories in visible body text');
+    }
+  }
+
+  // ── I11. Runtime: Reviews archive SSR must contain ≥10 spirit links ──────────
+  if (!reviewsResult.ok || reviewsResult.status !== 200) {
+    warn('I', 'Reviews archive SSR item count — skipped (could not fetch)');
+  } else {
+    const $rv = parseHtml(reviewsResult.html);
+    const reviewSpiritLinks = $rv('a[href*="/spirits/"]');
+    if (reviewSpiritLinks.length >= 10) {
+      pass('I', 'Reviews archive — SSR contains ≥10 spirit card links', `${reviewSpiritLinks.length} links`);
+    } else if (reviewSpiritLinks.length > 0) {
+      warn('I', 'Reviews archive — SSR spirit link count below 10',
+        `${reviewSpiritLinks.length} links found (expected ≥10 for full SSR coverage)`);
+    } else {
+      fail('I', 'Reviews archive — SSR must contain spirit card links (initialReviews empty or rendered client-only)',
+        'Ensure reviewsDb.getLatest() returns data and passes it as initialReviews prop');
+    }
+  }
+
+  // ── I12. Runtime: News archive SSR must contain ≥10 news article elements ────
+  if (!newsResult.ok || newsResult.status !== 200) {
+    warn('I', 'News archive SSR item count — skipped (could not fetch)');
+  } else {
+    const $nw = parseHtml(newsResult.html);
+    const newsArticles = $nw('article');
+    if (newsArticles.length >= 10) {
+      pass('I', 'News archive — SSR contains ≥10 news articles', `${newsArticles.length} articles`);
+    } else if (newsArticles.length > 0) {
+      warn('I', 'News archive — SSR article count below 10',
+        `${newsArticles.length} articles found (expected ≥10 for full SSR coverage)`);
+    } else {
+      fail('I', 'News archive — SSR must contain news article elements (initialNews empty or rendered client-only)',
+        'Ensure newsDb.getLatest() returns data and passes it as initialNews prop');
+    }
+  }
+
+  // ── I13. Runtime: Spirit detail page must not expose loading-shell text in SSR ─
+  if (!spiritEnResult.ok || spiritEnResult.status !== 200) {
+    warn('I', 'Spirit detail loading-shell check — skipped (could not fetch)');
+  } else {
+    let spiritShellLeak = null;
+    for (const pattern of LOADING_SHELL_PATTERNS) {
+      if (pattern.test(spiritEnResult.html)) {
+        spiritShellLeak = pattern.toString();
+        break;
+      }
+    }
+    if (spiritShellLeak) {
+      fail('I', 'Spirit detail — loading-shell text found in SSR HTML', `Pattern: ${spiritShellLeak}`);
+    } else {
+      pass('I', 'Spirit detail — no loading-shell text in SSR HTML');
     }
   }
 }

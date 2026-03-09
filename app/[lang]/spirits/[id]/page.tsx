@@ -9,7 +9,7 @@ import { getCanonicalUrl, getHreflangAlternates } from "@/lib/utils/seo-url";
 import { getSpiritRobotsMeta } from "@/lib/utils/indexable-tier";
 import { getRelatedSpirits } from "@/lib/utils/related-spirits";
 import { resolveSpiritPageState } from "@/lib/utils/spirit-page-resolver";
-import { localizeCategory, localizeCountry } from "@/lib/utils/localize-field";
+import { formatSpiritFieldValue } from "@/lib/utils/localize-field";
 
 export const runtime = 'edge';
 
@@ -195,7 +195,7 @@ export async function generateMetadata({
   if (isEn) {
     // EN: {Brand} {Name} {ABV}% {Type} Review & Tasting Notes | K-Spirits Club
     const displayName = enName || koName;
-    const typeLabel = type ? localizeCategory(type, 'en') : 'Korean Spirit';
+    const typeLabel = type ? formatSpiritFieldValue('category', type, 'en') : 'Korean Spirit';
     const brandPrefix = brand ? `${brand} ` : '';
     const abvStr = abv ? ` ${abv}% ` : ' ';
 
@@ -242,7 +242,7 @@ export async function generateMetadata({
     const tagsString = validTags.join(', ');
 
     if (isEn) {
-      const typeStr = type ? localizeCategory(type, 'en') : 'spirit';
+      const typeStr = type ? formatSpiritFieldValue('category', type, 'en') : 'spirit';
       const abvStr = abv ? `ABV ${abv}%. ` : '';
       const notesStr = validTags.length > 0 ? `Notes: ${tagsString}. ` : '';
       const reviewStr = reviewCount > 0 ? `(${reviewCount} reviews). ` : '';
@@ -429,7 +429,7 @@ export default async function SpiritDetailPage({
       '@type': 'Brand',
       name: spirit.distillery || 'K-Spirits Club',
     },
-    category: localizeCategory(spirit.category, lang),
+    category: formatSpiritFieldValue('category', spirit.category, lang),
 
     // SEO Enhancement: Add URL for better indexing
     url: pageUrl,
@@ -491,7 +491,7 @@ export default async function SpiritDetailPage({
       ...(spirit.country ? [{
         '@type': 'PropertyValue',
         name: 'Country',
-        value: localizeCountry(spirit.country, lang),
+        value: formatSpiritFieldValue('country', spirit.country, lang),
       }] : []),
     ],
   };
@@ -559,7 +559,7 @@ export default async function SpiritDetailPage({
       {
         '@type': 'ListItem',
         position: 3,
-        name: localizeCategory(spirit.category, lang),
+        name: formatSpiritFieldValue('category', spirit.category, lang),
         item: `${baseUrl}/${lang}/spirits?category=${encodeURIComponent(spirit.category)}`,
       },
       {
@@ -617,7 +617,7 @@ export default async function SpiritDetailPage({
   // → review 필드 누락 GSC 오류 방지 (reviewRating 없음: aggregateRating 오염 방지)
   const editorialReviewBody = buildEditorialReviewBody()
     || (isEn
-      ? `${spirit.name_en || spirit.name}${spirit.name_en && spirit.name !== spirit.name_en ? ` (${spirit.name})` : ''}${spirit.category ? ` · ${localizeCategory(spirit.category, 'en')}` : ''} — K-Spirits Club curated spirit.`
+      ? `${spirit.name_en || spirit.name}${spirit.name_en && spirit.name !== spirit.name_en ? ` (${spirit.name})` : ''}${spirit.category ? ` · ${formatSpiritFieldValue('category', spirit.category, 'en')}` : ''} — K-Spirits Club curated spirit.`
       : `${spirit.name}${spirit.name_en ? ` (${spirit.name_en})` : ''}${spirit.category ? ` · ${spirit.category}` : ''} - K-Spirits Club 큐레이션 주류.`);
 
   // 편집부 리뷰: 항상 포함 (reviewRating 없음: 점수를 매기지 않음)
