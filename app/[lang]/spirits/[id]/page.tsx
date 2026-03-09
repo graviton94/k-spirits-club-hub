@@ -388,9 +388,12 @@ export default async function SpiritDetailPage({
   priceValidUntilDate.setFullYear(priceValidUntilDate.getFullYear() + 1);
   const priceValidUntil = priceValidUntilDate.toISOString().split('T')[0];
 
-  // Build rich description with tasting notes and pairing information
+  // Build rich description with tasting notes and pairing information.
+  // Locale-aware: EN routes use English description first; KO routes use Korean first.
   const buildRichDescription = () => {
-    const baseDescription = spirit.metadata?.description_ko || spirit.metadata?.description_en || `${spirit.name} - ${spirit.category} 상세 정보`;
+    const baseDescription = isEn
+      ? (spirit.metadata?.description_en || spirit.metadata?.description_ko || `${spirit.name_en || spirit.name} - Korean Spirit`)
+      : (spirit.metadata?.description_ko || spirit.metadata?.description_en || `${spirit.name} - ${spirit.category} 상세 정보`);
     const parts = [baseDescription];
 
     // Add tasting note if available
@@ -400,7 +403,9 @@ export default async function SpiritDetailPage({
     }
 
     // Add pairing guide if available
-    const pairingGuide = spirit.metadata?.pairing_guide_ko || spirit.metadata?.pairing_guide_en || spirit.pairing_guide_ko || spirit.pairing_guide_en;
+    const pairingGuide = isEn
+      ? (spirit.metadata?.pairing_guide_en || spirit.metadata?.pairing_guide_ko || spirit.pairing_guide_en || spirit.pairing_guide_ko)
+      : (spirit.metadata?.pairing_guide_ko || spirit.metadata?.pairing_guide_en || spirit.pairing_guide_ko || spirit.pairing_guide_en);
     if (pairingGuide) {
       parts.push(`Best Pairing Tips: ${pairingGuide}`);
     }
@@ -424,7 +429,7 @@ export default async function SpiritDetailPage({
       '@type': 'Brand',
       name: spirit.distillery || 'K-Spirits Club',
     },
-    category: spirit.category,
+    category: localizeCategory(spirit.category, lang),
 
     // SEO Enhancement: Add URL for better indexing
     url: pageUrl,
@@ -554,7 +559,7 @@ export default async function SpiritDetailPage({
       {
         '@type': 'ListItem',
         position: 3,
-        name: spirit.category,
+        name: localizeCategory(spirit.category, lang),
         item: `${baseUrl}/${lang}/spirits?category=${encodeURIComponent(spirit.category)}`,
       },
       {

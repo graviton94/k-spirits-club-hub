@@ -845,8 +845,242 @@ async function checkPrivateRouteSafety() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Runner + summary
+// H. Phase 7-2 Re-audit: DOM order, locale leakage, loading-shell, code guards
 // ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Korean taxonomy/value strings that must NOT appear in the visible text of
+ * EN-locale pages. These are short-form category keys used in the database
+ * that would be returned as-is when no EN mapping existed (locale leakage).
+ *
+ * Note: Common product-name terms like '소주' are intentionally excluded
+ * because they appear legitimately as Korean product names on EN pages.
+ * This list covers categories that have unambiguous English equivalents and
+ * should never appear as raw Korean strings in EN routes.
+ */
+const KO_TAXONOMY_LEAK_PATTERNS = [
+  /\b버번\b/,
+  /\b데킬라\b/,
+  /\b메스칼\b/,
+  /\b쇼추\b/,
+  /\b레드와인\b/,
+  /\b화이트와인\b/,
+  /\b리큐어\b/,
+  /\b백주\b/,
+];
+
+async function checkPhase72() {
+  console.log('\n─── H. Phase 7-2 Re-audit ───');
+
+  // ── H1. DOM order: <main> must appear before <footer> in the HTML ──────────
+  const domOrderPages = [
+    { path: '/en', label: 'English homepage' },
+    { path: '/ko', label: 'Korean homepage' },
+  ];
+
+  for (const page of domOrderPages) {
+    const url = `${BASE_URL}${page.path}`;
+    const result = await fetchPage(url);
+    if (!result.ok || result.status !== 200) {
+      warn('H', `${page.label} DOM order — could not verify (status ${result.status})`);
+      continue;
+    }
+
+    const html = result.html;
+    const mainIdx = html.indexOf('<main');
+    const footerIdx = html.indexOf('<footer');
+
+    if (mainIdx === -1) {
+      fail('H', `${page.label} — no <main> element found in HTML`);
+    } else if (footerIdx === -1) {
+      warn('H', `${page.label} — no <footer> element found (cannot verify DOM order)`);
+    } else if (mainIdx < footerIdx) {
+      pass('H', `${page.label} — <main> appears before <footer> in DOM`);
+    } else {
+      fail('H', `${page.label} — <footer> appears before <main> in DOM (SEO structure issue)`,
+        `main at char ${mainIdx}, footer at char ${footerIdx}`);
+    }
+  }
+
+  // ── H2. Loading-shell leakage on spirit detail (EN) ───────────────────────
+  const indexableId = FIXTURES.indexableSpiritId;
+  const spiritEnUrl = `${BASE_URL}/en/spirits/${indexableId}`;
+  const spiritEnResult = await fetchPage(spiritEnUrl);
+
+  if (!spiritEnResult.ok || spiritEnResult.status !== 200) {
+    warn('H', `EN spirit (${indexableId}) — could not verify (status ${spiritEnResult.status})`);
+  } else {
+    let leaked = null;
+    for (const pattern of LOADING_SHELL_PATTERNS) {
+      if (pattern.test(spiritEnResult.html)) { leaked = pattern.toString(); break; }
+    }
+    if (leaked) {
+      fail('H', `EN spirit — loading-shell text in SSR HTML`, `Pattern: ${leaked}`);
+    } else {
+      pass('H', `EN spirit — no loading-shell text in SSR HTML`);
+    }
+
+    // H3. EN spirit page — Korean taxonomy strings must not appear in visible body text
+    const $ = parseHtml(spiritEnResult.html);
+    // Remove script/style content from body text inspection
+    $('script, style, [type="application/ld+json"]').remove();
+    const bodyText = $('body').text();
+
+    let koLeakPattern = null;
+    for (const pattern of KO_TAXONOMY_LEAK_PATTERNS) {
+      if (pattern.test(bodyText)) { koLeakPattern = pattern.toString(); break; }
+    }
+    if (koLeakPattern) {
+      warn('H', `EN spirit — Korean taxonomy string found in body text`, `Pattern: ${koLeakPattern}`);
+    } else {
+      pass('H', `EN spirit — no Korean taxonomy leakage in body text`);
+    }
+  }
+
+  // ── H4. EN spirit JSON-LD must not contain raw Korean category strings ──────
+  if (spiritEnResult.ok && spiritEnResult.status === 200) {
+    const $ = parseHtml(spiritEnResult.html);
+    const jsonLdScripts = $('script[type="application/ld+json"]').map((_, el) => $(el).html()).get();
+    let jsonLdKoLeak = false;
+    for (const scriptContent of jsonLdScripts) {
+      try {
+        const parsed = JSON.parse(scriptContent || '{}');
+        const jsonStr = JSON.stringify(parsed);
+        for (const pattern of KO_TAXONOMY_LEAK_PATTERNS) {
+          if (pattern.test(jsonStr)) { jsonLdKoLeak = true; break; }
+        }
+      } catch { /* ignore parse errors */ }
+      if (jsonLdKoLeak) break;
+    }
+    if (jsonLdKoLeak) {
+      warn('H', `EN spirit — Korean taxonomy string found in JSON-LD structured data`);
+    } else {
+      pass('H', `EN spirit — no Korean taxonomy leakage in JSON-LD`);
+    }
+  }
+
+  // ── H5. Reviews archive must not expose loading shell text ────────────────
+  const reviewsResult = await fetchPage(`${BASE_URL}/en/contents/reviews`);
+  if (reviewsResult.ok && reviewsResult.status === 200) {
+    let leaked = null;
+    for (const pattern of LOADING_SHELL_PATTERNS) {
+      if (pattern.test(reviewsResult.html)) { leaked = pattern.toString(); break; }
+    }
+    if (leaked) {
+      fail('H', `Reviews archive — loading-shell text in SSR HTML`, `Pattern: ${leaked}`);
+    } else {
+      pass('H', `Reviews archive — no loading-shell text in SSR HTML`);
+    }
+  } else {
+    warn('H', `Reviews archive — could not verify loading shell (status ${reviewsResult.status})`);
+  }
+
+  // ── H6. News archive must not expose loading shell text ───────────────────
+  const newsResult = await fetchPage(`${BASE_URL}/en/contents/news`);
+  if (newsResult.ok && newsResult.status === 200) {
+    let leaked = null;
+    for (const pattern of LOADING_SHELL_PATTERNS) {
+      if (pattern.test(newsResult.html)) { leaked = pattern.toString(); break; }
+    }
+    if (leaked) {
+      fail('H', `News archive — loading-shell text in SSR HTML`, `Pattern: ${leaked}`);
+    } else {
+      pass('H', `News archive — no loading-shell text in SSR HTML`);
+    }
+  } else {
+    warn('H', `News archive — could not verify loading shell (status ${newsResult.status})`);
+  }
+
+  // ── H7. Code guard: reviews-client and news-client must not start with loading=true ─
+  const reviewsClientSrc = readSourceFile('app/[lang]/contents/reviews/reviews-client.tsx');
+  if (!reviewsClientSrc) {
+    warn('H', 'reviews-client.tsx not found — skipping loading-shell guard');
+  } else {
+    // Must NOT have useState(!hasInitial) pattern (that would SSR the loading text)
+    if (/useState\s*\(\s*!hasInitial\s*\)/.test(reviewsClientSrc)) {
+      fail('H', 'reviews-client — loading state initialised to !hasInitial (SSR shell risk)',
+        'Change to useState(false) so SSR never renders the loading placeholder text');
+    } else {
+      pass('H', 'reviews-client — loading state does not start from !hasInitial');
+    }
+  }
+
+  const newsClientSrc = readSourceFile('app/[lang]/contents/news/news-client.tsx');
+  if (!newsClientSrc) {
+    warn('H', 'news-client.tsx not found — skipping loading-shell guard');
+  } else {
+    if (/useState\s*\(\s*!hasInitial\s*\)/.test(newsClientSrc)) {
+      fail('H', 'news-client — loading state initialised to !hasInitial (SSR shell risk)',
+        'Change to useState(false) so SSR never renders the loading placeholder text');
+    } else {
+      pass('H', 'news-client — loading state does not start from !hasInitial');
+    }
+  }
+
+  // ── H8. Code guard: spirit detail page uses localizeCategory for JSON-LD ──
+  const spiritPageSrc = readSourceFile('app/[lang]/spirits/[id]/page.tsx');
+  if (!spiritPageSrc) {
+    warn('H', 'Spirit detail page not found — skipping locale-leakage code guard');
+  } else {
+    // JSON-LD category must use localizeCategory, not raw spirit.category
+    if (/category:\s*spirit\.category\b/.test(spiritPageSrc)) {
+      fail('H', 'Spirit page — JSON-LD category uses raw spirit.category (Korean leak on EN routes)',
+        'Use localizeCategory(spirit.category, lang) instead');
+    } else if (/category:\s*localizeCategory/.test(spiritPageSrc)) {
+      pass('H', 'Spirit page — JSON-LD category uses localizeCategory');
+    } else {
+      warn('H', 'Spirit page — could not confirm JSON-LD category localization');
+    }
+
+    // buildRichDescription must be locale-aware (use isEn branching)
+    if (/buildRichDescription/.test(spiritPageSrc) && /isEn/.test(spiritPageSrc)) {
+      pass('H', 'Spirit page — buildRichDescription is locale-aware');
+    } else {
+      warn('H', 'Spirit page — buildRichDescription may not be locale-aware');
+    }
+
+    // Breadcrumb position 3 name must not be raw spirit.category
+    if (/position:\s*3[\s\S]{0,100}name:\s*spirit\.category/.test(spiritPageSrc)) {
+      fail('H', 'Spirit page — breadcrumb position 3 uses raw spirit.category (Korean leak on EN routes)',
+        'Use localizeCategory(spirit.category, lang) for the breadcrumb name');
+    } else {
+      pass('H', 'Spirit page — breadcrumb position 3 does not use raw spirit.category');
+    }
+  }
+
+  // ── H9. display_names_en must include common short-form category keys ──────
+  const metadataPath = path.join(REPO_ROOT, 'lib/constants/spirits-metadata.json');
+  try {
+    const metadataContent = fs.readFileSync(metadataPath, 'utf-8');
+    const metadata = JSON.parse(metadataContent);
+    const displayNamesEn = metadata.display_names_en || {};
+
+    const requiredEnKeys = ['버번', '데킬라', '메스칼', '쇼추', '레드와인', '화이트와인', '리큐어', '백주'];
+    const missingKeys = requiredEnKeys.filter(k => !displayNamesEn[k]);
+
+    if (missingKeys.length > 0) {
+      fail('H', 'spirits-metadata.json missing EN display names for short-form category keys',
+        `Missing: ${missingKeys.join(', ')}`);
+    } else {
+      pass('H', 'spirits-metadata.json has EN display names for all short-form category keys');
+    }
+  } catch {
+    warn('H', 'Could not read spirits-metadata.json for display_names_en check');
+  }
+
+  // ── H10. Terms and privacy pages must have noindex ────────────────────────
+  for (const page of ['terms', 'privacy']) {
+    const src = readSourceFile(`app/[lang]/contents/${page}/page.tsx`);
+    if (!src) {
+      warn('H', `${page} page not found — skipping noindex guard`);
+    } else if (hasNoindexInSource(src)) {
+      pass('H', `${page} page — has noindex (utility page correctly excluded)`);
+    } else {
+      warn('H', `${page} page — missing noindex (utility page may be unnecessarily indexed)`);
+    }
+  }
+}
+
 
 function printSummary() {
   console.log('\n' + '═'.repeat(60));
@@ -903,6 +1137,7 @@ async function main() {
   if (!isOnline) {
     console.log(`\n⚠️  Server not reachable at ${BASE_URL}. Skipping HTTP checks, running code-only checks.\n`);
     await checkPrivateRouteSafety();
+    await checkPhase72();
   } else {
     await checkPublicHtmlQuality();
     await checkMetadata();
@@ -911,6 +1146,7 @@ async function main() {
     await checkArchives();
     await checkCrawlableLinks();
     await checkPrivateRouteSafety();
+    await checkPhase72();
   }
 
   printSummary();

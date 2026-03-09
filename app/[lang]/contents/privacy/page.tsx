@@ -6,6 +6,7 @@ export const runtime = 'edge';
 
 export const metadata = {
     title: 'Privacy Policy',
+    robots: { index: false, follow: true },
 };
 
 export default async function PrivacyPage({ params }: { params: Promise<{ lang: Locale }> }) {

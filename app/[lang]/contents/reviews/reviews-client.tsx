@@ -24,7 +24,13 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
 
     const hasInitial = Array.isArray(initialReviews) && initialReviews.length > 0;
     const [reviews, setReviews] = useState<any[]>(initialReviews ?? []);
-    const [loading, setLoading] = useState(!hasInitial);
+    // SSR-safe: start with loading=false so the server HTML never includes the loading-shell
+    // text ("Fetching tastes..."). When no initial data was provided, the useEffect below
+    // calls fetchPage(initialPage) which will set loading=true during the client-side fetch.
+    // Trade-off: on a DB-failure fallback the SSR renders an empty list instead of a spinner,
+    // which is correct — a crawlable page should show content or an empty state, not a
+    // loading placeholder.
+    const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(initialPage);
     const [totalCount, setTotalCount] = useState(0);
     const [pageMarkers, setPageMarkers] = useState<Record<number, QueryDocumentSnapshot<DocumentData> | null>>({});
