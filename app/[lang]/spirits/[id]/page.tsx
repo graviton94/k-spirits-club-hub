@@ -672,6 +672,12 @@ export default async function SpiritDetailPage({
   const wikiLabelEn = CATEGORY_TO_WIKI_LABEL_EN[category];
   const wikiLabelKo = CATEGORY_TO_WIKI_LABEL_KO[category];
 
+  const guideBtnBase = 'flex items-center gap-1.5 w-full sm:w-auto justify-center sm:justify-start px-3 py-2 sm:py-1.5 rounded-full border transition-colors font-medium';
+  const guideBtnAmber  = 'bg-amber-500/10 border-amber-500/40 text-amber-700 dark:text-amber-300 hover:bg-amber-500/20 hover:border-amber-500/70';
+  const guideBtnOrange = 'bg-orange-500/10 border-orange-500/40 text-orange-700 dark:text-orange-300 hover:bg-orange-500/20 hover:border-orange-500/70';
+  const guideBtnSky    = 'bg-sky-500/10 border-sky-500/40 text-sky-700 dark:text-sky-300 hover:bg-sky-500/20 hover:border-sky-500/70';
+  const guideBtnViolet = 'bg-violet-500/10 border-violet-500/40 text-violet-700 dark:text-violet-300 hover:bg-violet-500/20 hover:border-violet-500/70';
+
   return (
     <>
       <script
@@ -695,18 +701,18 @@ export default async function SpiritDetailPage({
           <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-3">
             {isEn ? 'Explore Related Guides' : '관련 가이드 탐색'}
           </p>
-          <ul className="flex flex-wrap gap-2 text-sm">
+          <ul className="flex flex-col sm:flex-row sm:flex-wrap gap-2 text-sm">
             {wikiSlug && (
-              <li>
-                <Link href={`/${lang}/contents/wiki/${wikiSlug}`} className="px-3 py-1.5 rounded-full border border-border hover:border-amber-500/60 hover:text-amber-500 transition-colors">
-                  {isEn ? (wikiLabelEn || 'Spirit Category Guide') : (wikiLabelKo || '주류 카테고리 가이드')}
+              <li className="w-full sm:w-auto">
+                <Link href={`/${lang}/contents/wiki/${wikiSlug}`} className={`${guideBtnBase} ${guideBtnAmber}`}>
+                  <span>📖</span>{isEn ? (wikiLabelEn || 'Spirit Category Guide') : (wikiLabelKo || '주류 카테고리 가이드')}
                 </Link>
               </li>
             )}
-            <li><Link href={`/${lang}/contents/wiki`} className="px-3 py-1.5 rounded-full border border-border hover:border-amber-500/60 hover:text-amber-500 transition-colors">{isEn ? 'Spirits Wiki — All Categories' : '주류 백과사전 전체 카테고리'}</Link></li>
-            <li><Link href={`/${lang}/contents/reviews`} className="px-3 py-1.5 rounded-full border border-border hover:border-amber-500/60 hover:text-amber-500 transition-colors">{isEn ? 'Spirit Tasting Reviews' : '주류 시음 리뷰 보드'}</Link></li>
-            <li><Link href={`/${lang}/contents`} className="px-3 py-1.5 rounded-full border border-border hover:border-amber-500/60 hover:text-amber-500 transition-colors">{isEn ? 'Contents Hub' : '콘텐츠 허브'}</Link></li>
-            <li><Link href={`/${lang}/explore`} className="px-3 py-1.5 rounded-full border border-border hover:border-amber-500/60 hover:text-amber-500 transition-colors">{isEn ? 'Explore All Spirits' : '주류 전체 탐색'}</Link></li>
+            <li className="w-full sm:w-auto"><Link href={`/${lang}/contents/wiki`} className={`${guideBtnBase} ${guideBtnAmber}`}><span>📚</span>{isEn ? 'Spirits Wiki — All Categories' : '주류 백과사전 전체 카테고리'}</Link></li>
+            <li className="w-full sm:w-auto"><Link href={`/${lang}/contents/reviews`} className={`${guideBtnBase} ${guideBtnOrange}`}><span>🥃</span>{isEn ? 'Spirit Tasting Reviews' : '주류 시음 리뷰 보드'}</Link></li>
+            <li className="w-full sm:w-auto"><Link href={`/${lang}/contents`} className={`${guideBtnBase} ${guideBtnSky}`}><span>🌐</span>{isEn ? 'Contents Hub' : '콘텐츠 허브'}</Link></li>
+            <li className="w-full sm:w-auto"><Link href={`/${lang}/explore`} className={`${guideBtnBase} ${guideBtnViolet}`}><span>🔍</span>{isEn ? 'Explore All Spirits' : '주류 전체 탐색'}</Link></li>
           </ul>
         </div>
       </section>
