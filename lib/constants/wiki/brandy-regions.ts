@@ -17,10 +17,10 @@ export const brandyRegions: SpiritCategory = {
                 criteria: '프랑스 Charente 및 Charente-Maritime 데파르트망 내 생산 | 유니 블랑(Ugni Blanc) 품종 주 사용 | 샤랑트 증류기(구리 단식 증류기)로 2회 증류 | 프랑스산 오크에서 최소 2년 이상 숙성 | VS / VSOP / XO / Hors d\'âge 등급 체계',
                 description: '세계에서 가장 엄격하게 규제되고 권위있는 브랜디 산지다. 분필(Chalk) 토양이 풍부한 "그랑드 샹파뉴"와 "프티트 샹파뉴" 지구는 최고 품질의 풍미를 만든다. 2회의 샤랑트 방식 증류로 정갈하고 우아한 증류액이 만들어지며, 리무쟁이나 트롱세 산 참나무에서의 장기 숙성으로 건자두·말린 꽃·가죽·도자기 같은 복합적인 3차 아로마가 발전한다.',
                 flavorTags: [
-                    { label: '건자두/말린 꽃', color: 'bg-rose-600/20 text-zinc-950 dark:text-rose-300' },
-                    { label: '바닐라/시더', color: 'bg-amber-500/20 text-zinc-950 dark:text-amber-300' },
-                    { label: '가죽/시가 박스', color: 'bg-stone-600/20 text-zinc-950 dark:text-stone-300' },
-                    { label: '오렌지 필/스파이스', color: 'bg-orange-500/20 text-zinc-950 dark:text-orange-300' },
+                    { label: '건자두/말린 꽃', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: '바닐라/시더', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: '가죽/시가 박스', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: '오렌지 필/스파이스', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
                 ]
             },
             {
@@ -28,10 +28,10 @@ export const brandyRegions: SpiritCategory = {
                 criteria: '프랑스 남서부 3개 데파르트망(Gers, Lot-et-Garonne, Landes) | 콜롱바르, 폴 블랑스 등 다양한 품종 허용 | 아르마냑 특유의 연속식 단식 증류기(Alambic Armagnacais) 사용 | 블랙 오크 숙성 | 빈티지(단일 연도) 병입 허용',
                 description: '코냑의 화려함과 달리, 아르마냑은 프랑스 주류 문화에서 가장 복고적이고 고집스러운 산지다. 단식 증류기로 1회만 증류하는 전통(연속 단식 증류)과 가스코뉴산 블랙 오크 사용이 코냑보다 더 기름지고(oily), 야생적이며, 원재료의 포도 개성이 강하게 남는 스타일을 만든다. 빈티지 아르마냑(특정 연도 수확 포도만 사용)은 희귀한 고급 시장에서 큰 인기를 끈다.',
                 flavorTags: [
-                    { label: '프룬/대추야자', color: 'bg-rose-700/20 text-zinc-950 dark:text-rose-400' },
-                    { label: '오일리/풀바디', color: 'bg-amber-700/20 text-zinc-950 dark:text-amber-500' },
-                    { label: '흙내/버섯', color: 'bg-stone-600/20 text-zinc-950 dark:text-stone-300' },
-                    { label: '고수/허브', color: 'bg-green-500/20 text-zinc-950 dark:text-green-300' },
+                    { label: '프룬/대추야자', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: '오일리/풀바디', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: '흙내/버섯', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: '고수/허브', color: 'bg-green-100 text-green-950 dark:bg-green-900/40 dark:text-green-100' },
                 ]
             },
             {
@@ -39,10 +39,10 @@ export const brandyRegions: SpiritCategory = {
                 criteria: '스페인 카디스 지방 헤레즈 데 라 프론테라 등 3개 도시 | 아이렌, 팔로미노 품종 | 솔레라(Solera) 시스템으로 다중 빈티지 블렌딩 | 셰리 와인을 담았던 배럴에서만 숙성',
                 description: '셰리 와인 산지 헤레즈의 오래된 셰리 캐스크에서 숙성되는 이 브랜디는 세계에서 가장 달콤하고 진한 스타일을 자랑한다. 솔레라 시스템(오래된 통에 새 술을 점점 보충하며 블렌딩)으로 빈티지의 일관성 없이 깊은 복합미를 만들어낸다. 페드로 히메네스(PX) 캐스크를 거친 제품은 건포도·당밀·초콜릿 같은 극단적인 달콤함을 보인다.',
                 flavorTags: [
-                    { label: '건포도/당밀', color: 'bg-amber-800/20 text-zinc-950 dark:text-amber-400' },
-                    { label: '초콜릿/커피', color: 'bg-stone-800/20 text-zinc-950 dark:text-stone-200' },
-                    { label: '달콤한 스파이스', color: 'bg-orange-600/20 text-zinc-950 dark:text-orange-300' },
-                    { label: '나무/탄닌', color: 'bg-stone-500/20 text-zinc-950 dark:text-stone-300' },
+                    { label: '건포도/당밀', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: '초콜릿/커피', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: '달콤한 스파이스', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: '나무/탄닌', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
                 ]
             },
             {
@@ -50,10 +50,10 @@ export const brandyRegions: SpiritCategory = {
                 criteria: '이탈리아 전역 | 와인 양조 후 남은 포도 찌꺼기(pomace: 껍질·씨·줄기)를 발효·증류 | 품종별 또는 지역별 그라파 가능',
                 description: '그라파는 와인 제조의 부산물인 포도 찌꺼기를 원료로 쓴다. 대량의 탄닌과 껍질 성분이 남아있어 코냑보다 훨씬 강렬하고 날카로운 스타일이 특징이다. 베네토, 피에몬테, 프리울리 등 지역마다 포도 품종이 달라 개성이 극명히 갈린다. 고급 그라파는 청동 또는 스테인리스 탱크에서 숙성해 포도 품종 본연의 순수한 아로마를 강조한다.',
                 flavorTags: [
-                    { label: '강렬함/날카로움', color: 'bg-purple-600/20 text-zinc-950 dark:text-purple-300' },
-                    { label: '꽃향/과실', color: 'bg-rose-400/20 text-zinc-950 dark:text-rose-300' },
-                    { label: '허브/아니스', color: 'bg-green-400/20 text-zinc-950 dark:text-green-300' },
-                    { label: '호두/타닌', color: 'bg-stone-600/20 text-zinc-950 dark:text-stone-200' },
+                    { label: '강렬함/날카로움', color: 'bg-purple-100 text-purple-950 dark:bg-purple-900/40 dark:text-purple-100' },
+                    { label: '꽃향/과실', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: '허브/아니스', color: 'bg-green-100 text-green-950 dark:bg-green-900/40 dark:text-green-100' },
+                    { label: '호두/타닌', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
                 ]
             },
             {
@@ -61,10 +61,10 @@ export const brandyRegions: SpiritCategory = {
                 criteria: '페루 및 칠레 (각각 원산지 법적 분쟁 중) | 허용된 특정 포도 품종만 사용 | 단식 증류 후 물·색소·첨가물 금지 | 오크 숙성 금지(페루식)',
                 description: '페루의 피스코는 무숙성(투명)이 규정이다. 물을 첨가하거나 오크 향을 입히는 것을 금지하여 포도 품종 자체의 순수한 아로마 — 꽃항기, 복숭아, 사과, 시트러스 — 를 가장 응축된 형태로 보여준다. 피스코 사워(Pisco Sour) 칵테일로 세계적으로 유명해졌으며, 최근 고급 싱글 빈야드 피스코 시장도 성장 중이다.',
                 flavorTags: [
-                    { label: '꽃향기/복숭아', color: 'bg-pink-400/20 text-zinc-950 dark:text-pink-300' },
-                    { label: '사과/포도', color: 'bg-green-400/20 text-zinc-950 dark:text-green-300' },
-                    { label: '시트러스/클린', color: 'bg-lime-400/20 text-zinc-950 dark:text-lime-300' },
-                    { label: '투명/무숙성', color: 'bg-slate-300/20 text-zinc-950 dark:text-slate-200' },
+                    { label: '꽃향기/복숭아', color: 'bg-pink-100 text-pink-950 dark:bg-pink-900/40 dark:text-pink-100' },
+                    { label: '사과/포도', color: 'bg-green-100 text-green-950 dark:bg-green-900/40 dark:text-green-100' },
+                    { label: '시트러스/클린', color: 'bg-lime-100 text-lime-950 dark:bg-lime-900/40 dark:text-lime-100' },
+                    { label: '투명/무숙성', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
                 ]
             }
         ],
@@ -134,11 +134,11 @@ export const brandyRegions: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: '코냑: 우아함·건자두', color: 'bg-rose-600/20 text-zinc-950 dark:text-rose-300' },
-            { label: '아르마냑: 야생적·오일리', color: 'bg-amber-700/20 text-zinc-950 dark:text-amber-500' },
-            { label: '헤레즈: 달콤·셰리', color: 'bg-amber-800/20 text-zinc-950 dark:text-amber-400' },
-            { label: '그라파: 강렬·꽃향', color: 'bg-purple-500/20 text-zinc-950 dark:text-purple-300' },
-            { label: '피스코: 과실·클린', color: 'bg-lime-400/20 text-zinc-950 dark:text-lime-300' },
+            { label: '코냑: 우아함·건자두', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: '아르마냑: 야생적·오일리', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: '헤레즈: 달콤·셰리', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: '그라파: 강렬·꽃향', color: 'bg-purple-100 text-purple-950 dark:bg-purple-900/40 dark:text-purple-100' },
+            { label: '피스코: 과실·클린', color: 'bg-lime-100 text-lime-950 dark:bg-lime-900/40 dark:text-lime-100' },
         ],
         foodPairing: [
             '코냑 — 푸아그라, 다크 초콜릿, 블루 치즈',
@@ -161,10 +161,10 @@ export const brandyRegions: SpiritCategory = {
                 criteria: 'Produced solely within the Charente and Charente-Maritime departments | Primary grape: Ugni Blanc | Double-distilled in Charentais copper pot stills | Aged in French oak (Limousin or Tronçais) minimum 2 years | Graded: VS / VSOP / XO / Hors d\'âge',
                 description: 'The world\'s most strictly regulated and prestigious brandy. The chalky soils of the Grande Champagne and Petite Champagne crus are considered the finest terroir, producing the most complex and ageworthy base wines. Double distillation in the Charentais method creates a clean, elegant distillate that develops profound tertiary aromas — dried plum, pressed flowers, leather, and porcelain — through decades of patient aging.',
                 flavorTags: [
-                    { label: 'Dried Plum/Pressed Flowers', color: 'bg-rose-600/20 text-zinc-950 dark:text-rose-300' },
-                    { label: 'Vanilla/Cedar', color: 'bg-amber-500/20 text-zinc-950 dark:text-amber-300' },
-                    { label: 'Leather/Cigar Box', color: 'bg-stone-600/20 text-zinc-950 dark:text-stone-300' },
-                    { label: 'Orange Peel/Spice', color: 'bg-orange-500/20 text-zinc-950 dark:text-orange-300' },
+                    { label: 'Dried Plum/Pressed Flowers', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: 'Vanilla/Cedar', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: 'Leather/Cigar Box', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: 'Orange Peel/Spice', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
                 ]
             },
             {
@@ -172,10 +172,10 @@ export const brandyRegions: SpiritCategory = {
                 criteria: 'Three departments of southwestern France (Gers, Lot-et-Garonne, Landes) | Multiple permitted grape varieties (Colombard, Folle Blanche, etc.) | Traditional continuous Armagnac still (Alambic Armagnacais) | Aged in local Gascon black oak | Vintage (single-year) bottling permitted',
                 description: 'Where Cognac is polished perfection, Armagnac is France\'s most rustic and uncompromising brandy tradition. Single-pass continuous distillation in a unique Armagnac still retains more grape character — oilier, wilder, and more primal than Cognac. Vintage Armagnac (from a single harvest year) is a treasure of the rarities market, allowing collectors to taste single-year expressions stretching back decades.',
                 flavorTags: [
-                    { label: 'Prune/Dates', color: 'bg-rose-700/20 text-zinc-950 dark:text-rose-400' },
-                    { label: 'Oily/Full-Bodied', color: 'bg-amber-700/20 text-zinc-950 dark:text-amber-500' },
-                    { label: 'Earthy/Mushroom', color: 'bg-stone-600/20 text-zinc-950 dark:text-stone-300' },
-                    { label: 'Coriander/Herbs', color: 'bg-green-500/20 text-zinc-950 dark:text-green-300' },
+                    { label: 'Prune/Dates', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: 'Oily/Full-Bodied', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: 'Earthy/Mushroom', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: 'Coriander/Herbs', color: 'bg-green-100 text-green-950 dark:bg-green-900/40 dark:text-green-100' },
                 ]
             },
             {
@@ -183,10 +183,10 @@ export const brandyRegions: SpiritCategory = {
                 criteria: 'Three towns in Cádiz province, Spain | Airén and Palomino grapes | Solera aging system (fractional blending of multiple vintages) | Must be aged exclusively in ex-Sherry barrels',
                 description: 'The sweetest and most intensely flavored of the major brandy styles. Aged in the same Sherry casks that define Jerez\'s wines (Fino, Amontillado, Oloroso, PX), the Solera system — continuously blending younger spirit into older — creates extraordinary complexity without a single vintage year. PX (Pedro Ximénez) cask-finished expressions deliver near-syrupy notes of raisins, molasses, dark chocolate, and toffee.',
                 flavorTags: [
-                    { label: 'Raisins/Molasses', color: 'bg-amber-800/20 text-zinc-950 dark:text-amber-400' },
-                    { label: 'Dark Chocolate/Coffee', color: 'bg-stone-800/20 text-zinc-950 dark:text-stone-200' },
-                    { label: 'Sweet Spice', color: 'bg-orange-600/20 text-zinc-950 dark:text-orange-300' },
-                    { label: 'Wood/Tannin', color: 'bg-stone-500/20 text-zinc-950 dark:text-stone-300' },
+                    { label: 'Raisins/Molasses', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: 'Dark Chocolate/Coffee', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: 'Sweet Spice', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: 'Wood/Tannin', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
                 ]
             },
             {
@@ -194,10 +194,10 @@ export const brandyRegions: SpiritCategory = {
                 criteria: 'Produced throughout Italy | Made from pomace (skins, seeds, stems) — the by-product of winemaking | Grape variety and regional styles permitted',
                 description: 'Grappa is made from what is left after winemaking: the pressed pomace of skins, seeds, and stems. This makes it inherently more intensely flavored and raw than wine-based brandies — rich in tannin, grape skin oils, and variety-specific aromatics. The finest Grappas (Monovitigno — single variety) are distilled and aged in stainless steel or glass demijohns to preserve the pure aromatic character of the grape. The Veneto, Piedmont, and Friuli-Venezia Giulia regions produce the most celebrated examples.',
                 flavorTags: [
-                    { label: 'Intense/Bold', color: 'bg-purple-600/20 text-zinc-950 dark:text-purple-300' },
-                    { label: 'Floral/Fruity', color: 'bg-rose-400/20 text-zinc-950 dark:text-rose-300' },
-                    { label: 'Herbs/Anise', color: 'bg-green-400/20 text-zinc-950 dark:text-green-300' },
-                    { label: 'Walnut/Tannin', color: 'bg-stone-600/20 text-zinc-950 dark:text-stone-200' },
+                    { label: 'Intense/Bold', color: 'bg-purple-100 text-purple-950 dark:bg-purple-900/40 dark:text-purple-100' },
+                    { label: 'Floral/Fruity', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: 'Herbs/Anise', color: 'bg-green-100 text-green-950 dark:bg-green-900/40 dark:text-green-100' },
+                    { label: 'Walnut/Tannin', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
                 ]
             },
             {
@@ -205,10 +205,10 @@ export const brandyRegions: SpiritCategory = {
                 criteria: 'Both Peru and Chile legally claim Pisco (an ongoing geopolitical dispute) | Only specific permitted grape varieties | Single-distillation; no water, additives, or coloring allowed | No oak aging (Peruvian style)',
                 description: 'Peruvian Pisco regulations are among the strictest in the world: no water may be added to reduce proof, and no oak contact is permitted. This mandatory preservation of purity makes Pisco a uniquely transparent "terroir spirit" — the aromas are purely from specific Quebranta, Torontel, Italia, or Muscat grapes. The Pisco Sour cocktail catapulted Pisco to global fame, and a growing market for single-vineyard expressions is elevating it into the premium spirits tier.',
                 flavorTags: [
-                    { label: 'Floral/Peach', color: 'bg-pink-400/20 text-zinc-950 dark:text-pink-300' },
-                    { label: 'Apple/Grape', color: 'bg-green-400/20 text-zinc-950 dark:text-green-300' },
-                    { label: 'Citrus/Clean', color: 'bg-lime-400/20 text-zinc-950 dark:text-lime-300' },
-                    { label: 'Clear/Unaged', color: 'bg-slate-300/20 text-zinc-950 dark:text-slate-200' },
+                    { label: 'Floral/Peach', color: 'bg-pink-100 text-pink-950 dark:bg-pink-900/40 dark:text-pink-100' },
+                    { label: 'Apple/Grape', color: 'bg-green-100 text-green-950 dark:bg-green-900/40 dark:text-green-100' },
+                    { label: 'Citrus/Clean', color: 'bg-lime-100 text-lime-950 dark:bg-lime-900/40 dark:text-lime-100' },
+                    { label: 'Clear/Unaged', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
                 ]
             }
         ],
@@ -278,11 +278,11 @@ export const brandyRegions: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: 'Cognac: Elegant & Dried Plum', color: 'bg-rose-600/20 text-zinc-950 dark:text-rose-300' },
-            { label: 'Armagnac: Wild & Oily', color: 'bg-amber-700/20 text-zinc-950 dark:text-amber-500' },
-            { label: 'Jerez: Sweet & Sherry', color: 'bg-amber-800/20 text-zinc-950 dark:text-amber-400' },
-            { label: 'Grappa: Bold & Floral', color: 'bg-purple-500/20 text-zinc-950 dark:text-purple-300' },
-            { label: 'Pisco: Fruity & Clean', color: 'bg-lime-400/20 text-zinc-950 dark:text-lime-300' },
+            { label: 'Cognac: Elegant & Dried Plum', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: 'Armagnac: Wild & Oily', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: 'Jerez: Sweet & Sherry', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: 'Grappa: Bold & Floral', color: 'bg-purple-100 text-purple-950 dark:bg-purple-900/40 dark:text-purple-100' },
+            { label: 'Pisco: Fruity & Clean', color: 'bg-lime-100 text-lime-950 dark:bg-lime-900/40 dark:text-lime-100' },
         ],
         foodPairing: [
             'Cognac — Foie Gras, Dark Chocolate, Blue Cheese',

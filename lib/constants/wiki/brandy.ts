@@ -125,13 +125,13 @@ export const brandy: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "건과일/레이즌", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "바닐라/카라멜", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" },
-            { label: "오크/토스트", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
-            { label: "시나몬/스파이스", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "견과/셰리향", color: "bg-yellow-600/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "화이트 플라워", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-300" },
-            { label: "란시오/가죽", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" }
+            { label: "건과일/레이즌", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "바닐라/카라멜", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "오크/토스트", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "시나몬/스파이스", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "견과/셰리향", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "화이트 플라워", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "란시오/가죽", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
         ],
         foodPairing: [
             "다크 초콜릿 및 테라미수",
@@ -272,13 +272,13 @@ export const brandy: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "Dried Fruit / Raisin", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Vanilla / Caramel", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Oak / Toast", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
-            { label: "Cinnamon / Spice", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Nutty / Sherry-like", color: "bg-yellow-600/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "White Flowers", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-300" },
-            { label: "Rancio / Leather", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" }
+            { label: "Dried Fruit / Raisin", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Vanilla / Caramel", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Oak / Toast", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "Cinnamon / Spice", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Nutty / Sherry-like", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "White Flowers", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "Rancio / Leather", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
         ],
         foodPairing: [
             "Dark Chocolate and Tiramisu",

@@ -136,12 +136,12 @@ export const tequila: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "구운 아가베", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" },
-            { label: "라임/시트러스", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
-            { label: "화이트 페퍼", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
-            { label: "바닐라/카라멜", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "풀/허브", color: "bg-emerald-500/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "미네랄", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" }
+            { label: "구운 아가베", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "라임/시트러스", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "화이트 페퍼", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "바닐라/카라멜", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "풀/허브", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "미네랄", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
         ],
         foodPairing: [
             "라임을 곁들인 세비체 및 해산물",
@@ -280,12 +280,12 @@ export const tequila: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "Roasted Agave", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Lime/Citrus", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
-            { label: "White Pepper", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
-            { label: "Vanilla/Caramel", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Grass/Herbal", color: "bg-emerald-500/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "Mineral", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" }
+            { label: "Roasted Agave", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Lime/Citrus", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "White Pepper", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "Vanilla/Caramel", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Grass/Herbal", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "Mineral", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
         ],
         foodPairing: [
             "Ceviche with Lime and Fresh Seafood",

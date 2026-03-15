@@ -136,13 +136,13 @@ export const makgeolli: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "쌀밥/곡물 고소함", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "요거트/락틱 산미", color: "bg-emerald-500/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "바나나/배", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
-            { label: "우유빛/크리미", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" },
-            { label: "청량한 탄산", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
-            { label: "누룩/견과/흙내", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" },
-            { label: "허브/풀내", color: "bg-emerald-600/20 text-zinc-950 dark:text-emerald-300" }
+            { label: "쌀밥/곡물 고소함", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "요거트/락틱 산미", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "바나나/배", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "우유빛/크리미", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "청량한 탄산", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "누룩/견과/흙내", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "허브/풀내", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' }
         ],
         foodPairing: [
             "각종 전 요리 (파전, 김치전, 육전)",
@@ -282,13 +282,13 @@ export const makgeolli: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "Steamed Rice/Nutty", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Yogurt/Lactic Acid", color: "bg-emerald-500/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "Banana/Pear", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
-            { label: "Milky/Creamy", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" },
-            { label: "Refreshing Fizz", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
-            { label: "Nuruk/Earthy", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Herbal/Grassy", color: "bg-emerald-600/20 text-zinc-950 dark:text-emerald-300" }
+            { label: "Steamed Rice/Nutty", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Yogurt/Lactic Acid", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "Banana/Pear", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "Milky/Creamy", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "Refreshing Fizz", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "Nuruk/Earthy", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Herbal/Grassy", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' }
         ],
         foodPairing: [
             "Various Jeon (Pajeon, Kimchijeon, Meat Jeon)",

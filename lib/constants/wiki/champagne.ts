@@ -148,13 +148,13 @@ export const champagne: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "레몬/자몽 시트러스", color: "bg-yellow-400/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "청사과/배", color: "bg-emerald-400/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "화이트 플라워", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-300" },
-            { label: "분필/초크 미네랄", color: "bg-stone-400/20 text-zinc-950 dark:text-stone-300" },
-            { label: "브리오슈/토스트", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "비스킷/빵", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" },
-            { label: "크리미 질감", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" }
+            { label: "레몬/자몽 시트러스", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "청사과/배", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "화이트 플라워", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "분필/초크 미네랄", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "브리오슈/토스트", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "비스킷/빵", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "크리미 질감", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' }
         ],
         foodPairing: [
             "생굴 및 각종 해산물",
@@ -306,13 +306,13 @@ export const champagne: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "Lemon/Grapefruit Citrus", color: "bg-yellow-400/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "Green Apple/Pear", color: "bg-emerald-400/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "White Flowers", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-300" },
-            { label: "Chalky/Mineral", color: "bg-stone-400/20 text-zinc-950 dark:text-stone-300" },
-            { label: "Brioche/Toast", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Biscuit/Bread", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Creamy Texture", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" }
+            { label: "Lemon/Grapefruit Citrus", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "Green Apple/Pear", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "White Flowers", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "Chalky/Mineral", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "Brioche/Toast", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Biscuit/Bread", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Creamy Texture", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' }
         ],
         foodPairing: [
             "Fresh Oysters and various Seafood",

@@ -65,9 +65,9 @@ export const sojuGuide: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "깔끔한 알코올", color: "bg-sky-500/20 text-zinc-950 dark:text-sky-300" },
-            { label: "은은한 단맛", color: "bg-pink-500/20 text-zinc-950 dark:text-pink-300" },
-            { label: "구수한 곡물향", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" }
+            { label: "깔끔한 알코올", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "은은한 단맛", color: 'bg-pink-100 text-pink-950 dark:bg-pink-900/40 dark:text-pink-100' },
+            { label: "구수한 곡물향", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' }
         ],
         foodPairing: [
             "삼겹살 구이",
@@ -134,9 +134,9 @@ export const sojuGuide: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "Clean Alcohol", color: "bg-sky-500/20 text-zinc-950 dark:text-sky-300" },
-            { label: "Subtle Sweetness", color: "bg-pink-500/20 text-zinc-950 dark:text-pink-300" },
-            { label: "Nutty Grain", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" }
+            { label: "Clean Alcohol", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "Subtle Sweetness", color: 'bg-pink-100 text-pink-950 dark:bg-pink-900/40 dark:text-pink-100' },
+            { label: "Nutty Grain", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' }
         ],
         foodPairing: [
             "Korean BBQ (Samgyeopsal)",

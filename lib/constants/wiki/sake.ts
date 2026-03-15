@@ -134,12 +134,12 @@ export const sake: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "멜론/배/사과", color: "bg-emerald-400/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "화이트 플라워", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-300" },
-            { label: "감칠맛/우마미", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "부드러운 단맛", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "깔끔한 산미", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
-            { label: "누룩/쌀향", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" }
+            { label: "멜론/배/사과", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "화이트 플라워", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "감칠맛/우마미", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "부드러운 단맛", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "깔끔한 산미", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "누룩/쌀향", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
         ],
         foodPairing: [
             "사시미 및 초밥 (흰살생선 베스트)",
@@ -276,12 +276,12 @@ export const sake: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "Melon/Pear/Apple", color: "bg-emerald-400/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "White Flowers", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-300" },
-            { label: "Umami/Savory", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Supple Sweetness", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "Clean Acidity", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
-            { label: "Koji/Rice Aroma", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" }
+            { label: "Melon/Pear/Apple", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "White Flowers", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "Umami/Savory", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Supple Sweetness", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "Clean Acidity", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "Koji/Rice Aroma", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
         ],
         foodPairing: [
             "Sashimi and Sushi (White-fleshed fish best)",

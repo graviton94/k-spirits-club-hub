@@ -19,7 +19,7 @@ export function RandomBackground() {
     }, []);
 
     return (
-        <div className="absolute inset-0 z-[-1]">
+        <div className="absolute inset-0 z-0">
             {/* 
                 LCP 최적화를 위한 Next.js Image 컴포넌트 사용 
                 - priority: 브라우저가 이 이미지를 높은 우선순위로 간주하고 미리 로드합니다.

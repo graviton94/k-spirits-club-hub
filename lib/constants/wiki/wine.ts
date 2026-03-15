@@ -115,11 +115,11 @@ export const wine: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "딸기/라즈베리", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
-            { label: "청사과/레몬", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
-            { label: "브리오슈/비스킷", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "아몬드/헤이즐넛", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" },
-            { label: "미네랄리티", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" }
+            { label: "딸기/라즈베리", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "청사과/레몬", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "브리오슈/비스킷", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "아몬드/헤이즐넛", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "미네랄리티", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
         ],
         foodPairing: [
             "신선한 굴 및 각종 해산물",
@@ -237,11 +237,11 @@ export const wine: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "Strawberry/Raspberry", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
-            { label: "Green Apple/Lemon", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
-            { label: "Brioche/Biscuit", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Almond/Hazelnut", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Minerality", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" }
+            { label: "Strawberry/Raspberry", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "Green Apple/Lemon", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "Brioche/Biscuit", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Almond/Hazelnut", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Minerality", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
         ],
         foodPairing: [
             "Fresh Oysters and Seafood",

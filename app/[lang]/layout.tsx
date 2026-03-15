@@ -173,7 +173,7 @@ export default async function RootLayout({
         )}
 
         {/* Footer */}
-        <footer className="bg-slate-50 dark:bg-neutral-950 border-t border-slate-200 dark:border-white/5 py-12 pb-32">
+        <footer className="bg-[#f8fafc] dark:bg-neutral-950 border-t border-[#e2e8f0] dark:border-white/5 py-12 pb-32">
           <div className="container max-w-6xl mx-auto px-4">
             {/* Grid Layout */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">

@@ -61,9 +61,9 @@ export const koreanWhisky: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "강렬한 오크", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "진한 바닐라", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "스파이시/향신료", color: "bg-red-900/20 text-zinc-950 dark:text-red-300" }
+            { label: "강렬한 오크", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "진한 바닐라", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "스파이시/향신료", color: 'bg-red-100 text-red-950 dark:bg-red-900/40 dark:text-red-100' }
         ],
         foodPairing: [
             "한우 다이닝 스테이크",
@@ -127,9 +127,9 @@ export const koreanWhisky: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "Spicy Oak", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Intense Vanilla", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "Dried Fruit", color: "bg-red-900/20 text-zinc-950 dark:text-red-300" }
+            { label: "Spicy Oak", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Intense Vanilla", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "Dried Fruit", color: 'bg-red-100 text-red-950 dark:bg-red-900/40 dark:text-red-100' }
         ],
         foodPairing: [
             "Dark Chocolate",

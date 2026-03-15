@@ -17,10 +17,10 @@ export const scotchWhiskyRegions: SpiritCategory = {
                 criteria: '스코틀랜드 북동부, 스페이 강 유역 | 스카치 전체 생산량의 약 60% 차지 | 대표 증류소: 글렌피딕, 맥캘란, 더 글렌리벳, 발베니, 글렌파클라스',
                 description: '세계에서 증류소 밀집도가 가장 높은 지역으로, 전 세계 싱글몰트 스카치의 절반 이상이 이곳에서 생산된다. 스페이 강의 부드럽고 미네랄이 풍부한 물을 사용하며, 피트를 거의 사용하지 않는다. 셰리 캐스크 숙성의 비율이 높아 건포도·무화과·다크 초콜릿·오렌지 필 같은 풍부하고 달콤한 과실향이 대표적이다. 맥캘란, 글렌파클라스처럼 헤비 셰리 스타일부터, 더 글렌리벳처럼 화사하고 가벼운 플로럴 스타일까지 스펙트럼이 넓다.',
                 flavorTags: [
-                    { label: '셰리/건과일', color: 'bg-rose-600/20 text-zinc-950 dark:text-rose-300' },
-                    { label: '꿀/바닐라', color: 'bg-amber-400/20 text-zinc-950 dark:text-amber-300' },
-                    { label: '사과/배', color: 'bg-green-400/20 text-zinc-950 dark:text-green-300' },
-                    { label: '오크/스파이스', color: 'bg-stone-600/20 text-zinc-950 dark:text-stone-300' },
+                    { label: '셰리/건과일', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: '꿀/바닐라', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: '사과/배', color: 'bg-green-100 text-green-950 dark:bg-green-900/40 dark:text-green-100' },
+                    { label: '오크/스파이스', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
                 ]
             },
             {
@@ -28,10 +28,10 @@ export const scotchWhiskyRegions: SpiritCategory = {
                 criteria: '스코틀랜드 북부 및 중부 대부분 지역 | 가장 광활한 산지 | 대표 증류소: 탈리스커(아일랜드 인근), 글렌모렌지, 달모어, 오반, 에드라두어',
                 description: '스코틀랜드에서 지리적으로 가장 넓고 스타일이 다양한 산지다. 넓은 만큼 하위 스타일이 다채롭다: 북부 하이랜드는 꿀과 헤더꽃의 달콤함, 동부는 과실과 스파이스, 해안가(Coastal Highland)는 바다 소금기와 약한 피트향, 중부는 묵직한 바디와 카라멜이 특징이다. "하이랜드 스타일"이라는 하나의 규칙으로 묶기 어려울 정도로 개성이 분산되어 있으며, 그것이 오히려 탐험의 묘미를 준다.',
                 flavorTags: [
-                    { label: '꿀/헤더', color: 'bg-yellow-400/20 text-zinc-950 dark:text-yellow-300' },
-                    { label: '과실/스파이스', color: 'bg-orange-500/20 text-zinc-950 dark:text-orange-300' },
-                    { label: '해풍/소금기', color: 'bg-sky-400/20 text-zinc-950 dark:text-sky-300' },
-                    { label: '카라멜/오크', color: 'bg-amber-700/20 text-zinc-950 dark:text-amber-500' },
+                    { label: '꿀/헤더', color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+                    { label: '과실/스파이스', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: '해풍/소금기', color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+                    { label: '카라멜/오크', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
                 ]
             },
             {
@@ -39,10 +39,10 @@ export const scotchWhiskyRegions: SpiritCategory = {
                 criteria: '스코틀랜드 서부 해안의 섬 | 면적 대비 증류소 밀도 최고 | 대표 증류소: 아드벡, 라가불린, 라프로익, 보모어, 브룩라디, 킬호만',
                 description: '주류계에서 가장 개성이 강하고 마니아층이 두터운 산지다. 아일라 섬은 해안선을 따라 무진장한 이탄(Peat)이 쌓여 있으며, 이 피트로 맥아를 건조하는 전통이 아일라 위스키의 상징인 "스모키함"을 만든다. PPM(페놀 수치) 25 이상의 헤비 피트부터 보모어처럼 상대적으로 절제된 스타일까지 존재한다. 훈제향 아래 잠복한 레몬·배·바닐라·타르·해초·요오드 등의 복합미가 깊다.',
                 flavorTags: [
-                    { label: '피트/스모키', color: 'bg-stone-700/20 text-zinc-950 dark:text-stone-300' },
-                    { label: '해풍/요오드', color: 'bg-sky-600/20 text-zinc-950 dark:text-sky-300' },
-                    { label: '타르/메디시널', color: 'bg-stone-800/20 text-zinc-950 dark:text-stone-200' },
-                    { label: '레몬/과실(배경)', color: 'bg-yellow-300/20 text-zinc-950 dark:text-yellow-100' },
+                    { label: '피트/스모키', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: '해풍/요오드', color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+                    { label: '타르/메디시널', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: '레몬/과실(배경)', color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
                 ]
             },
             {
@@ -50,10 +50,10 @@ export const scotchWhiskyRegions: SpiritCategory = {
                 criteria: '스코틀랜드 중남부 저지대 | 전통적으로 3회 증류 방식 | 대표 증류소: 오켄토션, 글렌킨치, 아녹무어, 아일사베이',
                 description: '스카치 위스키 산지 중 가장 순하고 섬세한 스타일로 알려져 있다. 아일랜드 위스키 전통에서 영향을 받은 3회 증류 방식이 특징이며, 이로 인해 매우 가볍고 깨끗한 증류액이 만들어진다. 피트를 거의 사용하지 않으며, 초보자가 위스키에 입문할 때 첫 번째 선택지로 추천되곤 한다. 풀꽃, 크림, 레몬, 바닐라, 가벼운 오크의 섬세한 아로마가 특징이다.',
                 flavorTags: [
-                    { label: '크림/버터', color: 'bg-yellow-100/20 text-zinc-950 dark:text-yellow-100' },
-                    { label: '풀꽃/허브', color: 'bg-emerald-300/20 text-zinc-950 dark:text-emerald-200' },
-                    { label: '레몬/시트러스', color: 'bg-lime-400/20 text-zinc-950 dark:text-lime-300' },
-                    { label: '가벼운 오크', color: 'bg-amber-300/20 text-zinc-950 dark:text-amber-200' },
+                    { label: '크림/버터', color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+                    { label: '풀꽃/허브', color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+                    { label: '레몬/시트러스', color: 'bg-lime-100 text-lime-950 dark:bg-lime-900/40 dark:text-lime-100' },
+                    { label: '가벼운 오크', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
                 ]
             },
             {
@@ -61,10 +61,10 @@ export const scotchWhiskyRegions: SpiritCategory = {
                 criteria: '킨타이어 반도 남쪽 끝의 작은 항구 도시 | 한때 30개 이상의 증류소가 있던 "세계의 위스키 수도" | 현존: 스프링뱅크, 글렌기어, 글렌스코시아',
                 description: '과거 엄청난 번영을 누렸으나 20세기 초 경기 침체와 금주법 여파로 대부분의 증류소가 문을 닫았고, 현재는 3개 증류소만이 이 영광을 이어가고 있다. 캠벨타운 스타일은 독특하다: 유황 특유의 짭조름하고 오일리한 질감, 소금기, 적당한 피트, 그리고 묵직하고 복합적인 바디감이 특징이다. 특히 스프링뱅크는 전 세계 위스키 마니아에게 "가장 개성 있는 증류소"로 손꼽힌다.',
                 flavorTags: [
-                    { label: '유황/오일리', color: 'bg-yellow-700/20 text-zinc-950 dark:text-yellow-400' },
-                    { label: '소금/해풍', color: 'bg-sky-500/20 text-zinc-950 dark:text-sky-300' },
-                    { label: '과실/스파이스', color: 'bg-orange-400/20 text-zinc-950 dark:text-orange-300' },
-                    { label: '묵직한 바디', color: 'bg-stone-500/20 text-zinc-950 dark:text-stone-300' },
+                    { label: '유황/오일리', color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+                    { label: '소금/해풍', color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+                    { label: '과실/스파이스', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: '묵직한 바디', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
                 ]
             }
         ],
@@ -134,11 +134,11 @@ export const scotchWhiskyRegions: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: '스페이사이드: 셰리·과실', color: 'bg-rose-500/20 text-zinc-950 dark:text-rose-300' },
-            { label: '하이랜드: 꿀·다양성', color: 'bg-amber-400/20 text-zinc-950 dark:text-amber-300' },
-            { label: '아일라: 피트·스모키', color: 'bg-stone-700/20 text-zinc-950 dark:text-stone-200' },
-            { label: '로우랜드: 크림·플로럴', color: 'bg-green-300/20 text-zinc-950 dark:text-green-200' },
-            { label: '캠벨타운: 오일리·소금기', color: 'bg-sky-600/20 text-zinc-950 dark:text-sky-300' },
+            { label: '스페이사이드: 셰리·과실', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: '하이랜드: 꿀·다양성', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: '아일라: 피트·스모키', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: '로우랜드: 크림·플로럴', color: 'bg-green-100 text-green-950 dark:bg-green-900/40 dark:text-green-100' },
+            { label: '캠벨타운: 오일리·소금기', color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
         ],
         foodPairing: [
             '스페이사이드 — 훈제 연어, 숙성 치즈, 다크 초콜릿',
@@ -161,10 +161,10 @@ export const scotchWhiskyRegions: SpiritCategory = {
                 criteria: 'Located in northeastern Scotland along the River Spey | Accounts for approximately 60% of all Scotch production | Key Distilleries: Glenfiddich, Macallan, The Glenlivet, Balvenie, Glenfarclas',
                 description: 'The world\'s most densely concentrated whisky-producing region, responsible for over half of all single malt Scotch. The soft, mineral-rich waters of the River Spey and a predominant use of Sherry casks define its signature: rich dried fruit, dark chocolate, orange peel, and honey. Styles range from the heavy sherry bombs of Macallan and Glenfarclas to the lighter, floral elegance of The Glenlivet.',
                 flavorTags: [
-                    { label: 'Sherry/Dried Fruit', color: 'bg-rose-600/20 text-zinc-950 dark:text-rose-300' },
-                    { label: 'Honey/Vanilla', color: 'bg-amber-400/20 text-zinc-950 dark:text-amber-300' },
-                    { label: 'Apple/Pear', color: 'bg-green-400/20 text-zinc-950 dark:text-green-300' },
-                    { label: 'Oak/Spice', color: 'bg-stone-600/20 text-zinc-950 dark:text-stone-300' },
+                    { label: 'Sherry/Dried Fruit', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: 'Honey/Vanilla', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: 'Apple/Pear', color: 'bg-green-100 text-green-950 dark:bg-green-900/40 dark:text-green-100' },
+                    { label: 'Oak/Spice', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
                 ]
             },
             {
@@ -172,10 +172,10 @@ export const scotchWhiskyRegions: SpiritCategory = {
                 criteria: 'The largest whisky region; encompasses most of northern and central Scotland | Key Distilleries: Glenmorangie, Dalmore, Oban (Coastal), Edradour, Talisker (Isle of Skye, often associated)',
                 description: 'The most geographically diverse region, making a single "Highland style" nearly impossible to define. The north favors honey and heather, the east leans toward fruit and spice, coastal Highland distilleries carry a briny, maritime quality with light peat, and the central Highlands produce richer, more caramel-driven expressions. This diversity is its greatest strength and a treasure for whisky explorers.',
                 flavorTags: [
-                    { label: 'Honey/Heather', color: 'bg-yellow-400/20 text-zinc-950 dark:text-yellow-300' },
-                    { label: 'Fruit/Spice', color: 'bg-orange-500/20 text-zinc-950 dark:text-orange-300' },
-                    { label: 'Sea Breeze/Brine', color: 'bg-sky-400/20 text-zinc-950 dark:text-sky-300' },
-                    { label: 'Caramel/Oak', color: 'bg-amber-700/20 text-zinc-950 dark:text-amber-500' },
+                    { label: 'Honey/Heather', color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+                    { label: 'Fruit/Spice', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: 'Sea Breeze/Brine', color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+                    { label: 'Caramel/Oak', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
                 ]
             },
             {
@@ -183,10 +183,10 @@ export const scotchWhiskyRegions: SpiritCategory = {
                 criteria: 'A small island off the west coast of Scotland | Highest distillery density per square kilometer | Key Distilleries: Ardbeg, Lagavulin, Laphroaig, Bowmore, Bruichladdich, Kilchoman',
                 description: 'The most iconic and intensely flavored region in whisky. Vast peat bogs along the coastline and centuries of tradition mean most Islay expressions carry powerful, distinctive smoke. The peat is laced with seaweed and organic coastal matter, producing a unique "maritime smoke" of iodine, brine, and tar. Beneath the smoke lies a surprising complexity of lemon, vanilla, and briny fruit. Entry-level to Islay: Bowmore 12. The deep end: Ardbeg or Laphroaig 10.',
                 flavorTags: [
-                    { label: 'Peat/Smoky', color: 'bg-stone-700/20 text-zinc-950 dark:text-stone-300' },
-                    { label: 'Coastal/Iodine', color: 'bg-sky-600/20 text-zinc-950 dark:text-sky-300' },
-                    { label: 'Tar/Medicinal', color: 'bg-stone-800/20 text-zinc-950 dark:text-stone-200' },
-                    { label: 'Lemon/Fruit (Underlying)', color: 'bg-yellow-300/20 text-zinc-950 dark:text-yellow-100' },
+                    { label: 'Peat/Smoky', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: 'Coastal/Iodine', color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+                    { label: 'Tar/Medicinal', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: 'Lemon/Fruit (Underlying)', color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
                 ]
             },
             {
@@ -194,10 +194,10 @@ export const scotchWhiskyRegions: SpiritCategory = {
                 criteria: 'The southern lowlands of Scotland | Traditionally triple-distilled | Key Distilleries: Auchentoshan, Glenkinchie, Ailsa Bay',
                 description: 'The gentlest and most approachable of the Scotch regions, often compared to Irish whiskey in style. Triple distillation (a rarity in Scotland, common in Ireland) produces an exceptionally clean and light distillate with minimal fusel oils. No peat is used. The resulting expressions are delicate, creamy, and floral — showcasing elderflower, vanilla, lemon curd, and light cereal notes. Highly recommended as a gateway whisky.',
                 flavorTags: [
-                    { label: 'Cream/Butter', color: 'bg-yellow-100/20 text-zinc-950 dark:text-yellow-100' },
-                    { label: 'Wildflower/Herbal', color: 'bg-emerald-300/20 text-zinc-950 dark:text-emerald-200' },
-                    { label: 'Lemon/Citrus', color: 'bg-lime-400/20 text-zinc-950 dark:text-lime-300' },
-                    { label: 'Light Oak', color: 'bg-amber-300/20 text-zinc-950 dark:text-amber-200' },
+                    { label: 'Cream/Butter', color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+                    { label: 'Wildflower/Herbal', color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+                    { label: 'Lemon/Citrus', color: 'bg-lime-100 text-lime-950 dark:bg-lime-900/40 dark:text-lime-100' },
+                    { label: 'Light Oak', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
                 ]
             },
             {
@@ -205,10 +205,10 @@ export const scotchWhiskyRegions: SpiritCategory = {
                 criteria: 'A small harbor town at the southern tip of the Kintyre Peninsula | Once home to 30+ distilleries; the "Whisky Capital of the World" | Surviving Distilleries: Springbank, Glengyle (Kilkerran), Glen Scotia',
                 description: 'A once-booming town brought to near extinction by Prohibition-era economic collapse. Only three distilleries carry the flame today, yet Campbeltown retains its own official GI (Geographical Indication). Its style is unmistakable: a distinct sulfurous note, oily and viscous texture, briny coastal character, and a medium peat presence that gives a complex, rugged profile. Springbank in particular is revered globally as one of the most characterful and collectible distilleries in existence.',
                 flavorTags: [
-                    { label: 'Sulfurous/Oily', color: 'bg-yellow-700/20 text-zinc-950 dark:text-yellow-400' },
-                    { label: 'Brine/Sea Air', color: 'bg-sky-500/20 text-zinc-950 dark:text-sky-300' },
-                    { label: 'Fruit/Spice', color: 'bg-orange-400/20 text-zinc-950 dark:text-orange-300' },
-                    { label: 'Full Body', color: 'bg-stone-500/20 text-zinc-950 dark:text-stone-300' },
+                    { label: 'Sulfurous/Oily', color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+                    { label: 'Brine/Sea Air', color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+                    { label: 'Fruit/Spice', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: 'Full Body', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
                 ]
             }
         ],
@@ -278,11 +278,11 @@ export const scotchWhiskyRegions: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: 'Speyside: Sherry & Fruit', color: 'bg-rose-500/20 text-zinc-950 dark:text-rose-300' },
-            { label: 'Highland: Honey & Diversity', color: 'bg-amber-400/20 text-zinc-950 dark:text-amber-300' },
-            { label: 'Islay: Peat & Smoke', color: 'bg-stone-700/20 text-zinc-950 dark:text-stone-200' },
-            { label: 'Lowland: Cream & Floral', color: 'bg-green-300/20 text-zinc-950 dark:text-green-200' },
-            { label: 'Campbeltown: Oily & Briny', color: 'bg-sky-600/20 text-zinc-950 dark:text-sky-300' },
+            { label: 'Speyside: Sherry & Fruit', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: 'Highland: Honey & Diversity', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: 'Islay: Peat & Smoke', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: 'Lowland: Cream & Floral', color: 'bg-green-100 text-green-950 dark:bg-green-900/40 dark:text-green-100' },
+            { label: 'Campbeltown: Oily & Briny', color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
         ],
         foodPairing: [
             'Speyside — Smoked Salmon, Aged Cheese, Dark Chocolate',

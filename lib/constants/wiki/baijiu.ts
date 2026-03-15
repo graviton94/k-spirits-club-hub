@@ -167,14 +167,14 @@ export const baijiu: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "파인애플/열대과일", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
-            { label: "배/사과(청량함)", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
-            { label: "꽃/화이트플라워", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-300" },
-            { label: "볶은 곡물/고소함", color: "bg-yellow-600/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "참깨/토스트(너티)", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "간장/된장(장향)", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
-            { label: "흙내/발효창고", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" },
-            { label: "후추/알싸함", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" }
+            { label: "파인애플/열대과일", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "배/사과(청량함)", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "꽃/화이트플라워", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "볶은 곡물/고소함", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "참깨/토스트(너티)", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "간장/된장(장향)", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "흙내/발효창고", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "후추/알싸함", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' }
         ],
         foodPairing: [
             "훠궈 및 마라 요리",
@@ -345,14 +345,14 @@ export const baijiu: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "Pineapple / Tropical Fruit", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
-            { label: "Pear / Apple (Crisp)", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
-            { label: "Floral / White Flowers", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-300" },
-            { label: "Roasted Grain / Nutty", color: "bg-yellow-600/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "Sesame / Toast", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "Soy Sauce / Savory (Jiang)", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
-            { label: "Earthy / Cellar Funk", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" },
-            { label: "Peppery / Sharp", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" }
+            { label: "Pineapple / Tropical Fruit", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "Pear / Apple (Crisp)", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "Floral / White Flowers", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "Roasted Grain / Nutty", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "Sesame / Toast", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "Soy Sauce / Savory (Jiang)", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "Earthy / Cellar Funk", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "Peppery / Sharp", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' }
         ],
         foodPairing: [
             "Hot Pot and Mala (Spicy) dishes",

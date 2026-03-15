@@ -134,12 +134,12 @@ export const sojuDistilled: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "구수한 쌀향", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "산뜻한 과실향", color: "bg-rose-500/20 text-zinc-950 dark:text-rose-300" },
-            { label: "누룩 발효향", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
-            { label: "클린/미네랄", color: "bg-sky-500/20 text-zinc-950 dark:text-sky-300" },
-            { label: "오일리/질감", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" },
-            { label: "바닐라/나무향", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" }
+            { label: "구수한 쌀향", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "산뜻한 과실향", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "누룩 발효향", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "클린/미네랄", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "오일리/질감", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "바닐라/나무향", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' }
         ],
         foodPairing: [
             "두툼한 삼겹살 및 목살 구이",
@@ -277,12 +277,12 @@ export const sojuDistilled: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "Savory Rice", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Bright Orchard Fruit", color: "bg-rose-500/20 text-zinc-950 dark:text-rose-300" },
-            { label: "Earthy Nuruk", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
-            { label: "Clean/Mineral", color: "bg-sky-500/20 text-zinc-950 dark:text-sky-300" },
-            { label: "Oily/Velvety", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" },
-            { label: "Vanilla/Woody", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" }
+            { label: "Savory Rice", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Bright Orchard Fruit", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "Earthy Nuruk", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "Clean/Mineral", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "Oily/Velvety", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "Vanilla/Woody", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' }
         ],
         foodPairing: [
             "Grilled Pork Belly and Neck (Samgyeopsal)",

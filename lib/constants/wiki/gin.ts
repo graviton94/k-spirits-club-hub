@@ -134,13 +134,13 @@ export const gin: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "주니퍼/솔잎", color: "bg-emerald-600/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "시트러스 제스트", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "허브/그린", color: "bg-emerald-500/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "코리앤더/후추", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "플로럴", color: "bg-rose-500/20 text-zinc-950 dark:text-rose-300" },
-            { label: "오이/청량감", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
-            { label: "어스티/흙내음", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" }
+            { label: "주니퍼/솔잎", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "시트러스 제스트", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "허브/그린", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "코리앤더/후추", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "플로럴", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "오이/청량감", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "어스티/흙내음", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
         ],
         foodPairing: [
             "신선한 굴 및 생선회",
@@ -277,13 +277,13 @@ export const gin: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "Juniper/Pine", color: "bg-emerald-600/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "Citrus Zest", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "Herbal/Green", color: "bg-emerald-500/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "Coriander/Pepper", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Floral", color: "bg-rose-500/20 text-zinc-950 dark:text-rose-300" },
-            { label: "Cucumber/Crisp", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
-            { label: "Earthy", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" }
+            { label: "Juniper/Pine", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "Citrus Zest", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "Herbal/Green", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "Coriander/Pepper", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Floral", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "Cucumber/Crisp", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "Earthy", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
         ],
         foodPairing: [
             "Fresh Oysters and Sashimi",

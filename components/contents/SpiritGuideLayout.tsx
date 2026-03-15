@@ -1,9 +1,11 @@
 'use client';
+import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { BookOpen, Clock, Layers, Droplets, FlaskConical, GlassWater, Utensils, ShoppingBag, Activity, Leaf, Thermometer, Search, HelpCircle } from 'lucide-react'
+import { BookOpen, Clock, Layers, Droplets, FlaskConical, GlassWater, Utensils, ShoppingBag, Activity, Leaf, Thermometer, Search, HelpCircle, X } from 'lucide-react'
 import type { SpiritCategory } from '@/lib/constants/spirits-guide-data'
 import { getCategoryFallbackImage } from '@/lib/utils/image-fallback'
+import { SPIRIT_CATEGORIES } from '@/lib/constants/spirits-guide-data'
 import BackButton from '@/components/ui/BackButton'
 import GoogleAd from '@/components/ui/GoogleAd'
 
@@ -28,6 +30,14 @@ const COLOR_MAP: Record<string, { bg: string; border: string; text: string; badg
     purple: { bg: 'bg-purple-500/10', border: 'border-purple-500/30', text: 'text-purple-900 dark:text-purple-400', badge: 'bg-purple-500/10 text-black dark:text-purple-300' },
     yellow: { bg: 'bg-yellow-500/10', border: 'border-yellow-500/30', text: 'text-yellow-700 dark:text-yellow-400', badge: 'bg-yellow-500/10 text-black dark:text-yellow-300' },
     red: { bg: 'bg-red-500/10', border: 'border-red-500/30', text: 'text-red-900 dark:text-red-400', badge: 'bg-red-500/10 text-black dark:text-red-300' },
+}
+
+const PARENT_EMOJI_MAP: Record<string, string> = {
+    'single-malt': '🥃',
+    'bourbon': '🦅',
+    'brandy': '🍇',
+    'red-wine': '🍷',
+    'white-wine': '🥂',
 }
 
 // ─── 섹션 래퍼 ──────────────────────────────────────────────────────────────
@@ -76,6 +86,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
     const c = COLOR_MAP[category.color] ?? COLOR_MAP.amber
     const isEn = lang === 'en'
     const s = isEn && category.sectionsEn ? category.sectionsEn : category.sections
+    const [mapModalOpen, setMapModalOpen] = useState(false)
 
     return (
         <article className="container mx-auto px-4 py-6 max-w-3xl pb-24 space-y-6">
@@ -86,8 +97,26 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
             <div className={`relative rounded-2xl overflow-hidden border ${c.border} ${c.bg} p-8 text-center`}>
                 {/* ambient glow */}
                 <div className={`absolute inset-0 ${c.bg} blur-[60px] pointer-events-none`} />
-                <div className="relative z-10">
-                    <span className="text-6xl mb-4 block">{category.emoji}</span>
+                <div className="relative z-10 flex flex-col items-center">
+                    {category.slug.endsWith('regions') ? (
+                        <>
+                            <div
+                                className="w-48 h-48 sm:w-64 sm:h-64 mb-4 relative cursor-pointer hover:scale-105 transition-transform group"
+                                onClick={() => setMapModalOpen(true)}
+                            >
+                                <img
+                                    src={`/images/wiki/${category.slug}-map.png`}
+                                    alt={`${category.nameKo} Map`}
+                                    className="w-full h-full object-contain"
+                                />
+                                <div className="absolute bottom-2 right-2 bg-black/60 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-md">
+                                    <Search className="w-4 h-4" />
+                                </div>
+                            </div>
+                        </>
+                    ) : (
+                        <span className="text-6xl mb-4 block">{category.emoji}</span>
+                    )}
                     <h1 className={`text-3xl md:text-4xl font-black tracking-tight ${c.text} mb-2`}>
                         {isEn ? category.nameEn : category.nameKo}
                     </h1>
@@ -175,16 +204,11 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
 
                                     {cls.flavorTags && cls.flavorTags.length > 0 && (
                                         <div className="flex flex-wrap gap-1.5 mt-2">
-                                            {cls.flavorTags.map((tag) => {
-                                                const bgPart = tag.color.split(' ').find(c => c.startsWith('bg-'))?.replace('/20', '') ?? 'bg-neutral-900'
-                                                const shade = parseInt(bgPart.match(/(\d+)$/)?.[1] ?? '500')
-                                                const textColor = shade < 500 ? 'text-gray-900' : 'text-white'
-                                                return (
-                                                    <span key={tag.label} className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${bgPart} ${textColor}`}>
-                                                        {tag.label}
-                                                    </span>
-                                                )
-                                            })}
+                                            {cls.flavorTags.map((tag) => (
+                                                <span key={tag.label} className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${tag.color}`}>
+                                                    {tag.label}
+                                                </span>
+                                            ))}
                                         </div>
                                     )}
                                 </dd>
@@ -240,17 +264,11 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
             <Section id="flavor" icon={<Droplets className="w-5 h-5" />} title={isEn ? 'Flavor Profile' : '맛 & 향 특징'} color={category.color}>
                 {s?.flavorTags && s.flavorTags.length > 0 ? (
                     <div className="flex flex-wrap gap-2">
-                        {s.flavorTags.map((tag) => {
-                            const bgPart = tag.color.split(' ').find(c => c.startsWith('bg-'))?.replace('/20', '') ?? 'bg-neutral-900'
-                            // shade 숫자 추출: 낮을수록 밝은 색. 500 미만이면 어두운 텍스트 사용
-                            const shade = parseInt(bgPart.match(/(\d+)$/)?.[1] ?? '500')
-                            const textColor = shade < 500 ? 'text-gray-900' : 'text-white'
-                            return (
-                                <span key={tag.label} className={`px-3 py-1.5 rounded-full text-xs font-bold shadow-sm ${bgPart} ${textColor}`}>
-                                    {tag.label}
-                                </span>
-                            )
-                        })}
+                        {s.flavorTags.map((tag) => (
+                            <span key={tag.label} className={`px-3 py-1.5 rounded-full text-xs font-bold ${tag.color}`}>
+                                {tag.label}
+                            </span>
+                        ))}
                     </div>
                 ) : (
                     <ComingSoon label={isEn ? 'Flavor Profile' : '맛·향 특징'} />
@@ -395,27 +413,30 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                     href={`/${lang}/contents/wiki/${s.relatedPageSlug}`}
                     className={`group flex items-center gap-4 rounded-2xl border-2 ${c.border} ${c.bg} px-6 py-5 hover:brightness-105 transition-all duration-200 shadow-sm`}
                 >
-                    {/* 맵 이미지 썸네일 */}
-                    <div className="shrink-0 w-16 h-16 rounded-xl overflow-hidden border border-white/20 bg-black/10">
-                        <img
-                            src={`/images/wiki/${s.relatedPageSlug}-map.png`}
-                            alt="Region Map"
-                            className="w-full h-full object-cover"
-                            onError={(e) => {
-                                const img = e.currentTarget
-                                img.style.display = 'none'
-                            }}
-                        />
+                    {/* 좌측 썸네일 (지역페이지면 부모 이모지, 아니면 맵 이미지) */}
+                    <div className="shrink-0 w-16 h-16 rounded-xl flex items-center justify-center overflow-hidden border border-white/20 bg-black/10 text-3xl">
+                        {!category.slug.endsWith('regions') ? (
+                            <img
+                                src={`/images/wiki/${s.relatedPageSlug}-map.png`}
+                                alt="Region Map"
+                                className="w-full h-full object-cover"
+                                onError={(e) => {
+                                    e.currentTarget.style.display = 'none'
+                                }}
+                            />
+                        ) : (
+                            <span>{PARENT_EMOJI_MAP[s.relatedPageSlug] ?? '🔙'}</span>
+                        )}
                     </div>
                     {/* 텍스트 */}
                     <div className="flex-1 min-w-0">
                         <p className={`text-[10px] font-black uppercase tracking-widest ${c.text} mb-0.5`}>
-                            {isEn ? '🗺️ Regional Deep Dive' : '🗺️ 산지별 심층 가이드'}
+                            {category.slug.endsWith('regions') ? (isEn ? 'Return to Base Spirit' : '기존 백과로 돌아가기') : (isEn ? '🗺️ Regional Deep Dive' : '🗺️ 산지별 심층 가이드')}
                         </p>
                         <p className="font-black text-foreground text-sm group-hover:underline leading-snug">
                             {isEn
-                                ? (s.relatedPageLabelEn || '→ Explore Regional Styles')
-                                : (s.relatedPageLabelKo || '→ 지역별 스타일 탐험하기')
+                                ? (s.relatedPageLabelEn || (category.slug.endsWith('regions') ? '→ Go Back' : '→ Explore Regional Styles'))
+                                : (s.relatedPageLabelKo || (category.slug.endsWith('regions') ? '→ 돌아가기' : '→ 지역별 스타일 탐험하기'))
                             }
                         </p>
                     </div>
@@ -515,6 +536,33 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                         </div>
                     )}
                 </Section>
+            )}
+
+            {/* ── Image Modal (Moved to root for best stacking) ── */}
+            {mapModalOpen && (
+                <div
+                    className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-md p-4 animate-in fade-in duration-300"
+                    onClick={() => setMapModalOpen(false)}
+                >
+                    <div
+                        className="relative max-w-6xl w-full max-h-[92vh] bg-neutral-900 rounded-3xl overflow-hidden p-2 ring-1 ring-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] animate-in zoom-in-95 duration-300"
+                        onClick={e => e.stopPropagation()}
+                    >
+                        <button
+                            className="absolute top-6 right-6 z-50 bg-black/60 hover:bg-black/90 text-white rounded-full p-3 backdrop-blur-xl transition-all shadow-xl border border-white/10"
+                            onClick={() => setMapModalOpen(false)}
+                        >
+                            <X className="w-6 h-6" />
+                        </button>
+                        <div className="w-full h-full flex items-center justify-center bg-transparent">
+                            <img
+                                src={`/images/wiki/${category.slug}-map.png`}
+                                alt={`${category.nameKo} Map Enlarged`}
+                                className="max-w-full max-h-[85vh] object-contain"
+                            />
+                        </div>
+                    </div>
+                </div>
             )}
         </article>
     )

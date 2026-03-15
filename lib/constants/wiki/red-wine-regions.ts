@@ -17,10 +17,10 @@ export const redWineRegions: SpiritCategory = {
                 criteria: '주요 품종: 까베르네 소비뇽, 메를로, 까베르네 프랑 등 블렌드 | 좌안(메독): 까베르네 소비뇽 중심·강렬한 구조 | 우안(생테밀리옹·포므롤): 메를로 중심·부드러운 질감 | 1855년 공식 등급 체계',
                 description: '세계 프리미엄 레드 와인의 기준점. 구조적이고 숙성 잠재력이 뛰어난 "블렌드" 시스템을 발전시켜, 매 빈티지 기후에 따라 최적의 품종 비율을 조정한다. 좌안의 까베르네 소비뇽 중심 와인은 블랙커런트, 삼나무, 흑연, 미네랄의 우아함이 특징이고, 우안의 메를로 중심 와인은 더 부드럽고 과실미가 풍부하다. 피숑 바론, 무똥 로트실트, 페트뤼스 같은 샤또가 세계 최고가 와인의 상징이다.',
                 flavorTags: [
-                    { label: '블랙커런트/삼나무', color: 'bg-rose-700/20 text-zinc-950 dark:text-rose-300' },
-                    { label: '흑연/미네랄', color: 'bg-stone-500/20 text-zinc-950 dark:text-stone-300' },
-                    { label: '가죽/담배', color: 'bg-stone-700/20 text-zinc-950 dark:text-stone-200' },
-                    { label: '체리/자두(우안)', color: 'bg-rose-500/20 text-zinc-950 dark:text-rose-400' },
+                    { label: '블랙커런트/삼나무', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: '흑연/미네랄', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: '가죽/담배', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: '체리/자두(우안)', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
                 ]
             },
             {
@@ -28,10 +28,10 @@ export const redWineRegions: SpiritCategory = {
                 criteria: '단일 품종: 피노 누아 | 포도밭 등급 시스템(그랑 크뤼 > 프르미에 크뤼 > 빌라쥬 > 레지오날) | 코트 드 뉘, 코트 드 본 서브 지역 | 기후에 매우 민감',
                 description: '세계에서 가장 섬세하고 복잡한 레드 와인의 고향. 피노 누아 한 품종으로 포도밭 위치에 따라 극적으로 다른 결과를 만들어내는 테루아의 예술이다. 그랑 크뤼(로마네·콩티, 라 타슈, 샹베르탱 등)는 세계에서 가장 희귀하고 비싼 와인에 속한다. 어린 부르고뉴는 체리·라즈베리, 숙성된 빈티지는 버섯·송로버섯·숲바닥·가죽의 복합적인 3차 향을 보인다.',
                 flavorTags: [
-                    { label: '체리/라즈베리', color: 'bg-rose-400/20 text-zinc-950 dark:text-rose-300' },
-                    { label: '버섯/흙내(숙성)', color: 'bg-stone-600/20 text-zinc-950 dark:text-stone-300' },
-                    { label: '장미/바이올렛', color: 'bg-pink-400/20 text-zinc-950 dark:text-pink-300' },
-                    { label: '미네랄/섬세함', color: 'bg-sky-400/20 text-zinc-950 dark:text-sky-300' },
+                    { label: '체리/라즈베리', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: '버섯/흙내(숙성)', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: '장미/바이올렛', color: 'bg-pink-100 text-pink-950 dark:bg-pink-900/40 dark:text-pink-100' },
+                    { label: '미네랄/섬세함', color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
                 ]
             },
             {
@@ -39,10 +39,10 @@ export const redWineRegions: SpiritCategory = {
                 criteria: '주요 품종: 산조베제 (Sangiovese) | 키안티 클라시코, 브루넬로 디 몬탈치노, 몬테풀차노 등 DOCG | 슈퍼 투스칸(국제 품종 블렌드) 별도 존재',
                 description: '산조베제는 이탈리아 레드 와인의 왕이다. 높은 산도와 중간~고탄닌이 특징으로 토마토 소스 파스타, 미트 요리와 천상의 결합을 이룬다. 브루넬로 디 몬탈치노는 세계에서 최고의 숙성 잠재력을 가진 이탈리아 레드 와인 중 하나다(최소 10년 이상 셀러링 권장). 키안티 클라시코는 체리, 허브, 미네랄의 생동감 있는 스타일로 파스타 애호가들의 기본 선택이다.',
                 flavorTags: [
-                    { label: '체리/토마토', color: 'bg-rose-500/20 text-zinc-950 dark:text-rose-400' },
-                    { label: '허브/후추', color: 'bg-green-500/20 text-zinc-950 dark:text-green-300' },
-                    { label: '산도/탄닌 구조', color: 'bg-amber-500/20 text-zinc-950 dark:text-amber-300' },
-                    { label: '흙내/가죽(숙성)', color: 'bg-stone-600/20 text-zinc-950 dark:text-stone-200' },
+                    { label: '체리/토마토', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: '허브/후추', color: 'bg-green-100 text-green-950 dark:bg-green-900/40 dark:text-green-100' },
+                    { label: '산도/탄닌 구조', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: '흙내/가죽(숙성)', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
                 ]
             },
             {
@@ -50,10 +50,10 @@ export const redWineRegions: SpiritCategory = {
                 criteria: '나파: 까베르네 소비뇽 왕국 | 소노마: 다양한 품종(피노 누아, 진판델, 샤르도네) | 지중해성 기후(따뜻하고 일조량 풍부) | 1976년 파리의 심판에서 최초 세계적 인정',
                 description: '신세계 프리미엄 와인의 상징. 나파 밸리의 까베르네 소비뇽은 보르도보다 과실미가 풍부하고 탄닌이 부드러우며 알코올이 높다. 풍부한 일조량이 포도를 완숙시켜 블랙베리·카시스·다크 초콜릿의 진하고 농밀한 풍미를 만든다. 케이머스, 오퍼스 원, 스크리밍 이글이 세계적인 나파 아이콘 와인이다.',
                 flavorTags: [
-                    { label: '블랙베리/카시스', color: 'bg-rose-600/20 text-zinc-950 dark:text-rose-300' },
-                    { label: '다크 초콜릿/바닐라', color: 'bg-stone-700/20 text-zinc-950 dark:text-amber-300' },
-                    { label: '실크/부드러운 탄닌', color: 'bg-amber-300/20 text-zinc-950 dark:text-amber-200' },
-                    { label: '블루베리/자두', color: 'bg-blue-400/20 text-zinc-950 dark:text-blue-300' },
+                    { label: '블랙베리/카시스', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: '다크 초콜릿/바닐라', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: '실크/부드러운 탄닌', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: '블루베리/자두', color: 'bg-blue-100 text-blue-950 dark:bg-blue-900/40 dark:text-blue-100' },
                 ]
             },
             {
@@ -61,10 +61,10 @@ export const redWineRegions: SpiritCategory = {
                 criteria: '주요 품종: 템프라니요 (Tempranillo) | 크리안자, 레세르바, 그란 레세르바 숙성 등급 | 아메리칸 오크와 프랑스 오크 혼용',
                 description: '이베리아 반도 최고의 레드 와인 산지. 템프라니요의 높은 산도와 중간 탄닌이 긴 오크 숙성과 결합하여 스페인 레드 와인만의 독특한 스타일 — 말린 딸기, 바닐라, 가죽, 담배 — 을 창조한다. 아메리칸 오크의 코코넛·크리미한 뉘앙스가 구세계 와인에서 특이하게 달콤한 풍미 레이어를 만든다.',
                 flavorTags: [
-                    { label: '말린 딸기/체리', color: 'bg-rose-600/20 text-zinc-950 dark:text-rose-300' },
-                    { label: '바닐라/코코넛', color: 'bg-amber-400/20 text-zinc-950 dark:text-amber-200' },
-                    { label: '가죽/담배', color: 'bg-stone-700/20 text-zinc-950 dark:text-stone-300' },
-                    { label: '드라이 허브/후추', color: 'bg-green-600/20 text-zinc-950 dark:text-green-300' },
+                    { label: '말린 딸기/체리', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: '바닐라/코코넛', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: '가죽/담배', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: '드라이 허브/후추', color: 'bg-green-100 text-green-950 dark:bg-green-900/40 dark:text-green-100' },
                 ]
             },
             {
@@ -72,10 +72,10 @@ export const redWineRegions: SpiritCategory = {
                 criteria: '주요 품종: 쉬라즈 (Shiraz) | 따뜻한 대륙성 기후 | 올드 바인(수령 100년+ 포도나무) 보유 | 세계 최고령 쉬라즈 포도나무 산지',
                 description: '호주 레드 와인의 플래그십. 바로사의 쉬라즈는 세계에서 가장 진하고 강렬한 레드 와인 중 하나로, 블랙베리·블루베리·다크 초콜릿·후추·베이킹 스파이스의 풍성하고 볼드한 풍미가 특징이다. 세계에서 가장 오래된 쉬라즈 포도나무들(1843년 식재)이 아직도 생산 중인 바로사는 "올드 바인(Old Vine)" 와인의 성지로 불린다.',
                 flavorTags: [
-                    { label: '블랙베리/블루베리', color: 'bg-rose-700/20 text-zinc-950 dark:text-blue-300' },
-                    { label: '다크 초콜릿/후추', color: 'bg-stone-800/20 text-zinc-950 dark:text-stone-200' },
-                    { label: '베이킹 스파이스', color: 'bg-orange-500/20 text-zinc-950 dark:text-orange-300' },
-                    { label: '진한 바디/볼드', color: 'bg-rose-900/20 text-zinc-950 dark:text-rose-300' },
+                    { label: '블랙베리/블루베리', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: '다크 초콜릿/후추', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: '베이킹 스파이스', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: '진한 바디/볼드', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
                 ]
             }
         ],
@@ -136,12 +136,12 @@ export const redWineRegions: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: '보르도: 구조·우아함', color: 'bg-rose-700/20 text-zinc-950 dark:text-rose-300' },
-            { label: '부르고뉴: 섬세·테루아', color: 'bg-rose-400/20 text-zinc-950 dark:text-rose-200' },
-            { label: '토스카나: 산도·음식친화적', color: 'bg-amber-500/20 text-zinc-950 dark:text-amber-300' },
-            { label: '나파: 과실미·볼드', color: 'bg-rose-600/20 text-zinc-950 dark:text-rose-400' },
-            { label: '리오하: 오크·스파이스', color: 'bg-orange-500/20 text-zinc-950 dark:text-orange-300' },
-            { label: '바로사: 진함·파워풀', color: 'bg-rose-900/20 text-zinc-950 dark:text-rose-300' },
+            { label: '보르도: 구조·우아함', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: '부르고뉴: 섬세·테루아', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: '토스카나: 산도·음식친화적', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: '나파: 과실미·볼드', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: '리오하: 오크·스파이스', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: '바로사: 진함·파워풀', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
         ],
         foodPairing: [
             '보르도 — 양고기 구이, 숙성 치즈, 트러플 요리',
@@ -165,10 +165,10 @@ export const redWineRegions: SpiritCategory = {
                 criteria: 'Key varieties: Cabernet Sauvignon, Merlot, Cabernet Franc (blended) | Left Bank (Médoc): Cab-dominant, structured | Right Bank (Saint-Émilion, Pomerol): Merlot-dominant, supple | 1855 Classification system',
                 description: 'The global benchmark for premium red wine. Bordeaux\'s genius lies in its "blended" system, allowing winemakers to adjust varietal ratios each vintage to achieve the optimal balance. Left Bank wines (Pauillac, Saint-Julien) are defined by Cab\'s black currant, cedar, graphite, and gravelly minerality. Right Bank expressions (Pomerol\'s Petrus, Saint-Émilion Grand Cru) bring silkier, plummier, more immediately accessible Merlot-driven charm at extraordinary price points.',
                 flavorTags: [
-                    { label: 'Blackcurrant/Cedar', color: 'bg-rose-700/20 text-zinc-950 dark:text-rose-300' },
-                    { label: 'Graphite/Mineral', color: 'bg-stone-500/20 text-zinc-950 dark:text-stone-300' },
-                    { label: 'Leather/Tobacco', color: 'bg-stone-700/20 text-zinc-950 dark:text-stone-200' },
-                    { label: 'Cherry/Plum (Right Bank)', color: 'bg-rose-500/20 text-zinc-950 dark:text-rose-400' },
+                    { label: 'Blackcurrant/Cedar', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: 'Graphite/Mineral', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: 'Leather/Tobacco', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: 'Cherry/Plum (Right Bank)', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
                 ]
             },
             {
@@ -176,10 +176,10 @@ export const redWineRegions: SpiritCategory = {
                 criteria: 'Single variety: Pinot Noir | Vineyard classification (Grand Cru > Premier Cru > Village > Regional) | Côte de Nuits and Côte de Beaune sub-regions | Highly climate-sensitive',
                 description: 'Home to the world\'s most delicate and complex red wines. The extraordinary power of Burgundy lies in showcasing how a single grape variety — Pinot Noir — can express the micro-terroir of individual vineyard plots with unrivaled precision. Grands Crus like Romanée-Conti, La Tâche, and Chambertin are among the rarest and most expensive wines on earth. Young Burgundy expresses vibrant cherry and raspberry; aged Burgundy evolves into a mesmerizing landscape of mushroom, truffle, forest floor, and leather.',
                 flavorTags: [
-                    { label: 'Cherry/Raspberry', color: 'bg-rose-400/20 text-zinc-950 dark:text-rose-300' },
-                    { label: 'Mushroom/Earthy (Aged)', color: 'bg-stone-600/20 text-zinc-950 dark:text-stone-300' },
-                    { label: 'Rose/Violet', color: 'bg-pink-400/20 text-zinc-950 dark:text-pink-300' },
-                    { label: 'Mineral/Delicate', color: 'bg-sky-400/20 text-zinc-950 dark:text-sky-300' },
+                    { label: 'Cherry/Raspberry', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: 'Mushroom/Earthy (Aged)', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: 'Rose/Violet', color: 'bg-pink-100 text-pink-950 dark:bg-pink-900/40 dark:text-pink-100' },
+                    { label: 'Mineral/Delicate', color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
                 ]
             },
             {
@@ -187,10 +187,10 @@ export const redWineRegions: SpiritCategory = {
                 criteria: 'Primary variety: Sangiovese | DOCG appellations: Chianti Classico, Brunello di Montalcino, Vino Nobile di Montepulciano | Super Tuscans (international variety blends) also exist',
                 description: 'Sangiovese is the king of Italian red wine. Its naturally high acidity and medium-to-high tannins make it a supremely "food-friendly" variety — a dream partner for tomato-based pasta and grilled meats. Brunello di Montalcino is one of Italy\'s most long-lived wines, requiring at minimum a decade of cellaring to reveal its full complexity of dried cherry, leather, dried roses, and iron. Chianti Classico is the everyday hero: vibrant, cherry-forward, and reliably excellent.',
                 flavorTags: [
-                    { label: 'Cherry/Tomato Leaf', color: 'bg-rose-500/20 text-zinc-950 dark:text-rose-400' },
-                    { label: 'Dried Herbs/Pepper', color: 'bg-green-500/20 text-zinc-950 dark:text-green-300' },
-                    { label: 'Acidity/Tannin Structure', color: 'bg-amber-500/20 text-zinc-950 dark:text-amber-300' },
-                    { label: 'Leather/Earth (Aged)', color: 'bg-stone-600/20 text-zinc-950 dark:text-stone-200' },
+                    { label: 'Cherry/Tomato Leaf', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: 'Dried Herbs/Pepper', color: 'bg-green-100 text-green-950 dark:bg-green-900/40 dark:text-green-100' },
+                    { label: 'Acidity/Tannin Structure', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: 'Leather/Earth (Aged)', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
                 ]
             },
             {
@@ -198,10 +198,10 @@ export const redWineRegions: SpiritCategory = {
                 criteria: 'Napa: Cabernet Sauvignon stronghold | Sonoma: diverse varieties (Pinot Noir, Zinfandel, Chardonnay) | Mediterranean climate (warm, abundant sunshine) | First globally recognized in the 1976 Judgment of Paris',
                 description: 'The symbol of New World premium wine excellence. Napa Valley Cabernet Sauvignon is richer in fruit than Bordeaux, with softer tannins and higher natural alcohol. The generous California sunshine fully ripens grapes to deliver deeply concentrated Blackberry, black cherry, dark chocolate, and espresso. Caymus, Opus One, and Screaming Eagle are Napa\'s most iconic labels; the latter is among the most sought-after cult wines on earth.',
                 flavorTags: [
-                    { label: 'Blackberry/Cassis', color: 'bg-rose-600/20 text-zinc-950 dark:text-rose-300' },
-                    { label: 'Dark Chocolate/Vanilla', color: 'bg-stone-700/20 text-zinc-950 dark:text-amber-300' },
-                    { label: 'Silky/Soft Tannins', color: 'bg-amber-300/20 text-zinc-950 dark:text-amber-200' },
-                    { label: 'Blueberry/Plum', color: 'bg-blue-400/20 text-zinc-950 dark:text-blue-300' },
+                    { label: 'Blackberry/Cassis', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: 'Dark Chocolate/Vanilla', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: 'Silky/Soft Tannins', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: 'Blueberry/Plum', color: 'bg-blue-100 text-blue-950 dark:bg-blue-900/40 dark:text-blue-100' },
                 ]
             },
             {
@@ -209,10 +209,10 @@ export const redWineRegions: SpiritCategory = {
                 criteria: 'Primary variety: Tempranillo | Aging grades: Crianza, Reserva, Gran Reserva | Mix of American and French oak | D.O.Ca. (Spain\'s highest wine designation)',
                 description: 'The Iberian Peninsula\'s most celebrated red wine region. Tempranillo\'s naturally high acidity and moderate tannins, combined with rigorous aging in oak — notably American oak with its characteristic coconut and creamy vanillin influence (unusual for Old World wines) — produce a uniquely accessible yet age-worthy style. Top Riojas develop gorgeous notes of dried strawberry, leather, tobacco, and exotic spice over decades of evolution.',
                 flavorTags: [
-                    { label: 'Dried Strawberry/Cherry', color: 'bg-rose-600/20 text-zinc-950 dark:text-rose-300' },
-                    { label: 'Vanilla/Coconut', color: 'bg-amber-400/20 text-zinc-950 dark:text-amber-200' },
-                    { label: 'Leather/Tobacco', color: 'bg-stone-700/20 text-zinc-950 dark:text-stone-300' },
-                    { label: 'Dried Herbs/Pepper', color: 'bg-green-600/20 text-zinc-950 dark:text-green-300' },
+                    { label: 'Dried Strawberry/Cherry', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: 'Vanilla/Coconut', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: 'Leather/Tobacco', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: 'Dried Herbs/Pepper', color: 'bg-green-100 text-green-950 dark:bg-green-900/40 dark:text-green-100' },
                 ]
             },
             {
@@ -220,10 +220,10 @@ export const redWineRegions: SpiritCategory = {
                 criteria: 'Primary variety: Shiraz | Warm continental climate | Among the world\'s oldest surviving Shiraz vines (planted 1843) | "Old Vine Charter" classification for centenarian vines',
                 description: 'Australia\'s most famous wine region and one of the world\'s great red wine destinations. Barossa Shiraz is bold, concentrated, and unapologetically powerful — blackberry, blueberry, dark chocolate, cracked black pepper, and baking spice cascade across the palate in a defining display of New World viticulture. The region\'s "Old Vine" treasures — Grenache, Mourvedre and Shiraz vines over 100 years old — produce wines of extraordinary complexity that rival the world\'s finest.',
                 flavorTags: [
-                    { label: 'Blackberry/Blueberry', color: 'bg-rose-700/20 text-zinc-950 dark:text-blue-300' },
-                    { label: 'Dark Chocolate/Pepper', color: 'bg-stone-800/20 text-zinc-950 dark:text-stone-200' },
-                    { label: 'Baking Spice', color: 'bg-orange-500/20 text-zinc-950 dark:text-orange-300' },
-                    { label: 'Full Body/Powerful', color: 'bg-rose-900/20 text-zinc-950 dark:text-rose-300' },
+                    { label: 'Blackberry/Blueberry', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: 'Dark Chocolate/Pepper', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: 'Baking Spice', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: 'Full Body/Powerful', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
                 ]
             }
         ],
@@ -284,12 +284,12 @@ export const redWineRegions: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: 'Bordeaux: Structure & Elegance', color: 'bg-rose-700/20 text-zinc-950 dark:text-rose-300' },
-            { label: 'Burgundy: Delicate & Terroir', color: 'bg-rose-400/20 text-zinc-950 dark:text-rose-200' },
-            { label: 'Tuscany: Acidic & Food-Friendly', color: 'bg-amber-500/20 text-zinc-950 dark:text-amber-300' },
-            { label: 'Napa: Fruity & Bold', color: 'bg-rose-600/20 text-zinc-950 dark:text-rose-400' },
-            { label: 'Rioja: Oak & Spice', color: 'bg-orange-500/20 text-zinc-950 dark:text-orange-300' },
-            { label: 'Barossa: Powerful & Dark', color: 'bg-rose-900/20 text-zinc-950 dark:text-rose-300' },
+            { label: 'Bordeaux: Structure & Elegance', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: 'Burgundy: Delicate & Terroir', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: 'Tuscany: Acidic & Food-Friendly', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: 'Napa: Fruity & Bold', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: 'Rioja: Oak & Spice', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: 'Barossa: Powerful & Dark', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
         ],
         foodPairing: [
             'Bordeaux — Grilled Lamb, Aged Cheeses, Truffle Dishes',

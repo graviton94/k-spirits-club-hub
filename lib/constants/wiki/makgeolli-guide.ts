@@ -61,9 +61,9 @@ export const makgeolliGuide: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "크리미/밀키", color: "bg-emerald-500/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "요구르트 산미", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "구수한 곡물", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" }
+            { label: "크리미/밀키", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "요구르트 산미", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "구수한 곡물", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' }
         ],
         foodPairing: [
             "파전, 빈대떡, 김치전",
@@ -131,9 +131,9 @@ export const makgeolliGuide: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "Milky Sweetness", color: "bg-emerald-500/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "Lactic Tang", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "Earthy Nutty", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" }
+            { label: "Milky Sweetness", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "Lactic Tang", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "Earthy Nutty", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' }
         ],
         foodPairing: [
             "Korean Pancakes (Jeon, Pajeon, Bindaetteok)",

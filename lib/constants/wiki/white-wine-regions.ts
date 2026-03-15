@@ -17,10 +17,10 @@ export const whiteWineRegions: SpiritCategory = {
                 criteria: '품종: 샤르도네 | 샤블리(오크 미사용·極미네랄) vs 뫼르소·몽라쉐(오크 숙성·묵직) | 그랑 크뤼/프르미에 크뤼 포도밭 등급 | 서늘한 기후',
                 description: '샤블리는 해양 화석이 포함된 석회암 토양(키메리지앙)에서 자란 샤르도네로 만들어지며, 굴 껍데기 같은 매우 순수한 미네랄리티와 레몬·청사과의 날카로운 산도가 특징이다. 강의 반대편 뫼르소와 퓔리니-몽라쉐는 오크 숙성을 통해 버터·구운 헤이즐넛·꿀·꽃의 복합미를 더한다. 르 몽라쉐 그랑 크뤼는 세계 최고의 드라이 화이트 와인으로 꼽힌다.',
                 flavorTags: [
-                    { label: '굴/미네랄(샤블리)', color: 'bg-slate-400/20 text-zinc-950 dark:text-slate-300' },
-                    { label: '레몬/청사과', color: 'bg-lime-400/20 text-zinc-950 dark:text-lime-300' },
-                    { label: '버터/헤이즐넛(뫼르소)', color: 'bg-amber-400/20 text-zinc-950 dark:text-amber-300' },
-                    { label: '꿀/토스트', color: 'bg-yellow-400/20 text-zinc-950 dark:text-yellow-300' },
+                    { label: '굴/미네랄(샤블리)', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: '레몬/청사과', color: 'bg-lime-100 text-lime-950 dark:bg-lime-900/40 dark:text-lime-100' },
+                    { label: '버터/헤이즐넛(뫼르소)', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: '꿀/토스트', color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
                 ]
             },
             {
@@ -28,10 +28,10 @@ export const whiteWineRegions: SpiritCategory = {
                 criteria: '대표 품종: 소비뇽 블랑, 슈냉 블랑, 뮈스카데 | 상세르, 푸이 퓌메(소비뇽 블랑) | 부브레(슈냉 블랑·드라이~스위트) | 서늘한 대서양성 기후',
                 description: '소비뇽 블랑의 고향 루아르는 신선함과 허브 아로마의 왕국이다. 상세르와 푸이 퓌메의 소비뇽 블랑은 자몽·풀·각시완두콩(흑현미향)·분필·미네랄의 날카롭고 생동감 넘치는 프로파일로 세계 어디서도 복제 불가능한 스타일을 구현한다. 부브레의 슈냉 블랑은 드라이에서 달콤한 귀부와인(Vouvray Moelleux)까지 폭넓은 스타일을 아우른다.',
                 flavorTags: [
-                    { label: '자몽/시트러스', color: 'bg-yellow-400/20 text-zinc-950 dark:text-yellow-300' },
-                    { label: '풀/허브/완두콩', color: 'bg-green-500/20 text-zinc-950 dark:text-green-300' },
-                    { label: '분필/미네랄', color: 'bg-slate-400/20 text-zinc-950 dark:text-slate-300' },
-                    { label: '산도/청량감', color: 'bg-lime-500/20 text-zinc-950 dark:text-lime-300' },
+                    { label: '자몽/시트러스', color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+                    { label: '풀/허브/완두콩', color: 'bg-green-100 text-green-950 dark:bg-green-900/40 dark:text-green-100' },
+                    { label: '분필/미네랄', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: '산도/청량감', color: 'bg-lime-100 text-lime-950 dark:bg-lime-900/40 dark:text-lime-100' },
                 ]
             },
             {
@@ -39,10 +39,10 @@ export const whiteWineRegions: SpiritCategory = {
                 criteria: '주요 품종: 리슬링, 게뷔르츠트라미너, 피노 그리, 뮈스카 | 독일 접경 지역(보주 산맥 동쪽) | 매우 건조한 기후 | 드라이 스타일 및 방당쥐 타르디브(늦수확) 스위트 스타일',
                 description: '알자스는 독일과 지리적으로 인접해 독일 품종을 재배하지만 스타일은 전혀 다르다. 보주 산맥이 만드는 "비 그늘"로 프랑스에서 가장 건조한 기후가 형성되어, 게뷔르츠트라미너의 리치·장미향과 리슬링의 섬세한 미네랄이 매우 응축된 형태로 잘 익는다. 그랑 크뤼 알자스(리슬링)는 세계 최고 수준의 드라이 화이트 와인으로 평가받는다.',
                 flavorTags: [
-                    { label: '리치/장미(게뷔르츠)', color: 'bg-pink-400/20 text-zinc-950 dark:text-pink-300' },
-                    { label: '백도/아카시아(리슬링)', color: 'bg-yellow-300/20 text-zinc-950 dark:text-yellow-200' },
-                    { label: '응축 미네랄', color: 'bg-slate-500/20 text-zinc-950 dark:text-slate-300' },
-                    { label: '풀바디/드라이', color: 'bg-amber-300/20 text-zinc-950 dark:text-amber-200' },
+                    { label: '리치/장미(게뷔르츠)', color: 'bg-pink-100 text-pink-950 dark:bg-pink-900/40 dark:text-pink-100' },
+                    { label: '백도/아카시아(리슬링)', color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+                    { label: '응축 미네랄', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: '풀바디/드라이', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
                 ]
             },
             {
@@ -50,10 +50,10 @@ export const whiteWineRegions: SpiritCategory = {
                 criteria: '품종: 리슬링 (압도적 비중) | 슬레이트(점판암) 토양 | 매우 서늘한 기후 | 카비넷·슈패트레제·아우스레제·트로켄베렌아우스레제 등 당도 등급 체계 | Prädikat 등급 시스템',
                 description: '세계에서 가장 섬세하고 미묘한 화이트 와인을 만드는 산지. 모젤의 그레이 슬레이트 토양은 포도에 독특한 연기·미네랄 풍미를 부여한다. 산도가 매우 높고 알코올이 낮으며(7~11%), 약간의 잔당이 완벽한 단맛-산도 불균형을 만들어내는 독특한 균형감이 특징이다. 에곤 뮐러, 요하네스 호프 등의 그랑 크뤼 리슬링은 세계에서 가장 비싼 화이트 와인 중 하나다.',
                 flavorTags: [
-                    { label: '백도/살구', color: 'bg-orange-200/20 text-zinc-950 dark:text-orange-200' },
-                    { label: '슬레이트/연기 미네랄', color: 'bg-slate-600/20 text-zinc-950 dark:text-slate-300' },
-                    { label: '꿀/아카시아', color: 'bg-yellow-400/20 text-zinc-950 dark:text-yellow-300' },
-                    { label: '낮은 알코올·높은 산도', color: 'bg-lime-300/20 text-zinc-950 dark:text-lime-200' },
+                    { label: '백도/살구', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: '슬레이트/연기 미네랄', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: '꿀/아카시아', color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+                    { label: '낮은 알코올·높은 산도', color: 'bg-lime-100 text-lime-950 dark:bg-lime-900/40 dark:text-lime-100' },
                 ]
             },
             {
@@ -61,10 +61,10 @@ export const whiteWineRegions: SpiritCategory = {
                 criteria: '품종: 소비뇽 블랑(말버러의 상징) | 서늘하고 일조량 풍부한 기후 | 뉴질랜드 화이트 와인 생산의 70%+ | 클라우디 베이(Cloudy Bay)로 세계적으로 알려짐',
                 description: '1980년대 말버러의 소비뇽 블랑은 전 세계 소비뇽 블랑의 스타일을 재정의했다. 루아르 밸리의 허브 미네랄 스타일과 달리, 말버러는 강렬하고 폭발적인 열대과일(페션프루트·구아바·망고) + 자몽 + 신선한 허브의 조합으로 미각에 강렬한 인상을 남긴다. 스테인리스 발효, 오크 무사용이 이 선명한 과실 아로마를 보존한다.',
                 flavorTags: [
-                    { label: '페션프루트/구아바', color: 'bg-yellow-500/20 text-zinc-950 dark:text-yellow-300' },
-                    { label: '자몽/시트러스', color: 'bg-lime-400/20 text-zinc-950 dark:text-lime-300' },
-                    { label: '허브(흑현미/아스파라거스)', color: 'bg-green-500/20 text-zinc-950 dark:text-green-300' },
-                    { label: '선명/폭발적', color: 'bg-emerald-400/20 text-zinc-950 dark:text-emerald-300' },
+                    { label: '페션프루트/구아바', color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+                    { label: '자몽/시트러스', color: 'bg-lime-100 text-lime-950 dark:bg-lime-900/40 dark:text-lime-100' },
+                    { label: '허브(흑현미/아스파라거스)', color: 'bg-green-100 text-green-950 dark:bg-green-900/40 dark:text-green-100' },
+                    { label: '선명/폭발적', color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
                 ]
             }
         ],
@@ -125,11 +125,11 @@ export const whiteWineRegions: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: '부르고뉴: 버터·미네랄', color: 'bg-amber-300/20 text-zinc-950 dark:text-amber-200' },
-            { label: '루아르: 허브·시트러스', color: 'bg-green-400/20 text-zinc-950 dark:text-green-300' },
-            { label: '알자스: 아로마틱·리치', color: 'bg-pink-300/20 text-zinc-950 dark:text-pink-200' },
-            { label: '모젤: 슬레이트·꿀', color: 'bg-slate-400/20 text-zinc-950 dark:text-slate-200' },
-            { label: '말버러: 열대과일·폭발적', color: 'bg-lime-500/20 text-zinc-950 dark:text-lime-300' },
+            { label: '부르고뉴: 버터·미네랄', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: '루아르: 허브·시트러스', color: 'bg-green-100 text-green-950 dark:bg-green-900/40 dark:text-green-100' },
+            { label: '알자스: 아로마틱·리치', color: 'bg-pink-100 text-pink-950 dark:bg-pink-900/40 dark:text-pink-100' },
+            { label: '모젤: 슬레이트·꿀', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: '말버러: 열대과일·폭발적', color: 'bg-lime-100 text-lime-950 dark:bg-lime-900/40 dark:text-lime-100' },
         ],
         foodPairing: [
             '샤블리 — 신선한 굴, 해산물, 스시',
@@ -153,10 +153,10 @@ export const whiteWineRegions: SpiritCategory = {
                 criteria: 'Variety: Chardonnay | Chablis (no oak, extreme minerality) vs. Meursault/Montrachet (oak-aged, rich) | Grand Cru and Premier Cru vineyard hierarchy | Cool continental climate',
                 description: 'Chablis is crafted from Chardonnay grown in Kimmeridgian limestone soils rich in ancient oyster fossils, producing an intensely mineral, oyster shell-tinged style with razor-sharp lemon and green apple acidity — completely unlike oak-aged Burgundy. Meursault and Puligny-Montrachet on the Côte de Beaune bring opulent, complex expressions of butter, toasted hazelnut, honey, and citrus blossom through careful oak aging. Le Montrachet Grand Cru is widely considered the greatest dry white wine on earth.',
                 flavorTags: [
-                    { label: 'Oyster Shell/Mineral (Chablis)', color: 'bg-slate-400/20 text-zinc-950 dark:text-slate-300' },
-                    { label: 'Lemon/Green Apple', color: 'bg-lime-400/20 text-zinc-950 dark:text-lime-300' },
-                    { label: 'Butter/Hazelnut (Meursault)', color: 'bg-amber-400/20 text-zinc-950 dark:text-amber-300' },
-                    { label: 'Honey/Toast', color: 'bg-yellow-400/20 text-zinc-950 dark:text-yellow-300' },
+                    { label: 'Oyster Shell/Mineral (Chablis)', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: 'Lemon/Green Apple', color: 'bg-lime-100 text-lime-950 dark:bg-lime-900/40 dark:text-lime-100' },
+                    { label: 'Butter/Hazelnut (Meursault)', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: 'Honey/Toast', color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
                 ]
             },
             {
@@ -164,10 +164,10 @@ export const whiteWineRegions: SpiritCategory = {
                 criteria: 'Key varieties: Sauvignon Blanc, Chenin Blanc, Muscadet | Sancerre, Pouilly-Fumé (Sauvignon Blanc) | Vouvray (Chenin Blanc, dry to sweet) | Cool Atlantic climate',
                 description: 'The original home of Sauvignon Blanc, the Loire Valley is a kingdom of freshness and herbal aromatics. Sancerre and Pouilly-Fumé are the benchmark for the grape — an inimitable combination of grapefruit, freshly cut grass, black currant leaves (cassis bud), chalk, and limestone minerality that cannot be replicated elsewhere. Vouvray\'s Chenin Blanc spans a remarkable range from bone-dry to lusciously sweet botrytized Moelleux, making the Loire the most stylistically diverse white wine valley in France.',
                 flavorTags: [
-                    { label: 'Grapefruit/Citrus', color: 'bg-yellow-400/20 text-zinc-950 dark:text-yellow-300' },
-                    { label: 'Grass/Herb/Pea', color: 'bg-green-500/20 text-zinc-950 dark:text-green-300' },
-                    { label: 'Chalk/Mineral', color: 'bg-slate-400/20 text-zinc-950 dark:text-slate-300' },
-                    { label: 'High Acidity/Freshness', color: 'bg-lime-500/20 text-zinc-950 dark:text-lime-300' },
+                    { label: 'Grapefruit/Citrus', color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+                    { label: 'Grass/Herb/Pea', color: 'bg-green-100 text-green-950 dark:bg-green-900/40 dark:text-green-100' },
+                    { label: 'Chalk/Mineral', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: 'High Acidity/Freshness', color: 'bg-lime-100 text-lime-950 dark:bg-lime-900/40 dark:text-lime-100' },
                 ]
             },
             {
@@ -175,10 +175,10 @@ export const whiteWineRegions: SpiritCategory = {
                 criteria: 'Key varieties: Riesling, Gewürztraminer, Pinot Gris, Muscat | Bordering Germany (east of Vosges Mountains) | France\'s driest wine region | Both dry and Vendange Tardive (late-harvest) sweet styles',
                 description: 'Alsace is geographically adjacent to Germany but stylistically entirely distinct. The natural "rain shadow" of the Vosges Mountains creates France\'s driest wine climate, concentrating and fully ripening the aromatic Germanic varieties into something uniquely Alsatian: Gewürztraminer\'s intoxicating lychee-and-rose perfume and Riesling\'s intense, layered mineral complexity both achieve extraordinary concentration here. Grand Cru Alsace Riesling is consistently ranked among the world\'s finest dry white wines.',
                 flavorTags: [
-                    { label: 'Lychee/Rose (Gewürztraminer)', color: 'bg-pink-400/20 text-zinc-950 dark:text-pink-300' },
-                    { label: 'White Peach/Acacia (Riesling)', color: 'bg-yellow-300/20 text-zinc-950 dark:text-yellow-200' },
-                    { label: 'Concentrated Minerality', color: 'bg-slate-500/20 text-zinc-950 dark:text-slate-300' },
-                    { label: 'Full-Bodied/Dry', color: 'bg-amber-300/20 text-zinc-950 dark:text-amber-200' },
+                    { label: 'Lychee/Rose (Gewürztraminer)', color: 'bg-pink-100 text-pink-950 dark:bg-pink-900/40 dark:text-pink-100' },
+                    { label: 'White Peach/Acacia (Riesling)', color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+                    { label: 'Concentrated Minerality', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: 'Full-Bodied/Dry', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
                 ]
             },
             {
@@ -186,10 +186,10 @@ export const whiteWineRegions: SpiritCategory = {
                 criteria: 'Variety: Riesling (dominant) | Slate (Schiefer) soil | Extremely cool climate | Prädikat sweetness classification: Kabinett > Spätlese > Auslese > Beerenauslese > Trockenbeerenauslese (TBA) | Steep terraced vineyards on the river',
                 description: 'Germany\'s Mosel produces some of the world\'s most delicate and intellectually thrilling white wines. The iconic grey slate (Schiefer) soil imparts a unique smoky, stony minerality to the wines. With naturally high acidity and low alcohol (often just 7–9%), Mosel Rieslings achieve a hauntingly precise balance between residual sweetness and vibrant acidity. Egon Müller\'s Scharzhofberger Trockenbeerenauslese regularly fetches prices rivaling Romanée-Conti.',
                 flavorTags: [
-                    { label: 'White Peach/Apricot', color: 'bg-orange-200/20 text-zinc-950 dark:text-orange-200' },
-                    { label: 'Slate/Smoky Mineral', color: 'bg-slate-600/20 text-zinc-950 dark:text-slate-300' },
-                    { label: 'Honey/Acacia', color: 'bg-yellow-400/20 text-zinc-950 dark:text-yellow-300' },
-                    { label: 'Low Alcohol/High Acidity', color: 'bg-lime-300/20 text-zinc-950 dark:text-lime-200' },
+                    { label: 'White Peach/Apricot', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: 'Slate/Smoky Mineral', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: 'Honey/Acacia', color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+                    { label: 'Low Alcohol/High Acidity', color: 'bg-lime-100 text-lime-950 dark:bg-lime-900/40 dark:text-lime-100' },
                 ]
             },
             {
@@ -197,10 +197,10 @@ export const whiteWineRegions: SpiritCategory = {
                 criteria: 'Primary variety: Sauvignon Blanc (Marlborough\'s defining grape) | Cool, sun-rich climate with large diurnal temperature variation | Produces 70%+ of all New Zealand white wine | Globally introduced by Cloudy Bay (1985 vintage)',
                 description: 'Marlborough\'s Sauvignon Blanc redefined what the world expected from the grape when it burst onto the global stage in the 1980s. Far more exuberant and fruit-forward than Loire Valley\'s mineral herb style, Marlborough delivers an explosion of tropical passion fruit, guava, mango, and grapefruit alongside fresh-cut grass and bell pepper (in cool vintages). Stainless steel fermentation with no oak preserves the vivid aromatics in their fullest intensity.',
                 flavorTags: [
-                    { label: 'Passion Fruit/Guava', color: 'bg-yellow-500/20 text-zinc-950 dark:text-yellow-300' },
-                    { label: 'Grapefruit/Citrus', color: 'bg-lime-400/20 text-zinc-950 dark:text-lime-300' },
-                    { label: 'Fresh Herb/Asparagus', color: 'bg-green-500/20 text-zinc-950 dark:text-green-300' },
-                    { label: 'Vivid/Explosive', color: 'bg-emerald-400/20 text-zinc-950 dark:text-emerald-300' },
+                    { label: 'Passion Fruit/Guava', color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+                    { label: 'Grapefruit/Citrus', color: 'bg-lime-100 text-lime-950 dark:bg-lime-900/40 dark:text-lime-100' },
+                    { label: 'Fresh Herb/Asparagus', color: 'bg-green-100 text-green-950 dark:bg-green-900/40 dark:text-green-100' },
+                    { label: 'Vivid/Explosive', color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
                 ]
             }
         ],
@@ -261,11 +261,11 @@ export const whiteWineRegions: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: 'Burgundy: Butter & Mineral', color: 'bg-amber-300/20 text-zinc-950 dark:text-amber-200' },
-            { label: 'Loire: Herb & Citrus', color: 'bg-green-400/20 text-zinc-950 dark:text-green-300' },
-            { label: 'Alsace: Aromatic & Lychee', color: 'bg-pink-300/20 text-zinc-950 dark:text-pink-200' },
-            { label: 'Mosel: Slate & Honey', color: 'bg-slate-400/20 text-zinc-950 dark:text-slate-200' },
-            { label: 'Marlborough: Tropical & Vivid', color: 'bg-lime-500/20 text-zinc-950 dark:text-lime-300' },
+            { label: 'Burgundy: Butter & Mineral', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: 'Loire: Herb & Citrus', color: 'bg-green-100 text-green-950 dark:bg-green-900/40 dark:text-green-100' },
+            { label: 'Alsace: Aromatic & Lychee', color: 'bg-pink-100 text-pink-950 dark:bg-pink-900/40 dark:text-pink-100' },
+            { label: 'Mosel: Slate & Honey', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: 'Marlborough: Tropical & Vivid', color: 'bg-lime-100 text-lime-950 dark:bg-lime-900/40 dark:text-lime-100' },
         ],
         foodPairing: [
             'Chablis — Fresh Oysters, Shellfish, Sashimi',

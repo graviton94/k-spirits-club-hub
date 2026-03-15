@@ -119,12 +119,12 @@ export const singleMalt: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "바닐라/카라멜", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "건포도/셰리", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
-            { label: "청사과/배", color: "bg-emerald-400/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "꿀/플로럴", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "스모키/피트", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" },
-            { label: "해풍/브인", color: "bg-sky-500/20 text-zinc-950 dark:text-sky-300" }
+            { label: "바닐라/카라멜", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "건포도/셰리", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "청사과/배", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "꿀/플로럴", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "스모키/피트", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "해풍/브인", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' }
         ],
         foodPairing: [
             "훈제 연어 및 신선한 굴",
@@ -263,12 +263,12 @@ export const singleMalt: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "Vanilla/Caramel", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Dried Fruit/Sherry", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
-            { label: "Green Apple/Pear", color: "bg-emerald-400/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "Honey/Floral", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "Smoky/Peat", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" },
-            { label: "Brine/Sea Breeze", color: "bg-sky-500/20 text-zinc-950 dark:text-sky-300" }
+            { label: "Vanilla/Caramel", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Dried Fruit/Sherry", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "Green Apple/Pear", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "Honey/Floral", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "Smoky/Peat", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "Brine/Sea Breeze", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' }
         ],
         foodPairing: [
             "Smoked Salmon and Fresh Oysters",

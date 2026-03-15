@@ -17,10 +17,10 @@ export const oakBarrel: SpiritCategory = {
                 criteria: "미국산 화이트 오크의 심재 중심 / 낮은 탄닌·높은 오크 락톤 / 버번 배럴의 표준",
                 description: "조직이 치밀해 숙성 안정성이 뛰어나다. 코코넛, 우디 스위트, 바닐린이 풍부해 밝은 단맛을 만들고 황금색으로 빠르게 올라온다. 피트/스모크처럼 강한 원주 향을 부드럽게 감싸는 성격이다.",
                 flavorTags: [
-                    { label: "바닐라", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-                    { label: "코코넛(락톤)", color: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30" },
-                    { label: "토피/카라멜", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-                    { label: "꿀", color: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30" }
+                    { label: "바닐라", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: "코코넛(락톤)", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+                    { label: "토피/카라멜", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: "꿀", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' }
                 ]
             },
             {
@@ -28,10 +28,10 @@ export const oakBarrel: SpiritCategory = {
                 criteria: "유럽산 참나무 / 높은 탄닌 / 셰리 시즌드 캐스크에서 흔함",
                 description: "탄닌 함량이 높아 견고한 바디와 드라이한 떫은맛을 준다. 산화 숙성과 만나 짙은 마호가니 색을 만들며 건과일, 견과, 가죽처럼 어두운 스펙트럼의 풍미를 강화한다.",
                 flavorTags: [
-                    { label: "건과일(레이즌)", color: "bg-rose-500/20 text-rose-300 border-rose-500/30" },
-                    { label: "호두/견과류", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-                    { label: "가죽/우디", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" },
-                    { label: "다크 초콜릿", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" }
+                    { label: "건과일(레이즌)", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: "호두/견과류", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: "가죽/우디", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: "다크 초콜릿", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
                 ]
             },
             {
@@ -39,10 +39,10 @@ export const oakBarrel: SpiritCategory = {
                 criteria: "프랑스산 / 타이트 그레인 / 중간~높은 탄닌 및 향신료 페놀",
                 description: "결이 촘촘해 추출이 천천히 진행되며 베이킹 스파이스, 구운 견과, 코코아 같은 세련된 건조함을 만든다. 질감(실키함)과 향의 층위를 만드는 데 유리하다.",
                 flavorTags: [
-                    { label: "베이킹 스파이스", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-                    { label: "구운 아몬드", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-                    { label: "시더/우디", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" },
-                    { label: "코코아", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" }
+                    { label: "베이킹 스파이스", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: "구운 아몬드", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: "시더/우디", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: "코코아", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
                 ]
             },
             {
@@ -50,10 +50,10 @@ export const oakBarrel: SpiritCategory = {
                 criteria: "일본산 물참나무 / 높은 기공률 / 장기 숙성용",
                 description: "목재가 무르고 가공이 까다롭지만 긴 숙성에서 백단향, 인센스, 약재, 정향 같은 이국적 향을 낸다. 주질이 섬세한 원주일수록 미즈나라의 개성이 깨끗하게 드러난다.",
                 flavorTags: [
-                    { label: "백단향(샌달우드)", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" },
-                    { label: "가라향/인센스", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" },
-                    { label: "자스민/플로럴", color: "bg-rose-500/20 text-rose-300 border-rose-500/30" },
-                    { label: "은은한 꿀", color: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30" }
+                    { label: "백단향(샌달우드)", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: "가라향/인센스", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: "자스민/플로럴", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: "은은한 꿀", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' }
                 ]
             },
             {
@@ -61,10 +61,10 @@ export const oakBarrel: SpiritCategory = {
                 criteria: "재사용하지 않은 새 오크통 / 직선적인 추출",
                 description: "나무 성분이 가장 강하게 추출된다. 짧은 기간에도 색과 향이 빠르게 올라오지만 밸런스가 무너지면 우디함이나 쓴맛이 과해질 수 있어 정교한 설계가 필요하다.",
                 flavorTags: [
-                    { label: "강한 바닐라", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-                    { label: "로스티드 오크", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" },
-                    { label: "카라멜라이즈", color: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30" },
-                    { label: "드라이 스파이스", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" }
+                    { label: "강한 바닐라", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: "로스티드 오크", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: "카라멜라이즈", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+                    { label: "드라이 스파이스", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' }
                 ]
             },
             {
@@ -72,10 +72,10 @@ export const oakBarrel: SpiritCategory = {
                 criteria: "버번 숙성에 1회 사용된 배럴 / 균형형 추출",
                 description: "바닐라, 토피, 코코넛 같은 달콤한 오크 노트를 남기되 과도한 우디함은 줄어든 상태다. 원주의 과실이나 꽃 향 같은 증류 캐릭터를 살리면서 질감과 단맛을 더한다.",
                 flavorTags: [
-                    { label: "바닐라 크림", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-                    { label: "시트러스 필", color: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30" },
-                    { label: "토피", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-                    { label: "라이트 오크", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" }
+                    { label: "바닐라 크림", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: "시트러스 필", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+                    { label: "토피", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: "라이트 오크", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
                 ]
             },
             {
@@ -83,10 +83,10 @@ export const oakBarrel: SpiritCategory = {
                 criteria: "드라이 셰리아 올로로소를 담았던 대형 캐스크",
                 description: "산화 숙성 셰리의 너티함과 건과일 특성이 배어 있다. 위스키와 럼에 호두, 헤이즐넛, 오렌지 껍질, 말린 과일 풍미와 리치한 바디를 부여한다.",
                 flavorTags: [
-                    { label: "호두/헤이즐넛", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-                    { label: "오렌지 필", color: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30" },
-                    { label: "건포도", color: "bg-rose-500/20 text-rose-300 border-rose-500/30" },
-                    { label: "리치 바디", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" }
+                    { label: "호두/헤이즐넛", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: "오렌지 필", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+                    { label: "건포도", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: "리치 바디", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
                 ]
             },
             {
@@ -94,10 +94,10 @@ export const oakBarrel: SpiritCategory = {
                 criteria: "당도 높은 페드로 히메네스 셰리를 담았던 캐스크",
                 description: "점도 높은 단맛과 짙은 색이 강하게 이입된다. 대추야자, 무화과 잼, 몰라세스, 초콜릿 시럽 같은 농밀한 디저트 풍미를 빠르게 더한다.",
                 flavorTags: [
-                    { label: "대추야자", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-                    { label: "무화과 잼", color: "bg-rose-500/20 text-rose-300 border-rose-500/30" },
-                    { label: "몰라세스", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" },
-                    { label: "초콜릿 시럽", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" }
+                    { label: "대추야자", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: "무화과 잼", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: "몰라세스", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: "초콜릿 시럽", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
                 ]
             },
             {
@@ -105,10 +105,10 @@ export const oakBarrel: SpiritCategory = {
                 criteria: "레드 와인 또는 포트 와인 숙성/피니시용",
                 description: "와인 유래의 베리, 자두 과실미와 탄닌이 더해진다. 과일의 색감과 드라이한 구조가 강화되며 원주 스타일과의 궁합이 매우 중요한 캐스크다.",
                 flavorTags: [
-                    { label: "붉은 베리", color: "bg-rose-500/20 text-rose-300 border-rose-500/30" },
-                    { label: "자두/체리", color: "bg-rose-500/20 text-rose-300 border-rose-500/30" },
-                    { label: "와인 탄닌", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" },
-                    { label: "다크 코코아", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" }
+                    { label: "붉은 베리", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: "자두/체리", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: "와인 탄닌", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: "다크 코코아", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
                 ]
             },
             {
@@ -116,10 +116,10 @@ export const oakBarrel: SpiritCategory = {
                 criteria: "배럴을 재조립해 용량을 키운 범용 숙성용 (~250L)",
                 description: "배럴보다 추출은 완만하고 산화 숙성이 안정적으로 진행된다. 오크 과다를 줄이면서도 충분한 바닐라와 토스트 노트를 주어 장기 숙성에 널리 쓰인다.",
                 flavorTags: [
-                    { label: "균형 잡힌 바닐라", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-                    { label: "은은한 토스트", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" },
-                    { label: "과실감 유지", color: "bg-rose-500/20 text-rose-300 border-rose-500/30" },
-                    { label: "부드러운 질감", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" }
+                    { label: "균형 잡힌 바닐라", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: "은은한 토스트", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: "과실감 유지", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: "부드러운 질감", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
                 ]
             },
             {
@@ -127,10 +127,10 @@ export const oakBarrel: SpiritCategory = {
                 criteria: "소형 캐스크 / 높은 표면적 비율로 빠른 숙성",
                 description: "짧은 기간에 색과 오크 성분이 빠르게 올라와 성숙감을 만들지만 우디함에 취약하다. 피니시나 강한 캐릭터를 의도적으로 강화할 때 효과적이다.",
                 flavorTags: [
-                    { label: "빠른 컬러 업", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-                    { label: "스파이시 오크", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-                    { label: "농밀한 바디", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" },
-                    { label: "우디 강도↑", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" }
+                    { label: "빠른 컬러 업", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: "스파이시 오크", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: "농밀한 바디", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: "우디 강도↑", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
                 ]
             },
             {
@@ -138,10 +138,10 @@ export const oakBarrel: SpiritCategory = {
                 criteria: "여러 번 사용되어 오크 영향이 줄어든 상태",
                 description: "직접적인 오크 향은 약하지만 원주의 과일, 꽃, 곡물 캐릭터가 또렷하게 유지된다. 장기 숙성에서 부드러움과 복합성을 쌓는 훌륭한 캔버스 역할을 한다.",
                 flavorTags: [
-                    { label: "클린한 과실", color: "bg-rose-500/20 text-rose-300 border-rose-500/30" },
-                    { label: "플로럴", color: "bg-rose-500/20 text-rose-300 border-rose-500/30" },
-                    { label: "섬세한 오크", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" },
-                    { label: "미네랄/드라이", color: "bg-sky-500/20 text-sky-300 border-sky-500/30" }
+                    { label: "클린한 과실", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: "플로럴", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: "섬세한 오크", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: "미네랄/드라이", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' }
                 ]
             },
             {
@@ -149,10 +149,10 @@ export const oakBarrel: SpiritCategory = {
                 criteria: "내부를 깎고(Shaved) 재가열한 재생 캐스크",
                 description: "리필의 성격을 되살리면서 새 오크의 장점(바닐라/카라멜)을 절충했다. 붉은 과실과 로스티드 노트가 빠르게 올라와 피니시나 NAS 스타일 설계에 활용된다.",
                 flavorTags: [
-                    { label: "레드 프루트", color: "bg-rose-500/20 text-rose-300 border-rose-500/30" },
-                    { label: "토스트 카라멜", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-                    { label: "로스티드", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" },
-                    { label: "퀵 피니시", color: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30" }
+                    { label: "레드 프루트", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: "토스트 카라멜", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: "로스티드", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: "퀵 피니시", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' }
                 ]
             },
             {
@@ -160,10 +160,10 @@ export const oakBarrel: SpiritCategory = {
                 criteria: "내부 탄화 강도 / #4 alligator 등이 최고 강도",
                 description: "차링 층은 불순물을 흡착하고 바닐라/스파이스 전구체를 활성화한다. 강도가 높을수록 스모키, 로스티드, 브라운 슈거 톤이 진하게 강화된다.",
                 flavorTags: [
-                    { label: "차콜/스모키", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" },
-                    { label: "로스티드 커피", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" },
-                    { label: "메이플 슈거", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-                    { label: "스파이스", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" }
+                    { label: "차콜/스모키", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: "로스티드 커피", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: "메이플 슈거", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: "스파이스", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' }
                 ]
             }
         ],
@@ -251,10 +251,10 @@ export const oakBarrel: SpiritCategory = {
                 criteria: "Heartwood-centric / Low tannin, High oak lactones / The Bourbon Standard",
                 description: "The dense grain structure provides excellent stability. It is rich in vanillin and oak lactones, creating bright sweetness with notes of coconut, vanilla, and honey. It excels at softening intense distillate notes like peat and smoke.",
                 flavorTags: [
-                    { label: "Vanilla", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-                    { label: "Coconut (Lactone)", color: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30" },
-                    { label: "Toffee/Caramel", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-                    { label: "Honey", color: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30" }
+                    { label: "Vanilla", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: "Coconut (Lactone)", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+                    { label: "Toffee/Caramel", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: "Honey", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' }
                 ]
             },
             {
@@ -262,10 +262,10 @@ export const oakBarrel: SpiritCategory = {
                 criteria: "High tannin content / Common in Sherry-seasoned casks",
                 description: "High tannin levels provide a robust body and a dry, astringent finish. Combined with oxidative maturation, it produces a deep mahogany color and a dark flavor spectrum of dried fruits, nuts, and leather.",
                 flavorTags: [
-                    { label: "Dried Fruits (Raisin)", color: "bg-rose-500/20 text-rose-300 border-rose-500/30" },
-                    { label: "Walnut/Nutty", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-                    { label: "Leather/Woody", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" },
-                    { label: "Dark Chocolate", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" }
+                    { label: "Dried Fruits (Raisin)", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: "Walnut/Nutty", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: "Leather/Woody", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: "Dark Chocolate", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
                 ]
             },
             {
@@ -273,10 +273,10 @@ export const oakBarrel: SpiritCategory = {
                 criteria: "Tight grain / Medium-high tannins & spicy phenols",
                 description: "The exceptionally tight grain results in a slow extraction process, yielding sophisticated dryness with notes of baking spices, toasted almonds, and cocoa. It is prized for creating silky textures and complex aromatic layers.",
                 flavorTags: [
-                    { label: "Baking Spices", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-                    { label: "Toasted Almond", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-                    { label: "Cedar/Woody", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" },
-                    { label: "Cocoa", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" }
+                    { label: "Baking Spices", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: "Toasted Almond", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: "Cedar/Woody", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: "Cocoa", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
                 ]
             },
             {
@@ -284,10 +284,10 @@ export const oakBarrel: SpiritCategory = {
                 criteria: "High porosity / Specialized for long-term maturation",
                 description: "Though the wood is soft and difficult to coop, long-term aging yields exotic aromas of sandalwood, agarwood (incense), and cloves. It shines brightest with delicate distillates that allow the Mizunara character to remain transparent.",
                 flavorTags: [
-                    { label: "Sandalwood", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" },
-                    { label: "Incense (Kara)", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" },
-                    { label: "Jasmine/Floral", color: "bg-rose-500/20 text-rose-300 border-rose-500/30" },
-                    { label: "Subtle Honey", color: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30" }
+                    { label: "Sandalwood", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: "Incense (Kara)", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: "Jasmine/Floral", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: "Subtle Honey", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' }
                 ]
             },
             {
@@ -295,10 +295,10 @@ export const oakBarrel: SpiritCategory = {
                 criteria: "Barrel used once for Bourbon / Balanced extraction",
                 description: "Maintains sweet oak notes like vanilla and toffee but with reduced woody harshness. It enhances the distillery's character (fruit/floral) while adding essential texture and sweetness.",
                 flavorTags: [
-                    { label: "Vanilla Cream", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-                    { label: "Citrus Peel", color: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30" },
-                    { label: "Toffee", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-                    { label: "Light Oak", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" }
+                    { label: "Vanilla Cream", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: "Citrus Peel", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+                    { label: "Toffee", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: "Light Oak", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
                 ]
             },
             {
@@ -306,10 +306,10 @@ export const oakBarrel: SpiritCategory = {
                 criteria: "Cask previously holding ultra-sweet PX Sherry",
                 description: "Intense sweetness and dark color are rapidly infused. It quickly adds luscious dessert flavors like dates, fig jam, molasses, and chocolate syrup.",
                 flavorTags: [
-                    { label: "Dates", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-                    { label: "Fig Jam", color: "bg-rose-500/20 text-rose-300 border-rose-500/30" },
-                    { label: "Molasses", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" },
-                    { label: "Chocolate Syrup", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" }
+                    { label: "Dates", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: "Fig Jam", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: "Molasses", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: "Chocolate Syrup", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
                 ]
             },
             {
@@ -317,10 +317,10 @@ export const oakBarrel: SpiritCategory = {
                 criteria: "Used multiple times / Minimal oak influence",
                 description: "While the direct oak aroma is subtle, the spirit's innate fruit, floral, and grain characters are preserved with clarity. It acts as an excellent canvas for building complexity during very long-term maturation.",
                 flavorTags: [
-                    { label: "Clean Fruit", color: "bg-rose-500/20 text-rose-300 border-rose-500/30" },
-                    { label: "Floral", color: "bg-rose-500/20 text-rose-300 border-rose-500/30" },
-                    { label: "Delicate Oak", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" },
-                    { label: "Mineral/Dry", color: "bg-sky-500/20 text-sky-300 border-sky-500/30" }
+                    { label: "Clean Fruit", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: "Floral", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: "Delicate Oak", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: "Mineral/Dry", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' }
                 ]
             },
             {
@@ -328,10 +328,10 @@ export const oakBarrel: SpiritCategory = {
                 criteria: "Shaved, Toasted, and Re-charred wine casks",
                 description: "A hybrid approach that revives used casks with the benefits of new oak (vanilla/caramel). It quickly imparts red fruit and roasted notes, often used for 'finishing' or NAS styles.",
                 flavorTags: [
-                    { label: "Red Fruit", color: "bg-rose-500/20 text-rose-300 border-rose-500/30" },
-                    { label: "Toasted Caramel", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-                    { label: "Roasted", color: "bg-stone-500/20 text-stone-300 border-stone-500/30" },
-                    { label: "Quick Finish", color: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30" }
+                    { label: "Red Fruit", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+                    { label: "Toasted Caramel", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: "Roasted", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: "Quick Finish", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' }
                 ]
             }
         ],

@@ -141,16 +141,16 @@ export const grainWhisky: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "시리얼/곡물", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" },
-            { label: "바닐라/카라멜", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-400" },
-            { label: "꿀/메이플", color: "bg-yellow-600/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "베이킹 스파이스", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
-            { label: "후추/민트(라이)", color: "bg-emerald-600/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "오크/토스트", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
-            { label: "시트러스", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-200" },
-            { label: "청사과/배", color: "bg-emerald-400/20 text-zinc-950 dark:text-emerald-200" },
-            { label: "코코넛/크리미", color: "bg-yellow-400/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "클린/드라이 피니시", color: "bg-sky-500/20 text-zinc-950 dark:text-sky-300" }
+            { label: "시리얼/곡물", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "바닐라/카라멜", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "꿀/메이플", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "베이킹 스파이스", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "후추/민트(라이)", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "오크/토스트", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "시트러스", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "청사과/배", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "코코넛/크리미", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "클린/드라이 피니시", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' }
         ],
         foodPairing: [
             "치킨, 감자튀김 등 가벼운 튀김류 (하이볼)",
@@ -297,16 +297,16 @@ export const grainWhisky: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "Cereal/Grain", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Vanilla/Caramel", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-400" },
-            { label: "Honey/Maple", color: "bg-yellow-600/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "Baking Spices", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
-            { label: "Pepper/Mint (Rye)", color: "bg-emerald-600/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "Oak/Toasted", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
-            { label: "Citrus", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-200" },
-            { label: "Green Apple/Pear", color: "bg-emerald-400/20 text-zinc-950 dark:text-emerald-200" },
-            { label: "Coconut/Creamy", color: "bg-yellow-400/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "Clean/Dry Finish", color: "bg-sky-500/20 text-zinc-950 dark:text-sky-300" }
+            { label: "Cereal/Grain", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Vanilla/Caramel", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Honey/Maple", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "Baking Spices", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "Pepper/Mint (Rye)", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "Oak/Toasted", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "Citrus", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "Green Apple/Pear", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "Coconut/Creamy", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "Clean/Dry Finish", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' }
         ],
         foodPairing: [
             "Fried Foods (Chicken, Fries) in Highball",

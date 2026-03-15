@@ -134,12 +134,12 @@ export const shochu: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "구수한 고구마", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "토스티/보리", color: "bg-yellow-600/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "산뜻한 긴죠향", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-300" },
-            { label: "클린/미네랄", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
-            { label: "시트러스/라임", color: "bg-emerald-400/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "카라멜/바닐라", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" }
+            { label: "구수한 고구마", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "토스티/보리", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "산뜻한 긴죠향", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "클린/미네랄", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "시트러스/라임", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "카라멜/바닐라", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' }
         ],
         foodPairing: [
             "야키토리 (닭꼬치 구이)",
@@ -277,12 +277,12 @@ export const shochu: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "Savory Sweet Potato", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Toasty/Barley", color: "bg-yellow-600/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "Floral Ginjo-ka", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-300" },
-            { label: "Clean/Mineral", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
-            { label: "Citrus/Lime", color: "bg-emerald-400/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "Caramel/Vanilla", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" }
+            { label: "Savory Sweet Potato", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Toasty/Barley", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "Floral Ginjo-ka", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "Clean/Mineral", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "Citrus/Lime", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "Caramel/Vanilla", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' }
         ],
         foodPairing: [
             "Yakitori (Grilled Chicken Skewers)",

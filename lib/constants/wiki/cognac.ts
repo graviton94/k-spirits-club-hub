@@ -225,18 +225,18 @@ export const cognac: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "포도꽃/화이트 플로럴", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-300" },
-            { label: "청사과/배", color: "bg-emerald-400/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "시트러스/오렌지 필", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
-            { label: "바닐라/토피", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "오크 스파이스/시나몬", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" },
-            { label: "말린 살구/무화과", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
-            { label: "견과/호두", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
-            { label: "초콜릿/코코아", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" },
-            { label: "가죽/담배", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" },
-            { label: "란시오/버섯/폴리시드 우드", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" },
-            { label: "꿀/마멀레이드", color: "bg-yellow-600/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "미네랄/초크", color: "bg-stone-400/20 text-zinc-950 dark:text-stone-300" }
+            { label: "포도꽃/화이트 플로럴", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "청사과/배", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "시트러스/오렌지 필", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "바닐라/토피", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "오크 스파이스/시나몬", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "말린 살구/무화과", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "견과/호두", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "초콜릿/코코아", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "가죽/담배", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "란시오/버섯/폴리시드 우드", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "꿀/마멀레이드", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "미네랄/초크", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
         ],
         foodPairing: [
             "푸아그라/테린/파테",
@@ -403,16 +403,16 @@ export const cognac: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "Vine Flower / White Florals", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-300" },
-            { label: "Green Apple / Pear", color: "bg-emerald-400/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "Citrus / Orange Peel", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
-            { label: "Vanilla / Toffee", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Oak Spice / Cinnamon", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Dried Apricot / Fig", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
-            { label: "Walnut / Nutty", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
-            { label: "Chocolate / Cocoa", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" },
-            { label: "Leather / Tobacco", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" },
-            { label: "Rancio / Mushroom", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" }
+            { label: "Vine Flower / White Florals", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "Green Apple / Pear", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "Citrus / Orange Peel", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "Vanilla / Toffee", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Oak Spice / Cinnamon", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Dried Apricot / Fig", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "Walnut / Nutty", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "Chocolate / Cocoa", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "Leather / Tobacco", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "Rancio / Mushroom", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
         ],
         foodPairing: [
             "Foie Gras / Terrine / Pâté",

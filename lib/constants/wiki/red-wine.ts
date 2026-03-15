@@ -124,13 +124,13 @@ export const redWine: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "블랙베리/카시스", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
-            { label: "체리/라즈베리", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-400" },
-            { label: "바닐라/토스트", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" },
-            { label: "후추/스파이스", color: "bg-yellow-600/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "흙내/버섯/숲", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
-            { label: "가죽/담배", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" },
-            { label: "미네랄리티", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" }
+            { label: "블랙베리/카시스", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "체리/라즈베리", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "바닐라/토스트", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "후추/스파이스", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "흙내/버섯/숲", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "가죽/담배", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "미네랄리티", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
         ],
         foodPairing: [
             "스테이크 및 양갈비 구이",
@@ -261,13 +261,13 @@ export const redWine: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "Blackberry/Cassis", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
-            { label: "Cherry/Raspberry", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-400" },
-            { label: "Vanilla/Toast", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Pepper/Spice", color: "bg-yellow-600/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "Earthy/Mushroom", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
-            { label: "Leather/Tobacco", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" },
-            { label: "Minerality", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" }
+            { label: "Blackberry/Cassis", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "Cherry/Raspberry", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "Vanilla/Toast", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Pepper/Spice", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "Earthy/Mushroom", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "Leather/Tobacco", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "Minerality", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
         ],
         foodPairing: [
             "Steak and Grilled Lamb Chops",

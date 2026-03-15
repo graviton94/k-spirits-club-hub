@@ -123,12 +123,12 @@ export const blendedWhisky: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "바닐라/카라멜", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "꿀/토피", color: "bg-yellow-600/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "말린 과일", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
-            { label: "시트러스/레몬", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "토스티/시리얼", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" },
-            { label: "스모키/피트", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" }
+            { label: "바닐라/카라멜", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "꿀/토피", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "말린 과일", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "시트러스/레몬", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "토스티/시리얼", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "스모키/피트", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
         ],
         foodPairing: [
             "스테이크 및 바비큐 요리",
@@ -254,12 +254,12 @@ export const blendedWhisky: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "Vanilla / Caramel", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Honey / Toffee", color: "bg-yellow-600/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "Dried Fruit", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
-            { label: "Citrus / Lemon", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "Toasty / Cereal", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Smoky / Peat", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" }
+            { label: "Vanilla / Caramel", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Honey / Toffee", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "Dried Fruit", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "Citrus / Lemon", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "Toasty / Cereal", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Smoky / Peat", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
         ],
         foodPairing: [
             "Steak and Barbecue dishes",

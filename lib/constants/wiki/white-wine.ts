@@ -110,13 +110,13 @@ export const whiteWine: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "시트러스/레몬", color: "bg-yellow-400/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "청사과/배", color: "bg-emerald-400/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "열대과일/망고", color: "bg-rose-500/20 text-zinc-950 dark:text-rose-400" },
-            { label: "화이트 플로럴", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-300" },
-            { label: "잔디/허브", color: "bg-emerald-500/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "바닐라/버터(오크)", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" },
-            { label: "미네랄/젖은돌", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" }
+            { label: "시트러스/레몬", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "청사과/배", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "열대과일/망고", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "화이트 플로럴", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "잔디/허브", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "바닐라/버터(오크)", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "미네랄/젖은돌", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
         ],
         foodPairing: [
             "신선한 생선회 및 해산물",
@@ -232,13 +232,13 @@ export const whiteWine: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "Citrus/Lemon", color: "bg-yellow-400/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "Green Apple/Pear", color: "bg-emerald-400/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "Tropical/Mango", color: "bg-rose-500/20 text-zinc-950 dark:text-rose-400" },
-            { label: "White Floral", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-300" },
-            { label: "Grassy/Herbal", color: "bg-emerald-500/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "Vanilla/Butter", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Mineral/Wet Stones", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" }
+            { label: "Citrus/Lemon", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "Green Apple/Pear", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "Tropical/Mango", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "White Floral", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "Grassy/Herbal", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "Vanilla/Butter", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Mineral/Wet Stones", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
         ],
         foodPairing: [
             "Fresh Sashimi and Raw Seafood",

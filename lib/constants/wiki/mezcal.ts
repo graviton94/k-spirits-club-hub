@@ -131,13 +131,13 @@ export const mezcal: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "스모키/훈연", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" },
-            { label: "구운 아가베", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "흙내/미네랄", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" },
-            { label: "허브/그린 페퍼", color: "bg-emerald-500/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "시트러스/오렌지", color: "bg-yellow-400/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "발효 과실/요거트", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-300" },
-            { label: "후추/알싸함", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" }
+            { label: "스모키/훈연", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "구운 아가베", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "흙내/미네랄", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "허브/그린 페퍼", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "시트러스/오렌지", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "발효 과실/요거트", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "후추/알싸함", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' }
         ],
         foodPairing: [
             "진한 몰레(Mole) 소스 요리",
@@ -271,13 +271,13 @@ export const mezcal: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "Smoky/Roasted", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" },
-            { label: "Roasted Agave", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Earthy/Mineral", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" },
-            { label: "Herbal/Green Pepper", color: "bg-emerald-500/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "Citrus/Orange", color: "bg-yellow-400/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "Fermented Fruit/Yogurt", color: "bg-rose-400/20 text-zinc-950 dark:text-rose-300" },
-            { label: "Peppery/Piquant", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" }
+            { label: "Smoky/Roasted", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "Roasted Agave", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Earthy/Mineral", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "Herbal/Green Pepper", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "Citrus/Orange", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "Fermented Fruit/Yogurt", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "Peppery/Piquant", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' }
         ],
         foodPairing: [
             "Rich Mole Sauce Dishes",

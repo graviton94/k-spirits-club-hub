@@ -115,12 +115,12 @@ export const vodka: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "클린/뉴트럴", color: "bg-sky-600/20 text-zinc-950 dark:text-sky-300" },
-            { label: "매끄러운 질감", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
-            { label: "은은한 단맛", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" },
-            { label: "알싸한 후추", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
-            { label: "크리미/실키", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "미네랄리티", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" }
+            { label: "클린/뉴트럴", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "매끄러운 질감", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "은은한 단맛", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "알싸한 후추", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "크리미/실키", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "미네랄리티", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
         ],
         foodPairing: [
             "진하고 기름진 안주 (삼겹살, 훈제 오리)",
@@ -238,12 +238,12 @@ export const vodka: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "Clean/Neutral", color: "bg-sky-600/20 text-zinc-950 dark:text-sky-300" },
-            { label: "Smooth Texture", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
-            { label: "Subtle Sweetness", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" },
-            { label: "White Pepper", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
-            { label: "Creamy/Silky", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Minerality", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" }
+            { label: "Clean/Neutral", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "Smooth Texture", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "Subtle Sweetness", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "White Pepper", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "Creamy/Silky", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Minerality", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
         ],
         foodPairing: [
             "Rich and Savory Snacks (Pork Belly, Smoked Duck)",

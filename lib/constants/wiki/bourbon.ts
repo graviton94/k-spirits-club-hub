@@ -216,17 +216,17 @@ export const bourbon: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "바닐라/카라멜", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "토피/브라운슈가", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-500" },
-            { label: "메이플/꿀", color: "bg-yellow-600/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "오크/토스트", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
-            { label: "코코넛", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-200" },
-            { label: "스파이스(시나몬)", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
-            { label: "후추/호밀", color: "bg-emerald-600/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "체리/과실", color: "bg-rose-500/20 text-zinc-950 dark:text-rose-400" },
-            { label: "가죽/타바코", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-400" },
-            { label: "스모키/숯", color: "bg-stone-800/20 text-zinc-950 dark:text-stone-300" },
-            { label: "민트/허브", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" }
+            { label: "바닐라/카라멜", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "토피/브라운슈가", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "메이플/꿀", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "오크/토스트", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "코코넛", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "스파이스(시나몬)", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "후추/호밀", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "체리/과실", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "가죽/타바코", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "스모키/숯", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "민트/허브", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' }
         ],
         foodPairing: [
             "바비큐(브리스킷/풀드포크) & 스모크 소스",
@@ -467,17 +467,17 @@ export const bourbon: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "Vanilla/Caramel", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Toffee/Brown Sugar", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-500" },
-            { label: "Maple/Honey", color: "bg-yellow-600/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "Oak/Toasted", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
-            { label: "Coconut", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-200" },
-            { label: "Cinnamon Spice", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
-            { label: "Pepper/Rye", color: "bg-emerald-600/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "Cherry/Stone Fruit", color: "bg-rose-500/20 text-zinc-950 dark:text-rose-400" },
-            { label: "Leather/Tobacco", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-400" },
-            { label: "Smoke/Char", color: "bg-stone-800/20 text-zinc-950 dark:text-stone-300" },
-            { label: "Mint/Herbal", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" }
+            { label: "Vanilla/Caramel", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Toffee/Brown Sugar", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Maple/Honey", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "Oak/Toasted", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "Coconut", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "Cinnamon Spice", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "Pepper/Rye", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "Cherry/Stone Fruit", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "Leather/Tobacco", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "Smoke/Char", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "Mint/Herbal", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' }
         ],
         foodPairing: [
             "BBQ (Brisket/Pulled Pork) with Smokey Sauce",

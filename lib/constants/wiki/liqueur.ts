@@ -139,16 +139,16 @@ export const liqueur: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "시트러스/오렌지", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "베리/과일", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
-            { label: "허브/보타니컬", color: "bg-emerald-600/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "민트/쿨링", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
-            { label: "바닐라/카라멜", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "견과/마지팬", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" },
-            { label: "커피/로스팅", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" },
-            { label: "다크 초콜릿", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
-            { label: "비터/약초", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" },
-            { label: "크리미/밀키", color: "bg-amber-400/20 text-zinc-950 dark:text-amber-300" }
+            { label: "시트러스/오렌지", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "베리/과일", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "허브/보타니컬", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "민트/쿨링", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "바닐라/카라멜", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "견과/마지팬", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "커피/로스팅", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "다크 초콜릿", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "비터/약초", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "크리미/밀키", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' }
         ],
         foodPairing: [
             "다크 초콜릿 및 티라미수",
@@ -290,16 +290,16 @@ export const liqueur: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "Citrus/Orange", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "Berry/Fruit", color: "bg-rose-600/20 text-zinc-950 dark:text-rose-300" },
-            { label: "Herbal/Botanical", color: "bg-emerald-600/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "Mint/Cooling", color: "bg-sky-400/20 text-zinc-950 dark:text-sky-300" },
-            { label: "Vanilla/Caramel", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Nut/Marzipan", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Coffee/Roasted", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" },
-            { label: "Dark Chocolate", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
-            { label: "Bitter/Medicinal", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" },
-            { label: "Creamy/Milky", color: "bg-amber-400/20 text-zinc-950 dark:text-amber-300" }
+            { label: "Citrus/Orange", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "Berry/Fruit", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "Herbal/Botanical", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "Mint/Cooling", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "Vanilla/Caramel", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Nut/Marzipan", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Coffee/Roasted", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "Dark Chocolate", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "Bitter/Medicinal", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "Creamy/Milky", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' }
         ],
         foodPairing: [
             "Dark Chocolate and Tiramisu",

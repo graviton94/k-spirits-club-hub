@@ -71,9 +71,9 @@ export const koreanTraditionalSpirits: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "누룩/발효향", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
-            { label: "산뜻한 꽃향", color: "bg-pink-400/20 text-zinc-950 dark:text-pink-300" },
-            { label: "달콤한 조청", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" }
+            { label: "누룩/발효향", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "산뜻한 꽃향", color: 'bg-pink-100 text-pink-950 dark:bg-pink-900/40 dark:text-pink-100' },
+            { label: "달콤한 조청", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' }
         ],
         foodPairing: [
             "한정식 및 궁중 요리",
@@ -141,9 +141,9 @@ export const koreanTraditionalSpirits: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "Earthy Nuruk", color: "bg-stone-600/20 text-zinc-950 dark:text-stone-300" },
-            { label: "Floral & Fruity", color: "bg-pink-400/20 text-zinc-950 dark:text-pink-300" },
-            { label: "Savory Grain", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" }
+            { label: "Earthy Nuruk", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "Floral & Fruity", color: 'bg-pink-100 text-pink-950 dark:bg-pink-900/40 dark:text-pink-100' },
+            { label: "Savory Grain", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' }
         ],
         foodPairing: [
             "Royal Court Cuisine (Gungjung Eumsik)",

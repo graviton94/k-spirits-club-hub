@@ -134,13 +134,13 @@ export const beer: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "홉 시트러스/열대과일", color: "bg-yellow-400/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "솔·레진/파인", color: "bg-emerald-600/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "몰트 비스킷/빵", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" },
-            { label: "로스티드 커피/카카오", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" },
-            { label: "바나나/클로브", color: "bg-rose-500/20 text-zinc-950 dark:text-rose-300" },
-            { label: "상큼한 산미/요거트", color: "bg-sky-300/20 text-zinc-950 dark:text-sky-300" },
-            { label: "오크/바닐라", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" }
+            { label: "홉 시트러스/열대과일", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "솔·레진/파인", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "몰트 비스킷/빵", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "로스티드 커피/카카오", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "바나나/클로브", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "상큼한 산미/요거트", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "오크/바닐라", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' }
         ],
         foodPairing: [
             "프라이드 치킨 및 각종 튀김",
@@ -277,13 +277,13 @@ export const beer: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "Hop Citrus / Tropical Fruit", color: "bg-yellow-400/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "Pine / Resin", color: "bg-emerald-600/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "Malt Biscuit / Bread", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Roasted Coffee / Cacao", color: "bg-stone-700/20 text-zinc-950 dark:text-stone-300" },
-            { label: "Banana / Clove", color: "bg-rose-500/20 text-zinc-950 dark:text-rose-300" },
-            { label: "Tart Acidity / Yogurt", color: "bg-sky-300/20 text-zinc-950 dark:text-sky-300" },
-            { label: "Oak / Vanilla", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" }
+            { label: "Hop Citrus / Tropical Fruit", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "Pine / Resin", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "Malt Biscuit / Bread", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Roasted Coffee / Cacao", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: "Banana / Clove", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "Tart Acidity / Yogurt", color: 'bg-sky-100 text-sky-950 dark:bg-sky-900/40 dark:text-sky-100' },
+            { label: "Oak / Vanilla", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' }
         ],
         foodPairing: [
             "Fried Chicken and various fried foods",

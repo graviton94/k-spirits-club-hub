@@ -17,10 +17,10 @@ export const usWhiskeyRegions: SpiritCategory = {
                 criteria: '법적으로 버번은 미국 어디서나 생산 가능하지만, 전체 버번의 약 95%가 켄터키에서 생산됨 | 대표 증류소: 버팔로 트레이스, 헤븐 힐, 포 로지스, 메이커스 마크, 짐 빔, 와일드 터키',
                 description: '켄터키가 버번의 심장인 이유는 지리학적 조건에 있다. 석회암(Limestone) 지층을 통과한 지하수는 철분이 제거되고 칼슘과 마그네슘이 풍부해진다. 이 물이 발효와 숙성에서 독특한 결과를 만들어낸다. 또한 켄터키의 극단적인 온도 편차(여름 35℃ / 겨울 -15℃)가 버번을 오크 안에서 빠르게 팽창·수축시켜 다른 지역보다 훨씬 빠른 "숙성 가속 효과"를 만든다. 이것이 켄터키 버번의 바닐라·카라멜이 타 지역보다 더 진하고 빠르게 발현되는 비결이다.',
                 flavorTags: [
-                    { label: '바닐라/카라멜', color: 'bg-amber-500/20 text-zinc-950 dark:text-amber-300' },
-                    { label: '오크/토스트', color: 'bg-stone-600/20 text-zinc-950 dark:text-stone-300' },
-                    { label: '토피/메이플', color: 'bg-amber-700/20 text-zinc-950 dark:text-amber-500' },
-                    { label: '과실(체리·사과)', color: 'bg-rose-500/20 text-zinc-950 dark:text-rose-300' },
+                    { label: '바닐라/카라멜', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: '오크/토스트', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: '토피/메이플', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: '과실(체리·사과)', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
                 ]
             },
             {
@@ -28,10 +28,10 @@ export const usWhiskeyRegions: SpiritCategory = {
                 criteria: '법적으로 "테네시 위스키"는 버번의 모든 요건을 충족 + "링컨 카운티 공정(Lincoln County Process)" 의무 적용 | 대표 증류소: 잭 다니엘스, 조지 디켈, 벤자민 프리차드(예외적으로 LCP 미적용)',
                 description: '테네시 위스키의 가장 큰 특징은 "링컨 카운티 공정"이다. 증류된 원액을 배럴에 넣기 전, 최소 10피트(약 3m) 두께의 사탕단풍나무 숯 층을 천천히 통과시켜 거친 요소를 걸러내는 것이다. 이 공정으로 테네시 위스키는 버번보다 훨씬 부드럽고 달콤하며 약간의 스모키한 숯 뉘앙스를 가진다. 잭 다니엘스의 "Jack Daniel\'s Old No.7"은 세계에서 가장 많이 팔리는 위스키다.',
                 flavorTags: [
-                    { label: '숯/스모키(은은)', color: 'bg-stone-700/20 text-zinc-950 dark:text-stone-300' },
-                    { label: '바닐라/메이플', color: 'bg-amber-400/20 text-zinc-950 dark:text-amber-300' },
-                    { label: '부드러움/크림', color: 'bg-yellow-200/20 text-zinc-950 dark:text-yellow-100' },
-                    { label: '견과류/오크', color: 'bg-stone-500/20 text-zinc-950 dark:text-stone-300' },
+                    { label: '숯/스모키(은은)', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: '바닐라/메이플', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: '부드러움/크림', color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+                    { label: '견과류/오크', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
                 ]
             },
             {
@@ -39,10 +39,10 @@ export const usWhiskeyRegions: SpiritCategory = {
                 criteria: '라이 위스키는 버번과 달리 호밀이 매시빌의 51% 이상 | 펜실베이니아, 메릴랜드 역사적 전통 / 현대 크래프트 산지: 뉴욕, 콜로라도 | 대표: 버들라이프, 세이어스 위스키',
                 description: '라이 위스키는 미국 위스키의 또 다른 역사적 전통이다. 금주법 이전 펜실베이니아와 메릴랜드 스타일의 라이 위스키는 매우 풀바디하고 스파이시했다. 현재 라이 위스키는 크래프트 증류소 붐과 함께 부활하고 있으며, 호밀 특유의 후추·허브·드라이한 스파이스 덕분에 올드패션드, 맨해튼 등 클래식 칵테일 베이스로 강력한 존재감을 보인다.',
                 flavorTags: [
-                    { label: '후추/호밀 스파이스', color: 'bg-emerald-600/20 text-zinc-950 dark:text-emerald-300' },
-                    { label: '드라이 허브', color: 'bg-green-500/20 text-zinc-950 dark:text-green-300' },
-                    { label: '레몬/시트러스', color: 'bg-lime-400/20 text-zinc-950 dark:text-lime-300' },
-                    { label: '오크/타닌', color: 'bg-stone-600/20 text-zinc-950 dark:text-stone-300' },
+                    { label: '후추/호밀 스파이스', color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+                    { label: '드라이 허브', color: 'bg-green-100 text-green-950 dark:bg-green-900/40 dark:text-green-100' },
+                    { label: '레몬/시트러스', color: 'bg-lime-100 text-lime-950 dark:bg-lime-900/40 dark:text-lime-100' },
+                    { label: '오크/타닌', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
                 ]
             },
             {
@@ -50,10 +50,10 @@ export const usWhiskeyRegions: SpiritCategory = {
                 criteria: '최근 ASMWC(아메리칸 싱글몰트 위스키 협회) 주도로 카테고리 규정 논의 중 | 주요 산지: 오리건, 워싱턴, 텍사스, 콜로라도, 버지니아 | 대표: 웨스트랜드, 벌칸, 로스트 스피릿츠',
                 description: '스카치 싱글몰트 위스키의 방법론을 미국의 원재료와 기후로 재해석한 새로운 카테고리다. 오리건의 다습하고 온화한 기후, 텍사스의 극단적 열기, 콜로라도의 고산 건조 기후가 각각 전혀 다른 숙성 결과를 만들어낸다. 아직 카테고리 자체가 성장 중에 있지만, 세계 위스키 시장에서 가장 빠르게 주목받는 새로운 물결이다.',
                 flavorTags: [
-                    { label: '미국산 오크/코코넛', color: 'bg-amber-400/20 text-zinc-950 dark:text-amber-300' },
-                    { label: '열대과일/허브', color: 'bg-green-400/20 text-zinc-950 dark:text-green-300' },
-                    { label: '피트(선택적)', color: 'bg-stone-600/20 text-zinc-950 dark:text-stone-200' },
-                    { label: '실험적·개성적', color: 'bg-purple-500/20 text-zinc-950 dark:text-purple-300' },
+                    { label: '미국산 오크/코코넛', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: '열대과일/허브', color: 'bg-green-100 text-green-950 dark:bg-green-900/40 dark:text-green-100' },
+                    { label: '피트(선택적)', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: '실험적·개성적', color: 'bg-purple-100 text-purple-950 dark:bg-purple-900/40 dark:text-purple-100' },
                 ]
             }
         ],
@@ -123,10 +123,10 @@ export const usWhiskeyRegions: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: '버번: 바닐라·카라멜', color: 'bg-amber-500/20 text-zinc-950 dark:text-amber-300' },
-            { label: '테네시: 부드러움·숯향', color: 'bg-stone-500/20 text-zinc-950 dark:text-stone-200' },
-            { label: '라이: 스파이시·드라이', color: 'bg-emerald-600/20 text-zinc-950 dark:text-emerald-300' },
-            { label: '아메리칸 싱글몰트: 실험적', color: 'bg-purple-400/20 text-zinc-950 dark:text-purple-300' },
+            { label: '버번: 바닐라·카라멜', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: '테네시: 부드러움·숯향', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: '라이: 스파이시·드라이', color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: '아메리칸 싱글몰트: 실험적', color: 'bg-purple-100 text-purple-950 dark:bg-purple-900/40 dark:text-purple-100' },
         ],
         foodPairing: [
             '켄터키 버번 — 바비큐 브리스킷, 피칸 파이, 버팔로 윙',
@@ -148,10 +148,10 @@ export const usWhiskeyRegions: SpiritCategory = {
                 criteria: 'While Bourbon can legally be made anywhere in the US, approximately 95% is produced in Kentucky | Key Distilleries: Buffalo Trace, Heaven Hill, Four Roses, Maker\'s Mark, Jim Beam, Wild Turkey',
                 description: 'Kentucky\'s dominance isn\'t an accident — it\'s geological. Limestone bedrock filters the groundwater, removing iron (which impedes fermentation) and enriching it with calcium and magnesium (which yeast thrives on). Kentucky\'s extreme temperature swings (summer 35°C / winter -15°C) cause dramatic wood expansion and contraction cycles that dramatically accelerate the maturation process. This is why a 4-year-old Kentucky bourbon can carry as much oak character as an 8–10 year Scotch whisky.',
                 flavorTags: [
-                    { label: 'Vanilla/Caramel', color: 'bg-amber-500/20 text-zinc-950 dark:text-amber-300' },
-                    { label: 'Oak/Toast', color: 'bg-stone-600/20 text-zinc-950 dark:text-stone-300' },
-                    { label: 'Toffee/Maple', color: 'bg-amber-700/20 text-zinc-950 dark:text-amber-500' },
-                    { label: 'Cherry/Apple', color: 'bg-rose-500/20 text-zinc-950 dark:text-rose-300' },
+                    { label: 'Vanilla/Caramel', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: 'Oak/Toast', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: 'Toffee/Maple', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: 'Cherry/Apple', color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
                 ]
             },
             {
@@ -159,10 +159,10 @@ export const usWhiskeyRegions: SpiritCategory = {
                 criteria: 'Tennessee Whiskey must meet all Bourbon requirements PLUS mandatory Lincoln County Process | Key Distilleries: Jack Daniel\'s, George Dickel, Benjamin Prichard\'s (exempt from LCP)',
                 description: 'Tennessee whiskey\'s defining feature is the Lincoln County Process. Before barreling, the new spirit is slowly dripped through at least 10 feet (3 meters) of sugar maple charcoal, filtering out harsh congeners. The result is a spirit noticeably smoother and sweeter than standard bourbon, with a subtle, pleasant charcoal smokiness. Jack Daniel\'s Old No. 7 is the world\'s best-selling whiskey, making Tennessee Whiskey the most consumed American whiskey globally.',
                 flavorTags: [
-                    { label: 'Charcoal/Subtle Smoke', color: 'bg-stone-700/20 text-zinc-950 dark:text-stone-300' },
-                    { label: 'Vanilla/Maple', color: 'bg-amber-400/20 text-zinc-950 dark:text-amber-300' },
-                    { label: 'Smooth/Creamy', color: 'bg-yellow-200/20 text-zinc-950 dark:text-yellow-100' },
-                    { label: 'Nutmeg/Oak', color: 'bg-stone-500/20 text-zinc-950 dark:text-stone-300' },
+                    { label: 'Charcoal/Subtle Smoke', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: 'Vanilla/Maple', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: 'Smooth/Creamy', color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+                    { label: 'Nutmeg/Oak', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
                 ]
             },
             {
@@ -170,10 +170,10 @@ export const usWhiskeyRegions: SpiritCategory = {
                 criteria: 'Rye Whiskey: mash of 51%+ rye grain | Historical heartlands: Pennsylvania & Maryland | Modern craft producers: New York, Colorado, Vermont | Examples: WhistlePig, Sazerac Rye, High West',
                 description: 'Rye whiskey is American whiskey\'s other great tradition. Pre-Prohibition Pennsylvania and Maryland Rye was known for full body and bold spice. Today it has undergone a spectacular revival, driven by the cocktail renaissance. The rye grain\'s innate black pepper, caraway, dry herb, and grain tannins make it the ideal backbone for classic cocktails like the Old Fashioned, the Manhattan, and the Sazerac.',
                 flavorTags: [
-                    { label: 'Black Pepper/Rye Spice', color: 'bg-emerald-600/20 text-zinc-950 dark:text-emerald-300' },
-                    { label: 'Dry Herbs', color: 'bg-green-500/20 text-zinc-950 dark:text-green-300' },
-                    { label: 'Citrus/Lemon', color: 'bg-lime-400/20 text-zinc-950 dark:text-lime-300' },
-                    { label: 'Oak/Tannin', color: 'bg-stone-600/20 text-zinc-950 dark:text-stone-300' },
+                    { label: 'Black Pepper/Rye Spice', color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+                    { label: 'Dry Herbs', color: 'bg-green-100 text-green-950 dark:bg-green-900/40 dark:text-green-100' },
+                    { label: 'Citrus/Lemon', color: 'bg-lime-100 text-lime-950 dark:bg-lime-900/40 dark:text-lime-100' },
+                    { label: 'Oak/Tannin', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
                 ]
             },
             {
@@ -181,10 +181,10 @@ export const usWhiskeyRegions: SpiritCategory = {
                 criteria: 'Led by the ASMWC (American Single Malt Whiskey Commission), category definition currently being formalized | Key regions: Oregon, Washington, Texas, Colorado, Virginia | Notable producers: Westland, Stranahan\'s, Lost Spirits',
                 description: 'American Single Malt reimagines the methodology of Scotch single malt using American ingredients, climate, and innovation. Oregon\'s cool, humid Pacific climate, Texas\'s extreme heat, and Colorado\'s high-altitude dryness each produce dramatically different aging profiles. While still an emerging category, American Single Malt is one of the fastest-growing and most talked-about segments in the global whiskey market.',
                 flavorTags: [
-                    { label: 'American Oak/Coconut', color: 'bg-amber-400/20 text-zinc-950 dark:text-amber-300' },
-                    { label: 'Tropical Fruit/Herbs', color: 'bg-green-400/20 text-zinc-950 dark:text-green-300' },
-                    { label: 'Peat (Optional)', color: 'bg-stone-600/20 text-zinc-950 dark:text-stone-200' },
-                    { label: 'Experimental/Innovative', color: 'bg-purple-500/20 text-zinc-950 dark:text-purple-300' },
+                    { label: 'American Oak/Coconut', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+                    { label: 'Tropical Fruit/Herbs', color: 'bg-green-100 text-green-950 dark:bg-green-900/40 dark:text-green-100' },
+                    { label: 'Peat (Optional)', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+                    { label: 'Experimental/Innovative', color: 'bg-purple-100 text-purple-950 dark:bg-purple-900/40 dark:text-purple-100' },
                 ]
             }
         ],
@@ -254,10 +254,10 @@ export const usWhiskeyRegions: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: 'Bourbon: Vanilla & Caramel', color: 'bg-amber-500/20 text-zinc-950 dark:text-amber-300' },
-            { label: 'Tennessee: Smooth & Charcoal', color: 'bg-stone-500/20 text-zinc-950 dark:text-stone-200' },
-            { label: 'Rye: Spicy & Dry', color: 'bg-emerald-600/20 text-zinc-950 dark:text-emerald-300' },
-            { label: 'American Single Malt: Experimental', color: 'bg-purple-400/20 text-zinc-950 dark:text-purple-300' },
+            { label: 'Bourbon: Vanilla & Caramel', color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: 'Tennessee: Smooth & Charcoal', color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' },
+            { label: 'Rye: Spicy & Dry', color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: 'American Single Malt: Experimental', color: 'bg-purple-100 text-purple-950 dark:bg-purple-900/40 dark:text-purple-100' },
         ],
         foodPairing: [
             'Kentucky Bourbon — BBQ Brisket, Pecan Pie, Buffalo Wings',

@@ -66,9 +66,9 @@ export const koreanSpiritsByAbv: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "부드러운 목넘김", color: "bg-indigo-400/20 text-indigo-950 dark:text-indigo-300" },
-            { label: "짜릿한 타격감", color: "bg-red-600/20 text-red-950 dark:text-red-300" },
-            { label: "오래 남는 여운", color: "bg-orange-500/20 text-orange-950 dark:text-orange-300" }
+            { label: "부드러운 목넘김", color: 'bg-indigo-100 text-indigo-950 dark:bg-indigo-900/40 dark:text-indigo-100' },
+            { label: "짜릿한 타격감", color: 'bg-red-100 text-red-950 dark:bg-red-900/40 dark:text-red-100' },
+            { label: "오래 남는 여운", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' }
         ],
         foodPairing: [
             "저도수: 파전, 매운 요리",
@@ -135,9 +135,9 @@ export const koreanSpiritsByAbv: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "Smooth & Light", color: "bg-indigo-400/20 text-indigo-950 dark:text-indigo-300" },
-            { label: "Intense Burn", color: "bg-red-600/20 text-red-950 dark:text-red-300" },
-            { label: "Warm Chest", color: "bg-orange-500/20 text-orange-950 dark:text-orange-300" }
+            { label: "Smooth & Light", color: 'bg-indigo-100 text-indigo-950 dark:bg-indigo-900/40 dark:text-indigo-100' },
+            { label: "Intense Burn", color: 'bg-red-100 text-red-950 dark:bg-red-900/40 dark:text-red-100' },
+            { label: "Warm Chest", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' }
         ],
         foodPairing: [
             "Low ABV: Savory Pancakes, Spicy Food",

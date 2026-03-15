@@ -1,7 +1,16 @@
-import type { Config } from "tailwindcss";
-
-const config: Config = {
+/** @type {import('tailwindcss').Config} */
+const config = {
   darkMode: 'class',
+  safelist: [
+    {
+      pattern: /(bg|text|border)-(stone|amber|rose|emerald|sky|yellow|lime|green|pink|blue|orange|purple|slate|zinc|gray)-(50|100|200|300|400|500|600|700|800|900|950)/,
+      variants: ['dark', 'hover', 'focus'],
+    },
+    {
+      pattern: /bg-(stone|amber|rose|emerald|sky|yellow|lime|green|pink|blue|orange|purple|slate|zinc|gray)-(500|600|700|800|900)\/(10|20|30|40|50)/,
+      variants: ['dark'],
+    }
+  ],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",

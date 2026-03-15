@@ -135,13 +135,13 @@ export const rum: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "바닐라/토피", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "카라멜/흑설탕", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" },
-            { label: "바나나/펑키", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "파인애플/열대과일", color: "bg-rose-500/20 text-zinc-950 dark:text-rose-300" },
-            { label: "그라시/사탕수수", color: "bg-emerald-400/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "스파이스/시나몬", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" },
-            { label: "훈연/레더", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" }
+            { label: "바닐라/토피", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "카라멜/흑설탕", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "바나나/펑키", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "파인애플/열대과일", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "그라시/사탕수수", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "스파이스/시나몬", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "훈연/레더", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
         ],
         foodPairing: [
             "저크 치킨 및 매콤한 바비큐 요리",
@@ -279,13 +279,13 @@ export const rum: SpiritCategory = {
             ]
         },
         flavorTags: [
-            { label: "Vanilla/Toffee", color: "bg-amber-600/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Caramel/Brown Sugar", color: "bg-amber-700/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Banana/Funky", color: "bg-yellow-500/20 text-zinc-950 dark:text-yellow-300" },
-            { label: "Pineapple/Tropical", color: "bg-rose-500/20 text-zinc-950 dark:text-rose-300" },
-            { label: "Grassy/Sugarcane", color: "bg-emerald-400/20 text-zinc-950 dark:text-emerald-300" },
-            { label: "Spice/Cinnamon", color: "bg-amber-500/20 text-zinc-950 dark:text-amber-300" },
-            { label: "Smoky/Leather", color: "bg-stone-500/20 text-zinc-950 dark:text-stone-300" }
+            { label: "Vanilla/Toffee", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Caramel/Brown Sugar", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Banana/Funky", color: 'bg-yellow-100 text-yellow-950 dark:bg-yellow-900/40 dark:text-yellow-100' },
+            { label: "Pineapple/Tropical", color: 'bg-rose-100 text-rose-950 dark:bg-rose-900/40 dark:text-rose-100' },
+            { label: "Grassy/Sugarcane", color: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/40 dark:text-emerald-100' },
+            { label: "Spice/Cinnamon", color: 'bg-orange-200 text-orange-950 dark:bg-orange-900/40 dark:text-orange-100' },
+            { label: "Smoky/Leather", color: 'bg-stone-200 text-stone-950 dark:bg-stone-900/40 dark:text-stone-100' }
         ],
         foodPairing: [
             "Jerk Chicken and Spicy BBQ",
