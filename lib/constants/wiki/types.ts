@@ -64,6 +64,8 @@ export interface SpiritSection {
     manufacturingProcess?: SpiritProcess[]
     /** 5. 최적의 음용 가이드 */
     servingGuidelines?: SpiritServingGuideline
+    /** 6. FAQ (자주 묻는 질문) */
+    faqs?: { question: string; answer: string }[]
     // ------------------------------------
 
     /** 기존 레거시(or 간이) 렌더링용 필드들 */
@@ -74,6 +76,12 @@ export interface SpiritSection {
     foodPairing?: string[]
     /** DB 제품 조회용 카테고리 필터 키워드 */
     dbCategories?: string[]
+    /** 지역별 서브 Wiki로의 점프 슬러그 (e.g. 'scotch-whisky-regions') */
+    relatedPageSlug?: string
+    /** 지역 점프 배너 레이블 (한국어) */
+    relatedPageLabelKo?: string
+    /** 지역 점프 배너 레이블 (영어) */
+    relatedPageLabelEn?: string
 }
 
 export interface SpiritCategory {

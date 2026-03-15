@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { BookOpen, Clock, Layers, Droplets, FlaskConical, GlassWater, Utensils, ShoppingBag, Activity, Leaf, Thermometer, Search } from 'lucide-react'
+import { BookOpen, Clock, Layers, Droplets, FlaskConical, GlassWater, Utensils, ShoppingBag, Activity, Leaf, Thermometer, Search, HelpCircle } from 'lucide-react'
 import type { SpiritCategory } from '@/lib/constants/spirits-guide-data'
 import { getCategoryFallbackImage } from '@/lib/utils/image-fallback'
 import BackButton from '@/components/ui/BackButton'
@@ -375,6 +375,40 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                 )}
             </Section>
 
+            {/* ── 7-b. 지역 서브 위키 점프 배너 (relatedPageSlug 설정 시에만 표시) ── */}
+            {s?.relatedPageSlug && (
+                <Link
+                    href={`/${lang}/contents/wiki/${s.relatedPageSlug}`}
+                    className={`group flex items-center gap-4 rounded-2xl border-2 ${c.border} ${c.bg} px-6 py-5 hover:brightness-105 transition-all duration-200 shadow-sm`}
+                >
+                    {/* 맵 이미지 썸네일 */}
+                    <div className="shrink-0 w-16 h-16 rounded-xl overflow-hidden border border-white/20 bg-black/10">
+                        <img
+                            src={`/images/wiki/${s.relatedPageSlug}-map.png`}
+                            alt="Region Map"
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                                const img = e.currentTarget
+                                img.style.display = 'none'
+                            }}
+                        />
+                    </div>
+                    {/* 텍스트 */}
+                    <div className="flex-1 min-w-0">
+                        <p className={`text-[10px] font-black uppercase tracking-widest ${c.text} mb-0.5`}>
+                            {isEn ? '🗺️ Regional Deep Dive' : '🗺️ 산지별 심층 가이드'}
+                        </p>
+                        <p className="font-black text-foreground text-sm group-hover:underline leading-snug">
+                            {isEn
+                                ? (s.relatedPageLabelEn || '→ Explore Regional Styles')
+                                : (s.relatedPageLabelKo || '→ 지역별 스타일 탐험하기')
+                            }
+                        </p>
+                    </div>
+                    <span className={`text-lg font-black ${c.text} shrink-0 group-hover:translate-x-1 transition-transform`}>›</span>
+                </Link>
+            )}
+
             {/* ── 8. 푸드 페어링 ── */}
             <Section id="pairing" icon={<Utensils className="w-5 h-5" />} title={isEn ? 'Food Pairing' : '푸드 페어링'} color={category.color}>
                 {s?.foodPairing && s.foodPairing.length > 0 ? (
@@ -390,6 +424,26 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                     <ComingSoon label={isEn ? 'Food Pairing' : '푸드 페어링'} />
                 )}
             </Section>
+
+            {/* ── 8-b. FAQ (자주 묻는 질문) ── */}
+            {s?.faqs && s.faqs.length > 0 && (
+                <Section id="faq" icon={<HelpCircle className="w-5 h-5" />} title={isEn ? 'Frequently Asked Questions' : '자주 묻는 질문 (FAQ)'} color={category.color}>
+                    <div className="flex flex-col gap-4">
+                        {s.faqs.map((faq, idx) => (
+                            <div key={idx} className="flex flex-col gap-1.5 p-4 rounded-xl bg-background/50 border border-white/10">
+                                <h4 className={`font-black text-sm md:text-base ${c.text} flex items-start gap-2 leading-snug`}>
+                                    <span className="shrink-0">Q.</span>
+                                    <span>{faq.question}</span>
+                                </h4>
+                                <p className="text-sm text-muted-foreground leading-relaxed flex items-start gap-2">
+                                    <span className="shrink-0 font-bold opacity-70">A.</span>
+                                    <span>{faq.answer}</span>
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                </Section>
+            )}
 
             {/* ── 9. K-Spirits Club 추천 제품 ── */}
             {category.slug !== 'oak-barrel' && (

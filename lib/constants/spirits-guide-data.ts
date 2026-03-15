@@ -39,6 +39,13 @@ import { koreanWhisky } from './wiki/korean-whisky'
 import { koreanTraditionalSpirits } from './wiki/korean-traditional-spirits'
 import { koreanSpiritsByAbv } from './wiki/korean-spirits-by-abv'
 
+// Regional Sub-Wiki Pages (KO + EN)
+import { scotchWhiskyRegions } from './wiki/scotch-whisky-regions'
+import { usWhiskeyRegions } from './wiki/us-whiskey-regions'
+import { brandyRegions } from './wiki/brandy-regions'
+import { redWineRegions } from './wiki/red-wine-regions'
+import { whiteWineRegions } from './wiki/white-wine-regions'
+
 // 타입 재수출 (하위 호환성 유지)
 export type {
     SpiritSubtype,
@@ -99,7 +106,14 @@ export const SPIRIT_CATEGORIES: SpiritCategory[] = [
     makgeolliGuide,
     koreanWhisky,
     koreanTraditionalSpirits,
-    koreanSpiritsByAbv
+    koreanSpiritsByAbv,
+
+    // 9. Regional Sub-Wiki Pages (KO + EN)
+    scotchWhiskyRegions,
+    usWhiskeyRegions,
+    brandyRegions,
+    redWineRegions,
+    whiteWineRegions,
 ]
 
 /** slug로 카테고리 조회 */

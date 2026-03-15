@@ -125,7 +125,10 @@ export const whiteWine: SpiritCategory = {
             "크림 파스타 및 리조또",
             "태국/베트남식 매콤한 요리"
         ],
-        dbCategories: ['과실주']
+        dbCategories: ['과실주'],
+        relatedPageSlug: 'white-wine-regions',
+        relatedPageLabelKo: '🗺️ 샤블리·모젠·알자스·말버러의 화이트 와인 산지 탐험 →',
+        relatedPageLabelEn: '🗺️ Explore White Wine Regions of the World →',
     },
     sectionsEn: {
         definition: "White wine is a style of wine primarily produced by fermenting the juice of white grape varieties with minimal skin contact. Characterized by low tannins and a profile centered on high acidity, fresh fruit, and floral aromas, it spans a vast spectrum from bone-dry table wines to luscious, concentrated dessert wines.",
@@ -244,6 +247,9 @@ export const whiteWine: SpiritCategory = {
             "Cream-based Pastas and Risotto",
             "Spicy Thai or Vietnamese Cuisine"
         ],
-        dbCategories: ['과실주']
+        dbCategories: ['과실주'],
+        relatedPageSlug: 'white-wine-regions',
+        relatedPageLabelKo: '🗺️ 샤블리·모젠·알자스·말버러의 화이트 와인 산지 탐험 →',
+        relatedPageLabelEn: '🗺️ Explore White Wine Regions of the World →',
     }
 }

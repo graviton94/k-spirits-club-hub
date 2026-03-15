@@ -9,7 +9,7 @@ export const singleMalt: SpiritCategory = {
     taglineEn: 'The liquid art of a single distillery and its unique terroir',
     color: 'amber',
     sections: {
-        definition: "싱글몰트 위스키(Single Malt Whisky)란 단일 증류소(Single Distillery)에서 100% 맥아 보리(Malted Barley)만을 사용하여 물과 효모만으로 발효 및 증류한 위스키를 뜻한다. 여러 증류소의 몰트 원액을 섞는 '블렌디드 몰트'나 곡물을 섞는 '블렌디드 위스키'와 엄격히 구분된다. 특히 구리 팟 스틸(Pot Still)에서 두 번 증류하는 전통 방식을 고수하며, 원재료의 풍미와 증류소 고유의 테루아(Terroir)가 가장 진하게 투영되는 프리미엄 위스키의 정수로 꼽힌다.",
+        definition: "싱글몰트 위스키(Single Malt Whisky)란 단일 증류소(Single Distillery)에서 100% 맥아 보리(Malted Barley), 물, 효모라는 단 3가지 핵심 재료(Ingredients)만을 사용하여 발효 및 구리 팟 스틸(Pot Still)에서 증류한 위스키를 뜻한다. 여러 증류소의 원액을 섞는 '블렌디드 몰트'나 다른 곡물을 섞는 '블렌디드 위스키'와 엄격히 구분된다. 어떠한 첨가물 없이도 원재료의 풍미와 증류소 고유의 떼루아(Terroir)가 가장 진하게 투영되는 프리미엄 위스키의 정수다.",
         history: "몰트 위스키의 역사는 중세 수도원 증류 기술에서 시작되어, 1823년 세제 개편(Excise Act) 이후 '더 글렌리벳'이 최초의 합법 면허를 취득하며 현대적 산업의 기틀을 마련했다. 초기에는 대부분 블렌디드 위스키의 재료로 쓰였으나, 1963년 '글렌피딕'이 단일 증류소 원액만을 담은 '싱글몰트'를 전 세계에 마케팅하며 독립적인 카테고리로 급성장했다. 현재는 숙성 연수를 넘어 캐스크 피니시(Cask Finish), 논칠 필터링(Non-chill Filtered) 등 장인정신 기반의 다양성이 핵심 가치가 되었다.",
         classifications: [
             {
@@ -39,41 +39,41 @@ export const singleMalt: SpiritCategory = {
             }
         ],
         sensoryMetrics: [
-                {
-                    metric: "알코올 도수 (ABV)",
-                    label: "Strength",
-                    value: "40~46% (Standard) / 52~65% (CS)",
-                    description: "법적 최소 도수는 40%이다. 최근 프리미엄 몰트는 냉각 여과를 하지 않기 위해 46% 이상으로 병입하는 경우가 많으며, 도수가 높을수록 향기 분자의 휘발성이 강해져 노징(Nosing) 시 더 풍부한 정보를 제공한다."
-                },
-                {
-                    metric: "피트 스모크 (PPM)",
-                    label: "Peatiness",
-                    value: "0 (Unpeated) ~ 50+ (Heavy Peat)",
-                    description: "PPM(Phenol Parts Per Million)은 맥아의 페놀 함량을 나타낸다. 0~10은 저피트, 30 이상은 고피트로 분류되며, 증류 컷(Cut) 지점에 따라 실제 액체에 남는 스모키함의 질감은 달라질 수 있다."
-                },
-                {
-                    metric: "숙성 정보",
-                    label: "Age Statement",
-                    value: "NAS / 10~18년 / 21년+",
-                    description: "병에 표기된 연수는 사용된 원액 중 가장 어린 것의 나이다. 최근에는 연수 표기가 없는 NAS(Non-Age Statement) 제품도 캐스크 블렌딩의 기술력을 강조하며 프리미엄 시장에서 큰 비중을 차지하고 있다."
-                },
-                {
-                    metric: "캐스크 영향도",
-                    label: "Cask Influence",
-                    value: "First-fill / Refill",
-                    description: "처음 사용된 퍼스트필 캐스크는 오크의 바닐라와 탄닌이 강하며, 여러 번 사용된 리필 캐스크는 나무의 영향력을 줄여 증류소 본연의 섬세한 과실 향(New Make 캐릭터)을 더 잘 보여준다."
-                }
+            {
+                metric: "알코올 도수 (ABV)",
+                label: "Strength",
+                value: "40~46% (Standard) / 52~65% (CS)",
+                description: "법적 최소 도수는 40%이다. 최근 프리미엄 몰트는 냉각 여과를 하지 않기 위해 46% 이상으로 병입하는 경우가 많으며, 도수가 높을수록 향기 분자의 휘발성이 강해져 노징(Nosing) 시 더 풍부한 정보를 제공한다."
+            },
+            {
+                metric: "피트 스모크 (PPM)",
+                label: "Peatiness",
+                value: "0 (Unpeated) ~ 50+ (Heavy Peat)",
+                description: "PPM(Phenol Parts Per Million)은 맥아의 페놀 함량을 나타낸다. 0~10은 저피트, 30 이상은 고피트로 분류되며, 증류 컷(Cut) 지점에 따라 실제 액체에 남는 스모키함의 질감은 달라질 수 있다."
+            },
+            {
+                metric: "숙성 정보",
+                label: "Age Statement",
+                value: "NAS / 10~18년 / 21년+",
+                description: "병에 표기된 연수는 사용된 원액 중 가장 어린 것의 나이다. 최근에는 연수 표기가 없는 NAS(Non-Age Statement) 제품도 캐스크 블렌딩의 기술력을 강조하며 프리미엄 시장에서 큰 비중을 차지하고 있다."
+            },
+            {
+                metric: "캐스크 영향도",
+                label: "Cask Influence",
+                value: "First-fill / Refill",
+                description: "처음 사용된 퍼스트필 캐스크는 오크의 바닐라와 탄닌이 강하며, 여러 번 사용된 리필 캐스크는 나무의 영향력을 줄여 증류소 본연의 섬세한 과실 향(New Make 캐릭터)을 더 잘 보여준다."
+            }
         ],
         coreIngredients: [
             {
                 type: "주원료",
                 name: "맥아 보리 (Malted Barley)",
-                description: "100% 보리만을 사용하여 비스킷, 갓 구운 빵, 고소한 견과류의 바탕을 형성한다. 보리의 품종과 몰팅 방식(Floor Malting 등)은 위스키의 바디감에 큰 영향을 준다."
+                description: "Single malt whisky ingredients의 가장 핵심으로 100% 보리만을 사용한다. 비스킷, 갓 구운 빵, 고소한 견과류의 바탕을 형성하며 보리의 품종과 몰팅 방식은 위스키 바디감에 큰 영향을 준다."
             },
             {
                 type: "발효제",
                 name: "효모 (Yeast) & 양조수",
-                description: "효모는 발효 중 화사한 꽃향기와 과일향(에스터)을 생성하는 화학 공장의 역할을 한다. 물의 경도와 미네랄 함량은 증류액의 입안에서의 질감(Mouthfeel)을 결정짓는 테루아의 핵심이다."
+                description: "위스키가 무엇으로 만들어지는지(what is made from)를 묻는다면 물과 효모를 빼놓을 수 없다. 효모는 화사한 과일향을 생성하며, 물의 미네랄은 입안에서의 질감을 결정짓는 테루아의 핵심이다."
             },
             {
                 type: "숙성 도구",
@@ -133,10 +133,27 @@ export const singleMalt: SpiritCategory = {
             "다크 초콜릿 및 테라미수",
             "견과류와 건과일 플래터"
         ],
-        dbCategories: ['위스키']
+        dbCategories: ['위스키'],
+        relatedPageSlug: 'scotch-whisky-regions',
+        relatedPageLabelKo: '🗺️ 스코틀랜드 5대 산지별 위스키 개성 탐험하기 →',
+        relatedPageLabelEn: '🗺️ Explore Scotland\'s 5 Whisky Regions →',
+        faqs: [
+            {
+                question: "싱글몰트와 블렌디드 위스키의 차이점은 무엇인가요?",
+                answer: "싱글몰트는 오직 '단일 증류소'에서 '맥아 보리(Malted Barley)'만으로 만든 위스키입니다. 반면 블렌디드 위스키는 여러 증류소의 몰트 위스키와 저렴한 그레인(옥수수, 밀 등) 위스키를 부드럽게 섞어 대중적인 맛을 낸 것입니다."
+            },
+            {
+                question: "피트(Peat)란 무엇이며 왜 병원 소독약 냄새가 나나요?",
+                answer: "피트는 식물 퇴적물이 진흙처럼 굳은 이탄을 의미합니다. 스코틀랜드 아일라 지역 등에선 보리를 건조할 때 석탄 대신 이탄을 태웠고, 이 연기가 보리에 스며들어 특유의 스모키함과 요오드(소독약) 향을 만들어냅니다."
+            },
+            {
+                question: "숙성 연수(Age Statement)가 높을수록 항상 좋은 위스키인가요?",
+                answer: "반드시 그렇지는 않습니다. 오래 숙성할수록 오크통의 나무 향이 강해져 부드럽고 복합적이 될 수 있지만, 증류소 원액 본연의 개성(꽃향, 과실향)은 오히려 젊은 연수(10~15년)에서 더 선명하게 느낄 수 있습니다."
+            }
+        ]
     },
     sectionsEn: {
-        definition: "Single Malt Whisky refers to malt whisky produced at a single distillery using 100% malted barley. The wort is fermented, distilled in copper pot stills, and matured in oak casks before bottling. The term 'single' denotes its origin from one distillery, distinguishing it from blended whiskies that combine spirits from multiple sources.",
+        definition: "If you're wondering what is single malt whisky made from, the answer is remarkably simple but strictly regulated. Single Malt Whisky refers to whisky produced at a single distillery using exactly three single malt whisky ingredients: 100% malted barley, water, and yeast. The wort is fermented, distilled in copper pot stills, and matured in oak casks. The term 'single' denotes its origin from one distillery, distinguishing it from blended whiskies that combine spirits from multiple sources.",
         history: "The origins of malt whisky lie in the medieval distillation traditions of Scotland and Ireland, evolving into its modern form through the establishment of taxation, licensing, and refining of distillation techniques in the 18th and 19th centuries. Since the 1960s, distilleries began marketing their brands under the 'Single Malt' identity, growing into a premium category defined by cask experimentation, high-proof bottlings, and single-cask diversity.",
         classifications: [
             {
@@ -195,12 +212,12 @@ export const singleMalt: SpiritCategory = {
             {
                 type: "Primary Material",
                 name: "Malted Barley",
-                description: "100% barley creates a foundation of biscuit, cereal, and nutty notes. The specific grain variety and malting method (e.g., Floor Malting) are critical to the spirit's body."
+                description: "The crown jewel of single malt whisky ingredients. 100% barley creates a foundation of biscuit, cereal, and nutty notes. The specific grain variety and malting method are critical to the spirit's body."
             },
             {
                 type: "Fermentation Agent",
                 name: "Yeast & Brewing Water",
-                description: "Yeast acts as a chemical factory creating fruity esters. The water's mineral content and hardness define the 'terroir' and the final mouthfeel of the distillate."
+                description: "When asked what is single malt whisky made from, pure water and yeast are the essential drivers of flavor. Yeast creates fruity esters, while water minerality defines the final mouthfeel."
             },
             {
                 type: "Aging Vessel",
@@ -260,6 +277,23 @@ export const singleMalt: SpiritCategory = {
             "Dark Chocolate and Tiramisu",
             "Nut and Dried Fruit Platters"
         ],
-        dbCategories: ['위스키']
+        dbCategories: ['위스키'],
+        relatedPageSlug: 'scotch-whisky-regions',
+        relatedPageLabelKo: '🗺️ 스코틀랜드 5대 산지별 위스키 개성 탐험하기 →',
+        relatedPageLabelEn: '🗺️ Explore Scotland\'s 5 Whisky Regions →',
+        faqs: [
+            {
+                question: "What is the difference between single malt and blended whisky?",
+                answer: "A single malt is made entirely from malted barley at one specific distillery. A blended whisky combines malt whiskies from multiple distilleries with cheaper grain whiskies (like corn or wheat) to create a smoother, more consistent, and mass-market appealing flavor."
+            },
+            {
+                question: "What does 'peat' or 'peated' mean in single malt?",
+                answer: "Peat is partially decayed vegetation found in bogs. In some regions like Islay, distilleries burn peat to dry the malted barley. The aromatic smoke infuses the barley with phenols, giving the final whisky its distinctive smoky, medicinal, or campfire-like flavor."
+            },
+            {
+                question: "Does an older age statement mean a better whisky?",
+                answer: "Not necessarily. While older age statements (18+ years) extract more complex wood sugars, vanilla, and tannins from the cask making them smoother, younger whiskies (10-15 years) often showcase the distillery's vibrant core characteristics like fresh fruit, floral notes, or intense smoke much better."
+            }
+        ]
     }
 }

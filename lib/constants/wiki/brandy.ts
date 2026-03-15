@@ -140,7 +140,20 @@ export const brandy: SpiritCategory = {
             "푸아그라 및 무거운 소스의 스테이크",
             "사과 타르트 및 크렘 브륄레"
         ],
-        dbCategories: ['브랜디']
+        dbCategories: ['브랜디'],
+        relatedPageSlug: 'brandy-regions',
+        relatedPageLabelKo: '🗺️ 코냑·아르마냑·그라파·피스코 세계 브랜디 산지 탐험 →',
+        relatedPageLabelEn: '🗺️ Explore World Brandy Regions (Cognac, Armagnac, Grappa, Pisco) →',
+        faqs: [
+            {
+                question: "코냑과 브랜디의 차이점은 무엇인가요?",
+                answer: "브랜디는 과일을 증류한 모든 술을 통칭하는 큰 카테고리입니다. 코냑은 프랑스의 '코냑(Cognac)'이라는 특정 지방에서, 정해진 엄격한 법적 규정(포도 품종 제한, 구리 포트스틸 2회 증류 등)을 지켜 만들어진 최고급 브랜디만을 부르는 이름입니다. 즉, 모든 코냑은 브랜디이지만, 모든 브랜디가 코냑인 것은 아닙니다."
+            },
+            {
+                question: "브랜디의 평균 알코올 도수는 얼마나 되나요?",
+                answer: "대부분의 상업용 브랜디(코냑, 아르마냑 포함)는 병입 시 40% (80 proof)의 알코올 도수를 가집니다. 오크통 숙성 과정이나 정제수 가수를 통해 마시기 부드러운 도수인 40% 수준으로 맞추어 출시됩니다."
+            }
+        ]
     },
     sectionsEn: {
         definition: "Brandy is a distilled spirit produced by fermenting fruit juices—such as grapes, apples, or pears—into wine, which is then distilled and either aged in oak or bottled directly. It possesses a wide flavor spectrum, ranging from the essence of the raw fruit to complex notes of oak, vanilla, and 'Rancio' acquired through maturation.",
@@ -218,12 +231,12 @@ export const brandy: SpiritCategory = {
             {
                 step: "Distillation",
                 name: "Double Pot Still Distillation (Cognac Method)",
-                description: "Slowly distilled twice in copper stills to precisely isolate the purest and most elegant heart of the spirit (Eau-de-vie)."
+                description: "If you wonder how brandy is made, distillation is the core. It is slowly distilled twice in copper stills immediately following brandy fermentation to precisely isolate the purest heart of the spirit (Eau-de-vie)."
             },
             {
                 step: "Maturation",
                 name: "Barrel Aging and Oxidation",
-                description: "The spirit 'breathes' in oak barrels for years or decades, rounding off the alcohol's edge and creating aging esters to finalize aromatic depth."
+                description: "The spirit 'breathes' in oak barrels for years, rounding off the harsh alcohol edge and creating aging esters to finalize its aromatic depth."
             },
             {
                 step: "Blending",
@@ -274,6 +287,19 @@ export const brandy: SpiritCategory = {
             "Foie Gras and Steaks with heavy sauces",
             "Apple Tart and Crème Brûlée"
         ],
-        dbCategories: ['브랜디']
+        dbCategories: ['브랜디'],
+        relatedPageSlug: 'brandy-regions',
+        relatedPageLabelKo: '🗺️ 코냑·아르마냑·그라파·피스코 세계 브랜디 산지 탐험 →',
+        relatedPageLabelEn: '🗺️ Explore World Brandy Regions (Cognac, Armagnac, Grappa, Pisco) →',
+        faqs: [
+            {
+                question: "What is the difference between Cognac and Brandy?",
+                answer: "Brandy is a broad category for any spirit distilled from fermented fruit juice. Cognac is a specific, highly regulated type of brandy produced only in the Cognac region of France, using specific grape varieties and strict double-distillation methods. Simply put: all Cognac is brandy, but not all brandy is Cognac."
+            },
+            {
+                question: "What is the average brandy alcohol percentage?",
+                answer: "The vast majority of commercially available brandy, including Cognac and Armagnac, is bottled at 40% ABV (80 proof). While the spirit comes off the still at around 70% ABV, it naturally drops in proof during years of oak aging, and is usually cut with pure water before bottling to achieve the standard 40%."
+            }
+        ]
     }
 }

@@ -60,10 +60,10 @@ export const bourbon: SpiritCategory = {
         ],
         sensoryMetrics: [
             {
-            metric: "도수/알코올 볼륨",
-            label: "ABV/Proof",
-            value: "40~65% ABV (80~130 proof)",
-            description: "미국식 단위인 'Proof'는 ABV 수치의 정확히 2배이다. 80 proof는 법적 최소치이며, 매니아들은 100 proof(50% ABV) 이상의 고도수에서 오는 진한 오크 스파이스와 타격감을 선호한다."
+                metric: "도수/알코올 볼륨",
+                label: "ABV/Proof",
+                value: "40~65% ABV (80~130 proof)",
+                description: "미국식 단위인 'Proof'는 ABV 수치의 정확히 2배이다. 80 proof는 법적 최소치이며, 매니아들은 100 proof(50% ABV) 이상의 고도수에서 오는 진한 오크 스파이스와 타격감을 선호한다."
             },
             {
                 metric: "옥수수 비율",
@@ -240,7 +240,24 @@ export const bourbon: SpiritCategory = {
             "버섯구이·트러플 풍미 요리",
             "훈제 연어 또는 훈제 오리"
         ],
-        dbCategories: ['위스키']
+        dbCategories: ['위스키'],
+        relatedPageSlug: 'us-whiskey-regions',
+        relatedPageLabelKo: '🗺️ 미국 위스키 산지별 스타일 탐험하기 (켄터키·테네시·라이) →',
+        relatedPageLabelEn: '🗺️ Explore American Whiskey Regions (Kentucky, Tennessee, Rye) →',
+        faqs: [
+            {
+                question: "버번 배럴 하나에서 위스키가 몇 병이나 나오나요?",
+                answer: "표준 53갤런(약 200리터) 배럴 기준으로, 숙성 기간 동안 증발하는 '천사의 몫(Angel's Share)'을 제외하면 보통 150~200병 정도가 생산됩니다."
+            },
+            {
+                question: "버번 특유의 단맛은 설탕 때문인가요?",
+                answer: "아니요. 버번은 법적으로 어떠한 인공 첨가물이나 색소, 설탕을 넣을 수 없습니다. 특유의 바닐라와 달콤한 캐러멜 풍미는 오직 안을 불에 그을린 '새 참나무통(New Charred Oak)'에서 숙성하며 천연 성분을 추출하여 얻어진 것입니다."
+            },
+            {
+                question: "버번이라 부르기 위한 법적 요건은 무엇인가요?",
+                answer: "반드시 미국 내에서 제조되어야 하며, 원재료의 51% 이상이 옥수수여야 합니다. 또한 불에 그을린 새 아메리칸 오크통에서 숙성해야 하고, 병입 시 알코올 도수가 최소 40% (80 proof) 이상이어야 합니다."
+            }
+        ]
     },
     sectionsEn: {
         definition: "Bourbon Whiskey is a 'distinctive product of the United States,' officially recognized by Congress in 1964 as America’s Native Spirit. It must be produced in the USA from a grain mash of at least 51% corn and aged in new, charred American oak containers. Unlike Scotch or Canadian whisky, Bourbon strictly prohibits any additives like coloring or flavoring, ensuring a pure and bold profile of natural vanilla and caramel.",
@@ -474,6 +491,23 @@ export const bourbon: SpiritCategory = {
             "Grilled Mushrooms with Truffle Oil",
             "Smoked Salmon or Duck"
         ],
-        dbCategories: ['위스키']
+        dbCategories: ['위스키'],
+        relatedPageSlug: 'us-whiskey-regions',
+        relatedPageLabelKo: '🗺️ 미국 위스키 산지별 스타일 탐험하기 (켄터키·테네시·라이) →',
+        relatedPageLabelEn: '🗺️ Explore American Whiskey Regions (Kentucky, Tennessee, Rye) →',
+        faqs: [
+            {
+                question: "How many bottles of bourbon per barrel?",
+                answer: "A standard 53-gallon (about 200 liters) bourbon barrel typically yields around 150 to 200 bottles. This number varies depending on the 'Angel's Share'—the amount of liquid that naturally evaporates during the multi-year aging process."
+            },
+            {
+                question: "Does bourbon have sugar?",
+                answer: "No, bourbon does not contain any added sugar. By law, bourbon production strictly prohibits the addition of flavoring, coloring, or sweetening additives. The sweet vanilla and caramel notes you taste come entirely from the natural wood sugars extracted from the newly charred oak barrels during maturation."
+            },
+            {
+                question: "What are the strict bourbon requirements?",
+                answer: "To legally be called bourbon, the whiskey must be produced in the United States, made from a grain mixture that is at least 51% corn, and aged in new, charred oak containers. Furthermore, it must be distilled to no more than 160 proof, entered into the barrel at no more than 125 proof, and bottled at no less than 80 proof (40% ABV)."
+            }
+        ]
     }
 }

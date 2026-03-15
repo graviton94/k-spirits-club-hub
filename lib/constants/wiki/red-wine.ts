@@ -140,7 +140,10 @@ export const redWine: SpiritCategory = {
             "오리 가슴살 및 로스트 치킨",
             "갈비찜 및 불고기"
         ],
-        dbCategories: ['과실주']
+        dbCategories: ['과실주'],
+        relatedPageSlug: 'red-wine-regions',
+        relatedPageLabelKo: '🗺️ 보르도·부르고뉴·토스카나·나파의 레드 와인 산지 탐험 →',
+        relatedPageLabelEn: '🗺️ Explore Red Wine Regions of the World →',
     },
     sectionsEn: {
         definition: "Red wine is produced by fermenting and macerating the skins, seeds, and pulp of dark-colored grapes to extract anthocyanins (color) and tannins (structure). It offers a vast spectrum of styles, from light-bodied to full-bodied, depending on the grape variety, region, and oak aging profile.",
@@ -274,6 +277,9 @@ export const redWine: SpiritCategory = {
             "Duck Breast and Roasted Chicken",
             "Braised Beef (Galbi-jjim) and Bulgogi"
         ],
-        dbCategories: ['과실주']
+        dbCategories: ['과실주'],
+        relatedPageSlug: 'red-wine-regions',
+        relatedPageLabelKo: '🗺️ 보르도·부르고뉴·토스카나·나파의 레드 와인 산지 탐험 →',
+        relatedPageLabelEn: '🗺️ Explore Red Wine Regions of the World →',
     }
 }
