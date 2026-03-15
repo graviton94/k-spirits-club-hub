@@ -513,15 +513,6 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                 </div>
             </div>
 
-            {/* Middle Ad - Between Info and Reviews */}
-            <div className="mb-10 flex justify-center w-full">
-                <GoogleAd
-                    client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
-                    slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || ''}
-                    format="horizontal"
-                />
-            </div>
-
             {/* Related Spirits (Internal Linking P3 Requirements) */}
             {relatedSpirits && relatedSpirits.length > 0 && (
                 <div className="mb-12">
@@ -610,15 +601,6 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                 </p>
             </div>
 
-
-            {/* Bottom Ad */}
-            <div className="mt-12 mb-6 flex justify-center w-full">
-                <GoogleAd
-                    client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
-                    slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || ''}
-                    format="horizontal"
-                />
-            </div>
 
             {/* Review Modal */}
             <ReviewModal

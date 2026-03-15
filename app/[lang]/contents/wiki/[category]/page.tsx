@@ -7,7 +7,6 @@ import Link from 'next/link'
 import { SPIRIT_CATEGORIES, getSpiritCategory } from '@/lib/constants/spirits-guide-data'
 import { db } from '@/lib/db/index'
 import SpiritGuideLayout from '@/components/contents/SpiritGuideLayout'
-import GoogleAd from '@/components/ui/GoogleAd'
 import { redirect } from 'next/navigation'
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url'
 
@@ -307,19 +306,6 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
                 </div>
             </div>
 
-            {/* 하단 수익화 영역 (수수료 회생 대책) */}
-            <div className="container mx-auto max-w-3xl px-4 pb-12">
-                <div className="rounded-2xl border border-dashed border-border/60 p-4 bg-muted/5">
-                    <p className="text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest text-center mb-4">Advertisement</p>
-                    {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && (
-                        <GoogleAd
-                            client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT}
-                            slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || ''}
-                            format="horizontal"
-                        />
-                    )}
-                </div>
-            </div>
         </>
     )
 }
