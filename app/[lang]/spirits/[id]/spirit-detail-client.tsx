@@ -386,6 +386,19 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                 </div>
             )}
 
+            {/* In-Feed Ad: between Description and Tasting Notes */}
+            {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT && (
+                <div className="mb-8 flex justify-center w-full overflow-hidden">
+                    <GoogleAd
+                        client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT}
+                        slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT}
+                        format="fluid"
+                        responsive={true}
+                        style={{ display: 'block', width: '100%' }}
+                    />
+                </div>
+            )}
+
             {/* 3. Flavor Profile with Dynamic Colors */}
             {(spirit.nose_tags || spirit.palate_tags || spirit.finish_tags || (spirit.metadata as any)?.nose_tags) && (
                 <div className="mb-10 p-6 bg-secondary/30 rounded-3xl border border-dashed border-border">
