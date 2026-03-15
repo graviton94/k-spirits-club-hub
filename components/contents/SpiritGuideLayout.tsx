@@ -260,6 +260,20 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                 </Section>
             )}
 
+            {/* In-Feed Ad: between 맛과 향 지표 (Sensory Metrics) and 맛 & 향 특징 (Flavor Profile) */}
+            {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT && (
+                <div className="my-6 flex justify-center w-full overflow-hidden">
+                    <GoogleAd
+                        client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT}
+                        slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT}
+                        format="fluid"
+                        layoutKey="-fb+5w+4e-db+86"
+                        responsive={true}
+                        style={{ display: 'block', width: '100%' }}
+                    />
+                </div>
+            )}
+
             {/* ── 6. 맛·향 특징 태그 ── */}
             <Section id="flavor" icon={<Droplets className="w-5 h-5" />} title={isEn ? 'Flavor Profile' : '맛 & 향 특징'} color={category.color}>
                 {s?.flavorTags && s.flavorTags.length > 0 ? (
@@ -274,19 +288,6 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                     <ComingSoon label={isEn ? 'Flavor Profile' : '맛·향 특징'} />
                 )}
             </Section>
-
-            {/* In-Feed Ad: between Flavor Profile and Core Ingredients */}
-            {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT && (
-                <div className="my-6 flex justify-center w-full overflow-hidden">
-                    <GoogleAd
-                        client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT}
-                        slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT}
-                        format="fluid"
-                        responsive={true}
-                        style={{ display: 'block', width: '100%' }}
-                    />
-                </div>
-            )}
 
             {/* ── 7. 핵심 원재료 (신규) ── */}
             {s?.coreIngredients && s.coreIngredients.length > 0 && (

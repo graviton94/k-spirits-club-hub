@@ -393,6 +393,7 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                         client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT}
                         slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT}
                         format="fluid"
+                        layoutKey="-fb+5w+4e-db+86"
                         responsive={true}
                         style={{ display: 'block', width: '100%' }}
                     />
