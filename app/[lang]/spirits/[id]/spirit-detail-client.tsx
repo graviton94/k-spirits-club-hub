@@ -319,7 +319,7 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                                 {spirit.abv}% ABV
                             </span>
                             {spirit.volume && (
-                                <span className="px-2 py-0.5 bg-secondary rounded-md border border-border">
+                                <span className="hidden px-2 py-0.5 bg-secondary rounded-md border border-border">
                                     {spirit.volume}ml
                                 </span>
                             )}

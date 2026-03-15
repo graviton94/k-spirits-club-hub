@@ -9,28 +9,28 @@ export const singleMalt: SpiritCategory = {
     taglineEn: 'The liquid art of a single distillery and its unique terroir',
     color: 'amber',
     sections: {
-        definition: "싱글몰트 위스키란 하나의 증류소에서 100% 맥아 보리(malted barley)만을 원료로 당화·발효한 워트를 포트 스틸(pot still)로 증류하고, 오크 캐스크에서 숙성해 병입한 몰트 위스키를 말한다. ‘싱글(single)’은 단일 증류소를 뜻하며, 여러 증류소 원액을 섞는 블렌디드 위스키와 구분된다.",
-        history: "몰트 위스키의 기원은 스코틀랜드와 아일랜드의 중세 증류 전통에서 출발해, 18~19세기 과세·면허 제도와 증류 기술의 정착을 거치며 현대적 형태로 발전했다. 1960년대 이후 증류소 브랜드가 ‘싱글몰트’라는 정체성을 전면에 내세우며 프리미엄 카테고리로 성장했으며, 현재는 캐스크 실험과 고도수/싱글캐스크 등 다양성이 핵심 매력으로 자리 잡았다.",
+        definition: "싱글몰트 위스키(Single Malt Whisky)란 단일 증류소(Single Distillery)에서 100% 맥아 보리(Malted Barley)만을 사용하여 물과 효모만으로 발효 및 증류한 위스키를 뜻한다. 여러 증류소의 몰트 원액을 섞는 '블렌디드 몰트'나 곡물을 섞는 '블렌디드 위스키'와 엄격히 구분된다. 특히 구리 팟 스틸(Pot Still)에서 두 번 증류하는 전통 방식을 고수하며, 원재료의 풍미와 증류소 고유의 테루아(Terroir)가 가장 진하게 투영되는 프리미엄 위스키의 정수로 꼽힌다.",
+        history: "몰트 위스키의 역사는 중세 수도원 증류 기술에서 시작되어, 1823년 세제 개편(Excise Act) 이후 '더 글렌리벳'이 최초의 합법 면허를 취득하며 현대적 산업의 기틀을 마련했다. 초기에는 대부분 블렌디드 위스키의 재료로 쓰였으나, 1963년 '글렌피딕'이 단일 증류소 원액만을 담은 '싱글몰트'를 전 세계에 마케팅하며 독립적인 카테고리로 급성장했다. 현재는 숙성 연수를 넘어 캐스크 피니시(Cask Finish), 논칠 필터링(Non-chill Filtered) 등 장인정신 기반의 다양성이 핵심 가치가 되었다.",
         classifications: [
             {
                 name: "싱글 몰트 스카치 위스키 (Single Malt Scotch)",
-                criteria: "스코틀랜드 내 단일 증류소, 100% 맥아 보리, 포트 스틸 증류, 최소 3년 이상 오크 숙성",
-                description: "가장 대표적인 기준입니다. 지역(스페이사이드, 하이랜드, 아일라 등)과 증류기 형태, 캐스크 전략에 따라 향미 스펙트럼이 매우 넓게 나타납니다."
+                criteria: "스코틀랜드 내 단일 증류소 생산, 100% 맥아 보리 사용, 구리 팟 스틸 증류, 최소 700리터 이하 오크통에서 3년 이상 숙성, 최소 40% ABV 이상 병입",
+                description: "전 세계 싱글몰트의 기준이다. 법적으로 스코틀랜드 현지에서 증류 및 숙성되어야 하며, 색소 이외의 첨가물은 일절 금지된다. 하이랜드, 스페이사이드, 아일라 등 지역별 기후와 물의 성질, 피트 사용 여부에 따라 극명하게 갈리는 향미 프로파일이 특징이다."
             },
             {
                 name: "캐스크 스트렝스 (Cask Strength / CS)",
-                criteria: "원액을 물로 희석하지 않고 캐스크에서 나온 도수 그대로 병입 (보통 55~65% ABV)",
-                description: "향 성분이 농축되어 강렬한 아로마와 무게감이 특징입니다. 물 몇 방울로 향을 ‘열어’ 밸런스를 찾는 재미가 큰 스타일입니다."
+                criteria: "숙성 후 병입 전 물을 섞어 도수를 낮추는 과정(Proofing) 없이, 캐스크 속 원액 그대로 병입 (통상 52~65% ABV)",
+                description: "위스키 본연의 농축된 향과 질감을 가장 순수하게 경험할 수 있다. 도수가 높지만 알코올의 화끈함 속에 감춰진 오크 유래 에스터와 오일 성분이 풍부하며, 유저의 취향에 따라 물을 한두 방울 섞어 향을 여는 '가수' 과정을 통해 복합미를 탐구하기에 최적이다."
             },
             {
-                name: "싱글 캐스크 (Single Cask)",
-                criteria: "단 하나의 캐스크에서 나온 원액만 병입 (다른 캐스크와 바팅 없음)",
-                description: "캐스크 개별 차이가 그대로 드러나는 유일무이한 배치입니다. 동일 제품이라도 캐스크마다 향미가 달라 수집과 탐구 가치가 높습니다."
+                name: "싱글 캐스크 (Single Cask / Single Barrel)",
+                criteria: "여러 통의 원액을 섞어 맛을 표준화하는 '바팅(Vatting)' 없이, 오직 단 하나의 오크통에서 나온 원액만 병입",
+                description: "동일한 증류소 제품이라도 오크통의 위치, 나무의 결, 숙성 환경에 따른 '우연한 걸작'을 만날 수 있는 희소성 높은 카테고리다. 병마다 고유의 캐스크 번호와 병 번호가 기록되며, 해당 통이 소진되면 다시는 맛볼 수 없는 유일무이한 개성을 지닌다."
             },
             {
-                name: "피티드 위스키 (Peated)",
-                criteria: "맥아 건조 과정에서 피트(이탄) 연기를 사용해 스모크 성분 부여",
-                description: "스모키, 메디시널, 해풍 같은 인상이 강화됩니다. PPM 수치는 맥아의 페놀량을 나타내며 스타일을 가늠하는 유용한 단서가 됩니다."
+                name: "피티드 위스키 (Peated Whisky)",
+                criteria: "맥아 건조 시 이탄(Peat)을 태워 그 연기로 몰트를 훈연하여 페놀 성분을 고착시킴 (PPM 단위로 강도 측정)",
+                description: "강렬한 스모키함, 메디시널(병원 소독약), 해풍의 짠맛 등이 특징이다. 아일라(Islay) 지역 위스키들이 대표적이며, 훈연 과정의 시간과 온도에 따라 베이컨 같은 묵직한 훈제 향부터 화사한 재(Ash)의 느낌까지 다양한 스펙트럼을 형성한다."
             },
             {
                 name: "캐스크 피니시 (Cask Finish)",
@@ -39,53 +39,53 @@ export const singleMalt: SpiritCategory = {
             }
         ],
         sensoryMetrics: [
-            {
-                metric: "알코올 도수 (ABV)",
-                label: "Strength",
-                value: "40~46% (표준), 50~65% (CS)",
-                description: "도수가 높을수록 향이 강렬하게 휘발되지만 자극도 커집니다. 46% 이상에서는 가수 시 향의 변화가 더욱 드라마틱합니다."
-            },
-            {
-                metric: "피트 스모크 (PPM)",
-                label: "Peatiness",
-                value: "0 (Unpeated) ~ 50+ (Heavy Peat)",
-                description: "수치가 높을수록 훈제향과 약취가 강해집니다. 증류 커트와 숙성 방식에 따라 ‘달콤한 스모크’부터 ‘드라이한 연기’까지 다양하게 표현됩니다."
-            },
-            {
-                metric: "숙성 정보",
-                label: "Age Statement",
-                value: "NAS / 10~18년 / 21년+",
-                description: "숙성은 오크 성분을 부여하고 거친 성분을 다듬습니다. 연수는 신뢰할 만한 지표이나, 캐스크 품질이 최종 맛의 더 큰 변수가 되기도 합니다."
-            },
-            {
-                metric: "캐스크 영향도",
-                label: "Cask Influence",
-                value: "First-fill / Refill",
-                description: "퍼스트필은 오크의 풍미(바닐라, 스파이스)가 진하게 배어 나오며, 리필은 증류소 본연의 과실 에스터를 더 깔끔하게 보여줍니다."
-            }
+                {
+                    metric: "알코올 도수 (ABV)",
+                    label: "Strength",
+                    value: "40~46% (Standard) / 52~65% (CS)",
+                    description: "법적 최소 도수는 40%이다. 최근 프리미엄 몰트는 냉각 여과를 하지 않기 위해 46% 이상으로 병입하는 경우가 많으며, 도수가 높을수록 향기 분자의 휘발성이 강해져 노징(Nosing) 시 더 풍부한 정보를 제공한다."
+                },
+                {
+                    metric: "피트 스모크 (PPM)",
+                    label: "Peatiness",
+                    value: "0 (Unpeated) ~ 50+ (Heavy Peat)",
+                    description: "PPM(Phenol Parts Per Million)은 맥아의 페놀 함량을 나타낸다. 0~10은 저피트, 30 이상은 고피트로 분류되며, 증류 컷(Cut) 지점에 따라 실제 액체에 남는 스모키함의 질감은 달라질 수 있다."
+                },
+                {
+                    metric: "숙성 정보",
+                    label: "Age Statement",
+                    value: "NAS / 10~18년 / 21년+",
+                    description: "병에 표기된 연수는 사용된 원액 중 가장 어린 것의 나이다. 최근에는 연수 표기가 없는 NAS(Non-Age Statement) 제품도 캐스크 블렌딩의 기술력을 강조하며 프리미엄 시장에서 큰 비중을 차지하고 있다."
+                },
+                {
+                    metric: "캐스크 영향도",
+                    label: "Cask Influence",
+                    value: "First-fill / Refill",
+                    description: "처음 사용된 퍼스트필 캐스크는 오크의 바닐라와 탄닌이 강하며, 여러 번 사용된 리필 캐스크는 나무의 영향력을 줄여 증류소 본연의 섬세한 과실 향(New Make 캐릭터)을 더 잘 보여준다."
+                }
         ],
         coreIngredients: [
             {
                 type: "주원료",
                 name: "맥아 보리 (Malted Barley)",
-                description: "비스킷, 시리얼, 견과 같은 몰트 바탕을 만듭니다. 킬닝 방식에 따라 고소함과 스모크의 성격이 결정됩니다."
+                description: "100% 보리만을 사용하여 비스킷, 갓 구운 빵, 고소한 견과류의 바탕을 형성한다. 보리의 품종과 몰팅 방식(Floor Malting 등)은 위스키의 바디감에 큰 영향을 준다."
             },
             {
                 type: "발효제",
                 name: "효모 (Yeast) & 양조수",
-                description: "발효 중 과실 향(에스터)을 만들어내며, 물의 미네랄 성분은 증류주에 섬세한 질감 차이를 부여합니다."
+                description: "효모는 발효 중 화사한 꽃향기와 과일향(에스터)을 생성하는 화학 공장의 역할을 한다. 물의 경도와 미네랄 함량은 증류액의 입안에서의 질감(Mouthfeel)을 결정짓는 테루아의 핵심이다."
             },
             {
                 type: "숙성 도구",
                 name: "오크 캐스크 (Oak Cask)",
-                description: "바닐린, 락톤, 탄닌을 제공합니다. 버번, 셰리 등 이전 내용물의 성격이 위스키에 다층적인 향미를 입힙니다."
+                description: "바닐린(바닐라), 락톤(코코넛), 탄닌(구조감)을 부여한다. 이전 내용물(버번, 셰리, 포트와인 등)에 따라 위스키의 색상과 2차 풍미 레이어가 결정된다."
             }
         ],
         manufacturingProcess: [
-            { step: "몰팅/당화", name: "제국 & 매싱", description: "보리를 발아시켜 효소를 활성화하고, 뜨거운 물로 당액(워트)을 추출하여 발효를 준비한다." },
-            { step: "발효", name: "워시백 발효", description: "효모가 당을 알코올로 바꾸며 과실과 꽃 향의 전구체인 에스터를 생성하는 핵심 단계다." },
-            { step: "증류", name: "팟 스틸 이중 증류", description: "구리 증류기에서 두 번 증류하여 순수한 하트(Hearts)만을 채취한다. 증류기 형태가 무게감을 좌우한다." },
-            { step: "숙성/완성", name: "캐스크 숙성 & 바팅", description: "오크통에서 긴 시간을 보내며 성분을 안정화하고, 여러 통의 원액을 조합하여 하우스 스타일을 완성한다." }
+            { step: "몰팅", name: "Malting & Kilning", description: "보리를 물에 불려 발아시킨 뒤 건조하여 전분을 당으로 바꿀 효소를 활성화한다. 이때 피트 연기로 건조하면 스모키한 풍미가 입혀진다." },
+            { step: "당화/발효", name: "Mashing & Fermentation", description: "분쇄된 맥아(Grist)에 뜨거운 물을 부어 당액(Wort)을 추출하고, 이를 효모와 함께 48~100시간 동안 발효시켜 '워시(Wash)'라고 불리는 맥주와 유사한 액체를 만든다." },
+            { step: "증류", name: "Pot Still Distillation", description: "구리 팟 스틸에서 두 번 증류한다. 1차 증류(Wash Still)로 도수를 높이고, 2차 증류(Spirit Still)에서 가장 깨끗한 중간 부분(Hearts)만을 정밀하게 분리해낸다." },
+            { step: "숙성/완성", name: "Maturation & Vatting", description: "증류액을 오크통에 담아 최소 3년 이상 숙성한다. 이후 마스터 블렌더가 여러 캐스크를 조합(Vatting)하여 증류소 고유의 하우스 스타일을 완성하고 병입한다." }
         ],
         servingGuidelines: {
             recommendedGlass: "글렌캐런(Glencairn) 또는 튤립형 노징 글라스",
@@ -141,23 +141,23 @@ export const singleMalt: SpiritCategory = {
         classifications: [
             {
                 name: "Single Malt Scotch Whisky",
-                criteria: "100% malted barley, distilled in pot stills at a single Scottish distillery, and aged in oak for at least 3 years.",
-                description: "The global gold standard. It features a vast flavor spectrum depending on regional characteristics (Speyside, Highland, Islay, etc.), still shapes, and maturation strategies."
+                criteria: "Produced at a single Scottish distillery from 100% malted barley; distilled in pot stills; matured in oak (max 700L) for at least 3 years in Scotland; bottled at minimum 40% ABV.",
+                description: "The global benchmark. It must legally be distilled and matured in Scotland, with no additives allowed except for plain caramel coloring. Profiles vary by region—Speyside, Highland, Islay—each defined by its water and climate."
             },
             {
                 name: "Cask Strength (CS)",
-                criteria: "Bottled directly from the cask without water dilution, typically ranging from 55% to 65% ABV.",
-                description: "Characterized by concentrated aromatic compounds and heavy texture. It offers the unique experience of 'opening up' the balance with a few drops of water."
+                criteria: "Bottled directly from the cask without water dilution (Proofing), typically ranging from 52% to 65% ABV.",
+                description: "Offers the most undiluted and concentrated experience of the spirit. It carries a rich density of wood-derived esters and essential oils, allowing enthusiasts to 'open' the profile with a few drops of water."
             },
             {
-                name: "Single Cask",
-                criteria: "Bottled from one individual cask without vatting or blending with others.",
-                description: "A unique batch where the individual character of the cask is preserved. Highly valued by collectors as even the same product can vary significantly between casks."
+                name: "Single Cask (Single Barrel)",
+                criteria: "Bottled from one individual cask without any vatting or blending with other barrels from the same distillery.",
+                description: "A highly collectible category preserving the 'unique masterpiece' of a specific cask. Factors like warehouse location and wood grain create a profile that can never be replicated once the cask is empty."
             },
             {
                 name: "Peated Whisky",
-                criteria: "Malted barley is dried over peat fires to infuse smoky phenolic compounds.",
-                description: "Enhances notes of smoke, medicinal iodine, and sea breeze. The PPM (Phenol Parts Per Million) value serves as a useful clue to its stylistic intensity."
+                criteria: "Malted barley is dried over peat fires to infuse smoke and phenolic compounds, measured in PPM (Phenol Parts Per Million).",
+                description: "Known for intense smoky, medicinal, and briny notes. Depending on the distillation cut, the flavor can range from heavy, bacon-like smoke to delicate, floral ash."
             },
             {
                 name: "Cask Finish",
@@ -169,66 +169,50 @@ export const singleMalt: SpiritCategory = {
             {
                 metric: "Strength (ABV)",
                 label: "ABV Level",
-                value: "40~46% (Standard) / 55~65% (CS)",
-                description: "Higher proof increases aromatic volatility but also alcohol burn. Whiskies at 46% or higher show more dramatic profile shifts when water is added."
+                value: "40~46% (Standard) / 52~65% (CS)",
+                description: "The legal minimum is 40% ABV. Many premium malts are bottled at 46% or higher to avoid chill-filtration, as higher alcohol content keeps flavorful oils in suspension and enhances aromatic volatility."
             },
             {
                 metric: "Peat Smoke (PPM)",
                 label: "Peatiness",
                 value: "0 (Unpeated) ~ 50+ (Heavy Peat)",
-                description: "Higher values indicate stronger smoky and medicinal notes. Depending on the distillation cut, this can range from 'sweet smoke' to 'dry ash.'"
+                description: "PPM (Phenol Parts Per Million) measures the phenol content in the malted barley. While 30+ is considered 'heavy peat,' the perceived smokiness depends on the distillation cut and maturation period."
             },
             {
-                metric: "Maturation Info",
-                label: "Age Statement",
+                metric: "Age Statement",
+                label: "Age (Years)",
                 value: "NAS / 10~18 Years / 21+ Years",
-                description: "Aging imparts oak character and mellows harsh spirits. While a reliable indicator of maturity, cask quality is often a more critical variable for the final taste."
+                description: "The stated age represents the youngest whisky in the bottle. 'NAS' (Non-Age Statement) expressions focus on cask character and flavor profile rather than just time, becoming a significant part of the premium market."
             },
             {
                 metric: "Cask Influence",
                 label: "Cask Type",
                 value: "First-fill / Refill",
-                description: "First-fill casks provide intense oak flavors (vanilla, spice), while refill casks allow the distillery's core fruity esters to shine through more cleanly."
+                description: "First-fill casks impart bold vanilla and spice, while refill casks allow the distillery’s core fruity 'New Make' character to shine through more cleanly with less wood interference."
             }
         ],
         coreIngredients: [
             {
                 type: "Primary Material",
                 name: "Malted Barley",
-                description: "Creates the foundation of biscuit, cereal, and nutty notes. The kilning method determines the toastiness and smoky character."
+                description: "100% barley creates a foundation of biscuit, cereal, and nutty notes. The specific grain variety and malting method (e.g., Floor Malting) are critical to the spirit's body."
             },
             {
                 type: "Fermentation Agent",
                 name: "Yeast & Brewing Water",
-                description: "Yeast generates fruity esters during fermentation, while the mineral content of the water provides subtle differences in texture."
+                description: "Yeast acts as a chemical factory creating fruity esters. The water's mineral content and hardness define the 'terroir' and the final mouthfeel of the distillate."
             },
             {
                 type: "Aging Vessel",
                 name: "Oak Casks",
-                description: "Provides vanillin, lactones, and tannins. Previous contents like Bourbon or Sherry add multi-layered flavors to the whisky."
+                description: "Imparts vanillin, lactones, and tannins. Previous contents (Bourbon, Sherry, Port) dictate the secondary flavor layers and the whiskey's natural hue."
             }
         ],
         manufacturingProcess: [
-            {
-                step: "Malting/Mashing",
-                name: "Germination & Extraction",
-                description: "Barley is germinated to activate enzymes, and hot water is used to extract the sugary liquid (wort) ready for fermentation."
-            },
-            {
-                step: "Fermentation",
-                name: "Washback Fermentation",
-                description: "Yeast converts sugar into alcohol, creating esters—the precursors to floral and fruity aromas—in this critical stage."
-            },
-            {
-                step: "Distillation",
-                name: "Double Pot Still Distillation",
-                description: "Distilled twice in copper stills to collect only the pure 'Hearts.' The shape of the still determines the weight and body of the spirit."
-            },
-            {
-                step: "Maturation",
-                name: "Cask Aging & Vatting",
-                description: "Spent over years in oak to stabilize components, then combined (vatted) to achieve the consistent house style."
-            }
+            { step: "Malting", name: "Malting & Kilning", description: "Barley is steeped and germinated to activate enzymes, then dried. Using peat during kilning infuses the malt with smoky compounds." },
+            { step: "Mashing", name: "Extraction & Fermentation", description: "Sugars are extracted from the ground malt (Grist) into a liquid (Wort), which is then fermented with yeast for 48-100 hours to create a beer-like 'Wash.'" },
+            { step: "Distillation", name: "Pot Still Distillation", description: "Distilled twice in copper stills. The first distillation (Wash Still) increases alcohol, and the second (Spirit Still) carefully separates the 'Hearts' for aging." },
+            { step: "Maturation", name: "Aging & Vatting", description: "The spirit spends at least 3 years in oak. The Master Blender then combines (vats) selected casks to maintain the consistent house style before bottling." }
         ],
         servingGuidelines: {
             recommendedGlass: "Glencairn Glass or Tulip-shaped Nosing Glass",

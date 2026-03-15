@@ -9,23 +9,23 @@ export const bourbon: SpiritCategory = {
     taglineEn: 'The bold and sweet American whiskey made from corn',
     color: 'amber',
     sections: {
-        definition: "버번 위스키(Bourbon Whiskey)란 미국에서 생산되며 옥수수 함량이 최소 51%인 곡물 매시를 증류해 ‘새로 탄화한 아메리칸 오크통(new charred American oak cask)’에서 숙성한 위스키를 말한다. 달콤한 바닐라, 카라멜 톤과 오크 스파이스가 핵심 개성으로 나타나며, 강렬하고 직선적인 향미가 특징이다.",
-        history: "버번의 기원은 18~19세기 미국 켄터키를 중심으로 옥수수 기반 증류 문화가 확산되며 정착했고, 강을 따라 유통되며 ‘버번’ 명칭이 널리 알려졌다. 1897년 Bottled-in-Bond 법(품질·진품 보증)과 20세기 연방 기준 정립을 거치면서 생산 규격이 표준화되었고, 최근에는 프리미엄·크래프트 증류소의 성장으로 스몰 배치, 싱글 배럴 등 스타일 스펙트럼이 크게 넓어졌다.",
+        definition: "버번 위스키(Bourbon Whiskey)는 1964년 미국 의회에서 승인된 '미국의 고유 증류주(America’s Native Spirit)'이다. 미국 내에서 생산되어야 하며, 옥수수 함량이 최소 51%인 곡물 매시를 증류해 내부를 불에 태운 ‘새 아메리칸 오크통’에서 숙성한다. 특히 스카치나 캐나디안 위스키와 달리 색소나 향료 등 어떤 첨가물도 허용하지 않는 엄격한 순수성을 자랑하며, 오크통에서 유래한 천연 바닐라와 카라멜의 달콤함이 핵심이다.",
+        history: "버번은 18세기 후반 켄터키로 이주한 정착민들에 의해 시작되었으며, '엘리야 크레이그' 목사가 처음으로 오크통 내부를 태워 숙성했다는 전설이 유명하다. 19세기 미시시피 강을 따라 뉴올리언스의 '버번 스트리트'로 운송되며 그 명칭이 굳어졌다. 1897년 'Bottled-in-Bond' 법 제정은 저품질 위스키로부터 소비자를 보호하고 버번의 품질 기준을 정립한 역사적 전환점이 되었으며, 오늘날 전 세계에서 가장 규제가 엄격하고 신뢰받는 위스키 스타일 중 하나로 자리 잡았다.",
         classifications: [
             {
                 name: "버번 위스키 (Bourbon Whiskey)",
-                criteria: "미국 생산, 매시빌 옥수수 51% 이상, 160 proof(80% ABV) 이하로 증류, 새 탄화 오크통에 125 proof(62.5% ABV) 이하로 입창, 물 외 첨가물 금지, 80 proof(40% ABV) 이상 병입",
-                description: "법적 정의에 의해 ‘옥수수의 단맛 + 새 오크통의 바닐라/카라멜 + 탄화층의 토스트/스파이스’가 기본 골격이 된다. 매시빌(호밀/밀 비율), 효모, 숙성 창고 환경(온도·일교차)과 배럴 관리에 따라 향미 편차가 크게 발생한다."
+                criteria: "미국 내 생산, 옥수수 51% 이상 매시빌, 증류 시 160 proof(80% ABV) 이하 유지, 새 탄화 오크통에 125 proof(62.5% ABV) 이하로 입창, 첨가물(색소/향료) 절대 금지, 최소 80 proof(40% ABV) 이상 병입",
+                description: "인공적인 색소 없이 오직 '새 오크통'과의 상호작용만으로 호박색과 향미를 얻는다. 옥수수의 비중이 높을수록 질감이 오일리하고 달콤해지며, 숙성 중 증발하는 '엔젤스 쉐어(Angel's Share)' 비율이 스코틀랜드보다 훨씬 높아 숙성이 매우 빠르게 진행되는 것이 특징이다."
             },
             {
                 name: "스트레이트 버번 (Straight Bourbon)",
-                criteria: "버번 기준 충족 + 최소 2년 이상 숙성, 색·향 등 첨가물 불가(물만 허용), 4년 미만이면 라벨에 숙성 연수 표기",
-                description: "‘숙성’의 영향이 뚜렷해지며 오크 스파이스, 토피, 견과, 가죽/담배 같은 성숙한 노트가 안정적으로 나타난다. 2~4년대는 곡물 단맛과 신선한 오크가 강하고, 6~12년대는 오크·캐러멜·향신료의 균형이 좋아지는 경향이 있다."
+                criteria: "기본 버번 요건 + 최소 2년 이상 숙성, 물 이외의 어떤 혼합물도 불가, 4년 미만 숙성 시 반드시 라벨에 숙성 연수(Age Statement) 표기 의무",
+                description: "가장 대중적이고 신뢰받는 카테고리로, 최소 2년의 시간이 오크통의 거친 면을 깎아내어 카라멜, 토피, 가죽의 복합적인 노트를 완성한다. 숙성 연수가 표기되지 않은 스트레이트 버번은 최소 4년 이상 숙성되었음을 의미한다."
             },
             {
                 name: "보틀드 인 본드 (Bottled-in-Bond, BiB)",
-                criteria: "단일 증류소 + 단일 증류 시즌(상 / 하반기) + 연방 보세 창고에서 최소 4년 숙성 + 100 proof(50 % ABV)로 병입",
-                description: "도수·숙성·출처가 명확해 ‘표준화된 진득한 바디감’과 명료한 오크 스파이스를 기대하기 좋다. 칵테일에서도 향이 쉽게 묻히지 않아 올드패션드, 맨해튼 같은 클래식에 특히 강점이 있다."
+                criteria: "단일 증류소 + 단일 증류 시즌(상/하반기) + 연방 보세 창고에서 최소 4년 숙성 + 정확히 100 proof(50% ABV)로 병입",
+                description: "위스키의 '황금 표준'이라 불리며, 생산 과정의 투명성을 법적으로 보장한다. 50%라는 높은 도수는 타격감 있는 바디감을 선사하며, 유저들이 검색하는 'Bourbon Proof'의 가장 이상적인 기준으로 평가받는다."
             },
             {
                 name: "싱글 배럴 (Single Barrel)",
@@ -60,10 +60,10 @@ export const bourbon: SpiritCategory = {
         ],
         sensoryMetrics: [
             {
-                metric: "도수/알코올 볼륨",
-                label: "ABV/Proof",
-                value: "40~65% ABV (80~130 proof)",
-                description: "도수가 높을수록 향의 농도와 질감(점도감)이 증가하지만, 코와 입에서의 자극도 커진다. 45~55% 구간은 향·바디·음용성의 균형이 좋고, 55% 이상은 가수(물)로 향을 여는 접근이 유리하다."
+            metric: "도수/알코올 볼륨",
+            label: "ABV/Proof",
+            value: "40~65% ABV (80~130 proof)",
+            description: "미국식 단위인 'Proof'는 ABV 수치의 정확히 2배이다. 80 proof는 법적 최소치이며, 매니아들은 100 proof(50% ABV) 이상의 고도수에서 오는 진한 오크 스파이스와 타격감을 선호한다."
             },
             {
                 metric: "옥수수 비율",
@@ -243,23 +243,23 @@ export const bourbon: SpiritCategory = {
         dbCategories: ['위스키']
     },
     sectionsEn: {
-        definition: "Bourbon Whiskey is an American spirit produced from a grain mash containing at least 51% corn and aged in 'new charred American oak casks.' It is characterized by its bold, straightforward flavor profile, led by sweet notes of vanilla and caramel complemented by oak spices.",
-        history: "The origins of Bourbon trace back to the 18th and 19th centuries, primarily in Kentucky, where corn-based distillation became widespread. The name 'Bourbon' gained recognition as the spirit was distributed along the rivers. The 1897 Bottled-in-Bond Act ensured quality and authenticity, and federal standards established in the 20th century standardized production. Recently, the rise of premium and craft distilleries has expanded the style spectrum into small batches and single barrels.",
+        definition: "Bourbon Whiskey is a 'distinctive product of the United States,' officially recognized by Congress in 1964 as America’s Native Spirit. It must be produced in the USA from a grain mash of at least 51% corn and aged in new, charred American oak containers. Unlike Scotch or Canadian whisky, Bourbon strictly prohibits any additives like coloring or flavoring, ensuring a pure and bold profile of natural vanilla and caramel.",
+        history: "The origins of Bourbon date back to the late 18th century with settlers in Kentucky. Legend credits Reverend Elijah Craig as the first to age spirit in charred oak barrels. Its name was popularized as it was shipped down the Mississippi River to 'Bourbon Street' in New Orleans. The 1897 Bottled-in-Bond Act was a historic milestone that protected consumers from low-quality spirits and established the rigorous standards that make Bourbon one of the world's most trusted whiskey styles today.",
         classifications: [
             {
                 name: "Bourbon Whiskey",
-                criteria: "Produced in the USA; mash bill of 51%+ corn; distilled at no more than 160 proof (80% ABV); entered into new charred oak at no more than 125 proof (62.5% ABV); no additives except water; bottled at 80 proof (40% ABV) or higher.",
-                description: "The legal definition ensures a core structure of 'corn sweetness + oak vanilla/caramel + char-derived toast/spice.' Flavor profiles vary significantly based on mash bill (rye/wheat ratios), yeast strains, rickhouse conditions, and barrel management."
+                criteria: "Produced in the USA; mash bill of 51%+ corn; distilled at no more than 160 proof (80% ABV); entered into new charred oak at no more than 125 proof (62.5% ABV); no additives (color/flavor) allowed; bottled at 80 proof (40% ABV) or higher.",
+                description: "Bourbon gains its amber hue and rich flavor solely through interaction with new oak. A higher corn percentage results in an oily, sweet texture. Due to the warmer climate in the US, the 'Angel's Share' (evaporation) is much higher than in Scotland, leading to a more rapid and intense maturation process."
             },
             {
                 name: "Straight Bourbon",
-                criteria: "Meets Bourbon criteria + aged for a minimum of 2 years; no added coloring or flavoring; must state age if aged under 4 years.",
-                description: "The influence of maturation becomes distinct, revealing mature notes of oak spice, toffee, nuts, and leather/tobacco. Younger expressions (2–4 years) emphasize grain sweetness and fresh oak, while older ones (6–12 years) show a refined balance of wood and spice."
+                criteria: "Meets all Bourbon requirements + aged for at least 2 years; no coloring or flavoring added; must include an age statement if aged less than 4 years.",
+                description: "The gold standard for reliability. At least 2 years of aging rounds off the edges, developing complex notes of caramel, toffee, and leather. If no age is stated, the Straight Bourbon is guaranteed to be at least 4 years old."
             },
             {
                 name: "Bottled-in-Bond (BiB)",
                 criteria: "Product of one distillery + one distilling season + aged in a federally bonded warehouse for at least 4 years + bottled at exactly 100 proof (50% ABV).",
-                description: "Offers a standardized, robust body and clear oak spices. The high proof and clarity of origin make it an excellent base for classic cocktails like the Old Fashioned or Manhattan."
+                description: "Often called the 'Gold Standard,' this category legally guarantees transparency. The 100-proof strength provides a robust body and is the ideal benchmark for users searching for the authentic 'Bourbon Proof' experience."
             },
             {
                 name: "Single Barrel",
@@ -297,7 +297,7 @@ export const bourbon: SpiritCategory = {
                 metric: "Proof / Alcohol Volume",
                 label: "ABV/Proof",
                 value: "40~65% ABV (80~130 proof)",
-                description: "Higher proofs increase aromatic concentration and viscosity but also sensory intensity. 45-55% is often the 'sweet spot' for balance, while 55%+ benefits from a splash of water."
+                description: "The American 'Proof' unit is exactly double the ABV percentage. 80 proof is the legal minimum, while enthusiasts often seek 100 proof (50% ABV) or higher for more concentrated oak spices and a bolder mouthfeel."
             },
             {
                 metric: "Corn Proportion",
