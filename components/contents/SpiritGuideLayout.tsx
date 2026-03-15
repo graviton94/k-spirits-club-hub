@@ -5,6 +5,7 @@ import { BookOpen, Clock, Layers, Droplets, FlaskConical, GlassWater, Utensils, 
 import type { SpiritCategory } from '@/lib/constants/spirits-guide-data'
 import { getCategoryFallbackImage } from '@/lib/utils/image-fallback'
 import BackButton from '@/components/ui/BackButton'
+import GoogleAd from '@/components/ui/GoogleAd'
 
 interface SpiritGuideLayoutProps {
     category: SpiritCategory
@@ -255,6 +256,19 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                     <ComingSoon label={isEn ? 'Flavor Profile' : '맛·향 특징'} />
                 )}
             </Section>
+
+            {/* In-Feed Ad: between Flavor Profile and Core Ingredients */}
+            {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT && (
+                <div className="my-6 flex justify-center w-full overflow-hidden">
+                    <GoogleAd
+                        client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT}
+                        slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT}
+                        format="fluid"
+                        responsive={true}
+                        style={{ display: 'block', width: '100%' }}
+                    />
+                </div>
+            )}
 
             {/* ── 7. 핵심 원재료 (신규) ── */}
             {s?.coreIngredients && s.coreIngredients.length > 0 && (
