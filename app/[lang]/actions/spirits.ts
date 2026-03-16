@@ -10,11 +10,11 @@ import { Spirit, SpiritSearchIndex } from '@/lib/db/schema';
 export async function getSpiritsAction(filters: any = {}) {
   try {
     // 유저용 요청은 무조건 공개(isPublished: true)된 데이터만 필터링
-    const queryFilters = { 
-      ...filters, 
-      isPublished: true 
+    const queryFilters = {
+      ...filters,
+      isPublished: true
     };
-    
+
     // Firestore에서 데이터 조회
     const results = await spiritsDb.getAll(queryFilters);
     return (results || []) as Spirit[];
@@ -31,20 +31,20 @@ export async function getSpiritsAction(filters: any = {}) {
 export async function getSpiritById(id: string): Promise<Spirit | null> {
   try {
     console.log(`[Action] getSpiritById - Fetching spirit: ${id}`);
-    
+
     const spirit = await spiritsDb.getById(id);
-    
+
     if (!spirit) {
       console.warn(`[Action] Spirit not found: ${id}`);
       return null;
     }
-    
+
     // Only return published spirits
     if (!spirit.isPublished) {
       console.warn(`[Action] Attempted to access unpublished spirit: ${id}`);
       return null;
     }
-    
+
     return spirit as Spirit;
   } catch (error) {
     console.error('[Action] getSpiritById Error:', error);
@@ -60,7 +60,7 @@ export async function getSpiritsSearchIndex(): Promise<SpiritSearchIndex[]> {
   try {
     // 공개된 데이터만 전수 조사하여 인덱스 구축
     const spirits = await spiritsDb.getAll({ isPublished: true });
-    
+
     if (!spirits || spirits.length === 0) {
       console.warn('[Action] 검색할 수 있는 공개된 데이터가 없습니다.');
       return [];
@@ -74,6 +74,7 @@ export async function getSpiritsSearchIndex(): Promise<SpiritSearchIndex[]> {
       mc: s.mainCategory || null,
       sc: s.subcategory || null,
       t: s.thumbnailUrl || s.imageUrl || null, // 썸네일 누락 시 원본 이미지로 폴백
+      tn: s.thumbnailUrl || null,
       a: s.abv || 0,
       d: s.distillery || null
     }));

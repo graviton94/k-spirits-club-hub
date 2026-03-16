@@ -19,13 +19,132 @@ import metadata from "../constants/spirits-metadata.json";
 /**
  * Returns the display label for a spirit category / subcategory key.
  * Looks up display_names_en for English, display_names for Korean.
+ * Automatically splits and translates grape varieties in parentheses.
  */
 export function localizeCategory(key: string | null | undefined, lang: string): string {
     if (!key) return '';
+
+    // Check if key has parentheses for varieties: e.g., "레드 와인 (샤르도네)"
+    const match = key.match(/^(.*?)\s*\((.*?)\)$/);
+    if (match) {
+        const mainPart = match[1].trim();
+        const varietyPart = match[2].trim();
+
+        const localizedMain = localizeMainCategoryOnly(mainPart, lang);
+        const localizedVariety = localizeVariety(varietyPart, lang);
+
+        return `${localizedMain} (${localizedVariety})`;
+    }
+
+    return localizeMainCategoryOnly(key, lang);
+}
+
+function localizeMainCategoryOnly(key: string, lang: string): string {
     if (lang === 'en') {
         return (metadata as any).display_names_en[key] || key;
     }
     return (metadata as any).display_names[key] || key;
+}
+
+// ---------------------------------------------------------------------------
+// Variety dictionary (Grape Types, etc.)
+// ---------------------------------------------------------------------------
+
+const KO_TO_EN_VARIETY: Record<string, string> = {
+    '샤르도네': 'Chardonnay',
+    '소비뇽 블랑': 'Sauvignon Blanc',
+    '쇼비뇽 블랑': 'Sauvignon Blanc',
+    '피노 누아': 'Pinot Noir',
+    '피노누아': 'Pinot Noir',
+    '까베르네 소비뇽': 'Cabernet Sauvignon',
+    '카베르네 소비뇽': 'Cabernet Sauvignon',
+    '까베르네 프랑': 'Cabernet Franc',
+    '카베르네 프랑': 'Cabernet Franc',
+    '메를로': 'Merlot',
+    '쉬라즈': 'Shiraz',
+    '시라': 'Syrah',
+    '말벡': 'Malbec',
+    '진판델': 'Zinfandel',
+    '네비올로': 'Nebbiolo',
+    '산지오베제': 'Sangiovese',
+    '템프라니요': 'Tempranillo',
+    '가르나차': 'Garnacha',
+    '그르나슈': 'Grenache',
+    '알리고테': 'Aligote',
+    '알리고테 도레': 'Aligote',
+    '프리미티보': 'Primitivo',
+    '아기오르기티코': 'Agiorgitiko',
+    '코르비나': 'Corvina',
+    '론디넬라': 'Rondinella',
+    '몰리나라': 'Molinara',
+    '세미용': 'Semillon',
+    '모스카토': 'Moscato',
+    '리슬링': 'Riesling',
+    '슈냉 블랑': 'Chenin Blanc',
+    '카르메네르': 'Carmenere',
+    '가메': 'Gamay',
+    '비오니에': 'Viognier'
+};
+
+const EN_TO_KO_VARIETY: Record<string, string> = {
+    'Chardonnay': '샤르도네',
+    'Sauvignon Blanc': '소비뇽 블랑',
+    'Pinot Noir': '피노 누아',
+    'Cabernet Sauvignon': '까베르네 소비뇽',
+    'Cabernet Franc': '까베르네 프랑',
+    'Merlot': '메를로',
+    'Shiraz': '쉬라즈',
+    'Syrah': '시라',
+    'Malbec': '말벡',
+    'Zinfandel': '진판델',
+    'Nebbiolo': '네비올로',
+    'Sangiovese': '산지오베제',
+    'Tempranillo': '템프라니요',
+    'Garnacha': '가르나차',
+    'Grenache': '그르나슈',
+    'Aligote': '알리고테',
+    'Agiorgitiko': '아기오르기티코',
+    'Primitivo': '프리미티보',
+    'Corvina': '코르비나',
+    'Rondinella': '론디넬라',
+    'Molinara': '몰리나라',
+    'Semillon': '세미용',
+    'Moscato': '모스카토',
+    'Riesling': '리슬링',
+    'Chenin Blanc': '슈냉 블랑',
+    'Carmenere': '카르메네르',
+    'Gamay': '가메',
+    'Viognier': '비오니에'
+};
+
+function localizeVariety(variety: string, lang: string): string {
+    // split by commas or " 블렌드" indicating multiple grapes
+    const parts = variety.split(',').map(p => p.trim());
+    const translated = parts.map(part => {
+        if (lang === 'en') {
+            if (KO_TO_EN_VARIETY[part]) return KO_TO_EN_VARIETY[part];
+
+            if (part.endsWith(' 블렌드')) {
+                const base = part.replace(' 블렌드', '').trim();
+                if (KO_TO_EN_VARIETY[base]) return KO_TO_EN_VARIETY[base] + ' Blend';
+                return base + ' Blend';
+            }
+            return part; // fallback
+        } else {
+            // KO
+            if (EN_TO_KO_VARIETY[part]) return EN_TO_KO_VARIETY[part];
+
+            if (part.toLowerCase().endsWith(' blend')) {
+                const base = part.substring(0, part.length - 6).trim();
+                const mappedBase = Object.keys(EN_TO_KO_VARIETY).find(k => k.toLowerCase() === base.toLowerCase());
+                if (mappedBase) return EN_TO_KO_VARIETY[mappedBase] + ' 블렌드';
+                return base + ' 블렌드';
+            }
+            return part; // fallback
+        }
+    });
+
+    return translated.join(', ');
 }
 
 // ---------------------------------------------------------------------------
@@ -77,9 +196,21 @@ const KO_TO_EN_COUNTRY: Record<string, string> = {
     '아르헨티나': 'Argentina',
     '브라질': 'Brazil',
     '남아프리카공화국': 'South Africa',
-    '이스라엘': 'Israel',
     '아르메니아': 'Armenia',
     '조지아': 'Georgia',
+    '도미니카 공화국': 'Dominican Republic',
+    '푸에르토리코': 'Puerto Rico',
+    '베네수엘라': 'Venezuela',
+    '파나마': 'Panama',
+    '가이아나': 'Guyana',
+    '니카라과': 'Nicaragua',
+    '코스타리카': 'Costa Rica',
+    '과테말라': 'Guatemala',
+    '엘살바도르': 'El Salvador',
+    '몰도바': 'Moldova',
+    '마케도니아': 'Macedonia',
+    '루마니아': 'Romania',
+    '모리셔스': 'Mauritius'
 };
 
 /** English / common country names → Korean (for KO page rendering if data was stored in English) */
@@ -130,6 +261,19 @@ const EN_TO_KO_COUNTRY: Record<string, string> = {
     'Argentina': '아르헨티나',
     'Brazil': '브라질',
     'South Africa': '남아프리카공화국',
+    'Dominican Republic': '도미니카 공화국',
+    'Puerto Rico': '푸에르토리코',
+    'Venezuela': '베네수엘라',
+    'Panama': '파나마',
+    'Guyana': '가이아나',
+    'Nicaragua': '니카라과',
+    'Costa Rica': '코스타리카',
+    'Guatemala': '과테말라',
+    'El Salvador': '엘살바도르',
+    'Moldova': '몰도바',
+    'Macedonia': '마케도니아',
+    'Romania': '루마니아',
+    'Mauritius': '모리셔스'
 };
 
 /**

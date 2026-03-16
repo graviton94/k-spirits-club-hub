@@ -67,7 +67,7 @@ test('Complete spirit with 300+ char description (KO)', isIndexableSpirit(tierA1
 // Test 2: English description only
 const tierA2 = createSpirit({
   metadata: {
-    description_ko: null,
+    description_ko: undefined,
     description_en: 'C'.repeat(350),
   },
 });
@@ -114,7 +114,7 @@ test('Short description (< 300 chars)', isIndexableSpirit(tierB5), false);
 const tierB6 = createSpirit({
   metadata: {
     description_ko: 'A'.repeat(299),
-    description_en: null,
+    description_en: undefined,
   },
 });
 test('Description with exactly 299 chars', isIndexableSpirit(tierB6), false);
@@ -123,7 +123,7 @@ test('Description with exactly 299 chars', isIndexableSpirit(tierB6), false);
 const tierA4 = createSpirit({
   metadata: {
     description_ko: 'A'.repeat(300),
-    description_en: null,
+    description_en: undefined,
   },
 });
 test('Description with exactly 300 chars', isIndexableSpirit(tierA4), true);
@@ -152,8 +152,8 @@ console.log('\nTest Group 4: Edge Cases\n');
 const tierA5 = createSpirit({
   description_ko: 'D'.repeat(400),
   metadata: {
-    description_ko: null,
-    description_en: null,
+    description_ko: undefined,
+    description_en: undefined,
   },
 });
 test('Root description_ko field (legacy)', isIndexableSpirit(tierA5), true);
@@ -162,8 +162,8 @@ test('Root description_ko field (legacy)', isIndexableSpirit(tierA5), true);
 const tierA6 = createSpirit({
   description_en: 'E'.repeat(350),
   metadata: {
-    description_ko: null,
-    description_en: null,
+    description_ko: undefined,
+    description_en: undefined,
   },
 });
 test('Root description_en field (legacy)', isIndexableSpirit(tierA6), true);

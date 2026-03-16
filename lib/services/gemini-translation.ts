@@ -657,3 +657,33 @@ export async function enrichSpiritWithAI(spirit: SpiritEnrichmentInput): Promise
 // Export aliases for backward compatibility
 export const generateSensoryData = generateSensoryProfile;
 export { enrichSpiritWithAI as default };
+
+/**
+ * Translates a spirit name to English using Gemini.
+ */
+export async function translateSpiritName(name: string, category: string, distillery?: string): Promise<{ name_en: string }> {
+    if (!API_KEY) throw new Error("GEMINI_API_KEY is not set");
+    const genAI = new GoogleGenerativeAI(API_KEY);
+    const model = genAI.getGenerativeModel({ model: MODEL_ID, generationConfig: { responseMimeType: "application/json", temperature: 0.1 } });
+
+    const prompt = `
+    Translate the following spirit name to English.
+    Product Name: "${name}"
+    Category: ${category}
+    Distillery: ${distillery || 'Unknown'}
+
+    Return ONLY a JSON object with a single key "name_en" containing the translated English name in Title Case.
+    Example: {"name_en": "Glenfiddich 12 Year Old Single Malt Scotch Whisky"}
+    `;
+
+    try {
+        const result = await model.generateContent(prompt);
+        const text = result.response.text();
+        const cleanJson = text.replace(/```json|```/g, '').trim();
+        const parsed = JSON.parse(cleanJson);
+        return { name_en: parsed.name_en || name };
+    } catch (e: any) {
+        console.error('[Gemini Translation] Error:', e);
+        return { name_en: name }; // Fallback
+    }
+}

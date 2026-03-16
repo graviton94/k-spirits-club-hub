@@ -141,7 +141,7 @@ export class onlineIngestion {
     // Simple deduplication logic
     return (
       existing.name.toLowerCase() === candidate.name?.toLowerCase() &&
-      existing.distillery.toLowerCase() === candidate.distillery?.toLowerCase() &&
+      existing.distillery?.toLowerCase() === candidate.distillery?.toLowerCase() &&
       existing.abv === candidate.abv
     );
   }
