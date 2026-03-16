@@ -92,6 +92,19 @@ export default async function WikiHubPage({ params }: WikiHubPageProps) {
                 </p>
             </div>
 
+            {/* In-Feed Ad: between intro copy and category grid */}
+            {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT && (
+                <div className="mb-8 flex justify-center w-full overflow-hidden">
+                    <GoogleAd
+                        client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT}
+                        slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT}
+                        format="auto"
+                        responsive={true}
+                        style={{ display: 'block', width: '100%' }}
+                    />
+                </div>
+            )}
+
             {/* Category Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 relative z-10">
                 {SPIRIT_CATEGORIES.map((cat) => {
@@ -141,13 +154,6 @@ export default async function WikiHubPage({ params }: WikiHubPageProps) {
                 <p className="text-muted-foreground/40 text-[10px] font-medium uppercase tracking-widest">
                     {isEn ? 'More categories coming soon' : '더 많은 카테고리가 추가될 예정입니다'}
                 </p>
-                <div className="mt-8 flex justify-center w-full">
-                    <GoogleAd
-                        client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
-                        slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || ''}
-                        format="horizontal"
-                    />
-                </div>
             </div>
         </div>
     )
