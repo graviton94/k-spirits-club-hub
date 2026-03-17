@@ -1,4 +1,3 @@
-export const runtime = 'edge';
 export const revalidate = 60;
 
 import { newArrivalsDb, reviewsDb } from "@/lib/db/firestore-rest";
@@ -62,9 +61,10 @@ export default async function HomePage({ params }: PageProps) {
         initialNewArrivals={newArrivals}
         initialTrending={[]} // Deprecated
         initialReviews={recentReviews}
-        newsSection={<NewsSection lang={lang} />}
         dailySnippet={dailySnippet}
-      />
+      >
+        <NewsSection lang={lang} />
+      </HomeClient>
     </>
   );
 }

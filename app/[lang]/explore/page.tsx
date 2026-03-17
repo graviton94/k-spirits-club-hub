@@ -8,7 +8,6 @@ import { Locale } from "@/i18n-config";
 import { getCanonicalUrl, getHreflangAlternates } from "@/lib/utils/seo-url";
 import ExploreLoading from "./loading";
 
-export const runtime = 'edge';
 export const revalidate = 60;
 
 const CRAWLABLE_EXPLORE_SECTIONS = [

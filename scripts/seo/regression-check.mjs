@@ -1183,6 +1183,71 @@ async function checkPhase72() {
   } else {
     pass('H', 'Perfect-pour layout — no static metadata (page handles locale-aware title)');
   }
+
+  // ── H18. WorldCup result page must be locale-aware and explicitly noindex ───
+  const worldcupResultSrc = readSourceFile('app/[lang]/contents/worldcup/result/[id]/page.tsx');
+  if (!worldcupResultSrc) {
+    warn('H', 'WorldCup result page source not found — skipping locale/noindex guard');
+  } else {
+    const hasGenerateMetadata = /generateMetadata/i.test(worldcupResultSrc);
+    const hasLocaleBranch = /\bisEn\b/.test(worldcupResultSrc) || /lang\s*===\s*['"]en['"]/.test(worldcupResultSrc);
+    const hasLocalizedReturnLink = /href=\{`\/\$\{lang\}\/contents\/worldcup`\}/.test(worldcupResultSrc);
+
+    if (hasGenerateMetadata && hasLocaleBranch) {
+      pass('H', 'WorldCup result page — uses locale-aware generateMetadata');
+    } else {
+      fail('H', 'WorldCup result page — metadata is not locale-aware');
+    }
+
+    if (hasNoindexInSource(worldcupResultSrc)) {
+      pass('H', 'WorldCup result page — has explicit robots noindex');
+    } else {
+      fail('H', 'WorldCup result page — missing robots noindex');
+    }
+
+    if (hasLocalizedReturnLink && !/href="\/contents\/worldcup"/.test(worldcupResultSrc)) {
+      pass('H', 'WorldCup result page — uses locale-prefixed WorldCup links');
+    } else {
+      fail('H', 'WorldCup result page — contains locale-less WorldCup links');
+    }
+  }
+
+  // ── H19. Taste result page must be locale-aware and explicitly noindex ─────
+  const tasteResultSrc = readSourceFile('app/[lang]/contents/taste/result/[userId]/page.tsx');
+  if (!tasteResultSrc) {
+    warn('H', 'Taste result page source not found — skipping locale/noindex guard');
+  } else {
+    const hasGenerateMetadata = /generateMetadata/i.test(tasteResultSrc);
+    const hasLocaleBranch = /\bisEn\b/.test(tasteResultSrc) || /lang\s*===\s*['"]en['"]/.test(tasteResultSrc);
+
+    if (hasGenerateMetadata && hasLocaleBranch) {
+      pass('H', 'Taste result page — uses locale-aware generateMetadata');
+    } else {
+      fail('H', 'Taste result page — metadata is not locale-aware');
+    }
+
+    if (hasNoindexInSource(tasteResultSrc)) {
+      pass('H', 'Taste result page — has explicit robots noindex');
+    } else {
+      fail('H', 'Taste result page — missing robots noindex');
+    }
+  }
+
+  // ── H20. WorldCup game page links must retain locale prefixes ───────────────
+  const worldcupGamePageSrc = readSourceFile('app/[lang]/contents/worldcup/game/page.tsx');
+  if (!worldcupGamePageSrc) {
+    warn('H', 'WorldCup/game page source not found — skipping locale-link guard');
+  } else {
+    const hasLocalizedShareUrl = /window\.location\.origin\}\/\$\{lang\}\/contents\/worldcup\/result\/\$\{resultId\}/.test(worldcupGamePageSrc);
+    const hasLocalizedRouterPush = /router\.push\(`\/\$\{lang\}\/contents\/worldcup`\)/.test(worldcupGamePageSrc);
+    const hasLocaleLeak = /\/contents\/worldcup\/result\/\$\{resultId\}/.test(worldcupGamePageSrc) && !hasLocalizedShareUrl;
+
+    if (hasLocalizedShareUrl && hasLocalizedRouterPush && !hasLocaleLeak) {
+      pass('H', 'WorldCup/game page — share and navigation links retain locale prefixes');
+    } else {
+      fail('H', 'WorldCup/game page — locale-less share or navigation link detected');
+    }
+  }
 }
 
 

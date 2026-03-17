@@ -1,5 +1,3 @@
-export const runtime = 'edge';
-
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url';

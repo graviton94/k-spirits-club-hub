@@ -148,7 +148,8 @@ export const sake: SpiritCategory = {
             "야키토리 (소금구이/타레)",
             "샤브샤브 및 나베 요리"
         ],
-        dbCategories: ['청주']
+        dbCategories: ['청주'],
+        dbSubcategoryKeywords: ['사케', '사케(니혼슈)', '준마이', '긴조', '다이긴조', '혼죠조', '토쿠베츠', 'Sake', 'Nihonshu', 'Junmai', 'Ginjo', 'Daiginjo', 'Honjozo', 'Tokubetsu']
     },
     sectionsEn: {
         definition: "Sake (Nihonshu) is a traditional Japanese brewed beverage made from rice, koji (mold cultures), and water. It is classified by the 'polishing ratio' (how much of the outer rice grain is removed) and whether distilled alcohol is added. It is characterized by delicate aromatics and dramatic flavor profiles that evolve with serving temperature.",
@@ -290,6 +291,7 @@ export const sake: SpiritCategory = {
             "Yakitori (Salt or Tare)",
             "Shabu-shabu and Nabe (Hot pot)"
         ],
-        dbCategories: ['청주']
+        dbCategories: ['청주'],
+        dbSubcategoryKeywords: ['사케', '사케(니혼슈)', '준마이', '긴조', '다이긴조', '혼죠조', '토쿠베츠', 'Sake', 'Nihonshu', 'Junmai', 'Ginjo', 'Daiginjo', 'Honjozo', 'Tokubetsu']
     }
 }

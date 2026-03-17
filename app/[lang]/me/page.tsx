@@ -4,7 +4,6 @@ import { Locale } from "@/i18n-config";
 import ProfileClient from "@/components/profile/ProfileClient";
 import { Metadata } from 'next';
 
-export const runtime = 'edge';
 
 interface MyPageProps {
     params: Promise<{ lang: string }>;

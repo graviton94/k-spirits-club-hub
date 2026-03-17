@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { MBTIClient } from './mbti-client';
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url';
 
-export const runtime = 'edge';
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
     const { lang } = await params;

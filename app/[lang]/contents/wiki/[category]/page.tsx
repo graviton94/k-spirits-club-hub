@@ -1,14 +1,14 @@
-export const runtime = 'edge';
 export const revalidate = 0; // Force fetching dynamically so latest spirits always show
 
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { SPIRIT_CATEGORIES, getSpiritCategory } from '@/lib/constants/spirits-guide-data'
+import { getSpiritCategory } from '@/lib/constants/spirits-guide-data'
 import { db } from '@/lib/db/index'
 import SpiritGuideLayout from '@/components/contents/SpiritGuideLayout'
 import { redirect } from 'next/navigation'
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url'
+import { selectFeaturedSpiritsForWiki } from '@/lib/utils/wiki-spirit-match'
 
 const KO_TO_EN_MAP: Record<string, string> = {
     '소주-가이드': 'soju-guide',
@@ -17,6 +17,14 @@ const KO_TO_EN_MAP: Record<string, string> = {
     '전통주-종류-정리': 'korean-traditional-spirits',
     '도수별-증류주': 'korean-spirits-by-abv',
 };
+
+const RELATED_COMPARISON_SLUGS: Record<string, string[]> = {
+    cheongju: ['cheongju-vs-sake', 'yakju-vs-cheongju'],
+    sake: ['cheongju-vs-sake'],
+    yakju: ['yakju-vs-cheongju'],
+    'single-malt': ['single-malt-vs-blended'],
+    whisky: ['single-malt-vs-blended'],
+}
 
 interface CategoryPageProps {
     params: Promise<{ lang: string; category: string }>
@@ -212,26 +220,51 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
     }
 
     const isEn = lang === 'en'
-    const section = isEn ? (cat.sectionsEn || cat.sections) : cat.sections
+    const section = isEn ? (cat.sectionsEn || cat.sections) : (cat.sections || cat.sectionsEn)
     const dbCategories = section?.dbCategories
 
     // 해당 카테고리의 추천 제품 조회 (최대 6개)
-    let featuredSpirits: { id: string; name: string; category: string; imageUrl?: string }[] = []
+    let featuredSpirits: {
+        id: string
+        name: string
+        nameEn?: string | null
+        category: string
+        subcategory?: string | null
+        imageUrl?: string
+    }[] = []
 
     if (slug !== 'oak-barrel' && dbCategories && dbCategories.length > 0) {
         try {
-            // Use the first category in the list for featured spirits
-            const result = await db.getLatestFeatured(dbCategories[0], 6)
-            featuredSpirits = result.map((s: any) => ({
+            const spiritGroups = await Promise.all(
+                dbCategories.map((dbCategory) =>
+                    db.getAll(
+                        { category: dbCategory, isPublished: true },
+                        { page: 1, pageSize: 60 },
+                    ).then((result) => result.data).catch(() => []),
+                ),
+            )
+
+            const uniqueSpirits = Array.from(
+                new Map(spiritGroups.flat().map((spirit: any) => [spirit.id, spirit])).values(),
+            )
+
+            featuredSpirits = selectFeaturedSpiritsForWiki(uniqueSpirits, cat, 6)
+                .map((s: any) => ({
                 id: s.id,
                 name: s.name,
+                nameEn: s.metadata?.name_en || s.name_en || null,
                 category: s.category,
+                subcategory: s.subcategory || null,
                 imageUrl: s.imageUrl,
             }))
         } catch {
             // 무시
         }
     }
+
+    const comparisonLinks = (RELATED_COMPARISON_SLUGS[cat.slug] || [])
+        .map((relatedSlug) => getSpiritCategory(relatedSlug))
+        .filter((relatedCategory): relatedCategory is NonNullable<typeof relatedCategory> => Boolean(relatedCategory))
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://kspiritsclub.com'
     const title = isEn
@@ -297,6 +330,13 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
                         {isEn ? 'Explore Related Content' : '관련 콘텐츠 탐색'}
                     </p>
                     <ul className="flex flex-wrap gap-2 text-sm">
+                        {comparisonLinks.map((comparison) => (
+                            <li key={comparison.slug}>
+                                <Link href={`/${lang}/contents/wiki/${comparison.slug}`} className="px-3 py-1.5 rounded-full border border-border hover:border-cyan-500/60 hover:text-cyan-500 transition-colors">
+                                    {isEn ? comparison.nameEn : comparison.nameKo}
+                                </Link>
+                            </li>
+                        ))}
                         <li><Link href={`/${lang}/contents/wiki`} className="px-3 py-1.5 rounded-full border border-border hover:border-emerald-500/60 hover:text-emerald-500 transition-colors">{isEn ? 'All Spirit Categories — Spirits Wiki' : '주류 백과사전 전체 카테고리'}</Link></li>
                         <li><Link href={`/${lang}/contents`} className="px-3 py-1.5 rounded-full border border-border hover:border-emerald-500/60 hover:text-emerald-500 transition-colors">{isEn ? 'Contents Hub' : '콘텐츠 허브'}</Link></li>
                         <li><Link href={`/${lang}/contents/reviews`} className="px-3 py-1.5 rounded-full border border-border hover:border-emerald-500/60 hover:text-emerald-500 transition-colors">{isEn ? 'Spirit Tasting Reviews' : '주류 시음 리뷰'}</Link></li>

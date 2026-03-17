@@ -5,7 +5,6 @@ import { ArrowLeft, Target, Database, Brain, Globe } from 'lucide-react';
 import { ABOUT_CONTENT, ABOUT_SECTIONS } from '@/lib/constants/about-content';
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url';
 
-export const runtime = 'edge';
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
     const { lang } = await params;

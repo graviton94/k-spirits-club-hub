@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-export const runtime = 'edge';
 import { useAuth } from '@/app/[lang]/context/auth-context';
 import { useRouter, useParams } from 'next/navigation';
 import { getCategoryFallbackImage } from '@/lib/utils/image-fallback';

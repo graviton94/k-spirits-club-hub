@@ -1,40 +1,65 @@
-import { Metadata } from 'next';
-import { tasteProfileDb } from '@/lib/db/firestore-rest';
-import TastePublicReport from '@/components/cabinet/TastePublicReport';
-import { notFound } from 'next/navigation';
+import { Metadata } from 'next'
+import { notFound } from 'next/navigation'
+import TastePublicReport from '@/components/cabinet/TastePublicReport'
+import { tasteProfileDb } from '@/lib/db/firestore-rest'
+import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url'
 
-export const runtime = 'edge';
+export const revalidate = 3600
 
-export async function generateMetadata({ params }: { params: { userId: string } }): Promise<Metadata> {
-    const profile = await tasteProfileDb.get(params.userId);
+interface TasteResultPageProps {
+    params: Promise<{ userId: string; lang: string }>
+}
+
+export async function generateMetadata({ params }: TasteResultPageProps): Promise<Metadata> {
+    const { userId, lang } = await params
+    const isEn = lang === 'en'
+    const profile = await tasteProfileDb.get(userId)
+    const canonicalUrl = getCanonicalUrl(`/${lang}/contents/taste/result/${userId}`)
+    const hreflangAlternates = getHreflangAlternates(`/contents/taste/result/${userId}`)
 
     if (!profile) {
         return {
-            title: '취향 분석 결과를 찾을 수 없습니다 - K-Spirits',
-        };
+            title: isEn ? 'Taste Report Not Found | K-Spirits Club' : '취향 리포트를 찾을 수 없습니다 | K-Spirits Club',
+            robots: { index: false, follow: true },
+            alternates: {
+                canonical: canonicalUrl,
+                languages: hreflangAlternates,
+            },
+        }
     }
 
-    const title = `🧬 나의 미각 DNA: "${profile.persona.title}"`;
-    const description = `${profile.persona.keywords.join(' ')} | AI가 분석한 나의 주류 취향을 확인해보세요.`;
-
-    // 카카오톡 캐시를 방지하고 최신 이미지를 불러오기 위해 유저 ID 기반 쿼리 추가
-    const image = `/cabinet.jpg?v=${params.userId}`;
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://kspiritsclub.com'
+    const personaTitle = profile.persona?.title || (isEn ? 'Taste DNA Report' : '취향 DNA 리포트')
+    const keywords = Array.isArray(profile.persona?.keywords) ? profile.persona.keywords.join(' ') : ''
+    const title = isEn ? `Taste DNA Report: ${personaTitle}` : `취향 DNA 리포트: ${personaTitle}`
+    const description = isEn
+        ? `${keywords} Explore this shared AI taste profile on K-Spirits Club.`.trim()
+        : `${keywords} AI가 분석한 공유 취향 리포트를 확인해보세요.`.trim()
+    const image = `${baseUrl}/cabinet.jpg?v=${encodeURIComponent(userId)}`
 
     return {
-        title: `${profile.persona.title} - 미각 DNA 리포트`,
+        title: `${personaTitle} | ${isEn ? 'Taste DNA Report' : '취향 DNA 리포트'}`,
         description,
+        robots: { index: false, follow: true },
+        alternates: {
+            canonical: canonicalUrl,
+            languages: hreflangAlternates,
+        },
         openGraph: {
             title,
             description,
+            url: canonicalUrl,
+            type: 'website',
+            locale: isEn ? 'en_US' : 'ko_KR',
+            siteName: 'K-Spirits Club',
             images: [
                 {
                     url: image,
                     width: 1200,
                     height: 630,
-                    alt: profile.persona.title,
+                    alt: personaTitle,
                 },
             ],
-            type: 'website',
         },
         twitter: {
             card: 'summary_large_image',
@@ -42,32 +67,30 @@ export async function generateMetadata({ params }: { params: { userId: string } 
             description,
             images: [image],
         },
-    };
+    }
 }
 
-export default async function TasteResultPage({ params }: { params: { userId: string } }) {
-    const profileData = await tasteProfileDb.get(params.userId);
+export default async function TasteResultPage({ params }: TasteResultPageProps) {
+    const { userId } = await params
+    const profileData = await tasteProfileDb.get(userId)
 
     if (!profileData) {
-        notFound();
+        notFound()
     }
 
-    // Convert string ISO to Date object for the component
     const profile = {
         ...profileData,
-        analyzedAt: new Date(profileData.analyzedAt)
-    };
+        analyzedAt: new Date(profileData.analyzedAt),
+    }
 
     return (
         <div className="min-h-screen bg-black flex flex-col items-center p-4 md:p-8 relative overflow-hidden">
-            {/* 배경 글로우 효과 */}
             <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-pink-600/10 blur-[150px] rounded-full pointer-events-none" />
             <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-purple-600/10 blur-[150px] rounded-full pointer-events-none" />
 
             <div className="w-full max-w-5xl relative z-10 pt-10 md:pt-20">
                 <TastePublicReport profile={profile} isPublic={true} />
 
-                {/* Footer 하단 작게 표시 */}
                 <div className="mt-20 text-center opacity-30">
                     <p className="text-[10px] text-neutral-500 font-bold tracking-[0.4em] uppercase">
                         k-spirits.club | Advanced AI Taste Analysis
@@ -75,8 +98,5 @@ export default async function TasteResultPage({ params }: { params: { userId: st
                 </div>
             </div>
         </div>
-    );
+    )
 }
-
-// ISR 설정 (1시간마다 갱신 혹은 공유 시점에 최신화)
-export const revalidate = 3600;

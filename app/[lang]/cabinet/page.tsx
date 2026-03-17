@@ -3,7 +3,6 @@ import { Locale } from "@/i18n-config";
 import CabinetClient from "@/components/cabinet/CabinetClient";
 import { getCanonicalUrl, getHreflangAlternates } from "@/lib/utils/seo-url";
 
-export const runtime = 'edge';
 
 interface CabinetPageProps {
   params: Promise<{ lang: string }>;

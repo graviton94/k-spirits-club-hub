@@ -1,0 +1,135 @@
+
+> k-spirits-club-hub@1.0.0 dev
+> next dev
+
+   ▲ Next.js 15.1.4
+   - Local:        http://localhost:3001
+   - Network:      http://192.168.0.13:3001
+   - Environments: .env
+
+ ✓ Starting...
+ ✓ Ready in 2.5s
+ ○ Compiling /middleware ...
+ ✓ Compiled /middleware in 595ms (164 modules)
+ ○ Compiling /[lang] ...
+Watchpack Error (initial scan): Error: EINVAL: invalid argument, lstat 'C:\DumpStack.log.tmp'
+Watchpack Error (initial scan): Error: EINVAL: invalid argument, lstat 'C:\hiberfil.sys'
+Watchpack Error (initial scan): Error: EINVAL: invalid argument, lstat 'C:\pagefile.sys'
+Watchpack Error (initial scan): Error: EINVAL: invalid argument, lstat 'C:\swapfile.sys'
+ ✓ Compiled /[lang] in 7.5s (2330 modules)
+ ⨯ [Error: Could not find the module "(app-pages-browser)/../node_modules/next/dist/client/components/layout-router.js" in the React Server Consumer Manifest. This is probably a bug in the React Server Components bundler.] {
+  digest: '2690692404'
+}
+Error: Could not find the module "(app-pages-browser)/../node_modules/next/dist/client/components/client-page.js" in the React Server Consumer Manifest. This is probably a bug in the React Server Components bundler. {
+  
+}
+ ⨯ Error: Could not find the module "(app-pages-browser)/../node_modules/next/dist/client/components/client-page.js" in the React Server Consumer Manifest. This is probably a bug in the React Server Components bundler. {
+  
+}
+ ⨯ TypeError: Cannot read properties of null (reading 'default') {  }
+ GET /ko 500 in 8226ms
+(node:15028) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/k-spirits-club-hub/k-spirits-club-hub/tailwind.config.ts?id=1773744937847 is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to C:\k-spirits-club-hub\k-spirits-club-hub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ Compiled in 6.3s (959 modules)
+ ○ Compiling /[lang] ...
+Watchpack Error (initial scan): Error: EINVAL: invalid argument, lstat 'C:\DumpStack.log.tmp'
+Watchpack Error (initial scan): Error: EINVAL: invalid argument, lstat 'C:\hiberfil.sys'
+Watchpack Error (initial scan): Error: EINVAL: invalid argument, lstat 'C:\pagefile.sys'
+Watchpack Error (initial scan): Error: EINVAL: invalid argument, lstat 'C:\swapfile.sys'
+ ⨯ ./..\node_modules\next\dist\compiled\client-only\error.js
+'client-only' cannot be imported from a Server Component module. It should only be used from a Client Component.
+
+Import trace for requested module:
+  ./..\node_modules\next\dist\compiled\client-only\error.js
+  ./..\node_modules\styled-jsx\dist\index\index.js
+  ./..\node_modules\styled-jsx\style.js
+  ./app\[lang]\loading.tsx
+  ./app\[lang]\page.tsx
+Watchpack Error (initial scan): Error: EINVAL: invalid argument, lstat 'C:\DumpStack.log.tmp'
+Watchpack Error (initial scan): Error: EINVAL: invalid argument, lstat 'C:\hiberfil.sys'
+Watchpack Error (initial scan): Error: EINVAL: invalid argument, lstat 'C:\swapfile.sys'
+Watchpack Error (initial scan): Error: EINVAL: invalid argument, lstat 'C:\pagefile.sys'
+Watchpack Error (initial scan): Error: EINVAL: invalid argument, lstat 'C:\DumpStack.log.tmp'
+Watchpack Error (initial scan): Error: EINVAL: invalid argument, lstat 'C:\hiberfil.sys'
+Watchpack Error (initial scan): Error: EINVAL: invalid argument, lstat 'C:\swapfile.sys'
+Watchpack Error (initial scan): Error: EINVAL: invalid argument, lstat 'C:\pagefile.sys'
+ ✓ Compiled /_error in 579ms (1043 modules)
+ GET /ko 500 in 9057ms
+Watchpack Error (initial scan): Error: EINVAL: invalid argument, lstat 'C:\DumpStack.log.tmp'
+Watchpack Error (initial scan): Error: EINVAL: invalid argument, lstat 'C:\hiberfil.sys'
+Watchpack Error (initial scan): Error: EINVAL: invalid argument, lstat 'C:\swapfile.sys'
+Watchpack Error (initial scan): Error: EINVAL: invalid argument, lstat 'C:\pagefile.sys'
+ GET /ko 500 in 106ms
+ ✓ Compiled in 3.1s (2533 modules)
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 1590ms (1390 modules)
+ GET /ko 404 in 2117ms
+ ⨯ ReferenceError: self is not defined
+    at Object.<anonymous> (C:\k-spirits-club-hub\k-spirits-club-hub\.next\server\app\[lang]\page.js:9:1) {
+  page: '/ko'
+}
+Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
+1. You might have mismatching versions of React and the renderer (such as React DOM)
+2. You might be breaking the Rules of Hooks
+3. You might have more than one copy of React in the same app
+See https://react.dev/link/invalid-hook-call for tips about how to debug and fix this problem.
+[TypeError: Cannot read properties of null (reading 'useReducer')]
+Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
+1. You might have mismatching versions of React and the renderer (such as React DOM)
+2. You might be breaking the Rules of Hooks
+3. You might have more than one copy of React in the same app
+See https://react.dev/link/invalid-hook-call for tips about how to debug and fix this problem.
+[TypeError: Cannot read properties of null (reading 'useReducer')]
+ ⨯ [TypeError: Cannot read properties of null (reading 'useReducer')]
+ ⨯ [TypeError: Cannot read properties of null (reading 'useReducer')]
+[TypeError: Cannot read properties of null (reading 'useReducer')]
+ ⨯ unhandledRejection: [TypeError: Cannot read properties of null (reading 'useReducer')]
+ ⨯ unhandledRejection:  [TypeError: Cannot read properties of null (reading 'useReducer')]
+ GET /ko 500 in 1352ms
+ ⨯ ReferenceError: self is not defined
+    at Object.<anonymous> (C:\k-spirits-club-hub\k-spirits-club-hub\.next\server\app\[lang]\page.js:9:1) {
+  page: '/en'
+}
+ ⨯ ReferenceError: self is not defined
+    at Object.<anonymous> (C:\k-spirits-club-hub\k-spirits-club-hub\.next\server\app\[lang]\page.js:9:1) {
+  page: '/ko'
+}
+Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
+1. You might have mismatching versions of React and the renderer (such as React DOM)
+2. You might be breaking the Rules of Hooks
+3. You might have more than one copy of React in the same app
+See https://react.dev/link/invalid-hook-call for tips about how to debug and fix this problem.
+[TypeError: Cannot read properties of null (reading 'useReducer')]
+Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
+1. You might have mismatching versions of React and the renderer (such as React DOM)
+2. You might be breaking the Rules of Hooks
+3. You might have more than one copy of React in the same app
+See https://react.dev/link/invalid-hook-call for tips about how to debug and fix this problem.
+[TypeError: Cannot read properties of null (reading 'useReducer')]
+ ⨯ [TypeError: Cannot read properties of null (reading 'useReducer')]
+ ⨯ [TypeError: Cannot read properties of null (reading 'useReducer')]
+[TypeError: Cannot read properties of null (reading 'useReducer')]
+ ⨯ unhandledRejection: [TypeError: Cannot read properties of null (reading 'useReducer')]
+ ⨯ unhandledRejection:  [TypeError: Cannot read properties of null (reading 'useReducer')]
+ GET /en 500 in 1339ms
+Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
+1. You might have mismatching versions of React and the renderer (such as React DOM)
+2. You might be breaking the Rules of Hooks
+3. You might have more than one copy of React in the same app
+See https://react.dev/link/invalid-hook-call for tips about how to debug and fix this problem.
+[TypeError: Cannot read properties of null (reading 'useReducer')]
+Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
+1. You might have mismatching versions of React and the renderer (such as React DOM)
+2. You might be breaking the Rules of Hooks
+3. You might have more than one copy of React in the same app
+See https://react.dev/link/invalid-hook-call for tips about how to debug and fix this problem.
+[TypeError: Cannot read properties of null (reading 'useReducer')]
+ ⨯ [TypeError: Cannot read properties of null (reading 'useReducer')]
+ ⨯ [TypeError: Cannot read properties of null (reading 'useReducer')]
+[TypeError: Cannot read properties of null (reading 'useReducer')]
+ ⨯ unhandledRejection: [TypeError: Cannot read properties of null (reading 'useReducer')]
+ ⨯ unhandledRejection:  [TypeError: Cannot read properties of null (reading 'useReducer')]
+ GET /ko 500 in 1489ms
+ ○ Compiling /[lang]/contents/about ...

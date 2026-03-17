@@ -151,7 +151,8 @@ export const yakju: SpiritCategory = {
             "간장게장 및 장아찌류",
             "한과/약과 또는 크림치즈 디저트"
         ],
-        dbCategories: ['약주']
+        dbCategories: ['약주'],
+        dbSubcategoryKeywords: ['약주', '전통 약주', '개량 약주', 'Yakju']
     },
     sectionsEn: {
         definition: "Korean Clear Rice Wine (Yakju/Cheongju) is a refined traditional spirit made by fermenting rice, water, and Nuruk (traditional starter), followed by a precise clarification or filtration process. While commonly called 'Cheongju' (clear wine), it is legally classified as 'Yakju' if the amount of traditional Nuruk used exceeds 1% of the rice weight, or 'Cheongju' if it is less than 1%—a distinction rooted in modern Korean liquor tax laws.",
@@ -300,6 +301,7 @@ export const yakju: SpiritCategory = {
             "Soy-marinated Crab and Pickled Vegetables",
             "Traditional Confections (Hangwa) or Cream Cheese"
         ],
-        dbCategories: ['약주']
+        dbCategories: ['약주'],
+        dbSubcategoryKeywords: ['약주', '전통 약주', '개량 약주', 'Yakju']
     }
 }

@@ -1,5 +1,3 @@
-export const runtime = 'edge';
-
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { BookOpen, ChevronRight } from 'lucide-react'
@@ -21,11 +19,11 @@ export async function generateMetadata({ params }: WikiHubPageProps): Promise<Me
 
     return {
         title: isEn
-            ? 'Spirits Wiki — Complete Guide to Whisky, Soju, Makgeolli & More'
-            : '주류 백과사전 — 위스키, 소주, 막걸리, 전통주 완벽 가이드',
+            ? 'Spirits Wiki — Complete Guide to Whisky, Soju, Cheongju, Sake & More'
+            : '주류 백과사전 — 위스키, 소주, 청주, 사케, 막걸리 완벽 가이드',
         description: isEn
-            ? 'Your complete guide to the world of spirits. Explore whisky, sake, gin, rum, tequila, and more — definitions, history, flavor profiles, and pairing tips.'
-            : '위스키부터 사케, 진, 럼, 데킬라까지 — 세계의 주류를 한눈에. 정의, 역사, 맛·향 특징, 페어링 정보를 K-Spirits Club에서 확인하세요.',
+            ? 'Your complete guide to the world of spirits. Explore whisky, cheongju, sake, gin, rum, tequila, and comparison guides — definitions, history, flavor profiles, and pairing tips.'
+            : '위스키부터 청주, 사케, 진, 럼, 데킬라와 비교 가이드까지 — 정의, 역사, 맛·향 특징, 페어링 정보를 K-Spirits Club에서 확인하세요.',
         alternates: {
             canonical: canonicalUrl,
             languages: hreflangAlternates,
@@ -56,9 +54,15 @@ const COLOR_CARD_MAP: Record<string, { gradient: string; text: string; border: s
     red: { gradient: 'from-red-500/20 to-rose-600/20', text: 'text-red-400', border: 'group-hover:border-red-500/50' },
 }
 
+const COMPARISON_SLUGS = ['yakju-vs-cheongju', 'cheongju-vs-sake', 'single-malt-vs-blended']
+
 export default async function WikiHubPage({ params }: WikiHubPageProps) {
     const { lang } = await params
     const isEn = lang === 'en'
+    const gridCategories = SPIRIT_CATEGORIES.filter((category) => !category.hideFromWikiHubGrid)
+    const comparisonCategories = COMPARISON_SLUGS
+        .map((slug) => SPIRIT_CATEGORIES.find((category) => category.slug === slug))
+        .filter((category): category is NonNullable<typeof category> => Boolean(category))
 
     return (
         <div className="container mx-auto px-4 py-6 max-w-5xl pb-24">
@@ -87,8 +91,8 @@ export default async function WikiHubPage({ params }: WikiHubPageProps) {
             <div className="mb-8 max-w-2xl mx-auto text-center px-2">
                 <p className="text-sm text-muted-foreground leading-relaxed">
                     {isEn
-                        ? 'The K-Spirits Club Spirits Wiki is your authoritative reference for understanding and exploring the world of alcoholic beverages. Each category guide covers definition and origin, production methods, flavor profiles, optimal serving temperatures, food pairing recommendations, and key brands — all written for enthusiasts and curious beginners alike.'
-                        : 'K-Spirits Club 주류 백과사전은 세계의 주류를 이해하고 탐험하기 위한 전문 레퍼런스입니다. 각 카테고리 가이드는 정의와 역사, 제조 공정, 풍미 프로파일, 최적 시음 온도, 음식 페어링 추천, 주요 브랜드를 담고 있습니다 — 입문자부터 애호가까지 모두를 위해 쓰였습니다.'}
+                        ? 'The K-Spirits Club Spirits Wiki is your authoritative reference for understanding and exploring the world of alcoholic beverages. Each category guide covers definition and origin, production methods, flavor profiles, optimal serving temperatures, food pairing recommendations, key brands, and high-intent comparison topics such as Cheongju vs Sake or Single Malt vs Blended.'
+                        : 'K-Spirits Club 주류 백과사전은 세계의 주류를 이해하고 탐험하기 위한 전문 레퍼런스입니다. 각 카테고리 가이드는 정의와 역사, 제조 공정, 풍미 프로파일, 최적 시음 온도, 음식 페어링 추천, 주요 브랜드를 담고 있으며, 청주 vs 사케나 싱글 몰트 vs 블렌디드 같은 비교 가이드도 함께 제공합니다.'}
                 </p>
             </div>
 
@@ -105,9 +109,26 @@ export default async function WikiHubPage({ params }: WikiHubPageProps) {
                 </div>
             )}
 
+            <div className="mb-8 rounded-2xl border border-border/40 bg-card/30 p-4">
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-3">
+                    {isEn ? 'Popular Comparison Guides' : '인기 비교 가이드'}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                    {comparisonCategories.map((category) => (
+                        <Link
+                            key={category.slug}
+                            href={`/${lang}/contents/wiki/${category.slug}`}
+                            className="px-3 py-1.5 rounded-full border border-border hover:border-cyan-500/60 hover:text-cyan-500 transition-colors text-sm"
+                        >
+                            {isEn ? category.nameEn : category.nameKo}
+                        </Link>
+                    ))}
+                </div>
+            </div>
+
             {/* Category Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 relative z-10">
-                {SPIRIT_CATEGORIES.map((cat) => {
+                {gridCategories.map((cat) => {
                     const c = COLOR_CARD_MAP[cat.color] ?? COLOR_CARD_MAP.amber
                     return (
                         <Link

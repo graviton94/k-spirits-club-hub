@@ -1,5 +1,3 @@
-export const runtime = 'edge';
-
 import { Metadata } from "next";
 import Link from "next/link";
 import {
@@ -35,8 +33,8 @@ export async function generateMetadata({ params }: ContentsPageProps): Promise<M
       ? "Contents Hub — Spirit MBTI, World Cup, Reviews & Wiki"
       : "콘텐츠 허브 — 주류 MBTI · 월드컵 · 리뷰 · 백과사전",
     description: isEn
-      ? "Discover your spirit personality with our MBTI test, vote in the Spirit World Cup, read community tasting reviews, follow AI-powered global spirits news, and explore the Spirits Wiki — all in one place."
-      : "주류 MBTI 테스트로 나의 취향을 분석하고, 술 취향 월드컵에서 최애 주류를 뽑고, 커뮤니티 리뷰를 읽고, AI가 분석한 글로벌 주류 뉴스와 주류 백과사전까지 — K-Spirits Club 콘텐츠 허브에서 모두 만나보세요.",
+      ? "Discover your spirit personality with our MBTI test, vote in the Spirit World Cup, read community tasting reviews, follow AI-powered global spirits news, and explore the Spirits Wiki and comparison guides — all in one place."
+      : "주류 MBTI 테스트로 나의 취향을 분석하고, 술 취향 월드컵에서 최애 주류를 뽑고, 커뮤니티 리뷰를 읽고, AI가 분석한 글로벌 주류 뉴스와 주류 백과사전·비교 가이드까지 — K-Spirits Club 콘텐츠 허브에서 모두 만나보세요.",
     alternates: {
       canonical: canonicalUrl,
       languages: hreflangAlternates,
@@ -231,6 +229,9 @@ export default async function ContentsPage({ params }: ContentsPageProps) {
           <Link href={`/${lang}/contents/wiki/makgeolli`} className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">
             {isEn ? 'Makgeolli Encyclopedia' : '막걸리 백과사전'}
           </Link>
+          <Link href={`/${lang}/contents/wiki/cheongju`} className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">
+            {isEn ? 'Cheongju Guide' : '청주 가이드'}
+          </Link>
           <Link href={`/${lang}/contents/wiki/yakju`} className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">
             {isEn ? 'Yakju — Premium Rice Wine' : '약주 가이드'}
           </Link>
@@ -238,6 +239,33 @@ export default async function ContentsPage({ params }: ContentsPageProps) {
       </div>
 
       {/* Global Spirits Wiki Section */}
+      <div className="mt-10 max-w-4xl mx-auto relative z-10 px-4">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="h-px flex-1 bg-border/50"></div>
+          <h2 className="text-sm font-bold text-muted-foreground uppercase tracking-widest whitespace-nowrap">
+            {isEn ? "Comparison Guides" : "비교 가이드"}
+          </h2>
+          <div className="h-px flex-1 bg-border/50"></div>
+        </div>
+        <p className="text-xs text-muted-foreground/70 text-center mb-4 leading-relaxed">
+          {isEn
+            ? 'Fast side-by-side guides for the questions users search most often before buying or tasting.'
+            : '구매 전과 입문 단계에서 가장 많이 검색하는 비교 질문을 빠르게 정리한 가이드.'}
+        </p>
+        <div className="flex flex-wrap justify-center gap-3 mb-10">
+          <Link href={`/${lang}/contents/wiki/yakju-vs-cheongju`} className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-cyan-500 transition-colors">
+            {isEn ? 'Yakju vs Cheongju' : '약주 vs 청주'}
+          </Link>
+          <Link href={`/${lang}/contents/wiki/cheongju-vs-sake`} className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-cyan-500 transition-colors">
+            {isEn ? 'Cheongju vs Sake' : '청주 vs 사케'}
+          </Link>
+          <Link href={`/${lang}/contents/wiki/single-malt-vs-blended`} className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-cyan-500 transition-colors">
+            {isEn ? 'Single Malt vs Blended' : '싱글 몰트 vs 블렌디드'}
+          </Link>
+        </div>
+
+      </div>
+
       <div className="mt-10 max-w-4xl mx-auto relative z-10 px-4">
         <div className="flex items-center gap-3 mb-4">
           <div className="h-px flex-1 bg-border/50"></div>

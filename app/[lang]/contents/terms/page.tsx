@@ -2,7 +2,6 @@ import { Locale } from '@/i18n-config';
 import Link from 'next/link';
 import { ArrowLeft, FileText, AlertCircle, Scale, UserX } from 'lucide-react';
 
-export const runtime = 'edge';
 
 export const metadata = {
     title: 'Terms of Service',

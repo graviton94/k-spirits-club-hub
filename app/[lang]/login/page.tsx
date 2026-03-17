@@ -2,7 +2,6 @@ import { getDictionary } from "@/lib/get-dictionary";
 import { Locale } from "@/i18n-config";
 import LoginClient from "@/components/auth/LoginClient";
 
-export const runtime = 'edge';
 
 interface LoginPageProps {
     params: Promise<{ lang: string }>;

@@ -5,15 +5,22 @@ import { useRouter } from 'next/navigation'
 import { BookOpen, Clock, Layers, Droplets, FlaskConical, GlassWater, Utensils, ShoppingBag, Activity, Leaf, Thermometer, Search, HelpCircle, X } from 'lucide-react'
 import type { SpiritCategory } from '@/lib/constants/spirits-guide-data'
 import { getCategoryFallbackImage } from '@/lib/utils/image-fallback'
-import { SPIRIT_CATEGORIES } from '@/lib/constants/spirits-guide-data'
 import BackButton from '@/components/ui/BackButton'
 import GoogleAd from '@/components/ui/GoogleAd'
+import { formatSpiritFieldValue } from '@/lib/utils/localize-field'
 
 interface SpiritGuideLayoutProps {
     category: SpiritCategory
     lang: string
     /** 추천 제품 (DB에서 주입) */
-    featuredSpirits?: { id: string; name: string; category: string; imageUrl?: string }[]
+    featuredSpirits?: {
+        id: string
+        name: string
+        nameEn?: string | null
+        category: string
+        subcategory?: string | null
+        imageUrl?: string
+    }[]
 }
 
 // ─── 색상 맵 ────────────────────────────────────────────────────────────────
@@ -494,14 +501,23 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                                 >
                                     <img
                                         src={spirit.imageUrl || getCategoryFallbackImage(spirit.category)}
-                                        alt={spirit.name}
+                                        alt={isEn ? (spirit.nameEn || spirit.name) : spirit.name}
                                         className={`w-full aspect-square object-contain mb-2 rounded-lg ${!spirit.imageUrl ? 'opacity-30 grayscale' : ''}`}
                                     />
                                     <p className="text-xs font-semibold text-foreground group-hover:text-amber-500 transition-colors line-clamp-1">
-                                        {spirit.name}
+                                        {isEn ? (spirit.nameEn || spirit.name) : spirit.name}
                                     </p>
-                                    <div className="flex items-center justify-between mt-1">
-                                        <p className="text-[10px] text-muted-foreground">{spirit.category}</p>
+                                    <div className="mt-1 space-y-0.5">
+                                        <p className="text-[10px] text-muted-foreground">
+                                            {formatSpiritFieldValue('category', spirit.category, lang)}
+                                        </p>
+                                        {spirit.subcategory && (
+                                            <p className="text-[10px] text-muted-foreground/80 line-clamp-1">
+                                                {formatSpiritFieldValue('subcategory', spirit.subcategory, lang)}
+                                            </p>
+                                        )}
+                                    </div>
+                                    <div className="flex items-center justify-end mt-2">
                                         <div className="flex gap-2">
                                             <a
                                                 href={`https://search.shopping.naver.com/search/all?query=${encodeURIComponent(spirit.name)}`}

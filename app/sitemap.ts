@@ -2,7 +2,6 @@ import { MetadataRoute } from 'next';
 import { getPublishedSpiritMetaWithQuality } from '@/lib/db/firestore-rest';
 import { SPIRIT_CATEGORIES } from '@/lib/constants/spirits-guide-data';
 
-export const runtime = 'edge';
 
 /**
  * Sitemap revalidation: 24시간

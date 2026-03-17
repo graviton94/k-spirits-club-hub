@@ -22,6 +22,7 @@ interface HomeClientProps {
     initialTrending: any[];
     initialReviews: any[];
     dailySnippet: import('@/lib/utils/wiki-snippet').WikiSnippet | null;
+    children?: React.ReactNode;
 }
 
 const UI_TEXT = {
@@ -41,7 +42,7 @@ const UI_TEXT = {
     }
 };
 
-export default function HomeClient({ lang, dict, initialNewArrivals, initialReviews, newsSection, dailySnippet }: HomeClientProps & { newsSection: React.ReactNode }) {
+export default function HomeClient({ lang, dict, initialNewArrivals, initialReviews, dailySnippet, children }: HomeClientProps) {
     // const { publishedSpirits, isLoading: isCacheLoading } = useSpiritsCache(); // Cache might still be used for other things or removed if only for trending
     // Actually, let's keep it simple. Remove trending logic.
 
@@ -142,7 +143,7 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialRevi
             </section>
 
             {/* 3. Global News Feed (Replaces Trending) */}
-            {newsSection}
+            {children}
 
             {/* 4. Live Reviews Grid */}
             <section className="container max-w-4xl mx-auto px-4 mb-20">

@@ -1,5 +1,3 @@
-export const runtime = 'edge';
-
 import { Metadata } from 'next';
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url';
 import PerfectPourPage from './perfect-pour-client';

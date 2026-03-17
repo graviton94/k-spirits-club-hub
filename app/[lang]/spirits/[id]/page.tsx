@@ -11,8 +11,9 @@ import { getRelatedSpirits } from "@/lib/utils/related-spirits";
 import { resolveSpiritPageState } from "@/lib/utils/spirit-page-resolver";
 import { formatSpiritFieldValue } from "@/lib/utils/localize-field";
 import { Spirit } from "@/lib/db/schema";
+import { getSpiritCategory } from "@/lib/constants/spirits-guide-data";
+import { scoreSpiritForWikiCategory } from "@/lib/utils/wiki-spirit-match";
 
-export const runtime = 'edge';
 
 const DESCRIPTION_MAX_LENGTH = 155;
 
@@ -31,6 +32,7 @@ const CATEGORY_TO_WIKI_SLUG: Record<string, string> = {
   '소주': 'soju-guide',
   '막걸리': 'makgeolli-guide',
   '약주': 'yakju',
+  '청주': 'cheongju',
   '위스키': 'single-malt',
   '버번': 'bourbon',
   '진': 'gin',
@@ -55,6 +57,7 @@ const CATEGORY_TO_WIKI_LABEL_EN: Record<string, string> = {
   '소주': 'Korean Soju Guide',
   '막걸리': 'Makgeolli Guide',
   '약주': 'Yakju — Premium Rice Wine Guide',
+  '청주': 'Cheongju Guide',
   '위스키': 'Single Malt Whisky Guide',
   '버번': 'Bourbon Whiskey Guide',
   '진': 'Gin Distillation & Botanicals',
@@ -79,6 +82,7 @@ const CATEGORY_TO_WIKI_LABEL_KO: Record<string, string> = {
   '소주': '소주 가이드',
   '막걸리': '막걸리 가이드',
   '약주': '약주 가이드',
+  '청주': '청주 가이드',
   '위스키': '싱글 몰트 위스키 가이드',
   '버번': '버번 위스키 가이드',
   '진': '진 가이드',
@@ -98,6 +102,46 @@ const CATEGORY_TO_WIKI_LABEL_KO: Record<string, string> = {
   '리큐어': '리큐어 가이드',
   '백주': '바이주 가이드',
 };
+
+function resolveSpiritWikiGuide(
+  category: string,
+  subcategory: string | null | undefined,
+  mainCategory: string | null | undefined,
+) {
+  if (!category) return null;
+
+  let slug = CATEGORY_TO_WIKI_SLUG[category];
+
+  if (category === '청주') {
+    const sakeCategory = getSpiritCategory('sake');
+    const cheongjuCategory = getSpiritCategory('cheongju');
+    const wikiTarget = {
+      category,
+      subcategory: subcategory || null,
+      mainCategory: mainCategory || null,
+    };
+
+    const sakeScore = sakeCategory ? scoreSpiritForWikiCategory(wikiTarget, sakeCategory) : -1;
+    const cheongjuScore = cheongjuCategory ? scoreSpiritForWikiCategory(wikiTarget, cheongjuCategory) : -1;
+
+    slug = sakeScore > cheongjuScore ? 'sake' : 'cheongju';
+  }
+
+  if (!slug) return null;
+
+  const wikiCategory = getSpiritCategory(slug);
+  const useWikiCategoryLabel = category === '청주';
+
+  return {
+    slug,
+    labelEn: useWikiCategoryLabel
+      ? (wikiCategory?.nameEn || 'Cheongju Guide')
+      : (CATEGORY_TO_WIKI_LABEL_EN[category] || wikiCategory?.nameEn || 'Spirit Category Guide'),
+    labelKo: useWikiCategoryLabel
+      ? (wikiCategory?.nameKo || '청주 가이드')
+      : (CATEGORY_TO_WIKI_LABEL_KO[category] || wikiCategory?.nameKo || '주류 카테고리 가이드'),
+  };
+}
 
 // --- Interfaces ---
 
@@ -604,9 +648,10 @@ export default async function SpiritDetailPage({
     mainEntity: faqQuestions
   } : null;
   const category = spirit.category || '';
-  const wikiSlug = CATEGORY_TO_WIKI_SLUG[category];
-  const wikiLabelEn = CATEGORY_TO_WIKI_LABEL_EN[category];
-  const wikiLabelKo = CATEGORY_TO_WIKI_LABEL_KO[category];
+  const wikiGuide = resolveSpiritWikiGuide(category, spirit.subcategory, spirit.mainCategory);
+  const breadcrumbGuideName = category === '청주' && spirit.subcategory
+    ? formatSpiritFieldValue('subcategory', spirit.subcategory, lang)
+    : formatSpiritFieldValue('category', spirit.category, lang);
 
   // --- Breadcrumb Schema ---
   const breadcrumbLd = {
@@ -628,9 +673,9 @@ export default async function SpiritDetailPage({
       {
         '@type': 'ListItem',
         position: 3,
-        name: formatSpiritFieldValue('category', spirit.category, lang),
-        item: wikiSlug
-          ? `${baseUrl}/${lang}/contents/wiki/${wikiSlug}`
+        name: breadcrumbGuideName,
+        item: wikiGuide
+          ? `${baseUrl}/${lang}/contents/wiki/${wikiGuide.slug}`
           : `${baseUrl}/${lang}/explore?category=${encodeURIComponent(spirit.category)}`,
       },
       {
@@ -768,10 +813,10 @@ export default async function SpiritDetailPage({
             {isEn ? 'Explore Related Guides' : '관련 가이드 탐색'}
           </p>
           <ul className="flex flex-col sm:flex-row sm:flex-wrap gap-2 text-sm">
-            {wikiSlug && (
+            {wikiGuide && (
               <li className="w-full sm:w-auto">
-                <Link href={`/${lang}/contents/wiki/${wikiSlug}`} className={`${guideBtnBase} ${guideBtnAmber}`}>
-                  <span>📖</span>{isEn ? (wikiLabelEn || 'Spirit Category Guide') : (wikiLabelKo || '주류 카테고리 가이드')}
+                <Link href={`/${lang}/contents/wiki/${wikiGuide.slug}`} className={`${guideBtnBase} ${guideBtnAmber}`}>
+                  <span>📖</span>{isEn ? wikiGuide.labelEn : wikiGuide.labelKo}
                 </Link>
               </li>
             )}

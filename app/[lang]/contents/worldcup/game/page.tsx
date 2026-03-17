@@ -1,5 +1,4 @@
 'use client';
-export const runtime = 'edge';
 
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -351,7 +350,7 @@ export default function WorldCupGamePage({ params }: { params: Promise<{ lang: s
 
         // If resultId is not yet saved, use fallback link or wait
         const shareUrl = resultId
-            ? `${window.location.origin}/contents/worldcup/result/${resultId}`
+            ? `${window.location.origin}/${lang}/contents/worldcup/result/${resultId}`
             : window.location.href;
 
         const shareData = {
@@ -598,7 +597,7 @@ export default function WorldCupGamePage({ params }: { params: Promise<{ lang: s
             <div className="fixed top-16 left-0 right-0 p-4 z-40 bg-gradient-to-b from-background via-background/40 to-transparent flex flex-col items-center">
                 <div className="w-full max-w-2xl flex items-center justify-between mb-2">
                     <button
-                        onClick={() => router.push('/contents/worldcup')}
+                        onClick={() => router.push(`/${lang}/contents/worldcup`)}
                         className="p-2.5 bg-card/50 backdrop-blur-md rounded-2xl border border-border hover:bg-muted transition-all"
                     >
                         <ChevronLeft className="w-5 h-5 text-foreground" />

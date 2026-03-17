@@ -76,6 +76,10 @@ export interface SpiritSection {
     foodPairing?: string[]
     /** DB 제품 조회용 카테고리 필터 키워드 */
     dbCategories?: string[]
+    /** DB 제품 조회용 서브카테고리 매칭 키워드 */
+    dbSubcategoryKeywords?: string[]
+    /** 비교형 위키에서 양측 스타일을 균형 노출하기 위한 그룹 */
+    dbSubcategoryKeywordGroups?: string[][]
     /** 지역별 서브 Wiki로의 점프 슬러그 (e.g. 'scotch-whisky-regions') */
     relatedPageSlug?: string
     /** 지역 점프 배너 레이블 (한국어) */
@@ -96,6 +100,8 @@ export interface SpiritCategory {
     taglineEn: string
     /** Tailwind 테마 색상 키 (amber, rose, sky …) */
     color: string
+    /** 허브 메인 그리드 노출 여부 */
+    hideFromWikiHubGrid?: boolean
     /** 본문 섹션 (기본/국문) */
     sections?: SpiritSection
     /** 본문 섹션 (영문) */

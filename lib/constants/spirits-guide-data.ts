@@ -28,9 +28,13 @@ import { brandy } from './wiki/brandy'
 import { baijiu } from './wiki/baijiu'
 import { beer } from './wiki/beer'
 import { yakju } from './wiki/yakju'
+import { cheongju } from './wiki/cheongju'
 import { makgeolli } from './wiki/makgeolli'
 import { shochu } from './wiki/shochu'
 import { oakBarrel } from './wiki/oak-barrel'
+import { cheongjuVsSake } from './wiki/cheongju-vs-sake'
+import { yakjuVsCheongju } from './wiki/yakju-vs-cheongju'
+import { singleMaltVsBlended } from './wiki/single-malt-vs-blended'
 
 // SEO Hub Categories (Bilingual)
 import { sojuGuide } from './wiki/soju-guide'
@@ -89,6 +93,7 @@ export const SPIRIT_CATEGORIES: SpiritCategory[] = [
     sojuDistilled,
     sojuDiluted,
     yakju,
+    cheongju,
     makgeolli,
     sake,
     shochu,
@@ -107,6 +112,9 @@ export const SPIRIT_CATEGORIES: SpiritCategory[] = [
     koreanWhisky,
     koreanTraditionalSpirits,
     koreanSpiritsByAbv,
+    cheongjuVsSake,
+    yakjuVsCheongju,
+    singleMaltVsBlended,
 
     // 9. Regional Sub-Wiki Pages (KO + EN)
     scotchWhiskyRegions,
