@@ -284,7 +284,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                             ) : (
                                 <div className="w-full flex gap-2">
                                     <button
-                                        onClick={() => router.push(`/spirits/${localSpirit.id}`)}
+                                        onClick={() => router.push(`/${isEn ? 'en' : 'ko'}/spirits/${localSpirit.id}`)}
                                         className="flex-2 flex items-center justify-center gap-2 py-3 bg-linear-to-r from-amber-500 to-orange-600 text-white rounded-xl font-bold text-sm shadow-lg shadow-primary/20 hover:from-amber-600 hover:to-orange-700 hover:scale-105 transition-all"
                                     >
                                         <Pencil className="w-4 h-4" />

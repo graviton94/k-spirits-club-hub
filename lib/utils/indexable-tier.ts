@@ -16,8 +16,11 @@ import { Spirit } from '@/lib/db/schema';
  * - name exists
  * - abv exists
  * - category exists
- * - At least 1 image (imageUrl or thumbnailUrl)
- * - description (ko or en) >= 300 characters
+ * - At least 2 quality signals among:
+ *   - image
+ *   - description (ko or en) >= 160 characters
+ *   - pairing guide (ko or en) >= 120 characters
+ *   - tasting note / sensory tags
  *
  * @param spirit - Spirit object to evaluate
  * @returns true if spirit meets Tier A criteria (indexable), false for Tier B (noindex)
@@ -31,13 +34,27 @@ export function isIndexableSpirit(spirit: Spirit | null | undefined): boolean {
   const hasCategory = !!spirit.category;
   const hasImage = !!(spirit.imageUrl || spirit.thumbnailUrl);
 
-  // Check description length (300+ chars in either Korean or English)
+  // Check content richness across multiple fields.
   const descKo = spirit.metadata?.description_ko || spirit.description_ko || '';
   const descEn = spirit.metadata?.description_en || spirit.description_en || '';
-  const hasDescription = descKo.length >= 300 || descEn.length >= 300;
+  const pairingKo = spirit.metadata?.pairing_guide_ko || spirit.pairing_guide_ko || '';
+  const pairingEn = spirit.metadata?.pairing_guide_en || spirit.pairing_guide_en || '';
+  const tastingNote = spirit.tasting_note || spirit.metadata?.tasting_note || '';
+  const sensoryTagCount = [
+    ...(spirit.nose_tags || spirit.metadata?.nose_tags || []),
+    ...(spirit.palate_tags || spirit.metadata?.palate_tags || []),
+    ...(spirit.finish_tags || spirit.metadata?.finish_tags || []),
+  ].filter(Boolean).length;
 
-  // All conditions must be met for Tier A
-  return hasName && hasAbv && hasCategory && hasImage && hasDescription;
+  const qualitySignalCount = [
+    hasImage,
+    descKo.length >= 160 || descEn.length >= 160,
+    pairingKo.length >= 120 || pairingEn.length >= 120,
+    tastingNote.length >= 24 || sensoryTagCount >= 4,
+  ].filter(Boolean).length;
+
+  // All identity fields must exist, plus at least two content-quality signals.
+  return hasName && hasAbv && hasCategory && qualitySignalCount >= 2;
 }
 
 /**

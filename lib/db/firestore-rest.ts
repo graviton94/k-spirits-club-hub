@@ -391,6 +391,10 @@ export async function getPublishedSpiritMetaWithQuality(): Promise<{
     thumbnailUrl: string | null;
     descriptionKoLength: number;
     descriptionEnLength: number;
+    pairingKoLength: number;
+    pairingEnLength: number;
+    tastingNoteLength: number;
+    sensoryTagCount: number;
 }[]> {
     const token = await getServiceAccountToken();
     const runQueryUrl = `${BASE_URL}:runQuery`;
@@ -411,6 +415,10 @@ export async function getPublishedSpiritMetaWithQuality(): Promise<{
         thumbnailUrl: string | null;
         descriptionKoLength: number;
         descriptionEnLength: number;
+        pairingKoLength: number;
+        pairingEnLength: number;
+        tastingNoteLength: number;
+        sensoryTagCount: number;
     }[] = [];
     let offset = 0;
     const pageSize = 5000;
@@ -439,6 +447,12 @@ export async function getPublishedSpiritMetaWithQuality(): Promise<{
                         { fieldPath: 'thumbnailUrl' },
                         { fieldPath: 'description_ko' },
                         { fieldPath: 'description_en' },
+                        { fieldPath: 'pairing_guide_ko' },
+                        { fieldPath: 'pairing_guide_en' },
+                        { fieldPath: 'tasting_note' },
+                        { fieldPath: 'nose_tags' },
+                        { fieldPath: 'palate_tags' },
+                        { fieldPath: 'finish_tags' },
                         { fieldPath: 'metadata' },
                     ]
                 },
@@ -483,19 +497,45 @@ export async function getPublishedSpiritMetaWithQuality(): Promise<{
                 // Get description from root fields or metadata
                 const descKoRoot = fromFirestoreValue(fields.description_ko) || '';
                 const descEnRoot = fromFirestoreValue(fields.description_en) || '';
+                const pairingKoRoot = fromFirestoreValue(fields.pairing_guide_ko) || '';
+                const pairingEnRoot = fromFirestoreValue(fields.pairing_guide_en) || '';
+                const tastingNoteRoot = fromFirestoreValue(fields.tasting_note) || '';
+                const noseTagsRoot = fromFirestoreValue(fields.nose_tags) || [];
+                const palateTagsRoot = fromFirestoreValue(fields.palate_tags) || [];
+                const finishTagsRoot = fromFirestoreValue(fields.finish_tags) || [];
 
                 // Extract metadata descriptions
                 let descKoMeta = '';
                 let descEnMeta = '';
+                let pairingKoMeta = '';
+                let pairingEnMeta = '';
+                let tastingNoteMeta = '';
+                let noseTagsMeta: string[] = [];
+                let palateTagsMeta: string[] = [];
+                let finishTagsMeta: string[] = [];
                 if (fields.metadata?.mapValue?.fields) {
                     const metaFields = fields.metadata.mapValue.fields;
                     descKoMeta = fromFirestoreValue(metaFields.description_ko) || '';
                     descEnMeta = fromFirestoreValue(metaFields.description_en) || '';
+                    pairingKoMeta = fromFirestoreValue(metaFields.pairing_guide_ko) || '';
+                    pairingEnMeta = fromFirestoreValue(metaFields.pairing_guide_en) || '';
+                    tastingNoteMeta = fromFirestoreValue(metaFields.tasting_note) || '';
+                    noseTagsMeta = fromFirestoreValue(metaFields.nose_tags) || [];
+                    palateTagsMeta = fromFirestoreValue(metaFields.palate_tags) || [];
+                    finishTagsMeta = fromFirestoreValue(metaFields.finish_tags) || [];
                 }
 
                 // Use whichever description is longer
                 const descKo = descKoRoot.length > descKoMeta.length ? descKoRoot : descKoMeta;
                 const descEn = descEnRoot.length > descEnMeta.length ? descEnRoot : descEnMeta;
+                const pairingKo = pairingKoRoot.length > pairingKoMeta.length ? pairingKoRoot : pairingKoMeta;
+                const pairingEn = pairingEnRoot.length > pairingEnMeta.length ? pairingEnRoot : pairingEnMeta;
+                const tastingNote = tastingNoteRoot.length > tastingNoteMeta.length ? tastingNoteRoot : tastingNoteMeta;
+                const sensoryTagCount = [
+                    ...(Array.isArray(noseTagsRoot) && noseTagsRoot.length > 0 ? noseTagsRoot : noseTagsMeta),
+                    ...(Array.isArray(palateTagsRoot) && palateTagsRoot.length > 0 ? palateTagsRoot : palateTagsMeta),
+                    ...(Array.isArray(finishTagsRoot) && finishTagsRoot.length > 0 ? finishTagsRoot : finishTagsMeta),
+                ].filter(Boolean).length;
 
                 if (id) {
                     allMeta.push({
@@ -508,6 +548,10 @@ export async function getPublishedSpiritMetaWithQuality(): Promise<{
                         thumbnailUrl,
                         descriptionKoLength: descKo.length,
                         descriptionEnLength: descEn.length,
+                        pairingKoLength: pairingKo.length,
+                        pairingEnLength: pairingEn.length,
+                        tastingNoteLength: tastingNote.length,
+                        sensoryTagCount,
                     });
                 }
             }

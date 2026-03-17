@@ -15,7 +15,8 @@ export const revalidate = 86400;
  * SEO Phase 2: Indexable Tier Classification
  *
  * Tier A (Indexable): Spirits with high-quality content
- * - name, abv, category, image, description >= 300 chars
+ * - name, abv, category
+ * - at least two quality signals among image / description / pairing / tasting data
  *
  * Tier B (Non-indexable): Thin content spirits
  * - Excluded from sitemap, marked with noindex on page
@@ -30,14 +31,23 @@ function isIndexableSpiritMeta(spirit: {
   thumbnailUrl: string | null;
   descriptionKoLength: number;
   descriptionEnLength: number;
+  pairingKoLength: number;
+  pairingEnLength: number;
+  tastingNoteLength: number;
+  sensoryTagCount: number;
 }): boolean {
   const hasName = !!spirit.name;
   const hasAbv = typeof spirit.abv === 'number';
   const hasCategory = !!spirit.category;
   const hasImage = !!(spirit.imageUrl || spirit.thumbnailUrl);
-  const hasDescription = spirit.descriptionKoLength >= 300 || spirit.descriptionEnLength >= 300;
+  const qualitySignalCount = [
+    hasImage,
+    spirit.descriptionKoLength >= 160 || spirit.descriptionEnLength >= 160,
+    spirit.pairingKoLength >= 120 || spirit.pairingEnLength >= 120,
+    spirit.tastingNoteLength >= 24 || spirit.sensoryTagCount >= 4,
+  ].filter(Boolean).length;
 
-  return hasName && hasAbv && hasCategory && hasImage && hasDescription;
+  return hasName && hasAbv && hasCategory && qualitySignalCount >= 2;
 }
 
 /**

@@ -211,7 +211,7 @@ export default function ReviewsPage() {
               {/* Row 1 & 2: Image + Meta */}
               <div className="flex gap-4 sm:gap-6 mb-5">
                 {/* Spirit Image */}
-                <Link href={`/spirits/${spirit.id}`} className="shrink-0">
+                <Link href={`/${lang}/spirits/${spirit.id}`} className="shrink-0">
                   <div className="w-20 h-24 sm:w-28 sm:h-36 rounded-2xl bg-secondary overflow-hidden border border-border flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
                     <img
                       src={getOptimizedImageUrl(spirit.imageUrl || getCategoryFallbackImage(spirit.category), 200)}
@@ -224,7 +224,7 @@ export default function ReviewsPage() {
                 {/* Info Right */}
                 <div className="flex-1 flex flex-col justify-center min-w-0">
                   <Link
-                    href={`/spirits/${spirit.id}`}
+                    href={`/${lang}/spirits/${spirit.id}`}
                     className="text-xl sm:text-2xl font-black hover:text-amber-600 transition-colors truncate mb-3"
                   >
                     {spirit.name}

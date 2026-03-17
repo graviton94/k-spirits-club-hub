@@ -1,12 +1,17 @@
 import { spiritsDb as restSpiritsDb } from './firestore-rest';
 import { Spirit, SpiritStatus, SpiritFilter, PaginationParams, PaginatedResponse, SpiritSearchIndex } from './schema';
 import { generateSpiritSearchKeywords } from '../utils/search-keywords';
+import { getPublicLatestFeatured, getPublicSpiritById } from './public-read-fallback';
 
 /**
  * [Server-Side Database Adapter]
  * Uses Firestore REST API to be compatible with Edge Runtime (Cloudflare).
  */
 export const spiritsDb = restSpiritsDb;
+
+function hasServiceAccountCredentials(): boolean {
+  return !!process.env.FIREBASE_CLIENT_EMAIL && !!process.env.FIREBASE_PRIVATE_KEY;
+}
 
 // -----------------------------------------------------------------------------
 // LEGACY ADAPTER (Compatible Wrapper)
@@ -157,10 +162,20 @@ export const db = {
   },
 
   async getLatestFeatured(category: string, limit: number = 6): Promise<Spirit[]> {
+    if (!hasServiceAccountCredentials()) {
+      console.warn('[DB Adapter] Missing service-account credentials. Falling back to public Firestore read for getLatestFeatured().');
+      return getPublicLatestFeatured(category, limit);
+    }
+
     return spiritsDb.getLatestFeatured(category, limit);
   },
 
   async getSpirit(id: string): Promise<Spirit | null> {
+    if (!hasServiceAccountCredentials()) {
+      console.warn(`[DB Adapter] Missing service-account credentials. Falling back to public Firestore read for spirit ${id}.`);
+      return getPublicSpiritById(id);
+    }
+
     return spiritsDb.getById(id);
   },
 
