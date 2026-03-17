@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { Suspense, useState, useEffect, useMemo, useCallback } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -57,7 +57,16 @@ interface Spirit {
 import { getDictionary } from "@/lib/get-dictionary";
 import { Locale } from "@/i18n-config";
 
-export default function WorldCupGamePage({ params }: { params: Promise<{ lang: string }> }) {
+function WorldCupGameFallback() {
+    return (
+        <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-background">
+            <Loader2 className="w-12 h-12 text-amber-500 animate-spin mb-4" />
+            <p className="text-muted-foreground font-bold animate-pulse">Loading world cup match...</p>
+        </div>
+    );
+}
+
+function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }> }) {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [lang, setLang] = useState<Locale>('ko');
@@ -638,6 +647,14 @@ export default function WorldCupGamePage({ params }: { params: Promise<{ lang: s
                 <ChoiceCard item={rightItem} onClick={() => selectWinner(rightItem)} pos="right" isEn={isEn} />
             </div>
         </div>
+    );
+}
+
+export default function WorldCupGamePage({ params }: { params: Promise<{ lang: string }> }) {
+    return (
+        <Suspense fallback={<WorldCupGameFallback />}>
+            <WorldCupGamePageContent params={params} />
+        </Suspense>
     );
 }
 

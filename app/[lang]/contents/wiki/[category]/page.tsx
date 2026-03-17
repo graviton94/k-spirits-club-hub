@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { getSpiritCategory } from '@/lib/constants/spirits-guide-data'
-import { db } from '@/lib/db/index'
+import { spiritsDb } from '@/lib/db/firestore-rest'
 import SpiritGuideLayout from '@/components/contents/SpiritGuideLayout'
 import { redirect } from 'next/navigation'
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url'
@@ -17,6 +17,10 @@ const KO_TO_EN_MAP: Record<string, string> = {
     '전통주-종류-정리': 'korean-traditional-spirits',
     '도수별-증류주': 'korean-spirits-by-abv',
 };
+
+const LEGACY_EN_SLUG_MAP: Record<string, string> = {
+    'korean-soju': 'soju-guide',
+}
 
 const RELATED_COMPARISON_SLUGS: Record<string, string[]> = {
     cheongju: ['cheongju-vs-sake', 'yakju-vs-cheongju'],
@@ -38,6 +42,9 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
     // Unified Slug Policy: Always redirect Korean slugs to English slugs for stability
     if (KO_TO_EN_MAP[decodedSlug]) {
         redirect(`/${lang}/contents/wiki/${KO_TO_EN_MAP[decodedSlug]}`)
+    }
+    if (LEGACY_EN_SLUG_MAP[decodedSlug]) {
+        redirect(`/${lang}/contents/wiki/${LEGACY_EN_SLUG_MAP[decodedSlug]}`)
     }
 
     const cat = getSpiritCategory(decodedSlug) || getSpiritCategory(slug)
@@ -212,6 +219,9 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
     if (KO_TO_EN_MAP[decodedSlug]) {
         redirect(`/${lang}/contents/wiki/${KO_TO_EN_MAP[decodedSlug]}`)
     }
+    if (LEGACY_EN_SLUG_MAP[decodedSlug]) {
+        redirect(`/${lang}/contents/wiki/${LEGACY_EN_SLUG_MAP[decodedSlug]}`)
+    }
 
     const cat = getSpiritCategory(decodedSlug) || getSpiritCategory(slug)
 
@@ -237,10 +247,10 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
         try {
             const spiritGroups = await Promise.all(
                 dbCategories.map((dbCategory) =>
-                    db.getAll(
+                    spiritsDb.getAll(
                         { category: dbCategory, isPublished: true },
                         { page: 1, pageSize: 60 },
-                    ).then((result) => result.data).catch(() => []),
+                    ).catch(() => []),
                 ),
             )
 
@@ -255,7 +265,7 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
                 nameEn: s.metadata?.name_en || s.name_en || null,
                 category: s.category,
                 subcategory: s.subcategory || null,
-                imageUrl: s.imageUrl,
+                imageUrl: s.thumbnailUrl || s.imageUrl || null,
             }))
         } catch {
             // 무시

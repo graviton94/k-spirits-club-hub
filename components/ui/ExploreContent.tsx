@@ -1,21 +1,29 @@
 "use client";
 
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
-import { useSearchParams, usePathname, useRouter } from 'next/navigation';
+import { useSearchParams, usePathname } from 'next/navigation';
 import { useSpiritsCache } from '@/app/[lang]/context/spirits-cache-context';
 import { useAuth } from '@/app/[lang]/context/auth-context';
 import { getCabinetStatusInfo } from '@/app/[lang]/actions/cabinet';
 import { ExploreCard } from './ExploreCard';
 import { ExploreGridSkeleton } from './ExploreSkeleton';
-import { Search, Loader2, AlertCircle, RefreshCw, Filter } from 'lucide-react';
-import AdSlot from '@/components/common/AdSlot';
+import { Search, Loader2 } from 'lucide-react';
 import GoogleAd from '@/components/ui/GoogleAd';
 import metadata from '@/lib/constants/spirits-metadata.json';
 import { SpiritSearchIndex } from '@/lib/db/schema';
 
+const QUICK_CATEGORY_KEYS = ['위스키', '소주', '청주', '약주', '과실주'] as const;
+
+const QUICK_CATEGORY_LABELS: Record<(typeof QUICK_CATEGORY_KEYS)[number], { ko: string; en: string }> = {
+  '위스키': { ko: '위스키', en: 'Whisky' },
+  '소주': { ko: '소주', en: 'Soju' },
+  '청주': { ko: '청주', en: 'Cheongju' },
+  '약주': { ko: '약주', en: 'Yakju' },
+  '과실주': { ko: '과실주', en: 'Wine & Fruit Wine' },
+};
+
 export default function ExploreContent({ dict }: { dict?: any }) {
   const pathname = usePathname() || "";
-  const router = useRouter();
   const searchParams = useSearchParams();
   const lang = pathname.split('/')[1] === 'en' ? 'en' : 'ko';
   const isEn = lang === 'en';
@@ -77,43 +85,54 @@ export default function ExploreContent({ dict }: { dict?: any }) {
     });
   };
 
-  /**
-   * Perform instant client-side search using the cached search index
-   */
-  const performSearch = useCallback(async (isInitial = false) => {
+  const runSearch = useCallback((nextSearchTerm: string, nextCategory: string, nextSubCategory: string) => {
     if (!searchIndex || searchIndex.length === 0) return;
 
     setIsSearching(true);
     setHasSearched(true);
-    setDisplayLimit(24); // Reset display limit on new search
+    setDisplayLimit(24);
 
-    // Small delay to allow UI to breathe
     setTimeout(() => {
       let results = [...searchIndex];
 
-      // 1. Text Search (using Fuse.js from cache context)
-      if (searchTerm.trim()) {
-        results = searchSpirits(searchTerm);
+      if (nextSearchTerm.trim()) {
+        results = searchSpirits(nextSearchTerm);
       }
 
-      // 2. Category Filter
-      if (selectedCategory && selectedCategory !== 'ALL') {
+      if (nextCategory && nextCategory !== 'ALL') {
         results = results.filter(s =>
-          s.c === selectedCategory ||
-          s.sc === selectedCategory ||
-          s.mc === selectedCategory
+          s.c === nextCategory ||
+          s.sc === nextCategory ||
+          s.mc === nextCategory
         );
       }
 
-      // 3. Subcategory Filter
-      if (selectedSubCategory) {
-        results = results.filter(s => s.sc === selectedSubCategory);
+      if (nextSubCategory) {
+        results = results.filter(s => s.sc === nextSubCategory);
       }
 
       setSearchResults(results);
       setIsSearching(false);
     }, 50);
-  }, [searchTerm, selectedCategory, selectedSubCategory, searchIndex, searchSpirits]);
+  }, [searchIndex, searchSpirits]);
+
+  const performSearch = useCallback(() => {
+    runSearch(searchTerm, selectedCategory, selectedSubCategory);
+  }, [runSearch, searchTerm, selectedCategory, selectedSubCategory]);
+
+  const applyQuickCategory = useCallback((category: string) => {
+    setSearchTerm('');
+    setSelectedCategory(category);
+    setSelectedSubCategory('');
+    runSearch('', category, '');
+  }, [runSearch]);
+
+  const resetFilters = useCallback(() => {
+    setSearchTerm('');
+    setSelectedCategory('');
+    setSelectedSubCategory('');
+    runSearch('', '', '');
+  }, [runSearch]);
 
   // Initial search or search whenever index is loaded
   useEffect(() => {
@@ -197,7 +216,7 @@ export default function ExploreContent({ dict }: { dict?: any }) {
               />
             </div>
             <button
-              onClick={() => performSearch()}
+              onClick={performSearch}
               disabled={isSearching}
               className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-2xl font-bold transition-all disabled:opacity-50 flex items-center gap-2 shrink-0 shadow-lg shadow-indigo-500/20 active:scale-95"
             >
@@ -205,6 +224,50 @@ export default function ExploreContent({ dict }: { dict?: any }) {
               <span className="hidden sm:inline">{isEn ? "Search" : "검색"}</span>
             </button>
           </div>
+        </div>
+      </div>
+
+      <div className="mb-8 rounded-3xl border border-border/60 bg-card/40 p-5 shadow-sm">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <div className="space-y-1">
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              {isEn ? "Quick Filters" : "빠른 카테고리"}
+            </p>
+            <p className="text-sm text-muted-foreground">
+              {isEn
+                ? "Use the most common spirit categories as one-tap entry points."
+                : "자주 찾는 주종을 한 번에 눌러서 바로 결과를 보도록 바꿨습니다."}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={resetFilters}
+            className="self-start rounded-full border border-border px-3 py-1.5 text-xs font-semibold text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground"
+          >
+            {isEn ? "Reset Filters" : "필터 초기화"}
+          </button>
+        </div>
+
+        <div className="mt-4 flex flex-wrap gap-2">
+          {QUICK_CATEGORY_KEYS.map((categoryKey) => {
+            const isActive = selectedCategory === categoryKey;
+            const label = isEn ? QUICK_CATEGORY_LABELS[categoryKey].en : QUICK_CATEGORY_LABELS[categoryKey].ko;
+
+            return (
+              <button
+                key={categoryKey}
+                type="button"
+                onClick={() => applyQuickCategory(categoryKey)}
+                className={`rounded-full px-4 py-2 text-sm font-bold transition-all ${
+                  isActive
+                    ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20'
+                    : 'border border-border bg-background hover:border-indigo-500/40 hover:text-indigo-600'
+                }`}
+              >
+                {label}
+              </button>
+            );
+          })}
         </div>
       </div>
 

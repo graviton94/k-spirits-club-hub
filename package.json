@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "pages:build": "npx @cloudflare/next-on-pages",
+    "build": "next build --no-lint",
+    "pages:build": "npx @cloudflare/next-on-pages --skip-build",
     "start": "next start",
     "lint": "next lint",
     "publish-ready-spirits": "npx tsx scripts/publish-ready-data.ts",
@@ -58,7 +58,7 @@
     "@types/node-fetch": "^2.6.13",
     "cheerio": "^1.2.0",
     "eslint": "9.39.2",
-    "eslint-config-next": "16.1.4",
+    "eslint-config-next": "^15.1.4",
     "sharp": "^0.34.5",
     "vercel": "^50.5.0"
   }

@@ -20,12 +20,9 @@ import { ScrollToTop } from '@/components/layout/ScrollToTop';
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit", display: "swap" });
 
-export async function generateStaticParams() {
-  return i18n.locales.map((locale) => ({ lang: locale }));
-}
-
 // Explicitly allow dynamic params for locale routing
 export const dynamicParams = true;
+export const runtime = 'edge';
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
   const { lang } = await params;

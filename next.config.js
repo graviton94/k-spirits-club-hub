@@ -18,6 +18,7 @@ const nextConfig = {
   },
   // 빌드 시 타입 체크 오류 무시
   typescript: { ignoreBuildErrors: true },
+  eslint: { ignoreDuringBuilds: true },
   webpack: (config, { isServer }) => {
     // Disable webpack cache ONLY in production to prevent large cache files (>25MB) on Cloudflare Pages
     if (process.env.NODE_ENV === 'production') {

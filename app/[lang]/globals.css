@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@config "../../tailwind.config.ts";
+@config "../../tailwind.config.mjs";
 
 /**
  * Safelist: spirits-guide-data.ts의 flavorTags에서 런타임에 동적으로 조합하는
