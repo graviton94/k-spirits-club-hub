@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build --no-lint",
-    "pages:build": "npx @cloudflare/next-on-pages --skip-build",
+    "pages:build": "npx @cloudflare/next-on-pages",
     "start": "next start",
     "lint": "next lint",
     "publish-ready-spirits": "npx tsx scripts/publish-ready-data.ts",
