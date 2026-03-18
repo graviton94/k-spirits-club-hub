@@ -42,12 +42,12 @@ export default function SuccessToast({
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -50 }}
-          className="fixed top-4 left-1/2 -translate-x-1/2"
+          className="fixed top-4 left-1/2 w-full max-w-sm -translate-x-1/2 px-4"
           style={{ zIndex: TOAST_Z_INDEX }}
         >
-          <div className="bg-white/90 backdrop-blur-md border border-gray-100 shadow-xl rounded-2xl px-6 py-4 flex items-center gap-3 min-w-[280px]">
+          <div className="flex w-full items-center gap-3 rounded-2xl border border-gray-100 bg-white/90 px-4 py-4 shadow-xl backdrop-blur-md min-[380px]:px-6">
             <Icon className={`w-6 h-6 ${iconColor} flex-shrink-0`} />
-            <span className="text-sm font-bold text-gray-900">{message}</span>
+            <span className="min-w-0 break-words text-sm font-bold text-gray-900">{message}</span>
           </div>
         </motion.div>
       )}

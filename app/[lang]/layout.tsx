@@ -125,7 +125,7 @@ export default async function RootLayout({
         </Script>
       </head>
 
-      <body className={`${inter.variable} ${outfit.variable} font-sans antialiased bg-background text-foreground`}>
+      <body className={`${inter.variable} ${outfit.variable} font-sans antialiased bg-background text-foreground overflow-x-hidden`}>
         {/* ✅ 1 & 2. Google Analytics & Tag Manager (공식 라이브러리)
           - body 태그 내부에 위치시켜도 Next.js가 최적의 위치로 자동 렌더링합니다.
           - GA4와 GTM을 함께 사용하는 경우, 데이터 정합성을 위해 둘 다 명시하는 것이 좋습니다.
@@ -145,7 +145,7 @@ export default async function RootLayout({
               <ScrollToTop />
               <PwaInstallPrompt />
               <OnboardingModal />
-              <main className="relative min-h-screen pb-20 md:pb-0">
+              <main className="relative min-h-screen overflow-x-hidden pb-20 md:pb-0">
                 {children}
               </main>
               <BottomNav lang={lang} dict={dictionary.nav} />

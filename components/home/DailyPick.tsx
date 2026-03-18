@@ -69,12 +69,12 @@ export default function DailyPick({ lang: propLang }: { lang?: string }) {
                 <Sparkles className="w-3 h-3 text-neutral-300" /> {t.label}
             </div>
 
-            <div className="relative group">
+            <div className="relative group w-full max-w-md">
                 {/* 2. Glow Effect: 핑크 대신 차가운 화이트/실버의 미묘한 빛 번짐 */}
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-neutral-700/50 via-neutral-500/30 to-neutral-700/50 rounded-full blur-md opacity-0 group-hover:opacity-40 transition duration-700 ease-out"></div>
 
                 {/* 3. Container: 깊이감 있는 유리 질감 (Glassmorphism Dark) */}
-                <div className="relative flex items-center bg-neutral-950/80 backdrop-blur-xl border border-white/10 group-hover:border-white/20 rounded-full p-1.5 pr-6 shadow-2xl transition-all duration-300">
+                <div className="relative flex w-full items-center rounded-full border border-white/10 bg-neutral-950/80 p-1.5 pr-3 shadow-2xl backdrop-blur-xl transition-all duration-300 group-hover:border-white/20 min-[380px]:pr-6">
 
                     {/* Refresh Button: 미니멀한 원형 버튼 */}
                     <button
@@ -87,7 +87,7 @@ export default function DailyPick({ lang: propLang }: { lang?: string }) {
                     </button>
 
                     {/* Spirit Info & Link */}
-                    <div className="min-w-[200px] sm:min-w-[240px] ml-4">
+                    <div className="ml-3 min-w-0 flex-1 min-[380px]:ml-4">
                         <AnimatePresence mode="wait">
                             {loading ? (
                                 <motion.span
@@ -109,11 +109,11 @@ export default function DailyPick({ lang: propLang }: { lang?: string }) {
                                 >
                                     <Link
                                         href={`/${lang}/spirits/${spirit.id}`}
-                                        className="flex items-center justify-between gap-4 group/link w-full"
+                                        className="group/link flex w-full items-center justify-between gap-3 min-[380px]:gap-4"
                                     >
-                                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 text-left">
+                                        <div className="min-w-0 flex flex-col gap-1 text-left sm:flex-row sm:items-center sm:gap-3">
                                             {/* 이름: 순수한 화이트로 강조 */}
-                                            <span className="text-sm font-bold text-neutral-200 tracking-tight group-hover/link:text-white transition-colors duration-300">
+                                            <span className="truncate text-sm font-bold tracking-tight text-neutral-200 transition-colors duration-300 group-hover/link:text-white">
                                                 {lang === 'en' ? (spirit.name_en || spirit.metadata?.name_en || spirit.name) : spirit.name}
                                             </span>
 

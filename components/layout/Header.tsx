@@ -10,7 +10,6 @@ import { Locale } from "@/i18n-config";
 export function Header({ lang, dict }: { lang: Locale, dict: any }) {
     const { user, profile } = useAuth();
 
-    // Display Name logic: Nickname -> DisplayName -> "Guest"
     const displayName = user
         ? (profile?.nickname || user.displayName?.split(' ')[0] || "Member")
         : "Guest";
@@ -19,43 +18,53 @@ export function Header({ lang, dict }: { lang: Locale, dict: any }) {
 
     return (
         <header className="sticky top-0 z-40 w-full border-b border-border bg-card/90 backdrop-blur-xl">
-            <div className="container flex flex-nowrap h-16 items-center justify-between px-4 max-w-4xl mx-auto gap-2 md:gap-4">
-                <Link href={`/${lang}`} prefetch={false} className="flex items-center gap-2 flex-shrink-0 whitespace-nowrap">
-                    <span className="text-2xl">🥃</span>
-                    <span className="text-xl font-black bg-linear-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">
+            <div className="mobile-safe-x container mx-auto flex h-16 max-w-4xl items-center justify-between gap-2 md:gap-4">
+                <Link href={`/${lang}`} prefetch={false} className="flex min-w-0 items-center gap-2">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-linear-to-r from-amber-500 to-orange-600 text-sm font-black text-white">
+                        K
+                    </span>
+                    <span className="truncate bg-linear-to-r from-amber-500 to-orange-600 bg-clip-text text-base font-black text-transparent min-[380px]:text-lg sm:text-xl">
                         K-SPIRITS
                     </span>
                 </Link>
 
-                <div className="flex flex-nowrap items-center gap-2 md:gap-3 flex-shrink-0">
+                <div className="flex min-w-0 items-center gap-1.5 min-[380px]:gap-2 md:gap-3">
                     <LanguageSwitcher />
                     <ThemeToggle />
 
                     {user ? (
-                        <Link href={`/${lang}/me`} className="flex items-center gap-2 md:gap-3 pl-2 md:pl-4 py-1 rounded-full hover:bg-secondary transition-colors flex-shrink-0">
-                            <div className="text-right hidden sm:block whitespace-nowrap">
-                                <p className="text-xs text-muted-foreground">{dict.welcome || (lang === 'en' ? 'Welcome back,' : '안녕하세요,')}</p>
-                                <p className="text-sm font-bold leading-none text-primary">{displayName}{lang === 'ko' ? '님' : ''}</p>
+                        <Link
+                            href={`/${lang}/me`}
+                            className="flex min-w-0 items-center gap-2 rounded-full py-1 pl-2 transition-colors hover:bg-secondary min-[380px]:gap-3 md:pl-4"
+                        >
+                            <div className="hidden whitespace-nowrap text-right sm:block">
+                                <p className="text-xs text-muted-foreground">
+                                    {dict.welcome || 'Welcome back,'}
+                                </p>
+                                <p className="text-sm font-bold leading-none text-primary">
+                                    {displayName}
+                                </p>
                             </div>
-                            <div className="relative w-9 h-9 rounded-full overflow-hidden border-2 border-primary/50 shadow-sm flex items-center justify-center bg-secondary flex-shrink-0">
+                            <div className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-primary/50 bg-secondary shadow-sm">
                                 {profileImage ? (
                                     <img
                                         src={profileImage}
                                         alt={displayName}
-                                        className="w-full h-full object-cover"
+                                        className="h-full w-full object-cover"
                                     />
                                 ) : (
-                                    <User className="w-5 h-5 text-primary" />
+                                    <User className="h-5 w-5 text-primary" />
                                 )}
                             </div>
                         </Link>
                     ) : (
                         <Link
                             href={`/${lang}/login`}
-                            className="flex items-center gap-2 px-3 md:px-4 py-2 rounded-full bg-linear-to-r from-amber-500 to-orange-600 text-white text-sm font-bold hover:from-amber-600 hover:to-orange-700 transition-all shadow-lg shadow-primary/20 flex-shrink-0 whitespace-nowrap"
+                            className="flex shrink-0 items-center gap-1.5 rounded-full bg-linear-to-r from-amber-500 to-orange-600 px-2.5 py-2 text-sm font-bold text-white shadow-lg shadow-primary/20 transition-all hover:from-amber-600 hover:to-orange-700 min-[380px]:gap-2 min-[380px]:px-3 md:px-4"
+                            aria-label="Login"
                         >
-                            <LogIn className="w-4 h-4" />
-                            <span>{lang === 'en' ? 'Login' : '로그인'}</span>
+                            <LogIn className="h-4 w-4" />
+                            <span className="hidden min-[380px]:inline">Login</span>
                         </Link>
                     )}
                 </div>
