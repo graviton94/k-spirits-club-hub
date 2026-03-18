@@ -278,6 +278,39 @@ function getBrandPrefix(brand: string, displayName: string): string {
   return `${brand} `;
 }
 
+function toAbsoluteSeoImageUrl(url: string | null | undefined, baseUrl: string): string | null {
+  if (!url) return null;
+  if (/^https?:\/\//i.test(url)) return url;
+
+  const normalizedBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+  const normalizedPath = url.startsWith('/') ? url : `/${url}`;
+  return `${normalizedBase}${normalizedPath}`;
+}
+
+function getSpiritSeoImageCandidates(spirit: Spirit, baseUrl: string): string[] {
+  const candidates = [
+    toAbsoluteSeoImageUrl(spirit.imageUrl, baseUrl),
+    toAbsoluteSeoImageUrl(spirit.thumbnailUrl, baseUrl),
+  ].filter(Boolean) as string[];
+
+  return Array.from(new Set(candidates));
+}
+
+function getSpiritSeoRobots(spirit: Spirit) {
+  const baseRobots = getSpiritRobotsMeta(spirit) || { index: true, follow: true };
+
+  return {
+    ...baseRobots,
+    googleBot: {
+      index: baseRobots.index,
+      follow: baseRobots.follow,
+      'max-image-preview': 'large' as const,
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  };
+}
+
 function buildSpiritMetaDescription(
   spirit: Spirit,
   lang: 'ko' | 'en',
@@ -399,6 +432,8 @@ export async function generateMetadata({
     isEn ? (enName || koName) : koName
   );
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://kspiritsclub.com';
+  const seoImageCandidates = getSpiritSeoImageCandidates(spirit, baseUrl);
+  const preferredImage = seoImageCandidates[0] || `${baseUrl}/default-og.jpg`;
 
   // 롱테일 키워드 펌핑 (동적 조합)
   const baseKeywords = [
@@ -415,20 +450,20 @@ export async function generateMetadata({
 
   const keywords = [...baseKeywords, ...longTailKeywords].filter(Boolean);
 
-  // Build Dynamic OG Image URL ONLY if indexable
-  let ogImageUrl = `${baseUrl}/default-og.jpg`; // Fallback asset
+  // Keep the actual product image as the primary image signal for search engines.
+  let brandedOgImageUrl = `${baseUrl}/default-og.jpg`;
   if (isIndexable) {
     const searchParams = new URLSearchParams();
     searchParams.set('title', isEn ? (enName || koName) : koName);
     searchParams.set('category', spirit.category || 'Spirits');
-    if (spirit.imageUrl) searchParams.set('image', spirit.imageUrl);
+    if (preferredImage) searchParams.set('image', preferredImage);
 
     const tagsData = spirit.tasting_note ? spirit.tasting_note.split(/[,\s#]+/) : (spirit.nose_tags || []);
     const validTags = tagsData.filter(Boolean).slice(0, 3);
     if (validTags.length > 0) {
       searchParams.set('tags', validTags.join(','));
     }
-    ogImageUrl = `${baseUrl}/api/og/spirit?${searchParams.toString()}`;
+    brandedOgImageUrl = `${baseUrl}/api/og/spirit?${searchParams.toString()}`;
   }
 
   // Canonical URL (current language version, without query strings)
@@ -437,15 +472,26 @@ export async function generateMetadata({
   // Hreflang alternates (both ko and en versions)
   const hreflangAlternates = getHreflangAlternates(`/spirits/${id}`);
 
-  // SEO Phase 2: Apply Tier-based robots meta
-  const robotsMeta = getSpiritRobotsMeta(spirit);
+  const robotsMeta = getSpiritSeoRobots(spirit);
+  const openGraphImages = [
+    {
+      url: preferredImage,
+      alt: isEn ? `${enName || koName} product image` : `${koName} 제품 이미지`,
+    },
+  ];
+
+  if (brandedOgImageUrl !== preferredImage) {
+    openGraphImages.push({
+      url: brandedOgImageUrl,
+      alt: `${title} | K-Spirits Club`,
+    });
+  }
 
   return {
     title: title, // Handled within logic above
     description: fullDescription,
     keywords: keywords.join(', '),
-    // Apply robots meta for Tier B spirits (noindex, follow)
-    ...(robotsMeta && { robots: robotsMeta }),
+    robots: robotsMeta,
     alternates: {
       canonical: canonicalUrl,
       languages: hreflangAlternates,
@@ -453,7 +499,7 @@ export async function generateMetadata({
     openGraph: {
       title: title,
       description: fullDescription,
-      images: [ogImageUrl],
+      images: openGraphImages,
       type: 'website',
       url: canonicalUrl, // Absolute URL for OG
       locale: lang === 'ko' ? 'ko_KR' : 'en_US',
@@ -463,7 +509,7 @@ export async function generateMetadata({
       card: 'summary_large_image',
       title: title,
       description: fullDescription,
-      images: [ogImageUrl],
+      images: [preferredImage],
     },
   };
 }
@@ -557,6 +603,8 @@ export default async function SpiritDetailPage({
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://kspiritsclub.com';
   const pageUrl = `${baseUrl}/${lang}/spirits/${id}`;
+  const seoImageCandidates = getSpiritSeoImageCandidates(spirit, baseUrl);
+  const preferredImage = seoImageCandidates[0] || `${baseUrl}/default-og.jpg`;
 
   const jsonLd: any = {
     '@context': 'https://schema.org',
@@ -566,7 +614,7 @@ export default async function SpiritDetailPage({
     ...(spirit.name_en && { alternateName: spirit.name_en }),
     description: buildRichDescription(),
     // Image array format for rich snippet
-    image: [spirit.imageUrl || spirit.thumbnailUrl || `${baseUrl}/default-og.jpg`],
+    image: seoImageCandidates.length > 0 ? seoImageCandidates : [`${baseUrl}/default-og.jpg`],
     brand: {
       '@type': 'Brand',
       name: spirit.distillery || 'K-Spirits Club',
@@ -600,6 +648,20 @@ export default async function SpiritDetailPage({
         value: formatSpiritFieldValue('country', spirit.country, lang),
       }] : []),
     ],
+  };
+
+  const webPageLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': pageUrl,
+    url: pageUrl,
+    name: isEn ? (spirit.name_en || spirit.name) : spirit.name,
+    primaryImageOfPage: {
+      '@type': 'ImageObject',
+      contentUrl: preferredImage,
+      url: preferredImage,
+      representativeOfPage: true,
+    },
   };
 
   // --- FAQ Schema (롱테일 질문/답변 타겟) ---
@@ -791,6 +853,10 @@ export default async function SpiritDetailPage({
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageLd) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

@@ -300,7 +300,7 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
             {/* 1. Header: Image Left, Info Right */}
             <div className="flex flex-col sm:flex-row gap-6 mb-8 items-start">
                 <div className="w-40 sm:w-56 shrink-0 mx-auto sm:mx-0">
-                    <ExpandableImage imageUrl={spirit.imageUrl} name={displayName} category={spirit.category} />
+                    <ExpandableImage imageUrl={spirit.imageUrl || spirit.thumbnailUrl} name={displayName} category={spirit.category} />
                 </div>
 
                 <div className="flex-1 w-full min-w-0 pt-2">
@@ -576,7 +576,7 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
             <ReviewSection
                 spiritId={spirit.id}
                 spiritName={spirit.name}
-                spiritImageUrl={spirit.imageUrl}
+                spiritImageUrl={spirit.imageUrl || spirit.thumbnailUrl}
                 reviews={reviews}
                 lang={lang}
                 dict={dict}
@@ -682,9 +682,11 @@ function ExpandableImage({ imageUrl, name, category }: { imageUrl: string | null
             >
                 {imageUrl ? (
                     <img
-                        src={getOptimizedImageUrl(imageUrl, 600)}
-                        alt={name}
+                        src={getOptimizedImageUrl(imageUrl, 1200, 85)}
+                        alt={`${name} product image`}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        loading="eager"
+                        fetchPriority="high"
                         onError={(e) => {
                             const target = e.target as HTMLImageElement;
                             target.src = fallbackImage;
@@ -729,8 +731,8 @@ function ExpandableImage({ imageUrl, name, category }: { imageUrl: string | null
                         >
                             {imageUrl ? (
                                 <img
-                                    src={getOptimizedImageUrl(imageUrl, 800, 85)}
-                                    alt={name}
+                                    src={getOptimizedImageUrl(imageUrl, 1600, 85)}
+                                    alt={`${name} product image`}
                                     className="w-full h-full object-contain rounded-lg"
                                 />
                             ) : (
