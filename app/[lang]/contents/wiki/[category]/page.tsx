@@ -96,7 +96,17 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 
     // JSON-LD는 page 컴포넌트에서 단일 출력 (중복 방지)
     // generateMetadata에서 JSON-LD를 출력하면 Google이 동일 URL에서 두 개의 구조화 데이터를 받아 혼란 발생
-    const ogImageUrl = `${baseUrl}/default-og.jpg`;
+    let ogImageUrl = `${baseUrl}/default-og.jpg`;
+    try {
+        const ogParams = new URLSearchParams();
+        ogParams.set('title', isEn ? cat.nameEn : cat.nameKo);
+        ogParams.set('emoji', cat.emoji);
+        ogParams.set('tagline', isEn ? (cat.taglineEn || '') : (cat.taglineKo || ''));
+        ogParams.set('color', cat.color || 'amber');
+        ogImageUrl = `${baseUrl}/api/og/wiki?${ogParams.toString()}`;
+    } catch (e) {
+        // fail silently back to default
+    }
 
     const canonicalUrl = getCanonicalUrl(`/${lang}/contents/wiki/${cat.slug}`)
     const hreflangAlternates = getHreflangAlternates(`/contents/wiki/${cat.slug}`)

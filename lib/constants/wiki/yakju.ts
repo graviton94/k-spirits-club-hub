@@ -301,6 +301,20 @@ export const yakju: SpiritCategory = {
             "Soy-marinated Crab and Pickled Vegetables",
             "Traditional Confections (Hangwa) or Cream Cheese"
         ],
+        faqs: [
+            {
+                question: "What is Yakju?",
+                answer: "Yakju is a refined, traditional Korean clear rice wine. After fermenting rice, water, and Nuruk (starter culture), the murky solids are filtered out or allowed to settle, leaving a clear, golden liquid that offers elegant, multi-layered aromas."
+            },
+            {
+                question: "What is the difference between Yakju and Cheongju?",
+                answer: "Historically, both refer to the same traditional clear rice wine. However, under modern South Korean liquor tax laws, if the wine uses more than 1% traditional Nuruk (wild starter), it is legally classified as 'Yakju.' If it uses less than 1% (often relying on Japanese-style Koji), it is legally 'Cheongju.'"
+            },
+            {
+                question: "How does Yakju compare to Sake?",
+                answer: "Both are clear rice wines, but traditional Yakju relies on 'Nuruk', introducing complex wild microbes and lactic acid bacteria. This gives Yakju a nuttier, tangier, and more earthy 'umami' profile compared to the highly refined, delicate fruit-forward typicality of Sake."
+            }
+        ],
         dbCategories: ['약주'],
         dbSubcategoryKeywords: ['약주', '전통 약주', '개량 약주', 'Yakju']
     }

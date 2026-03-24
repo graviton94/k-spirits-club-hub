@@ -292,6 +292,20 @@ export const sojuDistilled: SpiritCategory = {
             "Grilled Eel and Oily Fish Dishes",
             "Korean Pancakes (Jeon) like Seafood or Beef Pancake"
         ],
+        faqs: [
+            {
+                question: "What is traditional Korean Soju made of?",
+                answer: "Traditional distilled Soju is made primarily from rice (or a mixture of grains) and water, fermented using 'Nuruk' (a traditional wild starter culture), and then distilled in a pot still. This differs from modern green-bottle soju, which is usually diluted from highly refined ethanol."
+            },
+            {
+                question: "What is the difference between Soju and Sake?",
+                answer: "Soju is a distilled spirit originating from Korea, typically ranging from 20% to 53% ABV with a punchy, clear, or savory profile. Sake is a brewed (fermented) rice beverage from Japan, typically around 15% ABV, tasting softer and more similar to wine or Korean Cheongju."
+            },
+            {
+                question: "How should I drink premium distilled Soju?",
+                answer: "High-quality distilled soju is best enjoyed neat in a small tasting glass to appreciate its savory rice notes and complex fermentation aromas. It can also be enjoyed on the rocks or mixed with soda water as a highball."
+            }
+        ],
         dbCategories: ['소주']
     }
 }

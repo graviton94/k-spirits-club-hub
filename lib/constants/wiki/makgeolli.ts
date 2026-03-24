@@ -298,6 +298,20 @@ export const makgeolli: SpiritCategory = {
             "Brie/Gouda Cheese and Nuts",
             "Crispy Fried Chicken"
         ],
+        faqs: [
+            {
+                question: "What is Makgeolli?",
+                answer: "Makgeolli is a traditional Korean unfiltered rice wine made by fermenting rice with 'Nuruk' (a traditional fermentation starter). It has a milky, cloudy appearance and a slightly sweet, tangy, and subtly carbonated flavor."
+            },
+            {
+                question: "Does Makgeolli have probiotics?",
+                answer: "Yes, unpasteurized (fresh) Makgeolli is rich in live lactic acid bacteria and yeast, which function as probiotics. Many people enjoy it not only for its distinct taste but also for its potential digestive benefits."
+            },
+            {
+                question: "How long does Makgeolli last?",
+                answer: "Fresh, unpasteurized Makgeolli usually lasts 10-30 days refrigerated, as fermentation continues in the bottle, making it drier over time. Pasteurized Makgeolli, however, has a much longer shelf life of several months to a year."
+            }
+        ],
         dbCategories: ['탁주']
     }
 }

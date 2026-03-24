@@ -240,6 +240,20 @@ export const sojuDiluted: SpiritCategory = {
             "Sashimi and Seafood Platters",
             "Dried Snacks and Fruit"
         ],
+        faqs: [
+            {
+                question: "What does Soju taste like?",
+                answer: "Standard diluted 'green-bottle' Soju tastes somewhat like a slightly sweeter, less aggressive version of vodka. It has a very neutral, crisp profile with a subtle hint of sweetness (from added sweeteners like Stevia or Erythritol) designed to cut through spicy and greasy foods."
+            },
+            {
+                question: "What is the alcohol percentage of Soju?",
+                answer: "Modern diluted Soju typically ranges between 16% and 17% ABV (Alcohol by Volume). Fruit-flavored sojus are slightly lower, usually between 12% and 14% ABV, while older traditional versions were over 20%."
+            },
+            {
+                question: "Why is Soju so popular in Korea?",
+                answer: "Soju is incredibly popular due to its affordability, its clean profile that pairs perfectly with almost all Korean foods (especially pork belly and stews), and its deep-rooted presence in Korean social and dining culture."
+            }
+        ],
         dbCategories: ['소주']
     }
 }
