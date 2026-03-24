@@ -190,7 +190,7 @@ export const brandy: SpiritCategory = {
                 description: "Heavy sherry cask influence creates deep notes of nuts, caramel, and dried fruits. It is characterized by a rich, heavy, and sweet impression."
             },
             {
-                name: "V.S / V.S.O.S / X.O / Extra",
+                name: "V.S / V.S.O.P / X.O / Extra",
                 criteria: "Classified by the oak aging period of the youngest eau-de-vie (2 / 4 / 10+ years).",
                 description: "As aging progresses, the fruit's charm evolves into deep tertiary notes (chocolate, leather, nuts), with the complexity of flavor layers increasing exponentially."
             }
