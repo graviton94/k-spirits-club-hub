@@ -129,6 +129,12 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
         <button
           id="review-form-anchor"
           onClick={() => {
+            if (!user) {
+              setToast({ message: isEn ? 'Please log in to leave a review.' : '로그인 후 리뷰를 남길 수 있습니다.', variant: 'error' });
+              // Dispatch event to open login modal if the app has a global listener
+              window.dispatchEvent(new CustomEvent('openLoginModal'));
+              return;
+            }
             if (!showForm && hasReviewed && !editingReview) {
               setToast({ message: isEn ? 'You have already reviewed this product. Only one review per product is allowed.' : '이미 제품에 대한 리뷰를 작성하셨습니다. 한 제품에는 하나의 리뷰만 작성 가능합니다.', variant: 'error' });
               return;
@@ -171,6 +177,29 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
           lang={lang}
           dict={dict}
         />
+      )}
+
+      {/* Non-Logged In User CTA Banner */}
+      {!user && !showForm && (
+        <div className="mb-8 p-6 sm:p-8 bg-linear-to-r from-amber-500/10 to-orange-600/10 border border-amber-500/20 rounded-3xl flex flex-col sm:flex-row items-center justify-between gap-6 shadow-inner">
+          <div>
+            <h3 className="text-lg sm:text-xl font-black text-foreground mb-2 flex items-center gap-2">
+              <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
+              {isEn ? "Want to share your rating?" : "이 스피릿을 평가하고 싶으신가요?"}
+            </h3>
+            <p className="text-sm text-foreground/70 font-medium">
+              {isEn
+                ? "Join K-Spirits Club to leave a review and keep track of your tasting notes."
+                : "K-Spirits Club에 가입하고 나만의 테이스팅 노트를 기록해보세요."}
+            </p>
+          </div>
+          <button
+            onClick={() => window.dispatchEvent(new CustomEvent('openLoginModal'))}
+            className="shrink-0 px-8 py-3 bg-foreground text-background font-black rounded-xl hover:bg-foreground/80 transition-all shadow-lg hover:scale-105 active:scale-95"
+          >
+            {isEn ? "Sign In / Sign Up" : "로그인 / 회원가입"}
+          </button>
+        </div>
       )}
 
       <div className="space-y-4 sm:space-y-6 mt-6">

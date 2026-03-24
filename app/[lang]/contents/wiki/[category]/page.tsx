@@ -94,91 +94,8 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 
     const ogDescription = tagline || description
 
-    // 복합 JSON-LD 구성
-    const jsonLd = {
-        '@context': 'https://schema.org',
-        '@graph': [
-            {
-                '@type': 'WebPage',
-                '@id': `${baseUrl}/${lang}/contents/wiki/${slug}`,
-                url: `${baseUrl}/${lang}/contents/wiki/${slug}`,
-                name: title,
-                description: tagline,
-                inLanguage: isEn ? 'en' : 'ko',
-            },
-            {
-                '@type': 'Article',
-                headline: isEn
-                    ? `${cat.nameEn} Guide: Everything You Need to Know`
-                    : `${cat.nameKo} 완벽 가이드: 정의부터 테이스팅 방법까지`,
-                description: tagline,
-                image: `${baseUrl}/images/wiki/${slug}-og.jpg`, // 존재한다고 가정하거나 기본 이미지 사용
-                author: {
-                    '@type': 'Organization',
-                    name: 'K-Spirits Club',
-                },
-                publisher: {
-                    '@type': 'Organization',
-                    name: 'K-Spirits Club',
-                    logo: {
-                        '@type': 'ImageObject',
-                        url: `${baseUrl}/logo.png`,
-                    },
-                },
-                datePublished: '2024-01-01', // 초기 게시일
-                dateModified: new Date().toISOString().split('T')[0],
-            },
-            {
-                '@type': 'HowTo',
-                name: isEn ? `How to Enjoy ${cat.nameEn}` : `${cat.nameKo} 최적으로 즐기는 법`,
-                description: isEn ? `Professional serving guide for ${cat.nameEn}` : `${cat.nameKo}의 맛을 극대화하는 전문가 음용 가이드`,
-                step: section?.servingGuidelines?.methods?.map((m, idx) => ({
-                    '@type': 'HowToStep',
-                    position: idx + 1,
-                    name: m.name,
-                    text: m.description,
-                })) || [],
-            },
-            {
-                '@type': 'FAQPage',
-                mainEntity: [
-                    section?.servingGuidelines?.optimalTemperatures?.[0] && {
-                        '@type': 'Question',
-                        name: isEn ? `What is the best temperature for ${cat.nameEn}?` : `${cat.nameKo}의 최적 시음 온도는?`,
-                        acceptedAnswer: {
-                            '@type': 'Answer',
-                            text: section.servingGuidelines.optimalTemperatures[0].description
-                        }
-                    },
-                    section?.servingGuidelines?.recommendedGlass && {
-                        '@type': 'Question',
-                        name: isEn ? `What glass should I use for ${cat.nameEn}?` : `${cat.nameKo}를 마실 때 추천하는 잔은?`,
-                        acceptedAnswer: {
-                            '@type': 'Answer',
-                            text: section.servingGuidelines.recommendedGlass
-                        }
-                    },
-                    ...(section?.classifications?.map(c => ({
-                        '@type': 'Question',
-                        name: isEn ? `What is ${c.name}?` : `${c.name}(이)란? (분류/특징)`,
-                        acceptedAnswer: {
-                            '@type': 'Answer',
-                            text: `${c.criteria ? c.criteria + ' - ' : ''}${c.description}`
-                        }
-                    })) || []),
-                    ...(section?.sensoryMetrics?.map(m => ({
-                        '@type': 'Question',
-                        name: isEn ? `What is ${m.label} (${m.metric})?` : `${m.metric} (${m.label})(이)란?`,
-                        acceptedAnswer: {
-                            '@type': 'Answer',
-                            text: m.description
-                        }
-                    })) || [])
-                ].filter(Boolean)
-            }
-        ]
-    }
-
+    // JSON-LD는 page 컴포넌트에서 단일 출력 (중복 방지)
+    // generateMetadata에서 JSON-LD를 출력하면 Google이 동일 URL에서 두 개의 구조화 데이터를 받아 혼란 발생
     const ogImageUrl = `${baseUrl}/default-og.jpg`;
 
     const canonicalUrl = getCanonicalUrl(`/${lang}/contents/wiki/${cat.slug}`)
@@ -260,13 +177,13 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
 
             featuredSpirits = selectFeaturedSpiritsForWiki(uniqueSpirits, cat, 6)
                 .map((s: any) => ({
-                id: s.id,
-                name: s.name,
-                nameEn: s.metadata?.name_en || s.name_en || null,
-                category: s.category,
-                subcategory: s.subcategory || null,
-                imageUrl: s.thumbnailUrl || s.imageUrl || null,
-            }))
+                    id: s.id,
+                    name: s.name,
+                    nameEn: s.metadata?.name_en || s.name_en || null,
+                    category: s.category,
+                    subcategory: s.subcategory || null,
+                    imageUrl: s.thumbnailUrl || s.imageUrl || null,
+                }))
         } catch {
             // 무시
         }
@@ -281,7 +198,49 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
         ? `${cat.nameEn} Guide — Spirits Wiki | K-Spirits Club`
         : `${cat.nameKo} 가이드 — 주류 백과사전 | K-Spirits Club`
 
-    // 복합 JSON-LD 구성
+    // 통합 JSON-LD: WebPage + Article + HowTo + FAQPage 단일 그래프
+    // generateMetadata에서 JSON-LD를 중복 출력하던 코드 제거 후 여기서만 출력
+    const faqItems = [
+        // 1. 카테고리 정의 FAQ
+        section?.definition && {
+            '@type': 'Question',
+            name: isEn ? `What is ${cat.nameEn}?` : `${cat.nameKo}이란 무엇인가요?`,
+            acceptedAnswer: { '@type': 'Answer', text: section.definition }
+        },
+        // 2. 최적 시음 온도
+        section?.servingGuidelines?.optimalTemperatures?.[0] && {
+            '@type': 'Question',
+            name: isEn ? `What is the best serving temperature for ${cat.nameEn}?` : `${cat.nameKo}의 최적 시음 온도는?`,
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: isEn
+                    ? `${section.servingGuidelines!.optimalTemperatures![0].temp}: ${section.servingGuidelines!.optimalTemperatures![0].description}`
+                    : `${section.servingGuidelines!.optimalTemperatures![0].temp}: ${section.servingGuidelines!.optimalTemperatures![0].description}`
+            }
+        },
+        // 3. 추천 잔
+        section?.servingGuidelines?.recommendedGlass && {
+            '@type': 'Question',
+            name: isEn ? `What glass is best for ${cat.nameEn}?` : `${cat.nameKo}에 추천하는 잔은?`,
+            acceptedAnswer: { '@type': 'Answer', text: section.servingGuidelines!.recommendedGlass! }
+        },
+        // 4. 분류별 FAQ (최대 3개)
+        ...(section?.classifications?.slice(0, 3).map(c => ({
+            '@type': 'Question',
+            name: isEn ? `What is ${c.name}?` : `${c.name}(이)란? (분류/특징)`,
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: `${c.criteria ? c.criteria + ' — ' : ''}${c.description}`
+            }
+        })) || []),
+        // 5. sections.faqs 직접 활용
+        ...(section?.faqs?.slice(0, 3).map(f => ({
+            '@type': 'Question',
+            name: f.question,
+            acceptedAnswer: { '@type': 'Answer', text: f.answer }
+        })) || [])
+    ].filter(Boolean)
+
     const jsonLd = {
         '@context': 'https://schema.org',
         '@graph': [
@@ -292,36 +251,50 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
                 name: title,
                 description: isEn ? cat.taglineEn : cat.taglineKo,
                 inLanguage: isEn ? 'en' : 'ko',
+                breadcrumb: {
+                    '@type': 'BreadcrumbList',
+                    itemListElement: [
+                        { '@type': 'ListItem', position: 1, name: isEn ? 'Home' : '홈', item: `${baseUrl}/${lang}` },
+                        { '@type': 'ListItem', position: 2, name: isEn ? 'Spirits Wiki' : '주류 백과사전', item: `${baseUrl}/${lang}/contents/wiki` },
+                        { '@type': 'ListItem', position: 3, name: isEn ? cat.nameEn : cat.nameKo, item: `${baseUrl}/${lang}/contents/wiki/${slug}` },
+                    ]
+                }
             },
             {
                 '@type': 'Article',
+                '@id': `${baseUrl}/${lang}/contents/wiki/${slug}#article`,
                 headline: isEn
                     ? `${cat.nameEn} Guide: Everything You Need to Know`
                     : `${cat.nameKo} 완벽 가이드: 정의부터 테이스팅 방법까지`,
                 description: isEn ? cat.taglineEn : cat.taglineKo,
                 image: `${baseUrl}/default-og.jpg`,
-                author: {
-                    '@type': 'Organization',
-                    name: 'K-Spirits Club',
-                },
+                author: { '@type': 'Organization', name: 'K-Spirits Club', url: baseUrl },
                 publisher: {
                     '@type': 'Organization',
                     name: 'K-Spirits Club',
+                    url: baseUrl,
+                    logo: { '@type': 'ImageObject', url: `${baseUrl}/logo.png` }
                 },
                 datePublished: '2024-01-01',
                 dateModified: new Date().toISOString().split('T')[0],
+                mainEntityOfPage: `${baseUrl}/${lang}/contents/wiki/${slug}`,
+                inLanguage: isEn ? 'en' : 'ko',
             },
-            {
+            ...(section?.servingGuidelines?.methods && section.servingGuidelines.methods.length > 0 ? [{
                 '@type': 'HowTo',
                 name: isEn ? `How to Enjoy ${cat.nameEn}` : `${cat.nameKo} 최적으로 즐기는 법`,
                 description: isEn ? `Professional serving guide for ${cat.nameEn}` : `${cat.nameKo}의 맛을 극대화하는 전문가 음용 가이드`,
-                step: section?.servingGuidelines?.methods?.map((m, idx) => ({
+                step: section.servingGuidelines.methods.map((m, idx) => ({
                     '@type': 'HowToStep',
                     position: idx + 1,
                     name: m.name,
                     text: m.description,
-                })) || [],
-            }
+                }))
+            }] : []),
+            ...(faqItems.length > 0 ? [{
+                '@type': 'FAQPage',
+                mainEntity: faqItems
+            }] : [])
         ]
     }
 

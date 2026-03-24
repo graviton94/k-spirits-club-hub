@@ -292,6 +292,20 @@ export const gin: SpiritCategory = {
             "Olive and Cheese Platters",
             "Lemon or Yuzu Pound Cake"
         ],
+        faqs: [
+            {
+                question: "What is gin and is gin a spirit?",
+                answer: "Yes, gin is a distilled spirit. It is made by redistilling a neutral grain spirit with botanicals — most importantly juniper berries, which must be the dominant flavor by law. Other common botanicals include coriander, angelica root, and citrus peel."
+            },
+            {
+                question: "What is gin distilled from?",
+                answer: "Gin is distilled from a neutral base spirit, typically made from grain (wheat, barley, or corn). This neutral spirit is then redistilled or infused with juniper berries and other botanicals to create the distinctive gin flavor."
+            },
+            {
+                question: "Where is gin from and what is its origin?",
+                answer: "Gin originated from Genever, a Dutch medicinal spirit created in the 16th and 17th centuries. It spread to England, where over centuries it evolved into the crisper, drier 'London Dry' style known worldwide today."
+            }
+        ],
         dbCategories: ['일반증류주']
     }
 }

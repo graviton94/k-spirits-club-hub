@@ -252,6 +252,20 @@ export const vodka: SpiritCategory = {
             "Rye Bread and Blini",
             "Salty Hard Cheeses"
         ],
+        faqs: [
+            {
+                question: "What is vodka and what is it made from?",
+                answer: "Vodka is a clear, neutral distilled spirit made from fermented agricultural products, most commonly grains (wheat, rye, corn) or potatoes. It is distilled to a very high purity to remove most flavor compounds, then diluted with water to drinking strength — typically 37.5% to 40% ABV."
+            },
+            {
+                question: "What is the history and origin of vodka?",
+                answer: "Vodka's origins lie in Eastern Europe, with Russia and Poland both claiming its invention. Early vodkas date back to the 9th-12th centuries as medicinal spirits. The development of continuous distillation in the 19th century perfected the clean, neutral style widely known today. It became globally popular in the mid-20th century through cocktail culture."
+            },
+            {
+                question: "What is the alcohol content of vodka?",
+                answer: "Standard vodka is bottled at 40% ABV (alcohol by volume), which is equivalent to 80 proof in the US. The legal minimum in most countries is 37.5% ABV. Some premium or cask-strength vodkas can reach higher levels, but flavored or light vodkas may be slightly lower."
+            }
+        ],
         dbCategories: ['일반증류주']
     }
 }

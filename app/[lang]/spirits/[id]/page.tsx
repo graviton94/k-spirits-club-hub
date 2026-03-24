@@ -324,24 +324,35 @@ function buildSpiritMetaDescription(
   const countryLabel = spirit.country ? formatSpiritFieldValue('country', spirit.country, lang) : '';
   const tags = getPreferredMetaTags(spirit, lang);
   const abvLine = typeof spirit.abv === 'number'
-    ? (isEn ? `ABV ${spirit.abv}%. ` : `${spirit.abv}% 도수. `)
+    ? (isEn ? `ABV ${spirit.abv}%. ` : `도수 ${spirit.abv}%. `)
     : '';
   const typeLine = isEn
     ? `${typeLabel}${countryLabel ? ` from ${countryLabel}` : ''}. `
     : `${countryLabel ? `${countryLabel} ` : ''}${typeLabel}. `;
+  // GSC 개선: 페어링 정보를 앞에, 노트는 뒤에 배치 → 클릭 유도 강화
+  const pairingGuideRaw = isEn
+    ? (spirit.metadata?.pairing_guide_en || spirit.pairing_guide_en || spirit.metadata?.pairing_guide_ko || spirit.pairing_guide_ko)
+    : (spirit.metadata?.pairing_guide_ko || spirit.pairing_guide_ko || spirit.metadata?.pairing_guide_en || spirit.pairing_guide_en);
+  // 페어링 가이드에서 첫 번째 음식만 추출 (쉼표 또는 마침표 기준)
+  const firstPairing = pairingGuideRaw
+    ? pairingGuideRaw.split(/[,.,。]/)[0]?.trim().slice(0, 30)
+    : null;
+  const pairingLine = firstPairing
+    ? (isEn ? `Pairs well with ${firstPairing}. ` : `${firstPairing}과 페어링. `)
+    : '';
   const notesLine = tags.length > 0
-    ? (isEn ? `Notes: ${tags.join(', ')}. ` : `향/맛 키워드: ${tags.join(', ')}. `)
+    ? (isEn ? `Notes: ${tags.join(', ')}. ` : `향·맛: ${tags.join(', ')}. `)
     : '';
   const reviewLine = reviewCount > 0
     ? (isEn ? `${reviewCount} review${reviewCount === 1 ? '' : 's'}. ` : `리뷰 ${reviewCount}개. `)
     : '';
-  const actionLine = isEn ? 'Pairing guide and related spirits.' : '페어링과 비슷한 술까지 확인.';
+  const actionLine = isEn ? 'Full tasting notes & food pairing.' : '상세 시음 후기 및 안주 추천.';
   const fallback = isEn
     ? `Spirit information for ${fallbackName} on K-Spirits Club.`
     : `${fallbackName} 주류 정보. K-Spirits Club.`;
 
   return truncateMetaDescription(
-    `${abvLine}${typeLine}${notesLine}${reviewLine}${actionLine}`.trim() || fallback
+    `${abvLine}${typeLine}${pairingLine}${notesLine}${reviewLine}${actionLine}`.trim() || fallback
   );
 }
 
@@ -408,17 +419,21 @@ export async function generateMetadata({
 
     title = baseReviewTitle;
   } else {
-    // KO: {브랜드} {제품명} ({원어명}) {ABV}% {주종} 시음노트·리뷰 | K-Spirits Club
+    // KO: {브랜드} {제품명} ({원어명}) {ABV}% {주종} 시음노트·리뷰·후기 | K-Spirits Club
     const namePart = enName ? `${koName} (${enName})` : koName;
     const brandPrefix = getBrandPrefix(brand, namePart);
     const abvStr = abv ? ` ${abv}% ` : ' ';
     const typeLabel = type ? `${type} ` : '';
 
-    let baseReviewTitle = `${brandPrefix}${namePart}${abvStr}${typeLabel}시음노트·리뷰`;
+    // GSC 데이터 기반: "후기" 키워드가 CTR 높음 → 타이틀에 포함
+    let baseReviewTitle = `${brandPrefix}${namePart}${abvStr}${typeLabel}시음노트·후기`;
 
     // KO Length optimization
     if (baseReviewTitle.length > 65 && brandPrefix) {
-      baseReviewTitle = `${namePart}${abvStr}${typeLabel}시음노트·리뷰`;
+      baseReviewTitle = `${namePart}${abvStr}${typeLabel}시음노트·후기`;
+    }
+    if (baseReviewTitle.length > 65) {
+      baseReviewTitle = `${namePart}${abvStr}${typeLabel}후기`;
     }
 
     title = baseReviewTitle;
@@ -457,6 +472,14 @@ export async function generateMetadata({
     searchParams.set('title', isEn ? (enName || koName) : koName);
     searchParams.set('category', spirit.category || 'Spirits');
     if (preferredImage) searchParams.set('image', preferredImage);
+
+    // SEO Enhancement: ABV, rating, reviewCount → OG 이미지에 정보 추가 노출
+    if (spirit.abv) searchParams.set('abv', String(spirit.abv));
+    if (reviewCount > 0 && Array.isArray(reviewsData)) {
+      const avgRating = (reviewsData.reduce((acc, r) => acc + (r.rating || 0), 0) / reviewCount).toFixed(1);
+      searchParams.set('rating', avgRating);
+      searchParams.set('reviews', String(reviewCount));
+    }
 
     const tagsData = spirit.tasting_note ? spirit.tasting_note.split(/[,\s#]+/) : (spirit.nose_tags || []);
     const validTags = tagsData.filter(Boolean).slice(0, 3);
@@ -621,6 +644,20 @@ export default async function SpiritDetailPage({
     },
     category: formatSpiritFieldValue('category', spirit.category, lang),
 
+    // GSC 필수: offers가 없으면 리뷰/rating 없는 제품은 Product 스니펫 자격 미달
+    // availability만 포함해도 Google Product 스니펫 노출 조건 충족
+    offers: {
+      '@type': 'Offer',
+      availability: 'https://schema.org/InStock',
+      priceCurrency: 'KRW',
+      url: pageUrl,
+      seller: {
+        '@type': 'Organization',
+        name: 'K-Spirits Club',
+        url: baseUrl,
+      },
+    },
+
     // SEO Enhancement: Add URL for better indexing
     url: pageUrl,
 
@@ -671,10 +708,15 @@ export default async function SpiritDetailPage({
   if (tastingNote || spirit.nose_tags?.length) {
     faqQuestions.push({
       '@type': 'Question',
-      name: isEn ? `What are the tasting notes of ${spirit.name_en || spirit.name}?` : `${spirit.name}의 맛(테이스팅 노트)은 어떤가요?`,
+      // GSC 검색어 패턴: "[제품명] 맛" "[제품명] 테이스팅노트" 등
+      name: isEn ? `What are the tasting notes of ${spirit.name_en || spirit.name}?` : `${spirit.name} 맛(테이스팅 노트)은 어떤가요?`,
       acceptedAnswer: {
         '@type': 'Answer',
-        text: tastingNote || `Nose: ${spirit.nose_tags?.join(', ')} / Palate: ${spirit.palate_tags?.join(', ')} / Finish: ${spirit.finish_tags?.join(', ')}`
+        text: tastingNote || [
+          spirit.nose_tags?.length ? `Nose: ${spirit.nose_tags.join(', ')}` : '',
+          spirit.palate_tags?.length ? `Palate: ${spirit.palate_tags.join(', ')}` : '',
+          spirit.finish_tags?.length ? `Finish: ${spirit.finish_tags.join(', ')}` : '',
+        ].filter(Boolean).join(' / ')
       }
     });
   }
@@ -685,7 +727,8 @@ export default async function SpiritDetailPage({
   if (pairingGuide) {
     faqQuestions.push({
       '@type': 'Question',
-      name: isEn ? `What is a good food pairing for ${spirit.name_en || spirit.name}?` : `${spirit.name}에 잘 어울리는 안주(푸드 페어링)는 무엇인가요?`,
+      // GSC 검색어 패턴: "[제품명] 안주" "[제품명] 페어링"
+      name: isEn ? `What food goes well with ${spirit.name_en || spirit.name}?` : `${spirit.name}에 어울리는 안주(페어링)는?`,
       acceptedAnswer: {
         '@type': 'Answer',
         text: pairingGuide
@@ -696,13 +739,26 @@ export default async function SpiritDetailPage({
   if (spirit.abv) {
     faqQuestions.push({
       '@type': 'Question',
-      name: isEn ? `What is the ABV (alcohol content) of ${spirit.name_en || spirit.name}?` : `${spirit.name}의 도수는 몇 도인가요?`,
+      // GSC 검색어 패턴: "[제품명] 도수" "[product] abv"
+      name: isEn ? `What is the alcohol content (ABV) of ${spirit.name_en || spirit.name}?` : `${spirit.name} 도수는 몇 도인가요?`,
       acceptedAnswer: {
         '@type': 'Answer',
-        text: isEn ? `The ABV of ${spirit.name_en || spirit.name} is ${spirit.abv}%.` : `${spirit.name}의 알코올 도수는 ${spirit.abv}% 입니다.`
+        text: isEn ? `${spirit.name_en || spirit.name} has an ABV of ${spirit.abv}%.` : `${spirit.name}의 알코올 도수는 ${spirit.abv}%입니다.`
       }
     });
   }
+
+  // 추가 FAQ: 구매처 (GSC에서 "[제품명] 파는곳" "where to buy" 다수 검색)
+  faqQuestions.push({
+    '@type': 'Question',
+    name: isEn ? `Where can I buy ${spirit.name_en || spirit.name} in Korea?` : `${spirit.name} 어디서 살 수 있나요?`,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: isEn
+        ? `${spirit.name_en || spirit.name} is available at major Korean liquor shops and online platforms. Use the shopping links on this page to find current pricing.`
+        : `${spirit.name}은 국내 주류 전문점 및 온라인몰에서 구매 가능합니다. 이 페이지의 쇼핑 링크를 통해 최신 가격을 확인하세요.`
+    }
+  });
 
   const faqLd = faqQuestions.length > 0 ? {
     '@context': 'https://schema.org',
@@ -846,9 +902,9 @@ export default async function SpiritDetailPage({
   const dictionary = await getDictionary(lang as Locale);
 
   const guideBtnBase = 'flex items-center gap-1.5 w-full sm:w-auto justify-center sm:justify-start px-3 py-2 sm:py-1.5 rounded-full border transition-colors font-medium';
-  const guideBtnAmber  = 'bg-amber-500/10 border-amber-500/40 text-amber-700 dark:text-amber-300 hover:bg-amber-500/20 hover:border-amber-500/70';
+  const guideBtnAmber = 'bg-amber-500/10 border-amber-500/40 text-amber-700 dark:text-amber-300 hover:bg-amber-500/20 hover:border-amber-500/70';
   const guideBtnOrange = 'bg-orange-500/10 border-orange-500/40 text-orange-700 dark:text-orange-300 hover:bg-orange-500/20 hover:border-orange-500/70';
-  const guideBtnSky    = 'bg-sky-500/10 border-sky-500/40 text-sky-700 dark:text-sky-300 hover:bg-sky-500/20 hover:border-sky-500/70';
+  const guideBtnSky = 'bg-sky-500/10 border-sky-500/40 text-sky-700 dark:text-sky-300 hover:bg-sky-500/20 hover:border-sky-500/70';
   const guideBtnViolet = 'bg-violet-500/10 border-violet-500/40 text-violet-700 dark:text-violet-300 hover:bg-violet-500/20 hover:border-violet-500/70';
 
   return (
