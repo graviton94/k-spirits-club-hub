@@ -62,7 +62,9 @@ export interface SpiritSection {
     coreIngredients?: SpiritIngredient[]
     /** 4. 특수 제조 및 가공 공정 */
     manufacturingProcess?: SpiritProcess[]
-    /** 5. 최적의 음용 가이드 */
+    /** 5. 주요 생산 지역 */
+    majorRegions?: { name: string; description: string; emoji?: string }[]
+    /** 6. 최적의 음용 가이드 */
     servingGuidelines?: SpiritServingGuideline
     /** 6. FAQ (자주 묻는 질문) */
     faqs?: { question: string; answer: string }[]
@@ -74,12 +76,6 @@ export interface SpiritSection {
     production?: string
     howToEnjoy?: string[]
     foodPairing?: string[]
-    /** DB 제품 조회용 카테고리 필터 키워드 */
-    dbCategories?: string[]
-    /** DB 제품 조회용 서브카테고리 매칭 키워드 */
-    dbSubcategoryKeywords?: string[]
-    /** 비교형 위키에서 양측 스타일을 균형 노출하기 위한 그룹 */
-    dbSubcategoryKeywordGroups?: string[][]
     /** 지역별 서브 Wiki로의 점프 슬러그 (e.g. 'scotch-whisky-regions') */
     relatedPageSlug?: string
     /** 지역 점프 배너 레이블 (한국어) */
@@ -106,4 +102,10 @@ export interface SpiritCategory {
     sections?: SpiritSection
     /** 본문 섹션 (영문) */
     sectionsEn?: SpiritSection
+    /** DB 제품 조회용 카테고리 필터 키워드 */
+    dbCategories?: string[]
+    /** DB 제품 조회용 서브카테고리 매칭 키워드 */
+    dbSubcategoryKeywords?: string[]
+    /** 비교형 위키에서 양측 스타일을 균형 노출하기 위한 그룹 */
+    dbSubcategoryKeywordGroups?: string[][]
 }

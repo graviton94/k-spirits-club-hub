@@ -158,7 +158,8 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
 
     const isEn = lang === 'en'
     const section = isEn ? (cat.sectionsEn || cat.sections) : (cat.sections || cat.sectionsEn)
-    const dbCategories = section?.dbCategories
+    const dbCategories = cat.dbCategories
+    const dbSubcategoryKeywords = cat.dbSubcategoryKeywords
 
     // 해당 카테고리의 추천 제품 조회 (최대 6개)
     let featuredSpirits: {

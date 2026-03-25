@@ -70,14 +70,13 @@ export function scoreSpiritForWikiCategory(
     spirit: Pick<Spirit, 'category' | 'subcategory' | 'mainCategory'>,
     category: SpiritCategory,
 ): number {
-    const section = getWikiSection(category)
-    const dbCategories = section?.dbCategories || []
+    const dbCategories = category.dbCategories || []
 
     if (!spirit.category || !dbCategories.includes(spirit.category)) {
         return -1
     }
 
-    const keywords = (section?.dbSubcategoryKeywords || [])
+    const keywords = (category.dbSubcategoryKeywords || [])
         .map((keyword) => normalizeMatchValue(keyword))
         .filter(Boolean)
 
@@ -130,8 +129,7 @@ export function selectFeaturedSpiritsForWiki<T extends WikiMatchSpirit>(
     category: SpiritCategory,
     limit: number,
 ): T[] {
-    const section = getWikiSection(category)
-    const groups = (section?.dbSubcategoryKeywordGroups || []).filter((group) => group.length > 0)
+    const groups = (category.dbSubcategoryKeywordGroups || []).filter((group) => group.length > 0)
     const sorted = sortFeaturedSpiritsForWiki(spirits, category)
 
     if (groups.length === 0) {

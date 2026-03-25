@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { BookOpen, Clock, Layers, Droplets, FlaskConical, GlassWater, Utensils, ShoppingBag, Activity, Leaf, Thermometer, Search, HelpCircle, X } from 'lucide-react'
+import { BookOpen, Clock, Layers, Droplets, FlaskConical, GlassWater, Utensils, ShoppingBag, Activity, Leaf, Thermometer, Search, HelpCircle, X, MapPin } from 'lucide-react'
 import type { SpiritCategory } from '@/lib/constants/spirits-guide-data'
 import { getCategoryFallbackImage } from '@/lib/utils/image-fallback'
 import BackButton from '@/components/ui/BackButton'
@@ -264,6 +264,25 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                             </div>
                         ))}
                     </dl>
+                </Section>
+            )}
+
+            {/* ── 5-b. 주요 생산 지역 (신규) ── */}
+            {s?.majorRegions && s.majorRegions.length > 0 && (
+                <Section id="regions" icon={<MapPin className="w-5 h-5" />} title={isEn ? 'Major Regions' : '주요 생산 지역'} color={category.color}>
+                    <div className="grid grid-cols-1 gap-4">
+                        {s.majorRegions.map((region) => (
+                            <div key={region.name} className="flex flex-col gap-2 rounded-2xl border border-white/20 bg-background/30 p-5">
+                                <div className="flex items-center gap-2">
+                                    <span className="text-xl">{region.emoji}</span>
+                                    <h3 className="font-extrabold text-foreground text-sm uppercase tracking-tight">{region.name}</h3>
+                                </div>
+                                <div className="border-l-2 border-border/10 pl-4 py-1">
+                                    <p className="text-xs text-foreground/90 font-medium leading-relaxed">{region.description}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </Section>
             )}
 

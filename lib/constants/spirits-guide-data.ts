@@ -50,6 +50,30 @@ import { brandyRegions } from './wiki/brandy-regions'
 import { redWineRegions } from './wiki/red-wine-regions'
 import { whiteWineRegions } from './wiki/white-wine-regions'
 
+// Wine Grapes Hubs
+export const redGrapeHub: SpiritCategory = {
+    slug: 'red-grape',
+    emoji: '🍷',
+    nameKo: '레드 와인 포도 품종',
+    nameEn: 'Red Wine Grape Varieties',
+    taglineKo: '카베르네 소비뇽, 피노 누아 등 레드 와인의 주역들',
+    taglineEn: 'Master varieties of red wine: Cabernet, Pinot, and more',
+    color: 'rose',
+}
+
+export const whiteGrapeHub: SpiritCategory = {
+    slug: 'white-grape',
+    emoji: '🥂',
+    nameKo: '화이트 와인 포도 품종',
+    nameEn: 'White Wine Grape Varieties',
+    taglineKo: '샤르도네, 소비뇽 블랑 등 화이트 와인의 정수',
+    taglineEn: 'Essential white wine grapes: Chardonnay, Sauvignon, and more',
+    color: 'emerald',
+}
+
+// Individual Grapes
+import { RED_WINE_GRAPES, WHITE_WINE_GRAPES } from './wiki/grapes/index'
+
 // 타입 재수출 (하위 호환성 유지)
 export type {
     SpiritSubtype,
@@ -122,6 +146,12 @@ export const SPIRIT_CATEGORIES: SpiritCategory[] = [
     brandyRegions,
     redWineRegions,
     whiteWineRegions,
+
+    // 10. Wine Grapes (Hubs & Varieties)
+    redGrapeHub,
+    whiteGrapeHub,
+    ...RED_WINE_GRAPES,
+    ...WHITE_WINE_GRAPES,
 ]
 
 /** slug로 카테고리 조회 */
