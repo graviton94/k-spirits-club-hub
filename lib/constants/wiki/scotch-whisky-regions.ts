@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const scotchWhiskyRegions: SpiritCategory = {
     slug: 'scotch-whisky-regions',
+    dbCategories: ['위스키'],
     emoji: '🗺️',
     nameKo: '스카치 위스키 지역 가이드',
     nameEn: 'Scotch Whisky Regions Guide',
@@ -147,7 +148,6 @@ export const scotchWhiskyRegions: SpiritCategory = {
             '로우랜드 — 크림치즈, 연어 카나페, 라이트 샐러드',
             '캠벨타운 — 훈제 해산물, 스코틀랜드 전통 하기스',
         ],
-        dbCategories: ['위스키'],
         relatedPageSlug: 'single-malt',
         relatedPageLabelKo: '← 싱글 몰트 위스키 백과로 돌아가기',
         relatedPageLabelEn: '← Back to Single Malt Whisky Wiki',
@@ -291,7 +291,6 @@ export const scotchWhiskyRegions: SpiritCategory = {
             'Lowland — Cream Cheese, Salmon Canapés, Light Salads',
             'Campbeltown — Smoked Seafood, Traditional Haggis',
         ],
-        dbCategories: ['위스키'],
         relatedPageSlug: 'single-malt',
         relatedPageLabelKo: '← 싱글 몰트 위스키 백과로 돌아가기',
         relatedPageLabelEn: '← Back to Single Malt Whisky Wiki',

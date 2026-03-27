@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const singleMaltVsBlended: SpiritCategory = {
     slug: 'single-malt-vs-blended',
+    dbCategories: ['위스키'],
     emoji: '⚖️',
     nameKo: '싱글 몰트 vs 블렌디드 위스키',
     nameEn: 'Single Malt vs Blended Whisky',
@@ -110,7 +111,6 @@ export const singleMaltVsBlended: SpiritCategory = {
                 answer: "위스키 향미를 배우고 싶다면 싱글 몰트, 부담 없이 자주 마시고 싶다면 블렌디드부터 시작하는 편이 좋다."
             }
         ],
-        dbCategories: ['위스키'],
         dbSubcategoryKeywords: ['싱글 몰트 스카치 위스키', '블렌디드 스카치 위스키', '블렌디드 몰트 스카치 위스키', 'Single Malt Scotch Whisky', 'Blended Scotch Whisky', 'Blended Malt Scotch Whisky'],
         dbSubcategoryKeywordGroups: [
             ['싱글 몰트 스카치 위스키', 'Single Malt Scotch Whisky', 'Single Malt'],
@@ -218,7 +218,6 @@ export const singleMaltVsBlended: SpiritCategory = {
                 answer: "Choose Single Malt if you want to learn whisky aromas in detail. Choose Blended Whisky if you want an easier and more versatile starting point."
             }
         ],
-        dbCategories: ['위스키'],
         dbSubcategoryKeywords: ['싱글 몰트 스카치 위스키', '블렌디드 스카치 위스키', '블렌디드 몰트 스카치 위스키', 'Single Malt Scotch Whisky', 'Blended Scotch Whisky', 'Blended Malt Scotch Whisky'],
         dbSubcategoryKeywordGroups: [
             ['싱글 몰트 스카치 위스키', 'Single Malt Scotch Whisky', 'Single Malt'],

@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const rum: SpiritCategory = {
     slug: 'rum',
+    dbCategories: ['일반증류주'],
     emoji: '🥃',
     nameKo: '럼',
     nameEn: 'Rum',
@@ -149,8 +150,7 @@ export const rum: SpiritCategory = {
             "그릴드 파인애플 및 열대과일 디저트",
             "바나나 브레드 및 견과류 정과",
             "훈제 치즈 및 숙성 체다 치즈"
-        ],
-        dbCategories: ['일반증류주']
+        ]
     },
     sectionsEn: {
         definition: "Rum is a distilled spirit made from sugarcane byproducts, such as molasses or fresh sugarcane juice, through fermentation and distillation. It encompasses a vast stylistic spectrum depending on aging, blending, distillation methods, and optional processing like sweetening, spicing, or coloring.",
@@ -293,7 +293,6 @@ export const rum: SpiritCategory = {
             "Grilled Pineapple and Tropical Desserts",
             "Banana Bread and Glazed Nuts",
             "Smoked Cheese and Aged Cheddar"
-        ],
-        dbCategories: ['일반증류주']
+        ]
     }
 }

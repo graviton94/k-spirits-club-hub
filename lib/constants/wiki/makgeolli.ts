@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const makgeolli: SpiritCategory = {
     slug: 'makgeolli',
+    dbCategories: ['탁주'],
     emoji: '🍶',
     nameKo: '막걸리',
     nameEn: 'Makgeolli',
@@ -151,8 +152,7 @@ export const makgeolli: SpiritCategory = {
             "삼겹살 구이",
             "브리/고다 치즈와 견과류",
             "바삭한 후라이드 치킨"
-        ],
-        dbCategories: ['탁주']
+        ]
     },
     sectionsEn: {
         definition: "Makgeolli is Korea's iconic cloudy rice wine (Takju) produced by saccharifying rice or other grains with Nuruk (traditional fermentation starter) and undergoing yeast and lactic acid fermentation. It retains fine grain particles, resulting in its characteristic milky appearance and creamy texture.",
@@ -311,7 +311,6 @@ export const makgeolli: SpiritCategory = {
                 question: "How long does Makgeolli last?",
                 answer: "Fresh, unpasteurized Makgeolli usually lasts 10-30 days refrigerated, as fermentation continues in the bottle, making it drier over time. Pasteurized Makgeolli, however, has a much longer shelf life of several months to a year."
             }
-        ],
-        dbCategories: ['탁주']
+        ]
     }
 }

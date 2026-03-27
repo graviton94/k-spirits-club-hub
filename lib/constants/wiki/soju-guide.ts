@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const sojuGuide: SpiritCategory = {
     slug: 'soju-guide',
+    dbCategories: ['소주'],
     emoji: '🍶',
     nameKo: '소주 가이드',
     nameEn: 'Soju Guide',
@@ -74,8 +75,7 @@ export const sojuGuide: SpiritCategory = {
             "김치찌개 / 된장찌개",
             "모듬 회",
             "매운 족발 및 볶음 요리"
-        ],
-        dbCategories: ['소주']
+        ]
     },
     sectionsEn: {
         definition: "Soju is generally categorized into two types: the ubiquitous 'diluted soju' in green bottles, and 'distilled soju' crafted from grains and aged for depth.",
@@ -143,7 +143,6 @@ export const sojuGuide: SpiritCategory = {
             "Spicy Stews (Kimchi-jjigae)",
             "Sashimi and Seafood",
             "Spicy Korean Stir-fry Dishes"
-        ],
-        dbCategories: ['소주']
+        ]
     }
 }

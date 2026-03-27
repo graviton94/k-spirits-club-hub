@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const beer: SpiritCategory = {
     slug: 'beer',
+    dbCategories: ['맥주'],
     emoji: '🍺',
     nameKo: '맥주',
     nameEn: 'Beer',
@@ -148,8 +149,7 @@ export const beer: SpiritCategory = {
             "스테이크 및 바비큐",
             "소시지 및 샤퀴테리",
             "다크 초콜릿 및 티라미수"
-        ],
-        dbCategories: ['맥주']
+        ]
     },
     sectionsEn: {
         definition: "Beer is a fermented beverage made by saccharifying malted grains (such as barley), fermenting the resulting wort with yeast, and adding hops for bitterness, aroma, and preservative qualities. It encompasses a vast spectrum ranging from crisp lagers to robust ales depending on the brewing process.",
@@ -291,7 +291,6 @@ export const beer: SpiritCategory = {
             "Steak and Barbecue",
             "Sausage and Charcuterie",
             "Dark Chocolate and Tiramisu"
-        ],
-        dbCategories: ['맥주']
+        ]
     }
 }

@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const redWineRegions: SpiritCategory = {
     slug: 'red-wine-regions',
+    dbCategories: ['과실주'],
     emoji: '🗺️',
     nameKo: '레드 와인 세계 산지 가이드',
     nameEn: 'Red Wine Regions of the World',
@@ -151,7 +152,6 @@ export const redWineRegions: SpiritCategory = {
             '리오하 — 양갈비, 초리소, 프레소 치즈',
             '바로사 쉬라즈 — 캥거루 스테이크, 블랙 페퍼 요리, 강한 치즈',
         ],
-        dbCategories: ['과실주'],
         relatedPageSlug: 'red-wine',
         relatedPageLabelKo: '← 레드 와인 백과로 돌아가기',
         relatedPageLabelEn: '← Back to Red Wine Wiki',
@@ -299,7 +299,6 @@ export const redWineRegions: SpiritCategory = {
             'Rioja — Lamb Chops, Chorizo, Hard Spanish Cheese',
             'Barossa Shiraz — Black Pepper Steaks, Strong Aged Cheese',
         ],
-        dbCategories: ['과실주'],
         relatedPageSlug: 'red-wine',
         relatedPageLabelKo: '← 레드 와인 백과로 돌아가기',
         relatedPageLabelEn: '← Back to Red Wine Wiki',

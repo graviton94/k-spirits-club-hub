@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const brandyRegions: SpiritCategory = {
     slug: 'brandy-regions',
+    dbCategories: ['브랜디'],
     emoji: '🌍',
     nameKo: '브랜디 세계 산지 가이드',
     nameEn: 'World Brandy Regions Guide',
@@ -147,7 +148,6 @@ export const brandyRegions: SpiritCategory = {
             '그라파 — 이탈리안 에스프레소, 하드 치즈, 구운 견과류',
             '피스코 — 세비체, 로미토 사우스아메리칸 요리',
         ],
-        dbCategories: ['브랜디'],
         relatedPageSlug: 'brandy',
         relatedPageLabelKo: '← 브랜디 백과로 돌아가기',
         relatedPageLabelEn: '← Back to Brandy Wiki',
@@ -291,7 +291,6 @@ export const brandyRegions: SpiritCategory = {
             'Grappa — Italian Espresso, Hard Cheese, Roasted Nuts',
             'Pisco — Ceviche, South American Grilled Meats',
         ],
-        dbCategories: ['브랜디'],
         relatedPageSlug: 'brandy',
         relatedPageLabelKo: '← 브랜디 백과로 돌아가기',
         relatedPageLabelEn: '← Back to Brandy Wiki',

@@ -83,8 +83,56 @@ export default async function ReviewsPage({ params, searchParams }: ReviewsPageP
     notFound();
   }
 
+  // --- FAQ Schema for Reviews Hub ---
+  // Boosts SERP real estate and answers common user intent (who can write, what spirits etc.)
+  const faqQuestions = isEn ? [
+    {
+      '@type': 'Question',
+      name: 'Who can write a spirits review on K-Spirits Club?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Any registered member can write a review. Creating an account is free and takes under a minute.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: 'What types of spirits can I find reviews for?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'You can find reviews for over 100,000 products including Whisky, Soju, Makgeolli, Wine, Gin, and more.'
+      }
+    }
+  ] : [
+    {
+      '@type': 'Question',
+      name: 'K-Spirits Club에서 누가 리뷰를 작성할 수 있나요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '가입한 회원이라면 누구나 자유롭게 시음 리뷰를 작성할 수 있습니다. 가입은 무료이며 1분 내외로 가능합니다.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: '어떤 종류의 술 리뷰를 볼 수 있나요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '위스키, 소주, 막걸리, 와인 등 10만 종 이상의 다양한 주류 리뷰와 테이스팅 노트를 확인할 수 있습니다.'
+      }
+    }
+  ];
+
+  const faqLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqQuestions
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+      />
       {/* SSR landing content — provides substantial indexed copy for both KO and EN */}
       <section className="bg-background border-t border-border/40 py-14 px-4">
         <div className="container mx-auto max-w-2xl space-y-10">
@@ -181,7 +229,7 @@ export default async function ReviewsPage({ params, searchParams }: ReviewsPageP
 
           {/* Internal Links */}
           <div className="space-y-3 pt-2 border-t border-border/40">
-            <h2 className="text-base font-semibold text-muted-foreground uppercase tracking-widest text-sm">
+            <h2 className="font-semibold text-muted-foreground uppercase tracking-widest text-sm">
               {isEn ? 'Explore Related Content' : '관련 콘텐츠 탐색'}
             </h2>
             <ul className="flex flex-wrap gap-2 text-sm">

@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const sojuDiluted: SpiritCategory = {
     slug: 'soju-diluted',
+    dbCategories: ['소주'],
     emoji: '🍶',
     nameKo: '희석식 소주',
     nameEn: 'Diluted Soju',
@@ -122,8 +123,7 @@ export const sojuDiluted: SpiritCategory = {
             "제육볶음 및 닭발 등의 매운 요리",
             "생선회 및 해산물 안주",
             "각종 마른안주 및 과일"
-        ],
-        dbCategories: ['소주']
+        ]
     },
     sectionsEn: {
         definition: "Diluted Soju is a distilled spirit created by diluting highly refined neutral spirits (ethanol) with purified water and blending in sweeteners to adjust the flavor profile. Rather than focusing on the aromatics of raw ingredients, it emphasizes alcoholic clarity, a smooth throat-feel, and a subtle lingering sweetness. It is South Korea's most iconic mass-market beverage.",
@@ -253,7 +253,6 @@ export const sojuDiluted: SpiritCategory = {
                 question: "Why is Soju so popular in Korea?",
                 answer: "Soju is incredibly popular due to its affordability, its clean profile that pairs perfectly with almost all Korean foods (especially pork belly and stews), and its deep-rooted presence in Korean social and dining culture."
             }
-        ],
-        dbCategories: ['소주']
+        ]
     }
 }

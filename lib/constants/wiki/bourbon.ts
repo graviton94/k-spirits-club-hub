@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const bourbon: SpiritCategory = {
     slug: 'bourbon',
+    dbCategories: ['위스키'],
     emoji: '🇺🇸',
     nameKo: '버번 위스키',
     nameEn: 'Bourbon Whiskey',
@@ -240,7 +241,6 @@ export const bourbon: SpiritCategory = {
             "버섯구이·트러플 풍미 요리",
             "훈제 연어 또는 훈제 오리"
         ],
-        dbCategories: ['위스키'],
         relatedPageSlug: 'us-whiskey-regions',
         relatedPageLabelKo: '🗺️ 미국 위스키 산지별 스타일 탐험하기 (켄터키·테네시·라이) →',
         relatedPageLabelEn: '🗺️ Explore American Whiskey Regions (Kentucky, Tennessee, Rye) →',
@@ -491,7 +491,6 @@ export const bourbon: SpiritCategory = {
             "Grilled Mushrooms with Truffle Oil",
             "Smoked Salmon or Duck"
         ],
-        dbCategories: ['위스키'],
         relatedPageSlug: 'us-whiskey-regions',
         relatedPageLabelKo: '🗺️ 미국 위스키 산지별 스타일 탐험하기 (켄터키·테네시·라이) →',
         relatedPageLabelEn: '🗺️ Explore American Whiskey Regions (Kentucky, Tennessee, Rye) →',

@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const singleMalt: SpiritCategory = {
     slug: 'single-malt',
+    dbCategories: ['위스키'],
     emoji: '🥃',
     nameKo: '싱글 몰트 위스키 (Single Malt)',
     nameEn: 'Single Malt Whisky',
@@ -133,7 +134,6 @@ export const singleMalt: SpiritCategory = {
             "다크 초콜릿 및 테라미수",
             "견과류와 건과일 플래터"
         ],
-        dbCategories: ['위스키'],
         relatedPageSlug: 'scotch-whisky-regions',
         relatedPageLabelKo: '🗺️ 스코틀랜드 5대 산지별 위스키 개성 탐험하기 →',
         relatedPageLabelEn: '🗺️ Explore Scotland\'s 5 Whisky Regions →',
@@ -277,7 +277,6 @@ export const singleMalt: SpiritCategory = {
             "Dark Chocolate and Tiramisu",
             "Nut and Dried Fruit Platters"
         ],
-        dbCategories: ['위스키'],
         relatedPageSlug: 'scotch-whisky-regions',
         relatedPageLabelKo: '🗺️ 스코틀랜드 5대 산지별 위스키 개성 탐험하기 →',
         relatedPageLabelEn: '🗺️ Explore Scotland\'s 5 Whisky Regions →',

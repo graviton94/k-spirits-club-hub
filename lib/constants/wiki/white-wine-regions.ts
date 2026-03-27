@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const whiteWineRegions: SpiritCategory = {
     slug: 'white-wine-regions',
+    dbCategories: ['과실주'],
     emoji: '🗺️',
     nameKo: '화이트 와인 세계 산지 가이드',
     nameEn: 'White Wine Regions of the World',
@@ -139,7 +140,6 @@ export const whiteWineRegions: SpiritCategory = {
             '독일 리슬링 — 한국 양념치킨, 매운 아시안 요리, 독일 소시지',
             '말버러 소비뇽 블랑 — 참치회, 녹색 샐러드, 헤르브 치즈',
         ],
-        dbCategories: ['과실주'],
         relatedPageSlug: 'white-wine',
         relatedPageLabelKo: '← 화이트 와인 백과로 돌아가기',
         relatedPageLabelEn: '← Back to White Wine Wiki',
@@ -275,7 +275,6 @@ export const whiteWineRegions: SpiritCategory = {
             'German Riesling — Korean Fried Chicken, Spicy Asian Cuisine, Pork',
             'Marlborough Sauvignon Blanc — Tuna Sashimi, Green Salads, Herbed Cheese',
         ],
-        dbCategories: ['과실주'],
         relatedPageSlug: 'white-wine',
         relatedPageLabelKo: '← 화이트 와인 백과로 돌아가기',
         relatedPageLabelEn: '← Back to White Wine Wiki',

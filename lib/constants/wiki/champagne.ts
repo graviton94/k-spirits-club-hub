@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const champagne: SpiritCategory = {
     slug: 'champagne',
+    dbCategories: ['과실주'],
     emoji: '🥂',
     nameKo: '샴페인 (Champagne)',
     nameEn: 'Champagne',
@@ -163,8 +164,7 @@ export const champagne: SpiritCategory = {
             "크림 파스타 및 리조또",
             "브리/카망베르 등 소프트 치즈",
             "과일 타르트 및 디저트"
-        ],
-        dbCategories: ['과실주']
+        ]
     },
     sectionsEn: {
         definition: "Champagne is a high-quality sparkling wine produced exclusively in the Champagne region of France under strict AOC regulations. It acquires its natural carbonation through a secondary fermentation in the bottle, a process known as the 'méthode traditionnelle' (traditional method).",
@@ -321,7 +321,6 @@ export const champagne: SpiritCategory = {
             "Cream Pasta and Risotto",
             "Soft Cheeses like Brie or Camembert",
             "Fruit Tarts and Desserts"
-        ],
-        dbCategories: ['과실주']
+        ]
     }
 }

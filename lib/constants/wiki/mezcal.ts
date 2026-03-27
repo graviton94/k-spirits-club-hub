@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const mezcal: SpiritCategory = {
     slug: 'mezcal',
+    dbCategories: ['일반증류주'],
     emoji: '🌵',
     nameKo: '메즈칼',
     nameEn: 'Mezcal',
@@ -145,8 +146,7 @@ export const mezcal: SpiritCategory = {
             "훈제 해산물 및 세비체",
             "과카몰리와 나초",
             "다크 초콜릿 및 견과류"
-        ],
-        dbCategories: ['일반증류주']
+        ]
     },
     sectionsEn: {
         definition: "Mezcal is a Mexican agave spirit produced by roasting, fermenting, and distilling the 'piña' (heart) of various agave species. It is renowned for its signature smokiness derived from traditional underground pit ovens and its profound expression of terroir. Unlike Tequila, which is primarily restricted to Blue Weber Agave and specific regions, Mezcal encompasses a vast array of agave varieties, production zones, and ancestral methods.",
@@ -285,7 +285,6 @@ export const mezcal: SpiritCategory = {
             "Smoked Seafood and Ceviche",
             "Guacamole and Nachos",
             "Dark Chocolate and Nuts"
-        ],
-        dbCategories: ['일반증류주']
+        ]
     }
 }

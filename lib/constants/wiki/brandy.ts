@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const brandy: SpiritCategory = {
     slug: 'brandy',
+    dbCategories: ['브랜디'],
     emoji: '🍇',
     nameKo: '브랜디',
     nameEn: 'Brandy',
@@ -140,7 +141,6 @@ export const brandy: SpiritCategory = {
             "푸아그라 및 무거운 소스의 스테이크",
             "사과 타르트 및 크렘 브륄레"
         ],
-        dbCategories: ['브랜디'],
         relatedPageSlug: 'brandy-regions',
         relatedPageLabelKo: '🗺️ 코냑·아르마냑·그라파·피스코 세계 브랜디 산지 탐험 →',
         relatedPageLabelEn: '🗺️ Explore World Brandy Regions (Cognac, Armagnac, Grappa, Pisco) →',
@@ -287,7 +287,6 @@ export const brandy: SpiritCategory = {
             "Foie Gras and Steaks with heavy sauces",
             "Apple Tart and Crème Brûlée"
         ],
-        dbCategories: ['브랜디'],
         relatedPageSlug: 'brandy-regions',
         relatedPageLabelKo: '🗺️ 코냑·아르마냑·그라파·피스코 세계 브랜디 산지 탐험 →',
         relatedPageLabelEn: '🗺️ Explore World Brandy Regions (Cognac, Armagnac, Grappa, Pisco) →',

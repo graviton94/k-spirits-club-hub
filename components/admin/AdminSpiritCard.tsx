@@ -281,19 +281,19 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
               {/* Tags Section */}
               <div className="grid grid-cols-3 gap-2">
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold text-muted-foreground uppercase text-pink-500">Nose Tags</label>
+                  <label className="text-[10px] font-bold uppercase text-pink-500">Nose Tags</label>
                   <div className="text-[10px] bg-secondary/50 p-2 rounded min-h-[40px] border border-border/50">
                     {noseTags.join(', ') || 'No tags'}
                   </div>
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold text-muted-foreground uppercase text-amber-500">Palate Tags</label>
+                  <label className="text-[10px] font-bold uppercase text-amber-500">Palate Tags</label>
                   <div className="text-[10px] bg-secondary/50 p-2 rounded min-h-[40px] border border-border/50">
                     {palateTags.join(', ') || 'No tags'}
                   </div>
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold text-muted-foreground uppercase text-blue-500">Finish Tags</label>
+                  <label className="text-[10px] font-bold uppercase text-blue-500">Finish Tags</label>
                   <div className="text-[10px] bg-secondary/50 p-2 rounded min-h-[40px] border border-border/50">
                     {finishTags.join(', ') || 'No tags'}
                   </div>

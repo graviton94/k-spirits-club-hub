@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const grainWhisky: SpiritCategory = {
     slug: 'grain-whisky',
+    dbCategories: ['위스키'],
     emoji: '🌾',
     nameKo: '그레인/라이 위스키',
     nameEn: 'Grain & Rye Whisky',
@@ -161,8 +162,7 @@ export const grainWhisky: SpiritCategory = {
             "마카다미아, 아몬드 플래터",
             "다크 초콜릿 및 스파이시 코코아 디저트",
             "사과 파이, 시나몬 롤"
-        ],
-        dbCategories: ['위스키']
+        ]
     },
     sectionsEn: {
         definition: "Grain Whisky is a distilled spirit produced from a mash of grains other than malted barley (such as corn, rye, or wheat), which is then saccharified, fermented, and matured in oak casks. Typically distilled using continuous column stills to high alcohol concentrations, it possesses a light body and clean character. This category also includes specific grain-led styles like Rye Whiskey.",
@@ -317,7 +317,6 @@ export const grainWhisky: SpiritCategory = {
             "Macadamia and Almond Platter",
             "Dark Chocolate or Spicy Cocoa Desserts",
             "Apple Pie and Cinnamon Rolls"
-        ],
-        dbCategories: ['위스키']
+        ]
     }
 }

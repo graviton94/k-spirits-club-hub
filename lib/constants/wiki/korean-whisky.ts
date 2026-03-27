@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const koreanWhisky: SpiritCategory = {
     slug: 'korean-whisky',
+    dbCategories: ['위스키'],
     emoji: '🥃',
     nameKo: '한국 위스키 가이드',
     nameEn: 'Korean Whisky Guide',
@@ -70,8 +71,7 @@ export const koreanWhisky: SpiritCategory = {
             "다크 초콜릿",
             "하몽 및 건조 육류",
             "훈제 향이 배어든 요리"
-        ],
-        dbCategories: ['위스키']
+        ]
     },
     sectionsEn: {
         definition: "Korean Whisky represents a burgeoning sector of the global spirits industry, marked by passionate craft distillers pioneering single malt production in Korea's unique climate.",
@@ -136,7 +136,6 @@ export const koreanWhisky: SpiritCategory = {
             "Korean Beef (Hanwoo) Steak",
             "Smoked Charcuterie",
             "Cigar pairings"
-        ],
-        dbCategories: ['위스키']
+        ]
     }
 }

@@ -53,8 +53,9 @@ export function isIndexableSpirit(spirit: Spirit | null | undefined): boolean {
     tastingNote.length >= 24 || sensoryTagCount >= 4,
   ].filter(Boolean).length;
 
-  // All identity fields must exist, plus at least two content-quality signals.
-  return hasName && hasAbv && hasCategory && qualitySignalCount >= 2;
+  // [Expert SEO Strategy] All spirits with at least a name and category should be indexed.
+  // We no longer use qualityScore to block indexing, as even basic pages capture long-tail search.
+  return hasName && hasCategory;
 }
 
 /**

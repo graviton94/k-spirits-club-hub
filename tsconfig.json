@@ -26,6 +26,7 @@
         "./*"
       ]
     },
+    "types": ["jest", "node"],
     "target": "ES2022"
   },
   "include": [

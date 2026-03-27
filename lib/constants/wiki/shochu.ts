@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const shochu: SpiritCategory = {
     slug: 'shochu',
+    dbCategories: ['소주'],
     emoji: '🍶',
     nameKo: '쇼츄',
     nameEn: 'Shochu',
@@ -148,8 +149,7 @@ export const shochu: SpiritCategory = {
             "가라아게 및 각종 튀김 요리",
             "짭조름한 명란젓 및 젓갈류",
             "구운 생선 및 스테이크"
-        ],
-        dbCategories: ['소주']
+        ]
     },
     sectionsEn: {
         definition: "Shochu is a traditional Japanese distilled spirit produced by saccharifying and fermenting starchy or sugary raw materials—such as sweet potato, barley, rice, or brown sugar—using Koji (mold cultures) before distillation. It is categorized into 'Honkaku' (authentic) shochu, which preserves raw ingredient character, and 'Korui' shochu, known for its clean profile. It is widely enjoyed as a food-pairing spirit, often diluted with water or tea.",
@@ -291,7 +291,6 @@ export const shochu: SpiritCategory = {
             "Karaage and Tempura",
             "Salted Roe (Mentaiko) and Fermented Foods",
             "Grilled Fish and Steaks"
-        ],
-        dbCategories: ['소주']
+        ]
     }
 }
