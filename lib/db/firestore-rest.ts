@@ -957,6 +957,41 @@ export const spiritsDb = {
     },
 
     /**
+     * List all document IDs in the spirits collection (lightweight, no full document fetch)
+     */
+    async listAllIds(): Promise<string[]> {
+        const token = await getServiceAccountToken();
+        const collectionPath = getAppPath().spirits;
+        let allIds: string[] = [];
+        let nextPageToken: string | undefined;
+
+        do {
+            const params = new URLSearchParams({ pageSize: '300' });
+            if (nextPageToken) params.set('pageToken', nextPageToken);
+
+            const url = `${BASE_URL}/${collectionPath}?${params.toString()}`;
+            const res = await fetch(url, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            if (!res.ok) throw new Error(await res.text());
+            const data = await res.json();
+
+            if (data.documents) {
+                const ids = (data.documents as { name: string }[]).map(doc => {
+                    const parts = doc.name.split('/');
+                    return parts[parts.length - 1];
+                });
+                allIds = [...allIds, ...ids];
+            }
+
+            nextPageToken = data.nextPageToken;
+        } while (nextPageToken);
+
+        return allIds;
+    },
+
+    /**
      * Get all PUBLISHED spirits for search index generation
      */
     async getPublishedSearchIndex(): Promise<SpiritSearchIndex[]> {

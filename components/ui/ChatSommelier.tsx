@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send, User, Sparkles, ChevronRight, Search, RefreshCcw } from 'lucide-react';
 import { SpiritCard } from './SpiritCard';
 import { useAuth } from '@/app/[lang]/context/auth-context';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -44,6 +44,7 @@ const AiHeaderProfile = () => (
 export default function ChatSommelier({ lang }: ChatSommelierProps) {
   const { user } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -155,6 +156,14 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
   };
 
   const isFinished = currentStep === 6;
+
+  // Only show on main page and spirits pages
+  const isVisible = pathname !== null && (
+    /^\/(ko|en)\/?$/.test(pathname) ||
+    /^\/(ko|en)\/spirits(\/.*)?$/.test(pathname)
+  );
+
+  if (!isVisible) return null;
 
   return (
     <>

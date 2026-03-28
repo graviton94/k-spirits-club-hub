@@ -60,6 +60,7 @@ export default function AdminDashboard() {
 
     // Edit Modal
     const [editingId, setEditingId] = useState<string | null>(null);
+    const [isCreating, setIsCreating] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false);
     const [editForm, setEditForm] = useState<EditFormState>({
         name: '', abv: 0, imageUrl: '', name_en: '', category: '', subcategory: '',
@@ -180,6 +181,7 @@ export default function AdminDashboard() {
     };
 
     const startEdit = (spirit: Spirit) => {
+        setIsCreating(false);
         setEditingId(spirit.id);
         setEditForm({
             name: spirit.name,
@@ -204,8 +206,76 @@ export default function AdminDashboard() {
         });
     };
 
+    const startCreate = () => {
+        setIsCreating(true);
+        setEditingId('__new__');
+        setEditForm({
+            name: '', abv: 0, imageUrl: '', name_en: '', category: '', subcategory: '',
+            country: '', region: '', distillery: '', bottler: '', volume: 700,
+            tasting_note: '', description_ko: '', description_en: '', pairing_guide_ko: '', pairing_guide_en: '',
+            nose_tags: '', palate_tags: '', finish_tags: ''
+        });
+    };
+
+    const createSpirit = async (publish: boolean) => {
+        if (!editForm.name || !editForm.category) {
+            alert('제품명과 카테고리는 필수입니다.');
+            return;
+        }
+        setIsProcessing(true);
+        try {
+            const payload: any = {
+                name: editForm.name,
+                abv: parseFloat(String(editForm.abv)) || 0,
+                imageUrl: editForm.imageUrl,
+                category: editForm.category,
+                subcategory: editForm.subcategory,
+                country: editForm.country,
+                region: editForm.region,
+                distillery: editForm.distillery,
+                bottler: editForm.bottler,
+                volume: Number(editForm.volume) || 700,
+                name_en: editForm.name_en,
+                tasting_note: editForm.tasting_note,
+                nose_tags: editForm.nose_tags.split(',').filter(Boolean).map(t => t.trim()),
+                palate_tags: editForm.palate_tags.split(',').filter(Boolean).map(t => t.trim()),
+                finish_tags: editForm.finish_tags.split(',').filter(Boolean).map(t => t.trim()),
+                description_ko: editForm.description_ko,
+                description_en: editForm.description_en,
+                pairing_guide_ko: editForm.pairing_guide_ko,
+                pairing_guide_en: editForm.pairing_guide_en,
+            };
+
+            if (publish) {
+                payload.isPublished = true;
+            }
+
+            const res = await fetch('/api/admin/spirits', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                await loadSpirits();
+                setEditingId(null);
+                setIsCreating(false);
+                alert(`✅ 새 제품 등록${publish ? ' 및 발행' : ''} 완료 (ID: ${data.id})`);
+            } else {
+                const err = await res.text();
+                alert(`등록 실패: ${err}`);
+            }
+        } catch (e) {
+            console.error(e);
+            alert('Error during create');
+        } finally {
+            setIsProcessing(false);
+        }
+    };
+
     const saveEdit = async (publish: boolean) => {
-        if (!editingId) return;
+        if (!editingId || isCreating) return;
         setIsProcessing(true);
         try {
             const payload: any = {
@@ -264,7 +334,7 @@ export default function AdminDashboard() {
     };
 
     const generateAIData = async () => {
-        if (!editingId) return;
+        if (!editingId || isCreating) return;
         setIsProcessing(true);
         try {
             const res = await fetch('/api/admin/spirits/bulk-patch', {
@@ -529,6 +599,13 @@ export default function AdminDashboard() {
                                     >
                                         📰 뉴스 수집
                                     </button>
+
+                                    <button
+                                        onClick={startCreate}
+                                        className="bg-green-600 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-green-500"
+                                    >
+                                        ➕ 새 제품 등록
+                                    </button>
                                 </div>
 
                                 {/* Count */}
@@ -701,25 +778,28 @@ export default function AdminDashboard() {
                 )}
             </div>
 
-            {/* Edit Modal */}
+            {/* Edit / Create Modal */}
             {editingId && (
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-start justify-center p-2 md:p-4 overflow-y-auto">
                     <div className="bg-white dark:bg-black w-full max-w-4xl rounded-2xl md:rounded-3xl shadow-2xl border p-4 md:p-8 my-4 md:my-8">
                         {/* Header */}
                         <div className="flex justify-between items-center mb-6 pb-4 border-b">
                             <div>
-                                <h2 className="text-xl md:text-2xl font-black">제품 편집</h2>
-                                <p className="text-gray-500 text-xs md:text-sm mt-1">ID: {editingId}</p>
+                                <h2 className="text-xl md:text-2xl font-black">{isCreating ? '새 제품 등록' : '제품 편집'}</h2>
+                                <p className="text-gray-500 text-xs md:text-sm mt-1">
+                                    {isCreating ? 'ID는 저장 시 자동 생성됩니다 (kspt-XXXXXXXX)' : `ID: ${editingId}`}
+                                </p>
                             </div>
                             <button
-                                onClick={() => setEditingId(null)}
+                                onClick={() => { setEditingId(null); setIsCreating(false); }}
                                 className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-900 text-xl md:text-2xl"
                             >
                                 ✕
                             </button>
                         </div>
 
-                        {/* AI Generate Button */}
+                        {/* AI Generate Button (edit mode only) */}
+                        {!isCreating && (
                         <button
                             disabled={isProcessing}
                             onClick={generateAIData}
@@ -727,6 +807,7 @@ export default function AdminDashboard() {
                         >
                             ✨ {isProcessing ? 'AI 생성 중...' : 'AI 데이터 생성 (영문명, 설명, 페어링 가이드)'}
                         </button>
+                        )}
 
                         {/* Form - Scrollable */}
                         <div className="space-y-6 max-h-[60vh] overflow-y-auto pr-2">
@@ -946,25 +1027,46 @@ export default function AdminDashboard() {
                         <div className="flex flex-col sm:flex-row gap-2 mt-6 pt-6 border-t">
                             <button
                                 disabled={isProcessing}
-                                onClick={() => setEditingId(null)}
+                                onClick={() => { setEditingId(null); setIsCreating(false); }}
                                 className="flex-1 px-4 py-3 bg-gray-100 dark:bg-gray-900 text-black dark:text-white font-bold rounded-xl hover:bg-gray-200 dark:hover:bg-gray-800 disabled:opacity-50"
                             >
                                 취소
                             </button>
-                            <button
-                                disabled={isProcessing}
-                                onClick={() => saveEdit(false)}
-                                className="flex-1 px-4 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-500 disabled:opacity-50"
-                            >
-                                {isProcessing ? '저장 중...' : '💾 저장만'}
-                            </button>
-                            <button
-                                disabled={isProcessing}
-                                onClick={() => saveEdit(true)}
-                                className="flex-1 px-4 py-3 bg-green-600 text-white font-bold rounded-xl hover:bg-green-500 disabled:opacity-50"
-                            >
-                                {isProcessing ? '처리 중...' : '✨ 저장 및 발행'}
-                            </button>
+                            {isCreating ? (
+                                <>
+                                    <button
+                                        disabled={isProcessing}
+                                        onClick={() => createSpirit(false)}
+                                        className="flex-1 px-4 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-500 disabled:opacity-50"
+                                    >
+                                        {isProcessing ? '등록 중...' : '💾 등록만'}
+                                    </button>
+                                    <button
+                                        disabled={isProcessing}
+                                        onClick={() => createSpirit(true)}
+                                        className="flex-1 px-4 py-3 bg-green-600 text-white font-bold rounded-xl hover:bg-green-500 disabled:opacity-50"
+                                    >
+                                        {isProcessing ? '처리 중...' : '✨ 등록 및 발행'}
+                                    </button>
+                                </>
+                            ) : (
+                                <>
+                                    <button
+                                        disabled={isProcessing}
+                                        onClick={() => saveEdit(false)}
+                                        className="flex-1 px-4 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-500 disabled:opacity-50"
+                                    >
+                                        {isProcessing ? '저장 중...' : '💾 저장만'}
+                                    </button>
+                                    <button
+                                        disabled={isProcessing}
+                                        onClick={() => saveEdit(true)}
+                                        className="flex-1 px-4 py-3 bg-green-600 text-white font-bold rounded-xl hover:bg-green-500 disabled:opacity-50"
+                                    >
+                                        {isProcessing ? '처리 중...' : '✨ 저장 및 발행'}
+                                    </button>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>
