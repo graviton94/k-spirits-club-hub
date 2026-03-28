@@ -96,6 +96,10 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
 
       const data = await response.json();
 
+      if (response.status === 429) {
+        throw new Error(data.message || (isEn ? 'Daily chat limit reached. Please try again tomorrow.' : '오늘의 채팅 한도에 도달했습니다. 내일 다시 시도해 주세요.'));
+      }
+
       if (!response.ok || !data.message) {
         throw new Error(data.error || data.details || 'API Error');
       }
@@ -111,11 +115,11 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
       setCurrentStep(data.nextStep);
       setDnaProgress(Math.min((data.nextStep - 1) * 20, 100));
 
-    } catch (error) {
+    } catch (error: any) {
       console.error('Chat Error:', error);
       setIsError(true);
-      const errorMsg = isEn ? "Sorry, something went wrong. Please try again." : "죄송합니다. 오류가 발생했어요. 다시 시도해 주세요.";
-      setMessages(prev => [...prev, { role: 'assistant', content: errorMsg }]);
+      const fallbackMsg = isEn ? "Sorry, something went wrong. Please try again." : "죄송합니다. 오류가 발생했어요. 다시 시도해 주세요.";
+      setMessages(prev => [...prev, { role: 'assistant', content: error?.message || fallbackMsg }]);
     } finally {
       setIsTyping(false);
     }

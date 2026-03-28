@@ -2361,3 +2361,77 @@ export const sommelierDb = {
     }
 };
 
+
+
+/**
+ * Rate-limit helper for the AI Sommelier chatbot.
+ * Uses a simple read-then-increment pattern per IP or userId per UTC day.
+ * Fail-open: if Firestore is unreachable the request is allowed through.
+ */
+export const rateLimitDb = {
+    /**
+     * Check whether the caller has exceeded their daily quota and, if not, increment the counter.
+     * @param key  - Identifier: "user_{uid}" for authenticated users or "ip_{ip}" for guests.
+     * @param limit - Maximum allowed requests per UTC day.
+     * @returns `{ limited: true }` when quota is exhausted, `{ limited: false, remaining }` otherwise.
+     */
+    async checkAndIncrement(key: string, limit: number): Promise<{ limited: boolean; remaining: number }> {
+        try {
+            const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD (UTC)
+            const safeKey = key.replace(/[^a-zA-Z0-9_-]/g, '_');
+            const docId = `${safeKey}_${today}`;
+            const docPath = `${getAppPath().sommelierRateLimits}/${docId}`;
+            const url = `${BASE_URL}/${docPath}`;
+
+            const token = await getServiceAccountToken();
+
+            // Read current count.
+            // Note: the read-then-increment pattern has a small race window where
+            // concurrent requests could both read the same count and both proceed.
+            // For this chatbot cost-protection use case (limit=20/day) the marginal
+            // over-run (≤2–3 extra requests) is an accepted trade-off over the
+            // complexity of a full Firestore transaction.
+            const getRes = await fetch(url, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            let currentCount = 0;
+            if (getRes.ok) {
+                const doc = await getRes.json();
+                currentCount = parseInt(doc.fields?.count?.integerValue || '0', 10);
+            } else if (getRes.status !== 404) {
+                // Unexpected error — fail open to avoid blocking legitimate users
+                console.error('[rateLimitDb] Unexpected read error:', getRes.status);
+                return { limited: false, remaining: limit };
+            }
+
+            if (currentCount >= limit) {
+                return { limited: true, remaining: 0 };
+            }
+
+            // Increment (updateMask ensures we only touch the count field)
+            const newCount = currentCount + 1;
+            const patchRes = await fetch(`${url}?updateMask.fieldPaths=count`, {
+                method: 'PATCH',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    fields: { count: { integerValue: String(newCount) } }
+                })
+            });
+
+            if (!patchRes.ok) {
+                // Counter write failed — log and fail open so the request still proceeds
+                console.error('[rateLimitDb] Increment write failed:', patchRes.status);
+            }
+
+            return { limited: false, remaining: limit - newCount };
+        } catch (err) {
+            // Fail open on any unexpected exception
+            console.error('[rateLimitDb] Error:', err);
+            return { limited: false, remaining: limit };
+        }
+    }
+};
