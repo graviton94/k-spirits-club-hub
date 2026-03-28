@@ -95,6 +95,10 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
 
       const data = await response.json();
 
+      if (!response.ok || !data.message) {
+        throw new Error(data.error || data.details || 'API Error');
+      }
+
       setMessages(prev => [...prev, {
         role: 'assistant',
         content: data.message,
