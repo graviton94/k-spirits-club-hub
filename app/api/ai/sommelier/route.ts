@@ -24,6 +24,25 @@ export async function POST(req: NextRequest) {
         const { messages, lang = 'ko', currentStep = 1, userId = 'guest' } = body;
         const isEn = lang === 'en';
 
+        // --- RATE LIMITING ---
+        // 20 requests/day per user (authenticated) or per IP (guest).
+        // Covers 4 full 5-step sessions with room to spare.
+        const DAILY_LIMIT = 20;
+        const ip = req.headers.get('CF-Connecting-IP') ||
+            req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+            'unknown';
+        const rateLimitKey = userId !== 'guest' ? `user_${userId}` : `ip_${ip}`;
+        const { rateLimitDb } = await import('@/lib/db/firestore-rest');
+        const rateCheck = await rateLimitDb.checkAndIncrement(rateLimitKey, DAILY_LIMIT);
+        if (rateCheck.limited) {
+            return NextResponse.json({
+                error: 'rate_limit_exceeded',
+                message: isEn
+                    ? `You've reached today's chat limit (${DAILY_LIMIT} messages). Please try again tomorrow.`
+                    : `오늘의 AI 채팅 한도(${DAILY_LIMIT}회)에 도달했습니다. 내일 다시 시도해 주세요.`
+            }, { status: 429 });
+        }
+
         let knowledgeBase = "";
         let searchIndex: any[] = [];
         
