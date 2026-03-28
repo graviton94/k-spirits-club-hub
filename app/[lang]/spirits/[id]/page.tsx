@@ -658,37 +658,43 @@ export default async function SpiritDetailPage({
           name: 'K-Spirits Club',
           url: baseUrl,
         },
-        // GSC Merchant Listing requirements
+        // GSC-compliant policy fields (varies by seller/region)
         hasMerchantReturnPolicy: {
           '@type': 'MerchantReturnPolicy',
           applicableCountry: 'KR',
-          returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnPeriod',
-          merchantReturnDays: 7,
-          returnMethod: 'https://schema.org/ReturnByMail',
-          returnFees: 'https://schema.org/ReturnFeesCustomerPaying',
+          returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
+          // Return policy varies by seller - customer should check with individual retailers
+          additionalProperty: {
+            '@type': 'PropertyValue',
+            name: isEn ? 'Return Policy' : '환불 정책',
+            value: isEn
+              ? 'Return and refund policies vary by seller. Please check with the retailer for specific terms.'
+              : '환불 및 반품 정책은 판매처에 따라 상이합니다. 구매 전 판매자에게 확인하시기 바랍니다.'
+          }
         },
         shippingDetails: {
           '@type': 'OfferShippingDetails',
-          shippingRate: {
-            '@type': 'MonetaryAmount',
-            value: spirit.metadata.shippingCost || '3000',
-            currency: 'KRW',
+          // Shipping varies by region/seller
+          shippingDestination: {
+            '@type': 'DefinedRegion',
+            addressCountry: 'KR'
           },
           deliveryTime: {
             '@type': 'ShippingDeliveryTime',
-            handlingTime: {
-              '@type': 'QuantitativeValue',
-              minValue: 0,
-              maxValue: 1,
-              unitCode: 'DAY',
-            },
-            transitTime: {
-              '@type': 'QuantitativeValue',
-              minValue: 1,
-              maxValue: 3,
-              unitCode: 'DAY',
-            },
+            // Delivery time varies by seller location and destination
+            businessDays: {
+              '@type': 'OpeningHoursSpecification',
+              dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+            }
           },
+          shippingRate: {
+            '@type': 'MonetaryAmount',
+            currency: 'KRW',
+            // Shipping cost varies by seller and destination
+            value: isEn
+              ? 'Shipping costs vary by seller and destination.'
+              : '배송비는 판매처 및 배송 지역에 따라 상이합니다.'
+          }
         },
       },
     }),
@@ -711,7 +717,7 @@ export default async function SpiritDetailPage({
     },
   };
 
-  // --- FAQ Schema (롱테일 질문/답변 타겟) ---
+  // --- FAQ Schema (롱테일 질문/답변 타겟 + Wiki 콘텐츠 통합) ---
   const faqQuestions = [];
 
   const tastingNote = spirit.tasting_note || spirit.metadata?.tasting_note;
@@ -756,6 +762,71 @@ export default async function SpiritDetailPage({
         text: isEn ? `${spirit.name_en || spirit.name} has an ABV of ${spirit.abv}%.` : `${spirit.name}의 알코올 도수는 ${spirit.abv}%입니다.`
       }
     });
+  }
+
+  // Wiki 콘텐츠 통합: 카테고리별 설명 (예: "소주란 무엇인가요?")
+  if (wikiGuide) {
+    const wikiCategory = getSpiritCategory(wikiGuide.slug);
+    if (wikiCategory) {
+      const sections = isEn ? wikiCategory.sectionsEn : wikiCategory.sections;
+
+      // FAQ 1: "{카테고리}란 무엇인가요?" / "What is {category}?"
+      if (sections?.definition) {
+        faqQuestions.push({
+          '@type': 'Question',
+          name: isEn
+            ? `What is ${wikiCategory.nameEn}?`
+            : `${wikiCategory.nameKo}란 무엇인가요?`,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: sections.definition
+          }
+        });
+      }
+
+      // FAQ 2: "{카테고리} 추천 음용 방법" / "How to enjoy {category}?"
+      if (sections?.servingGuidelines?.methods?.length) {
+        const methodsText = sections.servingGuidelines.methods
+          .map(m => `${m.name}: ${m.description}`)
+          .join(' ');
+        faqQuestions.push({
+          '@type': 'Question',
+          name: isEn
+            ? `How should I enjoy ${wikiCategory.nameEn}?`
+            : `${wikiCategory.nameKo}는 어떻게 즐기나요?`,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: methodsText
+          }
+        });
+      } else if (sections?.howToEnjoy?.length) {
+        // Legacy fallback
+        faqQuestions.push({
+          '@type': 'Question',
+          name: isEn
+            ? `How should I enjoy ${wikiCategory.nameEn}?`
+            : `${wikiCategory.nameKo}는 어떻게 즐기나요?`,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: sections.howToEnjoy.join(' ')
+          }
+        });
+      }
+
+      // FAQ 3: "{카테고리}에 어울리는 음식" (위키의 foodPairing 활용)
+      if (sections?.foodPairing?.length && !pairingGuide) {
+        faqQuestions.push({
+          '@type': 'Question',
+          name: isEn
+            ? `What food pairs well with ${wikiCategory.nameEn}?`
+            : `${wikiCategory.nameKo}에 어울리는 음식은?`,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: sections.foodPairing.join(', ')
+          }
+        });
+      }
+    }
   }
 
   // 추가 FAQ: 구매처 (GSC에서 "[제품명] 파는곳" "where to buy" 다수 검색)
