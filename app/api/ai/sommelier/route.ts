@@ -149,25 +149,33 @@ ${knowledgeBase}
             systemInstruction
         });
 
-        // Gemini REQUIRES history to start with role 'user'.
+        // Gemini JSON mode (responseMimeType: "application/json") requires ALL model turns
+        // in the conversation to also be valid JSON strings. The client stores only the
+        // plain-text `message` field, so we must re-wrap model turns into minimal JSON
+        // objects before sending to the API. We use generateContent with the full
+        // conversation instead of startChat+sendMessage to avoid session-state issues in
+        // edge runtime.
         const firstUserIndex = messages.findIndex((m: any) => m.role === 'user');
-        const historyData = firstUserIndex !== -1
-            ? messages.slice(firstUserIndex, -1)
-            : [];
+        const conversationMessages = firstUserIndex !== -1
+            ? messages.slice(firstUserIndex)
+            : messages;
 
-        const chat = model.startChat({
-            history: historyData.map((m: any) => ({
-                role: m.role === 'user' ? 'user' : 'model',
-                parts: [{ text: m.content }]
-            })),
+        const contents = conversationMessages.map((m: any) => ({
+            role: m.role === 'user' ? 'user' : 'model',
+            parts: [{
+                text: m.role === 'user'
+                    ? m.content
+                    : JSON.stringify({ message: m.content })
+            }]
+        }));
+
+        const result = await model.generateContent({
+            contents,
             generationConfig: {
                 responseMimeType: "application/json",
                 temperature: 0.7,
             }
         });
-
-        const lastMessage = messages[messages.length - 1].content;
-        const result = await chat.sendMessage(lastMessage);
         const responseText = result.response.text();
 
         // 3. Parse and Enrich Recommendations
