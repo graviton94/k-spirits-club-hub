@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidateTag } from 'next/cache';
-import { db } from '@/lib/db';
+import { db, spiritsDb } from '@/lib/db';
 import { SpiritStatus } from '@/lib/db/schema';
+import { generateSpiritSearchKeywords } from '@/lib/utils/search-keywords';
 
 export const runtime = 'edge';
 
@@ -52,6 +53,88 @@ export async function GET(req: NextRequest) {
     } catch (error: any) {
         console.error('[API /api/admin/spirits] Error:', error);
         return NextResponse.json({ error: 'Failed to fetch spirits', details: error.message }, { status: 500 });
+    }
+}
+
+function parseTags(value: string | string[]): string[] {
+    if (Array.isArray(value)) return value.filter(Boolean).map(t => t.trim());
+    return (value || '').split(',').filter(Boolean).map(t => t.trim());
+}
+
+// POST /api/admin/spirits (Create New Spirit)
+export async function POST(req: NextRequest) {
+    try {
+        const body = await req.json();
+
+        if (!body.name || !body.category) {
+            return NextResponse.json({ error: '제품명(name)과 카테고리(category)는 필수입니다.' }, { status: 400 });
+        }
+
+        // Generate next sequential ID in kspt-XXXXXXXX format
+        const allIds = await spiritsDb.listAllIds();
+        const ksptPattern = /^kspt-(\d{8})$/;
+        const maxNum = Math.max(
+            0,
+            ...allIds
+                .map(id => id.match(ksptPattern)?.[1])
+                .filter((n): n is string => n !== undefined)
+                .map(n => parseInt(n, 10))
+        );
+        const nextId = `kspt-${String(maxNum + 1).padStart(8, '0')}`;
+
+        const now = new Date().toISOString();
+        const spiritForKeywords = {
+            name: body.name,
+            name_en: body.name_en || null,
+            distillery: body.distillery || null,
+            metadata: {
+                name_en: body.name_en || null,
+            }
+        };
+
+        const newSpirit = {
+            id: nextId,
+            name: body.name,
+            name_en: body.name_en || null,
+            abv: parseFloat(body.abv) || 0,
+            volume: Number(body.volume) || 700,
+            category: body.category,
+            subcategory: body.subcategory || null,
+            country: body.country || null,
+            region: body.region || null,
+            distillery: body.distillery || null,
+            bottler: body.bottler || null,
+            imageUrl: body.imageUrl || null,
+            thumbnailUrl: body.imageUrl || null,
+            mainCategory: null,
+            tasting_note: body.tasting_note || null,
+            nose_tags: parseTags(body.nose_tags),
+            palate_tags: parseTags(body.palate_tags),
+            finish_tags: parseTags(body.finish_tags),
+            metadata: {
+                description_ko: body.description_ko || null,
+                description_en: body.description_en || null,
+                pairing_guide_ko: body.pairing_guide_ko || null,
+                pairing_guide_en: body.pairing_guide_en || null,
+            },
+            source: 'manual' as const,
+            externalId: null,
+            status: 'RAW' as SpiritStatus,
+            isPublished: false,
+            isReviewed: false,
+            reviewedBy: null,
+            reviewedAt: null,
+            searchKeywords: generateSpiritSearchKeywords(spiritForKeywords),
+            createdAt: now,
+            updatedAt: now,
+        };
+
+        await spiritsDb.upsert(nextId, newSpirit as any);
+
+        return NextResponse.json({ success: true, id: nextId, spirit: newSpirit }, { status: 201 });
+    } catch (error: any) {
+        console.error('[API POST /api/admin/spirits] Error:', error);
+        return NextResponse.json({ error: '새 제품 등록 실패', details: error.message }, { status: 500 });
     }
 }
 
