@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sommelierDb } from '@/lib/db/firestore-rest';
 
-export const runtime = 'nodejs'; // Use nodejs runtime for Firebase Service Account
+export const runtime = 'edge'; // Use edge runtime for Cloudflare Pages compatibility
 
 /**
  * Admin API to fetch AI Sommelier discovery logs
