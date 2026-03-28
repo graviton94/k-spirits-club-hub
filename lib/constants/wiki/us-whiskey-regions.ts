@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const usWhiskeyRegions: SpiritCategory = {
     slug: 'us-whiskey-regions',
+    dbCategories: ['위스키'],
     emoji: '🇺🇸',
     nameKo: '미국 위스키 지역 가이드',
     nameEn: 'American Whiskey Regions Guide',
@@ -134,7 +135,6 @@ export const usWhiskeyRegions: SpiritCategory = {
             '라이 위스키 — 훈제 파스트라미, 호밀빵 샌드위치',
             '아메리칸 싱글몰트 — 아티산 치즈, 시즈널 푸드 페어링',
         ],
-        dbCategories: ['위스키'],
         relatedPageSlug: 'bourbon',
         relatedPageLabelKo: '← 버번 위스키 백과로 돌아가기',
         relatedPageLabelEn: '← Back to Bourbon Whiskey Wiki',
@@ -265,7 +265,6 @@ export const usWhiskeyRegions: SpiritCategory = {
             'Rye Whiskey — Smoked Pastrami, Rye Bread Sandwiches',
             'American Single Malt — Artisan Cheese, Seasonal Food Pairings',
         ],
-        dbCategories: ['위스키'],
         relatedPageSlug: 'bourbon',
         relatedPageLabelKo: '← 버번 위스키 백과로 돌아가기',
         relatedPageLabelEn: '← Back to Bourbon Whiskey Wiki',

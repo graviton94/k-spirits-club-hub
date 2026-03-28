@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const wine: SpiritCategory = {
     slug: 'wine',
+    dbCategories: ['과실주'],
     emoji: '🍷',
     nameKo: '와인 (로제/스파클링)',
     nameEn: 'Wine (Rosé & Sparkling)',
@@ -127,8 +128,7 @@ export const wine: SpiritCategory = {
             "연어 사시미 및 초밥",
             "브리 치즈와 견과류",
             "딸기 크림 디저트"
-        ],
-        dbCategories: ['과실주']
+        ]
     },
     sectionsEn: {
         definition: "Rosé and Sparkling wines (including Champagne) are specialized categories defined by the precise control of grape skin maceration time (for Rosé) and the management of carbon dioxide generated during fermentation (for Sparkling). They are characterized by vibrant acidity, a diverse spectrum of hues, and the refined sensory pleasure of delicate bubbles.",
@@ -249,7 +249,6 @@ export const wine: SpiritCategory = {
             "Salmon Sashimi and Sushi",
             "Brie Cheese with Roasted Nuts",
             "Strawberry Cream Desserts"
-        ],
-        dbCategories: ['과실주']
+        ]
     }
 }

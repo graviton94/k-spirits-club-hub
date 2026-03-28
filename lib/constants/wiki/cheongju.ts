@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const cheongju: SpiritCategory = {
     slug: 'cheongju',
+    dbCategories: ['청주'],
     emoji: '🍶',
     nameKo: '청주 (한국 맑은술)',
     nameEn: 'Cheongju (Korean Clear Rice Wine)',
@@ -153,7 +154,6 @@ export const cheongju: SpiritCategory = {
                 answer: "대부분의 한국 청주는 10~14℃에서 가장 균형이 좋지만, 드라이한 스타일은 더 차게, 감칠맛 중심 스타일은 약간 높은 온도에서 더 잘 열린다."
             }
         ],
-        dbCategories: ['청주'],
         dbSubcategoryKeywords: ['한국 청주', '청주', 'Korean Cheongju', 'Cheongju']
     },
     sectionsEn: {
@@ -301,7 +301,6 @@ export const cheongju: SpiritCategory = {
                 answer: "Not always. Most bottles show the best balance around 10 to 14°C, but drier styles can go colder and savory styles can benefit from a slightly warmer pour."
             }
         ],
-        dbCategories: ['청주'],
         dbSubcategoryKeywords: ['한국 청주', '청주', 'Korean Cheongju', 'Cheongju']
     }
 }

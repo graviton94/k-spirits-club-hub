@@ -129,7 +129,7 @@ export default async function ContentsPage({ params }: ContentsPageProps) {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-48 bg-purple-500/10 blur-[80px] pointer-events-none" />
 
         <div className="relative z-10">
-          <h1 className="text-3xl md:text-4xl font-black mb-2 tracking-tighter bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent drop-shadow-sm">
+          <h1 className="text-3xl md:text-4xl font-black mb-2 tracking-tighter bg-linear-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent drop-shadow-sm">
             {isEn ? 'Contents Hub' : '콘텐츠 허브'}
           </h1>
           <p className="text-xs font-bold text-muted-foreground/60 tracking-widest uppercase flex items-center justify-center gap-1.5">
@@ -154,7 +154,7 @@ export default async function ContentsPage({ params }: ContentsPageProps) {
             `}
           >
             {/* Hover Gradient Background */}
-            <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+            <div className={`absolute inset-0 bg-linear-to-br ${item.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
 
             <div className="relative z-10 flex flex-col h-full">
               <div className="flex items-center gap-3 mb-2">

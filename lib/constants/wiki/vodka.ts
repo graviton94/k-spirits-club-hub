@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const vodka: SpiritCategory = {
     slug: 'vodka',
+    dbCategories: ['일반증류주'],
     emoji: '❄️',
     nameKo: '보드카',
     nameEn: 'Vodka',
@@ -128,8 +129,7 @@ export const vodka: SpiritCategory = {
             "염장 피클 및 사워크라우트",
             "호밀빵과 블리니",
             "짭짤한 하드 치즈"
-        ],
-        dbCategories: ['일반증류주']
+        ]
     },
     sectionsEn: {
         definition: "Vodka is a colorless 'Neutral Spirit' produced by fermenting and distilling agricultural raw materials—such as grains, potatoes, or grapes—to a high proof to minimize impurities and aromatics. While its core philosophy is a clean and dry profile, subtle variations in texture and flavor emerge depending on the base material, distillation intensity, and filtration process.",
@@ -265,7 +265,6 @@ export const vodka: SpiritCategory = {
                 question: "What is the alcohol content of vodka?",
                 answer: "Standard vodka is bottled at 40% ABV (alcohol by volume), which is equivalent to 80 proof in the US. The legal minimum in most countries is 37.5% ABV. Some premium or cask-strength vodkas can reach higher levels, but flavored or light vodkas may be slightly lower."
             }
-        ],
-        dbCategories: ['일반증류주']
+        ]
     }
 }

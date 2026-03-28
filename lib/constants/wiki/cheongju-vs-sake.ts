@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const cheongjuVsSake: SpiritCategory = {
     slug: 'cheongju-vs-sake',
+    dbCategories: ['청주'],
     emoji: '⚖️',
     nameKo: '청주 vs 사케',
     nameEn: 'Cheongju vs Sake',
@@ -110,7 +111,6 @@ export const cheongjuVsSake: SpiritCategory = {
                 answer: "한식 식사와 함께라면 청주, 향이 화려한 스타일 차를 느끼고 싶다면 사케 쪽이 더 직관적이다."
             }
         ],
-        dbCategories: ['청주'],
         dbSubcategoryKeywords: ['한국 청주', '청주', '사케', '사케(니혼슈)', '준마이', '긴조', '다이긴조', 'Cheongju', 'Sake'],
         dbSubcategoryKeywordGroups: [
             ['한국 청주', '청주', 'Korean Cheongju', 'Cheongju'],
@@ -218,7 +218,6 @@ export const cheongjuVsSake: SpiritCategory = {
                 answer: "Cheongju is a smooth entry if you want a meal-friendly Korean context. Sake is a better starting point if you want to learn clearly labeled aromatic styles."
             }
         ],
-        dbCategories: ['청주'],
         dbSubcategoryKeywords: ['한국 청주', '청주', '사케', '사케(니혼슈)', '준마이', '긴조', '다이긴조', 'Cheongju', 'Sake'],
         dbSubcategoryKeywordGroups: [
             ['한국 청주', '청주', 'Korean Cheongju', 'Cheongju'],

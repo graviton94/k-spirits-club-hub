@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const redWine: SpiritCategory = {
     slug: 'red-wine',
+    dbCategories: ['과실주'],
     emoji: '🍷',
     nameKo: '레드 와인',
     nameEn: 'Red Wine',
@@ -140,7 +141,6 @@ export const redWine: SpiritCategory = {
             "오리 가슴살 및 로스트 치킨",
             "갈비찜 및 불고기"
         ],
-        dbCategories: ['과실주'],
         relatedPageSlug: 'red-wine-regions',
         relatedPageLabelKo: '🗺️ 보르도·부르고뉴·토스카나·나파의 레드 와인 산지 탐험 →',
         relatedPageLabelEn: '🗺️ Explore Red Wine Regions of the World →',
@@ -277,7 +277,6 @@ export const redWine: SpiritCategory = {
             "Duck Breast and Roasted Chicken",
             "Braised Beef (Galbi-jjim) and Bulgogi"
         ],
-        dbCategories: ['과실주'],
         relatedPageSlug: 'red-wine-regions',
         relatedPageLabelKo: '🗺️ 보르도·부르고뉴·토스카나·나파의 레드 와인 산지 탐험 →',
         relatedPageLabelEn: '🗺️ Explore Red Wine Regions of the World →',

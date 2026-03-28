@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const whiteWine: SpiritCategory = {
     slug: 'white-wine',
+    dbCategories: ['과실주'],
     emoji: '🥂',
     nameKo: '화이트 와인',
     nameEn: 'White Wine',
@@ -125,7 +126,6 @@ export const whiteWine: SpiritCategory = {
             "크림 파스타 및 리조또",
             "태국/베트남식 매콤한 요리"
         ],
-        dbCategories: ['과실주'],
         relatedPageSlug: 'white-wine-regions',
         relatedPageLabelKo: '🗺️ 샤블리·모젠·알자스·말버러의 화이트 와인 산지 탐험 →',
         relatedPageLabelEn: '🗺️ Explore White Wine Regions of the World →',
@@ -247,7 +247,6 @@ export const whiteWine: SpiritCategory = {
             "Cream-based Pastas and Risotto",
             "Spicy Thai or Vietnamese Cuisine"
         ],
-        dbCategories: ['과실주'],
         relatedPageSlug: 'white-wine-regions',
         relatedPageLabelKo: '🗺️ 샤블리·모젠·알자스·말버러의 화이트 와인 산지 탐험 →',
         relatedPageLabelEn: '🗺️ Explore White Wine Regions of the World →',

@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const makgeolliGuide: SpiritCategory = {
     slug: 'makgeolli-guide',
+    dbCategories: ['탁주'],
     emoji: '🍶',
     nameKo: '막걸리 가이드',
     nameEn: 'Makgeolli Guide',
@@ -70,8 +71,7 @@ export const makgeolliGuide: SpiritCategory = {
             "두부김치와 보쌈",
             "매콤한 오징어 볶음",
             "도토리묵 무침"
-        ],
-        dbCategories: ['탁주']
+        ]
     },
     sectionsEn: {
         definition: "Makgeolli is Korea's oldest alcoholic beverage. It is an unfiltered, lightly sparkling rice wine with a milky, opaque color and a slightly sweet, tangy, and astringent flavor profile.",
@@ -140,7 +140,6 @@ export const makgeolliGuide: SpiritCategory = {
             "Spicy Stir-fried Pork",
             "Tofu with Sautéed Kimchi (Dubu Kimchi)",
             "Acorn Jelly Salad (Dotorimuk)"
-        ],
-        dbCategories: ['탁주']
+        ]
     }
 }

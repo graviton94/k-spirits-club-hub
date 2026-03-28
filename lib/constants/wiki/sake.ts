@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const sake: SpiritCategory = {
     slug: 'sake',
+    dbCategories: ['청주'],
     emoji: '🍶',
     nameKo: '사케 (니혼슈)',
     nameEn: 'Sake (Nihonshu)',
@@ -148,7 +149,6 @@ export const sake: SpiritCategory = {
             "야키토리 (소금구이/타레)",
             "샤브샤브 및 나베 요리"
         ],
-        dbCategories: ['청주'],
         dbSubcategoryKeywords: ['사케', '사케(니혼슈)', '준마이', '긴조', '다이긴조', '혼죠조', '토쿠베츠', 'Sake', 'Nihonshu', 'Junmai', 'Ginjo', 'Daiginjo', 'Honjozo', 'Tokubetsu']
     },
     sectionsEn: {
@@ -291,7 +291,6 @@ export const sake: SpiritCategory = {
             "Yakitori (Salt or Tare)",
             "Shabu-shabu and Nabe (Hot pot)"
         ],
-        dbCategories: ['청주'],
         dbSubcategoryKeywords: ['사케', '사케(니혼슈)', '준마이', '긴조', '다이긴조', '혼죠조', '토쿠베츠', 'Sake', 'Nihonshu', 'Junmai', 'Ginjo', 'Daiginjo', 'Honjozo', 'Tokubetsu']
     }
 }

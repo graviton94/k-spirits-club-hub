@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const gin: SpiritCategory = {
     slug: 'gin',
+    dbCategories: ['일반증류주'],
     emoji: '🍸',
     nameKo: '진',
     nameEn: 'Gin',
@@ -148,8 +149,7 @@ export const gin: SpiritCategory = {
             "허브를 곁들인 치킨 구이",
             "올리브 및 치즈 플래터",
             "레몬 또는 유자 파운드 케이크"
-        ],
-        dbCategories: ['일반증류주']
+        ]
     },
     sectionsEn: {
         definition: "Gin is a distilled spirit crafted by infusing agricultural neutral spirits with various botanicals, centered around the essential aroma of juniper berries. It serves as a foundational base for cocktails and maintains a strict identity where the flavor of juniper must be predominant.",
@@ -305,7 +305,6 @@ export const gin: SpiritCategory = {
                 question: "Where is gin from and what is its origin?",
                 answer: "Gin originated from Genever, a Dutch medicinal spirit created in the 16th and 17th centuries. It spread to England, where over centuries it evolved into the crisper, drier 'London Dry' style known worldwide today."
             }
-        ],
-        dbCategories: ['일반증류주']
+        ]
     }
 }

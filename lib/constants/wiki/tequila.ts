@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const tequila: SpiritCategory = {
     slug: 'tequila',
+    dbCategories: ['일반증류주'],
     emoji: '🌵',
     nameKo: '데킬라',
     nameEn: 'Tequila',
@@ -149,8 +150,7 @@ export const tequila: SpiritCategory = {
             "양념된 그릴 육류 및 스테이크",
             "숙성된 치즈 (만체고, 고다)",
             "다크 초콜릿 및 견과류"
-        ],
-        dbCategories: ['일반증류주']
+        ]
     },
     sectionsEn: {
         definition: "Tequila is a world-renowned Mexican spirit produced by fermenting and distilling the sugars of the Blue Weber Agave, grown specifically within designated regions of Mexico. It is a strictly regulated category of Agave spirit protected by a Declaration of Origin.",
@@ -293,7 +293,6 @@ export const tequila: SpiritCategory = {
             "Spicy Grilled Meats and Steaks",
             "Aged Cheeses (Manchego, Gouda)",
             "Dark Chocolate and Nut Platters"
-        ],
-        dbCategories: ['일반증류주']
+        ]
     }
 }

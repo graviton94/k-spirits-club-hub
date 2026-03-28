@@ -577,7 +577,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
             {/* ── Image Modal (Moved to root for best stacking) ── */}
             {mapModalOpen && (
                 <div
-                    className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-md p-4 animate-in fade-in duration-300"
+                    className="fixed inset-0 z-9999 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 animate-in fade-in duration-300"
                     onClick={() => setMapModalOpen(false)}
                 >
                     <div

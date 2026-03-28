@@ -723,7 +723,7 @@ export default function AdminDashboard() {
                         <button
                             disabled={isProcessing}
                             onClick={generateAIData}
-                            className="w-full mb-6 px-4 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-sm font-black rounded-xl hover:scale-[1.02] active:scale-95 transition-all shadow-lg disabled:opacity-50"
+                            className="w-full mb-6 px-4 py-3 bg-linear-to-r from-purple-600 to-indigo-600 text-white text-sm font-black rounded-xl hover:scale-[1.02] active:scale-95 transition-all shadow-lg disabled:opacity-50"
                         >
                             ✨ {isProcessing ? 'AI 생성 중...' : 'AI 데이터 생성 (영문명, 설명, 페어링 가이드)'}
                         </button>

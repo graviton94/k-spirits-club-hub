@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const yakju: SpiritCategory = {
     slug: 'yakju',
+    dbCategories: ['약주'],
     emoji: '🍶',
     nameKo: '약주 (한국 전통 청주)',
     nameEn: 'Yakju (Korean Clear Rice Wine)',
@@ -151,7 +152,6 @@ export const yakju: SpiritCategory = {
             "간장게장 및 장아찌류",
             "한과/약과 또는 크림치즈 디저트"
         ],
-        dbCategories: ['약주'],
         dbSubcategoryKeywords: ['약주', '전통 약주', '개량 약주', 'Yakju']
     },
     sectionsEn: {
@@ -315,7 +315,6 @@ export const yakju: SpiritCategory = {
                 answer: "Both are clear rice wines, but traditional Yakju relies on 'Nuruk', introducing complex wild microbes and lactic acid bacteria. This gives Yakju a nuttier, tangier, and more earthy 'umami' profile compared to the highly refined, delicate fruit-forward typicality of Sake."
             }
         ],
-        dbCategories: ['약주'],
         dbSubcategoryKeywords: ['약주', '전통 약주', '개량 약주', 'Yakju']
     }
 }

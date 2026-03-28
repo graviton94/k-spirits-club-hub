@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const koreanTraditionalSpirits: SpiritCategory = {
     slug: 'korean-traditional-spirits',
+    dbCategories: ['소주', '탁주', '약주', '기타주류'],
     emoji: '🏺',
     nameKo: '전통주 종류 가이드',
     nameEn: 'Traditional Spirits',
@@ -80,8 +81,7 @@ export const koreanTraditionalSpirits: SpiritCategory = {
             "각종 전과 부침개",
             "갈비찜, 불고기 등 간장 베이스 육류",
             "숙성회 및 젓갈류"
-        ],
-        dbCategories: ['소주', '탁주', '약주', '기타주류']
+        ]
     },
     sectionsEn: {
         definition: "Korean traditional spirits encompass a vast array of indigenous alcoholic beverages meticulously crafted from local agricultural products, preserving the culinary and cultural heritage of the Korean peninsula.",
@@ -150,7 +150,6 @@ export const koreanTraditionalSpirits: SpiritCategory = {
             "Delicate Seafood",
             "Savory Pancakes",
             "Braised Meats"
-        ],
-        dbCategories: ['소주', '탁주', '약주', '기타주류']
+        ]
     }
 }

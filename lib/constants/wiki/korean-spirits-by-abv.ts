@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const koreanSpiritsByAbv: SpiritCategory = {
     slug: 'korean-spirits-by-abv',
+    dbCategories: ['소주', '위스키', '탁주'],
     emoji: '📈',
     nameKo: '도수별 증류주 추천',
     nameEn: 'Korean Spirits by ABV',
@@ -74,8 +75,7 @@ export const koreanSpiritsByAbv: SpiritCategory = {
             "저도수: 파전, 매운 요리",
             "중도수: 회, 삼겹살 구이",
             "고도수: 초콜릿, 견과류, 치즈"
-        ],
-        dbCategories: ['소주', '위스키', '탁주']
+        ]
     },
     sectionsEn: {
         definition: "Korean spirits span an incredibly wide range of alcohol by volume (ABV), from gentle, sessionable fermented rice wines to intensely potent cask-strength craft whiskies.",
@@ -143,7 +143,6 @@ export const koreanSpiritsByAbv: SpiritCategory = {
             "Low ABV: Savory Pancakes, Spicy Food",
             "Mid ABV: Seafood, Korean BBQ",
             "High ABV: Dark Chocolate, Cigar, Charcuterie"
-        ],
-        dbCategories: ['소주', '위스키', '탁주']
+        ]
     }
 }

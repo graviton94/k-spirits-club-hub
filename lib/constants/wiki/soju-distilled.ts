@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const sojuDistilled: SpiritCategory = {
     slug: 'soju-distilled',
+    dbCategories: ['소주'],
     emoji: '🍶',
     nameKo: '증류식 소주',
     nameEn: 'Distilled Soju',
@@ -148,8 +149,7 @@ export const sojuDistilled: SpiritCategory = {
             "감칠맛 나는 된장찌개/전골 요리",
             "장어 구이 및 기름진 생선 요리",
             "다양한 전류 (해물파전, 육전)"
-        ],
-        dbCategories: ['소주']
+        ]
     },
     sectionsEn: {
         definition: "Traditional Distilled Soju is a Korean craft spirit produced by fermenting grain and starch—primarily rice—using traditional 'Nuruk' (starter culture) or Koji, then concentrating the alcohol and aromatics through pot distillation. Unlike mass-produced diluted soju, it preserves the savory grain notes and complex fermentation aromas of its raw materials.",
@@ -305,7 +305,6 @@ export const sojuDistilled: SpiritCategory = {
                 question: "How should I drink premium distilled Soju?",
                 answer: "High-quality distilled soju is best enjoyed neat in a small tasting glass to appreciate its savory rice notes and complex fermentation aromas. It can also be enjoyed on the rocks or mixed with soda water as a highball."
             }
-        ],
-        dbCategories: ['소주']
+        ]
     }
 }

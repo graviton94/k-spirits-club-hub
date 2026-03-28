@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const blendedWhisky: SpiritCategory = {
     slug: 'whisky',
+    dbCategories: ['위스키'],
     emoji: '🥃',
     nameKo: '블랜디드 위스키 (Blended Whisky)',
     nameEn: 'Blended Whisky',
@@ -136,8 +137,7 @@ export const blendedWhisky: SpiritCategory = {
             "하드 치즈 및 각종 견과류",
             "다크 초콜릿 및 브라우니",
             "치킨 및 생선 튀김 요리 (하이볼)"
-        ],
-        dbCategories: ['위스키']
+        ]
     },
     sectionsEn: {
         definition: "Blended Whisky is a spirit created by intentionally blending different styles (malt and grain) or whiskies from various distilleries to achieve a balanced flavor and a consistent house style. Blenders combine the individual characteristics of the spirits—aroma, texture, oak influence, and peat—to design 'smoothness, complexity, and reproducibility.'",
@@ -267,7 +267,6 @@ export const blendedWhisky: SpiritCategory = {
             "Hard Cheeses and assorted nuts",
             "Dark Chocolate and Brownies",
             "Fried Chicken or Fish and Chips (with Highball)"
-        ],
-        dbCategories: ['위스키']
+        ]
     }
 }

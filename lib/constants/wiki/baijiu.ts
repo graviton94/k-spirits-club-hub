@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const baijiu: SpiritCategory = {
     slug: 'baijiu',
+    dbCategories: ['일반증류주'],
     emoji: '🏮',
     nameKo: '백주',
     nameEn: 'Baijiu',
@@ -183,8 +184,7 @@ export const baijiu: SpiritCategory = {
             "북경오리 및 로스트 덕",
             "짭짤한 건해산물 안주",
             "사천식 매운 볶음 요리"
-        ],
-        dbCategories: ['일반증류주']
+        ]
     },
     sectionsEn: {
         definition: "Baijiu (White Liquor) is China's representative high-proof distilled spirit, made by solid-state fermentation of grains like sorghum using Qu (starter culture), followed by distillation. Depending on the region, Qu type, and fermentation environment, it has developed a unique classification system called 'Aroma Types (香型),' offering a diverse flavor spectrum.",
@@ -361,7 +361,6 @@ export const baijiu: SpiritCategory = {
             "Peking Duck and roast duck",
             "Salty dried seafood appetizers",
             "Sichuan-style spicy stir-fries"
-        ],
-        dbCategories: ['일반증류주']
+        ]
     }
 }

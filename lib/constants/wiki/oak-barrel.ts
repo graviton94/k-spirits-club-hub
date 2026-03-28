@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const oakBarrel: SpiritCategory = {
     slug: 'oak-barrel',
+    dbCategories: ['위스키', '브랜디', '소주', '일반증류주'],
     emoji: '🪵',
     nameKo: '오크통 (캐스크)',
     nameEn: 'The Cask Guide',
@@ -239,8 +240,7 @@ export const oakBarrel: SpiritCategory = {
             "숙성 하드 치즈 (체다, 구다)",
             "볶은 견과류 및 피칸 파이",
             "말린 무화과와 대추야자"
-        ],
-        dbCategories: ['위스키', '브랜디', '소주', '일반증류주']
+        ]
     },
     sectionsEn: {
         definition: "An oak cask (or barrel) is a maturation vessel made from the Quercus genus. Far more than a mere storage container, it acts as a 'biological reactor' that actively designs the chemical composition, aroma, color, and texture of the spirit. During maturation, the liquid extracts compounds from the wood (vanillin, oak lactones, spice phenols, tannins) while undergoing micro-oxidation through the wood's pores and evaporation (the 'Angel's Share'), resulting in a rounded, complex, and refined final product.",
@@ -407,7 +407,6 @@ export const oakBarrel: SpiritCategory = {
             "Aged Hard Cheeses (Cheddar, Gouda)",
             "Roasted Nuts and Pecan Pie",
             "Dried Figs and Dates"
-        ],
-        dbCategories: ['위스키', '브랜디', '소주', '일반증류주']
+        ]
     }
 }

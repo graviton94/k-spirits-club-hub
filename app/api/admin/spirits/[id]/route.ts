@@ -22,9 +22,9 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
 }
 
 // PATCH /api/admin/spirits/[id]
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
-        const id = params.id;
+        const { id } = await params;
         const body = await req.json();
 
         // Validate if spirit exists
@@ -41,15 +41,16 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
 
         return NextResponse.json(updated);
     } catch (error) {
-        console.error(`API Update Error for ${params.id}:`, error);
+        const { id } = await params;
+        console.error(`API Update Error for ${id}:`, error);
         return NextResponse.json({ error: 'Failed to update spirit' }, { status: 500 });
     }
 }
 
 // DELETE /api/admin/spirits/[id]
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
-        const id = params.id;
+        const { id } = await params;
         const success = await db.deleteSpirit(id);
 
         if (!success) {
@@ -61,7 +62,8 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
 
         return NextResponse.json({ success: true });
     } catch (error) {
-        console.error(`API Delete Error for ${params.id}:`, error);
+        const { id } = await params;
+        console.error(`API Delete Error for ${id}:`, error);
         return NextResponse.json({ error: 'Failed to delete spirit' }, { status: 500 });
     }
 }

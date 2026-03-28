@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const yakjuVsCheongju: SpiritCategory = {
     slug: 'yakju-vs-cheongju',
+    dbCategories: ['약주', '청주'],
     emoji: '⚖️',
     nameKo: '약주 vs 청주',
     nameEn: 'Yakju vs Cheongju',
@@ -110,7 +111,6 @@ export const yakjuVsCheongju: SpiritCategory = {
                 answer: "보다 깔끔하고 단정한 스타일을 찾는다면 청주, 풍미 층위와 감칠맛을 원한다면 약주가 맞다."
             }
         ],
-        dbCategories: ['약주', '청주'],
         dbSubcategoryKeywords: ['약주', '전통 약주', '개량 약주', '한국 청주', '청주', 'Yakju', 'Cheongju'],
         dbSubcategoryKeywordGroups: [
             ['약주', '전통 약주', '개량 약주', 'Yakju'],
@@ -218,7 +218,6 @@ export const yakjuVsCheongju: SpiritCategory = {
                 answer: "Cheongju is often easier if you prefer clean, tidy styles. Yakju is rewarding if you want more savory depth and layered fermentation character."
             }
         ],
-        dbCategories: ['약주', '청주'],
         dbSubcategoryKeywords: ['약주', '전통 약주', '개량 약주', '한국 청주', '청주', 'Yakju', 'Cheongju'],
         dbSubcategoryKeywordGroups: [
             ['약주', '전통 약주', '개량 약주', 'Yakju'],

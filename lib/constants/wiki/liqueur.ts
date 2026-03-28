@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const liqueur: SpiritCategory = {
     slug: 'liqueur',
+    dbCategories: ['리큐르'],
     emoji: '🧪',
     nameKo: '리큐르',
     nameEn: 'Liqueur',
@@ -156,8 +157,7 @@ export const liqueur: SpiritCategory = {
             "각종 과일 타르트 및 샤베트",
             "블루 치즈 및 숙성 하드 치즈",
             "훈제 햄 및 사퀴테리 (비터 계열)"
-        ],
-        dbCategories: ['리큐르']
+        ]
     },
     sectionsEn: {
         definition: "Liqueur is a flavored spirit produced by adding aromatic ingredients—such as fruits, herbs, spices, nuts, coffee, or cream—and sweeteners to a neutral spirit or a distilled base (brandy, rum, whiskey, etc.). Generally used as both a standalone drink and a fundamental 'seasoning' to define the aroma, sweetness, and texture of cocktails.",
@@ -307,7 +307,6 @@ export const liqueur: SpiritCategory = {
             "Fruit Tarts and Sorbets",
             "Blue Cheese and Aged Hard Cheeses",
             "Smoked Ham and Charcuterie (for Bitter styles)"
-        ],
-        dbCategories: ['리큐르']
+        ]
     }
 }

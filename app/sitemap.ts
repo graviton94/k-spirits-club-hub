@@ -24,29 +24,14 @@ export const revalidate = 86400;
  */
 function isIndexableSpiritMeta(spirit: {
   name: string;
-  abv: number | null;
   category: string | null;
-  imageUrl: string | null;
-  thumbnailUrl: string | null;
-  descriptionKoLength: number;
-  descriptionEnLength: number;
-  pairingKoLength: number;
-  pairingEnLength: number;
-  tastingNoteLength: number;
-  sensoryTagCount: number;
+  // ... rest of meta if needed, but we focus on core identity for indexability
 }): boolean {
   const hasName = !!spirit.name;
-  const hasAbv = typeof spirit.abv === 'number';
   const hasCategory = !!spirit.category;
-  const hasImage = !!(spirit.imageUrl || spirit.thumbnailUrl);
-  const qualitySignalCount = [
-    hasImage,
-    spirit.descriptionKoLength >= 160 || spirit.descriptionEnLength >= 160,
-    spirit.pairingKoLength >= 120 || spirit.pairingEnLength >= 120,
-    spirit.tastingNoteLength >= 24 || spirit.sensoryTagCount >= 4,
-  ].filter(Boolean).length;
 
-  return hasName && hasAbv && hasCategory && qualitySignalCount >= 2;
+  // SEO Expert: We now index all spirits with at least a name and category to maximize reach.
+  return hasName && hasCategory;
 }
 
 /**

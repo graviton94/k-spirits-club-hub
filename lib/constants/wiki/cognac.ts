@@ -2,6 +2,7 @@ import { SpiritCategory } from './types'
 
 export const cognac: SpiritCategory = {
     slug: 'cognac',
+    dbCategories: ['브랜디'],
     emoji: '🥃',
     nameKo: '꼬냑 (Cognac)',
     nameEn: 'Cognac',
@@ -247,8 +248,7 @@ export const cognac: SpiritCategory = {
             "타르트 타탱/카라멜 디저트",
             "견과류/말린 과일 플래터",
             "커피/에스프레소 기반 디저트(티라미수 등)"
-        ],
-        dbCategories: ['브랜디']
+        ]
     },
     sectionsEn: {
         definition: "Cognac is a premium grape brandy produced in the Cognac AOC, spanning the Charente and Charente-Maritime departments of France. It is crafted by double-distilling high-acidity white wine in traditional Charentais copper pot stills, followed by aging in oak barrels and meticulous blending.",
@@ -422,7 +422,6 @@ export const cognac: SpiritCategory = {
             "Dark Chocolate and Cocoa Desserts",
             "Tarte Tatin / Caramel Desserts",
             "Dried Fruit and Nut Platters"
-        ],
-        dbCategories: ['브랜디']
+        ]
     }
 }
