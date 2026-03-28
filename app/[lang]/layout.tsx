@@ -16,6 +16,7 @@ import { getDictionary } from '@/lib/get-dictionary';
 import { PwaProvider } from './context/pwa-context';
 import { PwaInstallPrompt } from '@/components/ui/PwaInstallPrompt';
 import { ScrollToTop } from '@/components/layout/ScrollToTop';
+import ChatSommelier from "@/components/ui/ChatSommelier";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit", display: "swap" });
@@ -149,6 +150,7 @@ export default async function RootLayout({
                 {children}
               </main>
               <BottomNav lang={lang} dict={dictionary.nav} />
+              <ChatSommelier lang={lang} />
             </PwaProvider>
           </SpiritsCacheProvider>
         </AuthProvider>

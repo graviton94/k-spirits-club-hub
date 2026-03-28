@@ -8,6 +8,7 @@ import Link from 'next/link';
 import metadata from '@/lib/constants/spirits-metadata.json';
 import { TagMultiSelect } from '@/components/ui/TagMultiSelect';
 import { getOptimizedImageUrl } from '@/lib/utils/image-optimization';
+import DiscoveryLogsTable from '@/components/admin/DiscoveryLogsTable';
 
 interface EditFormState {
     name: string;
@@ -37,7 +38,7 @@ export default function AdminDashboard() {
     }, []);
 
     // State
-    const [activeTab, setActiveTab] = useState<'spirits' | 'requests'>('spirits');
+    const [activeTab, setActiveTab] = useState<'spirits' | 'requests' | 'discovery'>('spirits');
     const [spirits, setSpirits] = useState<Spirit[]>([]);
     const [requests, setRequests] = useState<ModificationRequest[]>([]);
     const [loading, setLoading] = useState(false);
@@ -443,6 +444,12 @@ export default function AdminDashboard() {
                     >
                         정보 수정 요청
                     </button>
+                    <button
+                        onClick={() => setActiveTab('discovery')}
+                        className={`text-lg font-bold pb-2 border-b-2 transition-colors ${activeTab === 'discovery' ? 'border-amber-500 text-amber-500' : 'border-transparent text-gray-400 hover:text-gray-500 dark:hover:text-gray-300'}`}
+                    >
+                        AI 발굴 로그
+                    </button>
                 </div>
 
                 {activeTab === 'spirits' ? (
@@ -630,7 +637,7 @@ export default function AdminDashboard() {
                             </div>
                         </div>
                     </>
-                ) : (
+                ) : activeTab === 'requests' ? (
                     /* Modification Requests View */
                     <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-2xl shadow-sm overflow-hidden">
                         <div className="overflow-x-auto">
@@ -685,6 +692,11 @@ export default function AdminDashboard() {
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                ) : (
+                    /* Discovery Logs View */
+                    <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-2xl p-4 md:p-8 shadow-sm">
+                        <DiscoveryLogsTable />
                     </div>
                 )}
             </div>

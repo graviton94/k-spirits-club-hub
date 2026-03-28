@@ -2247,3 +2247,82 @@ export const newsDb = {
     },
 };
 
+export const sommelierDb = {
+    /**
+     * Log a sommelier chat discovery event (when recommendations are made)
+     */
+    async logDiscovery(userId: string, data: any) {
+        const token = await getServiceAccountToken();
+        const collectionPath = getAppPath().sommelierLogs;
+        const url = `${BASE_URL}/${collectionPath}`;
+
+        const payload = {
+            ...data,
+            userId,
+            createdAt: new Date().toISOString()
+        };
+
+        const converted = toFirestore(payload);
+        const res = await fetch(url, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(converted)
+        });
+
+        if (!res.ok) {
+            console.error('[sommelierDb] Failed to log discovery:', await res.text());
+        }
+    },
+
+    /**
+     * Get recent discovery logs for admin dashboard
+     */
+    async getDiscoveryLogs(limit: number = 50): Promise<any[]> {
+        const token = await getServiceAccountToken();
+        const collectionPath = getAppPath().sommelierLogs;
+        
+        // Parent calculation: artifacts/{appId}/admin/logs/sommelier -> parent is logs
+        const segments = collectionPath.split('/');
+        const collectionId = segments.pop();
+        const parentPath = segments.join('/');
+        const parent = `projects/${PROJECT_ID}/databases/(default)/documents/${parentPath}`;
+
+        try {
+            const res = await fetch(`${BASE_URL}:runQuery`, {
+                method: 'POST',
+                headers: { Authorization: `Bearer ${token}` },
+                body: JSON.stringify({
+                    parent,
+                    structuredQuery: {
+                        from: [{ collectionId }],
+                        orderBy: [{ field: { fieldPath: 'createdAt' }, direction: 'DESCENDING' }],
+                        limit
+                    }
+                })
+            });
+
+            if (!res.ok) {
+                console.error('[sommelierDb] getDiscoveryLogs failed:', await res.text());
+                return [];
+            }
+
+            const json = await res.json();
+            if (!Array.isArray(json)) return [];
+
+            return json
+                .filter((r: any) => r.document)
+                .map((r: any) => {
+                    const data = parseFirestoreFields(r.document.fields || {});
+                    data.id = r.document.name.split('/').pop();
+                    return data;
+                });
+        } catch (err) {
+            console.error('[sommelierDb] Error fetching logs:', err);
+            return [];
+        }
+    }
+};
+

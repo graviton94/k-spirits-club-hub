@@ -2,7 +2,7 @@
 
 import { useAuth } from '@/app/[lang]/context/auth-context';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import SuccessToast from '@/components/ui/SuccessToast';
 import { Locale } from '@/i18n-config';
 
@@ -14,15 +14,18 @@ interface LoginClientProps {
 export default function LoginClient({ lang, dict }: LoginClientProps) {
     const { user, loginWithGoogle, loading } = useAuth();
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const redirectPath = searchParams.get('redirect') || `/${lang}/cabinet`;
+    
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState("");
     const isEn = lang === 'en';
 
     useEffect(() => {
         if (!loading && user) {
-            router.replace(`/${lang}/cabinet`);
+            router.replace(redirectPath);
         }
-    }, [user, loading, router, lang]);
+    }, [user, loading, router, redirectPath]);
 
     // Set page title for SEO
     useEffect(() => {
@@ -34,7 +37,7 @@ export default function LoginClient({ lang, dict }: LoginClientProps) {
     if (loading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
 
     const handleLogin = () => {
-        loginWithGoogle(`/${lang}/cabinet`);
+        loginWithGoogle(redirectPath);
     };
 
     return (
