@@ -135,6 +135,7 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
 
   const handleRecommendClick = (id: string) => {
     if (!id) return;
+    setIsOpen(false);
     if (!user) {
       const loginUrl = `/${lang}/login?redirect=/${lang}/spirits/${id}`;
       router.push(loginUrl);
@@ -159,7 +160,12 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
     });
   };
 
-  const isFinished = currentStep === 6;
+  // Only consider the session finished when step 6 was reached AND the last
+  // assistant message actually carries recommendations. This prevents the UI
+  // from locking up (showing only a restart button) when the AI declared step 6
+  // but returned an empty recommendations array.
+  const lastAssistantMsg = messages.findLast(m => m.role === 'assistant');
+  const isFinished = currentStep === 6 && (lastAssistantMsg?.recommendations?.length ?? 0) > 0;
 
   // Only show on main page and spirits pages
   const isVisible = pathname !== null && (
