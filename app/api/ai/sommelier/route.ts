@@ -200,6 +200,13 @@ ${knowledgeBase}
         // 3. Parse and Enrich Recommendations
         const parsed = JSON.parse(responseText);
 
+        // Guard: if the AI declared nextStep 6 (recommendation stage) but produced no
+        // recommendations (e.g. because it was called before the DB index was loaded),
+        // revert to step 5 so the client does not lock up with an empty result screen.
+        if (parsed.nextStep === 6 && (!parsed.recommendations || parsed.recommendations.length === 0)) {
+            parsed.nextStep = 5;
+        }
+
         if (parsed.recommendations && parsed.recommendations.length > 0) {
             // Re-load index if not already loaded (Step 6 might reach here if currentStep was >= 5)
             if (searchIndex.length === 0) {
