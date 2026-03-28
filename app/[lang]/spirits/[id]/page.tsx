@@ -718,6 +718,8 @@ export default async function SpiritDetailPage({
   };
 
   // --- FAQ Schema (롱테일 질문/답변 타겟 + Wiki 콘텐츠 통합) ---
+  const category = spirit.category || '';
+  const wikiGuide = resolveSpiritWikiGuide(category, spirit.subcategory, spirit.mainCategory);
   const faqQuestions = [];
 
   const tastingNote = spirit.tasting_note || spirit.metadata?.tasting_note;
@@ -846,8 +848,6 @@ export default async function SpiritDetailPage({
     '@type': 'FAQPage',
     mainEntity: faqQuestions
   } : null;
-  const category = spirit.category || '';
-  const wikiGuide = resolveSpiritWikiGuide(category, spirit.subcategory, spirit.mainCategory);
   const breadcrumbGuideName = category === '청주' && spirit.subcategory
     ? formatSpiritFieldValue('subcategory', spirit.subcategory, lang)
     : formatSpiritFieldValue('category', spirit.category, lang);
