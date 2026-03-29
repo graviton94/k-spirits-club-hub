@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidateTag } from 'next/cache';
 import { db, spiritsDb } from '@/lib/db';
+import { newArrivalsDb } from '@/lib/db/firestore-rest';
 import { SpiritStatus } from '@/lib/db/schema';
 import { generateSpiritSearchKeywords } from '@/lib/utils/search-keywords';
 
@@ -92,6 +93,7 @@ export async function POST(req: NextRequest) {
             }
         };
 
+        const isPublished = body.isPublished === true;
         const newSpirit = {
             id: nextId,
             name: body.name,
@@ -119,11 +121,11 @@ export async function POST(req: NextRequest) {
             },
             source: 'manual' as const,
             externalId: null,
-            status: 'RAW' as SpiritStatus,
-            isPublished: false,
-            isReviewed: false,
-            reviewedBy: null,
-            reviewedAt: null,
+            status: (isPublished ? 'PUBLISHED' : 'RAW') as SpiritStatus,
+            isPublished: isPublished,
+            isReviewed: isPublished,
+            reviewedBy: isPublished ? 'ADMIN' : null,
+            reviewedAt: isPublished ? now : null,
             searchKeywords: generateSpiritSearchKeywords(spiritForKeywords),
             createdAt: now,
             updatedAt: now,
@@ -131,7 +133,17 @@ export async function POST(req: NextRequest) {
 
         await spiritsDb.upsert(nextId, newSpirit as any);
 
+        // If published, sync the new arrivals cache immediately
+        if (isPublished) {
+            try {
+                await newArrivalsDb.syncCache();
+            } catch (error) {
+                console.error('[API POST /api/admin/spirits] Cache sync failed:', error);
+            }
+        }
+
         return NextResponse.json({ success: true, id: nextId, spirit: newSpirit }, { status: 201 });
+
     } catch (error: any) {
         console.error('[API POST /api/admin/spirits] Error:', error);
         return NextResponse.json({ error: '새 제품 등록 실패', details: error.message }, { status: 500 });
