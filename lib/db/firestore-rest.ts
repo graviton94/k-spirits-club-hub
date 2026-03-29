@@ -3,7 +3,7 @@ import { getServiceAccountToken } from '../auth/service-account';
 import { getAppPath, APP_ID } from './paths';
 import { extractSearchKeyword } from '../utils/search-keywords';
 
-const PROJECT_ID = process.env.FIREBASE_PROJECT_ID;
+const PROJECT_ID = process.env.FIREBASE_PROJECT_ID || 'k-spirits-club';
 const BASE_URL = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
 
 /**
@@ -2294,7 +2294,7 @@ export const sommelierDb = {
         const payload = {
             ...data,
             userId,
-            createdAt: new Date().toISOString()
+            createdAt: new Date()
         };
 
         const converted = toFirestore(payload);
@@ -2308,7 +2308,7 @@ export const sommelierDb = {
         });
 
         if (!res.ok) {
-            console.error('[sommelierDb] Failed to log discovery:', await res.text());
+            console.error('[sommelierDb] Failed to log discovery:', res.status, await res.text());
         }
     },
 
@@ -2319,11 +2319,9 @@ export const sommelierDb = {
         const token = await getServiceAccountToken();
         const collectionPath = getAppPath().sommelierLogs;
         
-        // Parent calculation: artifacts/{appId}/admin/logs/sommelier -> parent is logs
-        const segments = collectionPath.split('/');
-        const collectionId = segments.pop();
-        const parentPath = segments.join('/');
-        const parent = `projects/${PROJECT_ID}/databases/(default)/documents/${parentPath}`;
+        // Broad search across all 'sommelier' collections using Collection Group query
+        const collectionId = collectionPath.split('/').pop();
+        const parent = `projects/${PROJECT_ID}/databases/(default)/documents`;
 
         try {
             const res = await fetch(`${BASE_URL}:runQuery`, {
@@ -2332,15 +2330,15 @@ export const sommelierDb = {
                 body: JSON.stringify({
                     parent,
                     structuredQuery: {
-                        from: [{ collectionId }],
-                        orderBy: [{ field: { fieldPath: 'createdAt' }, direction: 'DESCENDING' }],
+                        from: [{ collectionId, allDescendants: true }],
                         limit
                     }
                 })
             });
 
             if (!res.ok) {
-                console.error('[sommelierDb] getDiscoveryLogs failed:', await res.text());
+                const errText = await res.text();
+                console.error('[sommelierDb] getDiscoveryLogs failed:', res.status, errText);
                 return [];
             }
 
@@ -2353,7 +2351,13 @@ export const sommelierDb = {
                     const data = parseFirestoreFields(r.document.fields || {});
                     data.id = r.document.name.split('/').pop();
                     return data;
+                })
+                .sort((a: any, b: any) => {
+                    const aTime = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+                    const bTime = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+                    return bTime - aTime;
                 });
+
         } catch (err) {
             console.error('[sommelierDb] Error fetching logs:', err);
             return [];
