@@ -168,9 +168,23 @@ ${categoryStructure}
             status: 'ENRICHED',
             updatedAt: new Date()
         };
-    } catch (error) {
-        console.error(`Gemini Enrichment Error for ${spirit.name}:`, error);
-        throw error;
+    } catch (error: any) {
+        console.error(`[Gemini Enrichment Error] failed for ${spirit.name}:`, error.message);
+        
+        // Check if it is a region lock error
+        const isRegionLock = error.message?.includes('location is not supported');
+        
+        // Return original spirit data with error status to prevent complete failure
+        return {
+            ...spirit,
+            status: isRegionLock ? 'ERROR_REGION_LOCK' : 'ERROR_AI_FAILED',
+            metadata: {
+                ...spirit.metadata,
+                description: spirit.metadata?.description || spirit.name,
+                tasting_note: spirit.metadata?.tasting_note || ''
+            },
+            updatedAt: new Date()
+        };
     }
 }
 

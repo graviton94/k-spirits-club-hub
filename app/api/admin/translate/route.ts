@@ -1,4 +1,6 @@
-export const runtime = 'edge';
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+export const preferredRegion = 'iad1';
 
 import { NextRequest, NextResponse } from 'next/server';
 import { translateSpiritName } from '@/lib/services/gemini-translation';

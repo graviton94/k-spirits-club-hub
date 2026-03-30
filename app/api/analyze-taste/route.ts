@@ -5,8 +5,10 @@ import { cabinetDb, tasteProfileDb, reviewsDb } from '@/lib/db/firestore-rest';
 import { buildTasteAnalysisPrompt } from '@/lib/utils/aiPromptBuilder';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-// Vercel/Edge 환경 설정
-export const runtime = 'edge';
+// Vercel/Node.js 환경 설정
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+export const preferredRegion = 'iad1'; // Vercel 기준 미국 동부(워싱턴 D.C)로 실행 위치 고정
 
 const API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_GEMINI_API_KEY || '';
 

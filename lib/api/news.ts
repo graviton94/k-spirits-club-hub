@@ -329,37 +329,54 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
             }
         }
 
-        // Final assembly using the map to ensure NO MISMATCHES
-        // FILTER by isAlcoholRelated flag from Gemini
+        // Final assembly using the map 
+        // Fallback to original text if AI analysis failed or was skipped
         const finalItems = itemsToProcess
-            .filter(item => {
-                if (!processedMap.has(item.tempId)) return false;
-                const proc = processedMap.get(item.tempId)!;
-
-                // Only keep alcohol-related items
-                if (proc.isAlcoholRelated === false) {
-                    console.log('[News Collection] 🚫 AI filtered out non-alcohol news:', item.title);
-                    return false;
-                }
-                return true;
-            })
             .map(item => {
-                const proc = processedMap.get(item.tempId)!;
+                const proc = processedMap.get(item.tempId);
+                
+                // If AI analysis succeeded and it's not alcohol related, skip
+                if (proc && proc.isAlcoholRelated === false) {
+                    console.log('[News Collection] 🚫 AI filtered out non-alcohol news:', item.title);
+                    return null;
+                }
+
+                // Normal Case: AI analysis succeeded
+                if (proc) {
+                    return {
+                        link: item.link,
+                        source: item.source,
+                        date: item.pubDate ? new Date(item.pubDate).toISOString() : new Date().toISOString(),
+                        originalTitle: item.title,
+                        translations: {
+                            en: proc.en || { title: item.title, snippet: item.snippet, content: item.snippet },
+                            ko: proc.ko || { title: item.title, snippet: item.snippet, content: item.snippet }
+                        },
+                        tags: {
+                            en: proc.tags_en || ['#Spirits'],
+                            ko: proc.tags_ko || ['#주류']
+                        }
+                    };
+                }
+
+                // Fallback Case: AI analysis failed (e.g. Region Lock)
+                console.warn('[News Collection] ⚠️ Falling back to original text for:', item.title);
                 return {
                     link: item.link,
                     source: item.source,
-                    date: new Date(item.pubDate).toISOString(),
+                    date: item.pubDate ? new Date(item.pubDate).toISOString() : new Date().toISOString(),
                     originalTitle: item.title,
                     translations: {
-                        en: proc.en,
-                        ko: proc.ko
+                        en: { title: item.title, snippet: item.snippet, content: item.snippet },
+                        ko: { title: item.title, snippet: item.snippet, content: item.snippet }
                     },
                     tags: {
-                        en: proc.tags_en || [],
-                        ko: proc.tags_ko || []
+                        en: ['#Spirits', '#News'],
+                        ko: ['#주류', '#뉴스']
                     }
                 };
-            });
+            })
+            .filter((item): item is any => item !== null);
 
         console.log('[News Collection] 🎉 Final assembly complete:', finalItems.length, 'items');
         return finalItems;

@@ -323,8 +323,17 @@ export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<En
 
         return data;
     } catch (e: any) {
-        console.error('[Gemini Identity] ❌ Error:', e);
-        throw new Error(`Identity audit failed: ${e.message}`);
+        console.error('[Gemini Identity] ❌ Error:', e.message);
+        // Fallback: Return original input if AI fails
+        return {
+            name_en: spirit.name_en || spirit.name,
+            category: spirit.category,
+            subcategory: spirit.subcategory || (validSubcategories[0] || ''),
+            distillery: spirit.distillery || 'Unknown',
+            region: spirit.region || 'Unknown',
+            country: spirit.country || 'Unknown',
+            abv: spirit.abv || 0
+        };
     }
 }
 
@@ -424,8 +433,16 @@ export async function generateSensoryProfile(spirit: SpiritEnrichmentInput): Pro
         console.log('[Gemini Sensory] Generated tags:', data.nose_tags, data.palate_tags, data.finish_tags);
         return data;
     } catch (e: any) {
-        console.error('[Gemini Sensory] ❌ Error:', e);
-        throw new Error(`Sensory analysis failed: ${e.message}`);
+        console.error('[Gemini Sensory] ❌ Error:', e.message);
+        // Fallback: Simplified sensory data
+        return {
+            description_ko: spirit.metadata?.description || spirit.name,
+            description_en: spirit.name_en || spirit.name,
+            nose_tags: spirit.nose_tags || ['#Spirits'],
+            palate_tags: spirit.palate_tags || [],
+            finish_tags: spirit.finish_tags || [],
+            tasting_note: spirit.metadata?.tasting_note || spirit.metadata?.description || spirit.name
+        };
     }
 }
 
@@ -500,8 +517,12 @@ export async function generateDescriptionOnly(spirit: SpiritEnrichmentInput): Pr
         console.log('[Gemini Description] Generated descriptions:', data);
         return data;
     } catch (e: any) {
-        console.error('[Gemini Description] ❌ Error:', e);
-        throw new Error(`Description generation failed: ${e.message}`);
+        console.error('[Gemini Description] ❌ Error:', e.message);
+        // Fallback: Original or name-based descriptions
+        return {
+            description_ko: spirit.description_ko || spirit.metadata?.description || spirit.name,
+            description_en: spirit.description_en || spirit.name_en || spirit.name
+        };
     }
 }
 
@@ -613,8 +634,12 @@ export async function generatePairingGuide(spirit: SpiritEnrichmentInput): Promi
         const parsed = JSON.parse(cleanJson);
         return Array.isArray(parsed) ? parsed[0] : parsed;
     } catch (e: any) {
-        console.error('[Gemini Pairing] ❌ Error:', e);
-        throw new Error(`Pairing guide generation failed: ${e.message}`);
+        console.error('[Gemini Pairing] ❌ Error:', e.message);
+        // Fallback: Generic pairings
+        return {
+            pairing_guide_ko: "함께 즐기기 좋은 가벼운 스낵 또는 치즈와 잘 어울립니다.",
+            pairing_guide_en: "Pairs well with light snacks or assorted cheeses."
+        };
     }
 }
 

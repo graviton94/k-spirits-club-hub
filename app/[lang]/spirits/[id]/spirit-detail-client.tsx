@@ -707,7 +707,7 @@ function ExpandableImage({ imageUrl, name, category }: { imageUrl: string | null
             <AnimatePresence>
                 {isExpanded && (
                     <motion.div
-                        className="fixed inset-0 z-100 bg-black/95 backdrop-blur-xl flex items-center justify-center p-4"
+                        className="fixed inset-0 z-100 bg-black/90 backdrop-blur-2xl flex items-center justify-center p-8 md:p-20"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
@@ -715,28 +715,28 @@ function ExpandableImage({ imageUrl, name, category }: { imageUrl: string | null
                     >
                         {/* Close Button */}
                         <button
-                            className="absolute top-4 right-4 p-2 text-white/70 hover:text-white transition-colors"
+                            className="absolute top-8 right-8 p-3 text-white/40 hover:text-white transition-all bg-white/5 hover:bg-white/10 rounded-full z-110"
                             onClick={() => setIsExpanded(false)}
                         >
                             <X className="w-8 h-8" />
                         </button>
 
-                        {/* Expanded Image */}
+                        {/* Expanded Image Container */}
                         <motion.div
-                            className="max-w-2xl max-h-[80vh]"
-                            initial={{ scale: 0.8 }}
-                            animate={{ scale: 1 }}
-                            exit={{ scale: 0.8 }}
+                            className="relative flex items-center justify-center pointer-events-none"
+                            initial={{ scale: 0.95, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.95, opacity: 0 }}
                             onClick={(e) => e.stopPropagation()}
                         >
                             {imageUrl ? (
                                 <img
                                     src={getOptimizedImageUrl(imageUrl, 1600, 85)}
-                                    alt={`${name} product image`}
-                                    className="w-full h-full object-contain rounded-lg"
+                                    alt={`${name} product view`}
+                                    className="w-auto h-auto max-h-[75vh] max-w-[85vw] md:max-w-3xl object-contain rounded-xl shadow-2xl pointer-events-auto border border-white/5"
                                 />
                             ) : (
-                                <div className="w-96 h-96 flex items-center justify-center text-9xl bg-neutral-800 rounded-lg">
+                                <div className="w-96 h-96 flex items-center justify-center text-9xl bg-neutral-800 rounded-2xl">
                                     🥃
                                 </div>
                             )}

@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { generatePairingGuide } from '@/lib/services/gemini-translation';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+export const preferredRegion = 'iad1';
 
 export async function POST(req: NextRequest) {
     try {
