@@ -3,7 +3,7 @@ import { fetchNewsForCollection } from '@/lib/api/news';
 import { newsDb } from '@/lib/db/firestore-rest';
 import { getServiceAccountToken } from '@/lib/auth/service-account';
 
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
 export const preferredRegion = 'iad1'; // Vercel 기준 미국 동부(워싱턴 D.C)로 실행 위치 고정
 
