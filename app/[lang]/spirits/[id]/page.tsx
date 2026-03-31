@@ -597,20 +597,30 @@ export default async function SpiritDetailPage({
   const pageUrl = `${baseUrl}/${lang}/spirits/${id}`;
   const seoImageCandidates = getSpiritSeoImageCandidates(spirit, baseUrl);
   
-  // 1+N 전략: 전문가 리뷰(1) + 유저 리뷰(N)
+  // 1+N 전략: 소믈리에 리포트(1) + 유저 리뷰(N)
   const expertRatingValue = 5.0;
+  
+  // 전문가 리뷰 본문 생성 (설명 + 맛 + 페어링)
+  const flavorTags = getPreferredMetaTags(spirit, isEn ? 'en' : 'ko');
+  const pairingGuide = isEn 
+    ? (spirit.metadata?.pairing_guide_en || spirit.pairing_guide_en) 
+    : (spirit.metadata?.pairing_guide_ko || spirit.pairing_guide_ko);
+
+  const sommelierReviewBody = isEn
+    ? `[Sommelier Report] ${spirit.metadata?.description_en || 'A premium selection.'}\n\n` +
+      `Flavor Profile: ${flavorTags.join(', ')}\n` +
+      `Best Mariage: ${pairingGuide || 'Traditional pairings recommended.'}`
+    : `[소믈리에 리포트] ${spirit.metadata?.description_ko || '엄선된 프리미엄 주류입니다.'}\n\n` +
+      `맛과 향: ${flavorTags.join(', ')}\n` +
+      `추천 마리아주: ${pairingGuide || '다양한 안주와 잘 어울립니다.'}`;
+
   const userReviewCount = reviews.length;
   const totalReviewCount = 1 + userReviewCount;
   
   const userRatingsSum = reviews.reduce((acc, r) => acc + (Number(r.rating) || 0), 0);
   const aggregateRatingValue = ((expertRatingValue * 1) + userRatingsSum) / totalReviewCount;
 
-  // 전문가 리뷰 본문 생성 (테이스팅 노트 또는 설명 활용)
-  const expertReviewContent = isEn
-    ? (spirit.metadata?.description_en || spirit.pairing_guide_en || `Professional sommelier's choice. Exceptional ${spirit.category} with detailed notes.`)
-    : (spirit.metadata?.description_ko || spirit.pairing_guide_ko || `전문 소믈리에가 엄선한 제품입니다. ${spirit.category}의 정수를 느낄 수 있는 탁월한 선택입니다.`);
-
-  // 리뷰 리스트 빌드 (전문가 리뷰 우선 + 최신 유저 리뷰 4개)
+  // 리뷰 리스트 빌드 (전문가 리뷰 우선 + 최신 유저 리뷰)
   const schemaReviews = [
     {
       '@type': 'Review',
@@ -626,9 +636,9 @@ export default async function SpiritDetailPage({
         bestRating: 5,
         worstRating: 1
       },
-      reviewBody: expertReviewContent
+      reviewBody: sommelierReviewBody
     },
-    ...reviews.slice(0, 4).map(r => ({
+    ...reviews.map(r => ({
       '@type': 'Review',
       author: {
         '@type': 'Person',
@@ -641,7 +651,7 @@ export default async function SpiritDetailPage({
         bestRating: 5,
         worstRating: 1
       },
-      reviewBody: r.content || (isEn ? 'Great experience.' : '훌륭한 시음 경험이었습니다.')
+      reviewBody: r.content || (isEn ? 'Wonderful experience.' : '만족스러운 시음 경험이었습니다.')
     }))
   ];
 
@@ -703,31 +713,72 @@ export default async function SpiritDetailPage({
     name: isEn ? (spirit.name_en || spirit.name) : spirit.name
   };
 
-  // FAQ Schema
+  // FAQ Schema: Comprehensive Template (ABV, Category, Distillery, Flavor, Pairing)
   const faqQuestions = [];
-  const tastingNote = spirit.tasting_note || spirit.metadata?.tasting_note;
-  if (tastingNote) {
-    faqQuestions.push({
-      '@type': 'Question',
-      name: isEn ? `What are the tasting notes of ${spirit.name_en || spirit.name}?` : `${spirit.name} 맛과 향은 어떤가요?`,
-      acceptedAnswer: { '@type': 'Answer', text: tastingNote }
-    });
-  }
-  const pairingGuide = isEn 
-    ? (spirit.metadata?.pairing_guide_en || spirit.pairing_guide_en) 
-    : (spirit.metadata?.pairing_guide_ko || spirit.pairing_guide_ko);
-  if (pairingGuide) {
-    faqQuestions.push({
-      '@type': 'Question',
-      name: isEn ? `What food pairs well with ${spirit.name_en || spirit.name}?` : `${spirit.name} 안주 추천과 페어링은?`,
-      acceptedAnswer: { '@type': 'Answer', text: pairingGuide }
-    });
-  }
+  
+  // 1. Category/Type Question
+  faqQuestions.push({
+    '@type': 'Question',
+    name: isEn ? `What kind of spirit is ${spirit.name_en || spirit.name}?` : `${spirit.name}은(는) 어떤 주류인가요?`,
+    acceptedAnswer: { 
+      '@type': 'Answer', 
+      text: isEn 
+        ? `${spirit.name} is a ${formatSpiritFieldValue('subcategory', spirit.subcategory || spirit.category, 'en')} from ${spirit.country || 'the selected region'}.`
+        : `${spirit.name}은(는) ${spirit.country || ''}에서 생산된 ${formatSpiritFieldValue('subcategory', spirit.subcategory || spirit.category, 'ko')} 제품입니다.`
+    }
+  });
+
+  // 2. ABV Question
   if (spirit.abv) {
     faqQuestions.push({
       '@type': 'Question',
-      name: isEn ? `How strong is ${spirit.name_en || spirit.name}?` : `${spirit.name}의 알코올 도수는?`,
-      acceptedAnswer: { '@type': 'Answer', text: isEn ? `${spirit.name} has an ABV of ${spirit.abv}%.` : `${spirit.name}의 ABV는 ${spirit.abv}%입니다.` }
+      name: isEn ? `What is the alcohol content (ABV) of ${spirit.name_en || spirit.name}?` : `${spirit.name}의 알코올 도수는?`,
+      acceptedAnswer: { 
+        '@type': 'Answer', 
+        text: isEn 
+          ? `${spirit.name} has an alcohol by volume (ABV) of ${spirit.abv}%.`
+          : `${spirit.name}의 ABV(도수)는 ${spirit.abv}%입니다.` 
+      }
+    });
+  }
+
+  // 3. Distillery/Brand Question
+  if (spirit.distillery) {
+    faqQuestions.push({
+      '@type': 'Question',
+      name: isEn ? `Who produces ${spirit.name_en || spirit.name}?` : `${spirit.name}의 생산처(증류소)는?`,
+      acceptedAnswer: { 
+        '@type': 'Answer', 
+        text: isEn 
+          ? `${spirit.name} is produced by ${spirit.distillery}.` 
+          : `${spirit.name}은(는) ${spirit.distillery}에서 생산됩니다.`
+      }
+    });
+  }
+
+  // 4. Tasting Note Question
+  if (flavorTags.length > 0) {
+    faqQuestions.push({
+      '@type': 'Question',
+      name: isEn ? `What are the tasting notes for ${spirit.name_en || spirit.name}?` : `${spirit.name}의 맛과 향 특징은?`,
+      acceptedAnswer: { 
+        '@type': 'Answer', 
+        text: isEn 
+          ? `It features a unique flavor profile with notes of ${flavorTags.join(', ')}.` 
+          : `${flavorTags.join(', ')} 등의 특징적인 맛과 향을 느낄 수 있습니다.`
+      }
+    });
+  }
+
+  // 5. Pairing Question
+  if (pairingGuide) {
+    faqQuestions.push({
+      '@type': 'Question',
+      name: isEn ? `Which food goes best with ${spirit.name_en || spirit.name}?` : `${spirit.name}과(와) 어울리는 안주 추천은?`,
+      acceptedAnswer: { 
+        '@type': 'Answer', 
+        text: pairingGuide
+      }
     });
   }
 
