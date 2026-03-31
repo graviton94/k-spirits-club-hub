@@ -13,9 +13,6 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: 'Missing spirit data' }, { status: 400 });
         }
 
-        const genAI = new GoogleGenerativeAI(API_KEY);
-        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-
         const prompt = `
         You are a spirits expert and database auditor. Analyze the following spirit data for inconsistencies or missing information.
         
@@ -49,7 +46,33 @@ export async function POST(req: NextRequest) {
         }
         `;
 
-        const result = await model.generateContent(prompt);
+        let result;
+        try {
+            // 🟢 [Plan A] 1차 시도: Cloudflare AI Gateway
+            console.log('[Audit API] [Plan A] Attempting via Cloudflare AI Gateway...');
+            const gatewayGenAI = new GoogleGenerativeAI("CF_MANAGED_KEY");
+            const model = gatewayGenAI.getGenerativeModel(
+                { model: "gemini-2.0-flash" },
+                {
+                    baseUrl: process.env.CF_GATEWAY_URL,
+                    customHeaders: {
+                        "cf-aig-authorization": `Bearer ${process.env.CF_AIG_TOKEN}`
+                    }
+                }
+            );
+            result = await model.generateContent(prompt);
+            console.log('[Audit API] [Plan A] Success via AI Gateway');
+
+        } catch (gatewayError: any) {
+            // ⚠️ Fallback
+            console.warn("⚠️ [Fallback] AI Gateway 호출 실패, Direct API로 우회합니다.", gatewayError.message);
+
+            // 🟠 [Plan B] 2차 시도: Direct Gemini API
+            const directGenAI = new GoogleGenerativeAI(API_KEY);
+            const fallbackModel = directGenAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+            result = await fallbackModel.generateContent(prompt);
+            console.log('[Audit API] [Plan B] Success via Direct API');
+        }
         const response = await result.response;
         let text = response.text().trim();
 

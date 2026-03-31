@@ -1,7 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const genAI = new GoogleGenerativeAI(GEMINI_API_KEY || '');
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
 if (!GEMINI_API_KEY) {
     console.error('[Gemini News] 🔴 ERROR: GEMINI_API_KEY is missing!');
 }
@@ -254,10 +253,7 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
 
         console.log('[News Collection] 🤖 Processing', itemsToProcess.length, 'items in', batches.length, 'batches...');
 
-        const model = genAI.getGenerativeModel({
-            model: 'gemini-2.0-flash',
-            generationConfig: { responseMimeType: "application/json" }
-        });
+        const generationConfig = { responseMimeType: "application/json" };
 
         // Store results in a map for indexed-lookup
         const processedMap = new Map<string, any>();
@@ -312,8 +308,41 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
             ]
             `;
 
+            let result;
             try {
-                const result = await model.generateContent(prompt);
+                // 🟢 [Plan A] 1차 시도: Cloudflare AI Gateway
+                console.log(`[News Collection] [Plan A] Batch ${batchIdx + 1} via Cloudflare AI Gateway...`);
+                const gatewayGenAI = new GoogleGenerativeAI("CF_MANAGED_KEY");
+                const model = gatewayGenAI.getGenerativeModel(
+                    { model: 'gemini-2.0-flash' },
+                    {
+                        baseUrl: process.env.CF_GATEWAY_URL,
+                        customHeaders: {
+                            "cf-aig-authorization": `Bearer ${process.env.CF_AIG_TOKEN}`
+                        }
+                    }
+                );
+                result = await model.generateContent({
+                    contents: [{ role: 'user', parts: [{ text: prompt }] }],
+                    generationConfig
+                });
+                console.log(`[News Collection] [Plan A] Success for Batch ${batchIdx + 1}`);
+
+            } catch (gatewayError: any) {
+                // ⚠️ Fallback
+                console.warn(`⚠️ [Fallback] News Batch ${batchIdx + 1} Gateway 실패, Direct로 우회:`, gatewayError.message);
+
+                // 🟠 [Plan B] 2차 시도: Direct Gemini API
+                const directGenAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+                const fallbackModel = directGenAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+                result = await fallbackModel.generateContent({
+                    contents: [{ role: 'user', parts: [{ text: prompt }] }],
+                    generationConfig
+                });
+                console.log(`[News Collection] [Plan B] Success for Batch ${batchIdx + 1}`);
+            }
+
+            try {
                 const text = result.response.text();
                 const cleanJson = text.replace(/```json|```/g, '').trim();
                 const processedList = JSON.parse(cleanJson);

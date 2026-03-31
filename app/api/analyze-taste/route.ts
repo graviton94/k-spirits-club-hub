@@ -179,9 +179,13 @@ export async function POST(req: NextRequest) {
             }, { status: 400 });
         }
 
-        // 4. Call AI
-        console.log(`[Analyze Taste] Initializing Gemini Model: gemini-2.0-flash (Lang: ${lang})`);
-        const genAI = new GoogleGenerativeAI(API_KEY);
+        // 4. Call AI (Multi-Regional Fallback Architecture)
+        const generationConfig = {
+            responseMimeType: "application/json",
+            temperature: 0.7,
+            topP: 0.8,
+            topK: 40
+        };
 
         const systemInstruction = `
         You are a World-Class Spirits Analyst and Gastronomy Critic with an encyclopedic knowledge of global liquors—from obscure Japanese small-batch shochus and traditional Korean yakjus to hyper-aged Caribbean rums and esoteric European eaux-de-vie. 
@@ -219,31 +223,37 @@ export async function POST(req: NextRequest) {
         }
         `;
 
-        const model = genAI.getGenerativeModel({
-            model: "gemini-2.0-flash",
-            systemInstruction: systemInstruction,
-            generationConfig: {
-                responseMimeType: "application/json",
-                temperature: 0.7,
-                topP: 0.8,
-                topK: 40
-            }
-        });
-
-        console.log('[Analyze Taste] Generating content with Gemini...');
         let result;
         try {
+            // 🟢 [Plan A] 1차 시도: Cloudflare AI Gateway (지역 락 우회 및 프록시)
+            console.log('[Analyze Taste] [Plan A] Attempting via Cloudflare AI Gateway...');
+            const gatewayGenAI = new GoogleGenerativeAI("CF_MANAGED_KEY");
+            const model = gatewayGenAI.getGenerativeModel({
+                model: "gemini-2.0-flash",
+                systemInstruction,
+                generationConfig
+            }, {
+                baseUrl: process.env.CF_GATEWAY_URL,
+                customHeaders: {
+                    "cf-aig-authorization": `Bearer ${process.env.CF_AIG_TOKEN}`
+                }
+            });
             result = await model.generateContent(promptData);
-        } catch (aiError: any) {
-            console.error('[Analyze Taste] Gemini API Critical Error:', aiError);
-            console.error('[Analyze Taste] Error details:', JSON.stringify(aiError, null, 2));
-            return NextResponse.json({
-                error: 'AI Generation Failed',
-                details: aiError.message || 'Unknown AI error',
-                message: isEn
-                    ? `Failed to generate taste analysis: ${aiError.message}`
-                    : `AI 분석 생성에 실패했습니다: ${aiError.message}`
-            }, { status: 500 });
+            console.log('[Analyze Taste] [Plan A] Success via AI Gateway');
+
+        } catch (gatewayError: any) {
+            // ⚠️ Fallback
+            console.warn("⚠️ [Fallback] AI Gateway 호출 실패, Direct API로 우회합니다.", gatewayError.message);
+
+            // 🟠 [Plan B] 2차 시도: Direct Gemini API (기존 방식)
+            const directGenAI = new GoogleGenerativeAI(API_KEY);
+            const fallbackModel = directGenAI.getGenerativeModel({
+                model: "gemini-2.0-flash",
+                systemInstruction,
+                generationConfig
+            });
+            result = await fallbackModel.generateContent(promptData);
+            console.log('[Analyze Taste] [Plan B] Success via Direct API');
         }
 
         let responseText = '';

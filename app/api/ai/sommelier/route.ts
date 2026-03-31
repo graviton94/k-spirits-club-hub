@@ -8,7 +8,7 @@ export const runtime = 'edge';
 const API_KEY = process.env.GEMINI_API_KEY || '';
 const MODEL_ID = "gemini-2.0-flash";
 
-const genAI = new GoogleGenerativeAI(API_KEY);
+
 
 /**
  * AI Sommelier Q&A Bot API
@@ -163,17 +163,11 @@ ${knowledgeBase}
 }
 `;
 
-        const model = genAI.getGenerativeModel({
-            model: MODEL_ID,
-            systemInstruction
-        });
+        const generationConfig = {
+            responseMimeType: "application/json",
+            temperature: 0.7,
+        };
 
-        // Gemini JSON mode (responseMimeType: "application/json") requires ALL model turns
-        // in the conversation to also be valid JSON strings. The client stores only the
-        // plain-text `message` field, so we must re-wrap model turns into minimal JSON
-        // objects before sending to the API. We use generateContent with the full
-        // conversation instead of startChat+sendMessage to avoid session-state issues in
-        // edge runtime.
         const firstUserIndex = messages.findIndex((m: any) => m.role === 'user');
         const conversationMessages = firstUserIndex !== -1
             ? messages.slice(firstUserIndex)
@@ -188,13 +182,43 @@ ${knowledgeBase}
             }]
         }));
 
-        const result = await model.generateContent({
-            contents,
-            generationConfig: {
-                responseMimeType: "application/json",
-                temperature: 0.7,
-            }
-        });
+        let result;
+        try {
+            // 🟢 [Plan A] 1차 시도: Cloudflare AI Gateway
+            console.log('[Sommelier API] [Plan A] Attempting via Cloudflare AI Gateway...');
+            const gatewayGenAI = new GoogleGenerativeAI("CF_MANAGED_KEY");
+            const model = gatewayGenAI.getGenerativeModel({
+                model: MODEL_ID,
+                systemInstruction
+            }, {
+                baseUrl: process.env.CF_GATEWAY_URL,
+                customHeaders: {
+                    "cf-aig-authorization": `Bearer ${process.env.CF_AIG_TOKEN}`
+                }
+            });
+            result = await model.generateContent({
+                contents,
+                generationConfig
+            });
+            console.log('[Sommelier API] [Plan A] Success via AI Gateway');
+
+        } catch (gatewayError: any) {
+            // ⚠️ Fallback
+            console.warn("⚠️ [Fallback] AI Gateway 호출 실패, Direct API로 우회합니다.", gatewayError.message);
+
+            // 🟠 [Plan B] 2차 시도: Direct Gemini API
+            const directGenAI = new GoogleGenerativeAI(API_KEY);
+            const fallbackModel = directGenAI.getGenerativeModel({
+                model: MODEL_ID,
+                systemInstruction
+            });
+            result = await fallbackModel.generateContent({
+                contents,
+                generationConfig
+            });
+            console.log('[Sommelier API] [Plan B] Success via Direct API');
+        }
+
         const responseText = result.response.text();
 
         // 3. Parse and Enrich Recommendations
