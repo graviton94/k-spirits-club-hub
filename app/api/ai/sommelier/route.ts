@@ -47,7 +47,8 @@ export async function POST(req: NextRequest) {
         let searchIndex: any[] = [];
         
         // --- OPTIMIZATION: Only load deep DB index when preparing for recommendation (Step 5) ---
-        if (currentStep >= 5) {
+        // --- OPTIMIZATION: Load DB index earlier (Step 3+) to prevent "no context" bridge messages ---
+        if (currentStep >= 3) {
             // Load Full Index for Matching
             searchIndex = await spiritsDb.getPublishedSearchIndex();
             
@@ -123,9 +124,11 @@ export async function POST(req: NextRequest) {
 언어: ${isEn ? 'English' : 'Korean'}
 
 [진행 로직 (핵심)]
-- **1~5단계 (인터뷰)**: 사용자의 답변을 전문적으로 해석하고, **반드시 "다음 단계 질문"을 던져야 해.** (Progress 0%~80%)
-- **마지막 5번째 질문 답변 이후 (nextStep: 6)**: 이때만 최종 분석 결론(맛 DNA)과 추천 리스트를 제공해. (Progress 100%)
-- **멘트 규칙**: "잠시만 기다려주세요"나 "찾아보겠습니다" 같은 무의미한 대기 요청은 하지 마. 
+- **인터뷰 (1~5단계)**: 사용자의 답변을 전문적으로 해석하고, 반드시 "다음 단계 질문"을 던져야 해. 
+  * 권장 흐름: 1.주종 선호 -> 2.향미 취향 -> 3.상황/페어링 -> 4.도수/강도 -> 5.가격대
+- **조기 완료 가능**: 사용자의 의도가 명확하다면 5단계를 다 채우지 않아도 즉시 nextStep: 6으로 넘어가서 추천을 시작해.
+- **마지막 답변 시 (nextStep: 6)**: 최종 분석 결론(맛 DNA)과 추천 리스트를 제공해.
+- **멘트 규칙**: "잠시만 기다려주세요", "분석을 시작합니다" 같은 무의미한 대기 요청은 절대 하지 마. 즉시 다음 질문을 하거나 결과를 내놓아라. 
 
 [DB 매칭 특급 지침 (추천 단계용)]
 제공된 [주류 데이터]는 계층화되어 있어. 이를 사용자의 의도와 적극적으로 매칭해:
@@ -140,7 +143,7 @@ export async function POST(req: NextRequest) {
 
 [작성 및 답변 규칙]
 - 말투: 품격 있고 신뢰감 있는 마스터 소믈리에 톤.
-- **유지 규칙**: 인터뷰 진행 중(1~5단계)에는 절대 추천 결과를 미리 말하지 마. **마지막 문장은 정중하고 구체적인 질문으로 끝낼 것.**
+- **유지 규칙**: 인터뷰 진행 중에는 절대 추천 결과를 미리 말하지 마. **마지막 문장은 정중하고 구체적인 질문으로 끝낼 것.**
 - **추천 단계(nextStep === 6)**: 사용자의 맛 DNA 요약과 함께 추천 제품 1~3개를 상세 사유와 함께 제시해.
 
 ${knowledgeBase}
@@ -220,9 +223,40 @@ ${knowledgeBase}
         }
 
         const responseText = result.response.text();
+        let parsed = JSON.parse(responseText);
+
+        // --- HIDDEN TURN (AUTO-FOLLOWUP): Detect and eliminate bridge messages ---
+        const waitKeywords = ["잠시만", "기다려", "찾아보", "분석을 위해", "분석을 시작", "결과를 준비", "조금만", "Please wait", "Analyzing", "Calculating", "Searching"];
+        const isMsgWaitLike = waitKeywords.some(kw => parsed.message.includes(kw));
+
+        if (isMsgWaitLike && parsed.nextStep < 6 && currentStep >= 2) {
+            console.log('[Sommelier API] Bridge message detected. Performing an automatic hidden turn.');
+            
+            // Add the bridge message to contents as a model turn
+            const hiddenTurnContents = [...contents, {
+                role: 'model',
+                parts: [{ text: responseText }]
+            }, {
+                role: 'user',
+                parts: [{ text: isEn ? "Okay, proceed to recommendations now." : "좋습니다. 분석을 완료하고 즉시 추천 결과(Step 6)를 보여주세요." }]
+            }];
+
+            // Re-call AI with high determination
+            const followUpModel = new GoogleGenerativeAI(API_KEY).getGenerativeModel({
+                model: MODEL_ID,
+                systemInstruction: systemInstruction + "\n\nCRITICAL: DO NOT SEND BRIDGE MESSAGES. PROVIDE THE FINAL CHOICE (Step 6) IMMEDIATELY."
+            });
+
+            const followUpResult = await followUpModel.generateContent({
+                contents: hiddenTurnContents,
+                generationConfig
+            });
+            
+            parsed = JSON.parse(followUpResult.response.text());
+            console.log('[Sommelier API] Hidden turn success. nextStep:', parsed.nextStep);
+        }
 
         // 3. Parse and Enrich Recommendations
-        const parsed = JSON.parse(responseText);
 
         // Guard: if the AI declared nextStep 6 (recommendation stage) but produced no
         // recommendations (e.g. because it was called before the DB index was loaded),
