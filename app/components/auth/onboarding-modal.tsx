@@ -4,8 +4,30 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { isBotClient } from '@/lib/utils/bot-detection';
 import SuccessToast from '@/components/ui/SuccessToast';
+import Image from 'next/image';
 
-export default function OnboardingModal() {
+interface OnboardingModalProps {
+    dict: {
+        title: string;
+        subtitle: string;
+        year: string;
+        month: string;
+        day: string;
+        birthDateLabel: string;
+        enter: string;
+        exit: string;
+        footer: string;
+        errorEmpty: string;
+        errorInvalid: string;
+        errorYear: string;
+        errorMonth: string;
+        errorDay: string;
+        errorFuture: string;
+        errorUnderage: string;
+    };
+}
+
+export default function OnboardingModal({ dict }: OnboardingModalProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [birthYear, setBirthYear] = useState('');
     const [birthMonth, setBirthMonth] = useState('');
@@ -43,7 +65,7 @@ export default function OnboardingModal() {
     const handleEnter = () => {
         // Validate inputs
         if (!birthYear || !birthMonth || !birthDay) {
-            triggerToast('생년월일을 모두 입력해주세요.');
+            triggerToast(dict.errorEmpty);
             return;
         }
 
@@ -52,23 +74,23 @@ export default function OnboardingModal() {
         const day = parseInt(birthDay, 10);
 
         if (isNaN(year) || isNaN(month) || isNaN(day)) {
-            triggerToast('올바른 숫자를 입력해주세요.');
+            triggerToast(dict.errorInvalid);
             return;
         }
 
         const currentYear = new Date().getFullYear();
         if (year < 1900 || year > currentYear) {
-            triggerToast('올바른 연도를 입력해주세요.');
+            triggerToast(dict.errorYear);
             return;
         }
         if (month < 1 || month > 12) {
-            triggerToast('올바른 월을 입력해주세요. (1-12)');
+            triggerToast(dict.errorMonth);
             return;
         }
 
         const daysInMonth = new Date(year, month, 0).getDate();
         if (day < 1 || day > daysInMonth) {
-            triggerToast(`${month}월은 ${daysInMonth}일까지 있습니다.`);
+            triggerToast(dict.errorDay.replace('{month}', month.toString()).replace('{days}', daysInMonth.toString()));
             return;
         }
 
@@ -76,7 +98,7 @@ export default function OnboardingModal() {
         const birthDate = new Date(year, month - 1, day);
 
         if (birthDate > today) {
-            triggerToast('미래의 날짜는 입력할 수 없습니다.');
+            triggerToast(dict.errorFuture);
             return;
         }
 
@@ -91,7 +113,7 @@ export default function OnboardingModal() {
         const isAdult = age >= 19;
 
         if (!isAdult) {
-            triggerToast('19세 미만은 접속할 수 없습니다.');
+            triggerToast(dict.errorUnderage);
             setTimeout(() => {
                 window.location.replace('https://google.com');
             }, 1500);
@@ -110,41 +132,48 @@ export default function OnboardingModal() {
         <AnimatePresence>
             {isOpen && (
                 <motion.div
+                    key="onboarding-backdrop"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-md p-4"
+                    className="fixed inset-0 z-9999 flex items-center justify-center bg-slate-900/40 backdrop-blur-md p-4"
                 >
                     <motion.div
+                        key="onboarding-content"
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.95 }}
                         transition={{ duration: 0.3, delay: 0.1 }}
-                        // Note: This modal intentionally uses slate colors to maintain a dark, serious aesthetic
-                        // for age verification, separate from the main app theme
-                        className="bg-gradient-to-br from-slate-900 to-slate-950 w-full max-w-md rounded-3xl p-8 shadow-2xl border-2 border-primary/30 relative overflow-hidden"
+                        className="bg-white w-full max-w-sm rounded-[2.5rem] p-10 shadow-2xl relative overflow-hidden"
                     >
-                        {/* Decorative background gradient */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none" />
+                        {/* Subtle background glow */}
+                        <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-amber-500/20 to-transparent" />
 
                         <div className="relative z-10">
                             {/* Header */}
-                            <div className="text-center mb-8">
-                                <div className="inline-block p-4 bg-primary/20 rounded-full mb-4 border-2 border-primary/30">
-                                    <span className="text-5xl">🔞</span>
+                            <div className="text-center mb-10">
+                                <div className="inline-block p-1 bg-slate-50 rounded-full mb-6 border border-slate-100 shadow-sm">
+                                    <div className="w-20 h-20 relative rounded-full overflow-hidden">
+                                        <Image 
+                                            src="/icons/icon-192.png" 
+                                            alt="K-Spirits Club"
+                                            fill
+                                            className="object-cover"
+                                        />
+                                    </div>
                                 </div>
-                                <h2 className="text-2xl font-black text-white mb-2">Age Verification</h2>
-                                <p className="text-sm text-slate-300 leading-relaxed">
-                                    You must be 19 years or older to enter.
+                                <h2 className="text-xl font-bold text-slate-900 mb-3 tracking-tight">{dict.title}</h2>
+                                <p className="text-sm text-slate-500 leading-relaxed whitespace-pre-line">
+                                    {dict.subtitle}
                                 </p>
                             </div>
 
                             {/* Birth Date Inputs */}
-                            <div className="space-y-4 mb-6">
+                            <div className="space-y-6 mb-8">
                                 <div>
-                                    <label className="block text-xs font-bold text-slate-400 mb-2 ml-1">
-                                        생년월일 입력 (Birth Date)
+                                    <label className="block text-xs font-bold text-slate-400 mb-3 ml-1 uppercase tracking-wider">
+                                        {dict.birthDateLabel}
                                     </label>
                                     <div className="grid grid-cols-3 gap-3">
                                         {/* Year */}
@@ -159,9 +188,9 @@ export default function OnboardingModal() {
                                                 }}
                                                 min="1900"
                                                 max={new Date().getFullYear()}
-                                                className="w-full bg-slate-800/70 border-2 border-slate-700 rounded-xl px-3 py-3 text-center font-bold text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                                className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-3 py-4 text-center font-black text-slate-900 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                             />
-                                            <p className="text-xs text-slate-500 text-center mt-1">년</p>
+                                            <p className="text-[10px] font-bold text-slate-400 text-center mt-2">{dict.year}</p>
                                         </div>
                                         {/* Month */}
                                         <div>
@@ -175,9 +204,9 @@ export default function OnboardingModal() {
                                                 }}
                                                 min="1"
                                                 max="12"
-                                                className="w-full bg-slate-800/70 border-2 border-slate-700 rounded-xl px-3 py-3 text-center font-bold text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                                className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-3 py-4 text-center font-black text-slate-900 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                             />
-                                            <p className="text-xs text-slate-500 text-center mt-1">월</p>
+                                            <p className="text-[10px] font-bold text-slate-400 text-center mt-2">{dict.month}</p>
                                         </div>
                                         {/* Day */}
                                         <div>
@@ -191,18 +220,11 @@ export default function OnboardingModal() {
                                                 }}
                                                 min="1"
                                                 max="31"
-                                                className="w-full bg-slate-800/70 border-2 border-slate-700 rounded-xl px-3 py-3 text-center font-bold text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                                className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-3 py-4 text-center font-black text-slate-900 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                             />
-                                            <p className="text-xs text-slate-500 text-center mt-1">일</p>
+                                            <p className="text-[10px] font-bold text-slate-400 text-center mt-2">{dict.day}</p>
                                         </div>
                                     </div>
-                                </div>
-
-                                {/* Legal Notice */}
-                                <div className="bg-red-950/30 border-2 border-red-900/50 rounded-xl p-3">
-                                    <p className="text-red-400 text-xs text-center leading-relaxed">
-                                        ⚠️ 19세 미만은 접속하실 수 없습니다.
-                                    </p>
                                 </div>
                             </div>
 
@@ -210,22 +232,22 @@ export default function OnboardingModal() {
                             <div className="space-y-3">
                                 <button
                                     onClick={handleEnter}
-                                    className="w-full py-4 bg-gradient-to-r from-amber-600 to-orange-700 hover:from-amber-500 hover:to-orange-600 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-primary/50 active:scale-[0.98]"
+                                    className="w-full py-4.5 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-2xl transition-all shadow-xl shadow-slate-200 active:scale-[0.98]"
                                 >
-                                    Enter
+                                    {dict.enter}
                                 </button>
 
                                 <button
                                     onClick={handleExit}
-                                    className="w-full py-3 bg-transparent hover:bg-slate-800/50 text-slate-400 hover:text-slate-300 font-semibold rounded-xl transition-all border-2 border-slate-700/50 active:scale-[0.98]"
+                                    className="w-full py-3.5 bg-transparent hover:bg-slate-50 text-slate-400 hover:text-slate-600 font-semibold rounded-2xl transition-all border border-slate-100 active:scale-[0.98]"
                                 >
-                                    Exit
+                                    {dict.exit}
                                 </button>
                             </div>
 
                             {/* Footer notice */}
-                            <p className="text-xs text-slate-500 text-center mt-6 leading-relaxed">
-                                귀하의 정보는 연령 확인 목적으로만 사용되며 저장되지 않습니다.
+                            <p className="text-[11px] text-slate-400 text-center mt-8 leading-relaxed px-4">
+                                {dict.footer}
                             </p>
                         </div>
                     </motion.div>

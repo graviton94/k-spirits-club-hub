@@ -145,7 +145,7 @@ export default async function RootLayout({
               <Header lang={lang} dict={dictionary.nav} />
               <ScrollToTop />
               <PwaInstallPrompt />
-              <OnboardingModal />
+              <OnboardingModal dict={dictionary.onboarding} />
               <main className="relative min-h-screen overflow-x-hidden pb-20 md:pb-0">
                 {children}
               </main>

@@ -151,5 +151,23 @@
         "shareText": "My best pick is [{winner}]! Check out your taste too.",
         "copyLink": "🔗 Link copied!",
         "saveError": "Failed to generate image. Please try again in a moment."
+    },
+    "onboarding": {
+        "title": "Welcome to K-Spirits Club",
+        "subtitle": "This service contains alcohol-related content.\nPlease enter your birth date to continue.",
+        "year": "YYYY",
+        "month": "MM",
+        "day": "DD",
+        "birthDateLabel": "Date of Birth",
+        "enter": "Enter",
+        "exit": "Exit",
+        "footer": "Your information is only used for age verification.",
+        "errorEmpty": "Please enter your birth date.",
+        "errorInvalid": "Please enter a valid number.",
+        "errorYear": "Please enter a valid year.",
+        "errorMonth": "Please enter a valid month (1-12).",
+        "errorDay": "{month} has {days} days.",
+        "errorFuture": "Future date is not allowed.",
+        "errorUnderage": "You must be 19 or older to enter."
     }
 }

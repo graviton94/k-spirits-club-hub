@@ -151,12 +151,16 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
     return parts.map((part, i) => {
       if (part.startsWith('**') && part.endsWith('**')) {
         return (
-          <strong key={i} className="font-black text-primary underline underline-offset-2 decoration-primary/30">
+          <strong key={`bold-${i}`} className="font-black text-primary underline underline-offset-2 decoration-primary/30">
             {part.slice(2, -2)}
           </strong>
         );
       }
-      return part;
+      return (
+        <span key={`text-${i}`}>
+          {part}
+        </span>
+      );
     });
   };
 
@@ -262,7 +266,7 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
                   </div>
                   <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
                     <motion.div
-                      className="h-full bg-gradient-to-r from-amber-300 to-amber-500"
+                      className="h-full bg-linear-to-r from-amber-300 to-amber-500"
                       initial={{ width: 0 }}
                       animate={{ width: `${dnaProgress}%` }}
                       transition={{ duration: 0.8, ease: "easeOut" }}
@@ -274,7 +278,7 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
               {/* Messages Area */}
               <div className="flex-1 overflow-y-auto p-4 space-y-6 scrollbar-hide">
                 {messages.map((message, idx) => (
-                  <div key={idx} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div key={`msg-${idx}-${message.role}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                     <div className={`flex gap-3 max-w-[85%] ${message.role === 'user' ? 'flex-row-reverse' : ''}`}>
                       <div className={`shrink-0 flex items-center justify-center`}>
                         {message.role === 'user' ? (

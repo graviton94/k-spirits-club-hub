@@ -31,7 +31,7 @@ export function BottomNav({ lang, dict }: { lang: Locale, dict: any }) {
         <div className="flex justify-evenly items-center h-16 px-2">
           {navItems.map((item) => (
             <Link
-              key={item.href}
+              key={`nav-item-${item.href}`}
               href={`/${lang}${item.href === "/" ? "" : item.href}`}
               prefetch={false}
               className={`relative flex flex-col items-center justify-center p-2 rounded-2xl transition-all duration-300 group hover:bg-secondary w-16 h-16 ${isActive(item.href)
