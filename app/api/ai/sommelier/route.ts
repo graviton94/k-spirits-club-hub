@@ -45,20 +45,20 @@ export async function POST(req: NextRequest) {
 
         let knowledgeBase = "";
         let searchIndex: any[] = [];
-        
+
         // --- OPTIMIZATION: Only load deep DB index when preparing for recommendation (Step 5) ---
         // --- OPTIMIZATION: Load DB index earlier (Step 3+) to prevent "no context" bridge messages ---
         if (currentStep >= 3) {
             // Load Full Index for Matching
             searchIndex = await spiritsDb.getPublishedSearchIndex();
-            
+
             // 0. Priority Matching based on User Input (to prevent missing DB items mentioned by user)
             const userKeywords = messages.map((m: any) => m.content).join(' ');
             const priorityMatches = searchIndex.filter(item => {
                 const name = (item.n || '').toLowerCase();
                 const nameEn = (item.m || '').toLowerCase(); // Actually manufacturer/distillery often in 'm'
                 const keywords = userKeywords.toLowerCase();
-                
+
                 // Check if name or parts of name appear in user messages
                 return keywords.includes(name) || (name.length > 2 && keywords.includes(name.split(' ')[0]));
             }).slice(0, 30);
@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
             // 1. Prepare Balanced Search Index (Sample from each category for diverse knowledge)
             const categories = [...new Set(searchIndex.map(s => s.c))];
             const balancedIndex: any[] = [];
-            
+
             // Add priority matches first
             priorityMatches.forEach(item => {
                 balancedIndex.push({
@@ -87,7 +87,7 @@ export async function POST(req: NextRequest) {
                 const catItems = searchIndex
                     .filter(s => s.c === cat && !balancedIndex.some(existing => existing.id === s.i))
                     .slice(0, SAMPLES_PER_CATEGORY);
-                
+
                 balancedIndex.push(...catItems.map(item => ({
                     id: item.i,
                     name: item.n,
@@ -142,7 +142,7 @@ export async function POST(req: NextRequest) {
 3. **외부 지식 추천 (external)**: DB에 정말 적합한 것이 없을 때만 실존 제품 추천. (구글/네이버 링크 필수)
 
 [작성 및 답변 규칙]
-- 말투: 품격 있고 신뢰감 있는 마스터 소믈리에 톤.
+- 말투: 품격 있고 신뢰감 있는 마스터 소믈리에 톤, 사용자의 언어와 동일한 언어로 소통.
 - **유지 규칙**: 인터뷰 진행 중에는 절대 추천 결과를 미리 말하지 마. **마지막 문장은 정중하고 구체적인 질문으로 끝낼 것.**
 - **추천 단계(nextStep === 6)**: 사용자의 맛 DNA 요약과 함께 추천 제품 1~3개를 상세 사유와 함께 제시해.
 
@@ -231,7 +231,7 @@ ${knowledgeBase}
 
         if (isMsgWaitLike && parsed.nextStep < 6 && currentStep >= 2) {
             console.log('[Sommelier API] Bridge message detected. Performing an automatic hidden turn.');
-            
+
             // Add the bridge message to contents as a model turn
             const hiddenTurnContents = [...contents, {
                 role: 'model',
@@ -251,7 +251,7 @@ ${knowledgeBase}
                 contents: hiddenTurnContents,
                 generationConfig
             });
-            
+
             parsed = JSON.parse(followUpResult.response.text());
             console.log('[Sommelier API] Hidden turn success. nextStep:', parsed.nextStep);
         }
