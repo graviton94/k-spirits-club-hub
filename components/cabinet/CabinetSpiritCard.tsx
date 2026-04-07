@@ -59,6 +59,7 @@ function CabinetSpiritCardComponent({
                         sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 150px"
                         priority={index < 6}
                         onError={() => setImgSrc(getCategoryFallbackImage(spirit.category))}
+                        unoptimized={true}
                     />
 
                     {/* Content Overlay (Always Visible, Top Layer) */}

@@ -199,6 +199,7 @@ function ExploreCardComponent({
             const target = e.target as HTMLImageElement;
             target.src = getCategoryFallbackImage(spirit.category);
           }}
+          unoptimized={true}
         />
       </div>
 

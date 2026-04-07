@@ -116,12 +116,13 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialRevi
                                         <div className="relative w-28 h-36 rounded-2xl bg-card border border-border shadow-md overflow-hidden flex items-center justify-center p-2 group-hover:border-amber-500/50 transition-colors">
                                             {spirit.thumbnailUrl || spirit.imageUrl ? (
                                                 <Image
-                                                    src={getOptimizedImageUrl(spirit.thumbnailUrl || spirit.imageUrl, 112)}
+                                                    src={getOptimizedImageUrl(spirit.thumbnailUrl || spirit.imageUrl, 224)}
                                                     alt={spirit.name}
                                                     loading="lazy"
                                                     fill
                                                     sizes="(max-width: 768px) 112px, 112px"
                                                     className="object-contain p-2"
+                                                    unoptimized={true}
                                                 />
                                             ) : (
                                                 <span className="text-3xl">🍾</span>

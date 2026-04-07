@@ -195,6 +195,7 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
           sizes="80px" // Optimized sizes for 80x80
           priority={index < 4} // LCP Boost
           onError={() => setImgSrc(getCategoryFallbackImage(spirit.category))}
+          unoptimized={true}
         />
       </div>
 
