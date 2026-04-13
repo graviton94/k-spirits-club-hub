@@ -37,6 +37,11 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
   const [subcategory, setSubcategory] = useState(spirit.subcategory || '');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  // GSC Offers/Price fields
+  const [price, setPrice] = useState(spirit.metadata?.offer?.price || 0);
+  const [currency, setCurrency] = useState(spirit.metadata?.offer?.priceCurrency || 'KRW');
+  const [purchaseUrl, setPurchaseUrl] = useState(spirit.metadata?.offer?.url || '');
+
   const handleEnrich = async () => {
     if (!spirit.name) return;
     setIsTranslating(true);
@@ -183,7 +188,14 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
           description_en: descEn,
           pairing_guide_ko: pairingKo,
           pairing_guide_en: pairingEn,
-          enriched_at: new Date().toISOString()
+          enriched_at: new Date().toISOString(),
+          offer: price > 0 ? {
+            price: Number(price),
+            priceCurrency: currency,
+            url: purchaseUrl,
+            availability: 'OutOfStock',
+            updatedAt: new Date()
+          } : spirit.metadata?.offer
         }
       };
 
@@ -243,6 +255,25 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
                     placeholder="e.g. Jinro Is Back"
                     className="w-full px-3 py-1.5 text-sm border border-border rounded bg-background"
                   />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-muted-foreground uppercase">Price ({currency}) & Purchase URL</label>
+                  <div className="flex gap-2">
+                    <input
+                      type="number"
+                      value={price}
+                      onChange={(e) => setPrice(Number(e.target.value))}
+                      placeholder="Price"
+                      className="w-24 px-3 py-1.5 text-sm border border-border rounded bg-background"
+                    />
+                    <input
+                      type="text"
+                      value={purchaseUrl}
+                      onChange={(e) => setPurchaseUrl(e.target.value)}
+                      placeholder="https://..."
+                      className="flex-1 px-3 py-1.5 text-sm border border-border rounded bg-background"
+                    />
+                  </div>
                 </div>
               </div>
 

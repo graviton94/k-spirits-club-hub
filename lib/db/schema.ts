@@ -99,6 +99,15 @@ export interface Spirit {
   updatedAt: Date;
 }
 
+export interface SpiritOffer {
+  price: number;
+  priceCurrency: string; // e.g. "KRW"
+  url: string;           // Purchase link
+  availability: 'InStock' | 'OutOfStock' | 'Discontinued';
+  sellerName?: string;   // Optional seller name (e.g. "DailyShot", "Wine-Searcher")
+  updatedAt: Date;
+}
+
 export interface SpiritMetadata {
   // New Location for heavy content
   description_ko?: string;
@@ -109,6 +118,9 @@ export interface SpiritMetadata {
   pairing_guide_en?: string | null;
 
   enriched_at?: string;
+
+  // Primary Offer for GSC Merchant Listings
+  offer?: SpiritOffer;
 
   // Original/Raw metadata
   raw_category?: string;

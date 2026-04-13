@@ -13,6 +13,7 @@ import { formatSpiritFieldValue } from "@/lib/utils/localize-field";
 import { Spirit } from "@/lib/db/schema";
 import { getSpiritCategory } from "@/lib/constants/spirits-guide-data";
 import { scoreSpiritForWikiCategory } from "@/lib/utils/wiki-spirit-match";
+import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
 
 
 const DESCRIPTION_MAX_LENGTH = 155;
@@ -288,9 +289,14 @@ function toAbsoluteSeoImageUrl(url: string | null | undefined, baseUrl: string):
 }
 
 function getSpiritSeoImageCandidates(spirit: Spirit, baseUrl: string): string[] {
+  const primaryUrl = spirit.imageUrl || spirit.thumbnailUrl;
+  if (!primaryUrl) return [];
+
   const candidates = [
-    toAbsoluteSeoImageUrl(spirit.imageUrl, baseUrl),
-    toAbsoluteSeoImageUrl(spirit.thumbnailUrl, baseUrl),
+    toAbsoluteSeoImageUrl(primaryUrl, baseUrl),
+    getOptimizedImageUrl(primaryUrl, 1200, 80, '1:1'),
+    getOptimizedImageUrl(primaryUrl, 1200, 80, '4:3'),
+    getOptimizedImageUrl(primaryUrl, 1200, 80, '16:9'),
   ].filter(Boolean) as string[];
 
   return Array.from(new Set(candidates));
@@ -716,12 +722,10 @@ export default async function SpiritDetailPage({
     review: schemaReviews,
     offers: {
       '@type': 'Offer',
-      availability: 'https://schema.org/InStock',
-      url: pageUrl,
-      priceCurrency: 'KRW',
-      ...(spirit.metadata?.price && {
-        price: spirit.metadata.price,
-      }),
+      availability: 'https://schema.org/OutOfStock',
+      url: spirit.metadata?.offer?.url || pageUrl,
+      priceCurrency: spirit.metadata?.offer?.priceCurrency || 'KRW',
+      price: spirit.metadata?.offer?.price || spirit.metadata?.price || 0,
       seller: { '@type': 'Organization', name: 'K-Spirits Club', url: baseUrl },
       hasMerchantReturnPolicy: {
         '@type': 'MerchantReturnPolicy',

@@ -1,0 +1,1 @@
+{"nodes": [{"id": "test_localization_ts", "label": "test_localization.ts", "file_type": "code", "source_file": "test_localization.ts", "source_location": "L1"}], "edges": [{"source": "test_localization_ts", "target": "lib_utils_localize_field", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "test_localization.ts", "source_location": "L1", "weight": 1.0}]}
