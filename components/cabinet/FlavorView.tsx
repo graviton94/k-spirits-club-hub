@@ -101,14 +101,14 @@ export default function FlavorView({
                     <div className="flex-1 min-h-[420px]">
                         <TasteRadar data={radarData} />
                     </div>
-                    <div className="flex gap-4 h-14">
+                    <div className="flex gap-4 h-14 relative z-20">
                         <button
                             onClick={handleAnalyze}
                             disabled={isLimitReached}
                             className={`flex-1 h-full rounded-2xl font-black text-[11px] uppercase tracking-widest border transition-all flex items-center justify-center gap-2 
                                 ${isLimitReached
                                     ? 'bg-muted text-muted-foreground cursor-not-allowed grayscale'
-                                    : 'bg-card hover:bg-secondary text-foreground border-border shadow-sm'}`}
+                                    : 'bg-amber-500 hover:bg-amber-600 text-black border-none shadow-lg shadow-amber-500/20'}`}
                         >
                             {isLimitReached ? <Lock className="w-3.5 h-3.5" /> : <RefreshCw className="w-3.5 h-3.5" />}
                             {isLimitReached
