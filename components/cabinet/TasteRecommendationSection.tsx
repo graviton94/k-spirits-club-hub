@@ -36,7 +36,7 @@ export default function TasteRecommendationSection({
                             initial={{ opacity: 0, x: 20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: idx * 0.1 }}
-                            className="min-w-[280px] sm:min-w-[340px] lg:min-w-[380px] snap-start relative group"
+                            className="min-w-[320px] sm:min-w-[420px] lg:min-w-[500px] snap-start relative group"
                         >
                             <SpiritCard spirit={spirit} />
                             

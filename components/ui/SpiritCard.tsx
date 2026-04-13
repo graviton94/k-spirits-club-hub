@@ -113,7 +113,7 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
   const content = (
     <motion.div
       ref={observerRef}
-      className={`group flex gap-4 p-4 rounded-[32px] bg-card border border-border hover:bg-secondary/40 transition-all cursor-pointer shadow-sm relative overflow-hidden h-full ${isAiDiscovery ? 'border-amber-500/30' : ''}`}
+      className={`group flex flex-col sm:flex-row gap-6 p-5 sm:p-6 rounded-[32px] bg-card border border-border hover:bg-secondary/40 transition-all cursor-pointer shadow-sm relative overflow-hidden h-full ${isAiDiscovery ? 'border-amber-500/30' : ''}`}
       whileHover={{ y: -4, scale: 1.01 }}
       onClick={() => {
           if (isAiDiscovery) window.open(spirit.externalSearchUrl, '_blank');
@@ -121,48 +121,66 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
       }}
     >
       {/* Background Glow for Discovery */}
-      {isAiDiscovery && <div className="absolute inset-0 bg-amber-500/5 -z-10 animate-pulse" />}
+      {isAiDiscovery && <div className="absolute inset-x-0 top-0 h-40 bg-amber-500/5 -z-10 animate-pulse sm:h-full sm:w-40" />}
 
       {/* Thumbnail */}
-      <div className="relative shrink-0 w-24 h-24 rounded-2xl overflow-hidden bg-muted border border-border shadow-inner aspect-square">
+      <div className="relative shrink-0 w-full h-52 sm:w-32 sm:h-32 rounded-2xl overflow-hidden bg-muted border border-border shadow-inner">
         <Image
           src={imgSrc}
           alt={`Thumbnail for ${localizedName}`}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-110"
-          sizes="96px"
+          sizes="(max-width: 640px) 100vw, 128px"
           priority={index < 4}
           onError={() => setImgSrc(getCategoryFallbackImage(spirit.category))}
           unoptimized={true}
         />
         {isAiDiscovery && (
             <div className="absolute inset-0 bg-black/40 flex items-center justify-center backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity">
-                <ExternalLink className="w-6 h-6 text-white" />
+                <ExternalLink className="w-8 h-8 text-white" />
             </div>
         )}
       </div>
 
       {/* Content */}
-      <div className="flex-1 min-w-0 flex flex-col justify-between py-1">
+      <div className="flex-1 min-w-0 flex flex-col justify-between">
         <div>
-          <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-              {matchRate > 0 && (
-                  <span className="text-[10px] font-black bg-amber-500 text-black px-2 py-0.5 rounded-full shadow-lg shadow-amber-500/20">
-                      {matchRate}% MATCH
-                  </span>
-              )}
-              {isAiDiscovery && (
-                  <span className="text-[10px] font-black bg-foreground text-background px-2 py-0.5 rounded-full flex items-center gap-1">
-                      <Sparkles className="w-2.5 h-2.5" /> AI DISCOVERY
-                  </span>
+          <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2 flex-wrap">
+                  {matchRate > 0 && (
+                      <span className="text-[10px] font-black bg-amber-500 text-black px-2 py-0.5 rounded-full shadow-lg shadow-amber-500/20">
+                          {matchRate}% MATCH
+                      </span>
+                  )}
+                  {isAiDiscovery && (
+                      <span className="text-[10px] font-black bg-foreground text-background px-2 py-0.5 rounded-full flex items-center gap-1">
+                          <Sparkles className="w-2.5 h-2.5" /> AI DISCOVERY
+                      </span>
+                  )}
+              </div>
+              
+              {!isAiDiscovery ? (
+                  <button
+                    className={`p-1 transition-colors ${isInCabinet ? 'text-red-500' : 'text-muted-foreground/30 hover:text-red-500'}`}
+                    onClick={(e) => { e.stopPropagation(); e.preventDefault(); 
+                        if (!user) triggerLoginModal();
+                        else setShowSelectionModal(true);
+                    }}
+                  >
+                    <Heart className={`w-5 h-5 ${isInCabinet ? 'fill-current' : ''}`} />
+                  </button>
+              ) : (
+                  <div className="p-1 text-muted-foreground/20">
+                      <ExternalLink className="w-4 h-4" />
+                  </div>
               )}
           </div>
 
-          <h3 className="font-black text-foreground text-lg leading-tight line-clamp-2 mb-1">
+          <h3 className="font-black text-foreground text-xl leading-tight mb-2">
             {localizedName}
           </h3>
 
-          <p className="text-[10px] font-black text-muted-foreground flex items-center gap-1 uppercase tracking-widest opacity-70">
+          <p className="text-[11px] font-black text-muted-foreground flex items-center gap-1 uppercase tracking-widest opacity-70 mb-1">
             <span>{isEn ? "Category" : "분류"}</span>
             <span className="text-foreground/80">
               {localizedCategory}
@@ -171,24 +189,24 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
           </p>
 
           {localizedDistillery && (
-            <p className="text-[10px] text-muted-foreground/60 mt-1 max-w-full truncate font-bold">
+            <p className="text-[11px] text-muted-foreground/60 mb-4 max-w-full truncate font-bold">
               🏭 {localizedDistillery}
             </p>
           )}
 
           {matchReason && (
-              <p className="text-[11px] text-foreground/80 mt-3 line-height-relaxed font-medium bg-secondary/30 p-3 rounded-xl italic">
+              <p className="text-[12px] text-foreground/90 leading-relaxed font-medium bg-secondary/30 p-4 rounded-2xl italic border border-secondary/50">
                   "{matchReason}"
               </p>
           )}
         </div>
 
         {tastingTags.length > 0 && (
-          <div className="flex flex-wrap gap-1 mt-4">
+          <div className="flex flex-wrap gap-2 mt-6">
             {tastingTags.map((tag: string, i: number) => {
               const styles = getTagStyle(tag);
               return (
-                <span key={i} className="text-[9px] px-2 py-0.5 rounded-full font-black border transition-colors whitespace-nowrap opacity-80"
+                <span key={i} className="text-[10px] px-3 py-1 rounded-full font-black border transition-colors whitespace-nowrap opacity-90"
                   style={{ backgroundColor: styles.light.bg, color: styles.light.text, borderColor: styles.light.border }}>
                   #{tag}
                 </span>
@@ -197,22 +215,6 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
           </div>
         )}
       </div>
-
-      {!isAiDiscovery ? (
-          <button
-            className={`shrink-0 self-start p-1 transition-colors ${isInCabinet ? 'text-red-500' : 'text-muted-foreground/30 hover:text-red-500'}`}
-            onClick={(e) => { e.stopPropagation(); e.preventDefault(); 
-                if (!user) triggerLoginModal();
-                else setShowSelectionModal(true);
-            }}
-          >
-            <Heart className={`w-5 h-5 ${isInCabinet ? 'fill-current' : ''}`} />
-          </button>
-      ) : (
-          <div className="shrink-0 self-start p-1 text-muted-foreground/20">
-              <ExternalLink className="w-5 h-5" />
-          </div>
-      )}
     </motion.div>
   );
 

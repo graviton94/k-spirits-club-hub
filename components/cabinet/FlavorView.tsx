@@ -112,7 +112,7 @@ export default function FlavorView({
                         >
                             {isLimitReached ? <Lock className="w-3.5 h-3.5" /> : <RefreshCw className="w-3.5 h-3.5" />}
                             {isLimitReached
-                                ? (isEn ? "Daily Limit (3/3)" : "일일 제한 도달 (3/3)")
+                                ? (isEn ? "Daily limit reached🥹 (3/day)" : "분석 횟수가 소진되었어요🥹 (일 3회)")
                                 : (isEn ? "Sync DNA" : "DNA 동기화")}
                         </button>
                         <button className="w-14 h-full bg-card hover:bg-secondary rounded-2xl border border-border flex items-center justify-center transition-all shadow-sm">
