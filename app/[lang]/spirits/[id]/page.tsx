@@ -652,11 +652,16 @@ export default async function SpiritDetailPage({
     sommelierReviewBody = baseSommelierReview + enrichment;
   }
 
-  const userReviewCount = reviews.length;
+  const metadataRating = spirit.metadata?.aggregateRating;
+  const userReviewCount = metadataRating ? metadataRating.reviewCount : reviews.length;
+  // Total count including the AI Sommelier (Expert) review
   const totalReviewCount = 1 + userReviewCount;
   
-  const userRatingsSum = reviews.reduce((acc, r) => acc + (Number(r.rating) || 0), 0);
-  const aggregateRatingValue = ((expertRatingValue * 1) + userRatingsSum) / totalReviewCount;
+  const aggregateRatingValue = metadataRating 
+    ? metadataRating.ratingValue 
+    : (userReviewCount > 0 
+        ? (((expertRatingValue * 1) + reviews.reduce((acc, r) => acc + (Number(r.rating) || 0), 0)) / totalReviewCount)
+        : expertRatingValue);
 
   // 리뷰 리스트 빌드 (전문가 리뷰 우선 + 최신 유저 리뷰)
   const schemaReviews = [

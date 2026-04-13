@@ -1,639 +1,208 @@
+import ingestedData from '../db/ingested-data.json';
+import { Review, Spirit as SpiritSchema } from '../db/schema';
+
 /**
- * Flavor Analysis Engine
- * 
- * Analyzes user's spirit collection to extract:
- * - Category distribution
- * - Top flavor keywords
- * - Taste persona
+ * Flavor Analysis Engine (v2.2 - Multi-Category Diversity)
  */
 
 export interface UserReview {
-  ratingN: number; // 0.5 - 5.0
-  ratingP: number;
-  ratingF: number;
-  ratingOverall: number;
-  comment: string;
-  tagsN: string[];
-  tagsP: string[];
-  tagsF: string[];
-  createdAt: string;
+    ratingN: number;
+    ratingP: number;
+    ratingF: number;
+    ratingOverall: number;
+    comment: string;
+    tagsN: string[];
+    tagsP: string[];
+    tagsF: string[];
+    createdAt: string;
 }
 
 export interface Spirit {
-  id: string;
-  name: string;
-  category: string;
-  category_en?: string | null;
-  subcategory?: string;
-  abv: number;
-  imageUrl?: string;
-  distillery?: string;
-  isWishlist: boolean;
-  userReview?: UserReview;
-  name_en?: string | null;
-  description_en?: string | null;
-  description_ko?: string | null;
-
-  // Root Flavor DNA
-  nose_tags?: string[];
-  palate_tags?: string[];
-  finish_tags?: string[];
-  tasting_note?: string;
-
-  metadata?: {
+    id: string;
+    name: string;
+    category: string;
+    category_en?: string | null;
+    subcategory?: string;
+    abv: number;
+    imageUrl?: string;
+    thumbnailUrl?: string;
+    distillery?: string;
+    isWishlist: boolean;
+    userReview?: UserReview;
+    name_en?: string | null;
+    description_en?: string | null;
+    description_ko?: string | null;
+    nose_tags?: string[];
+    palate_tags?: string[];
+    finish_tags?: string[];
     tasting_note?: string;
-    description_ko?: string;
-    description_en?: string;
-    pairing_guide_ko?: string;
-    pairing_guide_en?: string;
-    nose?: string;
-    palate?: string;
-    finish?: string;
-    [key: string]: any;
-  };
+    metadata?: any;
+    score?: number; // For recommendations
 }
 
-export interface HierarchicalNode {
-  id: string;
-  type: 'user' | 'product' | 'tag';
-  label: string;
-  category?: string;
-  position: { x: number; y: number };
-  connections: string[]; // IDs of connected nodes
-  size?: number;
-  color?: string;
-  metadata?: any;
-}
+export type FlavorVector = [number, number, number, number, number, number];
 
-export interface FlavorAnalysis {
-  totalSpirits: number;
-  categoryDistribution: { category: string; count: number; percentage: number }[];
-  topKeywords: { keyword: string; count: number }[];
-  persona: string;
-  coreFlavorProfile: string[];
-  dominantCategory: string;
-  flavorNodes?: FlavorNode[];
-  hierarchicalNodes?: HierarchicalNode[];
-}
-
-export interface FlavorNode {
-  id: string;
-  keyword: string;
-  count: number;
-  relatedSpirits: string[];
-  position?: { x: number; y: number };
-  color?: string;
-}
-
-/**
- * Mock spirits data based on "달홀진주25" for rich sample visualization
- */
-export const MOCK_CELLAR_SPIRITS: Spirit[] = [
-  {
-    id: "1",
-    name: "달홀진주25",
-    category: "소주",
-    subcategory: "증류식 소주",
-    abv: 25,
-    imageUrl: "https://via.placeholder.com/300x600/8B4513/FFFFFF?text=달홀진주25",
-    distillery: "달홀",
-    isWishlist: false,
-    metadata: {
-      tasting_note: "깔끔한, 부드러운, 곡물향",
-      nose: "곡물향, 바닐라",
-      palate: "부드러운, 깔끔한, 미네랄",
-      finish: "긴여운, 곡물향"
+const TAG_TAXONOMY: Record<string, Record<string, Partial<Record<string, number>>>> = {
+    whisky: {
+        '#바닐라': { sweet: 0.6, woody: 0.4 },
+        '#오크': { woody: 1.0 },
+        '#피트': { peaty: 1.0 },
+        '#스모키': { peaty: 0.8, woody: 0.2 },
+        '#건포도': { fruity: 0.7, sweet: 0.3 },
+        '#시트러스': { fruity: 1.0 },
+        '#스파이시': { spicy: 1.0 },
+        '#초콜릿': { sweet: 0.4, woody: 0.6 },
+        '#너티': { woody: 1.0 },
+    },
+    soju: {
+        '#곡물': { woody: 0.6, sweet: 0.4 },
+        '#깔끔한': { floral: 0.5 },
+        '#부드러운': { sweet: 0.3, floral: 0.2 },
+        '#달콤한': { sweet: 1.0 },
+        '#청량한': { fruity: 0.4, floral: 0.6 },
+    },
+    global: {
+        '#달콤한': { sweet: 1.0 },
+        '#과일향': { fruity: 1.0 },
+        '#꽃향기': { floral: 1.0 },
+        '#스파이시': { spicy: 1.0 },
+        '#우디': { woody: 1.0 },
+        '#피티': { peaty: 1.0 },
+        '#스모키': { peaty: 1.0 },
+        '#바닐라': { sweet: 0.8, woody: 0.2 },
+        '#허브': { floral: 0.8, spicy: 0.2 },
+        '#너티': { woody: 1.0 },
+        '#청사과': { fruity: 1.0 },
+        '#서양배': { fruity: 1.0 },
+        '#꿀': { sweet: 1.0 },
+        '#카라멜': { sweet: 1.0 },
+        '#곡물': { woody: 0.5, sweet: 0.5 },
+        '#나무': { woody: 1.0 },
+        '#상큼한': { fruity: 0.8, floral: 0.2 },
+        '#깔끔한': { floral: 0.5 },
+        '#부드러운': { sweet: 0.3, floral: 0.2 },
+        '#탄산감': { spicy: 0.3, fruity: 0.2 },
     }
-  },
-  {
-    id: "2",
-    name: "화요",
-    category: "소주",
-    subcategory: "증류식 소주",
-    abv: 41,
-    imageUrl: "https://via.placeholder.com/300x600/4A5568/FFFFFF?text=화요",
-    distillery: "국순당",
-    isWishlist: false,
-    metadata: {
-      tasting_note: "스파이시한, 곡물향, 강렬한",
-      nose: "곡물향, 후추",
-      palate: "스파이시한, 강렬한",
-      finish: "긴여운, 따뜻한"
+};
+
+class FlavorVectorIndex {
+    private static instance: FlavorVectorIndex;
+    private vectorMap: Map<string, Float32Array> = new Map();
+
+    private constructor() { this.initialize(); }
+
+    public static getInstance(): FlavorVectorIndex {
+        if (!FlavorVectorIndex.instance) FlavorVectorIndex.instance = new FlavorVectorIndex();
+        return FlavorVectorIndex.instance;
     }
-  },
-  {
-    id: "3",
-    name: "문배주",
-    category: "전통주",
-    subcategory: "증류식 소주",
-    abv: 40,
-    imageUrl: "https://via.placeholder.com/300x600/2D3748/F0E68C?text=문배주",
-    distillery: "문배주양조원",
-    isWishlist: false,
-    metadata: {
-      tasting_note: "과일향, 달콤한, 부드러운",
-      nose: "배향, 과일향",
-      palate: "달콤한, 부드러운",
-      finish: "깔끔한"
+
+    private initialize() {
+        if (typeof window === 'undefined') return;
+        try {
+            (ingestedData as any).forEach((spirit: any) => {
+                const tags = [...(spirit.nose_tags || []), ...(spirit.palate_tags || []), ...(spirit.finish_tags || []), ...(spirit.metadata?.nose_tags || []), ...(spirit.metadata?.palate_tags || []), ...(spirit.metadata?.finish_tags || [])];
+                const vector = this.calculateVector(spirit.category || spirit.mainCategory || 'global', tags);
+                this.vectorMap.set(spirit.id, new Float32Array(vector));
+            });
+        } catch (e) { console.error('Failed to initialize FlavorVectorIndex', e); }
     }
-  },
-  {
-    id: "4",
-    name: "Hibiki Harmony",
-    category: "위스키",
-    subcategory: "Japanese Whisky",
-    abv: 43,
-    imageUrl: "https://via.placeholder.com/300x600/B8860B/FFFFFF?text=Hibiki",
-    distillery: "Suntory",
-    isWishlist: false,
-    metadata: {
-      tasting_note: "플로랄, 허니, 부드러운",
-      nose: "플로랄, 꿀향",
-      palate: "부드러운, 달콤한, 복합적",
-      finish: "긴여운, 우아한"
-    }
-  },
-  {
-    id: "5",
-    name: "Glenfiddich 12",
-    category: "위스키",
-    subcategory: "Single Malt Scotch",
-    abv: 40,
-    imageUrl: "https://via.placeholder.com/300x600/228B22/FFFFFF?text=Glenfiddich",
-    distillery: "Glenfiddich",
-    isWishlist: false,
-    metadata: {
-      tasting_note: "오크, 바닐라, 부드러운",
-      nose: "사과, 배향, 오크",
-      palate: "바닐라, 부드러운, 크리미한",
-      finish: "긴여운, 오크"
-    }
-  },
-  {
-    id: "6",
-    name: "Jameson Irish Whiskey",
-    category: "위스키",
-    subcategory: "Irish Whiskey",
-    abv: 40,
-    imageUrl: "https://via.placeholder.com/300x600/006400/FFFFFF?text=Jameson",
-    distillery: "Jameson",
-    isWishlist: false,
-    metadata: {
-      tasting_note: "스무스, 과일향, 부드러운",
-      nose: "바닐라, 과일향",
-      palate: "스무스, 부드러운, 곡물향",
-      finish: "깔끔한, 부드러운"
-    }
-  },
-  {
-    id: "7",
-    name: "안동소주",
-    category: "전통주",
-    subcategory: "증류식 소주",
-    abv: 45,
-    imageUrl: "https://via.placeholder.com/300x600/8B4513/FFFFFF?text=안동소주",
-    distillery: "안동소주",
-    isWishlist: false,
-    metadata: {
-      tasting_note: "전통적인, 강렬한, 곡물향",
-      nose: "곡물향, 발효향",
-      palate: "강렬한, 깔끔한",
-      finish: "긴여운, 따뜻한"
-    }
-  },
-  {
-    id: "8",
-    name: "Hendrick's Gin",
-    category: "일반증류주",
-    subcategory: "Gin",
-    abv: 44,
-    imageUrl: "https://via.placeholder.com/300x600/1A202C/90EE90?text=Hendricks",
-    distillery: "Hendrick's",
-    isWishlist: false,
-    metadata: {
-      tasting_note: "큐컴버, 로즈, 플로랄",
-      nose: "큐컴버, 장미향",
-      palate: "플로랄, 부드러운, 신선한",
-      finish: "깔끔한, 상쾌한"
-    }
-  },
-];
 
-/**
- * Calculate similarity between two flavor profiles using Jaccard similarity coefficient
- * The Jaccard index measures similarity as the size of intersection divided by size of union
- * 
- * @param keywords1 - First set of flavor keywords
- * @param keywords2 - Second set of flavor keywords
- * @returns A similarity score between 0 (completely different) and 1 (identical)
- */
-function calculateSimilarity(keywords1: string[], keywords2: string[]): number {
-  if (keywords1.length === 0 || keywords2.length === 0) return 0;
-
-  const set1 = new Set(keywords1);
-  const set2 = new Set(keywords2);
-
-  const intersection = new Set([...set1].filter(x => set2.has(x)));
-  const union = new Set([...set1, ...set2]);
-
-  return intersection.size / union.size;
-}
-
-/**
- * Generate flavor nodes with spatial positioning based on relationships
- * 
- * This function implements a force-directed layout algorithm where:
- * - Nodes are positioned in a circular orbit around the center (user)
- * - High correlation (shared spirits/tags) results in closer proximity
- * - Low correlation (unrelated flavors) results in distant placement
- * - Node frequency affects radius: more common flavors appear closer to center
- * 
- * Algorithm:
- * 1. Maps keywords to related spirits (Person-Product-Tags relationship)
- * 2. Calculates similarity between nodes using Jaccard coefficient
- * 3. Positions nodes with base circular distribution
- * 4. Adjusts radius based on keyword frequency (30% max variation)
- * 
- * @param spirits - Array of spirit objects to analyze
- * @param topKeywords - Top flavor keywords with their counts
- * @returns Array of FlavorNode objects with calculated positions
- */
-function generateFlavorNodes(
-  spirits: Spirit[],
-  topKeywords: { keyword: string; count: number }[]
-): FlavorNode[] {
-  const nodes: FlavorNode[] = [];
-
-  // Create a map of keywords to spirits
-  const keywordToSpirits = new Map<string, string[]>();
-
-  spirits.forEach(spirit => {
-    const rootTags = [
-      ...(spirit.nose_tags || []),
-      ...(spirit.palate_tags || []),
-      ...(spirit.finish_tags || [])
-    ].join(', ');
-
-    const metadataText = spirit.metadata ? [
-      spirit.metadata.tasting_note,
-      spirit.metadata.nose,
-      spirit.metadata.palate,
-      spirit.metadata.finish,
-    ].filter(Boolean).join(', ') : '';
-
-    const allText = [spirit.tasting_note, rootTags, metadataText].filter(Boolean).join(', ');
-
-    const keywords = allText
-      .split(/[,\s#]+/)
-      .map(k => k.trim())
-      .filter(k => k.length > 0 && k !== '');
-
-    keywords.forEach(keyword => {
-      if (!keywordToSpirits.has(keyword)) {
-        keywordToSpirits.set(keyword, []);
-      }
-      keywordToSpirits.get(keyword)!.push(spirit.id);
-    });
-  });
-
-  // Create nodes for top keywords
-  topKeywords.forEach((kw, index) => {
-    const relatedSpirits = keywordToSpirits.get(kw.keyword) || [];
-
-    nodes.push({
-      id: `node-${index}`,
-      keyword: kw.keyword,
-      count: kw.count,
-      relatedSpirits,
-    });
-  });
-
-  // Calculate positions based on similarity
-  // Use force-directed layout concept
-  if (nodes.length > 0) {
-    const radius = 140;
-    const angleStep = (Math.PI * 2) / nodes.length;
-
-    nodes.forEach((node, index) => {
-      // Calculate similarity with other nodes
-      const similarities = nodes.map((otherNode, otherIndex) => {
-        if (index === otherIndex) return 0;
-        return calculateSimilarity(node.relatedSpirits, otherNode.relatedSpirits);
-      });
-
-      // Base angle for even distribution
-      let angle = angleStep * index - Math.PI / 2;
-
-      // Adjust angle based on similarity to create clustering
-      // Nodes with high similarity should be closer together
-      const avgSimilarity = similarities.reduce((a, b) => a + b, 0) / (similarities.length || 1);
-
-      // Adjust radius based on count (more common = closer to center)
-      const maxCount = Math.max(...nodes.map(n => n.count));
-      const radiusModifier = 1 - (node.count / maxCount) * 0.3; // 30% max variation
-      const adjustedRadius = radius * radiusModifier;
-
-      node.position = {
-        x: Math.cos(angle) * adjustedRadius,
-        y: Math.sin(angle) * adjustedRadius,
-      };
-    });
-  }
-
-  return nodes;
-}
-
-/**
- * Generate hierarchical nodes for 3-layer visualization
- * Layer 1: User (center)
- * Layer 2: Products (middle orbit, clustered by category)
- * Layer 3: Tags (outer orbit, near their products)
- * 
- * @param spirits - Array of spirit objects
- * @returns Array of HierarchicalNode objects
- */
-function generateHierarchicalNodes(spirits: Spirit[]): HierarchicalNode[] {
-  const nodes: HierarchicalNode[] = [];
-
-  // Layer 1: User node at center
-  nodes.push({
-    id: 'user',
-    type: 'user',
-    label: 'You',
-    position: { x: 0, y: 0 },
-    connections: [],
-    size: 64,
-  });
-
-  // Group products by category for clustering
-  const categoryGroups = new Map<string, Spirit[]>();
-  spirits.forEach(spirit => {
-    if (!categoryGroups.has(spirit.category)) {
-      categoryGroups.set(spirit.category, []);
-    }
-    categoryGroups.get(spirit.category)!.push(spirit);
-  });
-
-  // Assign angular sectors to categories
-  const categories = Array.from(categoryGroups.keys());
-  const sectorSize = (Math.PI * 2) / categories.length;
-
-  // Layer 2: Product nodes in middle orbit
-  const productRadius = 140;
-
-  categories.forEach((category, catIndex) => {
-    const productsInCategory = categoryGroups.get(category)!;
-    const sectorStart = catIndex * sectorSize - Math.PI / 2;
-    const angleStep = sectorSize / (productsInCategory.length + 1);
-
-    productsInCategory.forEach((spirit, spiritIndex) => {
-      const angle = sectorStart + angleStep * (spiritIndex + 1);
-      const productId = `product-${spirit.id}`;
-
-      nodes.push({
-        id: productId,
-        type: 'product',
-        label: spirit.name,
-        category: spirit.category,
-        position: {
-          x: Math.cos(angle) * productRadius,
-          y: Math.sin(angle) * productRadius,
-        },
-        connections: ['user'],
-        size: 48,
-        metadata: spirit,
-      });
-
-      // Connect user to this product
-      nodes[0].connections.push(productId);
-
-      // Layer 3: Tag nodes for this product
-      const rootTags = [
-        ...(spirit.nose_tags || []),
-        ...(spirit.palate_tags || []),
-        ...(spirit.finish_tags || [])
-      ].join(', ');
-
-      const metadataText = spirit.metadata ? [
-        spirit.metadata.tasting_note,
-        spirit.metadata.nose,
-        spirit.metadata.palate,
-        spirit.metadata.finish,
-      ].filter(Boolean).join(', ') : '';
-
-      const allText = [spirit.tasting_note, rootTags, metadataText].filter(Boolean).join(', ');
-
-      const tags = allText
-        .split(/[,\s#]+/)
-        .map(t => t.trim())
-        .filter(t => t.length > 0)
-        .slice(0, 3); // Limit to top 3 tags per product
-
-      const tagRadius = 230;
-      const tagAngleSpread = sectorSize * 0.6; // Tags spread within 60% of sector
-      const tagAngleStep = tagAngleSpread / (tags.length + 1);
-
-      tags.forEach((tag, tagIndex) => {
-        const tagAngle = angle - tagAngleSpread / 2 + tagAngleStep * (tagIndex + 1);
-        const tagId = `tag-${spirit.id}-${tagIndex}`;
-
-        nodes.push({
-          id: tagId,
-          type: 'tag',
-          label: tag,
-          category: spirit.category,
-          position: {
-            x: Math.cos(tagAngle) * tagRadius,
-            y: Math.sin(tagAngle) * tagRadius,
-          },
-          connections: [productId],
-          size: 32,
+    public calculateVector(category: string, tags: string[]): number[] {
+        const vec = [0, 0, 0, 0, 0, 0];
+        const dimMap = ['sweet', 'fruity', 'floral', 'spicy', 'woody', 'peaty'];
+        const normalizedCategory = category.toLowerCase();
+        tags.forEach(rawTag => {
+            const tag = rawTag.split(' ')[0].trim();
+            const mapping = TAG_TAXONOMY[normalizedCategory]?.[tag] || TAG_TAXONOMY['global']?.[tag];
+            if (mapping) { Object.entries(mapping).forEach(([dim, weight]) => { const idx = dimMap.indexOf(dim); if (idx !== -1) vec[idx] += (weight as number); }); }
         });
-
-        // Connect product to this tag
-        const productNode = nodes.find(n => n.id === productId);
-        if (productNode) {
-          productNode.connections.push(tagId);
-        }
-      });
-    });
-  });
-
-  return nodes;
-}
-
-/**
- * Extract all flavor keywords from spirits metadata
- */
-function extractKeywords(spirits: Spirit[]): Map<string, number> {
-  const keywordMap = new Map<string, number>();
-
-  spirits.forEach(spirit => {
-    const rootTags = [
-      ...(spirit.nose_tags || []),
-      ...(spirit.palate_tags || []),
-      ...(spirit.finish_tags || [])
-    ].join(', ');
-
-    const metadataText = spirit.metadata ? [
-      spirit.metadata.tasting_note,
-      spirit.metadata.nose,
-      spirit.metadata.palate,
-      spirit.metadata.finish,
-    ].filter(Boolean).join(', ') : '';
-
-    const allText = [spirit.tasting_note, rootTags, metadataText].filter(Boolean).join(', ');
-
-    // Split by comma, space, or hashtag
-    const keywords = allText
-      .split(/[,\s#]+/)
-      .map(k => k.trim())
-      .filter(k => k.length > 0);
-
-    keywords.forEach(keyword => {
-      keywordMap.set(keyword, (keywordMap.get(keyword) || 0) + 1);
-    });
-  });
-
-  return keywordMap;
-}
-
-/**
- * Calculate category distribution
- */
-function calculateCategoryDistribution(spirits: Spirit[]) {
-  const categoryCount = new Map<string, number>();
-
-  spirits.forEach(spirit => {
-    categoryCount.set(spirit.category, (categoryCount.get(spirit.category) || 0) + 1);
-  });
-
-  const total = spirits.length;
-  return Array.from(categoryCount.entries())
-    .map(([category, count]) => ({
-      category,
-      count,
-      percentage: Math.round((count / total) * 100),
-    }))
-    .sort((a, b) => b.count - a.count);
-}
-
-/**
- * Generate persona string based on dominant flavors and categories
- */
-function generatePersona(
-  topKeywords: { keyword: string; count: number }[],
-  dominantCategory: string
-): string {
-  if (topKeywords.length === 0) {
-    return "술을 사랑하는 탐험가";
-  }
-
-  const primaryFlavor = topKeywords[0]?.keyword || "";
-  const secondaryFlavor = topKeywords[1]?.keyword || "";
-
-  // Category-based personas
-  const categoryPersonas: Record<string, string> = {
-    "소주": "전통 증류주 마니아",
-    "위스키": "세련된 위스키 애호가",
-    "전통주": "한국 전통주 수호자",
-    "일반증류주": "글로벌 스피릿 컬렉터",
-    "탁주": "전통 발효주 마스터",
-  };
-
-  // Flavor-based modifiers
-  const flavorModifiers: Record<string, string> = {
-    "부드러운": "부드러움을 추구하는",
-    "깔끔한": "깔끔함을 선호하는",
-    "곡물향": "곡물향 애호가인",
-    "과일향": "프루티한 향을 사랑하는",
-    "스파이시한": "강렬한 맛을 즐기는",
-    "플로랄": "꽃향기를 좋아하는",
-    "달콤한": "달콤함을 선호하는",
-    "강렬한": "진한 풍미를 찾는",
-  };
-
-  const categoryBase = categoryPersonas[dominantCategory] || "다양한 술을 즐기는 애호가";
-  const flavorMod = flavorModifiers[primaryFlavor] || "";
-
-  if (flavorMod) {
-    return `${flavorMod} ${categoryBase}`;
-  }
-
-  return categoryBase;
-}
-
-/**
- * Main analysis function
- * Analyzes localStorage spirits or uses mock data
- */
-export function analyzeCellar(spirits?: Spirit[]): FlavorAnalysis {
-  // Use provided spirits or mock data
-  const cellarSpirits = spirits && spirits.length > 0 ? spirits : MOCK_CELLAR_SPIRITS;
-
-  // Filter out wishlist items - only analyze owned spirits
-  const ownedSpirits = cellarSpirits.filter(s => !s.isWishlist);
-
-  if (ownedSpirits.length === 0) {
-    return {
-      totalSpirits: 0,
-      categoryDistribution: [],
-      topKeywords: [],
-      persona: "아직 술장이 비어있습니다",
-      coreFlavorProfile: [],
-      dominantCategory: "",
-    };
-  }
-
-  // Extract keywords
-  const keywordMap = extractKeywords(ownedSpirits);
-  const topKeywords = Array.from(keywordMap.entries())
-    .map(([keyword, count]) => ({ keyword, count }))
-    .sort((a, b) => b.count - a.count)
-    .slice(0, 5);
-
-  // Calculate category distribution
-  const categoryDistribution = calculateCategoryDistribution(ownedSpirits);
-  const dominantCategory = categoryDistribution[0]?.category || "";
-
-  // Core flavor profile (top 3)
-  const coreFlavorProfile = topKeywords.slice(0, 3).map(k => k.keyword);
-
-  // Generate flavor nodes with spatial positioning
-  const flavorNodes = generateFlavorNodes(ownedSpirits, topKeywords);
-
-  // Generate hierarchical nodes for 3-layer visualization
-  const hierarchicalNodes = generateHierarchicalNodes(ownedSpirits);
-
-  // Generate persona
-  const persona = generatePersona(topKeywords, dominantCategory);
-
-  return {
-    totalSpirits: ownedSpirits.length,
-    categoryDistribution,
-    topKeywords,
-    persona,
-    coreFlavorProfile,
-    dominantCategory,
-    flavorNodes,
-    hierarchicalNodes,
-  };
-}
-
-/**
- * Load spirits from localStorage
- */
-export function loadCellarFromStorage(): Spirit[] {
-  if (typeof window === 'undefined') return [];
-
-  try {
-    const stored = localStorage.getItem('kspirits_cellar');
-    if (stored) {
-      return JSON.parse(stored);
+        const magnitude = Math.sqrt(vec.reduce((sum, val) => sum + val * val, 0));
+        return magnitude > 0 ? vec.map(v => v / magnitude) : vec;
     }
-  } catch (error) {
-    console.error('Failed to load cellar from storage:', error);
-  }
 
-  return [];
+    public getVector(id: string): Float32Array | null { return this.vectorMap.get(id) || null; }
+    public getAllVectors() { return this.vectorMap; }
+}
+
+export const flavorIndex = FlavorVectorIndex.getInstance();
+
+export function calculateCosineSimilarity(vecA: Float32Array | number[], vecB: Float32Array | number[]): number {
+    let dotProduct = 0; let magA = 0; let magB = 0;
+    for (let i = 0; i < 6; i++) { dotProduct += vecA[i] * vecB[i]; magA += vecA[i] * vecA[i]; magB += vecB[i] * vecB[i]; }
+    const mag = Math.sqrt(magA) * Math.sqrt(magB);
+    return mag > 0 ? dotProduct / mag : 0;
+}
+
+export function generateUserPalate(reviews: any[]): number[] {
+    const userVec = [0, 0, 0, 0, 0, 0];
+    reviews.forEach(review => {
+        const spiritVec = flavorIndex.getVector(review.spiritId);
+        if (spiritVec) {
+            let weight = 0.5;
+            const rating = review.rating || review.ratingOverall || 0;
+            if (rating >= 5) weight = 1.0; else if (rating >= 4) weight = 0.8; else if (rating >= 3) weight = 0.4; else if (rating >= 2) weight = 0.1; else if (rating >= 1) weight = -0.5;
+            for (let i = 0; i < 6; i++) { userVec[i] += spiritVec[i] * weight; }
+        }
+    });
+    const magnitude = Math.sqrt(userVec.reduce((sum, val) => sum + val * val, 0));
+    return magnitude > 0 ? userVec.map(v => Math.max(0, (v / magnitude) * 100)) : userVec.map(() => 0);
+}
+
+export function getHybridRecommendations(
+    userVector: number[], 
+    options: { mode: 'Refine' | 'Discover', currentCategory?: string, excludedIds: string[], limit?: number }
+) {
+    const { limit = 6 } = options;
+    const vectors = flavorIndex.getAllVectors();
+    const candidates: any[] = [];
+    const normUserVec = userVector.map(v => v / 100);
+
+    vectors.forEach((vec, id) => {
+        if (options.excludedIds.includes(id)) return;
+        const spirit = (ingestedData as any).find((s: any) => s.id === id);
+        if (!spirit || !spirit.isPublished) return;
+
+        let similarity = calculateCosineSimilarity(normUserVec, vec);
+        const spiritCategory = (spirit.category || spirit.mainCategory || '').toLowerCase();
+
+        // High Variance / Discovery Logic
+        if (options.mode === 'Discover') {
+            const isOtherCategory = options.currentCategory && spiritCategory !== options.currentCategory.toLowerCase();
+            similarity *= isOtherCategory ? 1.2 : 0.8;
+            // Add slight randomness to break "Popularity Bias"
+            similarity += (Math.random() - 0.5) * 0.05;
+        }
+
+        candidates.push({ ...spirit, score: Math.max(0, similarity) });
+    });
+
+    // Sort by score
+    const sorted = candidates.sort((a, b) => b.score - a.score);
+
+    // DIVERSITY SHUFFLE: Ensure we don't just pick one category
+    const finalSelection: any[] = [];
+    const categoryCounts: Record<string, number> = {};
+
+    for (const item of sorted) {
+        if (finalSelection.length >= limit) break;
+        const cat = item.category || 'unknown';
+        
+        // Max 2 items per category for high diversity
+        if ((categoryCounts[cat] || 0) < 2 || finalSelection.length > limit / 2) {
+            finalSelection.push(item);
+            categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
+        }
+    }
+
+    return finalSelection;
+}
+
+export function analyzeCellar(spirits: Spirit[]) {
+    const reviews = spirits.filter(s => s.userReview).map(s => ({ spiritId: s.id, rating: s.userReview?.ratingOverall || 0 }));
+    const statsArray = generateUserPalate(reviews);
+    return {
+        totalSpirits: spirits.length,
+        stats: { sweet: statsArray[0], fruity: statsArray[1], floral: statsArray[2], spicy: statsArray[3], woody: statsArray[4], peaty: statsArray[5] },
+        persona: { title: "Analyzing DNA...", description: "Mapping your flavor DNA...", keywords: ["#DNA"] }
+    };
 }

@@ -3,9 +3,11 @@
 import { motion } from "framer-motion";
 import FlavorView from "@/components/cabinet/FlavorView";
 import GuestOverlay from "./GuestOverlay";
+import { Spirit } from "@/lib/utils/flavor-engine";
 
 interface PreferenceExplorationProps {
     flavorAnalysis: any;
+    spirits: Spirit[];
     profile: any;
     loading: boolean;
     dict?: any;
@@ -13,6 +15,7 @@ interface PreferenceExplorationProps {
 
 export default function PreferenceExploration({
     flavorAnalysis,
+    spirits,
     profile,
     loading,
     dict
@@ -30,7 +33,7 @@ export default function PreferenceExploration({
             )}
 
             {/* New Taste Analysis View */}
-            <FlavorView dict={dict} />
+            <FlavorView dict={dict} spirits={spirits} />
         </motion.div>
     );
 }

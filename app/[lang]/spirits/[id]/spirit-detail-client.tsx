@@ -259,6 +259,18 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
         }
     };
 
+    const handleOutboundClick = (platform: string) => {
+        fetch('/api/trending/log', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                spiritId: spirit.id, 
+                action: 'purchase_click',
+                platform 
+            })
+        }).catch(err => console.error(`Failed to log ${platform} click:`, err));
+    };
+
     const handleReviewSubmit = async (review: UserReview) => {
         if (!user) return;
 
@@ -488,6 +500,7 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                         href={`https://search.shopping.naver.com/search/all?query=${encodeURIComponent(spirit.name.replace(/\([^)]*\)/g, '').trim())}`}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={() => handleOutboundClick('naver')}
                         className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-transparent border border-border hover:border-emerald-500 transition-colors text-xs font-bold"
                     >
                         <span className="text-emerald-500 font-black">N</span>
@@ -497,6 +510,7 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                         href={`https://dailyshot.co/m/search/result?q=${encodeURIComponent(spirit.name.replace(/\([^)]*\)/g, '').trim())}`}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={() => handleOutboundClick('dailyshot')}
                         className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-transparent border border-border hover:border-purple-500 transition-colors text-xs font-bold"
                     >
                         <Activity className="w-3.5 h-3.5 text-purple-500" />
@@ -506,6 +520,7 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                         href={`https://www.wine-searcher.com/find/${encodeURIComponent((spirit.metadata?.name_en || spirit.name_en || spirit.name).replace(/\([^)]*\)/g, '').trim())}`}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={() => handleOutboundClick('wine-searcher')}
                         className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-transparent border border-border hover:border-amber-500 transition-colors text-xs font-bold"
                     >
                         <span className="text-amber-500 font-black">W</span>

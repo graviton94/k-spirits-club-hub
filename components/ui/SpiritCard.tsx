@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from "framer-motion";
-import { Heart } from "lucide-react";
+import { Heart, ExternalLink, Sparkles, PlusCircle } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
@@ -20,10 +20,10 @@ import Image from 'next/image';
 import metadata from "@/lib/constants/spirits-metadata.json";
 
 interface SpiritCardProps {
-  spirit: Spirit;
-  onClick?: (spirit: Spirit) => void;
+  spirit: any; // Using any to support both DB Spirits and AI Discovery objects
+  onClick?: (spirit: any) => void;
   onCabinetChange?: () => void;
-  index?: number; // Added for LCP priority control
+  index?: number;
   size?: 'default' | 'compact';
   lang?: string;
 }
@@ -40,12 +40,18 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
   const [successMessage, setSuccessMessage] = useState('');
   const isEn = lang === 'en';
 
-  // Image Error Fallback State
+  const isAiDiscovery = spirit.isAiDiscovery === true;
+  const matchRate = spirit.score ? Math.round(spirit.score * 100) : 0;
+
+  const localizedName = isEn ? (spirit.name_en || spirit.metadata?.name_en || spirit.name) : spirit.name;
+  const localizedDistillery = isEn ? (spirit.metadata?.distillery_en || spirit.distillery) : spirit.distillery;
+  const localizedCategory = isEn ? ((metadata as any).display_names_en?.[spirit.category] || spirit.category) : spirit.category;
+  const matchReason = spirit.analysisReason || spirit.reason;
+  
   const [imgSrc, setImgSrc] = useState(
     spirit.imageUrl ? getOptimizedImageUrl(spirit.imageUrl, 200) : getCategoryFallbackImage(spirit.category)
   );
 
-  // Sync image source with prop changes
   useEffect(() => {
     setImgSrc(spirit.imageUrl ? getOptimizedImageUrl(spirit.imageUrl, 200) : getCategoryFallbackImage(spirit.category));
   }, [spirit.imageUrl, spirit.category]);
@@ -53,38 +59,27 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
   const observerRef = useRef<HTMLDivElement>(null);
   const [hasBeenVisible, setHasBeenVisible] = useState(false);
 
-  // Intersection Observer to stagger status checks
   useEffect(() => {
-    if (hasBeenVisible || !user) return;
-
+    if (hasBeenVisible || !user || !spirit.id) return;
     const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        setHasBeenVisible(true);
-      }
+      if (entries[0].isIntersecting) setHasBeenVisible(true);
     }, { rootMargin: '200px' });
-
     if (observerRef.current) observer.observe(observerRef.current);
     return () => observer.disconnect();
-  }, [user, hasBeenVisible]);
+  }, [user, hasBeenVisible, spirit.id]);
 
-  // Check cabinet status on mount
   useEffect(() => {
-    if (user && hasBeenVisible) {
+    if (user && hasBeenVisible && spirit.id) {
       fetch(`/api/cabinet/check?uid=${user.uid}&sid=${spirit.id}`)
         .then(res => res.json())
-        .then(({ isOwned, isWishlist }) => {
-          setIsInCabinet(isOwned || isWishlist);
-        })
+        .then(({ isOwned, isWishlist }) => setIsInCabinet(isOwned || isWishlist))
         .catch(err => console.error('Failed to check status:', err));
     }
   }, [user, spirit.id, hasBeenVisible]);
 
-  // Generic handler for adding (cabinet or wishlist)
   const handleAdd = async (isWishlist: boolean, review?: any) => {
-    if (!user) {
-      triggerLoginModal();
-      return;
-    }
+    if (!user) { triggerLoginModal(); return; }
+    if (isAiDiscovery) return; // Cannot add external discovery yet (needs automated creation)
     setIsToggling(true);
     try {
       await addToCabinet(user.uid, spirit.id, {
@@ -96,167 +91,105 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
         category: spirit.category,
         abv: spirit.abv
       });
-
-      // Notify parent to refresh if needed
       onCabinetChange?.();
-
-      if (isWishlist) setSuccessMessage(isEn ? '🔖 Added to wishlist!' : '🔖 위시리스트에 추가되었습니다!');
-      else setSuccessMessage(isEn ? '🥃 Saved to cabinet!' : '🥃 술장에 저장되었습니다!');
-
-      if (review) setSuccessMessage(isEn ? '✅ Saved with review!' : '✅ 리뷰와 함께 술장에 저장되었습니다!');
-
+      setSuccessMessage(isEn ? (isWishlist ? '🔖 Added to wishlist!' : '🥃 Saved to cabinet!') : (isWishlist ? '🔖 위시리스트에 추가되었습니다!' : '🥃 술장은 저장되었습니다!'));
       setShowSuccessToast(true);
-
-      // Update local state if adding to cabinet/wishlist (not just review update)
       if (!isInCabinet) setIsInCabinet(true);
-
     } catch (error: any) {
-      console.error('Failed to add:', error);
-      setSuccessMessage(`❌ ${error.message || '실패했습니다.'}`);
+      setSuccessMessage(`❌ Error`);
       setShowSuccessToast(true);
     } finally {
       setIsToggling(false);
     }
   };
 
-  const handleHeartClick = async (e: React.MouseEvent) => {
-    e.stopPropagation();
-    e.preventDefault();
-
-    if (!user) {
-      triggerLoginModal();
-      return;
-    }
-
-    // If already in cabinet, remove it
-    if (isInCabinet) {
-      setIsToggling(true);
-      try {
-        await removeFromCabinet(user.uid, spirit.id);
-        setIsInCabinet(false);
-        onCabinetChange?.();
-      } catch (error) {
-        console.error('Failed to remove from cabinet:', error);
-      } finally {
-        setIsToggling(false);
-      }
-    } else {
-      // Show selection modal for cabinet or wishlist
-      setShowSelectionModal(true);
-    }
-  };
-
-  const handleSelectCabinet = async () => {
-    setShowSelectionModal(false);
-    await handleAdd(false); // Add to cabinet
-  };
-
-  const handleSelectWishlist = async () => {
-    setShowSelectionModal(false);
-    await handleAdd(true); // Add to wishlist
-  };
-
-  const handleReviewSubmit = async (review: UserReview) => {
-    setShowReviewModal(false);
-    await handleAdd(false, review); // Add to cabinet with review
-  };
-
-  // Extract first 2-3 tags (Strict Schema)
   const tastingTags = (() => {
-    // 1. Try Root Tasting Note (New hashtag-style)
-    if (spirit.tasting_note) {
-      return spirit.tasting_note
-        .split(/[,\s#]+/)
-        .filter(t => t.length > 0 && !t.startsWith('#')) // Handle both with/without #
-        .slice(0, 3);
-    }
-    // 2. Strict Fallback to Root Nose Tags
-    if (spirit.nose_tags && spirit.nose_tags.length > 0) {
-      return spirit.nose_tags.slice(0, 3);
-    }
+    if (spirit.tasting_note) return spirit.tasting_note.split(/[,\s#]+/).filter((t: string) => t.length > 0 && !t.startsWith('#')).slice(0, 3);
+    if (spirit.nose_tags && spirit.nose_tags.length > 0) return spirit.nose_tags.slice(0, 3);
+    if (spirit.tastingNotes) return spirit.tastingNotes.split(/[,\s#]+/).slice(0, 3);
     return [];
   })();
 
   const content = (
     <motion.div
       ref={observerRef}
-      className="group flex gap-3 p-3 rounded-2xl bg-white/60 dark:bg-slate-900/40 backdrop-blur-md border border-white/40 dark:border-white/10 hover:bg-white/80 dark:hover:bg-slate-900/60 transition-all cursor-pointer shadow-sm"
-      whileHover={{ scale: 0.99 }}
-      transition={{ type: "spring", stiffness: 400, damping: 17 }}
-      onClick={() => onClick?.(spirit)}
+      className={`group flex gap-4 p-4 rounded-[32px] bg-card border border-border hover:bg-secondary/40 transition-all cursor-pointer shadow-sm relative overflow-hidden h-full ${isAiDiscovery ? 'border-amber-500/30' : ''}`}
+      whileHover={{ y: -4, scale: 1.01 }}
+      onClick={() => {
+          if (isAiDiscovery) window.open(spirit.externalSearchUrl, '_blank');
+          else if (onClick) onClick(spirit);
+      }}
     >
-      {/* Left: 80x80 Thumbnail */}
-      <div className="relative shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-muted border border-border aspect-square">
+      {/* Background Glow for Discovery */}
+      {isAiDiscovery && <div className="absolute inset-0 bg-amber-500/5 -z-10 animate-pulse" />}
+
+      {/* Thumbnail */}
+      <div className="relative shrink-0 w-24 h-24 rounded-2xl overflow-hidden bg-muted border border-border shadow-inner aspect-square">
         <Image
           src={imgSrc}
-          alt={spirit.name}
+          alt={`Thumbnail for ${localizedName}`}
           fill
-          className="object-cover transition-transform duration-300 group-hover:scale-110"
-          sizes="80px" // Optimized sizes for 80x80
-          priority={index < 4} // LCP Boost
+          className="object-cover transition-transform duration-500 group-hover:scale-110"
+          sizes="96px"
+          priority={index < 4}
           onError={() => setImgSrc(getCategoryFallbackImage(spirit.category))}
           unoptimized={true}
         />
+        {isAiDiscovery && (
+            <div className="absolute inset-0 bg-black/40 flex items-center justify-center backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity">
+                <ExternalLink className="w-6 h-6 text-white" />
+            </div>
+        )}
       </div>
 
-      {/* Right: Content */}
-      <div className="flex-1 min-w-0 flex flex-col justify-between h-full py-0.5">
+      {/* Content */}
+      <div className="flex-1 min-w-0 flex flex-col justify-between py-1">
         <div>
-          <h3 className="font-bold text-foreground leading-tight line-clamp-2 mb-1">
-            <span className="mr-1.5 text-lg inline-block align-middle">
-              {
-                {
-                  "소주": "🍶", "위스키": "🥃", "맥주": "🍺", "일반증류주": "🍸",
-                  "기타 주류": "🥂", "탁주": "🥛", "약주": "🍵", "청주": "🍶",
-                  "과실주": "🍾", "브랜디": "🍷", "리큐르": "🍹"
-                }[spirit.category] || "🍾"
-              }
-            </span>
-            {isEn ? (spirit.metadata?.name_en || spirit.name_en || spirit.name) : spirit.name}
+          <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+              {matchRate > 0 && (
+                  <span className="text-[10px] font-black bg-amber-500 text-black px-2 py-0.5 rounded-full shadow-lg shadow-amber-500/20">
+                      {matchRate}% MATCH
+                  </span>
+              )}
+              {isAiDiscovery && (
+                  <span className="text-[10px] font-black bg-foreground text-background px-2 py-0.5 rounded-full flex items-center gap-1">
+                      <Sparkles className="w-2.5 h-2.5" /> AI DISCOVERY
+                  </span>
+              )}
+          </div>
+
+          <h3 className="font-black text-foreground text-lg leading-tight line-clamp-2 mb-1">
+            {localizedName}
           </h3>
 
-          <p className="text-xs font-medium text-muted-foreground flex items-center gap-1">
-            <span>📂</span>
-            <span>
-              {isEn ? ((metadata as any).display_names_en?.[spirit.category] || spirit.category) : spirit.category}
+          <p className="text-[10px] font-black text-muted-foreground flex items-center gap-1 uppercase tracking-widest opacity-70">
+            <span>{isEn ? "Category" : "분류"}</span>
+            <span className="text-foreground/80">
+              {localizedCategory}
               {spirit.subcategory && ` · ${isEn ? ((metadata as any).display_names_en?.[spirit.subcategory] || spirit.subcategory) : spirit.subcategory}`}
-              {spirit.abv > 0 && ` · ${spirit.abv}%`}
             </span>
           </p>
 
-          {spirit.distillery && (
-            <p className="text-xs text-muted-foreground/80 mt-0.5 max-w-full truncate">
-              🏭 {isEn ? (spirit.metadata?.distillery_en || spirit.distillery) : spirit.distillery}
+          {localizedDistillery && (
+            <p className="text-[10px] text-muted-foreground/60 mt-1 max-w-full truncate font-bold">
+              🏭 {localizedDistillery}
             </p>
+          )}
+
+          {matchReason && (
+              <p className="text-[11px] text-foreground/80 mt-3 line-height-relaxed font-medium bg-secondary/30 p-3 rounded-xl italic">
+                  "{matchReason}"
+              </p>
           )}
         </div>
 
         {tastingTags.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mt-2">
-            {tastingTags.map((tag: string, index: number) => {
+          <div className="flex flex-wrap gap-1 mt-4">
+            {tastingTags.map((tag: string, i: number) => {
               const styles = getTagStyle(tag);
               return (
-                <span
-                  key={index}
-                  className="text-[10px] px-2 py-0.5 rounded-full font-bold border transition-colors whitespace-nowrap"
-                  style={{
-                    backgroundColor: 'var(--tag-bg)',
-                    color: 'var(--tag-text)',
-                    borderColor: 'var(--tag-border)'
-                  } as any}
-                >
-                  <style jsx>{`
-                    span {
-                      --tag-bg: ${styles.light.bg};
-                      --tag-text: ${styles.light.text};
-                      --tag-border: ${styles.light.border};
-                    }
-                    :global(.dark) span {
-                      --tag-bg: ${styles.dark.bg};
-                      --tag-text: ${styles.dark.text};
-                      --tag-border: ${styles.dark.border};
-                    }
-                  `}</style>
+                <span key={i} className="text-[9px] px-2 py-0.5 rounded-full font-black border transition-colors whitespace-nowrap opacity-80"
+                  style={{ backgroundColor: styles.light.bg, color: styles.light.text, borderColor: styles.light.border }}>
                   #{tag}
                 </span>
               );
@@ -265,49 +198,32 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
         )}
       </div>
 
-      {/* Heart Icon */}
-      <button
-        className={`shrink-0 p-1 transition-colors ${isToggling
-          ? 'opacity-50 cursor-wait'
-          : isInCabinet
-            ? 'text-red-500'
-            : 'text-muted-foreground/30 hover:text-red-500'
-          }`}
-        onClick={handleHeartClick}
-        disabled={isToggling}
-      >
-        <Heart className={`w-5 h-5 ${isInCabinet ? 'fill-current' : ''}`} />
-      </button>
+      {!isAiDiscovery ? (
+          <button
+            className={`shrink-0 self-start p-1 transition-colors ${isInCabinet ? 'text-red-500' : 'text-muted-foreground/30 hover:text-red-500'}`}
+            onClick={(e) => { e.stopPropagation(); e.preventDefault(); 
+                if (!user) triggerLoginModal();
+                else setShowSelectionModal(true);
+            }}
+          >
+            <Heart className={`w-5 h-5 ${isInCabinet ? 'fill-current' : ''}`} />
+          </button>
+      ) : (
+          <div className="shrink-0 self-start p-1 text-muted-foreground/20">
+              <ExternalLink className="w-5 h-5" />
+          </div>
+      )}
     </motion.div>
   );
 
-  if (onClick) return content;
+  if (isAiDiscovery) return content;
 
   return (
     <>
-      <Link href={`/${lang}/spirits/${spirit.id}`}>
-        {content}
-      </Link>
-
-      <CabinetSelectionModal
-        isOpen={showSelectionModal}
-        onClose={() => setShowSelectionModal(false)}
-        onSelectCabinet={handleSelectCabinet}
-        onSelectWishlist={handleSelectWishlist}
-      />
-
-      <ReviewModal
-        spirit={toFlavorSpirit(spirit)}
-        isOpen={showReviewModal}
-        onClose={() => setShowReviewModal(false)}
-        onSubmit={handleReviewSubmit}
-      />
-
-      <SuccessToast
-        isVisible={showSuccessToast}
-        message={successMessage}
-        onClose={() => setShowSuccessToast(false)}
-      />
+      {onClick ? content : <Link href={`/${lang}/spirits/${spirit.id}`}>{content}</Link>}
+      <CabinetSelectionModal isOpen={showSelectionModal} onClose={() => setShowSelectionModal(false)} onSelectCabinet={() => handleAdd(false)} onSelectWishlist={() => handleAdd(true)} />
+      <ReviewModal spirit={toFlavorSpirit(spirit)} isOpen={showReviewModal} onClose={() => setShowReviewModal(false)} onSubmit={(review) => handleAdd(false, review)} />
+      <SuccessToast isVisible={showSuccessToast} message={successMessage} onClose={() => setShowSuccessToast(false)} />
     </>
   );
 }

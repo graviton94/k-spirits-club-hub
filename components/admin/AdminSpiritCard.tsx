@@ -210,6 +210,49 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
     }
   };
 
+  const handleUpdate = async () => {
+    setIsLoading(true);
+    setErrorMessage(null);
+    try {
+      const updateData: any = {
+        name_en: nameEn || null,
+        abv: abv,
+        distillery: distillery,
+        region: region,
+        country: country,
+        category: category,
+        subcategory: subcategory,
+        nose_tags: noseTags,
+        palate_tags: palateTags,
+        finish_tags: finishTags,
+        tasting_note: tastingNote,
+        metadata: {
+          ...spirit.metadata,
+          description_ko: descKo,
+          description_en: descEn,
+          pairing_guide_ko: pairingKo,
+          pairing_guide_en: pairingEn,
+          offer: {
+            price: Number(price),
+            priceCurrency: currency,
+            url: purchaseUrl,
+            availability: 'OutOfStock', // Always OutOfStock as per aggregator policy
+            updatedAt: new Date()
+          }
+        }
+      };
+
+      await db.updateSpirit(spirit.id, updateData);
+      alert('✨ 정보 업데이트 완료!');
+      if (onRefresh) onRefresh();
+    } catch (error) {
+      console.error("Failed to update:", error);
+      setErrorMessage(`Failed to update: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleReject = async () => {
     setIsLoading(true);
     try {
@@ -243,9 +286,7 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
             <span className="px-2 py-1 rounded bg-secondary font-bold">{region}, {country}</span>
           </div>
 
-          {status === 'pending' && (
-            <div className="mt-4 space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
                 <div className="space-y-1">
                   <label className="text-[10px] font-bold text-muted-foreground uppercase">English Name</label>
                   <input
@@ -276,6 +317,9 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
                   </div>
                 </div>
               </div>
+
+          {status === 'pending' && (
+            <div className="mt-0 space-y-4">
 
               <div className="space-y-1">
                 <label className="text-[10px] font-bold text-muted-foreground uppercase">Description (KO / EN)</label>
@@ -406,14 +450,32 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
             </>
           )}
           {status === 'published' && (
-            <span className="px-4 py-2 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded text-sm text-center">
-              발행됨
-            </span>
+            <>
+              <span className="px-4 py-2 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded text-sm text-center">
+                발행됨
+              </span>
+              <button
+                onClick={handleUpdate}
+                disabled={isLoading}
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50 text-sm font-bold"
+              >
+                정보 업데이트
+              </button>
+            </>
           )}
           {status === 'rejected' && (
-            <span className="px-4 py-2 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded text-sm text-center">
-              거절됨
-            </span>
+            <>
+              <span className="px-4 py-2 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded text-sm text-center">
+                거절됨
+              </span>
+              <button
+                onClick={handleUpdate}
+                disabled={isLoading}
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50 text-sm font-bold"
+              >
+                정보 업데이트
+              </button>
+            </>
           )}
         </div>
       </div>

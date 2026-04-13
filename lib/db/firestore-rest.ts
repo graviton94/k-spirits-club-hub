@@ -1637,7 +1637,7 @@ export const userDb = {
 };
 
 export const trendingDb = {
-    async logEvent(spiritId: string, action: 'view' | 'wishlist' | 'cabinet' | 'review') {
+    async logEvent(spiritId: string, action: 'view' | 'wishlist' | 'cabinet' | 'review' | 'purchase_click', metadata?: any) {
         const token = await getServiceAccountToken();
         const dateId = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
         // FIX: Use subcollection 'spirits' for cleaner structure and to avoid issues
@@ -1649,7 +1649,8 @@ export const trendingDb = {
             'view': { field: 'views', weight: 1 },
             'wishlist': { field: 'wishlistAdds', weight: 5 },
             'cabinet': { field: 'cabinetAdds', weight: 10 },
-            'review': { field: 'reviewsCount', weight: 20 }
+            'review': { field: 'reviewsCount', weight: 20 },
+            'purchase_click': { field: 'purchaseClicks', weight: 50 }
         };
 
         const config = fieldMap[action];

@@ -8,13 +8,14 @@ export type SpiritStatus = 'RAW' | 'ENRICHED' | 'READY_FOR_CONFIRM' | 'PUBLISHED
  */
 // Taste Analysis Types
 export interface FlavorStats {
-  woody: number;  // 우디함 (0-100)
-  peaty: number;  // 피트/스모키 (0-100)
-  floral: number; // 꽃향 (0-100)
-  fruity: number; // 과일향 (0-100)
-  nutty: number;  // 견과류/고소함 (0-100)
-  richness: number; // 바디감 (0-100)
+  sweet: number;    // 달콤함 (0-100)
+  fruity: number;   // 과일향 (0-100)
+  floral: number;   // 꽃향 (0-100)
+  spicy: number;    // 스파이시 (0-100)
+  woody: number;    // 우디함 (0-100)
+  peaty: number;    // 피트/스모키 (0-100)
 }
+
 
 export interface UserTasteProfile {
   userId: string;
@@ -121,6 +122,14 @@ export interface SpiritMetadata {
 
   // Primary Offer for GSC Merchant Listings
   offer?: SpiritOffer;
+
+  // Aggregate Rating for SEO Rich Snippets
+  aggregateRating?: {
+    ratingValue: number; // e.g., 4.7
+    reviewCount: number;  // e.g., 12
+    bestRating?: number;  // default 5
+    worstRating?: number; // default 1
+  };
 
   // Original/Raw metadata
   raw_category?: string;

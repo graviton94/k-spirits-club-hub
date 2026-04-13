@@ -1,347 +1,172 @@
 // app/api/analyze-taste/route.ts
 
 import { NextRequest, NextResponse } from 'next/server';
-import { cabinetDb, tasteProfileDb, reviewsDb } from '@/lib/db/firestore-rest';
+import { cabinetDb, tasteProfileDb, reviewsDb, spiritsDb } from '@/lib/db/firestore-rest';
 import { buildTasteAnalysisPrompt } from '@/lib/utils/aiPromptBuilder';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-// Vercel/Node.js 환경 설정
 export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
-export const preferredRegion = 'iad1'; // Vercel 기준 미국 동부(워싱턴 D.C)로 실행 위치 고정
+export const preferredRegion = 'iad1';
 
 const API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_GEMINI_API_KEY || '';
 
-// KST 날짜 헬퍼
 function getKSTDate() {
     return new Date().toLocaleString("en-CA", { timeZone: "Asia/Seoul" }).split(' ')[0];
 }
 
-// GET: Fetch existing profile & usage stats
+async function tryFindSpiritInDb(name: string) {
+    try {
+        // Search by name using exact match first, then broader
+        const results = await spiritsDb.getAll({ searchTerm: name, isPublished: true }, { page: 1, pageSize: 5 });
+        if (results && results.length > 0) {
+            // Find best name match
+            const lowerName = name.toLowerCase();
+            return results.find(s => 
+                s.name.toLowerCase().includes(lowerName) || 
+                (s.name_en && s.name_en.toLowerCase().includes(lowerName))
+            ) || results[0];
+        }
+        return null;
+    } catch (e) {
+        console.error('[Search Spirit Error]', e);
+        return null;
+    }
+}
+
 export async function GET(req: NextRequest) {
     try {
         const { searchParams } = new URL(req.url);
         const userId = searchParams.get('userId');
-
-        if (!userId) {
-            return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
-        }
+        if (!userId) return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
 
         const [profile, usage] = await Promise.all([
             tasteProfileDb.get(userId),
             tasteProfileDb.getUsage(userId)
         ]);
 
-        // Normalize usage for today
         const today = getKSTDate();
-        let dailyCount = 0;
+        let dailyCount = (usage && usage.date === today) ? usage.count : 0;
 
-        if (usage && usage.date === today) {
-            dailyCount = usage.count;
-        }
-
-        // Return wrapped response
         return NextResponse.json({
             profile: profile || null,
-            usage: {
-                date: today,
-                count: dailyCount,
-                remaining: Math.max(0, 3 - dailyCount)
-            }
+            usage: { date: today, count: dailyCount, remaining: Math.max(0, 3 - dailyCount) }
         });
-
     } catch (error) {
-        console.error('[Get Taste Profile Error]', error);
-        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+        return NextResponse.json({ error: 'Internal Error' }, { status: 500 });
     }
 }
 
 export async function POST(req: NextRequest) {
-    console.log('[Analyze Taste] POST Request received');
-
-    // 1. API 키 확인
-    if (!API_KEY) {
-        console.error('[Analyze Taste] API Key is missing (GEMINI_API_KEY)');
-        return NextResponse.json({
-            error: 'Server configuration error (API Key)',
-            details: 'GEMINI_API_KEY environment variable is not defined.'
-        }, { status: 500 });
-    }
+    if (!API_KEY) return NextResponse.json({ error: 'API Key missing' }, { status: 500 });
 
     try {
-        // Correctly read userId from Body for POST requests
         const body = await req.json();
-        const { userId } = body;
+        const { userId, lang = 'ko' } = body;
+        const isEn = lang === 'en';
 
-        if (!userId) {
-            console.error('[Analyze Taste] User ID missing in request body');
-            return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
-        }
+        if (!userId) return NextResponse.json({ error: 'User ID missing' }, { status: 400 });
 
-        // 0. Check Usage Limit
         const today = getKSTDate();
-        console.log(`[Analyze Taste] Checking usage for User: ${userId} on ${today}`);
+        let usage = await tasteProfileDb.getUsage(userId);
+        let currentCount = (usage && usage.date === today) ? usage.count : 0;
 
-        let usage;
-        try {
-            usage = await tasteProfileDb.getUsage(userId);
-        } catch (usageError: any) {
-            console.error('[Analyze Taste] Usage Check DB Error:', usageError);
-            // Non-blocking for now, or we can decide to fail
-        }
+        if (currentCount >= 3) return NextResponse.json({ error: 'Limit reached' }, { status: 429 });
 
-        let currentCount = 0;
+        const [cabinetItems, userReviews] = await Promise.all([
+            cabinetDb.getAll(userId),
+            reviewsDb.getAllForUser(userId, true)
+        ]);
 
-        if (usage && usage.date === today) {
-            currentCount = usage.count;
-        }
-
-        if (currentCount >= 3) {
-            console.warn(`[Analyze Taste] User ${userId} reached limit: ${currentCount}/3`);
-            return NextResponse.json({
-                error: 'Daily limit reached',
-                message: '오늘의 AI 분석 횟수(3회)를 모두 사용하셨어요. 내일 다시 시도해주세요!'
-            }, { status: 429 });
-        }
-
-        console.log(`[Analyze Taste] Data fetching for User: ${userId}`);
-
-        // 2. Fetch Data (DB 에러 1차 방어)
-        let cabinetItems = [];
-        let userReviews = [];
-
-        try {
-            [cabinetItems, userReviews] = await Promise.all([
-                cabinetDb.getAll(userId),
-                reviewsDb.getAllForUser(userId, true) // skipEnrichment = true to prevent N+1 fetch hitting 50 subreq limit
-            ]);
-            console.log(`[Analyze Taste] Fetched ${cabinetItems.length} cabinet items and ${userReviews.length} reviews`);
-        } catch (dbError: any) {
-            console.error('[Analyze Taste] DB Fetch Error:', dbError);
-            return NextResponse.json({
-                error: 'Failed to fetch user data',
-                details: dbError.message
-            }, { status: 500 });
-        }
-
-        // 3. Merge Data (데이터 병합)
         const spiritsForAnalysis = cabinetItems.map((item: any) => {
-            const review = userReviews.find((r: any) => r.spiritId === item.spiritId || r.spiritName === item.name);
-
-            // 활동 날짜 집계
-            const reviewDate = review?.createdAt || review?.updatedAt || null;
-            const addedDate = item.addedAt || null;
-            const lastActivityAt = reviewDate || addedDate;
-
+            const review = userReviews.find((r: any) => r.spiritId === item.spiritId);
             return {
                 ...item,
-                addedAt: addedDate,
-                lastActivityAt: lastActivityAt,
                 userReview: review ? {
                     ratingOverall: review.rating,
-                    ratingN: review.ratingN || 0,
-                    ratingP: review.ratingP || 0,
-                    ratingF: review.ratingF || 0,
-                    tagsN: review.tagsN ? [review.tagsN] : [],
-                    tagsP: review.tagsP ? [review.tagsP] : [],
-                    tagsF: review.tagsF ? [review.tagsF] : [],
-                    comment: review.notes,
-                    createdAt: reviewDate
-                } : null,
-                isWishlist: false
+                    tags: [...(review.tagsN || []), ...(review.tagsP || []), ...(review.tagsF || [])],
+                    comment: review.notes
+                } : null
             };
         });
 
-        const lang = body.lang || 'ko';
-        const isEn = lang === 'en';
-
-        // Fetch existing profile to get previous recommendations
-        let previousRecommendations: string[] = [];
-        try {
-            const existingProfile = await tasteProfileDb.get(userId);
-            if (existingProfile?.previousRecommendations) {
-                previousRecommendations = existingProfile.previousRecommendations;
-            }
-            console.log(`[Analyze Taste] Previous recommendations: ${previousRecommendations.length} items`);
-        } catch (e) {
-            console.warn('[Analyze Taste] Could not fetch previous recommendations:', e);
-        }
-
-        const promptData = buildTasteAnalysisPrompt(spiritsForAnalysis, isEn, previousRecommendations);
-        console.log(`[Analyze Taste] Prompt generated (Length: ${promptData?.length})`);
-
-        // 프롬프트가 너무 짧으면(분석할 술이 없으면) 에러 처리
-        if (!promptData || promptData.length < 10) {
-            console.error('[Analyze Taste] Prompt too short or empty');
-            return NextResponse.json({
-                error: 'Invalid data',
-                message: 'AI에게 전달할 데이터가 부족합니다. 최소 1개 이상의 술을 술장에 넣어주세요!'
-            }, { status: 400 });
-        }
-
-        // 4. Call AI (Multi-Regional Fallback Architecture)
-        const generationConfig = {
-            responseMimeType: "application/json",
-            temperature: 0.7,
-            topP: 0.8,
-            topK: 40
-        };
-
+        const promptData = buildTasteAnalysisPrompt(spiritsForAnalysis, isEn, []);
+        
         const systemInstruction = `
-        You are a World-Class Spirits Analyst and Gastronomy Critic with an encyclopedic knowledge of global liquors—from obscure Japanese small-batch shochus and traditional Korean yakjus to hyper-aged Caribbean rums and esoteric European eaux-de-vie. 
+        You are a World-Class AI Sommelier.
         
-        Analyze the user's spirit preferences based on the provided data with clinical precision and poetic insight.
+        GOAL:
+        1. Analyze user cellar data to create a precise 6D Flavor Vector (0-100).
+        2. Propose 3 high-discovery spirit recommendations.
         
-        IMPORTANT: Your recommendation MUST be high-variance and diverse. Do NOT just recommend the most famous or obvious bottles. Seek out high-quality, distinctive spirits that align with the user's flavor DNA but might be outside their current experience or represent a sophisticated shift in their taste journey.
+        6D VECTOR DIMENSIONS: sweet, fruity, floral, spicy, woody, peaty.
         
-        LANGUAGE REQUIREMENT: 
-        - Your response (description and recommendation reason) MUST be in ${isEn ? 'English' : 'professional, elegant Korean (polite tone)'}.
-        - Description should strictly be 4-5 sentences long, providing deep analytical insight.
-
-        REQUIRED FORMAT: Return ONLY valid JSON.
+        CRITICAL RECOMMENDATION RULES:
+        - NEVER suggest pairing one spirit with another (e.g., "Goes well with Whiskey X"). Spirits are NOT food.
+        - ALWAYS explain the match based on the User's Flavor DNA (e.g., "Your high Peaty score at 85 makes this an ideal match").
+        - SUGGEST actual Food Pairings (e.g., "Matches perfectly with smoked salmon or dark chocolate").
+        - COMPARATIVE ANALYSIS: Use phrases like "If you enjoyed X in your cabinet, you'll appreciate the Y notes in this bottle."
+        - Avoid repetitive or generic brands. Aim for "Discovery".
+        - Respond strictly in the ${isEn ? 'English' : 'Professional Korean (Honorifics)'} language.
         
-        Output Structure:
+        JSON FORMAT:
         {
-            "stats": {
-                "woody": 0-100,
-                "peaty": 0-100,
-                "floral": 0-100,
-                "fruity": 0-100,
-                "nutty": 0-100,
-                "richness": 0-100
-            },
-            "persona": {
-                "title": "A unique, creative title (e.g. 'The Esoteric Peat Hunter')",
-                "description": "4-5 sentences of deep analytical insight into their taste profile, acknowledging any recent trends or shifts in their collection.",
-                "keywords": ["#Tag1", "#Tag2", "#Tag3"]
-            },
-            "recommendation": {
-                "name": "Full professional name of a recommended spirit (Global)",
-                "matchRate": 80-99,
-                "reason": "An authoritative explanation of why this specific bottle's molecular profile matches the user's detected preferences, especially considering their recent activity."
+          "stats": { "sweet": 0-100, "fruity": 0-100, "floral": 0-100, "spicy": 0-100, "woody": 0-100, "peaty": 0-100 },
+          "persona": { "title": "Title", "description": "Analysis insight.", "keywords": ["#tag"] },
+          "recommendations": [
+            {
+              "name": "Exact Name",
+              "category": "Whisky/Traditional/etc",
+              "abv": 40.0,
+              "matchRate": 95,
+              "reason": "Detailed sommelier insight (No spirit-to-spirit pairing!)",
+              "tastingNotes": "Brief profile."
             }
+          ]
         }
         `;
 
-        let result;
-        try {
-            // 🟢 [Plan A] 1차 시도: Cloudflare AI Gateway (지역 락 우회 및 프록시)
-            console.log('[Analyze Taste] [Plan A] Attempting via Cloudflare AI Gateway...');
-            const gatewayGenAI = new GoogleGenerativeAI("CF_MANAGED_KEY");
-            const model = gatewayGenAI.getGenerativeModel({
-                model: "gemini-2.0-flash",
-                systemInstruction,
-                generationConfig
-            }, {
-                baseUrl: process.env.CF_GATEWAY_URL,
-                customHeaders: {
-                    "cf-aig-authorization": `Bearer ${process.env.CF_AIG_TOKEN}`
-                }
-            });
-            result = await model.generateContent(promptData);
-            console.log('[Analyze Taste] [Plan A] Success via AI Gateway');
+        const genAI = new GoogleGenerativeAI(API_KEY);
+        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash", systemInstruction, generationConfig: { responseMimeType: "application/json" } });
 
-        } catch (gatewayError: any) {
-            // ⚠️ Fallback
-            console.warn("⚠️ [Fallback] AI Gateway 호출 실패, Direct API로 우회합니다.", gatewayError.message);
+        const result = await model.generateContent(promptData);
+        const analysisResult = JSON.parse(result.response.text());
 
-            // 🟠 [Plan B] 2차 시도: Direct Gemini API (기존 방식)
-            const directGenAI = new GoogleGenerativeAI(API_KEY);
-            const fallbackModel = directGenAI.getGenerativeModel({
-                model: "gemini-2.0-flash",
-                systemInstruction,
-                generationConfig
-            });
-            result = await fallbackModel.generateContent(promptData);
-            console.log('[Analyze Taste] [Plan B] Success via Direct API');
-        }
-
-        let responseText = '';
-        try {
-            responseText = result.response.text();
-            console.log(`[Analyze Taste] AI Response received (Length: ${responseText.length})`);
-        } catch (textError: any) {
-            console.error('[Analyze Taste] Error extracting text from Gemini response:', textError);
-            return NextResponse.json({
-                error: 'AI Output Extraction Failed',
-                details: textError.message,
-                message: isEn
-                    ? 'Failed to extract AI response. Please try again.'
-                    : 'AI 응답 추출에 실패했습니다. 다시 시도해주세요.'
-            }, { status: 500 });
-        }
-
-        // 5. Parse JSON
-        let analysisResult;
-        try {
-            const cleanJson = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
-            analysisResult = JSON.parse(cleanJson);
-            console.log('[Analyze Taste] JSON Parsing Successful');
-            console.log('[Analyze Taste] Recommended:', analysisResult.recommendation?.name);
-        } catch (parseError: any) {
-            console.error('[Analyze Taste] JSON Parse Failed. Raw text sample:', responseText.substring(0, 200));
-            console.error('[Analyze Taste] Parse error:', parseError.message);
-            return NextResponse.json({
-                error: 'AI output format error',
-                details: parseError.message,
-                message: isEn
-                    ? 'Failed to parse AI analysis results. Please try again.'
-                    : 'AI 분석 결과 파싱에 실패했습니다. 다시 시도해주세요.'
-            }, { status: 500 });
-        }
-
-        // 6. Save & Response
-        console.log('[Analyze Taste] Saving results to DB...');
-
-        // Update previousRecommendations array
-        // Add current recommendation and keep last 10 total
-        const newRecommendation = analysisResult.recommendation?.name;
-        let updatedPreviousRecommendations = [...previousRecommendations];
-        if (newRecommendation) {
-            updatedPreviousRecommendations.push(newRecommendation);
-        }
-        // Keep only the last 10 recommendations
-        updatedPreviousRecommendations = updatedPreviousRecommendations.slice(-10);
+        // Process Recommendations with Live Firestore Sync
+        const enrichedRecs = await Promise.all(analysisResult.recommendations.slice(0, 3).map(async (rec: any) => {
+            const dbMatch = await tryFindSpiritInDb(rec.name);
+            if (dbMatch) {
+                return {
+                    ...dbMatch,
+                    id: dbMatch.id,
+                    score: rec.matchRate / 100,
+                    analysisReason: rec.reason,
+                    isAiDiscovery: false
+                };
+            }
+            return {
+                ...rec,
+                isAiDiscovery: true,
+                externalSearchUrl: `https://www.google.com/search?q=${encodeURIComponent(rec.name + ' spirits')}`
+            };
+        }));
 
         const profile = {
             userId,
             analyzedAt: new Date().toISOString(),
-            ...analysisResult,
-            previousRecommendations: updatedPreviousRecommendations
+            stats: analysisResult.stats,
+            persona: analysisResult.persona,
+            recommendationEntries: enrichedRecs // New list format
         };
 
-        try {
-            // Update Usage & Save Profile
-            await Promise.all([
-                tasteProfileDb.save(userId, profile),
-                tasteProfileDb.setUsage(userId, today, currentCount + 1)
-            ]);
-            console.log('[Analyze Taste] Save Successful');
-        } catch (saveError: any) {
-            console.error('[Analyze Taste] DB Save Error:', saveError);
-            // We can still return the profile even if save fails, but it's risky for UI consistency
-            // For now, let's treat it as a 500
-            return NextResponse.json({
-                error: 'Failed to save analysis results',
-                details: saveError.message
-            }, { status: 500 });
-        }
+        await Promise.all([
+            tasteProfileDb.save(userId, profile),
+            tasteProfileDb.setUsage(userId, today, currentCount + 1)
+        ]);
 
-        return NextResponse.json({
-            success: true,
-            profile,
-            usage: {
-                date: today,
-                count: currentCount + 1,
-                remaining: Math.max(0, 3 - (currentCount + 1))
-            }
-        });
-
+        return NextResponse.json({ success: true, profile });
     } catch (error: any) {
-        console.error('[Analyze Taste Critical Error]', error);
-        return NextResponse.json({
-            error: 'Internal Server Error',
-            details: error.message
-        }, { status: 500 });
+        console.error('[Analyze Taste Error]', error);
+        return NextResponse.json({ error: 'AI Error', details: error.message }, { status: 500 });
     }
 }

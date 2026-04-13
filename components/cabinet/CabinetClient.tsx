@@ -27,40 +27,28 @@ interface CabinetClientProps {
 
 export default function CabinetClient({ lang, dict }: CabinetClientProps) {
     const isEn = lang === 'en';
-    // View state
     const [viewMode, setViewMode] = useState<ViewMode>('cellar');
-
-    // Cabinet state
     const [spirits, setSpirits] = useState<Spirit[]>([]);
     const [isLoadingCabinet, setIsLoadingCabinet] = useState(false);
-
-    // User stats state
     const [reviewCount, setReviewCount] = useState(0);
     const [likesReceived, setLikesReceived] = useState(0);
     const [isLoadingStats, setIsLoadingStats] = useState(false);
-
-    // Modal state
     const [selectedSpirit, setSelectedSpirit] = useState<Spirit | null>(null);
     const [reviewModalOpen, setReviewModalOpen] = useState(false);
     const [reviewTarget, setReviewTarget] = useState<Spirit | null>(null);
     const [searchModalOpen, setSearchModalOpen] = useState(false);
-
-    // Toast state
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState("");
 
-    // Hooks
     const { profile, loading, user } = useAuth();
     const { searchIndex } = useSpiritsCache();
 
-    // Set page title for SEO
     useEffect(() => {
         document.title = isEn
             ? `My Cabinet | K-Spirits Club`
             : `K-Spirits Club | 나만의 술장 만들기 & AI 취향 분석`;
     }, [isEn]);
 
-    // Fetch cabinet data
     const fetchCabinet = useCallback(async () => {
         if (!user) {
             setSpirits([]);
@@ -77,7 +65,7 @@ export default function CabinetClient({ lang, dict }: CabinetClientProps) {
                 console.error('Failed to parse cabinet cache', e);
             }
         } else {
-            setIsLoadingCabinet(true); // Show initial loader only if no cache exists
+            setIsLoadingCabinet(true);
         }
 
         try {
@@ -295,6 +283,7 @@ export default function CabinetClient({ lang, dict }: CabinetClientProps) {
                     <PreferenceExploration
                         key="flavor"
                         flavorAnalysis={flavorAnalysis}
+                        spirits={spirits}
                         profile={profile}
                         loading={loading}
                         dict={dict}

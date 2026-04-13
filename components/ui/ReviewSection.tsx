@@ -11,6 +11,7 @@ import { getRatingColor } from '@/lib/utils/rating-colors';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '@/lib/db/firebase';
 import imageCompression from 'browser-image-compression';
+import MicroReviewModal from '@/components/ui/MicroReviewModal';
 
 interface ExtendedReview extends Review {
   noseRating?: number;
@@ -37,6 +38,7 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
   const [deleteTarget, setDeleteTarget] = useState<ExtendedReview | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const [toast, setToast] = useState<{ message: string; variant: 'success' | 'error' } | null>(null);
+  const [showMicroModal, setShowMicroModal] = useState(false);
 
   // Synchronize internal state when reviews prop changes (e.g., after fetching from API)
   useEffect(() => {
@@ -150,7 +152,30 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
         >
           {showForm ? (isEn ? 'Cancel' : '취소하기') : hasReviewed ? (isEn ? 'Review Completed' : '리뷰 작성 완료') : (dict?.writeReview || (isEn ? '+ Write Review' : '+ 리뷰 작성하기'))}
         </button>
+        {!hasReviewed && !showForm && (
+          <button
+            onClick={() => {
+              if (!user) {
+                window.dispatchEvent(new CustomEvent('openLoginModal'));
+                return;
+              }
+              setShowMicroModal(true);
+            }}
+            className="flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold bg-neutral-900 border border-white/10 text-white hover:bg-neutral-800 transition-all shadow-lg"
+          >
+            <Zap className="w-4 h-4 text-amber-500" />
+            {isEn ? 'Quick Rate' : '빠른 평가'}
+          </button>
+        )}
       </div>
+
+      <MicroReviewModal 
+        spiritId={spiritId}
+        spiritName={spiritName}
+        isOpen={showMicroModal}
+        onClose={() => setShowMicroModal(false)}
+        lang={lang}
+      />
 
       {/* Average Summary Card */}
       {liveReviews.length > 0 && (
