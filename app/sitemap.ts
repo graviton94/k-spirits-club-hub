@@ -14,8 +14,12 @@ export const revalidate = 86400;
  * SEO Phase 2: Indexable Tier Classification
  *
  * Tier A (Indexable): Spirits with high-quality content
- * - name, abv, category
- * - at least two quality signals among image / description / pairing / tasting data
+ * - name, category (required)
+ * - at least TWO quality signals among:
+ *   - image (imageUrl or thumbnailUrl)
+ *   - description (ko or en) >= 160 characters
+ *   - pairing guide (ko or en) >= 120 characters
+ *   - tasting note / sensory tags
  *
  * Tier B (Non-indexable): Thin content spirits
  * - Excluded from sitemap, marked with noindex on page
@@ -25,13 +29,32 @@ export const revalidate = 86400;
 function isIndexableSpiritMeta(spirit: {
   name: string;
   category: string | null;
-  // ... rest of meta if needed, but we focus on core identity for indexability
+  imageUrl: string | null;
+  thumbnailUrl: string | null;
+  descriptionKoLength: number;
+  descriptionEnLength: number;
+  pairingKoLength: number;
+  pairingEnLength: number;
+  tastingNoteLength: number;
+  sensoryTagCount: number;
 }): boolean {
   const hasName = !!spirit.name;
   const hasCategory = !!spirit.category;
 
-  // SEO Expert: We now index all spirits with at least a name and category to maximize reach.
-  return hasName && hasCategory;
+  // Required minimum fields
+  if (!hasName || !hasCategory) return false;
+
+  // Calculate quality signals (same logic as indexable-tier.ts)
+  const hasImage = !!(spirit.imageUrl || spirit.thumbnailUrl);
+  const qualitySignalCount = [
+    hasImage,
+    spirit.descriptionKoLength >= 160 || spirit.descriptionEnLength >= 160,
+    spirit.pairingKoLength >= 120 || spirit.pairingEnLength >= 120,
+    spirit.tastingNoteLength >= 24 || spirit.sensoryTagCount >= 4,
+  ].filter(Boolean).length;
+
+  // Quality threshold: At least 2 quality signals required
+  return qualitySignalCount >= 2;
 }
 
 /**
