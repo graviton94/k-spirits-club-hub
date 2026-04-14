@@ -3,7 +3,7 @@ export const revalidate = 0; // Force fetching dynamically so latest spirits alw
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { getSpiritCategory } from '@/lib/constants/spirits-guide-data'
+import { resolveWikiCategory } from '@/lib/utils/wiki-resolver'
 import { db } from '@/lib/db'
 import SpiritGuideLayout from '@/components/contents/SpiritGuideLayout'
 import { redirect } from 'next/navigation'
@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
         redirect(`/${lang}/contents/wiki/${LEGACY_EN_SLUG_MAP[decodedSlug]}`)
     }
 
-    const cat = getSpiritCategory(decodedSlug) || getSpiritCategory(slug)
+    const cat = await resolveWikiCategory(decodedSlug) || await resolveWikiCategory(slug)
     if (!cat) return { title: 'Not Found' }
 
     const isEn = lang === 'en'
@@ -150,7 +150,7 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
         redirect(`/${lang}/contents/wiki/${LEGACY_EN_SLUG_MAP[decodedSlug]}`)
     }
 
-    const cat = getSpiritCategory(decodedSlug) || getSpiritCategory(slug)
+    const cat = await resolveWikiCategory(decodedSlug) || await resolveWikiCategory(slug)
 
     if (!cat) {
         notFound()
@@ -196,9 +196,9 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
         }
     }
 
-    const comparisonLinks = (RELATED_COMPARISON_SLUGS[cat.slug] || [])
-        .map((relatedSlug) => getSpiritCategory(relatedSlug))
-        .filter((relatedCategory): relatedCategory is NonNullable<typeof relatedCategory> => Boolean(relatedCategory))
+    const comparisonLinks = (await Promise.all(
+        (RELATED_COMPARISON_SLUGS[cat.slug] || []).map((relatedSlug) => resolveWikiCategory(relatedSlug))
+    )).filter((relatedCategory): relatedCategory is NonNullable<typeof relatedCategory> => Boolean(relatedCategory))
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://kspiritsclub.com'
     const title = isEn

@@ -105,6 +105,9 @@ const nextConfig = {
       },
     ];
   },
+  experimental: {
+    optimizePackageImports: ['@/lib/constants'],
+  },
 };
 
 module.exports = nextConfig;

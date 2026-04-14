@@ -6,14 +6,13 @@ import { reviewsDb } from "@/lib/db/firestore-rest";
 import { getDictionary } from "@/lib/get-dictionary";
 import { Locale } from "@/i18n-config";
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url'
-import { selectFeaturedSpiritsForWiki } from '@/lib/utils/wiki-spirit-match'
 import { getSpiritRobotsMeta } from '@/lib/utils/indexable-tier'
 import RelatedWikiSection from '@/components/spirits/RelatedWikiSection'
 import { getRelatedSpirits } from "@/lib/utils/related-spirits";
 import { resolveSpiritPageState } from "@/lib/utils/spirit-page-resolver";
+import { resolveWikiCategory } from "@/lib/utils/wiki-resolver";
 import { formatSpiritFieldValue } from "@/lib/utils/localize-field";
 import { Spirit } from "@/lib/db/schema";
-import { getSpiritCategory } from "@/lib/constants/spirits-guide-data";
 import { scoreSpiritForWikiCategory } from "@/lib/utils/wiki-spirit-match";
 import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
 
@@ -106,7 +105,7 @@ const CATEGORY_TO_WIKI_LABEL_KO: Record<string, string> = {
   '백주': '바이주 가이드',
 };
 
-function resolveSpiritWikiGuide(
+async function resolveSpiritWikiGuide(
   category: string,
   subcategory: string | null | undefined,
   mainCategory: string | null | undefined,
@@ -116,8 +115,8 @@ function resolveSpiritWikiGuide(
   let slug = CATEGORY_TO_WIKI_SLUG[category];
 
   if (category === '청주') {
-    const sakeCategory = getSpiritCategory('sake');
-    const cheongjuCategory = getSpiritCategory('cheongju');
+    const sakeCategory = await resolveWikiCategory('sake');
+    const cheongjuCategory = await resolveWikiCategory('cheongju');
     const wikiTarget = {
       category,
       subcategory: subcategory || null,
@@ -132,7 +131,7 @@ function resolveSpiritWikiGuide(
 
   if (!slug) return null;
 
-  const wikiCategory = getSpiritCategory(slug);
+  const wikiCategory = await resolveWikiCategory(slug);
   const useWikiCategoryLabel = category === '청주';
 
   return {
@@ -558,12 +557,12 @@ export default async function SpiritDetailPage({
   // Shared resolver — deduplicates the Firestore fetch already issued by generateMetadata.
   const pageState = await resolveSpiritPageState(id);
 
-  // Permanent absence → real 404 (or 410 if the resource was clearly removed).
+  // Permanent absence → real 404
   if (pageState.status === 'NOT_FOUND') {
     notFound();
   }
 
-  // Transient backend/data failure → throw so Next.js returns 5xx, NOT a 200 loading shell.
+  // Transient backend/data failure → throw so Next.js returns 5xx
   if (pageState.status === 'TRANSIENT_FAILURE') {
     console.error(
       `[SpiritPage] id=${id} Transient failure — throwing to trigger 5xx. error=${pageState.error}`
@@ -573,10 +572,29 @@ export default async function SpiritDetailPage({
     );
   }
 
-  const spirit = pageState.spirit as any; // Enriched with aggregateRating and expertReview
-  const reviews = spirit.userReviews || [];
-  const expertReview = spirit.expertReview;
+  const spirit = (pageState as any).spirit as Spirit; // Enriched with aggregateRating and expertReview
+  const reviews = (spirit as any).userReviews || [];
+  const expertReview = (spirit as any).expertReview;
   const dictionary = await getDictionary(lang as Locale);
+
+  // --- Resolve Wiki Hub Link (Server Side) ---
+  const wikiGuide = await resolveSpiritWikiGuide(spirit.category, spirit.subcategory, spirit.mainCategory);
+
+  // Optimized Wiki Data Resolution (Server-side)
+  let wikiMetadata = null;
+  if (wikiGuide) {
+    const wikiCat = await resolveWikiCategory(wikiGuide.slug);
+    if (wikiCat) {
+      const section = isEn ? (wikiCat.sectionsEn || wikiCat.sections) : wikiCat.sections;
+      wikiMetadata = {
+        title: isEn ? wikiCat.nameEn : wikiCat.nameKo,
+        tagline: isEn ? wikiCat.taglineEn : wikiCat.taglineKo,
+        emoji: wikiCat.emoji,
+        recommendedGlass: section?.servingGuidelines?.recommendedGlass,
+        optimalTemp: section?.servingGuidelines?.optimalTemperatures?.[0]?.temp
+      };
+    }
+  }
 
   // --- Fetch Related Spirits Server Side ---
   const isIndexable = pageState.status === 'FOUND_INDEXABLE';
@@ -734,7 +752,6 @@ export default async function SpiritDetailPage({
   } : null;
 
 
-  const wikiGuide = resolveSpiritWikiGuide(spirit.category, spirit.subcategory, spirit.mainCategory);
 
   const breadcrumbLd = {
     '@context': 'https://schema.org',
@@ -781,17 +798,17 @@ export default async function SpiritDetailPage({
       )}
       <SpiritDetailClient spirit={spirit} reviews={reviews} relatedSpirits={relatedSpirits} lang={lang as Locale} dict={dictionary.detail} />
       
-      {/* Phase 3: Hub & Spoke Connectivity Section */}
-      {wikiGuide && (
+      {/* Phase 3: Hub & Spoke Connectivity Section (Optimized Bundle) */}
+      {wikiMetadata && wikiGuide && (
         <div className="container mx-auto px-4 max-w-4xl">
           <RelatedWikiSection 
              lang={lang}
-             category={spirit.category}
-             subcategory={spirit.subcategory}
-             mainCategory={spirit.mainCategory}
              slug={wikiGuide.slug}
-             labelKo={wikiGuide.labelKo}
-             labelEn={wikiGuide.labelEn}
+             title={wikiMetadata.title}
+             tagline={wikiMetadata.tagline}
+             emoji={wikiMetadata.emoji}
+             recommendedGlass={wikiMetadata.recommendedGlass}
+             optimalTemp={wikiMetadata.optimalTemp}
           />
         </div>
       )}

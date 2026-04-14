@@ -3,38 +3,28 @@
 import React from 'react';
 import Link from 'next/link';
 import { BookOpen, ArrowRight, ShieldCheck, Thermometer, GlassWater } from 'lucide-react';
-import { getSpiritCategory } from '@/lib/constants/spirits-guide-data';
 
 interface RelatedWikiSectionProps {
   lang: string;
-  category: string;
-  subcategory?: string | null;
-  mainCategory?: string | null;
   slug: string;
-  labelKo: string;
-  labelEn: string;
+  // UI Data passed from Server
+  title: string;
+  tagline: string;
+  emoji: string;
+  recommendedGlass?: string;
+  optimalTemp?: string;
 }
 
 export default function RelatedWikiSection({
   lang,
-  category,
-  subcategory,
-  mainCategory,
   slug,
-  labelKo,
-  labelEn,
+  title,
+  tagline,
+  emoji,
+  recommendedGlass,
+  optimalTemp,
 }: RelatedWikiSectionProps) {
-  const wikiCat = getSpiritCategory(slug);
-  if (!wikiCat) return null;
-
   const isEn = lang === 'en';
-  const title = isEn ? wikiCat.nameEn : wikiCat.nameKo;
-  const tagline = isEn ? wikiCat.taglineEn : wikiCat.taglineKo;
-  const section = isEn ? (wikiCat.sectionsEn || wikiCat.sections) : wikiCat.sections;
-
-  // Extract a "Pro Tip" or "Best Glass" from metadata
-  const servingInfo = section?.servingGuidelines;
-  const metrics = section?.sensoryMetrics;
 
   return (
     <section className="mt-12 mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -58,7 +48,7 @@ export default function RelatedWikiSection({
           <div className="flex flex-col md:flex-row md:items-center gap-6">
             <div className="flex-1">
               <h4 className="text-2xl md:text-3xl font-black mb-2 text-slate-900 dark:text-slate-100">
-                {wikiCat.emoji} {title}
+                {emoji} {title}
               </h4>
               <p className="text-slate-600 dark:text-slate-400 font-medium text-sm md:text-base mb-6 max-w-2xl leading-relaxed">
                 {tagline}
@@ -66,19 +56,19 @@ export default function RelatedWikiSection({
 
               {/* Snippets / Quick Tips */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                {servingInfo?.recommendedGlass && (
+                {recommendedGlass && (
                   <div className="flex items-center gap-3 bg-white/50 dark:bg-white/5 p-3 rounded-2xl border border-slate-200 dark:border-white/5">
                     <div className="text-blue-500">
                       <GlassWater size={18} />
                     </div>
                     <div className="text-xs">
                       <div className="text-slate-400 font-bold uppercase tracking-tight">Best Glass</div>
-                      <div className="text-slate-900 dark:text-slate-100 font-black">{servingInfo.recommendedGlass}</div>
+                      <div className="text-slate-900 dark:text-slate-100 font-black">{recommendedGlass}</div>
                     </div>
                   </div>
                 )}
                 
-                {servingInfo?.optimalTemperatures && servingInfo.optimalTemperatures.length > 0 && (
+                {optimalTemp && (
                   <div className="flex items-center gap-3 bg-white/50 dark:bg-white/5 p-3 rounded-2xl border border-slate-200 dark:border-white/5">
                     <div className="text-red-500">
                       <Thermometer size={18} />
@@ -86,7 +76,7 @@ export default function RelatedWikiSection({
                     <div className="text-xs">
                       <div className="text-slate-400 font-bold uppercase tracking-tight">Best Temp</div>
                       <div className="text-slate-900 dark:text-slate-100 font-black">
-                        {servingInfo.optimalTemperatures[0].temp}
+                        {optimalTemp}
                       </div>
                     </div>
                   </div>
