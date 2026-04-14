@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { getSpiritCategory } from '@/lib/constants/spirits-guide-data'
-import { spiritsDb } from '@/lib/db/firestore-rest'
+import { db } from '@/lib/db'
 import SpiritGuideLayout from '@/components/contents/SpiritGuideLayout'
 import { redirect } from 'next/navigation'
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url'
@@ -173,30 +173,26 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
 
     if (slug !== 'oak-barrel' && dbCategories && dbCategories.length > 0) {
         try {
-            const spiritGroups = await Promise.all(
-                dbCategories.map((dbCategory) =>
-                    spiritsDb.getAll(
-                        { category: dbCategory, isPublished: true },
-                        { page: 1, pageSize: 60 },
-                    ).catch(() => []),
-                ),
-            )
-
-            const uniqueSpirits = Array.from(
-                new Map(spiritGroups.flat().map((spirit: any) => [spirit.id, spirit])).values(),
-            )
-
-            featuredSpirits = selectFeaturedSpiritsForWiki(uniqueSpirits, cat, 6)
-                .map((s: any) => ({
-                    id: s.id,
-                    name: s.name,
-                    nameEn: s.metadata?.name_en || s.name_en || null,
-                    category: s.category,
-                    subcategory: s.subcategory || null,
-                    imageUrl: s.thumbnailUrl || s.imageUrl || null,
-                }))
-        } catch {
-            // 무시
+            // High-Performance Fetch: Use the Search Index with short keys
+            // Priority: Fetch top-rated spirits from the primary category
+            const results = await db.getTopInCategory(dbCategories[0], 12);
+            
+            // Map short keys to the UI model expected by the layout/cards
+            featuredSpirits = results.map((s: any) => ({
+                id: s.i,
+                name: s.n,
+                nameEn: s.en,
+                category: s.c,
+                subcategory: s.sc,
+                imageUrl: s.t,
+                rating: s.r
+            }));
+            
+            // If we have subcategory keywords, we can still do a light filter if needed, 
+            // but the indexed 'r' rating is now our primary quality signal.
+            featuredSpirits = featuredSpirits.slice(0, 6);
+        } catch (error) {
+            console.error('[Wiki Featured] Search index fetch failed:', error);
         }
     }
 

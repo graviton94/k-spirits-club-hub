@@ -169,5 +169,15 @@
         "errorDay": "{month} has {days} days.",
         "errorFuture": "Future date is not allowed.",
         "errorUnderage": "You must be 19 or older to enter."
+    },
+    "faq": {
+        "abv_q": "What is the ABV (Alcohol by Volume) of {name}?",
+        "abv_a": "The alcohol by volume (ABV) of {name} is {abv}%.",
+        "origin_q": "Where is {name} produced?",
+        "origin_a": "{name} is a {category} product produced in the {origin} region/country.",
+        "tasting_q": "What are the tasting notes for {name}?",
+        "tasting_a": "{name} features a flavor profile with notes of {notes}, and it currently holds a quality rating of {rating} on K-Spirits Club.",
+        "pairing_q": "What food pairs well with {name}?",
+        "pairing_a": "{name} pairs exceptionally well with {pairing}."
     }
 }

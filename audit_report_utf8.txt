@@ -1,0 +1,548 @@
+﻿[dotenv@17.2.3] injecting env (15) from .env -- tip: ??audit secrets and track compliance: https://dotenvx.com/ops
+?뱻 Total Published Spirits: 1830
+[Firestore] Fetching Spirit Detail: fsk-2003001503616
+[Firestore] Fetching Spirit Detail: fsk-200100152328
+[Firestore] Fetching Spirit Detail: fsk-200300150364
+[Firestore] Fetching Spirit Detail: fsk-2003001523642
+[Firestore] Fetching Spirit Detail: fsk-2010001514410
+[Firestore] Fetching Spirit Detail: fsk-200800152085
+[Firestore] Fetching Spirit Detail: fsk-2003001523680
+[Firestore] Fetching Spirit Detail: fsk-201000151493
+[Firestore] Fetching Spirit Detail: fsk-201000151494
+[Firestore] Fetching Spirit Detail: fsk-2013001508581
+[Firestore] Fetching Spirit Detail: fsk-2003001523622
+[Firestore] Fetching Spirit Detail: fsk-200800152081
+[Firestore] Fetching Spirit Detail: fsk-200800152642
+[Firestore] Fetching Spirit Detail: fsk-2013001508554
+[Firestore] Fetching Spirit Detail: fsk-2012001524114
+[Firestore] Fetching Spirit Detail: fsk-20130015085161
+[Firestore] Fetching Spirit Detail: fsk-2013001508560
+[Firestore] Fetching Spirit Detail: fsk-201300151014
+[Firestore] Fetching Spirit Detail: fsk-201300160351
+[Firestore] Fetching Spirit Detail: fsk-201000151497
+[Firestore] Fetching Spirit Detail: fsk-2010001514425
+[Firestore] Fetching Spirit Detail: fsk-200300152364
+[Firestore] Fetching Spirit Detail: fsk-201300151015
+[Firestore] Fetching Spirit Detail: fsk-201300160201
+[Firestore] Fetching Spirit Detail: fsk-2010001514433
+[Firestore] Fetching Spirit Detail: fsk-2010001519411
+[Firestore] Fetching Spirit Detail: fsk-2013001508594
+[Firestore] Fetching Spirit Detail: fsk-20110015190110
+[Firestore] Fetching Spirit Detail: fsk-20030015236118
+[Firestore] Fetching Spirit Detail: fsk-201000151947
+[Firestore] Fetching Spirit Detail: fsk-201300160891
+[Firestore] Fetching Spirit Detail: fsk-200800152646
+[Firestore] Fetching Spirit Detail: fsk-20110015171114
+[Firestore] Fetching Spirit Detail: fsk-20110015171120
+[Firestore] Fetching Spirit Detail: fsk-2013001508548
+[Firestore] Fetching Spirit Detail: fsk-2013001609860
+[Firestore] Fetching Spirit Detail: fsk-200300152361
+[Firestore] Fetching Spirit Detail: fsk-2010001502233
+[Firestore] Fetching Spirit Detail: fsk-20130016053555
+[Firestore] Fetching Spirit Detail: fsk-2013001508546
+[Firestore] Fetching Spirit Detail: fsk-201300160392
+[Firestore] Fetching Spirit Detail: fsk-2010001514424
+[Firestore] Fetching Spirit Detail: fsk-2010001514434
+[Firestore] Fetching Spirit Detail: fsk-200800152647
+[Firestore] Fetching Spirit Detail: fsk-201300160135
+[Firestore] Fetching Spirit Detail: fsk-20110015190186
+[Firestore] Fetching Spirit Detail: fsk-2013001508593
+[Firestore] Fetching Spirit Detail: fsk-2006001502095
+[Firestore] Fetching Spirit Detail: fsk-2013001508549
+[Firestore] Fetching Spirit Detail: fsk-201300151012
+[Firestore] Fetching Spirit Detail: fsk-2003001523683
+[Firestore] Fetching Spirit Detail: fsk-2003001523616
+[Firestore] Fetching Spirit Detail: fsk-2006001502047
+[Firestore] Fetching Spirit Detail: fsk-2003001523672
+[Firestore] Fetching Spirit Detail: fsk-201000151492
+[Firestore] Fetching Spirit Detail: fsk-2010001514426
+[Firestore] Fetching Spirit Detail: fsk-2013001508558
+[Firestore] Fetching Spirit Detail: fsk-201300160303
+[Firestore] Fetching Spirit Detail: fsk-20130015085155
+[Firestore] Fetching Spirit Detail: fsk-201300160752
+[Firestore] Fetching Spirit Detail: fsk-200300152365
+[Firestore] Fetching Spirit Detail: fsk-2010001502243
+[Firestore] Fetching Spirit Detail: fsk-201200150513
+[Firestore] Fetching Spirit Detail: fsk-2013001611918
+[Firestore] Fetching Spirit Detail: fsk-20130016119142
+[Firestore] Fetching Spirit Detail: fsk-201200150514
+[Firestore] Fetching Spirit Detail: fsk-2013001508563
+[Firestore] Fetching Spirit Detail: fsk-2003001523682
+[Firestore] Fetching Spirit Detail: fsk-2012001507212
+[Firestore] Fetching Spirit Detail: fsk-2013001601452
+[Firestore] Fetching Spirit Detail: fsk-201300160884
+[Firestore] Fetching Spirit Detail: fsk-20110015171115
+[Firestore] Fetching Spirit Detail: fsk-20130015085151
+[Firestore] Fetching Spirit Detail: fsk-2011001520525
+[Firestore] Fetching Spirit Detail: fsk-201300160657
+[Firestore] Fetching Spirit Detail: fsk-199000150021
+[Firestore] Fetching Spirit Detail: fsk-2013001508553
+[Firestore] Fetching Spirit Detail: fsk-201300160292
+[Firestore] Fetching Spirit Detail: fsk-201300160894
+[Firestore] Fetching Spirit Detail: fsk-201300160411
+[Firestore] Fetching Spirit Detail: fsk-2012001507216
+[Firestore] Fetching Spirit Detail: fsk-2003001523653
+[Firestore] Fetching Spirit Detail: fsk-2013001508590
+[Firestore] Fetching Spirit Detail: fsk-2013001601429
+[Firestore] Fetching Spirit Detail: fsk-2010001514421
+[Firestore] Fetching Spirit Detail: fsk-2011001517153
+[Firestore] Fetching Spirit Detail: fsk-20110015171112
+[Firestore] Fetching Spirit Detail: fsk-2006001502064
+[Firestore] Fetching Spirit Detail: fsk-2013001508596
+[Firestore] Fetching Spirit Detail: fsk-2013001606515
+[Firestore] Fetching Spirit Detail: fsk-201200150516
+[Firestore] Fetching Spirit Detail: fsk-2012001524115
+[Firestore] Fetching Spirit Detail: fsk-201300160297
+[Firestore] Fetching Spirit Detail: fsk-2013001601415
+[Firestore] Fetching Spirit Detail: fsk-201300160301
+[Firestore] Fetching Spirit Detail: fsk-2013001607416
+[Firestore] Fetching Spirit Detail: fsk-201100151034
+[Firestore] Fetching Spirit Detail: fsk-201300161002
+[Firestore] Fetching Spirit Detail: fsk-2013001601449
+[Firestore] Fetching Spirit Detail: fsk-201300161102
+
+=================================================
+?룇 MOST RICH SAMPLE DATA
+=================================================
+{
+  "id": "fsk-2006001502047",
+  "subcategory": "?쎌＜",
+  "region": "Hoengseong",
+  "reviewedAt": "2026-02-09T12:18:45.214Z",
+  "isReviewed": true,
+  "country": "??쒕?援?,
+  "palate_tags": [
+    "Mild Sweetness",
+    "Herbal Infusion",
+    "Smooth Texture",
+    "Rice Flavor",
+    "Subtle Bitterness",
+    "Balanced",
+    "Umami"
+  ],
+  "status": "PUBLISHED",
+  "volume": 700,
+  "updatedAt": "2026-04-14T13:06:58.776Z",
+  "finish_tags": [
+    "Clean",
+    "Lingering Sweetness",
+    "Gentle Herbal",
+    "Refreshing",
+    "Short",
+    "Balanced",
+    "Smooth"
+  ],
+  "searchKeywords": [
+    "ae",
+    "aek",
+    "aeks",
+    "aekse",
+    "aeksej",
+    "aekseju",
+    "aen",
+    "aeng",
+    "an",
+    "ang",
+    "ba",
+    "bae",
+    "baek",
+    "baeks",
+    "baekse",
+    "baeksej",
+    "baekseju",
+    "da",
+    "dan",
+    "dang",
+    "ej",
+    "eju",
+    "ek",
+    "eks",
+    "ekse",
+    "eksej",
+    "ekseju",
+    "en",
+    "eng",
+    "ju",
+    "ko",
+    "koo",
+    "kook",
+    "kooks",
+    "kookso",
+    "kooksoo",
+    "kooksoon",
+    "kooksoond",
+    "kooksoonda",
+    "ks",
+    "kse",
+    "ksej",
+    "kseju",
+    "kso",
+    "ksoo",
+    "ksoon",
+    "ksoond",
+    "ksoonda",
+    "ksoondan",
+    "ksoondang",
+    "nd",
+    "nda",
+    "ndan",
+    "ndang",
+    "ng",
+    "ok",
+    "oks",
+    "okso",
+    "oksoo",
+    "oksoon",
+    "oksoond",
+    "oksoonda",
+    "oksoondan",
+    "oksoondang",
+    "on",
+    "ond",
+    "onda",
+    "ondan",
+    "ondang",
+    "oo",
+    "ook",
+    "ooks",
+    "ookso",
+    "ooksoo",
+    "ooksoon",
+    "ooksoond",
+    "ooksoonda",
+    "ooksoondan",
+    "oon",
+    "oond",
+    "oonda",
+    "oondan",
+    "oondang",
+    "sa",
+    "sae",
+    "saen",
+    "saeng",
+    "se",
+    "sej",
+    "seju",
+    "so",
+    "soo",
+    "soon",
+    "soond",
+    "soonda",
+    "soondan",
+    "soondang",
+    "諛깆꽭",
+    "諛깆꽭二?,
+    "??,
+    "?몄＜"
+  ],
+  "distillery": "Kooksoondang",
+  "isPublished": true,
+  "reviewedBy": "ADMIN",
+  "metadata": {
+    "pairing_guide_ko": "??諛깆꽭二쇰뒗 ?????⑤쭧怨??쎌옱 ?μ씠 ?뱀쭠?쇰줈, ?ъ꽭???띾?瑜?媛吏??뚯떇怨????댁슱由쎈땲?? 癒쇱?, **?대Ъ?뚯쟾**??異붿쿇?⑸땲?? 諛붿궘???대Ъ?뚯쟾??怨좎냼?④낵 ?ㅼ뼇???댁궛臾쇱쓽 ?띾?媛 諛깆꽭二쇱쓽 ?????⑤쭧怨??댁슦?ъ졇 議고솕濡쒖슫 留쏆쓣 ?좎궗?⑸땲?? ?뱁엳 ?뚯쟾??湲곕쫫吏?留쏆쓣 諛깆꽭二쇨? 源붾걫?섍쾶 ?≪븘二쇱뼱 ?붿슧 留쏆엳寃?利먭만 ???덉뒿?덈떎. ?ㅼ쓬?쇰줈, **踰꾩꽢?꾧낏**怨쇱쓽 議고빀??異붿쿇?⑸땲?? ?ㅼ뼇??踰꾩꽢??源딆? ?κ낵 ?대갚??留쏆씠 諛깆꽭二쇱쓽 ?쎌옱 ?κ낵 ?????⑤쭧???붿슧 ?뗫낫?닿쾶 ?⑸땲?? ?곕쑜??援?Ъ ?붾━??踰꾩꽢?꾧낏? 諛깆꽭二쇱쓽 遺?쒕윭??吏덇컧怨????댁슱???몄븞?섍퀬 ?곕쑜???먮굦???좎궗?⑸땲??",
+    "description_ko": "??諛깆꽭二쇰뒗 李뱀?怨?硫μ???二쇱썝猷뚮줈 ?섏뿬 12媛吏 ?쎌옱瑜?泥④??섏뿬 鍮싳? ?쎌＜?낅땲?? ?????쎌옱 ?κ낵 ?④퍡 ????⑤쭧??議고솕濡?쾶 ?댁슦?ъ졇 遺?쒕윭???띾?瑜??좎궗?⑸땲?? 紐⑸꽆源??源붾걫?섎ŉ, ???섍쾶 ?쇱????⑤쭧??湲곕텇 醫뗭? ?ъ슫???④퉩?덈떎. 李④컩寃?移좊쭅?섏뿬 媛蹂띻쾶 利먭린嫄곕굹, ?쒖떇 ?붾━? ?④퍡 怨곷뱾?대㈃ ?붿슧 醫뗭뒿?덈떎. 諛깆꽭二쇱쓽 ?좎꽑?⑥쓣 洹몃?濡??댁븘????諛깆꽭二쇰뒗 ?밸퀎???좎쓣 ?붿슧 ?띿슂濡?쾶 留뚮뱾??以?寃껋엯?덈떎.",
+    "description_en": "Saeng Baekseju is a medicinal liquor made primarily from glutinous and non-glutinous rice, with the addition of 12 medicinal herbs. The subtle aroma of medicinal herbs harmonizes with the sweetness of the rice, offering a smooth and pleasant flavor. It has a clean finish, and the subtle sweetness leaves a pleasant aftertaste. It is best enjoyed chilled or paired with Korean cuisine. Saeng Baekseju, capturing the freshness of Baekseju, will enrich any special occasion.",
+    "pairing_guide_en": "Saeng Baekseju, characterized by its subtle sweetness and herbal notes, pairs well with foods that have delicate flavors. First, I recommend **Haemul Pajeon (Seafood Scallion Pancake)**. The savory and crispy Haemul Pajeon, with its diverse seafood flavors, complements the subtle sweetness of Baekseju, creating a harmonious taste. In particular, Baekseju cleanly cuts through the oily taste of the pancake, making it even more enjoyable. Next, I suggest pairing it with **Beoseot Jeongol (Mushroom Hot Pot)**. The deep aroma and mild flavor of various mushrooms further enhance the herbal notes and subtle sweetness of Baekseju. As a warm soup dish, Beoseot Jeongol pairs well with the smooth texture of Baekseju, providing a comforting and warm feeling."
+  },
+  "category": "?쎌＜",
+  "thumbnailUrl": "https://godomall.speedycdn.net/ecde3d55747f2aa4dbec5952a29271fe/goods/1000001542/image/detail/1000001542_detail_153.jpg",
+  "imageUrl": "https://godomall.speedycdn.net/ecde3d55747f2aa4dbec5952a29271fe/goods/1000001542/image/detail/1000001542_detail_153.jpg",
+  "nose_tags": [
+    "Subtle Herbal Notes",
+    "Rice Sweetness",
+    "Floral Aroma",
+    "Light Spice",
+    "Grain",
+    "Slightly Earthy"
+  ],
+  "abv": 13,
+  "source": "food_safety_korea",
+  "name": "??諛깆꽭二?,
+  "bottler": "",
+  "name_en": "Saeng Baekseju",
+  "createdAt": "2026-01-24T11:56:57.303Z",
+  "externalId": "2006001502047",
+  "tasting_note": "#Floral #Herbal #DriedFruit #Effervescent",
+  "aggregateRating": {
+    "ratingValue": 4.3,
+    "reviewCount": 2
+  },
+  "expertReview": {
+    "@type": "Review",
+    "author": {
+      "@type": "Person",
+      "name": "K-Spirits Editor"
+    },
+    "datePublished": "2026-04-14T13:06:58.776Z",
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": 5,
+      "bestRating": 5,
+      "worstRating": 1
+    },
+    "reviewBody": "[Editor's Review] This ?쎌＜ from Kooksoondang offers a distinctive tasting experience. Features a profile with notes of Subtle Herbal Notes, Rice Sweetness, Floral Aroma. Comes with a curated food pairing guide. K-Spirits Club provides certified technical data and expert tasting notes for enthusiasts."
+  },
+  "userReviews": [
+    {
+      "tagsP": "?ㅽ궎, 誘몃뵒?꾩뒪?? ?꾨텇?섎떒留? ?쎄컙?섏궛誘? ?ㅻ???,
+      "ratingP": 3.5,
+      "imageUrl": "https://godomall.speedycdn.net/ecde3d55747f2aa4dbec5952a29271fe/goods/1000001542/image/detail/1000001542_detail_153.jpg",
+      "createdAt": "2026-02-09T12:24:19.051Z",
+      "spiritId": "fsk-2006001502047",
+      "spiritName": "??諛깆꽭二?,
+      "updatedAt": "2026-02-09T12:24:19.977Z",
+      "tagsN": "?밴?, ?몄궪, 媛먯큹, ?꾨씪吏, 怨〓Ъ?섎떒留? ?덈툕",
+      "tagsF": "?쎌옱, 以묎컙, ?곕쑜?쒕쭏臾대━, ?덈툕",
+      "isPublished": true,
+      "notes": "?곕━媛 ?뷀엳 ?쇨퀎?뺢낵 ?섏뼱留곹븯??吏꾪븳 ?쒕갑 ?쎌옱???μ씠 遺?쒕읇寃??뺤젣?섏뿀?? ?낆뿉???섎뒗 ?앹옱猷뚮씪硫?萸먮뱺 ?댁슱由?踰??섎떎. 李④컩寃?移좊쭅?댁꽌 ?④쾪怨?留묒? 援?Ъ怨??④퍡?쒕떎硫??쒕꼫吏 理쒓퀬!",
+      "userName": "臾듭쭅???꾨뱶踰?8969",
+      "ratingF": 3.7,
+      "userId": "fiO8qf1PjLZAPBNcJmvy1cpqrY52",
+      "ratingN": 3.7,
+      "rating": 3.64
+    }
+  ]
+}
+
+狩?[Logic Calculation Result - MOST RICH]
+{
+  "ratingValue": 5,
+  "reviewCount": 1,
+  "expertReview": {
+    "@type": "Review",
+    "author": {
+      "@type": "Person",
+      "name": "K-Spirits Editor"
+    },
+    "datePublished": "2026-04-14T13:06:58.776Z",
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": 5,
+      "bestRating": 5,
+      "worstRating": 1
+    },
+    "reviewBody": "[Editor's Review] This ?쎌＜ from Kooksoondang offers a distinctive tasting experience. Features a profile with notes of Subtle Herbal Notes, Rice Sweetness, Floral Aroma. Comes with a curated food pairing guide. K-Spirits Club provides certified technical data and expert tasting notes for enthusiasts."
+  }
+}
+
+=================================================
+?뱣 LEAST RICH SAMPLE DATA
+=================================================
+{
+  "id": "fsk-2013001606515",
+  "isPublished": true,
+  "createdAt": "2026-01-24T11:56:57.303Z",
+  "abv": 18,
+  "category": "?쎌＜",
+  "searchKeywords": [
+    "?꾨━",
+    "?꾨━誘?,
+    "?꾨━誘몄뾼",
+    "?꾨━誘몄뾼??,
+    "?꾨━誘몄뾼?붿넚",
+    "?꾨━誘몄뾼?붿넚二?,
+    "由щ?",
+    "由щ???,
+    "由щ??꾩넄",
+    "由щ??꾩넄??,
+    "由щ??꾩넄?≪＜",
+    "誘몄뾼",
+    "誘몄뾼??,
+    "誘몄뾼?붿넚",
+    "誘몄뾼?붿넚二?,
+    "?꾩넄",
+    "?꾩넄??,
+    "?꾩넄?≪＜",
+    "?붿넚",
+    "?붿넚二?,
+    "?≪＜",
+    "pre",
+    "prem",
+    "premi",
+    "premiu",
+    "premium",
+    "premiums",
+    "premiumso",
+    "premiumsol",
+    "premiumsols",
+    "premiumsolso",
+    "premiumsolson",
+    "premiumsolsong",
+    "premiumsolsongj",
+    "premiumsolsongju",
+    "rem",
+    "remi",
+    "remiu",
+    "remium",
+    "remiums",
+    "remiumso",
+    "remiumsol",
+    "remiumsols",
+    "remiumsolso",
+    "remiumsolson",
+    "remiumsolsong",
+    "remiumsolsongj",
+    "remiumsolsongju",
+    "emi",
+    "emiu",
+    "emium",
+    "emiums",
+    "emiumso",
+    "emiumsol",
+    "emiumsols",
+    "emiumsolso",
+    "emiumsolson",
+    "emiumsolsong",
+    "emiumsolsongj",
+    "emiumsolsongju",
+    "miu",
+    "mium",
+    "miums",
+    "miumso",
+    "miumsol",
+    "miumsols",
+    "miumsolso",
+    "miumsolson",
+    "miumsolsong",
+    "miumsolsongj",
+    "miumsolsongju",
+    "ium",
+    "iums",
+    "iumso",
+    "iumsol",
+    "iumsols",
+    "iumsolso",
+    "iumsolson",
+    "iumsolsong",
+    "iumsolsongj",
+    "iumsolsongju",
+    "ums",
+    "umso",
+    "umsol",
+    "umsols",
+    "umsolso",
+    "umsolson",
+    "umsolsong",
+    "umsolsongj",
+    "umsolsongju",
+    "mso",
+    "msol",
+    "msols",
+    "msolso",
+    "msolson",
+    "msolsong",
+    "msolsongj",
+    "msolsongju",
+    "sol",
+    "sols",
+    "solso",
+    "solson",
+    "solsong",
+    "solsongj",
+    "solsongju",
+    "ols",
+    "olso",
+    "olson",
+    "olsong",
+    "olsongj",
+    "olsongju",
+    "lso",
+    "lson",
+    "lsong",
+    "lsongj",
+    "lsongju",
+    "son",
+    "song",
+    "songj",
+    "songju",
+    "ong",
+    "ongj",
+    "ongju",
+    "ngj",
+    "ngju",
+    "gju"
+  ],
+  "palate_tags": [
+    "Medium-bodied",
+    "Smooth",
+    "Balanced",
+    "Clean"
+  ],
+  "name_en": "Premium Solsongju",
+  "updatedAt": "2026-04-14T13:06:59.198Z",
+  "nose_tags": [
+    "Pine needles",
+    "Herbal",
+    "Floral",
+    "Meadow hay"
+  ],
+  "name": "?꾨━誘몄뾼 ?붿넚二?,
+  "reviewedBy": "ADMIN",
+  "externalId": "2013001606515",
+  "country": "??쒕?援?,
+  "isReviewed": true,
+  "finish_tags": [
+    "Dry",
+    "Lingering herbs"
+  ],
+  "imageUrl": "https://m.soollove.com/web/product/medium/202502/4459cfaf059209b77a73b22d7a4d98d2.jpg",
+  "volume": 700,
+  "thumbnailUrl": "https://m.soollove.com/web/product/medium/202502/4459cfaf059209b77a73b22d7a4d98d2.jpg",
+  "distillery": "?붿넚二?,
+  "status": "PUBLISHED",
+  "reviewedAt": "2026-02-02T05:31:11.844Z",
+  "subcategory": "?쎌＜",
+  "source": "food_safety_korea",
+  "region": "寃쎌긽?⑤룄 ?⑥뼇援?,
+  "tasting_note": "#Pine #Herbal #Floral #Smooth #Dry",
+  "metadata": {
+    "pairing_guide_en": "The herbal and floral notes of Solsongju find a harmonious counterpart in a delicate steamed Dover sole, its flesh imbued with subtle sea minerality. A drizzle of browned butter, infused with lemon thyme, amplifies the herbal character of the yakju while providing a luxurious mouthfeel. Alternatively, consider a bright and aromatic Thai pomelo salad (Yam Som O), its sweet and sour complexity cutting through the Solsongju's dryness, while the fresh herbs echo its inherent botanical profile.",
+    "description_en": "Premium Solsongju is a refined yakju, a Korean traditional liquor crafted through fermentation. Originating from Hamyang County, South Gyeongsang Province, it presents a delicate balance of herbal and floral aromas reminiscent of pine needles and meadow hay, leading to a smooth, medium-bodied palate with a clean, dry finish, making it a genuinely unique spirit.",
+    "corrections": [],
+    "auditDate": "2026-02-01T14:55:27.647562",
+    "description_ko": "?붿넚二??꾨━誘몄뾼 ?붿넚二쇰뒗 諛쒗슚瑜??듯빐 ?뺤꽦猿?鍮싳뼱???쒓뎅 ?꾪넻 ?쎌＜?낅땲?? 寃쎌긽?⑤룄 ?⑥뼇援곗뿉???꾩깮?????좎? ?붿옂怨?珥덉썝??嫄댁큹瑜??곗긽?쒗궎???ъ꽭???덈툕 諛?苑??κ린??洹좏삎???좊낫?대ŉ, 遺?쒕윭??誘몃뵒??諛붾뵒媛먭낵 源붾걫?섍퀬 ?쒕씪?댄븳 留덈Т由щ줈 ?댁뼱??吏꾩젙?쇰줈 ?낇듅???띾?瑜??좎궗?⑸땲?? ?붿넚二쇱쓽 ?꾨줈留덉? ?띾????쒖떇? 臾쇰줎 ?ㅼ뼇???멸퀎 ?붾━????섏뼱留곸뿉???뚮???議고솕瑜??대９?덈떎. ?뱁엳 ?????뷀뼢? ?곕쑜???댁궛臾??붾━???덈툕瑜??ъ슜???덉＜ 異붿쿇??醫뗭뒿?덈떎. ?ъ꽭???뚯씠?ㅽ똿???듯빐 ?붿넚二쇰쭔??留ㅻ젰???먭뺨蹂댁떆湲?諛붾엻?덈떎.",
+    "pairing_guide_ko": "?붿넚二쇱쓽 ?덈툕 諛?苑??μ? ????諛붾떎??誘몃꽕?꾩씠 ?ㅻŉ???ъ꽭???꾨쾭 ???ㅽ? ?붾━? 議고솕濡쒖슫 洹좏삎???대９?덈떎. ?덈が ??꾩쑝濡??띾?瑜??뷀븳 釉뚮씪??踰꾪꽣瑜??댁쭩 肉뚮━硫??쎌＜???덈툕 ?μ씠 ?붿슧 媛뺤“?섍퀬 怨좉툒?ㅻ윭??吏덇컧???좎궗?⑸땲?? ?먮뒗 ?ъ숴?섍퀬 ?덉숴??蹂듯빀?깆씠 ?붿넚二쇱쓽 ?쒕씪?댄븿???곸뇙?섎뒗 ?쒓뎅???쇰찞濡??먮윭????????瑜?怨좊젮??蹂댁꽭?? ?좎꽑???덈툕???붿넚二쇱쓽 怨좎쑀???앸Ъ???μ쓣 諛섏쁺?⑸땲?? ??留덈━?꾩＜???낆븞??媛먯떥???띾???議고솕瑜??좎궗??寃껋엯?덈떎.",
+    "enriched_at": "2026-02-03T17:50:35.223Z"
+  },
+  "aggregateRating": {
+    "ratingValue": 5,
+    "reviewCount": 1
+  },
+  "expertReview": {
+    "@type": "Review",
+    "author": {
+      "@type": "Person",
+      "name": "K-Spirits Editor"
+    },
+    "datePublished": "2026-04-14T13:06:59.198Z",
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": 5,
+      "bestRating": 5,
+      "worstRating": 1
+    },
+    "reviewBody": "[Editor's Review] This ?쎌＜ from ?붿넚二?offers a distinctive tasting experience. Features a profile with notes of Pine needles, Herbal, Floral. Comes with a curated food pairing guide. K-Spirits Club provides certified technical data and expert tasting notes for enthusiasts."
+  },
+  "userReviews": []
+}
+
+狩?[Logic Calculation Result - LEAST RICH]
+{
+  "ratingValue": 5,
+  "reviewCount": 1,
+  "expertReview": {
+    "@type": "Review",
+    "author": {
+      "@type": "Person",
+      "name": "K-Spirits Editor"
+    },
+    "datePublished": "2026-04-14T13:06:59.198Z",
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": 5,
+      "bestRating": 5,
+      "worstRating": 1
+    },
+    "reviewBody": "[Editor's Review] This ?쎌＜ from ?붿넚二?offers a distinctive tasting experience. Features a profile with notes of Pine needles, Herbal, Floral. Comes with a curated food pairing guide. K-Spirits Club provides certified technical data and expert tasting notes for enthusiasts."
+  }
+}

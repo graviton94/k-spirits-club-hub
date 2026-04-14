@@ -499,7 +499,7 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                     <a
                         href={`https://search.shopping.naver.com/search/all?query=${encodeURIComponent(spirit.name.replace(/\([^)]*\)/g, '').trim())}`}
                         target="_blank"
-                        rel="noopener noreferrer"
+                        rel="nofollow noopener noreferrer"
                         onClick={() => handleOutboundClick('naver')}
                         className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-transparent border border-border hover:border-emerald-500 transition-colors text-xs font-bold"
                     >
@@ -509,7 +509,7 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                     <a
                         href={`https://dailyshot.co/m/search/result?q=${encodeURIComponent(spirit.name.replace(/\([^)]*\)/g, '').trim())}`}
                         target="_blank"
-                        rel="noopener noreferrer"
+                        rel="nofollow noopener noreferrer"
                         onClick={() => handleOutboundClick('dailyshot')}
                         className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-transparent border border-border hover:border-purple-500 transition-colors text-xs font-bold"
                     >
@@ -519,7 +519,7 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                     <a
                         href={`https://www.wine-searcher.com/find/${encodeURIComponent((spirit.metadata?.name_en || spirit.name_en || spirit.name).replace(/\([^)]*\)/g, '').trim())}`}
                         target="_blank"
-                        rel="noopener noreferrer"
+                        rel="nofollow noopener noreferrer"
                         onClick={() => handleOutboundClick('wine-searcher')}
                         className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-transparent border border-border hover:border-amber-500 transition-colors text-xs font-bold"
                     >
@@ -697,8 +697,10 @@ function ExpandableImage({ imageUrl, name, category }: { imageUrl: string | null
             >
                 {imageUrl ? (
                     <img
-                        src={getOptimizedImageUrl(imageUrl, 1200, 85)}
+                        src={getOptimizedImageUrl(imageUrl, 600, 85)}
                         alt={`${name} product image`}
+                        width={450}
+                        height={600}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                         loading="eager"
                         fetchPriority="high"

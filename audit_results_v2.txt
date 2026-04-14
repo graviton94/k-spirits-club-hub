@@ -1,0 +1,104 @@
+[dotenv@17.2.3] injecting env (15) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+📡 Total Published Spirits: 1830
+[Firestore] Fetching Spirit Detail: fsk-199000150021
+[Firestore] Fetching Spirit Detail: fsk-200100152328
+[Firestore] Fetching Spirit Detail: fsk-200300150364
+[Firestore] Fetching Spirit Detail: fsk-2003001503616
+[Firestore] Fetching Spirit Detail: fsk-2003001523653
+[Firestore] Fetching Spirit Detail: fsk-200300152361
+[Firestore] Fetching Spirit Detail: fsk-2003001523642
+[Firestore] Fetching Spirit Detail: fsk-2003001523622
+[Firestore] Fetching Spirit Detail: fsk-200800152647
+[Firestore] Fetching Spirit Detail: fsk-2006001502047
+[Firestore] Fetching Spirit Detail: fsk-2003001523680
+[Firestore] Fetching Spirit Detail: fsk-2010001514433
+[Firestore] Fetching Spirit Detail: fsk-20110015190110
+[Firestore] Fetching Spirit Detail: fsk-2003001523672
+[Firestore] Fetching Spirit Detail: fsk-2010001514434
+[Firestore] Fetching Spirit Detail: fsk-2003001523616
+[Firestore] Fetching Spirit Detail: fsk-200800152085
+[Firestore] Fetching Spirit Detail: fsk-2010001514410
+[Firestore] Fetching Spirit Detail: fsk-201200150513
+[Firestore] Fetching Spirit Detail: fsk-2010001519411
+[Firestore] Fetching Spirit Detail: fsk-2010001514425
+[Firestore] Fetching Spirit Detail: fsk-201000151494
+[Firestore] Fetching Spirit Detail: fsk-2006001502064
+[Firestore] Fetching Spirit Detail: fsk-2010001514424
+[Firestore] Fetching Spirit Detail: fsk-20110015190186
+[Firestore] Fetching Spirit Detail: fsk-201200150514
+[Firestore] Fetching Spirit Detail: fsk-2003001523683
+[Firestore] Fetching Spirit Detail: fsk-200800152642
+[Firestore] Fetching Spirit Detail: fsk-201100151034
+[Firestore] Fetching Spirit Detail: fsk-2011001517153
+[Firestore] Fetching Spirit Detail: fsk-20030015236118
+[Firestore] Fetching Spirit Detail: fsk-2010001502243
+[Firestore] Fetching Spirit Detail: fsk-200300152364
+[Firestore] Fetching Spirit Detail: fsk-2006001502095
+[Firestore] Fetching Spirit Detail: fsk-200800152646
+[Firestore] Fetching Spirit Detail: fsk-20110015171120
+[Firestore] Fetching Spirit Detail: fsk-201000151497
+[Firestore] Fetching Spirit Detail: fsk-201000151493
+[Firestore] Fetching Spirit Detail: fsk-201000151492
+[Firestore] Fetching Spirit Detail: fsk-2011001520525
+[Firestore] Fetching Spirit Detail: fsk-20110015171112
+[Firestore] Fetching Spirit Detail: fsk-2010001502233
+[Firestore] Fetching Spirit Detail: fsk-20110015171115
+[Firestore] Fetching Spirit Detail: fsk-2003001523682
+[Firestore] Fetching Spirit Detail: fsk-20110015171114
+[Firestore] Fetching Spirit Detail: fsk-2010001514426
+[Firestore] Fetching Spirit Detail: fsk-200800152081
+[Firestore] Fetching Spirit Detail: fsk-2010001514421
+[Firestore] Fetching Spirit Detail: fsk-200300152365
+[Firestore] Fetching Spirit Detail: fsk-201000151947
+
+--- [MOST RICH SAMPLE] ---
+ID: fsk-199000150021
+Name: 서주
+Desc Length: 0
+Tags: 0
+Bilingual: false
+Calculation Result: {
+  "ratingValue": 5,
+  "reviewCount": 1,
+  "expertReview": {
+    "@type": "Review",
+    "author": {
+      "@type": "Person",
+      "name": "K-Spirits Editor"
+    },
+    "datePublished": "2026-04-14T13:06:58.775Z",
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": 5,
+      "bestRating": 5,
+      "worstRating": 1
+    },
+    "reviewBody": "[Editor's Review] This 약주 from 오대서주양조장 offers a distinctive tasting experience. Features a profile with notes of Rice, Floral, Subtle Sweetness. Comes with a curated food pairing guide. K-Spirits Club provides certified technical data and expert tasting notes for enthusiasts."
+  }
+}
+
+--- [LEAST RICH SAMPLE] ---
+ID: fsk-201200150514
+Name: 초리골미인
+Desc Length: 0
+Tags: 0
+Bilingual: false
+Calculation Result: {
+  "ratingValue": 5,
+  "reviewCount": 1,
+  "expertReview": {
+    "@type": "Review",
+    "author": {
+      "@type": "Person",
+      "name": "K-Spirits Editor"
+    },
+    "datePublished": "2026-04-14T13:06:58.776Z",
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": 5,
+      "bestRating": 5,
+      "worstRating": 1
+    },
+    "reviewBody": "[Editor's Review] This 약주 from 최행숙 전통주가 offers a distinctive tasting experience. Features a profile with notes of Floral hay, Grain sweetness, Subtle floral notes. Comes with a curated food pairing guide. K-Spirits Club provides certified technical data and expert tasting notes for enthusiasts."
+  }
+}

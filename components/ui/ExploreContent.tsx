@@ -302,6 +302,11 @@ export default function ExploreContent({ dict }: { dict?: any }) {
                   reviewedAt: null,
                   name_en: item.en || null,
                   metadata: item.m || {},
+                  aggregateRating: (item.r !== undefined) ? {
+                    ratingValue: item.r,
+                    reviewCount: item.rc || 1
+                  } : (item.m as any)?.aggregateRating,
+                  hasTastingNotes: item.h ?? false,
                   createdAt: item.cre ? new Date(item.cre) : new Date(),
                   updatedAt: new Date()
                 } as any}

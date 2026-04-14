@@ -49,6 +49,9 @@ export interface SpiritSearchIndex {
   mc?: string | null;  // mainCategory (Optional in index)
   m?: any;             // metadata snippet
   cre?: string | number | Date; // createdAt
+  r?: number;          // ratingValue (1.0 - 5.0)
+  rc?: number;         // reviewCount
+  h?: boolean;         // hasTastingNotes (for badge)
 }
 
 export interface Spirit {
@@ -95,6 +98,13 @@ export interface Spirit {
 
   // Search optimization
   searchKeywords?: string[]; // N-gram keywords for efficient searching
+
+  // SEO & Quality Signals
+  aggregateRating?: {
+    ratingValue: number;
+    reviewCount: number;
+  };
+  hasTastingNotes?: boolean;
 
   createdAt: Date;
   updatedAt: Date;

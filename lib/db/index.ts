@@ -2,6 +2,8 @@ import { spiritsDb as restSpiritsDb } from './firestore-rest';
 import { Spirit, SpiritStatus, SpiritFilter, PaginationParams, PaginatedResponse, SpiritSearchIndex } from './schema';
 import { generateSpiritSearchKeywords } from '../utils/search-keywords';
 import { getPublicLatestFeatured, getPublicSpiritById } from './public-read-fallback';
+import { calculateInitialContentRating } from '../utils/content-rating';
+import { searchIndexDb as restSearchIndexDb } from './firestore-rest';
 
 /**
  * [Server-Side Database Adapter]
@@ -202,12 +204,41 @@ export const db = {
       }
     }
 
-    await spiritsDb.upsert(id, updates);
-
     // If spirit was published (or is currently published), sync the new arrivals cache
     // This ensures updates like Image URL changes are reflected in the cache immediately
     const finalState = await spiritsDb.getById(id);
+    
     if (finalState?.isPublished) {
+      // --- NEW: SEO AUTOMATION ENGINE ---
+      // Automatically calculate rating and sync with search index
+      const seoResults = calculateInitialContentRating(finalState);
+      
+      const indexUpdate: SpiritSearchIndex = {
+        i: id,
+        n: finalState.name,
+        en: finalState.name_en || finalState.metadata?.name_en || null,
+        c: finalState.category,
+        sc: finalState.subcategory || null,
+        t: finalState.thumbnailUrl || finalState.imageUrl || null,
+        a: finalState.abv || 0,
+        d: finalState.distillery || null,
+        tn: finalState.tasting_note || null,
+        cre: finalState.createdAt,
+        r: seoResults.ratingValue,
+        rc: 1, // Initial expert review
+        h: !!finalState.tasting_note
+      };
+
+      // Perform ATOMIC Sync (Spirit Detail + Search Index)
+      // We update the spirit again but only with the calculated quality rating fields
+      await spiritsDb.commitSEOUpdate(id, {
+        aggregateRating: {
+          ratingValue: seoResults.ratingValue,
+          reviewCount: 1
+        }
+      }, indexUpdate);
+
+      // Also sync new arrivals cache as usual
       const { newArrivalsDb } = await import('./firestore-rest');
       try {
         await newArrivalsDb.syncCache();
@@ -228,7 +259,18 @@ export const db = {
    * Get minimized search index for all PUBLISHED spirits
    * Uses short keys to reduce bandwidth consumption
    */
+  /**
+   * Get minimized search index for all PUBLISHED spirits
+   * Uses short keys to reduce bandwidth consumption
+   */
   async getPublishedSearchIndex(): Promise<SpiritSearchIndex[]> {
     return spiritsDb.getPublishedSearchIndex();
+  },
+
+  /**
+   * [Phase 3] High-performance Wiki recommendations using search index
+   */
+  async getTopInCategory(category: string, limit: number = 6): Promise<SpiritSearchIndex[]> {
+    return restSearchIndexDb.getTopInCategory(category, limit);
   }
 };

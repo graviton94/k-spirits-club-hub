@@ -1,0 +1,69 @@
+﻿[dotenv@17.2.3] injecting env (15) from .env -- tip: ?숋툘  write to custom object with { processEnv: myObject }
+??Environment loaded from .env
+
+?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺???? Testing Admin Sync for: fsk-202500165001
+?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺?곣봺??
+[Firestore] Fetching Spirit Detail: fsk-202500165001
+?뱻 Current Rating: 1.5
+
+?랃툘  Simulating Admin update/publish...
+[Firestore] Fetching Spirit Detail: fsk-202500165001
+[Spirit Upsert] Patching fsk-202500165001. Fields: aggregateRating, updatedAt
+[commitSEOUpdate] Successfully synced spirit and index for fsk-202500165001
+node.exe : Error syncing new arrivals cache:
+ TypeError: fetch failed
+위치 줄:1 문자:1
++ & "C:\Program Files\nodejs/node.exe" "C:\P
+rogram Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: 
+    (Error syncing n...r: fetch failed:Str  
+  ing) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommand 
+   Error
+ 
+    at node:internal/deps/undici/undici:1584
+5:13
+    at process.processTicksAndRejections (no
+de:internal/process/task_queues:103:5)
+    at async <anonymous> (C:\k-spirits-club-
+hub\lib\db\firestore-rest.ts:2068:29)
+    at async Promise.all (index 8)
+    at async Object.syncCache (C:\k-spirits-
+club-hub\lib\db\firestore-rest.ts:2079:13)
+    at async Object.updateSpirit (C:\k-spiri
+ts-club-hub\lib\db\index.ts:244:9)
+    at async testAdminSync (C:\k-spirits-clu
+b-hub\scripts\test-admin-sync.ts:24:5) {
+  [cause]: ConnectTimeoutError: Connect Time
+out Error (attempted address: firestore.goog
+leapis.com:443, timeout: 10000ms)
+      at onConnectTimeout (node:internal/dep
+s/undici/undici:1690:23)
+      at Immediate._onImmediate (node:intern
+al/deps/undici/undici:1656:35)
+      at process.processImmediate (node:inte
+rnal/timers:504:21) {
+    code: 'UND_ERR_CONNECT_TIMEOUT'
+  }
+}
+[Firestore] Fetching Spirit Detail: fsk-202500165001
+
+?뵇 Verifying Synchronization...
+[Firestore] Fetching Spirit Detail: fsk-202500165001
+[SearchIndex] getTopInCategory failed: [{
+  "error": {
+    "code": 400,
+    "message": "Collection id \"artifacts/k-
+spirits-club-hub/public/data/search_index\" 
+is invalid because it contains \"/\".",
+    "status": "INVALID_ARGUMENT"
+  }
+}
+]
+
+??Spirit Master: 1.5 (Expected: 1.5)
+
+?좑툘  WARNING: Search Index Entry not found o
+r not published.

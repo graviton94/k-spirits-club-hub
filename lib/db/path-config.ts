@@ -59,6 +59,7 @@ export const getAppPath = (appId: string = APP_ID) => ({
   trendingGlobal: `artifacts/${appId}/public/trending/global`,
   modificationRequests: `modification_requests`, // Root collection for user-submitted modification requests
   news: `artifacts/${appId}/public/data/news`, // Global news collection
+  searchIndex: `artifacts/${appId}/public/data/search_index`, // Search index collection
   sommelierLogs: `artifacts/${appId}/admin/logs/sommelier`, // AI Sommelier chat & discovery logs
   sommelierRateLimits: `artifacts/${appId}/admin/rateLimits/sommelier` // Per-user/IP daily rate limit counters
 });

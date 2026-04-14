@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from "framer-motion";
-import { Heart, ExternalLink, Sparkles, PlusCircle } from "lucide-react";
+import { Heart, ExternalLink, Sparkles, PlusCircle, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
@@ -189,10 +189,32 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
           </p>
 
           {localizedDistillery && (
-            <p className="text-[11px] text-muted-foreground/60 mb-4 max-w-full truncate font-bold">
+            <p className="text-[11px] text-muted-foreground/60 mb-2 truncate font-bold">
               🏭 {localizedDistillery}
             </p>
           )}
+
+          {/* Rating & Notes Badge */}
+          <div className="flex items-center gap-3 mb-5">
+            {spirit.aggregateRating && spirit.aggregateRating.ratingValue > 0 && (
+              <div 
+                className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 text-xs font-black border border-amber-500/20"
+                title={isEn ? "AI & Expert data quality score" : "AI와 전문가가 함께 분석한 데이터 품질 점수입니다"}
+              >
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span className="text-sm">★</span>
+                <span>{Number(spirit.aggregateRating.ratingValue).toFixed(1)}</span>
+                <span className="opacity-60 font-bold ml-1 text-[10px]">
+                  ({spirit.aggregateRating.reviewCount})
+                </span>
+              </div>
+            )}
+            {spirit.hasTastingNotes && (
+              <div className="px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-[10px] font-black uppercase tracking-wider border border-indigo-500/20">
+                {isEn ? 'Notes' : '시음노트'}
+              </div>
+            )}
+          </div>
 
           {matchReason && (
               <p className="text-[12px] text-foreground/90 leading-relaxed font-medium bg-secondary/30 p-4 rounded-2xl italic border border-secondary/50">

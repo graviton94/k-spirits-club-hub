@@ -2,6 +2,7 @@ import { Spirit, SpiritStatus, SpiritFilter, SpiritSearchIndex, ModificationRequ
 import { getServiceAccountToken } from '../auth/service-account';
 import { getAppPath, APP_ID } from './paths';
 import { extractSearchKeyword } from '../utils/search-keywords';
+import { calculateInitialContentRating } from '../utils/content-rating';
 
 const PROJECT_ID = process.env.FIREBASE_PROJECT_ID || 'k-spirits-club';
 const BASE_URL = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
@@ -851,25 +852,60 @@ export const spiritsDb = {
         return mainResults;
     },
 
-    async getById(id: string): Promise<Spirit | null> {
+    async getById(id: string): Promise<(Spirit & { 
+        aggregateRating?: { ratingValue: number; reviewCount: number };
+        expertReview?: any;
+        userReviews?: any[];
+    }) | null> {
         const token = await getServiceAccountToken();
         const collectionPath = getAppPath().spirits;
         const url = `${BASE_URL}/${collectionPath}/${id}`;
 
-        console.log(`[Firestore] Fetching Spirit: ${url} (ID: ${id})`); // DEBUG
+        console.log(`[Firestore] Fetching Spirit Detail: ${id}`);
 
-        const res = await fetch(url, {
-            headers: { Authorization: `Bearer ${token}` }
-        });
+        // Parallel fetch using Promise.all for better performance in Edge
+        // Fetches both the spirit document and its reviews
+        try {
+            const [spiritRes, reviewsData] = await Promise.all([
+                fetch(url, { headers: { Authorization: `Bearer ${token}` } }),
+                reviewsDb.getAllForSpirit(id).catch(err => {
+                    console.error(`[Firestore] Failed to fetch reviews for ${id}:`, err);
+                    return [];
+                })
+            ]);
 
-        if (res.status === 404) {
-            console.error(`[Firestore] Spirit Not Found: ${url}`);
-            return null;
+            if (spiritRes.status === 404) {
+                return null;
+            }
+            if (!spiritRes.ok) throw new Error(await spiritRes.text());
+
+            const doc = await spiritRes.json();
+            const spirit = fromFirestore(doc);
+
+            // Calculate Initial Content Rating (Expert Review)
+            const ratingResult = calculateInitialContentRating(spirit);
+            
+            // Aggregate with user reviews
+            const userReviews = Array.isArray(reviewsData) ? reviewsData : [];
+            const userReviewCount = userReviews.length;
+            const totalReviewCount = 1 + userReviewCount;
+            
+            const userRatingSum = userReviews.reduce((acc, r) => acc + (Number(r.rating) || 0), 0);
+            const aggregateRatingValue = (ratingResult.ratingValue + userRatingSum) / totalReviewCount;
+
+            return {
+                ...spirit,
+                aggregateRating: {
+                    ratingValue: Number(aggregateRatingValue.toFixed(1)),
+                    reviewCount: totalReviewCount
+                },
+                expertReview: ratingResult.expertReview,
+                userReviews: userReviews
+            };
+        } catch (error) {
+            console.error(`[Firestore] Error in getById for ${id}:`, error);
+            throw error;
         }
-        if (!res.ok) throw new Error(await res.text());
-
-        const doc = await res.json();
-        return fromFirestore(doc);
     },
 
     // A simple, bulletproof list method that NEVER requires indexes (uses GET instead of POST runQuery)
@@ -992,44 +1028,194 @@ export const spiritsDb = {
     },
 
     /**
+     * Get IDs of all published spirits (lightweight for migration scripts)
+     */
+    async getPublishedSpiritIds(): Promise<string[]> {
+        const token = await getServiceAccountToken();
+        const collectionPath = getAppPath().spirits;
+        const runQueryUrl = `${BASE_URL}:runQuery`;
+        
+        const parent = `projects/${PROJECT_ID}/databases/(default)/documents`;
+        const structuredQuery = {
+            from: [{ collectionId: collectionPath }],
+            where: {
+                fieldFilter: {
+                    field: { fieldPath: 'isPublished' },
+                    op: 'EQUAL',
+                    value: { booleanValue: true }
+                }
+            },
+            select: { fields: [] }
+        };
+
+        const res = await fetch(runQueryUrl, {
+            method: 'POST',
+            headers: { Authorization: `Bearer ${token}` },
+            body: JSON.stringify({ parent, structuredQuery })
+        });
+
+        if (!res.ok) throw new Error(await res.text());
+        const json = await res.json();
+        return json
+            .filter((r: any) => r.document)
+            .map((r: any) => {
+                const parts = r.document.name.split('/');
+                return parts[parts.length - 1];
+            });
+    },
+
+    /**
      * Get all PUBLISHED spirits for search index generation
      */
     async getPublishedSearchIndex(): Promise<SpiritSearchIndex[]> {
-        // Fetch all published spirits using isPublished flag
-        const publishedSpirits = await this.getAll({
-            isPublished: true
+        const token = await getServiceAccountToken();
+        const collectionPath = getAppPath().searchIndex;
+        const url = `${BASE_URL}/${collectionPath}?pageSize=5000`; // Fetch all at once if possible
+
+        const res = await fetch(url, {
+            headers: { Authorization: `Bearer ${token}` }
         });
 
-        console.log(`[SearchIndex] Total published spirits fetched: ${publishedSpirits.length}`);
+        if (!res.ok) {
+            console.warn(`[SearchIndex] Failed to fetch from search_index collection:`, await res.text());
+            // Safe fallback to mapping from spirits collection (original logic)
+            const publishedSpirits = await this.getAll({ isPublished: true });
+            return publishedSpirits.map(spirit => ({
+                i: spirit.id,
+                n: spirit.name,
+                en: spirit.name_en || spirit.metadata?.name_en || null,
+                c: spirit.category,
+                mc: spirit.mainCategory ?? null,
+                sc: spirit.subcategory ?? null,
+                t: spirit.thumbnailUrl ?? spirit.imageUrl ?? null,
+                a: spirit.abv ?? 0,
+                d: spirit.distillery ?? null,
+                tn: spirit.tasting_note || null,
+                cre: spirit.createdAt ? (spirit.createdAt instanceof Date ? spirit.createdAt.toISOString() : (spirit.createdAt as any)) : null,
+                // These will be N/A until migration script runs
+                r: 1.0, 
+                rc: 1,
+                h: !!spirit.tasting_note
+            }));
+        }
 
-        const validSpirits = publishedSpirits.filter(spirit => {
-            const isValid = spirit.id && spirit.name && spirit.category;
-            if (!isValid) {
-                console.warn(`[SearchIndex] Skipping malformed spirit:`, {
-                    id: spirit.id,
-                    hasName: !!spirit.name,
-                    hasCategory: !!spirit.category,
-                    isPublished: spirit.isPublished
-                });
+        const json = await res.json();
+        if (!json.documents) return [];
+
+        return json.documents.map((doc: any) => {
+            const data = parseFirestoreFields(doc.fields || {});
+            // In the index collection, ID is the document ID
+            if (!data.i) {
+                data.i = doc.name.split('/').pop();
             }
-            return isValid;
+            return data as SpiritSearchIndex;
+        });
+    },
+    /**
+     * Atomically update a single spirit and its search index entry.
+     * Uses two sequential PATCH requests to ensure compatibility with Edge Runtime
+     * while maintaining data consistency for the admin workflow.
+     */
+    async commitSEOUpdate(id: string, spiritUpdates: Partial<Spirit>, indexUpdates: SpiritSearchIndex) {
+        // 1. Update Master Spirit Document
+        await this.upsert(id, spiritUpdates);
+        
+        // 2. Update Search Index Entry
+        await searchIndexDb.upsert(id, indexUpdates);
+        
+        console.log(`[commitSEOUpdate] Successfully synced spirit and index for ${id}`);
+    }
+};
+
+/**
+ * [Optimized Search Index Database]
+ * Uses short keys and specialized queries for high-performance reading.
+ */
+export const searchIndexDb = {
+    /**
+     * Update search index entry using a PATCH request.
+     * Uses short keys to minimize storage and bandwidth.
+     */
+    async upsert(id: string, data: SpiritSearchIndex) {
+        const token = await getServiceAccountToken();
+        const collectionPath = getAppPath().searchIndex;
+        const url = `${BASE_URL}/${collectionPath}/${id}`;
+
+        const converted = toFirestore(data);
+        const fieldKeys = Object.keys(converted.fields);
+        const queryParams = new URLSearchParams();
+        fieldKeys.forEach(key => queryParams.append('updateMask.fieldPaths', key));
+
+        const res = await fetch(`${url}?${queryParams.toString()}`, {
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(converted)
         });
 
-        console.log(`[SearchIndex] Valid spirits after filtering: ${validSpirits.length}`);
+        if (!res.ok) {
+            throw new Error(`[SearchIndex] Upsert failed: ${await res.text()}`);
+        }
+    },
 
-        return validSpirits.map(spirit => ({
-            i: spirit.id,
-            n: spirit.name,
-            en: spirit.name_en || spirit.metadata?.name_en || null,
-            c: spirit.category,
-            mc: spirit.mainCategory ?? null,
-            sc: spirit.subcategory ?? null,
-            t: spirit.thumbnailUrl ?? spirit.imageUrl ?? null, // Fallback to imageUrl if thumbnailUrl missing
-            a: spirit.abv ?? 0,
-            d: spirit.distillery ?? null,
-            tn: spirit.tasting_note || null,
-            cre: spirit.createdAt ? (spirit.createdAt instanceof Date ? spirit.createdAt.toISOString() : (spirit.createdAt as any)) : null
-        }));
+    /**
+     * Get top-rated spirits in a specific category using the search index.
+     * Uses short keys (c: category, r: rating).
+     */
+    async getTopInCategory(category: string, limit: number = 6): Promise<SpiritSearchIndex[]> {
+        const token = await getServiceAccountToken();
+        const collectionPath = getAppPath().searchIndex;
+        const runQueryUrl = `${BASE_URL}:runQuery`;
+        
+        const parent = `projects/${PROJECT_ID}/databases/(default)/documents`;
+        const structuredQuery = {
+            from: [{ collectionId: collectionPath }],
+            where: {
+                fieldFilter: {
+                    field: { fieldPath: 'c' },
+                    op: 'EQUAL',
+                    value: { stringValue: category }
+                }
+            },
+            orderBy: [
+                { field: { fieldPath: 'r' }, direction: 'DESCENDING' }
+            ],
+            limit,
+            select: {
+                fields: [
+                    { fieldPath: 'i' },
+                    { fieldPath: 'n' },
+                    { fieldPath: 'en' },
+                    { fieldPath: 't' },
+                    { fieldPath: 'r' },
+                    { fieldPath: 'rc' },
+                    { fieldPath: 'h' }
+                ]
+            }
+        };
+
+        try {
+            const res = await fetch(runQueryUrl, {
+                method: 'POST',
+                headers: { Authorization: `Bearer ${token}` },
+                body: JSON.stringify({ parent, structuredQuery })
+            });
+
+            if (!res.ok) {
+                console.error(`[SearchIndex] getTopInCategory failed:`, await res.text());
+                return [];
+            }
+
+            const json = await res.json();
+            return json
+                .filter((r: any) => r.document)
+                .map((r: any) => parseFirestoreFields(r.document.fields || {}) as SpiritSearchIndex);
+        } catch (error) {
+            console.error(`[SearchIndex] Error fetching top in category ${category}:`, error);
+            return [];
+        }
     }
 };
 
@@ -1438,7 +1624,7 @@ export const reviewsDb = {
         const token = await getServiceAccountToken();
         const reviewId = `${spiritId}_${reviewUserId}`;
         const mainPath = `${getAppPath().reviews}/${reviewId}`;
-        const commitUrl = `${BASE_URL.replace('/documents', '')}:commit`;
+        const commitUrl = `${BASE_URL}:commit`;
 
         // 1. Get current review to check if already liked
         const review = await this.getById(spiritId, reviewUserId);
@@ -1601,7 +1787,7 @@ export const userDb = {
     async incrementStats(userId: string, stats: { reviewsWritten?: number, heartsReceived?: number }) {
         const token = await getServiceAccountToken();
         const docPath = `users/${userId}`;
-        const commitUrl = `${BASE_URL.replace('/documents', '')}:commit`;
+        const commitUrl = `${BASE_URL}:commit`;
 
         const fieldTransforms = [];
         if (stats.reviewsWritten) {
@@ -1643,7 +1829,7 @@ export const trendingDb = {
         // FIX: Use subcollection 'spirits' for cleaner structure and to avoid issues
         // Path: artifacts/.../trending/daily/{dateId}/spirits/{spiritId}
         const dailyDocPath = `${getAppPath().trendingDaily(dateId)}/spirits/${spiritId}`;
-        const commitUrl = `${BASE_URL.replace('/documents', '')}:commit`;
+        const commitUrl = `${BASE_URL}:commit`;
 
         const fieldMap: Record<string, { field: string, weight: number }> = {
             'view': { field: 'views', weight: 1 },
@@ -2033,7 +2219,7 @@ export const tasteProfileDb = {
         const token = await getServiceAccountToken();
         const path = `users/${userId}/taste_data/usage`;
         const url = `${BASE_URL}/${path}`;
-        const commitUrl = `${BASE_URL.replace('/documents', '')}:commit`;
+        const commitUrl = `${BASE_URL}:commit`;
 
         // We need an atomic increment that DOES NOT increment if the date is different
         // But Firestore REST :commit condition is complex.

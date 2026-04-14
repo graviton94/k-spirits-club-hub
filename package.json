@@ -21,6 +21,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@dataconnect/admin-generated": "file:src/dataconnect-admin-generated",
+    "@dataconnect/generated": "file:src/dataconnect-generated",
     "@formatjs/intl-localematcher": "^0.8.1",
     "@google/generative-ai": "^0.24.1",
     "@next/third-parties": "^15.1.4",

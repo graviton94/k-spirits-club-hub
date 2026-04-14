@@ -5,8 +5,10 @@ import SpiritDetailClient from "./spirit-detail-client";
 import { reviewsDb } from "@/lib/db/firestore-rest";
 import { getDictionary } from "@/lib/get-dictionary";
 import { Locale } from "@/i18n-config";
-import { getCanonicalUrl, getHreflangAlternates } from "@/lib/utils/seo-url";
-import { getSpiritRobotsMeta } from "@/lib/utils/indexable-tier";
+import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url'
+import { selectFeaturedSpiritsForWiki } from '@/lib/utils/wiki-spirit-match'
+import { getSpiritRobotsMeta } from '@/lib/utils/indexable-tier'
+import RelatedWikiSection from '@/components/spirits/RelatedWikiSection'
 import { getRelatedSpirits } from "@/lib/utils/related-spirits";
 import { resolveSpiritPageState } from "@/lib/utils/spirit-page-resolver";
 import { formatSpiritFieldValue } from "@/lib/utils/localize-field";
@@ -395,14 +397,15 @@ export async function generateMetadata({
     };
   }
 
-  const spirit = pageState.spirit;
+  const spirit = pageState.spirit as any; // Enriched with aggregateRating and reviewer data
   const isIndexable = pageState.status === 'FOUND_INDEXABLE';
   const koName = spirit.name || '';
   const enName = spirit.metadata?.name_en || spirit.name_en || '';
   const brand = spirit.distillery || '';
   const abv = typeof spirit.abv === 'number' ? `${spirit.abv}` : '';
   const type = spirit.category || '';
-  const reviewCount = Array.isArray(reviewsData) ? reviewsData.length : 0;
+  const aggregateRating = spirit.aggregateRating || { ratingValue: 0, reviewCount: 0 };
+  const reviewCount = aggregateRating.reviewCount;
 
   // Title Building
   let title = '';
@@ -481,10 +484,9 @@ export async function generateMetadata({
 
     // SEO Enhancement: ABV, rating, reviewCount → OG 이미지에 정보 추가 노출
     if (spirit.abv) searchParams.set('abv', String(spirit.abv));
-    if (reviewCount > 0 && Array.isArray(reviewsData)) {
-      const avgRating = (reviewsData.reduce((acc, r) => acc + (r.rating || 0), 0) / reviewCount).toFixed(1);
-      searchParams.set('rating', avgRating);
-      searchParams.set('reviews', String(reviewCount));
+    if (aggregateRating.reviewCount > 0) {
+      searchParams.set('rating', String(aggregateRating.ratingValue));
+      searchParams.set('reviews', String(aggregateRating.reviewCount));
     }
 
     const tagsData = spirit.tasting_note ? spirit.tasting_note.split(/[,\s#]+/) : (spirit.nose_tags || []);
@@ -562,7 +564,6 @@ export default async function SpiritDetailPage({
   }
 
   // Transient backend/data failure → throw so Next.js returns 5xx, NOT a 200 loading shell.
-  // This keeps Google from treating an empty/broken page as a soft-404 or indexable content.
   if (pageState.status === 'TRANSIENT_FAILURE') {
     console.error(
       `[SpiritPage] id=${id} Transient failure — throwing to trigger 5xx. error=${pageState.error}`
@@ -572,21 +573,12 @@ export default async function SpiritDetailPage({
     );
   }
 
-  const spirit = pageState.spirit;
-
-  let reviews: TransformedReview[] = [];
-  try {
-    const reviewsData = await reviewsDb.getAllForSpirit(id);
-    if (Array.isArray(reviewsData)) {
-      reviews = transformReviewData(reviewsData as DbReview[]);
-    }
-  } catch (error) {
-    console.error('Failed to fetch reviews:', error);
-  }
+  const spirit = pageState.spirit as any; // Enriched with aggregateRating and expertReview
+  const reviews = spirit.userReviews || [];
+  const expertReview = spirit.expertReview;
+  const dictionary = await getDictionary(lang as Locale);
 
   // --- Fetch Related Spirits Server Side ---
-  // Save DB and cache costs: Only fetch related items if this page is indexable (Tier A)
-  // Fails open — if related spirits fetch throws, the page still renders.
   const isIndexable = pageState.status === 'FOUND_INDEXABLE';
   let relatedSpirits: any[] = [];
   if (isIndexable) {
@@ -597,91 +589,23 @@ export default async function SpiritDetailPage({
     }
   }
 
-  // --- [SEO 최적화된 JSON-LD 및 데이터 준비 - 통합 관리 전략] ---
+  // --- [SEO 최적화된 JSON-LD 및 데이터 준비] ---
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://kspiritsclub.com';
   const pageUrl = `${baseUrl}/${lang}/spirits/${id}`;
   const seoImageCandidates = getSpiritSeoImageCandidates(spirit, baseUrl);
   
+  const aggregateRating = spirit.aggregateRating || { ratingValue: 0, reviewCount: 0 };
+  const totalReviewCount = aggregateRating.reviewCount || 1;
+  const aggregateRatingValue = aggregateRating.ratingValue || 5.0;
+
+  // Global Metadata for LD
+  const jsonLdName = isEn ? (spirit.name_en || spirit.name) : spirit.name;
+
   // 1+N 전략: 소믈리에 리포트(1) + 유저 리뷰(N)
-  // Variable expert rating based on content quality (4.5-4.9) to avoid Google spam filters
-  const hasImage = !!(spirit.imageUrl || spirit.thumbnailUrl);
-  const descKo = spirit.metadata?.description_ko || spirit.description_ko || '';
-  const descEn = spirit.metadata?.description_en || spirit.description_en || '';
-  const pairingKo = spirit.metadata?.pairing_guide_ko || spirit.pairing_guide_ko || '';
-  const pairingEn = spirit.metadata?.pairing_guide_en || spirit.pairing_guide_en || '';
-  const tastingNote = spirit.tasting_note || spirit.metadata?.tasting_note || '';
-  const sensoryTagCount = [
-    ...(spirit.nose_tags || spirit.metadata?.nose_tags || []),
-    ...(spirit.palate_tags || spirit.metadata?.palate_tags || []),
-    ...(spirit.finish_tags || spirit.metadata?.finish_tags || []),
-  ].filter(Boolean).length;
-
-  const qualitySignals = [
-    hasImage,
-    descKo.length >= 160 || descEn.length >= 160,
-    pairingKo.length >= 120 || pairingEn.length >= 120,
-    tastingNote.length >= 24 || sensoryTagCount >= 4,
-  ].filter(Boolean).length;
-
-  // Variable rating: 4.5 (2 signals) → 4.7 (3 signals) → 4.9 (4 signals)
-  const expertRatingValue = qualitySignals >= 4 ? 4.9 : qualitySignals >= 3 ? 4.7 : 4.5;
-
-  // 전문가 리뷰 본문 생성 (설명 + 맛 + 페어링)
-  const flavorTags = getPreferredMetaTags(spirit, isEn ? 'en' : 'ko');
-  const pairingGuide = isEn
-    ? (spirit.metadata?.pairing_guide_en || spirit.pairing_guide_en)
-    : (spirit.metadata?.pairing_guide_ko || spirit.pairing_guide_ko);
-
-  // Build rich sommelier review with minimum 150 characters to avoid thin content
-  const baseSommelierReview = isEn
-    ? `[Sommelier Report] ${spirit.metadata?.description_en || spirit.description_en || ''}\n\n` +
-      `Flavor Profile: ${flavorTags.length > 0 ? flavorTags.join(', ') : 'Balanced and nuanced'}\n` +
-      `Best Mariage: ${pairingGuide || 'Traditional pairings recommended'}`
-    : `[소믈리에 리포트] ${spirit.metadata?.description_ko || spirit.description_ko || ''}\n\n` +
-      `맛과 향: ${flavorTags.length > 0 ? flavorTags.join(', ') : '균형 잡힌 조화'}\n` +
-      `추천 마리아주: ${pairingGuide || '다양한 안주와 잘 어울립니다'}`;
-
-  // Ensure minimum 150 characters for SEO compliance
-  let sommelierReviewBody = baseSommelierReview;
-  if (sommelierReviewBody.length < 150) {
-    const categoryName = formatSpiritFieldValue('category', spirit.category, lang);
-    const enrichment = isEn
-      ? `\n\nThis ${categoryName} showcases the craftsmanship of ${spirit.distillery || 'traditional methods'}. With an ABV of ${spirit.abv || 'standard'}%, it offers a distinctive tasting experience. K-Spirits Club provides comprehensive information including expert tasting notes, food pairing suggestions, and community reviews to help you discover and enjoy this spirit.`
-      : `\n\n${categoryName}은(는) ${spirit.distillery || '전통 방식'}의 장인정신을 보여줍니다. ${spirit.abv || '표준'}%의 도수로, 독특한 시음 경험을 제공합니다. K-Spirits Club은 전문가 테이스팅 노트, 음식 페어링 추천, 커뮤니티 리뷰 등 종합적인 정보를 제공하여 이 주류를 발견하고 즐길 수 있도록 돕습니다.`;
-    sommelierReviewBody = baseSommelierReview + enrichment;
-  }
-
-  const metadataRating = spirit.metadata?.aggregateRating;
-  const userReviewCount = metadataRating ? metadataRating.reviewCount : reviews.length;
-  // Total count including the AI Sommelier (Expert) review
-  const totalReviewCount = 1 + userReviewCount;
-  
-  const aggregateRatingValue = metadataRating 
-    ? metadataRating.ratingValue 
-    : (userReviewCount > 0 
-        ? (((expertRatingValue * 1) + reviews.reduce((acc, r) => acc + (Number(r.rating) || 0), 0)) / totalReviewCount)
-        : expertRatingValue);
-
-  // 리뷰 리스트 빌드 (전문가 리뷰 우선 + 최신 유저 리뷰)
   const schemaReviews = [
-    {
-      '@type': 'Review',
-      author: {
-        '@type': 'Organization',
-        name: isEn ? 'K-Spirits AI Sommelier' : 'K-Spirits AI 소믈리에',
-        url: baseUrl
-      },
-      datePublished: spirit.createdAt ? (new Date(spirit.createdAt).toISOString()) : new Date().toISOString(),
-      reviewRating: {
-        '@type': 'Rating',
-        ratingValue: expertRatingValue,
-        bestRating: 5,
-        worstRating: 1
-      },
-      reviewBody: sommelierReviewBody
-    },
-    ...reviews.map(r => ({
+    expertReview, // Enriched expert review from DB layer
+    ...reviews.map((r: any) => ({
       '@type': 'Review',
       author: {
         '@type': 'Person',
@@ -701,10 +625,10 @@ export default async function SpiritDetailPage({
   const jsonLd: any = {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    name: isEn ? (spirit.name_en || spirit.name) : spirit.name,
+    name: jsonLdName,
     ...(spirit.name_en && !isEn && { alternateName: spirit.name_en }),
     image: seoImageCandidates.length > 0 ? seoImageCandidates : [`${baseUrl}/default-og.jpg`],
-    description: buildSpiritMetaDescription(spirit, isEn ? 'en' : 'ko', totalReviewCount, (isEn ? (spirit.name_en || spirit.name) : spirit.name)),
+    description: buildSpiritMetaDescription(spirit, isEn ? 'en' : 'ko', totalReviewCount, jsonLdName),
     sku: spirit.id,
     mpn: spirit.id,
     brand: {
@@ -713,17 +637,13 @@ export default async function SpiritDetailPage({
     },
     category: formatSpiritFieldValue('category', spirit.category, lang),
     ...(spirit.abv && { 'alcoholByVolume': spirit.abv }),
-    // Only show aggregateRating when we have user reviews to avoid Google spam detection
-    // Pattern: "1 review, 4.9 rating" (expert only) looks suspicious
-    ...(userReviewCount >= 1 && {
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: aggregateRatingValue.toFixed(1),
-        reviewCount: totalReviewCount,
-        bestRating: 5,
-        worstRating: 1
-      }
-    }),
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: aggregateRatingValue.toFixed(1),
+      reviewCount: totalReviewCount,
+      bestRating: 5,
+      worstRating: 1
+    },
     review: schemaReviews,
     offers: {
       '@type': 'Offer',
@@ -735,23 +655,7 @@ export default async function SpiritDetailPage({
       hasMerchantReturnPolicy: {
         '@type': 'MerchantReturnPolicy',
         applicableCountry: 'KR',
-        returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
-        additionalProperty: {
-          '@type': 'PropertyValue',
-          name: isEn ? 'Return Policy' : '환불 정책',
-          value: isEn
-            ? 'Return and refund policies vary by retailer. Please check with the seller before purchase.'
-            : '환불 및 반품 정책은 판매처에 따라 상이합니다. 구매 전 판매자에게 확인하시기 바랍니다.'
-        }
-      },
-      shippingDetails: {
-        '@type': 'OfferShippingDetails',
-        shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'KR' },
-        deliveryTime: {
-          '@type': 'ShippingDeliveryTime',
-          handlingTime: { '@type': 'QuantitativeValue', minValue: 1, maxValue: 3, unitCode: 'day' },
-          transitTime: { '@type': 'QuantitativeValue', minValue: 1, maxValue: 5, unitCode: 'day' }
-        }
+        returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted'
       }
     },
     url: pageUrl,
@@ -762,85 +666,75 @@ export default async function SpiritDetailPage({
     '@type': 'WebPage',
     '@id': pageUrl,
     url: pageUrl,
-    name: isEn ? (spirit.name_en || spirit.name) : spirit.name
+    name: jsonLdName
   };
 
-  // FAQ Schema: Comprehensive Template (ABV, Category, Distillery, Flavor, Pairing)
+  const flavorTags = getPreferredMetaTags(spirit, isEn ? 'en' : 'ko');
+  const pairingGuide = isEn
+    ? (spirit.metadata?.pairing_guide_en || spirit.pairing_guide_en)
+    : (spirit.metadata?.pairing_guide_ko || spirit.pairing_guide_ko);
+
+  // FAQ Schema: Localized Template
   const faqQuestions = [];
+  const faqDict = dictionary.faq || {};
+
+  // SEO Quality Gate: Only generate FAQ for high-quality content (Rating >= 3.5)
+  const isHighQuality = aggregateRatingValue >= 3.5;
   
-  // 1. Category/Type Question
-  faqQuestions.push({
-    '@type': 'Question',
-    name: isEn ? `What kind of spirit is ${spirit.name_en || spirit.name}?` : `${spirit.name}은(는) 어떤 주류인가요?`,
-    acceptedAnswer: { 
-      '@type': 'Answer', 
-      text: isEn 
-        ? `${spirit.name} is a ${formatSpiritFieldValue('subcategory', spirit.subcategory || spirit.category, 'en')} from ${spirit.country || 'the selected region'}.`
-        : `${spirit.name}은(는) ${spirit.country || ''}에서 생산된 ${formatSpiritFieldValue('subcategory', spirit.subcategory || spirit.category, 'ko')} 제품입니다.`
+  if (isHighQuality) {
+    if (spirit.abv) {
+      faqQuestions.push({
+        '@type': 'Question',
+        name: (faqDict.abv_q || '').replace('{name}', jsonLdName),
+        acceptedAnswer: { 
+          '@type': 'Answer', 
+          text: (faqDict.abv_a || '').replace('{name}', jsonLdName).replace('{abv}', String(spirit.abv))
+        }
+      });
     }
-  });
 
-  // 2. ABV Question
-  if (spirit.abv) {
+    const origin = formatSpiritFieldValue('country', spirit.country, lang) || (isEn ? 'the selected region' : '해당 지역');
+    const categoryLabel = formatSpiritFieldValue('subcategory', spirit.subcategory || spirit.category, lang);
     faqQuestions.push({
       '@type': 'Question',
-      name: isEn ? `What is the alcohol content (ABV) of ${spirit.name_en || spirit.name}?` : `${spirit.name}의 알코올 도수는?`,
+      name: (faqDict.origin_q || '').replace('{name}', jsonLdName),
       acceptedAnswer: { 
         '@type': 'Answer', 
-        text: isEn 
-          ? `${spirit.name} has an alcohol by volume (ABV) of ${spirit.abv}%.`
-          : `${spirit.name}의 ABV(도수)는 ${spirit.abv}%입니다.` 
+        text: (faqDict.origin_a || '').replace('{name}', jsonLdName).replace('{origin}', origin).replace('{category}', categoryLabel)
       }
     });
+
+    if (flavorTags.length > 0) {
+      faqQuestions.push({
+        '@type': 'Question',
+        name: (faqDict.tasting_q || '').replace('{name}', jsonLdName),
+        acceptedAnswer: { 
+          '@type': 'Answer', 
+          text: (faqDict.tasting_a || '').replace('{name}', jsonLdName).replace('{notes}', flavorTags.join(', ')).replace('{rating}', String(aggregateRatingValue.toFixed(1)))
+        }
+      });
+    }
+
+    if (pairingGuide) {
+      faqQuestions.push({
+        '@type': 'Question',
+        name: (faqDict.pairing_q || '').replace('{name}', jsonLdName),
+        acceptedAnswer: { 
+          '@type': 'Answer', 
+          text: (faqDict.pairing_a || '').replace('{name}', jsonLdName).replace('{pairing}', typeof pairingGuide === 'string' ? pairingGuide : (isEn ? 'Traditional pairings' : '전통적인 안주'))
+        }
+      });
+    }
   }
 
-  // 3. Distillery/Brand Question
-  if (spirit.distillery) {
-    faqQuestions.push({
-      '@type': 'Question',
-      name: isEn ? `Who produces ${spirit.name_en || spirit.name}?` : `${spirit.name}의 생산처(증류소)는?`,
-      acceptedAnswer: { 
-        '@type': 'Answer', 
-        text: isEn 
-          ? `${spirit.name} is produced by ${spirit.distillery}.` 
-          : `${spirit.name}은(는) ${spirit.distillery}에서 생산됩니다.`
-      }
-    });
-  }
-
-  // 4. Tasting Note Question
-  if (flavorTags.length > 0) {
-    faqQuestions.push({
-      '@type': 'Question',
-      name: isEn ? `What are the tasting notes for ${spirit.name_en || spirit.name}?` : `${spirit.name}의 맛과 향 특징은?`,
-      acceptedAnswer: { 
-        '@type': 'Answer', 
-        text: isEn 
-          ? `It features a unique flavor profile with notes of ${flavorTags.join(', ')}.` 
-          : `${flavorTags.join(', ')} 등의 특징적인 맛과 향을 느낄 수 있습니다.`
-      }
-    });
-  }
-
-  // 5. Pairing Question
-  if (pairingGuide) {
-    faqQuestions.push({
-      '@type': 'Question',
-      name: isEn ? `Which food goes best with ${spirit.name_en || spirit.name}?` : `${spirit.name}과(와) 어울리는 안주 추천은?`,
-      acceptedAnswer: { 
-        '@type': 'Answer', 
-        text: pairingGuide
-      }
-    });
-  }
-
-  const wikiGuide = resolveSpiritWikiGuide(spirit.category, spirit.subcategory, spirit.mainCategory);
-
-  const faqLd = faqQuestions.length > 0 ? {
+  const faqLd = isHighQuality && faqQuestions.length > 0 ? {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: faqQuestions
   } : null;
+
+
+  const wikiGuide = resolveSpiritWikiGuide(spirit.category, spirit.subcategory, spirit.mainCategory);
 
   const breadcrumbLd = {
     '@context': 'https://schema.org',
@@ -857,8 +751,6 @@ export default async function SpiritDetailPage({
       { '@type': 'ListItem', position: 4, name: spirit.name, item: pageUrl },
     ],
   };
-
-  const dictionary = await getDictionary(lang as Locale);
 
   const guideBtnBase = 'flex items-center gap-1.5 w-full sm:w-auto justify-center sm:justify-start px-3 py-2 sm:py-1.5 rounded-full border transition-colors font-medium';
   const guideBtnAmber = 'bg-amber-500/10 border-amber-500/40 text-amber-700 dark:text-amber-300 hover:bg-amber-500/20 hover:border-amber-500/70';
@@ -888,20 +780,29 @@ export default async function SpiritDetailPage({
         />
       )}
       <SpiritDetailClient spirit={spirit} reviews={reviews} relatedSpirits={relatedSpirits} lang={lang as Locale} dict={dictionary.detail} />
+      
+      {/* Phase 3: Hub & Spoke Connectivity Section */}
+      {wikiGuide && (
+        <div className="container mx-auto px-4 max-w-4xl">
+          <RelatedWikiSection 
+             lang={lang}
+             category={spirit.category}
+             subcategory={spirit.subcategory}
+             mainCategory={spirit.mainCategory}
+             slug={wikiGuide.slug}
+             labelKo={wikiGuide.labelKo}
+             labelEn={wikiGuide.labelEn}
+          />
+        </div>
+      )}
+
       {/* SSR section: crawlable internal links to wiki and contents hub */}
-      <section className="bg-background border-t border-border/40 py-8 px-4">
+      <section className="bg-background border-t border-border/40 py-12 px-4 pb-24">
         <div className="container mx-auto max-w-2xl">
-          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-3">
-            {isEn ? 'Explore Related Guides' : '관련 가이드 탐색'}
+          <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] mb-6 text-center">
+            {isEn ? 'Knowledge Network' : '지식 네트워크'}
           </p>
-          <ul className="flex flex-col sm:flex-row sm:flex-wrap gap-2 text-sm">
-            {wikiGuide && (
-              <li className="w-full sm:w-auto">
-                <Link href={`/${lang}/contents/wiki/${wikiGuide.slug}`} className={`${guideBtnBase} ${guideBtnAmber}`}>
-                  <span>📖</span>{isEn ? wikiGuide.labelEn : wikiGuide.labelKo}
-                </Link>
-              </li>
-            )}
+          <ul className="flex flex-wrap justify-center gap-3 text-sm">
             <li className="w-full sm:w-auto"><Link href={`/${lang}/contents/wiki`} className={`${guideBtnBase} ${guideBtnAmber}`}><span>📚</span>{isEn ? 'Spirits Wiki — All Categories' : '주류 백과사전 전체 카테고리'}</Link></li>
             <li className="w-full sm:w-auto"><Link href={`/${lang}/contents/reviews`} className={`${guideBtnBase} ${guideBtnOrange}`}><span>🥃</span>{isEn ? 'Spirit Tasting Reviews' : '주류 시음 리뷰 보드'}</Link></li>
             <li className="w-full sm:w-auto"><Link href={`/${lang}/contents`} className={`${guideBtnBase} ${guideBtnSky}`}><span>🌐</span>{isEn ? 'Contents Hub' : '콘텐츠 허브'}</Link></li>

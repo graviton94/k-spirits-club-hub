@@ -226,9 +226,27 @@ function ExploreCardComponent({
 
         {displayDistillery && (
           <p className="text-[10px] text-muted-foreground/60 mt-0.5 truncate">
-            {displayDistillery}
+                {displayDistillery}
           </p>
         )}
+
+        {/* Rating & Badge */}
+        <div className="flex items-center gap-2 mt-1">
+          {spirit.aggregateRating && spirit.aggregateRating.ratingValue > 0 && (
+            <div className="flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-amber-500/10 text-amber-600 dark:text-amber-400 text-[10px] font-black">
+              <span>★</span>
+              <span>{Number(spirit.aggregateRating.ratingValue).toFixed(1)}</span>
+              {(spirit.aggregateRating.reviewCount ?? 0) > 1 && (
+                <span className="opacity-60 font-medium ml-0.5">({spirit.aggregateRating.reviewCount})</span>
+              )}
+            </div>
+          )}
+          {spirit.hasTastingNotes && (
+            <div className="px-1.5 py-0.5 rounded-md bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-[9px] font-black uppercase tracking-tighter">
+              Notes
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Right: Two Action Buttons */}
