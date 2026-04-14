@@ -182,56 +182,72 @@ export const db = {
   },
 
   async updateSpirit(id: string, updates: Partial<Spirit>): Promise<Spirit | null> {
+    // 1. Fetch current spirit for context
+    const current = await spiritsDb.getById(id);
+    if (!current) return null;
+
+    // 2. Prepare merged updates
+    const finalUpdates = { ...updates };
+
+    // Metadata Merging: Prevent loss of existing fields not present in the admin form (e.g., 'offer', 'enriched_at')
+    if (finalUpdates.metadata) {
+      finalUpdates.metadata = {
+        ...(current.metadata || {}),
+        ...finalUpdates.metadata
+      };
+    }
+
     // Data Consistency Guard: Ensure status='PUBLISHED' always sets isPublished=true
-    if (updates.status === 'PUBLISHED') {
-      updates.isPublished = true;
+    if (finalUpdates.status === 'PUBLISHED') {
+      finalUpdates.isPublished = true;
     }
 
-    // Auto-generate searchKeywords if name, distillery, or name_en is being updated
-    const needsKeywordUpdate = updates.name || updates.distillery || updates.name_en || updates.metadata?.name_en;
-
+    // 3. Auto-generate searchKeywords if needed
+    const needsKeywordUpdate = finalUpdates.name || finalUpdates.distillery || finalUpdates.name_en || finalUpdates.metadata?.name_en;
     if (needsKeywordUpdate) {
-      // Fetch current spirit to get all fields for keyword generation
-      const currentSpirit = await spiritsDb.getById(id);
-      if (currentSpirit) {
-        const spiritForKeywords = {
-          name: updates.name || currentSpirit.name,
-          name_en: updates.name_en || currentSpirit.name_en,
-          distillery: updates.distillery !== undefined ? updates.distillery : currentSpirit.distillery,
-          metadata: updates.metadata ? { ...currentSpirit.metadata, ...updates.metadata } : currentSpirit.metadata
-        };
-        updates.searchKeywords = generateSpiritSearchKeywords(spiritForKeywords);
-      }
+      const spiritForKeywords = {
+        name: finalUpdates.name || current.name,
+        name_en: finalUpdates.name_en || current.name_en,
+        distillery: finalUpdates.distillery !== undefined ? finalUpdates.distillery : current.distillery,
+        metadata: finalUpdates.metadata ? { ...current.metadata, ...finalUpdates.metadata } : current.metadata
+      };
+      finalUpdates.searchKeywords = generateSpiritSearchKeywords(spiritForKeywords);
     }
 
-    // If spirit was published (or is currently published), sync the new arrivals cache
-    // This ensures updates like Image URL changes are reflected in the cache immediately
-    const finalState = await spiritsDb.getById(id);
+    // 4. Calculate final state for SEO and Sync
+    const isNowPublished = finalUpdates.isPublished !== undefined ? finalUpdates.isPublished : current.isPublished;
     
-    if (finalState?.isPublished) {
+    if (isNowPublished) {
       // --- NEW: SEO AUTOMATION ENGINE ---
-      // Automatically calculate rating and sync with search index
-      const seoResults = calculateInitialContentRating(finalState);
+      const combinedState = { 
+        ...current, 
+        ...finalUpdates,
+        metadata: finalUpdates.metadata ? { ...current.metadata, ...finalUpdates.metadata } : current.metadata
+      };
+
+      // Automatically calculate rating
+      const seoResults = calculateInitialContentRating(combinedState);
       
       const indexUpdate: SpiritSearchIndex = {
         i: id,
-        n: finalState.name,
-        en: finalState.name_en || finalState.metadata?.name_en || null,
-        c: finalState.category,
-        sc: finalState.subcategory || null,
-        t: finalState.thumbnailUrl || finalState.imageUrl || null,
-        a: finalState.abv || 0,
-        d: finalState.distillery || null,
-        tn: finalState.tasting_note || null,
-        cre: finalState.createdAt,
+        n: combinedState.name,
+        en: combinedState.name_en || combinedState.metadata?.name_en || null,
+        c: combinedState.category,
+        sc: combinedState.subcategory || null,
+        t: combinedState.thumbnailUrl || combinedState.imageUrl || null,
+        a: combinedState.abv || 0,
+        d: combinedState.distillery || null,
+        tn: combinedState.tasting_note || null,
+        cre: combinedState.createdAt,
         r: seoResults.ratingValue,
         rc: 1, // Initial expert review
-        h: !!finalState.tasting_note
+        h: !!combinedState.tasting_note
       };
 
       // Perform ATOMIC Sync (Spirit Detail + Search Index)
-      // We update the spirit again but only with the calculated quality rating fields
+      // This saves BOTH the primary updates and the calculated SEO fields in one transaction logic
       await spiritsDb.commitSEOUpdate(id, {
+        ...finalUpdates,
         aggregateRating: {
           ratingValue: seoResults.ratingValue,
           reviewCount: 1
@@ -239,12 +255,15 @@ export const db = {
       }, indexUpdate);
 
       // Also sync new arrivals cache as usual
-      const { newArrivalsDb } = await import('./firestore-rest');
       try {
+        const { newArrivalsDb } = await import('./firestore-rest');
         await newArrivalsDb.syncCache();
       } catch (error) {
         console.error('Failed to sync new arrivals cache:', error);
       }
+    } else {
+      // Simple update for non-published spirits
+      await spiritsDb.upsert(id, finalUpdates);
     }
 
     return spiritsDb.getById(id);
