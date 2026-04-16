@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import Link from "next/link";
 import SpiritDetailClient from "./spirit-detail-client";
-import { reviewsDb } from "@/lib/db/firestore-rest";
 import { getDictionary } from "@/lib/get-dictionary";
 import { Locale } from "@/i18n-config";
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url'
@@ -375,10 +374,7 @@ export async function generateMetadata({
 
   // Use the shared cached resolver — same fetch as the page component, zero double-fetching.
   // Errors are caught inside resolveSpiritPageState; metadata never throws.
-  const [pageState, reviewsData] = await Promise.all([
-    resolveSpiritPageState(id),
-    reviewsDb.getAllForSpirit(id).catch(() => [])
-  ]);
+  const pageState = await resolveSpiritPageState(id);
 
   if (pageState.status === 'NOT_FOUND') {
     return {
@@ -575,37 +571,36 @@ export default async function SpiritDetailPage({
   const spirit = (pageState as any).spirit as Spirit; // Enriched with aggregateRating and expertReview
   const reviews = (spirit as any).userReviews || [];
   const expertReview = (spirit as any).expertReview;
-  const dictionary = await getDictionary(lang as Locale);
-
-  // --- Resolve Wiki Hub Link (Server Side) ---
-  const wikiGuide = await resolveSpiritWikiGuide(spirit.category, spirit.subcategory, spirit.mainCategory);
-
-  // Optimized Wiki Data Resolution (Server-side)
-  let wikiMetadata = null;
-  if (wikiGuide) {
-    const wikiCat = await resolveWikiCategory(wikiGuide.slug);
-    if (wikiCat) {
-      const section = isEn ? (wikiCat.sectionsEn || wikiCat.sections) : wikiCat.sections;
-      wikiMetadata = {
-        title: isEn ? wikiCat.nameEn : wikiCat.nameKo,
-        tagline: isEn ? wikiCat.taglineEn : wikiCat.taglineKo,
-        emoji: wikiCat.emoji,
-        recommendedGlass: section?.servingGuidelines?.recommendedGlass,
-        optimalTemp: section?.servingGuidelines?.optimalTemperatures?.[0]?.temp
-      };
-    }
-  }
-
-  // --- Fetch Related Spirits Server Side ---
   const isIndexable = pageState.status === 'FOUND_INDEXABLE';
-  let relatedSpirits: any[] = [];
-  if (isIndexable) {
-    try {
-      relatedSpirits = await getRelatedSpirits(spirit.category, spirit.subcategory || undefined, spirit.abv, id);
-    } catch (error) {
-      console.error(`[SpiritPage] id=${id} Failed to fetch related spirits:`, error);
-    }
-  }
+  const [dictionary, relatedSpirits, wikiResolved] = await Promise.all([
+    getDictionary(lang as Locale),
+    isIndexable
+      ? getRelatedSpirits(spirit.category, spirit.subcategory || undefined, spirit.abv, id).catch((error) => {
+          console.error(`[SpiritPage] id=${id} Failed to fetch related spirits:`, error);
+          return [];
+        })
+      : Promise.resolve([]),
+    (async () => {
+      const wikiGuide = await resolveSpiritWikiGuide(spirit.category, spirit.subcategory, spirit.mainCategory);
+      if (!wikiGuide) return { wikiGuide: null, wikiMetadata: null };
+
+      const wikiCat = await resolveWikiCategory(wikiGuide.slug);
+      if (!wikiCat) return { wikiGuide, wikiMetadata: null };
+
+      const section = isEn ? (wikiCat.sectionsEn || wikiCat.sections) : wikiCat.sections;
+      return {
+        wikiGuide,
+        wikiMetadata: {
+          title: isEn ? wikiCat.nameEn : wikiCat.nameKo,
+          tagline: isEn ? wikiCat.taglineEn : wikiCat.taglineKo,
+          emoji: wikiCat.emoji,
+          recommendedGlass: section?.servingGuidelines?.recommendedGlass,
+          optimalTemp: section?.servingGuidelines?.optimalTemperatures?.[0]?.temp
+        }
+      };
+    })(),
+  ]);
+  const { wikiGuide, wikiMetadata } = wikiResolved;
 
   // --- [SEO 최적화된 JSON-LD 및 데이터 준비] ---
 
@@ -638,7 +633,7 @@ export default async function SpiritDetailPage({
       },
       reviewBody: r.content || (isEn ? 'Wonderful experience.' : '만족스러운 시음 경험이었습니다.')
     }))
-  ];
+  ].filter(Boolean).slice(0, 5);
 
   const jsonLd: any = {
     '@context': 'https://schema.org',

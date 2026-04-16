@@ -77,6 +77,8 @@ const STATIC_HUBS: Record<string, SpiritCategory> = {
     }
 };
 
+const WIKI_CATEGORY_CACHE = new Map<string, Promise<SpiritCategory | null>>();
+
 /**
  * Resolves a full Wiki Category by its slug.
  * Returns only the requested category as a clean SpiritCategory object.
@@ -89,18 +91,28 @@ export async function resolveWikiCategory(slug: string): Promise<SpiritCategory 
     const loader = WIKI_LOADERS[slug];
     if (!loader) return null;
 
-    try {
-        const module = await loader();
-        // The export name in the wiki files matches the camelCase name of the variable.
-        // E.g. blended-whisky.ts exports 'blendedWhisky'.
-        // To be safe and generic, we look for any export that looks like a SpiritCategory.
-        const categoryData = Object.values(module).find(
-            (val: any) => val && typeof val === 'object' && val.slug === slug
-        );
-        
-        return (categoryData as SpiritCategory) || null;
-    } catch (error) {
-        console.error(`[WikiResolver] Failed to load wiki for slug: ${slug}`, error);
-        return null;
+    const cached = WIKI_CATEGORY_CACHE.get(slug);
+    if (cached) {
+        return cached;
     }
+
+    const loadingPromise = (async () => {
+        try {
+            const module = await loader();
+            // The export name in the wiki files matches the camelCase name of the variable.
+            // E.g. blended-whisky.ts exports 'blendedWhisky'.
+            // To be safe and generic, we look for any export that looks like a SpiritCategory.
+            const categoryData = Object.values(module).find(
+                (val: any) => val && typeof val === 'object' && val.slug === slug
+            );
+
+            return (categoryData as SpiritCategory) || null;
+        } catch (error) {
+            console.error(`[WikiResolver] Failed to load wiki for slug: ${slug}`, error);
+            return null;
+        }
+    })();
+
+    WIKI_CATEGORY_CACHE.set(slug, loadingPromise);
+    return loadingPromise;
 }

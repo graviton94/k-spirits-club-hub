@@ -13,11 +13,16 @@ export const getRelatedSpirits = unstable_cache(
 
         // Fetch a broader pool to filter from
         // (We use a broad filter rather than exact ABV matches since Firestore REST doesn't easily support complex range queries with ORs without composite indexes)
-        const candidatesRes = await db.getSpirits({
-            category,
-            isPublished: true,
-        });
-        const candidates = Array.isArray(candidatesRes) ? candidatesRes : [];
+        const candidatesRes = await db.getSpirits(
+            {
+                category,
+                isPublished: true,
+            },
+            { page: 1, pageSize: 10 }
+        );
+        const candidates = Array.isArray((candidatesRes as any)?.data)
+            ? (candidatesRes as any).data
+            : (Array.isArray(candidatesRes) ? candidatesRes : []);
 
         // 1. Filter out the current spirit
         // 2. Filter out non-indexable Tier B spirits
