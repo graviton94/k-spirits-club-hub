@@ -1,4 +1,5 @@
 import { db } from "@/lib/db/index";
+import { Spirit } from "@/lib/db/schema";
 import { isIndexableSpirit } from "@/lib/utils/indexable-tier";
 import { unstable_cache } from "next/cache";
 
@@ -20,9 +21,7 @@ export const getRelatedSpirits = unstable_cache(
             },
             { page: 1, pageSize: 10 }
         );
-        const candidates = Array.isArray((candidatesRes as any)?.data)
-            ? (candidatesRes as any).data
-            : (Array.isArray(candidatesRes) ? candidatesRes : []);
+        const candidates: Spirit[] = candidatesRes?.data ?? [];
 
         // 1. Filter out the current spirit
         // 2. Filter out non-indexable Tier B spirits

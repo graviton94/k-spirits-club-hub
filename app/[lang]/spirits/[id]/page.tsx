@@ -614,11 +614,12 @@ export default async function SpiritDetailPage({
 
   // Global Metadata for LD
   const jsonLdName = isEn ? (spirit.name_en || spirit.name) : spirit.name;
+  const userSchemaReviewLimit = expertReview ? 4 : 5;
 
   // 1+N 전략: 소믈리에 리포트(1) + 유저 리뷰(N)
   const schemaReviews = [
-    expertReview, // Enriched expert review from DB layer
-    ...reviews.map((r: any) => ({
+    ...(expertReview ? [expertReview] : []), // Enriched expert review from DB layer
+    ...reviews.slice(0, userSchemaReviewLimit).map((r: any) => ({
       '@type': 'Review',
       author: {
         '@type': 'Person',
@@ -633,7 +634,7 @@ export default async function SpiritDetailPage({
       },
       reviewBody: r.content || (isEn ? 'Wonderful experience.' : '만족스러운 시음 경험이었습니다.')
     }))
-  ].filter(Boolean).slice(0, 5);
+  ];
 
   const jsonLd: any = {
     '@context': 'https://schema.org',

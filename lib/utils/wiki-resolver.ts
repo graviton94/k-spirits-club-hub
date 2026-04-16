@@ -77,7 +77,9 @@ const STATIC_HUBS: Record<string, SpiritCategory> = {
     }
 };
 
-const WIKI_CATEGORY_CACHE = new Map<string, Promise<SpiritCategory | null>>();
+const WIKI_CACHE_TTL_MS = 5 * 60 * 1000;
+const WIKI_CACHE_MAX_ENTRIES = 64;
+const WIKI_CATEGORY_CACHE = new Map<string, { value: Promise<SpiritCategory | null>; expiresAt: number }>();
 
 /**
  * Resolves a full Wiki Category by its slug.
@@ -91,9 +93,13 @@ export async function resolveWikiCategory(slug: string): Promise<SpiritCategory 
     const loader = WIKI_LOADERS[slug];
     if (!loader) return null;
 
+    const now = Date.now();
     const cached = WIKI_CATEGORY_CACHE.get(slug);
+    if (cached && cached.expiresAt > now) {
+        return cached.value;
+    }
     if (cached) {
-        return cached;
+        WIKI_CATEGORY_CACHE.delete(slug);
     }
 
     const loadingPromise = (async () => {
@@ -113,6 +119,24 @@ export async function resolveWikiCategory(slug: string): Promise<SpiritCategory 
         }
     })();
 
-    WIKI_CATEGORY_CACHE.set(slug, loadingPromise);
+    if (WIKI_CATEGORY_CACHE.size >= WIKI_CACHE_MAX_ENTRIES) {
+        let evictionKey: string | null = null;
+        let minExpiresAt = Number.POSITIVE_INFINITY;
+        for (const [key, entry] of WIKI_CATEGORY_CACHE.entries()) {
+            if (entry.expiresAt < minExpiresAt) {
+                minExpiresAt = entry.expiresAt;
+                evictionKey = key;
+            }
+        }
+        if (evictionKey) {
+            WIKI_CATEGORY_CACHE.delete(evictionKey);
+        }
+    }
+
+    WIKI_CATEGORY_CACHE.set(slug, {
+        value: loadingPromise,
+        expiresAt: now + WIKI_CACHE_TTL_MS,
+    });
+
     return loadingPromise;
 }
