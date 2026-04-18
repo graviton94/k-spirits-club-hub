@@ -77,6 +77,10 @@ const STATIC_HUBS: Record<string, SpiritCategory> = {
     }
 };
 
+const WIKI_CACHE_TTL_MS = 5 * 60 * 1000;
+const WIKI_CACHE_MAX_ENTRIES = 64;
+const WIKI_CATEGORY_CACHE = new Map<string, { value: Promise<SpiritCategory | null>; expiresAt: number }>();
+
 /**
  * Resolves a full Wiki Category by its slug.
  * Returns only the requested category as a clean SpiritCategory object.
@@ -89,18 +93,50 @@ export async function resolveWikiCategory(slug: string): Promise<SpiritCategory 
     const loader = WIKI_LOADERS[slug];
     if (!loader) return null;
 
-    try {
-        const module = await loader();
-        // The export name in the wiki files matches the camelCase name of the variable.
-        // E.g. blended-whisky.ts exports 'blendedWhisky'.
-        // To be safe and generic, we look for any export that looks like a SpiritCategory.
-        const categoryData = Object.values(module).find(
-            (val: any) => val && typeof val === 'object' && val.slug === slug
-        );
-        
-        return (categoryData as SpiritCategory) || null;
-    } catch (error) {
-        console.error(`[WikiResolver] Failed to load wiki for slug: ${slug}`, error);
-        return null;
+    const now = Date.now();
+    const cached = WIKI_CATEGORY_CACHE.get(slug);
+    if (cached && cached.expiresAt > now) {
+        return cached.value;
     }
+    if (cached) {
+        WIKI_CATEGORY_CACHE.delete(slug);
+    }
+
+    const loadingPromise = (async () => {
+        try {
+            const module = await loader();
+            // The export name in the wiki files matches the camelCase name of the variable.
+            // E.g. blended-whisky.ts exports 'blendedWhisky'.
+            // To be safe and generic, we look for any export that looks like a SpiritCategory.
+            const categoryData = Object.values(module).find(
+                (val: any) => val && typeof val === 'object' && val.slug === slug
+            );
+
+            return (categoryData as SpiritCategory) || null;
+        } catch (error) {
+            console.error(`[WikiResolver] Failed to load wiki for slug: ${slug}`, error);
+            return null;
+        }
+    })();
+
+    if (WIKI_CATEGORY_CACHE.size >= WIKI_CACHE_MAX_ENTRIES) {
+        let evictionKey: string | null = null;
+        let minExpiresAt = Number.POSITIVE_INFINITY;
+        for (const [key, entry] of WIKI_CATEGORY_CACHE.entries()) {
+            if (entry.expiresAt < minExpiresAt) {
+                minExpiresAt = entry.expiresAt;
+                evictionKey = key;
+            }
+        }
+        if (evictionKey) {
+            WIKI_CATEGORY_CACHE.delete(evictionKey);
+        }
+    }
+
+    WIKI_CATEGORY_CACHE.set(slug, {
+        value: loadingPromise,
+        expiresAt: now + WIKI_CACHE_TTL_MS,
+    });
+
+    return loadingPromise;
 }
