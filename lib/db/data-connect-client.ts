@@ -159,8 +159,32 @@ export const dbGetNewsCount = async () => {
   return data.newsArticles.length;
 };
 
+/** Coerce a value that may be a plain string or a structured translation object into a string. */
+function extractString(value: any, fallback = ''): string {
+  if (typeof value === 'string') return value;
+  if (value && typeof value === 'object') {
+    return value.title || value.content || value.snippet || fallback;
+  }
+  return fallback;
+}
+
+/** Pick the best available string from a translations payload (ko preferred, then en). */
+function pickTranslationTitle(translations: any): string {
+  return translations?.ko?.title || translations?.en?.title || '';
+}
+function pickTranslationContent(translations: any): string {
+  return translations?.ko?.content || translations?.ko?.snippet || translations?.en?.content || '';
+}
+
 export const dbUpsertNews = async (vars: any) => {
-  return await upsertNews(getDC(), vars);
+  const t = vars?.translations;
+  const normalizedVars = {
+    ...vars,
+    title: extractString(vars?.title, pickTranslationTitle(t)),
+    content: extractString(vars?.content, pickTranslationContent(t)),
+    tags: vars?.tags ?? vars?.newsTags
+  };
+  return await upsertNews(getDC(), normalizedVars);
 };
 
 export const dbDeleteNews = async (id: string) => {

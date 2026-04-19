@@ -84,11 +84,43 @@ export interface SpiritEnrichmentInput {
     noseTags?: string[];
     palateTags?: string[];
     finishTags?: string[];
+    pairingGuideKo?: string;
+    pairingGuideEn?: string;
     metadata?: {
         tasting_note?: string;
         description?: string;
         [key: string]: any;
     };
+}
+
+// --- Rating thresholds ---
+const RATING_BASE = 2.8;
+const RATING_DESC_MIN_CHARS = 120;   // minimum chars for a description score bonus
+const RATING_DESC_RICH_CHARS = 200;  // chars for bilingual-rich bonus
+const RATING_TAGS_RICH = 6;          // tag count threshold for full sensory bonus
+const RATING_TAGS_BASIC = 3;         // tag count threshold for partial sensory bonus
+const RATING_PAIRING_MIN_CHARS = 40; // minimum chars for a pairing guide bonus
+
+function calculateDynamicEditorRating(spirit: Partial<SpiritEnrichmentInput>): number {
+    const descriptionKo = (spirit.descriptionKo || '').trim();
+    const descriptionEn = (spirit.descriptionEn || '').trim();
+    const pairingKo = (spirit.pairingGuideKo || '').trim();
+    const pairingEn = (spirit.pairingGuideEn || '').trim();
+    const sensoryCount = [
+        ...(spirit.noseTags || []),
+        ...(spirit.palateTags || []),
+        ...(spirit.finishTags || [])
+    ].filter(Boolean).length;
+
+    let score = RATING_BASE;
+    if (descriptionKo.length >= RATING_DESC_MIN_CHARS) score += 0.5;
+    if (descriptionEn.length >= RATING_DESC_MIN_CHARS) score += 0.5;
+    if (descriptionKo.length >= RATING_DESC_RICH_CHARS || descriptionEn.length >= RATING_DESC_RICH_CHARS) score += 0.3;
+    if (sensoryCount >= RATING_TAGS_RICH) score += 0.6;
+    else if (sensoryCount >= RATING_TAGS_BASIC) score += 0.3;
+    if (pairingKo.length >= RATING_PAIRING_MIN_CHARS || pairingEn.length >= RATING_PAIRING_MIN_CHARS) score += 0.3;
+
+    return Math.max(1, Math.min(5, Number(score.toFixed(1))));
 }
 
 /**
@@ -302,6 +334,12 @@ export async function enrichSpiritWithAI(spirit: SpiritEnrichmentInput): Promise
         const auditData = await auditSpiritInfo(spirit);
         const sensoryData = await generateSensoryProfile({ ...spirit, ...auditData });
         const pairingData = await generatePairingGuide({ ...spirit, ...auditData, ...sensoryData });
+        const editorRating = calculateDynamicEditorRating({
+            ...spirit,
+            ...auditData,
+            ...sensoryData,
+            ...pairingData
+        });
 
         const totalConfidence = ((auditData.confidenceScore || 0) + (sensoryData.confidenceScore || 0) + (pairingData.confidenceScore || 0)) / 3;
         const allSources = [...(auditData.sources || []), ...(sensoryData.sources || []), ...(pairingData.sources || [])];
@@ -310,10 +348,12 @@ export async function enrichSpiritWithAI(spirit: SpiritEnrichmentInput): Promise
             ...auditData,
             ...sensoryData,
             ...pairingData,
+            rating: editorRating,
             status: totalConfidence < 0.7 ? "NEEDS_REVIEW" : "ENRICHED",
             metadata: {
                 confidence: totalConfidence,
-                sources: Array.from(new Set(allSources))
+                sources: Array.from(new Set(allSources)),
+                editorRating
             }
         };
     } catch (e: any) {

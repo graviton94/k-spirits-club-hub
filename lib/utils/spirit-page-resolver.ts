@@ -30,6 +30,14 @@ export const resolveSpiritPageState = cache(
         return { status: 'NOT_FOUND', fetchMs };
       }
 
+      // Public page guard: unpublished spirits must never resolve to a visible page.
+      if (sqlSpirit.isPublished !== true) {
+        console.warn(
+          `[SpiritResolver] id=${id} blocked_unpublished fetchMs=${fetchMs}ms`
+        );
+        return { status: 'NOT_FOUND', fetchMs };
+      }
+
       // Map SQL fields (Data Connect) to the Spirit interface
       const spirit: Spirit = {
         ...sqlSpirit,

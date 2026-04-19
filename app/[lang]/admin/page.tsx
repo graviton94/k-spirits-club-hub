@@ -79,6 +79,16 @@ export default function AdminDashboard() {
         noseTags: '', palateTags: '', finishTags: ''
     });
 
+    // Lock background scroll while modal is open to prevent mobile viewport shift / focus loss
+    useEffect(() => {
+        if (!editingId) return;
+        const prevOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = prevOverflow;
+        };
+    }, [editingId]);
+
     // Metadata
     const categoryOptions = Object.keys(metadata.categories);
     const distilleryOptions = (metadata as any).distilleries || [];
@@ -587,13 +597,13 @@ export default function AdminDashboard() {
                                                         const docId = btoa(item.link).replace(/\//g, '_').replace(/\+/g, '-').replace(/=/g, '');
                                                         await dbUpsertNews({
                                                             id: docId,
-                                                            title: item.translations.ko,
-                                                            content: item.translations.ko,
+                                                            title: item.translations?.ko?.title || item.translations?.en?.title || item.originalTitle || '',
+                                                            content: item.translations?.ko?.content || item.translations?.ko?.snippet || item.translations?.en?.content || '',
                                                             link: item.link,
                                                             source: item.source,
                                                             date: item.date,
                                                             translations: { ko: item.translations.ko, en: item.translations.en },
-                                                            newsTags: { ko: item.tags.ko, en: item.tags.en }
+                                                            tags: { ko: item.tags.ko, en: item.tags.en }
                                                         });
                                                         count++;
                                                     }

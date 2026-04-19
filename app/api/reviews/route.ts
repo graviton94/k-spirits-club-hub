@@ -3,6 +3,7 @@ import { reviewsDb } from '@/lib/db/firestore-rest';
 
 export const runtime = 'edge';
 
+
 // POST /api/reviews - Create a new review
 export async function POST(request: NextRequest) {
   try {
@@ -70,23 +71,26 @@ export async function GET(request: NextRequest) {
     const mode = searchParams.get('mode');
 
     if (mode === 'recent') {
-      const allRecent = await reviewsDb.getRecent();
-      // Only return the top 3 to the frontend (even if we store more)
-      const reviews = allRecent.slice(0, 3);
+      // reviewsDb.getRecent() uses Firestore REST — edge-runtime compatible
+      const recentReviews = await reviewsDb.getRecent();
+      const reviews = (recentReviews || []).slice(0, 3).map((r: any) => ({
+        id: r.id || `${r.spiritId}_${r.userId}`,
+        spiritId: r.spiritId || '',
+        spiritName: r.spiritName || '',
+        imageUrl: r.imageUrl || '',
+        imageUrls: r.imageUrls || [],
+        userId: r.userId || '',
+        userName: r.userName || 'Anonymous',
+        rating: Number(r.rating || 0),
+        content: r.notes || r.content || '',
+        nose: r.tagsN || r.nose || '',
+        palate: r.tagsP || r.palate || '',
+        finish: r.tagsF || r.finish || '',
+        createdAt: r.createdAt || new Date().toISOString()
+      }));
 
       return NextResponse.json({
-        reviews: reviews.map(r => ({
-          id: `${r.spiritId}_${r.userId}`,
-          ...r,
-          noseRating: r.ratingN,
-          palateRating: r.ratingP,
-          finishRating: r.ratingF,
-          content: r.notes,
-          nose: r.tagsN,
-          palate: r.tagsP,
-          finish: r.tagsF,
-          imageUrls: r.imageUrls || []
-        }))
+        reviews
       }, { status: 200 });
     }
 
