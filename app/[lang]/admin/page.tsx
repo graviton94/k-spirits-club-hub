@@ -47,15 +47,6 @@ export default function AdminDashboard() {
         document.title = `K-Spirits Club | 관리자 대시보드`;
     }, []);
 
-    useEffect(() => {
-        if (!editingId) return;
-        const prevOverflow = document.body.style.overflow;
-        document.body.style.overflow = 'hidden';
-        return () => {
-            document.body.style.overflow = prevOverflow;
-        };
-    }, [editingId]);
-
     // State
     const [activeTab, setActiveTab] = useState<'spirits' | 'requests' | 'discovery'>('spirits');
     const [spirits, setSpirits] = useState<Spirit[]>([]);
@@ -87,6 +78,16 @@ export default function AdminDashboard() {
         tastingNote: '', descriptionKo: '', descriptionEn: '', pairingGuideKo: '', pairingGuideEn: '',
         noseTags: '', palateTags: '', finishTags: ''
     });
+
+    // Lock background scroll while modal is open to prevent mobile viewport shift / focus loss
+    useEffect(() => {
+        if (!editingId) return;
+        const prevOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = prevOverflow;
+        };
+    }, [editingId]);
 
     // Metadata
     const categoryOptions = Object.keys(metadata.categories);

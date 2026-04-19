@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { reviewsDb } from '@/lib/db/firestore-rest';
 import { dbListSpiritReviews } from '@/lib/db/data-connect-client';
 
-export const runtime = 'edge';
-
 // POST /api/reviews - Create a new review
 export async function POST(request: NextRequest) {
   try {
