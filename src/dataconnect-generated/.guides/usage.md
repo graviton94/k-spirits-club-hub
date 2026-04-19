@@ -14,7 +14,7 @@ If a user is not using a supported framework, they can use the generated SDK dir
 Here's an example of how to use it with the first 5 operations:
 
 ```js
-import { upsertUser, upsertSpirit, upsertReview, upsertNews, upsertCabinet, upsertModificationRequest, upsertWorldCupResult, listSpirits, listNewArrivals, getSpirit } from '@k-spirits/dataconnect';
+import { upsertUser, upsertSpirit, upsertReview, upsertNews, upsertCabinet, upsertModificationRequest, upsertWorldCupResult, deleteSpirit, upsertAiDiscoveryLog, listSpirits } from '@k-spirits/dataconnect';
 
 
 // Operation upsertUser:  For variables, look at type UpsertUserVars in ../index.d.ts
@@ -38,14 +38,14 @@ const { data } = await UpsertModificationRequest(dataConnect, upsertModification
 // Operation upsertWorldCupResult:  For variables, look at type UpsertWorldCupResultVars in ../index.d.ts
 const { data } = await UpsertWorldCupResult(dataConnect, upsertWorldCupResultVars);
 
+// Operation deleteSpirit:  For variables, look at type DeleteSpiritVars in ../index.d.ts
+const { data } = await DeleteSpirit(dataConnect, deleteSpiritVars);
+
+// Operation upsertAiDiscoveryLog:  For variables, look at type UpsertAiDiscoveryLogVars in ../index.d.ts
+const { data } = await UpsertAiDiscoveryLog(dataConnect, upsertAiDiscoveryLogVars);
+
 // Operation listSpirits:  For variables, look at type ListSpiritsVars in ../index.d.ts
 const { data } = await ListSpirits(dataConnect, listSpiritsVars);
-
-// Operation listNewArrivals:  For variables, look at type ListNewArrivalsVars in ../index.d.ts
-const { data } = await ListNewArrivals(dataConnect, listNewArrivalsVars);
-
-// Operation getSpirit:  For variables, look at type GetSpiritVars in ../index.d.ts
-const { data } = await GetSpirit(dataConnect, getSpiritVars);
 
 
 ```

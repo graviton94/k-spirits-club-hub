@@ -1,5 +1,14 @@
 extend type Mutation {
   """
+  ✨ Insert a single `AiDiscoveryLog` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  aiDiscoveryLog_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: AiDiscoveryLog_Data!
+  ): AiDiscoveryLog_KeyOutput! @fdc_generated(from: "AiDiscoveryLog", purpose: INSERT_SINGLE)
+  """
   ✨ Insert a single `ModificationRequest` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
   """
   modificationRequest_insert(
@@ -62,6 +71,15 @@ extend type Mutation {
     """
     data: WorldCupResult_Data!
   ): WorldCupResult_KeyOutput! @fdc_generated(from: "WorldCupResult", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert `AiDiscoveryLog` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  aiDiscoveryLog_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [AiDiscoveryLog_Data!]!
+  ): [AiDiscoveryLog_KeyOutput!]! @fdc_generated(from: "AiDiscoveryLog", purpose: INSERT_MULTIPLE)
   """
   ✨ Insert `ModificationRequest` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
   """
@@ -126,6 +144,15 @@ extend type Mutation {
     data: [WorldCupResult_Data!]!
   ): [WorldCupResult_KeyOutput!]! @fdc_generated(from: "WorldCupResult", purpose: INSERT_MULTIPLE)
   """
+  ✨ Insert or update a single `AiDiscoveryLog` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `AiDiscoveryLog`.
+  """
+  aiDiscoveryLog_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: AiDiscoveryLog_Data!
+  ): AiDiscoveryLog_KeyOutput! @fdc_generated(from: "AiDiscoveryLog", purpose: UPSERT_SINGLE)
+  """
   ✨ Insert or update a single `ModificationRequest` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `ModificationRequest`.
   """
   modificationRequest_upsert(
@@ -189,6 +216,15 @@ extend type Mutation {
     data: WorldCupResult_Data!
   ): WorldCupResult_KeyOutput! @fdc_generated(from: "WorldCupResult", purpose: UPSERT_SINGLE)
   """
+  ✨ Insert or update `AiDiscoveryLog` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `AiDiscoveryLog`.
+  """
+  aiDiscoveryLog_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [AiDiscoveryLog_Data!]!
+  ): [AiDiscoveryLog_KeyOutput!]! @fdc_generated(from: "AiDiscoveryLog", purpose: UPSERT_MULTIPLE)
+  """
   ✨ Insert or update `ModificationRequest` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `ModificationRequest`.
   """
   modificationRequest_upsertMany(
@@ -251,6 +287,35 @@ extend type Mutation {
     """
     data: [WorldCupResult_Data!]!
   ): [WorldCupResult_KeyOutput!]! @fdc_generated(from: "WorldCupResult", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Update a single `AiDiscoveryLog` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `AiDiscoveryLog` or `null` if not found.
+  """
+  aiDiscoveryLog_update(
+    """
+    The unique ID of the object.
+    """
+    id: String
+
+    """
+    ✨ `_expr` server value variant of `id` (The unique ID of the object.)
+    """
+    id_expr: String_Expr
+
+    """
+    The key used to identify the object.
+    """
+    key: AiDiscoveryLog_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: AiDiscoveryLog_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: AiDiscoveryLog_Data!
+  ): AiDiscoveryLog_KeyOutput @fdc_generated(from: "AiDiscoveryLog", purpose: UPDATE_SINGLE)
   """
   ✨ Update a single `ModificationRequest` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `ModificationRequest` or `null` if not found.
   """
@@ -435,6 +500,25 @@ extend type Mutation {
     data: WorldCupResult_Data!
   ): WorldCupResult_KeyOutput @fdc_generated(from: "WorldCupResult", purpose: UPDATE_SINGLE)
   """
+  ✨ Update `AiDiscoveryLog` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  aiDiscoveryLog_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: AiDiscoveryLog_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: AiDiscoveryLog_Data!
+  ): Int! @fdc_generated(from: "AiDiscoveryLog", purpose: UPDATE_MULTIPLE)
+  """
   ✨ Update `ModificationRequest` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
   """
   modificationRequest_updateMany(
@@ -567,6 +651,30 @@ extend type Mutation {
     """
     data: WorldCupResult_Data!
   ): Int! @fdc_generated(from: "WorldCupResult", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Delete a single `AiDiscoveryLog` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  aiDiscoveryLog_delete(
+    """
+    The unique ID of the object.
+    """
+    id: String
+
+    """
+    ✨ `_expr` server value variant of `id` (The unique ID of the object.)
+    """
+    id_expr: String_Expr
+
+    """
+    The key used to identify the object.
+    """
+    key: AiDiscoveryLog_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: AiDiscoveryLog_FirstRow
+  ): AiDiscoveryLog_KeyOutput @fdc_generated(from: "AiDiscoveryLog", purpose: DELETE_SINGLE)
   """
   ✨ Delete a single `ModificationRequest` based on `id`, `key` or `first` and return its key (or `null` if not found).
   """
@@ -715,6 +823,20 @@ extend type Mutation {
     """
     first: WorldCupResult_FirstRow
   ): WorldCupResult_KeyOutput @fdc_generated(from: "WorldCupResult", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete `AiDiscoveryLog` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  aiDiscoveryLog_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: AiDiscoveryLog_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "AiDiscoveryLog", purpose: DELETE_MULTIPLE)
   """
   ✨ Delete `ModificationRequest` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
   """

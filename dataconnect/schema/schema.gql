@@ -76,7 +76,7 @@ type NewsArticle @table {
   link: String
   date: String @index
   translations: Any
-  tags: [String!]
+  tags: Any
   createdAt: Timestamp @default(expr: "request.time") @index
   updatedAt: Timestamp @default(expr: "request.time")
 }
@@ -108,4 +108,13 @@ type WorldCupResult @table {
   subcategory: String
   initialRound: Int
   timestamp: Timestamp @default(expr: "request.time")
+}
+
+type AiDiscoveryLog @table {
+  id: String!
+  userId: String
+  analysis: String
+  recommendations: Any # Array of {name, inDb}
+  messageHistory: Any # Array of {role, content}
+  createdAt: Timestamp @default(expr: "request.time")
 }

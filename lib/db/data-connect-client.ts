@@ -22,6 +22,10 @@ import {
   getWorldCupResult,
   listSpiritsForWorldCup,
   adminListRawSpirits,
+  deleteSpirit,
+  listAiDiscoveryLogs,
+  upsertAiDiscoveryLog,
+  listModificationRequests,
 } from '@/src/dataconnect-generated';
 
 /**
@@ -63,8 +67,15 @@ export const dbListSpiritsForSitemap = async () => {
   return data.spirits;
 };
 
-export const dbAdminListRawSpirits = async (limit: number, offset: number) => {
-  const { data } = await adminListRawSpirits(getDC(), { limit, offset });
+export const dbAdminListRawSpirits = async (vars: {
+  limit?: number;
+  offset?: number;
+  category?: string;
+  distillery?: string;
+  isPublished?: boolean;
+  search?: string;
+}) => {
+  const { data } = await adminListRawSpirits(getDC(), vars);
   return data.spirits;
 };
 
@@ -80,6 +91,10 @@ export const dbGetSpirit = async (id: string) => {
 
 export const dbUpsertSpirit = async (vars: any) => {
   return await upsertSpirit(getDC(), vars);
+};
+
+export const dbDeleteSpirit = async (id: string) => {
+  return await deleteSpirit(getDC(), { id });
 };
 
 // --- Users ---
@@ -107,6 +122,26 @@ export const dbUpsertReview = async (vars: any) => {
   return await upsertReview(getDC(), vars);
 };
 
+// --- AI Logs ---
+export const dbListAiDiscoveryLogs = async (limit: number) => {
+  const { data } = await listAiDiscoveryLogs(getDC(), { limit });
+  return data.aiDiscoveryLogs;
+};
+
+export const dbUpsertAiDiscoveryLog = async (vars: any) => {
+  return await upsertAiDiscoveryLog(getDC(), vars);
+};
+
+// --- Modification Requests ---
+export const dbListModificationRequests = async () => {
+  const { data } = await listModificationRequests(getDC());
+  return data.modificationRequests;
+};
+
+export const dbUpsertModificationRequest = async (vars: any) => {
+  return await upsertModificationRequest(getDC(), vars);
+};
+
 // --- News ---
 export const dbListNewsArticles = async (limit: number, offset: number) => {
   const { data } = await listNewsArticles(getDC(), { limit, offset });
@@ -132,10 +167,6 @@ export const dbUpsertCabinet = async (vars: any) => {
   return await upsertCabinet(getDC(), vars);
 };
 
-// --- Admin / Others ---
-export const dbUpsertModificationRequest = async (vars: any) => {
-  return await upsertModificationRequest(getDC(), vars);
-};
 
 // --- WorldCup ---
 export const dbUpsertWorldCupResult = async (vars: {

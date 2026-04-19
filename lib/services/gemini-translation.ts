@@ -40,33 +40,33 @@ const CLICHE_BAN_LIST = `
 `;
 
 export interface EnrichmentAuditResult {
-    name_en: string;
+    nameEn: string;
     distillery: string;
     region: string;
     country: string;
     abv: number;
     category: string;
-    category_en?: string;
+    categoryEn?: string;
     subcategory?: string;
-    confidence_score: number;
+    confidenceScore: number;
     sources?: string[];
 }
 
 export interface EnrichmentSensoryResult {
-    description_ko: string;
-    description_en: string;
-    nose_tags: string[];
-    palate_tags: string[];
-    finish_tags: string[];
-    tasting_note: string;
-    confidence_score: number;
+    descriptionKo: string;
+    descriptionEn: string;
+    noseTags: string[];
+    palateTags: string[];
+    finishTags: string[];
+    tastingNote: string;
+    confidenceScore: number;
     sources?: string[];
 }
 
 export interface EnrichmentPairingResult {
-    pairing_guide_ko: string;
-    pairing_guide_en: string;
-    confidence_score: number;
+    pairingGuideKo: string;
+    pairingGuideEn: string;
+    confidenceScore: number;
     sources?: string[];
 }
 
@@ -78,17 +78,40 @@ export interface SpiritEnrichmentInput {
     abv?: number;
     region?: string;
     country?: string;
-    name_en?: string;
-    description_en?: string;
-    description_ko?: string;
-    nose_tags?: string[];
-    palate_tags?: string[];
-    finish_tags?: string[];
+    nameEn?: string;
+    descriptionEn?: string;
+    descriptionKo?: string;
+    noseTags?: string[];
+    palateTags?: string[];
+    finishTags?: string[];
     metadata?: {
         tasting_note?: string;
         description?: string;
         [key: string]: any;
     };
+}
+
+/**
+ * Robust JSON extraction and parsing helper.
+ * Since Search Tool cannot be combined with Controlled Generation (MIME: JSON),
+ * we must manually extract the JSON block from the AI's textual response.
+ */
+function extractAndParseJSON(text: string): any {
+    try {
+        // Try finding the largest JSON block in markdown backticks
+        const jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/);
+        const rawJson = jsonMatch ? jsonMatch[1] : text;
+        
+        // Clean up common AI artifacts
+        const cleaned = rawJson.trim()
+            .replace(/^[^{]*/, '') // Remove anything before the first {
+            .replace(/[^}]*$/, ''); // Remove anything after the last }
+            
+        return JSON.parse(cleaned);
+    } catch (e) {
+        console.error('[Gemini Parser] Raw Output:', text);
+        throw new Error('Failed to parse AI response as JSON');
+    }
 }
 
 /**
@@ -98,7 +121,13 @@ export interface SpiritEnrichmentInput {
 export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<EnrichmentAuditResult> {
     if (!API_KEY) throw new Error("GEMINI_API_KEY is not set");
     const genAI = new GoogleGenerativeAI(API_KEY);
-    const model = genAI.getGenerativeModel({ model: MODEL_ID, generationConfig: { responseMimeType: "application/json", temperature: 0.1 } });
+    
+    // NOTE: responseMimeType: "application/json" is REMOVED to enable Google Search
+    const model = genAI.getGenerativeModel({ 
+        model: MODEL_ID, 
+        tools: [{ googleSearch: {} }] as any,
+        generationConfig: { temperature: 0.1 } 
+    });
 
     const categoryKey = spirit.category;
     const validSubcategories = CATEGORY_SUBCATEGORIES[categoryKey] || [];
@@ -110,7 +139,6 @@ export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<En
     🔍 **MISSION: OFFICIAL DATA DISCOVERY & AUDIT**
     
     You are a Professional Spirits Researcher & Data Auditor. Your mission is to verify the physical facts of this product.
-    YOU MUST use Google Search to find official records (Distillery Website, Food Safety Portal, Master of Malt, etc.).
     
     ### PRODUCT TO AUDIT:
     - Product Name: "${spirit.name}"
@@ -121,21 +149,31 @@ export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<En
     ${subcategoryGuidance}
 
     ### MANDATORY INVESTIGATION PROTOCOL:
-    1. OFFICIAL SOURCING: Search "${spirit.name} official site" to find exact ABV, Distillery, and Region.
-    2. BRAND NORMALIZATION: Use clean brand names (e.g., "Macallan" not "The Macallan Distillers Ltd").
-    3. GEOGRAPHICAL AUDIT: Find the specific city/region of the producer.
+    1. **SEARCH QUERY**: You must search for: "${spirit.name}" "${spirit.distillery || ''}" official site datasheet pdf.
+    2. OFFICIAL SOURCING: Find exact ABV, Distillery, and Region from official records (Distillery Website, Food Safety Portal, Master of Malt, etc.).
+    3. ASSET DISCOVERY: Prioritize finding links to official product PDF catalogs, technical datasheets, or official brand gallery pages.
+    4. BRAND NORMALIZATION: Use clean brand names.
+    5. GEOGRAPHICAL AUDIT: Find the specific city/region of the producer.
     
+    ### CONFIDENCE SCORING:
+    - +0.5: Official website found.
+    - +0.3: Reputable retailer spec found.
+    - +0.2: Multiple sources confirm spec.
+
+    ### IMPORTANT: RETURN JSON ONLY
+    YOU MUST return ONLY a JSON block wrapped in \`\`\`json\`\`\`. No additional text.
+
     ### OUTPUT JSON SCHEMA:
     {
-      "name_en": "Official English Name (Title Case)",
+      "nameEn": "Official English Name",
       "category": "${spirit.category}",
-      "category_en": "Category Translation",
+      "categoryEn": "Category Translation",
       "subcategory": "EXACT MATCH from valid subcategories list",
       "distillery": "Cleaned Brand Name",
       "region": "Specific Region/City",
       "country": "Country of Origin",
       "abv": number,
-      "confidence_score": number (0.0-1.0),
+      "confidenceScore": number,
       "sources": ["URL1", "URL2"]
     }
     `;
@@ -143,25 +181,23 @@ export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<En
     try {
         const result = await model.generateContent(prompt);
         const text = result.response.text();
-        const cleanJson = text.replace(/```json|```/g, '').trim();
-        const data = JSON.parse(cleanJson);
+        const data = extractAndParseJSON(text);
         
-        // Defensive defaults
         data.category = spirit.category; 
-        data.confidence_score = typeof data.confidence_score === 'number' ? data.confidence_score : 0;
+        data.confidenceScore = typeof data.confidenceScore === 'number' ? data.confidenceScore : 0;
         data.sources = Array.isArray(data.sources) ? data.sources : [];
         
         return data;
     } catch (e: any) {
         console.error('[Gemini Audit] Failed:', e);
         return {
-            name_en: spirit.name_en || spirit.name,
+            nameEn: spirit.nameEn || spirit.name,
             category: spirit.category,
             distillery: spirit.distillery || 'Unknown',
             region: spirit.region || 'Unknown',
             country: spirit.country || 'Unknown',
             abv: spirit.abv || 0,
-            confidence_score: 0,
+            confidenceScore: 0,
             sources: []
         };
     }
@@ -169,33 +205,39 @@ export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<En
 
 /**
  * PHASE 2: COMMUNITY SENSORY
- * Extracts flavor profiles from real user reviews.
  */
 export async function generateSensoryProfile(spirit: SpiritEnrichmentInput): Promise<EnrichmentSensoryResult> {
     if (!API_KEY) throw new Error("GEMINI_API_KEY is not set");
     const genAI = new GoogleGenerativeAI(API_KEY);
-    const model = genAI.getGenerativeModel({ model: MODEL_ID, generationConfig: { responseMimeType: "application/json", temperature: 0.5 } });
+    
+    const model = genAI.getGenerativeModel({ 
+        model: MODEL_ID, 
+        tools: [{ googleSearch: {} }] as any,
+        generationConfig: { temperature: 0.5 } 
+    });
 
     const prompt = `
     🔍 **MISSION: COMMUNITY SENSORY DISCOVERY**
     
-    You are a Spirits Sommelier researching community sentiment.
-    YOU MUST search sites like Whiskybase, Vivino, Reddit, and rating forums for real user reviews of: "${spirit.name}".
+    ### SEARCH TARGET:
+    - Target: "${spirit.name}" (${spirit.category})
+    - Producer: "${spirit.distillery || ''}"
     
-    ### INVESTIGATION PROTOCOL:
-    1. IDENTIFY REAL TAGS: Find descriptors users actually use (e.g., "Vanilla", "Peat Smoke").
-    2. CROSS-REFERENCE: Compare official notes with user feedback. If users say "it's salty" but official notes don't, include "Salt" in the tags.
+    1. **SEARCH QUERY**: Search for "${spirit.name}" reviews sensory notes.
+    2. IDENTIFY REAL TAGS: Find descriptors users actually use on sites like Whiskybase, Vivino, Reddit, or rating forums.
     3. DETAILED STORY: Write 4-5 sentences capturing the "Journey" of drinking this spirit.
     
-    ### OUTPUT JSON SCHEMA:
+    ### IMPORTANT: RETURN JSON ONLY
+    YOU MUST return ONLY a JSON block wrapped in \`\`\`json\`\`\`.
+
     {
-      "description_ko": "Detailed Korean description",
-      "description_en": "Detailed English description",
-      "nose_tags": ["Tag1", "Tag2"],
-      "palate_tags": ["Tag1", "Tag2"],
-      "finish_tags": ["Tag1", "Tag2"],
-      "tasting_note": "Sommelier-style detailed note",
-      "confidence_score": number,
+      "descriptionKo": "Detailed Korean description",
+      "descriptionEn": "Detailed English description",
+      "noseTags": ["Tag1", "Tag2"],
+      "palateTags": ["Tag1", "Tag2"],
+      "finishTags": ["Tag1", "Tag2"],
+      "tastingNote": "Sommelier-style detailed note",
+      "confidenceScore": number,
       "sources": ["URL1", "URL2"]
     }
     `;
@@ -203,10 +245,8 @@ export async function generateSensoryProfile(spirit: SpiritEnrichmentInput): Pro
     try {
         const result = await model.generateContent(prompt);
         const text = result.response.text();
-        const cleanJson = text.replace(/```json|```/g, '').trim();
-        const data = JSON.parse(cleanJson);
+        const data = extractAndParseJSON(text);
         
-        // Defensive defaults
         data.confidence_score = typeof data.confidence_score === 'number' ? data.confidence_score : 0;
         data.sources = Array.isArray(data.sources) ? data.sources : [];
         
@@ -214,13 +254,13 @@ export async function generateSensoryProfile(spirit: SpiritEnrichmentInput): Pro
     } catch (e: any) {
         console.error('[Gemini Sensory] Failed:', e);
         return {
-            description_ko: spirit.name,
-            description_en: spirit.name,
-            nose_tags: [],
-            palate_tags: [],
-            finish_tags: [],
-            tasting_note: spirit.name,
-            confidence_score: 0,
+            descriptionKo: spirit.name,
+            descriptionEn: spirit.name,
+            noseTags: [],
+            palateTags: [],
+            finishTags: [],
+            tastingNote: spirit.name,
+            confidenceScore: 0,
             sources: []
         };
     }
@@ -228,29 +268,33 @@ export async function generateSensoryProfile(spirit: SpiritEnrichmentInput): Pro
 
 /**
  * PHASE 3: SOMMELIER & PAIRING
- * Generates context-rich food pairings.
  */
 export async function generatePairingGuide(spirit: SpiritEnrichmentInput): Promise<EnrichmentPairingResult> {
     if (!API_KEY) throw new Error("GEMINI_API_KEY is not set");
     const genAI = new GoogleGenerativeAI(API_KEY);
-    const model = genAI.getGenerativeModel({ model: MODEL_ID, generationConfig: { responseMimeType: "application/json", temperature: 0.8 } });
+    
+    const model = genAI.getGenerativeModel({ 
+        model: MODEL_ID, 
+        tools: [{ googleSearch: {} }] as any,
+        generationConfig: { temperature: 0.8 } 
+    });
 
     const prompt = `
     🔍 **MISSION: CONTEXTUAL PAIRING DISCOVERY**
     
-    Search for "Real-world food pairings" for: "${spirit.name}".
-    Look for Instagram posts, sommelier blogs, and Reddit "What I ate with this" threads.
+    Search for real-world food pairings for: "${spirit.name}" by "${spirit.distillery || ''}".
     
     ### PAIRING RULES:
-    1. Avoid generic pairings (Steak, Cheese).
-    2. Find a "Terroir Pairing" (Traditional dish from the region).
-    3. Find a "Creative Pairing" (Innovative combo found in reviews).
+    1. **SEARCH QUERY**: Search for "${spirit.name}" food pairing.
+    2. Avoid generic pairings. Find a "Terroir Pairing" and a "Creative Pairing".
     
-    ### OUTPUT JSON SCHEMA:
+    ### IMPORTANT: RETURN JSON ONLY
+    YOU MUST return ONLY a JSON block wrapped in \`\`\`json\`\`\`.
+
     {
-      "pairing_guide_ko": "Pairing explanation in Korean",
-      "pairing_guide_en": "Pairing explanation in English",
-      "confidence_score": number,
+      "pairingGuideKo": "Pairing explanation in Korean",
+      "pairingGuideEn": "Pairing explanation in English",
+      "confidenceScore": number,
       "sources": ["URL1", "URL2"]
     }
     `;
@@ -258,10 +302,8 @@ export async function generatePairingGuide(spirit: SpiritEnrichmentInput): Promi
     try {
         const result = await model.generateContent(prompt);
         const text = result.response.text();
-        const cleanJson = text.replace(/```json|```/g, '').trim();
-        const data = JSON.parse(cleanJson);
+        const data = extractAndParseJSON(text);
         
-        // Defensive defaults
         data.confidence_score = typeof data.confidence_score === 'number' ? data.confidence_score : 0;
         data.sources = Array.isArray(data.sources) ? data.sources : [];
         
@@ -269,9 +311,9 @@ export async function generatePairingGuide(spirit: SpiritEnrichmentInput): Promi
     } catch (e: any) {
         console.error('[Gemini Pairing] Failed:', e);
         return {
-            pairing_guide_ko: "추천 음식이 없습니다.",
-            pairing_guide_en: "No recommended pairings.",
-            confidence_score: 0,
+            pairingGuideKo: "추천 음식이 없습니다.",
+            pairingGuideEn: "No recommended pairings.",
+            confidenceScore: 0,
             sources: []
         };
     }
@@ -282,7 +324,7 @@ export async function generatePairingGuide(spirit: SpiritEnrichmentInput): Promi
  * Manages the multi-phase discovery pipeline.
  */
 export async function enrichSpiritWithAI(spirit: SpiritEnrichmentInput): Promise<any> {
-    console.log('[Gemini Enrichment] 🚀 Phase 1: Identity & Audit for:', spirit.name);
+    console.log('[Gemini Enrichment] 🚀 Starting grounded discovery for:', spirit.name);
     
     try {
         const auditData = await auditSpiritInfo(spirit);
@@ -302,28 +344,28 @@ export async function enrichSpiritWithAI(spirit: SpiritEnrichmentInput): Promise
             subcategory: auditData.subcategory || spirit.subcategory
         });
 
-        const conf1 = typeof auditData.confidence_score === 'number' ? auditData.confidence_score : 0;
-        const conf2 = typeof sensoryData.confidence_score === 'number' ? sensoryData.confidence_score : 0;
-        const conf3 = typeof pairingData.confidence_score === 'number' ? pairingData.confidence_score : 0;
+        const conf1 = typeof auditData.confidenceScore === 'number' ? auditData.confidenceScore : 0;
+        const conf2 = typeof sensoryData.confidenceScore === 'number' ? sensoryData.confidenceScore : 0;
+        const conf3 = typeof pairingData.confidenceScore === 'number' ? pairingData.confidenceScore : 0;
 
         const totalConfidence = (conf1 + conf2 + conf3) / 3;
         const allSources = [...(auditData.sources || []), ...(sensoryData.sources || []), ...(pairingData.sources || [])];
 
-        console.log('[Gemini Enrichment] ✅ Enrichment complete. Avg confidence:', totalConfidence);
+        console.log('[Gemini Enrichment] ✅ Discovery complete. Avg confidence:', (totalConfidence * 100).toFixed(0) + '%');
 
         return {
             ...auditData,
             ...sensoryData,
             ...pairingData,
-            admin_status: totalConfidence < 0.7 ? "needs_review" : "verified",
+            status: totalConfidence < 0.7 ? "NEEDS_REVIEW" : "ENRICHED",
             metadata: {
                 confidence: totalConfidence,
                 sources: Array.from(new Set(allSources))
             }
         };
     } catch (e: any) {
-        console.error('[Gemini Enrichment] ❌ Orchestration failed:', e);
-        throw new Error(`AI enrichment failed: ${e.message}`);
+        console.error('[Gemini Enrichment] ❌ Discovery failed:', e);
+        throw new Error(`AI discovery failed: ${e.message}`);
     }
 }
 

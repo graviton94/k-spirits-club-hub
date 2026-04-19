@@ -93,9 +93,26 @@ query getSpirit($id: String!) @auth(level: PUBLIC) {
   }
 }
 
-# Admin only query for raw data access
-query adminListRawSpirits($limit: Int, $offset: Int) @auth(level: NO_ACCESS) {
-  spirits(limit: $limit, offset: $offset, orderBy: [{ updatedAt: DESC }]) {
+# Admin only query for raw data access with filtering and pagination
+query adminListRawSpirits(
+  $limit: Int, 
+  $offset: Int, 
+  $category: String, 
+  $distillery: String, 
+  $isPublished: Boolean, 
+  $search: String
+) @auth(level: NO_ACCESS) {
+  spirits(
+    limit: $limit, 
+    offset: $offset, 
+    orderBy: [{ updatedAt: DESC }],
+    where: {
+      category: { eq: $category },
+      distillery: { eq: $distillery },
+      isPublished: { eq: $isPublished },
+      name: { contains: $search }
+    }
+  ) {
     id
     name
     nameEn
@@ -104,6 +121,12 @@ query adminListRawSpirits($limit: Int, $offset: Int) @auth(level: NO_ACCESS) {
     isPublished
     status
     updatedAt
+    imageUrl
+    thumbnailUrl
+    abv
+    distillery
+    region
+    subcategory
   }
 }
 
@@ -286,6 +309,30 @@ query listSpiritsForWorldCup($category: String, $subcategories: [String!]) @auth
     noseTags
     palateTags
     finishTags
+    createdAt
+  }
+}
+
+query listAiDiscoveryLogs($limit: Int!) @auth(level: NO_ACCESS) {
+  aiDiscoveryLogs(limit: $limit, orderBy: [{ createdAt: DESC }]) {
+    id
+    userId
+    analysis
+    recommendations
+    messageHistory
+    createdAt
+  }
+}
+
+query listModificationRequests @auth(level: NO_ACCESS) {
+  modificationRequests(orderBy: [{ createdAt: DESC }]) {
+    id
+    spiritId
+    spiritName
+    userId
+    title
+    content
+    status
     createdAt
   }
 }

@@ -20,12 +20,27 @@ export interface AdminListRawSpiritsData {
     isPublished?: boolean | null;
     status?: string | null;
     updatedAt: TimestampString;
+    imageUrl: string;
+    thumbnailUrl?: string | null;
+    abv?: number | null;
+    distillery?: string | null;
+    region?: string | null;
+    subcategory?: string | null;
   } & Spirit_Key)[];
 }
 
 export interface AdminListRawSpiritsVariables {
   limit?: number | null;
   offset?: number | null;
+  category?: string | null;
+  distillery?: string | null;
+  isPublished?: boolean | null;
+  search?: string | null;
+}
+
+export interface AiDiscoveryLog_Key {
+  id: string;
+  __typename?: 'AiDiscoveryLog_Key';
 }
 
 export interface AuditAllNewsData {
@@ -65,6 +80,14 @@ export interface AuditAllUsersData {
   } & User_Key)[];
 }
 
+export interface DeleteSpiritData {
+  spirit_delete?: Spirit_Key | null;
+}
+
+export interface DeleteSpiritVariables {
+  id: string;
+}
+
 export interface GetNewsArticleData {
   newsArticle?: {
     id: string;
@@ -76,7 +99,7 @@ export interface GetNewsArticleData {
     link?: string | null;
     date?: string | null;
     translations?: unknown | null;
-    tags?: string[] | null;
+    tags?: unknown | null;
     createdAt?: TimestampString | null;
   } & NewsArticle_Key;
 }
@@ -195,6 +218,34 @@ export interface GetWorldCupResultVariables {
   id: UUIDString;
 }
 
+export interface ListAiDiscoveryLogsData {
+  aiDiscoveryLogs: ({
+    id: string;
+    userId?: string | null;
+    analysis?: string | null;
+    recommendations?: unknown | null;
+    messageHistory?: unknown | null;
+    createdAt?: TimestampString | null;
+  } & AiDiscoveryLog_Key)[];
+}
+
+export interface ListAiDiscoveryLogsVariables {
+  limit: number;
+}
+
+export interface ListModificationRequestsData {
+  modificationRequests: ({
+    id: string;
+    spiritId: string;
+    spiritName?: string | null;
+    userId?: string | null;
+    title: string;
+    content: string;
+    status?: string | null;
+    createdAt?: TimestampString | null;
+  } & ModificationRequest_Key)[];
+}
+
 export interface ListNewArrivalsData {
   spirits: ({
     id: string;
@@ -228,7 +279,7 @@ export interface ListNewsArticlesData {
     link?: string | null;
     date?: string | null;
     translations?: unknown | null;
-    tags?: string[] | null;
+    tags?: unknown | null;
     createdAt?: TimestampString | null;
   } & NewsArticle_Key)[];
 }
@@ -350,6 +401,18 @@ export interface Spirit_Key {
   __typename?: 'Spirit_Key';
 }
 
+export interface UpsertAiDiscoveryLogData {
+  aiDiscoveryLog_upsert: AiDiscoveryLog_Key;
+}
+
+export interface UpsertAiDiscoveryLogVariables {
+  id: string;
+  userId?: string | null;
+  analysis?: string | null;
+  recommendations?: unknown | null;
+  messageHistory?: unknown | null;
+}
+
 export interface UpsertCabinetData {
   userCabinet_upsert: UserCabinet_Key;
 }
@@ -392,7 +455,7 @@ export interface UpsertNewsVariables {
   link?: string | null;
   date?: string | null;
   translations?: unknown | null;
-  tags?: string[] | null;
+  tags?: unknown | null;
 }
 
 export interface UpsertReviewData {
@@ -581,6 +644,30 @@ export const upsertWorldCupResultRef: UpsertWorldCupResultRef;
 
 export function upsertWorldCupResult(vars: UpsertWorldCupResultVariables): MutationPromise<UpsertWorldCupResultData, UpsertWorldCupResultVariables>;
 export function upsertWorldCupResult(dc: DataConnect, vars: UpsertWorldCupResultVariables): MutationPromise<UpsertWorldCupResultData, UpsertWorldCupResultVariables>;
+
+interface DeleteSpiritRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: DeleteSpiritVariables): MutationRef<DeleteSpiritData, DeleteSpiritVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: DeleteSpiritVariables): MutationRef<DeleteSpiritData, DeleteSpiritVariables>;
+  operationName: string;
+}
+export const deleteSpiritRef: DeleteSpiritRef;
+
+export function deleteSpirit(vars: DeleteSpiritVariables): MutationPromise<DeleteSpiritData, DeleteSpiritVariables>;
+export function deleteSpirit(dc: DataConnect, vars: DeleteSpiritVariables): MutationPromise<DeleteSpiritData, DeleteSpiritVariables>;
+
+interface UpsertAiDiscoveryLogRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: UpsertAiDiscoveryLogVariables): MutationRef<UpsertAiDiscoveryLogData, UpsertAiDiscoveryLogVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: UpsertAiDiscoveryLogVariables): MutationRef<UpsertAiDiscoveryLogData, UpsertAiDiscoveryLogVariables>;
+  operationName: string;
+}
+export const upsertAiDiscoveryLogRef: UpsertAiDiscoveryLogRef;
+
+export function upsertAiDiscoveryLog(vars: UpsertAiDiscoveryLogVariables): MutationPromise<UpsertAiDiscoveryLogData, UpsertAiDiscoveryLogVariables>;
+export function upsertAiDiscoveryLog(dc: DataConnect, vars: UpsertAiDiscoveryLogVariables): MutationPromise<UpsertAiDiscoveryLogData, UpsertAiDiscoveryLogVariables>;
 
 interface ListSpiritsRef {
   /* Allow users to create refs without passing in DataConnect */
@@ -773,4 +860,28 @@ export const listSpiritsForWorldCupRef: ListSpiritsForWorldCupRef;
 
 export function listSpiritsForWorldCup(vars?: ListSpiritsForWorldCupVariables, options?: ExecuteQueryOptions): QueryPromise<ListSpiritsForWorldCupData, ListSpiritsForWorldCupVariables>;
 export function listSpiritsForWorldCup(dc: DataConnect, vars?: ListSpiritsForWorldCupVariables, options?: ExecuteQueryOptions): QueryPromise<ListSpiritsForWorldCupData, ListSpiritsForWorldCupVariables>;
+
+interface ListAiDiscoveryLogsRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: ListAiDiscoveryLogsVariables): QueryRef<ListAiDiscoveryLogsData, ListAiDiscoveryLogsVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: ListAiDiscoveryLogsVariables): QueryRef<ListAiDiscoveryLogsData, ListAiDiscoveryLogsVariables>;
+  operationName: string;
+}
+export const listAiDiscoveryLogsRef: ListAiDiscoveryLogsRef;
+
+export function listAiDiscoveryLogs(vars: ListAiDiscoveryLogsVariables, options?: ExecuteQueryOptions): QueryPromise<ListAiDiscoveryLogsData, ListAiDiscoveryLogsVariables>;
+export function listAiDiscoveryLogs(dc: DataConnect, vars: ListAiDiscoveryLogsVariables, options?: ExecuteQueryOptions): QueryPromise<ListAiDiscoveryLogsData, ListAiDiscoveryLogsVariables>;
+
+interface ListModificationRequestsRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (): QueryRef<ListModificationRequestsData, undefined>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect): QueryRef<ListModificationRequestsData, undefined>;
+  operationName: string;
+}
+export const listModificationRequestsRef: ListModificationRequestsRef;
+
+export function listModificationRequests(options?: ExecuteQueryOptions): QueryPromise<ListModificationRequestsData, undefined>;
+export function listModificationRequests(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<ListModificationRequestsData, undefined>;
 

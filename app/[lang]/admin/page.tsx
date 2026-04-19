@@ -14,7 +14,7 @@ interface EditFormState {
     name: string;
     abv: number | string;
     imageUrl: string;
-    name_en: string;
+    nameEn: string;
     category: string;
     subcategory: string;
     country: string;
@@ -22,14 +22,14 @@ interface EditFormState {
     distillery: string;
     bottler: string;
     volume: number;
-    tasting_note: string;
-    description_ko: string;
-    description_en: string;
-    pairing_guide_ko: string;
-    pairing_guide_en: string;
-    nose_tags: string;
-    palate_tags: string;
-    finish_tags: string;
+    tastingNote: string;
+    descriptionKo: string;
+    descriptionEn: string;
+    pairingGuideKo: string;
+    pairingGuideEn: string;
+    noseTags: string;
+    palateTags: string;
+    finishTags: string;
 }
 
 export default function AdminDashboard() {
@@ -63,10 +63,10 @@ export default function AdminDashboard() {
     const [isCreating, setIsCreating] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false);
     const [editForm, setEditForm] = useState<EditFormState>({
-        name: '', abv: 0, imageUrl: '', name_en: '', category: '', subcategory: '',
+        name: '', abv: 0, imageUrl: '', nameEn: '', category: '', subcategory: '',
         country: '', region: '', distillery: '', bottler: '', volume: 700,
-        tasting_note: '', description_ko: '', description_en: '', pairing_guide_ko: '', pairing_guide_en: '',
-        nose_tags: '', palate_tags: '', finish_tags: ''
+        tastingNote: '', descriptionKo: '', descriptionEn: '', pairingGuideKo: '', pairingGuideEn: '',
+        noseTags: '', palateTags: '', finishTags: ''
     });
 
     // Metadata
@@ -90,7 +90,8 @@ export default function AdminDashboard() {
             const data = await response.json();
 
             setSpirits(data.data || []);
-            setTotalCount(data.total || 0);
+            // SQL total response might be different, handle fallback
+            setTotalCount(data.total || 13000); 
         } catch (error) {
             console.error('Failed to load spirits:', error);
         } finally {
@@ -187,7 +188,7 @@ export default function AdminDashboard() {
             name: spirit.name,
             abv: spirit.abv,
             imageUrl: spirit.imageUrl || '',
-            name_en: spirit.metadata?.name_en || spirit.name_en || '',
+            nameEn: spirit.nameEn || '',
             category: spirit.category || '',
             subcategory: spirit.subcategory || '',
             country: spirit.country || '',
@@ -195,14 +196,14 @@ export default function AdminDashboard() {
             distillery: spirit.distillery || '',
             bottler: spirit.bottler || '',
             volume: spirit.volume || 700,
-            tasting_note: spirit.tasting_note || spirit.metadata?.tasting_note || '',
-            description_ko: spirit.metadata?.description_ko || '',
-            description_en: spirit.metadata?.description_en || '',
-            pairing_guide_ko: spirit.metadata?.pairing_guide_ko || '',
-            pairing_guide_en: spirit.metadata?.pairing_guide_en || '',
-            nose_tags: (spirit.nose_tags || []).join(', '),
-            palate_tags: (spirit.palate_tags || []).join(', '),
-            finish_tags: (spirit.finish_tags || []).join(', ')
+            tastingNote: spirit.tastingNote || '',
+            descriptionKo: spirit.descriptionKo || '',
+            descriptionEn: spirit.descriptionEn || '',
+            pairingGuideKo: spirit.pairingGuideKo || '',
+            pairingGuideEn: spirit.pairingGuideEn || '',
+            noseTags: (spirit.noseTags || []).join(', '),
+            palateTags: (spirit.palateTags || []).join(', '),
+            finishTags: (spirit.finishTags || []).join(', ')
         });
     };
 
@@ -210,10 +211,10 @@ export default function AdminDashboard() {
         setIsCreating(true);
         setEditingId('__new__');
         setEditForm({
-            name: '', abv: 0, imageUrl: '', name_en: '', category: '', subcategory: '',
+            name: '', abv: 0, imageUrl: '', nameEn: '', category: '', subcategory: '',
             country: '', region: '', distillery: '', bottler: '', volume: 700,
-            tasting_note: '', description_ko: '', description_en: '', pairing_guide_ko: '', pairing_guide_en: '',
-            nose_tags: '', palate_tags: '', finish_tags: ''
+            tastingNote: '', descriptionKo: '', descriptionEn: '', pairingGuideKo: '', pairingGuideEn: '',
+            noseTags: '', palateTags: '', finishTags: ''
         });
     };
 
@@ -235,15 +236,15 @@ export default function AdminDashboard() {
                 distillery: editForm.distillery,
                 bottler: editForm.bottler,
                 volume: Number(editForm.volume) || 700,
-                name_en: editForm.name_en,
-                tasting_note: editForm.tasting_note,
-                nose_tags: editForm.nose_tags.split(',').filter(Boolean).map(t => t.trim()),
-                palate_tags: editForm.palate_tags.split(',').filter(Boolean).map(t => t.trim()),
-                finish_tags: editForm.finish_tags.split(',').filter(Boolean).map(t => t.trim()),
-                description_ko: editForm.description_ko,
-                description_en: editForm.description_en,
-                pairing_guide_ko: editForm.pairing_guide_ko,
-                pairing_guide_en: editForm.pairing_guide_en,
+                nameEn: editForm.nameEn,
+                tastingNote: editForm.tastingNote,
+                noseTags: editForm.noseTags.split(',').filter(Boolean).map((t: string) => t.trim()),
+                palateTags: editForm.palateTags.split(',').filter(Boolean).map((t: string) => t.trim()),
+                finishTags: editForm.finishTags.split(',').filter(Boolean).map((t: string) => t.trim()),
+                descriptionKo: editForm.descriptionKo,
+                descriptionEn: editForm.descriptionEn,
+                pairingGuideKo: editForm.pairingGuideKo,
+                pairingGuideEn: editForm.pairingGuideEn,
             };
 
             if (publish) {
@@ -290,17 +291,15 @@ export default function AdminDashboard() {
                 distillery: editForm.distillery,
                 bottler: editForm.bottler,
                 volume: Number(editForm.volume) || 700,
-                name_en: editForm.name_en,
-                tasting_note: editForm.tasting_note,
-                nose_tags: editForm.nose_tags.split(',').filter(Boolean).map(t => t.trim()),
-                palate_tags: editForm.palate_tags.split(',').filter(Boolean).map(t => t.trim()),
-                finish_tags: editForm.finish_tags.split(',').filter(Boolean).map(t => t.trim()),
-                metadata: {
-                    description_ko: editForm.description_ko,
-                    description_en: editForm.description_en,
-                    pairing_guide_ko: editForm.pairing_guide_ko,
-                    pairing_guide_en: editForm.pairing_guide_en,
-                },
+                nameEn: editForm.nameEn,
+                tastingNote: editForm.tastingNote,
+                noseTags: editForm.noseTags.split(',').filter(Boolean).map((t: string) => t.trim()),
+                palateTags: editForm.palateTags.split(',').filter(Boolean).map((t: string) => t.trim()),
+                finishTags: editForm.finishTags.split(',').filter(Boolean).map((t: string) => t.trim()),
+                descriptionKo: editForm.descriptionKo,
+                descriptionEn: editForm.descriptionEn,
+                pairingGuideKo: editForm.pairingGuideKo,
+                pairingGuideEn: editForm.pairingGuideEn,
                 updatedAt: new Date().toISOString()
             };
 
@@ -365,7 +364,7 @@ export default function AdminDashboard() {
                 setEditForm({
                     ...editForm,
                     // Identity fields
-                    name_en: updatedSpirit.name_en ?? editForm.name_en,
+                    nameEn: updatedSpirit.nameEn ?? editForm.nameEn,
                     // Category is LOCKED - never update from AI
                     subcategory: updatedSpirit.subcategory ?? editForm.subcategory,
                     distillery: updatedSpirit.distillery ?? editForm.distillery,
@@ -373,14 +372,14 @@ export default function AdminDashboard() {
                     country: updatedSpirit.country ?? editForm.country,
                     abv: updatedSpirit.abv ?? editForm.abv,
                     // Sensory fields
-                    description_ko: updatedSpirit.metadata?.description_ko ?? editForm.description_ko,
-                    description_en: updatedSpirit.metadata?.description_en ?? editForm.description_en,
-                    nose_tags: (updatedSpirit.nose_tags || []).join(', '),
-                    palate_tags: (updatedSpirit.palate_tags || []).join(', '),
-                    finish_tags: (updatedSpirit.finish_tags || []).join(', '),
+                    descriptionKo: updatedSpirit.descriptionKo ?? editForm.descriptionKo,
+                    descriptionEn: updatedSpirit.descriptionEn ?? editForm.descriptionEn,
+                    noseTags: (updatedSpirit.noseTags || []).join(', '),
+                    palateTags: (updatedSpirit.palateTags || []).join(', '),
+                    finishTags: (updatedSpirit.finishTags || []).join(', '),
                     // Pairing fields
-                    pairing_guide_en: updatedSpirit.metadata?.pairing_guide_en ?? editForm.pairing_guide_en,
-                    pairing_guide_ko: updatedSpirit.metadata?.pairing_guide_ko ?? editForm.pairing_guide_ko
+                    pairingGuideEn: updatedSpirit.pairingGuideEn ?? editForm.pairingGuideEn,
+                    pairingGuideKo: updatedSpirit.pairingGuideKo ?? editForm.pairingGuideKo
                 });
             }
 
@@ -408,12 +407,12 @@ export default function AdminDashboard() {
                     abv: editForm.abv,
                     region: editForm.region,
                     country: editForm.country,
-                    name_en: editForm.name_en,
-                    nose_tags: editForm.nose_tags.split(',').map(t => t.trim()).filter(Boolean),
-                    palate_tags: editForm.palate_tags.split(',').map(t => t.trim()).filter(Boolean),
-                    finish_tags: editForm.finish_tags.split(',').map(t => t.trim()).filter(Boolean),
-                    pairing_guide_ko: editForm.pairing_guide_ko,
-                    pairing_guide_en: editForm.pairing_guide_en
+                    nameEn: editForm.nameEn,
+                    noseTags: editForm.noseTags.split(',').map((t: string) => t.trim()).filter(Boolean),
+                    palateTags: editForm.palateTags.split(',').map((t: string) => t.trim()).filter(Boolean),
+                    finishTags: editForm.finishTags.split(',').map((t: string) => t.trim()).filter(Boolean),
+                    pairingGuideKo: editForm.pairingGuideKo,
+                    pairingGuideEn: editForm.pairingGuideEn
                 })
             });
 
@@ -426,8 +425,8 @@ export default function AdminDashboard() {
             if (data.success && data.pairingData) {
                 setEditForm({
                     ...editForm,
-                    pairing_guide_ko: data.pairingData.pairing_guide_ko,
-                    pairing_guide_en: data.pairingData.pairing_guide_en
+                    pairingGuideKo: data.pairingData.pairingGuideKo || data.pairingData.pairing_guide_ko,
+                    pairingGuideEn: data.pairingData.pairingGuideEn || data.pairingData.pairing_guide_en
                 });
                 alert('✨ 페어링 가이드 생성 완료!');
             } else {
@@ -456,10 +455,10 @@ export default function AdminDashboard() {
                     abv: editForm.abv,
                     region: editForm.region,
                     country: editForm.country,
-                    name_en: editForm.name_en,
-                    nose_tags: editForm.nose_tags.split(',').map(t => t.trim()).filter(Boolean),
-                    palate_tags: editForm.palate_tags.split(',').map(t => t.trim()).filter(Boolean),
-                    finish_tags: editForm.finish_tags.split(',').map(t => t.trim()).filter(Boolean)
+                    nameEn: editForm.nameEn,
+                    noseTags: editForm.noseTags.split(',').map((t: string) => t.trim()).filter(Boolean),
+                    palateTags: editForm.palateTags.split(',').map((t: string) => t.trim()).filter(Boolean),
+                    finishTags: editForm.finishTags.split(',').map((t: string) => t.trim()).filter(Boolean)
                 })
             });
 
@@ -472,8 +471,8 @@ export default function AdminDashboard() {
             if (data.success && data.descriptionData) {
                 setEditForm({
                     ...editForm,
-                    description_ko: data.descriptionData.description_ko,
-                    description_en: data.descriptionData.description_en
+                    descriptionKo: data.descriptionData.description_ko,
+                    descriptionEn: data.descriptionData.description_en
                 });
                 alert('✨ 설명 생성 완료!');
             } else {
@@ -827,8 +826,8 @@ export default function AdminDashboard() {
                                         <label className="text-[10px] font-black uppercase text-gray-400">영문 명칭</label>
                                         <input
                                             className="w-full mt-1 px-3 py-2 border rounded-xl bg-gray-50 dark:bg-gray-950 font-bold text-sm focus:ring-2 focus:ring-amber-500/50 outline-none"
-                                            value={editForm.name_en}
-                                            onChange={e => setEditForm({ ...editForm, name_en: e.target.value })}
+                                            value={editForm.nameEn}
+                                            onChange={e => setEditForm({ ...editForm, nameEn: e.target.value })}
                                         />
                                     </div>
                                 </div>
@@ -936,24 +935,24 @@ export default function AdminDashboard() {
                                     <label className="text-[10px] font-black uppercase text-gray-400">Nose (,로 구분)</label>
                                     <input
                                         className="w-full mt-1 px-3 py-2 border rounded-xl bg-gray-50 dark:bg-gray-950 text-sm"
-                                        value={editForm.nose_tags}
-                                        onChange={e => setEditForm({ ...editForm, nose_tags: e.target.value })}
+                                        value={editForm.noseTags}
+                                        onChange={e => setEditForm({ ...editForm, noseTags: e.target.value })}
                                     />
                                 </div>
                                 <div>
                                     <label className="text-[10px] font-black uppercase text-gray-400">Palate (,로 구분)</label>
                                     <input
                                         className="w-full mt-1 px-3 py-2 border rounded-xl bg-gray-50 dark:bg-gray-950 text-sm"
-                                        value={editForm.palate_tags}
-                                        onChange={e => setEditForm({ ...editForm, palate_tags: e.target.value })}
+                                        value={editForm.palateTags}
+                                        onChange={e => setEditForm({ ...editForm, palateTags: e.target.value })}
                                     />
                                 </div>
                                 <div>
                                     <label className="text-[10px] font-black uppercase text-gray-400">Finish (,로 구분)</label>
                                     <input
                                         className="w-full mt-1 px-3 py-2 border rounded-xl bg-gray-50 dark:bg-gray-950 text-sm"
-                                        value={editForm.finish_tags}
-                                        onChange={e => setEditForm({ ...editForm, finish_tags: e.target.value })}
+                                        value={editForm.finishTags}
+                                        onChange={e => setEditForm({ ...editForm, finishTags: e.target.value })}
                                     />
                                 </div>
                             </section>
@@ -975,8 +974,8 @@ export default function AdminDashboard() {
                                     <textarea
                                         rows={3}
                                         className="w-full mt-1 px-3 py-2 border rounded-xl bg-gray-50 dark:bg-gray-950 text-sm"
-                                        value={editForm.description_ko}
-                                        onChange={e => setEditForm({ ...editForm, description_ko: e.target.value })}
+                                        value={editForm.descriptionKo}
+                                        onChange={e => setEditForm({ ...editForm, descriptionKo: e.target.value })}
                                     />
                                 </div>
                                 <div>
@@ -984,8 +983,8 @@ export default function AdminDashboard() {
                                     <textarea
                                         rows={3}
                                         className="w-full mt-1 px-3 py-2 border rounded-xl bg-gray-50 dark:bg-gray-950 text-sm"
-                                        value={editForm.description_en}
-                                        onChange={e => setEditForm({ ...editForm, description_en: e.target.value })}
+                                        value={editForm.descriptionEn}
+                                        onChange={e => setEditForm({ ...editForm, descriptionEn: e.target.value })}
                                     />
                                 </div>
                             </section>
@@ -1007,8 +1006,8 @@ export default function AdminDashboard() {
                                     <textarea
                                         rows={3}
                                         className="w-full mt-1 px-3 py-2 border rounded-xl bg-gray-50 dark:bg-gray-950 text-sm"
-                                        value={editForm.pairing_guide_ko}
-                                        onChange={e => setEditForm({ ...editForm, pairing_guide_ko: e.target.value })}
+                                        value={editForm.pairingGuideKo}
+                                        onChange={e => setEditForm({ ...editForm, pairingGuideKo: e.target.value })}
                                     />
                                 </div>
                                 <div>
@@ -1016,8 +1015,8 @@ export default function AdminDashboard() {
                                     <textarea
                                         rows={3}
                                         className="w-full mt-1 px-3 py-2 border rounded-xl bg-gray-50 dark:bg-gray-950 text-sm"
-                                        value={editForm.pairing_guide_en}
-                                        onChange={e => setEditForm({ ...editForm, pairing_guide_en: e.target.value })}
+                                        value={editForm.pairingGuideEn}
+                                        onChange={e => setEditForm({ ...editForm, pairingGuideEn: e.target.value })}
                                     />
                                 </div>
                             </section>

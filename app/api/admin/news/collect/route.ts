@@ -1,11 +1,10 @@
 import { NextResponse } from 'next/server';
 import { fetchNewsForCollection } from '@/lib/api/news';
-import { newsDb } from '@/lib/db/firestore-rest';
-import { getServiceAccountToken } from '@/lib/auth/service-account';
+import { dbListNewsArticles, dbUpsertNews } from '@/lib/db/data-connect-client';
 
 export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
-export const preferredRegion = 'iad1'; // Vercel 기준 미국 동부(워싱턴 D.C)로 실행 위치 고정
+export const preferredRegion = 'iad1';
 
 function generateSafeId(url: string): string {
     return btoa(url).replace(/\//g, '_').replace(/\+/g, '-').replace(/=/g, '');
@@ -13,17 +12,16 @@ function generateSafeId(url: string): string {
 
 export async function POST(request: Request) {
     try {
-        // 1. 보안 체크
         if (!process.env.GEMINI_API_KEY) {
             console.error('[Collect API] ❌ GEMINI_API_KEY is missing');
             return NextResponse.json({ success: false, error: 'GEMINI_API_KEY가 설정되지 않았습니다.' }, { status: 500 });
         }
 
-        console.log('[Collect API] 🚀 수집 프로세스 시작 (Edge Runtime)');
+        console.log('[Collect API] 🚀 수집 프로세스 시작 (SQL Backend)');
 
         // 2. 기존 뉴스 링크 목록 가져오기 (중복 체크용 - 최근 100개)
-        console.log('[Collect API] 📋 Fetching existing news links...');
-        const existingNews = await newsDb.getLatest(100);
+        console.log('[Collect API] 📋 Fetching existing news links from SQL...');
+        const existingNews = await dbListNewsArticles(100, 0);
         const existingLinks = new Set(existingNews.map((news: any) => news.link));
         console.log('[Collect API] 📋 Found', existingLinks.size, 'existing news items');
 
@@ -37,14 +35,15 @@ export async function POST(request: Request) {
             return NextResponse.json({ success: true, count: 0, message: '수집된 새로운 뉴스 없음' });
         }
 
-        // 4. Firestore REST API를 이용해 저장
+        // 4. Data Connect (PostgreSQL)를 이용해 저장
         let savedCount = 0;
         for (const item of newsItems) {
             const docId = generateSafeId(item.link);
 
-            // Upsert (이미 있으면 덮어쓰고 없으면 생성 - merge: true 효과)
-            await newsDb.upsert(docId, {
-                originalTitle: item.originalTitle,
+            await dbUpsertNews({
+                id: docId,
+                title: item.translations.ko, // We use translated title as primary title
+                content: item.translations.ko, // content is required in SQL schema
                 link: item.link,
                 source: item.source,
                 date: item.date,
@@ -55,23 +54,19 @@ export async function POST(request: Request) {
                 tags: {
                     ko: item.tags.ko,
                     en: item.tags.en
-                },
-                createdAt: new Date().toISOString(),
-                isVisible: true
+                }
             });
             savedCount++;
         }
 
-        console.log('[Collect API] ✅ DB 저장 완료:', savedCount, '건');
+        console.log('[Collect API] ✅ SQL 저장 완료:', savedCount, '건');
         return NextResponse.json({ success: true, count: savedCount });
 
     } catch (error: any) {
         console.error('[Collect API] ❌ 에러:', error);
-        console.error('[Collect API] ❌ 에러 스택:', error.stack);
         return NextResponse.json({
             success: false,
-            error: error.message || 'Unknown error',
-            details: error.stack
+            error: error.message || 'Unknown error'
         }, { status: 500 });
     }
 }

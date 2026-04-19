@@ -129,7 +129,7 @@ mutation upsertNews(
   $link: String,
   $date: String,
   $translations: Any,
-  $tags: [String!]
+  $tags: Any
 ) @auth(level: NO_ACCESS) {
   newsArticle_upsert(data: {
     id: $id,
@@ -203,5 +203,19 @@ mutation upsertWorldCupResult(
     subcategory: $subcategory,
     initialRound: $initialRound,
     timestamp: $timestamp
+  })
+}
+
+mutation deleteSpirit($id: String!) @auth(level: NO_ACCESS) {
+  spirit_delete(id: $id)
+}
+
+mutation upsertAiDiscoveryLog($id: String!, $userId: String, $analysis: String, $recommendations: Any, $messageHistory: Any) @auth(level: NO_ACCESS) {
+  aiDiscoveryLog_upsert(data: {
+    id: $id,
+    userId: $userId,
+    analysis: $analysis,
+    recommendations: $recommendations,
+    messageHistory: $messageHistory
   })
 }

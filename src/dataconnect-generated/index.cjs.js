@@ -105,6 +105,34 @@ exports.upsertWorldCupResult = function upsertWorldCupResult(dcOrVars, vars) {
 }
 ;
 
+const deleteSpiritRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'deleteSpirit', inputVars);
+}
+deleteSpiritRef.operationName = 'deleteSpirit';
+exports.deleteSpiritRef = deleteSpiritRef;
+
+exports.deleteSpirit = function deleteSpirit(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(deleteSpiritRef(dcInstance, inputVars));
+}
+;
+
+const upsertAiDiscoveryLogRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'upsertAiDiscoveryLog', inputVars);
+}
+upsertAiDiscoveryLogRef.operationName = 'upsertAiDiscoveryLog';
+exports.upsertAiDiscoveryLogRef = upsertAiDiscoveryLogRef;
+
+exports.upsertAiDiscoveryLog = function upsertAiDiscoveryLog(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(upsertAiDiscoveryLogRef(dcInstance, inputVars));
+}
+;
+
 const listSpiritsRef = (dcOrVars, vars) => {
   const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars);
   dcInstance._useGeneratedSdk();
@@ -342,5 +370,35 @@ exports.listSpiritsForWorldCup = function listSpiritsForWorldCup(dcOrVars, varsO
   
   const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, false);
   return executeQuery(listSpiritsForWorldCupRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
+}
+;
+
+const listAiDiscoveryLogsRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'listAiDiscoveryLogs', inputVars);
+}
+listAiDiscoveryLogsRef.operationName = 'listAiDiscoveryLogs';
+exports.listAiDiscoveryLogsRef = listAiDiscoveryLogsRef;
+
+exports.listAiDiscoveryLogs = function listAiDiscoveryLogs(dcOrVars, varsOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
+  return executeQuery(listAiDiscoveryLogsRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
+}
+;
+
+const listModificationRequestsRef = (dc) => {
+  const { dc: dcInstance} = validateArgs(connectorConfig, dc, undefined);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'listModificationRequests');
+}
+listModificationRequestsRef.operationName = 'listModificationRequests';
+exports.listModificationRequestsRef = listModificationRequestsRef;
+
+exports.listModificationRequests = function listModificationRequests(dcOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrOptions, options, undefined,false, false);
+  return executeQuery(listModificationRequestsRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
 }
 ;

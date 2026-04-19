@@ -89,6 +89,30 @@ export function upsertWorldCupResult(dcOrVars, vars) {
   return executeMutation(upsertWorldCupResultRef(dcInstance, inputVars));
 }
 
+export const deleteSpiritRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'deleteSpirit', inputVars);
+}
+deleteSpiritRef.operationName = 'deleteSpirit';
+
+export function deleteSpirit(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(deleteSpiritRef(dcInstance, inputVars));
+}
+
+export const upsertAiDiscoveryLogRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'upsertAiDiscoveryLog', inputVars);
+}
+upsertAiDiscoveryLogRef.operationName = 'upsertAiDiscoveryLog';
+
+export function upsertAiDiscoveryLog(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(upsertAiDiscoveryLogRef(dcInstance, inputVars));
+}
+
 export const listSpiritsRef = (dcOrVars, vars) => {
   const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars);
   dcInstance._useGeneratedSdk();
@@ -295,5 +319,31 @@ export function listSpiritsForWorldCup(dcOrVars, varsOrOptions, options) {
   
   const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, false);
   return executeQuery(listSpiritsForWorldCupRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
+}
+
+export const listAiDiscoveryLogsRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'listAiDiscoveryLogs', inputVars);
+}
+listAiDiscoveryLogsRef.operationName = 'listAiDiscoveryLogs';
+
+export function listAiDiscoveryLogs(dcOrVars, varsOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
+  return executeQuery(listAiDiscoveryLogsRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
+}
+
+export const listModificationRequestsRef = (dc) => {
+  const { dc: dcInstance} = validateArgs(connectorConfig, dc, undefined);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'listModificationRequests');
+}
+listModificationRequestsRef.operationName = 'listModificationRequests';
+
+export function listModificationRequests(dcOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrOptions, options, undefined,false, false);
+  return executeQuery(listModificationRequestsRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
 }
 

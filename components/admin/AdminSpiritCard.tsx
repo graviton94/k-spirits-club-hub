@@ -289,8 +289,21 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
   return (
     <div className="border border-border rounded-lg p-4 hover:shadow-md transition-shadow">
       <div className="flex gap-4">
-        <div className="w-20 h-20 bg-linear-to-br from-amber-100 to-amber-200 dark:from-amber-900 dark:to-amber-800 rounded flex items-center justify-center shrink-0">
-          <span className="text-3xl">🥃</span>
+        <div className="w-20 h-20 bg-muted rounded flex items-center justify-center shrink-0 overflow-hidden border border-border/50">
+          {spirit.imageUrl ? (
+            <img 
+              src={spirit.imageUrl} 
+              alt={spirit.name}
+              className="w-full h-full object-contain"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = '/icons/bottle-fallback.png'; // Fallback if image fails
+                setErrorMessage('⚠️ Image link appears to be broken. Verification needed.');
+              }}
+            />
+          ) : (
+            <span className="text-3xl grayscale opacity-50">🥃</span>
+          )}
         </div>
 
         <div className="flex-1 min-w-0">

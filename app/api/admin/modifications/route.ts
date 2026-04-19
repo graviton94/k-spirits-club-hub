@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { modificationDb } from '@/lib/db/firestore-rest';
+import { dbListModificationRequests, dbUpsertModificationRequest } from '@/lib/db/data-connect-client';
 
 export const runtime = 'edge';
 
 // GET /api/admin/modifications
 export async function GET(req: NextRequest) {
     try {
-        const requests = await modificationDb.getAll();
+        const requests = await dbListModificationRequests();
         return NextResponse.json({ data: requests });
     } catch (error: any) {
         console.error('[API /api/admin/modifications] Error:', error);
-        return NextResponse.json({ error: 'Failed to fetch modification requests', details: error.message }, { status: 500 });
+        return NextResponse.json({ error: 'Failed to fetch modification requests from SQL', details: error.message }, { status: 500 });
     }
 }
 
@@ -27,10 +27,12 @@ export async function PATCH(req: NextRequest) {
             return NextResponse.json({ error: 'Invalid status value' }, { status: 400 });
         }
 
-        await modificationDb.updateStatus(id, status);
+        // Use upsert to update status (id must exist)
+        await dbUpsertModificationRequest({ id, status });
+        
         return NextResponse.json({ success: true });
     } catch (error: any) {
         console.error('[API /api/admin/modifications] Error:', error);
-        return NextResponse.json({ error: 'Failed to update modification request', details: error.message }, { status: 500 });
+        return NextResponse.json({ error: 'Failed to update modification request in SQL', details: error.message }, { status: 500 });
     }
 }

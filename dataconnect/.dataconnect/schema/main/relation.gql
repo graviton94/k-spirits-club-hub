@@ -1,3 +1,95 @@
+extend type AiDiscoveryLog {
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "AiDiscoveryLog", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `AiDiscoveryLog` table.
+  """
+  _count: Int! @fdc_generated(from: "AiDiscoveryLog.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `AiDiscoveryLog` table where the `analysis` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  analysis_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "AiDiscoveryLog.analysis", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `AiDiscoveryLog` table where the `createdAt` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  createdAt_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "AiDiscoveryLog.createdAt", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `AiDiscoveryLog` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  id_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "AiDiscoveryLog.id", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `AiDiscoveryLog` table where the `messageHistory` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  messageHistory_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "AiDiscoveryLog.messageHistory", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `AiDiscoveryLog` table where the `recommendations` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  recommendations_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "AiDiscoveryLog.recommendations", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `AiDiscoveryLog` table where the `userId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  userId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "AiDiscoveryLog.userId", purpose: QUERY_COUNT)
+  """
+  ✨ Minimum of the `createdAt` field in the `AiDiscoveryLog` table.
+  """
+  createdAt_min: Timestamp @fdc_generated(from: "AiDiscoveryLog.createdAt", purpose: QUERY_MIN)
+  """
+  ✨ Minimum of the `messageHistory` field in the `AiDiscoveryLog` table.
+  """
+  messageHistory_min: Any @fdc_generated(from: "AiDiscoveryLog.messageHistory", purpose: QUERY_MIN)
+  """
+  ✨ Minimum of the `recommendations` field in the `AiDiscoveryLog` table.
+  """
+  recommendations_min: Any @fdc_generated(from: "AiDiscoveryLog.recommendations", purpose: QUERY_MIN)
+  """
+  ✨ Maximum of the `createdAt` field in the `AiDiscoveryLog` table.
+  """
+  createdAt_max: Timestamp @fdc_generated(from: "AiDiscoveryLog.createdAt", purpose: QUERY_MAX)
+  """
+  ✨ Maximum of the `messageHistory` field in the `AiDiscoveryLog` table.
+  """
+  messageHistory_max: Any @fdc_generated(from: "AiDiscoveryLog.messageHistory", purpose: QUERY_MAX)
+  """
+  ✨ Maximum of the `recommendations` field in the `AiDiscoveryLog` table.
+  """
+  recommendations_max: Any @fdc_generated(from: "AiDiscoveryLog.recommendations", purpose: QUERY_MAX)
+  """
+  A generated field that is used for caching results in SDKs.
+  """
+  _id: ID! @fdc_generated(from: "AiDiscoveryLog.id", purpose: ENTITY_ID)
+}
 extend type ModificationRequest {
   """
   Implicit metadata field that cannot be written. It provides extra information about query results.
@@ -174,6 +266,15 @@ extend type NewsArticle {
     distinct: Boolean = false
   ): Int! @fdc_generated(from: "NewsArticle.source", purpose: QUERY_COUNT)
   """
+  ✨ Count the number of rows in the `NewsArticle` table where the `tags` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  tags_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "NewsArticle.tags", purpose: QUERY_COUNT)
+  """
   ✨ Count the number of rows in the `NewsArticle` table where the `title` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
   """
   title_count(
@@ -205,6 +306,10 @@ extend type NewsArticle {
   """
   createdAt_min: Timestamp @fdc_generated(from: "NewsArticle.createdAt", purpose: QUERY_MIN)
   """
+  ✨ Minimum of the `tags` field in the `NewsArticle` table.
+  """
+  tags_min: Any @fdc_generated(from: "NewsArticle.tags", purpose: QUERY_MIN)
+  """
   ✨ Minimum of the `translations` field in the `NewsArticle` table.
   """
   translations_min: Any @fdc_generated(from: "NewsArticle.translations", purpose: QUERY_MIN)
@@ -216,6 +321,10 @@ extend type NewsArticle {
   ✨ Maximum of the `createdAt` field in the `NewsArticle` table.
   """
   createdAt_max: Timestamp @fdc_generated(from: "NewsArticle.createdAt", purpose: QUERY_MAX)
+  """
+  ✨ Maximum of the `tags` field in the `NewsArticle` table.
+  """
+  tags_max: Any @fdc_generated(from: "NewsArticle.tags", purpose: QUERY_MAX)
   """
   ✨ Maximum of the `translations` field in the `NewsArticle` table.
   """

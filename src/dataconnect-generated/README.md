@@ -24,6 +24,8 @@ This README will guide you through the process of using the generated JavaScript
   - [*listSpiritsForSitemap*](#listspiritsforsitemap)
   - [*getWorldCupResult*](#getworldcupresult)
   - [*listSpiritsForWorldCup*](#listspiritsforworldcup)
+  - [*listAiDiscoveryLogs*](#listaidiscoverylogs)
+  - [*listModificationRequests*](#listmodificationrequests)
 - [**Mutations**](#mutations)
   - [*upsertUser*](#upsertuser)
   - [*upsertSpirit*](#upsertspirit)
@@ -32,6 +34,8 @@ This README will guide you through the process of using the generated JavaScript
   - [*upsertCabinet*](#upsertcabinet)
   - [*upsertModificationRequest*](#upsertmodificationrequest)
   - [*upsertWorldCupResult*](#upsertworldcupresult)
+  - [*deleteSpirit*](#deletespirit)
+  - [*upsertAiDiscoveryLog*](#upsertaidiscoverylog)
 
 # Accessing the connector
 A connector is a collection of Queries and Mutations. One SDK is generated for each connector - this SDK is generated for the connector `main`. You can find more information about connectors in the [Data Connect documentation](https://firebase.google.com/docs/data-connect#how-does).
@@ -522,6 +526,10 @@ The `adminListRawSpirits` query has an optional argument of type `AdminListRawSp
 export interface AdminListRawSpiritsVariables {
   limit?: number | null;
   offset?: number | null;
+  category?: string | null;
+  distillery?: string | null;
+  isPublished?: boolean | null;
+  search?: string | null;
 }
 ```
 ### Return Type
@@ -539,6 +547,12 @@ export interface AdminListRawSpiritsData {
     isPublished?: boolean | null;
     status?: string | null;
     updatedAt: TimestampString;
+    imageUrl: string;
+    thumbnailUrl?: string | null;
+    abv?: number | null;
+    distillery?: string | null;
+    region?: string | null;
+    subcategory?: string | null;
   } & Spirit_Key)[];
 }
 ```
@@ -552,13 +566,17 @@ import { connectorConfig, adminListRawSpirits, AdminListRawSpiritsVariables } fr
 const adminListRawSpiritsVars: AdminListRawSpiritsVariables = {
   limit: ..., // optional
   offset: ..., // optional
+  category: ..., // optional
+  distillery: ..., // optional
+  isPublished: ..., // optional
+  search: ..., // optional
 };
 
 // Call the `adminListRawSpirits()` function to execute the query.
 // You can use the `await` keyword to wait for the promise to resolve.
 const { data } = await adminListRawSpirits(adminListRawSpiritsVars);
 // Variables can be defined inline as well.
-const { data } = await adminListRawSpirits({ limit: ..., offset: ..., });
+const { data } = await adminListRawSpirits({ limit: ..., offset: ..., category: ..., distillery: ..., isPublished: ..., search: ..., });
 // Since all variables are optional for this query, you can omit the `AdminListRawSpiritsVariables` argument.
 const { data } = await adminListRawSpirits();
 
@@ -585,12 +603,16 @@ import { connectorConfig, adminListRawSpiritsRef, AdminListRawSpiritsVariables }
 const adminListRawSpiritsVars: AdminListRawSpiritsVariables = {
   limit: ..., // optional
   offset: ..., // optional
+  category: ..., // optional
+  distillery: ..., // optional
+  isPublished: ..., // optional
+  search: ..., // optional
 };
 
 // Call the `adminListRawSpiritsRef()` function to get a reference to the query.
 const ref = adminListRawSpiritsRef(adminListRawSpiritsVars);
 // Variables can be defined inline as well.
-const ref = adminListRawSpiritsRef({ limit: ..., offset: ..., });
+const ref = adminListRawSpiritsRef({ limit: ..., offset: ..., category: ..., distillery: ..., isPublished: ..., search: ..., });
 // Since all variables are optional for this query, you can omit the `AdminListRawSpiritsVariables` argument.
 const ref = adminListRawSpiritsRef();
 
@@ -784,7 +806,7 @@ export interface ListNewsArticlesData {
     link?: string | null;
     date?: string | null;
     translations?: unknown | null;
-    tags?: string[] | null;
+    tags?: unknown | null;
     createdAt?: TimestampString | null;
   } & NewsArticle_Key)[];
 }
@@ -911,7 +933,7 @@ export interface GetNewsArticleData {
     link?: string | null;
     date?: string | null;
     translations?: unknown | null;
-    tags?: string[] | null;
+    tags?: unknown | null;
     createdAt?: TimestampString | null;
   } & NewsArticle_Key;
 }
@@ -1962,6 +1984,222 @@ executeQuery(ref).then((response) => {
 });
 ```
 
+## listAiDiscoveryLogs
+You can execute the `listAiDiscoveryLogs` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
+```typescript
+listAiDiscoveryLogs(vars: ListAiDiscoveryLogsVariables, options?: ExecuteQueryOptions): QueryPromise<ListAiDiscoveryLogsData, ListAiDiscoveryLogsVariables>;
+
+interface ListAiDiscoveryLogsRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: ListAiDiscoveryLogsVariables): QueryRef<ListAiDiscoveryLogsData, ListAiDiscoveryLogsVariables>;
+}
+export const listAiDiscoveryLogsRef: ListAiDiscoveryLogsRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `QueryRef` function.
+```typescript
+listAiDiscoveryLogs(dc: DataConnect, vars: ListAiDiscoveryLogsVariables, options?: ExecuteQueryOptions): QueryPromise<ListAiDiscoveryLogsData, ListAiDiscoveryLogsVariables>;
+
+interface ListAiDiscoveryLogsRef {
+  ...
+  (dc: DataConnect, vars: ListAiDiscoveryLogsVariables): QueryRef<ListAiDiscoveryLogsData, ListAiDiscoveryLogsVariables>;
+}
+export const listAiDiscoveryLogsRef: ListAiDiscoveryLogsRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the listAiDiscoveryLogsRef:
+```typescript
+const name = listAiDiscoveryLogsRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `listAiDiscoveryLogs` query requires an argument of type `ListAiDiscoveryLogsVariables`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+
+```typescript
+export interface ListAiDiscoveryLogsVariables {
+  limit: number;
+}
+```
+### Return Type
+Recall that executing the `listAiDiscoveryLogs` query returns a `QueryPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `ListAiDiscoveryLogsData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface ListAiDiscoveryLogsData {
+  aiDiscoveryLogs: ({
+    id: string;
+    userId?: string | null;
+    analysis?: string | null;
+    recommendations?: unknown | null;
+    messageHistory?: unknown | null;
+    createdAt?: TimestampString | null;
+  } & AiDiscoveryLog_Key)[];
+}
+```
+### Using `listAiDiscoveryLogs`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, listAiDiscoveryLogs, ListAiDiscoveryLogsVariables } from '@k-spirits/dataconnect';
+
+// The `listAiDiscoveryLogs` query requires an argument of type `ListAiDiscoveryLogsVariables`:
+const listAiDiscoveryLogsVars: ListAiDiscoveryLogsVariables = {
+  limit: ..., 
+};
+
+// Call the `listAiDiscoveryLogs()` function to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await listAiDiscoveryLogs(listAiDiscoveryLogsVars);
+// Variables can be defined inline as well.
+const { data } = await listAiDiscoveryLogs({ limit: ..., });
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await listAiDiscoveryLogs(dataConnect, listAiDiscoveryLogsVars);
+
+console.log(data.aiDiscoveryLogs);
+
+// Or, you can use the `Promise` API.
+listAiDiscoveryLogs(listAiDiscoveryLogsVars).then((response) => {
+  const data = response.data;
+  console.log(data.aiDiscoveryLogs);
+});
+```
+
+### Using `listAiDiscoveryLogs`'s `QueryRef` function
+
+```typescript
+import { getDataConnect, executeQuery } from 'firebase/data-connect';
+import { connectorConfig, listAiDiscoveryLogsRef, ListAiDiscoveryLogsVariables } from '@k-spirits/dataconnect';
+
+// The `listAiDiscoveryLogs` query requires an argument of type `ListAiDiscoveryLogsVariables`:
+const listAiDiscoveryLogsVars: ListAiDiscoveryLogsVariables = {
+  limit: ..., 
+};
+
+// Call the `listAiDiscoveryLogsRef()` function to get a reference to the query.
+const ref = listAiDiscoveryLogsRef(listAiDiscoveryLogsVars);
+// Variables can be defined inline as well.
+const ref = listAiDiscoveryLogsRef({ limit: ..., });
+
+// You can also pass in a `DataConnect` instance to the `QueryRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = listAiDiscoveryLogsRef(dataConnect, listAiDiscoveryLogsVars);
+
+// Call `executeQuery()` on the reference to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeQuery(ref);
+
+console.log(data.aiDiscoveryLogs);
+
+// Or, you can use the `Promise` API.
+executeQuery(ref).then((response) => {
+  const data = response.data;
+  console.log(data.aiDiscoveryLogs);
+});
+```
+
+## listModificationRequests
+You can execute the `listModificationRequests` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
+```typescript
+listModificationRequests(options?: ExecuteQueryOptions): QueryPromise<ListModificationRequestsData, undefined>;
+
+interface ListModificationRequestsRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (): QueryRef<ListModificationRequestsData, undefined>;
+}
+export const listModificationRequestsRef: ListModificationRequestsRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `QueryRef` function.
+```typescript
+listModificationRequests(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<ListModificationRequestsData, undefined>;
+
+interface ListModificationRequestsRef {
+  ...
+  (dc: DataConnect): QueryRef<ListModificationRequestsData, undefined>;
+}
+export const listModificationRequestsRef: ListModificationRequestsRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the listModificationRequestsRef:
+```typescript
+const name = listModificationRequestsRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `listModificationRequests` query has no variables.
+### Return Type
+Recall that executing the `listModificationRequests` query returns a `QueryPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `ListModificationRequestsData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface ListModificationRequestsData {
+  modificationRequests: ({
+    id: string;
+    spiritId: string;
+    spiritName?: string | null;
+    userId?: string | null;
+    title: string;
+    content: string;
+    status?: string | null;
+    createdAt?: TimestampString | null;
+  } & ModificationRequest_Key)[];
+}
+```
+### Using `listModificationRequests`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, listModificationRequests } from '@k-spirits/dataconnect';
+
+
+// Call the `listModificationRequests()` function to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await listModificationRequests();
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await listModificationRequests(dataConnect);
+
+console.log(data.modificationRequests);
+
+// Or, you can use the `Promise` API.
+listModificationRequests().then((response) => {
+  const data = response.data;
+  console.log(data.modificationRequests);
+});
+```
+
+### Using `listModificationRequests`'s `QueryRef` function
+
+```typescript
+import { getDataConnect, executeQuery } from 'firebase/data-connect';
+import { connectorConfig, listModificationRequestsRef } from '@k-spirits/dataconnect';
+
+
+// Call the `listModificationRequestsRef()` function to get a reference to the query.
+const ref = listModificationRequestsRef();
+
+// You can also pass in a `DataConnect` instance to the `QueryRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = listModificationRequestsRef(dataConnect);
+
+// Call `executeQuery()` on the reference to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeQuery(ref);
+
+console.log(data.modificationRequests);
+
+// Or, you can use the `Promise` API.
+executeQuery(ref).then((response) => {
+  const data = response.data;
+  console.log(data.modificationRequests);
+});
+```
+
 # Mutations
 
 There are two ways to execute a Data Connect Mutation using the generated Web SDK:
@@ -2497,7 +2735,7 @@ export interface UpsertNewsVariables {
   link?: string | null;
   date?: string | null;
   translations?: unknown | null;
-  tags?: string[] | null;
+  tags?: unknown | null;
 }
 ```
 ### Return Type
@@ -2965,6 +3203,236 @@ console.log(data.worldCupResult_upsert);
 executeMutation(ref).then((response) => {
   const data = response.data;
   console.log(data.worldCupResult_upsert);
+});
+```
+
+## deleteSpirit
+You can execute the `deleteSpirit` mutation using the following action shortcut function, or by calling `executeMutation()` after calling the following `MutationRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
+```typescript
+deleteSpirit(vars: DeleteSpiritVariables): MutationPromise<DeleteSpiritData, DeleteSpiritVariables>;
+
+interface DeleteSpiritRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: DeleteSpiritVariables): MutationRef<DeleteSpiritData, DeleteSpiritVariables>;
+}
+export const deleteSpiritRef: DeleteSpiritRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `MutationRef` function.
+```typescript
+deleteSpirit(dc: DataConnect, vars: DeleteSpiritVariables): MutationPromise<DeleteSpiritData, DeleteSpiritVariables>;
+
+interface DeleteSpiritRef {
+  ...
+  (dc: DataConnect, vars: DeleteSpiritVariables): MutationRef<DeleteSpiritData, DeleteSpiritVariables>;
+}
+export const deleteSpiritRef: DeleteSpiritRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the deleteSpiritRef:
+```typescript
+const name = deleteSpiritRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `deleteSpirit` mutation requires an argument of type `DeleteSpiritVariables`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+
+```typescript
+export interface DeleteSpiritVariables {
+  id: string;
+}
+```
+### Return Type
+Recall that executing the `deleteSpirit` mutation returns a `MutationPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `DeleteSpiritData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface DeleteSpiritData {
+  spirit_delete?: Spirit_Key | null;
+}
+```
+### Using `deleteSpirit`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, deleteSpirit, DeleteSpiritVariables } from '@k-spirits/dataconnect';
+
+// The `deleteSpirit` mutation requires an argument of type `DeleteSpiritVariables`:
+const deleteSpiritVars: DeleteSpiritVariables = {
+  id: ..., 
+};
+
+// Call the `deleteSpirit()` function to execute the mutation.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await deleteSpirit(deleteSpiritVars);
+// Variables can be defined inline as well.
+const { data } = await deleteSpirit({ id: ..., });
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await deleteSpirit(dataConnect, deleteSpiritVars);
+
+console.log(data.spirit_delete);
+
+// Or, you can use the `Promise` API.
+deleteSpirit(deleteSpiritVars).then((response) => {
+  const data = response.data;
+  console.log(data.spirit_delete);
+});
+```
+
+### Using `deleteSpirit`'s `MutationRef` function
+
+```typescript
+import { getDataConnect, executeMutation } from 'firebase/data-connect';
+import { connectorConfig, deleteSpiritRef, DeleteSpiritVariables } from '@k-spirits/dataconnect';
+
+// The `deleteSpirit` mutation requires an argument of type `DeleteSpiritVariables`:
+const deleteSpiritVars: DeleteSpiritVariables = {
+  id: ..., 
+};
+
+// Call the `deleteSpiritRef()` function to get a reference to the mutation.
+const ref = deleteSpiritRef(deleteSpiritVars);
+// Variables can be defined inline as well.
+const ref = deleteSpiritRef({ id: ..., });
+
+// You can also pass in a `DataConnect` instance to the `MutationRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = deleteSpiritRef(dataConnect, deleteSpiritVars);
+
+// Call `executeMutation()` on the reference to execute the mutation.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeMutation(ref);
+
+console.log(data.spirit_delete);
+
+// Or, you can use the `Promise` API.
+executeMutation(ref).then((response) => {
+  const data = response.data;
+  console.log(data.spirit_delete);
+});
+```
+
+## upsertAiDiscoveryLog
+You can execute the `upsertAiDiscoveryLog` mutation using the following action shortcut function, or by calling `executeMutation()` after calling the following `MutationRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
+```typescript
+upsertAiDiscoveryLog(vars: UpsertAiDiscoveryLogVariables): MutationPromise<UpsertAiDiscoveryLogData, UpsertAiDiscoveryLogVariables>;
+
+interface UpsertAiDiscoveryLogRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: UpsertAiDiscoveryLogVariables): MutationRef<UpsertAiDiscoveryLogData, UpsertAiDiscoveryLogVariables>;
+}
+export const upsertAiDiscoveryLogRef: UpsertAiDiscoveryLogRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `MutationRef` function.
+```typescript
+upsertAiDiscoveryLog(dc: DataConnect, vars: UpsertAiDiscoveryLogVariables): MutationPromise<UpsertAiDiscoveryLogData, UpsertAiDiscoveryLogVariables>;
+
+interface UpsertAiDiscoveryLogRef {
+  ...
+  (dc: DataConnect, vars: UpsertAiDiscoveryLogVariables): MutationRef<UpsertAiDiscoveryLogData, UpsertAiDiscoveryLogVariables>;
+}
+export const upsertAiDiscoveryLogRef: UpsertAiDiscoveryLogRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the upsertAiDiscoveryLogRef:
+```typescript
+const name = upsertAiDiscoveryLogRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `upsertAiDiscoveryLog` mutation requires an argument of type `UpsertAiDiscoveryLogVariables`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+
+```typescript
+export interface UpsertAiDiscoveryLogVariables {
+  id: string;
+  userId?: string | null;
+  analysis?: string | null;
+  recommendations?: unknown | null;
+  messageHistory?: unknown | null;
+}
+```
+### Return Type
+Recall that executing the `upsertAiDiscoveryLog` mutation returns a `MutationPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `UpsertAiDiscoveryLogData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface UpsertAiDiscoveryLogData {
+  aiDiscoveryLog_upsert: AiDiscoveryLog_Key;
+}
+```
+### Using `upsertAiDiscoveryLog`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, upsertAiDiscoveryLog, UpsertAiDiscoveryLogVariables } from '@k-spirits/dataconnect';
+
+// The `upsertAiDiscoveryLog` mutation requires an argument of type `UpsertAiDiscoveryLogVariables`:
+const upsertAiDiscoveryLogVars: UpsertAiDiscoveryLogVariables = {
+  id: ..., 
+  userId: ..., // optional
+  analysis: ..., // optional
+  recommendations: ..., // optional
+  messageHistory: ..., // optional
+};
+
+// Call the `upsertAiDiscoveryLog()` function to execute the mutation.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await upsertAiDiscoveryLog(upsertAiDiscoveryLogVars);
+// Variables can be defined inline as well.
+const { data } = await upsertAiDiscoveryLog({ id: ..., userId: ..., analysis: ..., recommendations: ..., messageHistory: ..., });
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await upsertAiDiscoveryLog(dataConnect, upsertAiDiscoveryLogVars);
+
+console.log(data.aiDiscoveryLog_upsert);
+
+// Or, you can use the `Promise` API.
+upsertAiDiscoveryLog(upsertAiDiscoveryLogVars).then((response) => {
+  const data = response.data;
+  console.log(data.aiDiscoveryLog_upsert);
+});
+```
+
+### Using `upsertAiDiscoveryLog`'s `MutationRef` function
+
+```typescript
+import { getDataConnect, executeMutation } from 'firebase/data-connect';
+import { connectorConfig, upsertAiDiscoveryLogRef, UpsertAiDiscoveryLogVariables } from '@k-spirits/dataconnect';
+
+// The `upsertAiDiscoveryLog` mutation requires an argument of type `UpsertAiDiscoveryLogVariables`:
+const upsertAiDiscoveryLogVars: UpsertAiDiscoveryLogVariables = {
+  id: ..., 
+  userId: ..., // optional
+  analysis: ..., // optional
+  recommendations: ..., // optional
+  messageHistory: ..., // optional
+};
+
+// Call the `upsertAiDiscoveryLogRef()` function to get a reference to the mutation.
+const ref = upsertAiDiscoveryLogRef(upsertAiDiscoveryLogVars);
+// Variables can be defined inline as well.
+const ref = upsertAiDiscoveryLogRef({ id: ..., userId: ..., analysis: ..., recommendations: ..., messageHistory: ..., });
+
+// You can also pass in a `DataConnect` instance to the `MutationRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = upsertAiDiscoveryLogRef(dataConnect, upsertAiDiscoveryLogVars);
+
+// Call `executeMutation()` on the reference to execute the mutation.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeMutation(ref);
+
+console.log(data.aiDiscoveryLog_upsert);
+
+// Or, you can use the `Promise` API.
+executeMutation(ref).then((response) => {
+  const data = response.data;
+  console.log(data.aiDiscoveryLog_upsert);
 });
 ```
 
