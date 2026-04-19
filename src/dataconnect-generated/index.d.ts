@@ -1,7 +1,6 @@
-import { ConnectorConfig, DataConnect, QueryRef, QueryPromise, ExecuteQueryOptions, MutationRef, MutationPromise, DataConnectSettings } from 'firebase/data-connect';
+import { ConnectorConfig, DataConnect, QueryRef, QueryPromise, ExecuteQueryOptions, MutationRef, MutationPromise } from 'firebase/data-connect';
 
 export const connectorConfig: ConnectorConfig;
-export const dataConnectSettings: DataConnectSettings;
 
 export type TimestampString = string;
 export type UUIDString = string;
@@ -11,121 +10,423 @@ export type DateString = string;
 
 
 
-export interface AddReviewData {
-  review_upsert: Review_Key;
-}
-
-export interface AddReviewVariables {
-  movieId: UUIDString;
-  rating: number;
-  reviewText: string;
-}
-
-export interface CreateMovieData {
-  movie_insert: Movie_Key;
-}
-
-export interface CreateMovieVariables {
-  title: string;
-  genre: string;
-  imageUrl: string;
-}
-
-export interface DeleteReviewData {
-  review_delete?: Review_Key | null;
-}
-
-export interface DeleteReviewVariables {
-  movieId: UUIDString;
-}
-
-export interface GetMovieByIdData {
-  movie?: {
-    id: UUIDString;
-    title: string;
-    imageUrl: string;
-    genre?: string | null;
-    metadata?: {
-      rating?: number | null;
-      releaseYear?: number | null;
-      description?: string | null;
-    };
-      reviews: ({
-        reviewText?: string | null;
-        reviewDate: DateString;
-        rating?: number | null;
-        user: {
-          id: string;
-          username: string;
-        } & User_Key;
-      })[];
-  } & Movie_Key;
-}
-
-export interface GetMovieByIdVariables {
-  id: UUIDString;
-}
-
-export interface ListMoviesData {
-  movies: ({
-    id: UUIDString;
-    title: string;
-    imageUrl: string;
-    genre?: string | null;
-  } & Movie_Key)[];
-}
-
-export interface ListUserReviewsData {
-  user?: {
+export interface AuditAllNewsData {
+  newsArticles: ({
     id: string;
-    username: string;
-    reviews: ({
-      rating?: number | null;
-      reviewDate: DateString;
-      reviewText?: string | null;
-      movie: {
-        id: UUIDString;
-        title: string;
-      } & Movie_Key;
-    })[];
-  } & User_Key;
+    title: string;
+    translations?: unknown | null;
+  } & NewsArticle_Key)[];
 }
 
-export interface ListUsersData {
+export interface AuditAllReviewsData {
+  spiritReviews: ({
+    id: UUIDString;
+    spirit: {
+      id: string;
+      name: string;
+    } & Spirit_Key;
+      user: {
+        id: string;
+        nickname?: string | null;
+      } & User_Key;
+  } & SpiritReview_Key)[];
+}
+
+export interface AuditAllSpiritsData {
+  spirits: ({
+    id: string;
+  } & Spirit_Key)[];
+}
+
+export interface AuditAllUsersData {
   users: ({
     id: string;
-    username: string;
+    nickname?: string | null;
+    role?: string | null;
+    isFirstLogin?: boolean | null;
   } & User_Key)[];
 }
 
-export interface MovieMetadata_Key {
-  id: UUIDString;
-  __typename?: 'MovieMetadata_Key';
-}
-
-export interface Movie_Key {
-  id: UUIDString;
-  __typename?: 'Movie_Key';
-}
-
-export interface Review_Key {
-  userId: string;
-  movieId: UUIDString;
-  __typename?: 'Review_Key';
-}
-
-export interface SearchMovieData {
-  movies: ({
-    id: UUIDString;
+export interface GetNewsArticleData {
+  newsArticle?: {
+    id: string;
     title: string;
-    genre?: string | null;
-    imageUrl: string;
-  } & Movie_Key)[];
+    content: string;
+    imageUrl?: string | null;
+    category?: string | null;
+    source?: string | null;
+    link?: string | null;
+    date?: string | null;
+    translations?: unknown | null;
+    tags?: string[] | null;
+    createdAt?: TimestampString | null;
+  } & NewsArticle_Key;
 }
 
-export interface SearchMovieVariables {
-  titleInput?: string | null;
-  genre?: string | null;
+export interface GetNewsArticleVariables {
+  id: string;
+}
+
+export interface GetSpiritData {
+  spirit?: {
+    id: string;
+    name: string;
+    nameEn?: string | null;
+    category: string;
+    mainCategory?: string | null;
+    subcategory?: string | null;
+    distillery?: string | null;
+    bottler?: string | null;
+    abv?: number | null;
+    volume?: number | null;
+    country?: string | null;
+    region?: string | null;
+    imageUrl: string;
+    thumbnailUrl?: string | null;
+    descriptionKo?: string | null;
+    descriptionEn?: string | null;
+    pairingGuideKo?: string | null;
+    pairingGuideEn?: string | null;
+    noseTags?: string[] | null;
+    palateTags?: string[] | null;
+    finishTags?: string[] | null;
+    tastingNote?: string | null;
+    status?: string | null;
+    isPublished?: boolean | null;
+    isReviewed?: boolean | null;
+    rating?: number | null;
+    reviewCount?: number | null;
+    metadata?: unknown | null;
+    reviews: ({
+      id: UUIDString;
+      rating: number;
+      content: string;
+      nose?: string | null;
+      palate?: string | null;
+      finish?: string | null;
+      likedBy?: string[] | null;
+      imageUrls?: string[] | null;
+      createdAt: TimestampString;
+      updatedAt: TimestampString;
+      user: {
+        nickname?: string | null;
+        profileImage?: string | null;
+        role?: string | null;
+      };
+    } & SpiritReview_Key)[];
+  } & Spirit_Key;
+}
+
+export interface GetSpiritReviewsCountData {
+  spiritReviews: ({
+    id: UUIDString;
+  } & SpiritReview_Key)[];
+}
+
+export interface GetSpiritVariables {
+  id: string;
+}
+
+export interface GetUserProfileData {
+  user?: {
+    id: string;
+    nickname?: string | null;
+    email?: string | null;
+    profileImage?: string | null;
+    role?: string | null;
+    themePreference?: string | null;
+    isFirstLogin?: boolean | null;
+    reviewsWritten?: number | null;
+    heartsReceived?: number | null;
+  } & User_Key;
+}
+
+export interface GetUserProfileVariables {
+  id: string;
+}
+
+export interface GetWorldCupResultData {
+  worldCupResult?: {
+    id: UUIDString;
+    winner: {
+      id: string;
+      name: string;
+      nameEn?: string | null;
+      imageUrl: string;
+      thumbnailUrl?: string | null;
+      category: string;
+      categoryEn?: string | null;
+      subcategory?: string | null;
+      distillery?: string | null;
+      abv?: number | null;
+      country?: string | null;
+      region?: string | null;
+      noseTags?: string[] | null;
+      palateTags?: string[] | null;
+      finishTags?: string[] | null;
+    } & Spirit_Key;
+      category: string;
+      subcategory?: string | null;
+      initialRound?: number | null;
+      timestamp?: TimestampString | null;
+  } & WorldCupResult_Key;
+}
+
+export interface GetWorldCupResultVariables {
+  id: UUIDString;
+}
+
+export interface ListNewArrivalsData {
+  spirits: ({
+    id: string;
+    name: string;
+    nameEn?: string | null;
+    imageUrl: string;
+    category: string;
+    country?: string | null;
+    abv?: number | null;
+    distillery?: string | null;
+    descriptionKo?: string | null;
+    descriptionEn?: string | null;
+    updatedAt: TimestampString;
+    createdAt: TimestampString;
+  } & Spirit_Key)[];
+}
+
+export interface ListNewArrivalsVariables {
+  limit?: number | null;
+}
+
+export interface ListNewsArticlesData {
+  newsArticles: ({
+    id: string;
+    title: string;
+    content: string;
+    imageUrl?: string | null;
+    category?: string | null;
+    source?: string | null;
+    link?: string | null;
+    date?: string | null;
+    translations?: unknown | null;
+    tags?: string[] | null;
+    createdAt?: TimestampString | null;
+  } & NewsArticle_Key)[];
+}
+
+export interface ListNewsArticlesVariables {
+  limit?: number | null;
+  offset?: number | null;
+}
+
+export interface ListSpiritReviewsData {
+  spiritReviews: ({
+    id: UUIDString;
+    rating: number;
+    title?: string | null;
+    content: string;
+    imageUrls?: string[] | null;
+    createdAt: TimestampString;
+    spirit: {
+      id: string;
+      name: string;
+      imageUrl: string;
+    } & Spirit_Key;
+      user: {
+        id: string;
+        nickname?: string | null;
+        profileImage?: string | null;
+      } & User_Key;
+  } & SpiritReview_Key)[];
+}
+
+export interface ListSpiritReviewsVariables {
+  limit?: number | null;
+  offset?: number | null;
+}
+
+export interface ListSpiritsData {
+  spirits: ({
+    id: string;
+    name: string;
+    nameEn?: string | null;
+    category: string;
+    imageUrl: string;
+    isPublished?: boolean | null;
+    rating?: number | null;
+    reviewCount?: number | null;
+  } & Spirit_Key)[];
+}
+
+export interface ListSpiritsForSitemapData {
+  spirits: ({
+    id: string;
+    name: string;
+    category: string;
+    imageUrl: string;
+    thumbnailUrl?: string | null;
+    descriptionKo?: string | null;
+    descriptionEn?: string | null;
+    pairingGuideKo?: string | null;
+    pairingGuideEn?: string | null;
+    tastingNote?: string | null;
+    noseTags?: string[] | null;
+    palateTags?: string[] | null;
+    finishTags?: string[] | null;
+    updatedAt: TimestampString;
+  } & Spirit_Key)[];
+}
+
+export interface ListSpiritsForWorldCupData {
+  spirits: ({
+    id: string;
+    name: string;
+    nameEn?: string | null;
+    imageUrl: string;
+    thumbnailUrl?: string | null;
+    category: string;
+    categoryEn?: string | null;
+    subcategory?: string | null;
+    distillery?: string | null;
+    abv?: number | null;
+    country?: string | null;
+    region?: string | null;
+    noseTags?: string[] | null;
+    palateTags?: string[] | null;
+    finishTags?: string[] | null;
+    createdAt: TimestampString;
+  } & Spirit_Key)[];
+}
+
+export interface ListSpiritsForWorldCupVariables {
+  category?: string | null;
+  subcategories?: string[] | null;
+}
+
+export interface ListSpiritsVariables {
+  category?: string | null;
+}
+
+export interface ModificationRequest_Key {
+  id: string;
+  __typename?: 'ModificationRequest_Key';
+}
+
+export interface NewsArticle_Key {
+  id: string;
+  __typename?: 'NewsArticle_Key';
+}
+
+export interface SpiritReview_Key {
+  id: UUIDString;
+  __typename?: 'SpiritReview_Key';
+}
+
+export interface Spirit_Key {
+  id: string;
+  __typename?: 'Spirit_Key';
+}
+
+export interface UpsertCabinetData {
+  userCabinet_upsert: UserCabinet_Key;
+}
+
+export interface UpsertCabinetVariables {
+  userId: string;
+  spiritId: string;
+  addedAt?: TimestampString | null;
+  notes?: string | null;
+  rating?: number | null;
+  isFavorite?: boolean | null;
+}
+
+export interface UpsertModificationRequestData {
+  modificationRequest_upsert: ModificationRequest_Key;
+}
+
+export interface UpsertModificationRequestVariables {
+  id: string;
+  spiritId: string;
+  spiritName?: string | null;
+  userId?: string | null;
+  title: string;
+  content: string;
+  status?: string | null;
+  createdAt?: TimestampString | null;
+}
+
+export interface UpsertNewsData {
+  newsArticle_upsert: NewsArticle_Key;
+}
+
+export interface UpsertNewsVariables {
+  id: string;
+  title: string;
+  content: string;
+  imageUrl?: string | null;
+  category?: string | null;
+  source?: string | null;
+  link?: string | null;
+  date?: string | null;
+  translations?: unknown | null;
+  tags?: string[] | null;
+}
+
+export interface UpsertReviewData {
+  spiritReview_upsert: SpiritReview_Key;
+}
+
+export interface UpsertReviewVariables {
+  id: UUIDString;
+  spiritId: string;
+  userId: string;
+  rating: number;
+  title?: string | null;
+  content: string;
+  nose?: string | null;
+  palate?: string | null;
+  finish?: string | null;
+  likes?: number | null;
+  likedBy?: string[] | null;
+  isPublished?: boolean | null;
+  imageUrls?: string[] | null;
+  createdAt?: TimestampString | null;
+  updatedAt?: TimestampString | null;
+}
+
+export interface UpsertSpiritData {
+  spirit_upsert: Spirit_Key;
+}
+
+export interface UpsertSpiritVariables {
+  id: string;
+  name: string;
+  nameEn?: string | null;
+  category: string;
+  categoryEn?: string | null;
+  mainCategory?: string | null;
+  subcategory?: string | null;
+  distillery?: string | null;
+  bottler?: string | null;
+  abv?: number | null;
+  volume?: number | null;
+  country?: string | null;
+  region?: string | null;
+  imageUrl: string;
+  thumbnailUrl?: string | null;
+  descriptionKo?: string | null;
+  descriptionEn?: string | null;
+  pairingGuideKo?: string | null;
+  pairingGuideEn?: string | null;
+  noseTags?: string[] | null;
+  palateTags?: string[] | null;
+  finishTags?: string[] | null;
+  tastingNote?: string | null;
+  status?: string | null;
+  isPublished?: boolean | null;
+  isReviewed?: boolean | null;
+  rating?: number | null;
+  reviewCount?: number | null;
+  metadata?: unknown | null;
 }
 
 export interface UpsertUserData {
@@ -133,7 +434,34 @@ export interface UpsertUserData {
 }
 
 export interface UpsertUserVariables {
-  username: string;
+  id: string;
+  email?: string | null;
+  nickname?: string | null;
+  profileImage?: string | null;
+  role?: string | null;
+  themePreference?: string | null;
+  isFirstLogin?: boolean | null;
+  reviewsWritten?: number | null;
+  heartsReceived?: number | null;
+}
+
+export interface UpsertWorldCupResultData {
+  worldCupResult_upsert: WorldCupResult_Key;
+}
+
+export interface UpsertWorldCupResultVariables {
+  id: UUIDString;
+  winnerId: string;
+  category: string;
+  subcategory?: string | null;
+  initialRound: number;
+  timestamp?: TimestampString | null;
+}
+
+export interface UserCabinet_Key {
+  userId: string;
+  spiritId: string;
+  __typename?: 'UserCabinet_Key';
 }
 
 export interface User_Key {
@@ -141,17 +469,10 @@ export interface User_Key {
   __typename?: 'User_Key';
 }
 
-interface CreateMovieRef {
-  /* Allow users to create refs without passing in DataConnect */
-  (vars: CreateMovieVariables): MutationRef<CreateMovieData, CreateMovieVariables>;
-  /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars: CreateMovieVariables): MutationRef<CreateMovieData, CreateMovieVariables>;
-  operationName: string;
+export interface WorldCupResult_Key {
+  id: UUIDString;
+  __typename?: 'WorldCupResult_Key';
 }
-export const createMovieRef: CreateMovieRef;
-
-export function createMovie(vars: CreateMovieVariables): MutationPromise<CreateMovieData, CreateMovieVariables>;
-export function createMovie(dc: DataConnect, vars: CreateMovieVariables): MutationPromise<CreateMovieData, CreateMovieVariables>;
 
 interface UpsertUserRef {
   /* Allow users to create refs without passing in DataConnect */
@@ -165,87 +486,255 @@ export const upsertUserRef: UpsertUserRef;
 export function upsertUser(vars: UpsertUserVariables): MutationPromise<UpsertUserData, UpsertUserVariables>;
 export function upsertUser(dc: DataConnect, vars: UpsertUserVariables): MutationPromise<UpsertUserData, UpsertUserVariables>;
 
-interface AddReviewRef {
+interface UpsertSpiritRef {
   /* Allow users to create refs without passing in DataConnect */
-  (vars: AddReviewVariables): MutationRef<AddReviewData, AddReviewVariables>;
+  (vars: UpsertSpiritVariables): MutationRef<UpsertSpiritData, UpsertSpiritVariables>;
   /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars: AddReviewVariables): MutationRef<AddReviewData, AddReviewVariables>;
+  (dc: DataConnect, vars: UpsertSpiritVariables): MutationRef<UpsertSpiritData, UpsertSpiritVariables>;
   operationName: string;
 }
-export const addReviewRef: AddReviewRef;
+export const upsertSpiritRef: UpsertSpiritRef;
 
-export function addReview(vars: AddReviewVariables): MutationPromise<AddReviewData, AddReviewVariables>;
-export function addReview(dc: DataConnect, vars: AddReviewVariables): MutationPromise<AddReviewData, AddReviewVariables>;
+export function upsertSpirit(vars: UpsertSpiritVariables): MutationPromise<UpsertSpiritData, UpsertSpiritVariables>;
+export function upsertSpirit(dc: DataConnect, vars: UpsertSpiritVariables): MutationPromise<UpsertSpiritData, UpsertSpiritVariables>;
 
-interface DeleteReviewRef {
+interface UpsertReviewRef {
   /* Allow users to create refs without passing in DataConnect */
-  (vars: DeleteReviewVariables): MutationRef<DeleteReviewData, DeleteReviewVariables>;
+  (vars: UpsertReviewVariables): MutationRef<UpsertReviewData, UpsertReviewVariables>;
   /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars: DeleteReviewVariables): MutationRef<DeleteReviewData, DeleteReviewVariables>;
+  (dc: DataConnect, vars: UpsertReviewVariables): MutationRef<UpsertReviewData, UpsertReviewVariables>;
   operationName: string;
 }
-export const deleteReviewRef: DeleteReviewRef;
+export const upsertReviewRef: UpsertReviewRef;
 
-export function deleteReview(vars: DeleteReviewVariables): MutationPromise<DeleteReviewData, DeleteReviewVariables>;
-export function deleteReview(dc: DataConnect, vars: DeleteReviewVariables): MutationPromise<DeleteReviewData, DeleteReviewVariables>;
+export function upsertReview(vars: UpsertReviewVariables): MutationPromise<UpsertReviewData, UpsertReviewVariables>;
+export function upsertReview(dc: DataConnect, vars: UpsertReviewVariables): MutationPromise<UpsertReviewData, UpsertReviewVariables>;
 
-interface ListMoviesRef {
+interface UpsertNewsRef {
   /* Allow users to create refs without passing in DataConnect */
-  (): QueryRef<ListMoviesData, undefined>;
+  (vars: UpsertNewsVariables): MutationRef<UpsertNewsData, UpsertNewsVariables>;
   /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect): QueryRef<ListMoviesData, undefined>;
+  (dc: DataConnect, vars: UpsertNewsVariables): MutationRef<UpsertNewsData, UpsertNewsVariables>;
   operationName: string;
 }
-export const listMoviesRef: ListMoviesRef;
+export const upsertNewsRef: UpsertNewsRef;
 
-export function listMovies(options?: ExecuteQueryOptions): QueryPromise<ListMoviesData, undefined>;
-export function listMovies(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<ListMoviesData, undefined>;
+export function upsertNews(vars: UpsertNewsVariables): MutationPromise<UpsertNewsData, UpsertNewsVariables>;
+export function upsertNews(dc: DataConnect, vars: UpsertNewsVariables): MutationPromise<UpsertNewsData, UpsertNewsVariables>;
 
-interface ListUsersRef {
+interface UpsertCabinetRef {
   /* Allow users to create refs without passing in DataConnect */
-  (): QueryRef<ListUsersData, undefined>;
+  (vars: UpsertCabinetVariables): MutationRef<UpsertCabinetData, UpsertCabinetVariables>;
   /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect): QueryRef<ListUsersData, undefined>;
+  (dc: DataConnect, vars: UpsertCabinetVariables): MutationRef<UpsertCabinetData, UpsertCabinetVariables>;
   operationName: string;
 }
-export const listUsersRef: ListUsersRef;
+export const upsertCabinetRef: UpsertCabinetRef;
 
-export function listUsers(options?: ExecuteQueryOptions): QueryPromise<ListUsersData, undefined>;
-export function listUsers(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<ListUsersData, undefined>;
+export function upsertCabinet(vars: UpsertCabinetVariables): MutationPromise<UpsertCabinetData, UpsertCabinetVariables>;
+export function upsertCabinet(dc: DataConnect, vars: UpsertCabinetVariables): MutationPromise<UpsertCabinetData, UpsertCabinetVariables>;
 
-interface ListUserReviewsRef {
+interface UpsertModificationRequestRef {
   /* Allow users to create refs without passing in DataConnect */
-  (): QueryRef<ListUserReviewsData, undefined>;
+  (vars: UpsertModificationRequestVariables): MutationRef<UpsertModificationRequestData, UpsertModificationRequestVariables>;
   /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect): QueryRef<ListUserReviewsData, undefined>;
+  (dc: DataConnect, vars: UpsertModificationRequestVariables): MutationRef<UpsertModificationRequestData, UpsertModificationRequestVariables>;
   operationName: string;
 }
-export const listUserReviewsRef: ListUserReviewsRef;
+export const upsertModificationRequestRef: UpsertModificationRequestRef;
 
-export function listUserReviews(options?: ExecuteQueryOptions): QueryPromise<ListUserReviewsData, undefined>;
-export function listUserReviews(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<ListUserReviewsData, undefined>;
+export function upsertModificationRequest(vars: UpsertModificationRequestVariables): MutationPromise<UpsertModificationRequestData, UpsertModificationRequestVariables>;
+export function upsertModificationRequest(dc: DataConnect, vars: UpsertModificationRequestVariables): MutationPromise<UpsertModificationRequestData, UpsertModificationRequestVariables>;
 
-interface GetMovieByIdRef {
+interface UpsertWorldCupResultRef {
   /* Allow users to create refs without passing in DataConnect */
-  (vars: GetMovieByIdVariables): QueryRef<GetMovieByIdData, GetMovieByIdVariables>;
+  (vars: UpsertWorldCupResultVariables): MutationRef<UpsertWorldCupResultData, UpsertWorldCupResultVariables>;
   /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars: GetMovieByIdVariables): QueryRef<GetMovieByIdData, GetMovieByIdVariables>;
+  (dc: DataConnect, vars: UpsertWorldCupResultVariables): MutationRef<UpsertWorldCupResultData, UpsertWorldCupResultVariables>;
   operationName: string;
 }
-export const getMovieByIdRef: GetMovieByIdRef;
+export const upsertWorldCupResultRef: UpsertWorldCupResultRef;
 
-export function getMovieById(vars: GetMovieByIdVariables, options?: ExecuteQueryOptions): QueryPromise<GetMovieByIdData, GetMovieByIdVariables>;
-export function getMovieById(dc: DataConnect, vars: GetMovieByIdVariables, options?: ExecuteQueryOptions): QueryPromise<GetMovieByIdData, GetMovieByIdVariables>;
+export function upsertWorldCupResult(vars: UpsertWorldCupResultVariables): MutationPromise<UpsertWorldCupResultData, UpsertWorldCupResultVariables>;
+export function upsertWorldCupResult(dc: DataConnect, vars: UpsertWorldCupResultVariables): MutationPromise<UpsertWorldCupResultData, UpsertWorldCupResultVariables>;
 
-interface SearchMovieRef {
+interface ListSpiritsRef {
   /* Allow users to create refs without passing in DataConnect */
-  (vars?: SearchMovieVariables): QueryRef<SearchMovieData, SearchMovieVariables>;
+  (vars?: ListSpiritsVariables): QueryRef<ListSpiritsData, ListSpiritsVariables>;
   /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars?: SearchMovieVariables): QueryRef<SearchMovieData, SearchMovieVariables>;
+  (dc: DataConnect, vars?: ListSpiritsVariables): QueryRef<ListSpiritsData, ListSpiritsVariables>;
   operationName: string;
 }
-export const searchMovieRef: SearchMovieRef;
+export const listSpiritsRef: ListSpiritsRef;
 
-export function searchMovie(vars?: SearchMovieVariables, options?: ExecuteQueryOptions): QueryPromise<SearchMovieData, SearchMovieVariables>;
-export function searchMovie(dc: DataConnect, vars?: SearchMovieVariables, options?: ExecuteQueryOptions): QueryPromise<SearchMovieData, SearchMovieVariables>;
+export function listSpirits(vars?: ListSpiritsVariables, options?: ExecuteQueryOptions): QueryPromise<ListSpiritsData, ListSpiritsVariables>;
+export function listSpirits(dc: DataConnect, vars?: ListSpiritsVariables, options?: ExecuteQueryOptions): QueryPromise<ListSpiritsData, ListSpiritsVariables>;
+
+interface ListNewArrivalsRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars?: ListNewArrivalsVariables): QueryRef<ListNewArrivalsData, ListNewArrivalsVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars?: ListNewArrivalsVariables): QueryRef<ListNewArrivalsData, ListNewArrivalsVariables>;
+  operationName: string;
+}
+export const listNewArrivalsRef: ListNewArrivalsRef;
+
+export function listNewArrivals(vars?: ListNewArrivalsVariables, options?: ExecuteQueryOptions): QueryPromise<ListNewArrivalsData, ListNewArrivalsVariables>;
+export function listNewArrivals(dc: DataConnect, vars?: ListNewArrivalsVariables, options?: ExecuteQueryOptions): QueryPromise<ListNewArrivalsData, ListNewArrivalsVariables>;
+
+interface GetSpiritRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: GetSpiritVariables): QueryRef<GetSpiritData, GetSpiritVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: GetSpiritVariables): QueryRef<GetSpiritData, GetSpiritVariables>;
+  operationName: string;
+}
+export const getSpiritRef: GetSpiritRef;
+
+export function getSpirit(vars: GetSpiritVariables, options?: ExecuteQueryOptions): QueryPromise<GetSpiritData, GetSpiritVariables>;
+export function getSpirit(dc: DataConnect, vars: GetSpiritVariables, options?: ExecuteQueryOptions): QueryPromise<GetSpiritData, GetSpiritVariables>;
+
+interface GetUserProfileRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: GetUserProfileVariables): QueryRef<GetUserProfileData, GetUserProfileVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: GetUserProfileVariables): QueryRef<GetUserProfileData, GetUserProfileVariables>;
+  operationName: string;
+}
+export const getUserProfileRef: GetUserProfileRef;
+
+export function getUserProfile(vars: GetUserProfileVariables, options?: ExecuteQueryOptions): QueryPromise<GetUserProfileData, GetUserProfileVariables>;
+export function getUserProfile(dc: DataConnect, vars: GetUserProfileVariables, options?: ExecuteQueryOptions): QueryPromise<GetUserProfileData, GetUserProfileVariables>;
+
+interface ListNewsArticlesRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars?: ListNewsArticlesVariables): QueryRef<ListNewsArticlesData, ListNewsArticlesVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars?: ListNewsArticlesVariables): QueryRef<ListNewsArticlesData, ListNewsArticlesVariables>;
+  operationName: string;
+}
+export const listNewsArticlesRef: ListNewsArticlesRef;
+
+export function listNewsArticles(vars?: ListNewsArticlesVariables, options?: ExecuteQueryOptions): QueryPromise<ListNewsArticlesData, ListNewsArticlesVariables>;
+export function listNewsArticles(dc: DataConnect, vars?: ListNewsArticlesVariables, options?: ExecuteQueryOptions): QueryPromise<ListNewsArticlesData, ListNewsArticlesVariables>;
+
+interface GetNewsArticleRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: GetNewsArticleVariables): QueryRef<GetNewsArticleData, GetNewsArticleVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: GetNewsArticleVariables): QueryRef<GetNewsArticleData, GetNewsArticleVariables>;
+  operationName: string;
+}
+export const getNewsArticleRef: GetNewsArticleRef;
+
+export function getNewsArticle(vars: GetNewsArticleVariables, options?: ExecuteQueryOptions): QueryPromise<GetNewsArticleData, GetNewsArticleVariables>;
+export function getNewsArticle(dc: DataConnect, vars: GetNewsArticleVariables, options?: ExecuteQueryOptions): QueryPromise<GetNewsArticleData, GetNewsArticleVariables>;
+
+interface AuditAllUsersRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (): QueryRef<AuditAllUsersData, undefined>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect): QueryRef<AuditAllUsersData, undefined>;
+  operationName: string;
+}
+export const auditAllUsersRef: AuditAllUsersRef;
+
+export function auditAllUsers(options?: ExecuteQueryOptions): QueryPromise<AuditAllUsersData, undefined>;
+export function auditAllUsers(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<AuditAllUsersData, undefined>;
+
+interface AuditAllNewsRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (): QueryRef<AuditAllNewsData, undefined>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect): QueryRef<AuditAllNewsData, undefined>;
+  operationName: string;
+}
+export const auditAllNewsRef: AuditAllNewsRef;
+
+export function auditAllNews(options?: ExecuteQueryOptions): QueryPromise<AuditAllNewsData, undefined>;
+export function auditAllNews(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<AuditAllNewsData, undefined>;
+
+interface AuditAllSpiritsRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (): QueryRef<AuditAllSpiritsData, undefined>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect): QueryRef<AuditAllSpiritsData, undefined>;
+  operationName: string;
+}
+export const auditAllSpiritsRef: AuditAllSpiritsRef;
+
+export function auditAllSpirits(options?: ExecuteQueryOptions): QueryPromise<AuditAllSpiritsData, undefined>;
+export function auditAllSpirits(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<AuditAllSpiritsData, undefined>;
+
+interface ListSpiritReviewsRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars?: ListSpiritReviewsVariables): QueryRef<ListSpiritReviewsData, ListSpiritReviewsVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars?: ListSpiritReviewsVariables): QueryRef<ListSpiritReviewsData, ListSpiritReviewsVariables>;
+  operationName: string;
+}
+export const listSpiritReviewsRef: ListSpiritReviewsRef;
+
+export function listSpiritReviews(vars?: ListSpiritReviewsVariables, options?: ExecuteQueryOptions): QueryPromise<ListSpiritReviewsData, ListSpiritReviewsVariables>;
+export function listSpiritReviews(dc: DataConnect, vars?: ListSpiritReviewsVariables, options?: ExecuteQueryOptions): QueryPromise<ListSpiritReviewsData, ListSpiritReviewsVariables>;
+
+interface GetSpiritReviewsCountRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (): QueryRef<GetSpiritReviewsCountData, undefined>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect): QueryRef<GetSpiritReviewsCountData, undefined>;
+  operationName: string;
+}
+export const getSpiritReviewsCountRef: GetSpiritReviewsCountRef;
+
+export function getSpiritReviewsCount(options?: ExecuteQueryOptions): QueryPromise<GetSpiritReviewsCountData, undefined>;
+export function getSpiritReviewsCount(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<GetSpiritReviewsCountData, undefined>;
+
+interface ListSpiritsForSitemapRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (): QueryRef<ListSpiritsForSitemapData, undefined>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect): QueryRef<ListSpiritsForSitemapData, undefined>;
+  operationName: string;
+}
+export const listSpiritsForSitemapRef: ListSpiritsForSitemapRef;
+
+export function listSpiritsForSitemap(options?: ExecuteQueryOptions): QueryPromise<ListSpiritsForSitemapData, undefined>;
+export function listSpiritsForSitemap(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<ListSpiritsForSitemapData, undefined>;
+
+interface AuditAllReviewsRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (): QueryRef<AuditAllReviewsData, undefined>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect): QueryRef<AuditAllReviewsData, undefined>;
+  operationName: string;
+}
+export const auditAllReviewsRef: AuditAllReviewsRef;
+
+export function auditAllReviews(options?: ExecuteQueryOptions): QueryPromise<AuditAllReviewsData, undefined>;
+export function auditAllReviews(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<AuditAllReviewsData, undefined>;
+
+interface GetWorldCupResultRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: GetWorldCupResultVariables): QueryRef<GetWorldCupResultData, GetWorldCupResultVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: GetWorldCupResultVariables): QueryRef<GetWorldCupResultData, GetWorldCupResultVariables>;
+  operationName: string;
+}
+export const getWorldCupResultRef: GetWorldCupResultRef;
+
+export function getWorldCupResult(vars: GetWorldCupResultVariables, options?: ExecuteQueryOptions): QueryPromise<GetWorldCupResultData, GetWorldCupResultVariables>;
+export function getWorldCupResult(dc: DataConnect, vars: GetWorldCupResultVariables, options?: ExecuteQueryOptions): QueryPromise<GetWorldCupResultData, GetWorldCupResultVariables>;
+
+interface ListSpiritsForWorldCupRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars?: ListSpiritsForWorldCupVariables): QueryRef<ListSpiritsForWorldCupData, ListSpiritsForWorldCupVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars?: ListSpiritsForWorldCupVariables): QueryRef<ListSpiritsForWorldCupData, ListSpiritsForWorldCupVariables>;
+  operationName: string;
+}
+export const listSpiritsForWorldCupRef: ListSpiritsForWorldCupRef;
+
+export function listSpiritsForWorldCup(vars?: ListSpiritsForWorldCupVariables, options?: ExecuteQueryOptions): QueryPromise<ListSpiritsForWorldCupData, ListSpiritsForWorldCupVariables>;
+export function listSpiritsForWorldCup(dc: DataConnect, vars?: ListSpiritsForWorldCupVariables, options?: ExecuteQueryOptions): QueryPromise<ListSpiritsForWorldCupData, ListSpiritsForWorldCupVariables>;
 

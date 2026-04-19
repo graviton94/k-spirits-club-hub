@@ -1,10 +1,8 @@
 'use client';
 
 import React, { useEffect, useState, useMemo } from 'react';
-import { db } from '@/lib/db/firebase';
-import { collection, query, orderBy, limit, getDocs, startAfter, getCountFromServer, DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
+import { dbListSpiritReviews, dbGetSpiritReviewsCount } from '@/lib/db/data-connect-client';
 import { useAuth } from '@/app/[lang]/context/auth-context';
-import { getAppPath } from '@/lib/db/paths';
 import { getCategoryFallbackImage } from '@/lib/utils/image-fallback';
 import { getOptimizedImageUrl } from '@/lib/utils/image-optimization';
 import Link from 'next/link';
@@ -15,7 +13,6 @@ import SuccessToast from '@/components/ui/SuccessToast';
 import { useParams, useRouter } from 'next/navigation';
 import GoogleAd from '@/components/ui/GoogleAd';
 
-
 export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { initialReviews?: any[]; initialPage?: number }) {
     const { user, role } = useAuth();
     const params = useParams();
@@ -24,16 +21,9 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
 
     const hasInitial = Array.isArray(initialReviews) && initialReviews.length > 0;
     const [reviews, setReviews] = useState<any[]>(initialReviews ?? []);
-    // SSR-safe: start with loading=false so the server HTML never includes the loading-shell
-    // text ("Fetching tastes..."). When no initial data was provided, the useEffect below
-    // calls fetchPage(initialPage) which will set loading=true during the client-side fetch.
-    // Trade-off: on a DB-failure fallback the SSR renders an empty list instead of a spinner,
-    // which is correct — a crawlable page should show content or an empty state, not a
-    // loading placeholder.
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(initialPage);
     const [totalCount, setTotalCount] = useState(0);
-    const [pageMarkers, setPageMarkers] = useState<Record<number, QueryDocumentSnapshot<DocumentData> | null>>({});
     const [searchInput, setSearchInput] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
 
@@ -45,11 +35,9 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
     const [toastVariant, setToastVariant] = useState<'success' | 'error'>('success');
 
     const pageSize = 12;
-    // Hardcoded fallback for reliability
     const ADMIN_EMAILS = ['ruahn49@gmail.com'];
     const isAdmin = role === 'ADMIN' || (user?.email && ADMIN_EMAILS.includes(user.email));
 
-    // UI Dictionary
     const t = {
         title: isEn ? "Review Board" : "리뷰 보드",
         desc: isEn ? "Live comments and professional analysis reports from spirits enthusiasts." : "유저들의 생생한 리뷰와 분석",
@@ -68,64 +56,36 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
         anonymous: isEn ? "Anonymous" : "익명",
     };
 
-    // 1. 전체 리뷰 개수 가져오기
     const fetchTotalCount = async () => {
         try {
-            const reviewsPath = getAppPath().reviews;
-            const snapshot = await getCountFromServer(collection(db, reviewsPath));
-            setTotalCount(snapshot.data().count);
+            const count = await dbGetSpiritReviewsCount();
+            setTotalCount(count);
         } catch (error) {
             console.error('Error fetching reviews count:', error);
         }
     };
 
-    // 2. 특정 페이지 데이터 가져오기
     const fetchPage = async (page: number) => {
         try {
             setLoading(true);
-
-            // React State 기반 페이징 전환 시 강제 최상단 스크롤
             window.scrollTo({ top: 0, behavior: 'auto' });
 
-            const reviewsPath = getAppPath().reviews;
-            let q;
+            const data = await dbListSpiritReviews(pageSize, (page - 1) * pageSize);
+            const mappedData = data.map((r: any) => ({
+                ...r,
+                spiritName: r.spirit?.name,
+                spiritId: r.spirit?.id,
+                userName: r.user?.nickname || t.anonymous,
+                userId: r.user?.id,
+                profileImage: r.user?.profileImage,
+                tags: [
+                    ...(r.nose ? r.nose.split(',') : []),
+                    ...(r.palate ? r.palate.split(',') : []),
+                    ...(r.finish ? r.finish.split(',') : [])
+                ].map((t: string) => t.trim()).filter(Boolean)
+            }));
 
-            if (page === 1) {
-                q = query(collection(db, reviewsPath), orderBy('createdAt', 'desc'), limit(pageSize));
-            } else {
-                const prevDoc = pageMarkers[page - 1];
-                if (prevDoc) {
-                    q = query(collection(db, reviewsPath), orderBy('createdAt', 'desc'), startAfter(prevDoc), limit(pageSize));
-                } else {
-                    q = query(collection(db, reviewsPath), orderBy('createdAt', 'desc'), limit(page * pageSize));
-                }
-            }
-
-            const snapshot = await getDocs(q);
-            const docs = snapshot.docs;
-
-            const targetDocs = (page > 1 && !pageMarkers[page - 1]) ? docs.slice(-pageSize) : docs;
-            const data = targetDocs.map(doc => {
-                const docData = doc.data() as any;
-                // Tags processing (comma separated to array)
-                const tags = [
-                    ...(docData.tagsN ? docData.tagsN.split(',') : []),
-                    ...(docData.tagsP ? docData.tagsP.split(',') : []),
-                    ...(docData.tagsF ? docData.tagsF.split(',') : []),
-                    ...(docData.nose ? docData.nose.split(',') : []),
-                    ...(docData.palate ? docData.palate.split(',') : []),
-                    ...(docData.finish ? docData.finish.split(',') : [])
-                ].map(t => t.trim()).filter(Boolean);
-
-                return {
-                    id: doc.id,
-                    ...docData,
-                    tags: [...new Set(tags)]
-                };
-            });
-
-            setReviews(data);
-            setPageMarkers(prev => ({ ...prev, [page]: docs[docs.length - 1] }));
+            setReviews(mappedData);
             setCurrentPage(page);
         } catch (error) {
             console.error('Error fetching reviews page:', error);
@@ -136,20 +96,18 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
 
     useEffect(() => {
         fetchTotalCount();
-        // Skip re-fetch if the server already provided initial data for this page
         if (!hasInitial) {
             fetchPage(initialPage);
         }
-    }, []);
+    }, [initialPage, hasInitial]);
 
-    // 3. 클라이언트 사이드 검색 필터링
     const filteredReviews = useMemo(() => {
         if (!searchQuery.trim()) return reviews;
         const lowQuery = searchQuery.toLowerCase();
         return reviews.filter(item => {
             const spiritName = (item.spiritName || '').toLowerCase();
             const userName = (item.userName || '').toLowerCase();
-            const notes = (item.notes || item.content || '').toLowerCase();
+            const notes = (item.content || '').toLowerCase();
             return spiritName.includes(lowQuery) || userName.includes(lowQuery) || notes.includes(lowQuery);
         });
     }, [reviews, searchQuery]);
@@ -163,16 +121,12 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
 
     const handleDeleteReview = async () => {
         if (!deleteTarget || !user) return;
-
         setIsDeleting(true);
         try {
             const response = await fetch(`/api/reviews?spiritId=${deleteTarget.spiritId}&userId=${deleteTarget.userId}`, {
                 method: 'DELETE',
-                headers: {
-                    'x-user-id': user.uid
-                }
+                headers: { 'x-user-id': user.uid }
             });
-
             if (response.ok) {
                 setToastMessage(t.deleteSuccess);
                 setToastVariant('success');
@@ -198,7 +152,6 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
     return (
         <div className="min-h-screen bg-background text-foreground pt-16 pb-12 px-4 transition-colors duration-300">
             <div className="max-w-4xl mx-auto">
-                {/* Back Button */}
                 <button
                     onClick={() => router.back()}
                     className="mb-6 flex items-center gap-2 text-muted-foreground hover:text-foreground transition-all group"
@@ -206,7 +159,6 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                     <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
                     <span className="text-sm font-bold">{isEn ? 'Back' : '뒤로가기'}</span>
                 </button>
-                {/* Header */}
                 <div className="mb-8">
                     <div className="flex items-center gap-3 mb-2">
                         <MessageSquare className="w-8 h-8 text-blue-500" />
@@ -218,7 +170,6 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                     </p>
                 </div>
 
-                {/* Search Bar - Changed from live to button-triggered */}
                 <form onSubmit={handleSearch} className="relative mb-12 flex gap-3">
                     <div className="relative flex-1 group">
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-blue-500 transition-colors" />
@@ -261,25 +212,16 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                                     transition={{ delay: idx * 0.05 }}
                                     className="group relative bg-card border border-border rounded-2xl p-5 hover:border-blue-500/30 hover:shadow-xl transition-all"
                                 >
-                                    {/* Header: Spirit Name + Author + Rating */}
                                     <div className="flex flex-wrap items-center gap-2 mb-5">
-                                        {/* Spirit Name Link */}
-                                        <Link
-                                            href={`/${lang}/spirits/${review.spiritId}`}
-                                            className="text-lg sm:text-xl font-black hover:text-blue-500 transition-colors"
-                                        >
+                                        <Link href={`/${lang}/spirits/${review.spiritId}`} className="text-lg sm:text-xl font-black hover:text-blue-500 transition-colors">
                                             {review.spiritName}
                                         </Link>
-
-                                        {/* Author Capsule - Compact */}
                                         <div className="flex items-center gap-1.5 px-2.5 py-1 bg-secondary/50 border border-border rounded-full shadow-inner">
                                             <div className="w-4 h-4 rounded-full bg-blue-500 flex items-center justify-center text-[8px] text-white font-black">
                                                 {(review.userName || t.anonymous).substring(0, 1).toUpperCase()}
                                             </div>
                                             <span className="text-[10px] font-black text-foreground">{review.userName || t.anonymous}</span>
                                         </div>
-
-                                        {/* Rating Capsule - Color Coded */}
                                         {(() => {
                                             const ratingColors = getRatingColor(review.rating || 0);
                                             return (
@@ -291,18 +233,14 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                                     </div>
 
                                     <div className="flex justify-between items-start gap-4">
-
                                         <div className="flex-1">
-                                            {/* Tasting Note (Comment) */}
                                             <div className="relative">
                                                 <Quote className="absolute -top-2 -left-2 w-6 h-6 text-blue-500/10" />
                                                 <p className="text-sm sm:text-base text-foreground leading-relaxed font-medium italic relative z-10 pl-2">
-                                                    "{review.notes || review.content}"
+                                                    "{review.content}"
                                                 </p>
                                             </div>
                                         </div>
-
-                                        {/* Delete for Admin or Owner */}
                                         {(isAdmin || (user && user.uid === review.userId)) && (
                                             <button
                                                 onClick={() => setDeleteTarget(review)}
@@ -314,7 +252,6 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                                         )}
                                     </div>
 
-                                    {/* Attached Images */}
                                     {review.imageUrls && review.imageUrls.length > 0 && (
                                         <div className="flex gap-2 mt-4 overflow-x-auto pb-2 custom-scrollbar">
                                             {review.imageUrls.map((url: string, i: number) => (
@@ -323,42 +260,23 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                                         </div>
                                     )}
 
-                                    {/* Flavor Tags and Date */}
                                     {review.tags && review.tags.length > 0 && (
                                         <div className="flex flex-wrap gap-1.5 pt-4 mt-4 border-t border-border/50 relative">
                                             {review.tags.slice(0, 8).map((tag: string, i: number) => {
-                                                const colors = [
-                                                    'bg-blue-500/10 text-blue-600 border-blue-500/20',
-                                                    'bg-orange-500/10 text-orange-600 border-orange-500/20',
-                                                    'bg-purple-500/10 text-purple-600 border-purple-500/20',
-                                                    'bg-emerald-500/10 text-emerald-600 border-emerald-500/20',
-                                                    'bg-rose-500/10 text-rose-600 border-rose-500/20',
-                                                    'bg-indigo-500/10 text-indigo-600 border-indigo-500/20'
-                                                ];
-                                                return (
-                                                    <span key={i} className={`text-[9px] px-2.5 py-1 rounded-full border font-black uppercase tracking-tight ${colors[i % colors.length]}`}>
-                                                        #{tag}
-                                                    </span>
-                                                );
+                                                const colors = ['bg-blue-500/10 text-blue-600 border-blue-500/20', 'bg-orange-500/10 text-orange-600 border-orange-500/20', 'bg-purple-500/10 text-purple-600 border-purple-500/20', 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20', 'bg-rose-500/10 text-rose-600 border-rose-500/20', 'bg-indigo-500/10 text-indigo-600 border-indigo-500/20'];
+                                                return <span key={i} className={`text-[9px] px-2.5 py-1 rounded-full border font-black uppercase tracking-tight ${colors[i % colors.length]}`}>#{tag}</span>;
                                             })}
-                                            {/* Date in bottom-right */}
-                                            <span className="ml-auto text-[9px] text-muted-foreground/60 font-medium">
-                                                {new Date(review.createdAt).toLocaleDateString()}
-                                            </span>
+                                            <span className="ml-auto text-[9px] text-muted-foreground/60 font-medium">{new Date(review.createdAt).toLocaleDateString()}</span>
                                         </div>
                                     )}
 
-                                    {/* Date fallback if no tags */}
                                     {(!review.tags || review.tags.length === 0) && (
                                         <div className="flex justify-end pt-4 mt-4 border-t border-border/50">
-                                            <span className="text-[9px] text-muted-foreground/60 font-medium">
-                                                {new Date(review.createdAt).toLocaleDateString()}
-                                            </span>
+                                            <span className="text-[9px] text-muted-foreground/60 font-medium">{new Date(review.createdAt).toLocaleDateString()}</span>
                                         </div>
                                     )}
                                 </motion.div>
 
-                                {/* 4번째마다 뉴스 아이템 이후 인피드 광고 반복 삽입 (페이지네이션 대응) */}
                                 {(idx + 1) % 4 === 0 && (
                                     <div className="w-full my-8">
                                         <GoogleAd
@@ -374,7 +292,6 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                             </React.Fragment>
                         ))}
 
-                        {/* Pagination — links are crawlable <a href> for SEO; JS intercepts for SPA navigation */}
                         {!searchQuery && totalPages > 1 && (
                             <div className="flex justify-center items-center gap-3 mt-16 pb-12">
                                 <Link
@@ -394,10 +311,7 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                                                 key={num}
                                                 href={num === 1 ? '?' : `?page=${num}`}
                                                 onClick={(e) => { e.preventDefault(); fetchPage(num); }}
-                                                className={`w-12 h-12 rounded-2xl text-sm font-black transition-all shadow-sm flex items-center justify-center ${currentPage === num
-                                                    ? 'bg-blue-600 text-white shadow-blue-500/30 scale-110'
-                                                    : 'bg-card border border-border text-muted-foreground hover:bg-muted font-bold'
-                                                    }`}
+                                                className={`w-12 h-12 rounded-2xl text-sm font-black transition-all shadow-sm flex items-center justify-center ${currentPage === num ? 'bg-blue-600 text-white shadow-blue-500/30 scale-110' : 'bg-card border border-border text-muted-foreground hover:bg-muted font-bold'}`}
                                             >
                                                 {num}
                                             </Link>
@@ -418,56 +332,33 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                 )}
             </div>
 
-            {/* Delete Confirmation Modal */}
             <AnimatePresence>
                 {deleteTarget && (
                     <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
+                        initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                         className="fixed inset-0 bg-black/60 backdrop-blur-md z-50 flex items-center justify-center p-4"
                         onClick={() => !isDeleting && setDeleteTarget(null)}
                     >
                         <motion.div
-                            initial={{ scale: 0.9, opacity: 0, y: 20 }}
-                            animate={{ scale: 1, opacity: 1, y: 0 }}
-                            exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                            initial={{ scale: 0.9, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.9, opacity: 0, y: 20 }}
                             className="bg-white dark:bg-zinc-900 w-full max-w-sm rounded-[2.5rem] shadow-2xl overflow-hidden border border-border relative"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            {/* Decorative Header Background */}
                             <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-br from-rose-500/10 to-orange-500/10 z-0" />
-
                             <div className="relative z-10 p-8 flex flex-col items-center text-center">
-                                {/* Icon Bubble */}
                                 <div className="w-20 h-20 bg-rose-50 dark:bg-rose-900/20 rounded-full flex items-center justify-center mb-6 shadow-inner ring-1 ring-rose-500/20">
                                     <Trash2 className="w-10 h-10 text-rose-500" />
                                 </div>
-
-                                <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2">
-                                    {t.deleteTitle}
-                                </h2>
-
+                                <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2">{t.deleteTitle}</h2>
                                 <p className="text-slate-500 dark:text-slate-400 mb-8 text-sm leading-relaxed font-medium">
-                                    <span className="font-black text-slate-900 dark:text-white block text-base mb-1">
-                                        "{deleteTarget.spiritName}"
-                                    </span>
+                                    <span className="font-black text-slate-900 dark:text-white block text-base mb-1">"{deleteTarget.spiritName}"</span>
                                     {t.deleteConfirm}
                                 </p>
-
                                 <div className="flex gap-3 w-full">
-                                    <button
-                                        onClick={() => setDeleteTarget(null)}
-                                        disabled={isDeleting}
-                                        className="flex-1 py-4 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-black rounded-2xl transition-all active:scale-[0.98]"
-                                    >
+                                    <button onClick={() => setDeleteTarget(null)} disabled={isDeleting} className="flex-1 py-4 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-black rounded-2xl">
                                         {t.cancel}
                                     </button>
-                                    <button
-                                        onClick={handleDeleteReview}
-                                        disabled={isDeleting}
-                                        className="flex-1 py-4 bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 text-white shadow-lg shadow-rose-500/30 font-black rounded-2xl transition-all active:scale-[0.98]"
-                                    >
+                                    <button onClick={handleDeleteReview} disabled={isDeleting} className="flex-1 py-4 bg-gradient-to-r from-rose-500 to-red-600 text-white font-black rounded-2xl">
                                         {isDeleting ? <Loader2 className="w-5 h-5 animate-spin mx-auto" /> : t.delete}
                                     </button>
                                 </div>
@@ -477,13 +368,7 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                 )}
             </AnimatePresence>
 
-            {/* Notification Toast */}
-            <SuccessToast
-                isVisible={showToast}
-                message={toastMessage}
-                variant={toastVariant}
-                onClose={() => setShowToast(false)}
-            />
+            <SuccessToast isVisible={showToast} message={toastMessage} variant={toastVariant} onClose={() => setShowToast(false)} />
         </div>
     );
 }

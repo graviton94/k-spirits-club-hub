@@ -5,13 +5,11 @@ import {
     User,
     GoogleAuthProvider,
     signInWithPopup,
-    signInWithEmailAndPassword,
-    createUserWithEmailAndPassword,
     signOut,
     onAuthStateChanged
 } from 'firebase/auth';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { auth, db } from '@/lib/firebase';
+import { auth } from '@/lib/firebase';
+import { dbGetUserProfile, dbUpsertUser } from '@/lib/db/data-connect-client';
 import { useRouter } from 'next/navigation';
 
 type UserRole = 'ADMIN' | 'USER' | null;
@@ -58,8 +56,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const router = useRouter();
 
     useEffect(() => {
-        // Load theme from localStorage after component mounts (client-side only)
-        // This prevents hydration mismatches in Next.js SSR
         const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
         if (savedTheme) {
             setThemeState(savedTheme);
@@ -67,7 +63,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 document.documentElement.classList.toggle('dark', savedTheme === 'dark');
             }
         } else {
-            // Default to light theme
             setThemeState('light');
             if (typeof document !== 'undefined') {
                 document.documentElement.classList.remove('dark');
@@ -80,57 +75,52 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             setLoading(true);
             if (currentUser) {
                 setUser(currentUser);
-                // Fetch Role & Profile from Firestore
-                const userDocRef = doc(db, 'users', currentUser.uid);
-                const userDoc = await getDoc(userDocRef);
+                try {
+                    const userData = await dbGetUserProfile(currentUser.uid) as any;
 
-                if (userDoc.exists()) {
-                    const data = userDoc.data();
+                    if (userData) {
+                        const ADMIN_EMAILS = ['ruahn49@gmail.com'];
+                        let userRole = userData.role as UserRole;
+                        if (currentUser.email && ADMIN_EMAILS.includes(currentUser.email)) {
+                            userRole = 'ADMIN';
+                        }
+                        setRole(userRole);
 
-                    // [Start] Hardcoded Admin Check
-                    const ADMIN_EMAILS = ['ruahn49@gmail.com'];
-                    let userRole = data.role as UserRole;
-                    if (currentUser.email && ADMIN_EMAILS.includes(currentUser.email)) {
-                        userRole = 'ADMIN';
+                        const userTheme = (userData.themePreference as 'light' | 'dark') || 'light';
+                        setProfile({
+                            nickname: userData.nickname || currentUser.displayName || 'Anonymous',
+                            profileImage: userData.profileImage || '/icons/user/user-3.webp',
+                            isFirstLogin: userData.isFirstLogin ?? false,
+                            themePreference: userTheme,
+                            reviewsWritten: userData.reviewsWritten || 0,
+                            heartsReceived: userData.heartsReceived || 0
+                        });
+                        
+                        setThemeState(userTheme);
+                        if (typeof document !== 'undefined') {
+                            document.documentElement.classList.toggle('dark', userTheme === 'dark');
+                        }
+                        localStorage.setItem('theme', userTheme);
+                    } else {
+                        const initialProfile = {
+                            id: currentUser.uid,
+                            email: currentUser.email,
+                            role: 'USER',
+                            nickname: currentUser.displayName || 'New User',
+                            profileImage: '/icons/user/user-3.webp',
+                            isFirstLogin: true,
+                        };
+                        await dbUpsertUser(initialProfile);
+                        setRole('USER');
+                        setProfile({
+                            nickname: initialProfile.nickname,
+                            profileImage: initialProfile.profileImage,
+                            isFirstLogin: true,
+                            themePreference: 'light'
+                        });
                     }
-                    setRole(userRole);
-                    // [End] Hardcoded Admin Check
-
-                    const userTheme = data.themePreference || 'light';
-                    setProfile({
-                        nickname: data.nickname || currentUser.displayName || 'Anonymous',
-                        profileImage: data.profileImage || '/icons/user/user-3.webp',
-                        isFirstLogin: data.isFirstLogin ?? false,
-                        themePreference: userTheme,
-                        reviewsWritten: data.reviewsWritten || 0,
-                        heartsReceived: data.heartsReceived || 0
-                    });
-                    // Apply theme from user profile (client-side only to prevent hydration issues)
-                    setThemeState(userTheme);
-                    if (typeof document !== 'undefined') {
-                        document.documentElement.classList.toggle('dark', userTheme === 'dark');
-                    }
-                    localStorage.setItem('theme', userTheme);
-                } else {
-                    // Create new user doc with default role & profile
-                    // nickname and isFirstLogin will be handled by Onboarding
-                    const initialProfile = {
-                        email: currentUser.email,
-                        role: 'USER',
-                        nickname: currentUser.displayName || 'New User',
-                        profileImage: '/icons/user/user-3.webp', // Default avatar
-                        isFirstLogin: true, // Trigger Onboarding
-                        themePreference: 'light',
-                        createdAt: new Date().toISOString()
-                    };
-                    await setDoc(userDocRef, initialProfile);
-                    setRole('USER');
-                    setProfile({
-                        nickname: initialProfile.nickname,
-                        profileImage: initialProfile.profileImage,
-                        isFirstLogin: true,
-                        themePreference: 'light'
-                    });
+                } catch (err) {
+                    console.error('Data Connect Auth Error:', err);
                 }
             } else {
                 setUser(null);
@@ -144,20 +134,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const updateProfile = async (data: Partial<UserProfile>) => {
         if (!user) return;
-        const userDocRef = doc(db, 'users', user.uid);
-        await setDoc(userDocRef, data, { merge: true });
+        await dbUpsertUser({
+            id: user.uid,
+            ...data
+        });
         setProfile(prev => prev ? { ...prev, ...data } : null);
     };
 
     const setTheme = (newTheme: 'light' | 'dark') => {
         setThemeState(newTheme);
-        // Apply theme class only on client-side to prevent SSR hydration mismatches
         if (typeof document !== 'undefined') {
             document.documentElement.classList.toggle('dark', newTheme === 'dark');
         }
         localStorage.setItem('theme', newTheme);
 
-        // Save to user profile if logged in
         if (user) {
             updateProfile({ themePreference: newTheme });
         }

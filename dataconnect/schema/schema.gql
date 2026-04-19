@@ -1,52 +1,111 @@
-# Example schema for simple movie review app
 
-# User table is keyed by Firebase Auth UID.
+# K-Spirits Club Hub - SQL Schema (PostgreSQL)
+
 type User @table {
-  # `@default(expr: "auth.uid")` sets it to Firebase Auth UID during insert and upsert.
-  id: String! @default(expr: "auth.uid")
-  username: String! @col(dataType: "varchar(50)")
-  # The `user: User!` field in the Review table generates the following one-to-many query field.
-  #  reviews_on_user: [Review!]!
-  # The `Review` join table the following many-to-many query field.
-  #  movies_via_Review: [Movie!]!
+  id: String!
+  email: String
+  nickname: String @col(dataType: "varchar(100)")
+  profileImage: String
+  role: String @col(dataType: "varchar(20)") @default(value: "USER")
+  themePreference: String @col(dataType: "varchar(10)") @default(value: "light")
+  isFirstLogin: Boolean @default(value: true)
+  reviewsWritten: Int @default(value: 0)
+  heartsReceived: Int @default(value: 0)
+  createdAt: Timestamp @default(expr: "request.time")
 }
 
-# Movie is keyed by a randomly generated UUID.
-type Movie @table {
-  # If you do not pass a 'key' to `@table`, Data Connect automatically adds the following 'id' column.
-  # Feel free to uncomment and customize it.
-  #  id: UUID! @default(expr: "uuidV4()")
-  title: String!
+type Spirit @table {
+  id: String!
+  name: String!
+  nameEn: String
+  category: String!
+  categoryEn: String
+  mainCategory: String
+  subcategory: String
+  distillery: String
+  bottler: String
+  abv: Float
+  volume: Int
+  country: String
+  region: String
   imageUrl: String!
-  genre: String
+  thumbnailUrl: String
+  descriptionKo: String
+  descriptionEn: String
+  pairingGuideKo: String
+  pairingGuideEn: String
+  noseTags: [String!]
+  palateTags: [String!]
+  finishTags: [String!]
+  tastingNote: String
+  status: String @col(dataType: "varchar(50)")
+  isPublished: Boolean @default(value: false)
+  isReviewed: Boolean @default(value: false)
+  rating: Float @default(value: 0.0)
+  reviewCount: Int @default(value: 0)
+  metadata: Any
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
 }
 
-# MovieMetadata is a metadata attached to a Movie.
-# Movie <-> MovieMetadata is a one-to-one relationship
-type MovieMetadata @table {
-  # @unique ensures each Movie can only one MovieMetadata.
-  movie: Movie! @unique
-  # The movie field adds the following foreign key field. Feel free to uncomment and customize it.
-  #  movieId: UUID!
-  rating: Float
-  releaseYear: Int
-  description: String
-}
-
-# Reviews is a join table between User and Movie.
-# It has a composite primary keys `userUid` and `movieId`.
-# A user can leave reviews for many movies. A movie can have reviews from many users.
-# User  <-> Review is a one-to-many relationship
-# Movie <-> Review is a one-to-many relationship
-# Movie <-> User is a many-to-many relationship
-type Review @table(name: "Reviews", key: ["movie", "user"]) {
+type SpiritReview @table {
+  id: UUID! @default(expr: "uuidV4()")
+  spirit: Spirit!
   user: User!
-  # The user field adds the following foreign key field. Feel free to uncomment and customize it.
-  #  userUid: String!
-  movie: Movie!
-  # The movie field adds the following foreign key field. Feel free to uncomment and customize it.
-  #  movieId: UUID!
+  rating: Int!
+  title: String
+  content: String!
+  nose: String
+  palate: String
+  finish: String
+  likes: Int @default(value: 0)
+  likedBy: [String!]
+  isPublished: Boolean @default(value: true)
+  imageUrls: [String!]
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
+}
+
+type NewsArticle @table {
+  id: String!
+  title: String!
+  content: String!
+  imageUrl: String
+  category: String
+  source: String
+  link: String
+  date: String @index
+  translations: Any
+  tags: [String!]
+  createdAt: Timestamp @default(expr: "request.time") @index
+  updatedAt: Timestamp @default(expr: "request.time")
+}
+
+type UserCabinet @table(key: ["user", "spirit"]) {
+  user: User!
+  spirit: Spirit!
+  addedAt: Timestamp @default(expr: "request.time")
+  notes: String
   rating: Int
-  reviewText: String
-  reviewDate: Date! @default(expr: "request.time")
+  isFavorite: Boolean @default(value: false)
+}
+
+type ModificationRequest @table {
+  id: String!
+  spiritId: String!
+  spiritName: String
+  userId: String
+  title: String!
+  content: String!
+  status: String @default(value: "pending")
+  createdAt: Timestamp @default(expr: "request.time")
+}
+
+type WorldCupResult @table {
+  id: UUID! @default(expr: "uuidV4()")
+  winner: Spirit!
+  category: String!
+  subcategory: String
+  initialRound: Int
+  timestamp: Timestamp @default(expr: "request.time")
 }

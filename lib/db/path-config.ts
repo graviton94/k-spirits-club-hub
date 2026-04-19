@@ -49,6 +49,7 @@ export function getAppPathUtil(type: PathType, params?: { userId?: string }): st
  */
 export const getAppPath = (appId: string = APP_ID) => ({
   spirits: `spirits`, // Root collection
+  users: `users`,     // Root collection
   reviews: `artifacts/${appId}/public/data/reviews`,
   userCabinet: (userId: string) => `artifacts/${appId}/users/${userId}/cabinet`,
   spiritReviews: (spiritId: string) => `artifacts/${appId}/spirits/${spiritId}/reviews`,

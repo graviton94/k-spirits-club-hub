@@ -1,16 +1,13 @@
 'use client';
 
 import React, { useEffect, useState, useMemo } from 'react';
-import { db } from '@/lib/db/firebase';
-import { collection, query, orderBy, limit, getDocs, startAfter, getCountFromServer, DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
+import { dbListNewsArticles, dbGetNewsCount } from '@/lib/db/data-connect-client';
 import { useAuth } from '@/app/[lang]/context/auth-context';
-import { getAppPath } from '@/lib/db/paths';
 import Link from 'next/link';
 import { Search, Loader2, ChevronLeft, ChevronRight, ArrowLeft, Trash2 } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import GoogleAd from '@/components/ui/GoogleAd';
-
 
 export default function NewsContentPage({ initialNews, initialPage = 1 }: { initialNews?: any[]; initialPage?: number }) {
     const { user, role } = useAuth();
@@ -20,21 +17,13 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
 
     const hasInitial = Array.isArray(initialNews) && initialNews.length > 0;
     const [news, setNews] = useState<any[]>(initialNews ?? []);
-    // SSR-safe: start with loading=false so the server HTML never includes the loading-shell
-    // text ("Fetching latest news"). When no initial data was provided, the useEffect below
-    // calls fetchPage(initialPage) which will set loading=true during the client-side fetch.
-    // Trade-off: on a DB-failure fallback the SSR renders an empty list instead of a spinner,
-    // which is correct — a crawlable page should show content or an empty state, not a
-    // loading placeholder.
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(initialPage);
     const [totalCount, setTotalCount] = useState(0);
-    const [pageMarkers, setPageMarkers] = useState<Record<number, QueryDocumentSnapshot<DocumentData> | null>>({});
     const [searchInput, setSearchInput] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
 
     const pageSize = 10;
-    // Hardcoded fallback for reliability
     const ADMIN_EMAILS = ['ruahn49@gmail.com'];
     const isAdmin = role === 'ADMIN' || (user?.email && ADMIN_EMAILS.includes(user.email));
 
@@ -58,9 +47,8 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
 
     const fetchTotalCount = async () => {
         try {
-            const newsPath = getAppPath().news;
-            const snapshot = await getCountFromServer(collection(db, newsPath));
-            setTotalCount(snapshot.data().count);
+            const count = await dbGetNewsCount();
+            setTotalCount(count);
         } catch (error) {
             console.error('Error fetching count:', error);
         }
@@ -69,33 +57,10 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
     const fetchPage = async (page: number) => {
         try {
             setLoading(true);
-
-            // React State 기반 페이징 전환 시 강제 최상단 스크롤
             window.scrollTo({ top: 0, behavior: 'auto' });
 
-            const newsPath = getAppPath().news;
-            let q;
-
-            // Note: Using 'date' as per newsDb.getLatest implementation
-            if (page === 1) {
-                q = query(collection(db, newsPath), orderBy('date', 'desc'), limit(pageSize));
-            } else {
-                const prevDoc = pageMarkers[page - 1];
-                if (prevDoc) {
-                    q = query(collection(db, newsPath), orderBy('date', 'desc'), startAfter(prevDoc), limit(pageSize));
-                } else {
-                    q = query(collection(db, newsPath), orderBy('date', 'desc'), limit(page * pageSize));
-                }
-            }
-
-            const snapshot = await getDocs(q);
-            const docs = snapshot.docs;
-
-            const targetDocs = (page > 1 && !pageMarkers[page - 1]) ? docs.slice(-pageSize) : docs;
-            const data = targetDocs.map(doc => ({ id: doc.id, ...doc.data() }));
-
+            const data = await dbListNewsArticles(pageSize, (page - 1) * pageSize);
             setNews(data);
-            setPageMarkers(prev => ({ ...prev, [page]: docs[docs.length - 1] }));
             setCurrentPage(page);
         } catch (error) {
             console.error('Error fetching page:', error);
@@ -106,18 +71,17 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
 
     useEffect(() => {
         fetchTotalCount();
-        // Skip re-fetch if the server already provided initial data for this page
         if (!hasInitial) {
             fetchPage(initialPage);
         }
-    }, []);
+    }, [initialPage, hasInitial]);
 
     const filteredNews = useMemo(() => {
         if (!searchQuery.trim()) return news;
         const lowQuery = searchQuery.toLowerCase();
         return news.filter(item => {
-            const title = (item.translations?.[lang]?.title || item.translations?.ko?.title || item.originalTitle || '').toLowerCase();
-            const content = (item.translations?.[lang]?.content || item.translations?.ko?.content || item.translations?.[lang]?.snippet || item.translations?.ko?.snippet || '').toLowerCase();
+            const title = (item.translations?.[lang]?.title || item.translations?.ko?.title || item.title || '').toLowerCase();
+            const content = (item.translations?.[lang]?.content || item.translations?.ko?.content || item.content || '').toLowerCase();
             return title.includes(lowQuery) || content.includes(lowQuery);
         });
     }, [news, searchQuery, lang]);
@@ -164,7 +128,7 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
                     </motion.div>
                 </div>
 
-                {/* Search Bar - Changed from live to button-triggered */}
+                {/* Search Bar */}
                 <form onSubmit={handleSearch} className="relative mb-12 flex gap-2">
                     <div className="relative flex-1 group">
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-indigo-500 transition-colors" />
@@ -227,17 +191,17 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
 
                                     <Link href={item.link} target="_blank">
                                         <h2 className="text-xl md:text-2xl font-bold mb-4 hover:text-indigo-600 transition-colors leading-tight">
-                                            {String(item.translations?.[lang]?.title || item.translations?.ko?.title || item.originalTitle || '')}
+                                            {String(item.translations?.[lang]?.title || item.translations?.ko?.title || item.title || '')}
                                         </h2>
                                     </Link>
 
                                     <div className="text-muted-foreground leading-relaxed space-y-4 whitespace-pre-wrap text-sm md:text-base font-medium mb-6">
-                                        {String(item.translations?.[lang]?.content || item.translations?.ko?.content || item.translations?.[lang]?.snippet || item.translations?.ko?.snippet || item.originalSnippet || '')}
+                                        {String(item.translations?.[lang]?.content || item.translations?.ko?.content || item.content || '')}
                                     </div>
 
                                     <div className="mt-6 pt-6 border-t border-border flex items-center justify-between">
                                         <div className="flex gap-2">
-                                            {(item.tags?.[lang] || item.tags?.ko || [])?.slice(0, 2).map((tag: string, i: number) => {
+                                            {(item.tags?.[lang] || item.tags?.ko || item.tags || [])?.slice(0, 2).map((tag: string, i: number) => {
                                                 const cleanTag = tag.startsWith('#') ? tag.substring(1) : tag;
                                                 return (
                                                     <span key={i} className="text-[10px] font-bold text-indigo-500/60 transition-colors">
@@ -252,7 +216,6 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
                                     </div>
                                 </motion.article>
 
-                                {/* 4번째마다 뉴스 아이템 이후 인피드 광고 반복 삽입 (페이지네이션 대응) */}
                                 {(idx + 1) % 4 === 0 && (
                                     <div className="w-full my-8">
                                         <GoogleAd
@@ -268,7 +231,6 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
                             </React.Fragment>
                         ))}
 
-                        {/* Pagination Numbers — links are crawlable <a href> for SEO; JS intercepts for SPA navigation */}
                         {!searchQuery && totalPages > 1 && (
                             <div className="flex flex-col items-center gap-6 mt-12 pb-12">
                                 <div className="flex justify-center items-center gap-2">

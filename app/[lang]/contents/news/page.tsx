@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getCanonicalUrl, getHreflangAlternates, toAbsoluteUrl } from '@/lib/utils/seo-url';
 import NewsContentPage from './news-client';
-import { newsDb } from '@/lib/db/firestore-rest';
+import { dbListNewsArticles } from '@/lib/db/data-connect-client';
 
 interface NewsPageProps {
   params: Promise<{ lang: string }>;
@@ -72,9 +72,7 @@ export default async function NewsPage({ params, searchParams }: NewsPageProps) 
 
   const page = Math.max(1, parseInt(sp.page || '1', 10) || 1);
 
-  const initialNews = page === 1
-    ? await newsDb.getLatest(PAGE_SIZE).catch(() => [])
-    : await newsDb.getPage(page, PAGE_SIZE).catch(() => []);
+  const initialNews = await dbListNewsArticles(PAGE_SIZE, (page - 1) * PAGE_SIZE).catch(() => []);
 
   if (page > 1 && initialNews.length === 0) {
     notFound();

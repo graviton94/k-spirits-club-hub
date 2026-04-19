@@ -1,6 +1,6 @@
 export const revalidate = 60;
 
-import { newArrivalsDb, reviewsDb } from "@/lib/db/firestore-rest";
+import { dbListNewArrivals, dbListSpiritReviews } from "@/lib/db/data-connect-client";
 import HomeClient from "@/components/home/HomeClient";
 import NewsSection from "@/components/home/NewsSection";
 import { Locale } from "@/i18n-config";
@@ -16,12 +16,23 @@ export default async function HomePage({ params }: PageProps) {
   const { lang } = await params;
   const dictionary = await getDictionary(lang);
 
-  // 1. Parallel fetch essential home page data on the server
-  // This eliminates client-side waterfall and shows content instantly
-  const [newArrivals, recentReviews] = await Promise.all([
-    newArrivalsDb.getAll().catch(() => []),
-    reviewsDb.getRecent().catch(() => [])
+  const [rawNewArrivals, rawReviews] = await Promise.all([
+    dbListNewArrivals(12).catch(() => []),
+    dbListSpiritReviews(5, 0).catch(() => [])
   ]);
+
+  const newArrivals = rawNewArrivals.map((s: any) => ({
+    ...s,
+    name_en: s.nameEn,
+    description_ko: s.descriptionKo,
+    description_en: s.descriptionEn,
+  }));
+
+  const recentReviews = rawReviews.map((r: any) => ({
+    ...r,
+    spiritName: r.spirit?.name,
+    userName: r.user?.nickname || (lang === 'en' ? 'Anonymous' : '익명'),
+  }));
 
   // 2. Fetch the deterministic daily wiki snippet for the FAQ schema
   const dailySnippet = getRandomWikiSnippet(lang);

@@ -1,0 +1,103 @@
+I0418 12:38:56.411975   10704 load.go:31] Reloading schema and connectors...
+I0418 12:38:56.506747   10704 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 995d] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2796B] 
+Connector "main": sources: main\mutations.gql [4558B] main\queries.gql [691B] 
+I0418 12:38:56.540179   10704 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "C:\\k-spirits-club-hub\\src\\dataconnect-generated"
+I0418 12:38:56.557465   10704 collector.go:107] schema extensions wrote into "C:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\mutation.gql [25814B] main\implicit.gql [1037B] prelude.gql [82799B] main\input.gql [107386B] main\relation.gql [52691B] main\query.gql [9588B] 
+I0418 12:38:56.604203   10704 collector.go:107] connector "main" javascriptSdk wrote into "C:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: index.cjs.js [6402B] README.md [58174B] index.d.ts [12512B] esm\index.esm.js [5773B] package.json [612B] .guides/usage.md [2239B] .guides/setup.md [584B] .guides/config.json [236B] esm\package.json [17B] 
+I0418 12:38:56.604203   10704 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0418 12:38:56.604787   10704 load.go:109] Finished reloading
+I0418 12:38:56.612071   10704 dev.go:104] Listening on address (HTTP + gRPC): 127.0.0.1:9399
+I0418 12:38:56.615536   10704 dev.go:104] Listening on address (HTTP + gRPC): [::1]:9399
+I0418 12:39:05.416622   10704 migrate.go:24] Running migration SQL:
+Step 1: CREATE EXTENSION IF NOT EXISTS "uuid-ossp"
+Step 2: CREATE TABLE "public"."modification_request" ("id" text NOT NULL, "content" text NOT NULL, "created_at" timestamptz NULL, "spirit_id" text NOT NULL, "spirit_name" text NULL, "status" text NULL DEFAULT 'pending', "title" text NOT NULL, "user_id" text NULL, PRIMARY KEY ("id"))
+Step 3: CREATE TABLE "public"."news_article" ("id" text NOT NULL, "category" text NULL, "content" text NOT NULL, "created_at" timestamptz NULL, "date" text NULL, "image_url" text NULL, "link" text NULL, "source" text NULL, "tags" text[] NULL, "title" text NOT NULL, "translations" jsonb NULL, "updated_at" timestamptz NULL, PRIMARY KEY ("id"))
+Step 4: CREATE TABLE "public"."spirit" ("id" text NOT NULL, "abv" double precision NULL, "bottler" text NULL, "category" text NOT NULL, "category_en" text NULL, "country" text NULL, "created_at" timestamptz NOT NULL, "description_en" text NULL, "description_ko" text NULL, "distillery" text NULL, "finish_tags" text[] NULL, "image_url" text NOT NULL, "is_published" boolean NULL DEFAULT false, "is_reviewed" boolean NULL DEFAULT false, "main_category" text NULL, "metadata" jsonb NULL, "name" text NOT NULL, "name_en" text NULL, "nose_tags" text[] NULL, "pairing_guide_en" text NULL, "pairing_guide_ko" text NULL, "palate_tags" text[] NULL, "rating" double precision NULL DEFAULT 0::double precision, "region" text NULL, "review_count" integer NULL DEFAULT 0, "status" character varying(50) NULL, "subcategory" text NULL, "tasting_note" text NULL, "thumbnail_url" text NULL, "updated_at" timestamptz NOT NULL, "volume" integer NULL, PRIMARY KEY ("id"))
+Step 5: CREATE TABLE "public"."world_cup_result" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "category" text NOT NULL, "initial_round" integer NULL, "timestamp" timestamptz NULL, "winner_category" text NULL, "winner_image_url" text NULL, "winner_name" text NOT NULL, PRIMARY KEY ("id"))
+Step 6: CREATE TABLE "public"."user" ("id" text NOT NULL, "created_at" timestamptz NULL, "email" text NULL, "hearts_received" integer NULL DEFAULT 0, "is_first_login" boolean NULL DEFAULT true, "nickname" character varying(100) NULL, "profile_image" text NULL, "reviews_written" integer NULL DEFAULT 0, "role" character varying(20) NULL DEFAULT 'USER', "theme_preference" character varying(10) NULL DEFAULT 'light', PRIMARY KEY ("id"))
+Step 7: CREATE TABLE "public"."spirit_review" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "spirit_id" text NOT NULL, "user_id" text NOT NULL, "content" text NOT NULL, "created_at" timestamptz NOT NULL, "finish" text NULL, "image_urls" text[] NULL, "is_published" boolean NULL DEFAULT true, "liked_by" text[] NULL, "likes" integer NULL DEFAULT 0, "nose" text NULL, "palate" text NULL, "rating" integer NOT NULL, "title" text NULL, "updated_at" timestamptz NOT NULL, PRIMARY KEY ("id"), CONSTRAINT "spirit_review_spirit_id_fkey" FOREIGN KEY ("spirit_id") REFERENCES "public"."spirit" ("id") ON DELETE CASCADE, CONSTRAINT "spirit_review_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."user" ("id") ON DELETE CASCADE)
+Step 8: CREATE INDEX "spirit_review_spiritId_idx" ON "public"."spirit_review" ("spirit_id")
+Step 9: CREATE INDEX "spirit_review_userId_idx" ON "public"."spirit_review" ("user_id")
+Step 10: CREATE TABLE "public"."user_cabinet" ("user_id" text NOT NULL, "spirit_id" text NOT NULL, "added_at" timestamptz NULL, "is_favorite" boolean NULL DEFAULT false, "notes" text NULL, "rating" integer NULL, PRIMARY KEY ("user_id", "spirit_id"), CONSTRAINT "user_cabinet_spirit_id_fkey" FOREIGN KEY ("spirit_id") REFERENCES "public"."spirit" ("id") ON DELETE CASCADE, CONSTRAINT "user_cabinet_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."user" ("id") ON DELETE CASCADE)
+Step 11: CREATE INDEX "user_cabinet_spiritId_idx" ON "public"."user_cabinet" ("spirit_id")
+Step 12: CREATE INDEX "user_cabinet_userId_idx" ON "public"."user_cabinet" ("user_id")
+I0418 12:39:05.922951   10704 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 2171] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2796B] 
+Connector "main": sources: main\mutations.gql [4558B] main\queries.gql [691B] 
+I0418 12:39:05.944208   10704 configure_emulator.go:21] ConfigureEmulator successed
+Request: service_id:  "k-spirits-club-hub"
+connection_string:  "postgres://127.0.0.1:5432/fdcdb?sslmode=disable"
+database:  "fdcdb"
+
+Response: 
+I0418 12:49:16.635031   10704 load.go:31] Reloading schema and connectors...
+W0418 12:49:17.280132   10704 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 2dde] connector "main" has errors: main\mutations.gql:20:3: Unexpected $
+
+sources: main\mutations.gql [3121B] main\queries.gql [691B] 
+I0418 12:49:17.280132   10704 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 2dde] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2796B] 
+Connector "main": sources: main\queries.gql [691B] main\mutations.gql [3121B] 
+E0418 12:49:17.286582   10704 load.go:73] Could not load sources: 
+Errors: main\mutations.gql:20:3: Unexpected $
+I0418 12:49:17.294072   10704 collector.go:107] schema extensions wrote into "C:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\implicit.gql [1037B] main\input.gql [107386B] main\relation.gql [52691B] prelude.gql [82799B] main\query.gql [9588B] main\mutation.gql [25814B] 
+I0418 12:49:17.295225   10704 load.go:74] Finished reloading
+I0418 12:49:26.616050   10704 load.go:31] Reloading schema and connectors...
+W0418 12:49:26.825250   10704 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 6e0e] connector "main" has errors: main\mutations.gql:20:3: Unexpected $
+
+sources: main\mutations.gql [3121B] main\queries.gql [754B] 
+I0418 12:49:26.825250   10704 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 6e0e] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2796B] 
+Connector "main": sources: main\mutations.gql [3121B] main\queries.gql [754B] 
+E0418 12:49:26.828522   10704 load.go:73] Could not load sources: 
+Errors: main\mutations.gql:20:3: Unexpected $
+I0418 12:49:26.832336   10704 collector.go:107] schema extensions wrote into "C:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\mutation.gql [25814B] prelude.gql [82799B] main\implicit.gql [1037B] main\input.gql [107386B] main\relation.gql [52691B] main\query.gql [9588B] 
+I0418 12:49:26.832336   10704 load.go:74] Finished reloading
+I0418 12:49:56.608874   10704 load.go:31] Reloading schema and connectors...
+I0418 12:49:56.831140   10704 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 8fc4] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2796B] 
+Connector "main": sources: main\mutations.gql [4726B] main\queries.gql [754B] 
+I0418 12:49:56.865320   10704 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "C:\\k-spirits-club-hub\\src\\dataconnect-generated"
+I0418 12:49:56.880572   10704 collector.go:107] schema extensions wrote into "C:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\implicit.gql [1037B] main\input.gql [107386B] main\relation.gql [52691B] main\query.gql [9588B] main\mutation.gql [25814B] 
+I0418 12:49:56.896807   10704 collector.go:107] connector "main" javascriptSdk wrote into "C:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: README.md [58174B] .guides/usage.md [2239B] .guides/config.json [236B] index.d.ts [12512B] esm\package.json [17B] index.cjs.js [6402B] package.json [612B] .guides/setup.md [584B] esm\index.esm.js [5773B] 
+I0418 12:49:56.896807   10704 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0418 12:49:56.896807   10704 load.go:109] Finished reloading
+I0418 12:59:56.611782   10704 load.go:31] Reloading schema and connectors...
+I0418 12:59:57.257646   10704 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 0f8b] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2796B] 
+Connector "main": sources: main\mutations.gql [4726B] main\queries.gql [1155B] 
+I0418 12:59:57.347857   10704 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "C:\\k-spirits-club-hub\\src\\dataconnect-generated"
+I0418 12:59:57.392646   10704 collector.go:107] schema extensions wrote into "C:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\relation.gql [52691B] main\query.gql [9588B] main\mutation.gql [25814B] main\implicit.gql [1037B] prelude.gql [82799B] main\input.gql [107386B] 
+I0418 12:59:57.434233   10704 collector.go:107] connector "main" javascriptSdk wrote into "C:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: esm\index.esm.js [5773B] index.cjs.js [6402B] package.json [612B] README.md [59050B] .guides/setup.md [584B] .guides/config.json [236B] index.d.ts [13388B] esm\package.json [17B] .guides/usage.md [2239B] 
+I0418 12:59:57.434233   10704 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0418 12:59:57.434233   10704 load.go:109] Finished reloading
+I0418 13:14:26.609871   10704 load.go:31] Reloading schema and connectors...
+I0418 13:14:27.209900   10704 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 0b66] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2796B] 
+Connector "main": sources: main\mutations.gql [4726B] main\queries.gql [1424B] 
+I0418 13:14:27.259482   10704 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "C:\\k-spirits-club-hub\\src\\dataconnect-generated"
+I0418 13:14:27.299388   10704 collector.go:107] schema extensions wrote into "C:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\implicit.gql [1037B] main\input.gql [107386B] main\relation.gql [52691B] main\query.gql [9588B] main\mutation.gql [25814B] 
+I0418 13:14:27.314176   10704 collector.go:107] connector "main" javascriptSdk wrote into "C:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: esm\package.json [17B] index.cjs.js [8274B] README.md [68994B] .guides/usage.md [2239B] .guides/config.json [236B] esm\index.esm.js [7471B] package.json [612B] .guides/setup.md [584B] index.d.ts [15434B] 
+I0418 13:14:27.314176   10704 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0418 13:14:27.315691   10704 load.go:109] Finished reloading
+I0418 13:17:56.608929   10704 load.go:31] Reloading schema and connectors...
+I0418 13:17:57.023754   10704 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 6432] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2769B] 
+Connector "main": sources: main\mutations.gql [4726B] main\queries.gql [1424B] 
+I0418 13:17:57.065380   10704 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "C:\\k-spirits-club-hub\\src\\dataconnect-generated"
+I0418 13:17:57.086365   10704 collector.go:107] schema extensions wrote into "C:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\query.gql [9588B] prelude.gql [82799B] main\mutation.gql [25814B] main\implicit.gql [1037B] main\input.gql [107386B] main\relation.gql [52691B] 
+I0418 13:17:57.100263   10704 collector.go:107] connector "main" javascriptSdk wrote into "C:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: esm\index.esm.js [7471B] esm\package.json [17B] index.cjs.js [8274B] package.json [612B] README.md [68994B] .guides/usage.md [2239B] .guides/setup.md [584B] .guides/config.json [236B] index.d.ts [15434B] 
+I0418 13:17:57.100263   10704 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0418 13:17:57.104587   10704 load.go:109] Finished reloading

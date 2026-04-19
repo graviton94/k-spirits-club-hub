@@ -1,0 +1,263 @@
+
+# Queries for the App
+
+query listSpirits($category: String) @auth(level: PUBLIC) {
+  spirits(where: { category: { eq: $category } }) {
+    id
+    name
+    nameEn
+    category
+    imageUrl
+    isPublished
+    rating
+    reviewCount
+  }
+}
+
+query listNewArrivals($limit: Int) @auth(level: PUBLIC) {
+  spirits(limit: $limit, orderBy: [{ createdAt: DESC }]) {
+    id
+    name
+    nameEn
+    imageUrl
+    category
+    country
+    abv
+    distillery
+    descriptionKo
+    descriptionEn
+    updatedAt
+    createdAt
+  }
+}
+
+query getSpirit($id: String!) @auth(level: PUBLIC) {
+  spirit(id: $id) {
+    id
+    name
+    nameEn
+    category
+    mainCategory
+    subcategory
+    distillery
+    bottler
+    abv
+    volume
+    country
+    region
+    imageUrl
+    thumbnailUrl
+    descriptionKo
+    descriptionEn
+    pairingGuideKo
+    pairingGuideEn
+    noseTags
+    palateTags
+    finishTags
+    tastingNote
+    status
+    isPublished
+    isReviewed
+    rating
+    reviewCount
+    metadata
+    reviews: spiritReviews_on_spirit {
+      id
+      rating
+      content
+      nose
+      palate
+      finish
+      likedBy
+      imageUrls
+      createdAt
+      updatedAt
+      user {
+        nickname
+        profileImage
+        role
+      }
+    }
+  }
+}
+
+query getUserProfile($id: String!) @auth(level: PUBLIC) {
+  user(id: $id) {
+    id
+    nickname
+    email
+    profileImage
+    role
+    themePreference
+    isFirstLogin
+    reviewsWritten
+    heartsReceived
+  }
+}
+
+query listNewsArticles($limit: Int, $offset: Int) @auth(level: PUBLIC) {
+  newsArticles(limit: $limit, offset: $offset, orderBy: [{ date: DESC }, { createdAt: DESC }]) {
+    id
+    title
+    content
+    imageUrl
+    category
+    source
+    link
+    date
+    translations
+    tags
+    createdAt
+  }
+}
+
+query getNewsArticle($id: String!) @auth(level: PUBLIC) {
+  newsArticle(id: $id) {
+    id
+    title
+    content
+    imageUrl
+    category
+    source
+    link
+    date
+    translations
+    tags
+    createdAt
+  }
+}
+
+# --- Audit Queries (Temporary) ---
+query auditAllUsers @auth(level: PUBLIC) {
+  users {
+    id
+    nickname
+    role
+    isFirstLogin
+  }
+}
+
+query auditAllNews @auth(level: PUBLIC) {
+  newsArticles {
+    id
+    title
+    translations
+  }
+}
+
+query auditAllSpirits @auth(level: PUBLIC) {
+  spirits {
+    id
+  }
+}
+
+query listSpiritReviews($limit: Int, $offset: Int) @auth(level: PUBLIC) {
+  spiritReviews(limit: $limit, offset: $offset, orderBy: [{ createdAt: DESC }]) {
+    id
+    rating
+    title
+    content
+    imageUrls
+    createdAt
+    spirit {
+      id
+      name
+      imageUrl
+    }
+    user {
+      id
+      nickname
+      profileImage
+    }
+  }
+}
+
+query getSpiritReviewsCount @auth(level: PUBLIC) {
+  spiritReviews {
+    id
+  }
+}
+
+query listSpiritsForSitemap @auth(level: PUBLIC) {
+  spirits {
+    id
+    name
+    category
+    imageUrl
+    thumbnailUrl
+    descriptionKo
+    descriptionEn
+    pairingGuideKo
+    pairingGuideEn
+    tastingNote
+    noseTags
+    palateTags
+    finishTags
+    updatedAt
+  }
+}
+
+query auditAllReviews @auth(level: PUBLIC) {
+  spiritReviews {
+    id
+    spirit {
+      id
+      name
+    }
+    user {
+      id
+      nickname
+    }
+  }
+}
+query getWorldCupResult($id: UUID!) @auth(level: PUBLIC) {
+  worldCupResult(id: $id) {
+    id
+    winner {
+      id
+      name
+      nameEn
+      imageUrl
+      thumbnailUrl
+      category
+      categoryEn
+      subcategory
+      distillery
+      abv
+      country
+      region
+      noseTags
+      palateTags
+      finishTags
+    }
+    category
+    subcategory
+    initialRound
+    timestamp
+  }
+}
+
+query listSpiritsForWorldCup($category: String, $subcategories: [String!]) @auth(level: PUBLIC) {
+  spirits(where: {
+    isPublished: { eq: true },
+    category: { eq: $category },
+    subcategory: { in: $subcategories }
+  }, limit: 300) {
+    id
+    name
+    nameEn
+    imageUrl
+    thumbnailUrl
+    category
+    categoryEn
+    subcategory
+    distillery
+    abv
+    country
+    region
+    noseTags
+    palateTags
+    finishTags
+    createdAt
+  }
+}

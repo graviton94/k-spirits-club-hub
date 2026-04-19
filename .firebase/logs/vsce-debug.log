@@ -175,3 +175,928 @@ I0418 12:03:38.000499   11660 load.go:109] Finished reloading
  {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:03:38.155067   11660 dev.go:104] Listening on address (HTTP + gRPC): 127.0.0.1:50001\n"}}
 [debug] [2026-04-18T03:03:38.292Z] I0418 12:03:38.304280   11660 engine.go:209] [projects/emulator/locations/emulator/services/k-spirits-club-hub 1031] ExecuteGraphqlRead query IntrospectionQuery: succeeded. 
  {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:03:38.304280   11660 engine.go:209] [projects/emulator/locations/emulator/services/k-spirits-club-hub 1031] ExecuteGraphqlRead query IntrospectionQuery: succeeded. \n"}}
+[debug] [2026-04-18T03:11:28.015Z] I0418 12:11:28.008248   11660 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:11:28.008248   11660 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-18T03:11:28.120Z] E0418 12:11:28.118737   11660 load.go:73] Could not load sources: 
+Errors: schema\schema.gql:24:3: On Spirit.category_en: field name must not contain '_', we recommend camelCase
+schema\schema.gql:38:3: On Spirit.description_en: field name must not contain '_', we recommend camelCase
+schema\schema.gql:37:3: On Spirit.description_ko: field name must not contain '_', we recommend camelCase
+schema\schema.gql:43:3: On Spirit.finish_tags: field name must not contain '_', we recommend camelCase
+schema\schema.gql:22:3: On Spirit.name_en: field name must not contain '_', we recommend camelCase
+schema\schema.gql:41:3: On Spirit.nose_tags: field name must not contain '_', we recommend camelCase
+schema\schema.gql:40:3: On Spirit.pairing_guide_en: field name must not contain '_', we recommend camelCase
+schema\schema.gql:39:3: On Spirit.pairing_guide_ko: field name must not contain '_', we recommend camelCase
+schema\schema.gql:42:3: On Spirit.palate_tags: field name must not contain '_', we recommend camelCase
+schema\schema.gql:44:3: On Spirit.tasting_note: field name must not contain '_', we recommend camelCase
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0418 12:11:28.118737   11660 load.go:73] Could not load sources: \nErrors: schema\\schema.gql:24:3: On Spirit.category_en: field name must not contain '_', we recommend camelCase\nschema\\schema.gql:38:3: On Spirit.description_en: field name must not contain '_', we recommend camelCase\nschema\\schema.gql:37:3: On Spirit.description_ko: field name must not contain '_', we recommend camelCase\nschema\\schema.gql:43:3: On Spirit.finish_tags: field name must not contain '_', we recommend camelCase\nschema\\schema.gql:22:3: On Spirit.name_en: field name must not contain '_', we recommend camelCase\nschema\\schema.gql:41:3: On Spirit.nose_tags: field name must not contain '_', we recommend camelCase\nschema\\schema.gql:40:3: On Spirit.pairing_guide_en: field name must not contain '_', we recommend camelCase\nschema\\schema.gql:39:3: On Spirit.pairing_guide_ko: field name must not contain '_', we recommend camelCase\nschema\\schema.gql:42:3: On Spirit.palate_tags: field name must not contain '_', we recommend camelCase\nschema\\schema.gql:44:3: On Spirit.tasting_note: field name must not contain '_', we recommend camelCase\n"}}
+[debug] [2026-04-18T03:11:28.131Z] I0418 12:11:28.130058   11660 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\mutation.gql [13679B] main\implicit.gql [1261B] main\input.gql [28927B] main\relation.gql [14318B] prelude.gql [82799B] main\query.gql [5099B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:11:28.130058   11660 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\mutation.gql [13679B] main\\implicit.gql [1261B] main\\input.gql [28927B] main\\relation.gql [14318B] prelude.gql [82799B] main\\query.gql [5099B] \n"}}
+[debug] [2026-04-18T03:11:28.132Z] I0418 12:11:28.130058   11660 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:11:28.130058   11660 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-18T03:13:38.029Z] I0418 12:13:38.014812   11660 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:13:38.014812   11660 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-18T03:13:38.197Z] E0418 12:13:38.195330   11660 load.go:73] Could not load sources: 
+Errors: schema\schema.gql:24:3: On Spirit.category_en: field name must not contain '_', we recommend camelCase
+schema\schema.gql:38:3: On Spirit.description_en: field name must not contain '_', we recommend camelCase
+schema\schema.gql:37:3: On Spirit.description_ko: field name must not contain '_', we recommend camelCase
+schema\schema.gql:43:3: On Spirit.finish_tags: field name must not contain '_', we recommend camelCase
+schema\schema.gql:22:3: On Spirit.name_en: field name must not contain '_', we recommend camelCase
+schema\schema.gql:41:3: On Spirit.nose_tags: field name must not contain '_', we recommend camelCase
+schema\schema.gql:40:3: On Spirit.pairing_guide_en: field name must not contain '_', we recommend camelCase
+schema\schema.gql:39:3: On Spirit.pairing_guide_ko: field name must not contain '_', we recommend camelCase
+schema\schema.gql:42:3: On Spirit.palate_tags: field name must not contain '_', we recommend camelCase
+schema\schema.gql:44:3: On Spirit.tasting_note: field name must not contain '_', we recommend camelCase
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0418 12:13:38.195330   11660 load.go:73] Could not load sources: \nErrors: schema\\schema.gql:24:3: On Spirit.category_en: field name must not contain '_', we recommend camelCase\nschema\\schema.gql:38:3: On Spirit.description_en: field name must not contain '_', we recommend camelCase\nschema\\schema.gql:37:3: On Spirit.description_ko: field name must not contain '_', we recommend camelCase\nschema\\schema.gql:43:3: On Spirit.finish_tags: field name must not contain '_', we recommend camelCase\nschema\\schema.gql:22:3: On Spirit.name_en: field name must not contain '_', we recommend camelCase\nschema\\schema.gql:41:3: On Spirit.nose_tags: field name must not contain '_', we recommend camelCase\nschema\\schema.gql:40:3: On Spirit.pairing_guide_en: field name must not contain '_', we recommend camelCase\nschema\\schema.gql:39:3: On Spirit.pairing_guide_ko: field name must not contain '_', we recommend camelCase\nschema\\schema.gql:42:3: On Spirit.palate_tags: field name must not contain '_', we recommend camelCase\nschema\\schema.gql:44:3: On Spirit.tasting_note: field name must not contain '_', we recommend camelCase\n"}}
+[debug] [2026-04-18T03:13:38.219Z] I0418 12:13:38.217469   11660 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\mutation.gql [13679B] main\implicit.gql [1261B] main\input.gql [28927B] main\relation.gql [14318B] main\query.gql [5099B] prelude.gql [82799B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:13:38.217469   11660 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\mutation.gql [13679B] main\\implicit.gql [1261B] main\\input.gql [28927B] main\\relation.gql [14318B] main\\query.gql [5099B] prelude.gql [82799B] \n"}}
+[debug] [2026-04-18T03:13:38.221Z] I0418 12:13:38.218616   11660 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:13:38.218616   11660 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-18T03:14:18.011Z] I0418 12:14:18.011330   11660 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:14:18.011330   11660 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-18T03:14:18.071Z] W0418 12:14:18.071820   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 5694] connector "example" has errors: example\mutations.gql:6:3: Cannot query field "movie_insert" on type "Mutation". Did you mean "review_insert", "news_insert", "review_upsert", "spirit_insert", or "user_insert"?
+example\mutations.gql:12:44: Field "username" is not defined by type "User_Data". Did you mean "nickname"?
+example\mutations.gql:21:7: Field "movieId" is not defined by type "Review_Data".
+example\mutations.gql:23:7: Field "reviewText" is not defined by type "Review_Data".
+example\mutations.gql:32:24: Field "userId_expr" is not defined by type "Review_Key". Did you mean "id_expr"?
+example\mutations.gql:32:49: Field "movieId" is not defined by type "Review_Key".
+example\queries.gql:6:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+example\queries.gql:18:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:27:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:32:7: Cannot query field "reviewDate" on type "Review". Did you mean "createdAt"?
+example\queries.gql:33:7: Cannot query field "reviewText" on type "Review".
+example\queries.gql:34:7: Cannot query field "movie" on type "Review". Did you mean "nose"?
+example\queries.gql:44:3: Cannot query field "movie" on type "Query". Did you mean "review"?
+example\queries.gql:68:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+
+sources: example\mutations.gql [1243B] example\queries.gql [1801B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0418 12:14:18.071820   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 5694] connector \"example\" has errors: example\\mutations.gql:6:3: Cannot query field \"movie_insert\" on type \"Mutation\". Did you mean \"review_insert\", \"news_insert\", \"review_upsert\", \"spirit_insert\", or \"user_insert\"?\nexample\\mutations.gql:12:44: Field \"username\" is not defined by type \"User_Data\". Did you mean \"nickname\"?\nexample\\mutations.gql:21:7: Field \"movieId\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:23:7: Field \"reviewText\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:32:24: Field \"userId_expr\" is not defined by type \"Review_Key\". Did you mean \"id_expr\"?\nexample\\mutations.gql:32:49: Field \"movieId\" is not defined by type \"Review_Key\".\nexample\\queries.gql:6:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\nexample\\queries.gql:18:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:27:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:32:7: Cannot query field \"reviewDate\" on type \"Review\". Did you mean \"createdAt\"?\nexample\\queries.gql:33:7: Cannot query field \"reviewText\" on type \"Review\".\nexample\\queries.gql:34:7: Cannot query field \"movie\" on type \"Review\". Did you mean \"nose\"?\nexample\\queries.gql:44:3: Cannot query field \"movie\" on type \"Query\". Did you mean \"review\"?\nexample\\queries.gql:68:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\n\nsources: example\\mutations.gql [1243B] example\\queries.gql [1801B] \n"}}
+[debug] [2026-04-18T03:14:18.076Z] W0418 12:14:18.074365   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 5694] connector "main" has errors: main\mutations.gql:5:215: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:50:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:54:5: Field "name_en" is not defined by type "Spirit_Data". Did you mean "nameEn", "name", or "name_expr"?
+main\mutations.gql:56:5: Field "category_en" is not defined by type "Spirit_Data". Did you mean "categoryEn", "category", "category_expr", or "categoryEn_expr"?
+main\mutations.gql:67:5: Field "description_ko" is not defined by type "Spirit_Data". Did you mean "descriptionKo", "descriptionEn", "descriptionEn_expr", or "descriptionKo_expr"?
+main\mutations.gql:68:5: Field "description_en" is not defined by type "Spirit_Data". Did you mean "descriptionEn", "descriptionKo", "descriptionEn_expr", or "descriptionKo_expr"?
+main\mutations.gql:69:5: Field "pairing_guide_ko" is not defined by type "Spirit_Data". Did you mean "pairingGuideKo", "pairingGuideEn", "pairingGuideEn_expr", or "pairingGuideKo_expr"?
+main\mutations.gql:70:5: Field "pairing_guide_en" is not defined by type "Spirit_Data". Did you mean "pairingGuideEn", "pairingGuideKo", "pairingGuideEn_expr", or "pairingGuideKo_expr"?
+main\mutations.gql:71:5: Field "nose_tags" is not defined by type "Spirit_Data". Did you mean "noseTags"?
+main\mutations.gql:72:5: Field "palate_tags" is not defined by type "Spirit_Data". Did you mean "palateTags"?
+main\mutations.gql:73:5: Field "finish_tags" is not defined by type "Spirit_Data". Did you mean "finishTags" or "noseTags"?
+main\mutations.gql:74:5: Field "tasting_note" is not defined by type "Spirit_Data". Did you mean "tastingNote"?
+main\mutations.gql:101:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:113:14: Variable "$likedBy" of type "[String]" used in position expecting type "[String!]".
+main\mutations.gql:115:16: Variable "$imageUrls" of type "[String]" used in position expecting type "[String!]".
+main\mutations.gql:133:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:144:11: Variable "$tags" of type "[String]" used in position expecting type "[String!]".
+main\mutations.gql:156:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:177:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:199:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+
+sources: main\mutations.gql [4729B] 
+I0418 12:14:18.076011   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 5694] UpdateResources(): done
+Main schema: sources: schema\schema.gql [3252B] 
+Connector "example": sources: example\mutations.gql [1243B] example\queries.gql [1801B] 
+Connector "main": sources: main\mutations.gql [4729B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0418 12:14:18.074365   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 5694] connector \"main\" has errors: main\\mutations.gql:5:215: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:50:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:54:5: Field \"name_en\" is not defined by type \"Spirit_Data\". Did you mean \"nameEn\", \"name\", or \"name_expr\"?\nmain\\mutations.gql:56:5: Field \"category_en\" is not defined by type \"Spirit_Data\". Did you mean \"categoryEn\", \"category\", \"category_expr\", or \"categoryEn_expr\"?\nmain\\mutations.gql:67:5: Field \"description_ko\" is not defined by type \"Spirit_Data\". Did you mean \"descriptionKo\", \"descriptionEn\", \"descriptionEn_expr\", or \"descriptionKo_expr\"?\nmain\\mutations.gql:68:5: Field \"description_en\" is not defined by type \"Spirit_Data\". Did you mean \"descriptionEn\", \"descriptionKo\", \"descriptionEn_expr\", or \"descriptionKo_expr\"?\nmain\\mutations.gql:69:5: Field \"pairing_guide_ko\" is not defined by type \"Spirit_Data\". Did you mean \"pairingGuideKo\", \"pairingGuideEn\", \"pairingGuideEn_expr\", or \"pairingGuideKo_expr\"?\nmain\\mutations.gql:70:5: Field \"pairing_guide_en\" is not defined by type \"Spirit_Data\". Did you mean \"pairingGuideEn\", \"pairingGuideKo\", \"pairingGuideEn_expr\", or \"pairingGuideKo_expr\"?\nmain\\mutations.gql:71:5: Field \"nose_tags\" is not defined by type \"Spirit_Data\". Did you mean \"noseTags\"?\nmain\\mutations.gql:72:5: Field \"palate_tags\" is not defined by type \"Spirit_Data\". Did you mean \"palateTags\"?\nmain\\mutations.gql:73:5: Field \"finish_tags\" is not defined by type \"Spirit_Data\". Did you mean \"finishTags\" or \"noseTags\"?\nmain\\mutations.gql:74:5: Field \"tasting_note\" is not defined by type \"Spirit_Data\". Did you mean \"tastingNote\"?\nmain\\mutations.gql:101:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:113:14: Variable \"$likedBy\" of type \"[String]\" used in position expecting type \"[String!]\".\nmain\\mutations.gql:115:16: Variable \"$imageUrls\" of type \"[String]\" used in position expecting type \"[String!]\".\nmain\\mutations.gql:133:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:144:11: Variable \"$tags\" of type \"[String]\" used in position expecting type \"[String!]\".\nmain\\mutations.gql:156:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:177:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:199:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\n\nsources: main\\mutations.gql [4729B] \nI0418 12:14:18.076011   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 5694] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [3252B] \nConnector \"example\": sources: example\\mutations.gql [1243B] example\\queries.gql [1801B] \nConnector \"main\": sources: main\\mutations.gql [4729B] \n"}}
+[debug] [2026-04-18T03:14:18.080Z] E0418 12:14:18.079022   11660 load.go:73] Could not load sources: 
+Errors: example\mutations.gql:6:3: Cannot query field "movie_insert" on type "Mutation". Did you mean "review_insert", "news_insert", "review_upsert", "spirit_insert", or "user_insert"?
+example\mutations.gql:12:44: Field "username" is not defined by type "User_Data". Did you mean "nickname"?
+example\mutations.gql:21:7: Field "movieId" is not defined by type "Review_Data".
+example\mutations.gql:23:7: Field "reviewText" is not defined by type "Review_Data".
+example\mutations.gql:32:24: Field "userId_expr" is not defined by type "Review_Key". Did you mean "id_expr"?
+example\mutations.gql:32:49: Field "movieId" is not defined by type "Review_Key".
+example\queries.gql:6:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+example\queries.gql:18:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:27:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:32:7: Cannot query field "reviewDate" on type "Review". Did you mean "createdAt"?
+example\queries.gql:33:7: Cannot query field "reviewText" on type "Review".
+example\queries.gql:34:7: Cannot query field "movie" on type "Review". Did you mean "nose"?
+example\queries.gql:44:3: Cannot query field "movie" on type "Query". Did you mean "review"?
+example\queries.gql:68:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+main\mutations.gql:5:215: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:50:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:54:5: Field "name_en" is not defined by type "Spirit_Data". Did you mean "nameEn", "name", or "name_expr"?
+main\mutations.gql:56:5: Field "category_en" is not defined by type "Spirit_Data". Did you mean "categoryEn", "category", "category_expr", or "categoryEn_expr"?
+main\mutations.gql:67:5: Field "description_ko" is not defined by type "Spirit_Data". Did you mean "descriptionKo", "descriptionEn", "descriptionEn_expr", or "descriptionKo_expr"?
+main\mutations.gql:68:5: Field "description_en" is not defined by type "Spirit_Data". Did you mean "descriptionEn", "descriptionKo", "descriptionEn_expr", or "descriptionKo_expr"?
+main\mutations.gql:69:5: Field "pairing_guide_ko" is not defined by type "Spirit_Data". Did you mean "pairingGuideKo", "pairingGuideEn", "pairingGuideEn_expr", or "pairingGuideKo_expr"?
+main\mutations.gql:70:5: Field "pairing_guide_en" is not defined by type "Spirit_Data". Did you mean "pairingGuideEn", "pairingGuideKo", "pairingGuideEn_expr", or "pairingGuideKo_expr"?
+main\mutations.gql:71:5: Field "nose_tags" is not defined by type "Spirit_Data". Did you mean "noseTags"?
+main\mutations.gql:72:5: Field "palate_tags" is not defined by type "Spirit_Data". Did you mean "palateTags"?
+main\mutations.gql:73:5: Field "finish_tags" is not defined by type "Spirit_Data". Did you mean "finishTags" or "noseTags"?
+main\mutations.gql:74:5: Field "tasting_note" is not defined by type "Spirit_Data". Did you mean "tastingNote"?
+main\mutations.gql:101:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:113:14: Variable "$likedBy" of type "[String]" used in position expecting type "[String!]".
+main\mutations.gql:115:16: Variable "$imageUrls" of type "[String]" used in position expecting type "[String!]".
+main\mutations.gql:133:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:144:11: Variable "$tags" of type "[String]" used in position expecting type "[String!]".
+main\mutations.gql:156:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:177:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:199:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0418 12:14:18.079022   11660 load.go:73] Could not load sources: \nErrors: example\\mutations.gql:6:3: Cannot query field \"movie_insert\" on type \"Mutation\". Did you mean \"review_insert\", \"news_insert\", \"review_upsert\", \"spirit_insert\", or \"user_insert\"?\nexample\\mutations.gql:12:44: Field \"username\" is not defined by type \"User_Data\". Did you mean \"nickname\"?\nexample\\mutations.gql:21:7: Field \"movieId\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:23:7: Field \"reviewText\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:32:24: Field \"userId_expr\" is not defined by type \"Review_Key\". Did you mean \"id_expr\"?\nexample\\mutations.gql:32:49: Field \"movieId\" is not defined by type \"Review_Key\".\nexample\\queries.gql:6:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\nexample\\queries.gql:18:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:27:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:32:7: Cannot query field \"reviewDate\" on type \"Review\". Did you mean \"createdAt\"?\nexample\\queries.gql:33:7: Cannot query field \"reviewText\" on type \"Review\".\nexample\\queries.gql:34:7: Cannot query field \"movie\" on type \"Review\". Did you mean \"nose\"?\nexample\\queries.gql:44:3: Cannot query field \"movie\" on type \"Query\". Did you mean \"review\"?\nexample\\queries.gql:68:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\nmain\\mutations.gql:5:215: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:50:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:54:5: Field \"name_en\" is not defined by type \"Spirit_Data\". Did you mean \"nameEn\", \"name\", or \"name_expr\"?\nmain\\mutations.gql:56:5: Field \"category_en\" is not defined by type \"Spirit_Data\". Did you mean \"categoryEn\", \"category\", \"category_expr\", or \"categoryEn_expr\"?\nmain\\mutations.gql:67:5: Field \"description_ko\" is not defined by type \"Spirit_Data\". Did you mean \"descriptionKo\", \"descriptionEn\", \"descriptionEn_expr\", or \"descriptionKo_expr\"?\nmain\\mutations.gql:68:5: Field \"description_en\" is not defined by type \"Spirit_Data\". Did you mean \"descriptionEn\", \"descriptionKo\", \"descriptionEn_expr\", or \"descriptionKo_expr\"?\nmain\\mutations.gql:69:5: Field \"pairing_guide_ko\" is not defined by type \"Spirit_Data\". Did you mean \"pairingGuideKo\", \"pairingGuideEn\", \"pairingGuideEn_expr\", or \"pairingGuideKo_expr\"?\nmain\\mutations.gql:70:5: Field \"pairing_guide_en\" is not defined by type \"Spirit_Data\". Did you mean \"pairingGuideEn\", \"pairingGuideKo\", \"pairingGuideEn_expr\", or \"pairingGuideKo_expr\"?\nmain\\mutations.gql:71:5: Field \"nose_tags\" is not defined by type \"Spirit_Data\". Did you mean \"noseTags\"?\nmain\\mutations.gql:72:5: Field \"palate_tags\" is not defined by type \"Spirit_Data\". Did you mean \"palateTags\"?\nmain\\mutations.gql:73:5: Field \"finish_tags\" is not defined by type \"Spirit_Data\". Did you mean \"finishTags\" or \"noseTags\"?\nmain\\mutations.gql:74:5: Field \"tasting_note\" is not defined by type \"Spirit_Data\". Did you mean \"tastingNote\"?\nmain\\mutations.gql:101:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:113:14: Variable \"$likedBy\" of type \"[String]\" used in position expecting type \"[String!]\".\nmain\\mutations.gql:115:16: Variable \"$imageUrls\" of type \"[String]\" used in position expecting type \"[String!]\".\nmain\\mutations.gql:133:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:144:11: Variable \"$tags\" of type \"[String]\" used in position expecting type \"[String!]\".\nmain\\mutations.gql:156:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:177:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:199:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\n"}}
+[debug] [2026-04-18T03:14:18.085Z] I0418 12:14:18.084636   11660 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\mutation.gql [25229B] main\implicit.gql [1007B] main\input.gql [105602B] main\relation.gql [51992B] main\query.gql [9419B] 
+I0418 12:14:18.084636   11660 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:14:18.084636   11660 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\mutation.gql [25229B] main\\implicit.gql [1007B] main\\input.gql [105602B] main\\relation.gql [51992B] main\\query.gql [9419B] \nI0418 12:14:18.084636   11660 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-18T03:14:28.009Z] I0418 12:14:28.009639   11660 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:14:28.009639   11660 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-18T03:14:28.049Z] W0418 12:14:28.049812   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 5bd9] connector "example" has errors: example\mutations.gql:6:3: Cannot query field "movie_insert" on type "Mutation". Did you mean "review_insert", "news_insert", "review_upsert", "spirit_insert", or "user_insert"?
+example\mutations.gql:12:44: Field "username" is not defined by type "User_Data". Did you mean "nickname"?
+example\mutations.gql:21:7: Field "movieId" is not defined by type "Review_Data".
+example\mutations.gql:23:7: Field "reviewText" is not defined by type "Review_Data".
+example\mutations.gql:32:24: Field "userId_expr" is not defined by type "Review_Key". Did you mean "id_expr"?
+example\mutations.gql:32:49: Field "movieId" is not defined by type "Review_Key".
+example\queries.gql:6:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+example\queries.gql:18:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:27:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:32:7: Cannot query field "reviewDate" on type "Review". Did you mean "createdAt"?
+example\queries.gql:33:7: Cannot query field "reviewText" on type "Review".
+example\queries.gql:34:7: Cannot query field "movie" on type "Review". Did you mean "nose"?
+example\queries.gql:44:3: Cannot query field "movie" on type "Query". Did you mean "review"?
+example\queries.gql:68:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+
+sources: example\mutations.gql [1243B] example\queries.gql [1801B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0418 12:14:28.049812   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 5bd9] connector \"example\" has errors: example\\mutations.gql:6:3: Cannot query field \"movie_insert\" on type \"Mutation\". Did you mean \"review_insert\", \"news_insert\", \"review_upsert\", \"spirit_insert\", or \"user_insert\"?\nexample\\mutations.gql:12:44: Field \"username\" is not defined by type \"User_Data\". Did you mean \"nickname\"?\nexample\\mutations.gql:21:7: Field \"movieId\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:23:7: Field \"reviewText\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:32:24: Field \"userId_expr\" is not defined by type \"Review_Key\". Did you mean \"id_expr\"?\nexample\\mutations.gql:32:49: Field \"movieId\" is not defined by type \"Review_Key\".\nexample\\queries.gql:6:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\nexample\\queries.gql:18:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:27:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:32:7: Cannot query field \"reviewDate\" on type \"Review\". Did you mean \"createdAt\"?\nexample\\queries.gql:33:7: Cannot query field \"reviewText\" on type \"Review\".\nexample\\queries.gql:34:7: Cannot query field \"movie\" on type \"Review\". Did you mean \"nose\"?\nexample\\queries.gql:44:3: Cannot query field \"movie\" on type \"Query\". Did you mean \"review\"?\nexample\\queries.gql:68:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\n\nsources: example\\mutations.gql [1243B] example\\queries.gql [1801B] \n"}}
+[debug] [2026-04-18T03:14:28.050Z] W0418 12:14:28.049812   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 5bd9] connector "main" has errors: main\mutations.gql:5:215: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:50:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:71:15: Variable "$noseTags" of type "[String]" used in position expecting type "[String!]".
+main\mutations.gql:72:17: Variable "$palateTags" of type "[String]" used in position expecting type "[String!]".
+main\mutations.gql:73:17: Variable "$finishTags" of type "[String]" used in position expecting type "[String!]".
+main\mutations.gql:101:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:113:14: Variable "$likedBy" of type "[String]" used in position expecting type "[String!]".
+main\mutations.gql:115:16: Variable "$imageUrls" of type "[String]" used in position expecting type "[String!]".
+main\mutations.gql:133:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:144:11: Variable "$tags" of type "[String]" used in position expecting type "[String!]".
+main\mutations.gql:156:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:177:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:199:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+
+sources: main\mutations.gql [4693B] 
+I0418 12:14:28.049812   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 5bd9] UpdateResources(): done
+Main schema: sources: schema\schema.gql [3252B] 
+Connector "main": sources: main\mutations.gql [4693B] 
+Connector "example": sources: example\mutations.gql [1243B] example\queries.gql [1801B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0418 12:14:28.049812   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 5bd9] connector \"main\" has errors: main\\mutations.gql:5:215: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:50:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:71:15: Variable \"$noseTags\" of type \"[String]\" used in position expecting type \"[String!]\".\nmain\\mutations.gql:72:17: Variable \"$palateTags\" of type \"[String]\" used in position expecting type \"[String!]\".\nmain\\mutations.gql:73:17: Variable \"$finishTags\" of type \"[String]\" used in position expecting type \"[String!]\".\nmain\\mutations.gql:101:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:113:14: Variable \"$likedBy\" of type \"[String]\" used in position expecting type \"[String!]\".\nmain\\mutations.gql:115:16: Variable \"$imageUrls\" of type \"[String]\" used in position expecting type \"[String!]\".\nmain\\mutations.gql:133:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:144:11: Variable \"$tags\" of type \"[String]\" used in position expecting type \"[String!]\".\nmain\\mutations.gql:156:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:177:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:199:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\n\nsources: main\\mutations.gql [4693B] \nI0418 12:14:28.049812   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 5bd9] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [3252B] \nConnector \"main\": sources: main\\mutations.gql [4693B] \nConnector \"example\": sources: example\\mutations.gql [1243B] example\\queries.gql [1801B] \n"}}
+[debug] [2026-04-18T03:14:28.054Z] E0418 12:14:28.053442   11660 load.go:73] Could not load sources: 
+Errors: example\mutations.gql:6:3: Cannot query field "movie_insert" on type "Mutation". Did you mean "review_insert", "news_insert", "review_upsert", "spirit_insert", or "user_insert"?
+example\mutations.gql:12:44: Field "username" is not defined by type "User_Data". Did you mean "nickname"?
+example\mutations.gql:21:7: Field "movieId" is not defined by type "Review_Data".
+example\mutations.gql:23:7: Field "reviewText" is not defined by type "Review_Data".
+example\mutations.gql:32:24: Field "userId_expr" is not defined by type "Review_Key". Did you mean "id_expr"?
+example\mutations.gql:32:49: Field "movieId" is not defined by type "Review_Key".
+example\queries.gql:6:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+example\queries.gql:18:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:27:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:32:7: Cannot query field "reviewDate" on type "Review". Did you mean "createdAt"?
+example\queries.gql:33:7: Cannot query field "reviewText" on type "Review".
+example\queries.gql:34:7: Cannot query field "movie" on type "Review". Did you mean "nose"?
+example\queries.gql:44:3: Cannot query field "movie" on type "Query". Did you mean "review"?
+example\queries.gql:68:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+main\mutations.gql:5:215: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:50:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:71:15: Variable "$noseTags" of type "[String]" used in position expecting type "[String!]".
+main\mutations.gql:72:17: Variable "$palateTags" of type "[String]" used in position expecting type "[String!]".
+main\mutations.gql:73:17: Variable "$finishTags" of type "[String]" used in position expecting type "[String!]".
+main\mutations.gql:101:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:113:14: Variable "$likedBy" of type "[String]" used in position expecting type "[String!]".
+main\mutations.gql:115:16: Variable "$imageUrls" of type "[String]" used in position expecting type "[String!]".
+main\mutations.gql:133:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:144:11: Variable "$tags" of type "[String]" used in position expecting type "[String!]".
+main\mutations.gql:156:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:177:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:199:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0418 12:14:28.053442   11660 load.go:73] Could not load sources: \nErrors: example\\mutations.gql:6:3: Cannot query field \"movie_insert\" on type \"Mutation\". Did you mean \"review_insert\", \"news_insert\", \"review_upsert\", \"spirit_insert\", or \"user_insert\"?\nexample\\mutations.gql:12:44: Field \"username\" is not defined by type \"User_Data\". Did you mean \"nickname\"?\nexample\\mutations.gql:21:7: Field \"movieId\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:23:7: Field \"reviewText\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:32:24: Field \"userId_expr\" is not defined by type \"Review_Key\". Did you mean \"id_expr\"?\nexample\\mutations.gql:32:49: Field \"movieId\" is not defined by type \"Review_Key\".\nexample\\queries.gql:6:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\nexample\\queries.gql:18:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:27:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:32:7: Cannot query field \"reviewDate\" on type \"Review\". Did you mean \"createdAt\"?\nexample\\queries.gql:33:7: Cannot query field \"reviewText\" on type \"Review\".\nexample\\queries.gql:34:7: Cannot query field \"movie\" on type \"Review\". Did you mean \"nose\"?\nexample\\queries.gql:44:3: Cannot query field \"movie\" on type \"Query\". Did you mean \"review\"?\nexample\\queries.gql:68:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\nmain\\mutations.gql:5:215: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:50:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:71:15: Variable \"$noseTags\" of type \"[String]\" used in position expecting type \"[String!]\".\nmain\\mutations.gql:72:17: Variable \"$palateTags\" of type \"[String]\" used in position expecting type \"[String!]\".\nmain\\mutations.gql:73:17: Variable \"$finishTags\" of type \"[String]\" used in position expecting type \"[String!]\".\nmain\\mutations.gql:101:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:113:14: Variable \"$likedBy\" of type \"[String]\" used in position expecting type \"[String!]\".\nmain\\mutations.gql:115:16: Variable \"$imageUrls\" of type \"[String]\" used in position expecting type \"[String!]\".\nmain\\mutations.gql:133:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:144:11: Variable \"$tags\" of type \"[String]\" used in position expecting type \"[String!]\".\nmain\\mutations.gql:156:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:177:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:199:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\n"}}
+[debug] [2026-04-18T03:14:28.058Z] I0418 12:14:28.057958   11660 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\mutation.gql [25229B] prelude.gql [82799B] main\implicit.gql [1007B] main\input.gql [105602B] main\relation.gql [51992B] main\query.gql [9419B] 
+I0418 12:14:28.057958   11660 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:14:28.057958   11660 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\mutation.gql [25229B] prelude.gql [82799B] main\\implicit.gql [1007B] main\\input.gql [105602B] main\\relation.gql [51992B] main\\query.gql [9419B] \nI0418 12:14:28.057958   11660 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-18T03:15:18.009Z] I0418 12:15:18.008700   11660 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:15:18.008700   11660 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-18T03:15:18.055Z] W0418 12:15:18.053523   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub bd2e] connector "example" has errors: example\mutations.gql:6:3: Cannot query field "movie_insert" on type "Mutation". Did you mean "review_insert", "news_insert", "review_upsert", "spirit_insert", or "user_insert"?
+example\mutations.gql:12:44: Field "username" is not defined by type "User_Data". Did you mean "nickname"?
+example\mutations.gql:21:7: Field "movieId" is not defined by type "Review_Data".
+example\mutations.gql:23:7: Field "reviewText" is not defined by type "Review_Data".
+example\mutations.gql:32:24: Field "userId_expr" is not defined by type "Review_Key". Did you mean "id_expr"?
+example\mutations.gql:32:49: Field "movieId" is not defined by type "Review_Key".
+example\queries.gql:6:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+example\queries.gql:18:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:27:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:32:7: Cannot query field "reviewDate" on type "Review". Did you mean "createdAt"?
+example\queries.gql:33:7: Cannot query field "reviewText" on type "Review".
+example\queries.gql:34:7: Cannot query field "movie" on type "Review". Did you mean "nose"?
+example\queries.gql:44:3: Cannot query field "movie" on type "Query". Did you mean "review"?
+example\queries.gql:68:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+
+sources: example\mutations.gql [1243B] example\queries.gql [1801B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0418 12:15:18.053523   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub bd2e] connector \"example\" has errors: example\\mutations.gql:6:3: Cannot query field \"movie_insert\" on type \"Mutation\". Did you mean \"review_insert\", \"news_insert\", \"review_upsert\", \"spirit_insert\", or \"user_insert\"?\nexample\\mutations.gql:12:44: Field \"username\" is not defined by type \"User_Data\". Did you mean \"nickname\"?\nexample\\mutations.gql:21:7: Field \"movieId\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:23:7: Field \"reviewText\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:32:24: Field \"userId_expr\" is not defined by type \"Review_Key\". Did you mean \"id_expr\"?\nexample\\mutations.gql:32:49: Field \"movieId\" is not defined by type \"Review_Key\".\nexample\\queries.gql:6:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\nexample\\queries.gql:18:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:27:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:32:7: Cannot query field \"reviewDate\" on type \"Review\". Did you mean \"createdAt\"?\nexample\\queries.gql:33:7: Cannot query field \"reviewText\" on type \"Review\".\nexample\\queries.gql:34:7: Cannot query field \"movie\" on type \"Review\". Did you mean \"nose\"?\nexample\\queries.gql:44:3: Cannot query field \"movie\" on type \"Query\". Did you mean \"review\"?\nexample\\queries.gql:68:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\n\nsources: example\\mutations.gql [1243B] example\\queries.gql [1801B] \n"}}
+[debug] [2026-04-18T03:15:18.056Z] W0418 12:15:18.053523   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub bd2e] connector "main" has errors: main\mutations.gql:5:215: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:50:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:101:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:133:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:156:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:177:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:199:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+
+sources: main\mutations.gql [4699B] 
+I0418 12:15:18.053523   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub bd2e] UpdateResources(): done
+Main schema: sources: schema\schema.gql [3258B] 
+Connector "example": sources: example\mutations.gql [1243B] example\queries.gql [1801B] 
+Connector "main": sources: main\mutations.gql [4699B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0418 12:15:18.053523   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub bd2e] connector \"main\" has errors: main\\mutations.gql:5:215: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:50:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:101:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:133:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:156:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:177:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:199:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\n\nsources: main\\mutations.gql [4699B] \nI0418 12:15:18.053523   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub bd2e] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [3258B] \nConnector \"example\": sources: example\\mutations.gql [1243B] example\\queries.gql [1801B] \nConnector \"main\": sources: main\\mutations.gql [4699B] \n"}}
+[debug] [2026-04-18T03:15:18.058Z] E0418 12:15:18.056945   11660 load.go:73] Could not load sources: 
+Errors: example\mutations.gql:6:3: Cannot query field "movie_insert" on type "Mutation". Did you mean "review_insert", "news_insert", "review_upsert", "spirit_insert", or "user_insert"?
+example\mutations.gql:12:44: Field "username" is not defined by type "User_Data". Did you mean "nickname"?
+example\mutations.gql:21:7: Field "movieId" is not defined by type "Review_Data".
+example\mutations.gql:23:7: Field "reviewText" is not defined by type "Review_Data".
+example\mutations.gql:32:24: Field "userId_expr" is not defined by type "Review_Key". Did you mean "id_expr"?
+example\mutations.gql:32:49: Field "movieId" is not defined by type "Review_Key".
+example\queries.gql:6:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+example\queries.gql:18:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:27:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:32:7: Cannot query field "reviewDate" on type "Review". Did you mean "createdAt"?
+example\queries.gql:33:7: Cannot query field "reviewText" on type "Review".
+example\queries.gql:34:7: Cannot query field "movie" on type "Review". Did you mean "nose"?
+example\queries.gql:44:3: Cannot query field "movie" on type "Query". Did you mean "review"?
+example\queries.gql:68:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+main\mutations.gql:5:215: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:50:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:101:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:133:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:156:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:177:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:199:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0418 12:15:18.056945   11660 load.go:73] Could not load sources: \nErrors: example\\mutations.gql:6:3: Cannot query field \"movie_insert\" on type \"Mutation\". Did you mean \"review_insert\", \"news_insert\", \"review_upsert\", \"spirit_insert\", or \"user_insert\"?\nexample\\mutations.gql:12:44: Field \"username\" is not defined by type \"User_Data\". Did you mean \"nickname\"?\nexample\\mutations.gql:21:7: Field \"movieId\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:23:7: Field \"reviewText\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:32:24: Field \"userId_expr\" is not defined by type \"Review_Key\". Did you mean \"id_expr\"?\nexample\\mutations.gql:32:49: Field \"movieId\" is not defined by type \"Review_Key\".\nexample\\queries.gql:6:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\nexample\\queries.gql:18:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:27:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:32:7: Cannot query field \"reviewDate\" on type \"Review\". Did you mean \"createdAt\"?\nexample\\queries.gql:33:7: Cannot query field \"reviewText\" on type \"Review\".\nexample\\queries.gql:34:7: Cannot query field \"movie\" on type \"Review\". Did you mean \"nose\"?\nexample\\queries.gql:44:3: Cannot query field \"movie\" on type \"Query\". Did you mean \"review\"?\nexample\\queries.gql:68:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\nmain\\mutations.gql:5:215: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:50:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:101:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:133:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:156:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:177:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:199:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\n"}}
+[debug] [2026-04-18T03:15:18.063Z] I0418 12:15:18.062121   11660 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\mutation.gql [25229B] main\implicit.gql [1007B] main\input.gql [105620B] prelude.gql [82799B] main\relation.gql [51992B] main\query.gql [9419B] 
+I0418 12:15:18.062121   11660 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:15:18.062121   11660 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\mutation.gql [25229B] main\\implicit.gql [1007B] main\\input.gql [105620B] prelude.gql [82799B] main\\relation.gql [51992B] main\\query.gql [9419B] \nI0418 12:15:18.062121   11660 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-18T03:15:48.008Z] I0418 12:15:48.007920   11660 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:15:48.007920   11660 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-18T03:15:48.031Z] W0418 12:15:48.030451   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 9e20] connector "example" has errors: example\mutations.gql:6:3: Cannot query field "movie_insert" on type "Mutation". Did you mean "review_insert", "news_insert", "review_upsert", "spirit_insert", or "user_insert"?
+example\mutations.gql:12:44: Field "username" is not defined by type "User_Data". Did you mean "nickname"?
+example\mutations.gql:21:7: Field "movieId" is not defined by type "Review_Data".
+example\mutations.gql:23:7: Field "reviewText" is not defined by type "Review_Data".
+example\mutations.gql:32:24: Field "userId_expr" is not defined by type "Review_Key". Did you mean "id_expr"?
+example\mutations.gql:32:49: Field "movieId" is not defined by type "Review_Key".
+example\queries.gql:6:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+example\queries.gql:18:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:27:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:32:7: Cannot query field "reviewDate" on type "Review". Did you mean "createdAt"?
+example\queries.gql:33:7: Cannot query field "reviewText" on type "Review".
+example\queries.gql:34:7: Cannot query field "movie" on type "Review". Did you mean "nose"?
+example\queries.gql:44:3: Cannot query field "movie" on type "Query". Did you mean "review"?
+example\queries.gql:68:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+
+sources: example\mutations.gql [1243B] example\queries.gql [1801B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0418 12:15:48.030451   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 9e20] connector \"example\" has errors: example\\mutations.gql:6:3: Cannot query field \"movie_insert\" on type \"Mutation\". Did you mean \"review_insert\", \"news_insert\", \"review_upsert\", \"spirit_insert\", or \"user_insert\"?\nexample\\mutations.gql:12:44: Field \"username\" is not defined by type \"User_Data\". Did you mean \"nickname\"?\nexample\\mutations.gql:21:7: Field \"movieId\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:23:7: Field \"reviewText\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:32:24: Field \"userId_expr\" is not defined by type \"Review_Key\". Did you mean \"id_expr\"?\nexample\\mutations.gql:32:49: Field \"movieId\" is not defined by type \"Review_Key\".\nexample\\queries.gql:6:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\nexample\\queries.gql:18:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:27:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:32:7: Cannot query field \"reviewDate\" on type \"Review\". Did you mean \"createdAt\"?\nexample\\queries.gql:33:7: Cannot query field \"reviewText\" on type \"Review\".\nexample\\queries.gql:34:7: Cannot query field \"movie\" on type \"Review\". Did you mean \"nose\"?\nexample\\queries.gql:44:3: Cannot query field \"movie\" on type \"Query\". Did you mean \"review\"?\nexample\\queries.gql:68:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\n\nsources: example\\mutations.gql [1243B] example\\queries.gql [1801B] \n"}}
+[debug] [2026-04-18T03:15:48.037Z] W0418 12:15:48.037157   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 9e20] connector "main" has errors: main\mutations.gql:177:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:199:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+
+sources: main\mutations.gql [4694B] 
+I0418 12:15:48.037157   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 9e20] UpdateResources(): done
+Main schema: sources: schema\schema.gql [3258B] 
+Connector "example": sources: example\mutations.gql [1243B] example\queries.gql [1801B] 
+Connector "main": sources: main\mutations.gql [4694B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0418 12:15:48.037157   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 9e20] connector \"main\" has errors: main\\mutations.gql:177:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:199:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\n\nsources: main\\mutations.gql [4694B] \nI0418 12:15:48.037157   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 9e20] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [3258B] \nConnector \"example\": sources: example\\mutations.gql [1243B] example\\queries.gql [1801B] \nConnector \"main\": sources: main\\mutations.gql [4694B] \n"}}
+[debug] [2026-04-18T03:15:48.041Z] E0418 12:15:48.040521   11660 load.go:73] Could not load sources: 
+Errors: example\mutations.gql:6:3: Cannot query field "movie_insert" on type "Mutation". Did you mean "review_insert", "news_insert", "review_upsert", "spirit_insert", or "user_insert"?
+example\mutations.gql:12:44: Field "username" is not defined by type "User_Data". Did you mean "nickname"?
+example\mutations.gql:21:7: Field "movieId" is not defined by type "Review_Data".
+example\mutations.gql:23:7: Field "reviewText" is not defined by type "Review_Data".
+example\mutations.gql:32:24: Field "userId_expr" is not defined by type "Review_Key". Did you mean "id_expr"?
+example\mutations.gql:32:49: Field "movieId" is not defined by type "Review_Key".
+example\queries.gql:6:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+example\queries.gql:18:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:27:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:32:7: Cannot query field "reviewDate" on type "Review". Did you mean "createdAt"?
+example\queries.gql:33:7: Cannot query field "reviewText" on type "Review".
+example\queries.gql:34:7: Cannot query field "movie" on type "Review". Did you mean "nose"?
+example\queries.gql:44:3: Cannot query field "movie" on type "Query". Did you mean "review"?
+example\queries.gql:68:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+main\mutations.gql:177:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:199:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0418 12:15:48.040521   11660 load.go:73] Could not load sources: \nErrors: example\\mutations.gql:6:3: Cannot query field \"movie_insert\" on type \"Mutation\". Did you mean \"review_insert\", \"news_insert\", \"review_upsert\", \"spirit_insert\", or \"user_insert\"?\nexample\\mutations.gql:12:44: Field \"username\" is not defined by type \"User_Data\". Did you mean \"nickname\"?\nexample\\mutations.gql:21:7: Field \"movieId\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:23:7: Field \"reviewText\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:32:24: Field \"userId_expr\" is not defined by type \"Review_Key\". Did you mean \"id_expr\"?\nexample\\mutations.gql:32:49: Field \"movieId\" is not defined by type \"Review_Key\".\nexample\\queries.gql:6:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\nexample\\queries.gql:18:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:27:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:32:7: Cannot query field \"reviewDate\" on type \"Review\". Did you mean \"createdAt\"?\nexample\\queries.gql:33:7: Cannot query field \"reviewText\" on type \"Review\".\nexample\\queries.gql:34:7: Cannot query field \"movie\" on type \"Review\". Did you mean \"nose\"?\nexample\\queries.gql:44:3: Cannot query field \"movie\" on type \"Query\". Did you mean \"review\"?\nexample\\queries.gql:68:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\nmain\\mutations.gql:177:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:199:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\n"}}
+[debug] [2026-04-18T03:15:48.047Z] I0418 12:15:48.046210   11660 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\implicit.gql [1007B] main\input.gql [105620B] main\relation.gql [51992B] main\query.gql [9419B] main\mutation.gql [25229B] 
+I0418 12:15:48.046753   11660 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:15:48.046210   11660 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\implicit.gql [1007B] main\\input.gql [105620B] main\\relation.gql [51992B] main\\query.gql [9419B] main\\mutation.gql [25229B] \nI0418 12:15:48.046753   11660 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-18T03:16:18.009Z] I0418 12:16:18.009419   11660 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:16:18.009419   11660 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-18T03:16:18.034Z] W0418 12:16:18.033976   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 7e83] connector "example" has errors: example\mutations.gql:6:3: Cannot query field "movie_insert" on type "Mutation". Did you mean "review_insert", "news_insert", "review_upsert", "spirit_insert", or "user_insert"?
+example\mutations.gql:12:44: Field "username" is not defined by type "User_Data". Did you mean "nickname"?
+example\mutations.gql:21:7: Field "movieId" is not defined by type "Review_Data".
+example\mutations.gql:23:7: Field "reviewText" is not defined by type "Review_Data".
+example\mutations.gql:32:24: Field "userId_expr" is not defined by type "Review_Key". Did you mean "id_expr"?
+example\mutations.gql:32:49: Field "movieId" is not defined by type "Review_Key".
+example\queries.gql:6:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+example\queries.gql:18:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:27:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:32:7: Cannot query field "reviewDate" on type "Review". Did you mean "createdAt"?
+example\queries.gql:33:7: Cannot query field "reviewText" on type "Review".
+example\queries.gql:34:7: Cannot query field "movie" on type "Review". Did you mean "nose"?
+example\queries.gql:44:3: Cannot query field "movie" on type "Query". Did you mean "review"?
+example\queries.gql:68:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+
+sources: example\mutations.gql [1243B] example\queries.gql [1801B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0418 12:16:18.033976   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 7e83] connector \"example\" has errors: example\\mutations.gql:6:3: Cannot query field \"movie_insert\" on type \"Mutation\". Did you mean \"review_insert\", \"news_insert\", \"review_upsert\", \"spirit_insert\", or \"user_insert\"?\nexample\\mutations.gql:12:44: Field \"username\" is not defined by type \"User_Data\". Did you mean \"nickname\"?\nexample\\mutations.gql:21:7: Field \"movieId\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:23:7: Field \"reviewText\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:32:24: Field \"userId_expr\" is not defined by type \"Review_Key\". Did you mean \"id_expr\"?\nexample\\mutations.gql:32:49: Field \"movieId\" is not defined by type \"Review_Key\".\nexample\\queries.gql:6:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\nexample\\queries.gql:18:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:27:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:32:7: Cannot query field \"reviewDate\" on type \"Review\". Did you mean \"createdAt\"?\nexample\\queries.gql:33:7: Cannot query field \"reviewText\" on type \"Review\".\nexample\\queries.gql:34:7: Cannot query field \"movie\" on type \"Review\". Did you mean \"nose\"?\nexample\\queries.gql:44:3: Cannot query field \"movie\" on type \"Query\". Did you mean \"review\"?\nexample\\queries.gql:68:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\n\nsources: example\\mutations.gql [1243B] example\\queries.gql [1801B] \n"}}
+[debug] [2026-04-18T03:16:18.039Z] W0418 12:16:18.038232   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 7e83] connector "main" has errors: main\mutations.gql:177:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:199:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+
+sources: main\mutations.gql [4589B] 
+I0418 12:16:18.038232   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 7e83] UpdateResources(): done
+Main schema: sources: schema\schema.gql [3258B] 
+Connector "example": sources: example\queries.gql [1801B] example\mutations.gql [1243B] 
+Connector "main": sources: main\mutations.gql [4589B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0418 12:16:18.038232   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 7e83] connector \"main\" has errors: main\\mutations.gql:177:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:199:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\n\nsources: main\\mutations.gql [4589B] \nI0418 12:16:18.038232   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 7e83] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [3258B] \nConnector \"example\": sources: example\\queries.gql [1801B] example\\mutations.gql [1243B] \nConnector \"main\": sources: main\\mutations.gql [4589B] \n"}}
+[debug] [2026-04-18T03:16:18.045Z] E0418 12:16:18.045141   11660 load.go:73] Could not load sources: 
+Errors: example\mutations.gql:6:3: Cannot query field "movie_insert" on type "Mutation". Did you mean "review_insert", "news_insert", "review_upsert", "spirit_insert", or "user_insert"?
+example\mutations.gql:12:44: Field "username" is not defined by type "User_Data". Did you mean "nickname"?
+example\mutations.gql:21:7: Field "movieId" is not defined by type "Review_Data".
+example\mutations.gql:23:7: Field "reviewText" is not defined by type "Review_Data".
+example\mutations.gql:32:24: Field "userId_expr" is not defined by type "Review_Key". Did you mean "id_expr"?
+example\mutations.gql:32:49: Field "movieId" is not defined by type "Review_Key".
+example\queries.gql:6:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+example\queries.gql:18:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:27:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:32:7: Cannot query field "reviewDate" on type "Review". Did you mean "createdAt"?
+example\queries.gql:33:7: Cannot query field "reviewText" on type "Review".
+example\queries.gql:34:7: Cannot query field "movie" on type "Review". Did you mean "nose"?
+example\queries.gql:44:3: Cannot query field "movie" on type "Query". Did you mean "review"?
+example\queries.gql:68:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+main\mutations.gql:177:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+main\mutations.gql:199:16: Value "NO_AUTH" does not exist in "AccessLevel" enum.
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0418 12:16:18.045141   11660 load.go:73] Could not load sources: \nErrors: example\\mutations.gql:6:3: Cannot query field \"movie_insert\" on type \"Mutation\". Did you mean \"review_insert\", \"news_insert\", \"review_upsert\", \"spirit_insert\", or \"user_insert\"?\nexample\\mutations.gql:12:44: Field \"username\" is not defined by type \"User_Data\". Did you mean \"nickname\"?\nexample\\mutations.gql:21:7: Field \"movieId\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:23:7: Field \"reviewText\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:32:24: Field \"userId_expr\" is not defined by type \"Review_Key\". Did you mean \"id_expr\"?\nexample\\mutations.gql:32:49: Field \"movieId\" is not defined by type \"Review_Key\".\nexample\\queries.gql:6:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\nexample\\queries.gql:18:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:27:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:32:7: Cannot query field \"reviewDate\" on type \"Review\". Did you mean \"createdAt\"?\nexample\\queries.gql:33:7: Cannot query field \"reviewText\" on type \"Review\".\nexample\\queries.gql:34:7: Cannot query field \"movie\" on type \"Review\". Did you mean \"nose\"?\nexample\\queries.gql:44:3: Cannot query field \"movie\" on type \"Query\". Did you mean \"review\"?\nexample\\queries.gql:68:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\nmain\\mutations.gql:177:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\nmain\\mutations.gql:199:16: Value \"NO_AUTH\" does not exist in \"AccessLevel\" enum.\n"}}
+[debug] [2026-04-18T03:16:18.053Z] I0418 12:16:18.051693   11660 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\implicit.gql [1007B] main\input.gql [105620B] main\relation.gql [51992B] main\query.gql [9419B] main\mutation.gql [25229B] 
+I0418 12:16:18.051693   11660 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:16:18.051693   11660 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\implicit.gql [1007B] main\\input.gql [105620B] main\\relation.gql [51992B] main\\query.gql [9419B] main\\mutation.gql [25229B] \nI0418 12:16:18.051693   11660 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-18T03:16:38.008Z] I0418 12:16:38.008430   11660 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:16:38.008430   11660 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-18T03:16:38.062Z] W0418 12:16:38.057667   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub b1d0] connector "example" has errors: example\mutations.gql:6:3: Cannot query field "movie_insert" on type "Mutation". Did you mean "review_insert", "news_insert", "review_upsert", "spirit_insert", or "user_insert"?
+example\mutations.gql:12:44: Field "username" is not defined by type "User_Data". Did you mean "nickname"?
+example\mutations.gql:21:7: Field "movieId" is not defined by type "Review_Data".
+example\mutations.gql:23:7: Field "reviewText" is not defined by type "Review_Data".
+example\mutations.gql:32:24: Field "userId_expr" is not defined by type "Review_Key". Did you mean "id_expr"?
+example\mutations.gql:32:49: Field "movieId" is not defined by type "Review_Key".
+example\queries.gql:6:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+example\queries.gql:18:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:27:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:32:7: Cannot query field "reviewDate" on type "Review". Did you mean "createdAt"?
+example\queries.gql:33:7: Cannot query field "reviewText" on type "Review".
+example\queries.gql:34:7: Cannot query field "movie" on type "Review". Did you mean "nose"?
+example\queries.gql:44:3: Cannot query field "movie" on type "Query". Did you mean "review"?
+example\queries.gql:68:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+
+sources: example\mutations.gql [1243B] example\queries.gql [1801B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0418 12:16:38.057667   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub b1d0] connector \"example\" has errors: example\\mutations.gql:6:3: Cannot query field \"movie_insert\" on type \"Mutation\". Did you mean \"review_insert\", \"news_insert\", \"review_upsert\", \"spirit_insert\", or \"user_insert\"?\nexample\\mutations.gql:12:44: Field \"username\" is not defined by type \"User_Data\". Did you mean \"nickname\"?\nexample\\mutations.gql:21:7: Field \"movieId\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:23:7: Field \"reviewText\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:32:24: Field \"userId_expr\" is not defined by type \"Review_Key\". Did you mean \"id_expr\"?\nexample\\mutations.gql:32:49: Field \"movieId\" is not defined by type \"Review_Key\".\nexample\\queries.gql:6:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\nexample\\queries.gql:18:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:27:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:32:7: Cannot query field \"reviewDate\" on type \"Review\". Did you mean \"createdAt\"?\nexample\\queries.gql:33:7: Cannot query field \"reviewText\" on type \"Review\".\nexample\\queries.gql:34:7: Cannot query field \"movie\" on type \"Review\". Did you mean \"nose\"?\nexample\\queries.gql:44:3: Cannot query field \"movie\" on type \"Query\". Did you mean \"review\"?\nexample\\queries.gql:68:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\n\nsources: example\\mutations.gql [1243B] example\\queries.gql [1801B] \n"}}
+[debug] [2026-04-18T03:16:38.071Z] I0418 12:16:38.069383   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub b1d0] UpdateResources(): done
+Main schema: sources: schema\schema.gql [3258B] 
+Connector "main": sources: main\mutations.gql [4545B] 
+Connector "example": sources: example\mutations.gql [1243B] example\queries.gql [1801B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:16:38.069383   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub b1d0] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [3258B] \nConnector \"main\": sources: main\\mutations.gql [4545B] \nConnector \"example\": sources: example\\mutations.gql [1243B] example\\queries.gql [1801B] \n"}}
+[debug] [2026-04-18T03:16:38.077Z] E0418 12:16:38.074688   11660 load.go:73] Could not load sources: 
+Errors: example\mutations.gql:6:3: Cannot query field "movie_insert" on type "Mutation". Did you mean "review_insert", "news_insert", "review_upsert", "spirit_insert", or "user_insert"?
+example\mutations.gql:12:44: Field "username" is not defined by type "User_Data". Did you mean "nickname"?
+example\mutations.gql:21:7: Field "movieId" is not defined by type "Review_Data".
+example\mutations.gql:23:7: Field "reviewText" is not defined by type "Review_Data".
+example\mutations.gql:32:24: Field "userId_expr" is not defined by type "Review_Key". Did you mean "id_expr"?
+example\mutations.gql:32:49: Field "movieId" is not defined by type "Review_Key".
+example\queries.gql:6:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+example\queries.gql:18:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:27:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:32:7: Cannot query field "reviewDate" on type "Review". Did you mean "createdAt"?
+example\queries.gql:33:7: Cannot query field "reviewText" on type "Review".
+example\queries.gql:34:7: Cannot query field "movie" on type "Review". Did you mean "nose"?
+example\queries.gql:44:3: Cannot query field "movie" on type "Query". Did you mean "review"?
+example\queries.gql:68:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0418 12:16:38.074688   11660 load.go:73] Could not load sources: \nErrors: example\\mutations.gql:6:3: Cannot query field \"movie_insert\" on type \"Mutation\". Did you mean \"review_insert\", \"news_insert\", \"review_upsert\", \"spirit_insert\", or \"user_insert\"?\nexample\\mutations.gql:12:44: Field \"username\" is not defined by type \"User_Data\". Did you mean \"nickname\"?\nexample\\mutations.gql:21:7: Field \"movieId\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:23:7: Field \"reviewText\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:32:24: Field \"userId_expr\" is not defined by type \"Review_Key\". Did you mean \"id_expr\"?\nexample\\mutations.gql:32:49: Field \"movieId\" is not defined by type \"Review_Key\".\nexample\\queries.gql:6:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\nexample\\queries.gql:18:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:27:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:32:7: Cannot query field \"reviewDate\" on type \"Review\". Did you mean \"createdAt\"?\nexample\\queries.gql:33:7: Cannot query field \"reviewText\" on type \"Review\".\nexample\\queries.gql:34:7: Cannot query field \"movie\" on type \"Review\". Did you mean \"nose\"?\nexample\\queries.gql:44:3: Cannot query field \"movie\" on type \"Query\". Did you mean \"review\"?\nexample\\queries.gql:68:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\n"}}
+[debug] [2026-04-18T03:16:38.089Z] I0418 12:16:38.089464   11660 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\query.gql [9419B] main\mutation.gql [25229B] main\implicit.gql [1007B] main\input.gql [105620B] main\relation.gql [51992B] 
+I0418 12:16:38.089464   11660 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:16:38.089464   11660 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\query.gql [9419B] main\\mutation.gql [25229B] main\\implicit.gql [1007B] main\\input.gql [105620B] main\\relation.gql [51992B] \nI0418 12:16:38.089464   11660 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-18T03:17:08.009Z] I0418 12:17:08.008635   11660 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:17:08.008635   11660 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-18T03:17:08.042Z] W0418 12:17:08.041957   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub e293] connector "example" has errors: example\mutations.gql:6:3: Cannot query field "movie_insert" on type "Mutation". Did you mean "review_insert", "news_insert", "review_upsert", "spirit_insert", or "user_insert"?
+example\mutations.gql:12:44: Field "username" is not defined by type "User_Data". Did you mean "nickname"?
+example\mutations.gql:21:7: Field "movieId" is not defined by type "Review_Data".
+example\mutations.gql:23:7: Field "reviewText" is not defined by type "Review_Data".
+example\mutations.gql:32:24: Field "userId_expr" is not defined by type "Review_Key". Did you mean "id_expr"?
+example\mutations.gql:32:49: Field "movieId" is not defined by type "Review_Key".
+example\queries.gql:6:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+example\queries.gql:18:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:27:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:32:7: Cannot query field "reviewDate" on type "Review". Did you mean "createdAt"?
+example\queries.gql:33:7: Cannot query field "reviewText" on type "Review".
+example\queries.gql:34:7: Cannot query field "movie" on type "Review". Did you mean "nose"?
+example\queries.gql:44:3: Cannot query field "movie" on type "Query". Did you mean "review"?
+example\queries.gql:68:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+
+sources: example\mutations.gql [1243B] example\queries.gql [1801B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0418 12:17:08.041957   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub e293] connector \"example\" has errors: example\\mutations.gql:6:3: Cannot query field \"movie_insert\" on type \"Mutation\". Did you mean \"review_insert\", \"news_insert\", \"review_upsert\", \"spirit_insert\", or \"user_insert\"?\nexample\\mutations.gql:12:44: Field \"username\" is not defined by type \"User_Data\". Did you mean \"nickname\"?\nexample\\mutations.gql:21:7: Field \"movieId\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:23:7: Field \"reviewText\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:32:24: Field \"userId_expr\" is not defined by type \"Review_Key\". Did you mean \"id_expr\"?\nexample\\mutations.gql:32:49: Field \"movieId\" is not defined by type \"Review_Key\".\nexample\\queries.gql:6:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\nexample\\queries.gql:18:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:27:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:32:7: Cannot query field \"reviewDate\" on type \"Review\". Did you mean \"createdAt\"?\nexample\\queries.gql:33:7: Cannot query field \"reviewText\" on type \"Review\".\nexample\\queries.gql:34:7: Cannot query field \"movie\" on type \"Review\". Did you mean \"nose\"?\nexample\\queries.gql:44:3: Cannot query field \"movie\" on type \"Query\". Did you mean \"review\"?\nexample\\queries.gql:68:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\n\nsources: example\\mutations.gql [1243B] example\\queries.gql [1801B] \n"}}
+[debug] [2026-04-18T03:17:08.048Z] I0418 12:17:08.047616   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub e293] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2923B] 
+Connector "example": sources: example\mutations.gql [1243B] example\queries.gql [1801B] 
+Connector "main": sources: main\mutations.gql [4545B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:17:08.047616   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub e293] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2923B] \nConnector \"example\": sources: example\\mutations.gql [1243B] example\\queries.gql [1801B] \nConnector \"main\": sources: main\\mutations.gql [4545B] \n"}}
+[debug] [2026-04-18T03:17:08.050Z] E0418 12:17:08.050050   11660 load.go:73] Could not load sources: 
+Errors: example\mutations.gql:6:3: Cannot query field "movie_insert" on type "Mutation". Did you mean "review_insert", "news_insert", "review_upsert", "spirit_insert", or "user_insert"?
+example\mutations.gql:12:44: Field "username" is not defined by type "User_Data". Did you mean "nickname"?
+example\mutations.gql:21:7: Field "movieId" is not defined by type "Review_Data".
+example\mutations.gql:23:7: Field "reviewText" is not defined by type "Review_Data".
+example\mutations.gql:32:24: Field "userId_expr" is not defined by type "Review_Key". Did you mean "id_expr"?
+example\mutations.gql:32:49: Field "movieId" is not defined by type "Review_Key".
+example\queries.gql:6:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+example\queries.gql:18:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:27:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:32:7: Cannot query field "reviewDate" on type "Review". Did you mean "createdAt"?
+example\queries.gql:33:7: Cannot query field "reviewText" on type "Review".
+example\queries.gql:34:7: Cannot query field "movie" on type "Review". Did you mean "nose"?
+example\queries.gql:44:3: Cannot query field "movie" on type "Query". Did you mean "review"?
+example\queries.gql:68:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0418 12:17:08.050050   11660 load.go:73] Could not load sources: \nErrors: example\\mutations.gql:6:3: Cannot query field \"movie_insert\" on type \"Mutation\". Did you mean \"review_insert\", \"news_insert\", \"review_upsert\", \"spirit_insert\", or \"user_insert\"?\nexample\\mutations.gql:12:44: Field \"username\" is not defined by type \"User_Data\". Did you mean \"nickname\"?\nexample\\mutations.gql:21:7: Field \"movieId\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:23:7: Field \"reviewText\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:32:24: Field \"userId_expr\" is not defined by type \"Review_Key\". Did you mean \"id_expr\"?\nexample\\mutations.gql:32:49: Field \"movieId\" is not defined by type \"Review_Key\".\nexample\\queries.gql:6:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\nexample\\queries.gql:18:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:27:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:32:7: Cannot query field \"reviewDate\" on type \"Review\". Did you mean \"createdAt\"?\nexample\\queries.gql:33:7: Cannot query field \"reviewText\" on type \"Review\".\nexample\\queries.gql:34:7: Cannot query field \"movie\" on type \"Review\". Did you mean \"nose\"?\nexample\\queries.gql:44:3: Cannot query field \"movie\" on type \"Query\". Did you mean \"review\"?\nexample\\queries.gql:68:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\n"}}
+[debug] [2026-04-18T03:17:08.054Z] I0418 12:17:08.053812   11660 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\implicit.gql [1007B] main\input.gql [105620B] main\relation.gql [51992B] main\query.gql [9419B] main\mutation.gql [25229B] 
+I0418 12:17:08.053812   11660 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:17:08.053812   11660 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\implicit.gql [1007B] main\\input.gql [105620B] main\\relation.gql [51992B] main\\query.gql [9419B] main\\mutation.gql [25229B] \nI0418 12:17:08.053812   11660 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-18T03:17:58.007Z] I0418 12:17:58.007293   11660 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:17:58.007293   11660 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-18T03:17:58.045Z] W0418 12:17:58.033436   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 58d9] connector "example" has errors: example\mutations.gql:6:3: Cannot query field "movie_insert" on type "Mutation". Did you mean "review_insert", "news_insert", "review_upsert", "spirit_insert", or "user_insert"?
+example\mutations.gql:12:44: Field "username" is not defined by type "User_Data". Did you mean "nickname"?
+example\mutations.gql:21:7: Field "movieId" is not defined by type "Review_Data".
+example\mutations.gql:23:7: Field "reviewText" is not defined by type "Review_Data".
+example\mutations.gql:32:24: Field "userId_expr" is not defined by type "Review_Key". Did you mean "id_expr"?
+example\mutations.gql:32:49: Field "movieId" is not defined by type "Review_Key".
+example\queries.gql:6:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+example\queries.gql:18:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:27:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:32:7: Cannot query field "reviewDate" on type "Review". Did you mean "createdAt"?
+example\queries.gql:33:7: Cannot query field "reviewText" on type "Review".
+example\queries.gql:34:7: Cannot query field "movie" on type "Review". Did you mean "nose"?
+example\queries.gql:44:3: Cannot query field "movie" on type "Query". Did you mean "review"?
+example\queries.gql:68:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+
+sources: example\mutations.gql [1243B] example\queries.gql [1801B] 
+I0418 12:17:58.040187   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 58d9] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2783B] 
+Connector "main": sources: main\queries.gql [685B] main\mutations.gql [4545B] 
+Connector "example": sources: example\mutations.gql [1243B] example\queries.gql [1801B] 
+E0418 12:17:58.041913   11660 load.go:73] Could not load sources: 
+Errors: example\mutations.gql:6:3: Cannot query field "movie_insert" on type "Mutation". Did you mean "review_insert", "news_insert", "review_upsert", "spirit_insert", or "user_insert"?
+example\mutations.gql:12:44: Field "username" is not defined by type "User_Data". Did you mean "nickname"?
+example\mutations.gql:21:7: Field "movieId" is not defined by type "Review_Data".
+example\mutations.gql:23:7: Field "reviewText" is not defined by type "Review_Data".
+example\mutations.gql:32:24: Field "userId_expr" is not defined by type "Review_Key". Did you mean "id_expr"?
+example\mutations.gql:32:49: Field "movieId" is not defined by type "Review_Key".
+example\queries.gql:6:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+example\queries.gql:18:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:27:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:32:7: Cannot query field "reviewDate" on type "Review". Did you mean "createdAt"?
+example\queries.gql:33:7: Cannot query field "reviewText" on type "Review".
+example\queries.gql:34:7: Cannot query field "movie" on type "Review". Did you mean "nose"?
+example\queries.gql:44:3: Cannot query field "movie" on type "Query". Did you mean "review"?
+example\queries.gql:68:3: Cannot query field "movies" on type "Query". Did you mean "review" or "reviews"?
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0418 12:17:58.033436   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 58d9] connector \"example\" has errors: example\\mutations.gql:6:3: Cannot query field \"movie_insert\" on type \"Mutation\". Did you mean \"review_insert\", \"news_insert\", \"review_upsert\", \"spirit_insert\", or \"user_insert\"?\nexample\\mutations.gql:12:44: Field \"username\" is not defined by type \"User_Data\". Did you mean \"nickname\"?\nexample\\mutations.gql:21:7: Field \"movieId\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:23:7: Field \"reviewText\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:32:24: Field \"userId_expr\" is not defined by type \"Review_Key\". Did you mean \"id_expr\"?\nexample\\mutations.gql:32:49: Field \"movieId\" is not defined by type \"Review_Key\".\nexample\\queries.gql:6:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\nexample\\queries.gql:18:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:27:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:32:7: Cannot query field \"reviewDate\" on type \"Review\". Did you mean \"createdAt\"?\nexample\\queries.gql:33:7: Cannot query field \"reviewText\" on type \"Review\".\nexample\\queries.gql:34:7: Cannot query field \"movie\" on type \"Review\". Did you mean \"nose\"?\nexample\\queries.gql:44:3: Cannot query field \"movie\" on type \"Query\". Did you mean \"review\"?\nexample\\queries.gql:68:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\n\nsources: example\\mutations.gql [1243B] example\\queries.gql [1801B] \nI0418 12:17:58.040187   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 58d9] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2783B] \nConnector \"main\": sources: main\\queries.gql [685B] main\\mutations.gql [4545B] \nConnector \"example\": sources: example\\mutations.gql [1243B] example\\queries.gql [1801B] \nE0418 12:17:58.041913   11660 load.go:73] Could not load sources: \nErrors: example\\mutations.gql:6:3: Cannot query field \"movie_insert\" on type \"Mutation\". Did you mean \"review_insert\", \"news_insert\", \"review_upsert\", \"spirit_insert\", or \"user_insert\"?\nexample\\mutations.gql:12:44: Field \"username\" is not defined by type \"User_Data\". Did you mean \"nickname\"?\nexample\\mutations.gql:21:7: Field \"movieId\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:23:7: Field \"reviewText\" is not defined by type \"Review_Data\".\nexample\\mutations.gql:32:24: Field \"userId_expr\" is not defined by type \"Review_Key\". Did you mean \"id_expr\"?\nexample\\mutations.gql:32:49: Field \"movieId\" is not defined by type \"Review_Key\".\nexample\\queries.gql:6:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\nexample\\queries.gql:18:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:27:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:32:7: Cannot query field \"reviewDate\" on type \"Review\". Did you mean \"createdAt\"?\nexample\\queries.gql:33:7: Cannot query field \"reviewText\" on type \"Review\".\nexample\\queries.gql:34:7: Cannot query field \"movie\" on type \"Review\". Did you mean \"nose\"?\nexample\\queries.gql:44:3: Cannot query field \"movie\" on type \"Query\". Did you mean \"review\"?\nexample\\queries.gql:68:3: Cannot query field \"movies\" on type \"Query\". Did you mean \"review\" or \"reviews\"?\n"}}
+[debug] [2026-04-18T03:17:58.053Z] I0418 12:17:58.053155   11660 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\relation.gql [51992B] main\query.gql [9419B] main\mutation.gql [25229B] prelude.gql [82799B] main\implicit.gql [1007B] main\input.gql [105620B] 
+I0418 12:17:58.053155   11660 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:17:58.053155   11660 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\relation.gql [51992B] main\\query.gql [9419B] main\\mutation.gql [25229B] prelude.gql [82799B] main\\implicit.gql [1007B] main\\input.gql [105620B] \nI0418 12:17:58.053155   11660 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-18T03:18:28.013Z] I0418 12:18:28.012908   11660 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:18:28.012908   11660 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-18T03:18:28.056Z] W0418 12:18:28.056736   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub a0cb] connector "example" has errors: example\mutations.gql:6:3: Cannot query field "movie_insert" on type "Mutation". Did you mean "spirit_insert" or "user_insert"?
+example\mutations.gql:12:44: Field "username" is not defined by type "User_Data". Did you mean "nickname"?
+example\mutations.gql:18:3: Cannot query field "review_upsert" on type "Mutation". Did you mean "user_upsert", "spirit_upsert", or "spiritReview_upsert"?
+example\mutations.gql:32:3: Cannot query field "review_delete" on type "Mutation". Did you mean "user_delete", "spirit_delete", or "spiritReview_delete"?
+example\queries.gql:6:3: Cannot query field "movies" on type "Query".
+example\queries.gql:18:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:27:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:30:5: Cannot query field "reviews_on_user" on type "User". Did you mean "spiritReviews_on_user" or "reviewsWritten"?
+example\queries.gql:44:3: Cannot query field "movie" on type "Query".
+example\queries.gql:68:3: Cannot query field "movies" on type "Query".
+
+sources: example\mutations.gql [1243B] example\queries.gql [1801B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0418 12:18:28.056736   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub a0cb] connector \"example\" has errors: example\\mutations.gql:6:3: Cannot query field \"movie_insert\" on type \"Mutation\". Did you mean \"spirit_insert\" or \"user_insert\"?\nexample\\mutations.gql:12:44: Field \"username\" is not defined by type \"User_Data\". Did you mean \"nickname\"?\nexample\\mutations.gql:18:3: Cannot query field \"review_upsert\" on type \"Mutation\". Did you mean \"user_upsert\", \"spirit_upsert\", or \"spiritReview_upsert\"?\nexample\\mutations.gql:32:3: Cannot query field \"review_delete\" on type \"Mutation\". Did you mean \"user_delete\", \"spirit_delete\", or \"spiritReview_delete\"?\nexample\\queries.gql:6:3: Cannot query field \"movies\" on type \"Query\".\nexample\\queries.gql:18:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:27:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:30:5: Cannot query field \"reviews_on_user\" on type \"User\". Did you mean \"spiritReviews_on_user\" or \"reviewsWritten\"?\nexample\\queries.gql:44:3: Cannot query field \"movie\" on type \"Query\".\nexample\\queries.gql:68:3: Cannot query field \"movies\" on type \"Query\".\n\nsources: example\\mutations.gql [1243B] example\\queries.gql [1801B] \n"}}
+[debug] [2026-04-18T03:18:28.061Z] W0418 12:18:28.061930   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub a0cb] connector "main" has errors: main\mutations.gql:102:3: Cannot query field "review_upsert" on type "Mutation". Did you mean "user_upsert", "spirit_upsert", or "spiritReview_upsert"?
+main\mutations.gql:134:3: Cannot query field "news_upsert" on type "Mutation". Did you mean "user_upsert"?
+main\queries.gql:29:5: Cannot query field "reviews_on_spirit" on type "Spirit". Did you mean "spiritReviews_on_spirit"?
+
+sources: main\mutations.gql [4545B] main\queries.gql [685B] 
+I0418 12:18:28.061930   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub a0cb] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2796B] 
+Connector "example": sources: example\queries.gql [1801B] example\mutations.gql [1243B] 
+Connector "main": sources: main\mutations.gql [4545B] main\queries.gql [685B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0418 12:18:28.061930   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub a0cb] connector \"main\" has errors: main\\mutations.gql:102:3: Cannot query field \"review_upsert\" on type \"Mutation\". Did you mean \"user_upsert\", \"spirit_upsert\", or \"spiritReview_upsert\"?\nmain\\mutations.gql:134:3: Cannot query field \"news_upsert\" on type \"Mutation\". Did you mean \"user_upsert\"?\nmain\\queries.gql:29:5: Cannot query field \"reviews_on_spirit\" on type \"Spirit\". Did you mean \"spiritReviews_on_spirit\"?\n\nsources: main\\mutations.gql [4545B] main\\queries.gql [685B] \nI0418 12:18:28.061930   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub a0cb] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2796B] \nConnector \"example\": sources: example\\queries.gql [1801B] example\\mutations.gql [1243B] \nConnector \"main\": sources: main\\mutations.gql [4545B] main\\queries.gql [685B] \n"}}
+[debug] [2026-04-18T03:18:28.064Z] E0418 12:18:28.064140   11660 load.go:73] Could not load sources: 
+Errors: example\mutations.gql:6:3: Cannot query field "movie_insert" on type "Mutation". Did you mean "spirit_insert" or "user_insert"?
+example\mutations.gql:12:44: Field "username" is not defined by type "User_Data". Did you mean "nickname"?
+example\mutations.gql:18:3: Cannot query field "review_upsert" on type "Mutation". Did you mean "user_upsert", "spirit_upsert", or "spiritReview_upsert"?
+example\mutations.gql:32:3: Cannot query field "review_delete" on type "Mutation". Did you mean "user_delete", "spirit_delete", or "spiritReview_delete"?
+example\queries.gql:6:3: Cannot query field "movies" on type "Query".
+example\queries.gql:18:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:27:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:30:5: Cannot query field "reviews_on_user" on type "User". Did you mean "spiritReviews_on_user" or "reviewsWritten"?
+example\queries.gql:44:3: Cannot query field "movie" on type "Query".
+example\queries.gql:68:3: Cannot query field "movies" on type "Query".
+main\mutations.gql:102:3: Cannot query field "review_upsert" on type "Mutation". Did you mean "user_upsert", "spirit_upsert", or "spiritReview_upsert"?
+main\mutations.gql:134:3: Cannot query field "news_upsert" on type "Mutation". Did you mean "user_upsert"?
+main\queries.gql:29:5: Cannot query field "reviews_on_spirit" on type "Spirit". Did you mean "spiritReviews_on_spirit"?
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0418 12:18:28.064140   11660 load.go:73] Could not load sources: \nErrors: example\\mutations.gql:6:3: Cannot query field \"movie_insert\" on type \"Mutation\". Did you mean \"spirit_insert\" or \"user_insert\"?\nexample\\mutations.gql:12:44: Field \"username\" is not defined by type \"User_Data\". Did you mean \"nickname\"?\nexample\\mutations.gql:18:3: Cannot query field \"review_upsert\" on type \"Mutation\". Did you mean \"user_upsert\", \"spirit_upsert\", or \"spiritReview_upsert\"?\nexample\\mutations.gql:32:3: Cannot query field \"review_delete\" on type \"Mutation\". Did you mean \"user_delete\", \"spirit_delete\", or \"spiritReview_delete\"?\nexample\\queries.gql:6:3: Cannot query field \"movies\" on type \"Query\".\nexample\\queries.gql:18:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:27:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:30:5: Cannot query field \"reviews_on_user\" on type \"User\". Did you mean \"spiritReviews_on_user\" or \"reviewsWritten\"?\nexample\\queries.gql:44:3: Cannot query field \"movie\" on type \"Query\".\nexample\\queries.gql:68:3: Cannot query field \"movies\" on type \"Query\".\nmain\\mutations.gql:102:3: Cannot query field \"review_upsert\" on type \"Mutation\". Did you mean \"user_upsert\", \"spirit_upsert\", or \"spiritReview_upsert\"?\nmain\\mutations.gql:134:3: Cannot query field \"news_upsert\" on type \"Mutation\". Did you mean \"user_upsert\"?\nmain\\queries.gql:29:5: Cannot query field \"reviews_on_spirit\" on type \"Spirit\". Did you mean \"spiritReviews_on_spirit\"?\n"}}
+[debug] [2026-04-18T03:18:28.068Z] I0418 12:18:28.068919   11660 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\implicit.gql [1037B] main\input.gql [107386B] main\relation.gql [52691B] main\query.gql [9588B] main\mutation.gql [25814B] 
+I0418 12:18:28.068919   11660 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:18:28.068919   11660 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\implicit.gql [1037B] main\\input.gql [107386B] main\\relation.gql [52691B] main\\query.gql [9588B] main\\mutation.gql [25814B] \nI0418 12:18:28.068919   11660 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-18T03:18:38.009Z] I0418 12:18:38.008848   11660 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:18:38.008848   11660 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-18T03:18:38.046Z] W0418 12:18:38.046820   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 4a3e] connector "example" has errors: example\mutations.gql:6:3: Cannot query field "movie_insert" on type "Mutation". Did you mean "spirit_insert" or "user_insert"?
+example\mutations.gql:12:44: Field "username" is not defined by type "User_Data". Did you mean "nickname"?
+example\mutations.gql:18:3: Cannot query field "review_upsert" on type "Mutation". Did you mean "user_upsert", "spirit_upsert", or "spiritReview_upsert"?
+example\mutations.gql:32:3: Cannot query field "review_delete" on type "Mutation". Did you mean "user_delete", "spirit_delete", or "spiritReview_delete"?
+example\queries.gql:6:3: Cannot query field "movies" on type "Query".
+example\queries.gql:18:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:27:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:30:5: Cannot query field "reviews_on_user" on type "User". Did you mean "spiritReviews_on_user" or "reviewsWritten"?
+example\queries.gql:44:3: Cannot query field "movie" on type "Query".
+example\queries.gql:68:3: Cannot query field "movies" on type "Query".
+
+sources: example\mutations.gql [1243B] example\queries.gql [1801B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0418 12:18:38.046820   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 4a3e] connector \"example\" has errors: example\\mutations.gql:6:3: Cannot query field \"movie_insert\" on type \"Mutation\". Did you mean \"spirit_insert\" or \"user_insert\"?\nexample\\mutations.gql:12:44: Field \"username\" is not defined by type \"User_Data\". Did you mean \"nickname\"?\nexample\\mutations.gql:18:3: Cannot query field \"review_upsert\" on type \"Mutation\". Did you mean \"user_upsert\", \"spirit_upsert\", or \"spiritReview_upsert\"?\nexample\\mutations.gql:32:3: Cannot query field \"review_delete\" on type \"Mutation\". Did you mean \"user_delete\", \"spirit_delete\", or \"spiritReview_delete\"?\nexample\\queries.gql:6:3: Cannot query field \"movies\" on type \"Query\".\nexample\\queries.gql:18:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:27:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:30:5: Cannot query field \"reviews_on_user\" on type \"User\". Did you mean \"spiritReviews_on_user\" or \"reviewsWritten\"?\nexample\\queries.gql:44:3: Cannot query field \"movie\" on type \"Query\".\nexample\\queries.gql:68:3: Cannot query field \"movies\" on type \"Query\".\n\nsources: example\\mutations.gql [1243B] example\\queries.gql [1801B] \n"}}
+[debug] [2026-04-18T03:18:38.057Z] I0418 12:18:38.057464   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 4a3e] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2796B] 
+Connector "example": sources: example\mutations.gql [1243B] example\queries.gql [1801B] 
+Connector "main": sources: main\mutations.gql [4558B] main\queries.gql [691B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:18:38.057464   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 4a3e] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2796B] \nConnector \"example\": sources: example\\mutations.gql [1243B] example\\queries.gql [1801B] \nConnector \"main\": sources: main\\mutations.gql [4558B] main\\queries.gql [691B] \n"}}
+[debug] [2026-04-18T03:18:38.060Z] E0418 12:18:38.060179   11660 load.go:73] Could not load sources: 
+Errors: example\mutations.gql:6:3: Cannot query field "movie_insert" on type "Mutation". Did you mean "spirit_insert" or "user_insert"?
+example\mutations.gql:12:44: Field "username" is not defined by type "User_Data". Did you mean "nickname"?
+example\mutations.gql:18:3: Cannot query field "review_upsert" on type "Mutation". Did you mean "user_upsert", "spirit_upsert", or "spiritReview_upsert"?
+example\mutations.gql:32:3: Cannot query field "review_delete" on type "Mutation". Did you mean "user_delete", "spirit_delete", or "spiritReview_delete"?
+example\queries.gql:6:3: Cannot query field "movies" on type "Query".
+example\queries.gql:18:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:27:5: Cannot query field "username" on type "User". Did you mean "nickname"?
+example\queries.gql:30:5: Cannot query field "reviews_on_user" on type "User". Did you mean "spiritReviews_on_user" or "reviewsWritten"?
+example\queries.gql:44:3: Cannot query field "movie" on type "Query".
+example\queries.gql:68:3: Cannot query field "movies" on type "Query".
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0418 12:18:38.060179   11660 load.go:73] Could not load sources: \nErrors: example\\mutations.gql:6:3: Cannot query field \"movie_insert\" on type \"Mutation\". Did you mean \"spirit_insert\" or \"user_insert\"?\nexample\\mutations.gql:12:44: Field \"username\" is not defined by type \"User_Data\". Did you mean \"nickname\"?\nexample\\mutations.gql:18:3: Cannot query field \"review_upsert\" on type \"Mutation\". Did you mean \"user_upsert\", \"spirit_upsert\", or \"spiritReview_upsert\"?\nexample\\mutations.gql:32:3: Cannot query field \"review_delete\" on type \"Mutation\". Did you mean \"user_delete\", \"spirit_delete\", or \"spiritReview_delete\"?\nexample\\queries.gql:6:3: Cannot query field \"movies\" on type \"Query\".\nexample\\queries.gql:18:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:27:5: Cannot query field \"username\" on type \"User\". Did you mean \"nickname\"?\nexample\\queries.gql:30:5: Cannot query field \"reviews_on_user\" on type \"User\". Did you mean \"spiritReviews_on_user\" or \"reviewsWritten\"?\nexample\\queries.gql:44:3: Cannot query field \"movie\" on type \"Query\".\nexample\\queries.gql:68:3: Cannot query field \"movies\" on type \"Query\".\n"}}
+[debug] [2026-04-18T03:18:38.071Z] I0418 12:18:38.071350   11660 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\relation.gql [52691B] main\query.gql [9588B] main\mutation.gql [25814B] main\implicit.gql [1037B] main\input.gql [107386B] 
+I0418 12:18:38.071350   11660 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:18:38.071350   11660 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\relation.gql [52691B] main\\query.gql [9588B] main\\mutation.gql [25814B] main\\implicit.gql [1037B] main\\input.gql [107386B] \nI0418 12:18:38.071350   11660 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-18T03:19:08.006Z] I0418 12:19:08.007167   11660 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:19:08.007167   11660 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-18T03:19:08.029Z] I0418 12:19:08.029228   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 603f] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2796B] 
+Connector "main": sources: main\queries.gql [691B] main\mutations.gql [4558B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:19:08.029228   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 603f] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2796B] \nConnector \"main\": sources: main\\queries.gql [691B] main\\mutations.gql [4558B] \n"}}
+[debug] [2026-04-18T03:19:08.063Z] I0418 12:19:08.062359   11660 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:19:08.062359   11660 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-18T03:19:08.077Z] I0418 12:19:08.077399   11660 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\input.gql [107386B] main\relation.gql [52691B] main\query.gql [9588B] main\mutation.gql [25814B] prelude.gql [82799B] main\implicit.gql [1037B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:19:08.077399   11660 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\input.gql [107386B] main\\relation.gql [52691B] main\\query.gql [9588B] main\\mutation.gql [25814B] prelude.gql [82799B] main\\implicit.gql [1037B] \n"}}
+[debug] [2026-04-18T03:19:08.101Z] I0418 12:19:08.101337   11660 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: index.d.ts [12512B] esm\index.esm.js [5766B] .guides/setup.md [584B] .guides/config.json [236B] esm\package.json [17B] index.cjs.js [6395B] package.json [612B] README.md [58174B] .guides/usage.md [2239B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:19:08.101337   11660 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: index.d.ts [12512B] esm\\index.esm.js [5766B] .guides/setup.md [584B] .guides/config.json [236B] esm\\package.json [17B] index.cjs.js [6395B] package.json [612B] README.md [58174B] .guides/usage.md [2239B] \n"}}
+[debug] [2026-04-18T03:19:08.110Z] I0418 12:19:08.110446   11660 collector.go:114] connector "main" javascriptSdk deleted obsolete file "c:\\k-spirits-club-hub\\src\\dataconnect-generated\\react\\README.md"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:19:08.110446   11660 collector.go:114] connector \"main\" javascriptSdk deleted obsolete file \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\\\\react\\\\README.md\"\n"}}
+[debug] [2026-04-18T03:19:08.114Z] I0418 12:19:08.114014   11660 collector.go:114] connector "main" javascriptSdk deleted obsolete file "c:\\k-spirits-club-hub\\src\\dataconnect-generated\\react\\esm\\index.esm.js"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:19:08.114014   11660 collector.go:114] connector \"main\" javascriptSdk deleted obsolete file \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\\\\react\\\\esm\\\\index.esm.js\"\n"}}
+[debug] [2026-04-18T03:19:08.116Z] I0418 12:19:08.116462   11660 collector.go:114] connector "main" javascriptSdk deleted obsolete file "c:\\k-spirits-club-hub\\src\\dataconnect-generated\\react\\esm\\package.json"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:19:08.116462   11660 collector.go:114] connector \"main\" javascriptSdk deleted obsolete file \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\\\\react\\\\esm\\\\package.json\"\n"}}
+[debug] [2026-04-18T03:19:08.120Z] I0418 12:19:08.121066   11660 collector.go:114] connector "main" javascriptSdk deleted obsolete file "c:\\k-spirits-club-hub\\src\\dataconnect-generated\\react\\index.cjs.js"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:19:08.121066   11660 collector.go:114] connector \"main\" javascriptSdk deleted obsolete file \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\\\\react\\\\index.cjs.js\"\n"}}
+[debug] [2026-04-18T03:19:08.123Z] I0418 12:19:08.123412   11660 collector.go:114] connector "main" javascriptSdk deleted obsolete file "c:\\k-spirits-club-hub\\src\\dataconnect-generated\\react\\index.d.ts"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:19:08.123412   11660 collector.go:114] connector \"main\" javascriptSdk deleted obsolete file \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\\\\react\\\\index.d.ts\"\n"}}
+[debug] [2026-04-18T03:19:08.126Z] I0418 12:19:08.127040   11660 collector.go:114] connector "main" javascriptSdk deleted obsolete file "c:\\k-spirits-club-hub\\src\\dataconnect-generated\\react\\package.json"
+I0418 12:19:08.127040   11660 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:19:08.127040   11660 collector.go:114] connector \"main\" javascriptSdk deleted obsolete file \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\\\\react\\\\package.json\"\nI0418 12:19:08.127040   11660 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\n"}}
+[debug] [2026-04-18T03:19:08.127Z] I0418 12:19:08.127040   11660 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:19:08.127040   11660 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-18T03:22:18.008Z] I0418 12:22:18.007880   11660 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:22:18.007880   11660 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-18T03:22:18.032Z] I0418 12:22:18.031639   11660 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:22:18.031639   11660 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-18T03:22:18.055Z] I0418 12:22:18.055150   11660 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\implicit.gql [1037B] prelude.gql [82799B] main\input.gql [107386B] main\relation.gql [52691B] main\query.gql [9588B] main\mutation.gql [25814B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:22:18.055150   11660 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\implicit.gql [1037B] prelude.gql [82799B] main\\input.gql [107386B] main\\relation.gql [52691B] main\\query.gql [9588B] main\\mutation.gql [25814B] \n"}}
+[debug] [2026-04-18T03:22:18.076Z] I0418 12:22:18.068655   11660 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: index.d.ts [12512B] esm\index.esm.js [5773B] index.cjs.js [6402B] package.json [612B] README.md [58174B] .guides/setup.md [584B] esm\package.json [17B] .guides/usage.md [2239B] .guides/config.json [236B] 
+I0418 12:22:18.069657   11660 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0418 12:22:18.069657   11660 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:22:18.068655   11660 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: index.d.ts [12512B] esm\\index.esm.js [5773B] index.cjs.js [6402B] package.json [612B] README.md [58174B] .guides/setup.md [584B] esm\\package.json [17B] .guides/usage.md [2239B] .guides/config.json [236B] \nI0418 12:22:18.069657   11660 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0418 12:22:18.069657   11660 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-18T03:24:18.091Z] [Firebase Plugin] Received CLI notification.
+[debug] [2026-04-18T03:24:18.109Z] [Firebase Plugin] Received emulators shutdown notification.
+[debug] [2026-04-18T03:33:07.602Z] [Firebase Plugin] Received CLI notification.
+[debug] [2026-04-18T03:33:07.611Z] [Firebase Plugin] Received emulators shutdown notification.
+[debug] [2026-04-18T03:39:06.983Z] [Firebase Plugin] Received emulators started notification. Running detection.
+[debug] [2026-04-18T03:39:07.034Z] Found emulator hub locator: {"version":"15.15.0","origins":["http://127.0.0.1:4400","http://[::1]:4400"],"pid":23484}
+[debug] [2026-04-18T03:39:07.039Z] >>> [apiv2][query] GET http://127.0.0.1:4400/emulators [none]
+[debug] [2026-04-18T03:39:07.176Z] <<< [apiv2][status] GET http://127.0.0.1:4400/emulators 200
+[debug] [2026-04-18T03:39:07.176Z] <<< [apiv2][body] GET http://127.0.0.1:4400/emulators {"hub":{"listen":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"name":"hub","host":"127.0.0.1","port":4400},"ui":{"listen":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"name":"ui","host":"127.0.0.1","port":4000},"logging":{"listen":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"name":"logging","host":"127.0.0.1","port":4500},"firestore":{"listen":[{"address":"127.0.0.1","family":"IPv4","port":8080}],"name":"firestore","host":"127.0.0.1","port":8080,"pid":17520,"reservedPorts":[9150],"webSocketHost":"127.0.0.1","webSocketPort":9150},"dataconnect":{"listen":[{"address":"127.0.0.1","family":"IPv4","port":9399},{"address":"::1","family":"IPv6","port":9399}],"name":"dataconnect","host":"127.0.0.1","port":9399,"pid":10704,"timeout":10000}}
+[debug] [2026-04-18T03:39:07.648Z] I0418 12:39:07.647875   11660 engine.go:209] [projects/emulator/locations/emulator/services/k-spirits-club-hub 603f] ExecuteGraphqlRead query IntrospectionQuery: succeeded. 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:39:07.647875   11660 engine.go:209] [projects/emulator/locations/emulator/services/k-spirits-club-hub 603f] ExecuteGraphqlRead query IntrospectionQuery: succeeded. \n"}}
+[debug] [2026-04-18T03:49:18.008Z] I0418 12:49:18.008011   11660 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:49:18.008011   11660 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-18T03:49:18.076Z] W0418 12:49:18.074158   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub c8e4] connector "main" has errors: main\mutations.gql:20:3: Unexpected $
+
+sources: main\mutations.gql [3121B] main\queries.gql [691B] 
+I0418 12:49:18.074158   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub c8e4] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2796B] 
+Connector "main": sources: main\mutations.gql [3121B] main\queries.gql [691B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0418 12:49:18.074158   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub c8e4] connector \"main\" has errors: main\\mutations.gql:20:3: Unexpected $\n\nsources: main\\mutations.gql [3121B] main\\queries.gql [691B] \nI0418 12:49:18.074158   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub c8e4] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2796B] \nConnector \"main\": sources: main\\mutations.gql [3121B] main\\queries.gql [691B] \n"}}
+[debug] [2026-04-18T03:49:18.083Z] E0418 12:49:18.083993   11660 load.go:73] Could not load sources: 
+Errors: main\mutations.gql:20:3: Unexpected $
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0418 12:49:18.083993   11660 load.go:73] Could not load sources: \nErrors: main\\mutations.gql:20:3: Unexpected $\n"}}
+[debug] [2026-04-18T03:49:18.090Z] I0418 12:49:18.090264   11660 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\query.gql [9588B] main\mutation.gql [25814B] prelude.gql [82799B] main\implicit.gql [1037B] main\input.gql [107386B] main\relation.gql [52691B] 
+I0418 12:49:18.090264   11660 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:49:18.090264   11660 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\query.gql [9588B] main\\mutation.gql [25814B] prelude.gql [82799B] main\\implicit.gql [1037B] main\\input.gql [107386B] main\\relation.gql [52691B] \nI0418 12:49:18.090264   11660 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-18T03:49:28.006Z] I0418 12:49:28.006031   11660 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:49:28.006031   11660 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-18T03:49:28.032Z] W0418 12:49:28.032504   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub b005] connector "main" has errors: main\mutations.gql:20:3: Unexpected $
+
+sources: main\mutations.gql [3121B] main\queries.gql [754B] 
+I0418 12:49:28.032504   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub b005] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2796B] 
+Connector "main": sources: main\mutations.gql [3121B] main\queries.gql [754B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0418 12:49:28.032504   11660 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub b005] connector \"main\" has errors: main\\mutations.gql:20:3: Unexpected $\n\nsources: main\\mutations.gql [3121B] main\\queries.gql [754B] \nI0418 12:49:28.032504   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub b005] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2796B] \nConnector \"main\": sources: main\\mutations.gql [3121B] main\\queries.gql [754B] \n"}}
+[debug] [2026-04-18T03:49:28.034Z] E0418 12:49:28.034661   11660 load.go:73] Could not load sources: 
+Errors: main\mutations.gql:20:3: Unexpected $
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0418 12:49:28.034661   11660 load.go:73] Could not load sources: \nErrors: main\\mutations.gql:20:3: Unexpected $\n"}}
+[debug] [2026-04-18T03:49:28.040Z] I0418 12:49:28.040132   11660 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\query.gql [9588B] prelude.gql [82799B] main\mutation.gql [25814B] main\implicit.gql [1037B] main\input.gql [107386B] main\relation.gql [52691B] 
+I0418 12:49:28.040132   11660 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:49:28.040132   11660 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\query.gql [9588B] prelude.gql [82799B] main\\mutation.gql [25814B] main\\implicit.gql [1037B] main\\input.gql [107386B] main\\relation.gql [52691B] \nI0418 12:49:28.040132   11660 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-18T03:49:58.007Z] I0418 12:49:58.007370   11660 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:49:58.007370   11660 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-18T03:49:58.035Z] I0418 12:49:58.034976   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub fb9e] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2796B] 
+Connector "main": sources: main\mutations.gql [4726B] main\queries.gql [754B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:49:58.034976   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub fb9e] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2796B] \nConnector \"main\": sources: main\\mutations.gql [4726B] main\\queries.gql [754B] \n"}}
+[debug] [2026-04-18T03:49:58.069Z] I0418 12:49:58.069002   11660 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:49:58.069002   11660 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-18T03:49:58.085Z] I0418 12:49:58.085331   11660 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\implicit.gql [1037B] main\input.gql [107386B] main\relation.gql [52691B] main\query.gql [9588B] main\mutation.gql [25814B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:49:58.085331   11660 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\implicit.gql [1037B] main\\input.gql [107386B] main\\relation.gql [52691B] main\\query.gql [9588B] main\\mutation.gql [25814B] \n"}}
+[debug] [2026-04-18T03:49:58.097Z] I0418 12:49:58.096681   11660 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: index.d.ts [12512B] esm\index.esm.js [5773B] .guides/setup.md [584B] esm\package.json [17B] index.cjs.js [6402B] package.json [612B] README.md [58174B] .guides/usage.md [2239B] .guides/config.json [236B] 
+I0418 12:49:58.096681   11660 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0418 12:49:58.096681   11660 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:49:58.096681   11660 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: index.d.ts [12512B] esm\\index.esm.js [5773B] .guides/setup.md [584B] esm\\package.json [17B] index.cjs.js [6402B] package.json [612B] README.md [58174B] .guides/usage.md [2239B] .guides/config.json [236B] \nI0418 12:49:58.096681   11660 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0418 12:49:58.096681   11660 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-18T03:59:58.008Z] I0418 12:59:58.007800   11660 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:59:58.007800   11660 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-18T03:59:58.073Z] I0418 12:59:58.073230   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 789d] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2796B] 
+Connector "main": sources: main\queries.gql [1155B] main\mutations.gql [4726B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:59:58.073230   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 789d] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2796B] \nConnector \"main\": sources: main\\queries.gql [1155B] main\\mutations.gql [4726B] \n"}}
+[debug] [2026-04-18T03:59:58.114Z] I0418 12:59:58.112963   11660 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:59:58.112963   11660 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-18T03:59:58.132Z] I0418 12:59:58.130806   11660 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\implicit.gql [1037B] main\input.gql [107386B] main\relation.gql [52691B] main\query.gql [9588B] main\mutation.gql [25814B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:59:58.130806   11660 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\implicit.gql [1037B] main\\input.gql [107386B] main\\relation.gql [52691B] main\\query.gql [9588B] main\\mutation.gql [25814B] \n"}}
+[debug] [2026-04-18T03:59:58.145Z] I0418 12:59:58.145040   11660 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: esm\package.json [17B] README.md [59050B] .guides/usage.md [2239B] .guides/setup.md [584B] .guides/config.json [236B] index.d.ts [13388B] esm\index.esm.js [5773B] index.cjs.js [6402B] package.json [612B] 
+I0418 12:59:58.145431   11660 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0418 12:59:58.145431   11660 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 12:59:58.145040   11660 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: esm\\package.json [17B] README.md [59050B] .guides/usage.md [2239B] .guides/setup.md [584B] .guides/config.json [236B] index.d.ts [13388B] esm\\index.esm.js [5773B] index.cjs.js [6402B] package.json [612B] \nI0418 12:59:58.145431   11660 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0418 12:59:58.145431   11660 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-18T04:14:28.006Z] I0418 13:14:28.006722   11660 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 13:14:28.006722   11660 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-18T04:14:28.069Z] I0418 13:14:28.068638   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 7ad1] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2796B] 
+Connector "main": sources: main\mutations.gql [4726B] main\queries.gql [1424B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 13:14:28.068638   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 7ad1] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2796B] \nConnector \"main\": sources: main\\mutations.gql [4726B] main\\queries.gql [1424B] \n"}}
+[debug] [2026-04-18T04:14:28.110Z] I0418 13:14:28.110034   11660 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 13:14:28.110034   11660 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-18T04:14:28.126Z] I0418 13:14:28.126632   11660 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\mutation.gql [25814B] main\implicit.gql [1037B] main\input.gql [107386B] main\relation.gql [52691B] main\query.gql [9588B] prelude.gql [82799B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 13:14:28.126632   11660 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\mutation.gql [25814B] main\\implicit.gql [1037B] main\\input.gql [107386B] main\\relation.gql [52691B] main\\query.gql [9588B] prelude.gql [82799B] \n"}}
+[debug] [2026-04-18T04:14:28.138Z] I0418 13:14:28.138367   11660 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: esm\index.esm.js [7471B] .guides/setup.md [584B] .guides/config.json [236B] index.d.ts [15434B] esm\package.json [17B] index.cjs.js [8274B] package.json [612B] README.md [68994B] .guides/usage.md [2239B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 13:14:28.138367   11660 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: esm\\index.esm.js [7471B] .guides/setup.md [584B] .guides/config.json [236B] index.d.ts [15434B] esm\\package.json [17B] index.cjs.js [8274B] package.json [612B] README.md [68994B] .guides/usage.md [2239B] \n"}}
+[debug] [2026-04-18T04:14:28.139Z] I0418 13:14:28.138367   11660 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0418 13:14:28.138367   11660 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 13:14:28.138367   11660 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0418 13:14:28.138367   11660 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-18T04:17:57.579Z] I0418 13:17:57.579010   11660 engine.go:209] [projects/emulator/locations/emulator/services/k-spirits-club-hub 7ad1] ExecuteGraphqlRead query IntrospectionQuery: succeeded. 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 13:17:57.579010   11660 engine.go:209] [projects/emulator/locations/emulator/services/k-spirits-club-hub 7ad1] ExecuteGraphqlRead query IntrospectionQuery: succeeded. \n"}}
+[debug] [2026-04-18T04:17:58.014Z] I0418 13:17:58.012613   11660 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 13:17:58.012613   11660 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-18T04:17:58.073Z] I0418 13:17:58.061015   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 7e8b] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2769B] 
+Connector "main": sources: main\queries.gql [1424B] main\mutations.gql [4726B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 13:17:58.061015   11660 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 7e8b] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2769B] \nConnector \"main\": sources: main\\queries.gql [1424B] main\\mutations.gql [4726B] \n"}}
+[debug] [2026-04-18T04:17:58.132Z] I0418 13:17:58.130501   11660 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 13:17:58.130501   11660 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-18T04:17:58.153Z] I0418 13:17:58.151714   11660 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\implicit.gql [1037B] main\input.gql [107386B] main\relation.gql [52691B] main\query.gql [9588B] main\mutation.gql [25814B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 13:17:58.151714   11660 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\implicit.gql [1037B] main\\input.gql [107386B] main\\relation.gql [52691B] main\\query.gql [9588B] main\\mutation.gql [25814B] \n"}}
+[debug] [2026-04-18T04:17:58.167Z] I0418 13:17:58.164688   11660 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: README.md [68994B] .guides/usage.md [2239B] .guides/setup.md [584B] esm\package.json [17B] index.cjs.js [8274B] package.json [612B] .guides/config.json [236B] index.d.ts [15434B] esm\index.esm.js [7471B] 
+I0418 13:17:58.164688   11660 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0418 13:17:58.164688   11660 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0418 13:17:58.164688   11660 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: README.md [68994B] .guides/usage.md [2239B] .guides/setup.md [584B] esm\\package.json [17B] index.cjs.js [8274B] package.json [612B] .guides/config.json [236B] index.d.ts [15434B] esm\\index.esm.js [7471B] \nI0418 13:17:58.164688   11660 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0418 13:17:58.164688   11660 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-19T08:19:15.676Z] [Firebase Plugin] Activating Firebase extension.
+[debug] [2026-04-19T08:19:25.533Z] [Firebase Plugin] requireAuthWrapper
+[debug] [2026-04-19T08:19:25.538Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-04-19T08:19:25.539Z] > authorizing via signed-in user (ruahn49@gmail.com)
+[debug] [2026-04-19T08:19:25.544Z] Checked if tokens are valid: false, expires at: 1776487689088
+[debug] [2026-04-19T08:19:25.545Z] Checked if tokens are valid: false, expires at: 1776487689088
+[debug] [2026-04-19T08:19:25.546Z] > refreshing access token with scopes: []
+[debug] [2026-04-19T08:19:25.548Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-04-19T08:19:25.549Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-04-19T08:19:25.566Z] [Firebase Plugin] VSCode notification server listening on port 40001
+[info] [Firebase Plugin] Starting SQL Connect toolkit (version 3.4.5) on port 50001
+[debug] [2026-04-19T08:19:27.419Z] I0419 17:19:27.322843   23748 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 3989] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2769B] 
+Connector "main": sources: main\mutations.gql [4726B] main\queries.gql [1424B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 17:19:27.322843   23748 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 3989] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2769B] \nConnector \"main\": sources: main\\mutations.gql [4726B] main\\queries.gql [1424B] \n"}}
+[debug] [2026-04-19T08:19:27.421Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"dataconnect"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2026-04-19T08:19:27.421Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"dataconnect"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2026-04-19T08:19:27.422Z] Starting SQL Connect Emulator with command {"binary":"C:\\Users\\CHOI JUN YEONG\\.cache\\firebase\\emulators\\dataconnect-emulator-3.4.5.exe","args":["--logtostderr","-v=2","dev","--listen=localhost:50001","--config_dir=c:\\k-spirits-club-hub\\dataconnect","--enable_output_schema_extensions=true","--enable_output_generated_sdk=true"],"optionalArgs":["listen","config_dir","enable_output_schema_extensions","enable_output_generated_sdk"],"joinArgs":true,"shell":false,"port":9399} {"metadata":{"emulator":{"name":"dataconnect"},"message":"Starting SQL Connect Emulator with command {\"binary\":\"C:\\\\Users\\\\CHOI JUN YEONG\\\\.cache\\\\firebase\\\\emulators\\\\dataconnect-emulator-3.4.5.exe\",\"args\":[\"--logtostderr\",\"-v=2\",\"dev\",\"--listen=localhost:50001\",\"--config_dir=c:\\\\k-spirits-club-hub\\\\dataconnect\",\"--enable_output_schema_extensions=true\",\"--enable_output_generated_sdk=true\"],\"optionalArgs\":[\"listen\",\"config_dir\",\"enable_output_schema_extensions\",\"enable_output_generated_sdk\"],\"joinArgs\":true,\"shell\":false,\"port\":9399}"}}
+[info] i  dataconnect: SQL Connect Emulator logging to dataconnect-debug.log {"metadata":{"emulator":{"name":"dataconnect"},"message":"SQL Connect Emulator logging to \u001b[1mdataconnect-debug.log\u001b[22m"}}
+[debug] [2026-04-19T08:19:27.751Z] I0419 17:19:27.540689   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 17:19:27.540689   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T08:19:28.154Z] I0419 17:19:28.030838   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub e9f7] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2769B] 
+Connector "main": sources: main\mutations.gql [4726B] main\queries.gql [1424B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 17:19:28.030838   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub e9f7] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2769B] \nConnector \"main\": sources: main\\mutations.gql [4726B] main\\queries.gql [1424B] \n"}}
+[debug] [2026-04-19T08:19:28.321Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-04-19T08:19:28.323Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-04-19T08:19:28.462Z] [Firebase Plugin] User found:  ruahn49@gmail.com
+[info] [Firebase Plugin] (Core:Project) New user detected, fetching projects
+[debug] [2026-04-19T08:19:28.467Z] Checked if tokens are valid: true, expires at: 1776590367323
+[debug] [2026-04-19T08:19:28.473Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects pageSize=1000
+[debug] [2026-04-19T08:19:29.348Z] I0419 17:19:28.239005   12580 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+I0419 17:19:28.450549   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\relation.gql [52691B] main\query.gql [9588B] prelude.gql [82799B] main\mutation.gql [25814B] main\implicit.gql [1037B] main\input.gql [107386B] 
+I0419 17:19:28.527151   12580 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: esm\package.json [17B] index.cjs.js [8274B] package.json [612B] README.md [68994B] .guides/setup.md [584B] .guides/config.json [236B] index.d.ts [15434B] .guides/usage.md [2239B] esm\index.esm.js [7471B] 
+I0419 17:19:28.527151   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0419 17:19:28.532738   12580 load.go:109] Finished reloading
+I0419 17:19:28.959531   12580 dev.go:104] Listening on address (HTTP + gRPC): 127.0.0.1:50001
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 17:19:28.239005   12580 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nI0419 17:19:28.450549   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\relation.gql [52691B] main\\query.gql [9588B] prelude.gql [82799B] main\\mutation.gql [25814B] main\\implicit.gql [1037B] main\\input.gql [107386B] \nI0419 17:19:28.527151   12580 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: esm\\package.json [17B] index.cjs.js [8274B] package.json [612B] README.md [68994B] .guides/setup.md [584B] .guides/config.json [236B] index.d.ts [15434B] .guides/usage.md [2239B] esm\\index.esm.js [7471B] \nI0419 17:19:28.527151   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0419 17:19:28.532738   12580 load.go:109] Finished reloading\nI0419 17:19:28.959531   12580 dev.go:104] Listening on address (HTTP + gRPC): 127.0.0.1:50001\n"}}
+[debug] [2026-04-19T08:19:30.256Z] I0419 17:19:30.256392   12580 engine.go:209] [projects/emulator/locations/emulator/services/k-spirits-club-hub e9f7] ExecuteGraphqlRead query IntrospectionQuery: succeeded. 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 17:19:30.256392   12580 engine.go:209] [projects/emulator/locations/emulator/services/k-spirits-club-hub e9f7] ExecuteGraphqlRead query IntrospectionQuery: succeeded. \n"}}
+[debug] [2026-04-19T08:19:30.607Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects 200
+[debug] [2026-04-19T08:19:30.608Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects [omitted]
+[debug] [2026-04-19T09:34:38.656Z] I0419 18:34:38.649527   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:34:38.649527   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T09:34:38.831Z] I0419 18:34:38.830798   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub c3ad] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2783B] 
+Connector "main": sources: main\mutations.gql [4726B] main\queries.gql [1424B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:34:38.830798   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub c3ad] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2783B] \nConnector \"main\": sources: main\\mutations.gql [4726B] main\\queries.gql [1424B] \n"}}
+[debug] [2026-04-19T09:34:38.893Z] I0419 18:34:38.892555   12580 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:34:38.892555   12580 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-19T09:34:38.929Z] I0419 18:34:38.929165   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\query.gql [9588B] main\mutation.gql [25814B] main\implicit.gql [1037B] main\input.gql [107386B] main\relation.gql [52691B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:34:38.929165   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\query.gql [9588B] main\\mutation.gql [25814B] main\\implicit.gql [1037B] main\\input.gql [107386B] main\\relation.gql [52691B] \n"}}
+[debug] [2026-04-19T09:34:38.945Z] I0419 18:34:38.945657   12580 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: .guides/setup.md [584B] index.d.ts [15434B] index.cjs.js [8274B] package.json [612B] README.md [68994B] .guides/config.json [236B] esm\index.esm.js [7471B] esm\package.json [17B] .guides/usage.md [2239B] 
+I0419 18:34:38.945657   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:34:38.945657   12580 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: .guides/setup.md [584B] index.d.ts [15434B] index.cjs.js [8274B] package.json [612B] README.md [68994B] .guides/config.json [236B] esm\\index.esm.js [7471B] esm\\package.json [17B] .guides/usage.md [2239B] \nI0419 18:34:38.945657   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\n"}}
+[debug] [2026-04-19T09:34:38.946Z] I0419 18:34:38.945657   12580 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:34:38.945657   12580 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-19T09:34:58.647Z] I0419 18:34:58.646948   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:34:58.646948   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T09:34:58.674Z] I0419 18:34:58.674366   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 484a] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2783B] 
+Connector "main": sources: main\mutations.gql [4726B] main\queries.gql [2085B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:34:58.674366   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 484a] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2783B] \nConnector \"main\": sources: main\\mutations.gql [4726B] main\\queries.gql [2085B] \n"}}
+[debug] [2026-04-19T09:34:58.709Z] I0419 18:34:58.709655   12580 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:34:58.709655   12580 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-19T09:34:58.726Z] I0419 18:34:58.724358   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\relation.gql [52691B] main\query.gql [9588B] prelude.gql [82799B] main\mutation.gql [25814B] main\implicit.gql [1037B] main\input.gql [107386B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:34:58.724358   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\relation.gql [52691B] main\\query.gql [9588B] prelude.gql [82799B] main\\mutation.gql [25814B] main\\implicit.gql [1037B] main\\input.gql [107386B] \n"}}
+[debug] [2026-04-19T09:34:58.737Z] I0419 18:34:58.737452   12580 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: index.d.ts [18216B] esm\package.json [17B] index.cjs.js [9665B] .guides/config.json [236B] esm\index.esm.js [8736B] package.json [612B] README.md [79174B] .guides/usage.md [2239B] .guides/setup.md [584B] 
+I0419 18:34:58.737963   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0419 18:34:58.737963   12580 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:34:58.737452   12580 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: index.d.ts [18216B] esm\\package.json [17B] index.cjs.js [9665B] .guides/config.json [236B] esm\\index.esm.js [8736B] package.json [612B] README.md [79174B] .guides/usage.md [2239B] .guides/setup.md [584B] \nI0419 18:34:58.737963   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0419 18:34:58.737963   12580 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-19T09:36:38.647Z] I0419 18:36:38.646416   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:36:38.646416   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T09:36:38.674Z] I0419 18:36:38.673458   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub fd39] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2783B] 
+Connector "main": sources: main\queries.gql [2156B] main\mutations.gql [4726B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:36:38.673458   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub fd39] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2783B] \nConnector \"main\": sources: main\\queries.gql [2156B] main\\mutations.gql [4726B] \n"}}
+[debug] [2026-04-19T09:36:38.708Z] I0419 18:36:38.704742   12580 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:36:38.704742   12580 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-19T09:36:38.727Z] I0419 18:36:38.726666   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\relation.gql [52691B] main\query.gql [9588B] main\mutation.gql [25814B] prelude.gql [82799B] main\implicit.gql [1037B] main\input.gql [107386B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:36:38.726666   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\relation.gql [52691B] main\\query.gql [9588B] main\\mutation.gql [25814B] prelude.gql [82799B] main\\implicit.gql [1037B] main\\input.gql [107386B] \n"}}
+[debug] [2026-04-19T09:36:38.746Z] I0419 18:36:38.745049   12580 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: esm\index.esm.js [9312B] .guides/usage.md [2239B] .guides/config.json [236B] index.d.ts [18896B] esm\package.json [17B] index.cjs.js [10304B] package.json [612B] README.md [82513B] .guides/setup.md [584B] 
+I0419 18:36:38.745049   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0419 18:36:38.746088   12580 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:36:38.745049   12580 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: esm\\index.esm.js [9312B] .guides/usage.md [2239B] .guides/config.json [236B] index.d.ts [18896B] esm\\package.json [17B] index.cjs.js [10304B] package.json [612B] README.md [82513B] .guides/setup.md [584B] \nI0419 18:36:38.745049   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0419 18:36:38.746088   12580 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-19T09:47:58.656Z] I0419 18:47:58.648190   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:47:58.648190   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T09:47:58.827Z] I0419 18:47:58.827025   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 4b4c] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2783B] 
+Connector "main": sources: main\mutations.gql [4726B] main\queries.gql [2584B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:47:58.827025   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 4b4c] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2783B] \nConnector \"main\": sources: main\\mutations.gql [4726B] main\\queries.gql [2584B] \n"}}
+[debug] [2026-04-19T09:47:58.911Z] I0419 18:47:58.910308   12580 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:47:58.910308   12580 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-19T09:47:58.967Z] I0419 18:47:58.967191   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\mutation.gql [25814B] main\implicit.gql [1037B] main\input.gql [107386B] main\relation.gql [52691B] main\query.gql [9588B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:47:58.967191   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\mutation.gql [25814B] main\\implicit.gql [1037B] main\\input.gql [107386B] main\\relation.gql [52691B] main\\query.gql [9588B] \n"}}
+[debug] [2026-04-19T09:47:59.028Z] I0419 18:47:59.027639   12580 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: package.json [612B] .guides/usage.md [2239B] .guides/config.json [236B] esm\index.esm.js [10566B] esm\package.json [17B] README.md [91467B] .guides/setup.md [584B] index.d.ts [21029B] index.cjs.js [11708B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:47:59.027639   12580 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: package.json [612B] .guides/usage.md [2239B] .guides/config.json [236B] esm\\index.esm.js [10566B] esm\\package.json [17B] README.md [91467B] .guides/setup.md [584B] index.d.ts [21029B] index.cjs.js [11708B] \n"}}
+[debug] [2026-04-19T09:47:59.035Z] I0419 18:47:59.027639   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:47:59.027639   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\n"}}
+[debug] [2026-04-19T09:47:59.044Z] I0419 18:47:59.036044   12580 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:47:59.036044   12580 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-19T09:49:38.655Z] I0419 18:49:38.654614   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:49:38.654614   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T09:49:38.771Z] W0419 18:49:38.771117   12580 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub c005] connector "main" has errors: main\queries.gql:26:5: Cannot query field "price" on type "Spirit".
+
+sources: main\queries.gql [2870B] main\mutations.gql [4726B] 
+I0419 18:49:38.771117   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub c005] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2783B] 
+Connector "main": sources: main\mutations.gql [4726B] main\queries.gql [2870B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0419 18:49:38.771117   12580 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub c005] connector \"main\" has errors: main\\queries.gql:26:5: Cannot query field \"price\" on type \"Spirit\".\n\nsources: main\\queries.gql [2870B] main\\mutations.gql [4726B] \nI0419 18:49:38.771117   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub c005] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2783B] \nConnector \"main\": sources: main\\mutations.gql [4726B] main\\queries.gql [2870B] \n"}}
+[debug] [2026-04-19T09:49:38.779Z] E0419 18:49:38.778229   12580 load.go:73] Could not load sources: 
+Errors: main\queries.gql:26:5: Cannot query field "price" on type "Spirit".
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0419 18:49:38.778229   12580 load.go:73] Could not load sources: \nErrors: main\\queries.gql:26:5: Cannot query field \"price\" on type \"Spirit\".\n"}}
+[debug] [2026-04-19T09:49:38.784Z] I0419 18:49:38.784024   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\implicit.gql [1037B] main\input.gql [107386B] main\relation.gql [52691B] main\query.gql [9588B] main\mutation.gql [25814B] 
+I0419 18:49:38.784024   12580 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:49:38.784024   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\implicit.gql [1037B] main\\input.gql [107386B] main\\relation.gql [52691B] main\\query.gql [9588B] main\\mutation.gql [25814B] \nI0419 18:49:38.784024   12580 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-19T09:50:08.650Z] I0419 18:50:08.649733   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:50:08.649733   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T09:50:08.718Z] I0419 18:50:08.717402   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 7111] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2783B] 
+Connector "main": sources: main\queries.gql [2860B] main\mutations.gql [4726B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:50:08.717402   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 7111] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2783B] \nConnector \"main\": sources: main\\queries.gql [2860B] main\\mutations.gql [4726B] \n"}}
+[debug] [2026-04-19T09:50:08.776Z] I0419 18:50:08.774895   12580 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:50:08.774895   12580 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-19T09:50:08.815Z] I0419 18:50:08.815400   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\query.gql [9588B] main\mutation.gql [25814B] prelude.gql [82799B] main\implicit.gql [1037B] main\input.gql [107386B] main\relation.gql [52691B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:50:08.815400   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\query.gql [9588B] main\\mutation.gql [25814B] prelude.gql [82799B] main\\implicit.gql [1037B] main\\input.gql [107386B] main\\relation.gql [52691B] \n"}}
+[debug] [2026-04-19T09:50:08.838Z] I0419 18:50:08.835929   12580 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: index.d.ts [22281B] esm\index.esm.js [11196B] .guides/config.json [236B] esm\package.json [17B] index.cjs.js [12401B] package.json [612B] README.md [96525B] .guides/usage.md [2244B] .guides/setup.md [584B] 
+I0419 18:50:08.838688   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0419 18:50:08.838688   12580 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:50:08.835929   12580 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: index.d.ts [22281B] esm\\index.esm.js [11196B] .guides/config.json [236B] esm\\package.json [17B] index.cjs.js [12401B] package.json [612B] README.md [96525B] .guides/usage.md [2244B] .guides/setup.md [584B] \nI0419 18:50:08.838688   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0419 18:50:08.838688   12580 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-19T09:51:08.648Z] I0419 18:51:08.648503   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:51:08.648503   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T09:51:08.695Z] I0419 18:51:08.695808   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub dffd] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2783B] 
+Connector "main": sources: main\mutations.gql [4726B] main\queries.gql [3136B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:51:08.695808   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub dffd] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2783B] \nConnector \"main\": sources: main\\mutations.gql [4726B] main\\queries.gql [3136B] \n"}}
+[debug] [2026-04-19T09:51:08.734Z] I0419 18:51:08.735053   12580 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:51:08.735053   12580 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-19T09:51:08.753Z] I0419 18:51:08.753774   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\implicit.gql [1037B] main\input.gql [107386B] main\relation.gql [52691B] main\query.gql [9588B] main\mutation.gql [25814B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:51:08.753774   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\implicit.gql [1037B] main\\input.gql [107386B] main\\relation.gql [52691B] main\\query.gql [9588B] main\\mutation.gql [25814B] \n"}}
+[debug] [2026-04-19T09:51:08.765Z] I0419 18:51:08.765257   12580 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: .guides/config.json [236B] esm\package.json [17B] index.cjs.js [13094B] package.json [612B] README.md [100465B] .guides/usage.md [2244B] index.d.ts [23424B] esm\index.esm.js [11808B] .guides/setup.md [584B] 
+I0419 18:51:08.765257   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0419 18:51:08.765257   12580 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:51:08.765257   12580 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: .guides/config.json [236B] esm\\package.json [17B] index.cjs.js [13094B] package.json [612B] README.md [100465B] .guides/usage.md [2244B] index.d.ts [23424B] esm\\index.esm.js [11808B] .guides/setup.md [584B] \nI0419 18:51:08.765257   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0419 18:51:08.765257   12580 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-19T09:52:28.651Z] I0419 18:52:28.650780   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:52:28.650780   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T09:52:28.712Z] I0419 18:52:28.710929   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 7e05] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2783B] 
+Connector "main": sources: main\mutations.gql [4726B] main\queries.gql [3333B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:52:28.710929   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 7e05] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2783B] \nConnector \"main\": sources: main\\mutations.gql [4726B] main\\queries.gql [3333B] \n"}}
+[debug] [2026-04-19T09:52:28.760Z] I0419 18:52:28.760425   12580 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:52:28.760425   12580 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-19T09:52:28.783Z] I0419 18:52:28.782232   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\mutation.gql [25814B] main\implicit.gql [1037B] main\input.gql [107386B] main\relation.gql [52691B] main\query.gql [9588B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:52:28.782232   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\mutation.gql [25814B] main\\implicit.gql [1037B] main\\input.gql [107386B] main\\relation.gql [52691B] main\\query.gql [9588B] \n"}}
+[debug] [2026-04-19T09:52:28.821Z] I0419 18:52:28.821232   12580 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: index.d.ts [24601B] package.json [612B] README.md [105224B] .guides/setup.md [584B] esm\index.esm.js [12455B] esm\package.json [17B] index.cjs.js [13810B] .guides/usage.md [2244B] .guides/config.json [236B] 
+I0419 18:52:28.821232   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0419 18:52:28.821232   12580 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:52:28.821232   12580 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: index.d.ts [24601B] package.json [612B] README.md [105224B] .guides/setup.md [584B] esm\\index.esm.js [12455B] esm\\package.json [17B] index.cjs.js [13810B] .guides/usage.md [2244B] .guides/config.json [236B] \nI0419 18:52:28.821232   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0419 18:52:28.821232   12580 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-19T09:55:38.653Z] I0419 18:55:38.653981   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:55:38.653981   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T09:55:38.744Z] I0419 18:55:38.745001   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 5f31] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2805B] 
+Connector "main": sources: main\mutations.gql [4726B] main\queries.gql [3333B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:55:38.745001   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 5f31] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2805B] \nConnector \"main\": sources: main\\mutations.gql [4726B] main\\queries.gql [3333B] \n"}}
+[debug] [2026-04-19T09:55:38.788Z] I0419 18:55:38.789288   12580 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:55:38.789288   12580 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-19T09:55:38.811Z] I0419 18:55:38.812560   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\relation.gql [53090B] main\query.gql [9588B] main\mutation.gql [25814B] prelude.gql [82799B] main\implicit.gql [1037B] main\input.gql [108175B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:55:38.812560   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\relation.gql [53090B] main\\query.gql [9588B] main\\mutation.gql [25814B] prelude.gql [82799B] main\\implicit.gql [1037B] main\\input.gql [108175B] \n"}}
+[debug] [2026-04-19T09:55:38.836Z] I0419 18:55:38.836968   12580 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: esm\package.json [17B] index.cjs.js [13810B] README.md [105224B] .guides/setup.md [584B] index.d.ts [24601B] esm\index.esm.js [12455B] package.json [612B] .guides/usage.md [2244B] .guides/config.json [236B] 
+I0419 18:55:38.836968   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0419 18:55:38.836968   12580 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 18:55:38.836968   12580 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: esm\\package.json [17B] index.cjs.js [13810B] README.md [105224B] .guides/setup.md [584B] index.d.ts [24601B] esm\\index.esm.js [12455B] package.json [612B] .guides/usage.md [2244B] .guides/config.json [236B] \nI0419 18:55:38.836968   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0419 18:55:38.836968   12580 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-19T10:01:08.649Z] I0419 19:01:08.648566   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 19:01:08.648566   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T10:01:08.700Z] W0419 19:01:08.699131   12580 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 4389] connector "main" has errors: main\mutations.gql:191:1: There can be only one operation named "upsertWorldCupResult".
+
+sources: main\mutations.gql [4726B] main\queries.gql [4260B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0419 19:01:08.699131   12580 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 4389] connector \"main\" has errors: main\\mutations.gql:191:1: There can be only one operation named \"upsertWorldCupResult\".\n\nsources: main\\mutations.gql [4726B] main\\queries.gql [4260B] \n"}}
+[debug] [2026-04-19T10:01:08.701Z] I0419 19:01:08.700130   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 4389] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2805B] 
+Connector "main": sources: main\mutations.gql [4726B] main\queries.gql [4260B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 19:01:08.700130   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 4389] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2805B] \nConnector \"main\": sources: main\\mutations.gql [4726B] main\\queries.gql [4260B] \n"}}
+[debug] [2026-04-19T10:01:08.706Z] E0419 19:01:08.706104   12580 load.go:73] Could not load sources: 
+Errors: main\mutations.gql:191:1: There can be only one operation named "upsertWorldCupResult".
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0419 19:01:08.706104   12580 load.go:73] Could not load sources: \nErrors: main\\mutations.gql:191:1: There can be only one operation named \"upsertWorldCupResult\".\n"}}
+[debug] [2026-04-19T10:01:08.715Z] I0419 19:01:08.715371   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\input.gql [108175B] main\relation.gql [53090B] main\query.gql [9588B] main\mutation.gql [25814B] prelude.gql [82799B] main\implicit.gql [1037B] 
+I0419 19:01:08.715371   12580 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 19:01:08.715371   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\input.gql [108175B] main\\relation.gql [53090B] main\\query.gql [9588B] main\\mutation.gql [25814B] prelude.gql [82799B] main\\implicit.gql [1037B] \nI0419 19:01:08.715371   12580 load.go:74] Finished reloading\n"}}

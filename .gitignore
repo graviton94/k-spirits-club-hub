@@ -58,3 +58,6 @@ docs/diago/
 
 # Gstack
 gstack/
+
+# Firebase Data Connect
+.dataconnect/

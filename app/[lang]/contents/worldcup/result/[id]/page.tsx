@@ -1,42 +1,45 @@
 import { Metadata } from 'next';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '@/lib/db/firebase';
 import { Trophy, ChevronLeft, Gamepad2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getOptimizedImageUrl } from '@/lib/utils/image-optimization';
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url';
+import { dbGetWorldCupResult } from '@/lib/db/data-connect-client';
 
+interface WinnerData {
+  id: string;
+  name: string;
+  nameEn?: string | null;
+  category: string;
+  categoryEn?: string | null;
+  subcategory?: string | null;
+  distillery?: string | null;
+  imageUrl?: string | null;
+  thumbnailUrl?: string | null;
+  noseTags?: string[] | null;
+  palateTags?: string[] | null;
+  finishTags?: string[] | null;
+  abv?: number | null;
+  country?: string | null;
+  region?: string | null;
+}
 
 interface ResultData {
-  winner: {
-    name: string;
-    category: string;
-    subcategory: string | null;
-    distillery: string | null;
-    imageUrl: string | null;
-    thumbnailUrl: string | null;
-    tags: string[];
-    abv: number | null;
-    country: string | null;
-    region: string | null;
-  };
+  winner: WinnerData;
   category: string;
-  timestamp: unknown;
+  subcategory?: string | null;
+  timestamp?: string | null;
 }
 
 async function getResult(id: string): Promise<ResultData | null> {
   try {
-    const docRef = doc(db, 'worldcup_results', id);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      return docSnap.data() as ResultData;
-    }
+    const raw = await dbGetWorldCupResult(id);
+    if (!raw || !raw.winner) return null;
+    return raw as ResultData;
   } catch (error) {
     console.error('Error fetching worldcup result:', error);
   }
-
   return null;
 }
 
@@ -63,16 +66,15 @@ export async function generateMetadata({
   }
 
   const { winner } = result;
-  const title = isEn
-    ? `My World Cup Champion: ${winner.name}`
-    : `나의 월드컵 우승 픽: ${winner.name}`;
   const description = isEn
     ? 'See the winning spirit from this tournament share page and start your own bracket on K-Spirits Club.'
     : '이 토너먼트 결과를 확인하고 K-Spirits Club에서 직접 월드컵을 시작해보세요.';
   const image = winner.imageUrl || winner.thumbnailUrl || '/og-image.png';
+  const title = isEn ? `${winner.name} | World Cup Result` : `${winner.name} | 월드컵 결과`;
+  const ogTitle = isEn ? `My World Cup Champion: ${winner.name}` : `나의 월드컵 우승 픽: ${winner.name}`;
 
   return {
-    title: isEn ? `${winner.name} | World Cup Result` : `${winner.name} | 월드컵 결과`,
+    title,
     description,
     robots: { index: false, follow: true },
     alternates: {
@@ -80,24 +82,17 @@ export async function generateMetadata({
       languages: hreflangAlternates,
     },
     openGraph: {
-      title,
+      title: ogTitle,
       description,
       url: canonicalUrl,
       type: 'website',
       locale: isEn ? 'en_US' : 'ko_KR',
       siteName: 'K-Spirits Club',
-      images: [
-        {
-          url: image,
-          width: 800,
-          height: 800,
-          alt: winner.name,
-        },
-      ],
+      images: [{ url: image, width: 800, height: 800, alt: winner.name }],
     },
     twitter: {
       card: 'summary_large_image',
-      title,
+      title: ogTitle,
       description,
       images: [image],
     },
@@ -118,6 +113,13 @@ export default async function WorldCupResultPage({
   }
 
   const { winner } = result;
+  const tags = [
+    ...(winner.noseTags ?? []),
+    ...(winner.palateTags ?? []),
+    ...(winner.finishTags ?? []),
+  ]
+    .filter((v, i, a) => v && a.indexOf(v) === i)
+    .map((tag) => (tag.startsWith('#') ? tag.slice(1) : tag));
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 relative overflow-hidden">
@@ -212,9 +214,9 @@ export default async function WorldCupResultPage({
                   )}
                 </div>
 
-                {winner.tags && winner.tags.length > 0 && (
+                {tags.length > 0 && (
                   <div className="flex flex-wrap justify-center gap-1.5 mt-2">
-                    {winner.tags.slice(0, 3).map((tag) => (
+                    {tags.slice(0, 3).map((tag) => (
                       <span
                         key={tag}
                         className="px-2 py-0.5 bg-amber-50 border border-amber-100 rounded-full text-[9px] text-amber-600 font-bold whitespace-nowrap"

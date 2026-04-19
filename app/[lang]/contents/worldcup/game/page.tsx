@@ -19,16 +19,9 @@ import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import { toPng } from 'html-to-image';
 import { useRef } from 'react';
 import {
-    collection,
-    query,
-    where,
-    getDocs,
-    limit,
-    orderBy,
-    addDoc,
-    serverTimestamp
-} from 'firebase/firestore';
-import { db } from '@/lib/db/firebase';
+    dbListSpiritsForWorldCup,
+    dbUpsertWorldCupResult
+} from '@/lib/db/data-connect-client';
 import Image from 'next/image';
 import confetti from 'canvas-confetti';
 
@@ -109,46 +102,29 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
         const fetchSpirits = async () => {
             try {
                 setLoading(true);
-                const spiritsRef = collection(db, 'spirits');
-                let q = query(
-                    spiritsRef,
-                    where('isPublished', '==', true),
-                    limit(300) // Max fetch for pool
+                const fetchedDataRaw = await dbListSpiritsForWorldCup(
+                    cat === 'ALL' ? '' : cat,
+                    sub === 'ALL' ? [] : sub.split(',')
                 );
 
-                if (cat !== 'ALL') {
-                    q = query(q, where('category', '==', cat));
-                }
-
-                if (sub !== 'ALL') {
-                    const subArray = sub.split(',');
-                    if (subArray.length > 0) {
-                        // Note: firestore 'in' limited to 10 items
-                        q = query(q, where('subcategory', 'in', subArray.slice(0, 10)));
-                    }
-                }
-
-                const querySnapshot = await getDocs(q);
-                const fetchedData: Spirit[] = querySnapshot.docs.map(doc => {
-                    const data = doc.data();
+                const fetchedData: Spirit[] = fetchedDataRaw.map(data => {
                     return {
-                        id: doc.id,
+                        id: data.id,
                         name: data.name,
-                        name_en: data.name_en || null,
+                        name_en: data.nameEn || null,
                         distillery: data.distillery || null,
                         imageUrl: data.imageUrl || null,
                         thumbnailUrl: data.thumbnailUrl || null,
                         category: data.category,
-                        category_en: data.category_en || null,
+                        category_en: data.categoryEn || null,
                         subcategory: data.subcategory || null,
                         abv: data.abv !== undefined ? Number(data.abv) : null,
                         country: data.country || null,
                         region: data.region || null,
                         tags: [
-                            ...(data.nose_tags || data.metadata?.nose_tags || []),
-                            ...(data.palate_tags || data.metadata?.palate_tags || []),
-                            ...(data.finish_tags || data.metadata?.finish_tags || []),
-                            ...(data.tags || [])
+                            ...(data.noseTags || []),
+                            ...(data.palateTags || []),
+                            ...(data.finishTags || [])
                         ]
                             .filter((v, i, a) => v && a.indexOf(v) === i)
                             .map(tag => tag.startsWith('#') ? tag.slice(1) : tag)
@@ -261,14 +237,16 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
                 // Auto Save Result for Sharing
                 const saveResult = async () => {
                     try {
-                        const docRef = await addDoc(collection(db, 'worldcup_results'), {
-                            winner: finalWinner,
+                        const newId = crypto.randomUUID();
+                        await dbUpsertWorldCupResult({
+                            id: newId,
+                            winnerId: finalWinner.id,
                             category: cat,
-                            subcategory: sub,
+                            subcategory: sub === 'ALL' ? null : sub,
                             initialRound: requestedRound,
-                            timestamp: serverTimestamp()
+                            timestamp: new Date().toISOString()
                         });
-                        setResultId(docRef.id);
+                        setResultId(newId);
                     } catch (err) {
                         console.error('Failed to save worldcup result:', err);
                     }

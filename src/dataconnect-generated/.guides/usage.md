@@ -7,62 +7,6 @@ best practices are followed.
 
 
 
-### React
-For each operation, there is a wrapper hook that can be used to call the operation.
-
-Here are all of the hooks that get generated:
-```ts
-import { useCreateMovie, useUpsertUser, useAddReview, useDeleteReview, useListMovies, useListUsers, useListUserReviews, useGetMovieById, useSearchMovie } from '@dataconnect/generated/react';
-// The types of these hooks are available in react/index.d.ts
-
-const { data, isPending, isSuccess, isError, error } = useCreateMovie(createMovieVars);
-
-const { data, isPending, isSuccess, isError, error } = useUpsertUser(upsertUserVars);
-
-const { data, isPending, isSuccess, isError, error } = useAddReview(addReviewVars);
-
-const { data, isPending, isSuccess, isError, error } = useDeleteReview(deleteReviewVars);
-
-const { data, isPending, isSuccess, isError, error } = useListMovies();
-
-const { data, isPending, isSuccess, isError, error } = useListUsers();
-
-const { data, isPending, isSuccess, isError, error } = useListUserReviews();
-
-const { data, isPending, isSuccess, isError, error } = useGetMovieById(getMovieByIdVars);
-
-const { data, isPending, isSuccess, isError, error } = useSearchMovie(searchMovieVars);
-
-```
-
-Here's an example from a different generated SDK:
-
-```ts
-import { useListAllMovies } from '@dataconnect/generated/react';
-
-function MyComponent() {
-  const { isLoading, data, error } = useListAllMovies();
-  if(isLoading) {
-    return <div>Loading...</div>
-  }
-  if(error) {
-    return <div> An Error Occurred: {error} </div>
-  }
-}
-
-// App.tsx
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import MyComponent from './my-component';
-
-function App() {
-  const queryClient = new QueryClient();
-  return <QueryClientProvider client={queryClient}>
-    <MyComponent />
-  </QueryClientProvider>
-}
-```
-
-
 
 ## Advanced Usage
 If a user is not using a supported framework, they can use the generated SDK directly.
@@ -70,35 +14,38 @@ If a user is not using a supported framework, they can use the generated SDK dir
 Here's an example of how to use it with the first 5 operations:
 
 ```js
-import { createMovie, upsertUser, addReview, deleteReview, listMovies, listUsers, listUserReviews, getMovieById, searchMovie } from '@dataconnect/generated';
+import { upsertUser, upsertSpirit, upsertReview, upsertNews, upsertCabinet, upsertModificationRequest, upsertWorldCupResult, listSpirits, listNewArrivals, getSpirit } from '@k-spirits/dataconnect';
 
 
-// Operation CreateMovie:  For variables, look at type CreateMovieVars in ../index.d.ts
-const { data } = await CreateMovie(dataConnect, createMovieVars);
-
-// Operation UpsertUser:  For variables, look at type UpsertUserVars in ../index.d.ts
+// Operation upsertUser:  For variables, look at type UpsertUserVars in ../index.d.ts
 const { data } = await UpsertUser(dataConnect, upsertUserVars);
 
-// Operation AddReview:  For variables, look at type AddReviewVars in ../index.d.ts
-const { data } = await AddReview(dataConnect, addReviewVars);
+// Operation upsertSpirit:  For variables, look at type UpsertSpiritVars in ../index.d.ts
+const { data } = await UpsertSpirit(dataConnect, upsertSpiritVars);
 
-// Operation DeleteReview:  For variables, look at type DeleteReviewVars in ../index.d.ts
-const { data } = await DeleteReview(dataConnect, deleteReviewVars);
+// Operation upsertReview:  For variables, look at type UpsertReviewVars in ../index.d.ts
+const { data } = await UpsertReview(dataConnect, upsertReviewVars);
 
-// Operation ListMovies: 
-const { data } = await ListMovies(dataConnect);
+// Operation upsertNews:  For variables, look at type UpsertNewsVars in ../index.d.ts
+const { data } = await UpsertNews(dataConnect, upsertNewsVars);
 
-// Operation ListUsers: 
-const { data } = await ListUsers(dataConnect);
+// Operation upsertCabinet:  For variables, look at type UpsertCabinetVars in ../index.d.ts
+const { data } = await UpsertCabinet(dataConnect, upsertCabinetVars);
 
-// Operation ListUserReviews: 
-const { data } = await ListUserReviews(dataConnect);
+// Operation upsertModificationRequest:  For variables, look at type UpsertModificationRequestVars in ../index.d.ts
+const { data } = await UpsertModificationRequest(dataConnect, upsertModificationRequestVars);
 
-// Operation GetMovieById:  For variables, look at type GetMovieByIdVars in ../index.d.ts
-const { data } = await GetMovieById(dataConnect, getMovieByIdVars);
+// Operation upsertWorldCupResult:  For variables, look at type UpsertWorldCupResultVars in ../index.d.ts
+const { data } = await UpsertWorldCupResult(dataConnect, upsertWorldCupResultVars);
 
-// Operation SearchMovie:  For variables, look at type SearchMovieVars in ../index.d.ts
-const { data } = await SearchMovie(dataConnect, searchMovieVars);
+// Operation listSpirits:  For variables, look at type ListSpiritsVars in ../index.d.ts
+const { data } = await ListSpirits(dataConnect, listSpiritsVars);
+
+// Operation listNewArrivals:  For variables, look at type ListNewArrivalsVars in ../index.d.ts
+const { data } = await ListNewArrivals(dataConnect, listNewArrivalsVars);
+
+// Operation getSpirit:  For variables, look at type GetSpiritVars in ../index.d.ts
+const { data } = await GetSpirit(dataConnect, getSpiritVars);
 
 
 ```

@@ -1,0 +1,8 @@
+
+connectorId: "main"
+generate:
+  javascriptSdk:
+    outputDir: "../../src/dataconnect-generated"
+    package: "@k-spirits/dataconnect"
+  adminSdk: 
+    outputDir: "../../src/dataconnect-admin-generated"

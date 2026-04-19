@@ -1,0 +1,207 @@
+
+# Mutations for Data Migration and App Logic
+
+# --- User Mutations ---
+mutation upsertUser($id: String!, $email: String, $nickname: String, $profileImage: String, $role: String, $themePreference: String, $isFirstLogin: Boolean, $reviewsWritten: Int, $heartsReceived: Int) @auth(level: NO_ACCESS) {
+  user_upsert(data: {
+    id: $id,
+    email: $email,
+    nickname: $nickname,
+    profileImage: $profileImage,
+    role: $role,
+    themePreference: $themePreference,
+    isFirstLogin: $isFirstLogin,
+    reviewsWritten: $reviewsWritten,
+    heartsReceived: $heartsReceived
+  })
+}
+
+# --- Spirit Mutations ---
+mutation upsertSpirit(
+  $id: String!,
+  $name: String!,
+  $nameEn: String,
+  $category: String!,
+  $categoryEn: String,
+  $mainCategory: String,
+  $subcategory: String,
+  $distillery: String,
+  $bottler: String,
+  $abv: Float,
+  $volume: Int,
+  $country: String,
+  $region: String,
+  $imageUrl: String!,
+  $thumbnailUrl: String,
+  $descriptionKo: String,
+  $descriptionEn: String,
+  $pairingGuideKo: String,
+  $pairingGuideEn: String,
+  $noseTags: [String!],
+  $palateTags: [String!],
+  $finishTags: [String!],
+  $tastingNote: String,
+  $status: String,
+  $isPublished: Boolean,
+  $isReviewed: Boolean,
+  $rating: Float,
+  $reviewCount: Int,
+  $metadata: Any
+) @auth(level: NO_ACCESS) {
+  spirit_upsert(data: {
+    id: $id,
+    name: $name,
+    nameEn: $nameEn,
+    category: $category,
+    categoryEn: $categoryEn,
+    mainCategory: $mainCategory,
+    subcategory: $subcategory,
+    distillery: $distillery,
+    bottler: $bottler,
+    abv: $abv,
+    volume: $volume,
+    country: $country,
+    region: $region,
+    imageUrl: $imageUrl,
+    thumbnailUrl: $thumbnailUrl,
+    descriptionKo: $descriptionKo,
+    descriptionEn: $descriptionEn,
+    pairingGuideKo: $pairingGuideKo,
+    pairingGuideEn: $pairingGuideEn,
+    noseTags: $noseTags,
+    palateTags: $palateTags,
+    finishTags: $finishTags,
+    tastingNote: $tastingNote,
+    status: $status,
+    isPublished: $isPublished,
+    isReviewed: $isReviewed,
+    rating: $rating,
+    reviewCount: $reviewCount,
+    metadata: $metadata
+  })
+}
+
+# --- Review Mutations ---
+mutation upsertReview(
+  $id: UUID!,
+  $spiritId: String!,
+  $userId: String!,
+  $rating: Int!,
+  $title: String,
+  $content: String!,
+  $nose: String,
+  $palate: String,
+  $finish: String,
+  $likes: Int,
+  $likedBy: [String!],
+  $isPublished: Boolean,
+  $imageUrls: [String!],
+  $createdAt: Timestamp,
+  $updatedAt: Timestamp
+) @auth(level: NO_ACCESS) {
+  spiritReview_upsert(data: {
+    id: $id,
+    spiritId: $spiritId,
+    userId: $userId,
+    rating: $rating,
+    title: $title,
+    content: $content,
+    nose: $nose,
+    palate: $palate,
+    finish: $finish,
+    likes: $likes,
+    likedBy: $likedBy,
+    isPublished: $isPublished,
+    imageUrls: $imageUrls,
+    createdAt: $createdAt,
+    updatedAt: $updatedAt
+  })
+}
+
+# --- News Mutations ---
+mutation upsertNews(
+  $id: String!,
+  $title: String!,
+  $content: String!,
+  $imageUrl: String,
+  $category: String,
+  $source: String,
+  $link: String,
+  $date: String,
+  $translations: Any,
+  $tags: [String!]
+) @auth(level: NO_ACCESS) {
+  newsArticle_upsert(data: {
+    id: $id,
+    title: $title,
+    content: $content,
+    imageUrl: $imageUrl,
+    category: $category,
+    source: $source,
+    link: $link,
+    date: $date,
+    translations: $translations,
+    tags: $tags
+  })
+}
+
+# --- Cabinet Mutations ---
+mutation upsertCabinet(
+  $userId: String!,
+  $spiritId: String!,
+  $addedAt: Timestamp,
+  $notes: String,
+  $rating: Int,
+  $isFavorite: Boolean
+) @auth(level: NO_ACCESS) {
+  userCabinet_upsert(data: {
+    userId: $userId,
+    spiritId: $spiritId,
+    addedAt: $addedAt,
+    notes: $notes,
+    rating: $rating,
+    isFavorite: $isFavorite
+  })
+}
+
+# --- ModificationRequest Mutations ---
+mutation upsertModificationRequest(
+  $id: String!,
+  $spiritId: String!,
+  $spiritName: String,
+  $userId: String,
+  $title: String!,
+  $content: String!,
+  $status: String,
+  $createdAt: Timestamp
+) @auth(level: NO_ACCESS) {
+  modificationRequest_upsert(data: {
+    id: $id,
+    spiritId: $spiritId,
+    spiritName: $spiritName,
+    userId: $userId,
+    title: $title,
+    content: $content,
+    status: $status,
+    createdAt: $createdAt
+  })
+}
+
+# --- WorldCupResult Mutations ---
+mutation upsertWorldCupResult(
+  $id: UUID!,
+  $winnerId: String!,
+  $category: String!,
+  $subcategory: String,
+  $initialRound: Int!,
+  $timestamp: Timestamp
+) @auth(level: PUBLIC) {
+  worldCupResult_upsert(data: {
+    id: $id,
+    winnerId: $winnerId,
+    category: $category,
+    subcategory: $subcategory,
+    initialRound: $initialRound,
+    timestamp: $timestamp
+  })
+}

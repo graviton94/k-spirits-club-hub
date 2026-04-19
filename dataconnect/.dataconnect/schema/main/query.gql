@@ -1,8 +1,80 @@
 extend type Query {
   """
-  ✨ Look up a single `Movie` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  ✨ Look up a single `ModificationRequest` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
   """
-  movie(
+  modificationRequest(
+    """
+    The unique ID of the object.
+    """
+    id: String
+
+    """
+    ✨ `_expr` server value variant of `id` (The unique ID of the object.)
+    """
+    id_expr: String_Expr
+
+    """
+    The key used to identify the object.
+    """
+    key: ModificationRequest_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: ModificationRequest_FirstRow
+  ): ModificationRequest @fdc_generated(from: "ModificationRequest", purpose: QUERY_SINGLE)
+  """
+  ✨ Look up a single `NewsArticle` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  newsArticle(
+    """
+    The unique ID of the object.
+    """
+    id: String
+
+    """
+    ✨ `_expr` server value variant of `id` (The unique ID of the object.)
+    """
+    id_expr: String_Expr
+
+    """
+    The key used to identify the object.
+    """
+    key: NewsArticle_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: NewsArticle_FirstRow
+  ): NewsArticle @fdc_generated(from: "NewsArticle", purpose: QUERY_SINGLE)
+  """
+  ✨ Look up a single `Spirit` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  spirit(
+    """
+    The unique ID of the object.
+    """
+    id: String
+
+    """
+    ✨ `_expr` server value variant of `id` (The unique ID of the object.)
+    """
+    id_expr: String_Expr
+
+    """
+    The key used to identify the object.
+    """
+    key: Spirit_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Spirit_FirstRow
+  ): Spirit @fdc_generated(from: "Spirit", purpose: QUERY_SINGLE)
+  """
+  ✨ Look up a single `SpiritReview` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  spiritReview(
     """
     The unique ID of the object.
     """
@@ -11,46 +83,13 @@ extend type Query {
     """
     The key used to identify the object.
     """
-    key: Movie_Key
+    key: SpiritReview_Key
 
     """
     Fetch the first row based on the filters and ordering.
     """
-    first: Movie_FirstRow
-  ): Movie @fdc_generated(from: "Movie", purpose: QUERY_SINGLE)
-  """
-  ✨ Look up a single `MovieMetadata` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
-  """
-  movieMetadata(
-    """
-    The unique ID of the object.
-    """
-    id: UUID
-
-    """
-    The key used to identify the object.
-    """
-    key: MovieMetadata_Key
-
-    """
-    Fetch the first row based on the filters and ordering.
-    """
-    first: MovieMetadata_FirstRow
-  ): MovieMetadata @fdc_generated(from: "MovieMetadata", purpose: QUERY_SINGLE)
-  """
-  ✨ Look up a single `Review` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
-  """
-  review(
-    """
-    The key used to identify the object.
-    """
-    key: Review_Key
-
-    """
-    Fetch the first row based on the filters and ordering.
-    """
-    first: Review_FirstRow
-  ): Review @fdc_generated(from: "Review", purpose: QUERY_SINGLE)
+    first: SpiritReview_FirstRow
+  ): SpiritReview @fdc_generated(from: "SpiritReview", purpose: QUERY_SINGLE)
   """
   ✨ Look up a single `User` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
   """
@@ -76,18 +115,51 @@ extend type Query {
     first: User_FirstRow
   ): User @fdc_generated(from: "User", purpose: QUERY_SINGLE)
   """
-  ✨ List `Movie` objects in the table and return selected fields, optionally filtered by `where` conditions
+  ✨ Look up a single `UserCabinet` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
   """
-  movies(
+  userCabinet(
+    """
+    The key used to identify the object.
+    """
+    key: UserCabinet_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: UserCabinet_FirstRow
+  ): UserCabinet @fdc_generated(from: "UserCabinet", purpose: QUERY_SINGLE)
+  """
+  ✨ Look up a single `WorldCupResult` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  worldCupResult(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: WorldCupResult_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: WorldCupResult_FirstRow
+  ): WorldCupResult @fdc_generated(from: "WorldCupResult", purpose: QUERY_SINGLE)
+  """
+  ✨ List `ModificationRequest` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  modificationRequests(
     """
     Filter condition to narrow down the query results.
     """
-    where: Movie_Filter
+    where: ModificationRequest_Filter
 
     """
     Order the query results by specific fields.
     """
-    orderBy: [Movie_Order!]
+    orderBy: [ModificationRequest_Order!]
 
     """
     Number of rows to skip before starting to return the results.
@@ -107,21 +179,21 @@ extend type Query {
     """
     Filter condition to apply to the groups of aggregate queries.
     """
-    having: Movie_Having
-  ): [Movie!]! @fdc_generated(from: "Movie", purpose: QUERY_MULTIPLE)
+    having: ModificationRequest_Having
+  ): [ModificationRequest!]! @fdc_generated(from: "ModificationRequest", purpose: QUERY_MULTIPLE)
   """
-  ✨ List `MovieMetadata` objects in the table and return selected fields, optionally filtered by `where` conditions
+  ✨ List `NewsArticle` objects in the table and return selected fields, optionally filtered by `where` conditions
   """
-  movieMetadatas(
+  newsArticles(
     """
     Filter condition to narrow down the query results.
     """
-    where: MovieMetadata_Filter
+    where: NewsArticle_Filter
 
     """
     Order the query results by specific fields.
     """
-    orderBy: [MovieMetadata_Order!]
+    orderBy: [NewsArticle_Order!]
 
     """
     Number of rows to skip before starting to return the results.
@@ -141,21 +213,21 @@ extend type Query {
     """
     Filter condition to apply to the groups of aggregate queries.
     """
-    having: MovieMetadata_Having
-  ): [MovieMetadata!]! @fdc_generated(from: "MovieMetadata", purpose: QUERY_MULTIPLE)
+    having: NewsArticle_Having
+  ): [NewsArticle!]! @fdc_generated(from: "NewsArticle", purpose: QUERY_MULTIPLE)
   """
-  ✨ List `Review` objects in the table and return selected fields, optionally filtered by `where` conditions
+  ✨ List `Spirit` objects in the table and return selected fields, optionally filtered by `where` conditions
   """
-  reviews(
+  spirits(
     """
     Filter condition to narrow down the query results.
     """
-    where: Review_Filter
+    where: Spirit_Filter
 
     """
     Order the query results by specific fields.
     """
-    orderBy: [Review_Order!]
+    orderBy: [Spirit_Order!]
 
     """
     Number of rows to skip before starting to return the results.
@@ -175,8 +247,42 @@ extend type Query {
     """
     Filter condition to apply to the groups of aggregate queries.
     """
-    having: Review_Having
-  ): [Review!]! @fdc_generated(from: "Review", purpose: QUERY_MULTIPLE)
+    having: Spirit_Having
+  ): [Spirit!]! @fdc_generated(from: "Spirit", purpose: QUERY_MULTIPLE)
+  """
+  ✨ List `SpiritReview` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  spiritReviews(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: SpiritReview_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [SpiritReview_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: SpiritReview_Having
+  ): [SpiritReview!]! @fdc_generated(from: "SpiritReview", purpose: QUERY_MULTIPLE)
   """
   ✨ List `User` objects in the table and return selected fields, optionally filtered by `where` conditions
   """
@@ -211,4 +317,72 @@ extend type Query {
     """
     having: User_Having
   ): [User!]! @fdc_generated(from: "User", purpose: QUERY_MULTIPLE)
+  """
+  ✨ List `UserCabinet` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  userCabinets(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: UserCabinet_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [UserCabinet_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: UserCabinet_Having
+  ): [UserCabinet!]! @fdc_generated(from: "UserCabinet", purpose: QUERY_MULTIPLE)
+  """
+  ✨ List `WorldCupResult` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  worldCupResults(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: WorldCupResult_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [WorldCupResult_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: WorldCupResult_Having
+  ): [WorldCupResult!]! @fdc_generated(from: "WorldCupResult", purpose: QUERY_MULTIPLE)
 }

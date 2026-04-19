@@ -1,31 +1,40 @@
 extend type Mutation {
   """
-  ✨ Insert a single `Movie` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  ✨ Insert a single `ModificationRequest` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
   """
-  movie_insert(
+  modificationRequest_insert(
     """
     Data object to insert into the table.
     """
-    data: Movie_Data!
-  ): Movie_KeyOutput! @fdc_generated(from: "Movie", purpose: INSERT_SINGLE)
+    data: ModificationRequest_Data!
+  ): ModificationRequest_KeyOutput! @fdc_generated(from: "ModificationRequest", purpose: INSERT_SINGLE)
   """
-  ✨ Insert a single `MovieMetadata` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  ✨ Insert a single `NewsArticle` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
   """
-  movieMetadata_insert(
+  newsArticle_insert(
     """
     Data object to insert into the table.
     """
-    data: MovieMetadata_Data!
-  ): MovieMetadata_KeyOutput! @fdc_generated(from: "MovieMetadata", purpose: INSERT_SINGLE)
+    data: NewsArticle_Data!
+  ): NewsArticle_KeyOutput! @fdc_generated(from: "NewsArticle", purpose: INSERT_SINGLE)
   """
-  ✨ Insert a single `Review` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  ✨ Insert a single `Spirit` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
   """
-  review_insert(
+  spirit_insert(
     """
     Data object to insert into the table.
     """
-    data: Review_Data!
-  ): Review_KeyOutput! @fdc_generated(from: "Review", purpose: INSERT_SINGLE)
+    data: Spirit_Data!
+  ): Spirit_KeyOutput! @fdc_generated(from: "Spirit", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `SpiritReview` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  spiritReview_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: SpiritReview_Data!
+  ): SpiritReview_KeyOutput! @fdc_generated(from: "SpiritReview", purpose: INSERT_SINGLE)
   """
   ✨ Insert a single `User` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
   """
@@ -36,32 +45,59 @@ extend type Mutation {
     data: User_Data!
   ): User_KeyOutput! @fdc_generated(from: "User", purpose: INSERT_SINGLE)
   """
-  ✨ Insert `Movie` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  ✨ Insert a single `UserCabinet` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
   """
-  movie_insertMany(
+  userCabinet_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: UserCabinet_Data!
+  ): UserCabinet_KeyOutput! @fdc_generated(from: "UserCabinet", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `WorldCupResult` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  worldCupResult_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: WorldCupResult_Data!
+  ): WorldCupResult_KeyOutput! @fdc_generated(from: "WorldCupResult", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert `ModificationRequest` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  modificationRequest_insertMany(
     """
     List of data objects to insert into the table.
     """
-    data: [Movie_Data!]!
-  ): [Movie_KeyOutput!]! @fdc_generated(from: "Movie", purpose: INSERT_MULTIPLE)
+    data: [ModificationRequest_Data!]!
+  ): [ModificationRequest_KeyOutput!]! @fdc_generated(from: "ModificationRequest", purpose: INSERT_MULTIPLE)
   """
-  ✨ Insert `MovieMetadata` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  ✨ Insert `NewsArticle` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
   """
-  movieMetadata_insertMany(
+  newsArticle_insertMany(
     """
     List of data objects to insert into the table.
     """
-    data: [MovieMetadata_Data!]!
-  ): [MovieMetadata_KeyOutput!]! @fdc_generated(from: "MovieMetadata", purpose: INSERT_MULTIPLE)
+    data: [NewsArticle_Data!]!
+  ): [NewsArticle_KeyOutput!]! @fdc_generated(from: "NewsArticle", purpose: INSERT_MULTIPLE)
   """
-  ✨ Insert `Review` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  ✨ Insert `Spirit` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
   """
-  review_insertMany(
+  spirit_insertMany(
     """
     List of data objects to insert into the table.
     """
-    data: [Review_Data!]!
-  ): [Review_KeyOutput!]! @fdc_generated(from: "Review", purpose: INSERT_MULTIPLE)
+    data: [Spirit_Data!]!
+  ): [Spirit_KeyOutput!]! @fdc_generated(from: "Spirit", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `SpiritReview` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  spiritReview_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [SpiritReview_Data!]!
+  ): [SpiritReview_KeyOutput!]! @fdc_generated(from: "SpiritReview", purpose: INSERT_MULTIPLE)
   """
   ✨ Insert `User` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
   """
@@ -72,32 +108,59 @@ extend type Mutation {
     data: [User_Data!]!
   ): [User_KeyOutput!]! @fdc_generated(from: "User", purpose: INSERT_MULTIPLE)
   """
-  ✨ Insert or update a single `Movie` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Movie`.
+  ✨ Insert `UserCabinet` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
   """
-  movie_upsert(
+  userCabinet_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [UserCabinet_Data!]!
+  ): [UserCabinet_KeyOutput!]! @fdc_generated(from: "UserCabinet", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `WorldCupResult` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  worldCupResult_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [WorldCupResult_Data!]!
+  ): [WorldCupResult_KeyOutput!]! @fdc_generated(from: "WorldCupResult", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert or update a single `ModificationRequest` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `ModificationRequest`.
+  """
+  modificationRequest_upsert(
     """
     Data object to insert or update if it already exists.
     """
-    data: Movie_Data!
-  ): Movie_KeyOutput! @fdc_generated(from: "Movie", purpose: UPSERT_SINGLE)
+    data: ModificationRequest_Data!
+  ): ModificationRequest_KeyOutput! @fdc_generated(from: "ModificationRequest", purpose: UPSERT_SINGLE)
   """
-  ✨ Insert or update a single `MovieMetadata` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `MovieMetadata`.
+  ✨ Insert or update a single `NewsArticle` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `NewsArticle`.
   """
-  movieMetadata_upsert(
+  newsArticle_upsert(
     """
     Data object to insert or update if it already exists.
     """
-    data: MovieMetadata_Data!
-  ): MovieMetadata_KeyOutput! @fdc_generated(from: "MovieMetadata", purpose: UPSERT_SINGLE)
+    data: NewsArticle_Data!
+  ): NewsArticle_KeyOutput! @fdc_generated(from: "NewsArticle", purpose: UPSERT_SINGLE)
   """
-  ✨ Insert or update a single `Review` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Review`.
+  ✨ Insert or update a single `Spirit` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Spirit`.
   """
-  review_upsert(
+  spirit_upsert(
     """
     Data object to insert or update if it already exists.
     """
-    data: Review_Data!
-  ): Review_KeyOutput! @fdc_generated(from: "Review", purpose: UPSERT_SINGLE)
+    data: Spirit_Data!
+  ): Spirit_KeyOutput! @fdc_generated(from: "Spirit", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `SpiritReview` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `SpiritReview`.
+  """
+  spiritReview_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: SpiritReview_Data!
+  ): SpiritReview_KeyOutput! @fdc_generated(from: "SpiritReview", purpose: UPSERT_SINGLE)
   """
   ✨ Insert or update a single `User` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `User`.
   """
@@ -108,32 +171,59 @@ extend type Mutation {
     data: User_Data!
   ): User_KeyOutput! @fdc_generated(from: "User", purpose: UPSERT_SINGLE)
   """
-  ✨ Insert or update `Movie` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Movie`.
+  ✨ Insert or update a single `UserCabinet` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `UserCabinet`.
   """
-  movie_upsertMany(
+  userCabinet_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: UserCabinet_Data!
+  ): UserCabinet_KeyOutput! @fdc_generated(from: "UserCabinet", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `WorldCupResult` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `WorldCupResult`.
+  """
+  worldCupResult_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: WorldCupResult_Data!
+  ): WorldCupResult_KeyOutput! @fdc_generated(from: "WorldCupResult", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update `ModificationRequest` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `ModificationRequest`.
+  """
+  modificationRequest_upsertMany(
     """
     List of data objects to insert or update if it already exists.
     """
-    data: [Movie_Data!]!
-  ): [Movie_KeyOutput!]! @fdc_generated(from: "Movie", purpose: UPSERT_MULTIPLE)
+    data: [ModificationRequest_Data!]!
+  ): [ModificationRequest_KeyOutput!]! @fdc_generated(from: "ModificationRequest", purpose: UPSERT_MULTIPLE)
   """
-  ✨ Insert or update `MovieMetadata` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `MovieMetadata`.
+  ✨ Insert or update `NewsArticle` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `NewsArticle`.
   """
-  movieMetadata_upsertMany(
+  newsArticle_upsertMany(
     """
     List of data objects to insert or update if it already exists.
     """
-    data: [MovieMetadata_Data!]!
-  ): [MovieMetadata_KeyOutput!]! @fdc_generated(from: "MovieMetadata", purpose: UPSERT_MULTIPLE)
+    data: [NewsArticle_Data!]!
+  ): [NewsArticle_KeyOutput!]! @fdc_generated(from: "NewsArticle", purpose: UPSERT_MULTIPLE)
   """
-  ✨ Insert or update `Review` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Review`.
+  ✨ Insert or update `Spirit` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Spirit`.
   """
-  review_upsertMany(
+  spirit_upsertMany(
     """
     List of data objects to insert or update if it already exists.
     """
-    data: [Review_Data!]!
-  ): [Review_KeyOutput!]! @fdc_generated(from: "Review", purpose: UPSERT_MULTIPLE)
+    data: [Spirit_Data!]!
+  ): [Spirit_KeyOutput!]! @fdc_generated(from: "Spirit", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `SpiritReview` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `SpiritReview`.
+  """
+  spiritReview_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [SpiritReview_Data!]!
+  ): [SpiritReview_KeyOutput!]! @fdc_generated(from: "SpiritReview", purpose: UPSERT_MULTIPLE)
   """
   ✨ Insert or update `User` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `User`.
   """
@@ -144,9 +234,114 @@ extend type Mutation {
     data: [User_Data!]!
   ): [User_KeyOutput!]! @fdc_generated(from: "User", purpose: UPSERT_MULTIPLE)
   """
-  ✨ Update a single `Movie` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Movie` or `null` if not found.
+  ✨ Insert or update `UserCabinet` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `UserCabinet`.
   """
-  movie_update(
+  userCabinet_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [UserCabinet_Data!]!
+  ): [UserCabinet_KeyOutput!]! @fdc_generated(from: "UserCabinet", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `WorldCupResult` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `WorldCupResult`.
+  """
+  worldCupResult_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [WorldCupResult_Data!]!
+  ): [WorldCupResult_KeyOutput!]! @fdc_generated(from: "WorldCupResult", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Update a single `ModificationRequest` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `ModificationRequest` or `null` if not found.
+  """
+  modificationRequest_update(
+    """
+    The unique ID of the object.
+    """
+    id: String
+
+    """
+    ✨ `_expr` server value variant of `id` (The unique ID of the object.)
+    """
+    id_expr: String_Expr
+
+    """
+    The key used to identify the object.
+    """
+    key: ModificationRequest_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: ModificationRequest_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: ModificationRequest_Data!
+  ): ModificationRequest_KeyOutput @fdc_generated(from: "ModificationRequest", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `NewsArticle` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `NewsArticle` or `null` if not found.
+  """
+  newsArticle_update(
+    """
+    The unique ID of the object.
+    """
+    id: String
+
+    """
+    ✨ `_expr` server value variant of `id` (The unique ID of the object.)
+    """
+    id_expr: String_Expr
+
+    """
+    The key used to identify the object.
+    """
+    key: NewsArticle_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: NewsArticle_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: NewsArticle_Data!
+  ): NewsArticle_KeyOutput @fdc_generated(from: "NewsArticle", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `Spirit` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Spirit` or `null` if not found.
+  """
+  spirit_update(
+    """
+    The unique ID of the object.
+    """
+    id: String
+
+    """
+    ✨ `_expr` server value variant of `id` (The unique ID of the object.)
+    """
+    id_expr: String_Expr
+
+    """
+    The key used to identify the object.
+    """
+    key: Spirit_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Spirit_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: Spirit_Data!
+  ): Spirit_KeyOutput @fdc_generated(from: "Spirit", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `SpiritReview` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `SpiritReview` or `null` if not found.
+  """
+  spiritReview_update(
     """
     The unique ID of the object.
     """
@@ -155,61 +350,18 @@ extend type Mutation {
     """
     The key used to identify the object.
     """
-    key: Movie_Key
+    key: SpiritReview_Key
 
     """
     Fetch the first row based on the filters and ordering.
     """
-    first: Movie_FirstRow
+    first: SpiritReview_FirstRow
 
     """
     Data object containing fields to be updated.
     """
-    data: Movie_Data!
-  ): Movie_KeyOutput @fdc_generated(from: "Movie", purpose: UPDATE_SINGLE)
-  """
-  ✨ Update a single `MovieMetadata` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `MovieMetadata` or `null` if not found.
-  """
-  movieMetadata_update(
-    """
-    The unique ID of the object.
-    """
-    id: UUID
-
-    """
-    The key used to identify the object.
-    """
-    key: MovieMetadata_Key
-
-    """
-    Fetch the first row based on the filters and ordering.
-    """
-    first: MovieMetadata_FirstRow
-
-    """
-    Data object containing fields to be updated.
-    """
-    data: MovieMetadata_Data!
-  ): MovieMetadata_KeyOutput @fdc_generated(from: "MovieMetadata", purpose: UPDATE_SINGLE)
-  """
-  ✨ Update a single `Review` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Review` or `null` if not found.
-  """
-  review_update(
-    """
-    The key used to identify the object.
-    """
-    key: Review_Key
-
-    """
-    Fetch the first row based on the filters and ordering.
-    """
-    first: Review_FirstRow
-
-    """
-    Data object containing fields to be updated.
-    """
-    data: Review_Data!
-  ): Review_KeyOutput @fdc_generated(from: "Review", purpose: UPDATE_SINGLE)
+    data: SpiritReview_Data!
+  ): SpiritReview_KeyOutput @fdc_generated(from: "SpiritReview", purpose: UPDATE_SINGLE)
   """
   ✨ Update a single `User` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `User` or `null` if not found.
   """
@@ -240,13 +392,56 @@ extend type Mutation {
     data: User_Data!
   ): User_KeyOutput @fdc_generated(from: "User", purpose: UPDATE_SINGLE)
   """
-  ✨ Update `Movie` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  ✨ Update a single `UserCabinet` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `UserCabinet` or `null` if not found.
   """
-  movie_updateMany(
+  userCabinet_update(
+    """
+    The key used to identify the object.
+    """
+    key: UserCabinet_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: UserCabinet_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: UserCabinet_Data!
+  ): UserCabinet_KeyOutput @fdc_generated(from: "UserCabinet", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `WorldCupResult` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `WorldCupResult` or `null` if not found.
+  """
+  worldCupResult_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: WorldCupResult_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: WorldCupResult_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: WorldCupResult_Data!
+  ): WorldCupResult_KeyOutput @fdc_generated(from: "WorldCupResult", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update `ModificationRequest` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  modificationRequest_updateMany(
     """
     Filter condition to specify which rows to update.
     """
-    where: Movie_Filter
+    where: ModificationRequest_Filter
 
     """
     Set to true to update all rows.
@@ -256,16 +451,16 @@ extend type Mutation {
     """
     Data object containing fields to update.
     """
-    data: Movie_Data!
-  ): Int! @fdc_generated(from: "Movie", purpose: UPDATE_MULTIPLE)
+    data: ModificationRequest_Data!
+  ): Int! @fdc_generated(from: "ModificationRequest", purpose: UPDATE_MULTIPLE)
   """
-  ✨ Update `MovieMetadata` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  ✨ Update `NewsArticle` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
   """
-  movieMetadata_updateMany(
+  newsArticle_updateMany(
     """
     Filter condition to specify which rows to update.
     """
-    where: MovieMetadata_Filter
+    where: NewsArticle_Filter
 
     """
     Set to true to update all rows.
@@ -275,16 +470,16 @@ extend type Mutation {
     """
     Data object containing fields to update.
     """
-    data: MovieMetadata_Data!
-  ): Int! @fdc_generated(from: "MovieMetadata", purpose: UPDATE_MULTIPLE)
+    data: NewsArticle_Data!
+  ): Int! @fdc_generated(from: "NewsArticle", purpose: UPDATE_MULTIPLE)
   """
-  ✨ Update `Review` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  ✨ Update `Spirit` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
   """
-  review_updateMany(
+  spirit_updateMany(
     """
     Filter condition to specify which rows to update.
     """
-    where: Review_Filter
+    where: Spirit_Filter
 
     """
     Set to true to update all rows.
@@ -294,8 +489,27 @@ extend type Mutation {
     """
     Data object containing fields to update.
     """
-    data: Review_Data!
-  ): Int! @fdc_generated(from: "Review", purpose: UPDATE_MULTIPLE)
+    data: Spirit_Data!
+  ): Int! @fdc_generated(from: "Spirit", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `SpiritReview` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  spiritReview_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: SpiritReview_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: SpiritReview_Data!
+  ): Int! @fdc_generated(from: "SpiritReview", purpose: UPDATE_MULTIPLE)
   """
   ✨ Update `User` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
   """
@@ -316,9 +530,119 @@ extend type Mutation {
     data: User_Data!
   ): Int! @fdc_generated(from: "User", purpose: UPDATE_MULTIPLE)
   """
-  ✨ Delete a single `Movie` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  ✨ Update `UserCabinet` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
   """
-  movie_delete(
+  userCabinet_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: UserCabinet_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: UserCabinet_Data!
+  ): Int! @fdc_generated(from: "UserCabinet", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `WorldCupResult` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  worldCupResult_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: WorldCupResult_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: WorldCupResult_Data!
+  ): Int! @fdc_generated(from: "WorldCupResult", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Delete a single `ModificationRequest` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  modificationRequest_delete(
+    """
+    The unique ID of the object.
+    """
+    id: String
+
+    """
+    ✨ `_expr` server value variant of `id` (The unique ID of the object.)
+    """
+    id_expr: String_Expr
+
+    """
+    The key used to identify the object.
+    """
+    key: ModificationRequest_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: ModificationRequest_FirstRow
+  ): ModificationRequest_KeyOutput @fdc_generated(from: "ModificationRequest", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `NewsArticle` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  newsArticle_delete(
+    """
+    The unique ID of the object.
+    """
+    id: String
+
+    """
+    ✨ `_expr` server value variant of `id` (The unique ID of the object.)
+    """
+    id_expr: String_Expr
+
+    """
+    The key used to identify the object.
+    """
+    key: NewsArticle_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: NewsArticle_FirstRow
+  ): NewsArticle_KeyOutput @fdc_generated(from: "NewsArticle", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `Spirit` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  spirit_delete(
+    """
+    The unique ID of the object.
+    """
+    id: String
+
+    """
+    ✨ `_expr` server value variant of `id` (The unique ID of the object.)
+    """
+    id_expr: String_Expr
+
+    """
+    The key used to identify the object.
+    """
+    key: Spirit_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Spirit_FirstRow
+  ): Spirit_KeyOutput @fdc_generated(from: "Spirit", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `SpiritReview` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  spiritReview_delete(
     """
     The unique ID of the object.
     """
@@ -327,46 +651,13 @@ extend type Mutation {
     """
     The key used to identify the object.
     """
-    key: Movie_Key
+    key: SpiritReview_Key
 
     """
     Fetch the first row based on the filters and ordering.
     """
-    first: Movie_FirstRow
-  ): Movie_KeyOutput @fdc_generated(from: "Movie", purpose: DELETE_SINGLE)
-  """
-  ✨ Delete a single `MovieMetadata` based on `id`, `key` or `first` and return its key (or `null` if not found).
-  """
-  movieMetadata_delete(
-    """
-    The unique ID of the object.
-    """
-    id: UUID
-
-    """
-    The key used to identify the object.
-    """
-    key: MovieMetadata_Key
-
-    """
-    Fetch the first row based on the filters and ordering.
-    """
-    first: MovieMetadata_FirstRow
-  ): MovieMetadata_KeyOutput @fdc_generated(from: "MovieMetadata", purpose: DELETE_SINGLE)
-  """
-  ✨ Delete a single `Review` based on `id`, `key` or `first` and return its key (or `null` if not found).
-  """
-  review_delete(
-    """
-    The key used to identify the object.
-    """
-    key: Review_Key
-
-    """
-    Fetch the first row based on the filters and ordering.
-    """
-    first: Review_FirstRow
-  ): Review_KeyOutput @fdc_generated(from: "Review", purpose: DELETE_SINGLE)
+    first: SpiritReview_FirstRow
+  ): SpiritReview_KeyOutput @fdc_generated(from: "SpiritReview", purpose: DELETE_SINGLE)
   """
   ✨ Delete a single `User` based on `id`, `key` or `first` and return its key (or `null` if not found).
   """
@@ -392,47 +683,94 @@ extend type Mutation {
     first: User_FirstRow
   ): User_KeyOutput @fdc_generated(from: "User", purpose: DELETE_SINGLE)
   """
-  ✨ Delete `Movie` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  ✨ Delete a single `UserCabinet` based on `id`, `key` or `first` and return its key (or `null` if not found).
   """
-  movie_deleteMany(
+  userCabinet_delete(
+    """
+    The key used to identify the object.
+    """
+    key: UserCabinet_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: UserCabinet_FirstRow
+  ): UserCabinet_KeyOutput @fdc_generated(from: "UserCabinet", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `WorldCupResult` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  worldCupResult_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: WorldCupResult_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: WorldCupResult_FirstRow
+  ): WorldCupResult_KeyOutput @fdc_generated(from: "WorldCupResult", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete `ModificationRequest` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  modificationRequest_deleteMany(
     """
     Filter condition to specify which rows to delete.
     """
-    where: Movie_Filter
+    where: ModificationRequest_Filter
 
     """
     Set to true to delete all rows.
     """
     all: Boolean = false
-  ): Int! @fdc_generated(from: "Movie", purpose: DELETE_MULTIPLE)
+  ): Int! @fdc_generated(from: "ModificationRequest", purpose: DELETE_MULTIPLE)
   """
-  ✨ Delete `MovieMetadata` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  ✨ Delete `NewsArticle` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
   """
-  movieMetadata_deleteMany(
+  newsArticle_deleteMany(
     """
     Filter condition to specify which rows to delete.
     """
-    where: MovieMetadata_Filter
+    where: NewsArticle_Filter
 
     """
     Set to true to delete all rows.
     """
     all: Boolean = false
-  ): Int! @fdc_generated(from: "MovieMetadata", purpose: DELETE_MULTIPLE)
+  ): Int! @fdc_generated(from: "NewsArticle", purpose: DELETE_MULTIPLE)
   """
-  ✨ Delete `Review` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  ✨ Delete `Spirit` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
   """
-  review_deleteMany(
+  spirit_deleteMany(
     """
     Filter condition to specify which rows to delete.
     """
-    where: Review_Filter
+    where: Spirit_Filter
 
     """
     Set to true to delete all rows.
     """
     all: Boolean = false
-  ): Int! @fdc_generated(from: "Review", purpose: DELETE_MULTIPLE)
+  ): Int! @fdc_generated(from: "Spirit", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `SpiritReview` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  spiritReview_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: SpiritReview_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "SpiritReview", purpose: DELETE_MULTIPLE)
   """
   ✨ Delete `User` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
   """
@@ -447,4 +785,32 @@ extend type Mutation {
     """
     all: Boolean = false
   ): Int! @fdc_generated(from: "User", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `UserCabinet` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  userCabinet_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: UserCabinet_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "UserCabinet", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `WorldCupResult` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  worldCupResult_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: WorldCupResult_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "WorldCupResult", purpose: DELETE_MULTIPLE)
 }
