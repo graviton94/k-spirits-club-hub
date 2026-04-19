@@ -1,14 +1,14 @@
 # [Project Context] k-spirits-club-hub - Module: app
 
 ## 1. Project Architecture (Graphify)
-# Graph Report - .  (2026-04-13)
+# Graph Report - .  (2026-04-19)
 
 ## Corpus Check
-- 527 files · ~2,212,029 words
+- 561 files · ~2,506,679 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1539 nodes · 1511 edges · 477 communities detected
+- 1712 nodes · 1706 edges · 511 communities detected
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
@@ -490,18 +490,52 @@
 - [[_COMMUNITY_Community 474|Community 474]]
 - [[_COMMUNITY_Community 475|Community 475]]
 - [[_COMMUNITY_Community 476|Community 476]]
+- [[_COMMUNITY_Community 477|Community 477]]
+- [[_COMMUNITY_Community 478|Community 478]]
+- [[_COMMUNITY_Community 479|Community 479]]
+- [[_COMMUNITY_Community 480|Community 480]]
+- [[_COMMUNITY_Community 481|Community 481]]
+- [[_COMMUNITY_Community 482|Community 482]]
+- [[_COMMUNITY_Community 483|Community 483]]
+- [[_COMMUNITY_Community 484|Community 484]]
+- [[_COMMUNITY_Community 485|Community 485]]
+- [[_COMMUNITY_Community 486|Community 486]]
+- [[_COMMUNITY_Community 487|Community 487]]
+- [[_COMMUNITY_Community 488|Community 488]]
+- [[_COMMUNITY_Community 489|Community 489]]
+- [[_COMMUNITY_Community 490|Community 490]]
+- [[_COMMUNITY_Community 491|Community 491]]
+- [[_COMMUNITY_Community 492|Community 492]]
+- [[_COMMUNITY_Community 493|Community 493]]
+- [[_COMMUNITY_Community 494|Community 494]]
+- [[_COMMUNITY_Community 495|Community 495]]
+- [[_COMMUNITY_Community 496|Community 496]]
+- [[_COMMUNITY_Community 497|Community 497]]
+- [[_COMMUNITY_Community 498|Community 498]]
+- [[_COMMUNITY_Community 499|Community 499]]
+- [[_COMMUNITY_Community 500|Community 500]]
+- [[_COMMUNITY_Community 501|Community 501]]
+- [[_COMMUNITY_Community 502|Community 502]]
+- [[_COMMUNITY_Community 503|Community 503]]
+- [[_COMMUNITY_Community 504|Community 504]]
+- [[_COMMUNITY_Community 505|Community 505]]
+- [[_COMMUNITY_Community 506|Community 506]]
+- [[_COMMUNITY_Community 507|Community 507]]
+- [[_COMMUNITY_Community 508|Community 508]]
+- [[_COMMUNITY_Community 509|Community 509]]
+- [[_COMMUNITY_Community 510|Community 510]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `BrowserManager` - 48 edges
 2. `GET()` - 23 edges
-3. `generateMetadata()` - 22 edges
+3. `generateMetadata()` - 21 edges
 4. `POST()` - 20 edges
-5. `generatePreamble()` - 13 edges
-6. `main()` - 12 edges
-7. `CircularBuffer` - 10 edges
-8. `WorktreeManager` - 10 edges
-9. `ensureServer()` - 8 edges
-10. `importCookies()` - 8 edges
+5. `getDC()` - 20 edges
+6. `generatePreamble()` - 13 edges
+7. `main()` - 12 edges
+8. `CircularBuffer` - 10 edges
+9. `WorktreeManager` - 10 edges
+10. `ensureServer()` - 8 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `GET()` --calls--> `replaceWithStatus()`  [EXTRACTED]
@@ -518,284 +552,284 @@
 ## Communities
 
 ### Community 0 - "Community 0"
+Cohesion: 0.05
+Nodes (44): auditAllNews(), auditAllNewsRef(), auditAllReviews(), auditAllReviewsRef(), auditAllSpirits(), auditAllSpiritsRef(), auditAllUsers(), auditAllUsersRef() (+36 more)
+
+### Community 1 - "Community 1"
 Cohesion: 0.06
 Nodes (1): BrowserManager
 
-### Community 1 - "Community 1"
-Cohesion: 0.07
+### Community 2 - "Community 2"
+Cohesion: 0.06
 Nodes (8): DELETE(), generateSafeId(), GET(), getKSTDate(), parseTags(), PATCH(), POST(), replaceWithStatus()
 
-### Community 2 - "Community 2"
-Cohesion: 0.07
-Nodes (12): buildSpiritMetaDescription(), dedupeTokens(), extractTastingNoteTags(), generateMetadata(), getBrandPrefix(), getPreferredMetaTags(), getResult(), getSpiritSeoImageCandidates() (+4 more)
-
 ### Community 3 - "Community 3"
+Cohesion: 0.08
+Nodes (12): buildSpiritMetaDescription(), dedupeTokens(), extractTastingNoteTags(), generateMetadata(), getPreferredMetaTags(), getResult(), getSpiritSeoImageCandidates(), getSpiritSeoRobots() (+4 more)
+
+### Community 4 - "Community 4"
 Cohesion: 0.15
 Nodes (26): chromiumEpochToUnix(), chromiumNow(), CookieImportError, decryptCookieValue(), deriveKey(), findBrowserMatch(), getBaseDir(), getBrowserMatch() (+18 more)
 
-### Community 4 - "Community 4"
+### Community 5 - "Community 5"
 Cohesion: 0.12
 Nodes (22): addChatEntry(), createSession(), createWorktree(), emergencyCleanup(), findPort(), flushBuffers(), generateHelpText(), handleCommand() (+14 more)
 
-### Community 5 - "Community 5"
-Cohesion: 0.2
-Nodes (17): addChatEntry(), addEntry(), authHeaders(), connectSSE(), createEntryElement(), escapeHtml(), formatChatTime(), formatTime() (+9 more)
-
 ### Community 6 - "Community 6"
-Cohesion: 0.27
-Nodes (14): acquireServerLock(), cleanupLegacyState(), ensureServer(), isProcessAlive(), isServerHealthy(), killServer(), main(), parseArgs() (+6 more)
+Cohesion: 0.09
+Nodes (0): 
 
 ### Community 7 - "Community 7"
 Cohesion: 0.17
-Nodes (16): apply_normalization(), extract_abv(), extract_lot_info(), extract_volume(), final_cleanup(), load_spirits_to_normalize(), main(), normalize_spirit() (+8 more)
+Nodes (20): dbGetNewsArticle(), dbGetNewsCount(), dbGetSpirit(), dbGetSpiritReviewsCount(), dbGetUserProfile(), dbGetWorldCupResult(), dbListNewArrivals(), dbListNewsArticles() (+12 more)
 
 ### Community 8 - "Community 8"
+Cohesion: 0.2
+Nodes (17): addChatEntry(), addEntry(), authHeaders(), connectSSE(), createEntryElement(), escapeHtml(), formatChatTime(), formatTime() (+9 more)
+
+### Community 9 - "Community 9"
+Cohesion: 0.27
+Nodes (14): acquireServerLock(), cleanupLegacyState(), ensureServer(), isProcessAlive(), isServerHealthy(), killServer(), main(), parseArgs() (+6 more)
+
+### Community 10 - "Community 10"
+Cohesion: 0.17
+Nodes (16): apply_normalization(), extract_abv(), extract_lot_info(), extract_volume(), final_cleanup(), load_spirits_to_normalize(), main(), normalize_spirit() (+8 more)
+
+### Community 11 - "Community 11"
 Cohesion: 0.17
 Nodes (16): apply_normalization(), extract_abv(), extract_description(), extract_lot_info(), extract_volume(), load_spirits_to_normalize(), main(), normalize_spirit() (+8 more)
 
-### Community 9 - "Community 9"
+### Community 12 - "Community 12"
 Cohesion: 0.22
 Nodes (6): copyDirSync(), getDedupPath(), git(), loadDedupIndex(), saveDedupIndex(), WorktreeManager
 
-### Community 10 - "Community 10"
+### Community 13 - "Community 13"
 Cohesion: 0.22
 Nodes (8): compareEvalResults(), EvalCollector, extractToolSummary(), findPreviousRun(), formatComparison(), generateCommentary(), getGitInfo(), getVersion()
 
-### Community 11 - "Community 11"
+### Community 14 - "Community 14"
 Cohesion: 0.25
 Nodes (13): generateAskUserFormat(), generateCompletenessSection(), generateCompletionStatus(), generateContributorMode(), generateLakeIntro(), generatePreamble(), generatePreambleBash(), generateProactivePrompt() (+5 more)
 
-### Community 12 - "Community 12"
+### Community 15 - "Community 15"
 Cohesion: 0.16
 Nodes (5): createTestWorktree(), describeIfSelected(), describeWithWorktree(), getWorktreeManager(), harvestAndCleanup()
 
-### Community 13 - "Community 13"
+### Community 16 - "Community 16"
 Cohesion: 0.29
 Nodes (13): extractCwdFromJsonl(), getGitRemote(), isGitRepo(), main(), normalizeRemoteUrl(), parseArgs(), printUsage(), resolveAndDeduplicate() (+5 more)
 
-### Community 14 - "Community 14"
+### Community 17 - "Community 17"
 Cohesion: 0.2
 Nodes (4): addConsoleEntry(), addDialogEntry(), addNetworkEntry(), CircularBuffer
 
-### Community 15 - "Community 15"
+### Community 18 - "Community 18"
 Cohesion: 0.25
 Nodes (13): apply_normalization(), apply_normalization_to_dict(), call_audit_ai(), fetch_all_spirits(), fetch_published_spirits(), get_db_client(), main(), Firestore에서 모든 데이터 가져오기 (published + unpublished) (+5 more)
 
-### Community 16 - "Community 16"
+### Community 19 - "Community 19"
 Cohesion: 0.32
 Nodes (12): askClaude(), countLines(), getGitRoot(), handleStreamEvent(), main(), poll(), readLine(), refreshToken() (+4 more)
 
-### Community 17 - "Community 17"
+### Community 20 - "Community 20"
 Cohesion: 0.19
 Nodes (4): generatePlanCompletionAuditInner(), generatePlanCompletionAuditReview(), generatePlanCompletionAuditShip(), generatePlanFileDiscovery()
 
-### Community 18 - "Community 18"
+### Community 21 - "Community 21"
 Cohesion: 0.22
 Nodes (12): extract_abv(), extract_description(), extract_lot_info(), extract_volume(), main(), normalize_spirit(), Normalize Spirit Names - Pipeline Step  Extracts volume, ABV, lot info from na, Normalize a single spirit (+4 more)
 
-### Community 19 - "Community 19"
+### Community 22 - "Community 22"
 Cohesion: 0.17
 Nodes (0): 
 
-### Community 20 - "Community 20"
+### Community 23 - "Community 23"
 Cohesion: 0.23
 Nodes (5): dumpOutcomeDiagnostic(), logCost(), recordE2E(), runPlantedBugEval(), setupBrowseShims()
 
-### Community 21 - "Community 21"
+### Community 24 - "Community 24"
+Cohesion: 0.21
+Nodes (4): analyzeCellar(), FlavorVectorIndex, generateUserPalate(), getHybridRecommendations()
+
+### Community 25 - "Community 25"
 Cohesion: 0.36
 Nodes (7): checkHealth(), executeCommand(), fetchAndRelayRefs(), getBaseUrl(), notifyContentScripts(), setConnected(), setDisconnected()
 
-### Community 22 - "Community 22"
+### Community 26 - "Community 26"
 Cohesion: 0.27
 Nodes (5): fromFirestoreValue(), getPublishedSpiritMetaWithQuality(), parseFirestoreFields(), toFirestore(), toFirestoreValue()
 
-### Community 23 - "Community 23"
+### Community 27 - "Community 27"
+Cohesion: 0.2
+Nodes (0): 
+
+### Community 28 - "Community 28"
 Cohesion: 0.33
 Nodes (7): calculateScore(), getMessage(), resetGame(), startAnimation(), startGame(), switchAction(), updateLevel()
 
-### Community 24 - "Community 24"
+### Community 29 - "Community 29"
 Cohesion: 0.42
 Nodes (7): codexSkillName(), condenseOpenAIShortDescription(), extractHookSafetyProse(), extractNameAndDescription(), generateOpenAIYaml(), processTemplate(), transformFrontmatter()
 
-### Community 25 - "Community 25"
+### Community 30 - "Community 30"
 Cohesion: 0.22
 Nodes (0): 
 
-### Community 26 - "Community 26"
-Cohesion: 0.36
-Nodes (6): analyzeCellar(), calculateCategoryDistribution(), extractKeywords(), generateFlavorNodes(), generateHierarchicalNodes(), generatePersona()
-
-### Community 27 - "Community 27"
+### Community 31 - "Community 31"
 Cohesion: 0.36
 Nodes (6): getKeywordScore(), getMatchCandidates(), scoreSpiritForKeywordGroup(), scoreSpiritForWikiCategory(), selectFeaturedSpiritsForWiki(), sortFeaturedSpiritsForWiki()
 
-### Community 28 - "Community 28"
+### Community 32 - "Community 32"
 Cohesion: 0.32
 Nodes (3): emitActivity(), filterArgs(), truncateResult()
 
-### Community 29 - "Community 29"
+### Community 33 - "Community 33"
 Cohesion: 0.46
 Nodes (5): chromiumEpoch(), createFixtureDb(), createLinuxFixtureDb(), createMacFixtureDb(), encryptCookieValue()
 
-### Community 30 - "Community 30"
+### Community 34 - "Community 34"
 Cohesion: 0.36
 Nodes (4): createRoutingWorkDir(), initGitRepo(), installSkills(), run()
 
-### Community 31 - "Community 31"
+### Community 35 - "Community 35"
 Cohesion: 0.36
 Nodes (1): onlineIngestion
 
-### Community 32 - "Community 32"
+### Community 36 - "Community 36"
 Cohesion: 0.29
 Nodes (7): analyze_name(), generate_report(), load_spirits_sample(), Spirit Data Normalization Analyzer  This script analyzes spirits data from Fir, Analyze a spirit name for patterns that should be extracted., Load ALL spirits data from the API., Generate a detailed report of normalization needs.
 
-### Community 33 - "Community 33"
+### Community 37 - "Community 37"
+Cohesion: 0.57
+Nodes (7): cleanTimestamps(), executeMutation(), main(), migrateNews(), migrateSpirits(), migrateUsers(), prepareSystemUser()
+
+### Community 38 - "Community 38"
 Cohesion: 0.29
 Nodes (0): 
 
-### Community 34 - "Community 34"
+### Community 39 - "Community 39"
 Cohesion: 0.33
 Nodes (2): calculateResult(), handleAnswer()
 
-### Community 35 - "Community 35"
-Cohesion: 0.43
-Nodes (4): handleAdd(), handleReviewSubmit(), handleSelectCabinet(), handleSelectWishlist()
-
-### Community 36 - "Community 36"
+### Community 40 - "Community 40"
 Cohesion: 0.52
 Nodes (6): getCleanText(), handleReadCommand(), hasAwait(), needsBlockWrapper(), validateReadPath(), wrapForEvaluate()
 
-### Community 37 - "Community 37"
+### Community 41 - "Community 41"
 Cohesion: 0.48
 Nodes (4): clearOverlays(), ensureContainer(), renderRefBadges(), renderRefPanel()
 
-### Community 38 - "Community 38"
+### Community 42 - "Community 42"
 Cohesion: 0.33
 Nodes (2): extractNameAndDescription(), transformFrontmatter()
 
-### Community 39 - "Community 39"
+### Community 43 - "Community 43"
 Cohesion: 0.29
 Nodes (0): 
 
-### Community 40 - "Community 40"
+### Community 44 - "Community 44"
 Cohesion: 0.38
 Nodes (3): carefulInput(), detectSafeRmWorks(), runHook()
 
-### Community 41 - "Community 41"
+### Community 45 - "Community 45"
 Cohesion: 0.43
 Nodes (4): auditSpiritInfo(), enrichSpiritWithAI(), generatePairingGuide(), generateSensoryProfile()
 
-### Community 42 - "Community 42"
+### Community 46 - "Community 46"
 Cohesion: 0.52
 Nodes (6): formatSpiritFieldValue(), localizeCategory(), localizeCountry(), localizeDataSource(), localizeMainCategoryOnly(), localizeVariety()
 
-### Community 43 - "Community 43"
+### Community 47 - "Community 47"
+Cohesion: 0.52
+Nodes (6): BOLD(), getDcCount(), getFirestoreCount(), GREEN(), main(), RED()
+
+### Community 48 - "Community 48"
+Cohesion: 0.52
+Nodes (6): delay(), generateRichContent(), processSpirit(), researchSpirit(), run(), verifyFacts()
+
+### Community 49 - "Community 49"
 Cohesion: 0.33
 Nodes (0): 
 
-### Community 44 - "Community 44"
+### Community 50 - "Community 50"
 Cohesion: 0.33
 Nodes (0): 
 
-### Community 45 - "Community 45"
+### Community 51 - "Community 51"
 Cohesion: 0.33
 Nodes (0): 
 
-### Community 46 - "Community 46"
+### Community 52 - "Community 52"
 Cohesion: 0.47
 Nodes (3): getGitRoot(), getRemoteSlug(), resolveConfig()
 
-### Community 47 - "Community 47"
+### Community 53 - "Community 53"
 Cohesion: 0.47
 Nodes (4): defaultDesign(), extractDesignLanguage(), formatExtractedSection(), updateDesignMd()
 
-### Community 48 - "Community 48"
+### Community 54 - "Community 54"
 Cohesion: 0.53
 Nodes (4): createSession(), createSessionId(), sessionPath(), updateSession()
 
-### Community 49 - "Community 49"
+### Community 55 - "Community 55"
 Cohesion: 0.6
 Nodes (5): formatDuration(), isProcessAlive(), readJSON(), render(), renderDashboard()
 
-### Community 50 - "Community 50"
+### Community 56 - "Community 56"
 Cohesion: 0.53
 Nodes (4): generateTestCoverageAuditInner(), generateTestCoverageAuditPlan(), generateTestCoverageAuditReview(), generateTestCoverageAuditShip()
 
-### Community 51 - "Community 51"
+### Community 57 - "Community 57"
 Cohesion: 0.6
 Nodes (5): atomicWriteSync(), parseNDJSON(), runSkillTest(), sanitizeTestName(), truncate()
 
-### Community 52 - "Community 52"
+### Community 58 - "Community 58"
 Cohesion: 0.6
 Nodes (5): fetchPublicJson(), fromFirestoreDoc(), fromFirestoreValue(), getPublicLatestFeatured(), getPublicSpiritById()
 
-### Community 53 - "Community 53"
+### Community 59 - "Community 59"
 Cohesion: 0.6
 Nodes (5): getBaseUrl(), getCanonicalUrl(), getHreflangAlternates(), stripQuery(), toAbsoluteUrl()
 
-### Community 54 - "Community 54"
+### Community 60 - "Community 60"
 Cohesion: 0.73
 Nodes (5): bulkProcessor(), delay(), processSpiritWithAI(), syncNames(), translateMissing()
 
-### Community 55 - "Community 55"
+### Community 61 - "Community 61"
 Cohesion: 0.53
 Nodes (5): collect_files_from_dir(), compile_mega_prompt(), get_graphify_context(), 특정 디렉토리 내의 코드를 수집합니다. (MarkItDown 연동), save_bundle()
 
-### Community 56 - "Community 56"
+### Community 62 - "Community 62"
 Cohesion: 0.47
 Nodes (4): enrich_batch(), get_category_prompt(), main(), 카테고리에 맞는 프롬프트 가이드를 반환합니다.
 
-### Community 57 - "Community 57"
+### Community 63 - "Community 63"
 Cohesion: 0.47
 Nodes (5): fetch_spirits_by_category(), fetch_spirits_by_type(), main(), 하나의 표준 카테고리에 대해 여러 검색어 변형으로 데이터를 수집하고 합칩니다., 특정 주종에 대한 데이터를 식품안전나라 API에서 가져옵니다.
 
-### Community 58 - "Community 58"
+### Community 64 - "Community 64"
 Cohesion: 0.47
 Nodes (5): build_advanced_search_url(), fetch_image_url(), main(), 구글 고급 검색 파라미터를 조합하여 타겟팅된 URL 생성, HTML 내의 JSON 블록 및 URL 패턴을 분석하여 실제 이미지 URL 추출
 
-### Community 59 - "Community 59"
+### Community 65 - "Community 65"
 Cohesion: 0.53
 Nodes (5): extract_abv(), extract_description(), extract_volume(), normalize_spirit(), Normalize remaining 113 spirits  Uses the full_normalization_analysis.json to
 
-### Community 60 - "Community 60"
-Cohesion: 0.4
-Nodes (0): 
-
-### Community 61 - "Community 61"
-Cohesion: 0.4
-Nodes (0): 
-
-### Community 62 - "Community 62"
-Cohesion: 0.4
-Nodes (0): 
-
-### Community 63 - "Community 63"
-Cohesion: 0.4
-Nodes (0): 
-
-### Community 64 - "Community 64"
-Cohesion: 0.4
-Nodes (0): 
-
-### Community 65 - "Community 65"
-Cohesion: 0.4
-Nodes (0): 
-
 ### Community 66 - "Community 66"
-Cohesion: 0.6
-Nodes (3): fetchReviews(), handleReviewDeleted(), handleReviewSubmitted()
+Cohesion: 0.4
+Nodes (0): 
 
 ### Community 67 - "Community 67"
-Cohesion: 0.5
-Nodes (2): handleKeyDown(), handleSearch()
+Cohesion: 0.4
+Nodes (0): 
 
 ### Community 68 - "Community 68"
-Cohesion: 0.9
-Nodes (4): corsOrigin(), errorResponse(), handleCookiePickerRoute(), jsonResponse()
+Cohesion: 0.4
+Nodes (0): 
 
 ### Community 69 - "Community 69"
-Cohesion: 0.7
-Nodes (4): isMetadataIp(), normalizeHostname(), resolvesToBlockedIp(), validateNavigationUrl()
+Cohesion: 0.4
+Nodes (0): 
 
 ### Community 70 - "Community 70"
 Cohesion: 0.4
@@ -807,23 +841,23 @@ Nodes (0):
 
 ### Community 72 - "Community 72"
 Cohesion: 0.6
-Nodes (3): api(), pollChatUntil(), resetState()
+Nodes (3): fetchReviews(), handleReviewDeleted(), handleReviewSubmitted()
 
 ### Community 73 - "Community 73"
-Cohesion: 0.6
-Nodes (3): gallery(), generateEmptyGallery(), generateGalleryHtml()
+Cohesion: 0.5
+Nodes (2): handleKeyDown(), handleSearch()
 
 ### Community 74 - "Community 74"
-Cohesion: 0.7
-Nodes (4): buildAccumulatedPrompt(), callFresh(), callWithThreading(), iterate()
+Cohesion: 0.9
+Nodes (4): corsOrigin(), errorResponse(), handleCookiePickerRoute(), jsonResponse()
 
 ### Community 75 - "Community 75"
 Cohesion: 0.7
-Nodes (4): filterByPeriod(), formatReport(), main(), parseJSONL()
+Nodes (4): isMetadataIp(), normalizeHostname(), resolvesToBlockedIp(), validateNavigationUrl()
 
 ### Community 76 - "Community 76"
-Cohesion: 0.5
-Nodes (2): run(), setupReviewDir()
+Cohesion: 0.4
+Nodes (0): 
 
 ### Community 77 - "Community 77"
 Cohesion: 0.4
@@ -831,63 +865,63 @@ Nodes (0):
 
 ### Community 78 - "Community 78"
 Cohesion: 0.6
-Nodes (4): parseJsonl(), readJsonl(), run(), setConfig()
+Nodes (3): api(), pollChatUntil(), resetState()
 
 ### Community 79 - "Community 79"
-Cohesion: 0.4
-Nodes (1): Order
+Cohesion: 0.6
+Nodes (3): gallery(), generateEmptyGallery(), generateGalleryHtml()
 
 ### Community 80 - "Community 80"
-Cohesion: 0.4
-Nodes (1): Order
+Cohesion: 0.7
+Nodes (4): buildAccumulatedPrompt(), callFresh(), callWithThreading(), iterate()
 
 ### Community 81 - "Community 81"
-Cohesion: 0.5
-Nodes (2): extractBrowseCommands(), validateSkill()
+Cohesion: 0.7
+Nodes (4): filterByPeriod(), formatReport(), main(), parseJSONL()
 
 ### Community 82 - "Community 82"
-Cohesion: 0.4
-Nodes (0): 
+Cohesion: 0.5
+Nodes (2): run(), setupReviewDir()
 
 ### Community 83 - "Community 83"
-Cohesion: 0.7
-Nodes (4): analyzePublishedData(), generateReport(), main(), saveToFile()
+Cohesion: 0.4
+Nodes (0): 
 
 ### Community 84 - "Community 84"
 Cohesion: 0.6
-Nodes (3): audit(), from_firestore_value(), get_access_token()
+Nodes (4): parseJsonl(), readJsonl(), run(), setConfig()
 
 ### Community 85 - "Community 85"
-Cohesion: 0.5
-Nodes (4): consolidate_data(), deep_merge(), 국내(data/), 수입(data/raw_imported/), 보완(data/enriched/) 데이터를 모두 병합합니다.     우선순위:, 간단한 딕셔너리 딥 머지 (metadata 등 처리용)
+Cohesion: 0.4
+Nodes (1): Order
 
 ### Community 86 - "Community 86"
-Cohesion: 0.67
-Nodes (2): handleEnter(), triggerToast()
+Cohesion: 0.4
+Nodes (1): Order
 
 ### Community 87 - "Community 87"
 Cohesion: 0.5
-Nodes (1): generateMetadata()
+Nodes (2): extractBrowseCommands(), validateSkill()
 
 ### Community 88 - "Community 88"
-Cohesion: 0.5
+Cohesion: 0.4
 Nodes (0): 
 
 ### Community 89 - "Community 89"
-Cohesion: 0.67
-Nodes (2): fetchSpirits(), preloadAllImages()
+Cohesion: 0.7
+Nodes (4): analyzePublishedData(), generateReport(), main(), saveToFile()
 
 ### Community 90 - "Community 90"
-Cohesion: 0.5
-Nodes (0): 
+Cohesion: 0.6
+Nodes (3): audit(), from_firestore_value(), get_access_token()
 
 ### Community 91 - "Community 91"
 Cohesion: 0.5
-Nodes (0): 
+Nodes (4): consolidate_data(), deep_merge(), 국내(data/), 수입(data/raw_imported/), 보완(data/enriched/) 데이터를 모두 병합합니다.     우선순위:, 간단한 딕셔너리 딥 머지 (metadata 등 처리용)
 
 ### Community 92 - "Community 92"
-Cohesion: 0.5
-Nodes (0): 
+Cohesion: 0.67
+Nodes (2): handleEnter(), triggerToast()
 
 ### Community 93 - "Community 93"
 Cohesion: 0.5
@@ -895,151 +929,151 @@ Nodes (0):
 
 ### Community 94 - "Community 94"
 Cohesion: 0.5
-Nodes (0): 
+Nodes (1): generateMetadata()
 
 ### Community 95 - "Community 95"
-Cohesion: 0.83
-Nodes (3): getGitRoot(), locateBinary(), main()
+Cohesion: 0.67
+Nodes (2): fetchSpirits(), preloadAllImages()
 
 ### Community 96 - "Community 96"
-Cohesion: 0.67
-Nodes (2): handleMetaCommand(), validateOutputPath()
+Cohesion: 0.5
+Nodes (0): 
 
 ### Community 97 - "Community 97"
-Cohesion: 0.83
-Nodes (3): handleSnapshot(), parseLine(), parseSnapshotArgs()
+Cohesion: 0.5
+Nodes (0): 
 
 ### Community 98 - "Community 98"
 Cohesion: 0.5
 Nodes (0): 
 
 ### Community 99 - "Community 99"
-Cohesion: 0.67
-Nodes (2): parseQueueFile(), parseQueueLine()
+Cohesion: 0.5
+Nodes (0): 
 
 ### Community 100 - "Community 100"
-Cohesion: 0.67
-Nodes (2): requireApiKey(), resolveApiKey()
+Cohesion: 0.83
+Nodes (3): getGitRoot(), locateBinary(), main()
 
 ### Community 101 - "Community 101"
 Cohesion: 0.67
-Nodes (2): generateResponsiveVariants(), variants()
+Nodes (2): handleMetaCommand(), validateOutputPath()
 
 ### Community 102 - "Community 102"
 Cohesion: 0.83
-Nodes (3): discoverSkillFiles(), discoverTemplates(), subdirs()
+Nodes (3): handleSnapshot(), parseLine(), parseSnapshotArgs()
 
 ### Community 103 - "Community 103"
 Cohesion: 0.5
 Nodes (0): 
 
 ### Community 104 - "Community 104"
-Cohesion: 0.5
-Nodes (0): 
+Cohesion: 0.67
+Nodes (2): parseQueueFile(), parseQueueLine()
 
 ### Community 105 - "Community 105"
-Cohesion: 0.5
-Nodes (0): 
+Cohesion: 0.67
+Nodes (2): requireApiKey(), resolveApiKey()
 
 ### Community 106 - "Community 106"
+Cohesion: 0.67
+Nodes (2): generateResponsiveVariants(), variants()
+
+### Community 107 - "Community 107"
+Cohesion: 0.83
+Nodes (3): discoverSkillFiles(), discoverTemplates(), subdirs()
+
+### Community 108 - "Community 108"
 Cohesion: 0.5
 Nodes (0): 
 
-### Community 107 - "Community 107"
-Cohesion: 0.5
-Nodes (1): UserController
-
-### Community 108 - "Community 108"
-Cohesion: 0.83
-Nodes (3): installSkillToTempHome(), parseCodexJSONL(), runCodexSkill()
-
 ### Community 109 - "Community 109"
-Cohesion: 0.83
-Nodes (3): callJudge(), judge(), outcomeJudge()
+Cohesion: 0.5
+Nodes (0): 
 
 ### Community 110 - "Community 110"
-Cohesion: 0.67
-Nodes (2): decodeHTMLEntities(), parseRSSFeed()
+Cohesion: 0.5
+Nodes (0): 
 
 ### Community 111 - "Community 111"
 Cohesion: 0.5
 Nodes (0): 
 
 ### Community 112 - "Community 112"
-Cohesion: 0.67
-Nodes (2): getAppPathUtil(), getDocumentPath()
+Cohesion: 0.5
+Nodes (1): UserController
 
 ### Community 113 - "Community 113"
 Cohesion: 0.83
-Nodes (3): enrichSpiritMetadata(), getCategoryPrompt(), updateMetadataFile()
+Nodes (3): installSkillToTempHome(), parseCodexJSONL(), runCodexSkill()
 
 ### Community 114 - "Community 114"
-Cohesion: 0.5
-Nodes (0): 
+Cohesion: 0.83
+Nodes (3): callJudge(), judge(), outcomeJudge()
 
 ### Community 115 - "Community 115"
 Cohesion: 0.67
-Nodes (2): generateNGrams(), generateSpiritSearchKeywords()
+Nodes (2): decodeHTMLEntities(), parseRSSFeed()
 
 ### Community 116 - "Community 116"
 Cohesion: 0.5
-Nodes (3): has_normalization_needs(), Analyze ALL spirits for normalization needs  This script checks all 2308 spiri, Check if a spirit name needs normalization
+Nodes (0): 
 
 ### Community 117 - "Community 117"
-Cohesion: 0.83
-Nodes (3): generateNgramKeywords(), sleep(), theGreatMigration()
+Cohesion: 0.67
+Nodes (2): getAppPathUtil(), getDocumentPath()
 
 ### Community 118 - "Community 118"
-Cohesion: 0.67
-Nodes (3): fetch_category_data(), main(), 특정 주종 코드에 대해 MFDS 데이터를 수집합니다.
+Cohesion: 0.83
+Nodes (3): enrichSpiritMetadata(), getCategoryPrompt(), updateMetadataFile()
 
 ### Community 119 - "Community 119"
-Cohesion: 0.83
-Nodes (3): generateEnglishContent(), generateKoreanContent(), main()
+Cohesion: 0.5
+Nodes (0): 
 
 ### Community 120 - "Community 120"
 Cohesion: 0.67
-Nodes (3): main(), 지시사항에 따른 최적화된 쿼리로 이미지 검색, search_image()
+Nodes (2): generateNGrams(), generateSpiritSearchKeywords()
 
 ### Community 121 - "Community 121"
 Cohesion: 0.5
-Nodes (0): 
+Nodes (3): has_normalization_needs(), Analyze ALL spirits for normalization needs  This script checks all 2308 spiri, Check if a spirit name needs normalization
 
 ### Community 122 - "Community 122"
+Cohesion: 0.83
+Nodes (3): generateNgramKeywords(), sleep(), theGreatMigration()
+
+### Community 123 - "Community 123"
+Cohesion: 0.67
+Nodes (3): fetch_category_data(), main(), 특정 주종 코드에 대해 MFDS 데이터를 수집합니다.
+
+### Community 124 - "Community 124"
+Cohesion: 0.83
+Nodes (3): generateEnglishContent(), generateKoreanContent(), main()
+
+### Community 125 - "Community 125"
+Cohesion: 0.67
+Nodes (3): main(), 지시사항에 따른 최적화된 쿼리로 이미지 검색, search_image()
+
+### Community 126 - "Community 126"
 Cohesion: 0.5
 Nodes (0): 
 
-### Community 123 - "Community 123"
-Cohesion: 0.83
-Nodes (3): generateNGrams(), generateSpiritSearchKeywords(), populateSearchKeywords()
-
-### Community 124 - "Community 124"
-Cohesion: 1.0
-Nodes (2): getLocale(), middleware()
-
-### Community 125 - "Community 125"
-Cohesion: 1.0
-Nodes (2): fetchUrl(), run()
-
-### Community 126 - "Community 126"
-Cohesion: 0.67
-Nodes (0): 
-
 ### Community 127 - "Community 127"
-Cohesion: 0.67
+Cohesion: 0.5
 Nodes (0): 
 
 ### Community 128 - "Community 128"
-Cohesion: 0.67
-Nodes (0): 
+Cohesion: 0.83
+Nodes (3): generateNGrams(), generateSpiritSearchKeywords(), populateSearchKeywords()
 
 ### Community 129 - "Community 129"
-Cohesion: 0.67
-Nodes (0): 
+Cohesion: 1.0
+Nodes (2): getLocale(), middleware()
 
 ### Community 130 - "Community 130"
-Cohesion: 0.67
-Nodes (0): 
+Cohesion: 1.0
+Nodes (2): fetchUrl(), run()
 
 ### Community 131 - "Community 131"
 Cohesion: 0.67
@@ -1082,108 +1116,108 @@ Cohesion: 0.67
 Nodes (0): 
 
 ### Community 141 - "Community 141"
-Cohesion: 1.0
-Nodes (2): api(), resetState()
+Cohesion: 0.67
+Nodes (0): 
 
 ### Community 142 - "Community 142"
-Cohesion: 1.0
-Nodes (2): generateMockup(), main()
+Cohesion: 0.67
+Nodes (0): 
 
 ### Community 143 - "Community 143"
-Cohesion: 1.0
-Nodes (2): briefToPrompt(), parseBrief()
+Cohesion: 0.67
+Nodes (0): 
 
 ### Community 144 - "Community 144"
-Cohesion: 1.0
-Nodes (2): checkCommand(), checkMockup()
+Cohesion: 0.67
+Nodes (0): 
 
 ### Community 145 - "Community 145"
-Cohesion: 1.0
-Nodes (2): compare(), generateCompareHtml()
+Cohesion: 0.67
+Nodes (0): 
 
 ### Community 146 - "Community 146"
-Cohesion: 1.0
-Nodes (2): diffMockups(), verifyAgainstMockup()
+Cohesion: 0.67
+Nodes (0): 
 
 ### Community 147 - "Community 147"
 Cohesion: 1.0
-Nodes (2): analyzeScreenshot(), evolve()
+Nodes (2): api(), resetState()
 
 ### Community 148 - "Community 148"
 Cohesion: 1.0
-Nodes (2): callImageGeneration(), generate()
+Nodes (2): generateMockup(), main()
 
 ### Community 149 - "Community 149"
 Cohesion: 1.0
-Nodes (2): openBrowser(), serve()
+Nodes (2): briefToPrompt(), parseBrief()
 
 ### Community 150 - "Community 150"
-Cohesion: 0.67
-Nodes (0): 
+Cohesion: 1.0
+Nodes (2): checkCommand(), checkMockup()
 
 ### Community 151 - "Community 151"
-Cohesion: 0.67
-Nodes (0): 
+Cohesion: 1.0
+Nodes (2): compare(), generateCompareHtml()
 
 ### Community 152 - "Community 152"
-Cohesion: 0.67
-Nodes (0): 
+Cohesion: 1.0
+Nodes (2): diffMockups(), verifyAgainstMockup()
 
 ### Community 153 - "Community 153"
-Cohesion: 0.67
-Nodes (0): 
+Cohesion: 1.0
+Nodes (2): analyzeScreenshot(), evolve()
 
 ### Community 154 - "Community 154"
-Cohesion: 0.67
-Nodes (0): 
+Cohesion: 1.0
+Nodes (2): callImageGeneration(), generate()
 
 ### Community 155 - "Community 155"
 Cohesion: 1.0
-Nodes (2): makeEntry(), makeResult()
+Nodes (2): openBrowser(), serve()
 
 ### Community 156 - "Community 156"
-Cohesion: 1.0
-Nodes (2): parseGeminiJSONL(), runGeminiSkill()
+Cohesion: 0.67
+Nodes (0): 
 
 ### Community 157 - "Community 157"
 Cohesion: 0.67
 Nodes (0): 
 
 ### Community 158 - "Community 158"
-Cohesion: 1.0
-Nodes (2): buildSearchUrl(), fetchSpiritImage()
-
-### Community 159 - "Community 159"
-Cohesion: 1.0
-Nodes (2): isBot(), isBotClient()
-
-### Community 160 - "Community 160"
-Cohesion: 1.0
-Nodes (2): getSpiritRobotsMeta(), isIndexableSpirit()
-
-### Community 161 - "Community 161"
 Cohesion: 0.67
 Nodes (0): 
 
+### Community 159 - "Community 159"
+Cohesion: 0.67
+Nodes (0): 
+
+### Community 160 - "Community 160"
+Cohesion: 0.67
+Nodes (0): 
+
+### Community 161 - "Community 161"
+Cohesion: 1.0
+Nodes (2): makeEntry(), makeResult()
+
 ### Community 162 - "Community 162"
 Cohesion: 1.0
-Nodes (2): convertDir(), main()
+Nodes (2): parseGeminiJSONL(), runGeminiSkill()
 
 ### Community 163 - "Community 163"
-Cohesion: 1.0
-Nodes (2): enrichPoorQualitySpirits(), sleep()
+Cohesion: 0.67
+Nodes (0): 
 
 ### Community 164 - "Community 164"
 Cohesion: 1.0
-Nodes (2): enrich_reviews_batch(), main()
+Nodes (2): buildSearchUrl(), fetchSpiritImage()
 
 ### Community 165 - "Community 165"
-Cohesion: 0.67
-Nodes (1): Filter Large Volume Spirits - Pipeline Step  Removes spirits with volume >= 50
+Cohesion: 1.0
+Nodes (2): isBot(), isBotClient()
 
 ### Community 166 - "Community 166"
 Cohesion: 1.0
-Nodes (2): escape_sql_string(), main()
+Nodes (2): getSpiritRobotsMeta(), isIndexableSpirit()
 
 ### Community 167 - "Community 167"
 Cohesion: 0.67
@@ -1191,39 +1225,39 @@ Nodes (0):
 
 ### Community 168 - "Community 168"
 Cohesion: 1.0
-Nodes (2): main(), run_step()
+Nodes (2): convertDir(), main()
 
 ### Community 169 - "Community 169"
-Cohesion: 0.67
-Nodes (0): 
+Cohesion: 1.0
+Nodes (2): enrichPoorQualitySpirits(), sleep()
 
 ### Community 170 - "Community 170"
 Cohesion: 1.0
-Nodes (2): delay(), runEnrichment()
+Nodes (2): enrich_reviews_batch(), main()
 
 ### Community 171 - "Community 171"
-Cohesion: 1.0
-Nodes (0): 
+Cohesion: 0.67
+Nodes (1): Filter Large Volume Spirits - Pipeline Step  Removes spirits with volume >= 50
 
 ### Community 172 - "Community 172"
 Cohesion: 1.0
-Nodes (0): 
+Nodes (2): escape_sql_string(), main()
 
 ### Community 173 - "Community 173"
-Cohesion: 1.0
+Cohesion: 0.67
 Nodes (0): 
 
 ### Community 174 - "Community 174"
 Cohesion: 1.0
-Nodes (0): 
+Nodes (2): main(), run_step()
 
 ### Community 175 - "Community 175"
-Cohesion: 1.0
+Cohesion: 0.67
 Nodes (0): 
 
 ### Community 176 - "Community 176"
 Cohesion: 1.0
-Nodes (0): 
+Nodes (2): delay(), runEnrichment()
 
 ### Community 177 - "Community 177"
 Cohesion: 1.0
@@ -1563,7 +1597,7 @@ Nodes (0):
 
 ### Community 261 - "Community 261"
 Cohesion: 1.0
-Nodes (1): Delete Large Volume Spirits from Firebase  Finds and deletes all spirits with
+Nodes (0): 
 
 ### Community 262 - "Community 262"
 Cohesion: 1.0
@@ -1639,7 +1673,7 @@ Nodes (0):
 
 ### Community 280 - "Community 280"
 Cohesion: 1.0
-Nodes (0): 
+Nodes (1): Delete Large Volume Spirits from Firebase  Finds and deletes all spirits with
 
 ### Community 281 - "Community 281"
 Cohesion: 1.0
@@ -2425,635 +2459,831 @@ Nodes (0):
 Cohesion: 1.0
 Nodes (0): 
 
+### Community 477 - "Community 477"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 478 - "Community 478"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 479 - "Community 479"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 480 - "Community 480"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 481 - "Community 481"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 482 - "Community 482"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 483 - "Community 483"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 484 - "Community 484"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 485 - "Community 485"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 486 - "Community 486"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 487 - "Community 487"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 488 - "Community 488"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 489 - "Community 489"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 490 - "Community 490"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 491 - "Community 491"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 492 - "Community 492"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 493 - "Community 493"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 494 - "Community 494"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 495 - "Community 495"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 496 - "Community 496"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 497 - "Community 497"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 498 - "Community 498"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 499 - "Community 499"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 500 - "Community 500"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 501 - "Community 501"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 502 - "Community 502"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 503 - "Community 503"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 504 - "Community 504"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 505 - "Community 505"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 506 - "Community 506"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 507 - "Community 507"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 508 - "Community 508"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 509 - "Community 509"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 510 - "Community 510"
+Cohesion: 1.0
+Nodes (1): 특정 디렉토리 내의 코드를 수집합니다. (MarkItDown 연동)
+
 ## Knowledge Gaps
-- **45 isolated node(s):** `Analyze ALL spirits for normalization needs  This script checks all 2308 spiri`, `Check if a spirit name needs normalization`, `Spirit Data Normalization Analyzer  This script analyzes spirits data from Fir`, `Analyze a spirit name for patterns that should be extracted.`, `Load ALL spirits data from the API.` (+40 more)
+- **46 isolated node(s):** `Analyze ALL spirits for normalization needs  This script checks all 2308 spiri`, `Check if a spirit name needs normalization`, `Spirit Data Normalization Analyzer  This script analyzes spirits data from Fir`, `Analyze a spirit name for patterns that should be extracted.`, `Load ALL spirits data from the API.` (+41 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **Thin community `Community 171`** (2 nodes): `run()`, `find-thin.ts`
+- **Thin community `Community 177`** (2 nodes): `run()`, `find-thin.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 172`** (2 nodes): `checkData()`, `script_check_data.ts`
+- **Thin community `Community 178`** (2 nodes): `checkData()`, `script_check_data.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 173`** (2 nodes): `checkData()`, `script_check_data_client.ts`
+- **Thin community `Community 179`** (2 nodes): `checkData()`, `script_check_data_client.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 174`** (2 nodes): `testRegistration()`, `verify-registration.ts`
+- **Thin community `Community 180`** (2 nodes): `testRegistration()`, `verify-registration.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 175`** (2 nodes): `robots.ts`, `robots()`
+- **Thin community `Community 181`** (2 nodes): `robots.ts`, `robots()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 176`** (2 nodes): `layout.tsx`, `AdminLayout()`
+- **Thin community `Community 182`** (2 nodes): `reviews.ts`, `submitMicroReviewAction()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 177`** (2 nodes): `loading.tsx`, `CabinetSpiritCardSkeleton()`
+- **Thin community `Community 183`** (2 nodes): `layout.tsx`, `AdminLayout()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 178`** (2 nodes): `page.tsx`, `ContactPage()`
+- **Thin community `Community 184`** (2 nodes): `loading.tsx`, `CabinetSpiritCardSkeleton()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 179`** (2 nodes): `layout.tsx`, `MBTILayout()`
+- **Thin community `Community 185`** (2 nodes): `page.tsx`, `ContactPage()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 180`** (2 nodes): `layout.tsx`, `PerfectPourLayout()`
+- **Thin community `Community 186`** (2 nodes): `layout.tsx`, `MBTILayout()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 181`** (2 nodes): `page.tsx`, `RedGrapeHub()`
+- **Thin community `Community 187`** (2 nodes): `layout.tsx`, `PerfectPourLayout()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 182`** (2 nodes): `page.tsx`, `WhiteGrapeHub()`
+- **Thin community `Community 188`** (2 nodes): `page.tsx`, `RedGrapeHub()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 183`** (2 nodes): `layout.tsx`, `WorldCupLayout()`
+- **Thin community `Community 189`** (2 nodes): `page.tsx`, `WhiteGrapeHub()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 184`** (2 nodes): `layout.tsx`, `ReviewsLayout()`
+- **Thin community `Community 190`** (2 nodes): `layout.tsx`, `WorldCupLayout()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 185`** (2 nodes): `loadStats()`, `AdminStats.tsx`
+- **Thin community `Community 191`** (2 nodes): `layout.tsx`, `ReviewsLayout()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 186`** (2 nodes): `LoginClient.tsx`, `LoginClient()`
+- **Thin community `Community 192`** (2 nodes): `loadStats()`, `AdminStats.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 187`** (2 nodes): `AddSpiritCard()`, `AddSpiritCard.tsx`
+- **Thin community `Community 193`** (2 nodes): `LoginClient.tsx`, `LoginClient()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 188`** (2 nodes): `CabinetSpiritCardComponent()`, `CabinetSpiritCard.tsx`
+- **Thin community `Community 194`** (2 nodes): `AddSpiritCard()`, `AddSpiritCard.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 189`** (2 nodes): `MyCabinet.tsx`, `MyCabinet()`
+- **Thin community `Community 195`** (2 nodes): `CabinetSpiritCardComponent()`, `CabinetSpiritCard.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 190`** (2 nodes): `PreferenceExploration.tsx`, `PreferenceExploration()`
+- **Thin community `Community 196`** (2 nodes): `FlavorView.tsx`, `handleAnalyze()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 191`** (2 nodes): `TastePublicReport.tsx`, `TastePublicReport()`
+- **Thin community `Community 197`** (2 nodes): `MyCabinet.tsx`, `MyCabinet()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 192`** (2 nodes): `AdSlot()`, `AdSlot.tsx`
+- **Thin community `Community 198`** (2 nodes): `PreferenceExploration.tsx`, `PreferenceExploration()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 193`** (2 nodes): `DailyPick.tsx`, `fetchRandomSpirit()`
+- **Thin community `Community 199`** (2 nodes): `TastePublicReport.tsx`, `TastePublicReport()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 194`** (2 nodes): `WikiSnippetSection.tsx`, `WikiSnippetSection()`
+- **Thin community `Community 200`** (2 nodes): `TasteRecommendationSection.tsx`, `TasteRecommendationSection()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 195`** (2 nodes): `BottomNav()`, `BottomNav.tsx`
+- **Thin community `Community 201`** (2 nodes): `AdSlot()`, `AdSlot.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 196`** (2 nodes): `ScrollToTop.tsx`, `ScrollToTop()`
+- **Thin community `Community 202`** (2 nodes): `DailyPick.tsx`, `fetchRandomSpirit()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 197`** (2 nodes): `ModificationRequestButton.tsx`, `handleSubmit()`
+- **Thin community `Community 203`** (2 nodes): `WikiSnippetSection.tsx`, `WikiSnippetSection()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 198`** (2 nodes): `BackButton()`, `BackButton.tsx`
+- **Thin community `Community 204`** (2 nodes): `BottomNav()`, `BottomNav.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 199`** (2 nodes): `ExploreContent.tsx`, `handleStatusChange()`
+- **Thin community `Community 205`** (2 nodes): `ScrollToTop.tsx`, `ScrollToTop()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 200`** (2 nodes): `GoogleAd.tsx`, `GoogleAd()`
+- **Thin community `Community 206`** (2 nodes): `ModificationRequestButton.tsx`, `handleSubmit()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 201`** (2 nodes): `LanguageSwitcher.tsx`, `LanguageSwitcher()`
+- **Thin community `Community 207`** (2 nodes): `BackButton()`, `BackButton.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 202`** (2 nodes): `SaveButton.tsx`, `SaveButton()`
+- **Thin community `Community 208`** (2 nodes): `ExploreContent.tsx`, `handleStatusChange()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 203`** (2 nodes): `StickyFooterAd.tsx`, `StickyFooterAd()`
+- **Thin community `Community 209`** (2 nodes): `GoogleAd.tsx`, `GoogleAd()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 204`** (2 nodes): `SuccessToast.tsx`, `SuccessToast()`
+- **Thin community `Community 210`** (2 nodes): `LanguageSwitcher.tsx`, `LanguageSwitcher()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 205`** (2 nodes): `ThemeToggle.tsx`, `ThemeToggle()`
+- **Thin community `Community 211`** (2 nodes): `SaveButton.tsx`, `SaveButton()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 206`** (2 nodes): `getCookiePickerHTML()`, `cookie-picker-ui.ts`
+- **Thin community `Community 212`** (2 nodes): `SpiritCard.tsx`, `handleAdd()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 207`** (2 nodes): `platform.ts`, `isPathWithin()`
+- **Thin community `Community 213`** (2 nodes): `StickyFooterAd.tsx`, `StickyFooterAd()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 208`** (2 nodes): `sidebar-utils.ts`, `sanitizeExtensionUrl()`
+- **Thin community `Community 214`** (2 nodes): `SuccessToast.tsx`, `SuccessToast()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 209`** (2 nodes): `write-commands.ts`, `handleWriteCommand()`
+- **Thin community `Community 215`** (2 nodes): `ThemeToggle.tsx`, `ThemeToggle()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 210`** (2 nodes): `run()`, `gstack-config.test.ts`
+- **Thin community `Community 216`** (2 nodes): `getCookiePickerHTML()`, `cookie-picker-ui.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 211`** (2 nodes): `snapshot.test.ts`, `shutdown()`
+- **Thin community `Community 217`** (2 nodes): `platform.ts`, `isPathWithin()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 212`** (2 nodes): `test-server.ts`, `startTestServer()`
+- **Thin community `Community 218`** (2 nodes): `sidebar-utils.ts`, `sanitizeExtensionUrl()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 213`** (2 nodes): `generateDesignToCodePrompt()`, `design-to-code.ts`
+- **Thin community `Community 219`** (2 nodes): `write-commands.ts`, `handleWriteCommand()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 214`** (2 nodes): `createTestPng()`, `gallery.test.ts`
+- **Thin community `Community 220`** (2 nodes): `run()`, `gstack-config.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 215`** (2 nodes): `popup.js`, `updateStatus()`
+- **Thin community `Community 221`** (2 nodes): `snapshot.test.ts`, `shutdown()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 216`** (2 nodes): `regenerateAndValidate()`, `dev-skill.ts`
+- **Thin community `Community 222`** (2 nodes): `test-server.ts`, `startTestServer()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 217`** (2 nodes): `loadResult()`, `eval-compare.ts`
+- **Thin community `Community 223`** (2 nodes): `generateDesignToCodePrompt()`, `design-to-code.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 218`** (2 nodes): `codexErrorHandling()`, `constants.ts`
+- **Thin community `Community 224`** (2 nodes): `createTestPng()`, `gallery.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 219`** (2 nodes): `getAllSkillMds()`, `audit-compliance.test.ts`
+- **Thin community `Community 225`** (2 nodes): `popup.js`, `updateStatus()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 220`** (2 nodes): `extractDescription()`, `gen-skill-docs.test.ts`
+- **Thin community `Community 226`** (2 nodes): `regenerateAndValidate()`, `dev-skill.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 221`** (2 nodes): `review-log.test.ts`, `run()`
+- **Thin community `Community 227`** (2 nodes): `loadResult()`, `eval-compare.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 222`** (2 nodes): `skill-e2e-bws.test.ts`, `run()`
+- **Thin community `Community 228`** (2 nodes): `codexErrorHandling()`, `constants.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 223`** (2 nodes): `skill-e2e-cso.test.ts`, `run()`
+- **Thin community `Community 229`** (2 nodes): `getAllSkillMds()`, `audit-compliance.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 224`** (2 nodes): `skill-e2e-deploy.test.ts`, `run()`
+- **Thin community `Community 230`** (2 nodes): `extractDescription()`, `gen-skill-docs.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 225`** (2 nodes): `skill-e2e-qa-bugs.test.ts`, `runPlantedBugEval()`
+- **Thin community `Community 231`** (2 nodes): `review-log.test.ts`, `run()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 226`** (2 nodes): `skill-e2e-review.test.ts`, `run()`
+- **Thin community `Community 232`** (2 nodes): `skill-e2e-bws.test.ts`, `run()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 227`** (2 nodes): `skill-e2e-sidebar.test.ts`, `api()`
+- **Thin community `Community 233`** (2 nodes): `skill-e2e-cso.test.ts`, `run()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 228`** (2 nodes): `skill-e2e-workflow.test.ts`, `run()`
+- **Thin community `Community 234`** (2 nodes): `skill-e2e-deploy.test.ts`, `run()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 229`** (2 nodes): `skill-parser.test.ts`, `writeFixture()`
+- **Thin community `Community 235`** (2 nodes): `skill-e2e-qa-bugs.test.ts`, `runPlantedBugEval()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 230`** (2 nodes): `skill-validation.test.ts`, `skeleton()`
+- **Thin community `Community 236`** (2 nodes): `skill-e2e-review.test.ts`, `run()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 231`** (2 nodes): `touchfiles.test.ts`, `run()`
+- **Thin community `Community 237`** (2 nodes): `skill-e2e-sidebar.test.ts`, `api()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 232`** (2 nodes): `createCoverageAuditFixture()`, `coverage-audit-fixture.ts`
+- **Thin community `Community 238`** (2 nodes): `skill-e2e-workflow.test.ts`, `run()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 233`** (2 nodes): `getDictionary()`, `get-dictionary.ts`
+- **Thin community `Community 239`** (2 nodes): `skill-parser.test.ts`, `writeFixture()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 234`** (2 nodes): `modification-actions.ts`, `submitModificationRequest()`
+- **Thin community `Community 240`** (2 nodes): `skill-validation.test.ts`, `skeleton()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 235`** (2 nodes): `spirits-guide-data.ts`, `getSpiritCategory()`
+- **Thin community `Community 241`** (2 nodes): `touchfiles.test.ts`, `run()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 236`** (2 nodes): `tag-colors.ts`, `getTagColor()`
+- **Thin community `Community 242`** (2 nodes): `createCoverageAuditFixture()`, `coverage-audit-fixture.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 237`** (2 nodes): `hasServiceAccountCredentials()`, `index.ts`
+- **Thin community `Community 243`** (2 nodes): `getDictionary()`, `get-dictionary.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 238`** (2 nodes): `fromFirestore()`, `firestore-rest.test.ts`
+- **Thin community `Community 244`** (2 nodes): `modification-actions.ts`, `submitModificationRequest()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 239`** (2 nodes): `useDragScroll.ts`, `useDragScroll()`
+- **Thin community `Community 245`** (2 nodes): `spirits-guide-data.ts`, `getSpiritCategory()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 240`** (2 nodes): `fetchFromFoodSafety()`, `collection.ts`
+- **Thin community `Community 246`** (2 nodes): `tag-colors.ts`, `getTagColor()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 241`** (2 nodes): `buildTasteAnalysisPrompt()`, `aiPromptBuilder.ts`
+- **Thin community `Community 247`** (2 nodes): `hasServiceAccountCredentials()`, `index.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 242`** (2 nodes): `ingestFoodSafetyData()`, `foodSafetyKoreaIngestion.ts`
+- **Thin community `Community 248`** (2 nodes): `fromFirestore()`, `firestore-rest.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 243`** (2 nodes): `getCategoryFallbackImage()`, `image-fallback.ts`
+- **Thin community `Community 249`** (2 nodes): `useDragScroll.ts`, `useDragScroll()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 244`** (2 nodes): `getOptimizedImageUrl()`, `image-optimization.ts`
+- **Thin community `Community 250`** (2 nodes): `fetchFromFoodSafety()`, `collection.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 245`** (2 nodes): `nickname-generator.ts`, `generateRandomNickname()`
+- **Thin community `Community 251`** (2 nodes): `buildTasteAnalysisPrompt()`, `aiPromptBuilder.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 246`** (2 nodes): `normalization.ts`, `normalizeSpiritData()`
+- **Thin community `Community 252`** (2 nodes): `calculateInitialContentRating()`, `content-rating.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 247`** (2 nodes): `rating-colors.ts`, `getRatingColor()`
+- **Thin community `Community 253`** (2 nodes): `ingestFoodSafetyData()`, `foodSafetyKoreaIngestion.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 248`** (2 nodes): `wiki-snippet.ts`, `getRandomWikiSnippet()`
+- **Thin community `Community 254`** (2 nodes): `getCategoryFallbackImage()`, `image-fallback.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 249`** (2 nodes): `auditPublishStatus()`, `audit-publish-status.js`
+- **Thin community `Community 255`** (2 nodes): `getOptimizedImageUrl()`, `image-optimization.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 250`** (2 nodes): `auditData()`, `audit_firebase_data.js`
+- **Thin community `Community 256`** (2 nodes): `nickname-generator.ts`, `generateRandomNickname()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 251`** (2 nodes): `getAuditData()`, `audit_subcategories.js`
+- **Thin community `Community 257`** (2 nodes): `normalization.ts`, `normalizeSpiritData()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 252`** (2 nodes): `main()`, `batch-process-published.ts`
+- **Thin community `Community 258`** (2 nodes): `rating-colors.ts`, `getRatingColor()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 253`** (2 nodes): `checkImageUrls()`, `check-image-urls.js`
+- **Thin community `Community 259`** (2 nodes): `wiki-resolver.ts`, `resolveWikiCategory()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 254`** (2 nodes): `check()`, `check_role.js`
+- **Thin community `Community 260`** (2 nodes): `wiki-snippet.ts`, `getRandomWikiSnippet()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 255`** (2 nodes): `convert()`, `convert-og-image.js`
+- **Thin community `Community 261`** (2 nodes): `auditData()`, `audit-logic-deep.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 256`** (2 nodes): `convertToWebP()`, `convert-to-webp.js`
+- **Thin community `Community 262`** (2 nodes): `auditData()`, `audit-logic.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 257`** (2 nodes): `checkDatabaseStatus()`, `db-status-check-js.js`
+- **Thin community `Community 263`** (2 nodes): `auditPublishStatus()`, `audit-publish-status.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 258`** (2 nodes): `checkDatabaseStatus()`, `db-status-check.ts`
+- **Thin community `Community 264`** (2 nodes): `audit()`, `audit-sql.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 259`** (2 nodes): `main()`, `debug-news-db.ts`
+- **Thin community `Community 265`** (2 nodes): `auditData()`, `audit_firebase_data.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 260`** (2 nodes): `debug_search()`, `debug_search.py`
+- **Thin community `Community 266`** (2 nodes): `getAuditData()`, `audit_subcategories.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 261`** (2 nodes): `Delete Large Volume Spirits from Firebase  Finds and deletes all spirits with`, `delete_large_volumes.py`
+- **Thin community `Community 267`** (2 nodes): `main()`, `batch-process-published.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 262`** (2 nodes): `diagnose()`, `diagnose-data-health.ts`
+- **Thin community `Community 268`** (2 nodes): `check()`, `check-audit.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 263`** (2 nodes): `dryRun()`, `dry-run-specific.ts`
+- **Thin community `Community 269`** (2 nodes): `checkImageUrls()`, `check-image-urls.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 264`** (2 nodes): `exportSummaries()`, `export_data_summary.js`
+- **Thin community `Community 270`** (2 nodes): `checkNews()`, `check-news-debug.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 265`** (2 nodes): `extractDistilleries()`, `extract-distilleries.ts`
+- **Thin community `Community 271`** (2 nodes): `check()`, `check_role.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 266`** (2 nodes): `fixThumbnailUrls()`, `fix_thumbnail_urls.js`
+- **Thin community `Community 272`** (2 nodes): `convert()`, `convert-og-image.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 267`** (2 nodes): `getExample()`, `get-example-spirit.ts`
+- **Thin community `Community 273`** (2 nodes): `convertToWebP()`, `convert-to-webp.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 268`** (2 nodes): `migrate()`, `migrate_to_firestore.js`
+- **Thin community `Community 274`** (2 nodes): `checkDatabaseStatus()`, `db-status-check-js.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 269`** (2 nodes): `bulkPublishReadySpirits()`, `publish-ready-data.js`
+- **Thin community `Community 275`** (2 nodes): `checkDatabaseStatus()`, `db-status-check.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 270`** (2 nodes): `bulkPublishViaAPI()`, `publish-ready-data.ts`
+- **Thin community `Community 276`** (2 nodes): `debug()`, `debug-firestore.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 271`** (2 nodes): `randomSamplingRun()`, `random-sampling-run.ts`
+- **Thin community `Community 277`** (2 nodes): `main()`, `debug-news-db.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 272`** (2 nodes): `resetArtifacts()`, `reset_artifacts.js`
+- **Thin community `Community 278`** (2 nodes): `debug_search()`, `debug_search.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 273`** (2 nodes): `structuralMigration()`, `schema-phase2-cleanup.ts`
+- **Thin community `Community 279`** (2 nodes): `deepCheckUsers()`, `deep-check-users.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 274`** (2 nodes): `set_admin.js`, `setAdmin()`
+- **Thin community `Community 280`** (2 nodes): `Delete Large Volume Spirits from Firebase  Finds and deletes all spirits with`, `delete_large_volumes.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 275`** (2 nodes): `sync-thumbnail-urls.js`, `syncThumbnailUrls()`
+- **Thin community `Community 281`** (2 nodes): `diagnose()`, `diagnose-data-health.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 276`** (2 nodes): `test-api.ts`, `test()`
+- **Thin community `Community 282`** (2 nodes): `dryRun()`, `dry-run-specific.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 277`** (2 nodes): `test-env-key.ts`, `test()`
+- **Thin community `Community 283`** (2 nodes): `exportSummaries()`, `export_data_summary.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 278`** (2 nodes): `test-news-api.ts`, `testSearch()`
+- **Thin community `Community 284`** (2 nodes): `extractDistilleries()`, `extract-distilleries.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 279`** (2 nodes): `test_pairing.ts`, `dryRun()`
+- **Thin community `Community 285`** (2 nodes): `findSpiritId()`, `find-spirit-id.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 280`** (2 nodes): `verify-alignment.js`, `verify()`
+- **Thin community `Community 286`** (2 nodes): `fixThumbnailUrls()`, `fix_thumbnail_urls.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 281`** (1 nodes): `fix-all-colors.js`
+- **Thin community `Community 287`** (2 nodes): `getExample()`, `get-example-spirit.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 282`** (1 nodes): `fix-clean-vibrant.js`
+- **Thin community `Community 288`** (2 nodes): `listAppIds()`, `list-app-ids.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 283`** (1 nodes): `fix-colors.js`
+- **Thin community `Community 289`** (2 nodes): `listCollections()`, `list-collections.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 284`** (1 nodes): `fix-pure-vibrant.js`
+- **Thin community `Community 290`** (2 nodes): `migrate()`, `migrate_to_firestore.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 285`** (1 nodes): `fix-solid-colors.js`
+- **Thin community `Community 291`** (2 nodes): `bulkPublishReadySpirits()`, `publish-ready-data.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 286`** (1 nodes): `fix-solid-ultimate.js`
+- **Thin community `Community 292`** (2 nodes): `bulkPublishViaAPI()`, `publish-ready-data.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 287`** (1 nodes): `fix-ultimate-clean.js`
+- **Thin community `Community 293`** (2 nodes): `randomSamplingRun()`, `random-sampling-run.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 288`** (1 nodes): `fix-ultra-contrast.js`
+- **Thin community `Community 294`** (2 nodes): `resetArtifacts()`, `reset_artifacts.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 289`** (1 nodes): `fix_wiki_constants.py`
+- **Thin community `Community 295`** (2 nodes): `structuralMigration()`, `schema-phase2-cleanup.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 290`** (1 nodes): `i18n-config.ts`
+- **Thin community `Community 296`** (2 nodes): `set_admin.js`, `setAdmin()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 291`** (1 nodes): `merge-hubs.js`
+- **Thin community `Community 297`** (2 nodes): `sync-published-seo.ts`, `syncPublishedSEO()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 292`** (1 nodes): `next-env.d.ts`
+- **Thin community `Community 298`** (2 nodes): `sync-thumbnail-urls.js`, `syncThumbnailUrls()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 293`** (1 nodes): `next.config.js`
+- **Thin community `Community 299`** (2 nodes): `test-admin-sync.ts`, `testAdminSync()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 294`** (1 nodes): `test_localization.ts`
+- **Thin community `Community 300`** (2 nodes): `test-api.ts`, `test()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 295`** (1 nodes): `route.tsx`
+- **Thin community `Community 301`** (2 nodes): `test-env-key.ts`, `test()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 296`** (1 nodes): `route.tsx`
+- **Thin community `Community 302`** (2 nodes): `test-news-api.ts`, `testSearch()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 297`** (1 nodes): `page.tsx`
+- **Thin community `Community 303`** (2 nodes): `test_pairing.ts`, `dryRun()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 298`** (1 nodes): `page.tsx`
+- **Thin community `Community 304`** (2 nodes): `verify-alignment.js`, `verify()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 299`** (1 nodes): `page.tsx`
+- **Thin community `Community 305`** (1 nodes): `fix-all-colors.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 300`** (1 nodes): `GuestOverlay.tsx`
+- **Thin community `Community 306`** (1 nodes): `fix-clean-vibrant.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 301`** (1 nodes): `TasteRadar.tsx`
+- **Thin community `Community 307`** (1 nodes): `fix-colors.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 302`** (1 nodes): `HomeClient.tsx`
+- **Thin community `Community 308`** (1 nodes): `fix-pure-vibrant.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 303`** (1 nodes): `NewsSection.tsx`
+- **Thin community `Community 309`** (1 nodes): `fix-solid-colors.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 304`** (1 nodes): `Header.tsx`
+- **Thin community `Community 310`** (1 nodes): `fix-solid-ultimate.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 305`** (1 nodes): `AvatarSelector.tsx`
+- **Thin community `Community 311`** (1 nodes): `fix-ultimate-clean.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 306`** (1 nodes): `CabinetSelectionModal.tsx`
+- **Thin community `Community 312`** (1 nodes): `fix-ultra-contrast.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 307`** (1 nodes): `ChatSommelier.tsx`
+- **Thin community `Community 313`** (1 nodes): `fix_wiki_constants.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 308`** (1 nodes): `RandomBackground.tsx`
+- **Thin community `Community 314`** (1 nodes): `i18n-config.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 309`** (1 nodes): `ThemeSwitcher.tsx`
+- **Thin community `Community 315`** (1 nodes): `merge-hubs.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 310`** (1 nodes): `commands.ts`
+- **Thin community `Community 316`** (1 nodes): `next-env.d.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 311`** (1 nodes): `activity.test.ts`
+- **Thin community `Community 317`** (1 nodes): `next.config.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 312`** (1 nodes): `browser-manager-unit.test.ts`
+- **Thin community `Community 318`** (1 nodes): `test_localization.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 313`** (1 nodes): `bun-polyfill.test.ts`
+- **Thin community `Community 319`** (1 nodes): `route.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 314`** (1 nodes): `commands.test.ts`
+- **Thin community `Community 320`** (1 nodes): `route.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 315`** (1 nodes): `config.test.ts`
+- **Thin community `Community 321`** (1 nodes): `page.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 316`** (1 nodes): `find-browse.test.ts`
+- **Thin community `Community 322`** (1 nodes): `page.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 317`** (1 nodes): `handoff.test.ts`
+- **Thin community `Community 323`** (1 nodes): `page.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 318`** (1 nodes): `path-validation.test.ts`
+- **Thin community `Community 324`** (1 nodes): `GuestOverlay.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 319`** (1 nodes): `platform.test.ts`
+- **Thin community `Community 325`** (1 nodes): `TasteRadar.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 320`** (1 nodes): `sidebar-unit.test.ts`
+- **Thin community `Community 326`** (1 nodes): `HomeClient.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 321`** (1 nodes): `url-validation.test.ts`
+- **Thin community `Community 327`** (1 nodes): `NewsSection.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 322`** (1 nodes): `watch.test.ts`
+- **Thin community `Community 328`** (1 nodes): `Header.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 323`** (1 nodes): `commands.ts`
+- **Thin community `Community 329`** (1 nodes): `AvatarSelector.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 324`** (1 nodes): `eval-list.ts`
+- **Thin community `Community 330`** (1 nodes): `RelatedWikiSection.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 325`** (1 nodes): `eval-select.ts`
+- **Thin community `Community 331`** (1 nodes): `CabinetSelectionModal.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 326`** (1 nodes): `eval-summary.ts`
+- **Thin community `Community 332`** (1 nodes): `ChatSommelier.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 327`** (1 nodes): `skill-check.ts`
+- **Thin community `Community 333`** (1 nodes): `RandomBackground.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 328`** (1 nodes): `index.ts`
+- **Thin community `Community 334`** (1 nodes): `ThemeSwitcher.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 329`** (1 nodes): `types.ts`
+- **Thin community `Community 335`** (1 nodes): `commands.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 330`** (1 nodes): `index.ts`
+- **Thin community `Community 336`** (1 nodes): `activity.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 331`** (1 nodes): `index.ts`
+- **Thin community `Community 337`** (1 nodes): `browser-manager-unit.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 332`** (1 nodes): `index.ts`
+- **Thin community `Community 338`** (1 nodes): `bun-polyfill.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 333`** (1 nodes): `global-discover.test.ts`
+- **Thin community `Community 339`** (1 nodes): `commands.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 334`** (1 nodes): `uninstall.test.ts`
+- **Thin community `Community 340`** (1 nodes): `config.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 335`** (1 nodes): `gemini-session-runner.test.ts`
+- **Thin community `Community 341`** (1 nodes): `find-browse.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 336`** (1 nodes): `observability.test.ts`
+- **Thin community `Community 342`** (1 nodes): `handoff.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 337`** (1 nodes): `session-runner.test.ts`
+- **Thin community `Community 343`** (1 nodes): `path-validation.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 338`** (1 nodes): `firebase-admin.ts`
+- **Thin community `Community 344`** (1 nodes): `platform.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 339`** (1 nodes): `firebase.ts`
+- **Thin community `Community 345`** (1 nodes): `sidebar-unit.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 340`** (1 nodes): `about-content.ts`
+- **Thin community `Community 346`** (1 nodes): `url-validation.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 341`** (1 nodes): `api-codes.ts`
+- **Thin community `Community 347`** (1 nodes): `watch.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 342`** (1 nodes): `mbti-data.ts`
+- **Thin community `Community 348`** (1 nodes): `commands.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 343`** (1 nodes): `baijiu.ts`
+- **Thin community `Community 349`** (1 nodes): `eval-list.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 344`** (1 nodes): `beer.ts`
+- **Thin community `Community 350`** (1 nodes): `eval-select.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 345`** (1 nodes): `blended-whisky.ts`
+- **Thin community `Community 351`** (1 nodes): `eval-summary.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 346`** (1 nodes): `bourbon.ts`
+- **Thin community `Community 352`** (1 nodes): `skill-check.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 347`** (1 nodes): `brandy-regions.ts`
+- **Thin community `Community 353`** (1 nodes): `index.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 348`** (1 nodes): `brandy.ts`
+- **Thin community `Community 354`** (1 nodes): `types.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 349`** (1 nodes): `champagne.ts`
+- **Thin community `Community 355`** (1 nodes): `index.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 350`** (1 nodes): `cheongju-vs-sake.ts`
+- **Thin community `Community 356`** (1 nodes): `index.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 351`** (1 nodes): `cheongju.ts`
+- **Thin community `Community 357`** (1 nodes): `index.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 352`** (1 nodes): `cognac.ts`
+- **Thin community `Community 358`** (1 nodes): `global-discover.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 353`** (1 nodes): `gin.ts`
+- **Thin community `Community 359`** (1 nodes): `uninstall.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 354`** (1 nodes): `grain-whisky.ts`
+- **Thin community `Community 360`** (1 nodes): `gemini-session-runner.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 355`** (1 nodes): `korean-spirits-by-abv.ts`
+- **Thin community `Community 361`** (1 nodes): `observability.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 356`** (1 nodes): `korean-traditional-spirits.ts`
+- **Thin community `Community 362`** (1 nodes): `session-runner.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 357`** (1 nodes): `korean-whisky.ts`
+- **Thin community `Community 363`** (1 nodes): `firebase-admin.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 358`** (1 nodes): `liqueur.ts`
+- **Thin community `Community 364`** (1 nodes): `firebase.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 359`** (1 nodes): `makgeolli-guide.ts`
+- **Thin community `Community 365`** (1 nodes): `about-content.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 360`** (1 nodes): `makgeolli.ts`
+- **Thin community `Community 366`** (1 nodes): `api-codes.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 361`** (1 nodes): `mezcal.ts`
+- **Thin community `Community 367`** (1 nodes): `mbti-data.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 362`** (1 nodes): `oak-barrel.ts`
+- **Thin community `Community 368`** (1 nodes): `baijiu.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 363`** (1 nodes): `red-wine-regions.ts`
+- **Thin community `Community 369`** (1 nodes): `beer.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 364`** (1 nodes): `red-wine.ts`
+- **Thin community `Community 370`** (1 nodes): `blended-whisky.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 365`** (1 nodes): `rum.ts`
+- **Thin community `Community 371`** (1 nodes): `bourbon.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 366`** (1 nodes): `sake.ts`
+- **Thin community `Community 372`** (1 nodes): `brandy-regions.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 367`** (1 nodes): `scotch-whisky-regions.ts`
+- **Thin community `Community 373`** (1 nodes): `brandy.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 368`** (1 nodes): `shochu.ts`
+- **Thin community `Community 374`** (1 nodes): `champagne.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 369`** (1 nodes): `single-malt-vs-blended.ts`
+- **Thin community `Community 375`** (1 nodes): `cheongju-vs-sake.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 370`** (1 nodes): `single-malt.ts`
+- **Thin community `Community 376`** (1 nodes): `cheongju.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 371`** (1 nodes): `soju-diluted.ts`
+- **Thin community `Community 377`** (1 nodes): `cognac.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 372`** (1 nodes): `soju-distilled.ts`
+- **Thin community `Community 378`** (1 nodes): `gin.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 373`** (1 nodes): `soju-guide.ts`
+- **Thin community `Community 379`** (1 nodes): `grain-whisky.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 374`** (1 nodes): `tequila.ts`
+- **Thin community `Community 380`** (1 nodes): `korean-spirits-by-abv.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 375`** (1 nodes): `types.js`
+- **Thin community `Community 381`** (1 nodes): `korean-traditional-spirits.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 376`** (1 nodes): `types.ts`
+- **Thin community `Community 382`** (1 nodes): `korean-whisky.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 377`** (1 nodes): `us-whiskey-regions.ts`
+- **Thin community `Community 383`** (1 nodes): `liqueur.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 378`** (1 nodes): `vodka.ts`
+- **Thin community `Community 384`** (1 nodes): `makgeolli-guide.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 379`** (1 nodes): `white-wine-regions.ts`
+- **Thin community `Community 385`** (1 nodes): `makgeolli.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 380`** (1 nodes): `white-wine.ts`
+- **Thin community `Community 386`** (1 nodes): `mezcal.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 381`** (1 nodes): `wine.ts`
+- **Thin community `Community 387`** (1 nodes): `oak-barrel.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 382`** (1 nodes): `yakju-vs-cheongju.ts`
+- **Thin community `Community 388`** (1 nodes): `red-wine-regions.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 383`** (1 nodes): `yakju.ts`
+- **Thin community `Community 389`** (1 nodes): `red-wine.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 384`** (1 nodes): `airen.ts`
+- **Thin community `Community 390`** (1 nodes): `rum.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 385`** (1 nodes): `alicante-bouschet.ts`
+- **Thin community `Community 391`** (1 nodes): `sake.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 386`** (1 nodes): `aligote.ts`
+- **Thin community `Community 392`** (1 nodes): `scotch-whisky-regions.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 387`** (1 nodes): `aramon.ts`
+- **Thin community `Community 393`** (1 nodes): `shochu.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 388`** (1 nodes): `auxerrois.ts`
+- **Thin community `Community 394`** (1 nodes): `single-malt-vs-blended.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 389`** (1 nodes): `barbera.ts`
+- **Thin community `Community 395`** (1 nodes): `single-malt.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 390`** (1 nodes): `blaufrankisch.ts`
+- **Thin community `Community 396`** (1 nodes): `soju-diluted.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 391`** (1 nodes): `cabernet-franc.ts`
+- **Thin community `Community 397`** (1 nodes): `soju-distilled.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 392`** (1 nodes): `cabernet-sauvignon.ts`
+- **Thin community `Community 398`** (1 nodes): `soju-guide.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 393`** (1 nodes): `carmenere.ts`
+- **Thin community `Community 399`** (1 nodes): `tequila.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 394`** (1 nodes): `chardonnay.ts`
+- **Thin community `Community 400`** (1 nodes): `types.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 395`** (1 nodes): `chenin-blanc.ts`
+- **Thin community `Community 401`** (1 nodes): `types.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 396`** (1 nodes): `cinsault.ts`
+- **Thin community `Community 402`** (1 nodes): `us-whiskey-regions.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 397`** (1 nodes): `colombard.ts`
+- **Thin community `Community 403`** (1 nodes): `vodka.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 398`** (1 nodes): `cortese.ts`
+- **Thin community `Community 404`** (1 nodes): `white-wine-regions.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 399`** (1 nodes): `folle-blanche.ts`
+- **Thin community `Community 405`** (1 nodes): `white-wine.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 400`** (1 nodes): `furmint.ts`
+- **Thin community `Community 406`** (1 nodes): `wine.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 401`** (1 nodes): `gamay.ts`
+- **Thin community `Community 407`** (1 nodes): `yakju-vs-cheongju.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 402`** (1 nodes): `gewurztraminer.ts`
+- **Thin community `Community 408`** (1 nodes): `yakju.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 403`** (1 nodes): `glera.ts`
+- **Thin community `Community 409`** (1 nodes): `airen.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 404`** (1 nodes): `goldriesling.ts`
+- **Thin community `Community 410`** (1 nodes): `alicante-bouschet.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 405`** (1 nodes): `grenache.ts`
+- **Thin community `Community 411`** (1 nodes): `aligote.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 406`** (1 nodes): `gruner-veltliner.ts`
+- **Thin community `Community 412`** (1 nodes): `aramon.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 407`** (1 nodes): `harslevelu.ts`
+- **Thin community `Community 413`** (1 nodes): `auxerrois.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 408`** (1 nodes): `index.ts`
+- **Thin community `Community 414`** (1 nodes): `barbera.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 409`** (1 nodes): `kadarka.ts`
+- **Thin community `Community 415`** (1 nodes): `blaufrankisch.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 410`** (1 nodes): `kerner.ts`
+- **Thin community `Community 416`** (1 nodes): `cabernet-franc.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 411`** (1 nodes): `koshu.ts`
+- **Thin community `Community 417`** (1 nodes): `cabernet-sauvignon.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 412`** (1 nodes): `lambrusco.ts`
+- **Thin community `Community 418`** (1 nodes): `carmenere.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 413`** (1 nodes): `macabeo.ts`
+- **Thin community `Community 419`** (1 nodes): `chardonnay.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 414`** (1 nodes): `malbec.ts`
+- **Thin community `Community 420`** (1 nodes): `chenin-blanc.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 415`** (1 nodes): `marsanne.ts`
+- **Thin community `Community 421`** (1 nodes): `cinsault.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 416`** (1 nodes): `mazuelo.ts`
+- **Thin community `Community 422`** (1 nodes): `colombard.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 417`** (1 nodes): `melon-de-bourgogne.ts`
+- **Thin community `Community 423`** (1 nodes): `cortese.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 418`** (1 nodes): `merlot.ts`
+- **Thin community `Community 424`** (1 nodes): `folle-blanche.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 419`** (1 nodes): `monastrell.ts`
+- **Thin community `Community 425`** (1 nodes): `furmint.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 420`** (1 nodes): `montepulciano.ts`
+- **Thin community `Community 426`** (1 nodes): `gamay.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 421`** (1 nodes): `moscato.ts`
+- **Thin community `Community 427`** (1 nodes): `gewurztraminer.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 422`** (1 nodes): `mourvedre.ts`
+- **Thin community `Community 428`** (1 nodes): `glera.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 423`** (1 nodes): `muller-thurgau.ts`
+- **Thin community `Community 429`** (1 nodes): `goldriesling.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 424`** (1 nodes): `muscadelle.ts`
+- **Thin community `Community 430`** (1 nodes): `grenache.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 425`** (1 nodes): `muscat.ts`
+- **Thin community `Community 431`** (1 nodes): `gruner-veltliner.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 426`** (1 nodes): `nebbiolo.ts`
+- **Thin community `Community 432`** (1 nodes): `harslevelu.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 427`** (1 nodes): `negroamaro.ts`
+- **Thin community `Community 433`** (1 nodes): `index.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 428`** (1 nodes): `nero-davola.ts`
+- **Thin community `Community 434`** (1 nodes): `kadarka.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 429`** (1 nodes): `palomino.ts`
+- **Thin community `Community 435`** (1 nodes): `kerner.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 430`** (1 nodes): `parellada.ts`
+- **Thin community `Community 436`** (1 nodes): `koshu.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 431`** (1 nodes): `pedro-ximenez.ts`
+- **Thin community `Community 437`** (1 nodes): `lambrusco.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 432`** (1 nodes): `petit-manseng.ts`
+- **Thin community `Community 438`** (1 nodes): `macabeo.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 433`** (1 nodes): `petit-verdot.ts`
+- **Thin community `Community 439`** (1 nodes): `malbec.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 434`** (1 nodes): `petite-sirah.ts`
+- **Thin community `Community 440`** (1 nodes): `marsanne.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 435`** (1 nodes): `pinot-blanc.ts`
+- **Thin community `Community 441`** (1 nodes): `mazuelo.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 436`** (1 nodes): `pinot-gris.ts`
+- **Thin community `Community 442`** (1 nodes): `melon-de-bourgogne.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 437`** (1 nodes): `pinot-meunier.ts`
+- **Thin community `Community 443`** (1 nodes): `merlot.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 438`** (1 nodes): `pinot-noir.ts`
+- **Thin community `Community 444`** (1 nodes): `monastrell.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 439`** (1 nodes): `pinotage.ts`
+- **Thin community `Community 445`** (1 nodes): `montepulciano.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 440`** (1 nodes): `primitivo.ts`
+- **Thin community `Community 446`** (1 nodes): `moscato.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 441`** (1 nodes): `riesling.ts`
+- **Thin community `Community 447`** (1 nodes): `mourvedre.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 442`** (1 nodes): `roussanne.ts`
+- **Thin community `Community 448`** (1 nodes): `muller-thurgau.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 443`** (1 nodes): `sangiovese.ts`
+- **Thin community `Community 449`** (1 nodes): `muscadelle.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 444`** (1 nodes): `sauvignon-blanc.ts`
+- **Thin community `Community 450`** (1 nodes): `muscat.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 445`** (1 nodes): `sauvignon-grise.ts`
+- **Thin community `Community 451`** (1 nodes): `nebbiolo.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 446`** (1 nodes): `savagnin.ts`
+- **Thin community `Community 452`** (1 nodes): `negroamaro.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 447`** (1 nodes): `scheurebe.ts`
+- **Thin community `Community 453`** (1 nodes): `nero-davola.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 448`** (1 nodes): `semillon.ts`
+- **Thin community `Community 454`** (1 nodes): `palomino.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 449`** (1 nodes): `silvaner.ts`
+- **Thin community `Community 455`** (1 nodes): `parellada.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 450`** (1 nodes): `st-laurent.ts`
+- **Thin community `Community 456`** (1 nodes): `pedro-ximenez.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 451`** (1 nodes): `syrah.ts`
+- **Thin community `Community 457`** (1 nodes): `petit-manseng.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 452`** (1 nodes): `tempranillo.ts`
+- **Thin community `Community 458`** (1 nodes): `petit-verdot.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 453`** (1 nodes): `tinta-amarela.ts`
+- **Thin community `Community 459`** (1 nodes): `petite-sirah.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 454`** (1 nodes): `tinta-barroca.ts`
+- **Thin community `Community 460`** (1 nodes): `pinot-blanc.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 455`** (1 nodes): `touriga-franca.ts`
+- **Thin community `Community 461`** (1 nodes): `pinot-gris.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 456`** (1 nodes): `touriga-nacional.ts`
+- **Thin community `Community 462`** (1 nodes): `pinot-meunier.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 457`** (1 nodes): `trebbiano.ts`
+- **Thin community `Community 463`** (1 nodes): `pinot-noir.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 458`** (1 nodes): `welschriesling.ts`
+- **Thin community `Community 464`** (1 nodes): `pinotage.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 459`** (1 nodes): `xarello.ts`
+- **Thin community `Community 465`** (1 nodes): `primitivo.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 460`** (1 nodes): `zinfandel.ts`
+- **Thin community `Community 466`** (1 nodes): `riesling.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 461`** (1 nodes): `zweigelt.ts`
+- **Thin community `Community 467`** (1 nodes): `roussanne.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 462`** (1 nodes): `firebase.ts`
+- **Thin community `Community 468`** (1 nodes): `sangiovese.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 463`** (1 nodes): `paths.ts`
+- **Thin community `Community 469`** (1 nodes): `sauvignon-blanc.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 464`** (1 nodes): `schema.ts`
+- **Thin community `Community 470`** (1 nodes): `sauvignon-grise.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 465`** (1 nodes): `related-spirits.ts`
+- **Thin community `Community 471`** (1 nodes): `savagnin.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 466`** (1 nodes): `spirit-page-resolver.ts`
+- **Thin community `Community 472`** (1 nodes): `scheurebe.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 467`** (1 nodes): `bot-detection.test.ts`
+- **Thin community `Community 473`** (1 nodes): `semillon.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 468`** (1 nodes): `localize-field.test.ts`
+- **Thin community `Community 474`** (1 nodes): `silvaner.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 469`** (1 nodes): `analyze_audit_report.py`
+- **Thin community `Community 475`** (1 nodes): `st-laurent.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 470`** (1 nodes): `check-distilleries.py`
+- **Thin community `Community 476`** (1 nodes): `syrah.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 471`** (1 nodes): `check_audit_status.py`
+- **Thin community `Community 477`** (1 nodes): `tempranillo.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 472`** (1 nodes): `run_sequence.ps1`
+- **Thin community `Community 478`** (1 nodes): `tinta-amarela.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 473`** (1 nodes): `run_sequence.py`
+- **Thin community `Community 479`** (1 nodes): `tinta-barroca.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 474`** (1 nodes): `test-search-keywords.ts`
+- **Thin community `Community 480`** (1 nodes): `touriga-franca.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 475`** (1 nodes): `test_firestore.py`
+- **Thin community `Community 481`** (1 nodes): `touriga-nacional.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 476`** (1 nodes): `upload_processed.ps1`
+- **Thin community `Community 482`** (1 nodes): `trebbiano.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 483`** (1 nodes): `welschriesling.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 484`** (1 nodes): `xarello.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 485`** (1 nodes): `zinfandel.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 486`** (1 nodes): `zweigelt.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 487`** (1 nodes): `firebase.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 488`** (1 nodes): `paths.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 489`** (1 nodes): `schema.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 490`** (1 nodes): `related-spirits.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 491`** (1 nodes): `spirit-page-resolver.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 492`** (1 nodes): `bot-detection.test.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 493`** (1 nodes): `localize-field.test.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 494`** (1 nodes): `analyze_audit_report.py`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 495`** (1 nodes): `bare.js`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 496`** (1 nodes): `check-distilleries.py`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 497`** (1 nodes): `check_audit_status.py`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 498`** (1 nodes): `debug-fetch.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 499`** (1 nodes): `load-env.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 500`** (1 nodes): `run_sequence.ps1`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 501`** (1 nodes): `run_sequence.py`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 502`** (1 nodes): `test-cjs.js`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 503`** (1 nodes): `test-env.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 504`** (1 nodes): `test-search-keywords.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 505`** (1 nodes): `test-tsx-env.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 506`** (1 nodes): `test_firestore.py`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 507`** (1 nodes): `upload_processed.ps1`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 508`** (1 nodes): `index.d.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 509`** (1 nodes): `index.d.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 510`** (1 nodes): `특정 디렉토리 내의 코드를 수집합니다. (MarkItDown 연동)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **What connects `Analyze ALL spirits for normalization needs  This script checks all 2308 spiri`, `Check if a spirit name needs normalization`, `Spirit Data Normalization Analyzer  This script analyzes spirits data from Fir` to the rest of the system?**
-  _45 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _46 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.06 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.07 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
-  _Cohesion score 0.07 - nodes in this community are weakly interconnected._
-- **Should `Community 4` be split into smaller, more focused modules?**
+  _Cohesion score 0.06 - nodes in this community are weakly interconnected._
+- **Should `Community 3` be split into smaller, more focused modules?**
+  _Cohesion score 0.08 - nodes in this community are weakly interconnected._
+- **Should `Community 5` be split into smaller, more focused modules?**
   _Cohesion score 0.12 - nodes in this community are weakly interconnected._
+- **Should `Community 6` be split into smaller, more focused modules?**
+  _Cohesion score 0.09 - nodes in this community are weakly interconnected._
 
 ---
 
@@ -3121,79 +3351,49 @@ export default function robots(): MetadataRoute.Robots {
 ### File: app\sitemap.ts
 ```
 import { MetadataRoute } from 'next';
-import { getPublishedSpiritMetaWithQuality } from '@/lib/db/firestore-rest';
+import { dbListSpiritsForSitemap } from '@/lib/db/data-connect-client';
 import { SPIRIT_CATEGORIES } from '@/lib/constants/spirits-guide-data';
-
 
 /**
  * Sitemap revalidation: 24시간
- * - 하루에 한 번 갱신으로 충분 (술 정보는 자주 바뀌지 않음)
- * - 너무 짧은 revalidate는 Googlebot에 "항상 바뀐다"는 잘못된 신호를 줌
  */
 export const revalidate = 86400;
 
 /**
  * SEO Phase 2: Indexable Tier Classification
- *
- * Tier A (Indexable): Spirits with high-quality content
- * - name, category (required)
- * - at least TWO quality signals among:
- *   - image (imageUrl or thumbnailUrl)
- *   - description (ko or en) >= 160 characters
- *   - pairing guide (ko or en) >= 120 characters
- *   - tasting note / sensory tags
- *
- * Tier B (Non-indexable): Thin content spirits
- * - Excluded from sitemap, marked with noindex on page
- *
- * This prevents "Discovered - currently not indexed" issues in GSC
  */
 function isIndexableSpiritMeta(spirit: {
   name: string;
   category: string | null;
   imageUrl: string | null;
   thumbnailUrl: string | null;
-  descriptionKoLength: number;
-  descriptionEnLength: number;
-  pairingKoLength: number;
-  pairingEnLength: number;
-  tastingNoteLength: number;
-  sensoryTagCount: number;
+  descriptionKo: string | null;
+  descriptionEn: string | null;
+  pairingGuideKo: string | null;
+  pairingGuideEn: string | null;
+  tastingNote: string | null;
+  noseTags: string[] | null;
+  palateTags: string[] | null;
+  finishTags: string[] | null;
 }): boolean {
   const hasName = !!spirit.name;
   const hasCategory = !!spirit.category;
 
-  // Required minimum fields
   if (!hasName || !hasCategory) return false;
 
-  // Calculate quality signals (same logic as indexable-tier.ts)
   const hasImage = !!(spirit.imageUrl || spirit.thumbnailUrl);
   const qualitySignalCount = [
     hasImage,
-    spirit.descriptionKoLength >= 160 || spirit.descriptionEnLength >= 160,
-    spirit.pairingKoLength >= 120 || spirit.pairingEnLength >= 120,
-    spirit.tastingNoteLength >= 24 || spirit.sensoryTagCount >= 4,
+    (spirit.descriptionKo?.length || 0) >= 160 || (spirit.descriptionEn?.length || 0) >= 160,
+    (spirit.pairingGuideKo?.length || 0) >= 120 || (spirit.pairingGuideEn?.length || 0) >= 120,
+    (spirit.tastingNote?.length || 0) >= 24 || ((spirit.noseTags?.length || 0) + (spirit.palateTags?.length || 0) + (spirit.finishTags?.length || 0)) >= 4,
   ].filter(Boolean).length;
 
-  // Quality threshold: At least 2 quality signals required
   return qualitySignalCount >= 2;
 }
 
 /**
- * Dynamic Sitemap Generation - Phase 2
- *
- * Includes ONLY:
- * - Canonical URLs (with locale prefix)
- * - High-quality Tier A spirit pages
- * - Core indexable pages (explore, wiki, etc.)
- *
- * Excludes:
- * - Private pages (cabinet, me, admin)
- * - Tier B spirits (thin content)
- * - Query strings
- * - Dynamic filter combinations
- *
- * This focused approach helps Google concentrate crawl budget on quality content.
+ * Dynamic Sitemap Generation
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://kspiritsclub.com';
@@ -3201,35 +3401,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const routes: MetadataRoute.Sitemap = [];
   const now = new Date();
 
-  // ──────────────────────────────────────────────
-  // Static Indexable Pages (Tier A)
-  // ──────────────────────────────────────────────
   const staticPages: { path: string; priority: number; freq: MetadataRoute.Sitemap[0]['changeFrequency'] }[] = [
-    { path: '', priority: 1.0, freq: 'daily' }, // Homepage
-    { path: '/explore', priority: 0.9, freq: 'daily' }, // Search/Explore
-    { path: '/contents', priority: 0.8, freq: 'weekly' }, // Contents Hub
+    { path: '', priority: 1.0, freq: 'daily' },
+    { path: '/explore', priority: 0.9, freq: 'daily' },
+    { path: '/contents', priority: 0.8, freq: 'weekly' },
     { path: '/contents/mbti', priority: 0.7, freq: 'monthly' },
     { path: '/contents/worldcup', priority: 0.7, freq: 'monthly' },
     { path: '/contents/perfect-pour', priority: 0.7, freq: 'monthly' },
     { path: '/contents/reviews', priority: 0.7, freq: 'weekly' },
     { path: '/contents/news', priority: 0.6, freq: 'daily' },
     { path: '/contents/about', priority: 0.5, freq: 'yearly' },
-    // Spirit Encyclopedia Hub
     { path: '/contents/wiki', priority: 0.8, freq: 'monthly' },
-    // Spirit Encyclopedia Category Pages
     ...SPIRIT_CATEGORIES.map(cat => ({
       path: `/contents/wiki/${cat.slug}` as const,
       priority: 0.75,
       freq: 'monthly' as MetadataRoute.Sitemap[0]['changeFrequency'],
     })),
   ];
-
-  // NON-INDEXABLE PAGES (Excluded from sitemap):
-  // - /cabinet (personal collections, user-specific)
-  // - /me (user profile, user-specific)
-  // - /admin (admin dashboard, restricted)
-  // - Search result pages with query strings
-  // - Filter combination URLs
 
   for (const page of staticPages) {
     for (const locale of locales) {
@@ -3248,18 +3436,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  // ──────────────────────────────────────────────
-  // Dynamic Spirit Pages (Tier A Only)
-  // ──────────────────────────────────────────────
   try {
-    const spiritMeta = await getPublishedSpiritMetaWithQuality();
-    console.log(`[Sitemap] Fetched ${spiritMeta.length} published spirit entries`);
+    const spiritMeta = await dbListSpiritsForSitemap() as any[];
+    console.log(`[Sitemap] Fetched ${spiritMeta.length} spirit entries from Data Connect`);
 
-    // Filter for Tier A (indexable) spirits only
     const indexableSpirits = spiritMeta.filter(isIndexableSpiritMeta);
     const tierBCount = spiritMeta.length - indexableSpirits.length;
 
-    console.log(`[Sitemap] Tier A (indexable): ${indexableSpirits.length}, Tier B (excluded): ${tierBCount}`);
+    console.log(`[Sitemap] Tier A: ${indexableSpirits.length}, Tier B: ${tierBCount}`);
 
     for (const spirit of indexableSpirits) {
       const lastModified = spirit.updatedAt ? new Date(spirit.updatedAt) : now;
@@ -3279,13 +3463,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         });
       }
     }
-
-    console.log(`[Sitemap] Generated ${indexableSpirits.length * locales.length} spirit routes (Tier A only)`);
   } catch (error) {
-    console.error('[Sitemap] Failed to fetch spirit meta, falling back to static only:', error);
+    console.error('[Sitemap] Data Connect path failed:', error);
   }
 
-  console.log(`[Sitemap] Total routes: ${routes.length}`);
   return routes;
 }
 
@@ -5300,348 +5481,173 @@ ${knowledgeBase}
 // app/api/analyze-taste/route.ts
 
 import { NextRequest, NextResponse } from 'next/server';
-import { cabinetDb, tasteProfileDb, reviewsDb } from '@/lib/db/firestore-rest';
+import { cabinetDb, tasteProfileDb, reviewsDb, spiritsDb } from '@/lib/db/firestore-rest';
 import { buildTasteAnalysisPrompt } from '@/lib/utils/aiPromptBuilder';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-// Vercel/Node.js 환경 설정
 export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
-export const preferredRegion = 'iad1'; // Vercel 기준 미국 동부(워싱턴 D.C)로 실행 위치 고정
+export const preferredRegion = 'iad1';
 
 const API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_GEMINI_API_KEY || '';
 
-// KST 날짜 헬퍼
 function getKSTDate() {
     return new Date().toLocaleString("en-CA", { timeZone: "Asia/Seoul" }).split(' ')[0];
 }
 
-// GET: Fetch existing profile & usage stats
+async function tryFindSpiritInDb(name: string) {
+    try {
+        // Search by name using exact match first, then broader
+        const results = await spiritsDb.getAll({ searchTerm: name, isPublished: true }, { page: 1, pageSize: 5 });
+        if (results && results.length > 0) {
+            // Find best name match
+            const lowerName = name.toLowerCase();
+            return results.find(s => 
+                s.name.toLowerCase().includes(lowerName) || 
+                (s.name_en && s.name_en.toLowerCase().includes(lowerName))
+            ) || results[0];
+        }
+        return null;
+    } catch (e) {
+        console.error('[Search Spirit Error]', e);
+        return null;
+    }
+}
+
 export async function GET(req: NextRequest) {
     try {
         const { searchParams } = new URL(req.url);
         const userId = searchParams.get('userId');
-
-        if (!userId) {
-            return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
-        }
+        if (!userId) return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
 
         const [profile, usage] = await Promise.all([
             tasteProfileDb.get(userId),
             tasteProfileDb.getUsage(userId)
         ]);
 
-        // Normalize usage for today
         const today = getKSTDate();
-        let dailyCount = 0;
+        let dailyCount = (usage && usage.date === today) ? usage.count : 0;
 
-        if (usage && usage.date === today) {
-            dailyCount = usage.count;
-        }
-
-        // Return wrapped response
         return NextResponse.json({
             profile: profile || null,
-            usage: {
-                date: today,
-                count: dailyCount,
-                remaining: Math.max(0, 3 - dailyCount)
-            }
+            usage: { date: today, count: dailyCount, remaining: Math.max(0, 3 - dailyCount) }
         });
-
     } catch (error) {
-        console.error('[Get Taste Profile Error]', error);
-        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+        return NextResponse.json({ error: 'Internal Error' }, { status: 500 });
     }
 }
 
 export async function POST(req: NextRequest) {
-    console.log('[Analyze Taste] POST Request received');
-
-    // 1. API 키 확인
-    if (!API_KEY) {
-        console.error('[Analyze Taste] API Key is missing (GEMINI_API_KEY)');
-        return NextResponse.json({
-            error: 'Server configuration error (API Key)',
-            details: 'GEMINI_API_KEY environment variable is not defined.'
-        }, { status: 500 });
-    }
+    if (!API_KEY) return NextResponse.json({ error: 'API Key missing' }, { status: 500 });
 
     try {
-        // Correctly read userId from Body for POST requests
         const body = await req.json();
-        const { userId } = body;
+        const { userId, lang = 'ko' } = body;
+        const isEn = lang === 'en';
 
-        if (!userId) {
-            console.error('[Analyze Taste] User ID missing in request body');
-            return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
-        }
+        if (!userId) return NextResponse.json({ error: 'User ID missing' }, { status: 400 });
 
-        // 0. Check Usage Limit
         const today = getKSTDate();
-        console.log(`[Analyze Taste] Checking usage for User: ${userId} on ${today}`);
+        let usage = await tasteProfileDb.getUsage(userId);
+        let currentCount = (usage && usage.date === today) ? usage.count : 0;
 
-        let usage;
-        try {
-            usage = await tasteProfileDb.getUsage(userId);
-        } catch (usageError: any) {
-            console.error('[Analyze Taste] Usage Check DB Error:', usageError);
-            // Non-blocking for now, or we can decide to fail
-        }
+        if (currentCount >= 3) return NextResponse.json({ error: 'Limit reached' }, { status: 429 });
 
-        let currentCount = 0;
+        const [cabinetItems, userReviews] = await Promise.all([
+            cabinetDb.getAll(userId),
+            reviewsDb.getAllForUser(userId, true)
+        ]);
 
-        if (usage && usage.date === today) {
-            currentCount = usage.count;
-        }
-
-        if (currentCount >= 3) {
-            console.warn(`[Analyze Taste] User ${userId} reached limit: ${currentCount}/3`);
-            return NextResponse.json({
-                error: 'Daily limit reached',
-                message: '오늘의 AI 분석 횟수(3회)를 모두 사용하셨어요. 내일 다시 시도해주세요!'
-            }, { status: 429 });
-        }
-
-        console.log(`[Analyze Taste] Data fetching for User: ${userId}`);
-
-        // 2. Fetch Data (DB 에러 1차 방어)
-        let cabinetItems = [];
-        let userReviews = [];
-
-        try {
-            [cabinetItems, userReviews] = await Promise.all([
-                cabinetDb.getAll(userId),
-                reviewsDb.getAllForUser(userId, true) // skipEnrichment = true to prevent N+1 fetch hitting 50 subreq limit
-            ]);
-            console.log(`[Analyze Taste] Fetched ${cabinetItems.length} cabinet items and ${userReviews.length} reviews`);
-        } catch (dbError: any) {
-            console.error('[Analyze Taste] DB Fetch Error:', dbError);
-            return NextResponse.json({
-                error: 'Failed to fetch user data',
-                details: dbError.message
-            }, { status: 500 });
-        }
-
-        // 3. Merge Data (데이터 병합)
         const spiritsForAnalysis = cabinetItems.map((item: any) => {
-            const review = userReviews.find((r: any) => r.spiritId === item.spiritId || r.spiritName === item.name);
-
-            // 활동 날짜 집계
-            const reviewDate = review?.createdAt || review?.updatedAt || null;
-            const addedDate = item.addedAt || null;
-            const lastActivityAt = reviewDate || addedDate;
-
+            const review = userReviews.find((r: any) => r.spiritId === item.spiritId);
             return {
                 ...item,
-                addedAt: addedDate,
-                lastActivityAt: lastActivityAt,
                 userReview: review ? {
                     ratingOverall: review.rating,
-                    ratingN: review.ratingN || 0,
-                    ratingP: review.ratingP || 0,
-                    ratingF: review.ratingF || 0,
-                    tagsN: review.tagsN ? [review.tagsN] : [],
-                    tagsP: review.tagsP ? [review.tagsP] : [],
-                    tagsF: review.tagsF ? [review.tagsF] : [],
-                    comment: review.notes,
-                    createdAt: reviewDate
-                } : null,
-                isWishlist: false
+                    tags: [...(review.tagsN || []), ...(review.tagsP || []), ...(review.tagsF || [])],
+                    comment: review.notes
+                } : null
             };
         });
 
-        const lang = body.lang || 'ko';
-        const isEn = lang === 'en';
-
-        // Fetch existing profile to get previous recommendations
-        let previousRecommendations: string[] = [];
-        try {
-            const existingProfile = await tasteProfileDb.get(userId);
-            if (existingProfile?.previousRecommendations) {
-                previousRecommendations = existingProfile.previousRecommendations;
-            }
-            console.log(`[Analyze Taste] Previous recommendations: ${previousRecommendations.length} items`);
-        } catch (e) {
-            console.warn('[Analyze Taste] Could not fetch previous recommendations:', e);
-        }
-
-        const promptData = buildTasteAnalysisPrompt(spiritsForAnalysis, isEn, previousRecommendations);
-        console.log(`[Analyze Taste] Prompt generated (Length: ${promptData?.length})`);
-
-        // 프롬프트가 너무 짧으면(분석할 술이 없으면) 에러 처리
-        if (!promptData || promptData.length < 10) {
-            console.error('[Analyze Taste] Prompt too short or empty');
-            return NextResponse.json({
-                error: 'Invalid data',
-                message: 'AI에게 전달할 데이터가 부족합니다. 최소 1개 이상의 술을 술장에 넣어주세요!'
-            }, { status: 400 });
-        }
-
-        // 4. Call AI (Multi-Regional Fallback Architecture)
-        const generationConfig = {
-            responseMimeType: "application/json",
-            temperature: 0.7,
-            topP: 0.8,
-            topK: 40
-        };
-
+        const promptData = buildTasteAnalysisPrompt(spiritsForAnalysis, isEn, []);
+        
         const systemInstruction = `
-        You are a World-Class Spirits Analyst and Gastronomy Critic with an encyclopedic knowledge of global liquors—from obscure Japanese small-batch shochus and traditional Korean yakjus to hyper-aged Caribbean rums and esoteric European eaux-de-vie. 
+        You are a World-Class AI Sommelier.
         
-        Analyze the user's spirit preferences based on the provided data with clinical precision and poetic insight.
+        GOAL:
+        1. Analyze user cellar data to create a precise 6D Flavor Vector (0-100).
+        2. Propose 3 high-discovery spirit recommendations.
         
-        IMPORTANT: Your recommendation MUST be high-variance and diverse. Do NOT just recommend the most famous or obvious bottles. Seek out high-quality, distinctive spirits that align with the user's flavor DNA but might be outside their current experience or represent a sophisticated shift in their taste journey.
+        6D VECTOR DIMENSIONS: sweet, fruity, floral, spicy, woody, peaty.
         
-        LANGUAGE REQUIREMENT: 
-        - Your response (description and recommendation reason) MUST be in ${isEn ? 'English' : 'professional, elegant Korean (polite tone)'}.
-        - Description should strictly be 4-5 sentences long, providing deep analytical insight.
-
-        REQUIRED FORMAT: Return ONLY valid JSON.
+        CRITICAL RECOMMENDATION RULES:
+        - NEVER suggest pairing one spirit with another (e.g., "Goes well with Whiskey X"). Spirits are NOT food.
+        - ALWAYS explain the match based on the User's Flavor DNA (e.g., "Your high Peaty score at 85 makes this an ideal match").
+        - SUGGEST actual Food Pairings (e.g., "Matches perfectly with smoked salmon or dark chocolate").
+        - COMPARATIVE ANALYSIS: Use phrases like "If you enjoyed X in your cabinet, you'll appreciate the Y notes in this bottle."
+        - Avoid repetitive or generic brands. Aim for "Discovery".
+        - Respond strictly in the ${isEn ? 'English' : 'Professional Korean (Honorifics)'} language.
         
-        Output Structure:
+        JSON FORMAT:
         {
-            "stats": {
-                "woody": 0-100,
-                "peaty": 0-100,
-                "floral": 0-100,
-                "fruity": 0-100,
-                "nutty": 0-100,
-                "richness": 0-100
-            },
-            "persona": {
-                "title": "A unique, creative title (e.g. 'The Esoteric Peat Hunter')",
-                "description": "4-5 sentences of deep analytical insight into their taste profile, acknowledging any recent trends or shifts in their collection.",
-                "keywords": ["#Tag1", "#Tag2", "#Tag3"]
-            },
-            "recommendation": {
-                "name": "Full professional name of a recommended spirit (Global)",
-                "matchRate": 80-99,
-                "reason": "An authoritative explanation of why this specific bottle's molecular profile matches the user's detected preferences, especially considering their recent activity."
+          "stats": { "sweet": 0-100, "fruity": 0-100, "floral": 0-100, "spicy": 0-100, "woody": 0-100, "peaty": 0-100 },
+          "persona": { "title": "Title", "description": "Analysis insight.", "keywords": ["#tag"] },
+          "recommendations": [
+            {
+              "name": "Exact Name",
+              "category": "Whisky/Traditional/etc",
+              "abv": 40.0,
+              "matchRate": 95,
+              "reason": "Detailed sommelier insight (No spirit-to-spirit pairing!)",
+              "tastingNotes": "Brief profile."
             }
+          ]
         }
         `;
 
-        let result;
-        try {
-            // 🟢 [Plan A] 1차 시도: Cloudflare AI Gateway (지역 락 우회 및 프록시)
-            console.log('[Analyze Taste] [Plan A] Attempting via Cloudflare AI Gateway...');
-            const gatewayGenAI = new GoogleGenerativeAI("CF_MANAGED_KEY");
-            const model = gatewayGenAI.getGenerativeModel({
-                model: "gemini-2.0-flash",
-                systemInstruction,
-                generationConfig
-            }, {
-                baseUrl: process.env.CF_GATEWAY_URL,
-                customHeaders: {
-                    "cf-aig-authorization": `Bearer ${process.env.CF_AIG_TOKEN}`
-                }
-            });
-            result = await model.generateContent(promptData);
-            console.log('[Analyze Taste] [Plan A] Success via AI Gateway');
+        const genAI = new GoogleGenerativeAI(API_KEY);
+        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash", systemInstruction, generationConfig: { responseMimeType: "application/json" } });
 
-        } catch (gatewayError: any) {
-            // ⚠️ Fallback
-            console.warn("⚠️ [Fallback] AI Gateway 호출 실패, Direct API로 우회합니다.", gatewayError.message);
+        const result = await model.generateContent(promptData);
+        const analysisResult = JSON.parse(result.response.text());
 
-            // 🟠 [Plan B] 2차 시도: Direct Gemini API (기존 방식)
-            const directGenAI = new GoogleGenerativeAI(API_KEY);
-            const fallbackModel = directGenAI.getGenerativeModel({
-                model: "gemini-2.0-flash",
-                systemInstruction,
-                generationConfig
-            });
-            result = await fallbackModel.generateContent(promptData);
-            console.log('[Analyze Taste] [Plan B] Success via Direct API');
-        }
-
-        let responseText = '';
-        try {
-            responseText = result.response.text();
-            console.log(`[Analyze Taste] AI Response received (Length: ${responseText.length})`);
-        } catch (textError: any) {
-            console.error('[Analyze Taste] Error extracting text from Gemini response:', textError);
-            return NextResponse.json({
-                error: 'AI Output Extraction Failed',
-                details: textError.message,
-                message: isEn
-                    ? 'Failed to extract AI response. Please try again.'
-                    : 'AI 응답 추출에 실패했습니다. 다시 시도해주세요.'
-            }, { status: 500 });
-        }
-
-        // 5. Parse JSON
-        let analysisResult;
-        try {
-            const cleanJson = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
-            analysisResult = JSON.parse(cleanJson);
-            console.log('[Analyze Taste] JSON Parsing Successful');
-            console.log('[Analyze Taste] Recommended:', analysisResult.recommendation?.name);
-        } catch (parseError: any) {
-            console.error('[Analyze Taste] JSON Parse Failed. Raw text sample:', responseText.substring(0, 200));
-            console.error('[Analyze Taste] Parse error:', parseError.message);
-            return NextResponse.json({
-                error: 'AI output format error',
-                details: parseError.message,
-                message: isEn
-                    ? 'Failed to parse AI analysis results. Please try again.'
-                    : 'AI 분석 결과 파싱에 실패했습니다. 다시 시도해주세요.'
-            }, { status: 500 });
-        }
-
-        // 6. Save & Response
-        console.log('[Analyze Taste] Saving results to DB...');
-
-        // Update previousRecommendations array
-        // Add current recommendation and keep last 10 total
-        const newRecommendation = analysisResult.recommendation?.name;
-        let updatedPreviousRecommendations = [...previousRecommendations];
-        if (newRecommendation) {
-            updatedPreviousRecommendations.push(newRecommendation);
-        }
-        // Keep only the last 10 recommendations
-        updatedPreviousRecommendations = updatedPreviousRecommendations.slice(-10);
+        // Process Recommendations with Live Firestore Sync
+        const enrichedRecs = await Promise.all(analysisResult.recommendations.slice(0, 3).map(async (rec: any) => {
+            const dbMatch = await tryFindSpiritInDb(rec.name);
+            if (dbMatch) {
+                return {
+                    ...dbMatch,
+                    id: dbMatch.id,
+                    score: rec.matchRate / 100,
+                    analysisReason: rec.reason,
+                    isAiDiscovery: false
+                };
+            }
+            return {
+                ...rec,
+                isAiDiscovery: true,
+                externalSearchUrl: `https://www.google.com/search?q=${encodeURIComponent(rec.name + ' spirits')}`
+            };
+        }));
 
         const profile = {
             userId,
             analyzedAt: new Date().toISOString(),
-            ...analysisResult,
-            previousRecommendations: updatedPreviousRecommendations
+            stats: analysisResult.stats,
+            persona: analysisResult.persona,
+            recommendationEntries: enrichedRecs // New list format
         };
 
-        try {
-            // Update Usage & Save Profile
-            await Promise.all([
-                tasteProfileDb.save(userId, profile),
-                tasteProfileDb.setUsage(userId, today, currentCount + 1)
-            ]);
-            console.log('[Analyze Taste] Save Successful');
-        } catch (saveError: any) {
-            console.error('[Analyze Taste] DB Save Error:', saveError);
-            // We can still return the profile even if save fails, but it's risky for UI consistency
-            // For now, let's treat it as a 500
-            return NextResponse.json({
-                error: 'Failed to save analysis results',
-                details: saveError.message
-            }, { status: 500 });
-        }
+        await Promise.all([
+            tasteProfileDb.save(userId, profile),
+            tasteProfileDb.setUsage(userId, today, currentCount + 1)
+        ]);
 
-        return NextResponse.json({
-            success: true,
-            profile,
-            usage: {
-                date: today,
-                count: currentCount + 1,
-                remaining: Math.max(0, 3 - (currentCount + 1))
-            }
-        });
-
+        return NextResponse.json({ success: true, profile });
     } catch (error: any) {
-        console.error('[Analyze Taste Critical Error]', error);
-        return NextResponse.json({
-            error: 'Internal Server Error',
-            details: error.message
-        }, { status: 500 });
+        console.error('[Analyze Taste Error]', error);
+        return NextResponse.json({ error: 'AI Error', details: error.message }, { status: 500 });
     }
 }
 ```
@@ -6810,14 +6816,14 @@ export const runtime = 'edge';
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        const { spiritId, action } = body;
+        const { spiritId, action, platform } = body;
 
         if (!spiritId || !action) {
             return NextResponse.json({ error: 'Missing spiritId or action' }, { status: 400 });
         }
 
-        // Action can be: view, wishlist, cabinet, review
-        await trendingDb.logEvent(spiritId, action);
+        // Action can be: view, wishlist, cabinet, review, purchase_click
+        await trendingDb.logEvent(spiritId, action, { platform });
 
         return NextResponse.json({ success: true }, { status: 200 });
     } catch (error) {
@@ -7410,7 +7416,7 @@ export default async function RootLayout({
 ```
 export const revalidate = 60;
 
-import { newArrivalsDb, reviewsDb } from "@/lib/db/firestore-rest";
+import { dbListNewArrivals, dbListSpiritReviews } from "@/lib/db/data-connect-client";
 import HomeClient from "@/components/home/HomeClient";
 import NewsSection from "@/components/home/NewsSection";
 import { Locale } from "@/i18n-config";
@@ -7426,12 +7432,23 @@ export default async function HomePage({ params }: PageProps) {
   const { lang } = await params;
   const dictionary = await getDictionary(lang);
 
-  // 1. Parallel fetch essential home page data on the server
-  // This eliminates client-side waterfall and shows content instantly
-  const [newArrivals, recentReviews] = await Promise.all([
-    newArrivalsDb.getAll().catch(() => []),
-    reviewsDb.getRecent().catch(() => [])
+  const [rawNewArrivals, rawReviews] = await Promise.all([
+    dbListNewArrivals(12).catch(() => []),
+    dbListSpiritReviews(5, 0).catch(() => [])
   ]);
+
+  const newArrivals = rawNewArrivals.map((s: any) => ({
+    ...s,
+    name_en: s.nameEn,
+    description_ko: s.descriptionKo,
+    description_en: s.descriptionEn,
+  }));
+
+  const recentReviews = rawReviews.map((r: any) => ({
+    ...r,
+    spiritName: r.spirit?.name,
+    userName: r.user?.nickname || (lang === 'en' ? 'Anonymous' : '익명'),
+  }));
 
   // 2. Fetch the deterministic daily wiki snippet for the FAQ schema
   const dailySnippet = getRandomWikiSnippet(lang);
@@ -7739,6 +7756,86 @@ export async function getCabinetStatusInfo(userId: string) {
   } catch (error) {
     console.error('Error getting cabinet status info:', error);
     return { ownedIds: [], wishlistIds: [] };
+  }
+}
+
+```
+
+### File: app\[lang]\actions\reviews.ts
+```
+"use server";
+
+import { spiritsDb, reviewsDb } from '@/lib/db/firestore-rest';
+import { Review } from '@/lib/db/schema';
+import { revalidatePath } from 'next/cache';
+
+/**
+ * Submits a micro-review and updates the target spirit's aggregate rating metadata.
+ * Simplified for high conversion: only requires stars and flavor tags.
+ */
+export async function submitMicroReviewAction(
+  spiritId: string, 
+  rating: number, 
+  tags: string[], 
+  lang: string = 'ko'
+) {
+  try {
+    // 1. Fetch current spirit data to calculate new average
+    // In a REST-based environment, we fetch-calculate-update
+    const spirit = await spiritsDb.getById(spiritId);
+    if (!spirit) {
+      throw new Error(`Spirit not found: ${spiritId}`);
+    }
+
+    const oldRating = spirit.metadata?.aggregateRating?.ratingValue || 0;
+    const oldCount = spirit.metadata?.aggregateRating?.reviewCount || 0;
+
+    // 2. Calculate new moving average
+    const newCount = oldCount + 1;
+    const newRatingValue = ((oldRating * oldCount) + rating) / newCount;
+
+    // 3. Prepare the public review document
+    // Using a default comment for SEO compliance as requested
+    const defaultComment = lang === 'en' ? "Highly recommended!" : "정말 추천합니다!";
+    
+    // Construct simplified review payload
+    const reviewData: Partial<Review> = {
+      spiritId,
+      rating,
+      content: defaultComment,
+      nose: tags.filter((_, i) => i % 3 === 0).join(', '), // Simple heuristic for distributive tags
+      palate: tags.filter((_, i) => i % 3 === 1).join(', '),
+      finish: tags.filter((_, i) => i % 3 === 2).join(', '),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      isPublished: true,
+      userName: lang === 'en' ? "Resident Expert" : "시음 전문가" // Default for quick reviews
+    };
+
+    // 4. Atomic-ish update of parent spirit
+    const updatedMetadata = {
+      ...spirit.metadata,
+      aggregateRating: {
+        ratingValue: parseFloat(newRatingValue.toFixed(1)),
+        reviewCount: newCount,
+        bestRating: 5,
+        worstRating: 1
+      }
+    };
+
+    // Commit both: the new review and the updated spirit metadata
+    // Note: We use the existing REST helpers which perform sequential updates.
+    // In this specific architecture, this and trending logs are how engagement is tracked.
+    await reviewsDb.upsert(spiritId, `micro_${Date.now()}`, reviewData);
+    await spiritsDb.upsert(spiritId, { metadata: updatedMetadata });
+
+    // 5. Revalidate the product page to show the gold stars immediately
+    revalidatePath(`/${lang}/spirits/${spiritId}`);
+
+    return { success: true };
+  } catch (error) {
+    console.error('[Action] submitMicroReviewAction Error:', error);
+    return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
   }
 }
 
@@ -10464,16 +10561,13 @@ export default async function MbtiPage({ params }: { params: Promise<{ lang: str
 'use client';
 
 import React, { useEffect, useState, useMemo } from 'react';
-import { db } from '@/lib/db/firebase';
-import { collection, query, orderBy, limit, getDocs, startAfter, getCountFromServer, DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
+import { dbListNewsArticles, dbGetNewsCount } from '@/lib/db/data-connect-client';
 import { useAuth } from '@/app/[lang]/context/auth-context';
-import { getAppPath } from '@/lib/db/paths';
 import Link from 'next/link';
 import { Search, Loader2, ChevronLeft, ChevronRight, ArrowLeft, Trash2 } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import GoogleAd from '@/components/ui/GoogleAd';
-
 
 export default function NewsContentPage({ initialNews, initialPage = 1 }: { initialNews?: any[]; initialPage?: number }) {
     const { user, role } = useAuth();
@@ -10483,21 +10577,13 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
 
     const hasInitial = Array.isArray(initialNews) && initialNews.length > 0;
     const [news, setNews] = useState<any[]>(initialNews ?? []);
-    // SSR-safe: start with loading=false so the server HTML never includes the loading-shell
-    // text ("Fetching latest news"). When no initial data was provided, the useEffect below
-    // calls fetchPage(initialPage) which will set loading=true during the client-side fetch.
-    // Trade-off: on a DB-failure fallback the SSR renders an empty list instead of a spinner,
-    // which is correct — a crawlable page should show content or an empty state, not a
-    // loading placeholder.
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(initialPage);
     const [totalCount, setTotalCount] = useState(0);
-    const [pageMarkers, setPageMarkers] = useState<Record<number, QueryDocumentSnapshot<DocumentData> | null>>({});
     const [searchInput, setSearchInput] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
 
     const pageSize = 10;
-    // Hardcoded fallback for reliability
     const ADMIN_EMAILS = ['ruahn49@gmail.com'];
     const isAdmin = role === 'ADMIN' || (user?.email && ADMIN_EMAILS.includes(user.email));
 
@@ -10521,9 +10607,8 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
 
     const fetchTotalCount = async () => {
         try {
-            const newsPath = getAppPath().news;
-            const snapshot = await getCountFromServer(collection(db, newsPath));
-            setTotalCount(snapshot.data().count);
+            const count = await dbGetNewsCount();
+            setTotalCount(count);
         } catch (error) {
             console.error('Error fetching count:', error);
         }
@@ -10532,33 +10617,10 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
     const fetchPage = async (page: number) => {
         try {
             setLoading(true);
-
-            // React State 기반 페이징 전환 시 강제 최상단 스크롤
             window.scrollTo({ top: 0, behavior: 'auto' });
 
-            const newsPath = getAppPath().news;
-            let q;
-
-            // Note: Using 'date' as per newsDb.getLatest implementation
-            if (page === 1) {
-                q = query(collection(db, newsPath), orderBy('date', 'desc'), limit(pageSize));
-            } else {
-                const prevDoc = pageMarkers[page - 1];
-                if (prevDoc) {
-                    q = query(collection(db, newsPath), orderBy('date', 'desc'), startAfter(prevDoc), limit(pageSize));
-                } else {
-                    q = query(collection(db, newsPath), orderBy('date', 'desc'), limit(page * pageSize));
-                }
-            }
-
-            const snapshot = await getDocs(q);
-            const docs = snapshot.docs;
-
-            const targetDocs = (page > 1 && !pageMarkers[page - 1]) ? docs.slice(-pageSize) : docs;
-            const data = targetDocs.map(doc => ({ id: doc.id, ...doc.data() }));
-
+            const data = await dbListNewsArticles(pageSize, (page - 1) * pageSize);
             setNews(data);
-            setPageMarkers(prev => ({ ...prev, [page]: docs[docs.length - 1] }));
             setCurrentPage(page);
         } catch (error) {
             console.error('Error fetching page:', error);
@@ -10569,18 +10631,17 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
 
     useEffect(() => {
         fetchTotalCount();
-        // Skip re-fetch if the server already provided initial data for this page
         if (!hasInitial) {
             fetchPage(initialPage);
         }
-    }, []);
+    }, [initialPage, hasInitial]);
 
     const filteredNews = useMemo(() => {
         if (!searchQuery.trim()) return news;
         const lowQuery = searchQuery.toLowerCase();
         return news.filter(item => {
-            const title = (item.translations?.[lang]?.title || item.translations?.ko?.title || item.originalTitle || '').toLowerCase();
-            const content = (item.translations?.[lang]?.content || item.translations?.ko?.content || item.translations?.[lang]?.snippet || item.translations?.ko?.snippet || '').toLowerCase();
+            const title = (item.translations?.[lang]?.title || item.translations?.ko?.title || item.title || '').toLowerCase();
+            const content = (item.translations?.[lang]?.content || item.translations?.ko?.content || item.content || '').toLowerCase();
             return title.includes(lowQuery) || content.includes(lowQuery);
         });
     }, [news, searchQuery, lang]);
@@ -10627,7 +10688,7 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
                     </motion.div>
                 </div>
 
-                {/* Search Bar - Changed from live to button-triggered */}
+                {/* Search Bar */}
                 <form onSubmit={handleSearch} className="relative mb-12 flex gap-2">
                     <div className="relative flex-1 group">
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-indigo-500 transition-colors" />
@@ -10690,17 +10751,17 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
 
                                     <Link href={item.link} target="_blank">
                                         <h2 className="text-xl md:text-2xl font-bold mb-4 hover:text-indigo-600 transition-colors leading-tight">
-                                            {String(item.translations?.[lang]?.title || item.translations?.ko?.title || item.originalTitle || '')}
+                                            {String(item.translations?.[lang]?.title || item.translations?.ko?.title || item.title || '')}
                                         </h2>
                                     </Link>
 
                                     <div className="text-muted-foreground leading-relaxed space-y-4 whitespace-pre-wrap text-sm md:text-base font-medium mb-6">
-                                        {String(item.translations?.[lang]?.content || item.translations?.ko?.content || item.translations?.[lang]?.snippet || item.translations?.ko?.snippet || item.originalSnippet || '')}
+                                        {String(item.translations?.[lang]?.content || item.translations?.ko?.content || item.content || '')}
                                     </div>
 
                                     <div className="mt-6 pt-6 border-t border-border flex items-center justify-between">
                                         <div className="flex gap-2">
-                                            {(item.tags?.[lang] || item.tags?.ko || [])?.slice(0, 2).map((tag: string, i: number) => {
+                                            {(item.tags?.[lang] || item.tags?.ko || item.tags || [])?.slice(0, 2).map((tag: string, i: number) => {
                                                 const cleanTag = tag.startsWith('#') ? tag.substring(1) : tag;
                                                 return (
                                                     <span key={i} className="text-[10px] font-bold text-indigo-500/60 transition-colors">
@@ -10715,7 +10776,6 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
                                     </div>
                                 </motion.article>
 
-                                {/* 4번째마다 뉴스 아이템 이후 인피드 광고 반복 삽입 (페이지네이션 대응) */}
                                 {(idx + 1) % 4 === 0 && (
                                     <div className="w-full my-8">
                                         <GoogleAd
@@ -10731,7 +10791,6 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
                             </React.Fragment>
                         ))}
 
-                        {/* Pagination Numbers — links are crawlable <a href> for SEO; JS intercepts for SPA navigation */}
                         {!searchQuery && totalPages > 1 && (
                             <div className="flex flex-col items-center gap-6 mt-12 pb-12">
                                 <div className="flex justify-center items-center gap-2">
@@ -10815,7 +10874,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getCanonicalUrl, getHreflangAlternates, toAbsoluteUrl } from '@/lib/utils/seo-url';
 import NewsContentPage from './news-client';
-import { newsDb } from '@/lib/db/firestore-rest';
+import { dbListNewsArticles } from '@/lib/db/data-connect-client';
 
 interface NewsPageProps {
   params: Promise<{ lang: string }>;
@@ -10884,9 +10943,7 @@ export default async function NewsPage({ params, searchParams }: NewsPageProps) 
 
   const page = Math.max(1, parseInt(sp.page || '1', 10) || 1);
 
-  const initialNews = page === 1
-    ? await newsDb.getLatest(PAGE_SIZE).catch(() => [])
-    : await newsDb.getPage(page, PAGE_SIZE).catch(() => []);
+  const initialNews = await dbListNewsArticles(PAGE_SIZE, (page - 1) * PAGE_SIZE).catch(() => []);
 
   if (page > 1 && initialNews.length === 0) {
     notFound();
@@ -11719,7 +11776,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getCanonicalUrl, getHreflangAlternates, toAbsoluteUrl } from '@/lib/utils/seo-url';
 import ReviewBoardPage from './reviews-client';
-import { reviewsDb } from '@/lib/db/firestore-rest';
+import { dbListSpiritReviews } from '@/lib/db/data-connect-client';
 
 interface ReviewsPageProps {
   params: Promise<{ lang: string }>;
@@ -11790,9 +11847,7 @@ export default async function ReviewsPage({ params, searchParams }: ReviewsPageP
 
   const page = Math.max(1, parseInt(sp.page || '1', 10) || 1);
 
-  const initialReviews = page === 1
-    ? await reviewsDb.getLatest(PAGE_SIZE).catch(() => [])
-    : await reviewsDb.getPage(page, PAGE_SIZE).catch(() => []);
+  const initialReviews = await dbListSpiritReviews(PAGE_SIZE, (page - 1) * PAGE_SIZE).catch(() => []);
 
   // Invalid page: no results for page > 1 → 404 to avoid thin empty pages
   if (page > 1 && initialReviews.length === 0) {
@@ -11973,10 +12028,8 @@ export default async function ReviewsPage({ params, searchParams }: ReviewsPageP
 'use client';
 
 import React, { useEffect, useState, useMemo } from 'react';
-import { db } from '@/lib/db/firebase';
-import { collection, query, orderBy, limit, getDocs, startAfter, getCountFromServer, DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
+import { dbListSpiritReviews, dbGetSpiritReviewsCount } from '@/lib/db/data-connect-client';
 import { useAuth } from '@/app/[lang]/context/auth-context';
-import { getAppPath } from '@/lib/db/paths';
 import { getCategoryFallbackImage } from '@/lib/utils/image-fallback';
 import { getOptimizedImageUrl } from '@/lib/utils/image-optimization';
 import Link from 'next/link';
@@ -11987,7 +12040,6 @@ import SuccessToast from '@/components/ui/SuccessToast';
 import { useParams, useRouter } from 'next/navigation';
 import GoogleAd from '@/components/ui/GoogleAd';
 
-
 export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { initialReviews?: any[]; initialPage?: number }) {
     const { user, role } = useAuth();
     const params = useParams();
@@ -11996,16 +12048,9 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
 
     const hasInitial = Array.isArray(initialReviews) && initialReviews.length > 0;
     const [reviews, setReviews] = useState<any[]>(initialReviews ?? []);
-    // SSR-safe: start with loading=false so the server HTML never includes the loading-shell
-    // text ("Fetching tastes..."). When no initial data was provided, the useEffect below
-    // calls fetchPage(initialPage) which will set loading=true during the client-side fetch.
-    // Trade-off: on a DB-failure fallback the SSR renders an empty list instead of a spinner,
-    // which is correct — a crawlable page should show content or an empty state, not a
-    // loading placeholder.
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(initialPage);
     const [totalCount, setTotalCount] = useState(0);
-    const [pageMarkers, setPageMarkers] = useState<Record<number, QueryDocumentSnapshot<DocumentData> | null>>({});
     const [searchInput, setSearchInput] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
 
@@ -12017,11 +12062,9 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
     const [toastVariant, setToastVariant] = useState<'success' | 'error'>('success');
 
     const pageSize = 12;
-    // Hardcoded fallback for reliability
     const ADMIN_EMAILS = ['ruahn49@gmail.com'];
     const isAdmin = role === 'ADMIN' || (user?.email && ADMIN_EMAILS.includes(user.email));
 
-    // UI Dictionary
     const t = {
         title: isEn ? "Review Board" : "리뷰 보드",
         desc: isEn ? "Live comments and professional analysis reports from spirits enthusiasts." : "유저들의 생생한 리뷰와 분석",
@@ -12040,64 +12083,36 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
         anonymous: isEn ? "Anonymous" : "익명",
     };
 
-    // 1. 전체 리뷰 개수 가져오기
     const fetchTotalCount = async () => {
         try {
-            const reviewsPath = getAppPath().reviews;
-            const snapshot = await getCountFromServer(collection(db, reviewsPath));
-            setTotalCount(snapshot.data().count);
+            const count = await dbGetSpiritReviewsCount();
+            setTotalCount(count);
         } catch (error) {
             console.error('Error fetching reviews count:', error);
         }
     };
 
-    // 2. 특정 페이지 데이터 가져오기
     const fetchPage = async (page: number) => {
         try {
             setLoading(true);
-
-            // React State 기반 페이징 전환 시 강제 최상단 스크롤
             window.scrollTo({ top: 0, behavior: 'auto' });
 
-            const reviewsPath = getAppPath().reviews;
-            let q;
+            const data = await dbListSpiritReviews(pageSize, (page - 1) * pageSize);
+            const mappedData = data.map((r: any) => ({
+                ...r,
+                spiritName: r.spirit?.name,
+                spiritId: r.spirit?.id,
+                userName: r.user?.nickname || t.anonymous,
+                userId: r.user?.id,
+                profileImage: r.user?.profileImage,
+                tags: [
+                    ...(r.nose ? r.nose.split(',') : []),
+                    ...(r.palate ? r.palate.split(',') : []),
+                    ...(r.finish ? r.finish.split(',') : [])
+                ].map((t: string) => t.trim()).filter(Boolean)
+            }));
 
-            if (page === 1) {
-                q = query(collection(db, reviewsPath), orderBy('createdAt', 'desc'), limit(pageSize));
-            } else {
-                const prevDoc = pageMarkers[page - 1];
-                if (prevDoc) {
-                    q = query(collection(db, reviewsPath), orderBy('createdAt', 'desc'), startAfter(prevDoc), limit(pageSize));
-                } else {
-                    q = query(collection(db, reviewsPath), orderBy('createdAt', 'desc'), limit(page * pageSize));
-                }
-            }
-
-            const snapshot = await getDocs(q);
-            const docs = snapshot.docs;
-
-            const targetDocs = (page > 1 && !pageMarkers[page - 1]) ? docs.slice(-pageSize) : docs;
-            const data = targetDocs.map(doc => {
-                const docData = doc.data() as any;
-                // Tags processing (comma separated to array)
-                const tags = [
-                    ...(docData.tagsN ? docData.tagsN.split(',') : []),
-                    ...(docData.tagsP ? docData.tagsP.split(',') : []),
-                    ...(docData.tagsF ? docData.tagsF.split(',') : []),
-                    ...(docData.nose ? docData.nose.split(',') : []),
-                    ...(docData.palate ? docData.palate.split(',') : []),
-                    ...(docData.finish ? docData.finish.split(',') : [])
-                ].map(t => t.trim()).filter(Boolean);
-
-                return {
-                    id: doc.id,
-                    ...docData,
-                    tags: [...new Set(tags)]
-                };
-            });
-
-            setReviews(data);
-            setPageMarkers(prev => ({ ...prev, [page]: docs[docs.length - 1] }));
+            setReviews(mappedData);
             setCurrentPage(page);
         } catch (error) {
             console.error('Error fetching reviews page:', error);
@@ -12108,20 +12123,18 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
 
     useEffect(() => {
         fetchTotalCount();
-        // Skip re-fetch if the server already provided initial data for this page
         if (!hasInitial) {
             fetchPage(initialPage);
         }
-    }, []);
+    }, [initialPage, hasInitial]);
 
-    // 3. 클라이언트 사이드 검색 필터링
     const filteredReviews = useMemo(() => {
         if (!searchQuery.trim()) return reviews;
         const lowQuery = searchQuery.toLowerCase();
         return reviews.filter(item => {
             const spiritName = (item.spiritName || '').toLowerCase();
             const userName = (item.userName || '').toLowerCase();
-            const notes = (item.notes || item.content || '').toLowerCase();
+            const notes = (item.content || '').toLowerCase();
             return spiritName.includes(lowQuery) || userName.includes(lowQuery) || notes.includes(lowQuery);
         });
     }, [reviews, searchQuery]);
@@ -12135,16 +12148,12 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
 
     const handleDeleteReview = async () => {
         if (!deleteTarget || !user) return;
-
         setIsDeleting(true);
         try {
             const response = await fetch(`/api/reviews?spiritId=${deleteTarget.spiritId}&userId=${deleteTarget.userId}`, {
                 method: 'DELETE',
-                headers: {
-                    'x-user-id': user.uid
-                }
+                headers: { 'x-user-id': user.uid }
             });
-
             if (response.ok) {
                 setToastMessage(t.deleteSuccess);
                 setToastVariant('success');
@@ -12170,7 +12179,6 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
     return (
         <div className="min-h-screen bg-background text-foreground pt-16 pb-12 px-4 transition-colors duration-300">
             <div className="max-w-4xl mx-auto">
-                {/* Back Button */}
                 <button
                     onClick={() => router.back()}
                     className="mb-6 flex items-center gap-2 text-muted-foreground hover:text-foreground transition-all group"
@@ -12178,7 +12186,6 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                     <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
                     <span className="text-sm font-bold">{isEn ? 'Back' : '뒤로가기'}</span>
                 </button>
-                {/* Header */}
                 <div className="mb-8">
                     <div className="flex items-center gap-3 mb-2">
                         <MessageSquare className="w-8 h-8 text-blue-500" />
@@ -12190,7 +12197,6 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                     </p>
                 </div>
 
-                {/* Search Bar - Changed from live to button-triggered */}
                 <form onSubmit={handleSearch} className="relative mb-12 flex gap-3">
                     <div className="relative flex-1 group">
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-blue-500 transition-colors" />
@@ -12233,25 +12239,16 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                                     transition={{ delay: idx * 0.05 }}
                                     className="group relative bg-card border border-border rounded-2xl p-5 hover:border-blue-500/30 hover:shadow-xl transition-all"
                                 >
-                                    {/* Header: Spirit Name + Author + Rating */}
                                     <div className="flex flex-wrap items-center gap-2 mb-5">
-                                        {/* Spirit Name Link */}
-                                        <Link
-                                            href={`/${lang}/spirits/${review.spiritId}`}
-                                            className="text-lg sm:text-xl font-black hover:text-blue-500 transition-colors"
-                                        >
+                                        <Link href={`/${lang}/spirits/${review.spiritId}`} className="text-lg sm:text-xl font-black hover:text-blue-500 transition-colors">
                                             {review.spiritName}
                                         </Link>
-
-                                        {/* Author Capsule - Compact */}
                                         <div className="flex items-center gap-1.5 px-2.5 py-1 bg-secondary/50 border border-border rounded-full shadow-inner">
                                             <div className="w-4 h-4 rounded-full bg-blue-500 flex items-center justify-center text-[8px] text-white font-black">
                                                 {(review.userName || t.anonymous).substring(0, 1).toUpperCase()}
                                             </div>
                                             <span className="text-[10px] font-black text-foreground">{review.userName || t.anonymous}</span>
                                         </div>
-
-                                        {/* Rating Capsule - Color Coded */}
                                         {(() => {
                                             const ratingColors = getRatingColor(review.rating || 0);
                                             return (
@@ -12263,18 +12260,14 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                                     </div>
 
                                     <div className="flex justify-between items-start gap-4">
-
                                         <div className="flex-1">
-                                            {/* Tasting Note (Comment) */}
                                             <div className="relative">
                                                 <Quote className="absolute -top-2 -left-2 w-6 h-6 text-blue-500/10" />
                                                 <p className="text-sm sm:text-base text-foreground leading-relaxed font-medium italic relative z-10 pl-2">
-                                                    "{review.notes || review.content}"
+                                                    "{review.content}"
                                                 </p>
                                             </div>
                                         </div>
-
-                                        {/* Delete for Admin or Owner */}
                                         {(isAdmin || (user && user.uid === review.userId)) && (
                                             <button
                                                 onClick={() => setDeleteTarget(review)}
@@ -12286,7 +12279,6 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                                         )}
                                     </div>
 
-                                    {/* Attached Images */}
                                     {review.imageUrls && review.imageUrls.length > 0 && (
                                         <div className="flex gap-2 mt-4 overflow-x-auto pb-2 custom-scrollbar">
                                             {review.imageUrls.map((url: string, i: number) => (
@@ -12295,42 +12287,23 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                                         </div>
                                     )}
 
-                                    {/* Flavor Tags and Date */}
                                     {review.tags && review.tags.length > 0 && (
                                         <div className="flex flex-wrap gap-1.5 pt-4 mt-4 border-t border-border/50 relative">
                                             {review.tags.slice(0, 8).map((tag: string, i: number) => {
-                                                const colors = [
-                                                    'bg-blue-500/10 text-blue-600 border-blue-500/20',
-                                                    'bg-orange-500/10 text-orange-600 border-orange-500/20',
-                                                    'bg-purple-500/10 text-purple-600 border-purple-500/20',
-                                                    'bg-emerald-500/10 text-emerald-600 border-emerald-500/20',
-                                                    'bg-rose-500/10 text-rose-600 border-rose-500/20',
-                                                    'bg-indigo-500/10 text-indigo-600 border-indigo-500/20'
-                                                ];
-                                                return (
-                                                    <span key={i} className={`text-[9px] px-2.5 py-1 rounded-full border font-black uppercase tracking-tight ${colors[i % colors.length]}`}>
-                                                        #{tag}
-                                                    </span>
-                                                );
+                                                const colors = ['bg-blue-500/10 text-blue-600 border-blue-500/20', 'bg-orange-500/10 text-orange-600 border-orange-500/20', 'bg-purple-500/10 text-purple-600 border-purple-500/20', 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20', 'bg-rose-500/10 text-rose-600 border-rose-500/20', 'bg-indigo-500/10 text-indigo-600 border-indigo-500/20'];
+                                                return <span key={i} className={`text-[9px] px-2.5 py-1 rounded-full border font-black uppercase tracking-tight ${colors[i % colors.length]}`}>#{tag}</span>;
                                             })}
-                                            {/* Date in bottom-right */}
-                                            <span className="ml-auto text-[9px] text-muted-foreground/60 font-medium">
-                                                {new Date(review.createdAt).toLocaleDateString()}
-                                            </span>
+                                            <span className="ml-auto text-[9px] text-muted-foreground/60 font-medium">{new Date(review.createdAt).toLocaleDateString()}</span>
                                         </div>
                                     )}
 
-                                    {/* Date fallback if no tags */}
                                     {(!review.tags || review.tags.length === 0) && (
                                         <div className="flex justify-end pt-4 mt-4 border-t border-border/50">
-                                            <span className="text-[9px] text-muted-foreground/60 font-medium">
-                                                {new Date(review.createdAt).toLocaleDateString()}
-                                            </span>
+                                            <span className="text-[9px] text-muted-foreground/60 font-medium">{new Date(review.createdAt).toLocaleDateString()}</span>
                                         </div>
                                     )}
                                 </motion.div>
 
-                                {/* 4번째마다 뉴스 아이템 이후 인피드 광고 반복 삽입 (페이지네이션 대응) */}
                                 {(idx + 1) % 4 === 0 && (
                                     <div className="w-full my-8">
                                         <GoogleAd
@@ -12346,7 +12319,6 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                             </React.Fragment>
                         ))}
 
-                        {/* Pagination — links are crawlable <a href> for SEO; JS intercepts for SPA navigation */}
                         {!searchQuery && totalPages > 1 && (
                             <div className="flex justify-center items-center gap-3 mt-16 pb-12">
                                 <Link
@@ -12366,10 +12338,7 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                                                 key={num}
                                                 href={num === 1 ? '?' : `?page=${num}`}
                                                 onClick={(e) => { e.preventDefault(); fetchPage(num); }}
-                                                className={`w-12 h-12 rounded-2xl text-sm font-black transition-all shadow-sm flex items-center justify-center ${currentPage === num
-                                                    ? 'bg-blue-600 text-white shadow-blue-500/30 scale-110'
-                                                    : 'bg-card border border-border text-muted-foreground hover:bg-muted font-bold'
-                                                    }`}
+                                                className={`w-12 h-12 rounded-2xl text-sm font-black transition-all shadow-sm flex items-center justify-center ${currentPage === num ? 'bg-blue-600 text-white shadow-blue-500/30 scale-110' : 'bg-card border border-border text-muted-foreground hover:bg-muted font-bold'}`}
                                             >
                                                 {num}
                                             </Link>
@@ -12390,56 +12359,33 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                 )}
             </div>
 
-            {/* Delete Confirmation Modal */}
             <AnimatePresence>
                 {deleteTarget && (
                     <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
+                        initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                         className="fixed inset-0 bg-black/60 backdrop-blur-md z-50 flex items-center justify-center p-4"
                         onClick={() => !isDeleting && setDeleteTarget(null)}
                     >
                         <motion.div
-                            initial={{ scale: 0.9, opacity: 0, y: 20 }}
-                            animate={{ scale: 1, opacity: 1, y: 0 }}
-                            exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                            initial={{ scale: 0.9, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.9, opacity: 0, y: 20 }}
                             className="bg-white dark:bg-zinc-900 w-full max-w-sm rounded-[2.5rem] shadow-2xl overflow-hidden border border-border relative"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            {/* Decorative Header Background */}
                             <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-br from-rose-500/10 to-orange-500/10 z-0" />
-
                             <div className="relative z-10 p-8 flex flex-col items-center text-center">
-                                {/* Icon Bubble */}
                                 <div className="w-20 h-20 bg-rose-50 dark:bg-rose-900/20 rounded-full flex items-center justify-center mb-6 shadow-inner ring-1 ring-rose-500/20">
                                     <Trash2 className="w-10 h-10 text-rose-500" />
                                 </div>
-
-                                <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2">
-                                    {t.deleteTitle}
-                                </h2>
-
+                                <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2">{t.deleteTitle}</h2>
                                 <p className="text-slate-500 dark:text-slate-400 mb-8 text-sm leading-relaxed font-medium">
-                                    <span className="font-black text-slate-900 dark:text-white block text-base mb-1">
-                                        "{deleteTarget.spiritName}"
-                                    </span>
+                                    <span className="font-black text-slate-900 dark:text-white block text-base mb-1">"{deleteTarget.spiritName}"</span>
                                     {t.deleteConfirm}
                                 </p>
-
                                 <div className="flex gap-3 w-full">
-                                    <button
-                                        onClick={() => setDeleteTarget(null)}
-                                        disabled={isDeleting}
-                                        className="flex-1 py-4 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-black rounded-2xl transition-all active:scale-[0.98]"
-                                    >
+                                    <button onClick={() => setDeleteTarget(null)} disabled={isDeleting} className="flex-1 py-4 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-black rounded-2xl">
                                         {t.cancel}
                                     </button>
-                                    <button
-                                        onClick={handleDeleteReview}
-                                        disabled={isDeleting}
-                                        className="flex-1 py-4 bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 text-white shadow-lg shadow-rose-500/30 font-black rounded-2xl transition-all active:scale-[0.98]"
-                                    >
+                                    <button onClick={handleDeleteReview} disabled={isDeleting} className="flex-1 py-4 bg-gradient-to-r from-rose-500 to-red-600 text-white font-black rounded-2xl">
                                         {isDeleting ? <Loader2 className="w-5 h-5 animate-spin mx-auto" /> : t.delete}
                                     </button>
                                 </div>
@@ -12449,13 +12395,7 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                 )}
             </AnimatePresence>
 
-            {/* Notification Toast */}
-            <SuccessToast
-                isVisible={showToast}
-                message={toastMessage}
-                variant={toastVariant}
-                onClose={() => setShowToast(false)}
-            />
+            <SuccessToast isVisible={showToast} message={toastMessage} variant={toastVariant} onClose={() => setShowToast(false)} />
         </div>
     );
 }
@@ -13166,8 +13106,8 @@ export const revalidate = 0; // Force fetching dynamically so latest spirits alw
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { getSpiritCategory } from '@/lib/constants/spirits-guide-data'
-import { spiritsDb } from '@/lib/db/firestore-rest'
+import { resolveWikiCategory } from '@/lib/utils/wiki-resolver'
+import { db } from '@/lib/db'
 import SpiritGuideLayout from '@/components/contents/SpiritGuideLayout'
 import { redirect } from 'next/navigation'
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url'
@@ -13210,7 +13150,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
         redirect(`/${lang}/contents/wiki/${LEGACY_EN_SLUG_MAP[decodedSlug]}`)
     }
 
-    const cat = getSpiritCategory(decodedSlug) || getSpiritCategory(slug)
+    const cat = await resolveWikiCategory(decodedSlug) || await resolveWikiCategory(slug)
     if (!cat) return { title: 'Not Found' }
 
     const isEn = lang === 'en'
@@ -13313,7 +13253,7 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
         redirect(`/${lang}/contents/wiki/${LEGACY_EN_SLUG_MAP[decodedSlug]}`)
     }
 
-    const cat = getSpiritCategory(decodedSlug) || getSpiritCategory(slug)
+    const cat = await resolveWikiCategory(decodedSlug) || await resolveWikiCategory(slug)
 
     if (!cat) {
         notFound()
@@ -13336,36 +13276,32 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
 
     if (slug !== 'oak-barrel' && dbCategories && dbCategories.length > 0) {
         try {
-            const spiritGroups = await Promise.all(
-                dbCategories.map((dbCategory) =>
-                    spiritsDb.getAll(
-                        { category: dbCategory, isPublished: true },
-                        { page: 1, pageSize: 60 },
-                    ).catch(() => []),
-                ),
-            )
-
-            const uniqueSpirits = Array.from(
-                new Map(spiritGroups.flat().map((spirit: any) => [spirit.id, spirit])).values(),
-            )
-
-            featuredSpirits = selectFeaturedSpiritsForWiki(uniqueSpirits, cat, 6)
-                .map((s: any) => ({
-                    id: s.id,
-                    name: s.name,
-                    nameEn: s.metadata?.name_en || s.name_en || null,
-                    category: s.category,
-                    subcategory: s.subcategory || null,
-                    imageUrl: s.thumbnailUrl || s.imageUrl || null,
-                }))
-        } catch {
-            // 무시
+            // High-Performance Fetch: Use the Search Index with short keys
+            // Priority: Fetch top-rated spirits from the primary category
+            const results = await db.getTopInCategory(dbCategories[0], 12);
+            
+            // Map short keys to the UI model expected by the layout/cards
+            featuredSpirits = results.map((s: any) => ({
+                id: s.i,
+                name: s.n,
+                nameEn: s.en,
+                category: s.c,
+                subcategory: s.sc,
+                imageUrl: s.t,
+                rating: s.r
+            }));
+            
+            // If we have subcategory keywords, we can still do a light filter if needed, 
+            // but the indexed 'r' rating is now our primary quality signal.
+            featuredSpirits = featuredSpirits.slice(0, 6);
+        } catch (error) {
+            console.error('[Wiki Featured] Search index fetch failed:', error);
         }
     }
 
-    const comparisonLinks = (RELATED_COMPARISON_SLUGS[cat.slug] || [])
-        .map((relatedSlug) => getSpiritCategory(relatedSlug))
-        .filter((relatedCategory): relatedCategory is NonNullable<typeof relatedCategory> => Boolean(relatedCategory))
+    const comparisonLinks = (await Promise.all(
+        (RELATED_COMPARISON_SLUGS[cat.slug] || []).map((relatedSlug) => resolveWikiCategory(relatedSlug))
+    )).filter((relatedCategory): relatedCategory is NonNullable<typeof relatedCategory> => Boolean(relatedCategory))
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://kspiritsclub.com'
     const title = isEn
@@ -14001,16 +13937,9 @@ import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import { toPng } from 'html-to-image';
 import { useRef } from 'react';
 import {
-    collection,
-    query,
-    where,
-    getDocs,
-    limit,
-    orderBy,
-    addDoc,
-    serverTimestamp
-} from 'firebase/firestore';
-import { db } from '@/lib/db/firebase';
+    dbListSpiritsForWorldCup,
+    dbUpsertWorldCupResult
+} from '@/lib/db/data-connect-client';
 import Image from 'next/image';
 import confetti from 'canvas-confetti';
 
@@ -14091,46 +14020,29 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
         const fetchSpirits = async () => {
             try {
                 setLoading(true);
-                const spiritsRef = collection(db, 'spirits');
-                let q = query(
-                    spiritsRef,
-                    where('isPublished', '==', true),
-                    limit(300) // Max fetch for pool
+                const fetchedDataRaw = await dbListSpiritsForWorldCup(
+                    cat === 'ALL' ? '' : cat,
+                    sub === 'ALL' ? [] : sub.split(',')
                 );
 
-                if (cat !== 'ALL') {
-                    q = query(q, where('category', '==', cat));
-                }
-
-                if (sub !== 'ALL') {
-                    const subArray = sub.split(',');
-                    if (subArray.length > 0) {
-                        // Note: firestore 'in' limited to 10 items
-                        q = query(q, where('subcategory', 'in', subArray.slice(0, 10)));
-                    }
-                }
-
-                const querySnapshot = await getDocs(q);
-                const fetchedData: Spirit[] = querySnapshot.docs.map(doc => {
-                    const data = doc.data();
+                const fetchedData: Spirit[] = fetchedDataRaw.map(data => {
                     return {
-                        id: doc.id,
+                        id: data.id,
                         name: data.name,
-                        name_en: data.name_en || null,
+                        name_en: data.nameEn || null,
                         distillery: data.distillery || null,
                         imageUrl: data.imageUrl || null,
                         thumbnailUrl: data.thumbnailUrl || null,
                         category: data.category,
-                        category_en: data.category_en || null,
+                        category_en: data.categoryEn || null,
                         subcategory: data.subcategory || null,
                         abv: data.abv !== undefined ? Number(data.abv) : null,
                         country: data.country || null,
                         region: data.region || null,
                         tags: [
-                            ...(data.nose_tags || data.metadata?.nose_tags || []),
-                            ...(data.palate_tags || data.metadata?.palate_tags || []),
-                            ...(data.finish_tags || data.metadata?.finish_tags || []),
-                            ...(data.tags || [])
+                            ...(data.noseTags || []),
+                            ...(data.palateTags || []),
+                            ...(data.finishTags || [])
                         ]
                             .filter((v, i, a) => v && a.indexOf(v) === i)
                             .map(tag => tag.startsWith('#') ? tag.slice(1) : tag)
@@ -14243,14 +14155,16 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
                 // Auto Save Result for Sharing
                 const saveResult = async () => {
                     try {
-                        const docRef = await addDoc(collection(db, 'worldcup_results'), {
-                            winner: finalWinner,
+                        const newId = crypto.randomUUID();
+                        await dbUpsertWorldCupResult({
+                            id: newId,
+                            winnerId: finalWinner.id,
                             category: cat,
-                            subcategory: sub,
+                            subcategory: sub === 'ALL' ? null : sub,
                             initialRound: requestedRound,
-                            timestamp: serverTimestamp()
+                            timestamp: new Date().toISOString()
                         });
-                        setResultId(docRef.id);
+                        setResultId(newId);
                     } catch (err) {
                         console.error('Failed to save worldcup result:', err);
                     }
@@ -14732,44 +14646,47 @@ function ChoiceCard({ item, onClick, pos, isEn }: { item: Spirit, onClick: () =>
 ### File: app\[lang]\contents\worldcup\result\[id]\page.tsx
 ```
 import { Metadata } from 'next';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '@/lib/db/firebase';
 import { Trophy, ChevronLeft, Gamepad2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getOptimizedImageUrl } from '@/lib/utils/image-optimization';
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url';
+import { dbGetWorldCupResult } from '@/lib/db/data-connect-client';
 
+interface WinnerData {
+  id: string;
+  name: string;
+  nameEn?: string | null;
+  category: string;
+  categoryEn?: string | null;
+  subcategory?: string | null;
+  distillery?: string | null;
+  imageUrl?: string | null;
+  thumbnailUrl?: string | null;
+  noseTags?: string[] | null;
+  palateTags?: string[] | null;
+  finishTags?: string[] | null;
+  abv?: number | null;
+  country?: string | null;
+  region?: string | null;
+}
 
 interface ResultData {
-  winner: {
-    name: string;
-    category: string;
-    subcategory: string | null;
-    distillery: string | null;
-    imageUrl: string | null;
-    thumbnailUrl: string | null;
-    tags: string[];
-    abv: number | null;
-    country: string | null;
-    region: string | null;
-  };
+  winner: WinnerData;
   category: string;
-  timestamp: unknown;
+  subcategory?: string | null;
+  timestamp?: string | null;
 }
 
 async function getResult(id: string): Promise<ResultData | null> {
   try {
-    const docRef = doc(db, 'worldcup_results', id);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      return docSnap.data() as ResultData;
-    }
+    const raw = await dbGetWorldCupResult(id);
+    if (!raw || !raw.winner) return null;
+    return raw as ResultData;
   } catch (error) {
     console.error('Error fetching worldcup result:', error);
   }
-
   return null;
 }
 
@@ -14796,16 +14713,15 @@ export async function generateMetadata({
   }
 
   const { winner } = result;
-  const title = isEn
-    ? `My World Cup Champion: ${winner.name}`
-    : `나의 월드컵 우승 픽: ${winner.name}`;
   const description = isEn
     ? 'See the winning spirit from this tournament share page and start your own bracket on K-Spirits Club.'
     : '이 토너먼트 결과를 확인하고 K-Spirits Club에서 직접 월드컵을 시작해보세요.';
   const image = winner.imageUrl || winner.thumbnailUrl || '/og-image.png';
+  const title = isEn ? `${winner.name} | World Cup Result` : `${winner.name} | 월드컵 결과`;
+  const ogTitle = isEn ? `My World Cup Champion: ${winner.name}` : `나의 월드컵 우승 픽: ${winner.name}`;
 
   return {
-    title: isEn ? `${winner.name} | World Cup Result` : `${winner.name} | 월드컵 결과`,
+    title,
     description,
     robots: { index: false, follow: true },
     alternates: {
@@ -14813,24 +14729,17 @@ export async function generateMetadata({
       languages: hreflangAlternates,
     },
     openGraph: {
-      title,
+      title: ogTitle,
       description,
       url: canonicalUrl,
       type: 'website',
       locale: isEn ? 'en_US' : 'ko_KR',
       siteName: 'K-Spirits Club',
-      images: [
-        {
-          url: image,
-          width: 800,
-          height: 800,
-          alt: winner.name,
-        },
-      ],
+      images: [{ url: image, width: 800, height: 800, alt: winner.name }],
     },
     twitter: {
       card: 'summary_large_image',
-      title,
+      title: ogTitle,
       description,
       images: [image],
     },
@@ -14851,6 +14760,13 @@ export default async function WorldCupResultPage({
   }
 
   const { winner } = result;
+  const tags = [
+    ...(winner.noseTags ?? []),
+    ...(winner.palateTags ?? []),
+    ...(winner.finishTags ?? []),
+  ]
+    .filter((v, i, a) => v && a.indexOf(v) === i)
+    .map((tag) => (tag.startsWith('#') ? tag.slice(1) : tag));
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 relative overflow-hidden">
@@ -14945,9 +14861,9 @@ export default async function WorldCupResultPage({
                   )}
                 </div>
 
-                {winner.tags && winner.tags.length > 0 && (
+                {tags.length > 0 && (
                   <div className="flex flex-wrap justify-center gap-1.5 mt-2">
-                    {winner.tags.slice(0, 3).map((tag) => (
+                    {tags.slice(0, 3).map((tag) => (
                       <span
                         key={tag}
                         className="px-2 py-0.5 bg-amber-50 border border-amber-100 rounded-full text-[9px] text-amber-600 font-bold whitespace-nowrap"
@@ -14999,13 +14915,11 @@ import {
     User,
     GoogleAuthProvider,
     signInWithPopup,
-    signInWithEmailAndPassword,
-    createUserWithEmailAndPassword,
     signOut,
     onAuthStateChanged
 } from 'firebase/auth';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { auth, db } from '@/lib/firebase';
+import { auth } from '@/lib/firebase';
+import { dbGetUserProfile, dbUpsertUser } from '@/lib/db/data-connect-client';
 import { useRouter } from 'next/navigation';
 
 type UserRole = 'ADMIN' | 'USER' | null;
@@ -15052,8 +14966,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const router = useRouter();
 
     useEffect(() => {
-        // Load theme from localStorage after component mounts (client-side only)
-        // This prevents hydration mismatches in Next.js SSR
         const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
         if (savedTheme) {
             setThemeState(savedTheme);
@@ -15061,7 +14973,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 document.documentElement.classList.toggle('dark', savedTheme === 'dark');
             }
         } else {
-            // Default to light theme
             setThemeState('light');
             if (typeof document !== 'undefined') {
                 document.documentElement.classList.remove('dark');
@@ -15074,57 +14985,52 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             setLoading(true);
             if (currentUser) {
                 setUser(currentUser);
-                // Fetch Role & Profile from Firestore
-                const userDocRef = doc(db, 'users', currentUser.uid);
-                const userDoc = await getDoc(userDocRef);
+                try {
+                    const userData = await dbGetUserProfile(currentUser.uid) as any;
 
-                if (userDoc.exists()) {
-                    const data = userDoc.data();
+                    if (userData) {
+                        const ADMIN_EMAILS = ['ruahn49@gmail.com'];
+                        let userRole = userData.role as UserRole;
+                        if (currentUser.email && ADMIN_EMAILS.includes(currentUser.email)) {
+                            userRole = 'ADMIN';
+                        }
+                        setRole(userRole);
 
-                    // [Start] Hardcoded Admin Check
-                    const ADMIN_EMAILS = ['ruahn49@gmail.com'];
-                    let userRole = data.role as UserRole;
-                    if (currentUser.email && ADMIN_EMAILS.includes(currentUser.email)) {
-                        userRole = 'ADMIN';
+                        const userTheme = (userData.themePreference as 'light' | 'dark') || 'light';
+                        setProfile({
+                            nickname: userData.nickname || currentUser.displayName || 'Anonymous',
+                            profileImage: userData.profileImage || '/icons/user/user-3.webp',
+                            isFirstLogin: userData.isFirstLogin ?? false,
+                            themePreference: userTheme,
+                            reviewsWritten: userData.reviewsWritten || 0,
+                            heartsReceived: userData.heartsReceived || 0
+                        });
+                        
+                        setThemeState(userTheme);
+                        if (typeof document !== 'undefined') {
+                            document.documentElement.classList.toggle('dark', userTheme === 'dark');
+                        }
+                        localStorage.setItem('theme', userTheme);
+                    } else {
+                        const initialProfile = {
+                            id: currentUser.uid,
+                            email: currentUser.email,
+                            role: 'USER',
+                            nickname: currentUser.displayName || 'New User',
+                            profileImage: '/icons/user/user-3.webp',
+                            isFirstLogin: true,
+                        };
+                        await dbUpsertUser(initialProfile);
+                        setRole('USER');
+                        setProfile({
+                            nickname: initialProfile.nickname,
+                            profileImage: initialProfile.profileImage,
+                            isFirstLogin: true,
+                            themePreference: 'light'
+                        });
                     }
-                    setRole(userRole);
-                    // [End] Hardcoded Admin Check
-
-                    const userTheme = data.themePreference || 'light';
-                    setProfile({
-                        nickname: data.nickname || currentUser.displayName || 'Anonymous',
-                        profileImage: data.profileImage || '/icons/user/user-3.webp',
-                        isFirstLogin: data.isFirstLogin ?? false,
-                        themePreference: userTheme,
-                        reviewsWritten: data.reviewsWritten || 0,
-                        heartsReceived: data.heartsReceived || 0
-                    });
-                    // Apply theme from user profile (client-side only to prevent hydration issues)
-                    setThemeState(userTheme);
-                    if (typeof document !== 'undefined') {
-                        document.documentElement.classList.toggle('dark', userTheme === 'dark');
-                    }
-                    localStorage.setItem('theme', userTheme);
-                } else {
-                    // Create new user doc with default role & profile
-                    // nickname and isFirstLogin will be handled by Onboarding
-                    const initialProfile = {
-                        email: currentUser.email,
-                        role: 'USER',
-                        nickname: currentUser.displayName || 'New User',
-                        profileImage: '/icons/user/user-3.webp', // Default avatar
-                        isFirstLogin: true, // Trigger Onboarding
-                        themePreference: 'light',
-                        createdAt: new Date().toISOString()
-                    };
-                    await setDoc(userDocRef, initialProfile);
-                    setRole('USER');
-                    setProfile({
-                        nickname: initialProfile.nickname,
-                        profileImage: initialProfile.profileImage,
-                        isFirstLogin: true,
-                        themePreference: 'light'
-                    });
+                } catch (err) {
+                    console.error('Data Connect Auth Error:', err);
                 }
             } else {
                 setUser(null);
@@ -15138,20 +15044,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const updateProfile = async (data: Partial<UserProfile>) => {
         if (!user) return;
-        const userDocRef = doc(db, 'users', user.uid);
-        await setDoc(userDocRef, data, { merge: true });
+        await dbUpsertUser({
+            id: user.uid,
+            ...data
+        });
         setProfile(prev => prev ? { ...prev, ...data } : null);
     };
 
     const setTheme = (newTheme: 'light' | 'dark') => {
         setThemeState(newTheme);
-        // Apply theme class only on client-side to prevent SSR hydration mismatches
         if (typeof document !== 'undefined') {
             document.documentElement.classList.toggle('dark', newTheme === 'dark');
         }
         localStorage.setItem('theme', newTheme);
 
-        // Save to user profile if logged in
         if (user) {
             updateProfile({ themePreference: newTheme });
         }
@@ -16136,34 +16042,29 @@ export default function ReviewsPage() {
 ```
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import Link from "next/link";
 import SpiritDetailClient from "./spirit-detail-client";
-import { reviewsDb } from "@/lib/db/firestore-rest";
 import { getDictionary } from "@/lib/get-dictionary";
 import { Locale } from "@/i18n-config";
-import { getCanonicalUrl, getHreflangAlternates } from "@/lib/utils/seo-url";
-import { getSpiritRobotsMeta } from "@/lib/utils/indexable-tier";
+import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url'
+import { getSpiritRobotsMeta } from '@/lib/utils/indexable-tier'
+import RelatedWikiSection from '@/components/spirits/RelatedWikiSection'
 import { getRelatedSpirits } from "@/lib/utils/related-spirits";
 import { resolveSpiritPageState } from "@/lib/utils/spirit-page-resolver";
+import { resolveWikiCategory } from "@/lib/utils/wiki-resolver";
 import { formatSpiritFieldValue } from "@/lib/utils/localize-field";
 import { Spirit } from "@/lib/db/schema";
-import { getSpiritCategory } from "@/lib/constants/spirits-guide-data";
 import { scoreSpiritForWikiCategory } from "@/lib/utils/wiki-spirit-match";
-
+import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
 
 const DESCRIPTION_MAX_LENGTH = 155;
 
-// SEO suffix for spirit descriptions
-const SEO_SUFFIX_KO = "K-Spirits Club";
-const SEO_SUFFIX_EN = "K-Spirits Club";
-
-// Regex pattern for detecting ending punctuation
+// SEO regex patterns
 const ENDING_PUNCTUATION_REGEX = /[.!?…。！？]$/;
 const KOREAN_CHAR_REGEX = /[가-힣]/;
 const HASH_SPLIT_REGEX = /[#,\n]+/;
 const CAMEL_CASE_BOUNDARY_REGEX = /([a-z])([A-Z])/g;
 
-// Category-to-wiki-slug mappings for internal linking from spirit detail pages
+// Category-to-wiki-slug mappings
 const CATEGORY_TO_WIKI_SLUG: Record<string, string> = {
   '소주': 'soju-guide',
   '막걸리': 'makgeolli-guide',
@@ -16189,6 +16090,7 @@ const CATEGORY_TO_WIKI_SLUG: Record<string, string> = {
   '백주': 'baijiu',
 };
 
+// ... labels records ... (Keep them as they were)
 const CATEGORY_TO_WIKI_LABEL_EN: Record<string, string> = {
   '소주': 'Korean Soju Guide',
   '막걸리': 'Makgeolli Guide',
@@ -16239,125 +16141,48 @@ const CATEGORY_TO_WIKI_LABEL_KO: Record<string, string> = {
   '백주': '바이주 가이드',
 };
 
-function resolveSpiritWikiGuide(
+async function resolveSpiritWikiGuide(
   category: string,
   subcategory: string | null | undefined,
   mainCategory: string | null | undefined,
 ) {
   if (!category) return null;
-
   let slug = CATEGORY_TO_WIKI_SLUG[category];
-
   if (category === '청주') {
-    const sakeCategory = getSpiritCategory('sake');
-    const cheongjuCategory = getSpiritCategory('cheongju');
-    const wikiTarget = {
-      category,
-      subcategory: subcategory || null,
-      mainCategory: mainCategory || null,
-    };
-
+    const sakeCategory = await resolveWikiCategory('sake');
+    const cheongjuCategory = await resolveWikiCategory('cheongju');
+    const wikiTarget = { category, subcategory: subcategory || null, mainCategory: mainCategory || null };
     const sakeScore = sakeCategory ? scoreSpiritForWikiCategory(wikiTarget, sakeCategory) : -1;
     const cheongjuScore = cheongjuCategory ? scoreSpiritForWikiCategory(wikiTarget, cheongjuCategory) : -1;
-
     slug = sakeScore > cheongjuScore ? 'sake' : 'cheongju';
   }
-
   if (!slug) return null;
-
-  const wikiCategory = getSpiritCategory(slug);
+  const wikiCategory = await resolveWikiCategory(slug);
   const useWikiCategoryLabel = category === '청주';
-
   return {
     slug,
-    labelEn: useWikiCategoryLabel
-      ? (wikiCategory?.nameEn || 'Cheongju Guide')
-      : (CATEGORY_TO_WIKI_LABEL_EN[category] || wikiCategory?.nameEn || 'Spirit Category Guide'),
-    labelKo: useWikiCategoryLabel
-      ? (wikiCategory?.nameKo || '청주 가이드')
-      : (CATEGORY_TO_WIKI_LABEL_KO[category] || wikiCategory?.nameKo || '주류 카테고리 가이드'),
+    labelEn: useWikiCategoryLabel ? (wikiCategory?.nameEn || 'Cheongju Guide') : (CATEGORY_TO_WIKI_LABEL_EN[category] || wikiCategory?.nameEn || 'Spirit Category Guide'),
+    labelKo: useWikiCategoryLabel ? (wikiCategory?.nameKo || '청주 가이드') : (CATEGORY_TO_WIKI_LABEL_KO[category] || wikiCategory?.nameKo || '주류 카테고리 가이드'),
   };
 }
 
-// --- Interfaces ---
-
-interface TransformedReview {
-  id: string;
-  spiritId: string;
-  userId: string;
-  userName: string;
-  rating: number;
-  noseRating: number;
-  palateRating: number;
-  finishRating: number;
-  content: string;
-  nose: string;
-  palate: string;
-  finish: string;
-  createdAt: string;
-  updatedAt: string;
-  isPublished: boolean;
-}
-
-interface DbReview {
-  spiritId: string;
-  userId: string;
-  userName: string;
-  rating: number;
-  ratingN: number;
-  ratingP: number;
-  ratingF: number;
-  notes: string;
-  tagsN: string;
-  tagsP: string;
-  tagsF: string;
-  createdAt: string;
-  updatedAt: string;
-  isPublished: boolean;
-}
-
 // --- Helper Functions ---
-
-function transformReviewData(reviewsData: DbReview[]): TransformedReview[] {
-  return reviewsData.map(r => ({
-    id: `${r.spiritId}_${r.userId}`,
-    ...r,
-    noseRating: r.ratingN,
-    palateRating: r.ratingP,
-    finishRating: r.ratingF,
-    content: r.notes,
-    nose: r.tagsN,
-    palate: r.tagsP,
-    finish: r.tagsF
-  }));
-}
-
 function truncateMetaDescription(text: string, maxLength: number = DESCRIPTION_MAX_LENGTH): string {
   const normalized = text.replace(/\s+/g, ' ').trim();
-
   if (!normalized) return '';
-  if (normalized.length <= maxLength) {
-    return ENDING_PUNCTUATION_REGEX.test(normalized) ? normalized : `${normalized}.`;
-  }
-
+  if (normalized.length <= maxLength) return ENDING_PUNCTUATION_REGEX.test(normalized) ? normalized : `${normalized}.`;
   const shortened = normalized.slice(0, maxLength - 1);
   const lastSpace = shortened.lastIndexOf(' ');
   const safeCut = lastSpace >= maxLength - 30 ? shortened.slice(0, lastSpace) : shortened;
-
   return `${safeCut.replace(/[,:;/-]+$/, '').trim()}…`;
 }
 
 function normalizeSnippetToken(token: string): string {
-  return token
-    .replace(/^#+/, '')
-    .replace(CAMEL_CASE_BOUNDARY_REGEX, '$1 $2')
-    .replace(/\s+/g, ' ')
-    .trim();
+  return token.replace(/^#+/, '').replace(CAMEL_CASE_BOUNDARY_REGEX, '$1 $2').replace(/\s+/g, ' ').trim();
 }
 
 function dedupeTokens(tokens: string[]): string[] {
   const seen = new Set<string>();
-
   return tokens.filter((token) => {
     const key = token.toLowerCase();
     if (seen.has(key)) return false;
@@ -16368,674 +16193,174 @@ function dedupeTokens(tokens: string[]): string[] {
 
 function extractTastingNoteTags(rawValue: string | null | undefined): string[] {
   if (!rawValue) return [];
-
-  return dedupeTokens(
-    rawValue
-      .split(HASH_SPLIT_REGEX)
-      .map(normalizeSnippetToken)
-      .filter(Boolean)
-  );
+  return dedupeTokens(rawValue.split(HASH_SPLIT_REGEX).map(normalizeSnippetToken).filter(Boolean));
 }
 
 function getPreferredMetaTags(spirit: Spirit, lang: 'ko' | 'en'): string[] {
-  const tastingNoteTags = extractTastingNoteTags(spirit.tasting_note || spirit.metadata?.tasting_note);
+  const tastingNoteTags = extractTastingNoteTags(spirit.tasting_note);
   const sensoryTags = dedupeTokens(
-    [
-      ...(spirit.nose_tags || spirit.metadata?.nose_tags || []),
-      ...(spirit.palate_tags || spirit.metadata?.palate_tags || []),
-      ...(spirit.finish_tags || spirit.metadata?.finish_tags || []),
-    ]
-      .map((tag) => normalizeSnippetToken(String(tag)))
-      .filter(Boolean)
+    [...(spirit.nose_tags || []), ...(spirit.palate_tags || []), ...(spirit.finish_tags || [])]
+      .map((tag) => normalizeSnippetToken(String(tag))).filter(Boolean)
   );
-
-  if (lang === 'en') {
-    return (sensoryTags.length > 0 ? sensoryTags : tastingNoteTags).slice(0, 3);
-  }
-
+  if (lang === 'en') return (sensoryTags.length > 0 ? sensoryTags : tastingNoteTags).slice(0, 3);
   const tastingHasKorean = tastingNoteTags.some((tag) => KOREAN_CHAR_REGEX.test(tag));
-  if (tastingHasKorean) {
-    return tastingNoteTags.slice(0, 3);
-  }
-
+  if (tastingHasKorean) return tastingNoteTags.slice(0, 3);
   return (tastingNoteTags.length > 0 ? tastingNoteTags : sensoryTags).slice(0, 3);
 }
 
 function getBrandPrefix(brand: string, displayName: string): string {
   if (!brand) return '';
-
   const normalizedBrand = brand.trim().toLowerCase();
   const normalizedName = displayName.trim().toLowerCase();
-
-  if (!normalizedBrand || normalizedName.startsWith(normalizedBrand)) {
-    return '';
-  }
-
+  if (!normalizedBrand || normalizedName.startsWith(normalizedBrand)) return '';
   return `${brand} `;
 }
 
 function toAbsoluteSeoImageUrl(url: string | null | undefined, baseUrl: string): string | null {
   if (!url) return null;
   if (/^https?:\/\//i.test(url)) return url;
-
   const normalizedBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
   const normalizedPath = url.startsWith('/') ? url : `/${url}`;
   return `${normalizedBase}${normalizedPath}`;
 }
 
 function getSpiritSeoImageCandidates(spirit: Spirit, baseUrl: string): string[] {
+  const primaryUrl = spirit.imageUrl || spirit.thumbnailUrl;
+  if (!primaryUrl) return [];
   const candidates = [
-    toAbsoluteSeoImageUrl(spirit.imageUrl, baseUrl),
-    toAbsoluteSeoImageUrl(spirit.thumbnailUrl, baseUrl),
+    toAbsoluteSeoImageUrl(primaryUrl, baseUrl),
+    getOptimizedImageUrl(primaryUrl, 1200, 80, '1:1'),
+    getOptimizedImageUrl(primaryUrl, 1200, 80, '4:3'),
+    getOptimizedImageUrl(primaryUrl, 1200, 80, '16:9'),
   ].filter(Boolean) as string[];
-
   return Array.from(new Set(candidates));
 }
 
 function getSpiritSeoRobots(spirit: Spirit) {
   const baseRobots = getSpiritRobotsMeta(spirit) || { index: true, follow: true };
-
   return {
     ...baseRobots,
-    googleBot: {
-      index: baseRobots.index,
-      follow: baseRobots.follow,
-      'max-image-preview': 'large' as const,
-      'max-snippet': -1,
-      'max-video-preview': -1,
-    },
+    googleBot: { index: baseRobots.index, follow: baseRobots.follow, 'max-image-preview': 'large' as const, 'max-snippet': -1, 'max-video-preview': -1 },
   };
 }
 
-function buildSpiritMetaDescription(
-  spirit: Spirit,
-  lang: 'ko' | 'en',
-  reviewCount: number,
-  fallbackName: string
-): string {
+function buildSpiritMetaDescription(spirit: Spirit, lang: 'ko' | 'en', reviewCount: number, fallbackName: string): string {
   const isEn = lang === 'en';
-  const typeLabel = spirit.category
-    ? (isEn ? formatSpiritFieldValue('category', spirit.category, 'en') : spirit.category)
-    : (isEn ? 'Spirit' : '주류');
+  const typeLabel = spirit.category ? (isEn ? formatSpiritFieldValue('category', spirit.category, 'en') : spirit.category) : (isEn ? 'Spirit' : '주류');
   const countryLabel = spirit.country ? formatSpiritFieldValue('country', spirit.country, lang) : '';
   const tags = getPreferredMetaTags(spirit, lang);
-  const abvLine = typeof spirit.abv === 'number'
-    ? (isEn ? `ABV ${spirit.abv}%. ` : `도수 ${spirit.abv}%. `)
-    : '';
-  const typeLine = isEn
-    ? `${typeLabel}${countryLabel ? ` from ${countryLabel}` : ''}. `
-    : `${countryLabel ? `${countryLabel} ` : ''}${typeLabel}. `;
-  // GSC 개선: 페어링 정보를 앞에, 노트는 뒤에 배치 → 클릭 유도 강화
-  const pairingGuideRaw = isEn
-    ? (spirit.metadata?.pairing_guide_en || spirit.pairing_guide_en || spirit.metadata?.pairing_guide_ko || spirit.pairing_guide_ko)
-    : (spirit.metadata?.pairing_guide_ko || spirit.pairing_guide_ko || spirit.metadata?.pairing_guide_en || spirit.pairing_guide_en);
-  // 페어링 가이드에서 첫 번째 음식만 추출 (쉼표 또는 마침표 기준)
-  const firstPairing = pairingGuideRaw
-    ? pairingGuideRaw.split(/[,.,。]/)[0]?.trim().slice(0, 30)
-    : null;
-  const pairingLine = firstPairing
-    ? (isEn ? `Pairs well with ${firstPairing}. ` : `${firstPairing}과 페어링. `)
-    : '';
-  const notesLine = tags.length > 0
-    ? (isEn ? `Notes: ${tags.join(', ')}. ` : `향·맛: ${tags.join(', ')}. `)
-    : '';
-  const reviewLine = reviewCount > 0
-    ? (isEn ? `${reviewCount} review${reviewCount === 1 ? '' : 's'}. ` : `리뷰 ${reviewCount}개. `)
-    : '';
+  const abvLine = typeof spirit.abv === 'number' ? (isEn ? `ABV ${spirit.abv}%. ` : `도수 ${spirit.abv}%. `) : '';
+  const typeLine = isEn ? `${typeLabel}${countryLabel ? ` from ${countryLabel}` : ''}. ` : `${countryLabel ? `${countryLabel} ` : ''}${typeLabel}. `;
+  const pairingGuideRaw = isEn ? (spirit.pairing_guide_en || spirit.pairing_guide_ko) : (spirit.pairing_guide_ko || spirit.pairing_guide_en);
+  const firstPairing = pairingGuideRaw ? pairingGuideRaw.split(/[,.,。]/)[0]?.trim().slice(0, 30) : null;
+  const pairingLine = firstPairing ? (isEn ? `Pairs well with ${firstPairing}. ` : `${firstPairing}과 페어링. `) : '';
+  const notesLine = tags.length > 0 ? (isEn ? `Notes: ${tags.join(', ')}. ` : `향·맛: ${tags.join(', ')}. `) : '';
+  const reviewLine = reviewCount > 0 ? (isEn ? `${reviewCount} review${reviewCount === 1 ? '' : 's'}. ` : `리뷰 ${reviewCount}개. `) : '';
   const actionLine = isEn ? 'Full tasting notes & food pairing.' : '상세 시음 후기 및 안주 추천.';
-  const fallback = isEn
-    ? `Spirit information for ${fallbackName} on K-Spirits Club.`
-    : `${fallbackName} 주류 정보. K-Spirits Club.`;
-
-  return truncateMetaDescription(
-    `${abvLine}${typeLine}${pairingLine}${notesLine}${reviewLine}${actionLine}`.trim() || fallback
-  );
+  const fallback = isEn ? `Spirit information for ${fallbackName} on K-Spirits Club.` : `${fallbackName} 주류 정보. K-Spirits Club.`;
+  return truncateMetaDescription(`${abvLine}${typeLine}${pairingLine}${notesLine}${reviewLine}${actionLine}`.trim() || fallback);
 }
 
 // --- Metadata Generation ---
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ id: string; lang: string }>;
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ id: string; lang: string }>; }): Promise<Metadata> {
   const { id, lang } = await params;
   const isEn = lang === 'en';
+  const pageState = await resolveSpiritPageState(id);
 
-  // Use the shared cached resolver — same fetch as the page component, zero double-fetching.
-  // Errors are caught inside resolveSpiritPageState; metadata never throws.
-  const [pageState, reviewsData] = await Promise.all([
-    resolveSpiritPageState(id),
-    reviewsDb.getAllForSpirit(id).catch(() => [])
-  ]);
-
-  if (pageState.status === 'NOT_FOUND') {
-    return {
-      title: "Spirit Not Found",
-      description: "The requested spirit could not be found.",
-    };
-  }
-
-  // For transient failures, return minimal metadata so the request does not throw.
-  if (pageState.status === 'TRANSIENT_FAILURE') {
-    return {
-      title: "Spirit | K-Spirits Club",
-      description: "Spirit information on K-Spirits Club.",
-      robots: { index: false, follow: true },
-    };
-  }
+  if (pageState.status === 'NOT_FOUND') return { title: "Spirit Not Found", description: "The requested spirit could not be found." };
+  if (pageState.status === 'TRANSIENT_FAILURE') return { title: "Spirit | K-Spirits Club", description: "Spirit information on K-Spirits Club.", robots: { index: false, follow: true } };
 
   const spirit = pageState.spirit;
-  const isIndexable = pageState.status === 'FOUND_INDEXABLE';
   const koName = spirit.name || '';
-  const enName = spirit.metadata?.name_en || spirit.name_en || '';
+  const enName = spirit.name_en || '';
   const brand = spirit.distillery || '';
   const abv = typeof spirit.abv === 'number' ? `${spirit.abv}` : '';
-  const type = spirit.category || '';
-  const reviewCount = Array.isArray(reviewsData) ? reviewsData.length : 0;
+  const aggregateRating = spirit.aggregateRating || { ratingValue: 0, reviewCount: 0 };
+  
+  let title = isEn 
+    ? `${brand ? brand + ' ' : ''}${enName || koName}${abv ? ' ' + abv + '%' : ''} Review & Tasting Notes` 
+    : `${brand ? brand + ' ' : ''}${koName}${enName ? ' (' + enName + ')' : ''}${abv ? ' ' + abv + '%' : ''} 시음노트·후기`;
 
-  // Title Building
-  let title = '';
-  if (isEn) {
-    // EN: {Brand} {Name} {ABV}% {Type} Review & Tasting Notes | K-Spirits Club
-    const displayName = enName || koName;
-    const typeLabel = type ? formatSpiritFieldValue('category', type, 'en') : 'Korean Spirit';
-    const brandPrefix = getBrandPrefix(brand, displayName);
-    const abvStr = abv ? ` ${abv}% ` : ' ';
-
-    let baseReviewTitle = `${brandPrefix}${displayName}${abvStr}${typeLabel} Review & Tasting Notes`;
-
-    // Length optimization rules
-    if (baseReviewTitle.length > 75) {
-      baseReviewTitle = `${brandPrefix}${displayName}${abvStr}${typeLabel} Review`;
-    }
-    if (baseReviewTitle.length > 65 && brandPrefix) {
-      baseReviewTitle = `${displayName}${abvStr}${typeLabel} Review`;
-    }
-
-    title = baseReviewTitle;
-  } else {
-    // KO: {브랜드} {제품명} ({원어명}) {ABV}% {주종} 시음노트·리뷰·후기 | K-Spirits Club
-    const namePart = enName ? `${koName} (${enName})` : koName;
-    const brandPrefix = getBrandPrefix(brand, namePart);
-    const abvStr = abv ? ` ${abv}% ` : ' ';
-    const typeLabel = type ? `${type} ` : '';
-
-    // GSC 데이터 기반: "후기" 키워드가 CTR 높음 → 타이틀에 포함
-    let baseReviewTitle = `${brandPrefix}${namePart}${abvStr}${typeLabel}시음노트·후기`;
-
-    // KO Length optimization
-    if (baseReviewTitle.length > 65 && brandPrefix) {
-      baseReviewTitle = `${namePart}${abvStr}${typeLabel}시음노트·후기`;
-    }
-    if (baseReviewTitle.length > 65) {
-      baseReviewTitle = `${namePart}${abvStr}${typeLabel}후기`;
-    }
-
-    title = baseReviewTitle;
-  }
-
-  // Meta Description Building
-  const fullDescription = buildSpiritMetaDescription(
-    spirit,
-    isEn ? 'en' : 'ko',
-    reviewCount,
-    isEn ? (enName || koName) : koName
-  );
+  const fullDescription = buildSpiritMetaDescription(spirit, lang as any, aggregateRating.reviewCount, isEn ? (enName || koName) : koName);
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://kspiritsclub.com';
-  const seoImageCandidates = getSpiritSeoImageCandidates(spirit, baseUrl);
-  const preferredImage = seoImageCandidates[0] || `${baseUrl}/default-og.jpg`;
-
-  // 롱테일 키워드 펌핑 (동적 조합)
-  const baseKeywords = [
-    koName,
-    enName,
-    spirit.category,
-    spirit.distillery,
-    isEn ? 'Spirits Review' : '주류 리뷰',
-  ].filter(Boolean) as string[];
-
-  const longTailKeywords = isEn
-    ? [`${enName || koName} tasting notes`, `buy ${enName || koName}`, `${enName || koName} review`, `${spirit.distillery} ${spirit.category}`]
-    : [`${koName} 테이스팅 노트`, `${koName} 가격`, `${koName} 후기`, `${koName} 파는곳`, `${spirit.distillery} ${spirit.category}`];
-
-  const keywords = [...baseKeywords, ...longTailKeywords].filter(Boolean);
-
-  // Keep the actual product image as the primary image signal for search engines.
-  let brandedOgImageUrl = `${baseUrl}/default-og.jpg`;
-  if (isIndexable) {
-    const searchParams = new URLSearchParams();
-    searchParams.set('title', isEn ? (enName || koName) : koName);
-    searchParams.set('category', spirit.category || 'Spirits');
-    if (preferredImage) searchParams.set('image', preferredImage);
-
-    // SEO Enhancement: ABV, rating, reviewCount → OG 이미지에 정보 추가 노출
-    if (spirit.abv) searchParams.set('abv', String(spirit.abv));
-    if (reviewCount > 0 && Array.isArray(reviewsData)) {
-      const avgRating = (reviewsData.reduce((acc, r) => acc + (r.rating || 0), 0) / reviewCount).toFixed(1);
-      searchParams.set('rating', avgRating);
-      searchParams.set('reviews', String(reviewCount));
-    }
-
-    const tagsData = spirit.tasting_note ? spirit.tasting_note.split(/[,\s#]+/) : (spirit.nose_tags || []);
-    const validTags = tagsData.filter(Boolean).slice(0, 3);
-    if (validTags.length > 0) {
-      searchParams.set('tags', validTags.join(','));
-    }
-    brandedOgImageUrl = `${baseUrl}/api/og/spirit?${searchParams.toString()}`;
-  }
-
-  // Canonical URL (current language version, without query strings)
-  const canonicalUrl = getCanonicalUrl(`/${lang}/spirits/${id}`);
-
-  // Hreflang alternates (both ko and en versions)
-  const hreflangAlternates = getHreflangAlternates(`/spirits/${id}`);
-
-  const robotsMeta = getSpiritSeoRobots(spirit);
-  const openGraphImages = [
-    {
-      url: preferredImage,
-      alt: isEn ? `${enName || koName} product image` : `${koName} 제품 이미지`,
-    },
-  ];
-
-  if (brandedOgImageUrl !== preferredImage) {
-    openGraphImages.push({
-      url: brandedOgImageUrl,
-      alt: `${title} | K-Spirits Club`,
-    });
-  }
+  const preferredImage = getSpiritSeoImageCandidates(spirit, baseUrl)[0] || `${baseUrl}/default-og.jpg`;
 
   return {
-    title: title, // Handled within logic above
+    title,
     description: fullDescription,
-    keywords: keywords.join(', '),
-    robots: robotsMeta,
-    alternates: {
-      canonical: canonicalUrl,
-      languages: hreflangAlternates,
-    },
-    openGraph: {
-      title: title,
-      description: fullDescription,
-      images: openGraphImages,
-      type: 'website',
-      url: canonicalUrl, // Absolute URL for OG
-      locale: lang === 'ko' ? 'ko_KR' : 'en_US',
-      siteName: 'K-Spirits Club',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: title,
-      description: fullDescription,
-      images: [preferredImage],
-    },
+    robots: getSpiritSeoRobots(spirit),
+    alternates: { canonical: getCanonicalUrl(`/${lang}/spirits/${id}`), languages: getHreflangAlternates(`/spirits/${id}`) },
+    openGraph: { title, description: fullDescription, images: [{ url: preferredImage }], type: 'website', url: getCanonicalUrl(`/${lang}/spirits/${id}`), locale: lang === 'ko' ? 'ko_KR' : 'en_US', siteName: 'K-Spirits Club' },
+    twitter: { card: 'summary_large_image', title, description: fullDescription, images: [preferredImage] },
   };
 }
 
-// --- Main Page Component ---
-
-export default async function SpiritDetailPage({
-  params,
-}: {
-  params: Promise<{ id: string; lang: string }>;
-}) {
+export default async function SpiritDetailPage({ params }: { params: Promise<{ id: string; lang: string }>; }) {
   const { id, lang } = await params;
   const isEn = lang === 'en';
-
-  // Shared resolver — deduplicates the Firestore fetch already issued by generateMetadata.
   const pageState = await resolveSpiritPageState(id);
 
-  // Permanent absence → real 404 (or 410 if the resource was clearly removed).
-  if (pageState.status === 'NOT_FOUND') {
-    notFound();
-  }
-
-  // Transient backend/data failure → throw so Next.js returns 5xx, NOT a 200 loading shell.
-  // This keeps Google from treating an empty/broken page as a soft-404 or indexable content.
-  if (pageState.status === 'TRANSIENT_FAILURE') {
-    console.error(
-      `[SpiritPage] id=${id} Transient failure — throwing to trigger 5xx. error=${pageState.error}`
-    );
-    throw new Error(
-      `Spirit data temporarily unavailable for id=${id}. Please retry.`
-    );
-  }
+  if (pageState.status === 'NOT_FOUND') notFound();
+  if (pageState.status === 'TRANSIENT_FAILURE') throw new Error(`Spirit data unavailable for id=${id}.`);
 
   const spirit = pageState.spirit;
-
-  let reviews: TransformedReview[] = [];
-  try {
-    const reviewsData = await reviewsDb.getAllForSpirit(id);
-    if (Array.isArray(reviewsData)) {
-      reviews = transformReviewData(reviewsData as DbReview[]);
-    }
-  } catch (error) {
-    console.error('Failed to fetch reviews:', error);
-  }
-
-  // --- Fetch Related Spirits Server Side ---
-  // Save DB and cache costs: Only fetch related items if this page is indexable (Tier A)
-  // Fails open — if related spirits fetch throws, the page still renders.
+  const reviews = (spirit as any).userReviews || [];
+  const expertReview = (spirit as any).expertReview;
   const isIndexable = pageState.status === 'FOUND_INDEXABLE';
-  let relatedSpirits: any[] = [];
-  if (isIndexable) {
-    try {
-      relatedSpirits = await getRelatedSpirits(spirit.category, spirit.subcategory || undefined, spirit.abv, id);
-    } catch (error) {
-      console.error(`[SpiritPage] id=${id} Failed to fetch related spirits:`, error);
-    }
-  }
 
-  // --- [SEO 최적화된 JSON-LD 및 데이터 준비 - 통합 관리 전략] ---
+  const [dictionary, relatedSpirits, wikiResolved] = await Promise.all([
+    getDictionary(lang as Locale),
+    isIndexable ? getRelatedSpirits(spirit.category, spirit.subcategory || undefined, spirit.abv, id).catch(() => []) : Promise.resolve([]),
+    (async () => {
+      const wikiGuide = await resolveSpiritWikiGuide(spirit.category, spirit.subcategory, spirit.mainCategory);
+      if (!wikiGuide) return { wikiGuide: null, wikiMetadata: null };
+      const wikiCat = await resolveWikiCategory(wikiGuide.slug);
+      if (!wikiCat) return { wikiGuide, wikiMetadata: null };
+      const section = isEn ? (wikiCat.sectionsEn || wikiCat.sections) : wikiCat.sections;
+      return { wikiGuide, wikiMetadata: { title: isEn ? wikiCat.nameEn : wikiCat.nameKo, tagline: isEn ? wikiCat.taglineEn : wikiCat.taglineKo, emoji: wikiCat.emoji, recommendedGlass: section?.servingGuidelines?.recommendedGlass, optimalTemp: section?.servingGuidelines?.optimalTemperatures?.[0]?.temp } };
+    })(),
+  ]);
 
+  const { wikiGuide, wikiMetadata } = wikiResolved;
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://kspiritsclub.com';
   const pageUrl = `${baseUrl}/${lang}/spirits/${id}`;
-  const seoImageCandidates = getSpiritSeoImageCandidates(spirit, baseUrl);
-  
-  // 1+N 전략: 소믈리에 리포트(1) + 유저 리뷰(N)
-  // Variable expert rating based on content quality (4.5-4.9) to avoid Google spam filters
-  const hasImage = !!(spirit.imageUrl || spirit.thumbnailUrl);
-  const descKo = spirit.metadata?.description_ko || spirit.description_ko || '';
-  const descEn = spirit.metadata?.description_en || spirit.description_en || '';
-  const pairingKo = spirit.metadata?.pairing_guide_ko || spirit.pairing_guide_ko || '';
-  const pairingEn = spirit.metadata?.pairing_guide_en || spirit.pairing_guide_en || '';
-  const tastingNote = spirit.tasting_note || spirit.metadata?.tasting_note || '';
-  const sensoryTagCount = [
-    ...(spirit.nose_tags || spirit.metadata?.nose_tags || []),
-    ...(spirit.palate_tags || spirit.metadata?.palate_tags || []),
-    ...(spirit.finish_tags || spirit.metadata?.finish_tags || []),
-  ].filter(Boolean).length;
+  const aggregateRating = spirit.aggregateRating || { ratingValue: 0, reviewCount: 0 };
 
-  const qualitySignals = [
-    hasImage,
-    descKo.length >= 160 || descEn.length >= 160,
-    pairingKo.length >= 120 || pairingEn.length >= 120,
-    tastingNote.length >= 24 || sensoryTagCount >= 4,
-  ].filter(Boolean).length;
-
-  // Variable rating: 4.5 (2 signals) → 4.7 (3 signals) → 4.9 (4 signals)
-  const expertRatingValue = qualitySignals >= 4 ? 4.9 : qualitySignals >= 3 ? 4.7 : 4.5;
-
-  // 전문가 리뷰 본문 생성 (설명 + 맛 + 페어링)
-  const flavorTags = getPreferredMetaTags(spirit, isEn ? 'en' : 'ko');
-  const pairingGuide = isEn
-    ? (spirit.metadata?.pairing_guide_en || spirit.pairing_guide_en)
-    : (spirit.metadata?.pairing_guide_ko || spirit.pairing_guide_ko);
-
-  // Build rich sommelier review with minimum 150 characters to avoid thin content
-  const baseSommelierReview = isEn
-    ? `[Sommelier Report] ${spirit.metadata?.description_en || spirit.description_en || ''}\n\n` +
-      `Flavor Profile: ${flavorTags.length > 0 ? flavorTags.join(', ') : 'Balanced and nuanced'}\n` +
-      `Best Mariage: ${pairingGuide || 'Traditional pairings recommended'}`
-    : `[소믈리에 리포트] ${spirit.metadata?.description_ko || spirit.description_ko || ''}\n\n` +
-      `맛과 향: ${flavorTags.length > 0 ? flavorTags.join(', ') : '균형 잡힌 조화'}\n` +
-      `추천 마리아주: ${pairingGuide || '다양한 안주와 잘 어울립니다'}`;
-
-  // Ensure minimum 150 characters for SEO compliance
-  let sommelierReviewBody = baseSommelierReview;
-  if (sommelierReviewBody.length < 150) {
-    const categoryName = formatSpiritFieldValue('category', spirit.category, lang);
-    const enrichment = isEn
-      ? `\n\nThis ${categoryName} showcases the craftsmanship of ${spirit.distillery || 'traditional methods'}. With an ABV of ${spirit.abv || 'standard'}%, it offers a distinctive tasting experience. K-Spirits Club provides comprehensive information including expert tasting notes, food pairing suggestions, and community reviews to help you discover and enjoy this spirit.`
-      : `\n\n${categoryName}은(는) ${spirit.distillery || '전통 방식'}의 장인정신을 보여줍니다. ${spirit.abv || '표준'}%의 도수로, 독특한 시음 경험을 제공합니다. K-Spirits Club은 전문가 테이스팅 노트, 음식 페어링 추천, 커뮤니티 리뷰 등 종합적인 정보를 제공하여 이 주류를 발견하고 즐길 수 있도록 돕습니다.`;
-    sommelierReviewBody = baseSommelierReview + enrichment;
-  }
-
-  const userReviewCount = reviews.length;
-  const totalReviewCount = 1 + userReviewCount;
-  
-  const userRatingsSum = reviews.reduce((acc, r) => acc + (Number(r.rating) || 0), 0);
-  const aggregateRatingValue = ((expertRatingValue * 1) + userRatingsSum) / totalReviewCount;
-
-  // 리뷰 리스트 빌드 (전문가 리뷰 우선 + 최신 유저 리뷰)
   const schemaReviews = [
-    {
-      '@type': 'Review',
-      author: {
-        '@type': 'Organization',
-        name: isEn ? 'K-Spirits AI Sommelier' : 'K-Spirits AI 소믈리에',
-        url: baseUrl
-      },
-      datePublished: spirit.createdAt ? (new Date(spirit.createdAt).toISOString()) : new Date().toISOString(),
-      reviewRating: {
-        '@type': 'Rating',
-        ratingValue: expertRatingValue,
-        bestRating: 5,
-        worstRating: 1
-      },
-      reviewBody: sommelierReviewBody
-    },
-    ...reviews.map(r => ({
-      '@type': 'Review',
-      author: {
-        '@type': 'Person',
-        name: r.userName || (isEn ? 'Guest' : '방문자')
-      },
-      datePublished: r.createdAt ? (new Date(r.createdAt).toISOString()) : new Date().toISOString(),
-      reviewRating: {
-        '@type': 'Rating',
-        ratingValue: r.rating || 5,
-        bestRating: 5,
-        worstRating: 1
-      },
-      reviewBody: r.content || (isEn ? 'Wonderful experience.' : '만족스러운 시음 경험이었습니다.')
-    }))
+    ...(expertReview ? [{ '@type': 'Review', author: { '@type': 'Person', name: 'K-Spirits Editor' }, datePublished: spirit.updatedAt ? new Date(spirit.updatedAt).toISOString() : new Date().toISOString(), reviewRating: { '@type': 'Rating', ratingValue: aggregateRating.ratingValue || 5.0, bestRating: 5, worstRating: 1 }, reviewBody: expertReview.content }] : []),
+    ...reviews.slice(0, 5).map((r: any) => ({ '@type': 'Review', author: { '@type': 'Person', name: r.userName || 'Guest' }, datePublished: r.createdAt ? new Date(r.createdAt).toISOString() : new Date().toISOString(), reviewRating: { '@type': 'Rating', ratingValue: r.rating || 5, bestRating: 5, worstRating: 1 }, reviewBody: r.content || 'Great spirit.' }))
   ];
 
   const jsonLd: any = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: isEn ? (spirit.name_en || spirit.name) : spirit.name,
-    ...(spirit.name_en && !isEn && { alternateName: spirit.name_en }),
-    image: seoImageCandidates.length > 0 ? seoImageCandidates : [`${baseUrl}/default-og.jpg`],
-    description: buildSpiritMetaDescription(spirit, isEn ? 'en' : 'ko', totalReviewCount, (isEn ? (spirit.name_en || spirit.name) : spirit.name)),
+    image: getSpiritSeoImageCandidates(spirit, baseUrl),
+    description: buildSpiritMetaDescription(spirit, lang as any, aggregateRating.reviewCount, isEn ? (spirit.name_en || spirit.name) : spirit.name),
     sku: spirit.id,
-    mpn: spirit.id,
-    brand: {
-      '@type': 'Brand',
-      name: spirit.distillery || (isEn ? formatSpiritFieldValue('category', spirit.category, 'en') : spirit.category) || 'K-Spirits Club',
-    },
-    category: formatSpiritFieldValue('category', spirit.category, lang),
-    ...(spirit.abv && { 'alcoholByVolume': spirit.abv }),
-    // Only show aggregateRating when we have user reviews to avoid Google spam detection
-    // Pattern: "1 review, 4.9 rating" (expert only) looks suspicious
-    ...(userReviewCount >= 1 && {
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: aggregateRatingValue.toFixed(1),
-        reviewCount: totalReviewCount,
-        bestRating: 5,
-        worstRating: 1
-      }
-    }),
+    brand: { '@type': 'Brand', name: spirit.distillery || 'K-Spirits Club' },
+    aggregateRating: { '@type': 'AggregateRating', ratingValue: (aggregateRating.ratingValue || 5.0).toFixed(1), reviewCount: aggregateRating.reviewCount || 1, bestRating: 5, worstRating: 1 },
     review: schemaReviews,
-    offers: {
-      '@type': 'Offer',
-      availability: 'https://schema.org/InStock',
-      url: pageUrl,
-      priceCurrency: 'KRW',
-      ...(spirit.metadata?.price && {
-        price: spirit.metadata.price,
-      }),
-      seller: { '@type': 'Organization', name: 'K-Spirits Club', url: baseUrl },
-      hasMerchantReturnPolicy: {
-        '@type': 'MerchantReturnPolicy',
-        applicableCountry: 'KR',
-        returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
-        additionalProperty: {
-          '@type': 'PropertyValue',
-          name: isEn ? 'Return Policy' : '환불 정책',
-          value: isEn
-            ? 'Return and refund policies vary by retailer. Please check with the seller before purchase.'
-            : '환불 및 반품 정책은 판매처에 따라 상이합니다. 구매 전 판매자에게 확인하시기 바랍니다.'
-        }
-      },
-      shippingDetails: {
-        '@type': 'OfferShippingDetails',
-        shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'KR' },
-        deliveryTime: {
-          '@type': 'ShippingDeliveryTime',
-          handlingTime: { '@type': 'QuantitativeValue', minValue: 1, maxValue: 3, unitCode: 'day' },
-          transitTime: { '@type': 'QuantitativeValue', minValue: 1, maxValue: 5, unitCode: 'day' }
-        }
-      }
-    },
     url: pageUrl,
   };
-
-  const webPageLd = {
-    '@context': 'https://schema.org',
-    '@type': 'WebPage',
-    '@id': pageUrl,
-    url: pageUrl,
-    name: isEn ? (spirit.name_en || spirit.name) : spirit.name
-  };
-
-  // FAQ Schema: Comprehensive Template (ABV, Category, Distillery, Flavor, Pairing)
-  const faqQuestions = [];
-  
-  // 1. Category/Type Question
-  faqQuestions.push({
-    '@type': 'Question',
-    name: isEn ? `What kind of spirit is ${spirit.name_en || spirit.name}?` : `${spirit.name}은(는) 어떤 주류인가요?`,
-    acceptedAnswer: { 
-      '@type': 'Answer', 
-      text: isEn 
-        ? `${spirit.name} is a ${formatSpiritFieldValue('subcategory', spirit.subcategory || spirit.category, 'en')} from ${spirit.country || 'the selected region'}.`
-        : `${spirit.name}은(는) ${spirit.country || ''}에서 생산된 ${formatSpiritFieldValue('subcategory', spirit.subcategory || spirit.category, 'ko')} 제품입니다.`
-    }
-  });
-
-  // 2. ABV Question
-  if (spirit.abv) {
-    faqQuestions.push({
-      '@type': 'Question',
-      name: isEn ? `What is the alcohol content (ABV) of ${spirit.name_en || spirit.name}?` : `${spirit.name}의 알코올 도수는?`,
-      acceptedAnswer: { 
-        '@type': 'Answer', 
-        text: isEn 
-          ? `${spirit.name} has an alcohol by volume (ABV) of ${spirit.abv}%.`
-          : `${spirit.name}의 ABV(도수)는 ${spirit.abv}%입니다.` 
-      }
-    });
-  }
-
-  // 3. Distillery/Brand Question
-  if (spirit.distillery) {
-    faqQuestions.push({
-      '@type': 'Question',
-      name: isEn ? `Who produces ${spirit.name_en || spirit.name}?` : `${spirit.name}의 생산처(증류소)는?`,
-      acceptedAnswer: { 
-        '@type': 'Answer', 
-        text: isEn 
-          ? `${spirit.name} is produced by ${spirit.distillery}.` 
-          : `${spirit.name}은(는) ${spirit.distillery}에서 생산됩니다.`
-      }
-    });
-  }
-
-  // 4. Tasting Note Question
-  if (flavorTags.length > 0) {
-    faqQuestions.push({
-      '@type': 'Question',
-      name: isEn ? `What are the tasting notes for ${spirit.name_en || spirit.name}?` : `${spirit.name}의 맛과 향 특징은?`,
-      acceptedAnswer: { 
-        '@type': 'Answer', 
-        text: isEn 
-          ? `It features a unique flavor profile with notes of ${flavorTags.join(', ')}.` 
-          : `${flavorTags.join(', ')} 등의 특징적인 맛과 향을 느낄 수 있습니다.`
-      }
-    });
-  }
-
-  // 5. Pairing Question
-  if (pairingGuide) {
-    faqQuestions.push({
-      '@type': 'Question',
-      name: isEn ? `Which food goes best with ${spirit.name_en || spirit.name}?` : `${spirit.name}과(와) 어울리는 안주 추천은?`,
-      acceptedAnswer: { 
-        '@type': 'Answer', 
-        text: pairingGuide
-      }
-    });
-  }
-
-  const wikiGuide = resolveSpiritWikiGuide(spirit.category, spirit.subcategory, spirit.mainCategory);
-
-  const faqLd = faqQuestions.length > 0 ? {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqQuestions
-  } : null;
-
-  const breadcrumbLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: isEn ? 'Home' : '홈', item: `${baseUrl}/${lang}` },
-      { '@type': 'ListItem', position: 2, name: isEn ? 'Explore Spirits' : '주류 탐색', item: `${baseUrl}/${lang}/explore` },
-      { 
-        '@type': 'ListItem', 
-        position: 3, 
-        name: formatSpiritFieldValue('category', spirit.category, lang), 
-        item: wikiGuide ? `${baseUrl}/${lang}/contents/wiki/${wikiGuide.slug}` : `${baseUrl}/${lang}/explore?category=${encodeURIComponent(spirit.category)}` 
-      },
-      { '@type': 'ListItem', position: 4, name: spirit.name, item: pageUrl },
-    ],
-  };
-
-  const dictionary = await getDictionary(lang as Locale);
-
-  const guideBtnBase = 'flex items-center gap-1.5 w-full sm:w-auto justify-center sm:justify-start px-3 py-2 sm:py-1.5 rounded-full border transition-colors font-medium';
-  const guideBtnAmber = 'bg-amber-500/10 border-amber-500/40 text-amber-700 dark:text-amber-300 hover:bg-amber-500/20 hover:border-amber-500/70';
-  const guideBtnOrange = 'bg-orange-500/10 border-orange-500/40 text-orange-700 dark:text-orange-300 hover:bg-orange-500/20 hover:border-orange-500/70';
-  const guideBtnSky = 'bg-sky-500/10 border-sky-500/40 text-sky-700 dark:text-sky-300 hover:bg-sky-500/20 hover:border-sky-500/70';
-  const guideBtnViolet = 'bg-violet-500/10 border-violet-500/40 text-violet-700 dark:text-violet-300 hover:bg-violet-500/20 hover:border-violet-500/70';
-
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
-      />
-      {faqLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
-        />
-      )}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <SpiritDetailClient spirit={spirit} reviews={reviews} relatedSpirits={relatedSpirits} lang={lang as Locale} dict={dictionary.detail} />
-      {/* SSR section: crawlable internal links to wiki and contents hub */}
-      <section className="bg-background border-t border-border/40 py-8 px-4">
-        <div className="container mx-auto max-w-2xl">
-          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-3">
-            {isEn ? 'Explore Related Guides' : '관련 가이드 탐색'}
-          </p>
-          <ul className="flex flex-col sm:flex-row sm:flex-wrap gap-2 text-sm">
-            {wikiGuide && (
-              <li className="w-full sm:w-auto">
-                <Link href={`/${lang}/contents/wiki/${wikiGuide.slug}`} className={`${guideBtnBase} ${guideBtnAmber}`}>
-                  <span>📖</span>{isEn ? wikiGuide.labelEn : wikiGuide.labelKo}
-                </Link>
-              </li>
-            )}
-            <li className="w-full sm:w-auto"><Link href={`/${lang}/contents/wiki`} className={`${guideBtnBase} ${guideBtnAmber}`}><span>📚</span>{isEn ? 'Spirits Wiki — All Categories' : '주류 백과사전 전체 카테고리'}</Link></li>
-            <li className="w-full sm:w-auto"><Link href={`/${lang}/contents/reviews`} className={`${guideBtnBase} ${guideBtnOrange}`}><span>🥃</span>{isEn ? 'Spirit Tasting Reviews' : '주류 시음 리뷰 보드'}</Link></li>
-            <li className="w-full sm:w-auto"><Link href={`/${lang}/contents`} className={`${guideBtnBase} ${guideBtnSky}`}><span>🌐</span>{isEn ? 'Contents Hub' : '콘텐츠 허브'}</Link></li>
-            <li className="w-full sm:w-auto"><Link href={`/${lang}/explore`} className={`${guideBtnBase} ${guideBtnViolet}`}><span>🔍</span>{isEn ? 'Explore All Spirits' : '주류 전체 탐색'}</Link></li>
-          </ul>
+      {wikiMetadata && wikiGuide && (
+        <div className="container mx-auto px-4 max-w-4xl">
+          <RelatedWikiSection
+            slug={wikiGuide.slug}
+            title={wikiMetadata.title}
+            tagline={wikiMetadata.tagline}
+            emoji={wikiMetadata.emoji}
+            recommendedGlass={wikiMetadata.recommendedGlass}
+            optimalTemp={wikiMetadata.optimalTemp}
+            lang={lang as Locale}
+          />
         </div>
-      </section>
+      )}
     </>
   );
 }
@@ -17305,6 +16630,18 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
         }
     };
 
+    const handleOutboundClick = (platform: string) => {
+        fetch('/api/trending/log', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                spiritId: spirit.id, 
+                action: 'purchase_click',
+                platform 
+            })
+        }).catch(err => console.error(`Failed to log ${platform} click:`, err));
+    };
+
     const handleReviewSubmit = async (review: UserReview) => {
         if (!user) return;
 
@@ -17533,7 +16870,8 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                     <a
                         href={`https://search.shopping.naver.com/search/all?query=${encodeURIComponent(spirit.name.replace(/\([^)]*\)/g, '').trim())}`}
                         target="_blank"
-                        rel="noopener noreferrer"
+                        rel="nofollow noopener noreferrer"
+                        onClick={() => handleOutboundClick('naver')}
                         className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-transparent border border-border hover:border-emerald-500 transition-colors text-xs font-bold"
                     >
                         <span className="text-emerald-500 font-black">N</span>
@@ -17542,7 +16880,8 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                     <a
                         href={`https://dailyshot.co/m/search/result?q=${encodeURIComponent(spirit.name.replace(/\([^)]*\)/g, '').trim())}`}
                         target="_blank"
-                        rel="noopener noreferrer"
+                        rel="nofollow noopener noreferrer"
+                        onClick={() => handleOutboundClick('dailyshot')}
                         className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-transparent border border-border hover:border-purple-500 transition-colors text-xs font-bold"
                     >
                         <Activity className="w-3.5 h-3.5 text-purple-500" />
@@ -17551,7 +16890,8 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                     <a
                         href={`https://www.wine-searcher.com/find/${encodeURIComponent((spirit.metadata?.name_en || spirit.name_en || spirit.name).replace(/\([^)]*\)/g, '').trim())}`}
                         target="_blank"
-                        rel="noopener noreferrer"
+                        rel="nofollow noopener noreferrer"
+                        onClick={() => handleOutboundClick('wine-searcher')}
                         className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-transparent border border-border hover:border-amber-500 transition-colors text-xs font-bold"
                     >
                         <span className="text-amber-500 font-black">W</span>
@@ -17728,8 +17068,10 @@ function ExpandableImage({ imageUrl, name, category }: { imageUrl: string | null
             >
                 {imageUrl ? (
                     <img
-                        src={getOptimizedImageUrl(imageUrl, 1200, 85)}
+                        src={getOptimizedImageUrl(imageUrl, 600, 85)}
                         alt={`${name} product image`}
+                        width={450}
+                        height={600}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                         loading="eager"
                         fetchPriority="high"

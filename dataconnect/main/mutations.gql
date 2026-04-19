@@ -190,10 +190,10 @@ mutation upsertModificationRequest(
 # --- WorldCupResult Mutations ---
 mutation upsertWorldCupResult(
   $id: UUID!,
-  $winnerId: String!,
+  $winnerId: String,
   $category: String!,
   $subcategory: String,
-  $initialRound: Int!,
+  $initialRound: Int,
   $timestamp: Timestamp
 ) @auth(level: PUBLIC) {
   worldCupResult_upsert(data: {

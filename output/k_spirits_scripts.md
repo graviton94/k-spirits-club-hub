@@ -1,14 +1,14 @@
 # [Project Context] k-spirits-club-hub - Module: scripts
 
 ## 1. Project Architecture (Graphify)
-# Graph Report - .  (2026-04-13)
+# Graph Report - .  (2026-04-19)
 
 ## Corpus Check
-- 527 files · ~2,212,029 words
+- 561 files · ~2,506,679 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1539 nodes · 1511 edges · 477 communities detected
+- 1712 nodes · 1706 edges · 511 communities detected
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
@@ -490,18 +490,52 @@
 - [[_COMMUNITY_Community 474|Community 474]]
 - [[_COMMUNITY_Community 475|Community 475]]
 - [[_COMMUNITY_Community 476|Community 476]]
+- [[_COMMUNITY_Community 477|Community 477]]
+- [[_COMMUNITY_Community 478|Community 478]]
+- [[_COMMUNITY_Community 479|Community 479]]
+- [[_COMMUNITY_Community 480|Community 480]]
+- [[_COMMUNITY_Community 481|Community 481]]
+- [[_COMMUNITY_Community 482|Community 482]]
+- [[_COMMUNITY_Community 483|Community 483]]
+- [[_COMMUNITY_Community 484|Community 484]]
+- [[_COMMUNITY_Community 485|Community 485]]
+- [[_COMMUNITY_Community 486|Community 486]]
+- [[_COMMUNITY_Community 487|Community 487]]
+- [[_COMMUNITY_Community 488|Community 488]]
+- [[_COMMUNITY_Community 489|Community 489]]
+- [[_COMMUNITY_Community 490|Community 490]]
+- [[_COMMUNITY_Community 491|Community 491]]
+- [[_COMMUNITY_Community 492|Community 492]]
+- [[_COMMUNITY_Community 493|Community 493]]
+- [[_COMMUNITY_Community 494|Community 494]]
+- [[_COMMUNITY_Community 495|Community 495]]
+- [[_COMMUNITY_Community 496|Community 496]]
+- [[_COMMUNITY_Community 497|Community 497]]
+- [[_COMMUNITY_Community 498|Community 498]]
+- [[_COMMUNITY_Community 499|Community 499]]
+- [[_COMMUNITY_Community 500|Community 500]]
+- [[_COMMUNITY_Community 501|Community 501]]
+- [[_COMMUNITY_Community 502|Community 502]]
+- [[_COMMUNITY_Community 503|Community 503]]
+- [[_COMMUNITY_Community 504|Community 504]]
+- [[_COMMUNITY_Community 505|Community 505]]
+- [[_COMMUNITY_Community 506|Community 506]]
+- [[_COMMUNITY_Community 507|Community 507]]
+- [[_COMMUNITY_Community 508|Community 508]]
+- [[_COMMUNITY_Community 509|Community 509]]
+- [[_COMMUNITY_Community 510|Community 510]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `BrowserManager` - 48 edges
 2. `GET()` - 23 edges
-3. `generateMetadata()` - 22 edges
+3. `generateMetadata()` - 21 edges
 4. `POST()` - 20 edges
-5. `generatePreamble()` - 13 edges
-6. `main()` - 12 edges
-7. `CircularBuffer` - 10 edges
-8. `WorktreeManager` - 10 edges
-9. `ensureServer()` - 8 edges
-10. `importCookies()` - 8 edges
+5. `getDC()` - 20 edges
+6. `generatePreamble()` - 13 edges
+7. `main()` - 12 edges
+8. `CircularBuffer` - 10 edges
+9. `WorktreeManager` - 10 edges
+10. `ensureServer()` - 8 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `GET()` --calls--> `replaceWithStatus()`  [EXTRACTED]
@@ -518,284 +552,284 @@
 ## Communities
 
 ### Community 0 - "Community 0"
+Cohesion: 0.05
+Nodes (44): auditAllNews(), auditAllNewsRef(), auditAllReviews(), auditAllReviewsRef(), auditAllSpirits(), auditAllSpiritsRef(), auditAllUsers(), auditAllUsersRef() (+36 more)
+
+### Community 1 - "Community 1"
 Cohesion: 0.06
 Nodes (1): BrowserManager
 
-### Community 1 - "Community 1"
-Cohesion: 0.07
+### Community 2 - "Community 2"
+Cohesion: 0.06
 Nodes (8): DELETE(), generateSafeId(), GET(), getKSTDate(), parseTags(), PATCH(), POST(), replaceWithStatus()
 
-### Community 2 - "Community 2"
-Cohesion: 0.07
-Nodes (12): buildSpiritMetaDescription(), dedupeTokens(), extractTastingNoteTags(), generateMetadata(), getBrandPrefix(), getPreferredMetaTags(), getResult(), getSpiritSeoImageCandidates() (+4 more)
-
 ### Community 3 - "Community 3"
+Cohesion: 0.08
+Nodes (12): buildSpiritMetaDescription(), dedupeTokens(), extractTastingNoteTags(), generateMetadata(), getPreferredMetaTags(), getResult(), getSpiritSeoImageCandidates(), getSpiritSeoRobots() (+4 more)
+
+### Community 4 - "Community 4"
 Cohesion: 0.15
 Nodes (26): chromiumEpochToUnix(), chromiumNow(), CookieImportError, decryptCookieValue(), deriveKey(), findBrowserMatch(), getBaseDir(), getBrowserMatch() (+18 more)
 
-### Community 4 - "Community 4"
+### Community 5 - "Community 5"
 Cohesion: 0.12
 Nodes (22): addChatEntry(), createSession(), createWorktree(), emergencyCleanup(), findPort(), flushBuffers(), generateHelpText(), handleCommand() (+14 more)
 
-### Community 5 - "Community 5"
-Cohesion: 0.2
-Nodes (17): addChatEntry(), addEntry(), authHeaders(), connectSSE(), createEntryElement(), escapeHtml(), formatChatTime(), formatTime() (+9 more)
-
 ### Community 6 - "Community 6"
-Cohesion: 0.27
-Nodes (14): acquireServerLock(), cleanupLegacyState(), ensureServer(), isProcessAlive(), isServerHealthy(), killServer(), main(), parseArgs() (+6 more)
+Cohesion: 0.09
+Nodes (0): 
 
 ### Community 7 - "Community 7"
 Cohesion: 0.17
-Nodes (16): apply_normalization(), extract_abv(), extract_lot_info(), extract_volume(), final_cleanup(), load_spirits_to_normalize(), main(), normalize_spirit() (+8 more)
+Nodes (20): dbGetNewsArticle(), dbGetNewsCount(), dbGetSpirit(), dbGetSpiritReviewsCount(), dbGetUserProfile(), dbGetWorldCupResult(), dbListNewArrivals(), dbListNewsArticles() (+12 more)
 
 ### Community 8 - "Community 8"
+Cohesion: 0.2
+Nodes (17): addChatEntry(), addEntry(), authHeaders(), connectSSE(), createEntryElement(), escapeHtml(), formatChatTime(), formatTime() (+9 more)
+
+### Community 9 - "Community 9"
+Cohesion: 0.27
+Nodes (14): acquireServerLock(), cleanupLegacyState(), ensureServer(), isProcessAlive(), isServerHealthy(), killServer(), main(), parseArgs() (+6 more)
+
+### Community 10 - "Community 10"
+Cohesion: 0.17
+Nodes (16): apply_normalization(), extract_abv(), extract_lot_info(), extract_volume(), final_cleanup(), load_spirits_to_normalize(), main(), normalize_spirit() (+8 more)
+
+### Community 11 - "Community 11"
 Cohesion: 0.17
 Nodes (16): apply_normalization(), extract_abv(), extract_description(), extract_lot_info(), extract_volume(), load_spirits_to_normalize(), main(), normalize_spirit() (+8 more)
 
-### Community 9 - "Community 9"
+### Community 12 - "Community 12"
 Cohesion: 0.22
 Nodes (6): copyDirSync(), getDedupPath(), git(), loadDedupIndex(), saveDedupIndex(), WorktreeManager
 
-### Community 10 - "Community 10"
+### Community 13 - "Community 13"
 Cohesion: 0.22
 Nodes (8): compareEvalResults(), EvalCollector, extractToolSummary(), findPreviousRun(), formatComparison(), generateCommentary(), getGitInfo(), getVersion()
 
-### Community 11 - "Community 11"
+### Community 14 - "Community 14"
 Cohesion: 0.25
 Nodes (13): generateAskUserFormat(), generateCompletenessSection(), generateCompletionStatus(), generateContributorMode(), generateLakeIntro(), generatePreamble(), generatePreambleBash(), generateProactivePrompt() (+5 more)
 
-### Community 12 - "Community 12"
+### Community 15 - "Community 15"
 Cohesion: 0.16
 Nodes (5): createTestWorktree(), describeIfSelected(), describeWithWorktree(), getWorktreeManager(), harvestAndCleanup()
 
-### Community 13 - "Community 13"
+### Community 16 - "Community 16"
 Cohesion: 0.29
 Nodes (13): extractCwdFromJsonl(), getGitRemote(), isGitRepo(), main(), normalizeRemoteUrl(), parseArgs(), printUsage(), resolveAndDeduplicate() (+5 more)
 
-### Community 14 - "Community 14"
+### Community 17 - "Community 17"
 Cohesion: 0.2
 Nodes (4): addConsoleEntry(), addDialogEntry(), addNetworkEntry(), CircularBuffer
 
-### Community 15 - "Community 15"
+### Community 18 - "Community 18"
 Cohesion: 0.25
 Nodes (13): apply_normalization(), apply_normalization_to_dict(), call_audit_ai(), fetch_all_spirits(), fetch_published_spirits(), get_db_client(), main(), Firestore에서 모든 데이터 가져오기 (published + unpublished) (+5 more)
 
-### Community 16 - "Community 16"
+### Community 19 - "Community 19"
 Cohesion: 0.32
 Nodes (12): askClaude(), countLines(), getGitRoot(), handleStreamEvent(), main(), poll(), readLine(), refreshToken() (+4 more)
 
-### Community 17 - "Community 17"
+### Community 20 - "Community 20"
 Cohesion: 0.19
 Nodes (4): generatePlanCompletionAuditInner(), generatePlanCompletionAuditReview(), generatePlanCompletionAuditShip(), generatePlanFileDiscovery()
 
-### Community 18 - "Community 18"
+### Community 21 - "Community 21"
 Cohesion: 0.22
 Nodes (12): extract_abv(), extract_description(), extract_lot_info(), extract_volume(), main(), normalize_spirit(), Normalize Spirit Names - Pipeline Step  Extracts volume, ABV, lot info from na, Normalize a single spirit (+4 more)
 
-### Community 19 - "Community 19"
+### Community 22 - "Community 22"
 Cohesion: 0.17
 Nodes (0): 
 
-### Community 20 - "Community 20"
+### Community 23 - "Community 23"
 Cohesion: 0.23
 Nodes (5): dumpOutcomeDiagnostic(), logCost(), recordE2E(), runPlantedBugEval(), setupBrowseShims()
 
-### Community 21 - "Community 21"
+### Community 24 - "Community 24"
+Cohesion: 0.21
+Nodes (4): analyzeCellar(), FlavorVectorIndex, generateUserPalate(), getHybridRecommendations()
+
+### Community 25 - "Community 25"
 Cohesion: 0.36
 Nodes (7): checkHealth(), executeCommand(), fetchAndRelayRefs(), getBaseUrl(), notifyContentScripts(), setConnected(), setDisconnected()
 
-### Community 22 - "Community 22"
+### Community 26 - "Community 26"
 Cohesion: 0.27
 Nodes (5): fromFirestoreValue(), getPublishedSpiritMetaWithQuality(), parseFirestoreFields(), toFirestore(), toFirestoreValue()
 
-### Community 23 - "Community 23"
+### Community 27 - "Community 27"
+Cohesion: 0.2
+Nodes (0): 
+
+### Community 28 - "Community 28"
 Cohesion: 0.33
 Nodes (7): calculateScore(), getMessage(), resetGame(), startAnimation(), startGame(), switchAction(), updateLevel()
 
-### Community 24 - "Community 24"
+### Community 29 - "Community 29"
 Cohesion: 0.42
 Nodes (7): codexSkillName(), condenseOpenAIShortDescription(), extractHookSafetyProse(), extractNameAndDescription(), generateOpenAIYaml(), processTemplate(), transformFrontmatter()
 
-### Community 25 - "Community 25"
+### Community 30 - "Community 30"
 Cohesion: 0.22
 Nodes (0): 
 
-### Community 26 - "Community 26"
-Cohesion: 0.36
-Nodes (6): analyzeCellar(), calculateCategoryDistribution(), extractKeywords(), generateFlavorNodes(), generateHierarchicalNodes(), generatePersona()
-
-### Community 27 - "Community 27"
+### Community 31 - "Community 31"
 Cohesion: 0.36
 Nodes (6): getKeywordScore(), getMatchCandidates(), scoreSpiritForKeywordGroup(), scoreSpiritForWikiCategory(), selectFeaturedSpiritsForWiki(), sortFeaturedSpiritsForWiki()
 
-### Community 28 - "Community 28"
+### Community 32 - "Community 32"
 Cohesion: 0.32
 Nodes (3): emitActivity(), filterArgs(), truncateResult()
 
-### Community 29 - "Community 29"
+### Community 33 - "Community 33"
 Cohesion: 0.46
 Nodes (5): chromiumEpoch(), createFixtureDb(), createLinuxFixtureDb(), createMacFixtureDb(), encryptCookieValue()
 
-### Community 30 - "Community 30"
+### Community 34 - "Community 34"
 Cohesion: 0.36
 Nodes (4): createRoutingWorkDir(), initGitRepo(), installSkills(), run()
 
-### Community 31 - "Community 31"
+### Community 35 - "Community 35"
 Cohesion: 0.36
 Nodes (1): onlineIngestion
 
-### Community 32 - "Community 32"
+### Community 36 - "Community 36"
 Cohesion: 0.29
 Nodes (7): analyze_name(), generate_report(), load_spirits_sample(), Spirit Data Normalization Analyzer  This script analyzes spirits data from Fir, Analyze a spirit name for patterns that should be extracted., Load ALL spirits data from the API., Generate a detailed report of normalization needs.
 
-### Community 33 - "Community 33"
+### Community 37 - "Community 37"
+Cohesion: 0.57
+Nodes (7): cleanTimestamps(), executeMutation(), main(), migrateNews(), migrateSpirits(), migrateUsers(), prepareSystemUser()
+
+### Community 38 - "Community 38"
 Cohesion: 0.29
 Nodes (0): 
 
-### Community 34 - "Community 34"
+### Community 39 - "Community 39"
 Cohesion: 0.33
 Nodes (2): calculateResult(), handleAnswer()
 
-### Community 35 - "Community 35"
-Cohesion: 0.43
-Nodes (4): handleAdd(), handleReviewSubmit(), handleSelectCabinet(), handleSelectWishlist()
-
-### Community 36 - "Community 36"
+### Community 40 - "Community 40"
 Cohesion: 0.52
 Nodes (6): getCleanText(), handleReadCommand(), hasAwait(), needsBlockWrapper(), validateReadPath(), wrapForEvaluate()
 
-### Community 37 - "Community 37"
+### Community 41 - "Community 41"
 Cohesion: 0.48
 Nodes (4): clearOverlays(), ensureContainer(), renderRefBadges(), renderRefPanel()
 
-### Community 38 - "Community 38"
+### Community 42 - "Community 42"
 Cohesion: 0.33
 Nodes (2): extractNameAndDescription(), transformFrontmatter()
 
-### Community 39 - "Community 39"
+### Community 43 - "Community 43"
 Cohesion: 0.29
 Nodes (0): 
 
-### Community 40 - "Community 40"
+### Community 44 - "Community 44"
 Cohesion: 0.38
 Nodes (3): carefulInput(), detectSafeRmWorks(), runHook()
 
-### Community 41 - "Community 41"
+### Community 45 - "Community 45"
 Cohesion: 0.43
 Nodes (4): auditSpiritInfo(), enrichSpiritWithAI(), generatePairingGuide(), generateSensoryProfile()
 
-### Community 42 - "Community 42"
+### Community 46 - "Community 46"
 Cohesion: 0.52
 Nodes (6): formatSpiritFieldValue(), localizeCategory(), localizeCountry(), localizeDataSource(), localizeMainCategoryOnly(), localizeVariety()
 
-### Community 43 - "Community 43"
+### Community 47 - "Community 47"
+Cohesion: 0.52
+Nodes (6): BOLD(), getDcCount(), getFirestoreCount(), GREEN(), main(), RED()
+
+### Community 48 - "Community 48"
+Cohesion: 0.52
+Nodes (6): delay(), generateRichContent(), processSpirit(), researchSpirit(), run(), verifyFacts()
+
+### Community 49 - "Community 49"
 Cohesion: 0.33
 Nodes (0): 
 
-### Community 44 - "Community 44"
+### Community 50 - "Community 50"
 Cohesion: 0.33
 Nodes (0): 
 
-### Community 45 - "Community 45"
+### Community 51 - "Community 51"
 Cohesion: 0.33
 Nodes (0): 
 
-### Community 46 - "Community 46"
+### Community 52 - "Community 52"
 Cohesion: 0.47
 Nodes (3): getGitRoot(), getRemoteSlug(), resolveConfig()
 
-### Community 47 - "Community 47"
+### Community 53 - "Community 53"
 Cohesion: 0.47
 Nodes (4): defaultDesign(), extractDesignLanguage(), formatExtractedSection(), updateDesignMd()
 
-### Community 48 - "Community 48"
+### Community 54 - "Community 54"
 Cohesion: 0.53
 Nodes (4): createSession(), createSessionId(), sessionPath(), updateSession()
 
-### Community 49 - "Community 49"
+### Community 55 - "Community 55"
 Cohesion: 0.6
 Nodes (5): formatDuration(), isProcessAlive(), readJSON(), render(), renderDashboard()
 
-### Community 50 - "Community 50"
+### Community 56 - "Community 56"
 Cohesion: 0.53
 Nodes (4): generateTestCoverageAuditInner(), generateTestCoverageAuditPlan(), generateTestCoverageAuditReview(), generateTestCoverageAuditShip()
 
-### Community 51 - "Community 51"
+### Community 57 - "Community 57"
 Cohesion: 0.6
 Nodes (5): atomicWriteSync(), parseNDJSON(), runSkillTest(), sanitizeTestName(), truncate()
 
-### Community 52 - "Community 52"
+### Community 58 - "Community 58"
 Cohesion: 0.6
 Nodes (5): fetchPublicJson(), fromFirestoreDoc(), fromFirestoreValue(), getPublicLatestFeatured(), getPublicSpiritById()
 
-### Community 53 - "Community 53"
+### Community 59 - "Community 59"
 Cohesion: 0.6
 Nodes (5): getBaseUrl(), getCanonicalUrl(), getHreflangAlternates(), stripQuery(), toAbsoluteUrl()
 
-### Community 54 - "Community 54"
+### Community 60 - "Community 60"
 Cohesion: 0.73
 Nodes (5): bulkProcessor(), delay(), processSpiritWithAI(), syncNames(), translateMissing()
 
-### Community 55 - "Community 55"
+### Community 61 - "Community 61"
 Cohesion: 0.53
 Nodes (5): collect_files_from_dir(), compile_mega_prompt(), get_graphify_context(), 특정 디렉토리 내의 코드를 수집합니다. (MarkItDown 연동), save_bundle()
 
-### Community 56 - "Community 56"
+### Community 62 - "Community 62"
 Cohesion: 0.47
 Nodes (4): enrich_batch(), get_category_prompt(), main(), 카테고리에 맞는 프롬프트 가이드를 반환합니다.
 
-### Community 57 - "Community 57"
+### Community 63 - "Community 63"
 Cohesion: 0.47
 Nodes (5): fetch_spirits_by_category(), fetch_spirits_by_type(), main(), 하나의 표준 카테고리에 대해 여러 검색어 변형으로 데이터를 수집하고 합칩니다., 특정 주종에 대한 데이터를 식품안전나라 API에서 가져옵니다.
 
-### Community 58 - "Community 58"
+### Community 64 - "Community 64"
 Cohesion: 0.47
 Nodes (5): build_advanced_search_url(), fetch_image_url(), main(), 구글 고급 검색 파라미터를 조합하여 타겟팅된 URL 생성, HTML 내의 JSON 블록 및 URL 패턴을 분석하여 실제 이미지 URL 추출
 
-### Community 59 - "Community 59"
+### Community 65 - "Community 65"
 Cohesion: 0.53
 Nodes (5): extract_abv(), extract_description(), extract_volume(), normalize_spirit(), Normalize remaining 113 spirits  Uses the full_normalization_analysis.json to
 
-### Community 60 - "Community 60"
-Cohesion: 0.4
-Nodes (0): 
-
-### Community 61 - "Community 61"
-Cohesion: 0.4
-Nodes (0): 
-
-### Community 62 - "Community 62"
-Cohesion: 0.4
-Nodes (0): 
-
-### Community 63 - "Community 63"
-Cohesion: 0.4
-Nodes (0): 
-
-### Community 64 - "Community 64"
-Cohesion: 0.4
-Nodes (0): 
-
-### Community 65 - "Community 65"
-Cohesion: 0.4
-Nodes (0): 
-
 ### Community 66 - "Community 66"
-Cohesion: 0.6
-Nodes (3): fetchReviews(), handleReviewDeleted(), handleReviewSubmitted()
+Cohesion: 0.4
+Nodes (0): 
 
 ### Community 67 - "Community 67"
-Cohesion: 0.5
-Nodes (2): handleKeyDown(), handleSearch()
+Cohesion: 0.4
+Nodes (0): 
 
 ### Community 68 - "Community 68"
-Cohesion: 0.9
-Nodes (4): corsOrigin(), errorResponse(), handleCookiePickerRoute(), jsonResponse()
+Cohesion: 0.4
+Nodes (0): 
 
 ### Community 69 - "Community 69"
-Cohesion: 0.7
-Nodes (4): isMetadataIp(), normalizeHostname(), resolvesToBlockedIp(), validateNavigationUrl()
+Cohesion: 0.4
+Nodes (0): 
 
 ### Community 70 - "Community 70"
 Cohesion: 0.4
@@ -807,23 +841,23 @@ Nodes (0):
 
 ### Community 72 - "Community 72"
 Cohesion: 0.6
-Nodes (3): api(), pollChatUntil(), resetState()
+Nodes (3): fetchReviews(), handleReviewDeleted(), handleReviewSubmitted()
 
 ### Community 73 - "Community 73"
-Cohesion: 0.6
-Nodes (3): gallery(), generateEmptyGallery(), generateGalleryHtml()
+Cohesion: 0.5
+Nodes (2): handleKeyDown(), handleSearch()
 
 ### Community 74 - "Community 74"
-Cohesion: 0.7
-Nodes (4): buildAccumulatedPrompt(), callFresh(), callWithThreading(), iterate()
+Cohesion: 0.9
+Nodes (4): corsOrigin(), errorResponse(), handleCookiePickerRoute(), jsonResponse()
 
 ### Community 75 - "Community 75"
 Cohesion: 0.7
-Nodes (4): filterByPeriod(), formatReport(), main(), parseJSONL()
+Nodes (4): isMetadataIp(), normalizeHostname(), resolvesToBlockedIp(), validateNavigationUrl()
 
 ### Community 76 - "Community 76"
-Cohesion: 0.5
-Nodes (2): run(), setupReviewDir()
+Cohesion: 0.4
+Nodes (0): 
 
 ### Community 77 - "Community 77"
 Cohesion: 0.4
@@ -831,63 +865,63 @@ Nodes (0):
 
 ### Community 78 - "Community 78"
 Cohesion: 0.6
-Nodes (4): parseJsonl(), readJsonl(), run(), setConfig()
+Nodes (3): api(), pollChatUntil(), resetState()
 
 ### Community 79 - "Community 79"
-Cohesion: 0.4
-Nodes (1): Order
+Cohesion: 0.6
+Nodes (3): gallery(), generateEmptyGallery(), generateGalleryHtml()
 
 ### Community 80 - "Community 80"
-Cohesion: 0.4
-Nodes (1): Order
+Cohesion: 0.7
+Nodes (4): buildAccumulatedPrompt(), callFresh(), callWithThreading(), iterate()
 
 ### Community 81 - "Community 81"
-Cohesion: 0.5
-Nodes (2): extractBrowseCommands(), validateSkill()
+Cohesion: 0.7
+Nodes (4): filterByPeriod(), formatReport(), main(), parseJSONL()
 
 ### Community 82 - "Community 82"
-Cohesion: 0.4
-Nodes (0): 
+Cohesion: 0.5
+Nodes (2): run(), setupReviewDir()
 
 ### Community 83 - "Community 83"
-Cohesion: 0.7
-Nodes (4): analyzePublishedData(), generateReport(), main(), saveToFile()
+Cohesion: 0.4
+Nodes (0): 
 
 ### Community 84 - "Community 84"
 Cohesion: 0.6
-Nodes (3): audit(), from_firestore_value(), get_access_token()
+Nodes (4): parseJsonl(), readJsonl(), run(), setConfig()
 
 ### Community 85 - "Community 85"
-Cohesion: 0.5
-Nodes (4): consolidate_data(), deep_merge(), 국내(data/), 수입(data/raw_imported/), 보완(data/enriched/) 데이터를 모두 병합합니다.     우선순위:, 간단한 딕셔너리 딥 머지 (metadata 등 처리용)
+Cohesion: 0.4
+Nodes (1): Order
 
 ### Community 86 - "Community 86"
-Cohesion: 0.67
-Nodes (2): handleEnter(), triggerToast()
+Cohesion: 0.4
+Nodes (1): Order
 
 ### Community 87 - "Community 87"
 Cohesion: 0.5
-Nodes (1): generateMetadata()
+Nodes (2): extractBrowseCommands(), validateSkill()
 
 ### Community 88 - "Community 88"
-Cohesion: 0.5
+Cohesion: 0.4
 Nodes (0): 
 
 ### Community 89 - "Community 89"
-Cohesion: 0.67
-Nodes (2): fetchSpirits(), preloadAllImages()
+Cohesion: 0.7
+Nodes (4): analyzePublishedData(), generateReport(), main(), saveToFile()
 
 ### Community 90 - "Community 90"
-Cohesion: 0.5
-Nodes (0): 
+Cohesion: 0.6
+Nodes (3): audit(), from_firestore_value(), get_access_token()
 
 ### Community 91 - "Community 91"
 Cohesion: 0.5
-Nodes (0): 
+Nodes (4): consolidate_data(), deep_merge(), 국내(data/), 수입(data/raw_imported/), 보완(data/enriched/) 데이터를 모두 병합합니다.     우선순위:, 간단한 딕셔너리 딥 머지 (metadata 등 처리용)
 
 ### Community 92 - "Community 92"
-Cohesion: 0.5
-Nodes (0): 
+Cohesion: 0.67
+Nodes (2): handleEnter(), triggerToast()
 
 ### Community 93 - "Community 93"
 Cohesion: 0.5
@@ -895,151 +929,151 @@ Nodes (0):
 
 ### Community 94 - "Community 94"
 Cohesion: 0.5
-Nodes (0): 
+Nodes (1): generateMetadata()
 
 ### Community 95 - "Community 95"
-Cohesion: 0.83
-Nodes (3): getGitRoot(), locateBinary(), main()
+Cohesion: 0.67
+Nodes (2): fetchSpirits(), preloadAllImages()
 
 ### Community 96 - "Community 96"
-Cohesion: 0.67
-Nodes (2): handleMetaCommand(), validateOutputPath()
+Cohesion: 0.5
+Nodes (0): 
 
 ### Community 97 - "Community 97"
-Cohesion: 0.83
-Nodes (3): handleSnapshot(), parseLine(), parseSnapshotArgs()
+Cohesion: 0.5
+Nodes (0): 
 
 ### Community 98 - "Community 98"
 Cohesion: 0.5
 Nodes (0): 
 
 ### Community 99 - "Community 99"
-Cohesion: 0.67
-Nodes (2): parseQueueFile(), parseQueueLine()
+Cohesion: 0.5
+Nodes (0): 
 
 ### Community 100 - "Community 100"
-Cohesion: 0.67
-Nodes (2): requireApiKey(), resolveApiKey()
+Cohesion: 0.83
+Nodes (3): getGitRoot(), locateBinary(), main()
 
 ### Community 101 - "Community 101"
 Cohesion: 0.67
-Nodes (2): generateResponsiveVariants(), variants()
+Nodes (2): handleMetaCommand(), validateOutputPath()
 
 ### Community 102 - "Community 102"
 Cohesion: 0.83
-Nodes (3): discoverSkillFiles(), discoverTemplates(), subdirs()
+Nodes (3): handleSnapshot(), parseLine(), parseSnapshotArgs()
 
 ### Community 103 - "Community 103"
 Cohesion: 0.5
 Nodes (0): 
 
 ### Community 104 - "Community 104"
-Cohesion: 0.5
-Nodes (0): 
+Cohesion: 0.67
+Nodes (2): parseQueueFile(), parseQueueLine()
 
 ### Community 105 - "Community 105"
-Cohesion: 0.5
-Nodes (0): 
+Cohesion: 0.67
+Nodes (2): requireApiKey(), resolveApiKey()
 
 ### Community 106 - "Community 106"
+Cohesion: 0.67
+Nodes (2): generateResponsiveVariants(), variants()
+
+### Community 107 - "Community 107"
+Cohesion: 0.83
+Nodes (3): discoverSkillFiles(), discoverTemplates(), subdirs()
+
+### Community 108 - "Community 108"
 Cohesion: 0.5
 Nodes (0): 
 
-### Community 107 - "Community 107"
-Cohesion: 0.5
-Nodes (1): UserController
-
-### Community 108 - "Community 108"
-Cohesion: 0.83
-Nodes (3): installSkillToTempHome(), parseCodexJSONL(), runCodexSkill()
-
 ### Community 109 - "Community 109"
-Cohesion: 0.83
-Nodes (3): callJudge(), judge(), outcomeJudge()
+Cohesion: 0.5
+Nodes (0): 
 
 ### Community 110 - "Community 110"
-Cohesion: 0.67
-Nodes (2): decodeHTMLEntities(), parseRSSFeed()
+Cohesion: 0.5
+Nodes (0): 
 
 ### Community 111 - "Community 111"
 Cohesion: 0.5
 Nodes (0): 
 
 ### Community 112 - "Community 112"
-Cohesion: 0.67
-Nodes (2): getAppPathUtil(), getDocumentPath()
+Cohesion: 0.5
+Nodes (1): UserController
 
 ### Community 113 - "Community 113"
 Cohesion: 0.83
-Nodes (3): enrichSpiritMetadata(), getCategoryPrompt(), updateMetadataFile()
+Nodes (3): installSkillToTempHome(), parseCodexJSONL(), runCodexSkill()
 
 ### Community 114 - "Community 114"
-Cohesion: 0.5
-Nodes (0): 
+Cohesion: 0.83
+Nodes (3): callJudge(), judge(), outcomeJudge()
 
 ### Community 115 - "Community 115"
 Cohesion: 0.67
-Nodes (2): generateNGrams(), generateSpiritSearchKeywords()
+Nodes (2): decodeHTMLEntities(), parseRSSFeed()
 
 ### Community 116 - "Community 116"
 Cohesion: 0.5
-Nodes (3): has_normalization_needs(), Analyze ALL spirits for normalization needs  This script checks all 2308 spiri, Check if a spirit name needs normalization
+Nodes (0): 
 
 ### Community 117 - "Community 117"
-Cohesion: 0.83
-Nodes (3): generateNgramKeywords(), sleep(), theGreatMigration()
+Cohesion: 0.67
+Nodes (2): getAppPathUtil(), getDocumentPath()
 
 ### Community 118 - "Community 118"
-Cohesion: 0.67
-Nodes (3): fetch_category_data(), main(), 특정 주종 코드에 대해 MFDS 데이터를 수집합니다.
+Cohesion: 0.83
+Nodes (3): enrichSpiritMetadata(), getCategoryPrompt(), updateMetadataFile()
 
 ### Community 119 - "Community 119"
-Cohesion: 0.83
-Nodes (3): generateEnglishContent(), generateKoreanContent(), main()
+Cohesion: 0.5
+Nodes (0): 
 
 ### Community 120 - "Community 120"
 Cohesion: 0.67
-Nodes (3): main(), 지시사항에 따른 최적화된 쿼리로 이미지 검색, search_image()
+Nodes (2): generateNGrams(), generateSpiritSearchKeywords()
 
 ### Community 121 - "Community 121"
 Cohesion: 0.5
-Nodes (0): 
+Nodes (3): has_normalization_needs(), Analyze ALL spirits for normalization needs  This script checks all 2308 spiri, Check if a spirit name needs normalization
 
 ### Community 122 - "Community 122"
+Cohesion: 0.83
+Nodes (3): generateNgramKeywords(), sleep(), theGreatMigration()
+
+### Community 123 - "Community 123"
+Cohesion: 0.67
+Nodes (3): fetch_category_data(), main(), 특정 주종 코드에 대해 MFDS 데이터를 수집합니다.
+
+### Community 124 - "Community 124"
+Cohesion: 0.83
+Nodes (3): generateEnglishContent(), generateKoreanContent(), main()
+
+### Community 125 - "Community 125"
+Cohesion: 0.67
+Nodes (3): main(), 지시사항에 따른 최적화된 쿼리로 이미지 검색, search_image()
+
+### Community 126 - "Community 126"
 Cohesion: 0.5
 Nodes (0): 
 
-### Community 123 - "Community 123"
-Cohesion: 0.83
-Nodes (3): generateNGrams(), generateSpiritSearchKeywords(), populateSearchKeywords()
-
-### Community 124 - "Community 124"
-Cohesion: 1.0
-Nodes (2): getLocale(), middleware()
-
-### Community 125 - "Community 125"
-Cohesion: 1.0
-Nodes (2): fetchUrl(), run()
-
-### Community 126 - "Community 126"
-Cohesion: 0.67
-Nodes (0): 
-
 ### Community 127 - "Community 127"
-Cohesion: 0.67
+Cohesion: 0.5
 Nodes (0): 
 
 ### Community 128 - "Community 128"
-Cohesion: 0.67
-Nodes (0): 
+Cohesion: 0.83
+Nodes (3): generateNGrams(), generateSpiritSearchKeywords(), populateSearchKeywords()
 
 ### Community 129 - "Community 129"
-Cohesion: 0.67
-Nodes (0): 
+Cohesion: 1.0
+Nodes (2): getLocale(), middleware()
 
 ### Community 130 - "Community 130"
-Cohesion: 0.67
-Nodes (0): 
+Cohesion: 1.0
+Nodes (2): fetchUrl(), run()
 
 ### Community 131 - "Community 131"
 Cohesion: 0.67
@@ -1082,108 +1116,108 @@ Cohesion: 0.67
 Nodes (0): 
 
 ### Community 141 - "Community 141"
-Cohesion: 1.0
-Nodes (2): api(), resetState()
+Cohesion: 0.67
+Nodes (0): 
 
 ### Community 142 - "Community 142"
-Cohesion: 1.0
-Nodes (2): generateMockup(), main()
+Cohesion: 0.67
+Nodes (0): 
 
 ### Community 143 - "Community 143"
-Cohesion: 1.0
-Nodes (2): briefToPrompt(), parseBrief()
+Cohesion: 0.67
+Nodes (0): 
 
 ### Community 144 - "Community 144"
-Cohesion: 1.0
-Nodes (2): checkCommand(), checkMockup()
+Cohesion: 0.67
+Nodes (0): 
 
 ### Community 145 - "Community 145"
-Cohesion: 1.0
-Nodes (2): compare(), generateCompareHtml()
+Cohesion: 0.67
+Nodes (0): 
 
 ### Community 146 - "Community 146"
-Cohesion: 1.0
-Nodes (2): diffMockups(), verifyAgainstMockup()
+Cohesion: 0.67
+Nodes (0): 
 
 ### Community 147 - "Community 147"
 Cohesion: 1.0
-Nodes (2): analyzeScreenshot(), evolve()
+Nodes (2): api(), resetState()
 
 ### Community 148 - "Community 148"
 Cohesion: 1.0
-Nodes (2): callImageGeneration(), generate()
+Nodes (2): generateMockup(), main()
 
 ### Community 149 - "Community 149"
 Cohesion: 1.0
-Nodes (2): openBrowser(), serve()
+Nodes (2): briefToPrompt(), parseBrief()
 
 ### Community 150 - "Community 150"
-Cohesion: 0.67
-Nodes (0): 
+Cohesion: 1.0
+Nodes (2): checkCommand(), checkMockup()
 
 ### Community 151 - "Community 151"
-Cohesion: 0.67
-Nodes (0): 
+Cohesion: 1.0
+Nodes (2): compare(), generateCompareHtml()
 
 ### Community 152 - "Community 152"
-Cohesion: 0.67
-Nodes (0): 
+Cohesion: 1.0
+Nodes (2): diffMockups(), verifyAgainstMockup()
 
 ### Community 153 - "Community 153"
-Cohesion: 0.67
-Nodes (0): 
+Cohesion: 1.0
+Nodes (2): analyzeScreenshot(), evolve()
 
 ### Community 154 - "Community 154"
-Cohesion: 0.67
-Nodes (0): 
+Cohesion: 1.0
+Nodes (2): callImageGeneration(), generate()
 
 ### Community 155 - "Community 155"
 Cohesion: 1.0
-Nodes (2): makeEntry(), makeResult()
+Nodes (2): openBrowser(), serve()
 
 ### Community 156 - "Community 156"
-Cohesion: 1.0
-Nodes (2): parseGeminiJSONL(), runGeminiSkill()
+Cohesion: 0.67
+Nodes (0): 
 
 ### Community 157 - "Community 157"
 Cohesion: 0.67
 Nodes (0): 
 
 ### Community 158 - "Community 158"
-Cohesion: 1.0
-Nodes (2): buildSearchUrl(), fetchSpiritImage()
-
-### Community 159 - "Community 159"
-Cohesion: 1.0
-Nodes (2): isBot(), isBotClient()
-
-### Community 160 - "Community 160"
-Cohesion: 1.0
-Nodes (2): getSpiritRobotsMeta(), isIndexableSpirit()
-
-### Community 161 - "Community 161"
 Cohesion: 0.67
 Nodes (0): 
 
+### Community 159 - "Community 159"
+Cohesion: 0.67
+Nodes (0): 
+
+### Community 160 - "Community 160"
+Cohesion: 0.67
+Nodes (0): 
+
+### Community 161 - "Community 161"
+Cohesion: 1.0
+Nodes (2): makeEntry(), makeResult()
+
 ### Community 162 - "Community 162"
 Cohesion: 1.0
-Nodes (2): convertDir(), main()
+Nodes (2): parseGeminiJSONL(), runGeminiSkill()
 
 ### Community 163 - "Community 163"
-Cohesion: 1.0
-Nodes (2): enrichPoorQualitySpirits(), sleep()
+Cohesion: 0.67
+Nodes (0): 
 
 ### Community 164 - "Community 164"
 Cohesion: 1.0
-Nodes (2): enrich_reviews_batch(), main()
+Nodes (2): buildSearchUrl(), fetchSpiritImage()
 
 ### Community 165 - "Community 165"
-Cohesion: 0.67
-Nodes (1): Filter Large Volume Spirits - Pipeline Step  Removes spirits with volume >= 50
+Cohesion: 1.0
+Nodes (2): isBot(), isBotClient()
 
 ### Community 166 - "Community 166"
 Cohesion: 1.0
-Nodes (2): escape_sql_string(), main()
+Nodes (2): getSpiritRobotsMeta(), isIndexableSpirit()
 
 ### Community 167 - "Community 167"
 Cohesion: 0.67
@@ -1191,39 +1225,39 @@ Nodes (0):
 
 ### Community 168 - "Community 168"
 Cohesion: 1.0
-Nodes (2): main(), run_step()
+Nodes (2): convertDir(), main()
 
 ### Community 169 - "Community 169"
-Cohesion: 0.67
-Nodes (0): 
+Cohesion: 1.0
+Nodes (2): enrichPoorQualitySpirits(), sleep()
 
 ### Community 170 - "Community 170"
 Cohesion: 1.0
-Nodes (2): delay(), runEnrichment()
+Nodes (2): enrich_reviews_batch(), main()
 
 ### Community 171 - "Community 171"
-Cohesion: 1.0
-Nodes (0): 
+Cohesion: 0.67
+Nodes (1): Filter Large Volume Spirits - Pipeline Step  Removes spirits with volume >= 50
 
 ### Community 172 - "Community 172"
 Cohesion: 1.0
-Nodes (0): 
+Nodes (2): escape_sql_string(), main()
 
 ### Community 173 - "Community 173"
-Cohesion: 1.0
+Cohesion: 0.67
 Nodes (0): 
 
 ### Community 174 - "Community 174"
 Cohesion: 1.0
-Nodes (0): 
+Nodes (2): main(), run_step()
 
 ### Community 175 - "Community 175"
-Cohesion: 1.0
+Cohesion: 0.67
 Nodes (0): 
 
 ### Community 176 - "Community 176"
 Cohesion: 1.0
-Nodes (0): 
+Nodes (2): delay(), runEnrichment()
 
 ### Community 177 - "Community 177"
 Cohesion: 1.0
@@ -1563,7 +1597,7 @@ Nodes (0):
 
 ### Community 261 - "Community 261"
 Cohesion: 1.0
-Nodes (1): Delete Large Volume Spirits from Firebase  Finds and deletes all spirits with
+Nodes (0): 
 
 ### Community 262 - "Community 262"
 Cohesion: 1.0
@@ -1639,7 +1673,7 @@ Nodes (0):
 
 ### Community 280 - "Community 280"
 Cohesion: 1.0
-Nodes (0): 
+Nodes (1): Delete Large Volume Spirits from Firebase  Finds and deletes all spirits with
 
 ### Community 281 - "Community 281"
 Cohesion: 1.0
@@ -2425,635 +2459,831 @@ Nodes (0):
 Cohesion: 1.0
 Nodes (0): 
 
+### Community 477 - "Community 477"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 478 - "Community 478"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 479 - "Community 479"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 480 - "Community 480"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 481 - "Community 481"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 482 - "Community 482"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 483 - "Community 483"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 484 - "Community 484"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 485 - "Community 485"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 486 - "Community 486"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 487 - "Community 487"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 488 - "Community 488"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 489 - "Community 489"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 490 - "Community 490"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 491 - "Community 491"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 492 - "Community 492"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 493 - "Community 493"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 494 - "Community 494"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 495 - "Community 495"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 496 - "Community 496"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 497 - "Community 497"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 498 - "Community 498"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 499 - "Community 499"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 500 - "Community 500"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 501 - "Community 501"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 502 - "Community 502"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 503 - "Community 503"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 504 - "Community 504"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 505 - "Community 505"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 506 - "Community 506"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 507 - "Community 507"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 508 - "Community 508"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 509 - "Community 509"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 510 - "Community 510"
+Cohesion: 1.0
+Nodes (1): 특정 디렉토리 내의 코드를 수집합니다. (MarkItDown 연동)
+
 ## Knowledge Gaps
-- **45 isolated node(s):** `Analyze ALL spirits for normalization needs  This script checks all 2308 spiri`, `Check if a spirit name needs normalization`, `Spirit Data Normalization Analyzer  This script analyzes spirits data from Fir`, `Analyze a spirit name for patterns that should be extracted.`, `Load ALL spirits data from the API.` (+40 more)
+- **46 isolated node(s):** `Analyze ALL spirits for normalization needs  This script checks all 2308 spiri`, `Check if a spirit name needs normalization`, `Spirit Data Normalization Analyzer  This script analyzes spirits data from Fir`, `Analyze a spirit name for patterns that should be extracted.`, `Load ALL spirits data from the API.` (+41 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **Thin community `Community 171`** (2 nodes): `run()`, `find-thin.ts`
+- **Thin community `Community 177`** (2 nodes): `run()`, `find-thin.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 172`** (2 nodes): `checkData()`, `script_check_data.ts`
+- **Thin community `Community 178`** (2 nodes): `checkData()`, `script_check_data.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 173`** (2 nodes): `checkData()`, `script_check_data_client.ts`
+- **Thin community `Community 179`** (2 nodes): `checkData()`, `script_check_data_client.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 174`** (2 nodes): `testRegistration()`, `verify-registration.ts`
+- **Thin community `Community 180`** (2 nodes): `testRegistration()`, `verify-registration.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 175`** (2 nodes): `robots.ts`, `robots()`
+- **Thin community `Community 181`** (2 nodes): `robots.ts`, `robots()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 176`** (2 nodes): `layout.tsx`, `AdminLayout()`
+- **Thin community `Community 182`** (2 nodes): `reviews.ts`, `submitMicroReviewAction()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 177`** (2 nodes): `loading.tsx`, `CabinetSpiritCardSkeleton()`
+- **Thin community `Community 183`** (2 nodes): `layout.tsx`, `AdminLayout()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 178`** (2 nodes): `page.tsx`, `ContactPage()`
+- **Thin community `Community 184`** (2 nodes): `loading.tsx`, `CabinetSpiritCardSkeleton()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 179`** (2 nodes): `layout.tsx`, `MBTILayout()`
+- **Thin community `Community 185`** (2 nodes): `page.tsx`, `ContactPage()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 180`** (2 nodes): `layout.tsx`, `PerfectPourLayout()`
+- **Thin community `Community 186`** (2 nodes): `layout.tsx`, `MBTILayout()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 181`** (2 nodes): `page.tsx`, `RedGrapeHub()`
+- **Thin community `Community 187`** (2 nodes): `layout.tsx`, `PerfectPourLayout()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 182`** (2 nodes): `page.tsx`, `WhiteGrapeHub()`
+- **Thin community `Community 188`** (2 nodes): `page.tsx`, `RedGrapeHub()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 183`** (2 nodes): `layout.tsx`, `WorldCupLayout()`
+- **Thin community `Community 189`** (2 nodes): `page.tsx`, `WhiteGrapeHub()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 184`** (2 nodes): `layout.tsx`, `ReviewsLayout()`
+- **Thin community `Community 190`** (2 nodes): `layout.tsx`, `WorldCupLayout()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 185`** (2 nodes): `loadStats()`, `AdminStats.tsx`
+- **Thin community `Community 191`** (2 nodes): `layout.tsx`, `ReviewsLayout()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 186`** (2 nodes): `LoginClient.tsx`, `LoginClient()`
+- **Thin community `Community 192`** (2 nodes): `loadStats()`, `AdminStats.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 187`** (2 nodes): `AddSpiritCard()`, `AddSpiritCard.tsx`
+- **Thin community `Community 193`** (2 nodes): `LoginClient.tsx`, `LoginClient()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 188`** (2 nodes): `CabinetSpiritCardComponent()`, `CabinetSpiritCard.tsx`
+- **Thin community `Community 194`** (2 nodes): `AddSpiritCard()`, `AddSpiritCard.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 189`** (2 nodes): `MyCabinet.tsx`, `MyCabinet()`
+- **Thin community `Community 195`** (2 nodes): `CabinetSpiritCardComponent()`, `CabinetSpiritCard.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 190`** (2 nodes): `PreferenceExploration.tsx`, `PreferenceExploration()`
+- **Thin community `Community 196`** (2 nodes): `FlavorView.tsx`, `handleAnalyze()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 191`** (2 nodes): `TastePublicReport.tsx`, `TastePublicReport()`
+- **Thin community `Community 197`** (2 nodes): `MyCabinet.tsx`, `MyCabinet()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 192`** (2 nodes): `AdSlot()`, `AdSlot.tsx`
+- **Thin community `Community 198`** (2 nodes): `PreferenceExploration.tsx`, `PreferenceExploration()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 193`** (2 nodes): `DailyPick.tsx`, `fetchRandomSpirit()`
+- **Thin community `Community 199`** (2 nodes): `TastePublicReport.tsx`, `TastePublicReport()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 194`** (2 nodes): `WikiSnippetSection.tsx`, `WikiSnippetSection()`
+- **Thin community `Community 200`** (2 nodes): `TasteRecommendationSection.tsx`, `TasteRecommendationSection()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 195`** (2 nodes): `BottomNav()`, `BottomNav.tsx`
+- **Thin community `Community 201`** (2 nodes): `AdSlot()`, `AdSlot.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 196`** (2 nodes): `ScrollToTop.tsx`, `ScrollToTop()`
+- **Thin community `Community 202`** (2 nodes): `DailyPick.tsx`, `fetchRandomSpirit()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 197`** (2 nodes): `ModificationRequestButton.tsx`, `handleSubmit()`
+- **Thin community `Community 203`** (2 nodes): `WikiSnippetSection.tsx`, `WikiSnippetSection()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 198`** (2 nodes): `BackButton()`, `BackButton.tsx`
+- **Thin community `Community 204`** (2 nodes): `BottomNav()`, `BottomNav.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 199`** (2 nodes): `ExploreContent.tsx`, `handleStatusChange()`
+- **Thin community `Community 205`** (2 nodes): `ScrollToTop.tsx`, `ScrollToTop()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 200`** (2 nodes): `GoogleAd.tsx`, `GoogleAd()`
+- **Thin community `Community 206`** (2 nodes): `ModificationRequestButton.tsx`, `handleSubmit()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 201`** (2 nodes): `LanguageSwitcher.tsx`, `LanguageSwitcher()`
+- **Thin community `Community 207`** (2 nodes): `BackButton()`, `BackButton.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 202`** (2 nodes): `SaveButton.tsx`, `SaveButton()`
+- **Thin community `Community 208`** (2 nodes): `ExploreContent.tsx`, `handleStatusChange()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 203`** (2 nodes): `StickyFooterAd.tsx`, `StickyFooterAd()`
+- **Thin community `Community 209`** (2 nodes): `GoogleAd.tsx`, `GoogleAd()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 204`** (2 nodes): `SuccessToast.tsx`, `SuccessToast()`
+- **Thin community `Community 210`** (2 nodes): `LanguageSwitcher.tsx`, `LanguageSwitcher()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 205`** (2 nodes): `ThemeToggle.tsx`, `ThemeToggle()`
+- **Thin community `Community 211`** (2 nodes): `SaveButton.tsx`, `SaveButton()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 206`** (2 nodes): `getCookiePickerHTML()`, `cookie-picker-ui.ts`
+- **Thin community `Community 212`** (2 nodes): `SpiritCard.tsx`, `handleAdd()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 207`** (2 nodes): `platform.ts`, `isPathWithin()`
+- **Thin community `Community 213`** (2 nodes): `StickyFooterAd.tsx`, `StickyFooterAd()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 208`** (2 nodes): `sidebar-utils.ts`, `sanitizeExtensionUrl()`
+- **Thin community `Community 214`** (2 nodes): `SuccessToast.tsx`, `SuccessToast()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 209`** (2 nodes): `write-commands.ts`, `handleWriteCommand()`
+- **Thin community `Community 215`** (2 nodes): `ThemeToggle.tsx`, `ThemeToggle()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 210`** (2 nodes): `run()`, `gstack-config.test.ts`
+- **Thin community `Community 216`** (2 nodes): `getCookiePickerHTML()`, `cookie-picker-ui.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 211`** (2 nodes): `snapshot.test.ts`, `shutdown()`
+- **Thin community `Community 217`** (2 nodes): `platform.ts`, `isPathWithin()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 212`** (2 nodes): `test-server.ts`, `startTestServer()`
+- **Thin community `Community 218`** (2 nodes): `sidebar-utils.ts`, `sanitizeExtensionUrl()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 213`** (2 nodes): `generateDesignToCodePrompt()`, `design-to-code.ts`
+- **Thin community `Community 219`** (2 nodes): `write-commands.ts`, `handleWriteCommand()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 214`** (2 nodes): `createTestPng()`, `gallery.test.ts`
+- **Thin community `Community 220`** (2 nodes): `run()`, `gstack-config.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 215`** (2 nodes): `popup.js`, `updateStatus()`
+- **Thin community `Community 221`** (2 nodes): `snapshot.test.ts`, `shutdown()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 216`** (2 nodes): `regenerateAndValidate()`, `dev-skill.ts`
+- **Thin community `Community 222`** (2 nodes): `test-server.ts`, `startTestServer()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 217`** (2 nodes): `loadResult()`, `eval-compare.ts`
+- **Thin community `Community 223`** (2 nodes): `generateDesignToCodePrompt()`, `design-to-code.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 218`** (2 nodes): `codexErrorHandling()`, `constants.ts`
+- **Thin community `Community 224`** (2 nodes): `createTestPng()`, `gallery.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 219`** (2 nodes): `getAllSkillMds()`, `audit-compliance.test.ts`
+- **Thin community `Community 225`** (2 nodes): `popup.js`, `updateStatus()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 220`** (2 nodes): `extractDescription()`, `gen-skill-docs.test.ts`
+- **Thin community `Community 226`** (2 nodes): `regenerateAndValidate()`, `dev-skill.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 221`** (2 nodes): `review-log.test.ts`, `run()`
+- **Thin community `Community 227`** (2 nodes): `loadResult()`, `eval-compare.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 222`** (2 nodes): `skill-e2e-bws.test.ts`, `run()`
+- **Thin community `Community 228`** (2 nodes): `codexErrorHandling()`, `constants.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 223`** (2 nodes): `skill-e2e-cso.test.ts`, `run()`
+- **Thin community `Community 229`** (2 nodes): `getAllSkillMds()`, `audit-compliance.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 224`** (2 nodes): `skill-e2e-deploy.test.ts`, `run()`
+- **Thin community `Community 230`** (2 nodes): `extractDescription()`, `gen-skill-docs.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 225`** (2 nodes): `skill-e2e-qa-bugs.test.ts`, `runPlantedBugEval()`
+- **Thin community `Community 231`** (2 nodes): `review-log.test.ts`, `run()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 226`** (2 nodes): `skill-e2e-review.test.ts`, `run()`
+- **Thin community `Community 232`** (2 nodes): `skill-e2e-bws.test.ts`, `run()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 227`** (2 nodes): `skill-e2e-sidebar.test.ts`, `api()`
+- **Thin community `Community 233`** (2 nodes): `skill-e2e-cso.test.ts`, `run()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 228`** (2 nodes): `skill-e2e-workflow.test.ts`, `run()`
+- **Thin community `Community 234`** (2 nodes): `skill-e2e-deploy.test.ts`, `run()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 229`** (2 nodes): `skill-parser.test.ts`, `writeFixture()`
+- **Thin community `Community 235`** (2 nodes): `skill-e2e-qa-bugs.test.ts`, `runPlantedBugEval()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 230`** (2 nodes): `skill-validation.test.ts`, `skeleton()`
+- **Thin community `Community 236`** (2 nodes): `skill-e2e-review.test.ts`, `run()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 231`** (2 nodes): `touchfiles.test.ts`, `run()`
+- **Thin community `Community 237`** (2 nodes): `skill-e2e-sidebar.test.ts`, `api()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 232`** (2 nodes): `createCoverageAuditFixture()`, `coverage-audit-fixture.ts`
+- **Thin community `Community 238`** (2 nodes): `skill-e2e-workflow.test.ts`, `run()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 233`** (2 nodes): `getDictionary()`, `get-dictionary.ts`
+- **Thin community `Community 239`** (2 nodes): `skill-parser.test.ts`, `writeFixture()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 234`** (2 nodes): `modification-actions.ts`, `submitModificationRequest()`
+- **Thin community `Community 240`** (2 nodes): `skill-validation.test.ts`, `skeleton()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 235`** (2 nodes): `spirits-guide-data.ts`, `getSpiritCategory()`
+- **Thin community `Community 241`** (2 nodes): `touchfiles.test.ts`, `run()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 236`** (2 nodes): `tag-colors.ts`, `getTagColor()`
+- **Thin community `Community 242`** (2 nodes): `createCoverageAuditFixture()`, `coverage-audit-fixture.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 237`** (2 nodes): `hasServiceAccountCredentials()`, `index.ts`
+- **Thin community `Community 243`** (2 nodes): `getDictionary()`, `get-dictionary.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 238`** (2 nodes): `fromFirestore()`, `firestore-rest.test.ts`
+- **Thin community `Community 244`** (2 nodes): `modification-actions.ts`, `submitModificationRequest()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 239`** (2 nodes): `useDragScroll.ts`, `useDragScroll()`
+- **Thin community `Community 245`** (2 nodes): `spirits-guide-data.ts`, `getSpiritCategory()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 240`** (2 nodes): `fetchFromFoodSafety()`, `collection.ts`
+- **Thin community `Community 246`** (2 nodes): `tag-colors.ts`, `getTagColor()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 241`** (2 nodes): `buildTasteAnalysisPrompt()`, `aiPromptBuilder.ts`
+- **Thin community `Community 247`** (2 nodes): `hasServiceAccountCredentials()`, `index.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 242`** (2 nodes): `ingestFoodSafetyData()`, `foodSafetyKoreaIngestion.ts`
+- **Thin community `Community 248`** (2 nodes): `fromFirestore()`, `firestore-rest.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 243`** (2 nodes): `getCategoryFallbackImage()`, `image-fallback.ts`
+- **Thin community `Community 249`** (2 nodes): `useDragScroll.ts`, `useDragScroll()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 244`** (2 nodes): `getOptimizedImageUrl()`, `image-optimization.ts`
+- **Thin community `Community 250`** (2 nodes): `fetchFromFoodSafety()`, `collection.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 245`** (2 nodes): `nickname-generator.ts`, `generateRandomNickname()`
+- **Thin community `Community 251`** (2 nodes): `buildTasteAnalysisPrompt()`, `aiPromptBuilder.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 246`** (2 nodes): `normalization.ts`, `normalizeSpiritData()`
+- **Thin community `Community 252`** (2 nodes): `calculateInitialContentRating()`, `content-rating.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 247`** (2 nodes): `rating-colors.ts`, `getRatingColor()`
+- **Thin community `Community 253`** (2 nodes): `ingestFoodSafetyData()`, `foodSafetyKoreaIngestion.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 248`** (2 nodes): `wiki-snippet.ts`, `getRandomWikiSnippet()`
+- **Thin community `Community 254`** (2 nodes): `getCategoryFallbackImage()`, `image-fallback.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 249`** (2 nodes): `auditPublishStatus()`, `audit-publish-status.js`
+- **Thin community `Community 255`** (2 nodes): `getOptimizedImageUrl()`, `image-optimization.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 250`** (2 nodes): `auditData()`, `audit_firebase_data.js`
+- **Thin community `Community 256`** (2 nodes): `nickname-generator.ts`, `generateRandomNickname()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 251`** (2 nodes): `getAuditData()`, `audit_subcategories.js`
+- **Thin community `Community 257`** (2 nodes): `normalization.ts`, `normalizeSpiritData()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 252`** (2 nodes): `main()`, `batch-process-published.ts`
+- **Thin community `Community 258`** (2 nodes): `rating-colors.ts`, `getRatingColor()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 253`** (2 nodes): `checkImageUrls()`, `check-image-urls.js`
+- **Thin community `Community 259`** (2 nodes): `wiki-resolver.ts`, `resolveWikiCategory()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 254`** (2 nodes): `check()`, `check_role.js`
+- **Thin community `Community 260`** (2 nodes): `wiki-snippet.ts`, `getRandomWikiSnippet()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 255`** (2 nodes): `convert()`, `convert-og-image.js`
+- **Thin community `Community 261`** (2 nodes): `auditData()`, `audit-logic-deep.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 256`** (2 nodes): `convertToWebP()`, `convert-to-webp.js`
+- **Thin community `Community 262`** (2 nodes): `auditData()`, `audit-logic.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 257`** (2 nodes): `checkDatabaseStatus()`, `db-status-check-js.js`
+- **Thin community `Community 263`** (2 nodes): `auditPublishStatus()`, `audit-publish-status.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 258`** (2 nodes): `checkDatabaseStatus()`, `db-status-check.ts`
+- **Thin community `Community 264`** (2 nodes): `audit()`, `audit-sql.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 259`** (2 nodes): `main()`, `debug-news-db.ts`
+- **Thin community `Community 265`** (2 nodes): `auditData()`, `audit_firebase_data.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 260`** (2 nodes): `debug_search()`, `debug_search.py`
+- **Thin community `Community 266`** (2 nodes): `getAuditData()`, `audit_subcategories.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 261`** (2 nodes): `Delete Large Volume Spirits from Firebase  Finds and deletes all spirits with`, `delete_large_volumes.py`
+- **Thin community `Community 267`** (2 nodes): `main()`, `batch-process-published.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 262`** (2 nodes): `diagnose()`, `diagnose-data-health.ts`
+- **Thin community `Community 268`** (2 nodes): `check()`, `check-audit.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 263`** (2 nodes): `dryRun()`, `dry-run-specific.ts`
+- **Thin community `Community 269`** (2 nodes): `checkImageUrls()`, `check-image-urls.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 264`** (2 nodes): `exportSummaries()`, `export_data_summary.js`
+- **Thin community `Community 270`** (2 nodes): `checkNews()`, `check-news-debug.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 265`** (2 nodes): `extractDistilleries()`, `extract-distilleries.ts`
+- **Thin community `Community 271`** (2 nodes): `check()`, `check_role.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 266`** (2 nodes): `fixThumbnailUrls()`, `fix_thumbnail_urls.js`
+- **Thin community `Community 272`** (2 nodes): `convert()`, `convert-og-image.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 267`** (2 nodes): `getExample()`, `get-example-spirit.ts`
+- **Thin community `Community 273`** (2 nodes): `convertToWebP()`, `convert-to-webp.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 268`** (2 nodes): `migrate()`, `migrate_to_firestore.js`
+- **Thin community `Community 274`** (2 nodes): `checkDatabaseStatus()`, `db-status-check-js.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 269`** (2 nodes): `bulkPublishReadySpirits()`, `publish-ready-data.js`
+- **Thin community `Community 275`** (2 nodes): `checkDatabaseStatus()`, `db-status-check.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 270`** (2 nodes): `bulkPublishViaAPI()`, `publish-ready-data.ts`
+- **Thin community `Community 276`** (2 nodes): `debug()`, `debug-firestore.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 271`** (2 nodes): `randomSamplingRun()`, `random-sampling-run.ts`
+- **Thin community `Community 277`** (2 nodes): `main()`, `debug-news-db.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 272`** (2 nodes): `resetArtifacts()`, `reset_artifacts.js`
+- **Thin community `Community 278`** (2 nodes): `debug_search()`, `debug_search.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 273`** (2 nodes): `structuralMigration()`, `schema-phase2-cleanup.ts`
+- **Thin community `Community 279`** (2 nodes): `deepCheckUsers()`, `deep-check-users.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 274`** (2 nodes): `set_admin.js`, `setAdmin()`
+- **Thin community `Community 280`** (2 nodes): `Delete Large Volume Spirits from Firebase  Finds and deletes all spirits with`, `delete_large_volumes.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 275`** (2 nodes): `sync-thumbnail-urls.js`, `syncThumbnailUrls()`
+- **Thin community `Community 281`** (2 nodes): `diagnose()`, `diagnose-data-health.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 276`** (2 nodes): `test-api.ts`, `test()`
+- **Thin community `Community 282`** (2 nodes): `dryRun()`, `dry-run-specific.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 277`** (2 nodes): `test-env-key.ts`, `test()`
+- **Thin community `Community 283`** (2 nodes): `exportSummaries()`, `export_data_summary.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 278`** (2 nodes): `test-news-api.ts`, `testSearch()`
+- **Thin community `Community 284`** (2 nodes): `extractDistilleries()`, `extract-distilleries.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 279`** (2 nodes): `test_pairing.ts`, `dryRun()`
+- **Thin community `Community 285`** (2 nodes): `findSpiritId()`, `find-spirit-id.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 280`** (2 nodes): `verify-alignment.js`, `verify()`
+- **Thin community `Community 286`** (2 nodes): `fixThumbnailUrls()`, `fix_thumbnail_urls.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 281`** (1 nodes): `fix-all-colors.js`
+- **Thin community `Community 287`** (2 nodes): `getExample()`, `get-example-spirit.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 282`** (1 nodes): `fix-clean-vibrant.js`
+- **Thin community `Community 288`** (2 nodes): `listAppIds()`, `list-app-ids.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 283`** (1 nodes): `fix-colors.js`
+- **Thin community `Community 289`** (2 nodes): `listCollections()`, `list-collections.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 284`** (1 nodes): `fix-pure-vibrant.js`
+- **Thin community `Community 290`** (2 nodes): `migrate()`, `migrate_to_firestore.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 285`** (1 nodes): `fix-solid-colors.js`
+- **Thin community `Community 291`** (2 nodes): `bulkPublishReadySpirits()`, `publish-ready-data.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 286`** (1 nodes): `fix-solid-ultimate.js`
+- **Thin community `Community 292`** (2 nodes): `bulkPublishViaAPI()`, `publish-ready-data.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 287`** (1 nodes): `fix-ultimate-clean.js`
+- **Thin community `Community 293`** (2 nodes): `randomSamplingRun()`, `random-sampling-run.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 288`** (1 nodes): `fix-ultra-contrast.js`
+- **Thin community `Community 294`** (2 nodes): `resetArtifacts()`, `reset_artifacts.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 289`** (1 nodes): `fix_wiki_constants.py`
+- **Thin community `Community 295`** (2 nodes): `structuralMigration()`, `schema-phase2-cleanup.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 290`** (1 nodes): `i18n-config.ts`
+- **Thin community `Community 296`** (2 nodes): `set_admin.js`, `setAdmin()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 291`** (1 nodes): `merge-hubs.js`
+- **Thin community `Community 297`** (2 nodes): `sync-published-seo.ts`, `syncPublishedSEO()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 292`** (1 nodes): `next-env.d.ts`
+- **Thin community `Community 298`** (2 nodes): `sync-thumbnail-urls.js`, `syncThumbnailUrls()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 293`** (1 nodes): `next.config.js`
+- **Thin community `Community 299`** (2 nodes): `test-admin-sync.ts`, `testAdminSync()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 294`** (1 nodes): `test_localization.ts`
+- **Thin community `Community 300`** (2 nodes): `test-api.ts`, `test()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 295`** (1 nodes): `route.tsx`
+- **Thin community `Community 301`** (2 nodes): `test-env-key.ts`, `test()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 296`** (1 nodes): `route.tsx`
+- **Thin community `Community 302`** (2 nodes): `test-news-api.ts`, `testSearch()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 297`** (1 nodes): `page.tsx`
+- **Thin community `Community 303`** (2 nodes): `test_pairing.ts`, `dryRun()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 298`** (1 nodes): `page.tsx`
+- **Thin community `Community 304`** (2 nodes): `verify-alignment.js`, `verify()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 299`** (1 nodes): `page.tsx`
+- **Thin community `Community 305`** (1 nodes): `fix-all-colors.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 300`** (1 nodes): `GuestOverlay.tsx`
+- **Thin community `Community 306`** (1 nodes): `fix-clean-vibrant.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 301`** (1 nodes): `TasteRadar.tsx`
+- **Thin community `Community 307`** (1 nodes): `fix-colors.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 302`** (1 nodes): `HomeClient.tsx`
+- **Thin community `Community 308`** (1 nodes): `fix-pure-vibrant.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 303`** (1 nodes): `NewsSection.tsx`
+- **Thin community `Community 309`** (1 nodes): `fix-solid-colors.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 304`** (1 nodes): `Header.tsx`
+- **Thin community `Community 310`** (1 nodes): `fix-solid-ultimate.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 305`** (1 nodes): `AvatarSelector.tsx`
+- **Thin community `Community 311`** (1 nodes): `fix-ultimate-clean.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 306`** (1 nodes): `CabinetSelectionModal.tsx`
+- **Thin community `Community 312`** (1 nodes): `fix-ultra-contrast.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 307`** (1 nodes): `ChatSommelier.tsx`
+- **Thin community `Community 313`** (1 nodes): `fix_wiki_constants.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 308`** (1 nodes): `RandomBackground.tsx`
+- **Thin community `Community 314`** (1 nodes): `i18n-config.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 309`** (1 nodes): `ThemeSwitcher.tsx`
+- **Thin community `Community 315`** (1 nodes): `merge-hubs.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 310`** (1 nodes): `commands.ts`
+- **Thin community `Community 316`** (1 nodes): `next-env.d.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 311`** (1 nodes): `activity.test.ts`
+- **Thin community `Community 317`** (1 nodes): `next.config.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 312`** (1 nodes): `browser-manager-unit.test.ts`
+- **Thin community `Community 318`** (1 nodes): `test_localization.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 313`** (1 nodes): `bun-polyfill.test.ts`
+- **Thin community `Community 319`** (1 nodes): `route.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 314`** (1 nodes): `commands.test.ts`
+- **Thin community `Community 320`** (1 nodes): `route.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 315`** (1 nodes): `config.test.ts`
+- **Thin community `Community 321`** (1 nodes): `page.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 316`** (1 nodes): `find-browse.test.ts`
+- **Thin community `Community 322`** (1 nodes): `page.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 317`** (1 nodes): `handoff.test.ts`
+- **Thin community `Community 323`** (1 nodes): `page.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 318`** (1 nodes): `path-validation.test.ts`
+- **Thin community `Community 324`** (1 nodes): `GuestOverlay.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 319`** (1 nodes): `platform.test.ts`
+- **Thin community `Community 325`** (1 nodes): `TasteRadar.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 320`** (1 nodes): `sidebar-unit.test.ts`
+- **Thin community `Community 326`** (1 nodes): `HomeClient.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 321`** (1 nodes): `url-validation.test.ts`
+- **Thin community `Community 327`** (1 nodes): `NewsSection.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 322`** (1 nodes): `watch.test.ts`
+- **Thin community `Community 328`** (1 nodes): `Header.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 323`** (1 nodes): `commands.ts`
+- **Thin community `Community 329`** (1 nodes): `AvatarSelector.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 324`** (1 nodes): `eval-list.ts`
+- **Thin community `Community 330`** (1 nodes): `RelatedWikiSection.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 325`** (1 nodes): `eval-select.ts`
+- **Thin community `Community 331`** (1 nodes): `CabinetSelectionModal.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 326`** (1 nodes): `eval-summary.ts`
+- **Thin community `Community 332`** (1 nodes): `ChatSommelier.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 327`** (1 nodes): `skill-check.ts`
+- **Thin community `Community 333`** (1 nodes): `RandomBackground.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 328`** (1 nodes): `index.ts`
+- **Thin community `Community 334`** (1 nodes): `ThemeSwitcher.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 329`** (1 nodes): `types.ts`
+- **Thin community `Community 335`** (1 nodes): `commands.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 330`** (1 nodes): `index.ts`
+- **Thin community `Community 336`** (1 nodes): `activity.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 331`** (1 nodes): `index.ts`
+- **Thin community `Community 337`** (1 nodes): `browser-manager-unit.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 332`** (1 nodes): `index.ts`
+- **Thin community `Community 338`** (1 nodes): `bun-polyfill.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 333`** (1 nodes): `global-discover.test.ts`
+- **Thin community `Community 339`** (1 nodes): `commands.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 334`** (1 nodes): `uninstall.test.ts`
+- **Thin community `Community 340`** (1 nodes): `config.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 335`** (1 nodes): `gemini-session-runner.test.ts`
+- **Thin community `Community 341`** (1 nodes): `find-browse.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 336`** (1 nodes): `observability.test.ts`
+- **Thin community `Community 342`** (1 nodes): `handoff.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 337`** (1 nodes): `session-runner.test.ts`
+- **Thin community `Community 343`** (1 nodes): `path-validation.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 338`** (1 nodes): `firebase-admin.ts`
+- **Thin community `Community 344`** (1 nodes): `platform.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 339`** (1 nodes): `firebase.ts`
+- **Thin community `Community 345`** (1 nodes): `sidebar-unit.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 340`** (1 nodes): `about-content.ts`
+- **Thin community `Community 346`** (1 nodes): `url-validation.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 341`** (1 nodes): `api-codes.ts`
+- **Thin community `Community 347`** (1 nodes): `watch.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 342`** (1 nodes): `mbti-data.ts`
+- **Thin community `Community 348`** (1 nodes): `commands.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 343`** (1 nodes): `baijiu.ts`
+- **Thin community `Community 349`** (1 nodes): `eval-list.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 344`** (1 nodes): `beer.ts`
+- **Thin community `Community 350`** (1 nodes): `eval-select.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 345`** (1 nodes): `blended-whisky.ts`
+- **Thin community `Community 351`** (1 nodes): `eval-summary.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 346`** (1 nodes): `bourbon.ts`
+- **Thin community `Community 352`** (1 nodes): `skill-check.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 347`** (1 nodes): `brandy-regions.ts`
+- **Thin community `Community 353`** (1 nodes): `index.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 348`** (1 nodes): `brandy.ts`
+- **Thin community `Community 354`** (1 nodes): `types.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 349`** (1 nodes): `champagne.ts`
+- **Thin community `Community 355`** (1 nodes): `index.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 350`** (1 nodes): `cheongju-vs-sake.ts`
+- **Thin community `Community 356`** (1 nodes): `index.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 351`** (1 nodes): `cheongju.ts`
+- **Thin community `Community 357`** (1 nodes): `index.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 352`** (1 nodes): `cognac.ts`
+- **Thin community `Community 358`** (1 nodes): `global-discover.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 353`** (1 nodes): `gin.ts`
+- **Thin community `Community 359`** (1 nodes): `uninstall.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 354`** (1 nodes): `grain-whisky.ts`
+- **Thin community `Community 360`** (1 nodes): `gemini-session-runner.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 355`** (1 nodes): `korean-spirits-by-abv.ts`
+- **Thin community `Community 361`** (1 nodes): `observability.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 356`** (1 nodes): `korean-traditional-spirits.ts`
+- **Thin community `Community 362`** (1 nodes): `session-runner.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 357`** (1 nodes): `korean-whisky.ts`
+- **Thin community `Community 363`** (1 nodes): `firebase-admin.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 358`** (1 nodes): `liqueur.ts`
+- **Thin community `Community 364`** (1 nodes): `firebase.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 359`** (1 nodes): `makgeolli-guide.ts`
+- **Thin community `Community 365`** (1 nodes): `about-content.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 360`** (1 nodes): `makgeolli.ts`
+- **Thin community `Community 366`** (1 nodes): `api-codes.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 361`** (1 nodes): `mezcal.ts`
+- **Thin community `Community 367`** (1 nodes): `mbti-data.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 362`** (1 nodes): `oak-barrel.ts`
+- **Thin community `Community 368`** (1 nodes): `baijiu.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 363`** (1 nodes): `red-wine-regions.ts`
+- **Thin community `Community 369`** (1 nodes): `beer.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 364`** (1 nodes): `red-wine.ts`
+- **Thin community `Community 370`** (1 nodes): `blended-whisky.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 365`** (1 nodes): `rum.ts`
+- **Thin community `Community 371`** (1 nodes): `bourbon.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 366`** (1 nodes): `sake.ts`
+- **Thin community `Community 372`** (1 nodes): `brandy-regions.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 367`** (1 nodes): `scotch-whisky-regions.ts`
+- **Thin community `Community 373`** (1 nodes): `brandy.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 368`** (1 nodes): `shochu.ts`
+- **Thin community `Community 374`** (1 nodes): `champagne.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 369`** (1 nodes): `single-malt-vs-blended.ts`
+- **Thin community `Community 375`** (1 nodes): `cheongju-vs-sake.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 370`** (1 nodes): `single-malt.ts`
+- **Thin community `Community 376`** (1 nodes): `cheongju.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 371`** (1 nodes): `soju-diluted.ts`
+- **Thin community `Community 377`** (1 nodes): `cognac.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 372`** (1 nodes): `soju-distilled.ts`
+- **Thin community `Community 378`** (1 nodes): `gin.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 373`** (1 nodes): `soju-guide.ts`
+- **Thin community `Community 379`** (1 nodes): `grain-whisky.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 374`** (1 nodes): `tequila.ts`
+- **Thin community `Community 380`** (1 nodes): `korean-spirits-by-abv.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 375`** (1 nodes): `types.js`
+- **Thin community `Community 381`** (1 nodes): `korean-traditional-spirits.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 376`** (1 nodes): `types.ts`
+- **Thin community `Community 382`** (1 nodes): `korean-whisky.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 377`** (1 nodes): `us-whiskey-regions.ts`
+- **Thin community `Community 383`** (1 nodes): `liqueur.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 378`** (1 nodes): `vodka.ts`
+- **Thin community `Community 384`** (1 nodes): `makgeolli-guide.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 379`** (1 nodes): `white-wine-regions.ts`
+- **Thin community `Community 385`** (1 nodes): `makgeolli.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 380`** (1 nodes): `white-wine.ts`
+- **Thin community `Community 386`** (1 nodes): `mezcal.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 381`** (1 nodes): `wine.ts`
+- **Thin community `Community 387`** (1 nodes): `oak-barrel.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 382`** (1 nodes): `yakju-vs-cheongju.ts`
+- **Thin community `Community 388`** (1 nodes): `red-wine-regions.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 383`** (1 nodes): `yakju.ts`
+- **Thin community `Community 389`** (1 nodes): `red-wine.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 384`** (1 nodes): `airen.ts`
+- **Thin community `Community 390`** (1 nodes): `rum.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 385`** (1 nodes): `alicante-bouschet.ts`
+- **Thin community `Community 391`** (1 nodes): `sake.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 386`** (1 nodes): `aligote.ts`
+- **Thin community `Community 392`** (1 nodes): `scotch-whisky-regions.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 387`** (1 nodes): `aramon.ts`
+- **Thin community `Community 393`** (1 nodes): `shochu.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 388`** (1 nodes): `auxerrois.ts`
+- **Thin community `Community 394`** (1 nodes): `single-malt-vs-blended.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 389`** (1 nodes): `barbera.ts`
+- **Thin community `Community 395`** (1 nodes): `single-malt.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 390`** (1 nodes): `blaufrankisch.ts`
+- **Thin community `Community 396`** (1 nodes): `soju-diluted.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 391`** (1 nodes): `cabernet-franc.ts`
+- **Thin community `Community 397`** (1 nodes): `soju-distilled.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 392`** (1 nodes): `cabernet-sauvignon.ts`
+- **Thin community `Community 398`** (1 nodes): `soju-guide.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 393`** (1 nodes): `carmenere.ts`
+- **Thin community `Community 399`** (1 nodes): `tequila.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 394`** (1 nodes): `chardonnay.ts`
+- **Thin community `Community 400`** (1 nodes): `types.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 395`** (1 nodes): `chenin-blanc.ts`
+- **Thin community `Community 401`** (1 nodes): `types.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 396`** (1 nodes): `cinsault.ts`
+- **Thin community `Community 402`** (1 nodes): `us-whiskey-regions.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 397`** (1 nodes): `colombard.ts`
+- **Thin community `Community 403`** (1 nodes): `vodka.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 398`** (1 nodes): `cortese.ts`
+- **Thin community `Community 404`** (1 nodes): `white-wine-regions.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 399`** (1 nodes): `folle-blanche.ts`
+- **Thin community `Community 405`** (1 nodes): `white-wine.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 400`** (1 nodes): `furmint.ts`
+- **Thin community `Community 406`** (1 nodes): `wine.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 401`** (1 nodes): `gamay.ts`
+- **Thin community `Community 407`** (1 nodes): `yakju-vs-cheongju.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 402`** (1 nodes): `gewurztraminer.ts`
+- **Thin community `Community 408`** (1 nodes): `yakju.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 403`** (1 nodes): `glera.ts`
+- **Thin community `Community 409`** (1 nodes): `airen.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 404`** (1 nodes): `goldriesling.ts`
+- **Thin community `Community 410`** (1 nodes): `alicante-bouschet.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 405`** (1 nodes): `grenache.ts`
+- **Thin community `Community 411`** (1 nodes): `aligote.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 406`** (1 nodes): `gruner-veltliner.ts`
+- **Thin community `Community 412`** (1 nodes): `aramon.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 407`** (1 nodes): `harslevelu.ts`
+- **Thin community `Community 413`** (1 nodes): `auxerrois.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 408`** (1 nodes): `index.ts`
+- **Thin community `Community 414`** (1 nodes): `barbera.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 409`** (1 nodes): `kadarka.ts`
+- **Thin community `Community 415`** (1 nodes): `blaufrankisch.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 410`** (1 nodes): `kerner.ts`
+- **Thin community `Community 416`** (1 nodes): `cabernet-franc.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 411`** (1 nodes): `koshu.ts`
+- **Thin community `Community 417`** (1 nodes): `cabernet-sauvignon.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 412`** (1 nodes): `lambrusco.ts`
+- **Thin community `Community 418`** (1 nodes): `carmenere.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 413`** (1 nodes): `macabeo.ts`
+- **Thin community `Community 419`** (1 nodes): `chardonnay.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 414`** (1 nodes): `malbec.ts`
+- **Thin community `Community 420`** (1 nodes): `chenin-blanc.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 415`** (1 nodes): `marsanne.ts`
+- **Thin community `Community 421`** (1 nodes): `cinsault.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 416`** (1 nodes): `mazuelo.ts`
+- **Thin community `Community 422`** (1 nodes): `colombard.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 417`** (1 nodes): `melon-de-bourgogne.ts`
+- **Thin community `Community 423`** (1 nodes): `cortese.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 418`** (1 nodes): `merlot.ts`
+- **Thin community `Community 424`** (1 nodes): `folle-blanche.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 419`** (1 nodes): `monastrell.ts`
+- **Thin community `Community 425`** (1 nodes): `furmint.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 420`** (1 nodes): `montepulciano.ts`
+- **Thin community `Community 426`** (1 nodes): `gamay.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 421`** (1 nodes): `moscato.ts`
+- **Thin community `Community 427`** (1 nodes): `gewurztraminer.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 422`** (1 nodes): `mourvedre.ts`
+- **Thin community `Community 428`** (1 nodes): `glera.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 423`** (1 nodes): `muller-thurgau.ts`
+- **Thin community `Community 429`** (1 nodes): `goldriesling.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 424`** (1 nodes): `muscadelle.ts`
+- **Thin community `Community 430`** (1 nodes): `grenache.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 425`** (1 nodes): `muscat.ts`
+- **Thin community `Community 431`** (1 nodes): `gruner-veltliner.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 426`** (1 nodes): `nebbiolo.ts`
+- **Thin community `Community 432`** (1 nodes): `harslevelu.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 427`** (1 nodes): `negroamaro.ts`
+- **Thin community `Community 433`** (1 nodes): `index.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 428`** (1 nodes): `nero-davola.ts`
+- **Thin community `Community 434`** (1 nodes): `kadarka.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 429`** (1 nodes): `palomino.ts`
+- **Thin community `Community 435`** (1 nodes): `kerner.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 430`** (1 nodes): `parellada.ts`
+- **Thin community `Community 436`** (1 nodes): `koshu.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 431`** (1 nodes): `pedro-ximenez.ts`
+- **Thin community `Community 437`** (1 nodes): `lambrusco.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 432`** (1 nodes): `petit-manseng.ts`
+- **Thin community `Community 438`** (1 nodes): `macabeo.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 433`** (1 nodes): `petit-verdot.ts`
+- **Thin community `Community 439`** (1 nodes): `malbec.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 434`** (1 nodes): `petite-sirah.ts`
+- **Thin community `Community 440`** (1 nodes): `marsanne.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 435`** (1 nodes): `pinot-blanc.ts`
+- **Thin community `Community 441`** (1 nodes): `mazuelo.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 436`** (1 nodes): `pinot-gris.ts`
+- **Thin community `Community 442`** (1 nodes): `melon-de-bourgogne.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 437`** (1 nodes): `pinot-meunier.ts`
+- **Thin community `Community 443`** (1 nodes): `merlot.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 438`** (1 nodes): `pinot-noir.ts`
+- **Thin community `Community 444`** (1 nodes): `monastrell.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 439`** (1 nodes): `pinotage.ts`
+- **Thin community `Community 445`** (1 nodes): `montepulciano.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 440`** (1 nodes): `primitivo.ts`
+- **Thin community `Community 446`** (1 nodes): `moscato.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 441`** (1 nodes): `riesling.ts`
+- **Thin community `Community 447`** (1 nodes): `mourvedre.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 442`** (1 nodes): `roussanne.ts`
+- **Thin community `Community 448`** (1 nodes): `muller-thurgau.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 443`** (1 nodes): `sangiovese.ts`
+- **Thin community `Community 449`** (1 nodes): `muscadelle.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 444`** (1 nodes): `sauvignon-blanc.ts`
+- **Thin community `Community 450`** (1 nodes): `muscat.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 445`** (1 nodes): `sauvignon-grise.ts`
+- **Thin community `Community 451`** (1 nodes): `nebbiolo.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 446`** (1 nodes): `savagnin.ts`
+- **Thin community `Community 452`** (1 nodes): `negroamaro.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 447`** (1 nodes): `scheurebe.ts`
+- **Thin community `Community 453`** (1 nodes): `nero-davola.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 448`** (1 nodes): `semillon.ts`
+- **Thin community `Community 454`** (1 nodes): `palomino.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 449`** (1 nodes): `silvaner.ts`
+- **Thin community `Community 455`** (1 nodes): `parellada.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 450`** (1 nodes): `st-laurent.ts`
+- **Thin community `Community 456`** (1 nodes): `pedro-ximenez.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 451`** (1 nodes): `syrah.ts`
+- **Thin community `Community 457`** (1 nodes): `petit-manseng.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 452`** (1 nodes): `tempranillo.ts`
+- **Thin community `Community 458`** (1 nodes): `petit-verdot.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 453`** (1 nodes): `tinta-amarela.ts`
+- **Thin community `Community 459`** (1 nodes): `petite-sirah.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 454`** (1 nodes): `tinta-barroca.ts`
+- **Thin community `Community 460`** (1 nodes): `pinot-blanc.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 455`** (1 nodes): `touriga-franca.ts`
+- **Thin community `Community 461`** (1 nodes): `pinot-gris.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 456`** (1 nodes): `touriga-nacional.ts`
+- **Thin community `Community 462`** (1 nodes): `pinot-meunier.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 457`** (1 nodes): `trebbiano.ts`
+- **Thin community `Community 463`** (1 nodes): `pinot-noir.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 458`** (1 nodes): `welschriesling.ts`
+- **Thin community `Community 464`** (1 nodes): `pinotage.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 459`** (1 nodes): `xarello.ts`
+- **Thin community `Community 465`** (1 nodes): `primitivo.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 460`** (1 nodes): `zinfandel.ts`
+- **Thin community `Community 466`** (1 nodes): `riesling.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 461`** (1 nodes): `zweigelt.ts`
+- **Thin community `Community 467`** (1 nodes): `roussanne.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 462`** (1 nodes): `firebase.ts`
+- **Thin community `Community 468`** (1 nodes): `sangiovese.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 463`** (1 nodes): `paths.ts`
+- **Thin community `Community 469`** (1 nodes): `sauvignon-blanc.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 464`** (1 nodes): `schema.ts`
+- **Thin community `Community 470`** (1 nodes): `sauvignon-grise.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 465`** (1 nodes): `related-spirits.ts`
+- **Thin community `Community 471`** (1 nodes): `savagnin.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 466`** (1 nodes): `spirit-page-resolver.ts`
+- **Thin community `Community 472`** (1 nodes): `scheurebe.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 467`** (1 nodes): `bot-detection.test.ts`
+- **Thin community `Community 473`** (1 nodes): `semillon.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 468`** (1 nodes): `localize-field.test.ts`
+- **Thin community `Community 474`** (1 nodes): `silvaner.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 469`** (1 nodes): `analyze_audit_report.py`
+- **Thin community `Community 475`** (1 nodes): `st-laurent.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 470`** (1 nodes): `check-distilleries.py`
+- **Thin community `Community 476`** (1 nodes): `syrah.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 471`** (1 nodes): `check_audit_status.py`
+- **Thin community `Community 477`** (1 nodes): `tempranillo.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 472`** (1 nodes): `run_sequence.ps1`
+- **Thin community `Community 478`** (1 nodes): `tinta-amarela.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 473`** (1 nodes): `run_sequence.py`
+- **Thin community `Community 479`** (1 nodes): `tinta-barroca.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 474`** (1 nodes): `test-search-keywords.ts`
+- **Thin community `Community 480`** (1 nodes): `touriga-franca.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 475`** (1 nodes): `test_firestore.py`
+- **Thin community `Community 481`** (1 nodes): `touriga-nacional.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 476`** (1 nodes): `upload_processed.ps1`
+- **Thin community `Community 482`** (1 nodes): `trebbiano.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 483`** (1 nodes): `welschriesling.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 484`** (1 nodes): `xarello.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 485`** (1 nodes): `zinfandel.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 486`** (1 nodes): `zweigelt.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 487`** (1 nodes): `firebase.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 488`** (1 nodes): `paths.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 489`** (1 nodes): `schema.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 490`** (1 nodes): `related-spirits.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 491`** (1 nodes): `spirit-page-resolver.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 492`** (1 nodes): `bot-detection.test.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 493`** (1 nodes): `localize-field.test.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 494`** (1 nodes): `analyze_audit_report.py`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 495`** (1 nodes): `bare.js`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 496`** (1 nodes): `check-distilleries.py`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 497`** (1 nodes): `check_audit_status.py`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 498`** (1 nodes): `debug-fetch.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 499`** (1 nodes): `load-env.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 500`** (1 nodes): `run_sequence.ps1`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 501`** (1 nodes): `run_sequence.py`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 502`** (1 nodes): `test-cjs.js`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 503`** (1 nodes): `test-env.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 504`** (1 nodes): `test-search-keywords.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 505`** (1 nodes): `test-tsx-env.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 506`** (1 nodes): `test_firestore.py`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 507`** (1 nodes): `upload_processed.ps1`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 508`** (1 nodes): `index.d.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 509`** (1 nodes): `index.d.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 510`** (1 nodes): `특정 디렉토리 내의 코드를 수집합니다. (MarkItDown 연동)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **What connects `Analyze ALL spirits for normalization needs  This script checks all 2308 spiri`, `Check if a spirit name needs normalization`, `Spirit Data Normalization Analyzer  This script analyzes spirits data from Fir` to the rest of the system?**
-  _45 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _46 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.06 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.07 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
-  _Cohesion score 0.07 - nodes in this community are weakly interconnected._
-- **Should `Community 4` be split into smaller, more focused modules?**
+  _Cohesion score 0.06 - nodes in this community are weakly interconnected._
+- **Should `Community 3` be split into smaller, more focused modules?**
+  _Cohesion score 0.08 - nodes in this community are weakly interconnected._
+- **Should `Community 5` be split into smaller, more focused modules?**
   _Cohesion score 0.12 - nodes in this community are weakly interconnected._
+- **Should `Community 6` be split into smaller, more focused modules?**
+  _Cohesion score 0.09 - nodes in this community are weakly interconnected._
 
 ---
 
@@ -3867,6 +4097,121 @@ audit();
 
 ```
 
+### File: scripts\audit-logic-deep.ts
+```
+const path = require('path');
+require('dotenv').config({ path: path.join(process.cwd(), '.env') });
+
+const { spiritsDb } = require('../lib/db/firestore-rest');
+const { calculateInitialContentRating } = require('../lib/utils/content-rating');
+
+async function auditData() {
+  try {
+    const ids = await spiritsDb.getPublishedSpiritIds();
+    console.log(`📡 Total Published Spirits: ${ids.length}`);
+
+    // Fetch more samples to find a truly "rich" one
+    // We'll peek at 100 items
+    const samples = await Promise.all(ids.slice(0, 100).map(id => spiritsDb.getById(id)));
+    const validSamples = samples.filter(Boolean);
+
+    // Scoring logic for "Richness" (sum of various descriptive fields)
+    const getRichness = (s) => {
+      let score = 0;
+      score += (s.description_ko?.length || 0);
+      score += (s.description_en?.length || 0);
+      score += (s.nose_tags?.length || 0) * 50;
+      score += (s.palate_tags?.length || 0) * 50;
+      score += (s.finish_tags?.length || 0) * 50;
+      score += (s.pairing_guide_ko?.length || 0);
+      return score;
+    };
+
+    const sortedByRichness = [...validSamples].sort((a, b) => getRichness(b) - getRichness(a));
+
+    const mostRich = sortedByRichness[0];
+    const leastRich = sortedByRichness[sortedByRichness.length - 1];
+
+    console.log('\n=================================================');
+    console.log('🏆 MOST RICH SAMPLE DATA');
+    console.log('=================================================');
+    console.log(JSON.stringify(mostRich, null, 2));
+    
+    const mostRichRating = calculateInitialContentRating(mostRich);
+    console.log('\n⭐ [Logic Calculation Result - MOST RICH]');
+    console.log(JSON.stringify(mostRichRating, null, 2));
+
+    console.log('\n=================================================');
+    console.log('📉 LEAST RICH SAMPLE DATA');
+    console.log('=================================================');
+    console.log(JSON.stringify(leastRich, null, 2));
+
+    const leastRichRating = calculateInitialContentRating(leastRich);
+    console.log('\n⭐ [Logic Calculation Result - LEAST RICH]');
+    console.log(JSON.stringify(leastRichRating, null, 2));
+
+  } catch (error) {
+    console.error('Audit Error:', error);
+  }
+}
+
+auditData();
+
+```
+
+### File: scripts\audit-logic.ts
+```
+const path = require('path');
+require('dotenv').config({ path: path.join(process.cwd(), '.env') });
+
+const { spiritsDb } = require('../lib/db/firestore-rest');
+const { calculateInitialContentRating } = require('../lib/utils/content-rating');
+
+async function auditData() {
+  try {
+    const ids = await spiritsDb.getPublishedSpiritIds();
+    console.log(`📡 Total Published Spirits: ${ids.length}`);
+
+    // Fetch a sample to find most and least rich
+    const samples = await Promise.all(ids.slice(0, 50).map(id => spiritsDb.getById(id)));
+    const validSamples = samples.filter(Boolean);
+
+    const sortedByDescription = [...validSamples].sort((a, b) => 
+      (b.description?.length || 0) - (a.description?.length || 0)
+    );
+
+    const mostRich = sortedByDescription[0];
+    const leastRich = sortedByDescription[sortedByDescription.length - 1];
+
+    console.log('\n--- [MOST RICH SAMPLE] ---');
+    console.log(`ID: ${mostRich.id}`);
+    console.log(`Name: ${mostRich.name}`);
+    console.log(`Desc Length: ${mostRich.description?.length || 0}`);
+    console.log(`Tags: ${mostRich.flavor_tags?.length || 0}`);
+    console.log(`Bilingual: ${!!(mostRich.description && mostRich.metadata?.description_en)}`);
+
+    const mostRichRating = calculateInitialContentRating(mostRich);
+    console.log('Calculation Result:', JSON.stringify(mostRichRating, null, 2));
+
+    console.log('\n--- [LEAST RICH SAMPLE] ---');
+    console.log(`ID: ${leastRich.id}`);
+    console.log(`Name: ${leastRich.name}`);
+    console.log(`Desc Length: ${leastRich.description?.length || 0}`);
+    console.log(`Tags: ${leastRich.flavor_tags?.length || 0}`);
+    console.log(`Bilingual: ${!!(leastRich.description && leastRich.metadata?.description_en)}`);
+
+    const leastRichRating = calculateInitialContentRating(leastRich);
+    console.log('Calculation Result:', JSON.stringify(leastRichRating, null, 2));
+
+  } catch (error) {
+    console.error('Audit Error:', error);
+  }
+}
+
+auditData();
+
+```
+
 ### File: scripts\audit-publish-status.js
 ```
 const admin = require('firebase-admin');
@@ -3959,6 +4304,56 @@ async function auditPublishStatus() {
 }
 
 auditPublishStatus().catch(console.error);
+
+```
+
+### File: scripts\audit-sql.ts
+```
+import { getDataConnect } from 'firebase-admin/data-connect';
+import * as admin from 'firebase-admin';
+import * as dotenv from 'dotenv';
+
+dotenv.config({ path: '.env.local' });
+dotenv.config();
+
+if (!admin.apps.length) {
+  const privateKey = process.env.FIREBASE_PRIVATE_KEY
+    ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n')
+    : undefined;
+
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: privateKey,
+    }),
+  });
+}
+
+const dc = getDataConnect({
+  serviceId: 'k-spirits-club-hub',
+  location: 'asia-northeast3',
+  connector: 'main'
+});
+
+async function audit() {
+  console.log('--- SQL AUDIT START ---');
+  try {
+    const users = await dc.executeQuery('auditAllUsers', {});
+    const spirits = await dc.executeQuery('listSpirits', {});
+    const news = await dc.executeQuery('auditAllNews', {});
+    const reviews = await dc.executeQuery('auditAllReviews', {});
+
+    console.log(`SQL_U:${(users as any).data.users.length}`);
+    console.log(`SQL_S:${(spirits as any).data.spirits.length}`);
+    console.log(`SQL_N:${(news as any).data.newsArticles.length}`);
+    console.log(`SQL_R:${(reviews as any).data.spiritReviews.length}`);
+  } catch (err: any) {
+    console.error('Audit Error:', err.message);
+  }
+}
+
+audit();
 
 ```
 
@@ -4822,6 +5217,15 @@ async function getAuditData() {
 
 ```
 
+### File: scripts\bare.js
+```
+console.log('START');
+const fs = require('fs');
+console.log('FS LOADED');
+console.log('END');
+
+```
+
 ### File: scripts\batch-process-published.ts
 ```
 
@@ -5342,6 +5746,53 @@ bulkProcessor();
 
 ```
 
+### File: scripts\check-audit.ts
+```
+import { getDataConnect } from 'firebase-admin/data-connect';
+import * as admin from 'firebase-admin';
+import * as dotenv from 'dotenv';
+import * as fs from 'fs';
+
+dotenv.config({ path: '.env.local' });
+dotenv.config();
+
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+    }),
+  });
+}
+
+const dc = getDataConnect({ serviceId: 'k-spirits-club-hub', location: 'asia-northeast3', connector: 'main' });
+
+async function check() {
+  console.log('--- RELATIONAL AUDIT ---');
+  try {
+    const ids = ['fsk-199000150021', 'fsk-200100152328'];
+    for (const id of ids) {
+      const res = await dc.executeQuery('getSpirit', { id });
+      const s = (res as any).data.spirit;
+      if (s) {
+        console.log(`ID: ${id}`);
+        console.log(`NAME: ${s.name}`);
+        console.log(`REVIEWS_COUNT: ${s.reviews.length}`);
+        console.log(`HAS_EDITOR_REVIEW: ${s.reviews.some((r: any) => r.user.role === 'ADMIN' || r.user.nickname === 'K-Spirits Editor')}`);
+      } else {
+        console.log(`ID: ${id} NOT FOUND`);
+      }
+    }
+  } catch (err: any) {
+    console.error('Audit Error:', err.message);
+  }
+}
+
+check();
+
+```
+
 ### File: scripts\check-distilleries.py
 ```
 import json
@@ -5400,6 +5851,48 @@ async function checkImageUrls() {
 }
 
 checkImageUrls();
+
+```
+
+### File: scripts\check-news-debug.ts
+```
+import * as admin from 'firebase-admin';
+import * as dotenv from 'dotenv';
+import { getAppPath } from '../lib/db/path-config';
+
+dotenv.config({ path: '.env.local' });
+dotenv.config();
+
+if (!admin.apps.length) {
+  const privateKey = process.env.FIREBASE_PRIVATE_KEY
+    ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n')
+    : undefined;
+
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: privateKey,
+    }),
+  });
+}
+
+const db = admin.firestore();
+const paths = getAppPath('k-spirits-club-hub');
+
+async function checkNews() {
+  console.log(`Checking path: ${paths.news}`);
+  const snapshot = await db.collection(paths.news).get();
+  console.log(`News count in ${paths.news}: ${snapshot.size}`);
+
+  const ids = ['global-news-2025-04-16', 'korea-whisky-expo-2026'];
+  for (const id of ids) {
+    const doc = await db.collection(paths.news).doc(id).get();
+    console.log(`- ${id} exists: ${doc.exists}`);
+  }
+}
+
+checkNews();
 
 ```
 
@@ -5530,6 +6023,12 @@ import os
 import sys
 import subprocess
 from markitdown import MarkItDown
+
+# Handle Windows console encoding issues for emojis
+if sys.platform == 'win32':
+    import io
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
 # --- ⚙️ 설정 영역 ---
 TARGET_REPO = r"C:\k-spirits-club-hub"
@@ -5948,6 +6447,71 @@ checkDatabaseStatus();
 
 ```
 
+### File: scripts\debug-fetch.ts
+```
+import './load-env';
+console.log('DEBUG: FIREBASE_CLIENT_EMAIL after load-env:', process.env.FIREBASE_CLIENT_EMAIL ? 'FOUND' : 'MISSING');
+import { spiritsDb } from '../lib/db/firestore-rest';
+console.log('Spirits DB imported');
+console.log('PROJECT_ID:', process.env.FIREBASE_PROJECT_ID);
+console.log('Attempting to fetch spirit IDs...');
+spiritsDb.getPublishedSpiritIds()
+  .then(ids => console.log('Found IDs:', ids.length))
+  .catch(err => console.error('Error fetching IDs:', err));
+
+```
+
+### File: scripts\debug-firestore.ts
+```
+import * as admin from 'firebase-admin';
+import * as dotenv from 'dotenv';
+import { getAppPath } from '../lib/db/path-config';
+
+dotenv.config({ path: '.env.local' });
+dotenv.config();
+
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+    }),
+  });
+}
+
+const db = admin.firestore();
+const paths = getAppPath('k-spirits-club-hub');
+
+async function debug() {
+  console.log('--- FIRESTORE DEBUG ---');
+  
+  const usersCount = (await db.collection('users').count().get()).data().count;
+  console.log(`Global users count: ${usersCount}`);
+  
+  const newsId1 = 'global-news-2025-04-16';
+  const newsId2 = 'korea-whisky-expo-2026';
+  
+  const doc1 = await db.collection(paths.news).doc(newsId1).get();
+  console.log(`${newsId1} exists: ${doc1.exists}`);
+  
+  const doc2 = await db.collection(paths.news).doc(newsId2).get();
+  console.log(`${newsId2} exists: ${doc2.exists}`);
+
+  const spiritId1 = 'fsk-2003001503616';
+  const spiritId2 = 'fsk-manual-entry-001';
+  
+  const sdoc1 = await db.collection(paths.spirits).doc(spiritId1).get();
+  console.log(`${spiritId1} exists: ${sdoc1.exists}`);
+  
+  const sdoc2 = await db.collection(paths.spirits).doc(spiritId2).get();
+  console.log(`${spiritId2} exists: ${sdoc2.exists}`);
+}
+
+debug();
+
+```
+
 ### File: scripts\debug-news-db.ts
 ```
 import 'dotenv/config';
@@ -6010,6 +6574,40 @@ def debug_search():
 
 if __name__ == "__main__":
     debug_search()
+
+```
+
+### File: scripts\deep-check-users.ts
+```
+import * as admin from 'firebase-admin';
+import * as dotenv from 'dotenv';
+
+dotenv.config({ path: '.env.local' });
+dotenv.config();
+
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+    }),
+  });
+}
+
+const db = admin.firestore();
+
+async function deepCheckUsers() {
+  const snapshot = await db.collection('users').get();
+  console.log(`Total documents in 'users' collection: ${snapshot.size}`);
+  snapshot.docs.slice(0, 5).forEach(doc => {
+    console.log(`- ID: ${doc.id}, Nickname: ${doc.data().nickname || 'N/A'}, Role: ${doc.data().role || 'N/A'}`);
+  });
+  
+  // also check if appId might be something else?
+}
+
+deepCheckUsers();
 
 ```
 
@@ -7964,6 +8562,133 @@ if __name__ == '__main__':
 
 ```
 
+### File: scripts\final-audit.ts
+```
+/**
+ * final-audit.ts
+ * Directly compares row counts between Firestore and Data Connect.
+ * Run: npx ts-node --project tsconfig.scripts.json scripts/final-audit.ts
+ */
+import * as admin from 'firebase-admin';
+import { getDataConnect } from 'firebase-admin/data-connect';
+import * as dotenv from 'dotenv';
+
+dotenv.config({ path: '.env.local' });
+dotenv.config();
+
+// ─── Init App ────────────────────────────────────────────────────────────────
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: process.env.FIREBASE_PROJECT_ID!,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL!,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY!.replace(/\\n/g, '\n'),
+    }),
+  });
+}
+
+const db = admin.firestore();
+const dc = getDataConnect({
+  serviceId: 'k-spirits-club-hub',
+  location: 'asia-northeast3',
+  connector: 'main',
+});
+
+// ─── ANSI Helpers ────────────────────────────────────────────────────────────
+const GREEN  = (s: string) => `\x1b[32m${s}\x1b[0m`;
+const RED    = (s: string) => `\x1b[31m${s}\x1b[0m`;
+const BOLD   = (s: string) => `\x1b[1m${s}\x1b[0m`;
+
+async function getFirestoreCount(collection: string) {
+  const snap = await db.collection(collection).count().get();
+  return snap.data().count;
+}
+
+async function getDcCount(operationName: string, field: string) {
+  const res = await dc.executeQuery(operationName, {});
+  return ((res as any).data[field] ?? []).length;
+}
+
+async function main() {
+  console.log(BOLD('\n[PARITY AUDIT: FIRESTORE vs DATA CONNECT]'));
+  
+  const targets = [
+    { label: 'Spirits',  fsColl: 'spirits',       dcOp: 'auditAllSpirits',  dcField: 'spirits' },
+    { label: 'Users',    fsColl: 'users',         dcOp: 'auditAllUsers',    dcField: 'users' },
+    { label: 'News',     fsColl: 'news',          dcOp: 'auditAllNews',     dcField: 'newsArticles' },
+    { label: 'Reviews',  fsColl: 'spiritReviews', dcOp: 'auditAllReviews',  dcField: 'spiritReviews' },
+  ];
+
+  let totalFailed = 0;
+
+  for (const t of targets) {
+    try {
+      const fsCount = await getFirestoreCount(t.fsColl);
+      const dcCount = await getDcCount(t.dcOp, t.dcField);
+      
+      const diff = dcCount - fsCount;
+      const ok = diff === 0 || (t.label === 'Users' && diff >= 0); // Users might have 1 extra (system/admin)
+
+      console.log(`${BOLD(t.label.padEnd(8))} | Firestore: ${fsCount.toString().padEnd(5)} | Data Connect: ${dcCount.toString().padEnd(5)} | ${ok ? GREEN('MATCH') : RED('DIFF: ' + diff)}`);
+      if (!ok) totalFailed++;
+    } catch (e: any) {
+      console.log(`${BOLD(t.label.padEnd(8))} | ${RED('ERROR: ' + e.message)}`);
+      totalFailed++;
+    }
+  }
+
+  console.log(BOLD('\n════════════════════════════════════════'));
+  if (totalFailed === 0) {
+    console.log(GREEN('  ✓ ALL CORE DATA IS IN SYNC'));
+  } else {
+    console.log(RED(`  ✗ ${totalFailed} DISCREPANCIES FOUND`));
+  }
+  console.log(BOLD('════════════════════════════════════════\n'));
+
+  process.exit(totalFailed > 0 ? 1 : 0);
+}
+
+main().catch(e => { console.error(RED('FATAL: ' + e.message)); process.exit(1); });
+
+```
+
+### File: scripts\find-spirit-id.ts
+```
+import * as admin from 'firebase-admin';
+import * as dotenv from 'dotenv';
+
+dotenv.config({ path: '.env.local' });
+dotenv.config();
+
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+    }),
+  });
+}
+
+const db = admin.firestore();
+const query = process.argv[2];
+
+async function findSpiritId() {
+  console.log(`Searching for spirits with ID containing: ${query}`);
+  const snapshot = await db.collection('spirits').get();
+  const matches = snapshot.docs.filter(doc => doc.id.includes(query));
+  
+  if (matches.length === 0) {
+    console.log('No matches found.');
+  } else {
+    matches.forEach(m => console.log(`- ${m.id}`));
+  }
+}
+
+findSpiritId();
+
+```
+
 ### File: scripts\fix_thumbnail_urls.js
 ```
 const admin = require('firebase-admin');
@@ -9383,6 +10108,328 @@ if __name__ == "__main__":
         asyncio.run(main())
     except KeyboardInterrupt:
         print("\n👋 사용자에 의해 중단되었습니다.")
+
+```
+
+### File: scripts\list-app-ids.ts
+```
+import * as admin from 'firebase-admin';
+import * as dotenv from 'dotenv';
+
+dotenv.config({ path: '.env.local' });
+dotenv.config();
+
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+    }),
+  });
+}
+
+const db = admin.firestore();
+
+async function listAppIds() {
+  const snapshot = await db.collection('artifacts').get();
+  console.log('App IDs in artifacts:');
+  snapshot.forEach(doc => console.log(`- ${doc.id}`));
+}
+
+listAppIds();
+
+```
+
+### File: scripts\list-collections.ts
+```
+import * as admin from 'firebase-admin';
+import * as dotenv from 'dotenv';
+
+dotenv.config({ path: '.env.local' });
+dotenv.config();
+
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+    }),
+  });
+}
+
+const db = admin.firestore();
+
+async function listCollections() {
+  const collections = await db.listCollections();
+  console.log('Root Collections:');
+  collections.forEach(c => console.log(`- ${c.id}`));
+  
+  // Also check artifacts deep path
+  const appId = 'k-spirits-club-hub';
+  console.log('\nChecking artifacts/k-spirits-club-hub/public/data:');
+  const publicData = await db.doc(`artifacts/${appId}/public/data`).listCollections();
+  publicData.forEach(c => console.log(`  - ${c.id}`));
+
+  console.log('\nChecking artifacts/k-spirits-club-hub/users:');
+  const userRoot = await db.collection(`artifacts/${appId}/users`).limit(5).get();
+  console.log(`  - Count in artifacts/.../users collection: ${userRoot.size} (sampled)`);
+  // Not a collection if size is 0 and no listCollections?
+  // Actually artifacts/appId/users is likely a collection of documents (userIds).
+}
+
+listCollections();
+
+```
+
+### File: scripts\load-env.ts
+```
+import * as dotenv from 'dotenv';
+import path from 'path';
+
+// Load from .env in the root directory
+dotenv.config({ path: path.join(process.cwd(), '.env') });
+
+console.log('✅ Environment loaded from .env');
+if (!process.env.FIREBASE_CLIENT_EMAIL) {
+  console.warn('⚠️ FIREBASE_CLIENT_EMAIL missing from environment!');
+}
+
+```
+
+### File: scripts\migrate-all-to-pg.ts
+```
+import * as admin from 'firebase-admin';
+import * as dotenv from 'dotenv';
+import { v4 as uuidv4 } from 'uuid';
+import { getDataConnect } from 'firebase-admin/data-connect';
+import { getAppPath } from '../lib/db/path-config';
+import { calculateInitialContentRating } from '../lib/utils/content-rating';
+
+dotenv.config({ path: '.env.local' });
+dotenv.config();
+
+// Initialize Firebase Admin FIRST
+const privateKey = process.env.FIREBASE_PRIVATE_KEY
+  ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n')
+  : undefined;
+
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: privateKey,
+    }),
+  });
+}
+
+const db = admin.firestore();
+const APP_ID = process.env.NEXT_PUBLIC_APP_ID || 'k-spirits-club-hub';
+const paths = getAppPath(APP_ID);
+
+const DC_SERVICE_ID = 'k-spirits-club-hub';
+const DC_LOCATION = 'asia-northeast3';
+const SYSTEM_USER_ID = 'system-editor-id'; 
+
+const DEFAULT_IMAGE = 'https://kspiritsclub.com/placeholder.png';
+
+async function executeMutation(name: string, variables: any) {
+  try {
+    const dataConnect = getDataConnect({
+      serviceId: DC_SERVICE_ID,
+      location: DC_LOCATION,
+      connector: 'main'
+    });
+
+    const result = await dataConnect.executeMutation(name, variables);
+    const anyResult = result as any;
+    
+    if (anyResult.errors && anyResult.errors.length > 0) {
+      throw new Error(`Error in mutation ${name}: ${JSON.stringify(anyResult.errors, null, 2)}`);
+    }
+    return true;
+  } catch (error: any) {
+    throw new Error(`Admin SDK error in mutation ${name}: ${error.message}`);
+  }
+}
+
+function cleanTimestamps(obj: any): any {
+  if (!obj) return obj;
+  if (typeof obj.toDate === 'function') return obj.toDate().toISOString();
+  if (Array.isArray(obj)) return obj.map(cleanTimestamps);
+  if (typeof obj === 'object') {
+    const cleaned: any = {};
+    for (const key in obj) {
+      cleaned[key] = cleanTimestamps(obj[key]);
+    }
+    return cleaned;
+  }
+  return obj;
+}
+
+async function prepareSystemUser() {
+  console.log('--- Preparing System User (Editor) ---');
+  const vars = {
+    id: SYSTEM_USER_ID,
+    nickname: 'K-Spirits Editor',
+    role: 'ADMIN',
+    isFirstLogin: false
+  };
+  const success = await executeMutation('upsertUser', vars);
+  if (success) {
+    console.log('✅ System User Ready.');
+  } else {
+    throw new Error('❌ Failed to prepare System User.');
+  }
+}
+
+async function migrateUsers() {
+  console.log('--- Migrating Users ---');
+  const snapshot = await db.collection(paths.users).get();
+  console.log(`Found ${snapshot.size} users.`);
+
+  let count = 0;
+  for (const doc of snapshot.docs) {
+    const data = doc.data();
+    const vars = {
+      id: doc.id,
+      email: data.email || null,
+      nickname: data.nickname || null,
+      profileImage: data.profileImage || null,
+      role: data.role || 'USER',
+      isFirstLogin: data.isFirstLogin ?? true,
+      reviewsWritten: data.reviews_written || 0,
+      heartsReceived: data.hearts_received || 0
+    };
+    const success = await executeMutation('upsertUser', vars);
+    if (success) count++;
+    if (count % 100 === 0) console.log(`  Processed ${count} users...`);
+  }
+  console.log(`Finished Users. Total: ${count}`);
+}
+
+async function migrateSpirits(limit?: number) {
+  console.log(`--- Migrating Spirits (Limit: ${limit || 'Unlimited'}) ---`);
+  let query: admin.firestore.Query = db.collection(paths.spirits);
+  if (limit) query = query.limit(limit);
+  const snapshot = await query.get();
+  console.log(`Found ${snapshot.size} spirits.`);
+
+  let count = 0;
+  for (const doc of snapshot.docs) {
+    const data = doc.data();
+    if (!data.imageUrl) data.imageUrl = DEFAULT_IMAGE;
+
+    const variables = {
+      id: doc.id,
+      name: data.name || 'Untitled Spirit',
+      nameEn: data.name_en || null,
+      category: data.category || 'Other',
+      categoryEn: data.category_en || null,
+      mainCategory: data.main_category || null,
+      subcategory: data.subcategory || null,
+      distillery: data.distillery || null,
+      bottler: data.bottler || null,
+      abv: typeof data.abv === 'number' ? data.abv : null,
+      volume: typeof data.volume === 'number' ? data.volume : null,
+      country: data.country || null,
+      region: data.region || null,
+      imageUrl: data.imageUrl,
+      thumbnailUrl: data.thumbnailUrl || null,
+      descriptionKo: data.description_ko || null,
+      descriptionEn: data.description_en || null,
+      pairingGuideKo: data.pairing_guide_ko || null,
+      pairingGuideEn: data.pairing_guide_en || null,
+      noseTags: Array.isArray(data.nose_tags) ? data.nose_tags : [],
+      palateTags: Array.isArray(data.palate_tags) ? data.palate_tags : [],
+      finishTags: Array.isArray(data.finish_tags) ? data.finish_tags : [],
+      tastingNote: data.tasting_note || null,
+      status: data.status || null,
+      isPublished: !!data.isPublished,
+      isReviewed: !!data.isReviewed,
+      rating: data.rating || 0.0,
+      reviewCount: data.review_count || 0,
+      metadata: data.metadata || {}
+    };
+
+    const success = await executeMutation('upsertSpirit', variables);
+    if (success) {
+      count++;
+      if (data.isPublished) {
+         try {
+           const cleanedData = cleanTimestamps(data);
+           const ratingInfo = calculateInitialContentRating(cleanedData as any);
+           const expertReviewVars = {
+             id: uuidv4(),
+             spiritId: doc.id,
+             userId: SYSTEM_USER_ID,
+             rating: Math.round(data.rating || 4),
+             title: 'K-Spirits Editor Review',
+             content: ratingInfo.expertReview.reviewBody,
+             isPublished: true,
+             createdAt: new Date().toISOString(),
+             updatedAt: new Date().toISOString()
+           };
+           await executeMutation('upsertReview', expertReviewVars);
+         } catch (e) {
+           // Skip if expert review generation fails
+         }
+      }
+    }
+    if (count % 100 === 0) console.log(`  Processed ${count} spirits...`);
+  }
+  console.log(`Finished Spirits. Total: ${count}`);
+}
+
+async function migrateNews() {
+  console.log('--- Migrating News ---');
+  const snapshot = await db.collection(paths.news).get();
+  console.log(`Found ${snapshot.size} news.`);
+
+  let count = 0;
+  for (const doc of snapshot.docs) {
+    const data = doc.data();
+    const vars = {
+      id: doc.id,
+      title: data.title || 'Untitled News',
+      content: data.content || '',
+      imageUrl: data.image_url || null,
+      category: data.category || null,
+      source: data.source || null,
+      link: data.link || null,
+      date: data.date || null,
+      tags: Array.isArray(data.tags) ? data.tags : []
+    };
+    const success = await executeMutation('upsertNews', vars);
+    if (success) count++;
+  }
+  console.log(`Finished News. Total: ${count}`);
+}
+
+async function main() {
+  const isTrial = process.argv.includes('--trial');
+  try {
+    console.log('🏗️ INITIALIZING PRODUCTION MIGRATION...');
+    await prepareSystemUser();
+    
+    if (isTrial) {
+      console.log('🚀 RUNNING TRIAL MIGRATION (LIMIT 5)...');
+      await migrateSpirits(5);
+    } else {
+      console.log('🔥 RUNNING FULL MIGRATION (USERS -> SPIRITS -> NEWS)...');
+      await migrateUsers();
+      await migrateSpirits();
+      await migrateNews();
+      console.log('!!! ALL MIGRATIONS COMPLETED !!!');
+    }
+  } catch (error) {
+    console.error('Fatal error during migration:', error);
+  }
+}
+
+main();
 
 ```
 
@@ -14207,6 +15254,156 @@ if (!targetEmail) {
 
 ```
 
+### File: scripts\sync-published-seo.ts
+```
+const path = require('path');
+const fs = require('fs');
+// 1. Load Environment (CJS style to avoid hoisting)
+require('dotenv').config({ path: path.join(process.cwd(), '.env') });
+
+const { spiritsDb } = require('../lib/db/firestore-rest');
+const { calculateInitialContentRating } = require('../lib/utils/content-rating');
+
+async function syncPublishedSEO() {
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+  console.log('🚀 SEO Migration & Search Index Sync');
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+
+  if (!process.env.FIREBASE_CLIENT_EMAIL) {
+    console.error('❌ Error: Missing FIREBASE_CLIENT_EMAIL in environment.');
+    return;
+  }
+
+  try {
+    console.log('📡 Fetching published spirit IDs...');
+    const allIds = await spiritsDb.getPublishedSpiritIds();
+    console.log(`✅ Found ${allIds.length} published spirits.\n`);
+
+    if (allIds.length === 0) return;
+
+    const BATCH_SIZE = 50;
+    const COMMIT_BATCH_SIZE = 100;
+    const QUALITY_THRESHOLD = 3.5;
+    
+    let processedCount = 0;
+    let auditReport = [];
+    let currentCommitBatch = [];
+
+    for (let i = 0; i < allIds.length; i += BATCH_SIZE) {
+      const chunk = allIds.slice(i, i + BATCH_SIZE);
+      console.log(`⏳ Processing batch ${Math.floor(i / BATCH_SIZE) + 1}... (${chunk.length} items)`);
+
+      const spiritDetails = await Promise.all(
+        chunk.map((id: string) => spiritsDb.getById(id).catch((err: any) => {
+          console.error(`   ⚠️ Failed to fetch ${id}:`, err.message);
+          return null;
+        }))
+      );
+
+      for (const spirit of spiritDetails) {
+        if (!spirit) continue;
+
+        try {
+          const seoResult = calculateInitialContentRating(spirit);
+          const userReviews = spirit.userReviews || [];
+          const userRatingSum = userReviews.reduce((acc: number, r: any) => acc + (Number(r.rating) || 0), 0);
+          
+          // Calculate aggregate including the editor's review
+          const totalRatingSum = seoResult.ratingValue + userRatingSum;
+          const totalCount = 1 + userReviews.length;
+          const aggregateRatingValue = Number((totalRatingSum / totalCount).toFixed(1));
+
+          const indexUpdate = {
+            i: spirit.id,
+            n: spirit.name,
+            en: spirit.name_en || (spirit.metadata && spirit.metadata.name_en) || null,
+            c: spirit.category,
+            mc: spirit.mainCategory || null,
+            sc: spirit.subcategory || null,
+            t: spirit.thumbnailUrl || spirit.imageUrl || null,
+            a: spirit.abv || 0,
+            d: spirit.distillery || null,
+            tn: spirit.tasting_note || null,
+            cre: spirit.createdAt ? (new Date(spirit.createdAt).toISOString()) : new Date().toISOString(),
+            r: aggregateRatingValue, // Short key for Google rating
+            rc: totalCount,         // Short key for review count
+            h: !!spirit.tasting_note
+          };
+
+          currentCommitBatch.push({
+            id: spirit.id,
+            spiritUpdates: {
+              updatedAt: new Date(),
+              aggregateRating: {
+                ratingValue: aggregateRatingValue,
+                reviewCount: totalCount
+              },
+              expertReview: seoResult.expertReview
+            },
+            indexUpdates: indexUpdate
+          });
+
+          // Detailed Audit for Quality Control
+          if (aggregateRatingValue < QUALITY_THRESHOLD) {
+            auditReport.push({
+              id: spirit.id,
+              name: spirit.name,
+              rating: aggregateRatingValue,
+              missingElements: seoResult.missingElements || []
+            });
+          }
+
+          if (currentCommitBatch.length >= COMMIT_BATCH_SIZE) {
+            await spiritsDb.bulkUpdateSEOData(currentCommitBatch);
+            processedCount += currentCommitBatch.length;
+            console.log(`   ✅ Committed ${processedCount}/${allIds.length} items...`);
+            currentCommitBatch = [];
+          }
+        } catch (itemError: any) {
+          console.error(`   ❌ Error processing ${spirit.id}:`, itemError.message);
+        }
+      }
+    }
+
+    if (currentCommitBatch.length > 0) {
+      await spiritsDb.bulkUpdateSEOData(currentCommitBatch);
+      processedCount += currentCommitBatch.length;
+      console.log(`   ✅ Committed final ${currentCommitBatch.length} items...`);
+    }
+
+    // Save Audit Report
+    if (auditReport.length > 0) {
+      const reportPath = path.join(process.cwd(), 'low_quality_spirits.json');
+      fs.writeFileSync(reportPath, JSON.stringify(auditReport, null, 2));
+      console.log(`\n💾 Saved quality report to: ${reportPath}`);
+    }
+
+    console.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log(`📊 Quality Audit Report (Rating < ${QUALITY_THRESHOLD})`);
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    if (auditReport.length === 0) {
+      console.log(`✨ All spirits meet high-quality standards (>= ${QUALITY_THRESHOLD})!`);
+    } else {
+      console.log(`⚠️ ${auditReport.length} spirits require content enrichment:`);
+      auditReport.slice(0, 10).forEach(item => {
+        console.log(`   - [${item.rating}] ${item.name} (${item.id}) -> Missing: ${item.missingElements.join(', ') || 'N/A'}`);
+      });
+      if (auditReport.length > 10) console.log(`   ... and ${auditReport.length - 10} more.`);
+    }
+
+    console.log('\n🎉 Migration Complete!');
+
+  } catch (error: any) {
+    console.error('\n❌ Fatal Error during migration:', error.message);
+    process.exit(1);
+  }
+}
+
+syncPublishedSEO();
+
+
+```
+
 ### File: scripts\sync-thumbnail-urls.js
 ```
 #!/usr/bin/env node
@@ -14361,6 +15558,68 @@ syncThumbnailUrls();
 
 ```
 
+### File: scripts\test-admin-sync.ts
+```
+import './load-env';
+import { db } from '../lib/db';
+import { spiritsDb, searchIndexDb } from '../lib/db/firestore-rest';
+import { calculateInitialContentRating } from '../lib/utils/content-rating';
+
+async function testAdminSync() {
+  const TEST_ID = 'fsk-202500165001'; // 원석 위스키
+  console.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
+  console.log(`🚀 Testing Admin Sync for: ${TEST_ID}`);
+  console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`);
+
+  try {
+    // 1. Fetch current state
+    const beforeSpirit = await spiritsDb.getById(TEST_ID);
+    if (!beforeSpirit) {
+      console.error('❌ Test spirit not found in DB.');
+      return;
+    }
+    console.log(`📡 Current Rating: ${beforeSpirit.aggregateRating?.ratingValue || 'NONE'}`);
+
+    // 2. Perform Update (Simulate Admin "Publish")
+    console.log(`\n✍️  Simulating Admin update/publish...`);
+    // We update with an empty object to trigger the internal automation in updateSpirit
+    await db.updateSpirit(TEST_ID, { status: 'PUBLISHED' });
+
+    // 3. Verify Sync
+    console.log(`\n🔍 Verifying Synchronization...`);
+    const afterSpirit = await spiritsDb.getById(TEST_ID);
+    
+    // We need to fetch from search_index manually to verify atomic sync
+    // searchIndexDb.getPublishedSearchIndex() might be too slow for a single item, 
+    // but we added a helper or can just use REST directly.
+    // Actually, let's use the new searchIndexDb.getTopInCategory to check it
+    const topResults = await searchIndexDb.getTopInCategory(afterSpirit!.category, 50);
+    const indexEntry = topResults.find(r => r.i === TEST_ID);
+
+    const expectedRating = calculateInitialContentRating(afterSpirit!).ratingValue;
+
+    console.log(`\n✅ Spirit Master: ${afterSpirit?.aggregateRating?.ratingValue} (Expected: ${expectedRating})`);
+    
+    if (indexEntry) {
+      console.log(`✅ Search Index:  ${indexEntry.r} (Rating), ${indexEntry.rc} (Count)`);
+      if (indexEntry.r === afterSpirit?.aggregateRating?.ratingValue) {
+        console.log(`\n✨ SUCCESS: Atomic Synchronization Verified.`);
+      } else {
+        console.warn(`\n⚠️  WARNING: Data Mismatch between Collections.`);
+      }
+    } else {
+      console.warn(`\n⚠️  WARNING: Search Index Entry not found or not published.`);
+    }
+
+  } catch (error) {
+    console.error(`\n❌ Fatal Error during test:`, error);
+  }
+}
+
+testAdminSync();
+
+```
+
 ### File: scripts\test-api.ts
 ```
 import { GoogleGenerativeAI } from '@google/generative-ai';
@@ -14384,6 +15643,19 @@ async function test() {
     }
 }
 test();
+
+```
+
+### File: scripts\test-cjs.js
+```
+const dotenv = require('dotenv');
+const result = dotenv.config({ path: '.env' });
+console.log('Dotenv Result:', result.error ? 'ERROR' : 'SUCCESS');
+console.log('CLIENT_EMAIL:', process.env.FIREBASE_CLIENT_EMAIL ? 'FOUND' : 'MISSING');
+console.log('PRIVATE_KEY:', process.env.FIREBASE_PRIVATE_KEY ? 'FOUND' : 'MISSING');
+if (process.env.FIREBASE_CLIENT_EMAIL) {
+  console.log('Email:', process.env.FIREBASE_CLIENT_EMAIL.substring(0, 10) + '...');
+}
 
 ```
 
@@ -14413,6 +15685,16 @@ async function test() {
     }
 }
 test();
+
+```
+
+### File: scripts\test-env.ts
+```
+import * as dotenv from 'dotenv';
+dotenv.config({ path: '.env' });
+console.log('CLIENT_EMAIL:', process.env.FIREBASE_CLIENT_EMAIL ? 'FOUND' : 'MISSING');
+console.log('PRIVATE_KEY:', process.env.FIREBASE_PRIVATE_KEY ? 'FOUND' : 'MISSING');
+console.log('PROJECT_ID:', process.env.FIREBASE_PROJECT_ID);
 
 ```
 
@@ -14746,6 +16028,34 @@ if (failCount > 0) {
 
 ```
 
+### File: scripts\test-token.ts
+```
+const dotenv = require('dotenv');
+dotenv.config({ path: '.env' });
+
+async function test() {
+  console.log('Testing Service Account Token Generation...');
+  try {
+    const { getServiceAccountToken } = require('../lib/auth/service-account');
+    const token = await getServiceAccountToken();
+    console.log('Token generated! (length:', token.length, ')');
+  } catch (err) {
+    console.error('Error during token generation:', err);
+  }
+}
+
+test();
+
+```
+
+### File: scripts\test-tsx-env.ts
+```
+console.log('CLIENT_EMAIL:', process.env.FIREBASE_CLIENT_EMAIL ? 'FOUND' : 'MISSING');
+console.log('PRIVATE_KEY:', process.env.FIREBASE_PRIVATE_KEY ? 'FOUND' : 'MISSING');
+console.log('PROJECT_ID:', process.env.FIREBASE_PROJECT_ID);
+
+```
+
 ### File: scripts\test_firestore.py
 ```
 #!/usr/bin/env python3
@@ -15066,6 +16376,278 @@ async function verify() {
 }
 
 verify().catch(console.error);
+
+```
+
+### File: scripts\seo\enrich-agentic.ts
+```
+import dotenv from 'dotenv';
+import path from 'path';
+import { GoogleGenerativeAI } from '@google/generative-ai';
+
+// Load environment variables
+dotenv.config({ path: '.env.local' });
+dotenv.config({ path: '.env', override: false });
+
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
+const TAVILY_API_KEY = process.env.TAVILY_API_KEY || '';
+const MODEL_ID = "gemini-2.0-flash";
+
+if (!GEMINI_API_KEY) {
+    console.error('🔴 ERROR: GEMINI_API_KEY is missing.');
+    process.exit(1);
+}
+
+const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+const model = genAI.getGenerativeModel({ 
+    model: MODEL_ID, 
+    generationConfig: { responseMimeType: "application/json", temperature: 0.2 } 
+});
+
+interface SpiritData {
+    id: string;
+    name: string;
+    category: string;
+    subcategory?: string | null;
+    distillery?: string | null;
+    abv?: number | null;
+    country?: string | null;
+    region?: string | null;
+    [key: string]: any;
+}
+
+const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
+
+/**
+ * Stage 1: Fact-Finding via Tavily
+ */
+async function researchSpirit(name: string, category: string) {
+    console.log(`\n🔍 [Stage 1: Research] Fact-finding for "${name}" via Tavily...`);
+    
+    if (!TAVILY_API_KEY) {
+        console.warn('⚠️ TAVILY_API_KEY missing. Falling back to Gemini-only research.');
+        return null;
+    }
+
+    const query = `${name} ${category} official characteristics abv distillery region reviews`;
+    
+    try {
+        const response = await fetch('https://api.tavily.com/search', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                api_key: TAVILY_API_KEY,
+                query: query,
+                search_depth: "advanced",
+                include_answer: true,
+                max_results: 5
+            })
+        });
+
+        const data = await response.json();
+        console.log(`✅ [Stage 1] Found ${data.results?.length || 0} external sources.`);
+        return data;
+    } catch (error) {
+        console.error('❌ [Stage 1] Tavily search failed:', error);
+        return null;
+    }
+}
+
+/**
+ * Stage 2: Cross-Verification & Identity Correction (CoT)
+ */
+async function verifyFacts(spirit: SpiritData, researchData: any) {
+    console.log(`\n🧠 [Stage 2: Verification] Performing Cross-Verification and Chain-of-Thought reasoning...`);
+    
+    const context = researchData ? JSON.stringify(researchData.results.map((r: any) => ({
+        title: r.title,
+        content: r.content,
+        url: r.url
+    }))) : "No external research available.";
+
+    const prompt = `
+    You are an expert Spirits Auditor. Your goal is to verify and correct product data using provided research.
+    
+    ### CURRENT DATA:
+    - Name: "${spirit.name}"
+    - Category: "${spirit.category}"
+    - ABV: ${spirit.abv || 'Unknown'}%
+    - Distillery: "${spirit.distillery || 'Unknown'}"
+    - Region: "${spirit.region || 'Unknown'}"
+    - Country: "${spirit.country || 'Unknown'}"
+    
+    ### EXTERNAL RESEARCH:
+    ${context}
+    
+    ### TASK:
+    1. **Reasoning (Chain-of-Thought)**: Compare the current data with research. 
+       - Is the ABV exactly as stated in official sources?
+       - Does the region match the distillery location?
+       - If there is a conflict (e.g. 40% vs 43%), check multiple sources in the research to find the consensus or official distillery site.
+       - Note your reasoning for any changes.
+    2. **Self-Correction**: Update fields if the research provides more accurate or specific data.
+    
+    Return a JSON object:
+    {
+      "reasoning": "Step-by-step explanation of your verification process and any corrections made.",
+      "corrected_fields": {
+        "name_en": "Official English Name",
+        "abv": 0.0,
+        "distillery": "Cleaned Brand Name",
+        "region": "Specific Region",
+        "country": "Country",
+        "subcategory": "More specific classification if found"
+      },
+      "verified_facts": ["Fact 1: ...", "Fact 2: ..."]
+    }
+    `;
+
+    const result = await model.generateContent(prompt);
+    const responseText = result.response.text();
+    const parsed = JSON.parse(responseText.replace(/```json|```/g, '').trim());
+    
+    console.log(`💬 [Stage 2 Reasoning]:\n${parsed.reasoning}`);
+    return parsed;
+}
+
+/**
+ * Stage 3: High-Quality Bilingual Content Generation (CoT)
+ */
+async function generateRichContent(spirit: SpiritData, verifiedFacts: any) {
+    console.log(`\n✍️ [Stage 3: Generation] Generating deep, factual BILINGUAL content...`);
+    
+    const prompt = `
+    You are a professional Sommelier and Spirits Historian. 
+    Using the verified facts below, generate a deep, engaging report for "${spirit.name}".
+    
+    ### VERIFIED FACTS:
+    ${JSON.stringify(verifiedFacts)}
+    
+    ### INSTRUCTIONS:
+    1. **Bilingual Requirement**: Generate ALL content in both Korean (KO) and English (EN).
+    2. **Chain-of-Thought Analysis**:
+       - Analyze flavor profile based on spirit type and specific distillery notes.
+       - Explain WHY certain notes exist (distillation style, cask type, environment).
+       - Synthesize food pairings based on flavor chemistry.
+    3. **Reporting**:
+       - Generate 4-5 sentences for "Description" and "Sommelier Tasting Note".
+       - Must be FACT-ONLY. No hallucinations.
+    
+    Return a JSON object:
+    {
+      "description_ko": "...",
+      "description_en": "...",
+      "tasting_note_ko": "Detailed sommelier note in Korean",
+      "tasting_note_en": "Detailed sommelier note in English",
+      "pairing_guide_ko": "Detailed pairing rationale in Korean",
+      "pairing_guide_en": "Detailed pairing rationale in English",
+      "sensory_tags": {
+        "nose": ["tag1", "tag2", "tag3", "tag4", "tag5"],
+        "palate": ["tag1", "tag2", "tag3", "tag4", "tag5"],
+        "finish": ["tag1", "tag2", "tag3", "tag4", "tag5"]
+      }
+    }
+    `;
+
+    const result = await model.generateContent(prompt);
+    const responseText = result.response.text();
+    const parsed = JSON.parse(responseText.replace(/```json|```/g, '').trim());
+    
+    console.log(`✅ [Stage 3] Bilingual content generation complete.`);
+    return parsed;
+}
+
+/**
+ * Single Item Execution
+ */
+async function processSpirit(spiritId: string, spiritsDb: any) {
+    console.log(`\n🚀 [START] Agentic Enrichment for Spirit ID: ${spiritId}`);
+    
+    const spirit = await spiritsDb.getById(spiritId);
+    if (!spirit) {
+        console.error(`❌ Spirit not found: ${spiritId}`);
+        return false;
+    }
+
+    try {
+        const research = await researchSpirit(spirit.name, spirit.category);
+        const verification = await verifyFacts(spirit as SpiritData, research);
+        const content = await generateRichContent(spirit as SpiritData, verification);
+        
+        console.log(`\n💾 [Stage 4: Commit] Syncing enriched data via Firestore Merge...`);
+        
+        // Construct metadata with ZERO touching of 'offer' or 'price'
+        const updatedMetadata = {
+            ...spirit.metadata, // Spread existing metadata
+            description_ko: content.description_ko,
+            description_en: content.description_en,
+            tasting_note: content.tasting_note_ko,
+            tasting_note_en: content.tasting_note_en,
+            pairing_guide_ko: content.pairing_guide_ko,
+            pairing_guide_en: content.pairing_guide_en,
+            nose_tags: content.sensory_tags.nose,
+            palate_tags: content.sensory_tags.palate,
+            finish_tags: content.sensory_tags.finish,
+            agentic_enriched_at: new Date().toISOString(),
+            verification_audit: verification.reasoning
+        };
+
+        // Partial update payload
+        const updatePayload = {
+            ...verification.corrected_fields,
+            metadata: updatedMetadata,
+            status: 'ENRICHED'
+        };
+
+        // Firestore REST PATCH with UpdateMask will handle the merge safely
+        await spiritsDb.upsert(spiritId, updatePayload);
+        console.log(`✨ [DONE] ${spirit.name} (ID: ${spiritId}) enriched successfully!`);
+        return true;
+    } catch (error) {
+        console.error(`❌ [ERROR] Failed to process ${spirit.name}:`, error);
+        return false;
+    }
+}
+
+/**
+ * Main Executer with Batching & Rate Limiting
+ */
+async function run() {
+    const { spiritsDb } = await import('../../lib/db/firestore-rest');
+    
+    const targetId = process.argv[2];
+    const limitArg = process.argv.find(arg => arg.startsWith('--limit='));
+    const limit = limitArg ? parseInt(limitArg.split('=')[1], 10) : 1;
+
+    if (targetId && !targetId.startsWith('--')) {
+        // Individual processing
+        await processSpirit(targetId, spiritsDb);
+    } else {
+        // Batch processing
+        console.log(`\n📦 [BATCH MODE] Starting processing with limit: ${limit}`);
+        
+        // Fetch spirits that are NOT yet enriched by an agent
+        // For simplicity in this script, we'll fetch 'PUBLISHED' but potentially thin ones
+        const allSpirits = await spiritsDb.getAll({ status: 'PUBLISHED' });
+        const thinSpirits = allSpirits.filter((s: any) => !s.metadata?.agentic_enriched_at).slice(0, limit);
+        
+        console.log(`📊 Found ${thinSpirits.length} spirits needing enrichment in this batch.`);
+        
+        for (let i = 0; i < thinSpirits.length; i++) {
+            const spirit = thinSpirits[i];
+            console.log(`\n[${i + 1}/${thinSpirits.length}] Processing: ${spirit.name}`);
+            
+            await processSpirit(spirit.id, spiritsDb);
+            
+            if (i < thinSpirits.length - 1) {
+                console.log(`⏳ Respecting rate limits. Waiting 3 seconds...`);
+                await delay(3000); // 3-second delay between spirits
+            }
+        }
+    }
+}
+
+run().catch(console.error);
 
 ```
 

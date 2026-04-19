@@ -240,6 +240,21 @@ exports.auditAllSpirits = function auditAllSpirits(dcOrOptions, options) {
 }
 ;
 
+const auditAllReviewsRef = (dc) => {
+  const { dc: dcInstance} = validateArgs(connectorConfig, dc, undefined);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'auditAllReviews');
+}
+auditAllReviewsRef.operationName = 'auditAllReviews';
+exports.auditAllReviewsRef = auditAllReviewsRef;
+
+exports.auditAllReviews = function auditAllReviews(dcOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrOptions, options, undefined,false, false);
+  return executeQuery(auditAllReviewsRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
+}
+;
+
 const listSpiritReviewsRef = (dcOrVars, vars) => {
   const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars);
   dcInstance._useGeneratedSdk();
@@ -282,21 +297,6 @@ exports.listSpiritsForSitemap = function listSpiritsForSitemap(dcOrOptions, opti
   
   const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrOptions, options, undefined,false, false);
   return executeQuery(listSpiritsForSitemapRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
-}
-;
-
-const auditAllReviewsRef = (dc) => {
-  const { dc: dcInstance} = validateArgs(connectorConfig, dc, undefined);
-  dcInstance._useGeneratedSdk();
-  return queryRef(dcInstance, 'auditAllReviews');
-}
-auditAllReviewsRef.operationName = 'auditAllReviews';
-exports.auditAllReviewsRef = auditAllReviewsRef;
-
-exports.auditAllReviews = function auditAllReviews(dcOrOptions, options) {
-  
-  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrOptions, options, undefined,false, false);
-  return executeQuery(auditAllReviewsRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
 }
 ;
 

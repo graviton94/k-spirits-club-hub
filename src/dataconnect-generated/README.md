@@ -17,10 +17,10 @@ This README will guide you through the process of using the generated JavaScript
   - [*auditAllUsers*](#auditallusers)
   - [*auditAllNews*](#auditallnews)
   - [*auditAllSpirits*](#auditallspirits)
+  - [*auditAllReviews*](#auditallreviews)
   - [*listSpiritReviews*](#listspiritreviews)
   - [*getSpiritReviewsCount*](#getspiritreviewscount)
   - [*listSpiritsForSitemap*](#listspiritsforsitemap)
-  - [*auditAllReviews*](#auditallreviews)
   - [*getWorldCupResult*](#getworldcupresult)
   - [*listSpiritsForWorldCup*](#listspiritsforworldcup)
 - [**Mutations**](#mutations)
@@ -1132,6 +1132,107 @@ executeQuery(ref).then((response) => {
 });
 ```
 
+## auditAllReviews
+You can execute the `auditAllReviews` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
+```typescript
+auditAllReviews(options?: ExecuteQueryOptions): QueryPromise<AuditAllReviewsData, undefined>;
+
+interface AuditAllReviewsRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (): QueryRef<AuditAllReviewsData, undefined>;
+}
+export const auditAllReviewsRef: AuditAllReviewsRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `QueryRef` function.
+```typescript
+auditAllReviews(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<AuditAllReviewsData, undefined>;
+
+interface AuditAllReviewsRef {
+  ...
+  (dc: DataConnect): QueryRef<AuditAllReviewsData, undefined>;
+}
+export const auditAllReviewsRef: AuditAllReviewsRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the auditAllReviewsRef:
+```typescript
+const name = auditAllReviewsRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `auditAllReviews` query has no variables.
+### Return Type
+Recall that executing the `auditAllReviews` query returns a `QueryPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `AuditAllReviewsData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface AuditAllReviewsData {
+  spiritReviews: ({
+    id: UUIDString;
+    spirit: {
+      id: string;
+      name: string;
+    } & Spirit_Key;
+      user: {
+        id: string;
+        nickname?: string | null;
+      } & User_Key;
+  } & SpiritReview_Key)[];
+}
+```
+### Using `auditAllReviews`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, auditAllReviews } from '@k-spirits/dataconnect';
+
+
+// Call the `auditAllReviews()` function to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await auditAllReviews();
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await auditAllReviews(dataConnect);
+
+console.log(data.spiritReviews);
+
+// Or, you can use the `Promise` API.
+auditAllReviews().then((response) => {
+  const data = response.data;
+  console.log(data.spiritReviews);
+});
+```
+
+### Using `auditAllReviews`'s `QueryRef` function
+
+```typescript
+import { getDataConnect, executeQuery } from 'firebase/data-connect';
+import { connectorConfig, auditAllReviewsRef } from '@k-spirits/dataconnect';
+
+
+// Call the `auditAllReviewsRef()` function to get a reference to the query.
+const ref = auditAllReviewsRef();
+
+// You can also pass in a `DataConnect` instance to the `QueryRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = auditAllReviewsRef(dataConnect);
+
+// Call `executeQuery()` on the reference to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeQuery(ref);
+
+console.log(data.spiritReviews);
+
+// Or, you can use the `Promise` API.
+executeQuery(ref).then((response) => {
+  const data = response.data;
+  console.log(data.spiritReviews);
+});
+```
+
 ## listSpiritReviews
 You can execute the `listSpiritReviews` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
 ```typescript
@@ -1461,107 +1562,6 @@ console.log(data.spirits);
 executeQuery(ref).then((response) => {
   const data = response.data;
   console.log(data.spirits);
-});
-```
-
-## auditAllReviews
-You can execute the `auditAllReviews` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
-```typescript
-auditAllReviews(options?: ExecuteQueryOptions): QueryPromise<AuditAllReviewsData, undefined>;
-
-interface AuditAllReviewsRef {
-  ...
-  /* Allow users to create refs without passing in DataConnect */
-  (): QueryRef<AuditAllReviewsData, undefined>;
-}
-export const auditAllReviewsRef: AuditAllReviewsRef;
-```
-You can also pass in a `DataConnect` instance to the action shortcut function or `QueryRef` function.
-```typescript
-auditAllReviews(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<AuditAllReviewsData, undefined>;
-
-interface AuditAllReviewsRef {
-  ...
-  (dc: DataConnect): QueryRef<AuditAllReviewsData, undefined>;
-}
-export const auditAllReviewsRef: AuditAllReviewsRef;
-```
-
-If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the auditAllReviewsRef:
-```typescript
-const name = auditAllReviewsRef.operationName;
-console.log(name);
-```
-
-### Variables
-The `auditAllReviews` query has no variables.
-### Return Type
-Recall that executing the `auditAllReviews` query returns a `QueryPromise` that resolves to an object with a `data` property.
-
-The `data` property is an object of type `AuditAllReviewsData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
-```typescript
-export interface AuditAllReviewsData {
-  spiritReviews: ({
-    id: UUIDString;
-    spirit: {
-      id: string;
-      name: string;
-    } & Spirit_Key;
-      user: {
-        id: string;
-        nickname?: string | null;
-      } & User_Key;
-  } & SpiritReview_Key)[];
-}
-```
-### Using `auditAllReviews`'s action shortcut function
-
-```typescript
-import { getDataConnect } from 'firebase/data-connect';
-import { connectorConfig, auditAllReviews } from '@k-spirits/dataconnect';
-
-
-// Call the `auditAllReviews()` function to execute the query.
-// You can use the `await` keyword to wait for the promise to resolve.
-const { data } = await auditAllReviews();
-
-// You can also pass in a `DataConnect` instance to the action shortcut function.
-const dataConnect = getDataConnect(connectorConfig);
-const { data } = await auditAllReviews(dataConnect);
-
-console.log(data.spiritReviews);
-
-// Or, you can use the `Promise` API.
-auditAllReviews().then((response) => {
-  const data = response.data;
-  console.log(data.spiritReviews);
-});
-```
-
-### Using `auditAllReviews`'s `QueryRef` function
-
-```typescript
-import { getDataConnect, executeQuery } from 'firebase/data-connect';
-import { connectorConfig, auditAllReviewsRef } from '@k-spirits/dataconnect';
-
-
-// Call the `auditAllReviewsRef()` function to get a reference to the query.
-const ref = auditAllReviewsRef();
-
-// You can also pass in a `DataConnect` instance to the `QueryRef` function.
-const dataConnect = getDataConnect(connectorConfig);
-const ref = auditAllReviewsRef(dataConnect);
-
-// Call `executeQuery()` on the reference to execute the query.
-// You can use the `await` keyword to wait for the promise to resolve.
-const { data } = await executeQuery(ref);
-
-console.log(data.spiritReviews);
-
-// Or, you can use the `Promise` API.
-executeQuery(ref).then((response) => {
-  const data = response.data;
-  console.log(data.spiritReviews);
 });
 ```
 
@@ -2747,10 +2747,10 @@ The `upsertWorldCupResult` mutation requires an argument of type `UpsertWorldCup
 ```typescript
 export interface UpsertWorldCupResultVariables {
   id: UUIDString;
-  winnerId: string;
+  winnerId?: string | null;
   category: string;
   subcategory?: string | null;
-  initialRound: number;
+  initialRound?: number | null;
   timestamp?: TimestampString | null;
 }
 ```
@@ -2772,10 +2772,10 @@ import { connectorConfig, upsertWorldCupResult, UpsertWorldCupResultVariables } 
 // The `upsertWorldCupResult` mutation requires an argument of type `UpsertWorldCupResultVariables`:
 const upsertWorldCupResultVars: UpsertWorldCupResultVariables = {
   id: ..., 
-  winnerId: ..., 
+  winnerId: ..., // optional
   category: ..., 
   subcategory: ..., // optional
-  initialRound: ..., 
+  initialRound: ..., // optional
   timestamp: ..., // optional
 };
 
@@ -2807,10 +2807,10 @@ import { connectorConfig, upsertWorldCupResultRef, UpsertWorldCupResultVariables
 // The `upsertWorldCupResult` mutation requires an argument of type `UpsertWorldCupResultVariables`:
 const upsertWorldCupResultVars: UpsertWorldCupResultVariables = {
   id: ..., 
-  winnerId: ..., 
+  winnerId: ..., // optional
   category: ..., 
   subcategory: ..., // optional
-  initialRound: ..., 
+  initialRound: ..., // optional
   timestamp: ..., // optional
 };
 

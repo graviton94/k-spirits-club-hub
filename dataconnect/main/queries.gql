@@ -127,7 +127,7 @@ query getNewsArticle($id: String!) @auth(level: PUBLIC) {
   }
 }
 
-# --- Audit Queries (Temporary) ---
+# --- Audit Queries ---
 query auditAllUsers @auth(level: PUBLIC) {
   users {
     id
@@ -148,6 +148,20 @@ query auditAllNews @auth(level: PUBLIC) {
 query auditAllSpirits @auth(level: PUBLIC) {
   spirits {
     id
+  }
+}
+
+query auditAllReviews @auth(level: PUBLIC) {
+  spiritReviews {
+    id
+    spirit {
+      id
+      name
+    }
+    user {
+      id
+      nickname
+    }
   }
 }
 
@@ -197,19 +211,6 @@ query listSpiritsForSitemap @auth(level: PUBLIC) {
   }
 }
 
-query auditAllReviews @auth(level: PUBLIC) {
-  spiritReviews {
-    id
-    spirit {
-      id
-      name
-    }
-    user {
-      id
-      nickname
-    }
-  }
-}
 query getWorldCupResult($id: UUID!) @auth(level: PUBLIC) {
   worldCupResult(id: $id) {
     id

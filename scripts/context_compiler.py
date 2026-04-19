@@ -3,6 +3,12 @@ import sys
 import subprocess
 from markitdown import MarkItDown
 
+# Handle Windows console encoding issues for emojis
+if sys.platform == 'win32':
+    import io
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+
 # --- ⚙️ 설정 영역 ---
 TARGET_REPO = r"C:\k-spirits-club-hub"
 # GRAPHIFY_EXE 는 이제 sys.executable -m graphify 를 통해 실행되므로 제거되었습니다.

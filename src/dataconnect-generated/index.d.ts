@@ -451,10 +451,10 @@ export interface UpsertWorldCupResultData {
 
 export interface UpsertWorldCupResultVariables {
   id: UUIDString;
-  winnerId: string;
+  winnerId?: string | null;
   category: string;
   subcategory?: string | null;
-  initialRound: number;
+  initialRound?: number | null;
   timestamp?: TimestampString | null;
 }
 
@@ -666,6 +666,18 @@ export const auditAllSpiritsRef: AuditAllSpiritsRef;
 export function auditAllSpirits(options?: ExecuteQueryOptions): QueryPromise<AuditAllSpiritsData, undefined>;
 export function auditAllSpirits(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<AuditAllSpiritsData, undefined>;
 
+interface AuditAllReviewsRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (): QueryRef<AuditAllReviewsData, undefined>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect): QueryRef<AuditAllReviewsData, undefined>;
+  operationName: string;
+}
+export const auditAllReviewsRef: AuditAllReviewsRef;
+
+export function auditAllReviews(options?: ExecuteQueryOptions): QueryPromise<AuditAllReviewsData, undefined>;
+export function auditAllReviews(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<AuditAllReviewsData, undefined>;
+
 interface ListSpiritReviewsRef {
   /* Allow users to create refs without passing in DataConnect */
   (vars?: ListSpiritReviewsVariables): QueryRef<ListSpiritReviewsData, ListSpiritReviewsVariables>;
@@ -701,18 +713,6 @@ export const listSpiritsForSitemapRef: ListSpiritsForSitemapRef;
 
 export function listSpiritsForSitemap(options?: ExecuteQueryOptions): QueryPromise<ListSpiritsForSitemapData, undefined>;
 export function listSpiritsForSitemap(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<ListSpiritsForSitemapData, undefined>;
-
-interface AuditAllReviewsRef {
-  /* Allow users to create refs without passing in DataConnect */
-  (): QueryRef<AuditAllReviewsData, undefined>;
-  /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect): QueryRef<AuditAllReviewsData, undefined>;
-  operationName: string;
-}
-export const auditAllReviewsRef: AuditAllReviewsRef;
-
-export function auditAllReviews(options?: ExecuteQueryOptions): QueryPromise<AuditAllReviewsData, undefined>;
-export function auditAllReviews(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<AuditAllReviewsData, undefined>;
 
 interface GetWorldCupResultRef {
   /* Allow users to create refs without passing in DataConnect */

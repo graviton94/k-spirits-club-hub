@@ -1,14 +1,14 @@
 # [Project Context] k-spirits-club-hub - Module: graphify-out
 
 ## 1. Project Architecture (Graphify)
-# Graph Report - .  (2026-04-13)
+# Graph Report - .  (2026-04-19)
 
 ## Corpus Check
-- 527 files · ~2,212,029 words
+- 561 files · ~2,506,679 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1539 nodes · 1511 edges · 477 communities detected
+- 1712 nodes · 1706 edges · 511 communities detected
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
@@ -490,18 +490,52 @@
 - [[_COMMUNITY_Community 474|Community 474]]
 - [[_COMMUNITY_Community 475|Community 475]]
 - [[_COMMUNITY_Community 476|Community 476]]
+- [[_COMMUNITY_Community 477|Community 477]]
+- [[_COMMUNITY_Community 478|Community 478]]
+- [[_COMMUNITY_Community 479|Community 479]]
+- [[_COMMUNITY_Community 480|Community 480]]
+- [[_COMMUNITY_Community 481|Community 481]]
+- [[_COMMUNITY_Community 482|Community 482]]
+- [[_COMMUNITY_Community 483|Community 483]]
+- [[_COMMUNITY_Community 484|Community 484]]
+- [[_COMMUNITY_Community 485|Community 485]]
+- [[_COMMUNITY_Community 486|Community 486]]
+- [[_COMMUNITY_Community 487|Community 487]]
+- [[_COMMUNITY_Community 488|Community 488]]
+- [[_COMMUNITY_Community 489|Community 489]]
+- [[_COMMUNITY_Community 490|Community 490]]
+- [[_COMMUNITY_Community 491|Community 491]]
+- [[_COMMUNITY_Community 492|Community 492]]
+- [[_COMMUNITY_Community 493|Community 493]]
+- [[_COMMUNITY_Community 494|Community 494]]
+- [[_COMMUNITY_Community 495|Community 495]]
+- [[_COMMUNITY_Community 496|Community 496]]
+- [[_COMMUNITY_Community 497|Community 497]]
+- [[_COMMUNITY_Community 498|Community 498]]
+- [[_COMMUNITY_Community 499|Community 499]]
+- [[_COMMUNITY_Community 500|Community 500]]
+- [[_COMMUNITY_Community 501|Community 501]]
+- [[_COMMUNITY_Community 502|Community 502]]
+- [[_COMMUNITY_Community 503|Community 503]]
+- [[_COMMUNITY_Community 504|Community 504]]
+- [[_COMMUNITY_Community 505|Community 505]]
+- [[_COMMUNITY_Community 506|Community 506]]
+- [[_COMMUNITY_Community 507|Community 507]]
+- [[_COMMUNITY_Community 508|Community 508]]
+- [[_COMMUNITY_Community 509|Community 509]]
+- [[_COMMUNITY_Community 510|Community 510]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `BrowserManager` - 48 edges
 2. `GET()` - 23 edges
-3. `generateMetadata()` - 22 edges
+3. `generateMetadata()` - 21 edges
 4. `POST()` - 20 edges
-5. `generatePreamble()` - 13 edges
-6. `main()` - 12 edges
-7. `CircularBuffer` - 10 edges
-8. `WorktreeManager` - 10 edges
-9. `ensureServer()` - 8 edges
-10. `importCookies()` - 8 edges
+5. `getDC()` - 20 edges
+6. `generatePreamble()` - 13 edges
+7. `main()` - 12 edges
+8. `CircularBuffer` - 10 edges
+9. `WorktreeManager` - 10 edges
+10. `ensureServer()` - 8 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `GET()` --calls--> `replaceWithStatus()`  [EXTRACTED]
@@ -518,284 +552,284 @@
 ## Communities
 
 ### Community 0 - "Community 0"
+Cohesion: 0.05
+Nodes (44): auditAllNews(), auditAllNewsRef(), auditAllReviews(), auditAllReviewsRef(), auditAllSpirits(), auditAllSpiritsRef(), auditAllUsers(), auditAllUsersRef() (+36 more)
+
+### Community 1 - "Community 1"
 Cohesion: 0.06
 Nodes (1): BrowserManager
 
-### Community 1 - "Community 1"
-Cohesion: 0.07
+### Community 2 - "Community 2"
+Cohesion: 0.06
 Nodes (8): DELETE(), generateSafeId(), GET(), getKSTDate(), parseTags(), PATCH(), POST(), replaceWithStatus()
 
-### Community 2 - "Community 2"
-Cohesion: 0.07
-Nodes (12): buildSpiritMetaDescription(), dedupeTokens(), extractTastingNoteTags(), generateMetadata(), getBrandPrefix(), getPreferredMetaTags(), getResult(), getSpiritSeoImageCandidates() (+4 more)
-
 ### Community 3 - "Community 3"
+Cohesion: 0.08
+Nodes (12): buildSpiritMetaDescription(), dedupeTokens(), extractTastingNoteTags(), generateMetadata(), getPreferredMetaTags(), getResult(), getSpiritSeoImageCandidates(), getSpiritSeoRobots() (+4 more)
+
+### Community 4 - "Community 4"
 Cohesion: 0.15
 Nodes (26): chromiumEpochToUnix(), chromiumNow(), CookieImportError, decryptCookieValue(), deriveKey(), findBrowserMatch(), getBaseDir(), getBrowserMatch() (+18 more)
 
-### Community 4 - "Community 4"
+### Community 5 - "Community 5"
 Cohesion: 0.12
 Nodes (22): addChatEntry(), createSession(), createWorktree(), emergencyCleanup(), findPort(), flushBuffers(), generateHelpText(), handleCommand() (+14 more)
 
-### Community 5 - "Community 5"
-Cohesion: 0.2
-Nodes (17): addChatEntry(), addEntry(), authHeaders(), connectSSE(), createEntryElement(), escapeHtml(), formatChatTime(), formatTime() (+9 more)
-
 ### Community 6 - "Community 6"
-Cohesion: 0.27
-Nodes (14): acquireServerLock(), cleanupLegacyState(), ensureServer(), isProcessAlive(), isServerHealthy(), killServer(), main(), parseArgs() (+6 more)
+Cohesion: 0.09
+Nodes (0): 
 
 ### Community 7 - "Community 7"
 Cohesion: 0.17
-Nodes (16): apply_normalization(), extract_abv(), extract_lot_info(), extract_volume(), final_cleanup(), load_spirits_to_normalize(), main(), normalize_spirit() (+8 more)
+Nodes (20): dbGetNewsArticle(), dbGetNewsCount(), dbGetSpirit(), dbGetSpiritReviewsCount(), dbGetUserProfile(), dbGetWorldCupResult(), dbListNewArrivals(), dbListNewsArticles() (+12 more)
 
 ### Community 8 - "Community 8"
+Cohesion: 0.2
+Nodes (17): addChatEntry(), addEntry(), authHeaders(), connectSSE(), createEntryElement(), escapeHtml(), formatChatTime(), formatTime() (+9 more)
+
+### Community 9 - "Community 9"
+Cohesion: 0.27
+Nodes (14): acquireServerLock(), cleanupLegacyState(), ensureServer(), isProcessAlive(), isServerHealthy(), killServer(), main(), parseArgs() (+6 more)
+
+### Community 10 - "Community 10"
+Cohesion: 0.17
+Nodes (16): apply_normalization(), extract_abv(), extract_lot_info(), extract_volume(), final_cleanup(), load_spirits_to_normalize(), main(), normalize_spirit() (+8 more)
+
+### Community 11 - "Community 11"
 Cohesion: 0.17
 Nodes (16): apply_normalization(), extract_abv(), extract_description(), extract_lot_info(), extract_volume(), load_spirits_to_normalize(), main(), normalize_spirit() (+8 more)
 
-### Community 9 - "Community 9"
+### Community 12 - "Community 12"
 Cohesion: 0.22
 Nodes (6): copyDirSync(), getDedupPath(), git(), loadDedupIndex(), saveDedupIndex(), WorktreeManager
 
-### Community 10 - "Community 10"
+### Community 13 - "Community 13"
 Cohesion: 0.22
 Nodes (8): compareEvalResults(), EvalCollector, extractToolSummary(), findPreviousRun(), formatComparison(), generateCommentary(), getGitInfo(), getVersion()
 
-### Community 11 - "Community 11"
+### Community 14 - "Community 14"
 Cohesion: 0.25
 Nodes (13): generateAskUserFormat(), generateCompletenessSection(), generateCompletionStatus(), generateContributorMode(), generateLakeIntro(), generatePreamble(), generatePreambleBash(), generateProactivePrompt() (+5 more)
 
-### Community 12 - "Community 12"
+### Community 15 - "Community 15"
 Cohesion: 0.16
 Nodes (5): createTestWorktree(), describeIfSelected(), describeWithWorktree(), getWorktreeManager(), harvestAndCleanup()
 
-### Community 13 - "Community 13"
+### Community 16 - "Community 16"
 Cohesion: 0.29
 Nodes (13): extractCwdFromJsonl(), getGitRemote(), isGitRepo(), main(), normalizeRemoteUrl(), parseArgs(), printUsage(), resolveAndDeduplicate() (+5 more)
 
-### Community 14 - "Community 14"
+### Community 17 - "Community 17"
 Cohesion: 0.2
 Nodes (4): addConsoleEntry(), addDialogEntry(), addNetworkEntry(), CircularBuffer
 
-### Community 15 - "Community 15"
+### Community 18 - "Community 18"
 Cohesion: 0.25
 Nodes (13): apply_normalization(), apply_normalization_to_dict(), call_audit_ai(), fetch_all_spirits(), fetch_published_spirits(), get_db_client(), main(), Firestore에서 모든 데이터 가져오기 (published + unpublished) (+5 more)
 
-### Community 16 - "Community 16"
+### Community 19 - "Community 19"
 Cohesion: 0.32
 Nodes (12): askClaude(), countLines(), getGitRoot(), handleStreamEvent(), main(), poll(), readLine(), refreshToken() (+4 more)
 
-### Community 17 - "Community 17"
+### Community 20 - "Community 20"
 Cohesion: 0.19
 Nodes (4): generatePlanCompletionAuditInner(), generatePlanCompletionAuditReview(), generatePlanCompletionAuditShip(), generatePlanFileDiscovery()
 
-### Community 18 - "Community 18"
+### Community 21 - "Community 21"
 Cohesion: 0.22
 Nodes (12): extract_abv(), extract_description(), extract_lot_info(), extract_volume(), main(), normalize_spirit(), Normalize Spirit Names - Pipeline Step  Extracts volume, ABV, lot info from na, Normalize a single spirit (+4 more)
 
-### Community 19 - "Community 19"
+### Community 22 - "Community 22"
 Cohesion: 0.17
 Nodes (0): 
 
-### Community 20 - "Community 20"
+### Community 23 - "Community 23"
 Cohesion: 0.23
 Nodes (5): dumpOutcomeDiagnostic(), logCost(), recordE2E(), runPlantedBugEval(), setupBrowseShims()
 
-### Community 21 - "Community 21"
+### Community 24 - "Community 24"
+Cohesion: 0.21
+Nodes (4): analyzeCellar(), FlavorVectorIndex, generateUserPalate(), getHybridRecommendations()
+
+### Community 25 - "Community 25"
 Cohesion: 0.36
 Nodes (7): checkHealth(), executeCommand(), fetchAndRelayRefs(), getBaseUrl(), notifyContentScripts(), setConnected(), setDisconnected()
 
-### Community 22 - "Community 22"
+### Community 26 - "Community 26"
 Cohesion: 0.27
 Nodes (5): fromFirestoreValue(), getPublishedSpiritMetaWithQuality(), parseFirestoreFields(), toFirestore(), toFirestoreValue()
 
-### Community 23 - "Community 23"
+### Community 27 - "Community 27"
+Cohesion: 0.2
+Nodes (0): 
+
+### Community 28 - "Community 28"
 Cohesion: 0.33
 Nodes (7): calculateScore(), getMessage(), resetGame(), startAnimation(), startGame(), switchAction(), updateLevel()
 
-### Community 24 - "Community 24"
+### Community 29 - "Community 29"
 Cohesion: 0.42
 Nodes (7): codexSkillName(), condenseOpenAIShortDescription(), extractHookSafetyProse(), extractNameAndDescription(), generateOpenAIYaml(), processTemplate(), transformFrontmatter()
 
-### Community 25 - "Community 25"
+### Community 30 - "Community 30"
 Cohesion: 0.22
 Nodes (0): 
 
-### Community 26 - "Community 26"
-Cohesion: 0.36
-Nodes (6): analyzeCellar(), calculateCategoryDistribution(), extractKeywords(), generateFlavorNodes(), generateHierarchicalNodes(), generatePersona()
-
-### Community 27 - "Community 27"
+### Community 31 - "Community 31"
 Cohesion: 0.36
 Nodes (6): getKeywordScore(), getMatchCandidates(), scoreSpiritForKeywordGroup(), scoreSpiritForWikiCategory(), selectFeaturedSpiritsForWiki(), sortFeaturedSpiritsForWiki()
 
-### Community 28 - "Community 28"
+### Community 32 - "Community 32"
 Cohesion: 0.32
 Nodes (3): emitActivity(), filterArgs(), truncateResult()
 
-### Community 29 - "Community 29"
+### Community 33 - "Community 33"
 Cohesion: 0.46
 Nodes (5): chromiumEpoch(), createFixtureDb(), createLinuxFixtureDb(), createMacFixtureDb(), encryptCookieValue()
 
-### Community 30 - "Community 30"
+### Community 34 - "Community 34"
 Cohesion: 0.36
 Nodes (4): createRoutingWorkDir(), initGitRepo(), installSkills(), run()
 
-### Community 31 - "Community 31"
+### Community 35 - "Community 35"
 Cohesion: 0.36
 Nodes (1): onlineIngestion
 
-### Community 32 - "Community 32"
+### Community 36 - "Community 36"
 Cohesion: 0.29
 Nodes (7): analyze_name(), generate_report(), load_spirits_sample(), Spirit Data Normalization Analyzer  This script analyzes spirits data from Fir, Analyze a spirit name for patterns that should be extracted., Load ALL spirits data from the API., Generate a detailed report of normalization needs.
 
-### Community 33 - "Community 33"
+### Community 37 - "Community 37"
+Cohesion: 0.57
+Nodes (7): cleanTimestamps(), executeMutation(), main(), migrateNews(), migrateSpirits(), migrateUsers(), prepareSystemUser()
+
+### Community 38 - "Community 38"
 Cohesion: 0.29
 Nodes (0): 
 
-### Community 34 - "Community 34"
+### Community 39 - "Community 39"
 Cohesion: 0.33
 Nodes (2): calculateResult(), handleAnswer()
 
-### Community 35 - "Community 35"
-Cohesion: 0.43
-Nodes (4): handleAdd(), handleReviewSubmit(), handleSelectCabinet(), handleSelectWishlist()
-
-### Community 36 - "Community 36"
+### Community 40 - "Community 40"
 Cohesion: 0.52
 Nodes (6): getCleanText(), handleReadCommand(), hasAwait(), needsBlockWrapper(), validateReadPath(), wrapForEvaluate()
 
-### Community 37 - "Community 37"
+### Community 41 - "Community 41"
 Cohesion: 0.48
 Nodes (4): clearOverlays(), ensureContainer(), renderRefBadges(), renderRefPanel()
 
-### Community 38 - "Community 38"
+### Community 42 - "Community 42"
 Cohesion: 0.33
 Nodes (2): extractNameAndDescription(), transformFrontmatter()
 
-### Community 39 - "Community 39"
+### Community 43 - "Community 43"
 Cohesion: 0.29
 Nodes (0): 
 
-### Community 40 - "Community 40"
+### Community 44 - "Community 44"
 Cohesion: 0.38
 Nodes (3): carefulInput(), detectSafeRmWorks(), runHook()
 
-### Community 41 - "Community 41"
+### Community 45 - "Community 45"
 Cohesion: 0.43
 Nodes (4): auditSpiritInfo(), enrichSpiritWithAI(), generatePairingGuide(), generateSensoryProfile()
 
-### Community 42 - "Community 42"
+### Community 46 - "Community 46"
 Cohesion: 0.52
 Nodes (6): formatSpiritFieldValue(), localizeCategory(), localizeCountry(), localizeDataSource(), localizeMainCategoryOnly(), localizeVariety()
 
-### Community 43 - "Community 43"
+### Community 47 - "Community 47"
+Cohesion: 0.52
+Nodes (6): BOLD(), getDcCount(), getFirestoreCount(), GREEN(), main(), RED()
+
+### Community 48 - "Community 48"
+Cohesion: 0.52
+Nodes (6): delay(), generateRichContent(), processSpirit(), researchSpirit(), run(), verifyFacts()
+
+### Community 49 - "Community 49"
 Cohesion: 0.33
 Nodes (0): 
 
-### Community 44 - "Community 44"
+### Community 50 - "Community 50"
 Cohesion: 0.33
 Nodes (0): 
 
-### Community 45 - "Community 45"
+### Community 51 - "Community 51"
 Cohesion: 0.33
 Nodes (0): 
 
-### Community 46 - "Community 46"
+### Community 52 - "Community 52"
 Cohesion: 0.47
 Nodes (3): getGitRoot(), getRemoteSlug(), resolveConfig()
 
-### Community 47 - "Community 47"
+### Community 53 - "Community 53"
 Cohesion: 0.47
 Nodes (4): defaultDesign(), extractDesignLanguage(), formatExtractedSection(), updateDesignMd()
 
-### Community 48 - "Community 48"
+### Community 54 - "Community 54"
 Cohesion: 0.53
 Nodes (4): createSession(), createSessionId(), sessionPath(), updateSession()
 
-### Community 49 - "Community 49"
+### Community 55 - "Community 55"
 Cohesion: 0.6
 Nodes (5): formatDuration(), isProcessAlive(), readJSON(), render(), renderDashboard()
 
-### Community 50 - "Community 50"
+### Community 56 - "Community 56"
 Cohesion: 0.53
 Nodes (4): generateTestCoverageAuditInner(), generateTestCoverageAuditPlan(), generateTestCoverageAuditReview(), generateTestCoverageAuditShip()
 
-### Community 51 - "Community 51"
+### Community 57 - "Community 57"
 Cohesion: 0.6
 Nodes (5): atomicWriteSync(), parseNDJSON(), runSkillTest(), sanitizeTestName(), truncate()
 
-### Community 52 - "Community 52"
+### Community 58 - "Community 58"
 Cohesion: 0.6
 Nodes (5): fetchPublicJson(), fromFirestoreDoc(), fromFirestoreValue(), getPublicLatestFeatured(), getPublicSpiritById()
 
-### Community 53 - "Community 53"
+### Community 59 - "Community 59"
 Cohesion: 0.6
 Nodes (5): getBaseUrl(), getCanonicalUrl(), getHreflangAlternates(), stripQuery(), toAbsoluteUrl()
 
-### Community 54 - "Community 54"
+### Community 60 - "Community 60"
 Cohesion: 0.73
 Nodes (5): bulkProcessor(), delay(), processSpiritWithAI(), syncNames(), translateMissing()
 
-### Community 55 - "Community 55"
+### Community 61 - "Community 61"
 Cohesion: 0.53
 Nodes (5): collect_files_from_dir(), compile_mega_prompt(), get_graphify_context(), 특정 디렉토리 내의 코드를 수집합니다. (MarkItDown 연동), save_bundle()
 
-### Community 56 - "Community 56"
+### Community 62 - "Community 62"
 Cohesion: 0.47
 Nodes (4): enrich_batch(), get_category_prompt(), main(), 카테고리에 맞는 프롬프트 가이드를 반환합니다.
 
-### Community 57 - "Community 57"
+### Community 63 - "Community 63"
 Cohesion: 0.47
 Nodes (5): fetch_spirits_by_category(), fetch_spirits_by_type(), main(), 하나의 표준 카테고리에 대해 여러 검색어 변형으로 데이터를 수집하고 합칩니다., 특정 주종에 대한 데이터를 식품안전나라 API에서 가져옵니다.
 
-### Community 58 - "Community 58"
+### Community 64 - "Community 64"
 Cohesion: 0.47
 Nodes (5): build_advanced_search_url(), fetch_image_url(), main(), 구글 고급 검색 파라미터를 조합하여 타겟팅된 URL 생성, HTML 내의 JSON 블록 및 URL 패턴을 분석하여 실제 이미지 URL 추출
 
-### Community 59 - "Community 59"
+### Community 65 - "Community 65"
 Cohesion: 0.53
 Nodes (5): extract_abv(), extract_description(), extract_volume(), normalize_spirit(), Normalize remaining 113 spirits  Uses the full_normalization_analysis.json to
 
-### Community 60 - "Community 60"
-Cohesion: 0.4
-Nodes (0): 
-
-### Community 61 - "Community 61"
-Cohesion: 0.4
-Nodes (0): 
-
-### Community 62 - "Community 62"
-Cohesion: 0.4
-Nodes (0): 
-
-### Community 63 - "Community 63"
-Cohesion: 0.4
-Nodes (0): 
-
-### Community 64 - "Community 64"
-Cohesion: 0.4
-Nodes (0): 
-
-### Community 65 - "Community 65"
-Cohesion: 0.4
-Nodes (0): 
-
 ### Community 66 - "Community 66"
-Cohesion: 0.6
-Nodes (3): fetchReviews(), handleReviewDeleted(), handleReviewSubmitted()
+Cohesion: 0.4
+Nodes (0): 
 
 ### Community 67 - "Community 67"
-Cohesion: 0.5
-Nodes (2): handleKeyDown(), handleSearch()
+Cohesion: 0.4
+Nodes (0): 
 
 ### Community 68 - "Community 68"
-Cohesion: 0.9
-Nodes (4): corsOrigin(), errorResponse(), handleCookiePickerRoute(), jsonResponse()
+Cohesion: 0.4
+Nodes (0): 
 
 ### Community 69 - "Community 69"
-Cohesion: 0.7
-Nodes (4): isMetadataIp(), normalizeHostname(), resolvesToBlockedIp(), validateNavigationUrl()
+Cohesion: 0.4
+Nodes (0): 
 
 ### Community 70 - "Community 70"
 Cohesion: 0.4
@@ -807,23 +841,23 @@ Nodes (0):
 
 ### Community 72 - "Community 72"
 Cohesion: 0.6
-Nodes (3): api(), pollChatUntil(), resetState()
+Nodes (3): fetchReviews(), handleReviewDeleted(), handleReviewSubmitted()
 
 ### Community 73 - "Community 73"
-Cohesion: 0.6
-Nodes (3): gallery(), generateEmptyGallery(), generateGalleryHtml()
+Cohesion: 0.5
+Nodes (2): handleKeyDown(), handleSearch()
 
 ### Community 74 - "Community 74"
-Cohesion: 0.7
-Nodes (4): buildAccumulatedPrompt(), callFresh(), callWithThreading(), iterate()
+Cohesion: 0.9
+Nodes (4): corsOrigin(), errorResponse(), handleCookiePickerRoute(), jsonResponse()
 
 ### Community 75 - "Community 75"
 Cohesion: 0.7
-Nodes (4): filterByPeriod(), formatReport(), main(), parseJSONL()
+Nodes (4): isMetadataIp(), normalizeHostname(), resolvesToBlockedIp(), validateNavigationUrl()
 
 ### Community 76 - "Community 76"
-Cohesion: 0.5
-Nodes (2): run(), setupReviewDir()
+Cohesion: 0.4
+Nodes (0): 
 
 ### Community 77 - "Community 77"
 Cohesion: 0.4
@@ -831,63 +865,63 @@ Nodes (0):
 
 ### Community 78 - "Community 78"
 Cohesion: 0.6
-Nodes (4): parseJsonl(), readJsonl(), run(), setConfig()
+Nodes (3): api(), pollChatUntil(), resetState()
 
 ### Community 79 - "Community 79"
-Cohesion: 0.4
-Nodes (1): Order
+Cohesion: 0.6
+Nodes (3): gallery(), generateEmptyGallery(), generateGalleryHtml()
 
 ### Community 80 - "Community 80"
-Cohesion: 0.4
-Nodes (1): Order
+Cohesion: 0.7
+Nodes (4): buildAccumulatedPrompt(), callFresh(), callWithThreading(), iterate()
 
 ### Community 81 - "Community 81"
-Cohesion: 0.5
-Nodes (2): extractBrowseCommands(), validateSkill()
+Cohesion: 0.7
+Nodes (4): filterByPeriod(), formatReport(), main(), parseJSONL()
 
 ### Community 82 - "Community 82"
-Cohesion: 0.4
-Nodes (0): 
+Cohesion: 0.5
+Nodes (2): run(), setupReviewDir()
 
 ### Community 83 - "Community 83"
-Cohesion: 0.7
-Nodes (4): analyzePublishedData(), generateReport(), main(), saveToFile()
+Cohesion: 0.4
+Nodes (0): 
 
 ### Community 84 - "Community 84"
 Cohesion: 0.6
-Nodes (3): audit(), from_firestore_value(), get_access_token()
+Nodes (4): parseJsonl(), readJsonl(), run(), setConfig()
 
 ### Community 85 - "Community 85"
-Cohesion: 0.5
-Nodes (4): consolidate_data(), deep_merge(), 국내(data/), 수입(data/raw_imported/), 보완(data/enriched/) 데이터를 모두 병합합니다.     우선순위:, 간단한 딕셔너리 딥 머지 (metadata 등 처리용)
+Cohesion: 0.4
+Nodes (1): Order
 
 ### Community 86 - "Community 86"
-Cohesion: 0.67
-Nodes (2): handleEnter(), triggerToast()
+Cohesion: 0.4
+Nodes (1): Order
 
 ### Community 87 - "Community 87"
 Cohesion: 0.5
-Nodes (1): generateMetadata()
+Nodes (2): extractBrowseCommands(), validateSkill()
 
 ### Community 88 - "Community 88"
-Cohesion: 0.5
+Cohesion: 0.4
 Nodes (0): 
 
 ### Community 89 - "Community 89"
-Cohesion: 0.67
-Nodes (2): fetchSpirits(), preloadAllImages()
+Cohesion: 0.7
+Nodes (4): analyzePublishedData(), generateReport(), main(), saveToFile()
 
 ### Community 90 - "Community 90"
-Cohesion: 0.5
-Nodes (0): 
+Cohesion: 0.6
+Nodes (3): audit(), from_firestore_value(), get_access_token()
 
 ### Community 91 - "Community 91"
 Cohesion: 0.5
-Nodes (0): 
+Nodes (4): consolidate_data(), deep_merge(), 국내(data/), 수입(data/raw_imported/), 보완(data/enriched/) 데이터를 모두 병합합니다.     우선순위:, 간단한 딕셔너리 딥 머지 (metadata 등 처리용)
 
 ### Community 92 - "Community 92"
-Cohesion: 0.5
-Nodes (0): 
+Cohesion: 0.67
+Nodes (2): handleEnter(), triggerToast()
 
 ### Community 93 - "Community 93"
 Cohesion: 0.5
@@ -895,151 +929,151 @@ Nodes (0):
 
 ### Community 94 - "Community 94"
 Cohesion: 0.5
-Nodes (0): 
+Nodes (1): generateMetadata()
 
 ### Community 95 - "Community 95"
-Cohesion: 0.83
-Nodes (3): getGitRoot(), locateBinary(), main()
+Cohesion: 0.67
+Nodes (2): fetchSpirits(), preloadAllImages()
 
 ### Community 96 - "Community 96"
-Cohesion: 0.67
-Nodes (2): handleMetaCommand(), validateOutputPath()
+Cohesion: 0.5
+Nodes (0): 
 
 ### Community 97 - "Community 97"
-Cohesion: 0.83
-Nodes (3): handleSnapshot(), parseLine(), parseSnapshotArgs()
+Cohesion: 0.5
+Nodes (0): 
 
 ### Community 98 - "Community 98"
 Cohesion: 0.5
 Nodes (0): 
 
 ### Community 99 - "Community 99"
-Cohesion: 0.67
-Nodes (2): parseQueueFile(), parseQueueLine()
+Cohesion: 0.5
+Nodes (0): 
 
 ### Community 100 - "Community 100"
-Cohesion: 0.67
-Nodes (2): requireApiKey(), resolveApiKey()
+Cohesion: 0.83
+Nodes (3): getGitRoot(), locateBinary(), main()
 
 ### Community 101 - "Community 101"
 Cohesion: 0.67
-Nodes (2): generateResponsiveVariants(), variants()
+Nodes (2): handleMetaCommand(), validateOutputPath()
 
 ### Community 102 - "Community 102"
 Cohesion: 0.83
-Nodes (3): discoverSkillFiles(), discoverTemplates(), subdirs()
+Nodes (3): handleSnapshot(), parseLine(), parseSnapshotArgs()
 
 ### Community 103 - "Community 103"
 Cohesion: 0.5
 Nodes (0): 
 
 ### Community 104 - "Community 104"
-Cohesion: 0.5
-Nodes (0): 
+Cohesion: 0.67
+Nodes (2): parseQueueFile(), parseQueueLine()
 
 ### Community 105 - "Community 105"
-Cohesion: 0.5
-Nodes (0): 
+Cohesion: 0.67
+Nodes (2): requireApiKey(), resolveApiKey()
 
 ### Community 106 - "Community 106"
+Cohesion: 0.67
+Nodes (2): generateResponsiveVariants(), variants()
+
+### Community 107 - "Community 107"
+Cohesion: 0.83
+Nodes (3): discoverSkillFiles(), discoverTemplates(), subdirs()
+
+### Community 108 - "Community 108"
 Cohesion: 0.5
 Nodes (0): 
 
-### Community 107 - "Community 107"
-Cohesion: 0.5
-Nodes (1): UserController
-
-### Community 108 - "Community 108"
-Cohesion: 0.83
-Nodes (3): installSkillToTempHome(), parseCodexJSONL(), runCodexSkill()
-
 ### Community 109 - "Community 109"
-Cohesion: 0.83
-Nodes (3): callJudge(), judge(), outcomeJudge()
+Cohesion: 0.5
+Nodes (0): 
 
 ### Community 110 - "Community 110"
-Cohesion: 0.67
-Nodes (2): decodeHTMLEntities(), parseRSSFeed()
+Cohesion: 0.5
+Nodes (0): 
 
 ### Community 111 - "Community 111"
 Cohesion: 0.5
 Nodes (0): 
 
 ### Community 112 - "Community 112"
-Cohesion: 0.67
-Nodes (2): getAppPathUtil(), getDocumentPath()
+Cohesion: 0.5
+Nodes (1): UserController
 
 ### Community 113 - "Community 113"
 Cohesion: 0.83
-Nodes (3): enrichSpiritMetadata(), getCategoryPrompt(), updateMetadataFile()
+Nodes (3): installSkillToTempHome(), parseCodexJSONL(), runCodexSkill()
 
 ### Community 114 - "Community 114"
-Cohesion: 0.5
-Nodes (0): 
+Cohesion: 0.83
+Nodes (3): callJudge(), judge(), outcomeJudge()
 
 ### Community 115 - "Community 115"
 Cohesion: 0.67
-Nodes (2): generateNGrams(), generateSpiritSearchKeywords()
+Nodes (2): decodeHTMLEntities(), parseRSSFeed()
 
 ### Community 116 - "Community 116"
 Cohesion: 0.5
-Nodes (3): has_normalization_needs(), Analyze ALL spirits for normalization needs  This script checks all 2308 spiri, Check if a spirit name needs normalization
+Nodes (0): 
 
 ### Community 117 - "Community 117"
-Cohesion: 0.83
-Nodes (3): generateNgramKeywords(), sleep(), theGreatMigration()
+Cohesion: 0.67
+Nodes (2): getAppPathUtil(), getDocumentPath()
 
 ### Community 118 - "Community 118"
-Cohesion: 0.67
-Nodes (3): fetch_category_data(), main(), 특정 주종 코드에 대해 MFDS 데이터를 수집합니다.
+Cohesion: 0.83
+Nodes (3): enrichSpiritMetadata(), getCategoryPrompt(), updateMetadataFile()
 
 ### Community 119 - "Community 119"
-Cohesion: 0.83
-Nodes (3): generateEnglishContent(), generateKoreanContent(), main()
+Cohesion: 0.5
+Nodes (0): 
 
 ### Community 120 - "Community 120"
 Cohesion: 0.67
-Nodes (3): main(), 지시사항에 따른 최적화된 쿼리로 이미지 검색, search_image()
+Nodes (2): generateNGrams(), generateSpiritSearchKeywords()
 
 ### Community 121 - "Community 121"
 Cohesion: 0.5
-Nodes (0): 
+Nodes (3): has_normalization_needs(), Analyze ALL spirits for normalization needs  This script checks all 2308 spiri, Check if a spirit name needs normalization
 
 ### Community 122 - "Community 122"
+Cohesion: 0.83
+Nodes (3): generateNgramKeywords(), sleep(), theGreatMigration()
+
+### Community 123 - "Community 123"
+Cohesion: 0.67
+Nodes (3): fetch_category_data(), main(), 특정 주종 코드에 대해 MFDS 데이터를 수집합니다.
+
+### Community 124 - "Community 124"
+Cohesion: 0.83
+Nodes (3): generateEnglishContent(), generateKoreanContent(), main()
+
+### Community 125 - "Community 125"
+Cohesion: 0.67
+Nodes (3): main(), 지시사항에 따른 최적화된 쿼리로 이미지 검색, search_image()
+
+### Community 126 - "Community 126"
 Cohesion: 0.5
 Nodes (0): 
 
-### Community 123 - "Community 123"
-Cohesion: 0.83
-Nodes (3): generateNGrams(), generateSpiritSearchKeywords(), populateSearchKeywords()
-
-### Community 124 - "Community 124"
-Cohesion: 1.0
-Nodes (2): getLocale(), middleware()
-
-### Community 125 - "Community 125"
-Cohesion: 1.0
-Nodes (2): fetchUrl(), run()
-
-### Community 126 - "Community 126"
-Cohesion: 0.67
-Nodes (0): 
-
 ### Community 127 - "Community 127"
-Cohesion: 0.67
+Cohesion: 0.5
 Nodes (0): 
 
 ### Community 128 - "Community 128"
-Cohesion: 0.67
-Nodes (0): 
+Cohesion: 0.83
+Nodes (3): generateNGrams(), generateSpiritSearchKeywords(), populateSearchKeywords()
 
 ### Community 129 - "Community 129"
-Cohesion: 0.67
-Nodes (0): 
+Cohesion: 1.0
+Nodes (2): getLocale(), middleware()
 
 ### Community 130 - "Community 130"
-Cohesion: 0.67
-Nodes (0): 
+Cohesion: 1.0
+Nodes (2): fetchUrl(), run()
 
 ### Community 131 - "Community 131"
 Cohesion: 0.67
@@ -1082,108 +1116,108 @@ Cohesion: 0.67
 Nodes (0): 
 
 ### Community 141 - "Community 141"
-Cohesion: 1.0
-Nodes (2): api(), resetState()
+Cohesion: 0.67
+Nodes (0): 
 
 ### Community 142 - "Community 142"
-Cohesion: 1.0
-Nodes (2): generateMockup(), main()
+Cohesion: 0.67
+Nodes (0): 
 
 ### Community 143 - "Community 143"
-Cohesion: 1.0
-Nodes (2): briefToPrompt(), parseBrief()
+Cohesion: 0.67
+Nodes (0): 
 
 ### Community 144 - "Community 144"
-Cohesion: 1.0
-Nodes (2): checkCommand(), checkMockup()
+Cohesion: 0.67
+Nodes (0): 
 
 ### Community 145 - "Community 145"
-Cohesion: 1.0
-Nodes (2): compare(), generateCompareHtml()
+Cohesion: 0.67
+Nodes (0): 
 
 ### Community 146 - "Community 146"
-Cohesion: 1.0
-Nodes (2): diffMockups(), verifyAgainstMockup()
+Cohesion: 0.67
+Nodes (0): 
 
 ### Community 147 - "Community 147"
 Cohesion: 1.0
-Nodes (2): analyzeScreenshot(), evolve()
+Nodes (2): api(), resetState()
 
 ### Community 148 - "Community 148"
 Cohesion: 1.0
-Nodes (2): callImageGeneration(), generate()
+Nodes (2): generateMockup(), main()
 
 ### Community 149 - "Community 149"
 Cohesion: 1.0
-Nodes (2): openBrowser(), serve()
+Nodes (2): briefToPrompt(), parseBrief()
 
 ### Community 150 - "Community 150"
-Cohesion: 0.67
-Nodes (0): 
+Cohesion: 1.0
+Nodes (2): checkCommand(), checkMockup()
 
 ### Community 151 - "Community 151"
-Cohesion: 0.67
-Nodes (0): 
+Cohesion: 1.0
+Nodes (2): compare(), generateCompareHtml()
 
 ### Community 152 - "Community 152"
-Cohesion: 0.67
-Nodes (0): 
+Cohesion: 1.0
+Nodes (2): diffMockups(), verifyAgainstMockup()
 
 ### Community 153 - "Community 153"
-Cohesion: 0.67
-Nodes (0): 
+Cohesion: 1.0
+Nodes (2): analyzeScreenshot(), evolve()
 
 ### Community 154 - "Community 154"
-Cohesion: 0.67
-Nodes (0): 
+Cohesion: 1.0
+Nodes (2): callImageGeneration(), generate()
 
 ### Community 155 - "Community 155"
 Cohesion: 1.0
-Nodes (2): makeEntry(), makeResult()
+Nodes (2): openBrowser(), serve()
 
 ### Community 156 - "Community 156"
-Cohesion: 1.0
-Nodes (2): parseGeminiJSONL(), runGeminiSkill()
+Cohesion: 0.67
+Nodes (0): 
 
 ### Community 157 - "Community 157"
 Cohesion: 0.67
 Nodes (0): 
 
 ### Community 158 - "Community 158"
-Cohesion: 1.0
-Nodes (2): buildSearchUrl(), fetchSpiritImage()
-
-### Community 159 - "Community 159"
-Cohesion: 1.0
-Nodes (2): isBot(), isBotClient()
-
-### Community 160 - "Community 160"
-Cohesion: 1.0
-Nodes (2): getSpiritRobotsMeta(), isIndexableSpirit()
-
-### Community 161 - "Community 161"
 Cohesion: 0.67
 Nodes (0): 
 
+### Community 159 - "Community 159"
+Cohesion: 0.67
+Nodes (0): 
+
+### Community 160 - "Community 160"
+Cohesion: 0.67
+Nodes (0): 
+
+### Community 161 - "Community 161"
+Cohesion: 1.0
+Nodes (2): makeEntry(), makeResult()
+
 ### Community 162 - "Community 162"
 Cohesion: 1.0
-Nodes (2): convertDir(), main()
+Nodes (2): parseGeminiJSONL(), runGeminiSkill()
 
 ### Community 163 - "Community 163"
-Cohesion: 1.0
-Nodes (2): enrichPoorQualitySpirits(), sleep()
+Cohesion: 0.67
+Nodes (0): 
 
 ### Community 164 - "Community 164"
 Cohesion: 1.0
-Nodes (2): enrich_reviews_batch(), main()
+Nodes (2): buildSearchUrl(), fetchSpiritImage()
 
 ### Community 165 - "Community 165"
-Cohesion: 0.67
-Nodes (1): Filter Large Volume Spirits - Pipeline Step  Removes spirits with volume >= 50
+Cohesion: 1.0
+Nodes (2): isBot(), isBotClient()
 
 ### Community 166 - "Community 166"
 Cohesion: 1.0
-Nodes (2): escape_sql_string(), main()
+Nodes (2): getSpiritRobotsMeta(), isIndexableSpirit()
 
 ### Community 167 - "Community 167"
 Cohesion: 0.67
@@ -1191,39 +1225,39 @@ Nodes (0):
 
 ### Community 168 - "Community 168"
 Cohesion: 1.0
-Nodes (2): main(), run_step()
+Nodes (2): convertDir(), main()
 
 ### Community 169 - "Community 169"
-Cohesion: 0.67
-Nodes (0): 
+Cohesion: 1.0
+Nodes (2): enrichPoorQualitySpirits(), sleep()
 
 ### Community 170 - "Community 170"
 Cohesion: 1.0
-Nodes (2): delay(), runEnrichment()
+Nodes (2): enrich_reviews_batch(), main()
 
 ### Community 171 - "Community 171"
-Cohesion: 1.0
-Nodes (0): 
+Cohesion: 0.67
+Nodes (1): Filter Large Volume Spirits - Pipeline Step  Removes spirits with volume >= 50
 
 ### Community 172 - "Community 172"
 Cohesion: 1.0
-Nodes (0): 
+Nodes (2): escape_sql_string(), main()
 
 ### Community 173 - "Community 173"
-Cohesion: 1.0
+Cohesion: 0.67
 Nodes (0): 
 
 ### Community 174 - "Community 174"
 Cohesion: 1.0
-Nodes (0): 
+Nodes (2): main(), run_step()
 
 ### Community 175 - "Community 175"
-Cohesion: 1.0
+Cohesion: 0.67
 Nodes (0): 
 
 ### Community 176 - "Community 176"
 Cohesion: 1.0
-Nodes (0): 
+Nodes (2): delay(), runEnrichment()
 
 ### Community 177 - "Community 177"
 Cohesion: 1.0
@@ -1563,7 +1597,7 @@ Nodes (0):
 
 ### Community 261 - "Community 261"
 Cohesion: 1.0
-Nodes (1): Delete Large Volume Spirits from Firebase  Finds and deletes all spirits with
+Nodes (0): 
 
 ### Community 262 - "Community 262"
 Cohesion: 1.0
@@ -1639,7 +1673,7 @@ Nodes (0):
 
 ### Community 280 - "Community 280"
 Cohesion: 1.0
-Nodes (0): 
+Nodes (1): Delete Large Volume Spirits from Firebase  Finds and deletes all spirits with
 
 ### Community 281 - "Community 281"
 Cohesion: 1.0
@@ -2425,635 +2459,831 @@ Nodes (0):
 Cohesion: 1.0
 Nodes (0): 
 
+### Community 477 - "Community 477"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 478 - "Community 478"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 479 - "Community 479"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 480 - "Community 480"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 481 - "Community 481"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 482 - "Community 482"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 483 - "Community 483"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 484 - "Community 484"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 485 - "Community 485"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 486 - "Community 486"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 487 - "Community 487"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 488 - "Community 488"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 489 - "Community 489"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 490 - "Community 490"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 491 - "Community 491"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 492 - "Community 492"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 493 - "Community 493"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 494 - "Community 494"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 495 - "Community 495"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 496 - "Community 496"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 497 - "Community 497"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 498 - "Community 498"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 499 - "Community 499"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 500 - "Community 500"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 501 - "Community 501"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 502 - "Community 502"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 503 - "Community 503"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 504 - "Community 504"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 505 - "Community 505"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 506 - "Community 506"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 507 - "Community 507"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 508 - "Community 508"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 509 - "Community 509"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 510 - "Community 510"
+Cohesion: 1.0
+Nodes (1): 특정 디렉토리 내의 코드를 수집합니다. (MarkItDown 연동)
+
 ## Knowledge Gaps
-- **45 isolated node(s):** `Analyze ALL spirits for normalization needs  This script checks all 2308 spiri`, `Check if a spirit name needs normalization`, `Spirit Data Normalization Analyzer  This script analyzes spirits data from Fir`, `Analyze a spirit name for patterns that should be extracted.`, `Load ALL spirits data from the API.` (+40 more)
+- **46 isolated node(s):** `Analyze ALL spirits for normalization needs  This script checks all 2308 spiri`, `Check if a spirit name needs normalization`, `Spirit Data Normalization Analyzer  This script analyzes spirits data from Fir`, `Analyze a spirit name for patterns that should be extracted.`, `Load ALL spirits data from the API.` (+41 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **Thin community `Community 171`** (2 nodes): `run()`, `find-thin.ts`
+- **Thin community `Community 177`** (2 nodes): `run()`, `find-thin.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 172`** (2 nodes): `checkData()`, `script_check_data.ts`
+- **Thin community `Community 178`** (2 nodes): `checkData()`, `script_check_data.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 173`** (2 nodes): `checkData()`, `script_check_data_client.ts`
+- **Thin community `Community 179`** (2 nodes): `checkData()`, `script_check_data_client.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 174`** (2 nodes): `testRegistration()`, `verify-registration.ts`
+- **Thin community `Community 180`** (2 nodes): `testRegistration()`, `verify-registration.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 175`** (2 nodes): `robots.ts`, `robots()`
+- **Thin community `Community 181`** (2 nodes): `robots.ts`, `robots()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 176`** (2 nodes): `layout.tsx`, `AdminLayout()`
+- **Thin community `Community 182`** (2 nodes): `reviews.ts`, `submitMicroReviewAction()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 177`** (2 nodes): `loading.tsx`, `CabinetSpiritCardSkeleton()`
+- **Thin community `Community 183`** (2 nodes): `layout.tsx`, `AdminLayout()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 178`** (2 nodes): `page.tsx`, `ContactPage()`
+- **Thin community `Community 184`** (2 nodes): `loading.tsx`, `CabinetSpiritCardSkeleton()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 179`** (2 nodes): `layout.tsx`, `MBTILayout()`
+- **Thin community `Community 185`** (2 nodes): `page.tsx`, `ContactPage()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 180`** (2 nodes): `layout.tsx`, `PerfectPourLayout()`
+- **Thin community `Community 186`** (2 nodes): `layout.tsx`, `MBTILayout()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 181`** (2 nodes): `page.tsx`, `RedGrapeHub()`
+- **Thin community `Community 187`** (2 nodes): `layout.tsx`, `PerfectPourLayout()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 182`** (2 nodes): `page.tsx`, `WhiteGrapeHub()`
+- **Thin community `Community 188`** (2 nodes): `page.tsx`, `RedGrapeHub()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 183`** (2 nodes): `layout.tsx`, `WorldCupLayout()`
+- **Thin community `Community 189`** (2 nodes): `page.tsx`, `WhiteGrapeHub()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 184`** (2 nodes): `layout.tsx`, `ReviewsLayout()`
+- **Thin community `Community 190`** (2 nodes): `layout.tsx`, `WorldCupLayout()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 185`** (2 nodes): `loadStats()`, `AdminStats.tsx`
+- **Thin community `Community 191`** (2 nodes): `layout.tsx`, `ReviewsLayout()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 186`** (2 nodes): `LoginClient.tsx`, `LoginClient()`
+- **Thin community `Community 192`** (2 nodes): `loadStats()`, `AdminStats.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 187`** (2 nodes): `AddSpiritCard()`, `AddSpiritCard.tsx`
+- **Thin community `Community 193`** (2 nodes): `LoginClient.tsx`, `LoginClient()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 188`** (2 nodes): `CabinetSpiritCardComponent()`, `CabinetSpiritCard.tsx`
+- **Thin community `Community 194`** (2 nodes): `AddSpiritCard()`, `AddSpiritCard.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 189`** (2 nodes): `MyCabinet.tsx`, `MyCabinet()`
+- **Thin community `Community 195`** (2 nodes): `CabinetSpiritCardComponent()`, `CabinetSpiritCard.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 190`** (2 nodes): `PreferenceExploration.tsx`, `PreferenceExploration()`
+- **Thin community `Community 196`** (2 nodes): `FlavorView.tsx`, `handleAnalyze()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 191`** (2 nodes): `TastePublicReport.tsx`, `TastePublicReport()`
+- **Thin community `Community 197`** (2 nodes): `MyCabinet.tsx`, `MyCabinet()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 192`** (2 nodes): `AdSlot()`, `AdSlot.tsx`
+- **Thin community `Community 198`** (2 nodes): `PreferenceExploration.tsx`, `PreferenceExploration()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 193`** (2 nodes): `DailyPick.tsx`, `fetchRandomSpirit()`
+- **Thin community `Community 199`** (2 nodes): `TastePublicReport.tsx`, `TastePublicReport()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 194`** (2 nodes): `WikiSnippetSection.tsx`, `WikiSnippetSection()`
+- **Thin community `Community 200`** (2 nodes): `TasteRecommendationSection.tsx`, `TasteRecommendationSection()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 195`** (2 nodes): `BottomNav()`, `BottomNav.tsx`
+- **Thin community `Community 201`** (2 nodes): `AdSlot()`, `AdSlot.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 196`** (2 nodes): `ScrollToTop.tsx`, `ScrollToTop()`
+- **Thin community `Community 202`** (2 nodes): `DailyPick.tsx`, `fetchRandomSpirit()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 197`** (2 nodes): `ModificationRequestButton.tsx`, `handleSubmit()`
+- **Thin community `Community 203`** (2 nodes): `WikiSnippetSection.tsx`, `WikiSnippetSection()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 198`** (2 nodes): `BackButton()`, `BackButton.tsx`
+- **Thin community `Community 204`** (2 nodes): `BottomNav()`, `BottomNav.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 199`** (2 nodes): `ExploreContent.tsx`, `handleStatusChange()`
+- **Thin community `Community 205`** (2 nodes): `ScrollToTop.tsx`, `ScrollToTop()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 200`** (2 nodes): `GoogleAd.tsx`, `GoogleAd()`
+- **Thin community `Community 206`** (2 nodes): `ModificationRequestButton.tsx`, `handleSubmit()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 201`** (2 nodes): `LanguageSwitcher.tsx`, `LanguageSwitcher()`
+- **Thin community `Community 207`** (2 nodes): `BackButton()`, `BackButton.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 202`** (2 nodes): `SaveButton.tsx`, `SaveButton()`
+- **Thin community `Community 208`** (2 nodes): `ExploreContent.tsx`, `handleStatusChange()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 203`** (2 nodes): `StickyFooterAd.tsx`, `StickyFooterAd()`
+- **Thin community `Community 209`** (2 nodes): `GoogleAd.tsx`, `GoogleAd()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 204`** (2 nodes): `SuccessToast.tsx`, `SuccessToast()`
+- **Thin community `Community 210`** (2 nodes): `LanguageSwitcher.tsx`, `LanguageSwitcher()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 205`** (2 nodes): `ThemeToggle.tsx`, `ThemeToggle()`
+- **Thin community `Community 211`** (2 nodes): `SaveButton.tsx`, `SaveButton()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 206`** (2 nodes): `getCookiePickerHTML()`, `cookie-picker-ui.ts`
+- **Thin community `Community 212`** (2 nodes): `SpiritCard.tsx`, `handleAdd()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 207`** (2 nodes): `platform.ts`, `isPathWithin()`
+- **Thin community `Community 213`** (2 nodes): `StickyFooterAd.tsx`, `StickyFooterAd()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 208`** (2 nodes): `sidebar-utils.ts`, `sanitizeExtensionUrl()`
+- **Thin community `Community 214`** (2 nodes): `SuccessToast.tsx`, `SuccessToast()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 209`** (2 nodes): `write-commands.ts`, `handleWriteCommand()`
+- **Thin community `Community 215`** (2 nodes): `ThemeToggle.tsx`, `ThemeToggle()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 210`** (2 nodes): `run()`, `gstack-config.test.ts`
+- **Thin community `Community 216`** (2 nodes): `getCookiePickerHTML()`, `cookie-picker-ui.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 211`** (2 nodes): `snapshot.test.ts`, `shutdown()`
+- **Thin community `Community 217`** (2 nodes): `platform.ts`, `isPathWithin()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 212`** (2 nodes): `test-server.ts`, `startTestServer()`
+- **Thin community `Community 218`** (2 nodes): `sidebar-utils.ts`, `sanitizeExtensionUrl()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 213`** (2 nodes): `generateDesignToCodePrompt()`, `design-to-code.ts`
+- **Thin community `Community 219`** (2 nodes): `write-commands.ts`, `handleWriteCommand()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 214`** (2 nodes): `createTestPng()`, `gallery.test.ts`
+- **Thin community `Community 220`** (2 nodes): `run()`, `gstack-config.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 215`** (2 nodes): `popup.js`, `updateStatus()`
+- **Thin community `Community 221`** (2 nodes): `snapshot.test.ts`, `shutdown()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 216`** (2 nodes): `regenerateAndValidate()`, `dev-skill.ts`
+- **Thin community `Community 222`** (2 nodes): `test-server.ts`, `startTestServer()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 217`** (2 nodes): `loadResult()`, `eval-compare.ts`
+- **Thin community `Community 223`** (2 nodes): `generateDesignToCodePrompt()`, `design-to-code.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 218`** (2 nodes): `codexErrorHandling()`, `constants.ts`
+- **Thin community `Community 224`** (2 nodes): `createTestPng()`, `gallery.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 219`** (2 nodes): `getAllSkillMds()`, `audit-compliance.test.ts`
+- **Thin community `Community 225`** (2 nodes): `popup.js`, `updateStatus()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 220`** (2 nodes): `extractDescription()`, `gen-skill-docs.test.ts`
+- **Thin community `Community 226`** (2 nodes): `regenerateAndValidate()`, `dev-skill.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 221`** (2 nodes): `review-log.test.ts`, `run()`
+- **Thin community `Community 227`** (2 nodes): `loadResult()`, `eval-compare.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 222`** (2 nodes): `skill-e2e-bws.test.ts`, `run()`
+- **Thin community `Community 228`** (2 nodes): `codexErrorHandling()`, `constants.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 223`** (2 nodes): `skill-e2e-cso.test.ts`, `run()`
+- **Thin community `Community 229`** (2 nodes): `getAllSkillMds()`, `audit-compliance.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 224`** (2 nodes): `skill-e2e-deploy.test.ts`, `run()`
+- **Thin community `Community 230`** (2 nodes): `extractDescription()`, `gen-skill-docs.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 225`** (2 nodes): `skill-e2e-qa-bugs.test.ts`, `runPlantedBugEval()`
+- **Thin community `Community 231`** (2 nodes): `review-log.test.ts`, `run()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 226`** (2 nodes): `skill-e2e-review.test.ts`, `run()`
+- **Thin community `Community 232`** (2 nodes): `skill-e2e-bws.test.ts`, `run()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 227`** (2 nodes): `skill-e2e-sidebar.test.ts`, `api()`
+- **Thin community `Community 233`** (2 nodes): `skill-e2e-cso.test.ts`, `run()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 228`** (2 nodes): `skill-e2e-workflow.test.ts`, `run()`
+- **Thin community `Community 234`** (2 nodes): `skill-e2e-deploy.test.ts`, `run()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 229`** (2 nodes): `skill-parser.test.ts`, `writeFixture()`
+- **Thin community `Community 235`** (2 nodes): `skill-e2e-qa-bugs.test.ts`, `runPlantedBugEval()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 230`** (2 nodes): `skill-validation.test.ts`, `skeleton()`
+- **Thin community `Community 236`** (2 nodes): `skill-e2e-review.test.ts`, `run()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 231`** (2 nodes): `touchfiles.test.ts`, `run()`
+- **Thin community `Community 237`** (2 nodes): `skill-e2e-sidebar.test.ts`, `api()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 232`** (2 nodes): `createCoverageAuditFixture()`, `coverage-audit-fixture.ts`
+- **Thin community `Community 238`** (2 nodes): `skill-e2e-workflow.test.ts`, `run()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 233`** (2 nodes): `getDictionary()`, `get-dictionary.ts`
+- **Thin community `Community 239`** (2 nodes): `skill-parser.test.ts`, `writeFixture()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 234`** (2 nodes): `modification-actions.ts`, `submitModificationRequest()`
+- **Thin community `Community 240`** (2 nodes): `skill-validation.test.ts`, `skeleton()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 235`** (2 nodes): `spirits-guide-data.ts`, `getSpiritCategory()`
+- **Thin community `Community 241`** (2 nodes): `touchfiles.test.ts`, `run()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 236`** (2 nodes): `tag-colors.ts`, `getTagColor()`
+- **Thin community `Community 242`** (2 nodes): `createCoverageAuditFixture()`, `coverage-audit-fixture.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 237`** (2 nodes): `hasServiceAccountCredentials()`, `index.ts`
+- **Thin community `Community 243`** (2 nodes): `getDictionary()`, `get-dictionary.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 238`** (2 nodes): `fromFirestore()`, `firestore-rest.test.ts`
+- **Thin community `Community 244`** (2 nodes): `modification-actions.ts`, `submitModificationRequest()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 239`** (2 nodes): `useDragScroll.ts`, `useDragScroll()`
+- **Thin community `Community 245`** (2 nodes): `spirits-guide-data.ts`, `getSpiritCategory()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 240`** (2 nodes): `fetchFromFoodSafety()`, `collection.ts`
+- **Thin community `Community 246`** (2 nodes): `tag-colors.ts`, `getTagColor()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 241`** (2 nodes): `buildTasteAnalysisPrompt()`, `aiPromptBuilder.ts`
+- **Thin community `Community 247`** (2 nodes): `hasServiceAccountCredentials()`, `index.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 242`** (2 nodes): `ingestFoodSafetyData()`, `foodSafetyKoreaIngestion.ts`
+- **Thin community `Community 248`** (2 nodes): `fromFirestore()`, `firestore-rest.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 243`** (2 nodes): `getCategoryFallbackImage()`, `image-fallback.ts`
+- **Thin community `Community 249`** (2 nodes): `useDragScroll.ts`, `useDragScroll()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 244`** (2 nodes): `getOptimizedImageUrl()`, `image-optimization.ts`
+- **Thin community `Community 250`** (2 nodes): `fetchFromFoodSafety()`, `collection.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 245`** (2 nodes): `nickname-generator.ts`, `generateRandomNickname()`
+- **Thin community `Community 251`** (2 nodes): `buildTasteAnalysisPrompt()`, `aiPromptBuilder.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 246`** (2 nodes): `normalization.ts`, `normalizeSpiritData()`
+- **Thin community `Community 252`** (2 nodes): `calculateInitialContentRating()`, `content-rating.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 247`** (2 nodes): `rating-colors.ts`, `getRatingColor()`
+- **Thin community `Community 253`** (2 nodes): `ingestFoodSafetyData()`, `foodSafetyKoreaIngestion.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 248`** (2 nodes): `wiki-snippet.ts`, `getRandomWikiSnippet()`
+- **Thin community `Community 254`** (2 nodes): `getCategoryFallbackImage()`, `image-fallback.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 249`** (2 nodes): `auditPublishStatus()`, `audit-publish-status.js`
+- **Thin community `Community 255`** (2 nodes): `getOptimizedImageUrl()`, `image-optimization.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 250`** (2 nodes): `auditData()`, `audit_firebase_data.js`
+- **Thin community `Community 256`** (2 nodes): `nickname-generator.ts`, `generateRandomNickname()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 251`** (2 nodes): `getAuditData()`, `audit_subcategories.js`
+- **Thin community `Community 257`** (2 nodes): `normalization.ts`, `normalizeSpiritData()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 252`** (2 nodes): `main()`, `batch-process-published.ts`
+- **Thin community `Community 258`** (2 nodes): `rating-colors.ts`, `getRatingColor()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 253`** (2 nodes): `checkImageUrls()`, `check-image-urls.js`
+- **Thin community `Community 259`** (2 nodes): `wiki-resolver.ts`, `resolveWikiCategory()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 254`** (2 nodes): `check()`, `check_role.js`
+- **Thin community `Community 260`** (2 nodes): `wiki-snippet.ts`, `getRandomWikiSnippet()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 255`** (2 nodes): `convert()`, `convert-og-image.js`
+- **Thin community `Community 261`** (2 nodes): `auditData()`, `audit-logic-deep.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 256`** (2 nodes): `convertToWebP()`, `convert-to-webp.js`
+- **Thin community `Community 262`** (2 nodes): `auditData()`, `audit-logic.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 257`** (2 nodes): `checkDatabaseStatus()`, `db-status-check-js.js`
+- **Thin community `Community 263`** (2 nodes): `auditPublishStatus()`, `audit-publish-status.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 258`** (2 nodes): `checkDatabaseStatus()`, `db-status-check.ts`
+- **Thin community `Community 264`** (2 nodes): `audit()`, `audit-sql.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 259`** (2 nodes): `main()`, `debug-news-db.ts`
+- **Thin community `Community 265`** (2 nodes): `auditData()`, `audit_firebase_data.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 260`** (2 nodes): `debug_search()`, `debug_search.py`
+- **Thin community `Community 266`** (2 nodes): `getAuditData()`, `audit_subcategories.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 261`** (2 nodes): `Delete Large Volume Spirits from Firebase  Finds and deletes all spirits with`, `delete_large_volumes.py`
+- **Thin community `Community 267`** (2 nodes): `main()`, `batch-process-published.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 262`** (2 nodes): `diagnose()`, `diagnose-data-health.ts`
+- **Thin community `Community 268`** (2 nodes): `check()`, `check-audit.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 263`** (2 nodes): `dryRun()`, `dry-run-specific.ts`
+- **Thin community `Community 269`** (2 nodes): `checkImageUrls()`, `check-image-urls.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 264`** (2 nodes): `exportSummaries()`, `export_data_summary.js`
+- **Thin community `Community 270`** (2 nodes): `checkNews()`, `check-news-debug.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 265`** (2 nodes): `extractDistilleries()`, `extract-distilleries.ts`
+- **Thin community `Community 271`** (2 nodes): `check()`, `check_role.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 266`** (2 nodes): `fixThumbnailUrls()`, `fix_thumbnail_urls.js`
+- **Thin community `Community 272`** (2 nodes): `convert()`, `convert-og-image.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 267`** (2 nodes): `getExample()`, `get-example-spirit.ts`
+- **Thin community `Community 273`** (2 nodes): `convertToWebP()`, `convert-to-webp.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 268`** (2 nodes): `migrate()`, `migrate_to_firestore.js`
+- **Thin community `Community 274`** (2 nodes): `checkDatabaseStatus()`, `db-status-check-js.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 269`** (2 nodes): `bulkPublishReadySpirits()`, `publish-ready-data.js`
+- **Thin community `Community 275`** (2 nodes): `checkDatabaseStatus()`, `db-status-check.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 270`** (2 nodes): `bulkPublishViaAPI()`, `publish-ready-data.ts`
+- **Thin community `Community 276`** (2 nodes): `debug()`, `debug-firestore.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 271`** (2 nodes): `randomSamplingRun()`, `random-sampling-run.ts`
+- **Thin community `Community 277`** (2 nodes): `main()`, `debug-news-db.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 272`** (2 nodes): `resetArtifacts()`, `reset_artifacts.js`
+- **Thin community `Community 278`** (2 nodes): `debug_search()`, `debug_search.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 273`** (2 nodes): `structuralMigration()`, `schema-phase2-cleanup.ts`
+- **Thin community `Community 279`** (2 nodes): `deepCheckUsers()`, `deep-check-users.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 274`** (2 nodes): `set_admin.js`, `setAdmin()`
+- **Thin community `Community 280`** (2 nodes): `Delete Large Volume Spirits from Firebase  Finds and deletes all spirits with`, `delete_large_volumes.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 275`** (2 nodes): `sync-thumbnail-urls.js`, `syncThumbnailUrls()`
+- **Thin community `Community 281`** (2 nodes): `diagnose()`, `diagnose-data-health.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 276`** (2 nodes): `test-api.ts`, `test()`
+- **Thin community `Community 282`** (2 nodes): `dryRun()`, `dry-run-specific.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 277`** (2 nodes): `test-env-key.ts`, `test()`
+- **Thin community `Community 283`** (2 nodes): `exportSummaries()`, `export_data_summary.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 278`** (2 nodes): `test-news-api.ts`, `testSearch()`
+- **Thin community `Community 284`** (2 nodes): `extractDistilleries()`, `extract-distilleries.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 279`** (2 nodes): `test_pairing.ts`, `dryRun()`
+- **Thin community `Community 285`** (2 nodes): `findSpiritId()`, `find-spirit-id.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 280`** (2 nodes): `verify-alignment.js`, `verify()`
+- **Thin community `Community 286`** (2 nodes): `fixThumbnailUrls()`, `fix_thumbnail_urls.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 281`** (1 nodes): `fix-all-colors.js`
+- **Thin community `Community 287`** (2 nodes): `getExample()`, `get-example-spirit.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 282`** (1 nodes): `fix-clean-vibrant.js`
+- **Thin community `Community 288`** (2 nodes): `listAppIds()`, `list-app-ids.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 283`** (1 nodes): `fix-colors.js`
+- **Thin community `Community 289`** (2 nodes): `listCollections()`, `list-collections.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 284`** (1 nodes): `fix-pure-vibrant.js`
+- **Thin community `Community 290`** (2 nodes): `migrate()`, `migrate_to_firestore.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 285`** (1 nodes): `fix-solid-colors.js`
+- **Thin community `Community 291`** (2 nodes): `bulkPublishReadySpirits()`, `publish-ready-data.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 286`** (1 nodes): `fix-solid-ultimate.js`
+- **Thin community `Community 292`** (2 nodes): `bulkPublishViaAPI()`, `publish-ready-data.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 287`** (1 nodes): `fix-ultimate-clean.js`
+- **Thin community `Community 293`** (2 nodes): `randomSamplingRun()`, `random-sampling-run.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 288`** (1 nodes): `fix-ultra-contrast.js`
+- **Thin community `Community 294`** (2 nodes): `resetArtifacts()`, `reset_artifacts.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 289`** (1 nodes): `fix_wiki_constants.py`
+- **Thin community `Community 295`** (2 nodes): `structuralMigration()`, `schema-phase2-cleanup.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 290`** (1 nodes): `i18n-config.ts`
+- **Thin community `Community 296`** (2 nodes): `set_admin.js`, `setAdmin()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 291`** (1 nodes): `merge-hubs.js`
+- **Thin community `Community 297`** (2 nodes): `sync-published-seo.ts`, `syncPublishedSEO()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 292`** (1 nodes): `next-env.d.ts`
+- **Thin community `Community 298`** (2 nodes): `sync-thumbnail-urls.js`, `syncThumbnailUrls()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 293`** (1 nodes): `next.config.js`
+- **Thin community `Community 299`** (2 nodes): `test-admin-sync.ts`, `testAdminSync()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 294`** (1 nodes): `test_localization.ts`
+- **Thin community `Community 300`** (2 nodes): `test-api.ts`, `test()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 295`** (1 nodes): `route.tsx`
+- **Thin community `Community 301`** (2 nodes): `test-env-key.ts`, `test()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 296`** (1 nodes): `route.tsx`
+- **Thin community `Community 302`** (2 nodes): `test-news-api.ts`, `testSearch()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 297`** (1 nodes): `page.tsx`
+- **Thin community `Community 303`** (2 nodes): `test_pairing.ts`, `dryRun()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 298`** (1 nodes): `page.tsx`
+- **Thin community `Community 304`** (2 nodes): `verify-alignment.js`, `verify()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 299`** (1 nodes): `page.tsx`
+- **Thin community `Community 305`** (1 nodes): `fix-all-colors.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 300`** (1 nodes): `GuestOverlay.tsx`
+- **Thin community `Community 306`** (1 nodes): `fix-clean-vibrant.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 301`** (1 nodes): `TasteRadar.tsx`
+- **Thin community `Community 307`** (1 nodes): `fix-colors.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 302`** (1 nodes): `HomeClient.tsx`
+- **Thin community `Community 308`** (1 nodes): `fix-pure-vibrant.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 303`** (1 nodes): `NewsSection.tsx`
+- **Thin community `Community 309`** (1 nodes): `fix-solid-colors.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 304`** (1 nodes): `Header.tsx`
+- **Thin community `Community 310`** (1 nodes): `fix-solid-ultimate.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 305`** (1 nodes): `AvatarSelector.tsx`
+- **Thin community `Community 311`** (1 nodes): `fix-ultimate-clean.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 306`** (1 nodes): `CabinetSelectionModal.tsx`
+- **Thin community `Community 312`** (1 nodes): `fix-ultra-contrast.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 307`** (1 nodes): `ChatSommelier.tsx`
+- **Thin community `Community 313`** (1 nodes): `fix_wiki_constants.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 308`** (1 nodes): `RandomBackground.tsx`
+- **Thin community `Community 314`** (1 nodes): `i18n-config.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 309`** (1 nodes): `ThemeSwitcher.tsx`
+- **Thin community `Community 315`** (1 nodes): `merge-hubs.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 310`** (1 nodes): `commands.ts`
+- **Thin community `Community 316`** (1 nodes): `next-env.d.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 311`** (1 nodes): `activity.test.ts`
+- **Thin community `Community 317`** (1 nodes): `next.config.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 312`** (1 nodes): `browser-manager-unit.test.ts`
+- **Thin community `Community 318`** (1 nodes): `test_localization.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 313`** (1 nodes): `bun-polyfill.test.ts`
+- **Thin community `Community 319`** (1 nodes): `route.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 314`** (1 nodes): `commands.test.ts`
+- **Thin community `Community 320`** (1 nodes): `route.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 315`** (1 nodes): `config.test.ts`
+- **Thin community `Community 321`** (1 nodes): `page.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 316`** (1 nodes): `find-browse.test.ts`
+- **Thin community `Community 322`** (1 nodes): `page.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 317`** (1 nodes): `handoff.test.ts`
+- **Thin community `Community 323`** (1 nodes): `page.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 318`** (1 nodes): `path-validation.test.ts`
+- **Thin community `Community 324`** (1 nodes): `GuestOverlay.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 319`** (1 nodes): `platform.test.ts`
+- **Thin community `Community 325`** (1 nodes): `TasteRadar.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 320`** (1 nodes): `sidebar-unit.test.ts`
+- **Thin community `Community 326`** (1 nodes): `HomeClient.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 321`** (1 nodes): `url-validation.test.ts`
+- **Thin community `Community 327`** (1 nodes): `NewsSection.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 322`** (1 nodes): `watch.test.ts`
+- **Thin community `Community 328`** (1 nodes): `Header.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 323`** (1 nodes): `commands.ts`
+- **Thin community `Community 329`** (1 nodes): `AvatarSelector.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 324`** (1 nodes): `eval-list.ts`
+- **Thin community `Community 330`** (1 nodes): `RelatedWikiSection.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 325`** (1 nodes): `eval-select.ts`
+- **Thin community `Community 331`** (1 nodes): `CabinetSelectionModal.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 326`** (1 nodes): `eval-summary.ts`
+- **Thin community `Community 332`** (1 nodes): `ChatSommelier.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 327`** (1 nodes): `skill-check.ts`
+- **Thin community `Community 333`** (1 nodes): `RandomBackground.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 328`** (1 nodes): `index.ts`
+- **Thin community `Community 334`** (1 nodes): `ThemeSwitcher.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 329`** (1 nodes): `types.ts`
+- **Thin community `Community 335`** (1 nodes): `commands.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 330`** (1 nodes): `index.ts`
+- **Thin community `Community 336`** (1 nodes): `activity.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 331`** (1 nodes): `index.ts`
+- **Thin community `Community 337`** (1 nodes): `browser-manager-unit.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 332`** (1 nodes): `index.ts`
+- **Thin community `Community 338`** (1 nodes): `bun-polyfill.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 333`** (1 nodes): `global-discover.test.ts`
+- **Thin community `Community 339`** (1 nodes): `commands.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 334`** (1 nodes): `uninstall.test.ts`
+- **Thin community `Community 340`** (1 nodes): `config.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 335`** (1 nodes): `gemini-session-runner.test.ts`
+- **Thin community `Community 341`** (1 nodes): `find-browse.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 336`** (1 nodes): `observability.test.ts`
+- **Thin community `Community 342`** (1 nodes): `handoff.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 337`** (1 nodes): `session-runner.test.ts`
+- **Thin community `Community 343`** (1 nodes): `path-validation.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 338`** (1 nodes): `firebase-admin.ts`
+- **Thin community `Community 344`** (1 nodes): `platform.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 339`** (1 nodes): `firebase.ts`
+- **Thin community `Community 345`** (1 nodes): `sidebar-unit.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 340`** (1 nodes): `about-content.ts`
+- **Thin community `Community 346`** (1 nodes): `url-validation.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 341`** (1 nodes): `api-codes.ts`
+- **Thin community `Community 347`** (1 nodes): `watch.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 342`** (1 nodes): `mbti-data.ts`
+- **Thin community `Community 348`** (1 nodes): `commands.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 343`** (1 nodes): `baijiu.ts`
+- **Thin community `Community 349`** (1 nodes): `eval-list.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 344`** (1 nodes): `beer.ts`
+- **Thin community `Community 350`** (1 nodes): `eval-select.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 345`** (1 nodes): `blended-whisky.ts`
+- **Thin community `Community 351`** (1 nodes): `eval-summary.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 346`** (1 nodes): `bourbon.ts`
+- **Thin community `Community 352`** (1 nodes): `skill-check.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 347`** (1 nodes): `brandy-regions.ts`
+- **Thin community `Community 353`** (1 nodes): `index.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 348`** (1 nodes): `brandy.ts`
+- **Thin community `Community 354`** (1 nodes): `types.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 349`** (1 nodes): `champagne.ts`
+- **Thin community `Community 355`** (1 nodes): `index.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 350`** (1 nodes): `cheongju-vs-sake.ts`
+- **Thin community `Community 356`** (1 nodes): `index.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 351`** (1 nodes): `cheongju.ts`
+- **Thin community `Community 357`** (1 nodes): `index.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 352`** (1 nodes): `cognac.ts`
+- **Thin community `Community 358`** (1 nodes): `global-discover.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 353`** (1 nodes): `gin.ts`
+- **Thin community `Community 359`** (1 nodes): `uninstall.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 354`** (1 nodes): `grain-whisky.ts`
+- **Thin community `Community 360`** (1 nodes): `gemini-session-runner.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 355`** (1 nodes): `korean-spirits-by-abv.ts`
+- **Thin community `Community 361`** (1 nodes): `observability.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 356`** (1 nodes): `korean-traditional-spirits.ts`
+- **Thin community `Community 362`** (1 nodes): `session-runner.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 357`** (1 nodes): `korean-whisky.ts`
+- **Thin community `Community 363`** (1 nodes): `firebase-admin.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 358`** (1 nodes): `liqueur.ts`
+- **Thin community `Community 364`** (1 nodes): `firebase.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 359`** (1 nodes): `makgeolli-guide.ts`
+- **Thin community `Community 365`** (1 nodes): `about-content.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 360`** (1 nodes): `makgeolli.ts`
+- **Thin community `Community 366`** (1 nodes): `api-codes.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 361`** (1 nodes): `mezcal.ts`
+- **Thin community `Community 367`** (1 nodes): `mbti-data.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 362`** (1 nodes): `oak-barrel.ts`
+- **Thin community `Community 368`** (1 nodes): `baijiu.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 363`** (1 nodes): `red-wine-regions.ts`
+- **Thin community `Community 369`** (1 nodes): `beer.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 364`** (1 nodes): `red-wine.ts`
+- **Thin community `Community 370`** (1 nodes): `blended-whisky.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 365`** (1 nodes): `rum.ts`
+- **Thin community `Community 371`** (1 nodes): `bourbon.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 366`** (1 nodes): `sake.ts`
+- **Thin community `Community 372`** (1 nodes): `brandy-regions.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 367`** (1 nodes): `scotch-whisky-regions.ts`
+- **Thin community `Community 373`** (1 nodes): `brandy.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 368`** (1 nodes): `shochu.ts`
+- **Thin community `Community 374`** (1 nodes): `champagne.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 369`** (1 nodes): `single-malt-vs-blended.ts`
+- **Thin community `Community 375`** (1 nodes): `cheongju-vs-sake.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 370`** (1 nodes): `single-malt.ts`
+- **Thin community `Community 376`** (1 nodes): `cheongju.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 371`** (1 nodes): `soju-diluted.ts`
+- **Thin community `Community 377`** (1 nodes): `cognac.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 372`** (1 nodes): `soju-distilled.ts`
+- **Thin community `Community 378`** (1 nodes): `gin.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 373`** (1 nodes): `soju-guide.ts`
+- **Thin community `Community 379`** (1 nodes): `grain-whisky.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 374`** (1 nodes): `tequila.ts`
+- **Thin community `Community 380`** (1 nodes): `korean-spirits-by-abv.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 375`** (1 nodes): `types.js`
+- **Thin community `Community 381`** (1 nodes): `korean-traditional-spirits.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 376`** (1 nodes): `types.ts`
+- **Thin community `Community 382`** (1 nodes): `korean-whisky.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 377`** (1 nodes): `us-whiskey-regions.ts`
+- **Thin community `Community 383`** (1 nodes): `liqueur.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 378`** (1 nodes): `vodka.ts`
+- **Thin community `Community 384`** (1 nodes): `makgeolli-guide.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 379`** (1 nodes): `white-wine-regions.ts`
+- **Thin community `Community 385`** (1 nodes): `makgeolli.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 380`** (1 nodes): `white-wine.ts`
+- **Thin community `Community 386`** (1 nodes): `mezcal.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 381`** (1 nodes): `wine.ts`
+- **Thin community `Community 387`** (1 nodes): `oak-barrel.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 382`** (1 nodes): `yakju-vs-cheongju.ts`
+- **Thin community `Community 388`** (1 nodes): `red-wine-regions.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 383`** (1 nodes): `yakju.ts`
+- **Thin community `Community 389`** (1 nodes): `red-wine.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 384`** (1 nodes): `airen.ts`
+- **Thin community `Community 390`** (1 nodes): `rum.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 385`** (1 nodes): `alicante-bouschet.ts`
+- **Thin community `Community 391`** (1 nodes): `sake.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 386`** (1 nodes): `aligote.ts`
+- **Thin community `Community 392`** (1 nodes): `scotch-whisky-regions.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 387`** (1 nodes): `aramon.ts`
+- **Thin community `Community 393`** (1 nodes): `shochu.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 388`** (1 nodes): `auxerrois.ts`
+- **Thin community `Community 394`** (1 nodes): `single-malt-vs-blended.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 389`** (1 nodes): `barbera.ts`
+- **Thin community `Community 395`** (1 nodes): `single-malt.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 390`** (1 nodes): `blaufrankisch.ts`
+- **Thin community `Community 396`** (1 nodes): `soju-diluted.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 391`** (1 nodes): `cabernet-franc.ts`
+- **Thin community `Community 397`** (1 nodes): `soju-distilled.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 392`** (1 nodes): `cabernet-sauvignon.ts`
+- **Thin community `Community 398`** (1 nodes): `soju-guide.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 393`** (1 nodes): `carmenere.ts`
+- **Thin community `Community 399`** (1 nodes): `tequila.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 394`** (1 nodes): `chardonnay.ts`
+- **Thin community `Community 400`** (1 nodes): `types.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 395`** (1 nodes): `chenin-blanc.ts`
+- **Thin community `Community 401`** (1 nodes): `types.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 396`** (1 nodes): `cinsault.ts`
+- **Thin community `Community 402`** (1 nodes): `us-whiskey-regions.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 397`** (1 nodes): `colombard.ts`
+- **Thin community `Community 403`** (1 nodes): `vodka.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 398`** (1 nodes): `cortese.ts`
+- **Thin community `Community 404`** (1 nodes): `white-wine-regions.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 399`** (1 nodes): `folle-blanche.ts`
+- **Thin community `Community 405`** (1 nodes): `white-wine.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 400`** (1 nodes): `furmint.ts`
+- **Thin community `Community 406`** (1 nodes): `wine.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 401`** (1 nodes): `gamay.ts`
+- **Thin community `Community 407`** (1 nodes): `yakju-vs-cheongju.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 402`** (1 nodes): `gewurztraminer.ts`
+- **Thin community `Community 408`** (1 nodes): `yakju.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 403`** (1 nodes): `glera.ts`
+- **Thin community `Community 409`** (1 nodes): `airen.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 404`** (1 nodes): `goldriesling.ts`
+- **Thin community `Community 410`** (1 nodes): `alicante-bouschet.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 405`** (1 nodes): `grenache.ts`
+- **Thin community `Community 411`** (1 nodes): `aligote.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 406`** (1 nodes): `gruner-veltliner.ts`
+- **Thin community `Community 412`** (1 nodes): `aramon.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 407`** (1 nodes): `harslevelu.ts`
+- **Thin community `Community 413`** (1 nodes): `auxerrois.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 408`** (1 nodes): `index.ts`
+- **Thin community `Community 414`** (1 nodes): `barbera.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 409`** (1 nodes): `kadarka.ts`
+- **Thin community `Community 415`** (1 nodes): `blaufrankisch.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 410`** (1 nodes): `kerner.ts`
+- **Thin community `Community 416`** (1 nodes): `cabernet-franc.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 411`** (1 nodes): `koshu.ts`
+- **Thin community `Community 417`** (1 nodes): `cabernet-sauvignon.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 412`** (1 nodes): `lambrusco.ts`
+- **Thin community `Community 418`** (1 nodes): `carmenere.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 413`** (1 nodes): `macabeo.ts`
+- **Thin community `Community 419`** (1 nodes): `chardonnay.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 414`** (1 nodes): `malbec.ts`
+- **Thin community `Community 420`** (1 nodes): `chenin-blanc.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 415`** (1 nodes): `marsanne.ts`
+- **Thin community `Community 421`** (1 nodes): `cinsault.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 416`** (1 nodes): `mazuelo.ts`
+- **Thin community `Community 422`** (1 nodes): `colombard.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 417`** (1 nodes): `melon-de-bourgogne.ts`
+- **Thin community `Community 423`** (1 nodes): `cortese.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 418`** (1 nodes): `merlot.ts`
+- **Thin community `Community 424`** (1 nodes): `folle-blanche.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 419`** (1 nodes): `monastrell.ts`
+- **Thin community `Community 425`** (1 nodes): `furmint.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 420`** (1 nodes): `montepulciano.ts`
+- **Thin community `Community 426`** (1 nodes): `gamay.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 421`** (1 nodes): `moscato.ts`
+- **Thin community `Community 427`** (1 nodes): `gewurztraminer.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 422`** (1 nodes): `mourvedre.ts`
+- **Thin community `Community 428`** (1 nodes): `glera.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 423`** (1 nodes): `muller-thurgau.ts`
+- **Thin community `Community 429`** (1 nodes): `goldriesling.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 424`** (1 nodes): `muscadelle.ts`
+- **Thin community `Community 430`** (1 nodes): `grenache.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 425`** (1 nodes): `muscat.ts`
+- **Thin community `Community 431`** (1 nodes): `gruner-veltliner.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 426`** (1 nodes): `nebbiolo.ts`
+- **Thin community `Community 432`** (1 nodes): `harslevelu.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 427`** (1 nodes): `negroamaro.ts`
+- **Thin community `Community 433`** (1 nodes): `index.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 428`** (1 nodes): `nero-davola.ts`
+- **Thin community `Community 434`** (1 nodes): `kadarka.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 429`** (1 nodes): `palomino.ts`
+- **Thin community `Community 435`** (1 nodes): `kerner.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 430`** (1 nodes): `parellada.ts`
+- **Thin community `Community 436`** (1 nodes): `koshu.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 431`** (1 nodes): `pedro-ximenez.ts`
+- **Thin community `Community 437`** (1 nodes): `lambrusco.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 432`** (1 nodes): `petit-manseng.ts`
+- **Thin community `Community 438`** (1 nodes): `macabeo.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 433`** (1 nodes): `petit-verdot.ts`
+- **Thin community `Community 439`** (1 nodes): `malbec.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 434`** (1 nodes): `petite-sirah.ts`
+- **Thin community `Community 440`** (1 nodes): `marsanne.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 435`** (1 nodes): `pinot-blanc.ts`
+- **Thin community `Community 441`** (1 nodes): `mazuelo.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 436`** (1 nodes): `pinot-gris.ts`
+- **Thin community `Community 442`** (1 nodes): `melon-de-bourgogne.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 437`** (1 nodes): `pinot-meunier.ts`
+- **Thin community `Community 443`** (1 nodes): `merlot.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 438`** (1 nodes): `pinot-noir.ts`
+- **Thin community `Community 444`** (1 nodes): `monastrell.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 439`** (1 nodes): `pinotage.ts`
+- **Thin community `Community 445`** (1 nodes): `montepulciano.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 440`** (1 nodes): `primitivo.ts`
+- **Thin community `Community 446`** (1 nodes): `moscato.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 441`** (1 nodes): `riesling.ts`
+- **Thin community `Community 447`** (1 nodes): `mourvedre.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 442`** (1 nodes): `roussanne.ts`
+- **Thin community `Community 448`** (1 nodes): `muller-thurgau.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 443`** (1 nodes): `sangiovese.ts`
+- **Thin community `Community 449`** (1 nodes): `muscadelle.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 444`** (1 nodes): `sauvignon-blanc.ts`
+- **Thin community `Community 450`** (1 nodes): `muscat.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 445`** (1 nodes): `sauvignon-grise.ts`
+- **Thin community `Community 451`** (1 nodes): `nebbiolo.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 446`** (1 nodes): `savagnin.ts`
+- **Thin community `Community 452`** (1 nodes): `negroamaro.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 447`** (1 nodes): `scheurebe.ts`
+- **Thin community `Community 453`** (1 nodes): `nero-davola.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 448`** (1 nodes): `semillon.ts`
+- **Thin community `Community 454`** (1 nodes): `palomino.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 449`** (1 nodes): `silvaner.ts`
+- **Thin community `Community 455`** (1 nodes): `parellada.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 450`** (1 nodes): `st-laurent.ts`
+- **Thin community `Community 456`** (1 nodes): `pedro-ximenez.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 451`** (1 nodes): `syrah.ts`
+- **Thin community `Community 457`** (1 nodes): `petit-manseng.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 452`** (1 nodes): `tempranillo.ts`
+- **Thin community `Community 458`** (1 nodes): `petit-verdot.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 453`** (1 nodes): `tinta-amarela.ts`
+- **Thin community `Community 459`** (1 nodes): `petite-sirah.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 454`** (1 nodes): `tinta-barroca.ts`
+- **Thin community `Community 460`** (1 nodes): `pinot-blanc.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 455`** (1 nodes): `touriga-franca.ts`
+- **Thin community `Community 461`** (1 nodes): `pinot-gris.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 456`** (1 nodes): `touriga-nacional.ts`
+- **Thin community `Community 462`** (1 nodes): `pinot-meunier.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 457`** (1 nodes): `trebbiano.ts`
+- **Thin community `Community 463`** (1 nodes): `pinot-noir.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 458`** (1 nodes): `welschriesling.ts`
+- **Thin community `Community 464`** (1 nodes): `pinotage.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 459`** (1 nodes): `xarello.ts`
+- **Thin community `Community 465`** (1 nodes): `primitivo.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 460`** (1 nodes): `zinfandel.ts`
+- **Thin community `Community 466`** (1 nodes): `riesling.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 461`** (1 nodes): `zweigelt.ts`
+- **Thin community `Community 467`** (1 nodes): `roussanne.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 462`** (1 nodes): `firebase.ts`
+- **Thin community `Community 468`** (1 nodes): `sangiovese.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 463`** (1 nodes): `paths.ts`
+- **Thin community `Community 469`** (1 nodes): `sauvignon-blanc.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 464`** (1 nodes): `schema.ts`
+- **Thin community `Community 470`** (1 nodes): `sauvignon-grise.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 465`** (1 nodes): `related-spirits.ts`
+- **Thin community `Community 471`** (1 nodes): `savagnin.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 466`** (1 nodes): `spirit-page-resolver.ts`
+- **Thin community `Community 472`** (1 nodes): `scheurebe.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 467`** (1 nodes): `bot-detection.test.ts`
+- **Thin community `Community 473`** (1 nodes): `semillon.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 468`** (1 nodes): `localize-field.test.ts`
+- **Thin community `Community 474`** (1 nodes): `silvaner.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 469`** (1 nodes): `analyze_audit_report.py`
+- **Thin community `Community 475`** (1 nodes): `st-laurent.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 470`** (1 nodes): `check-distilleries.py`
+- **Thin community `Community 476`** (1 nodes): `syrah.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 471`** (1 nodes): `check_audit_status.py`
+- **Thin community `Community 477`** (1 nodes): `tempranillo.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 472`** (1 nodes): `run_sequence.ps1`
+- **Thin community `Community 478`** (1 nodes): `tinta-amarela.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 473`** (1 nodes): `run_sequence.py`
+- **Thin community `Community 479`** (1 nodes): `tinta-barroca.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 474`** (1 nodes): `test-search-keywords.ts`
+- **Thin community `Community 480`** (1 nodes): `touriga-franca.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 475`** (1 nodes): `test_firestore.py`
+- **Thin community `Community 481`** (1 nodes): `touriga-nacional.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 476`** (1 nodes): `upload_processed.ps1`
+- **Thin community `Community 482`** (1 nodes): `trebbiano.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 483`** (1 nodes): `welschriesling.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 484`** (1 nodes): `xarello.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 485`** (1 nodes): `zinfandel.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 486`** (1 nodes): `zweigelt.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 487`** (1 nodes): `firebase.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 488`** (1 nodes): `paths.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 489`** (1 nodes): `schema.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 490`** (1 nodes): `related-spirits.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 491`** (1 nodes): `spirit-page-resolver.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 492`** (1 nodes): `bot-detection.test.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 493`** (1 nodes): `localize-field.test.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 494`** (1 nodes): `analyze_audit_report.py`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 495`** (1 nodes): `bare.js`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 496`** (1 nodes): `check-distilleries.py`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 497`** (1 nodes): `check_audit_status.py`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 498`** (1 nodes): `debug-fetch.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 499`** (1 nodes): `load-env.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 500`** (1 nodes): `run_sequence.ps1`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 501`** (1 nodes): `run_sequence.py`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 502`** (1 nodes): `test-cjs.js`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 503`** (1 nodes): `test-env.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 504`** (1 nodes): `test-search-keywords.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 505`** (1 nodes): `test-tsx-env.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 506`** (1 nodes): `test_firestore.py`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 507`** (1 nodes): `upload_processed.ps1`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 508`** (1 nodes): `index.d.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 509`** (1 nodes): `index.d.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 510`** (1 nodes): `특정 디렉토리 내의 코드를 수집합니다. (MarkItDown 연동)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **What connects `Analyze ALL spirits for normalization needs  This script checks all 2308 spiri`, `Check if a spirit name needs normalization`, `Spirit Data Normalization Analyzer  This script analyzes spirits data from Fir` to the rest of the system?**
-  _45 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _46 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.06 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.07 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
-  _Cohesion score 0.07 - nodes in this community are weakly interconnected._
-- **Should `Community 4` be split into smaller, more focused modules?**
+  _Cohesion score 0.06 - nodes in this community are weakly interconnected._
+- **Should `Community 3` be split into smaller, more focused modules?**
+  _Cohesion score 0.08 - nodes in this community are weakly interconnected._
+- **Should `Community 5` be split into smaller, more focused modules?**
   _Cohesion score 0.12 - nodes in this community are weakly interconnected._
+- **Should `Community 6` be split into smaller, more focused modules?**
+  _Cohesion score 0.09 - nodes in this community are weakly interconnected._
 
 ---
 
@@ -3123,6 +3353,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "app_lang_layout_tsx", "label": "layout.tsx", "file_type": "code", "source_file": "app\\[lang]\\layout.tsx", "source_location": "L1"}, {"id": "layout_generatemetadata", "label": "generateMetadata()", "file_type": "code", "source_file": "app\\[lang]\\layout.tsx", "source_location": "L28"}], "edges": [{"source": "app_lang_layout_tsx", "target": "next", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\layout.tsx", "source_location": "L1", "weight": 1.0}, {"source": "app_lang_layout_tsx", "target": "script", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\layout.tsx", "source_location": "L2", "weight": 1.0}, {"source": "app_lang_layout_tsx", "target": "link", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\layout.tsx", "source_location": "L3", "weight": 1.0}, {"source": "app_lang_layout_tsx", "target": "google", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\layout.tsx", "source_location": "L4", "weight": 1.0}, {"source": "app_lang_layout_tsx", "target": "google", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\layout.tsx", "source_location": "L5", "weight": 1.0}, {"source": "app_lang_layout_tsx", "target": "navigation", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\layout.tsx", "source_location": "L6", "weight": 1.0}, {"source": "app_lang_layout_tsx", "target": "app_lang_globals_css", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\layout.tsx", "source_location": "L7", "weight": 1.0}, {"source": "app_lang_layout_tsx", "target": "app_lang_context_auth_context", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\layout.tsx", "source_location": "L8", "weight": 1.0}, {"source": "app_lang_layout_tsx", "target": "app_lang_context_spirits_cache_context", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\layout.tsx", "source_location": "L9", "weight": 1.0}, {"source": "app_lang_layout_tsx", "target": "app_lang_components_auth_onboarding_modal", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\layout.tsx", "source_location": "L10", "weight": 1.0}, {"source": "app_lang_layout_tsx", "target": "i18n_config", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\layout.tsx", "source_location": "L11", "weight": 1.0}, {"source": "app_lang_layout_tsx", "target": "header", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\layout.tsx", "source_location": "L12", "weight": 1.0}, {"source": "app_lang_layout_tsx", "target": "bottomnav", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\layout.tsx", "source_location": "L13", "weight": 1.0}, {"source": "app_lang_layout_tsx", "target": "googlead", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\layout.tsx", "source_location": "L14", "weight": 1.0}, {"source": "app_lang_layout_tsx", "target": "get_dictionary", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\layout.tsx", "source_location": "L15", "weight": 1.0}, {"source": "app_lang_layout_tsx", "target": "app_lang_context_pwa_context", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\layout.tsx", "source_location": "L16", "weight": 1.0}, {"source": "app_lang_layout_tsx", "target": "pwainstallprompt", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\layout.tsx", "source_location": "L17", "weight": 1.0}, {"source": "app_lang_layout_tsx", "target": "scrolltotop", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\layout.tsx", "source_location": "L18", "weight": 1.0}, {"source": "app_lang_layout_tsx", "target": "chatsommelier", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\layout.tsx", "source_location": "L19", "weight": 1.0}, {"source": "app_lang_layout_tsx", "target": "layout_generatemetadata", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\layout.tsx", "source_location": "L28", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\060f5a92ea20f318956df48ef196f7139177d876822f9619146ce6236fa796f8.json
+```
+{"nodes": [{"id": "app_lang_actions_reviews_ts", "label": "reviews.ts", "file_type": "code", "source_file": "app\\[lang]\\actions\\reviews.ts", "source_location": "L1"}, {"id": "reviews_submitmicroreviewaction", "label": "submitMicroReviewAction()", "file_type": "code", "source_file": "app\\[lang]\\actions\\reviews.ts", "source_location": "L11"}], "edges": [{"source": "app_lang_actions_reviews_ts", "target": "firestore_rest", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\actions\\reviews.ts", "source_location": "L3", "weight": 1.0}, {"source": "app_lang_actions_reviews_ts", "target": "schema", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\actions\\reviews.ts", "source_location": "L4", "weight": 1.0}, {"source": "app_lang_actions_reviews_ts", "target": "cache", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\actions\\reviews.ts", "source_location": "L5", "weight": 1.0}, {"source": "app_lang_actions_reviews_ts", "target": "reviews_submitmicroreviewaction", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\actions\\reviews.ts", "source_location": "L11", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\06d6c0398f542576bf9056c4b7909e7d8f1dc824e13b75bf6a5495a3a12513ec.json
 ```
 {"nodes": [{"id": "scripts_normalize_distilleries_ts", "label": "normalize-distilleries.ts", "file_type": "code", "source_file": "scripts\\normalize-distilleries.ts", "source_location": "L1"}, {"id": "normalize_distilleries_normalizedistilleryname", "label": "normalizeDistilleryName()", "file_type": "code", "source_file": "scripts\\normalize-distilleries.ts", "source_location": "L49"}, {"id": "normalize_distilleries_advancednormalization", "label": "advancedNormalization()", "file_type": "code", "source_file": "scripts\\normalize-distilleries.ts", "source_location": "L78"}], "edges": [{"source": "scripts_normalize_distilleries_ts", "target": "fs", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\normalize-distilleries.ts", "source_location": "L1", "weight": 1.0}, {"source": "scripts_normalize_distilleries_ts", "target": "path", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\normalize-distilleries.ts", "source_location": "L2", "weight": 1.0}, {"source": "scripts_normalize_distilleries_ts", "target": "normalize_distilleries_normalizedistilleryname", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\normalize-distilleries.ts", "source_location": "L49", "weight": 1.0}, {"source": "scripts_normalize_distilleries_ts", "target": "normalize_distilleries_advancednormalization", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\normalize-distilleries.ts", "source_location": "L78", "weight": 1.0}]}
@@ -3131,6 +3366,11 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\06ff904b88da1c981f0f91584e82fa21699fbf6f7170338066e527ee1ce00524.json
 ```
 {"nodes": [{"id": "lib_constants_wiki_cheongju_ts", "label": "cheongju.ts", "file_type": "code", "source_file": "lib\\constants\\wiki\\cheongju.ts", "source_location": "L1"}], "edges": [{"source": "lib_constants_wiki_cheongju_ts", "target": "lib_constants_wiki_types", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\constants\\wiki\\cheongju.ts", "source_location": "L1", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\072fbe20b15021f4521921b6c07c9338f99e1849adaf00e6711928e94104e41c.json
+```
+{"nodes": [{"id": "app_lang_contents_reviews_page_tsx", "label": "page.tsx", "file_type": "code", "source_file": "app\\[lang]\\contents\\reviews\\page.tsx", "source_location": "L1"}, {"id": "page_hasfilterparams", "label": "hasFilterParams()", "file_type": "code", "source_file": "app\\[lang]\\contents\\reviews\\page.tsx", "source_location": "L16"}, {"id": "page_generatemetadata", "label": "generateMetadata()", "file_type": "code", "source_file": "app\\[lang]\\contents\\reviews\\page.tsx", "source_location": "L20"}], "edges": [{"source": "app_lang_contents_reviews_page_tsx", "target": "next", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\reviews\\page.tsx", "source_location": "L1", "weight": 1.0}, {"source": "app_lang_contents_reviews_page_tsx", "target": "link", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\reviews\\page.tsx", "source_location": "L2", "weight": 1.0}, {"source": "app_lang_contents_reviews_page_tsx", "target": "navigation", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\reviews\\page.tsx", "source_location": "L3", "weight": 1.0}, {"source": "app_lang_contents_reviews_page_tsx", "target": "seo_url", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\reviews\\page.tsx", "source_location": "L4", "weight": 1.0}, {"source": "app_lang_contents_reviews_page_tsx", "target": "app_lang_contents_reviews_reviews_client", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\reviews\\page.tsx", "source_location": "L5", "weight": 1.0}, {"source": "app_lang_contents_reviews_page_tsx", "target": "data_connect_client", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\reviews\\page.tsx", "source_location": "L6", "weight": 1.0}, {"source": "app_lang_contents_reviews_page_tsx", "target": "page_hasfilterparams", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\reviews\\page.tsx", "source_location": "L16", "weight": 1.0}, {"source": "app_lang_contents_reviews_page_tsx", "target": "page_generatemetadata", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\reviews\\page.tsx", "source_location": "L20", "weight": 1.0}, {"source": "page_generatemetadata", "target": "page_hasfilterparams", "relation": "calls", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\reviews\\page.tsx", "source_location": "L33", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\07761735c52e3d9fcd1de68b500b7ff90af6d36cc840a9258d8a04a7276e447c.json
@@ -3178,6 +3418,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "gstack_gstack_main_design_src_cli_ts", "label": "cli.ts", "file_type": "code", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L1"}, {"id": "cli_parseargs", "label": "parseArgs()", "file_type": "code", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L29"}, {"id": "cli_printusage", "label": "printUsage()", "file_type": "code", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L56"}, {"id": "cli_runsetup", "label": "runSetup()", "file_type": "code", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L67"}, {"id": "cli_main", "label": "main()", "file_type": "code", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L109"}, {"id": "cli_resolveimagepaths", "label": "resolveImagePaths()", "file_type": "code", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L260"}], "edges": [{"source": "gstack_gstack_main_design_src_cli_ts", "target": "gstack_gstack_main_design_src_commands", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L15", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_cli_ts", "target": "gstack_gstack_main_design_src_generate", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L16", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_cli_ts", "target": "gstack_gstack_main_design_src_check", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L17", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_cli_ts", "target": "gstack_gstack_main_design_src_compare", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L18", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_cli_ts", "target": "gstack_gstack_main_design_src_variants", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L19", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_cli_ts", "target": "gstack_gstack_main_design_src_iterate", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L20", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_cli_ts", "target": "gstack_gstack_main_design_src_auth", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L21", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_cli_ts", "target": "gstack_gstack_main_design_src_memory", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L22", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_cli_ts", "target": "gstack_gstack_main_design_src_diff", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L23", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_cli_ts", "target": "gstack_gstack_main_design_src_evolve", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L24", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_cli_ts", "target": "gstack_gstack_main_design_src_design_to_code", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L25", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_cli_ts", "target": "gstack_gstack_main_design_src_serve", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L26", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_cli_ts", "target": "gstack_gstack_main_design_src_gallery", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L27", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_cli_ts", "target": "cli_parseargs", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L29", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_cli_ts", "target": "cli_printusage", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L56", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_cli_ts", "target": "cli_runsetup", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L67", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_cli_ts", "target": "cli_main", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L109", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_cli_ts", "target": "cli_resolveimagepaths", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L260", "weight": 1.0}, {"source": "cli_parseargs", "target": "cli_printusage", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L32", "weight": 1.0}, {"source": "cli_main", "target": "cli_parseargs", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L110", "weight": 1.0}, {"source": "cli_main", "target": "cli_printusage", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L114", "weight": 1.0}, {"source": "cli_main", "target": "cli_resolveimagepaths", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L138", "weight": 1.0}, {"source": "cli_main", "target": "cli_runsetup", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\cli.ts", "source_location": "L166", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\0b66543bca6908a0d16a38b10e13baeff142197026285f25f17133fe3fb08473.json
+```
+{"nodes": [{"id": "components_cabinet_cabinetclient_tsx", "label": "CabinetClient.tsx", "file_type": "code", "source_file": "components\\cabinet\\CabinetClient.tsx", "source_location": "L1"}, {"id": "cabinetclient_fetchuserstats", "label": "fetchUserStats()", "file_type": "code", "source_file": "components\\cabinet\\CabinetClient.tsx", "source_location": "L106"}, {"id": "cabinetclient_handlereviewsubmit", "label": "handleReviewSubmit()", "file_type": "code", "source_file": "components\\cabinet\\CabinetClient.tsx", "source_location": "L138"}, {"id": "cabinetclient_openreviewmodal", "label": "openReviewModal()", "file_type": "code", "source_file": "components\\cabinet\\CabinetClient.tsx", "source_location": "L160"}, {"id": "cabinetclient_openinfomodal", "label": "openInfoModal()", "file_type": "code", "source_file": "components\\cabinet\\CabinetClient.tsx", "source_location": "L166"}], "edges": [{"source": "components_cabinet_cabinetclient_tsx", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\CabinetClient.tsx", "source_location": "L3", "weight": 1.0}, {"source": "components_cabinet_cabinetclient_tsx", "target": "framer_motion", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\CabinetClient.tsx", "source_location": "L4", "weight": 1.0}, {"source": "components_cabinet_cabinetclient_tsx", "target": "googlead", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\CabinetClient.tsx", "source_location": "L5", "weight": 1.0}, {"source": "components_cabinet_cabinetclient_tsx", "target": "link", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\CabinetClient.tsx", "source_location": "L6", "weight": 1.0}, {"source": "components_cabinet_cabinetclient_tsx", "target": "reviewmodal", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\CabinetClient.tsx", "source_location": "L7", "weight": 1.0}, {"source": "components_cabinet_cabinetclient_tsx", "target": "searchspiritmodal", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\CabinetClient.tsx", "source_location": "L8", "weight": 1.0}, {"source": "components_cabinet_cabinetclient_tsx", "target": "flavor_engine", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\CabinetClient.tsx", "source_location": "L9", "weight": 1.0}, {"source": "components_cabinet_cabinetclient_tsx", "target": "spiritdetailmodal", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\CabinetClient.tsx", "source_location": "L10", "weight": 1.0}, {"source": "components_cabinet_cabinetclient_tsx", "target": "auth_context", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\CabinetClient.tsx", "source_location": "L11", "weight": 1.0}, {"source": "components_cabinet_cabinetclient_tsx", "target": "spirits_cache_context", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\CabinetClient.tsx", "source_location": "L12", "weight": 1.0}, {"source": "components_cabinet_cabinetclient_tsx", "target": "cabinet", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\CabinetClient.tsx", "source_location": "L13", "weight": 1.0}, {"source": "components_cabinet_cabinetclient_tsx", "target": "mycabinet", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\CabinetClient.tsx", "source_location": "L16", "weight": 1.0}, {"source": "components_cabinet_cabinetclient_tsx", "target": "preferenceexploration", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\CabinetClient.tsx", "source_location": "L17", "weight": 1.0}, {"source": "components_cabinet_cabinetclient_tsx", "target": "successtoast", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\CabinetClient.tsx", "source_location": "L18", "weight": 1.0}, {"source": "components_cabinet_cabinetclient_tsx", "target": "i18n_config", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\CabinetClient.tsx", "source_location": "L19", "weight": 1.0}, {"source": "components_cabinet_cabinetclient_tsx", "target": "cabinetclient_fetchuserstats", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\CabinetClient.tsx", "source_location": "L106", "weight": 1.0}, {"source": "components_cabinet_cabinetclient_tsx", "target": "cabinetclient_handlereviewsubmit", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\CabinetClient.tsx", "source_location": "L138", "weight": 1.0}, {"source": "components_cabinet_cabinetclient_tsx", "target": "cabinetclient_openreviewmodal", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\CabinetClient.tsx", "source_location": "L160", "weight": 1.0}, {"source": "components_cabinet_cabinetclient_tsx", "target": "cabinetclient_openinfomodal", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\CabinetClient.tsx", "source_location": "L166", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\0b85ad940a92a84b6938dd89cb848e45714c5a1061dfbe6ad566c03c27b4db04.json
 ```
 {"nodes": [{"id": "app_lang_contents_worldcup_worldcup_client_tsx", "label": "worldcup-client.tsx", "file_type": "code", "source_file": "app\\[lang]\\contents\\worldcup\\worldcup-client.tsx", "source_location": "L1"}, {"id": "worldcup_client_togglesubcategory", "label": "toggleSubCategory()", "file_type": "code", "source_file": "app\\[lang]\\contents\\worldcup\\worldcup-client.tsx", "source_location": "L76"}, {"id": "worldcup_client_handlestart", "label": "handleStart()", "file_type": "code", "source_file": "app\\[lang]\\contents\\worldcup\\worldcup-client.tsx", "source_location": "L89"}], "edges": [{"source": "app_lang_contents_worldcup_worldcup_client_tsx", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\worldcup-client.tsx", "source_location": "L3", "weight": 1.0}, {"source": "app_lang_contents_worldcup_worldcup_client_tsx", "target": "navigation", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\worldcup-client.tsx", "source_location": "L4", "weight": 1.0}, {"source": "app_lang_contents_worldcup_worldcup_client_tsx", "target": "framer_motion", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\worldcup-client.tsx", "source_location": "L5", "weight": 1.0}, {"source": "app_lang_contents_worldcup_worldcup_client_tsx", "target": "lucide_react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\worldcup-client.tsx", "source_location": "L6", "weight": 1.0}, {"source": "app_lang_contents_worldcup_worldcup_client_tsx", "target": "googlead", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\worldcup-client.tsx", "source_location": "L13", "weight": 1.0}, {"source": "app_lang_contents_worldcup_worldcup_client_tsx", "target": "spirits_metadata_json", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\worldcup-client.tsx", "source_location": "L14", "weight": 1.0}, {"source": "app_lang_contents_worldcup_worldcup_client_tsx", "target": "worldcup_client_togglesubcategory", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\worldcup-client.tsx", "source_location": "L76", "weight": 1.0}, {"source": "app_lang_contents_worldcup_worldcup_client_tsx", "target": "worldcup_client_handlestart", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\worldcup-client.tsx", "source_location": "L89", "weight": 1.0}]}
@@ -3191,6 +3436,16 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\0bdd34a60a20ee58df8ae292cb75a5baa0fdb7b754088577e7b82a968c952c6a.json
 ```
 {"nodes": [{"id": "gstack_gstack_main_design_src_gallery_ts", "label": "gallery.ts", "file_type": "code", "source_file": "gstack\\gstack-main\\design\\src\\gallery.ts", "source_location": "L1"}, {"id": "gallery_generategalleryhtml", "label": "generateGalleryHtml()", "file_type": "code", "source_file": "gstack\\gstack-main\\design\\src\\gallery.ts", "source_location": "L23"}, {"id": "gallery_generateemptygallery", "label": "generateEmptyGallery()", "file_type": "code", "source_file": "gstack\\gstack-main\\design\\src\\gallery.ts", "source_location": "L212"}, {"id": "gallery_escapehtml", "label": "escapeHtml()", "file_type": "code", "source_file": "gstack\\gstack-main\\design\\src\\gallery.ts", "source_location": "L238"}, {"id": "gallery_gallery", "label": "gallery()", "file_type": "code", "source_file": "gstack\\gstack-main\\design\\src\\gallery.ts", "source_location": "L245"}], "edges": [{"source": "gstack_gstack_main_design_src_gallery_ts", "target": "fs", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\gallery.ts", "source_location": "L7", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_gallery_ts", "target": "path", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\gallery.ts", "source_location": "L8", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_gallery_ts", "target": "gallery_generategalleryhtml", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\gallery.ts", "source_location": "L23", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_gallery_ts", "target": "gallery_generateemptygallery", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\gallery.ts", "source_location": "L212", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_gallery_ts", "target": "gallery_escapehtml", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\gallery.ts", "source_location": "L238", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_gallery_ts", "target": "gallery_gallery", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\gallery.ts", "source_location": "L245", "weight": 1.0}, {"source": "gallery_generategalleryhtml", "target": "gallery_generateemptygallery", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\gallery.ts", "source_location": "L27", "weight": 1.0}, {"source": "gallery_gallery", "target": "gallery_generategalleryhtml", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\gallery.ts", "source_location": "L246", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\0d1bfb2ee44801b3be855e2b889a6f8b59d654a39fb7869af2570dc9d269ae8d.json
+```
+{"nodes": [{"id": "scripts_sync_published_seo_ts", "label": "sync-published-seo.ts", "file_type": "code", "source_file": "scripts\\sync-published-seo.ts", "source_location": "L1"}, {"id": "sync_published_seo_syncpublishedseo", "label": "syncPublishedSEO()", "file_type": "code", "source_file": "scripts\\sync-published-seo.ts", "source_location": "L9"}], "edges": [{"source": "scripts_sync_published_seo_ts", "target": "sync_published_seo_syncpublishedseo", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\sync-published-seo.ts", "source_location": "L9", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\0d1e9dbd1fce4793cc4060149d40b6d19d760791ecc46dfa9998f1be3ce42cf1.json
+```
+{"nodes": [{"id": "app_lang_context_auth_context_tsx", "label": "auth-context.tsx", "file_type": "code", "source_file": "app\\[lang]\\context\\auth-context.tsx", "source_location": "L1"}, {"id": "auth_context_authprovider", "label": "AuthProvider()", "file_type": "code", "source_file": "app\\[lang]\\context\\auth-context.tsx", "source_location": "L50"}, {"id": "auth_context_useauth", "label": "useAuth()", "file_type": "code", "source_file": "app\\[lang]\\context\\auth-context.tsx", "source_location": "L179"}], "edges": [{"source": "app_lang_context_auth_context_tsx", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\context\\auth-context.tsx", "source_location": "L3", "weight": 1.0}, {"source": "app_lang_context_auth_context_tsx", "target": "auth", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\context\\auth-context.tsx", "source_location": "L4", "weight": 1.0}, {"source": "app_lang_context_auth_context_tsx", "target": "firebase", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\context\\auth-context.tsx", "source_location": "L11", "weight": 1.0}, {"source": "app_lang_context_auth_context_tsx", "target": "data_connect_client", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\context\\auth-context.tsx", "source_location": "L12", "weight": 1.0}, {"source": "app_lang_context_auth_context_tsx", "target": "navigation", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\context\\auth-context.tsx", "source_location": "L13", "weight": 1.0}, {"source": "app_lang_context_auth_context_tsx", "target": "auth_context_authprovider", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\context\\auth-context.tsx", "source_location": "L50", "weight": 1.0}, {"source": "app_lang_context_auth_context_tsx", "target": "auth_context_useauth", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\context\\auth-context.tsx", "source_location": "L179", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\0e0827affdc6c76affda3f97f7c91ac59ae41db146b63c3a9bc9c82d227cfc86.json
@@ -3216,6 +3471,11 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\0e8cbba31247bdae0bdbdd823c5d3f7b210fe87bf0d3c405a437c85e8d8ed6ce.json
 ```
 {"nodes": [{"id": "scripts_extract_distilleries_ts", "label": "extract-distilleries.ts", "file_type": "code", "source_file": "scripts\\extract-distilleries.ts", "source_location": "L1"}, {"id": "extract_distilleries_extractdistilleries", "label": "extractDistilleries()", "file_type": "code", "source_file": "scripts\\extract-distilleries.ts", "source_location": "L38"}], "edges": [{"source": "scripts_extract_distilleries_ts", "target": "firebase_admin", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\extract-distilleries.ts", "source_location": "L6", "weight": 1.0}, {"source": "scripts_extract_distilleries_ts", "target": "fs", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\extract-distilleries.ts", "source_location": "L7", "weight": 1.0}, {"source": "scripts_extract_distilleries_ts", "target": "path", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\extract-distilleries.ts", "source_location": "L8", "weight": 1.0}, {"source": "scripts_extract_distilleries_ts", "target": "dotenv", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\extract-distilleries.ts", "source_location": "L9", "weight": 1.0}, {"source": "scripts_extract_distilleries_ts", "target": "extract_distilleries_extractdistilleries", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\extract-distilleries.ts", "source_location": "L38", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\0e97be0e3682cb7365ddef576e108ae3393e0dce93767733cb95785d75b72b47.json
+```
+{"nodes": [{"id": "scripts_audit_logic_ts", "label": "audit-logic.ts", "file_type": "code", "source_file": "scripts\\audit-logic.ts", "source_location": "L1"}, {"id": "audit_logic_auditdata", "label": "auditData()", "file_type": "code", "source_file": "scripts\\audit-logic.ts", "source_location": "L7"}], "edges": [{"source": "scripts_audit_logic_ts", "target": "audit_logic_auditdata", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\audit-logic.ts", "source_location": "L7", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\0f43782e4823f72e7688c8533e164c28562a73865c29e96e71d6ce77078abfca.json
@@ -3278,6 +3538,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "gstack_gstack_main_scripts_resolvers_preamble_ts", "label": "preamble.ts", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L1"}, {"id": "preamble_generatepreamblebash", "label": "generatePreambleBash()", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L15"}, {"id": "preamble_generateupgradecheck", "label": "generateUpgradeCheck()", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L69"}, {"id": "preamble_generatelakeintro", "label": "generateLakeIntro()", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L84"}, {"id": "preamble_generatetelemetryprompt", "label": "generateTelemetryPrompt()", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L98"}, {"id": "preamble_generateproactiveprompt", "label": "generateProactivePrompt()", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L133"}, {"id": "preamble_generateaskuserformat", "label": "generateAskUserFormat()", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L156"}, {"id": "preamble_generatecompletenesssection", "label": "generateCompletenessSection()", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L170"}, {"id": "preamble_generaterepomodesection", "label": "generateRepoModeSection()", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L187"}, {"id": "preamble_generatetestfailuretriage", "label": "generateTestFailureTriage()", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L197"}, {"id": "preamble_generatesearchbeforebuildingsection", "label": "generateSearchBeforeBuildingSection()", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L303"}, {"id": "preamble_generatecontributormode", "label": "generateContributorMode()", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L315"}, {"id": "preamble_generatecompletionstatus", "label": "generateCompletionStatus()", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L335"}, {"id": "preamble_generatevoicedirective", "label": "generateVoiceDirective()", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L431"}, {"id": "preamble_generatepreamble", "label": "generatePreamble()", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L497"}], "edges": [{"source": "gstack_gstack_main_scripts_resolvers_preamble_ts", "target": "gstack_gstack_main_scripts_resolvers_types", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L1", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_preamble_ts", "target": "preamble_generatepreamblebash", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L15", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_preamble_ts", "target": "preamble_generateupgradecheck", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L69", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_preamble_ts", "target": "preamble_generatelakeintro", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L84", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_preamble_ts", "target": "preamble_generatetelemetryprompt", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L98", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_preamble_ts", "target": "preamble_generateproactiveprompt", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L133", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_preamble_ts", "target": "preamble_generateaskuserformat", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L156", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_preamble_ts", "target": "preamble_generatecompletenesssection", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L170", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_preamble_ts", "target": "preamble_generaterepomodesection", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L187", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_preamble_ts", "target": "preamble_generatetestfailuretriage", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L197", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_preamble_ts", "target": "preamble_generatesearchbeforebuildingsection", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L303", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_preamble_ts", "target": "preamble_generatecontributormode", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L315", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_preamble_ts", "target": "preamble_generatecompletionstatus", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L335", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_preamble_ts", "target": "preamble_generatevoicedirective", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L431", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_preamble_ts", "target": "preamble_generatepreamble", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L497", "weight": 1.0}, {"source": "preamble_generatepreamble", "target": "preamble_generatepreamblebash", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L503", "weight": 1.0}, {"source": "preamble_generatepreamble", "target": "preamble_generateupgradecheck", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L504", "weight": 1.0}, {"source": "preamble_generatepreamble", "target": "preamble_generatelakeintro", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L505", "weight": 1.0}, {"source": "preamble_generatepreamble", "target": "preamble_generatetelemetryprompt", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L506", "weight": 1.0}, {"source": "preamble_generatepreamble", "target": "preamble_generateproactiveprompt", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L507", "weight": 1.0}, {"source": "preamble_generatepreamble", "target": "preamble_generatevoicedirective", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L508", "weight": 1.0}, {"source": "preamble_generatepreamble", "target": "preamble_generateaskuserformat", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L509", "weight": 1.0}, {"source": "preamble_generatepreamble", "target": "preamble_generatecompletenesssection", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L509", "weight": 1.0}, {"source": "preamble_generatepreamble", "target": "preamble_generaterepomodesection", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L510", "weight": 1.0}, {"source": "preamble_generatepreamble", "target": "preamble_generatesearchbeforebuildingsection", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L510", "weight": 1.0}, {"source": "preamble_generatepreamble", "target": "preamble_generatecontributormode", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L511", "weight": 1.0}, {"source": "preamble_generatepreamble", "target": "preamble_generatecompletionstatus", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\preamble.ts", "source_location": "L512", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\15818fcb3ddb7700cde1c51897f861e0a0d0c754b34f3e8e24cb5eb512f9cbd5.json
+```
+{"nodes": [{"id": "components_spirits_relatedwikisection_tsx", "label": "RelatedWikiSection.tsx", "file_type": "code", "source_file": "components\\spirits\\RelatedWikiSection.tsx", "source_location": "L1"}], "edges": [{"source": "components_spirits_relatedwikisection_tsx", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\spirits\\RelatedWikiSection.tsx", "source_location": "L3", "weight": 1.0}, {"source": "components_spirits_relatedwikisection_tsx", "target": "link", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\spirits\\RelatedWikiSection.tsx", "source_location": "L4", "weight": 1.0}, {"source": "components_spirits_relatedwikisection_tsx", "target": "lucide_react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\spirits\\RelatedWikiSection.tsx", "source_location": "L5", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\15d86db28e5996055f514f54a0872dd238b9f227a6c7eea2d44f843484e53a40.json
 ```
 {"nodes": [{"id": "gstack_gstack_main_test_gen_skill_docs_test_ts", "label": "gen-skill-docs.test.ts", "file_type": "code", "source_file": "gstack\\gstack-main\\test\\gen-skill-docs.test.ts", "source_location": "L1"}, {"id": "gen_skill_docs_test_extractdescription", "label": "extractDescription()", "file_type": "code", "source_file": "gstack\\gstack-main\\test\\gen-skill-docs.test.ts", "source_location": "L11"}], "edges": [{"source": "gstack_gstack_main_test_gen_skill_docs_test_ts", "target": "bun_test", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\gen-skill-docs.test.ts", "source_location": "L1", "weight": 1.0}, {"source": "gstack_gstack_main_test_gen_skill_docs_test_ts", "target": "gstack_gstack_main_test_browse_src_commands", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\gen-skill-docs.test.ts", "source_location": "L2", "weight": 1.0}, {"source": "gstack_gstack_main_test_gen_skill_docs_test_ts", "target": "gstack_gstack_main_test_browse_src_snapshot", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\gen-skill-docs.test.ts", "source_location": "L3", "weight": 1.0}, {"source": "gstack_gstack_main_test_gen_skill_docs_test_ts", "target": "fs", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\gen-skill-docs.test.ts", "source_location": "L4", "weight": 1.0}, {"source": "gstack_gstack_main_test_gen_skill_docs_test_ts", "target": "path", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\gen-skill-docs.test.ts", "source_location": "L5", "weight": 1.0}, {"source": "gstack_gstack_main_test_gen_skill_docs_test_ts", "target": "os", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\gen-skill-docs.test.ts", "source_location": "L6", "weight": 1.0}, {"source": "gstack_gstack_main_test_gen_skill_docs_test_ts", "target": "gen_skill_docs_test_extractdescription", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\gen-skill-docs.test.ts", "source_location": "L11", "weight": 1.0}]}
@@ -3291,6 +3556,11 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\160a885ba55a907a3031a33654bd710abec1480e57e37d76c49576b0481ab759.json
 ```
 {"nodes": [{"id": "scripts_publish_ready_data_ts", "label": "publish-ready-data.ts", "file_type": "code", "source_file": "scripts\\publish-ready-data.ts", "source_location": "L1"}, {"id": "publish_ready_data_bulkpublishviaapi", "label": "bulkPublishViaAPI()", "file_type": "code", "source_file": "scripts\\publish-ready-data.ts", "source_location": "L19"}], "edges": [{"source": "scripts_publish_ready_data_ts", "target": "publish_ready_data_bulkpublishviaapi", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\publish-ready-data.ts", "source_location": "L19", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\182ede6866b4a5b0b06db4b63f153384eb220d71ae672b00ad075081c36886de.json
+```
+{"nodes": [{"id": "app_lang_spirits_id_page_tsx", "label": "page.tsx", "file_type": "code", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L1"}, {"id": "page_resolvespiritwikiguide", "label": "resolveSpiritWikiGuide()", "file_type": "code", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L102"}, {"id": "page_truncatemetadescription", "label": "truncateMetaDescription()", "file_type": "code", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L128"}, {"id": "page_normalizesnippettoken", "label": "normalizeSnippetToken()", "file_type": "code", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L138"}, {"id": "page_dedupetokens", "label": "dedupeTokens()", "file_type": "code", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L142"}, {"id": "page_extracttastingnotetags", "label": "extractTastingNoteTags()", "file_type": "code", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L152"}, {"id": "page_getpreferredmetatags", "label": "getPreferredMetaTags()", "file_type": "code", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L157"}, {"id": "page_getbrandprefix", "label": "getBrandPrefix()", "file_type": "code", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L169"}, {"id": "page_toabsoluteseoimageurl", "label": "toAbsoluteSeoImageUrl()", "file_type": "code", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L177"}, {"id": "page_getspiritseoimagecandidates", "label": "getSpiritSeoImageCandidates()", "file_type": "code", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L185"}, {"id": "page_getspiritseorobots", "label": "getSpiritSeoRobots()", "file_type": "code", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L197"}, {"id": "page_buildspiritmetadescription", "label": "buildSpiritMetaDescription()", "file_type": "code", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L205"}, {"id": "page_generatemetadata", "label": "generateMetadata()", "file_type": "code", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L223"}, {"id": "page_spiritdetailpage", "label": "SpiritDetailPage()", "file_type": "code", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L256"}], "edges": [{"source": "app_lang_spirits_id_page_tsx", "target": "navigation", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L1", "weight": 1.0}, {"source": "app_lang_spirits_id_page_tsx", "target": "next", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L2", "weight": 1.0}, {"source": "app_lang_spirits_id_page_tsx", "target": "app_lang_spirits_id_spirit_detail_client", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L3", "weight": 1.0}, {"source": "app_lang_spirits_id_page_tsx", "target": "get_dictionary", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L4", "weight": 1.0}, {"source": "app_lang_spirits_id_page_tsx", "target": "i18n_config", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L5", "weight": 1.0}, {"source": "app_lang_spirits_id_page_tsx", "target": "seo_url", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L6", "weight": 1.0}, {"source": "app_lang_spirits_id_page_tsx", "target": "indexable_tier", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L7", "weight": 1.0}, {"source": "app_lang_spirits_id_page_tsx", "target": "relatedwikisection", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L8", "weight": 1.0}, {"source": "app_lang_spirits_id_page_tsx", "target": "related_spirits", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L9", "weight": 1.0}, {"source": "app_lang_spirits_id_page_tsx", "target": "spirit_page_resolver", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L10", "weight": 1.0}, {"source": "app_lang_spirits_id_page_tsx", "target": "wiki_resolver", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L11", "weight": 1.0}, {"source": "app_lang_spirits_id_page_tsx", "target": "localize_field", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L12", "weight": 1.0}, {"source": "app_lang_spirits_id_page_tsx", "target": "schema", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L13", "weight": 1.0}, {"source": "app_lang_spirits_id_page_tsx", "target": "wiki_spirit_match", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L14", "weight": 1.0}, {"source": "app_lang_spirits_id_page_tsx", "target": "image_optimization", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L15", "weight": 1.0}, {"source": "app_lang_spirits_id_page_tsx", "target": "page_resolvespiritwikiguide", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L102", "weight": 1.0}, {"source": "app_lang_spirits_id_page_tsx", "target": "page_truncatemetadescription", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L128", "weight": 1.0}, {"source": "app_lang_spirits_id_page_tsx", "target": "page_normalizesnippettoken", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L138", "weight": 1.0}, {"source": "app_lang_spirits_id_page_tsx", "target": "page_dedupetokens", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L142", "weight": 1.0}, {"source": "app_lang_spirits_id_page_tsx", "target": "page_extracttastingnotetags", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L152", "weight": 1.0}, {"source": "app_lang_spirits_id_page_tsx", "target": "page_getpreferredmetatags", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L157", "weight": 1.0}, {"source": "app_lang_spirits_id_page_tsx", "target": "page_getbrandprefix", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L169", "weight": 1.0}, {"source": "app_lang_spirits_id_page_tsx", "target": "page_toabsoluteseoimageurl", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L177", "weight": 1.0}, {"source": "app_lang_spirits_id_page_tsx", "target": "page_getspiritseoimagecandidates", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L185", "weight": 1.0}, {"source": "app_lang_spirits_id_page_tsx", "target": "page_getspiritseorobots", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L197", "weight": 1.0}, {"source": "app_lang_spirits_id_page_tsx", "target": "page_buildspiritmetadescription", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L205", "weight": 1.0}, {"source": "app_lang_spirits_id_page_tsx", "target": "page_generatemetadata", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L223", "weight": 1.0}, {"source": "app_lang_spirits_id_page_tsx", "target": "page_spiritdetailpage", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L256", "weight": 1.0}, {"source": "page_extracttastingnotetags", "target": "page_dedupetokens", "relation": "calls", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L154", "weight": 1.0}, {"source": "page_getpreferredmetatags", "target": "page_extracttastingnotetags", "relation": "calls", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L158", "weight": 1.0}, {"source": "page_getpreferredmetatags", "target": "page_dedupetokens", "relation": "calls", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L159", "weight": 1.0}, {"source": "page_getspiritseoimagecandidates", "target": "page_toabsoluteseoimageurl", "relation": "calls", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L189", "weight": 1.0}, {"source": "page_buildspiritmetadescription", "target": "page_getpreferredmetatags", "relation": "calls", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L209", "weight": 1.0}, {"source": "page_buildspiritmetadescription", "target": "page_truncatemetadescription", "relation": "calls", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L219", "weight": 1.0}, {"source": "page_generatemetadata", "target": "page_buildspiritmetadescription", "relation": "calls", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L242", "weight": 1.0}, {"source": "page_generatemetadata", "target": "page_getspiritseoimagecandidates", "relation": "calls", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L244", "weight": 1.0}, {"source": "page_generatemetadata", "target": "page_getspiritseorobots", "relation": "calls", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L249", "weight": 1.0}, {"source": "page_spiritdetailpage", "target": "page_getspiritseoimagecandidates", "relation": "calls", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L296", "weight": 1.0}, {"source": "page_spiritdetailpage", "target": "page_buildspiritmetadescription", "relation": "calls", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\page.tsx", "source_location": "L297", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\18b1d3ba037a4360da8dfc8ff7efa5431f3fdb290e014b167ca076496a5070eb.json
@@ -3313,9 +3583,19 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "scripts_random_sampling_run_ts", "label": "random-sampling-run.ts", "file_type": "code", "source_file": "scripts\\random-sampling-run.ts", "source_location": "L1"}, {"id": "random_sampling_run_randomsamplingrun", "label": "randomSamplingRun()", "file_type": "code", "source_file": "scripts\\random-sampling-run.ts", "source_location": "L18"}], "edges": [{"source": "scripts_random_sampling_run_ts", "target": "dotenv", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\random-sampling-run.ts", "source_location": "L2", "weight": 1.0}, {"source": "scripts_random_sampling_run_ts", "target": "path", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\random-sampling-run.ts", "source_location": "L3", "weight": 1.0}, {"source": "scripts_random_sampling_run_ts", "target": "fs", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\random-sampling-run.ts", "source_location": "L4", "weight": 1.0}, {"source": "scripts_random_sampling_run_ts", "target": "random_sampling_run_randomsamplingrun", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\random-sampling-run.ts", "source_location": "L18", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\1a4ccb4c74d00a01b830c25677816c0e000adaf39758c19932d182f49e82bdff.json
+```
+{"nodes": [{"id": "lib_utils_related_spirits_ts", "label": "related-spirits.ts", "file_type": "code", "source_file": "lib\\utils\\related-spirits.ts", "source_location": "L1"}], "edges": [{"source": "lib_utils_related_spirits_ts", "target": "index", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\utils\\related-spirits.ts", "source_location": "L1", "weight": 1.0}, {"source": "lib_utils_related_spirits_ts", "target": "schema", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\utils\\related-spirits.ts", "source_location": "L2", "weight": 1.0}, {"source": "lib_utils_related_spirits_ts", "target": "indexable_tier", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\utils\\related-spirits.ts", "source_location": "L3", "weight": 1.0}, {"source": "lib_utils_related_spirits_ts", "target": "cache", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\utils\\related-spirits.ts", "source_location": "L4", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\1b0d58dce6e9b1a85aff0f7ea5c3d14a3cbae6729ae60ce7bf529bfb586e3fe5.json
 ```
 {"nodes": [{"id": "lib_constants_wiki_grapes_pinotage_ts", "label": "pinotage.ts", "file_type": "code", "source_file": "lib\\constants\\wiki\\grapes\\pinotage.ts", "source_location": "L1"}], "edges": [{"source": "lib_constants_wiki_grapes_pinotage_ts", "target": "lib_constants_wiki_grapes_types", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\constants\\wiki\\grapes\\pinotage.ts", "source_location": "L1", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\1bdd4c801a485e49ec84aa143de4abc2425e8fb7ad79a58aebd1fc2372ae76a7.json
+```
+{"nodes": [{"id": "scripts_migrate_all_to_pg_ts", "label": "migrate-all-to-pg.ts", "file_type": "code", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L1"}, {"id": "migrate_all_to_pg_executemutation", "label": "executeMutation()", "file_type": "code", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L36"}, {"id": "migrate_all_to_pg_cleantimestamps", "label": "cleanTimestamps()", "file_type": "code", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L56"}, {"id": "migrate_all_to_pg_preparesystemuser", "label": "prepareSystemUser()", "file_type": "code", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L70"}, {"id": "migrate_all_to_pg_migrateusers", "label": "migrateUsers()", "file_type": "code", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L86"}, {"id": "migrate_all_to_pg_migratespirits", "label": "migrateSpirits()", "file_type": "code", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L111"}, {"id": "migrate_all_to_pg_migratenews", "label": "migrateNews()", "file_type": "code", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L184"}, {"id": "migrate_all_to_pg_main", "label": "main()", "file_type": "code", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L209"}], "edges": [{"source": "scripts_migrate_all_to_pg_ts", "target": "firebase_admin", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L1", "weight": 1.0}, {"source": "scripts_migrate_all_to_pg_ts", "target": "dotenv", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L2", "weight": 1.0}, {"source": "scripts_migrate_all_to_pg_ts", "target": "uuid", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L3", "weight": 1.0}, {"source": "scripts_migrate_all_to_pg_ts", "target": "data_connect", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L4", "weight": 1.0}, {"source": "scripts_migrate_all_to_pg_ts", "target": "scripts_lib_db_path_config", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L5", "weight": 1.0}, {"source": "scripts_migrate_all_to_pg_ts", "target": "scripts_lib_utils_content_rating", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L6", "weight": 1.0}, {"source": "scripts_migrate_all_to_pg_ts", "target": "migrate_all_to_pg_executemutation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L36", "weight": 1.0}, {"source": "scripts_migrate_all_to_pg_ts", "target": "migrate_all_to_pg_cleantimestamps", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L56", "weight": 1.0}, {"source": "scripts_migrate_all_to_pg_ts", "target": "migrate_all_to_pg_preparesystemuser", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L70", "weight": 1.0}, {"source": "scripts_migrate_all_to_pg_ts", "target": "migrate_all_to_pg_migrateusers", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L86", "weight": 1.0}, {"source": "scripts_migrate_all_to_pg_ts", "target": "migrate_all_to_pg_migratespirits", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L111", "weight": 1.0}, {"source": "scripts_migrate_all_to_pg_ts", "target": "migrate_all_to_pg_migratenews", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L184", "weight": 1.0}, {"source": "scripts_migrate_all_to_pg_ts", "target": "migrate_all_to_pg_main", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L209", "weight": 1.0}, {"source": "migrate_all_to_pg_preparesystemuser", "target": "migrate_all_to_pg_executemutation", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L78", "weight": 1.0}, {"source": "migrate_all_to_pg_migrateusers", "target": "migrate_all_to_pg_executemutation", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L104", "weight": 1.0}, {"source": "migrate_all_to_pg_migratespirits", "target": "migrate_all_to_pg_executemutation", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L155", "weight": 1.0}, {"source": "migrate_all_to_pg_migratespirits", "target": "migrate_all_to_pg_cleantimestamps", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L160", "weight": 1.0}, {"source": "migrate_all_to_pg_migratenews", "target": "migrate_all_to_pg_executemutation", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L203", "weight": 1.0}, {"source": "migrate_all_to_pg_main", "target": "migrate_all_to_pg_preparesystemuser", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L213", "weight": 1.0}, {"source": "migrate_all_to_pg_main", "target": "migrate_all_to_pg_migratespirits", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L217", "weight": 1.0}, {"source": "migrate_all_to_pg_main", "target": "migrate_all_to_pg_migrateusers", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L220", "weight": 1.0}, {"source": "migrate_all_to_pg_main", "target": "migrate_all_to_pg_migratenews", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\migrate-all-to-pg.ts", "source_location": "L222", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\1c13ee3feafcd2529466b384cb4d0ed735b6397301296b038065698228fea138.json
@@ -3348,6 +3628,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "scripts_context_compiler_py", "label": "context_compiler.py", "file_type": "code", "source_file": "scripts\\context_compiler.py", "source_location": "L1"}, {"id": "context_compiler_get_graphify_context", "label": "get_graphify_context()", "file_type": "code", "source_file": "scripts\\context_compiler.py", "source_location": "L16"}, {"id": "context_compiler_collect_files_from_dir", "label": "collect_files_from_dir()", "file_type": "code", "source_file": "scripts\\context_compiler.py", "source_location": "L43"}, {"id": "context_compiler_save_bundle", "label": "save_bundle()", "file_type": "code", "source_file": "scripts\\context_compiler.py", "source_location": "L91"}, {"id": "context_compiler_compile_mega_prompt", "label": "compile_mega_prompt()", "file_type": "code", "source_file": "scripts\\context_compiler.py", "source_location": "L107"}, {"id": "context_compiler_rationale_44", "label": "\ud2b9\uc815 \ub514\ub809\ud1a0\ub9ac \ub0b4\uc758 \ucf54\ub4dc\ub97c \uc218\uc9d1\ud569\ub2c8\ub2e4. (MarkItDown \uc5f0\ub3d9)", "file_type": "rationale", "source_file": "scripts\\context_compiler.py", "source_location": "L44"}], "edges": [{"source": "scripts_context_compiler_py", "target": "os", "relation": "imports", "confidence": "EXTRACTED", "source_file": "scripts\\context_compiler.py", "source_location": "L1", "weight": 1.0}, {"source": "scripts_context_compiler_py", "target": "sys", "relation": "imports", "confidence": "EXTRACTED", "source_file": "scripts\\context_compiler.py", "source_location": "L2", "weight": 1.0}, {"source": "scripts_context_compiler_py", "target": "subprocess", "relation": "imports", "confidence": "EXTRACTED", "source_file": "scripts\\context_compiler.py", "source_location": "L3", "weight": 1.0}, {"source": "scripts_context_compiler_py", "target": "markitdown", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\context_compiler.py", "source_location": "L4", "weight": 1.0}, {"source": "scripts_context_compiler_py", "target": "context_compiler_get_graphify_context", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\context_compiler.py", "source_location": "L16", "weight": 1.0}, {"source": "scripts_context_compiler_py", "target": "context_compiler_collect_files_from_dir", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\context_compiler.py", "source_location": "L43", "weight": 1.0}, {"source": "scripts_context_compiler_py", "target": "context_compiler_save_bundle", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\context_compiler.py", "source_location": "L91", "weight": 1.0}, {"source": "scripts_context_compiler_py", "target": "context_compiler_compile_mega_prompt", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\context_compiler.py", "source_location": "L107", "weight": 1.0}, {"source": "context_compiler_compile_mega_prompt", "target": "context_compiler_get_graphify_context", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\context_compiler.py", "source_location": "L112", "weight": 1.0}, {"source": "context_compiler_compile_mega_prompt", "target": "context_compiler_collect_files_from_dir", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\context_compiler.py", "source_location": "L130", "weight": 1.0}, {"source": "context_compiler_compile_mega_prompt", "target": "context_compiler_save_bundle", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\context_compiler.py", "source_location": "L131", "weight": 1.0}, {"source": "context_compiler_rationale_44", "target": "context_compiler_collect_files_from_dir", "relation": "rationale_for", "confidence": "EXTRACTED", "source_file": "scripts\\context_compiler.py", "source_location": "L44", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\1d91b13a9197de62e24d44eccc913814312093c4561614d3970177bfe3ea894a.json
+```
+{"nodes": [{"id": "app_lang_spirits_id_spirit_detail_client_tsx", "label": "spirit-detail-client.tsx", "file_type": "code", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L1"}, {"id": "spirit_detail_client_handlecabinetaction", "label": "handleCabinetAction()", "file_type": "code", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L166"}, {"id": "spirit_detail_client_handlewishlistaction", "label": "handleWishlistAction()", "file_type": "code", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L214"}, {"id": "spirit_detail_client_handleoutboundclick", "label": "handleOutboundClick()", "file_type": "code", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L262"}, {"id": "spirit_detail_client_handlereviewsubmit", "label": "handleReviewSubmit()", "file_type": "code", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L274"}], "edges": [{"source": "app_lang_spirits_id_spirit_detail_client_tsx", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L3", "weight": 1.0}, {"source": "app_lang_spirits_id_spirit_detail_client_tsx", "target": "savebutton", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L4", "weight": 1.0}, {"source": "app_lang_spirits_id_spirit_detail_client_tsx", "target": "reviewsection", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L5", "weight": 1.0}, {"source": "app_lang_spirits_id_spirit_detail_client_tsx", "target": "googlead", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L6", "weight": 1.0}, {"source": "app_lang_spirits_id_spirit_detail_client_tsx", "target": "modificationrequestbutton", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L7", "weight": 1.0}, {"source": "app_lang_spirits_id_spirit_detail_client_tsx", "target": "framer_motion", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L8", "weight": 1.0}, {"source": "app_lang_spirits_id_spirit_detail_client_tsx", "target": "lucide_react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L9", "weight": 1.0}, {"source": "app_lang_spirits_id_spirit_detail_client_tsx", "target": "image_fallback", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L10", "weight": 1.0}, {"source": "app_lang_spirits_id_spirit_detail_client_tsx", "target": "navigation", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L11", "weight": 1.0}, {"source": "app_lang_spirits_id_spirit_detail_client_tsx", "target": "auth_context", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L12", "weight": 1.0}, {"source": "app_lang_spirits_id_spirit_detail_client_tsx", "target": "cabinet", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L13", "weight": 1.0}, {"source": "app_lang_spirits_id_spirit_detail_client_tsx", "target": "reviewmodal", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L14", "weight": 1.0}, {"source": "app_lang_spirits_id_spirit_detail_client_tsx", "target": "flavor_engine", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L15", "weight": 1.0}, {"source": "app_lang_spirits_id_spirit_detail_client_tsx", "target": "spirit_adapters", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L16", "weight": 1.0}, {"source": "app_lang_spirits_id_spirit_detail_client_tsx", "target": "successtoast", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L17", "weight": 1.0}, {"source": "app_lang_spirits_id_spirit_detail_client_tsx", "target": "i18n_config", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L18", "weight": 1.0}, {"source": "app_lang_spirits_id_spirit_detail_client_tsx", "target": "schema", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L20", "weight": 1.0}, {"source": "app_lang_spirits_id_spirit_detail_client_tsx", "target": "tag_styles", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L21", "weight": 1.0}, {"source": "app_lang_spirits_id_spirit_detail_client_tsx", "target": "image_optimization", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L22", "weight": 1.0}, {"source": "app_lang_spirits_id_spirit_detail_client_tsx", "target": "categories", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L23", "weight": 1.0}, {"source": "app_lang_spirits_id_spirit_detail_client_tsx", "target": "localize_field", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L112", "weight": 1.0}, {"source": "app_lang_spirits_id_spirit_detail_client_tsx", "target": "link", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L113", "weight": 1.0}, {"source": "app_lang_spirits_id_spirit_detail_client_tsx", "target": "spirit_detail_client_handlecabinetaction", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L166", "weight": 1.0}, {"source": "app_lang_spirits_id_spirit_detail_client_tsx", "target": "spirit_detail_client_handlewishlistaction", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L214", "weight": 1.0}, {"source": "app_lang_spirits_id_spirit_detail_client_tsx", "target": "spirit_detail_client_handleoutboundclick", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L262", "weight": 1.0}, {"source": "app_lang_spirits_id_spirit_detail_client_tsx", "target": "spirit_detail_client_handlereviewsubmit", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\spirits\\[id]\\spirit-detail-client.tsx", "source_location": "L274", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\1d96abb28cc3a391b7e29dd5830fa7e8b7db5455a7b22626ed8463e55b8c298e.json
 ```
 {"nodes": [{"id": "scripts_upload_processed_ps1", "label": "upload_processed.ps1", "file_type": "code", "source_file": "scripts\\upload_processed.ps1", "source_location": "L1"}], "edges": []}
@@ -3378,6 +3663,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "lib_constants_wiki_grapes_gruner_veltliner_ts", "label": "gruner-veltliner.ts", "file_type": "code", "source_file": "lib\\constants\\wiki\\grapes\\gruner-veltliner.ts", "source_location": "L1"}], "edges": [{"source": "lib_constants_wiki_grapes_gruner_veltliner_ts", "target": "lib_constants_wiki_grapes_types", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\constants\\wiki\\grapes\\gruner-veltliner.ts", "source_location": "L1", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\2193af0f3e2bd871ff326db1064466bf04a1c36b33ae358432b1342d5255b61b.json
+```
+{"nodes": [{"id": "components_cabinet_tastepublicreport_tsx", "label": "TastePublicReport.tsx", "file_type": "code", "source_file": "components\\cabinet\\TastePublicReport.tsx", "source_location": "L1"}, {"id": "tastepublicreport_tastepublicreport", "label": "TastePublicReport()", "file_type": "code", "source_file": "components\\cabinet\\TastePublicReport.tsx", "source_location": "L15"}], "edges": [{"source": "components_cabinet_tastepublicreport_tsx", "target": "framer_motion", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\TastePublicReport.tsx", "source_location": "L3", "weight": 1.0}, {"source": "components_cabinet_tastepublicreport_tsx", "target": "lucide_react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\TastePublicReport.tsx", "source_location": "L4", "weight": 1.0}, {"source": "components_cabinet_tastepublicreport_tsx", "target": "components_cabinet_tasteradar", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\TastePublicReport.tsx", "source_location": "L5", "weight": 1.0}, {"source": "components_cabinet_tastepublicreport_tsx", "target": "schema", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\TastePublicReport.tsx", "source_location": "L6", "weight": 1.0}, {"source": "components_cabinet_tastepublicreport_tsx", "target": "link", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\TastePublicReport.tsx", "source_location": "L7", "weight": 1.0}, {"source": "components_cabinet_tastepublicreport_tsx", "target": "navigation", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\TastePublicReport.tsx", "source_location": "L8", "weight": 1.0}, {"source": "components_cabinet_tastepublicreport_tsx", "target": "tastepublicreport_tastepublicreport", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\TastePublicReport.tsx", "source_location": "L15", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\21eaecb0ea221ae547b54bf98916a1546860d346c25860787789a3cb9f9f4089.json
 ```
 {"nodes": [{"id": "gstack_gstack_main_design_src_compare_ts", "label": "compare.ts", "file_type": "code", "source_file": "gstack\\gstack-main\\design\\src\\compare.ts", "source_location": "L1"}, {"id": "compare_generatecomparehtml", "label": "generateCompareHtml()", "file_type": "code", "source_file": "gstack\\gstack-main\\design\\src\\compare.ts", "source_location": "L20"}, {"id": "compare_compare", "label": "compare()", "file_type": "code", "source_file": "gstack\\gstack-main\\design\\src\\compare.ts", "source_location": "L622"}], "edges": [{"source": "gstack_gstack_main_design_src_compare_ts", "target": "fs", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\compare.ts", "source_location": "L9", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_compare_ts", "target": "path", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\compare.ts", "source_location": "L10", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_compare_ts", "target": "compare_generatecomparehtml", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\compare.ts", "source_location": "L20", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_compare_ts", "target": "compare_compare", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\compare.ts", "source_location": "L622", "weight": 1.0}, {"source": "compare_compare", "target": "compare_generatecomparehtml", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\compare.ts", "source_location": "L623", "weight": 1.0}]}
@@ -3396,6 +3686,11 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\22db1d6abb1f0e20fea96dcf03a1a84af4439fbd91464d7984754458771e8210.json
 ```
 {"nodes": [{"id": "gstack_gstack_main_test_fixtures_review_eval_enum_diff_rb", "label": "review-eval-enum-diff.rb", "file_type": "code", "source_file": "gstack\\gstack-main\\test\\fixtures\\review-eval-enum-diff.rb", "source_location": "L1"}, {"id": "review_eval_enum_diff_order", "label": "Order", "file_type": "code", "source_file": "gstack\\gstack-main\\test\\fixtures\\review-eval-enum-diff.rb", "source_location": "L2"}, {"id": "review_eval_enum_diff_order_display_status", "label": ".display_status()", "file_type": "code", "source_file": "gstack\\gstack-main\\test\\fixtures\\review-eval-enum-diff.rb", "source_location": "L7"}, {"id": "review_eval_enum_diff_order_can_cancel", "label": ".can_cancel?()", "file_type": "code", "source_file": "gstack\\gstack-main\\test\\fixtures\\review-eval-enum-diff.rb", "source_location": "L17"}, {"id": "review_eval_enum_diff_order_notify_customer", "label": ".notify_customer()", "file_type": "code", "source_file": "gstack\\gstack-main\\test\\fixtures\\review-eval-enum-diff.rb", "source_location": "L22"}], "edges": [{"source": "gstack_gstack_main_test_fixtures_review_eval_enum_diff_rb", "target": "review_eval_enum_diff_order", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\fixtures\\review-eval-enum-diff.rb", "source_location": "L2", "weight": 1.0}, {"source": "review_eval_enum_diff_order", "target": "review_eval_enum_diff_order_display_status", "relation": "method", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\fixtures\\review-eval-enum-diff.rb", "source_location": "L7", "weight": 1.0}, {"source": "review_eval_enum_diff_order", "target": "review_eval_enum_diff_order_can_cancel", "relation": "method", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\fixtures\\review-eval-enum-diff.rb", "source_location": "L17", "weight": 1.0}, {"source": "review_eval_enum_diff_order", "target": "review_eval_enum_diff_order_notify_customer", "relation": "method", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\fixtures\\review-eval-enum-diff.rb", "source_location": "L22", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\230c0835308ff1d6b75a403e3756d945dca111fdda7bb11fb8dcc95b147708db.json
+```
+{"nodes": [{"id": "scripts_debug_firestore_ts", "label": "debug-firestore.ts", "file_type": "code", "source_file": "scripts\\debug-firestore.ts", "source_location": "L1"}, {"id": "debug_firestore_debug", "label": "debug()", "file_type": "code", "source_file": "scripts\\debug-firestore.ts", "source_location": "L21"}], "edges": [{"source": "scripts_debug_firestore_ts", "target": "firebase_admin", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\debug-firestore.ts", "source_location": "L1", "weight": 1.0}, {"source": "scripts_debug_firestore_ts", "target": "dotenv", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\debug-firestore.ts", "source_location": "L2", "weight": 1.0}, {"source": "scripts_debug_firestore_ts", "target": "scripts_lib_db_path_config", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\debug-firestore.ts", "source_location": "L3", "weight": 1.0}, {"source": "scripts_debug_firestore_ts", "target": "debug_firestore_debug", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\debug-firestore.ts", "source_location": "L21", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\23ba74c9bcb1f4164fbfd5dbd720fcf76ef433f49d7c85d6617f81d9a3231278.json
@@ -3518,6 +3813,16 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "components_auth_loginclient_tsx", "label": "LoginClient.tsx", "file_type": "code", "source_file": "components\\auth\\LoginClient.tsx", "source_location": "L1"}, {"id": "loginclient_loginclient", "label": "LoginClient()", "file_type": "code", "source_file": "components\\auth\\LoginClient.tsx", "source_location": "L14"}], "edges": [{"source": "components_auth_loginclient_tsx", "target": "auth_context", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\auth\\LoginClient.tsx", "source_location": "L3", "weight": 1.0}, {"source": "components_auth_loginclient_tsx", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\auth\\LoginClient.tsx", "source_location": "L4", "weight": 1.0}, {"source": "components_auth_loginclient_tsx", "target": "navigation", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\auth\\LoginClient.tsx", "source_location": "L5", "weight": 1.0}, {"source": "components_auth_loginclient_tsx", "target": "successtoast", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\auth\\LoginClient.tsx", "source_location": "L6", "weight": 1.0}, {"source": "components_auth_loginclient_tsx", "target": "i18n_config", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\auth\\LoginClient.tsx", "source_location": "L7", "weight": 1.0}, {"source": "components_auth_loginclient_tsx", "target": "loginclient_loginclient", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\auth\\LoginClient.tsx", "source_location": "L14", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\2d68595be95c97f0830987aaee0eb859cefdbabdb6095997bf8d2ee15767dcba.json
+```
+{"nodes": [{"id": "scripts_list_app_ids_ts", "label": "list-app-ids.ts", "file_type": "code", "source_file": "scripts\\list-app-ids.ts", "source_location": "L1"}, {"id": "list_app_ids_listappids", "label": "listAppIds()", "file_type": "code", "source_file": "scripts\\list-app-ids.ts", "source_location": "L19"}], "edges": [{"source": "scripts_list_app_ids_ts", "target": "firebase_admin", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\list-app-ids.ts", "source_location": "L1", "weight": 1.0}, {"source": "scripts_list_app_ids_ts", "target": "dotenv", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\list-app-ids.ts", "source_location": "L2", "weight": 1.0}, {"source": "scripts_list_app_ids_ts", "target": "list_app_ids_listappids", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\list-app-ids.ts", "source_location": "L19", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\2db478152030e25a835d632796a71fc7eead9f360b8a6b4560f8f38878eef5a8.json
+```
+{"nodes": [{"id": "lib_db_index_ts", "label": "index.ts", "file_type": "code", "source_file": "lib\\db\\index.ts", "source_location": "L1"}, {"id": "index_hasserviceaccountcredentials", "label": "hasServiceAccountCredentials()", "file_type": "code", "source_file": "lib\\db\\index.ts", "source_location": "L14"}], "edges": [{"source": "lib_db_index_ts", "target": "lib_db_firestore_rest", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\db\\index.ts", "source_location": "L1", "weight": 1.0}, {"source": "lib_db_index_ts", "target": "lib_db_schema", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\db\\index.ts", "source_location": "L2", "weight": 1.0}, {"source": "lib_db_index_ts", "target": "lib_db_utils_search_keywords", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\db\\index.ts", "source_location": "L3", "weight": 1.0}, {"source": "lib_db_index_ts", "target": "lib_db_public_read_fallback", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\db\\index.ts", "source_location": "L4", "weight": 1.0}, {"source": "lib_db_index_ts", "target": "lib_db_utils_content_rating", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\db\\index.ts", "source_location": "L5", "weight": 1.0}, {"source": "lib_db_index_ts", "target": "lib_db_firestore_rest", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\db\\index.ts", "source_location": "L6", "weight": 1.0}, {"source": "lib_db_index_ts", "target": "index_hasserviceaccountcredentials", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\index.ts", "source_location": "L14", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\2dd6216c650dab689d1e279b6d254e2c5949a70317e0889c0da706b5f96b9167.json
 ```
 {"nodes": [{"id": "lib_db_public_read_fallback_ts", "label": "public-read-fallback.ts", "file_type": "code", "source_file": "lib\\db\\public-read-fallback.ts", "source_location": "L1"}, {"id": "public_read_fallback_fromfirestorevalue", "label": "fromFirestoreValue()", "file_type": "code", "source_file": "lib\\db\\public-read-fallback.ts", "source_location": "L15"}, {"id": "public_read_fallback_fromfirestoredoc", "label": "fromFirestoreDoc()", "file_type": "code", "source_file": "lib\\db\\public-read-fallback.ts", "source_location": "L42"}, {"id": "public_read_fallback_fetchpublicjson", "label": "fetchPublicJson()", "file_type": "code", "source_file": "lib\\db\\public-read-fallback.ts", "source_location": "L54"}, {"id": "public_read_fallback_getpublicspiritbyid", "label": "getPublicSpiritById()", "file_type": "code", "source_file": "lib\\db\\public-read-fallback.ts", "source_location": "L68"}, {"id": "public_read_fallback_getpubliclatestfeatured", "label": "getPublicLatestFeatured()", "file_type": "code", "source_file": "lib\\db\\public-read-fallback.ts", "source_location": "L80"}], "edges": [{"source": "lib_db_public_read_fallback_ts", "target": "lib_db_schema", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\db\\public-read-fallback.ts", "source_location": "L1", "weight": 1.0}, {"source": "lib_db_public_read_fallback_ts", "target": "lib_db_paths", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\db\\public-read-fallback.ts", "source_location": "L2", "weight": 1.0}, {"source": "lib_db_public_read_fallback_ts", "target": "public_read_fallback_fromfirestorevalue", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\public-read-fallback.ts", "source_location": "L15", "weight": 1.0}, {"source": "lib_db_public_read_fallback_ts", "target": "public_read_fallback_fromfirestoredoc", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\public-read-fallback.ts", "source_location": "L42", "weight": 1.0}, {"source": "lib_db_public_read_fallback_ts", "target": "public_read_fallback_fetchpublicjson", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\public-read-fallback.ts", "source_location": "L54", "weight": 1.0}, {"source": "lib_db_public_read_fallback_ts", "target": "public_read_fallback_getpublicspiritbyid", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\public-read-fallback.ts", "source_location": "L68", "weight": 1.0}, {"source": "lib_db_public_read_fallback_ts", "target": "public_read_fallback_getpubliclatestfeatured", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\public-read-fallback.ts", "source_location": "L80", "weight": 1.0}, {"source": "public_read_fallback_fromfirestoredoc", "target": "public_read_fallback_fromfirestorevalue", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\public-read-fallback.ts", "source_location": "L48", "weight": 1.0}, {"source": "public_read_fallback_getpublicspiritbyid", "target": "public_read_fallback_fetchpublicjson", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\public-read-fallback.ts", "source_location": "L71", "weight": 1.0}, {"source": "public_read_fallback_getpublicspiritbyid", "target": "public_read_fallback_fromfirestoredoc", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\public-read-fallback.ts", "source_location": "L77", "weight": 1.0}, {"source": "public_read_fallback_getpubliclatestfeatured", "target": "public_read_fallback_fetchpublicjson", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\public-read-fallback.ts", "source_location": "L82", "weight": 1.0}]}
@@ -3543,6 +3848,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "lib_db_firebase_ts", "label": "firebase.ts", "file_type": "code", "source_file": "lib\\db\\firebase.ts", "source_location": "L1"}], "edges": [{"source": "lib_db_firebase_ts", "target": "app", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\db\\firebase.ts", "source_location": "L1", "weight": 1.0}, {"source": "lib_db_firebase_ts", "target": "firestore", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\db\\firebase.ts", "source_location": "L2", "weight": 1.0}, {"source": "lib_db_firebase_ts", "target": "storage", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\db\\firebase.ts", "source_location": "L3", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\2fe4d040a04da0e353edf9ade752475d67f621c6e50d7658d838dc39abc74deb.json
+```
+{"nodes": [{"id": "lib_utils_flavor_engine_ts", "label": "flavor-engine.ts", "file_type": "code", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L1"}, {"id": "flavor_engine_flavorvectorindex", "label": "FlavorVectorIndex", "file_type": "code", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L88"}, {"id": "flavor_engine_flavorvectorindex_constructor", "label": ".constructor()", "file_type": "code", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L92"}, {"id": "flavor_engine_flavorvectorindex_getinstance", "label": ".getInstance()", "file_type": "code", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L94"}, {"id": "flavor_engine_flavorvectorindex_initialize", "label": ".initialize()", "file_type": "code", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L99"}, {"id": "flavor_engine_flavorvectorindex_calculatevector", "label": ".calculateVector()", "file_type": "code", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L110"}, {"id": "flavor_engine_flavorvectorindex_getvector", "label": ".getVector()", "file_type": "code", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L123"}, {"id": "flavor_engine_flavorvectorindex_getallvectors", "label": ".getAllVectors()", "file_type": "code", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L124"}, {"id": "flavor_engine_calculatecosinesimilarity", "label": "calculateCosineSimilarity()", "file_type": "code", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L129"}, {"id": "flavor_engine_generateuserpalate", "label": "generateUserPalate()", "file_type": "code", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L136"}, {"id": "flavor_engine_gethybridrecommendations", "label": "getHybridRecommendations()", "file_type": "code", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L151"}, {"id": "flavor_engine_analyzecellar", "label": "analyzeCellar()", "file_type": "code", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L200"}], "edges": [{"source": "lib_utils_flavor_engine_ts", "target": "lib_utils_db_ingested_data_json", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L1", "weight": 1.0}, {"source": "lib_utils_flavor_engine_ts", "target": "lib_utils_db_schema", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L2", "weight": 1.0}, {"source": "lib_utils_flavor_engine_ts", "target": "flavor_engine_flavorvectorindex", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L88", "weight": 1.0}, {"source": "flavor_engine_flavorvectorindex", "target": "flavor_engine_flavorvectorindex_constructor", "relation": "method", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L92", "weight": 1.0}, {"source": "flavor_engine_flavorvectorindex", "target": "flavor_engine_flavorvectorindex_getinstance", "relation": "method", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L94", "weight": 1.0}, {"source": "flavor_engine_flavorvectorindex", "target": "flavor_engine_flavorvectorindex_initialize", "relation": "method", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L99", "weight": 1.0}, {"source": "flavor_engine_flavorvectorindex", "target": "flavor_engine_flavorvectorindex_calculatevector", "relation": "method", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L110", "weight": 1.0}, {"source": "flavor_engine_flavorvectorindex", "target": "flavor_engine_flavorvectorindex_getvector", "relation": "method", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L123", "weight": 1.0}, {"source": "flavor_engine_flavorvectorindex", "target": "flavor_engine_flavorvectorindex_getallvectors", "relation": "method", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L124", "weight": 1.0}, {"source": "lib_utils_flavor_engine_ts", "target": "flavor_engine_calculatecosinesimilarity", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L129", "weight": 1.0}, {"source": "lib_utils_flavor_engine_ts", "target": "flavor_engine_generateuserpalate", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L136", "weight": 1.0}, {"source": "lib_utils_flavor_engine_ts", "target": "flavor_engine_gethybridrecommendations", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L151", "weight": 1.0}, {"source": "lib_utils_flavor_engine_ts", "target": "flavor_engine_analyzecellar", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L200", "weight": 1.0}, {"source": "flavor_engine_flavorvectorindex_constructor", "target": "flavor_engine_flavorvectorindex_initialize", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L92", "weight": 1.0}, {"source": "flavor_engine_gethybridrecommendations", "target": "flavor_engine_flavorvectorindex_getallvectors", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L156", "weight": 1.0}, {"source": "flavor_engine_analyzecellar", "target": "flavor_engine_generateuserpalate", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L202", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\2fe525e1bd19a59585725eb49617c3b7f7916039695fc0010a1abedca415032d.json
 ```
 {"nodes": [{"id": "scripts_seo_enrich_thin_published_ts", "label": "enrich-thin-published.ts", "file_type": "code", "source_file": "scripts\\seo\\enrich-thin-published.ts", "source_location": "L1"}, {"id": "enrich_thin_published_delay", "label": "delay()", "file_type": "code", "source_file": "scripts\\seo\\enrich-thin-published.ts", "source_location": "L10"}, {"id": "enrich_thin_published_runenrichment", "label": "runEnrichment()", "file_type": "code", "source_file": "scripts\\seo\\enrich-thin-published.ts", "source_location": "L12"}], "edges": [{"source": "scripts_seo_enrich_thin_published_ts", "target": "dotenv", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\seo\\enrich-thin-published.ts", "source_location": "L1", "weight": 1.0}, {"source": "scripts_seo_enrich_thin_published_ts", "target": "path", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\seo\\enrich-thin-published.ts", "source_location": "L2", "weight": 1.0}, {"source": "scripts_seo_enrich_thin_published_ts", "target": "enrich_thin_published_delay", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\seo\\enrich-thin-published.ts", "source_location": "L10", "weight": 1.0}, {"source": "scripts_seo_enrich_thin_published_ts", "target": "enrich_thin_published_runenrichment", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\seo\\enrich-thin-published.ts", "source_location": "L12", "weight": 1.0}, {"source": "enrich_thin_published_runenrichment", "target": "enrich_thin_published_delay", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\seo\\enrich-thin-published.ts", "source_location": "L53", "weight": 1.0}]}
@@ -3561,6 +3871,11 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\30a3359e05d83b1816e09ab92e5c788844dd08f59a208ac6b4c69d1cc5f0a229.json
 ```
 {"nodes": [{"id": "lib_constants_wiki_grapes_sangiovese_ts", "label": "sangiovese.ts", "file_type": "code", "source_file": "lib\\constants\\wiki\\grapes\\sangiovese.ts", "source_location": "L1"}], "edges": [{"source": "lib_constants_wiki_grapes_sangiovese_ts", "target": "lib_constants_wiki_grapes_types", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\constants\\wiki\\grapes\\sangiovese.ts", "source_location": "L1", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\30ba05c4db37b99ea86ebbcefa1d07b9242db829199667aff7f7d21edd4f407c.json
+```
+{"nodes": [{"id": "lib_db_data_connect_client_ts", "label": "data-connect-client.ts", "file_type": "code", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L1"}, {"id": "data_connect_client_getdc", "label": "getDC()", "file_type": "code", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L32"}, {"id": "data_connect_client_dblistspirits", "label": "dbListSpirits()", "file_type": "code", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L55"}, {"id": "data_connect_client_dblistspiritsforsitemap", "label": "dbListSpiritsForSitemap()", "file_type": "code", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L60"}, {"id": "data_connect_client_dblistnewarrivals", "label": "dbListNewArrivals()", "file_type": "code", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L65"}, {"id": "data_connect_client_dbgetspirit", "label": "dbGetSpirit()", "file_type": "code", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L70"}, {"id": "data_connect_client_dbupsertspirit", "label": "dbUpsertSpirit()", "file_type": "code", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L75"}, {"id": "data_connect_client_dbgetuserprofile", "label": "dbGetUserProfile()", "file_type": "code", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L80"}, {"id": "data_connect_client_dbupsertuser", "label": "dbUpsertUser()", "file_type": "code", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L85"}, {"id": "data_connect_client_dblistspiritreviews", "label": "dbListSpiritReviews()", "file_type": "code", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L90"}, {"id": "data_connect_client_dbgetspiritreviewscount", "label": "dbGetSpiritReviewsCount()", "file_type": "code", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L95"}, {"id": "data_connect_client_dbupsertreview", "label": "dbUpsertReview()", "file_type": "code", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L100"}, {"id": "data_connect_client_dblistnewsarticles", "label": "dbListNewsArticles()", "file_type": "code", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L105"}, {"id": "data_connect_client_dbgetnewsarticle", "label": "dbGetNewsArticle()", "file_type": "code", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L110"}, {"id": "data_connect_client_dbgetnewscount", "label": "dbGetNewsCount()", "file_type": "code", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L115"}, {"id": "data_connect_client_dbupsertnews", "label": "dbUpsertNews()", "file_type": "code", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L120"}, {"id": "data_connect_client_dbupsertcabinet", "label": "dbUpsertCabinet()", "file_type": "code", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L125"}, {"id": "data_connect_client_dbupsertmodificationrequest", "label": "dbUpsertModificationRequest()", "file_type": "code", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L130"}, {"id": "data_connect_client_dbupsertworldcupresult", "label": "dbUpsertWorldCupResult()", "file_type": "code", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L135"}, {"id": "data_connect_client_dbgetworldcupresult", "label": "dbGetWorldCupResult()", "file_type": "code", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L146"}, {"id": "data_connect_client_dblistspiritsforworldcup", "label": "dbListSpiritsForWorldCup()", "file_type": "code", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L151"}, {"id": "data_connect_client_closedc", "label": "closeDC()", "file_type": "code", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L157"}], "edges": [{"source": "lib_db_data_connect_client_ts", "target": "data_connect", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L1", "weight": 1.0}, {"source": "lib_db_data_connect_client_ts", "target": "app", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L2", "weight": 1.0}, {"source": "lib_db_data_connect_client_ts", "target": "dataconnect_generated", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L3", "weight": 1.0}, {"source": "lib_db_data_connect_client_ts", "target": "data_connect_client_getdc", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L32", "weight": 1.0}, {"source": "lib_db_data_connect_client_ts", "target": "data_connect_client_dblistspirits", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L55", "weight": 1.0}, {"source": "lib_db_data_connect_client_ts", "target": "data_connect_client_dblistspiritsforsitemap", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L60", "weight": 1.0}, {"source": "lib_db_data_connect_client_ts", "target": "data_connect_client_dblistnewarrivals", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L65", "weight": 1.0}, {"source": "lib_db_data_connect_client_ts", "target": "data_connect_client_dbgetspirit", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L70", "weight": 1.0}, {"source": "lib_db_data_connect_client_ts", "target": "data_connect_client_dbupsertspirit", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L75", "weight": 1.0}, {"source": "lib_db_data_connect_client_ts", "target": "data_connect_client_dbgetuserprofile", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L80", "weight": 1.0}, {"source": "lib_db_data_connect_client_ts", "target": "data_connect_client_dbupsertuser", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L85", "weight": 1.0}, {"source": "lib_db_data_connect_client_ts", "target": "data_connect_client_dblistspiritreviews", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L90", "weight": 1.0}, {"source": "lib_db_data_connect_client_ts", "target": "data_connect_client_dbgetspiritreviewscount", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L95", "weight": 1.0}, {"source": "lib_db_data_connect_client_ts", "target": "data_connect_client_dbupsertreview", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L100", "weight": 1.0}, {"source": "lib_db_data_connect_client_ts", "target": "data_connect_client_dblistnewsarticles", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L105", "weight": 1.0}, {"source": "lib_db_data_connect_client_ts", "target": "data_connect_client_dbgetnewsarticle", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L110", "weight": 1.0}, {"source": "lib_db_data_connect_client_ts", "target": "data_connect_client_dbgetnewscount", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L115", "weight": 1.0}, {"source": "lib_db_data_connect_client_ts", "target": "data_connect_client_dbupsertnews", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L120", "weight": 1.0}, {"source": "lib_db_data_connect_client_ts", "target": "data_connect_client_dbupsertcabinet", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L125", "weight": 1.0}, {"source": "lib_db_data_connect_client_ts", "target": "data_connect_client_dbupsertmodificationrequest", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L130", "weight": 1.0}, {"source": "lib_db_data_connect_client_ts", "target": "data_connect_client_dbupsertworldcupresult", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L135", "weight": 1.0}, {"source": "lib_db_data_connect_client_ts", "target": "data_connect_client_dbgetworldcupresult", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L146", "weight": 1.0}, {"source": "lib_db_data_connect_client_ts", "target": "data_connect_client_dblistspiritsforworldcup", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L151", "weight": 1.0}, {"source": "lib_db_data_connect_client_ts", "target": "data_connect_client_closedc", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L157", "weight": 1.0}, {"source": "data_connect_client_dblistspirits", "target": "data_connect_client_getdc", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L56", "weight": 1.0}, {"source": "data_connect_client_dblistspiritsforsitemap", "target": "data_connect_client_getdc", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L61", "weight": 1.0}, {"source": "data_connect_client_dblistnewarrivals", "target": "data_connect_client_getdc", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L66", "weight": 1.0}, {"source": "data_connect_client_dbgetspirit", "target": "data_connect_client_getdc", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L71", "weight": 1.0}, {"source": "data_connect_client_dbupsertspirit", "target": "data_connect_client_getdc", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L76", "weight": 1.0}, {"source": "data_connect_client_dbgetuserprofile", "target": "data_connect_client_getdc", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L81", "weight": 1.0}, {"source": "data_connect_client_dbupsertuser", "target": "data_connect_client_getdc", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L86", "weight": 1.0}, {"source": "data_connect_client_dblistspiritreviews", "target": "data_connect_client_getdc", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L91", "weight": 1.0}, {"source": "data_connect_client_dbgetspiritreviewscount", "target": "data_connect_client_getdc", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L96", "weight": 1.0}, {"source": "data_connect_client_dbupsertreview", "target": "data_connect_client_getdc", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L101", "weight": 1.0}, {"source": "data_connect_client_dblistnewsarticles", "target": "data_connect_client_getdc", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L106", "weight": 1.0}, {"source": "data_connect_client_dbgetnewsarticle", "target": "data_connect_client_getdc", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L111", "weight": 1.0}, {"source": "data_connect_client_dbgetnewscount", "target": "data_connect_client_getdc", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L116", "weight": 1.0}, {"source": "data_connect_client_dbupsertnews", "target": "data_connect_client_getdc", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L121", "weight": 1.0}, {"source": "data_connect_client_dbupsertcabinet", "target": "data_connect_client_getdc", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L126", "weight": 1.0}, {"source": "data_connect_client_dbupsertmodificationrequest", "target": "data_connect_client_getdc", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L131", "weight": 1.0}, {"source": "data_connect_client_dbupsertworldcupresult", "target": "data_connect_client_getdc", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L143", "weight": 1.0}, {"source": "data_connect_client_dbgetworldcupresult", "target": "data_connect_client_getdc", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L147", "weight": 1.0}, {"source": "data_connect_client_dblistspiritsforworldcup", "target": "data_connect_client_getdc", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\data-connect-client.ts", "source_location": "L152", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\312493e79e1264f914946e3e06fd9bce5b4b3754c3bd674ba6f54f39ac454cce.json
@@ -3708,6 +4023,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "lib_constants_wiki_grapes_trebbiano_ts", "label": "trebbiano.ts", "file_type": "code", "source_file": "lib\\constants\\wiki\\grapes\\trebbiano.ts", "source_location": "L1"}], "edges": [{"source": "lib_constants_wiki_grapes_trebbiano_ts", "target": "lib_constants_wiki_grapes_types", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\constants\\wiki\\grapes\\trebbiano.ts", "source_location": "L1", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\3eee80fa49017b88efd5a7adae5112820ee7fcc2e56cb28a7dc20ee982391bd1.json
+```
+{"nodes": [{"id": "scripts_load_env_ts", "label": "load-env.ts", "file_type": "code", "source_file": "scripts\\load-env.ts", "source_location": "L1"}], "edges": [{"source": "scripts_load_env_ts", "target": "dotenv", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\load-env.ts", "source_location": "L1", "weight": 1.0}, {"source": "scripts_load_env_ts", "target": "path", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\load-env.ts", "source_location": "L2", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\3fb7260e32d4ac2c6cdb070674a2f384d2ae1bcff105b614563a1340c76b2e57.json
 ```
 {"nodes": [{"id": "gstack_gstack_main_test_audit_compliance_test_ts", "label": "audit-compliance.test.ts", "file_type": "code", "source_file": "gstack\\gstack-main\\test\\audit-compliance.test.ts", "source_location": "L1"}, {"id": "audit_compliance_test_getallskillmds", "label": "getAllSkillMds()", "file_type": "code", "source_file": "gstack\\gstack-main\\test\\audit-compliance.test.ts", "source_location": "L7"}], "edges": [{"source": "gstack_gstack_main_test_audit_compliance_test_ts", "target": "bun_test", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\audit-compliance.test.ts", "source_location": "L1", "weight": 1.0}, {"source": "gstack_gstack_main_test_audit_compliance_test_ts", "target": "fs", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\audit-compliance.test.ts", "source_location": "L2", "weight": 1.0}, {"source": "gstack_gstack_main_test_audit_compliance_test_ts", "target": "path", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\audit-compliance.test.ts", "source_location": "L3", "weight": 1.0}, {"source": "gstack_gstack_main_test_audit_compliance_test_ts", "target": "audit_compliance_test_getallskillmds", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\audit-compliance.test.ts", "source_location": "L7", "weight": 1.0}]}
@@ -3758,6 +4078,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "lib_utils_nickname_generator_ts", "label": "nickname-generator.ts", "file_type": "code", "source_file": "lib\\utils\\nickname-generator.ts", "source_location": "L1"}, {"id": "nickname_generator_generaterandomnickname", "label": "generateRandomNickname()", "file_type": "code", "source_file": "lib\\utils\\nickname-generator.ts", "source_location": "L1"}], "edges": [{"source": "lib_utils_nickname_generator_ts", "target": "nickname_generator_generaterandomnickname", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\utils\\nickname-generator.ts", "source_location": "L1", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\43c64a99418eda340ac5608ff73d239a8314cfa4e8852e60386f1494d3498b1c.json
+```
+{"nodes": [{"id": "scripts_test_cjs_js", "label": "test-cjs.js", "file_type": "code", "source_file": "scripts\\test-cjs.js", "source_location": "L1"}], "edges": []}
+```
+
 ### File: graphify-out\cache\43eb742abeec8d10558443014d5c50c5e09aa0bb6bbe07d9ea36e36dd8606395.json
 ```
 {"nodes": [{"id": "scripts_analyze_audit_report_py", "label": "analyze_audit_report.py", "file_type": "code", "source_file": "scripts\\analyze_audit_report.py", "source_location": "L1"}], "edges": [{"source": "scripts_analyze_audit_report_py", "target": "json", "relation": "imports", "confidence": "EXTRACTED", "source_file": "scripts\\analyze_audit_report.py", "source_location": "L8", "weight": 1.0}, {"source": "scripts_analyze_audit_report_py", "target": "collections", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\analyze_audit_report.py", "source_location": "L9", "weight": 1.0}, {"source": "scripts_analyze_audit_report_py", "target": "pathlib", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\analyze_audit_report.py", "source_location": "L10", "weight": 1.0}]}
@@ -3796,6 +4121,11 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\45c41dfbc591cb720bff562cbb81aba1f2558823220f11fb950b409644e53194.json
 ```
 {"nodes": [{"id": "lib_db_tests_firestore_rest_test_ts", "label": "firestore-rest.test.ts", "file_type": "code", "source_file": "lib\\db\\__tests__\\firestore-rest.test.ts", "source_location": "L1"}, {"id": "firestore_rest_test_fromfirestore", "label": "fromFirestore()", "file_type": "code", "source_file": "lib\\db\\__tests__\\firestore-rest.test.ts", "source_location": "L7"}], "edges": [{"source": "lib_db_tests_firestore_rest_test_ts", "target": "firestore_rest_test_fromfirestore", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\__tests__\\firestore-rest.test.ts", "source_location": "L7", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\45c96db292dc5092e77df390f92f0fb55d6373a8a1cfdfd035ae8c93f8db7f24.json
+```
+{"nodes": [{"id": "scripts_check_news_debug_ts", "label": "check-news-debug.ts", "file_type": "code", "source_file": "scripts\\check-news-debug.ts", "source_location": "L1"}, {"id": "check_news_debug_checknews", "label": "checkNews()", "file_type": "code", "source_file": "scripts\\check-news-debug.ts", "source_location": "L25"}], "edges": [{"source": "scripts_check_news_debug_ts", "target": "firebase_admin", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\check-news-debug.ts", "source_location": "L1", "weight": 1.0}, {"source": "scripts_check_news_debug_ts", "target": "dotenv", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\check-news-debug.ts", "source_location": "L2", "weight": 1.0}, {"source": "scripts_check_news_debug_ts", "target": "scripts_lib_db_path_config", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\check-news-debug.ts", "source_location": "L3", "weight": 1.0}, {"source": "scripts_check_news_debug_ts", "target": "check_news_debug_checknews", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\check-news-debug.ts", "source_location": "L25", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\4644bd4e6955d2b2414370b629c289eec2ea567bd2c8b87b222597163fbd8e07.json
@@ -3853,6 +4183,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "scripts_convert_og_image_js", "label": "convert-og-image.js", "file_type": "code", "source_file": "scripts\\convert-og-image.js", "source_location": "L1"}, {"id": "convert_og_image_convert", "label": "convert()", "file_type": "code", "source_file": "scripts\\convert-og-image.js", "source_location": "L8"}], "edges": [{"source": "scripts_convert_og_image_js", "target": "convert_og_image_convert", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\convert-og-image.js", "source_location": "L8", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\4b16186d90aaca78428e53698be809908a365fe0cdf09335ed2815734467cd55.json
+```
+{"nodes": [{"id": "scripts_context_compiler_py", "label": "context_compiler.py", "file_type": "code", "source_file": "scripts\\context_compiler.py", "source_location": "L1"}, {"id": "context_compiler_get_graphify_context", "label": "get_graphify_context()", "file_type": "code", "source_file": "scripts\\context_compiler.py", "source_location": "L22"}, {"id": "context_compiler_collect_files_from_dir", "label": "collect_files_from_dir()", "file_type": "code", "source_file": "scripts\\context_compiler.py", "source_location": "L49"}, {"id": "context_compiler_save_bundle", "label": "save_bundle()", "file_type": "code", "source_file": "scripts\\context_compiler.py", "source_location": "L97"}, {"id": "context_compiler_compile_mega_prompt", "label": "compile_mega_prompt()", "file_type": "code", "source_file": "scripts\\context_compiler.py", "source_location": "L113"}, {"id": "context_compiler_rationale_50", "label": "\ud2b9\uc815 \ub514\ub809\ud1a0\ub9ac \ub0b4\uc758 \ucf54\ub4dc\ub97c \uc218\uc9d1\ud569\ub2c8\ub2e4. (MarkItDown \uc5f0\ub3d9)", "file_type": "rationale", "source_file": "scripts\\context_compiler.py", "source_location": "L50"}], "edges": [{"source": "scripts_context_compiler_py", "target": "os", "relation": "imports", "confidence": "EXTRACTED", "source_file": "scripts\\context_compiler.py", "source_location": "L1", "weight": 1.0}, {"source": "scripts_context_compiler_py", "target": "sys", "relation": "imports", "confidence": "EXTRACTED", "source_file": "scripts\\context_compiler.py", "source_location": "L2", "weight": 1.0}, {"source": "scripts_context_compiler_py", "target": "subprocess", "relation": "imports", "confidence": "EXTRACTED", "source_file": "scripts\\context_compiler.py", "source_location": "L3", "weight": 1.0}, {"source": "scripts_context_compiler_py", "target": "markitdown", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\context_compiler.py", "source_location": "L4", "weight": 1.0}, {"source": "scripts_context_compiler_py", "target": "io", "relation": "imports", "confidence": "EXTRACTED", "source_file": "scripts\\context_compiler.py", "source_location": "L8", "weight": 1.0}, {"source": "scripts_context_compiler_py", "target": "context_compiler_get_graphify_context", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\context_compiler.py", "source_location": "L22", "weight": 1.0}, {"source": "scripts_context_compiler_py", "target": "context_compiler_collect_files_from_dir", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\context_compiler.py", "source_location": "L49", "weight": 1.0}, {"source": "scripts_context_compiler_py", "target": "context_compiler_save_bundle", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\context_compiler.py", "source_location": "L97", "weight": 1.0}, {"source": "scripts_context_compiler_py", "target": "context_compiler_compile_mega_prompt", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\context_compiler.py", "source_location": "L113", "weight": 1.0}, {"source": "context_compiler_compile_mega_prompt", "target": "context_compiler_get_graphify_context", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\context_compiler.py", "source_location": "L118", "weight": 1.0}, {"source": "context_compiler_compile_mega_prompt", "target": "context_compiler_collect_files_from_dir", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\context_compiler.py", "source_location": "L136", "weight": 1.0}, {"source": "context_compiler_compile_mega_prompt", "target": "context_compiler_save_bundle", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\context_compiler.py", "source_location": "L137", "weight": 1.0}, {"source": "context_compiler_rationale_50", "target": "context_compiler_collect_files_from_dir", "relation": "rationale_for", "confidence": "EXTRACTED", "source_file": "scripts\\context_compiler.py", "source_location": "L50", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\4ba51b45cab5b63cb05b51cd2b94694f9b473fa3e3ade9f97ccfac898d5d89b4.json
 ```
 {"nodes": [{"id": "lib_constants_wiki_grapes_kerner_ts", "label": "kerner.ts", "file_type": "code", "source_file": "lib\\constants\\wiki\\grapes\\kerner.ts", "source_location": "L1"}], "edges": [{"source": "lib_constants_wiki_grapes_kerner_ts", "target": "lib_constants_wiki_grapes_types", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\constants\\wiki\\grapes\\kerner.ts", "source_location": "L1", "weight": 1.0}]}
@@ -3903,6 +4238,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "components_ui_randombackground_tsx", "label": "RandomBackground.tsx", "file_type": "code", "source_file": "components\\ui\\RandomBackground.tsx", "source_location": "L1"}], "edges": [{"source": "components_ui_randombackground_tsx", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\RandomBackground.tsx", "source_location": "L3", "weight": 1.0}, {"source": "components_ui_randombackground_tsx", "target": "image", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\RandomBackground.tsx", "source_location": "L4", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\50e2c10708950b4703fd42a5720b834ec021dd8a84a41b3c013d166415919ee4.json
+```
+{"nodes": [{"id": "app_lang_contents_worldcup_game_page_tsx", "label": "page.tsx", "file_type": "code", "source_file": "app\\[lang]\\contents\\worldcup\\game\\page.tsx", "source_location": "L1"}, {"id": "page_worldcupgamefallback", "label": "WorldCupGameFallback()", "file_type": "code", "source_file": "app\\[lang]\\contents\\worldcup\\game\\page.tsx", "source_location": "L53"}, {"id": "page_fetchspirits", "label": "fetchSpirits()", "file_type": "code", "source_file": "app\\[lang]\\contents\\worldcup\\game\\page.tsx", "source_location": "L102"}, {"id": "page_preloadallimages", "label": "preloadAllImages()", "file_type": "code", "source_file": "app\\[lang]\\contents\\worldcup\\game\\page.tsx", "source_location": "L168"}], "edges": [{"source": "app_lang_contents_worldcup_game_page_tsx", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\game\\page.tsx", "source_location": "L3", "weight": 1.0}, {"source": "app_lang_contents_worldcup_game_page_tsx", "target": "navigation", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\game\\page.tsx", "source_location": "L4", "weight": 1.0}, {"source": "app_lang_contents_worldcup_game_page_tsx", "target": "framer_motion", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\game\\page.tsx", "source_location": "L5", "weight": 1.0}, {"source": "app_lang_contents_worldcup_game_page_tsx", "target": "lucide_react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\game\\page.tsx", "source_location": "L6", "weight": 1.0}, {"source": "app_lang_contents_worldcup_game_page_tsx", "target": "image_optimization", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\game\\page.tsx", "source_location": "L17", "weight": 1.0}, {"source": "app_lang_contents_worldcup_game_page_tsx", "target": "image_fallback", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\game\\page.tsx", "source_location": "L18", "weight": 1.0}, {"source": "app_lang_contents_worldcup_game_page_tsx", "target": "html_to_image", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\game\\page.tsx", "source_location": "L19", "weight": 1.0}, {"source": "app_lang_contents_worldcup_game_page_tsx", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\game\\page.tsx", "source_location": "L20", "weight": 1.0}, {"source": "app_lang_contents_worldcup_game_page_tsx", "target": "data_connect_client", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\game\\page.tsx", "source_location": "L21", "weight": 1.0}, {"source": "app_lang_contents_worldcup_game_page_tsx", "target": "image", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\game\\page.tsx", "source_location": "L25", "weight": 1.0}, {"source": "app_lang_contents_worldcup_game_page_tsx", "target": "canvas_confetti", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\game\\page.tsx", "source_location": "L26", "weight": 1.0}, {"source": "app_lang_contents_worldcup_game_page_tsx", "target": "get_dictionary", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\game\\page.tsx", "source_location": "L50", "weight": 1.0}, {"source": "app_lang_contents_worldcup_game_page_tsx", "target": "i18n_config", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\game\\page.tsx", "source_location": "L51", "weight": 1.0}, {"source": "app_lang_contents_worldcup_game_page_tsx", "target": "page_worldcupgamefallback", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\game\\page.tsx", "source_location": "L53", "weight": 1.0}, {"source": "app_lang_contents_worldcup_game_page_tsx", "target": "page_fetchspirits", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\game\\page.tsx", "source_location": "L102", "weight": 1.0}, {"source": "app_lang_contents_worldcup_game_page_tsx", "target": "page_preloadallimages", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\game\\page.tsx", "source_location": "L168", "weight": 1.0}, {"source": "page_fetchspirits", "target": "page_preloadallimages", "relation": "calls", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\game\\page.tsx", "source_location": "L151", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\51090086d8ea25dd0b49978131775c1fead027ea38a72f65000786ba8b13fb26.json
 ```
 {"nodes": [{"id": "gstack_gstack_main_browse_test_sidebar_agent_roundtrip_test_ts", "label": "sidebar-agent-roundtrip.test.ts", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent-roundtrip.test.ts", "source_location": "L1"}, {"id": "sidebar_agent_roundtrip_test_api", "label": "api()", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent-roundtrip.test.ts", "source_location": "L23"}, {"id": "sidebar_agent_roundtrip_test_resetstate", "label": "resetState()", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent-roundtrip.test.ts", "source_location": "L34"}, {"id": "sidebar_agent_roundtrip_test_pollchatuntil", "label": "pollChatUntil()", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent-roundtrip.test.ts", "source_location": "L39"}, {"id": "sidebar_agent_roundtrip_test_writemockclaude", "label": "writeMockClaude()", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent-roundtrip.test.ts", "source_location": "L55"}], "edges": [{"source": "gstack_gstack_main_browse_test_sidebar_agent_roundtrip_test_ts", "target": "bun_test", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent-roundtrip.test.ts", "source_location": "L8", "weight": 1.0}, {"source": "gstack_gstack_main_browse_test_sidebar_agent_roundtrip_test_ts", "target": "bun", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent-roundtrip.test.ts", "source_location": "L9", "weight": 1.0}, {"source": "gstack_gstack_main_browse_test_sidebar_agent_roundtrip_test_ts", "target": "fs", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent-roundtrip.test.ts", "source_location": "L10", "weight": 1.0}, {"source": "gstack_gstack_main_browse_test_sidebar_agent_roundtrip_test_ts", "target": "os", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent-roundtrip.test.ts", "source_location": "L11", "weight": 1.0}, {"source": "gstack_gstack_main_browse_test_sidebar_agent_roundtrip_test_ts", "target": "path", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent-roundtrip.test.ts", "source_location": "L12", "weight": 1.0}, {"source": "gstack_gstack_main_browse_test_sidebar_agent_roundtrip_test_ts", "target": "sidebar_agent_roundtrip_test_api", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent-roundtrip.test.ts", "source_location": "L23", "weight": 1.0}, {"source": "gstack_gstack_main_browse_test_sidebar_agent_roundtrip_test_ts", "target": "sidebar_agent_roundtrip_test_resetstate", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent-roundtrip.test.ts", "source_location": "L34", "weight": 1.0}, {"source": "gstack_gstack_main_browse_test_sidebar_agent_roundtrip_test_ts", "target": "sidebar_agent_roundtrip_test_pollchatuntil", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent-roundtrip.test.ts", "source_location": "L39", "weight": 1.0}, {"source": "gstack_gstack_main_browse_test_sidebar_agent_roundtrip_test_ts", "target": "sidebar_agent_roundtrip_test_writemockclaude", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent-roundtrip.test.ts", "source_location": "L55", "weight": 1.0}, {"source": "sidebar_agent_roundtrip_test_resetstate", "target": "sidebar_agent_roundtrip_test_api", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent-roundtrip.test.ts", "source_location": "L35", "weight": 1.0}, {"source": "sidebar_agent_roundtrip_test_pollchatuntil", "target": "sidebar_agent_roundtrip_test_api", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent-roundtrip.test.ts", "source_location": "L45", "weight": 1.0}]}
@@ -3916,6 +4256,11 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\5152df3f6ebec61121dedba0ccee322f09cb4d7114f83153446769af979a9f18.json
 ```
 {"nodes": [{"id": "components_ui_spiritdetailmodal_tsx", "label": "SpiritDetailModal.tsx", "file_type": "code", "source_file": "components\\ui\\SpiritDetailModal.tsx", "source_location": "L1"}, {"id": "spiritdetailmodal_getlocalizedcategory", "label": "getLocalizedCategory()", "file_type": "code", "source_file": "components\\ui\\SpiritDetailModal.tsx", "source_location": "L70"}, {"id": "spiritdetailmodal_checkstatus", "label": "checkStatus()", "file_type": "code", "source_file": "components\\ui\\SpiritDetailModal.tsx", "source_location": "L96"}, {"id": "spiritdetailmodal_handleaction", "label": "handleAction()", "file_type": "code", "source_file": "components\\ui\\SpiritDetailModal.tsx", "source_location": "L122"}, {"id": "spiritdetailmodal_handlereviewsubmit", "label": "handleReviewSubmit()", "file_type": "code", "source_file": "components\\ui\\SpiritDetailModal.tsx", "source_location": "L165"}, {"id": "spiritdetailmodal_async", "label": "async()", "file_type": "code", "source_file": "components\\ui\\SpiritDetailModal.tsx", "source_location": "L295"}], "edges": [{"source": "components_ui_spiritdetailmodal_tsx", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritDetailModal.tsx", "source_location": "L3", "weight": 1.0}, {"source": "components_ui_spiritdetailmodal_tsx", "target": "framer_motion", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritDetailModal.tsx", "source_location": "L4", "weight": 1.0}, {"source": "components_ui_spiritdetailmodal_tsx", "target": "navigation", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritDetailModal.tsx", "source_location": "L5", "weight": 1.0}, {"source": "components_ui_spiritdetailmodal_tsx", "target": "auth_context", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritDetailModal.tsx", "source_location": "L6", "weight": 1.0}, {"source": "components_ui_spiritdetailmodal_tsx", "target": "image_fallback", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritDetailModal.tsx", "source_location": "L7", "weight": 1.0}, {"source": "components_ui_spiritdetailmodal_tsx", "target": "tag_colors", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritDetailModal.tsx", "source_location": "L8", "weight": 1.0}, {"source": "components_ui_spiritdetailmodal_tsx", "target": "flavor_engine", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritDetailModal.tsx", "source_location": "L9", "weight": 1.0}, {"source": "components_ui_spiritdetailmodal_tsx", "target": "reviewmodal", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritDetailModal.tsx", "source_location": "L10", "weight": 1.0}, {"source": "components_ui_spiritdetailmodal_tsx", "target": "lucide_react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritDetailModal.tsx", "source_location": "L11", "weight": 1.0}, {"source": "components_ui_spiritdetailmodal_tsx", "target": "cabinet", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritDetailModal.tsx", "source_location": "L12", "weight": 1.0}, {"source": "components_ui_spiritdetailmodal_tsx", "target": "image_optimization", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritDetailModal.tsx", "source_location": "L13", "weight": 1.0}, {"source": "components_ui_spiritdetailmodal_tsx", "target": "spirits_metadata_json", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritDetailModal.tsx", "source_location": "L14", "weight": 1.0}, {"source": "components_ui_spiritdetailmodal_tsx", "target": "successtoast", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritDetailModal.tsx", "source_location": "L16", "weight": 1.0}, {"source": "components_ui_spiritdetailmodal_tsx", "target": "spiritdetailmodal_getlocalizedcategory", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritDetailModal.tsx", "source_location": "L70", "weight": 1.0}, {"source": "components_ui_spiritdetailmodal_tsx", "target": "spiritdetailmodal_checkstatus", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritDetailModal.tsx", "source_location": "L96", "weight": 1.0}, {"source": "components_ui_spiritdetailmodal_tsx", "target": "spiritdetailmodal_handleaction", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritDetailModal.tsx", "source_location": "L122", "weight": 1.0}, {"source": "components_ui_spiritdetailmodal_tsx", "target": "spiritdetailmodal_handlereviewsubmit", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritDetailModal.tsx", "source_location": "L165", "weight": 1.0}, {"source": "components_ui_spiritdetailmodal_tsx", "target": "spiritdetailmodal_async", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritDetailModal.tsx", "source_location": "L295", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\51cc27f0980fd142386ff6a4d793ddd2fef550bcf19d929030980d8ad59b5e4d.json
+```
+{"nodes": [{"id": "scripts_bare_js", "label": "bare.js", "file_type": "code", "source_file": "scripts\\bare.js", "source_location": "L1"}], "edges": []}
 ```
 
 ### File: graphify-out\cache\51f802bf9eb1eb581421f8eca74b06ab12a65edab50ca5ef72cf69de643bb1a6.json
@@ -3948,6 +4293,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "scripts_test_news_api_ts", "label": "test-news-api.ts", "file_type": "code", "source_file": "scripts\\test-news-api.ts", "source_location": "L1"}, {"id": "test_news_api_testsearch", "label": "testSearch()", "file_type": "code", "source_file": "scripts\\test-news-api.ts", "source_location": "L25"}], "edges": [{"source": "scripts_test_news_api_ts", "target": "dotenv", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\test-news-api.ts", "source_location": "L1", "weight": 1.0}, {"source": "scripts_test_news_api_ts", "target": "fs", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\test-news-api.ts", "source_location": "L2", "weight": 1.0}, {"source": "scripts_test_news_api_ts", "target": "path", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\test-news-api.ts", "source_location": "L3", "weight": 1.0}, {"source": "scripts_test_news_api_ts", "target": "test_news_api_testsearch", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\test-news-api.ts", "source_location": "L25", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\55f55f0e5a8759e69aff4390b4d8d4640a223e9e147b167725b79f7ffb5d08c9.json
+```
+{"nodes": [{"id": "app_lang_contents_news_news_client_tsx", "label": "news-client.tsx", "file_type": "code", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L1"}, {"id": "news_client_fetchtotalcount", "label": "fetchTotalCount()", "file_type": "code", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L48"}, {"id": "news_client_fetchpage", "label": "fetchPage()", "file_type": "code", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L57"}, {"id": "news_client_handlesearch", "label": "handleSearch()", "file_type": "code", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L89"}, {"id": "news_client_handledelete", "label": "handleDelete()", "file_type": "code", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L96"}], "edges": [{"source": "app_lang_contents_news_news_client_tsx", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L3", "weight": 1.0}, {"source": "app_lang_contents_news_news_client_tsx", "target": "data_connect_client", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L4", "weight": 1.0}, {"source": "app_lang_contents_news_news_client_tsx", "target": "auth_context", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L5", "weight": 1.0}, {"source": "app_lang_contents_news_news_client_tsx", "target": "link", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L6", "weight": 1.0}, {"source": "app_lang_contents_news_news_client_tsx", "target": "lucide_react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L7", "weight": 1.0}, {"source": "app_lang_contents_news_news_client_tsx", "target": "navigation", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L8", "weight": 1.0}, {"source": "app_lang_contents_news_news_client_tsx", "target": "framer_motion", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L9", "weight": 1.0}, {"source": "app_lang_contents_news_news_client_tsx", "target": "googlead", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L10", "weight": 1.0}, {"source": "app_lang_contents_news_news_client_tsx", "target": "news_client_fetchtotalcount", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L48", "weight": 1.0}, {"source": "app_lang_contents_news_news_client_tsx", "target": "news_client_fetchpage", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L57", "weight": 1.0}, {"source": "app_lang_contents_news_news_client_tsx", "target": "news_client_handlesearch", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L89", "weight": 1.0}, {"source": "app_lang_contents_news_news_client_tsx", "target": "news_client_handledelete", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L96", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\563af07b74666cb454cebe115b8d889fa13bc8bcc967bdcc32fdeec438298647.json
 ```
 {"nodes": [{"id": "gstack_gstack_main_scripts_resolvers_design_ts", "label": "design.ts", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\design.ts", "source_location": "L1"}, {"id": "design_generatedesignreviewlite", "label": "generateDesignReviewLite()", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\design.ts", "source_location": "L4"}, {"id": "design_generatedesignmethodology", "label": "generateDesignMethodology()", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\design.ts", "source_location": "L69"}, {"id": "design_generatedesignsketch", "label": "generateDesignSketch()", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\design.ts", "source_location": "L393"}, {"id": "design_generatedesignoutsidevoices", "label": "generateDesignOutsideVoices()", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\design.ts", "source_location": "L483"}, {"id": "design_generatedesignhardrules", "label": "generateDesignHardRules()", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\design.ts", "source_location": "L672"}, {"id": "design_generatedesignsetup", "label": "generateDesignSetup()", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\design.ts", "source_location": "L726"}, {"id": "design_generatedesignmockup", "label": "generateDesignMockup()", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\design.ts", "source_location": "L771"}, {"id": "design_generatedesignshotgunloop", "label": "generateDesignShotgunLoop()", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\design.ts", "source_location": "L847"}], "edges": [{"source": "gstack_gstack_main_scripts_resolvers_design_ts", "target": "gstack_gstack_main_scripts_resolvers_types", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\design.ts", "source_location": "L1", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_design_ts", "target": "gstack_gstack_main_scripts_resolvers_constants", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\design.ts", "source_location": "L2", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_design_ts", "target": "design_generatedesignreviewlite", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\design.ts", "source_location": "L4", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_design_ts", "target": "design_generatedesignmethodology", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\design.ts", "source_location": "L69", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_design_ts", "target": "design_generatedesignsketch", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\design.ts", "source_location": "L393", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_design_ts", "target": "design_generatedesignoutsidevoices", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\design.ts", "source_location": "L483", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_design_ts", "target": "design_generatedesignhardrules", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\design.ts", "source_location": "L672", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_design_ts", "target": "design_generatedesignsetup", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\design.ts", "source_location": "L726", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_design_ts", "target": "design_generatedesignmockup", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\design.ts", "source_location": "L771", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_design_ts", "target": "design_generatedesignshotgunloop", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\design.ts", "source_location": "L847", "weight": 1.0}]}
@@ -3976,6 +4326,11 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\57c41aeadb285203d6ddadedbb2574929edbabaa0e462abf6aa0665273523cbf.json
 ```
 {"nodes": [{"id": "gstack_gstack_main_browse_src_sidebar_agent_ts", "label": "sidebar-agent.ts", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L1"}, {"id": "sidebar_agent_getgitroot", "label": "getGitRoot()", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L28"}, {"id": "sidebar_agent_writetoinbox", "label": "writeToInbox()", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L37"}, {"id": "sidebar_agent_refreshtoken", "label": "refreshToken()", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L68"}, {"id": "sidebar_agent_sendevent", "label": "sendEvent()", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L82"}, {"id": "sidebar_agent_shorten", "label": "shorten()", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L102"}, {"id": "sidebar_agent_summarizetoolinput", "label": "summarizeToolInput()", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L111"}, {"id": "sidebar_agent_handlestreamevent", "label": "handleStreamEvent()", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L125"}, {"id": "sidebar_agent_askclaude", "label": "askClaude()", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L154"}, {"id": "sidebar_agent_countlines", "label": "countLines()", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L222"}, {"id": "sidebar_agent_readline", "label": "readLine()", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L228"}, {"id": "sidebar_agent_poll", "label": "poll()", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L235"}, {"id": "sidebar_agent_main", "label": "main()", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L264"}], "edges": [{"source": "gstack_gstack_main_browse_src_sidebar_agent_ts", "target": "child_process", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L12", "weight": 1.0}, {"source": "gstack_gstack_main_browse_src_sidebar_agent_ts", "target": "fs", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L13", "weight": 1.0}, {"source": "gstack_gstack_main_browse_src_sidebar_agent_ts", "target": "path", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L14", "weight": 1.0}, {"source": "gstack_gstack_main_browse_src_sidebar_agent_ts", "target": "sidebar_agent_getgitroot", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L28", "weight": 1.0}, {"source": "gstack_gstack_main_browse_src_sidebar_agent_ts", "target": "sidebar_agent_writetoinbox", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L37", "weight": 1.0}, {"source": "gstack_gstack_main_browse_src_sidebar_agent_ts", "target": "sidebar_agent_refreshtoken", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L68", "weight": 1.0}, {"source": "gstack_gstack_main_browse_src_sidebar_agent_ts", "target": "sidebar_agent_sendevent", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L82", "weight": 1.0}, {"source": "gstack_gstack_main_browse_src_sidebar_agent_ts", "target": "sidebar_agent_shorten", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L102", "weight": 1.0}, {"source": "gstack_gstack_main_browse_src_sidebar_agent_ts", "target": "sidebar_agent_summarizetoolinput", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L111", "weight": 1.0}, {"source": "gstack_gstack_main_browse_src_sidebar_agent_ts", "target": "sidebar_agent_handlestreamevent", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L125", "weight": 1.0}, {"source": "gstack_gstack_main_browse_src_sidebar_agent_ts", "target": "sidebar_agent_askclaude", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L154", "weight": 1.0}, {"source": "gstack_gstack_main_browse_src_sidebar_agent_ts", "target": "sidebar_agent_countlines", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L222", "weight": 1.0}, {"source": "gstack_gstack_main_browse_src_sidebar_agent_ts", "target": "sidebar_agent_readline", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L228", "weight": 1.0}, {"source": "gstack_gstack_main_browse_src_sidebar_agent_ts", "target": "sidebar_agent_poll", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L235", "weight": 1.0}, {"source": "gstack_gstack_main_browse_src_sidebar_agent_ts", "target": "sidebar_agent_main", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L264", "weight": 1.0}, {"source": "sidebar_agent_writetoinbox", "target": "sidebar_agent_getgitroot", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L38", "weight": 1.0}, {"source": "sidebar_agent_sendevent", "target": "sidebar_agent_refreshtoken", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L83", "weight": 1.0}, {"source": "sidebar_agent_summarizetoolinput", "target": "sidebar_agent_shorten", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L114", "weight": 1.0}, {"source": "sidebar_agent_handlestreamevent", "target": "sidebar_agent_sendevent", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L128", "weight": 1.0}, {"source": "sidebar_agent_handlestreamevent", "target": "sidebar_agent_summarizetoolinput", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L134", "weight": 1.0}, {"source": "sidebar_agent_askclaude", "target": "sidebar_agent_sendevent", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L158", "weight": 1.0}, {"source": "sidebar_agent_poll", "target": "sidebar_agent_countlines", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L238", "weight": 1.0}, {"source": "sidebar_agent_poll", "target": "sidebar_agent_readline", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L243", "weight": 1.0}, {"source": "sidebar_agent_poll", "target": "sidebar_agent_writetoinbox", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L252", "weight": 1.0}, {"source": "sidebar_agent_poll", "target": "sidebar_agent_askclaude", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L254", "weight": 1.0}, {"source": "sidebar_agent_poll", "target": "sidebar_agent_sendevent", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L257", "weight": 1.0}, {"source": "sidebar_agent_main", "target": "sidebar_agent_countlines", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L269", "weight": 1.0}, {"source": "sidebar_agent_main", "target": "sidebar_agent_refreshtoken", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-agent.ts", "source_location": "L270", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\5837ad77105c5a16dc735c435a6b4469bb68d71de32ecc4206822b8a89865e42.json
+```
+{"nodes": [{"id": "scripts_check_audit_ts", "label": "check-audit.ts", "file_type": "code", "source_file": "scripts\\check-audit.ts", "source_location": "L1"}, {"id": "check_audit_check", "label": "check()", "file_type": "code", "source_file": "scripts\\check-audit.ts", "source_location": "L21"}], "edges": [{"source": "scripts_check_audit_ts", "target": "data_connect", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\check-audit.ts", "source_location": "L1", "weight": 1.0}, {"source": "scripts_check_audit_ts", "target": "firebase_admin", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\check-audit.ts", "source_location": "L2", "weight": 1.0}, {"source": "scripts_check_audit_ts", "target": "dotenv", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\check-audit.ts", "source_location": "L3", "weight": 1.0}, {"source": "scripts_check_audit_ts", "target": "fs", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\check-audit.ts", "source_location": "L4", "weight": 1.0}, {"source": "scripts_check_audit_ts", "target": "check_audit_check", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\check-audit.ts", "source_location": "L21", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\58d26d599a33fadf609fdf523c4934ca55154fafaf4fc321aad0e76a5bafafd4.json
@@ -4008,6 +4363,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "components_admin_discoverylogstable_tsx", "label": "DiscoveryLogsTable.tsx", "file_type": "code", "source_file": "components\\admin\\DiscoveryLogsTable.tsx", "source_location": "L1"}, {"id": "discoverylogstable_formatdate", "label": "formatDate()", "file_type": "code", "source_file": "components\\admin\\DiscoveryLogsTable.tsx", "source_location": "L11"}, {"id": "discoverylogstable_loadlogs", "label": "loadLogs()", "file_type": "code", "source_file": "components\\admin\\DiscoveryLogsTable.tsx", "source_location": "L28"}], "edges": [{"source": "components_admin_discoverylogstable_tsx", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\admin\\DiscoveryLogsTable.tsx", "source_location": "L3", "weight": 1.0}, {"source": "components_admin_discoverylogstable_tsx", "target": "lucide_react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\admin\\DiscoveryLogsTable.tsx", "source_location": "L4", "weight": 1.0}, {"source": "components_admin_discoverylogstable_tsx", "target": "discoverylogstable_formatdate", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\admin\\DiscoveryLogsTable.tsx", "source_location": "L11", "weight": 1.0}, {"source": "components_admin_discoverylogstable_tsx", "target": "discoverylogstable_loadlogs", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\admin\\DiscoveryLogsTable.tsx", "source_location": "L28", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\59f02798196dc5eea3bf98ccdb07259922f167466e33729fd280951def379413.json
+```
+{"nodes": [{"id": "lib_utils_spirit_page_resolver_ts", "label": "spirit-page-resolver.ts", "file_type": "code", "source_file": "lib\\utils\\spirit-page-resolver.ts", "source_location": "L1"}], "edges": [{"source": "lib_utils_spirit_page_resolver_ts", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\utils\\spirit-page-resolver.ts", "source_location": "L1", "weight": 1.0}, {"source": "lib_utils_spirit_page_resolver_ts", "target": "schema", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\utils\\spirit-page-resolver.ts", "source_location": "L2", "weight": 1.0}, {"source": "lib_utils_spirit_page_resolver_ts", "target": "lib_utils_indexable_tier", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\utils\\spirit-page-resolver.ts", "source_location": "L3", "weight": 1.0}, {"source": "lib_utils_spirit_page_resolver_ts", "target": "data_connect_client", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\utils\\spirit-page-resolver.ts", "source_location": "L4", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\5a36f66b99b5b97f25c4578ccef22fcd1ead8574692e278112cca508280024de.json
 ```
 {"nodes": [{"id": "app_api_cabinet_route_ts", "label": "route.ts", "file_type": "code", "source_file": "app\\api\\cabinet\\route.ts", "source_location": "L1"}, {"id": "route_get", "label": "GET()", "file_type": "code", "source_file": "app\\api\\cabinet\\route.ts", "source_location": "L6"}, {"id": "route_post", "label": "POST()", "file_type": "code", "source_file": "app\\api\\cabinet\\route.ts", "source_location": "L55"}, {"id": "route_delete", "label": "DELETE()", "file_type": "code", "source_file": "app\\api\\cabinet\\route.ts", "source_location": "L95"}], "edges": [{"source": "app_api_cabinet_route_ts", "target": "server", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\api\\cabinet\\route.ts", "source_location": "L1", "weight": 1.0}, {"source": "app_api_cabinet_route_ts", "target": "firestore_rest", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\api\\cabinet\\route.ts", "source_location": "L2", "weight": 1.0}, {"source": "app_api_cabinet_route_ts", "target": "route_get", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\api\\cabinet\\route.ts", "source_location": "L6", "weight": 1.0}, {"source": "app_api_cabinet_route_ts", "target": "route_post", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\api\\cabinet\\route.ts", "source_location": "L55", "weight": 1.0}, {"source": "app_api_cabinet_route_ts", "target": "route_delete", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\api\\cabinet\\route.ts", "source_location": "L95", "weight": 1.0}, {"source": "route_post", "target": "route_get", "relation": "calls", "confidence": "EXTRACTED", "source_file": "app\\api\\cabinet\\route.ts", "source_location": "L56", "weight": 1.0}, {"source": "route_delete", "target": "route_get", "relation": "calls", "confidence": "EXTRACTED", "source_file": "app\\api\\cabinet\\route.ts", "source_location": "L96", "weight": 1.0}]}
@@ -4021,6 +4381,11 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\5aa36c85c5fbc72c16da936dabbdc7d719ad7348dde9594b350decc338241e67.json
 ```
 {"nodes": [{"id": "lib_constants_wiki_mezcal_ts", "label": "mezcal.ts", "file_type": "code", "source_file": "lib\\constants\\wiki\\mezcal.ts", "source_location": "L1"}], "edges": [{"source": "lib_constants_wiki_mezcal_ts", "target": "lib_constants_wiki_types", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\constants\\wiki\\mezcal.ts", "source_location": "L1", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\5b34f11b85e5478fb8605bad6b1d2cb016157eb0330b6ee3548ae30d89b741e1.json
+```
+{"nodes": [{"id": "components_admin_adminspiritcard_tsx", "label": "AdminSpiritCard.tsx", "file_type": "code", "source_file": "components\\admin\\AdminSpiritCard.tsx", "source_location": "L1"}, {"id": "adminspiritcard_handleenrich", "label": "handleEnrich()", "file_type": "code", "source_file": "components\\admin\\AdminSpiritCard.tsx", "source_location": "L45"}, {"id": "adminspiritcard_handlegeneratedescription", "label": "handleGenerateDescription()", "file_type": "code", "source_file": "components\\admin\\AdminSpiritCard.tsx", "source_location": "L129"}, {"id": "adminspiritcard_handlepublish", "label": "handlePublish()", "file_type": "code", "source_file": "components\\admin\\AdminSpiritCard.tsx", "source_location": "L165"}, {"id": "adminspiritcard_handleupdate", "label": "handleUpdate()", "file_type": "code", "source_file": "components\\admin\\AdminSpiritCard.tsx", "source_location": "L213"}, {"id": "adminspiritcard_handlereject", "label": "handleReject()", "file_type": "code", "source_file": "components\\admin\\AdminSpiritCard.tsx", "source_location": "L256"}], "edges": [{"source": "components_admin_adminspiritcard_tsx", "target": "schema", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\admin\\AdminSpiritCard.tsx", "source_location": "L3", "weight": 1.0}, {"source": "components_admin_adminspiritcard_tsx", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\admin\\AdminSpiritCard.tsx", "source_location": "L4", "weight": 1.0}, {"source": "components_admin_adminspiritcard_tsx", "target": "db", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\admin\\AdminSpiritCard.tsx", "source_location": "L5", "weight": 1.0}, {"source": "components_admin_adminspiritcard_tsx", "target": "adminspiritcard_handleenrich", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\admin\\AdminSpiritCard.tsx", "source_location": "L45", "weight": 1.0}, {"source": "components_admin_adminspiritcard_tsx", "target": "adminspiritcard_handlegeneratedescription", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\admin\\AdminSpiritCard.tsx", "source_location": "L129", "weight": 1.0}, {"source": "components_admin_adminspiritcard_tsx", "target": "adminspiritcard_handlepublish", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\admin\\AdminSpiritCard.tsx", "source_location": "L165", "weight": 1.0}, {"source": "components_admin_adminspiritcard_tsx", "target": "adminspiritcard_handleupdate", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\admin\\AdminSpiritCard.tsx", "source_location": "L213", "weight": 1.0}, {"source": "components_admin_adminspiritcard_tsx", "target": "adminspiritcard_handlereject", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\admin\\AdminSpiritCard.tsx", "source_location": "L256", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\5bad9386060952b47b10a4bae2ee836ffa324597c905ca46661d5aee92c7e68a.json
@@ -4041,6 +4406,11 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\5c61b3fa328dc52d95907df7f2a0e2fd0c782a37978f6c1a8f9cc41a2e7bb502.json
 ```
 {"nodes": [{"id": "app_api_test_cache_sync_route_ts", "label": "route.ts", "file_type": "code", "source_file": "app\\api\\test-cache-sync\\route.ts", "source_location": "L1"}, {"id": "route_get", "label": "GET()", "file_type": "code", "source_file": "app\\api\\test-cache-sync\\route.ts", "source_location": "L6"}], "edges": [{"source": "app_api_test_cache_sync_route_ts", "target": "server", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\api\\test-cache-sync\\route.ts", "source_location": "L1", "weight": 1.0}, {"source": "app_api_test_cache_sync_route_ts", "target": "firestore_rest", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\api\\test-cache-sync\\route.ts", "source_location": "L2", "weight": 1.0}, {"source": "app_api_test_cache_sync_route_ts", "target": "route_get", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\api\\test-cache-sync\\route.ts", "source_location": "L6", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\5c6a0aca3778731516d14621d083404bf2ab993c1d1e4a10d852fe2233eae8d1.json
+```
+{"nodes": [{"id": "app_lang_contents_worldcup_result_id_page_tsx", "label": "page.tsx", "file_type": "code", "source_file": "app\\[lang]\\contents\\worldcup\\result\\[id]\\page.tsx", "source_location": "L1"}, {"id": "page_getresult", "label": "getResult()", "file_type": "code", "source_file": "app\\[lang]\\contents\\worldcup\\result\\[id]\\page.tsx", "source_location": "L35"}, {"id": "page_generatemetadata", "label": "generateMetadata()", "file_type": "code", "source_file": "app\\[lang]\\contents\\worldcup\\result\\[id]\\page.tsx", "source_location": "L46"}], "edges": [{"source": "app_lang_contents_worldcup_result_id_page_tsx", "target": "next", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\result\\[id]\\page.tsx", "source_location": "L1", "weight": 1.0}, {"source": "app_lang_contents_worldcup_result_id_page_tsx", "target": "lucide_react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\result\\[id]\\page.tsx", "source_location": "L2", "weight": 1.0}, {"source": "app_lang_contents_worldcup_result_id_page_tsx", "target": "image", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\result\\[id]\\page.tsx", "source_location": "L3", "weight": 1.0}, {"source": "app_lang_contents_worldcup_result_id_page_tsx", "target": "link", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\result\\[id]\\page.tsx", "source_location": "L4", "weight": 1.0}, {"source": "app_lang_contents_worldcup_result_id_page_tsx", "target": "navigation", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\result\\[id]\\page.tsx", "source_location": "L5", "weight": 1.0}, {"source": "app_lang_contents_worldcup_result_id_page_tsx", "target": "image_optimization", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\result\\[id]\\page.tsx", "source_location": "L6", "weight": 1.0}, {"source": "app_lang_contents_worldcup_result_id_page_tsx", "target": "seo_url", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\result\\[id]\\page.tsx", "source_location": "L7", "weight": 1.0}, {"source": "app_lang_contents_worldcup_result_id_page_tsx", "target": "data_connect_client", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\result\\[id]\\page.tsx", "source_location": "L8", "weight": 1.0}, {"source": "app_lang_contents_worldcup_result_id_page_tsx", "target": "page_getresult", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\result\\[id]\\page.tsx", "source_location": "L35", "weight": 1.0}, {"source": "app_lang_contents_worldcup_result_id_page_tsx", "target": "page_generatemetadata", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\result\\[id]\\page.tsx", "source_location": "L46", "weight": 1.0}, {"source": "page_generatemetadata", "target": "page_getresult", "relation": "calls", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\result\\[id]\\page.tsx", "source_location": "L53", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\5d4a58e7d64cbbd15df80aac8ed802b3dfe6c781d981734af1f5586bfa6ab3a2.json
@@ -4076,6 +4446,11 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\5e865639af4fc27e8ec75e543f354140015531952e3039eb334bd7296367369d.json
 ```
 {"nodes": [{"id": "gstack_gstack_main_test_worktree_test_ts", "label": "worktree.test.ts", "file_type": "code", "source_file": "gstack\\gstack-main\\test\\worktree.test.ts", "source_location": "L1"}, {"id": "worktree_test_createtestrepo", "label": "createTestRepo()", "file_type": "code", "source_file": "gstack\\gstack-main\\test\\worktree.test.ts", "source_location": "L17"}, {"id": "worktree_test_cleanuprepo", "label": "cleanupRepo()", "file_type": "code", "source_file": "gstack\\gstack-main\\test\\worktree.test.ts", "source_location": "L41"}], "edges": [{"source": "gstack_gstack_main_test_worktree_test_ts", "target": "bun_test", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\worktree.test.ts", "source_location": "L8", "weight": 1.0}, {"source": "gstack_gstack_main_test_worktree_test_ts", "target": "gstack_gstack_main_test_lib_worktree", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\worktree.test.ts", "source_location": "L9", "weight": 1.0}, {"source": "gstack_gstack_main_test_worktree_test_ts", "target": "gstack_gstack_main_test_lib_worktree", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\worktree.test.ts", "source_location": "L10", "weight": 1.0}, {"source": "gstack_gstack_main_test_worktree_test_ts", "target": "child_process", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\worktree.test.ts", "source_location": "L11", "weight": 1.0}, {"source": "gstack_gstack_main_test_worktree_test_ts", "target": "fs", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\worktree.test.ts", "source_location": "L12", "weight": 1.0}, {"source": "gstack_gstack_main_test_worktree_test_ts", "target": "path", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\worktree.test.ts", "source_location": "L13", "weight": 1.0}, {"source": "gstack_gstack_main_test_worktree_test_ts", "target": "os", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\worktree.test.ts", "source_location": "L14", "weight": 1.0}, {"source": "gstack_gstack_main_test_worktree_test_ts", "target": "worktree_test_createtestrepo", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\worktree.test.ts", "source_location": "L17", "weight": 1.0}, {"source": "gstack_gstack_main_test_worktree_test_ts", "target": "worktree_test_cleanuprepo", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\worktree.test.ts", "source_location": "L41", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\5ea2d1ac83e34234dc2d0efb9c3082fea77181aa5eb812838e6c85e409c570f6.json
+```
+{"nodes": [{"id": "scripts_seo_enrich_agentic_ts", "label": "enrich-agentic.ts", "file_type": "code", "source_file": "scripts\\seo\\enrich-agentic.ts", "source_location": "L1"}, {"id": "enrich_agentic_delay", "label": "delay()", "file_type": "code", "source_file": "scripts\\seo\\enrich-agentic.ts", "source_location": "L36"}, {"id": "enrich_agentic_researchspirit", "label": "researchSpirit()", "file_type": "code", "source_file": "scripts\\seo\\enrich-agentic.ts", "source_location": "L41"}, {"id": "enrich_agentic_verifyfacts", "label": "verifyFacts()", "file_type": "code", "source_file": "scripts\\seo\\enrich-agentic.ts", "source_location": "L76"}, {"id": "enrich_agentic_generaterichcontent", "label": "generateRichContent()", "file_type": "code", "source_file": "scripts\\seo\\enrich-agentic.ts", "source_location": "L133"}, {"id": "enrich_agentic_processspirit", "label": "processSpirit()", "file_type": "code", "source_file": "scripts\\seo\\enrich-agentic.ts", "source_location": "L180"}, {"id": "enrich_agentic_run", "label": "run()", "file_type": "code", "source_file": "scripts\\seo\\enrich-agentic.ts", "source_location": "L232"}], "edges": [{"source": "scripts_seo_enrich_agentic_ts", "target": "dotenv", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\seo\\enrich-agentic.ts", "source_location": "L1", "weight": 1.0}, {"source": "scripts_seo_enrich_agentic_ts", "target": "path", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\seo\\enrich-agentic.ts", "source_location": "L2", "weight": 1.0}, {"source": "scripts_seo_enrich_agentic_ts", "target": "generative_ai", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\seo\\enrich-agentic.ts", "source_location": "L3", "weight": 1.0}, {"source": "scripts_seo_enrich_agentic_ts", "target": "enrich_agentic_delay", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\seo\\enrich-agentic.ts", "source_location": "L36", "weight": 1.0}, {"source": "scripts_seo_enrich_agentic_ts", "target": "enrich_agentic_researchspirit", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\seo\\enrich-agentic.ts", "source_location": "L41", "weight": 1.0}, {"source": "scripts_seo_enrich_agentic_ts", "target": "enrich_agentic_verifyfacts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\seo\\enrich-agentic.ts", "source_location": "L76", "weight": 1.0}, {"source": "scripts_seo_enrich_agentic_ts", "target": "enrich_agentic_generaterichcontent", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\seo\\enrich-agentic.ts", "source_location": "L133", "weight": 1.0}, {"source": "scripts_seo_enrich_agentic_ts", "target": "enrich_agentic_processspirit", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\seo\\enrich-agentic.ts", "source_location": "L180", "weight": 1.0}, {"source": "scripts_seo_enrich_agentic_ts", "target": "enrich_agentic_run", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\seo\\enrich-agentic.ts", "source_location": "L232", "weight": 1.0}, {"source": "enrich_agentic_processspirit", "target": "enrich_agentic_researchspirit", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\seo\\enrich-agentic.ts", "source_location": "L190", "weight": 1.0}, {"source": "enrich_agentic_processspirit", "target": "enrich_agentic_verifyfacts", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\seo\\enrich-agentic.ts", "source_location": "L191", "weight": 1.0}, {"source": "enrich_agentic_processspirit", "target": "enrich_agentic_generaterichcontent", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\seo\\enrich-agentic.ts", "source_location": "L192", "weight": 1.0}, {"source": "enrich_agentic_run", "target": "enrich_agentic_processspirit", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\seo\\enrich-agentic.ts", "source_location": "L241", "weight": 1.0}, {"source": "enrich_agentic_run", "target": "enrich_agentic_delay", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\seo\\enrich-agentic.ts", "source_location": "L261", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\5ed7c719a41705e2f554b25fd113fbc68718fdafbd073af62734eae13eef6635.json
@@ -4128,6 +4503,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "fix_all_colors_js", "label": "fix-all-colors.js", "file_type": "code", "source_file": "fix-all-colors.js", "source_location": "L1"}], "edges": []}
 ```
 
+### File: graphify-out\cache\635cbbbf45c135d7b95478affde9195db2e293bf0c0b0e5dd0b4357dbf4b1c35.json
+```
+{"nodes": [{"id": "scripts_audit_logic_deep_ts", "label": "audit-logic-deep.ts", "file_type": "code", "source_file": "scripts\\audit-logic-deep.ts", "source_location": "L1"}, {"id": "audit_logic_deep_auditdata", "label": "auditData()", "file_type": "code", "source_file": "scripts\\audit-logic-deep.ts", "source_location": "L7"}], "edges": [{"source": "scripts_audit_logic_deep_ts", "target": "audit_logic_deep_auditdata", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\audit-logic-deep.ts", "source_location": "L7", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\63f17a54b9809c0641fe99e49cd71a99907a7f6261215f9e11b1c8b70e316d25.json
 ```
 {"nodes": [{"id": "gstack_gstack_main_browse_test_file_drop_test_ts", "label": "file-drop.test.ts", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\test\\file-drop.test.ts", "source_location": "L1"}, {"id": "file_drop_test_readinbox", "label": "readInbox()", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\test\\file-drop.test.ts", "source_location": "L35"}, {"id": "file_drop_test_formatinbox", "label": "formatInbox()", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\test\\file-drop.test.ts", "source_location": "L62"}, {"id": "file_drop_test_clearinbox", "label": "clearInbox()", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\test\\file-drop.test.ts", "source_location": "L81"}, {"id": "file_drop_test_writetestinboxfile", "label": "writeTestInboxFile()", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\test\\file-drop.test.ts", "source_location": "L90"}], "edges": [{"source": "gstack_gstack_main_browse_test_file_drop_test_ts", "target": "bun_test", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\file-drop.test.ts", "source_location": "L8", "weight": 1.0}, {"source": "gstack_gstack_main_browse_test_file_drop_test_ts", "target": "fs", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\file-drop.test.ts", "source_location": "L9", "weight": 1.0}, {"source": "gstack_gstack_main_browse_test_file_drop_test_ts", "target": "path", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\file-drop.test.ts", "source_location": "L10", "weight": 1.0}, {"source": "gstack_gstack_main_browse_test_file_drop_test_ts", "target": "os", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\file-drop.test.ts", "source_location": "L11", "weight": 1.0}, {"source": "gstack_gstack_main_browse_test_file_drop_test_ts", "target": "gstack_gstack_main_browse_test_src_meta_commands", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\file-drop.test.ts", "source_location": "L12", "weight": 1.0}, {"source": "gstack_gstack_main_browse_test_file_drop_test_ts", "target": "gstack_gstack_main_browse_test_src_browser_manager", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\file-drop.test.ts", "source_location": "L13", "weight": 1.0}, {"source": "gstack_gstack_main_browse_test_file_drop_test_ts", "target": "file_drop_test_readinbox", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\file-drop.test.ts", "source_location": "L35", "weight": 1.0}, {"source": "gstack_gstack_main_browse_test_file_drop_test_ts", "target": "file_drop_test_formatinbox", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\file-drop.test.ts", "source_location": "L62", "weight": 1.0}, {"source": "gstack_gstack_main_browse_test_file_drop_test_ts", "target": "file_drop_test_clearinbox", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\file-drop.test.ts", "source_location": "L81", "weight": 1.0}, {"source": "gstack_gstack_main_browse_test_file_drop_test_ts", "target": "file_drop_test_writetestinboxfile", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\file-drop.test.ts", "source_location": "L90", "weight": 1.0}]}
@@ -4141,6 +4521,16 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\644af1580e71f622098b3fcd270555190d54a7e0fbf2bcd3105a2ab5a7242f28.json
 ```
 {"nodes": [{"id": "gstack_gstack_main_browse_test_watch_test_ts", "label": "watch.test.ts", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\test\\watch.test.ts", "source_location": "L1"}], "edges": [{"source": "gstack_gstack_main_browse_test_watch_test_ts", "target": "bun_test", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\watch.test.ts", "source_location": "L9", "weight": 1.0}, {"source": "gstack_gstack_main_browse_test_watch_test_ts", "target": "gstack_gstack_main_browse_test_src_browser_manager", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\watch.test.ts", "source_location": "L10", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\648b30cf652642628efdbba684cb82159f6a57ebbf70b9feb6c3c74e32a94953.json
+```
+{"nodes": [{"id": "lib_db_schema_ts", "label": "schema.ts", "file_type": "code", "source_file": "lib\\db\\schema.ts", "source_location": "L1"}], "edges": []}
+```
+
+### File: graphify-out\cache\6539a70596f98e41f35442ed9e6d630819b83d16eadb0bb824f5ec98392f0661.json
+```
+{"nodes": [{"id": "src_dataconnect_generated_esm_index_esm_js", "label": "index.esm.js", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L1"}, {"id": "index_esm_upsertuserref", "label": "upsertUserRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L8"}, {"id": "index_esm_upsertuser", "label": "upsertUser()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L15"}, {"id": "index_esm_upsertspiritref", "label": "upsertSpiritRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L20"}, {"id": "index_esm_upsertspirit", "label": "upsertSpirit()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L27"}, {"id": "index_esm_upsertreviewref", "label": "upsertReviewRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L32"}, {"id": "index_esm_upsertreview", "label": "upsertReview()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L39"}, {"id": "index_esm_upsertnewsref", "label": "upsertNewsRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L44"}, {"id": "index_esm_upsertnews", "label": "upsertNews()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L51"}, {"id": "index_esm_upsertcabinetref", "label": "upsertCabinetRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L56"}, {"id": "index_esm_upsertcabinet", "label": "upsertCabinet()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L63"}, {"id": "index_esm_upsertmodificationrequestref", "label": "upsertModificationRequestRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L68"}, {"id": "index_esm_upsertmodificationrequest", "label": "upsertModificationRequest()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L75"}, {"id": "index_esm_upsertworldcupresultref", "label": "upsertWorldCupResultRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L80"}, {"id": "index_esm_upsertworldcupresult", "label": "upsertWorldCupResult()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L87"}, {"id": "index_esm_listspiritsref", "label": "listSpiritsRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L92"}, {"id": "index_esm_listspirits", "label": "listSpirits()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L99"}, {"id": "index_esm_listnewarrivalsref", "label": "listNewArrivalsRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L105"}, {"id": "index_esm_listnewarrivals", "label": "listNewArrivals()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L112"}, {"id": "index_esm_getspiritref", "label": "getSpiritRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L118"}, {"id": "index_esm_getspirit", "label": "getSpirit()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L125"}, {"id": "index_esm_getuserprofileref", "label": "getUserProfileRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L131"}, {"id": "index_esm_getuserprofile", "label": "getUserProfile()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L138"}, {"id": "index_esm_listnewsarticlesref", "label": "listNewsArticlesRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L144"}, {"id": "index_esm_listnewsarticles", "label": "listNewsArticles()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L151"}, {"id": "index_esm_getnewsarticleref", "label": "getNewsArticleRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L157"}, {"id": "index_esm_getnewsarticle", "label": "getNewsArticle()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L164"}, {"id": "index_esm_auditallusersref", "label": "auditAllUsersRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L170"}, {"id": "index_esm_auditallusers", "label": "auditAllUsers()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L177"}, {"id": "index_esm_auditallnewsref", "label": "auditAllNewsRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L183"}, {"id": "index_esm_auditallnews", "label": "auditAllNews()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L190"}, {"id": "index_esm_auditallspiritsref", "label": "auditAllSpiritsRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L196"}, {"id": "index_esm_auditallspirits", "label": "auditAllSpirits()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L203"}, {"id": "index_esm_auditallreviewsref", "label": "auditAllReviewsRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L209"}, {"id": "index_esm_auditallreviews", "label": "auditAllReviews()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L216"}, {"id": "index_esm_listspiritreviewsref", "label": "listSpiritReviewsRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L222"}, {"id": "index_esm_listspiritreviews", "label": "listSpiritReviews()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L229"}, {"id": "index_esm_getspiritreviewscountref", "label": "getSpiritReviewsCountRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L235"}, {"id": "index_esm_getspiritreviewscount", "label": "getSpiritReviewsCount()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L242"}, {"id": "index_esm_listspiritsforsitemapref", "label": "listSpiritsForSitemapRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L248"}, {"id": "index_esm_listspiritsforsitemap", "label": "listSpiritsForSitemap()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L255"}, {"id": "index_esm_getworldcupresultref", "label": "getWorldCupResultRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L261"}, {"id": "index_esm_getworldcupresult", "label": "getWorldCupResult()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L268"}, {"id": "index_esm_listspiritsforworldcupref", "label": "listSpiritsForWorldCupRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L274"}, {"id": "index_esm_listspiritsforworldcup", "label": "listSpiritsForWorldCup()", "file_type": "code", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L281"}], "edges": [{"source": "src_dataconnect_generated_esm_index_esm_js", "target": "data_connect", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L1", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_upsertuserref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L8", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_upsertuser", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L15", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_upsertspiritref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L20", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_upsertspirit", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L27", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_upsertreviewref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L32", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_upsertreview", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L39", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_upsertnewsref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L44", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_upsertnews", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L51", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_upsertcabinetref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L56", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_upsertcabinet", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L63", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_upsertmodificationrequestref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L68", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_upsertmodificationrequest", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L75", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_upsertworldcupresultref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L80", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_upsertworldcupresult", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L87", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_listspiritsref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L92", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_listspirits", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L99", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_listnewarrivalsref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L105", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_listnewarrivals", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L112", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_getspiritref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L118", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_getspirit", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L125", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_getuserprofileref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L131", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_getuserprofile", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L138", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_listnewsarticlesref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L144", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_listnewsarticles", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L151", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_getnewsarticleref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L157", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_getnewsarticle", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L164", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_auditallusersref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L170", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_auditallusers", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L177", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_auditallnewsref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L183", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_auditallnews", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L190", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_auditallspiritsref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L196", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_auditallspirits", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L203", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_auditallreviewsref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L209", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_auditallreviews", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L216", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_listspiritreviewsref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L222", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_listspiritreviews", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L229", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_getspiritreviewscountref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L235", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_getspiritreviewscount", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L242", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_listspiritsforsitemapref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L248", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_listspiritsforsitemap", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L255", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_getworldcupresultref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L261", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_getworldcupresult", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L268", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_listspiritsforworldcupref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L274", "weight": 1.0}, {"source": "src_dataconnect_generated_esm_index_esm_js", "target": "index_esm_listspiritsforworldcup", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L281", "weight": 1.0}, {"source": "index_esm_upsertuser", "target": "index_esm_upsertuserref", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L17", "weight": 1.0}, {"source": "index_esm_upsertspirit", "target": "index_esm_upsertspiritref", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L29", "weight": 1.0}, {"source": "index_esm_upsertreview", "target": "index_esm_upsertreviewref", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L41", "weight": 1.0}, {"source": "index_esm_upsertnews", "target": "index_esm_upsertnewsref", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L53", "weight": 1.0}, {"source": "index_esm_upsertcabinet", "target": "index_esm_upsertcabinetref", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L65", "weight": 1.0}, {"source": "index_esm_upsertmodificationrequest", "target": "index_esm_upsertmodificationrequestref", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L77", "weight": 1.0}, {"source": "index_esm_upsertworldcupresult", "target": "index_esm_upsertworldcupresultref", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L89", "weight": 1.0}, {"source": "index_esm_listspirits", "target": "index_esm_listspiritsref", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L102", "weight": 1.0}, {"source": "index_esm_listnewarrivals", "target": "index_esm_listnewarrivalsref", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L115", "weight": 1.0}, {"source": "index_esm_getspirit", "target": "index_esm_getspiritref", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L128", "weight": 1.0}, {"source": "index_esm_getuserprofile", "target": "index_esm_getuserprofileref", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L141", "weight": 1.0}, {"source": "index_esm_listnewsarticles", "target": "index_esm_listnewsarticlesref", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L154", "weight": 1.0}, {"source": "index_esm_getnewsarticle", "target": "index_esm_getnewsarticleref", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L167", "weight": 1.0}, {"source": "index_esm_auditallusers", "target": "index_esm_auditallusersref", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L180", "weight": 1.0}, {"source": "index_esm_auditallnews", "target": "index_esm_auditallnewsref", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L193", "weight": 1.0}, {"source": "index_esm_auditallspirits", "target": "index_esm_auditallspiritsref", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L206", "weight": 1.0}, {"source": "index_esm_auditallreviews", "target": "index_esm_auditallreviewsref", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L219", "weight": 1.0}, {"source": "index_esm_listspiritreviews", "target": "index_esm_listspiritreviewsref", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L232", "weight": 1.0}, {"source": "index_esm_getspiritreviewscount", "target": "index_esm_getspiritreviewscountref", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L245", "weight": 1.0}, {"source": "index_esm_listspiritsforsitemap", "target": "index_esm_listspiritsforsitemapref", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L258", "weight": 1.0}, {"source": "index_esm_getworldcupresult", "target": "index_esm_getworldcupresultref", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L271", "weight": 1.0}, {"source": "index_esm_listspiritsforworldcup", "target": "index_esm_listspiritsforworldcupref", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\esm\\index.esm.js", "source_location": "L284", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\658128909205d6e700db7ba5b1ba7fe72745a02b551f98f8804338cc0fa91b7a.json
@@ -4198,6 +4588,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "lib_constants_wiki_grapes_xarello_ts", "label": "xarello.ts", "file_type": "code", "source_file": "lib\\constants\\wiki\\grapes\\xarello.ts", "source_location": "L1"}], "edges": [{"source": "lib_constants_wiki_grapes_xarello_ts", "target": "lib_constants_wiki_grapes_types", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\constants\\wiki\\grapes\\xarello.ts", "source_location": "L1", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\69f88ce823a11dba392386e71928c01c6fb996bfb55f4367f1f0c3e1cd02404e.json
+```
+{"nodes": [{"id": "scripts_test_env_ts", "label": "test-env.ts", "file_type": "code", "source_file": "scripts\\test-env.ts", "source_location": "L1"}], "edges": [{"source": "scripts_test_env_ts", "target": "dotenv", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\test-env.ts", "source_location": "L1", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\6a085fb854b9e1c4c6f95afad80b10b7719425630ef49f7268fe3a86ecaf0ec6.json
 ```
 {"nodes": [{"id": "lib_constants_wiki_grapes_pinot_gris_ts", "label": "pinot-gris.ts", "file_type": "code", "source_file": "lib\\constants\\wiki\\grapes\\pinot-gris.ts", "source_location": "L1"}], "edges": [{"source": "lib_constants_wiki_grapes_pinot_gris_ts", "target": "lib_constants_wiki_grapes_types", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\constants\\wiki\\grapes\\pinot-gris.ts", "source_location": "L1", "weight": 1.0}]}
@@ -4226,6 +4621,11 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\6c24ec5e81dcc89a693139d2a258bd112fb4688da54eda229e0945c37c3ba229.json
 ```
 {"nodes": [{"id": "components_profile_avatarselector_tsx", "label": "AvatarSelector.tsx", "file_type": "code", "source_file": "components\\profile\\AvatarSelector.tsx", "source_location": "L1"}], "edges": [{"source": "components_profile_avatarselector_tsx", "target": "image", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\profile\\AvatarSelector.tsx", "source_location": "L3", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\6c72db2192b0fd1199959d230b1529f99eb382171a4801cfd7b56ad4e57a89a5.json
+```
+{"nodes": [{"id": "lib_utils_wiki_resolver_ts", "label": "wiki-resolver.ts", "file_type": "code", "source_file": "lib\\utils\\wiki-resolver.ts", "source_location": "L1"}, {"id": "wiki_resolver_resolvewikicategory", "label": "resolveWikiCategory()", "file_type": "code", "source_file": "lib\\utils\\wiki-resolver.ts", "source_location": "L88"}], "edges": [{"source": "lib_utils_wiki_resolver_ts", "target": "lib_utils_constants_wiki_types", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\utils\\wiki-resolver.ts", "source_location": "L1", "weight": 1.0}, {"source": "lib_utils_wiki_resolver_ts", "target": "wiki_resolver_resolvewikicategory", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\utils\\wiki-resolver.ts", "source_location": "L88", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\6cce2dda038dfc7a19d7baa42341abd13ee27b6089b787069ba5019133c15570.json
@@ -4328,6 +4728,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "scripts_enrich_poor_quality_ts", "label": "enrich-poor-quality.ts", "file_type": "code", "source_file": "scripts\\enrich-poor-quality.ts", "source_location": "L1"}, {"id": "enrich_poor_quality_sleep", "label": "sleep()", "file_type": "code", "source_file": "scripts\\enrich-poor-quality.ts", "source_location": "L18"}, {"id": "enrich_poor_quality_enrichpoorqualityspirits", "label": "enrichPoorQualitySpirits()", "file_type": "code", "source_file": "scripts\\enrich-poor-quality.ts", "source_location": "L20"}], "edges": [{"source": "scripts_enrich_poor_quality_ts", "target": "dotenv", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\enrich-poor-quality.ts", "source_location": "L2", "weight": 1.0}, {"source": "scripts_enrich_poor_quality_ts", "target": "path", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\enrich-poor-quality.ts", "source_location": "L3", "weight": 1.0}, {"source": "scripts_enrich_poor_quality_ts", "target": "enrich_poor_quality_sleep", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\enrich-poor-quality.ts", "source_location": "L18", "weight": 1.0}, {"source": "scripts_enrich_poor_quality_ts", "target": "enrich_poor_quality_enrichpoorqualityspirits", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\enrich-poor-quality.ts", "source_location": "L20", "weight": 1.0}, {"source": "enrich_poor_quality_enrichpoorqualityspirits", "target": "enrich_poor_quality_sleep", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\enrich-poor-quality.ts", "source_location": "L107", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\733ba3aad6f5dab9e1d24b10a76fbc09bef76c219b5715c03543749b35f5daf7.json
+```
+{"nodes": [{"id": "scripts_find_spirit_id_ts", "label": "find-spirit-id.ts", "file_type": "code", "source_file": "scripts\\find-spirit-id.ts", "source_location": "L1"}, {"id": "find_spirit_id_findspiritid", "label": "findSpiritId()", "file_type": "code", "source_file": "scripts\\find-spirit-id.ts", "source_location": "L20"}], "edges": [{"source": "scripts_find_spirit_id_ts", "target": "firebase_admin", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\find-spirit-id.ts", "source_location": "L1", "weight": 1.0}, {"source": "scripts_find_spirit_id_ts", "target": "dotenv", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\find-spirit-id.ts", "source_location": "L2", "weight": 1.0}, {"source": "scripts_find_spirit_id_ts", "target": "find_spirit_id_findspiritid", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\find-spirit-id.ts", "source_location": "L20", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\73615cdd89a74f8a2ad9b8caa91feaf4bb3d47386812c821cde31ad07094a4d2.json
 ```
 {"nodes": [{"id": "scripts_normalize_regions_js", "label": "normalize_regions.js", "file_type": "code", "source_file": "scripts\\normalize_regions.js", "source_location": "L1"}, {"id": "normalize_regions_getnormalizedregion", "label": "getNormalizedRegion()", "file_type": "code", "source_file": "scripts\\normalize_regions.js", "source_location": "L181"}, {"id": "normalize_regions_normalizelocalfile", "label": "normalizeLocalFile()", "file_type": "code", "source_file": "scripts\\normalize_regions.js", "source_location": "L193"}, {"id": "normalize_regions_normalizefirestore", "label": "normalizeFirestore()", "file_type": "code", "source_file": "scripts\\normalize_regions.js", "source_location": "L232"}], "edges": [{"source": "scripts_normalize_regions_js", "target": "normalize_regions_getnormalizedregion", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\normalize_regions.js", "source_location": "L181", "weight": 1.0}, {"source": "scripts_normalize_regions_js", "target": "normalize_regions_normalizelocalfile", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\normalize_regions.js", "source_location": "L193", "weight": 1.0}, {"source": "scripts_normalize_regions_js", "target": "normalize_regions_normalizefirestore", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\normalize_regions.js", "source_location": "L232", "weight": 1.0}]}
@@ -4388,6 +4793,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "scripts_audit_subcategories_js", "label": "audit_subcategories.js", "file_type": "code", "source_file": "scripts\\audit_subcategories.js", "source_location": "L1"}, {"id": "audit_subcategories_getauditdata", "label": "getAuditData()", "file_type": "code", "source_file": "scripts\\audit_subcategories.js", "source_location": "L14"}], "edges": [{"source": "scripts_audit_subcategories_js", "target": "audit_subcategories_getauditdata", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\audit_subcategories.js", "source_location": "L14", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\789bab4af817101211949d1010cfa38296d2400e9ea4e759608ea5aec6143a85.json
+```
+{"nodes": [{"id": "components_ui_reviewsection_tsx", "label": "ReviewSection.tsx", "file_type": "code", "source_file": "components\\ui\\ReviewSection.tsx", "source_location": "L1"}, {"id": "reviewsection_handlereviewsubmitted", "label": "handleReviewSubmitted()", "file_type": "code", "source_file": "components\\ui\\ReviewSection.tsx", "source_location": "L67"}, {"id": "reviewsection_handledeletereview", "label": "handleDeleteReview()", "file_type": "code", "source_file": "components\\ui\\ReviewSection.tsx", "source_location": "L77"}, {"id": "reviewsection_handleedit", "label": "handleEdit()", "file_type": "code", "source_file": "components\\ui\\ReviewSection.tsx", "source_location": "L115"}, {"id": "reviewsection_handlelike", "label": "handleLike()", "file_type": "code", "source_file": "components\\ui\\ReviewSection.tsx", "source_location": "L370"}, {"id": "reviewsection_handlesubmit", "label": "handleSubmit()", "file_type": "code", "source_file": "components\\ui\\ReviewSection.tsx", "source_location": "L595"}], "edges": [{"source": "components_ui_reviewsection_tsx", "target": "schema", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ReviewSection.tsx", "source_location": "L3", "weight": 1.0}, {"source": "components_ui_reviewsection_tsx", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ReviewSection.tsx", "source_location": "L4", "weight": 1.0}, {"source": "components_ui_reviewsection_tsx", "target": "lucide_react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ReviewSection.tsx", "source_location": "L5", "weight": 1.0}, {"source": "components_ui_reviewsection_tsx", "target": "spirits_metadata_json", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ReviewSection.tsx", "source_location": "L6", "weight": 1.0}, {"source": "components_ui_reviewsection_tsx", "target": "auth_context", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ReviewSection.tsx", "source_location": "L7", "weight": 1.0}, {"source": "components_ui_reviewsection_tsx", "target": "successtoast", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ReviewSection.tsx", "source_location": "L8", "weight": 1.0}, {"source": "components_ui_reviewsection_tsx", "target": "framer_motion", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ReviewSection.tsx", "source_location": "L9", "weight": 1.0}, {"source": "components_ui_reviewsection_tsx", "target": "rating_colors", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ReviewSection.tsx", "source_location": "L10", "weight": 1.0}, {"source": "components_ui_reviewsection_tsx", "target": "storage", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ReviewSection.tsx", "source_location": "L11", "weight": 1.0}, {"source": "components_ui_reviewsection_tsx", "target": "firebase", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ReviewSection.tsx", "source_location": "L12", "weight": 1.0}, {"source": "components_ui_reviewsection_tsx", "target": "browser_image_compression", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ReviewSection.tsx", "source_location": "L13", "weight": 1.0}, {"source": "components_ui_reviewsection_tsx", "target": "microreviewmodal", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ReviewSection.tsx", "source_location": "L14", "weight": 1.0}, {"source": "components_ui_reviewsection_tsx", "target": "reviewsection_handlereviewsubmitted", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\ui\\ReviewSection.tsx", "source_location": "L67", "weight": 1.0}, {"source": "components_ui_reviewsection_tsx", "target": "reviewsection_handledeletereview", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\ui\\ReviewSection.tsx", "source_location": "L77", "weight": 1.0}, {"source": "components_ui_reviewsection_tsx", "target": "reviewsection_handleedit", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\ui\\ReviewSection.tsx", "source_location": "L115", "weight": 1.0}, {"source": "components_ui_reviewsection_tsx", "target": "reviewsection_handlelike", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\ui\\ReviewSection.tsx", "source_location": "L370", "weight": 1.0}, {"source": "components_ui_reviewsection_tsx", "target": "reviewsection_handlesubmit", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\ui\\ReviewSection.tsx", "source_location": "L595", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\7906530d78eb450ec1f2336b9eba21e604aa412fbb3594c37ecc94e75cd2d0e3.json
 ```
 {"nodes": [{"id": "app_lang_contents_news_news_client_tsx", "label": "news-client.tsx", "file_type": "code", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L1"}, {"id": "news_client_fetchtotalcount", "label": "fetchTotalCount()", "file_type": "code", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L59"}, {"id": "news_client_fetchpage", "label": "fetchPage()", "file_type": "code", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L69"}, {"id": "news_client_handlesearch", "label": "handleSearch()", "file_type": "code", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L125"}, {"id": "news_client_handledelete", "label": "handleDelete()", "file_type": "code", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L132"}], "edges": [{"source": "app_lang_contents_news_news_client_tsx", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L3", "weight": 1.0}, {"source": "app_lang_contents_news_news_client_tsx", "target": "firebase", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L4", "weight": 1.0}, {"source": "app_lang_contents_news_news_client_tsx", "target": "firestore", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L5", "weight": 1.0}, {"source": "app_lang_contents_news_news_client_tsx", "target": "auth_context", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L6", "weight": 1.0}, {"source": "app_lang_contents_news_news_client_tsx", "target": "paths", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L7", "weight": 1.0}, {"source": "app_lang_contents_news_news_client_tsx", "target": "link", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L8", "weight": 1.0}, {"source": "app_lang_contents_news_news_client_tsx", "target": "lucide_react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L9", "weight": 1.0}, {"source": "app_lang_contents_news_news_client_tsx", "target": "navigation", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L10", "weight": 1.0}, {"source": "app_lang_contents_news_news_client_tsx", "target": "framer_motion", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L11", "weight": 1.0}, {"source": "app_lang_contents_news_news_client_tsx", "target": "googlead", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L12", "weight": 1.0}, {"source": "app_lang_contents_news_news_client_tsx", "target": "news_client_fetchtotalcount", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L59", "weight": 1.0}, {"source": "app_lang_contents_news_news_client_tsx", "target": "news_client_fetchpage", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L69", "weight": 1.0}, {"source": "app_lang_contents_news_news_client_tsx", "target": "news_client_handlesearch", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L125", "weight": 1.0}, {"source": "app_lang_contents_news_news_client_tsx", "target": "news_client_handledelete", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\news-client.tsx", "source_location": "L132", "weight": 1.0}]}
@@ -4411,6 +4821,16 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\7a4f84b1ced3edda60efedac9dcb59206c3110688440ce77c11cf63fa297dad1.json
 ```
 {"nodes": [{"id": "gstack_gstack_main_browse_src_find_browse_ts", "label": "find-browse.ts", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\src\\find-browse.ts", "source_location": "L1"}, {"id": "find_browse_getgitroot", "label": "getGitRoot()", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\src\\find-browse.ts", "source_location": "L14"}, {"id": "find_browse_locatebinary", "label": "locateBinary()", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\src\\find-browse.ts", "source_location": "L27"}, {"id": "find_browse_main", "label": "main()", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\src\\find-browse.ts", "source_location": "L51"}], "edges": [{"source": "gstack_gstack_main_browse_src_find_browse_ts", "target": "fs", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\find-browse.ts", "source_location": "L8", "weight": 1.0}, {"source": "gstack_gstack_main_browse_src_find_browse_ts", "target": "path", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\find-browse.ts", "source_location": "L9", "weight": 1.0}, {"source": "gstack_gstack_main_browse_src_find_browse_ts", "target": "os", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\find-browse.ts", "source_location": "L10", "weight": 1.0}, {"source": "gstack_gstack_main_browse_src_find_browse_ts", "target": "find_browse_getgitroot", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\find-browse.ts", "source_location": "L14", "weight": 1.0}, {"source": "gstack_gstack_main_browse_src_find_browse_ts", "target": "find_browse_locatebinary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\find-browse.ts", "source_location": "L27", "weight": 1.0}, {"source": "gstack_gstack_main_browse_src_find_browse_ts", "target": "find_browse_main", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\find-browse.ts", "source_location": "L51", "weight": 1.0}, {"source": "find_browse_locatebinary", "target": "find_browse_getgitroot", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\find-browse.ts", "source_location": "L28", "weight": 1.0}, {"source": "find_browse_main", "target": "find_browse_locatebinary", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\find-browse.ts", "source_location": "L52", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\7b550a32ff041b950218ccfdd29630d6cd737fdfb82fc6c1fef6028784763003.json
+```
+{"nodes": [{"id": "next_config_js", "label": "next.config.js", "file_type": "code", "source_file": "next.config.js", "source_location": "L1"}], "edges": []}
+```
+
+### File: graphify-out\cache\7b88a2d367044541f751327b48b6fdb6c069d13b31f8689af0d9c9ad69d97380.json
+```
+{"nodes": [{"id": "src_dataconnect_generated_index_d_ts", "label": "index.d.ts", "file_type": "code", "source_file": "src\\dataconnect-generated\\index.d.ts", "source_location": "L1"}], "edges": [{"source": "src_dataconnect_generated_index_d_ts", "target": "data_connect", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\index.d.ts", "source_location": "L1", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\7c84e11f086fe1349c3ee499bb9279f9106305096db295e4f6bcc23e51f01a8b.json
@@ -4448,9 +4868,19 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "app_lang_contents_page_tsx", "label": "page.tsx", "file_type": "code", "source_file": "app\\[lang]\\contents\\page.tsx", "source_location": "L1"}, {"id": "page_generatemetadata", "label": "generateMetadata()", "file_type": "code", "source_file": "app\\[lang]\\contents\\page.tsx", "source_location": "L22"}], "edges": [{"source": "app_lang_contents_page_tsx", "target": "next", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\page.tsx", "source_location": "L1", "weight": 1.0}, {"source": "app_lang_contents_page_tsx", "target": "link", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\page.tsx", "source_location": "L2", "weight": 1.0}, {"source": "app_lang_contents_page_tsx", "target": "lucide_react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\page.tsx", "source_location": "L3", "weight": 1.0}, {"source": "app_lang_contents_page_tsx", "target": "seo_url", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\page.tsx", "source_location": "L16", "weight": 1.0}, {"source": "app_lang_contents_page_tsx", "target": "page_generatemetadata", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\page.tsx", "source_location": "L22", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\7da6389e117c8494b4600fdcf4ef2c3297b6acb617bbf4009cf8a7099bc2c46f.json
+```
+{"nodes": [{"id": "app_lang_contents_news_page_tsx", "label": "page.tsx", "file_type": "code", "source_file": "app\\[lang]\\contents\\news\\page.tsx", "source_location": "L1"}, {"id": "page_hasfilterparams", "label": "hasFilterParams()", "file_type": "code", "source_file": "app\\[lang]\\contents\\news\\page.tsx", "source_location": "L15"}, {"id": "page_generatemetadata", "label": "generateMetadata()", "file_type": "code", "source_file": "app\\[lang]\\contents\\news\\page.tsx", "source_location": "L19"}], "edges": [{"source": "app_lang_contents_news_page_tsx", "target": "next", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\page.tsx", "source_location": "L1", "weight": 1.0}, {"source": "app_lang_contents_news_page_tsx", "target": "link", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\page.tsx", "source_location": "L2", "weight": 1.0}, {"source": "app_lang_contents_news_page_tsx", "target": "navigation", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\page.tsx", "source_location": "L3", "weight": 1.0}, {"source": "app_lang_contents_news_page_tsx", "target": "seo_url", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\page.tsx", "source_location": "L4", "weight": 1.0}, {"source": "app_lang_contents_news_page_tsx", "target": "app_lang_contents_news_news_client", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\page.tsx", "source_location": "L5", "weight": 1.0}, {"source": "app_lang_contents_news_page_tsx", "target": "data_connect_client", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\page.tsx", "source_location": "L6", "weight": 1.0}, {"source": "app_lang_contents_news_page_tsx", "target": "page_hasfilterparams", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\page.tsx", "source_location": "L15", "weight": 1.0}, {"source": "app_lang_contents_news_page_tsx", "target": "page_generatemetadata", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\page.tsx", "source_location": "L19", "weight": 1.0}, {"source": "page_generatemetadata", "target": "page_hasfilterparams", "relation": "calls", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\news\\page.tsx", "source_location": "L31", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\7ddd550ad624ddfeb20f7df2138c119fba82cde342f38d1f6f00457cafe32a44.json
 ```
 {"nodes": [{"id": "lib_constants_wiki_grapes_melon_de_bourgogne_ts", "label": "melon-de-bourgogne.ts", "file_type": "code", "source_file": "lib\\constants\\wiki\\grapes\\melon-de-bourgogne.ts", "source_location": "L1"}], "edges": [{"source": "lib_constants_wiki_grapes_melon_de_bourgogne_ts", "target": "lib_constants_wiki_grapes_types", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\constants\\wiki\\grapes\\melon-de-bourgogne.ts", "source_location": "L1", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\7def4488e4aa36c770b4eb47167bb30dcc0e913c2dbf2e0682256f210f325dba.json
+```
+{"nodes": [{"id": "components_ui_explorecontent_tsx", "label": "ExploreContent.tsx", "file_type": "code", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L1"}, {"id": "explorecontent_handlestatuschange", "label": "handleStatusChange()", "file_type": "code", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L63"}], "edges": [{"source": "components_ui_explorecontent_tsx", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L3", "weight": 1.0}, {"source": "components_ui_explorecontent_tsx", "target": "navigation", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L4", "weight": 1.0}, {"source": "components_ui_explorecontent_tsx", "target": "spirits_cache_context", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L5", "weight": 1.0}, {"source": "components_ui_explorecontent_tsx", "target": "auth_context", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L6", "weight": 1.0}, {"source": "components_ui_explorecontent_tsx", "target": "cabinet", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L7", "weight": 1.0}, {"source": "components_ui_explorecontent_tsx", "target": "components_ui_explorecard", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L8", "weight": 1.0}, {"source": "components_ui_explorecontent_tsx", "target": "components_ui_exploreskeleton", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L9", "weight": 1.0}, {"source": "components_ui_explorecontent_tsx", "target": "lucide_react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L10", "weight": 1.0}, {"source": "components_ui_explorecontent_tsx", "target": "googlead", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L11", "weight": 1.0}, {"source": "components_ui_explorecontent_tsx", "target": "spirits_metadata_json", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L12", "weight": 1.0}, {"source": "components_ui_explorecontent_tsx", "target": "schema", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L13", "weight": 1.0}, {"source": "components_ui_explorecontent_tsx", "target": "explorecontent_handlestatuschange", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L63", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\7f2eb72a17c727b265db9baced20bd62bcd06cc75dc54a75b82c5ae4fb8c2925.json
@@ -4493,6 +4923,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "app_api_admin_news_delete_route_ts", "label": "route.ts", "file_type": "code", "source_file": "app\\api\\admin\\news\\delete\\route.ts", "source_location": "L1"}, {"id": "route_delete", "label": "DELETE()", "file_type": "code", "source_file": "app\\api\\admin\\news\\delete\\route.ts", "source_location": "L7"}], "edges": [{"source": "app_api_admin_news_delete_route_ts", "target": "server", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\api\\admin\\news\\delete\\route.ts", "source_location": "L1", "weight": 1.0}, {"source": "app_api_admin_news_delete_route_ts", "target": "service_account", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\api\\admin\\news\\delete\\route.ts", "source_location": "L2", "weight": 1.0}, {"source": "app_api_admin_news_delete_route_ts", "target": "paths", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\api\\admin\\news\\delete\\route.ts", "source_location": "L3", "weight": 1.0}, {"source": "app_api_admin_news_delete_route_ts", "target": "route_delete", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\api\\admin\\news\\delete\\route.ts", "source_location": "L7", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\8300c652e3dc237c65c84575ec271f96c533d3a5192648f7f80519f49991d0bd.json
+```
+{"nodes": [{"id": "components_ui_explorecard_tsx", "label": "ExploreCard.tsx", "file_type": "code", "source_file": "components\\ui\\ExploreCard.tsx", "source_location": "L1"}, {"id": "explorecard_getlocalizedcategory", "label": "getLocalizedCategory()", "file_type": "code", "source_file": "components\\ui\\ExploreCard.tsx", "source_location": "L46"}, {"id": "explorecard_handlecabinetaction", "label": "handleCabinetAction()", "file_type": "code", "source_file": "components\\ui\\ExploreCard.tsx", "source_location": "L77"}, {"id": "explorecard_handlewishlistaction", "label": "handleWishlistAction()", "file_type": "code", "source_file": "components\\ui\\ExploreCard.tsx", "source_location": "L124"}], "edges": [{"source": "components_ui_explorecard_tsx", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreCard.tsx", "source_location": "L3", "weight": 1.0}, {"source": "components_ui_explorecard_tsx", "target": "framer_motion", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreCard.tsx", "source_location": "L4", "weight": 1.0}, {"source": "components_ui_explorecard_tsx", "target": "image", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreCard.tsx", "source_location": "L5", "weight": 1.0}, {"source": "components_ui_explorecard_tsx", "target": "link", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreCard.tsx", "source_location": "L6", "weight": 1.0}, {"source": "components_ui_explorecard_tsx", "target": "navigation", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreCard.tsx", "source_location": "L7", "weight": 1.0}, {"source": "components_ui_explorecard_tsx", "target": "image_fallback", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreCard.tsx", "source_location": "L8", "weight": 1.0}, {"source": "components_ui_explorecard_tsx", "target": "schema", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreCard.tsx", "source_location": "L9", "weight": 1.0}, {"source": "components_ui_explorecard_tsx", "target": "tag_styles", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreCard.tsx", "source_location": "L10", "weight": 1.0}, {"source": "components_ui_explorecard_tsx", "target": "auth_context", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreCard.tsx", "source_location": "L11", "weight": 1.0}, {"source": "components_ui_explorecard_tsx", "target": "cabinet", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreCard.tsx", "source_location": "L12", "weight": 1.0}, {"source": "components_ui_explorecard_tsx", "target": "spirit_adapters", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreCard.tsx", "source_location": "L13", "weight": 1.0}, {"source": "components_ui_explorecard_tsx", "target": "components_ui_successtoast", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreCard.tsx", "source_location": "L14", "weight": 1.0}, {"source": "components_ui_explorecard_tsx", "target": "lucide_react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreCard.tsx", "source_location": "L16", "weight": 1.0}, {"source": "components_ui_explorecard_tsx", "target": "image_optimization", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreCard.tsx", "source_location": "L17", "weight": 1.0}, {"source": "components_ui_explorecard_tsx", "target": "spirits_metadata_json", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreCard.tsx", "source_location": "L18", "weight": 1.0}, {"source": "components_ui_explorecard_tsx", "target": "explorecard_getlocalizedcategory", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreCard.tsx", "source_location": "L46", "weight": 1.0}, {"source": "components_ui_explorecard_tsx", "target": "explorecard_handlecabinetaction", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreCard.tsx", "source_location": "L77", "weight": 1.0}, {"source": "components_ui_explorecard_tsx", "target": "explorecard_handlewishlistaction", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreCard.tsx", "source_location": "L124", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\83dc982db286587b35a8c3777046e81feebca58632a68e120efd7cb63df7eedb.json
 ```
 {"nodes": [{"id": "gstack_gstack_main_browse_src_sidebar_utils_ts", "label": "sidebar-utils.ts", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-utils.ts", "source_location": "L1"}, {"id": "sidebar_utils_sanitizeextensionurl", "label": "sanitizeExtensionUrl()", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-utils.ts", "source_location": "L10"}], "edges": [{"source": "gstack_gstack_main_browse_src_sidebar_utils_ts", "target": "sidebar_utils_sanitizeextensionurl", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\src\\sidebar-utils.ts", "source_location": "L10", "weight": 1.0}]}
@@ -4528,6 +4963,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "gstack_gstack_main_scripts_eval_compare_ts", "label": "eval-compare.ts", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\eval-compare.ts", "source_location": "L1"}, {"id": "eval_compare_loadresult", "label": "loadResult()", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\eval-compare.ts", "source_location": "L24"}], "edges": [{"source": "gstack_gstack_main_scripts_eval_compare_ts", "target": "fs", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\eval-compare.ts", "source_location": "L11", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_eval_compare_ts", "target": "path", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\eval-compare.ts", "source_location": "L12", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_eval_compare_ts", "target": "os", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\eval-compare.ts", "source_location": "L13", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_eval_compare_ts", "target": "gstack_gstack_main_scripts_test_helpers_eval_store", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\eval-compare.ts", "source_location": "L14", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_eval_compare_ts", "target": "gstack_gstack_main_scripts_test_helpers_eval_store", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\eval-compare.ts", "source_location": "L20", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_eval_compare_ts", "target": "eval_compare_loadresult", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\eval-compare.ts", "source_location": "L24", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\886c320b1f56df027ed6e1c64b7db023f73a59867768a03766d18c7cf2e5239d.json
+```
+{"nodes": [{"id": "src_dataconnect_admin_generated_index_cjs_js", "label": "index.cjs.js", "file_type": "code", "source_file": "src\\dataconnect-admin-generated\\index.cjs.js", "source_location": "L1"}, {"id": "index_cjs_createmovie", "label": "createMovie()", "file_type": "code", "source_file": "src\\dataconnect-admin-generated\\index.cjs.js", "source_location": "L10"}, {"id": "index_cjs_upsertuser", "label": "upsertUser()", "file_type": "code", "source_file": "src\\dataconnect-admin-generated\\index.cjs.js", "source_location": "L17"}, {"id": "index_cjs_addreview", "label": "addReview()", "file_type": "code", "source_file": "src\\dataconnect-admin-generated\\index.cjs.js", "source_location": "L24"}, {"id": "index_cjs_deletereview", "label": "deleteReview()", "file_type": "code", "source_file": "src\\dataconnect-admin-generated\\index.cjs.js", "source_location": "L31"}, {"id": "index_cjs_listmovies", "label": "listMovies()", "file_type": "code", "source_file": "src\\dataconnect-admin-generated\\index.cjs.js", "source_location": "L38"}, {"id": "index_cjs_listusers", "label": "listUsers()", "file_type": "code", "source_file": "src\\dataconnect-admin-generated\\index.cjs.js", "source_location": "L45"}, {"id": "index_cjs_listuserreviews", "label": "listUserReviews()", "file_type": "code", "source_file": "src\\dataconnect-admin-generated\\index.cjs.js", "source_location": "L52"}, {"id": "index_cjs_getmoviebyid", "label": "getMovieById()", "file_type": "code", "source_file": "src\\dataconnect-admin-generated\\index.cjs.js", "source_location": "L59"}, {"id": "index_cjs_searchmovie", "label": "searchMovie()", "file_type": "code", "source_file": "src\\dataconnect-admin-generated\\index.cjs.js", "source_location": "L66"}], "edges": [{"source": "src_dataconnect_admin_generated_index_cjs_js", "target": "index_cjs_createmovie", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-admin-generated\\index.cjs.js", "source_location": "L10", "weight": 1.0}, {"source": "src_dataconnect_admin_generated_index_cjs_js", "target": "index_cjs_upsertuser", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-admin-generated\\index.cjs.js", "source_location": "L17", "weight": 1.0}, {"source": "src_dataconnect_admin_generated_index_cjs_js", "target": "index_cjs_addreview", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-admin-generated\\index.cjs.js", "source_location": "L24", "weight": 1.0}, {"source": "src_dataconnect_admin_generated_index_cjs_js", "target": "index_cjs_deletereview", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-admin-generated\\index.cjs.js", "source_location": "L31", "weight": 1.0}, {"source": "src_dataconnect_admin_generated_index_cjs_js", "target": "index_cjs_listmovies", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-admin-generated\\index.cjs.js", "source_location": "L38", "weight": 1.0}, {"source": "src_dataconnect_admin_generated_index_cjs_js", "target": "index_cjs_listusers", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-admin-generated\\index.cjs.js", "source_location": "L45", "weight": 1.0}, {"source": "src_dataconnect_admin_generated_index_cjs_js", "target": "index_cjs_listuserreviews", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-admin-generated\\index.cjs.js", "source_location": "L52", "weight": 1.0}, {"source": "src_dataconnect_admin_generated_index_cjs_js", "target": "index_cjs_getmoviebyid", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-admin-generated\\index.cjs.js", "source_location": "L59", "weight": 1.0}, {"source": "src_dataconnect_admin_generated_index_cjs_js", "target": "index_cjs_searchmovie", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-admin-generated\\index.cjs.js", "source_location": "L66", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\888cfd094ece481c0c3797fd36d867fd0746829df7a263e3173ea23232168357.json
 ```
 {"nodes": [{"id": "lib_constants_wiki_grapes_parellada_ts", "label": "parellada.ts", "file_type": "code", "source_file": "lib\\constants\\wiki\\grapes\\parellada.ts", "source_location": "L1"}], "edges": [{"source": "lib_constants_wiki_grapes_parellada_ts", "target": "lib_constants_wiki_grapes_types", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\constants\\wiki\\grapes\\parellada.ts", "source_location": "L1", "weight": 1.0}]}
@@ -4541,6 +4981,11 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\8938580a57951419f8efe3b816085236f7ee859acf95d42bb642bfda85b93ac9.json
 ```
 {"nodes": [{"id": "lib_constants_wiki_grapes_nebbiolo_ts", "label": "nebbiolo.ts", "file_type": "code", "source_file": "lib\\constants\\wiki\\grapes\\nebbiolo.ts", "source_location": "L1"}], "edges": [{"source": "lib_constants_wiki_grapes_nebbiolo_ts", "target": "lib_constants_wiki_grapes_types", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\constants\\wiki\\grapes\\nebbiolo.ts", "source_location": "L1", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\895ef34a8bc3991af9312fc9ae0ce5ab0ec5b827f69d6b8620df84ce36d457c7.json
+```
+{"nodes": [{"id": "scripts_list_collections_ts", "label": "list-collections.ts", "file_type": "code", "source_file": "scripts\\list-collections.ts", "source_location": "L1"}, {"id": "list_collections_listcollections", "label": "listCollections()", "file_type": "code", "source_file": "scripts\\list-collections.ts", "source_location": "L19"}], "edges": [{"source": "scripts_list_collections_ts", "target": "firebase_admin", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\list-collections.ts", "source_location": "L1", "weight": 1.0}, {"source": "scripts_list_collections_ts", "target": "dotenv", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\list-collections.ts", "source_location": "L2", "weight": 1.0}, {"source": "scripts_list_collections_ts", "target": "list_collections_listcollections", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\list-collections.ts", "source_location": "L19", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\8982c1b36e419a5bbe1187bb556f5339df1323417025fbf731e4acfdbf9af45a.json
@@ -4561,6 +5006,11 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\8ba1c9ef55ddb14163cba1c519e32ee0dfffc43c411d1f843caf04df9cc36f79.json
 ```
 {"nodes": [{"id": "gstack_gstack_main_design_test_gallery_test_ts", "label": "gallery.test.ts", "file_type": "code", "source_file": "gstack\\gstack-main\\design\\test\\gallery.test.ts", "source_location": "L1"}, {"id": "gallery_test_createtestpng", "label": "createTestPng()", "file_type": "code", "source_file": "gstack\\gstack-main\\design\\test\\gallery.test.ts", "source_location": "L12"}], "edges": [{"source": "gstack_gstack_main_design_test_gallery_test_ts", "target": "bun_test", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\test\\gallery.test.ts", "source_location": "L5", "weight": 1.0}, {"source": "gstack_gstack_main_design_test_gallery_test_ts", "target": "gstack_gstack_main_design_test_src_gallery", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\test\\gallery.test.ts", "source_location": "L6", "weight": 1.0}, {"source": "gstack_gstack_main_design_test_gallery_test_ts", "target": "fs", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\test\\gallery.test.ts", "source_location": "L7", "weight": 1.0}, {"source": "gstack_gstack_main_design_test_gallery_test_ts", "target": "path", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\test\\gallery.test.ts", "source_location": "L8", "weight": 1.0}, {"source": "gstack_gstack_main_design_test_gallery_test_ts", "target": "gallery_test_createtestpng", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\test\\gallery.test.ts", "source_location": "L12", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\8bcf4597c4f155f022a5f4a7f8bac5a06f98b7bfce688f5a290b86ced541c8ae.json
+```
+{"nodes": [{"id": "lib_utils_content_rating_ts", "label": "content-rating.ts", "file_type": "code", "source_file": "lib\\utils\\content-rating.ts", "source_location": "L1"}, {"id": "content_rating_calculateinitialcontentrating", "label": "calculateInitialContentRating()", "file_type": "code", "source_file": "lib\\utils\\content-rating.ts", "source_location": "L27"}], "edges": [{"source": "lib_utils_content_rating_ts", "target": "lib_utils_db_schema", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\utils\\content-rating.ts", "source_location": "L1", "weight": 1.0}, {"source": "lib_utils_content_rating_ts", "target": "content_rating_calculateinitialcontentrating", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\utils\\content-rating.ts", "source_location": "L27", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\8c15c7870c99176a3c60b8e0a646f065c38e9131f76f3c8985324397e6b4a141.json
@@ -4603,6 +5053,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "gstack_gstack_main_design_src_generate_ts", "label": "generate.ts", "file_type": "code", "source_file": "gstack\\gstack-main\\design\\src\\generate.ts", "source_location": "L1"}, {"id": "generate_callimagegeneration", "label": "callImageGeneration()", "file_type": "code", "source_file": "gstack\\gstack-main\\design\\src\\generate.ts", "source_location": "L33"}, {"id": "generate_generate", "label": "generate()", "file_type": "code", "source_file": "gstack\\gstack-main\\design\\src\\generate.ts", "source_location": "L90"}], "edges": [{"source": "gstack_gstack_main_design_src_generate_ts", "target": "fs", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\generate.ts", "source_location": "L5", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_generate_ts", "target": "path", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\generate.ts", "source_location": "L6", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_generate_ts", "target": "gstack_gstack_main_design_src_auth", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\generate.ts", "source_location": "L7", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_generate_ts", "target": "gstack_gstack_main_design_src_brief", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\generate.ts", "source_location": "L8", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_generate_ts", "target": "gstack_gstack_main_design_src_session", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\generate.ts", "source_location": "L9", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_generate_ts", "target": "gstack_gstack_main_design_src_check", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\generate.ts", "source_location": "L10", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_generate_ts", "target": "generate_callimagegeneration", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\generate.ts", "source_location": "L33", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_generate_ts", "target": "generate_generate", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\generate.ts", "source_location": "L90", "weight": 1.0}, {"source": "generate_generate", "target": "generate_callimagegeneration", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\generate.ts", "source_location": "L111", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\8f0075248fcb2da04e52e81457a7d328c472dc2d5eae931877acd846f4cc1d09.json
+```
+{"nodes": [{"id": "app_sitemap_ts", "label": "sitemap.ts", "file_type": "code", "source_file": "app\\sitemap.ts", "source_location": "L1"}, {"id": "sitemap_isindexablespiritmeta", "label": "isIndexableSpiritMeta()", "file_type": "code", "source_file": "app\\sitemap.ts", "source_location": "L13"}, {"id": "sitemap_sitemap", "label": "sitemap()", "file_type": "code", "source_file": "app\\sitemap.ts", "source_location": "L46"}], "edges": [{"source": "app_sitemap_ts", "target": "next", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\sitemap.ts", "source_location": "L1", "weight": 1.0}, {"source": "app_sitemap_ts", "target": "data_connect_client", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\sitemap.ts", "source_location": "L2", "weight": 1.0}, {"source": "app_sitemap_ts", "target": "spirits_guide_data", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\sitemap.ts", "source_location": "L3", "weight": 1.0}, {"source": "app_sitemap_ts", "target": "sitemap_isindexablespiritmeta", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\sitemap.ts", "source_location": "L13", "weight": 1.0}, {"source": "app_sitemap_ts", "target": "sitemap_sitemap", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\sitemap.ts", "source_location": "L46", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\8f2247498c1c5c3de39add0e447d669d3b521387e043c0b2d95df6943e1dbfed.json
 ```
 {"nodes": [{"id": "scripts_reset_artifacts_js", "label": "reset_artifacts.js", "file_type": "code", "source_file": "scripts\\reset_artifacts.js", "source_location": "L1"}, {"id": "reset_artifacts_resetartifacts", "label": "resetArtifacts()", "file_type": "code", "source_file": "scripts\\reset_artifacts.js", "source_location": "L28"}], "edges": [{"source": "scripts_reset_artifacts_js", "target": "reset_artifacts_resetartifacts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\reset_artifacts.js", "source_location": "L28", "weight": 1.0}]}
@@ -4628,6 +5083,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "components_common_adslot_tsx", "label": "AdSlot.tsx", "file_type": "code", "source_file": "components\\common\\AdSlot.tsx", "source_location": "L1"}, {"id": "adslot_adslot", "label": "AdSlot()", "file_type": "code", "source_file": "components\\common\\AdSlot.tsx", "source_location": "L17"}], "edges": [{"source": "components_common_adslot_tsx", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\common\\AdSlot.tsx", "source_location": "L3", "weight": 1.0}, {"source": "components_common_adslot_tsx", "target": "googlead", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\common\\AdSlot.tsx", "source_location": "L4", "weight": 1.0}, {"source": "components_common_adslot_tsx", "target": "adslot_adslot", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\common\\AdSlot.tsx", "source_location": "L17", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\903f044f0517373507211cb05c35e2af1bdd67dc7322a13baee6d19c6ce9f5a2.json
+```
+{"nodes": [{"id": "scripts_final_audit_ts", "label": "final-audit.ts", "file_type": "code", "source_file": "scripts\\final-audit.ts", "source_location": "L1"}, {"id": "final_audit_green", "label": "GREEN()", "file_type": "code", "source_file": "scripts\\final-audit.ts", "source_location": "L32"}, {"id": "final_audit_red", "label": "RED()", "file_type": "code", "source_file": "scripts\\final-audit.ts", "source_location": "L33"}, {"id": "final_audit_bold", "label": "BOLD()", "file_type": "code", "source_file": "scripts\\final-audit.ts", "source_location": "L34"}, {"id": "final_audit_getfirestorecount", "label": "getFirestoreCount()", "file_type": "code", "source_file": "scripts\\final-audit.ts", "source_location": "L36"}, {"id": "final_audit_getdccount", "label": "getDcCount()", "file_type": "code", "source_file": "scripts\\final-audit.ts", "source_location": "L41"}, {"id": "final_audit_main", "label": "main()", "file_type": "code", "source_file": "scripts\\final-audit.ts", "source_location": "L46"}], "edges": [{"source": "scripts_final_audit_ts", "target": "firebase_admin", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\final-audit.ts", "source_location": "L6", "weight": 1.0}, {"source": "scripts_final_audit_ts", "target": "data_connect", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\final-audit.ts", "source_location": "L7", "weight": 1.0}, {"source": "scripts_final_audit_ts", "target": "dotenv", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\final-audit.ts", "source_location": "L8", "weight": 1.0}, {"source": "scripts_final_audit_ts", "target": "final_audit_green", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\final-audit.ts", "source_location": "L32", "weight": 1.0}, {"source": "scripts_final_audit_ts", "target": "final_audit_red", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\final-audit.ts", "source_location": "L33", "weight": 1.0}, {"source": "scripts_final_audit_ts", "target": "final_audit_bold", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\final-audit.ts", "source_location": "L34", "weight": 1.0}, {"source": "scripts_final_audit_ts", "target": "final_audit_getfirestorecount", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\final-audit.ts", "source_location": "L36", "weight": 1.0}, {"source": "scripts_final_audit_ts", "target": "final_audit_getdccount", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\final-audit.ts", "source_location": "L41", "weight": 1.0}, {"source": "scripts_final_audit_ts", "target": "final_audit_main", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\final-audit.ts", "source_location": "L46", "weight": 1.0}, {"source": "final_audit_main", "target": "final_audit_bold", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\final-audit.ts", "source_location": "L47", "weight": 1.0}, {"source": "final_audit_main", "target": "final_audit_getfirestorecount", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\final-audit.ts", "source_location": "L60", "weight": 1.0}, {"source": "final_audit_main", "target": "final_audit_getdccount", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\final-audit.ts", "source_location": "L61", "weight": 1.0}, {"source": "final_audit_main", "target": "final_audit_green", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\final-audit.ts", "source_location": "L66", "weight": 1.0}, {"source": "final_audit_main", "target": "final_audit_red", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\final-audit.ts", "source_location": "L66", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\90bf0a761130be7b5e9d71bec709b58e730729a94d218a672f120eaa8546a45c.json
 ```
 {"nodes": [{"id": "lib_db_paths_ts", "label": "paths.ts", "file_type": "code", "source_file": "lib\\db\\paths.ts", "source_location": "L1"}], "edges": []}
@@ -4646,6 +5106,11 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\92ef335a134e14e30e38197f2d73cecb313e6ca105e58fffe24d8ca6e0ce2b2e.json
 ```
 {"nodes": [{"id": "app_lang_explore_loading_tsx", "label": "loading.tsx", "file_type": "code", "source_file": "app\\[lang]\\explore\\loading.tsx", "source_location": "L1"}, {"id": "loading_explorecardskeleton", "label": "ExploreCardSkeleton()", "file_type": "code", "source_file": "app\\[lang]\\explore\\loading.tsx", "source_location": "L8"}, {"id": "loading_exploreloading", "label": "ExploreLoading()", "file_type": "code", "source_file": "app\\[lang]\\explore\\loading.tsx", "source_location": "L30"}], "edges": [{"source": "app_lang_explore_loading_tsx", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\explore\\loading.tsx", "source_location": "L3", "weight": 1.0}, {"source": "app_lang_explore_loading_tsx", "target": "loading_explorecardskeleton", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\explore\\loading.tsx", "source_location": "L8", "weight": 1.0}, {"source": "app_lang_explore_loading_tsx", "target": "loading_exploreloading", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\explore\\loading.tsx", "source_location": "L30", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\9305d6c01b84afde8577fcbffef485e1432c827c397eacc0c499823405de70ec.json
+```
+{"nodes": [{"id": "app_lang_contents_wiki_category_page_tsx", "label": "page.tsx", "file_type": "code", "source_file": "app\\[lang]\\contents\\wiki\\[category]\\page.tsx", "source_location": "L1"}, {"id": "page_generatemetadata", "label": "generateMetadata()", "file_type": "code", "source_file": "app\\[lang]\\contents\\wiki\\[category]\\page.tsx", "source_location": "L38"}], "edges": [{"source": "app_lang_contents_wiki_category_page_tsx", "target": "navigation", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\wiki\\[category]\\page.tsx", "source_location": "L3", "weight": 1.0}, {"source": "app_lang_contents_wiki_category_page_tsx", "target": "next", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\wiki\\[category]\\page.tsx", "source_location": "L4", "weight": 1.0}, {"source": "app_lang_contents_wiki_category_page_tsx", "target": "link", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\wiki\\[category]\\page.tsx", "source_location": "L5", "weight": 1.0}, {"source": "app_lang_contents_wiki_category_page_tsx", "target": "wiki_resolver", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\wiki\\[category]\\page.tsx", "source_location": "L6", "weight": 1.0}, {"source": "app_lang_contents_wiki_category_page_tsx", "target": "db", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\wiki\\[category]\\page.tsx", "source_location": "L7", "weight": 1.0}, {"source": "app_lang_contents_wiki_category_page_tsx", "target": "spiritguidelayout", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\wiki\\[category]\\page.tsx", "source_location": "L8", "weight": 1.0}, {"source": "app_lang_contents_wiki_category_page_tsx", "target": "navigation", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\wiki\\[category]\\page.tsx", "source_location": "L9", "weight": 1.0}, {"source": "app_lang_contents_wiki_category_page_tsx", "target": "seo_url", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\wiki\\[category]\\page.tsx", "source_location": "L10", "weight": 1.0}, {"source": "app_lang_contents_wiki_category_page_tsx", "target": "wiki_spirit_match", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\wiki\\[category]\\page.tsx", "source_location": "L11", "weight": 1.0}, {"source": "app_lang_contents_wiki_category_page_tsx", "target": "page_generatemetadata", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\wiki\\[category]\\page.tsx", "source_location": "L38", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\934e65ab797cc7b1abf3be78d86ea8831d515144897eb051118c244f91b29aaf.json
@@ -4681,6 +5146,11 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\95cd581dcf33bbe438d90668ba3291878ee657a67b404a33c6c534d048f693b9.json
 ```
 {"nodes": [{"id": "gstack_gstack_main_test_skill_e2e_qa_workflow_test_ts", "label": "skill-e2e-qa-workflow.test.ts", "file_type": "code", "source_file": "gstack\\gstack-main\\test\\skill-e2e-qa-workflow.test.ts", "source_location": "L1"}, {"id": "skill_e2e_qa_workflow_test_run", "label": "run()", "file_type": "code", "source_file": "gstack\\gstack-main\\test\\skill-e2e-qa-workflow.test.ts", "source_location": "L96"}, {"id": "skill_e2e_qa_workflow_test_fetch", "label": "fetch()", "file_type": "code", "source_file": "gstack\\gstack-main\\test\\skill-e2e-qa-workflow.test.ts", "source_location": "L209"}], "edges": [{"source": "gstack_gstack_main_test_skill_e2e_qa_workflow_test_ts", "target": "bun_test", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\skill-e2e-qa-workflow.test.ts", "source_location": "L1", "weight": 1.0}, {"source": "gstack_gstack_main_test_skill_e2e_qa_workflow_test_ts", "target": "gstack_gstack_main_test_helpers_session_runner", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\skill-e2e-qa-workflow.test.ts", "source_location": "L2", "weight": 1.0}, {"source": "gstack_gstack_main_test_skill_e2e_qa_workflow_test_ts", "target": "gstack_gstack_main_test_helpers_e2e_helpers", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\skill-e2e-qa-workflow.test.ts", "source_location": "L3", "weight": 1.0}, {"source": "gstack_gstack_main_test_skill_e2e_qa_workflow_test_ts", "target": "gstack_gstack_main_test_browse_test_test_server", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\skill-e2e-qa-workflow.test.ts", "source_location": "L9", "weight": 1.0}, {"source": "gstack_gstack_main_test_skill_e2e_qa_workflow_test_ts", "target": "child_process", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\skill-e2e-qa-workflow.test.ts", "source_location": "L10", "weight": 1.0}, {"source": "gstack_gstack_main_test_skill_e2e_qa_workflow_test_ts", "target": "fs", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\skill-e2e-qa-workflow.test.ts", "source_location": "L11", "weight": 1.0}, {"source": "gstack_gstack_main_test_skill_e2e_qa_workflow_test_ts", "target": "path", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\skill-e2e-qa-workflow.test.ts", "source_location": "L12", "weight": 1.0}, {"source": "gstack_gstack_main_test_skill_e2e_qa_workflow_test_ts", "target": "os", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\skill-e2e-qa-workflow.test.ts", "source_location": "L13", "weight": 1.0}, {"source": "gstack_gstack_main_test_skill_e2e_qa_workflow_test_ts", "target": "skill_e2e_qa_workflow_test_run", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\skill-e2e-qa-workflow.test.ts", "source_location": "L96", "weight": 1.0}, {"source": "gstack_gstack_main_test_skill_e2e_qa_workflow_test_ts", "target": "skill_e2e_qa_workflow_test_run", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\skill-e2e-qa-workflow.test.ts", "source_location": "L196", "weight": 1.0}, {"source": "gstack_gstack_main_test_skill_e2e_qa_workflow_test_ts", "target": "skill_e2e_qa_workflow_test_fetch", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\skill-e2e-qa-workflow.test.ts", "source_location": "L209", "weight": 1.0}, {"source": "gstack_gstack_main_test_skill_e2e_qa_workflow_test_ts", "target": "skill_e2e_qa_workflow_test_run", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\skill-e2e-qa-workflow.test.ts", "source_location": "L315", "weight": 1.0}, {"source": "gstack_gstack_main_test_skill_e2e_qa_workflow_test_ts", "target": "skill_e2e_qa_workflow_test_fetch", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\skill-e2e-qa-workflow.test.ts", "source_location": "L327", "weight": 1.0}, {"source": "gstack_gstack_main_test_skill_e2e_qa_workflow_test_ts", "target": "skill_e2e_qa_workflow_test_run", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\skill-e2e-qa-workflow.test.ts", "source_location": "L363", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\970dbf5385a845633b8c044dece04e8c19170d5b1d8b592a46337ee187525b3a.json
+```
+{"nodes": [{"id": "src_dataconnect_admin_generated_index_d_ts", "label": "index.d.ts", "file_type": "code", "source_file": "src\\dataconnect-admin-generated\\index.d.ts", "source_location": "L1"}], "edges": [{"source": "src_dataconnect_admin_generated_index_d_ts", "target": "data_connect", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-admin-generated\\index.d.ts", "source_location": "L1", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\9761d41adfdac3b847a24aed085c5004e5a6c90e1f67c7e625bbfc2847bbcf2d.json
@@ -4743,6 +5213,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "components_cabinet_mindmap_tsx", "label": "MindMap.tsx", "file_type": "code", "source_file": "components\\cabinet\\MindMap.tsx", "source_location": "L1"}, {"id": "mindmap_getcategorycolor", "label": "getCategoryColor()", "file_type": "code", "source_file": "components\\cabinet\\MindMap.tsx", "source_location": "L58"}, {"id": "mindmap_getcategorycolorvalue", "label": "getCategoryColorValue()", "file_type": "code", "source_file": "components\\cabinet\\MindMap.tsx", "source_location": "L67"}, {"id": "mindmap_getparentposition", "label": "getParentPosition()", "file_type": "code", "source_file": "components\\cabinet\\MindMap.tsx", "source_location": "L77"}], "edges": [{"source": "components_cabinet_mindmap_tsx", "target": "framer_motion", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\MindMap.tsx", "source_location": "L3", "weight": 1.0}, {"source": "components_cabinet_mindmap_tsx", "target": "flavor_engine", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\MindMap.tsx", "source_location": "L4", "weight": 1.0}, {"source": "components_cabinet_mindmap_tsx", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\MindMap.tsx", "source_location": "L5", "weight": 1.0}, {"source": "components_cabinet_mindmap_tsx", "target": "mindmap_getcategorycolor", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\MindMap.tsx", "source_location": "L58", "weight": 1.0}, {"source": "components_cabinet_mindmap_tsx", "target": "mindmap_getcategorycolorvalue", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\MindMap.tsx", "source_location": "L67", "weight": 1.0}, {"source": "components_cabinet_mindmap_tsx", "target": "mindmap_getparentposition", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\MindMap.tsx", "source_location": "L77", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\9da88d1744242b0db6a1a1d39b248b72499d4acc52729cca4ef538903464910c.json
+```
+{"nodes": [{"id": "scripts_audit_sql_ts", "label": "audit-sql.ts", "file_type": "code", "source_file": "scripts\\audit-sql.ts", "source_location": "L1"}, {"id": "audit_sql_audit", "label": "audit()", "file_type": "code", "source_file": "scripts\\audit-sql.ts", "source_location": "L28"}], "edges": [{"source": "scripts_audit_sql_ts", "target": "data_connect", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\audit-sql.ts", "source_location": "L1", "weight": 1.0}, {"source": "scripts_audit_sql_ts", "target": "firebase_admin", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\audit-sql.ts", "source_location": "L2", "weight": 1.0}, {"source": "scripts_audit_sql_ts", "target": "dotenv", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\audit-sql.ts", "source_location": "L3", "weight": 1.0}, {"source": "scripts_audit_sql_ts", "target": "audit_sql_audit", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\audit-sql.ts", "source_location": "L28", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\9e0d29051bcfcdae2754d5409f3e1cb3c9a4a54b372b00bcdb3f3fb6ff569b96.json
 ```
 {"nodes": [{"id": "app_lang_contents_worldcup_layout_tsx", "label": "layout.tsx", "file_type": "code", "source_file": "app\\[lang]\\contents\\worldcup\\layout.tsx", "source_location": "L1"}, {"id": "layout_worldcuplayout", "label": "WorldCupLayout()", "file_type": "code", "source_file": "app\\[lang]\\contents\\worldcup\\layout.tsx", "source_location": "L1"}], "edges": [{"source": "app_lang_contents_worldcup_layout_tsx", "target": "layout_worldcuplayout", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\worldcup\\layout.tsx", "source_location": "L1", "weight": 1.0}]}
@@ -4763,6 +5238,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "lib_constants_wiki_grapes_savagnin_ts", "label": "savagnin.ts", "file_type": "code", "source_file": "lib\\constants\\wiki\\grapes\\savagnin.ts", "source_location": "L1"}], "edges": [{"source": "lib_constants_wiki_grapes_savagnin_ts", "target": "lib_constants_wiki_grapes_types", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\constants\\wiki\\grapes\\savagnin.ts", "source_location": "L1", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\a0306bac6208909c35f58905fe27abb279ab50f516a3370e906e33e9daf7154d.json
+```
+{"nodes": [{"id": "src_dataconnect_generated_index_cjs_js", "label": "index.cjs.js", "file_type": "code", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L1"}, {"id": "index_cjs_upsertuserref", "label": "upsertUserRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L10"}, {"id": "index_cjs_upsertspiritref", "label": "upsertSpiritRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L24"}, {"id": "index_cjs_upsertreviewref", "label": "upsertReviewRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L38"}, {"id": "index_cjs_upsertnewsref", "label": "upsertNewsRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L52"}, {"id": "index_cjs_upsertcabinetref", "label": "upsertCabinetRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L66"}, {"id": "index_cjs_upsertmodificationrequestref", "label": "upsertModificationRequestRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L80"}, {"id": "index_cjs_upsertworldcupresultref", "label": "upsertWorldCupResultRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L94"}, {"id": "index_cjs_listspiritsref", "label": "listSpiritsRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L108"}, {"id": "index_cjs_listnewarrivalsref", "label": "listNewArrivalsRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L123"}, {"id": "index_cjs_getspiritref", "label": "getSpiritRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L138"}, {"id": "index_cjs_getuserprofileref", "label": "getUserProfileRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L153"}, {"id": "index_cjs_listnewsarticlesref", "label": "listNewsArticlesRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L168"}, {"id": "index_cjs_getnewsarticleref", "label": "getNewsArticleRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L183"}, {"id": "index_cjs_auditallusersref", "label": "auditAllUsersRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L198"}, {"id": "index_cjs_auditallnewsref", "label": "auditAllNewsRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L213"}, {"id": "index_cjs_auditallspiritsref", "label": "auditAllSpiritsRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L228"}, {"id": "index_cjs_auditallreviewsref", "label": "auditAllReviewsRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L243"}, {"id": "index_cjs_listspiritreviewsref", "label": "listSpiritReviewsRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L258"}, {"id": "index_cjs_getspiritreviewscountref", "label": "getSpiritReviewsCountRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L273"}, {"id": "index_cjs_listspiritsforsitemapref", "label": "listSpiritsForSitemapRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L288"}, {"id": "index_cjs_getworldcupresultref", "label": "getWorldCupResultRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L303"}, {"id": "index_cjs_listspiritsforworldcupref", "label": "listSpiritsForWorldCupRef()", "file_type": "code", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L318"}], "edges": [{"source": "src_dataconnect_generated_index_cjs_js", "target": "index_cjs_upsertuserref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L10", "weight": 1.0}, {"source": "src_dataconnect_generated_index_cjs_js", "target": "index_cjs_upsertspiritref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L24", "weight": 1.0}, {"source": "src_dataconnect_generated_index_cjs_js", "target": "index_cjs_upsertreviewref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L38", "weight": 1.0}, {"source": "src_dataconnect_generated_index_cjs_js", "target": "index_cjs_upsertnewsref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L52", "weight": 1.0}, {"source": "src_dataconnect_generated_index_cjs_js", "target": "index_cjs_upsertcabinetref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L66", "weight": 1.0}, {"source": "src_dataconnect_generated_index_cjs_js", "target": "index_cjs_upsertmodificationrequestref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L80", "weight": 1.0}, {"source": "src_dataconnect_generated_index_cjs_js", "target": "index_cjs_upsertworldcupresultref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L94", "weight": 1.0}, {"source": "src_dataconnect_generated_index_cjs_js", "target": "index_cjs_listspiritsref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L108", "weight": 1.0}, {"source": "src_dataconnect_generated_index_cjs_js", "target": "index_cjs_listnewarrivalsref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L123", "weight": 1.0}, {"source": "src_dataconnect_generated_index_cjs_js", "target": "index_cjs_getspiritref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L138", "weight": 1.0}, {"source": "src_dataconnect_generated_index_cjs_js", "target": "index_cjs_getuserprofileref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L153", "weight": 1.0}, {"source": "src_dataconnect_generated_index_cjs_js", "target": "index_cjs_listnewsarticlesref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L168", "weight": 1.0}, {"source": "src_dataconnect_generated_index_cjs_js", "target": "index_cjs_getnewsarticleref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L183", "weight": 1.0}, {"source": "src_dataconnect_generated_index_cjs_js", "target": "index_cjs_auditallusersref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L198", "weight": 1.0}, {"source": "src_dataconnect_generated_index_cjs_js", "target": "index_cjs_auditallnewsref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L213", "weight": 1.0}, {"source": "src_dataconnect_generated_index_cjs_js", "target": "index_cjs_auditallspiritsref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L228", "weight": 1.0}, {"source": "src_dataconnect_generated_index_cjs_js", "target": "index_cjs_auditallreviewsref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L243", "weight": 1.0}, {"source": "src_dataconnect_generated_index_cjs_js", "target": "index_cjs_listspiritreviewsref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L258", "weight": 1.0}, {"source": "src_dataconnect_generated_index_cjs_js", "target": "index_cjs_getspiritreviewscountref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L273", "weight": 1.0}, {"source": "src_dataconnect_generated_index_cjs_js", "target": "index_cjs_listspiritsforsitemapref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L288", "weight": 1.0}, {"source": "src_dataconnect_generated_index_cjs_js", "target": "index_cjs_getworldcupresultref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L303", "weight": 1.0}, {"source": "src_dataconnect_generated_index_cjs_js", "target": "index_cjs_listspiritsforworldcupref", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-generated\\index.cjs.js", "source_location": "L318", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\a0694c2f83c27610ec56c43a7102e4741e1011e33a6c2220feff0744c75fd81c.json
 ```
 {"nodes": [{"id": "app_api_ai_sommelier_route_ts", "label": "route.ts", "file_type": "code", "source_file": "app\\api\\ai\\sommelier\\route.ts", "source_location": "L1"}, {"id": "route_post", "label": "POST()", "file_type": "code", "source_file": "app\\api\\ai\\sommelier\\route.ts", "source_location": "L17"}], "edges": [{"source": "app_api_ai_sommelier_route_ts", "target": "server", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\api\\ai\\sommelier\\route.ts", "source_location": "L1", "weight": 1.0}, {"source": "app_api_ai_sommelier_route_ts", "target": "generative_ai", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\api\\ai\\sommelier\\route.ts", "source_location": "L2", "weight": 1.0}, {"source": "app_api_ai_sommelier_route_ts", "target": "db", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\api\\ai\\sommelier\\route.ts", "source_location": "L3", "weight": 1.0}, {"source": "app_api_ai_sommelier_route_ts", "target": "spirits_metadata_json", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\api\\ai\\sommelier\\route.ts", "source_location": "L4", "weight": 1.0}, {"source": "app_api_ai_sommelier_route_ts", "target": "route_post", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\api\\ai\\sommelier\\route.ts", "source_location": "L17", "weight": 1.0}]}
@@ -4771,6 +5251,11 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\a069dd0d0a4c0cc3ad66984baeca094b5c14e18bbe9e28c918068b6544655423.json
 ```
 {"nodes": [{"id": "lib_utils_flavor_engine_ts", "label": "flavor-engine.ts", "file_type": "code", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L1"}, {"id": "flavor_engine_calculatesimilarity", "label": "calculateSimilarity()", "file_type": "code", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L230"}, {"id": "flavor_engine_generateflavornodes", "label": "generateFlavorNodes()", "file_type": "code", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L261"}, {"id": "flavor_engine_generatehierarchicalnodes", "label": "generateHierarchicalNodes()", "file_type": "code", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L355"}, {"id": "flavor_engine_extractkeywords", "label": "extractKeywords()", "file_type": "code", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L468"}, {"id": "flavor_engine_calculatecategorydistribution", "label": "calculateCategoryDistribution()", "file_type": "code", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L504"}, {"id": "flavor_engine_generatepersona", "label": "generatePersona()", "file_type": "code", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L524"}, {"id": "flavor_engine_analyzecellar", "label": "analyzeCellar()", "file_type": "code", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L570"}, {"id": "flavor_engine_loadcellarfromstorage", "label": "loadCellarFromStorage()", "file_type": "code", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L626"}], "edges": [{"source": "lib_utils_flavor_engine_ts", "target": "flavor_engine_calculatesimilarity", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L230", "weight": 1.0}, {"source": "lib_utils_flavor_engine_ts", "target": "flavor_engine_generateflavornodes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L261", "weight": 1.0}, {"source": "lib_utils_flavor_engine_ts", "target": "flavor_engine_generatehierarchicalnodes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L355", "weight": 1.0}, {"source": "lib_utils_flavor_engine_ts", "target": "flavor_engine_extractkeywords", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L468", "weight": 1.0}, {"source": "lib_utils_flavor_engine_ts", "target": "flavor_engine_calculatecategorydistribution", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L504", "weight": 1.0}, {"source": "lib_utils_flavor_engine_ts", "target": "flavor_engine_generatepersona", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L524", "weight": 1.0}, {"source": "lib_utils_flavor_engine_ts", "target": "flavor_engine_analyzecellar", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L570", "weight": 1.0}, {"source": "lib_utils_flavor_engine_ts", "target": "flavor_engine_loadcellarfromstorage", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L626", "weight": 1.0}, {"source": "flavor_engine_analyzecellar", "target": "flavor_engine_extractkeywords", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L589", "weight": 1.0}, {"source": "flavor_engine_analyzecellar", "target": "flavor_engine_calculatecategorydistribution", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L596", "weight": 1.0}, {"source": "flavor_engine_analyzecellar", "target": "flavor_engine_generateflavornodes", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L603", "weight": 1.0}, {"source": "flavor_engine_analyzecellar", "target": "flavor_engine_generatehierarchicalnodes", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L606", "weight": 1.0}, {"source": "flavor_engine_analyzecellar", "target": "flavor_engine_generatepersona", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\utils\\flavor-engine.ts", "source_location": "L609", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\a0e18352b90d0c6e5ad435b2890bb298bb908a6b0021be3dc536dc3b8e63e8f4.json
+```
+{"nodes": [{"id": "app_lang_page_tsx", "label": "page.tsx", "file_type": "code", "source_file": "app\\[lang]\\page.tsx", "source_location": "L1"}], "edges": [{"source": "app_lang_page_tsx", "target": "data_connect_client", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\page.tsx", "source_location": "L3", "weight": 1.0}, {"source": "app_lang_page_tsx", "target": "homeclient", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\page.tsx", "source_location": "L4", "weight": 1.0}, {"source": "app_lang_page_tsx", "target": "newssection", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\page.tsx", "source_location": "L5", "weight": 1.0}, {"source": "app_lang_page_tsx", "target": "i18n_config", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\page.tsx", "source_location": "L6", "weight": 1.0}, {"source": "app_lang_page_tsx", "target": "get_dictionary", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\page.tsx", "source_location": "L7", "weight": 1.0}, {"source": "app_lang_page_tsx", "target": "wiki_snippet", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\page.tsx", "source_location": "L8", "weight": 1.0}, {"source": "app_lang_page_tsx", "target": "script", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\page.tsx", "source_location": "L9", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\a32518b41e4471ec4749060ef6c99e7d8fd54d8c58800222a0453af41b649e05.json
@@ -4821,6 +5306,11 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\a7ad18624e833ea9ac7d83fbad870f398148661b21a3b3fa8e2f69b6cc3e2e3e.json
 ```
 {"nodes": [{"id": "lib_db_firestore_rest_ts", "label": "firestore-rest.ts", "file_type": "code", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L1"}, {"id": "firestore_rest_fromfirestore", "label": "fromFirestore()", "file_type": "code", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L12"}, {"id": "firestore_rest_tofirestorevalue", "label": "toFirestoreValue()", "file_type": "code", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L44"}, {"id": "firestore_rest_fromfirestorevalue", "label": "fromFirestoreValue()", "file_type": "code", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L79"}, {"id": "firestore_rest_tofirestore", "label": "toFirestore()", "file_type": "code", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L107"}, {"id": "firestore_rest_parsefirestorefields", "label": "parseFirestoreFields()", "file_type": "code", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L122"}, {"id": "firestore_rest_getallspiritids", "label": "getAllSpiritIds()", "file_type": "code", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L138"}, {"id": "firestore_rest_getpublishedspiritids", "label": "getPublishedSpiritIds()", "file_type": "code", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L211"}, {"id": "firestore_rest_getpublishedspiritmeta", "label": "getPublishedSpiritMeta()", "file_type": "code", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L299"}, {"id": "firestore_rest_getpublishedspiritmetawithquality", "label": "getPublishedSpiritMetaWithQuality()", "file_type": "code", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L384"}], "edges": [{"source": "lib_db_firestore_rest_ts", "target": "lib_db_db_schema", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L1", "weight": 1.0}, {"source": "lib_db_firestore_rest_ts", "target": "lib_db_auth_service_account", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L2", "weight": 1.0}, {"source": "lib_db_firestore_rest_ts", "target": "lib_db_paths", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L3", "weight": 1.0}, {"source": "lib_db_firestore_rest_ts", "target": "lib_db_utils_search_keywords", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L4", "weight": 1.0}, {"source": "lib_db_firestore_rest_ts", "target": "firestore_rest_fromfirestore", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L12", "weight": 1.0}, {"source": "lib_db_firestore_rest_ts", "target": "firestore_rest_tofirestorevalue", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L44", "weight": 1.0}, {"source": "lib_db_firestore_rest_ts", "target": "firestore_rest_fromfirestorevalue", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L79", "weight": 1.0}, {"source": "lib_db_firestore_rest_ts", "target": "firestore_rest_tofirestore", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L107", "weight": 1.0}, {"source": "lib_db_firestore_rest_ts", "target": "firestore_rest_parsefirestorefields", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L122", "weight": 1.0}, {"source": "lib_db_firestore_rest_ts", "target": "firestore_rest_getallspiritids", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L138", "weight": 1.0}, {"source": "lib_db_firestore_rest_ts", "target": "firestore_rest_getpublishedspiritids", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L211", "weight": 1.0}, {"source": "lib_db_firestore_rest_ts", "target": "firestore_rest_getpublishedspiritmeta", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L299", "weight": 1.0}, {"source": "lib_db_firestore_rest_ts", "target": "firestore_rest_getpublishedspiritmetawithquality", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L384", "weight": 1.0}, {"source": "firestore_rest_tofirestore", "target": "firestore_rest_tofirestorevalue", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L111", "weight": 1.0}, {"source": "firestore_rest_parsefirestorefields", "target": "firestore_rest_fromfirestorevalue", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L125", "weight": 1.0}, {"source": "firestore_rest_getpublishedspiritmetawithquality", "target": "firestore_rest_fromfirestorevalue", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L491", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\a88bb373814acc7246ad63dbf430bb9574940de1fb0be334c815ce4becadcb04.json
+```
+{"nodes": [{"id": "scripts_test_admin_sync_ts", "label": "test-admin-sync.ts", "file_type": "code", "source_file": "scripts\\test-admin-sync.ts", "source_location": "L1"}, {"id": "test_admin_sync_testadminsync", "label": "testAdminSync()", "file_type": "code", "source_file": "scripts\\test-admin-sync.ts", "source_location": "L6"}], "edges": [{"source": "scripts_test_admin_sync_ts", "target": "scripts_load_env", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\test-admin-sync.ts", "source_location": "L1", "weight": 1.0}, {"source": "scripts_test_admin_sync_ts", "target": "scripts_lib_db", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\test-admin-sync.ts", "source_location": "L2", "weight": 1.0}, {"source": "scripts_test_admin_sync_ts", "target": "scripts_lib_db_firestore_rest", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\test-admin-sync.ts", "source_location": "L3", "weight": 1.0}, {"source": "scripts_test_admin_sync_ts", "target": "scripts_lib_utils_content_rating", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\test-admin-sync.ts", "source_location": "L4", "weight": 1.0}, {"source": "scripts_test_admin_sync_ts", "target": "test_admin_sync_testadminsync", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\test-admin-sync.ts", "source_location": "L6", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\a8aa77468ac3834eb5580d8a4961d26e84ff3b1ab0300bd433566fa40a00c9b9.json
@@ -4886,6 +5376,11 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\ad8a3e8e559d0844e4ab054ea320a23bb93426f6570174c562b222816e892a01.json
 ```
 {"nodes": [{"id": "lib_constants_wiki_yakju_vs_cheongju_ts", "label": "yakju-vs-cheongju.ts", "file_type": "code", "source_file": "lib\\constants\\wiki\\yakju-vs-cheongju.ts", "source_location": "L1"}], "edges": [{"source": "lib_constants_wiki_yakju_vs_cheongju_ts", "target": "lib_constants_wiki_types", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\constants\\wiki\\yakju-vs-cheongju.ts", "source_location": "L1", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\ade11df7cc94527e169f357ace8400a22ef5be687bdc950940ed0f9803c4af49.json
+```
+{"nodes": [{"id": "scripts_test_tsx_env_ts", "label": "test-tsx-env.ts", "file_type": "code", "source_file": "scripts\\test-tsx-env.ts", "source_location": "L1"}], "edges": []}
 ```
 
 ### File: graphify-out\cache\ae1b6425681fbf5f8ec4ffe69b9bbda8075d5b9b73a1104be93d8917f163c1b6.json
@@ -4958,6 +5453,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "lib_constants_wiki_soju_diluted_ts", "label": "soju-diluted.ts", "file_type": "code", "source_file": "lib\\constants\\wiki\\soju-diluted.ts", "source_location": "L1"}], "edges": [{"source": "lib_constants_wiki_soju_diluted_ts", "target": "lib_constants_wiki_types", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\constants\\wiki\\soju-diluted.ts", "source_location": "L1", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\b6f49f0ec371308c4f866e35215237cfdbbe361156c95ce8c0b82e8043fee1e3.json
+```
+{"nodes": [{"id": "lib_db_firestore_rest_ts", "label": "firestore-rest.ts", "file_type": "code", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L1"}, {"id": "firestore_rest_fromfirestore", "label": "fromFirestore()", "file_type": "code", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L13"}, {"id": "firestore_rest_tofirestorevalue", "label": "toFirestoreValue()", "file_type": "code", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L45"}, {"id": "firestore_rest_fromfirestorevalue", "label": "fromFirestoreValue()", "file_type": "code", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L80"}, {"id": "firestore_rest_tofirestore", "label": "toFirestore()", "file_type": "code", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L108"}, {"id": "firestore_rest_parsefirestorefields", "label": "parseFirestoreFields()", "file_type": "code", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L123"}, {"id": "firestore_rest_getallspiritids", "label": "getAllSpiritIds()", "file_type": "code", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L139"}, {"id": "firestore_rest_getpublishedspiritids", "label": "getPublishedSpiritIds()", "file_type": "code", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L212"}, {"id": "firestore_rest_getpublishedspiritmeta", "label": "getPublishedSpiritMeta()", "file_type": "code", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L300"}, {"id": "firestore_rest_getpublishedspiritmetawithquality", "label": "getPublishedSpiritMetaWithQuality()", "file_type": "code", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L385"}], "edges": [{"source": "lib_db_firestore_rest_ts", "target": "lib_db_db_schema", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L1", "weight": 1.0}, {"source": "lib_db_firestore_rest_ts", "target": "lib_db_auth_service_account", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L2", "weight": 1.0}, {"source": "lib_db_firestore_rest_ts", "target": "lib_db_paths", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L3", "weight": 1.0}, {"source": "lib_db_firestore_rest_ts", "target": "lib_db_utils_search_keywords", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L4", "weight": 1.0}, {"source": "lib_db_firestore_rest_ts", "target": "lib_db_utils_content_rating", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L5", "weight": 1.0}, {"source": "lib_db_firestore_rest_ts", "target": "firestore_rest_fromfirestore", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L13", "weight": 1.0}, {"source": "lib_db_firestore_rest_ts", "target": "firestore_rest_tofirestorevalue", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L45", "weight": 1.0}, {"source": "lib_db_firestore_rest_ts", "target": "firestore_rest_fromfirestorevalue", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L80", "weight": 1.0}, {"source": "lib_db_firestore_rest_ts", "target": "firestore_rest_tofirestore", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L108", "weight": 1.0}, {"source": "lib_db_firestore_rest_ts", "target": "firestore_rest_parsefirestorefields", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L123", "weight": 1.0}, {"source": "lib_db_firestore_rest_ts", "target": "firestore_rest_getallspiritids", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L139", "weight": 1.0}, {"source": "lib_db_firestore_rest_ts", "target": "firestore_rest_getpublishedspiritids", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L212", "weight": 1.0}, {"source": "lib_db_firestore_rest_ts", "target": "firestore_rest_getpublishedspiritmeta", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L300", "weight": 1.0}, {"source": "lib_db_firestore_rest_ts", "target": "firestore_rest_getpublishedspiritmetawithquality", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L385", "weight": 1.0}, {"source": "firestore_rest_tofirestore", "target": "firestore_rest_tofirestorevalue", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L112", "weight": 1.0}, {"source": "firestore_rest_parsefirestorefields", "target": "firestore_rest_fromfirestorevalue", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L126", "weight": 1.0}, {"source": "firestore_rest_getpublishedspiritmetawithquality", "target": "firestore_rest_fromfirestorevalue", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\firestore-rest.ts", "source_location": "L492", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\b71bbd53487924c1c9ffdf5f501e18ba8f86fe331189367ff5e2e16662047c20.json
 ```
 {"nodes": [{"id": "gstack_gstack_main_browse_test_sidebar_agent_test_ts", "label": "sidebar-agent.test.ts", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent.test.ts", "source_location": "L1"}, {"id": "sidebar_agent_test_parsequeueline", "label": "parseQueueLine()", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent.test.ts", "source_location": "L17"}, {"id": "sidebar_agent_test_parsequeuefile", "label": "parseQueueFile()", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent.test.ts", "source_location": "L29"}, {"id": "sidebar_agent_test_writetoinbox", "label": "writeToInbox()", "file_type": "code", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent.test.ts", "source_location": "L40"}], "edges": [{"source": "gstack_gstack_main_browse_test_sidebar_agent_test_ts", "target": "bun_test", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent.test.ts", "source_location": "L9", "weight": 1.0}, {"source": "gstack_gstack_main_browse_test_sidebar_agent_test_ts", "target": "fs", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent.test.ts", "source_location": "L10", "weight": 1.0}, {"source": "gstack_gstack_main_browse_test_sidebar_agent_test_ts", "target": "path", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent.test.ts", "source_location": "L11", "weight": 1.0}, {"source": "gstack_gstack_main_browse_test_sidebar_agent_test_ts", "target": "os", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent.test.ts", "source_location": "L12", "weight": 1.0}, {"source": "gstack_gstack_main_browse_test_sidebar_agent_test_ts", "target": "sidebar_agent_test_parsequeueline", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent.test.ts", "source_location": "L17", "weight": 1.0}, {"source": "gstack_gstack_main_browse_test_sidebar_agent_test_ts", "target": "sidebar_agent_test_parsequeuefile", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent.test.ts", "source_location": "L29", "weight": 1.0}, {"source": "gstack_gstack_main_browse_test_sidebar_agent_test_ts", "target": "sidebar_agent_test_writetoinbox", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent.test.ts", "source_location": "L40", "weight": 1.0}, {"source": "sidebar_agent_test_parsequeuefile", "target": "sidebar_agent_test_parsequeueline", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\browse\\test\\sidebar-agent.test.ts", "source_location": "L33", "weight": 1.0}]}
@@ -4966,6 +5466,11 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\b74819b9841a26d998c4d133f8a413f6fd39a1788ce072623aac7e5536571580.json
 ```
 {"nodes": [{"id": "lib_constants_wiki_grapes_touriga_franca_ts", "label": "touriga-franca.ts", "file_type": "code", "source_file": "lib\\constants\\wiki\\grapes\\touriga-franca.ts", "source_location": "L1"}], "edges": [{"source": "lib_constants_wiki_grapes_touriga_franca_ts", "target": "lib_constants_wiki_grapes_types", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\constants\\wiki\\grapes\\touriga-franca.ts", "source_location": "L1", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\b81883e51cc24d189de2a9e15efc39308bfce011c7c1face8c483a09ea57bd44.json
+```
+{"nodes": [{"id": "components_cabinet_preferenceexploration_tsx", "label": "PreferenceExploration.tsx", "file_type": "code", "source_file": "components\\cabinet\\PreferenceExploration.tsx", "source_location": "L1"}, {"id": "preferenceexploration_preferenceexploration", "label": "PreferenceExploration()", "file_type": "code", "source_file": "components\\cabinet\\PreferenceExploration.tsx", "source_location": "L16"}], "edges": [{"source": "components_cabinet_preferenceexploration_tsx", "target": "framer_motion", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\PreferenceExploration.tsx", "source_location": "L3", "weight": 1.0}, {"source": "components_cabinet_preferenceexploration_tsx", "target": "flavorview", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\PreferenceExploration.tsx", "source_location": "L4", "weight": 1.0}, {"source": "components_cabinet_preferenceexploration_tsx", "target": "components_cabinet_guestoverlay", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\PreferenceExploration.tsx", "source_location": "L5", "weight": 1.0}, {"source": "components_cabinet_preferenceexploration_tsx", "target": "flavor_engine", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\PreferenceExploration.tsx", "source_location": "L6", "weight": 1.0}, {"source": "components_cabinet_preferenceexploration_tsx", "target": "preferenceexploration_preferenceexploration", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\PreferenceExploration.tsx", "source_location": "L16", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\b8687814928945a433acf5103c50da157130691e8e6b663553ef7edcd7988d27.json
@@ -4981,6 +5486,11 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\b9269ef8ebdc81c27b1a16c37cb57f91e1afe43859fcaab4c713b3db7517b9b4.json
 ```
 {"nodes": [{"id": "gstack_gstack_main_design_src_design_to_code_ts", "label": "design-to-code.ts", "file_type": "code", "source_file": "gstack\\gstack-main\\design\\src\\design-to-code.ts", "source_location": "L1"}, {"id": "design_to_code_generatedesigntocodeprompt", "label": "generateDesignToCodePrompt()", "file_type": "code", "source_file": "gstack\\gstack-main\\design\\src\\design-to-code.ts", "source_location": "L22"}], "edges": [{"source": "gstack_gstack_main_design_src_design_to_code_ts", "target": "fs", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\design-to-code.ts", "source_location": "L7", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_design_to_code_ts", "target": "gstack_gstack_main_design_src_auth", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\design-to-code.ts", "source_location": "L8", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_design_to_code_ts", "target": "gstack_gstack_main_design_src_memory", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\design-to-code.ts", "source_location": "L9", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_design_to_code_ts", "target": "design_to_code_generatedesigntocodeprompt", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\design-to-code.ts", "source_location": "L22", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\ba28f79658dbd2421511a72fd8e88e73bb6c4c6f390d2dec7a15c4330bb373b3.json
+```
+{"nodes": [{"id": "src_dataconnect_admin_generated_esm_index_esm_js", "label": "index.esm.js", "file_type": "code", "source_file": "src\\dataconnect-admin-generated\\esm\\index.esm.js", "source_location": "L1"}, {"id": "index_esm_createmovie", "label": "createMovie()", "file_type": "code", "source_file": "src\\dataconnect-admin-generated\\esm\\index.esm.js", "source_location": "L9"}, {"id": "index_esm_upsertuser", "label": "upsertUser()", "file_type": "code", "source_file": "src\\dataconnect-admin-generated\\esm\\index.esm.js", "source_location": "L15"}, {"id": "index_esm_addreview", "label": "addReview()", "file_type": "code", "source_file": "src\\dataconnect-admin-generated\\esm\\index.esm.js", "source_location": "L21"}, {"id": "index_esm_deletereview", "label": "deleteReview()", "file_type": "code", "source_file": "src\\dataconnect-admin-generated\\esm\\index.esm.js", "source_location": "L27"}, {"id": "index_esm_listmovies", "label": "listMovies()", "file_type": "code", "source_file": "src\\dataconnect-admin-generated\\esm\\index.esm.js", "source_location": "L33"}, {"id": "index_esm_listusers", "label": "listUsers()", "file_type": "code", "source_file": "src\\dataconnect-admin-generated\\esm\\index.esm.js", "source_location": "L39"}, {"id": "index_esm_listuserreviews", "label": "listUserReviews()", "file_type": "code", "source_file": "src\\dataconnect-admin-generated\\esm\\index.esm.js", "source_location": "L45"}, {"id": "index_esm_getmoviebyid", "label": "getMovieById()", "file_type": "code", "source_file": "src\\dataconnect-admin-generated\\esm\\index.esm.js", "source_location": "L51"}, {"id": "index_esm_searchmovie", "label": "searchMovie()", "file_type": "code", "source_file": "src\\dataconnect-admin-generated\\esm\\index.esm.js", "source_location": "L57"}], "edges": [{"source": "src_dataconnect_admin_generated_esm_index_esm_js", "target": "data_connect", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-admin-generated\\esm\\index.esm.js", "source_location": "L1", "weight": 1.0}, {"source": "src_dataconnect_admin_generated_esm_index_esm_js", "target": "index_esm_createmovie", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-admin-generated\\esm\\index.esm.js", "source_location": "L9", "weight": 1.0}, {"source": "src_dataconnect_admin_generated_esm_index_esm_js", "target": "index_esm_upsertuser", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-admin-generated\\esm\\index.esm.js", "source_location": "L15", "weight": 1.0}, {"source": "src_dataconnect_admin_generated_esm_index_esm_js", "target": "index_esm_addreview", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-admin-generated\\esm\\index.esm.js", "source_location": "L21", "weight": 1.0}, {"source": "src_dataconnect_admin_generated_esm_index_esm_js", "target": "index_esm_deletereview", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-admin-generated\\esm\\index.esm.js", "source_location": "L27", "weight": 1.0}, {"source": "src_dataconnect_admin_generated_esm_index_esm_js", "target": "index_esm_listmovies", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-admin-generated\\esm\\index.esm.js", "source_location": "L33", "weight": 1.0}, {"source": "src_dataconnect_admin_generated_esm_index_esm_js", "target": "index_esm_listusers", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-admin-generated\\esm\\index.esm.js", "source_location": "L39", "weight": 1.0}, {"source": "src_dataconnect_admin_generated_esm_index_esm_js", "target": "index_esm_listuserreviews", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-admin-generated\\esm\\index.esm.js", "source_location": "L45", "weight": 1.0}, {"source": "src_dataconnect_admin_generated_esm_index_esm_js", "target": "index_esm_getmoviebyid", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-admin-generated\\esm\\index.esm.js", "source_location": "L51", "weight": 1.0}, {"source": "src_dataconnect_admin_generated_esm_index_esm_js", "target": "index_esm_searchmovie", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\dataconnect-admin-generated\\esm\\index.esm.js", "source_location": "L57", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\ba387ecee7cc170460d3468a2f64b2296b8e69e4fbbdb0e072acbfa984d9b961.json
@@ -5023,9 +5533,19 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "gstack_gstack_main_scripts_resolvers_index_ts", "label": "index.ts", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\index.ts", "source_location": "L1"}], "edges": [{"source": "gstack_gstack_main_scripts_resolvers_index_ts", "target": "gstack_gstack_main_scripts_resolvers_types", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\index.ts", "source_location": "L6", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_index_ts", "target": "gstack_gstack_main_scripts_resolvers_preamble", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\index.ts", "source_location": "L9", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_index_ts", "target": "gstack_gstack_main_scripts_resolvers_preamble", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\index.ts", "source_location": "L10", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_index_ts", "target": "gstack_gstack_main_scripts_resolvers_browse", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\index.ts", "source_location": "L11", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_index_ts", "target": "gstack_gstack_main_scripts_resolvers_design", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\index.ts", "source_location": "L12", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_index_ts", "target": "gstack_gstack_main_scripts_resolvers_testing", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\index.ts", "source_location": "L13", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_index_ts", "target": "gstack_gstack_main_scripts_resolvers_review", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\index.ts", "source_location": "L14", "weight": 1.0}, {"source": "gstack_gstack_main_scripts_resolvers_index_ts", "target": "gstack_gstack_main_scripts_resolvers_utility", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\index.ts", "source_location": "L15", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\bdbd1e405121f5ccff097ab5bf023505c252d89c7af34a06e675ac772e73f73f.json
+```
+{"nodes": [{"id": "components_ui_microreviewmodal_tsx", "label": "MicroReviewModal.tsx", "file_type": "code", "source_file": "components\\ui\\MicroReviewModal.tsx", "source_location": "L1"}, {"id": "microreviewmodal_toggletag", "label": "toggleTag()", "file_type": "code", "source_file": "components\\ui\\MicroReviewModal.tsx", "source_location": "L27"}, {"id": "microreviewmodal_handlesubmit", "label": "handleSubmit()", "file_type": "code", "source_file": "components\\ui\\MicroReviewModal.tsx", "source_location": "L33"}], "edges": [{"source": "components_ui_microreviewmodal_tsx", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\MicroReviewModal.tsx", "source_location": "L3", "weight": 1.0}, {"source": "components_ui_microreviewmodal_tsx", "target": "framer_motion", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\MicroReviewModal.tsx", "source_location": "L4", "weight": 1.0}, {"source": "components_ui_microreviewmodal_tsx", "target": "lucide_react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\MicroReviewModal.tsx", "source_location": "L5", "weight": 1.0}, {"source": "components_ui_microreviewmodal_tsx", "target": "reviews", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\MicroReviewModal.tsx", "source_location": "L6", "weight": 1.0}, {"source": "components_ui_microreviewmodal_tsx", "target": "microreviewmodal_toggletag", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\ui\\MicroReviewModal.tsx", "source_location": "L27", "weight": 1.0}, {"source": "components_ui_microreviewmodal_tsx", "target": "microreviewmodal_handlesubmit", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\ui\\MicroReviewModal.tsx", "source_location": "L33", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\bdc5e826fe16fdf7e4df8dcd4d5d1307b0d4d472ae6615932c14aec1f04cc0e3.json
 ```
 {"nodes": [{"id": "lib_utils_localize_field_ts", "label": "localize-field.ts", "file_type": "code", "source_file": "lib\\utils\\localize-field.ts", "source_location": "L1"}, {"id": "localize_field_localizecategory", "label": "localizeCategory()", "file_type": "code", "source_file": "lib\\utils\\localize-field.ts", "source_location": "L24"}, {"id": "localize_field_localizemaincategoryonly", "label": "localizeMainCategoryOnly()", "file_type": "code", "source_file": "lib\\utils\\localize-field.ts", "source_location": "L42"}, {"id": "localize_field_localizevariety", "label": "localizeVariety()", "file_type": "code", "source_file": "lib\\utils\\localize-field.ts", "source_location": "L120"}, {"id": "localize_field_localizecountry", "label": "localizeCountry()", "file_type": "code", "source_file": "lib\\utils\\localize-field.ts", "source_location": "L286"}, {"id": "localize_field_localizedatasource", "label": "localizeDataSource()", "file_type": "code", "source_file": "lib\\utils\\localize-field.ts", "source_location": "L312"}, {"id": "localize_field_formatspiritfieldvalue", "label": "formatSpiritFieldValue()", "file_type": "code", "source_file": "lib\\utils\\localize-field.ts", "source_location": "L364"}], "edges": [{"source": "lib_utils_localize_field_ts", "target": "lib_utils_constants_spirits_metadata_json", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\utils\\localize-field.ts", "source_location": "L13", "weight": 1.0}, {"source": "lib_utils_localize_field_ts", "target": "localize_field_localizecategory", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\utils\\localize-field.ts", "source_location": "L24", "weight": 1.0}, {"source": "lib_utils_localize_field_ts", "target": "localize_field_localizemaincategoryonly", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\utils\\localize-field.ts", "source_location": "L42", "weight": 1.0}, {"source": "lib_utils_localize_field_ts", "target": "localize_field_localizevariety", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\utils\\localize-field.ts", "source_location": "L120", "weight": 1.0}, {"source": "lib_utils_localize_field_ts", "target": "localize_field_localizecountry", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\utils\\localize-field.ts", "source_location": "L286", "weight": 1.0}, {"source": "lib_utils_localize_field_ts", "target": "localize_field_localizedatasource", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\utils\\localize-field.ts", "source_location": "L312", "weight": 1.0}, {"source": "lib_utils_localize_field_ts", "target": "localize_field_formatspiritfieldvalue", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\utils\\localize-field.ts", "source_location": "L364", "weight": 1.0}, {"source": "localize_field_localizecategory", "target": "localize_field_localizemaincategoryonly", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\utils\\localize-field.ts", "source_location": "L33", "weight": 1.0}, {"source": "localize_field_localizecategory", "target": "localize_field_localizevariety", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\utils\\localize-field.ts", "source_location": "L34", "weight": 1.0}, {"source": "localize_field_formatspiritfieldvalue", "target": "localize_field_localizecategory", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\utils\\localize-field.ts", "source_location": "L375", "weight": 1.0}, {"source": "localize_field_formatspiritfieldvalue", "target": "localize_field_localizecountry", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\utils\\localize-field.ts", "source_location": "L377", "weight": 1.0}, {"source": "localize_field_formatspiritfieldvalue", "target": "localize_field_localizedatasource", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\utils\\localize-field.ts", "source_location": "L379", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\bddb2a1659ad1100eeb8d53565f120076e7f496a131625d8e80e91dc4d27775c.json
+```
+{"nodes": [{"id": "app_api_trending_log_route_ts", "label": "route.ts", "file_type": "code", "source_file": "app\\api\\trending\\log\\route.ts", "source_location": "L1"}, {"id": "route_post", "label": "POST()", "file_type": "code", "source_file": "app\\api\\trending\\log\\route.ts", "source_location": "L6"}], "edges": [{"source": "app_api_trending_log_route_ts", "target": "server", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\api\\trending\\log\\route.ts", "source_location": "L1", "weight": 1.0}, {"source": "app_api_trending_log_route_ts", "target": "firestore_rest", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\api\\trending\\log\\route.ts", "source_location": "L2", "weight": 1.0}, {"source": "app_api_trending_log_route_ts", "target": "route_post", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\api\\trending\\log\\route.ts", "source_location": "L6", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\bde2ec3a201422ad399161a716db7c5473cea4cbb9935887ab5cb144594b15d1.json
@@ -5093,6 +5613,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "gstack_gstack_main_scripts_resolvers_types_ts", "label": "types.ts", "file_type": "code", "source_file": "gstack\\gstack-main\\scripts\\resolvers\\types.ts", "source_location": "L1"}], "edges": []}
 ```
 
+### File: graphify-out\cache\c6538fac05e9b362f5b613c1256088f6ab42da013f64443266ace6611f5a2d72.json
+```
+{"nodes": [{"id": "app_lang_contents_reviews_reviews_client_tsx", "label": "reviews-client.tsx", "file_type": "code", "source_file": "app\\[lang]\\contents\\reviews\\reviews-client.tsx", "source_location": "L1"}, {"id": "reviews_client_fetchtotalcount", "label": "fetchTotalCount()", "file_type": "code", "source_file": "app\\[lang]\\contents\\reviews\\reviews-client.tsx", "source_location": "L59"}, {"id": "reviews_client_fetchpage", "label": "fetchPage()", "file_type": "code", "source_file": "app\\[lang]\\contents\\reviews\\reviews-client.tsx", "source_location": "L68"}, {"id": "reviews_client_handlesearch", "label": "handleSearch()", "file_type": "code", "source_file": "app\\[lang]\\contents\\reviews\\reviews-client.tsx", "source_location": "L115"}, {"id": "reviews_client_handledeletereview", "label": "handleDeleteReview()", "file_type": "code", "source_file": "app\\[lang]\\contents\\reviews\\reviews-client.tsx", "source_location": "L122"}], "edges": [{"source": "app_lang_contents_reviews_reviews_client_tsx", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\reviews\\reviews-client.tsx", "source_location": "L3", "weight": 1.0}, {"source": "app_lang_contents_reviews_reviews_client_tsx", "target": "data_connect_client", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\reviews\\reviews-client.tsx", "source_location": "L4", "weight": 1.0}, {"source": "app_lang_contents_reviews_reviews_client_tsx", "target": "auth_context", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\reviews\\reviews-client.tsx", "source_location": "L5", "weight": 1.0}, {"source": "app_lang_contents_reviews_reviews_client_tsx", "target": "image_fallback", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\reviews\\reviews-client.tsx", "source_location": "L6", "weight": 1.0}, {"source": "app_lang_contents_reviews_reviews_client_tsx", "target": "image_optimization", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\reviews\\reviews-client.tsx", "source_location": "L7", "weight": 1.0}, {"source": "app_lang_contents_reviews_reviews_client_tsx", "target": "link", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\reviews\\reviews-client.tsx", "source_location": "L8", "weight": 1.0}, {"source": "app_lang_contents_reviews_reviews_client_tsx", "target": "lucide_react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\reviews\\reviews-client.tsx", "source_location": "L9", "weight": 1.0}, {"source": "app_lang_contents_reviews_reviews_client_tsx", "target": "rating_colors", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\reviews\\reviews-client.tsx", "source_location": "L10", "weight": 1.0}, {"source": "app_lang_contents_reviews_reviews_client_tsx", "target": "framer_motion", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\reviews\\reviews-client.tsx", "source_location": "L11", "weight": 1.0}, {"source": "app_lang_contents_reviews_reviews_client_tsx", "target": "successtoast", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\reviews\\reviews-client.tsx", "source_location": "L12", "weight": 1.0}, {"source": "app_lang_contents_reviews_reviews_client_tsx", "target": "navigation", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\reviews\\reviews-client.tsx", "source_location": "L13", "weight": 1.0}, {"source": "app_lang_contents_reviews_reviews_client_tsx", "target": "googlead", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\reviews\\reviews-client.tsx", "source_location": "L14", "weight": 1.0}, {"source": "app_lang_contents_reviews_reviews_client_tsx", "target": "reviews_client_fetchtotalcount", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\reviews\\reviews-client.tsx", "source_location": "L59", "weight": 1.0}, {"source": "app_lang_contents_reviews_reviews_client_tsx", "target": "reviews_client_fetchpage", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\reviews\\reviews-client.tsx", "source_location": "L68", "weight": 1.0}, {"source": "app_lang_contents_reviews_reviews_client_tsx", "target": "reviews_client_handlesearch", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\reviews\\reviews-client.tsx", "source_location": "L115", "weight": 1.0}, {"source": "app_lang_contents_reviews_reviews_client_tsx", "target": "reviews_client_handledeletereview", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\contents\\reviews\\reviews-client.tsx", "source_location": "L122", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\c653b66bcba1536664ded8ab4559802f00e9a5d500574419071d13dc1af80bbb.json
 ```
 {"nodes": [{"id": "lib_utils_tests_bot_detection_test_ts", "label": "bot-detection.test.ts", "file_type": "code", "source_file": "lib\\utils\\__tests__\\bot-detection.test.ts", "source_location": "L1"}], "edges": [{"source": "lib_utils_tests_bot_detection_test_ts", "target": "lib_utils_tests_bot_detection", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\utils\\__tests__\\bot-detection.test.ts", "source_location": "L6", "weight": 1.0}]}
@@ -5126,6 +5651,11 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\c805ac34147f752cec7e53b03b3fd482933267cba7bf00fa94c8ccc918a24275.json
 ```
 {"nodes": [{"id": "lib_constants_wiki_grapes_colombard_ts", "label": "colombard.ts", "file_type": "code", "source_file": "lib\\constants\\wiki\\grapes\\colombard.ts", "source_location": "L1"}], "edges": [{"source": "lib_constants_wiki_grapes_colombard_ts", "target": "lib_constants_wiki_grapes_types", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\constants\\wiki\\grapes\\colombard.ts", "source_location": "L1", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\c82121a2a140ad77b92264cc3ed6005ff96a463c5cbc878695ce4aa4e0b5f958.json
+```
+{"nodes": [{"id": "components_ui_spiritcard_tsx", "label": "SpiritCard.tsx", "file_type": "code", "source_file": "components\\ui\\SpiritCard.tsx", "source_location": "L1"}, {"id": "spiritcard_handleadd", "label": "handleAdd()", "file_type": "code", "source_file": "components\\ui\\SpiritCard.tsx", "source_location": "L80"}], "edges": [{"source": "components_ui_spiritcard_tsx", "target": "framer_motion", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritCard.tsx", "source_location": "L3", "weight": 1.0}, {"source": "components_ui_spiritcard_tsx", "target": "lucide_react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritCard.tsx", "source_location": "L4", "weight": 1.0}, {"source": "components_ui_spiritcard_tsx", "target": "link", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritCard.tsx", "source_location": "L5", "weight": 1.0}, {"source": "components_ui_spiritcard_tsx", "target": "navigation", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritCard.tsx", "source_location": "L6", "weight": 1.0}, {"source": "components_ui_spiritcard_tsx", "target": "image_fallback", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritCard.tsx", "source_location": "L7", "weight": 1.0}, {"source": "components_ui_spiritcard_tsx", "target": "schema", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritCard.tsx", "source_location": "L8", "weight": 1.0}, {"source": "components_ui_spiritcard_tsx", "target": "tag_styles", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritCard.tsx", "source_location": "L9", "weight": 1.0}, {"source": "components_ui_spiritcard_tsx", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritCard.tsx", "source_location": "L10", "weight": 1.0}, {"source": "components_ui_spiritcard_tsx", "target": "auth_context", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritCard.tsx", "source_location": "L11", "weight": 1.0}, {"source": "components_ui_spiritcard_tsx", "target": "cabinet", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritCard.tsx", "source_location": "L12", "weight": 1.0}, {"source": "components_ui_spiritcard_tsx", "target": "components_ui_cabinetselectionmodal", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritCard.tsx", "source_location": "L13", "weight": 1.0}, {"source": "components_ui_spiritcard_tsx", "target": "reviewmodal", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritCard.tsx", "source_location": "L14", "weight": 1.0}, {"source": "components_ui_spiritcard_tsx", "target": "flavor_engine", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritCard.tsx", "source_location": "L15", "weight": 1.0}, {"source": "components_ui_spiritcard_tsx", "target": "spirit_adapters", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritCard.tsx", "source_location": "L16", "weight": 1.0}, {"source": "components_ui_spiritcard_tsx", "target": "image_optimization", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritCard.tsx", "source_location": "L17", "weight": 1.0}, {"source": "components_ui_spiritcard_tsx", "target": "components_ui_successtoast", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritCard.tsx", "source_location": "L18", "weight": 1.0}, {"source": "components_ui_spiritcard_tsx", "target": "image", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritCard.tsx", "source_location": "L19", "weight": 1.0}, {"source": "components_ui_spiritcard_tsx", "target": "spirits_metadata_json", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritCard.tsx", "source_location": "L20", "weight": 1.0}, {"source": "components_ui_spiritcard_tsx", "target": "spiritcard_handleadd", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\ui\\SpiritCard.tsx", "source_location": "L80", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\c8eee17b378372ec7e834010acea86b998f6b269c2028e1e8bf805ce1e772d85.json
@@ -5193,6 +5723,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "lib_services_gemini_translation_ts", "label": "gemini-translation.ts", "file_type": "code", "source_file": "lib\\services\\gemini-translation.ts", "source_location": "L1"}, {"id": "gemini_translation_auditspiritinfo", "label": "auditSpiritInfo()", "file_type": "code", "source_file": "lib\\services\\gemini-translation.ts", "source_location": "L93"}, {"id": "gemini_translation_generatesensoryprofile", "label": "generateSensoryProfile()", "file_type": "code", "source_file": "lib\\services\\gemini-translation.ts", "source_location": "L344"}, {"id": "gemini_translation_generatedescriptiononly", "label": "generateDescriptionOnly()", "file_type": "code", "source_file": "lib\\services\\gemini-translation.ts", "source_location": "L453"}, {"id": "gemini_translation_generatepairingguide", "label": "generatePairingGuide()", "file_type": "code", "source_file": "lib\\services\\gemini-translation.ts", "source_location": "L533"}, {"id": "gemini_translation_enrichspiritwithai", "label": "enrichSpiritWithAI()", "file_type": "code", "source_file": "lib\\services\\gemini-translation.ts", "source_location": "L650"}, {"id": "gemini_translation_translatespiritname", "label": "translateSpiritName()", "file_type": "code", "source_file": "lib\\services\\gemini-translation.ts", "source_location": "L689"}], "edges": [{"source": "lib_services_gemini_translation_ts", "target": "generative_ai", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\services\\gemini-translation.ts", "source_location": "L1", "weight": 1.0}, {"source": "lib_services_gemini_translation_ts", "target": "gemini_translation_auditspiritinfo", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\services\\gemini-translation.ts", "source_location": "L93", "weight": 1.0}, {"source": "lib_services_gemini_translation_ts", "target": "gemini_translation_generatesensoryprofile", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\services\\gemini-translation.ts", "source_location": "L344", "weight": 1.0}, {"source": "lib_services_gemini_translation_ts", "target": "gemini_translation_generatedescriptiononly", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\services\\gemini-translation.ts", "source_location": "L453", "weight": 1.0}, {"source": "lib_services_gemini_translation_ts", "target": "gemini_translation_generatepairingguide", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\services\\gemini-translation.ts", "source_location": "L533", "weight": 1.0}, {"source": "lib_services_gemini_translation_ts", "target": "gemini_translation_enrichspiritwithai", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\services\\gemini-translation.ts", "source_location": "L650", "weight": 1.0}, {"source": "lib_services_gemini_translation_ts", "target": "gemini_translation_translatespiritname", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\services\\gemini-translation.ts", "source_location": "L689", "weight": 1.0}, {"source": "gemini_translation_enrichspiritwithai", "target": "gemini_translation_auditspiritinfo", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\services\\gemini-translation.ts", "source_location": "L655", "weight": 1.0}, {"source": "gemini_translation_enrichspiritwithai", "target": "gemini_translation_generatesensoryprofile", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\services\\gemini-translation.ts", "source_location": "L658", "weight": 1.0}, {"source": "gemini_translation_enrichspiritwithai", "target": "gemini_translation_generatepairingguide", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\services\\gemini-translation.ts", "source_location": "L664", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\cc423f36057f50068b8dcbca6ba1d65667e151c9e78ebdb22ea30ea21f58f541.json
+```
+{"nodes": [{"id": "lib_db_path_config_ts", "label": "path-config.ts", "file_type": "code", "source_file": "lib\\db\\path-config.ts", "source_location": "L1"}, {"id": "path_config_getapppathutil", "label": "getAppPathUtil()", "file_type": "code", "source_file": "lib\\db\\path-config.ts", "source_location": "L22"}, {"id": "path_config_getapppath", "label": "getAppPath()", "file_type": "code", "source_file": "lib\\db\\path-config.ts", "source_location": "L50"}, {"id": "path_config_getdocumentpath", "label": "getDocumentPath()", "file_type": "code", "source_file": "lib\\db\\path-config.ts", "source_location": "L74"}], "edges": [{"source": "lib_db_path_config_ts", "target": "path_config_getapppathutil", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\path-config.ts", "source_location": "L22", "weight": 1.0}, {"source": "lib_db_path_config_ts", "target": "path_config_getapppath", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\path-config.ts", "source_location": "L50", "weight": 1.0}, {"source": "lib_db_path_config_ts", "target": "path_config_getdocumentpath", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\db\\path-config.ts", "source_location": "L74", "weight": 1.0}, {"source": "path_config_getdocumentpath", "target": "path_config_getapppathutil", "relation": "calls", "confidence": "EXTRACTED", "source_file": "lib\\db\\path-config.ts", "source_location": "L78", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\cc483a39b321f9d501719501f6ac8711422a7e59d1984e5b186bff07f0e94c51.json
 ```
 {"nodes": [{"id": "components_cabinet_addspiritcard_tsx", "label": "AddSpiritCard.tsx", "file_type": "code", "source_file": "components\\cabinet\\AddSpiritCard.tsx", "source_location": "L1"}, {"id": "addspiritcard_addspiritcard", "label": "AddSpiritCard()", "file_type": "code", "source_file": "components\\cabinet\\AddSpiritCard.tsx", "source_location": "L10"}], "edges": [{"source": "components_cabinet_addspiritcard_tsx", "target": "framer_motion", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\AddSpiritCard.tsx", "source_location": "L3", "weight": 1.0}, {"source": "components_cabinet_addspiritcard_tsx", "target": "navigation", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\AddSpiritCard.tsx", "source_location": "L4", "weight": 1.0}, {"source": "components_cabinet_addspiritcard_tsx", "target": "addspiritcard_addspiritcard", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\AddSpiritCard.tsx", "source_location": "L10", "weight": 1.0}]}
@@ -5213,6 +5748,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "gstack_gstack_main_test_hook_scripts_test_ts", "label": "hook-scripts.test.ts", "file_type": "code", "source_file": "gstack\\gstack-main\\test\\hook-scripts.test.ts", "source_location": "L1"}, {"id": "hook_scripts_test_runhook", "label": "runHook()", "file_type": "code", "source_file": "gstack\\gstack-main\\test\\hook-scripts.test.ts", "source_location": "L11"}, {"id": "hook_scripts_test_runhookraw", "label": "runHookRaw()", "file_type": "code", "source_file": "gstack\\gstack-main\\test\\hook-scripts.test.ts", "source_location": "L26"}, {"id": "hook_scripts_test_carefulinput", "label": "carefulInput()", "file_type": "code", "source_file": "gstack\\gstack-main\\test\\hook-scripts.test.ts", "source_location": "L41"}, {"id": "hook_scripts_test_freezeinput", "label": "freezeInput()", "file_type": "code", "source_file": "gstack\\gstack-main\\test\\hook-scripts.test.ts", "source_location": "L45"}, {"id": "hook_scripts_test_withfreezedir", "label": "withFreezeDir()", "file_type": "code", "source_file": "gstack\\gstack-main\\test\\hook-scripts.test.ts", "source_location": "L49"}, {"id": "hook_scripts_test_detectsafermworks", "label": "detectSafeRmWorks()", "file_type": "code", "source_file": "gstack\\gstack-main\\test\\hook-scripts.test.ts", "source_location": "L61"}], "edges": [{"source": "gstack_gstack_main_test_hook_scripts_test_ts", "target": "bun_test", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\hook-scripts.test.ts", "source_location": "L1", "weight": 1.0}, {"source": "gstack_gstack_main_test_hook_scripts_test_ts", "target": "child_process", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\hook-scripts.test.ts", "source_location": "L2", "weight": 1.0}, {"source": "gstack_gstack_main_test_hook_scripts_test_ts", "target": "path", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\hook-scripts.test.ts", "source_location": "L3", "weight": 1.0}, {"source": "gstack_gstack_main_test_hook_scripts_test_ts", "target": "fs", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\hook-scripts.test.ts", "source_location": "L4", "weight": 1.0}, {"source": "gstack_gstack_main_test_hook_scripts_test_ts", "target": "os", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\hook-scripts.test.ts", "source_location": "L5", "weight": 1.0}, {"source": "gstack_gstack_main_test_hook_scripts_test_ts", "target": "hook_scripts_test_runhook", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\hook-scripts.test.ts", "source_location": "L11", "weight": 1.0}, {"source": "gstack_gstack_main_test_hook_scripts_test_ts", "target": "hook_scripts_test_runhookraw", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\hook-scripts.test.ts", "source_location": "L26", "weight": 1.0}, {"source": "gstack_gstack_main_test_hook_scripts_test_ts", "target": "hook_scripts_test_carefulinput", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\hook-scripts.test.ts", "source_location": "L41", "weight": 1.0}, {"source": "gstack_gstack_main_test_hook_scripts_test_ts", "target": "hook_scripts_test_freezeinput", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\hook-scripts.test.ts", "source_location": "L45", "weight": 1.0}, {"source": "gstack_gstack_main_test_hook_scripts_test_ts", "target": "hook_scripts_test_withfreezedir", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\hook-scripts.test.ts", "source_location": "L49", "weight": 1.0}, {"source": "gstack_gstack_main_test_hook_scripts_test_ts", "target": "hook_scripts_test_detectsafermworks", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\hook-scripts.test.ts", "source_location": "L61", "weight": 1.0}, {"source": "hook_scripts_test_detectsafermworks", "target": "hook_scripts_test_runhook", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\hook-scripts.test.ts", "source_location": "L62", "weight": 1.0}, {"source": "hook_scripts_test_detectsafermworks", "target": "hook_scripts_test_carefulinput", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\hook-scripts.test.ts", "source_location": "L62", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\cd5abc99115eba8a2006434907724b731b4ae3acf09775d4eac97d30bf756581.json
+```
+{"nodes": [{"id": "components_cabinet_tasteradar_tsx", "label": "TasteRadar.tsx", "file_type": "code", "source_file": "components\\cabinet\\TasteRadar.tsx", "source_location": "L1"}], "edges": [{"source": "components_cabinet_tasteradar_tsx", "target": "recharts", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\TasteRadar.tsx", "source_location": "L3", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\ce22f87627b4b1209c9a47d926eb05bbeedbc8bc93f64f30579c3a4614a63b6a.json
 ```
 {"nodes": [{"id": "lib_constants_wiki_grain_whisky_ts", "label": "grain-whisky.ts", "file_type": "code", "source_file": "lib\\constants\\wiki\\grain-whisky.ts", "source_location": "L1"}], "edges": [{"source": "lib_constants_wiki_grain_whisky_ts", "target": "lib_constants_wiki_types", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\constants\\wiki\\grain-whisky.ts", "source_location": "L1", "weight": 1.0}]}
@@ -5226,6 +5766,11 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\ce7dc2df1c09306330790043128325cbc7390423add87e77a859bc8544736f09.json
 ```
 {"nodes": [{"id": "app_lang_explore_page_tsx", "label": "page.tsx", "file_type": "code", "source_file": "app\\[lang]\\explore\\page.tsx", "source_location": "L1"}, {"id": "page_generatemetadata", "label": "generateMetadata()", "file_type": "code", "source_file": "app\\[lang]\\explore\\page.tsx", "source_location": "L11"}], "edges": [{"source": "app_lang_explore_page_tsx", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\explore\\page.tsx", "source_location": "L1", "weight": 1.0}, {"source": "app_lang_explore_page_tsx", "target": "next", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\explore\\page.tsx", "source_location": "L2", "weight": 1.0}, {"source": "app_lang_explore_page_tsx", "target": "explorecontent", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\explore\\page.tsx", "source_location": "L3", "weight": 1.0}, {"source": "app_lang_explore_page_tsx", "target": "get_dictionary", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\explore\\page.tsx", "source_location": "L4", "weight": 1.0}, {"source": "app_lang_explore_page_tsx", "target": "i18n_config", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\explore\\page.tsx", "source_location": "L5", "weight": 1.0}, {"source": "app_lang_explore_page_tsx", "target": "seo_url", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\explore\\page.tsx", "source_location": "L6", "weight": 1.0}, {"source": "app_lang_explore_page_tsx", "target": "app_lang_explore_loading", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\explore\\page.tsx", "source_location": "L7", "weight": 1.0}, {"source": "app_lang_explore_page_tsx", "target": "page_generatemetadata", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\explore\\page.tsx", "source_location": "L11", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\cf70eb6ce78b982f0d15043e8bcc8d38b189fdb612a6d1ec3c4d70c7763b53a1.json
+```
+{"nodes": [{"id": "components_cabinet_flavorview_tsx", "label": "FlavorView.tsx", "file_type": "code", "source_file": "components\\cabinet\\FlavorView.tsx", "source_location": "L1"}, {"id": "flavorview_handleanalyze", "label": "handleAnalyze()", "file_type": "code", "source_file": "components\\cabinet\\FlavorView.tsx", "source_location": "L51"}], "edges": [{"source": "components_cabinet_flavorview_tsx", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\FlavorView.tsx", "source_location": "L3", "weight": 1.0}, {"source": "components_cabinet_flavorview_tsx", "target": "framer_motion", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\FlavorView.tsx", "source_location": "L4", "weight": 1.0}, {"source": "components_cabinet_flavorview_tsx", "target": "lucide_react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\FlavorView.tsx", "source_location": "L5", "weight": 1.0}, {"source": "components_cabinet_flavorview_tsx", "target": "navigation", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\FlavorView.tsx", "source_location": "L6", "weight": 1.0}, {"source": "components_cabinet_flavorview_tsx", "target": "auth_context", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\FlavorView.tsx", "source_location": "L7", "weight": 1.0}, {"source": "components_cabinet_flavorview_tsx", "target": "components_cabinet_tasteradar", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\FlavorView.tsx", "source_location": "L8", "weight": 1.0}, {"source": "components_cabinet_flavorview_tsx", "target": "successtoast", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\FlavorView.tsx", "source_location": "L9", "weight": 1.0}, {"source": "components_cabinet_flavorview_tsx", "target": "components_cabinet_tasterecommendationsection", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\FlavorView.tsx", "source_location": "L10", "weight": 1.0}, {"source": "components_cabinet_flavorview_tsx", "target": "flavorview_handleanalyze", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\FlavorView.tsx", "source_location": "L51", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\d0f2d9a098feada9002b7a1ecf2c3c4d93065db591ba26f2ed14d185229fad58.json
@@ -5333,6 +5878,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "fix_ultra_contrast_js", "label": "fix-ultra-contrast.js", "file_type": "code", "source_file": "fix-ultra-contrast.js", "source_location": "L1"}], "edges": []}
 ```
 
+### File: graphify-out\cache\dc7c3f1c96c283c1cf0e66c9111a7d1ec9b91c6b8f7b52c3faced4e429c2f7aa.json
+```
+{"nodes": [{"id": "scripts_deep_check_users_ts", "label": "deep-check-users.ts", "file_type": "code", "source_file": "scripts\\deep-check-users.ts", "source_location": "L1"}, {"id": "deep_check_users_deepcheckusers", "label": "deepCheckUsers()", "file_type": "code", "source_file": "scripts\\deep-check-users.ts", "source_location": "L19"}], "edges": [{"source": "scripts_deep_check_users_ts", "target": "firebase_admin", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\deep-check-users.ts", "source_location": "L1", "weight": 1.0}, {"source": "scripts_deep_check_users_ts", "target": "dotenv", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\deep-check-users.ts", "source_location": "L2", "weight": 1.0}, {"source": "scripts_deep_check_users_ts", "target": "deep_check_users_deepcheckusers", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\deep-check-users.ts", "source_location": "L19", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\dcc8acc69e13e614a9b43db08dd65017ef7cf8729e24d7ca6fb5d175198bb712.json
 ```
 {"nodes": [{"id": "components_ui_explorecontent_tsx", "label": "ExploreContent.tsx", "file_type": "code", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L1"}, {"id": "explorecontent_handlestatuschange", "label": "handleStatusChange()", "file_type": "code", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L63"}], "edges": [{"source": "components_ui_explorecontent_tsx", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L3", "weight": 1.0}, {"source": "components_ui_explorecontent_tsx", "target": "navigation", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L4", "weight": 1.0}, {"source": "components_ui_explorecontent_tsx", "target": "spirits_cache_context", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L5", "weight": 1.0}, {"source": "components_ui_explorecontent_tsx", "target": "auth_context", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L6", "weight": 1.0}, {"source": "components_ui_explorecontent_tsx", "target": "cabinet", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L7", "weight": 1.0}, {"source": "components_ui_explorecontent_tsx", "target": "components_ui_explorecard", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L8", "weight": 1.0}, {"source": "components_ui_explorecontent_tsx", "target": "components_ui_exploreskeleton", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L9", "weight": 1.0}, {"source": "components_ui_explorecontent_tsx", "target": "lucide_react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L10", "weight": 1.0}, {"source": "components_ui_explorecontent_tsx", "target": "googlead", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L11", "weight": 1.0}, {"source": "components_ui_explorecontent_tsx", "target": "spirits_metadata_json", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L12", "weight": 1.0}, {"source": "components_ui_explorecontent_tsx", "target": "schema", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L13", "weight": 1.0}, {"source": "components_ui_explorecontent_tsx", "target": "explorecontent_handlestatuschange", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\ui\\ExploreContent.tsx", "source_location": "L63", "weight": 1.0}]}
@@ -5411,6 +5961,11 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\e2d6bb2acc54ed27547b36cdfb481b7d2f081237eda24104b05dee34dc2db970.json
 ```
 {"nodes": [{"id": "lib_constants_wiki_grapes_primitivo_ts", "label": "primitivo.ts", "file_type": "code", "source_file": "lib\\constants\\wiki\\grapes\\primitivo.ts", "source_location": "L1"}], "edges": [{"source": "lib_constants_wiki_grapes_primitivo_ts", "target": "lib_constants_wiki_grapes_types", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "lib\\constants\\wiki\\grapes\\primitivo.ts", "source_location": "L1", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\e34162144b3ae86de891784eaa9b62f71fd958046dc32488687d8c8410eebdfc.json
+```
+{"nodes": [{"id": "app_api_analyze_taste_route_ts", "label": "route.ts", "file_type": "code", "source_file": "app\\api\\analyze-taste\\route.ts", "source_location": "L1"}, {"id": "route_getkstdate", "label": "getKSTDate()", "file_type": "code", "source_file": "app\\api\\analyze-taste\\route.ts", "source_location": "L14"}, {"id": "route_tryfindspiritindb", "label": "tryFindSpiritInDb()", "file_type": "code", "source_file": "app\\api\\analyze-taste\\route.ts", "source_location": "L18"}, {"id": "route_get", "label": "GET()", "file_type": "code", "source_file": "app\\api\\analyze-taste\\route.ts", "source_location": "L37"}, {"id": "route_post", "label": "POST()", "file_type": "code", "source_file": "app\\api\\analyze-taste\\route.ts", "source_location": "L60"}], "edges": [{"source": "app_api_analyze_taste_route_ts", "target": "server", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\api\\analyze-taste\\route.ts", "source_location": "L3", "weight": 1.0}, {"source": "app_api_analyze_taste_route_ts", "target": "firestore_rest", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\api\\analyze-taste\\route.ts", "source_location": "L4", "weight": 1.0}, {"source": "app_api_analyze_taste_route_ts", "target": "aipromptbuilder", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\api\\analyze-taste\\route.ts", "source_location": "L5", "weight": 1.0}, {"source": "app_api_analyze_taste_route_ts", "target": "generative_ai", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\api\\analyze-taste\\route.ts", "source_location": "L6", "weight": 1.0}, {"source": "app_api_analyze_taste_route_ts", "target": "route_getkstdate", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\api\\analyze-taste\\route.ts", "source_location": "L14", "weight": 1.0}, {"source": "app_api_analyze_taste_route_ts", "target": "route_tryfindspiritindb", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\api\\analyze-taste\\route.ts", "source_location": "L18", "weight": 1.0}, {"source": "app_api_analyze_taste_route_ts", "target": "route_get", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\api\\analyze-taste\\route.ts", "source_location": "L37", "weight": 1.0}, {"source": "app_api_analyze_taste_route_ts", "target": "route_post", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\api\\analyze-taste\\route.ts", "source_location": "L60", "weight": 1.0}, {"source": "route_get", "target": "route_getkstdate", "relation": "calls", "confidence": "EXTRACTED", "source_file": "app\\api\\analyze-taste\\route.ts", "source_location": "L48", "weight": 1.0}, {"source": "route_post", "target": "route_getkstdate", "relation": "calls", "confidence": "EXTRACTED", "source_file": "app\\api\\analyze-taste\\route.ts", "source_location": "L70", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\e361d4e9a979290409713dfe4a61a0d514de38d0157f1789cf9e0625fbf7bda2.json
@@ -5501,6 +6056,11 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\ea8aa671200c52311d308b4902af7636269e1c608bde8791b72f6244187ee286.json
 ```
 {"nodes": [{"id": "components_home_homeclient_tsx", "label": "HomeClient.tsx", "file_type": "code", "source_file": "components\\home\\HomeClient.tsx", "source_location": "L1"}], "edges": [{"source": "components_home_homeclient_tsx", "target": "searchbar", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\home\\HomeClient.tsx", "source_location": "L3", "weight": 1.0}, {"source": "components_home_homeclient_tsx", "target": "dailypick", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\home\\HomeClient.tsx", "source_location": "L4", "weight": 1.0}, {"source": "components_home_homeclient_tsx", "target": "spiritcard", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\home\\HomeClient.tsx", "source_location": "L5", "weight": 1.0}, {"source": "components_home_homeclient_tsx", "target": "livereviews", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\home\\HomeClient.tsx", "source_location": "L6", "weight": 1.0}, {"source": "components_home_homeclient_tsx", "target": "link", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\home\\HomeClient.tsx", "source_location": "L7", "weight": 1.0}, {"source": "components_home_homeclient_tsx", "target": "image", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\home\\HomeClient.tsx", "source_location": "L8", "weight": 1.0}, {"source": "components_home_homeclient_tsx", "target": "lucide_react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\home\\HomeClient.tsx", "source_location": "L9", "weight": 1.0}, {"source": "components_home_homeclient_tsx", "target": "page_module_css", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\home\\HomeClient.tsx", "source_location": "L10", "weight": 1.0}, {"source": "components_home_homeclient_tsx", "target": "randombackground", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\home\\HomeClient.tsx", "source_location": "L11", "weight": 1.0}, {"source": "components_home_homeclient_tsx", "target": "spirits_cache_context", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\home\\HomeClient.tsx", "source_location": "L12", "weight": 1.0}, {"source": "components_home_homeclient_tsx", "target": "react", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\home\\HomeClient.tsx", "source_location": "L13", "weight": 1.0}, {"source": "components_home_homeclient_tsx", "target": "image_optimization", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\home\\HomeClient.tsx", "source_location": "L14", "weight": 1.0}, {"source": "components_home_homeclient_tsx", "target": "schema", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\home\\HomeClient.tsx", "source_location": "L15", "weight": 1.0}, {"source": "components_home_homeclient_tsx", "target": "wikisnippetsection", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\home\\HomeClient.tsx", "source_location": "L16", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\eadb983a311c8e42633fcb59b9ace94ec79c1ff91ca5c49d10381e7175179f2e.json
+```
+{"nodes": [{"id": "components_cabinet_tasterecommendationsection_tsx", "label": "TasteRecommendationSection.tsx", "file_type": "code", "source_file": "components\\cabinet\\TasteRecommendationSection.tsx", "source_location": "L1"}, {"id": "tasterecommendationsection_tasterecommendationsection", "label": "TasteRecommendationSection()", "file_type": "code", "source_file": "components\\cabinet\\TasteRecommendationSection.tsx", "source_location": "L6"}], "edges": [{"source": "components_cabinet_tasterecommendationsection_tsx", "target": "components_cabinet_ui_spiritcard", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\TasteRecommendationSection.tsx", "source_location": "L3", "weight": 1.0}, {"source": "components_cabinet_tasterecommendationsection_tsx", "target": "framer_motion", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\TasteRecommendationSection.tsx", "source_location": "L4", "weight": 1.0}, {"source": "components_cabinet_tasterecommendationsection_tsx", "target": "tasterecommendationsection_tasterecommendationsection", "relation": "contains", "confidence": "EXTRACTED", "source_file": "components\\cabinet\\TasteRecommendationSection.tsx", "source_location": "L6", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\eae25ed82bc67946d7153316895cd98333521603963eea504d5e788a38545def.json
@@ -5653,6 +6213,11 @@ _Questions this graph is uniquely positioned to answer:_
 {"nodes": [{"id": "gstack_gstack_main_design_src_iterate_ts", "label": "iterate.ts", "file_type": "code", "source_file": "gstack\\gstack-main\\design\\src\\iterate.ts", "source_location": "L1"}, {"id": "iterate_iterate", "label": "iterate()", "file_type": "code", "source_file": "gstack\\gstack-main\\design\\src\\iterate.ts", "source_location": "L23"}, {"id": "iterate_callwiththreading", "label": "callWithThreading()", "file_type": "code", "source_file": "gstack\\gstack-main\\design\\src\\iterate.ts", "source_location": "L79"}, {"id": "iterate_callfresh", "label": "callFresh()", "file_type": "code", "source_file": "gstack\\gstack-main\\design\\src\\iterate.ts", "source_location": "L121"}, {"id": "iterate_buildaccumulatedprompt", "label": "buildAccumulatedPrompt()", "file_type": "code", "source_file": "gstack\\gstack-main\\design\\src\\iterate.ts", "source_location": "L161"}], "edges": [{"source": "gstack_gstack_main_design_src_iterate_ts", "target": "fs", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\iterate.ts", "source_location": "L9", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_iterate_ts", "target": "path", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\iterate.ts", "source_location": "L10", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_iterate_ts", "target": "gstack_gstack_main_design_src_auth", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\iterate.ts", "source_location": "L11", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_iterate_ts", "target": "gstack_gstack_main_design_src_session", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\iterate.ts", "source_location": "L12", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_iterate_ts", "target": "iterate_iterate", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\iterate.ts", "source_location": "L23", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_iterate_ts", "target": "iterate_callwiththreading", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\iterate.ts", "source_location": "L79", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_iterate_ts", "target": "iterate_callfresh", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\iterate.ts", "source_location": "L121", "weight": 1.0}, {"source": "gstack_gstack_main_design_src_iterate_ts", "target": "iterate_buildaccumulatedprompt", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\iterate.ts", "source_location": "L161", "weight": 1.0}, {"source": "iterate_iterate", "target": "iterate_callwiththreading", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\iterate.ts", "source_location": "L38", "weight": 1.0}, {"source": "iterate_iterate", "target": "iterate_buildaccumulatedprompt", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\iterate.ts", "source_location": "L49", "weight": 1.0}, {"source": "iterate_iterate", "target": "iterate_callfresh", "relation": "calls", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\design\\src\\iterate.ts", "source_location": "L54", "weight": 1.0}]}
 ```
 
+### File: graphify-out\cache\fb4215436a876e27595479f491655e221236d6fb25f3a2155d67d9cb9fb8b12b.json
+```
+{"nodes": [{"id": "lib_utils_image_optimization_ts", "label": "image-optimization.ts", "file_type": "code", "source_file": "lib\\utils\\image-optimization.ts", "source_location": "L1"}, {"id": "image_optimization_getoptimizedimageurl", "label": "getOptimizedImageUrl()", "file_type": "code", "source_file": "lib\\utils\\image-optimization.ts", "source_location": "L7"}], "edges": [{"source": "lib_utils_image_optimization_ts", "target": "image_optimization_getoptimizedimageurl", "relation": "contains", "confidence": "EXTRACTED", "source_file": "lib\\utils\\image-optimization.ts", "source_location": "L7", "weight": 1.0}]}
+```
+
 ### File: graphify-out\cache\fc13f93f4faf59851af31e76ab4fe003e2e5789f932cebd5f84cfb7c6ac91a50.json
 ```
 {"nodes": [{"id": "app_lang_me_reviews_layout_tsx", "label": "layout.tsx", "file_type": "code", "source_file": "app\\[lang]\\me\\reviews\\layout.tsx", "source_location": "L1"}, {"id": "layout_reviewslayout", "label": "ReviewsLayout()", "file_type": "code", "source_file": "app\\[lang]\\me\\reviews\\layout.tsx", "source_location": "L7"}], "edges": [{"source": "app_lang_me_reviews_layout_tsx", "target": "next", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\me\\reviews\\layout.tsx", "source_location": "L1", "weight": 1.0}, {"source": "app_lang_me_reviews_layout_tsx", "target": "layout_reviewslayout", "relation": "contains", "confidence": "EXTRACTED", "source_file": "app\\[lang]\\me\\reviews\\layout.tsx", "source_location": "L7", "weight": 1.0}]}
@@ -5681,6 +6246,11 @@ _Questions this graph is uniquely positioned to answer:_
 ### File: graphify-out\cache\fc4975bb06a53357d035e46e962186a5e0c2a176ef5d8cc6d125cf532038aa4f.json
 ```
 {"nodes": [{"id": "gstack_gstack_main_test_skill_parser_test_ts", "label": "skill-parser.test.ts", "file_type": "code", "source_file": "gstack\\gstack-main\\test\\skill-parser.test.ts", "source_location": "L1"}, {"id": "skill_parser_test_writefixture", "label": "writeFixture()", "file_type": "code", "source_file": "gstack\\gstack-main\\test\\skill-parser.test.ts", "source_location": "L9"}], "edges": [{"source": "gstack_gstack_main_test_skill_parser_test_ts", "target": "bun_test", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\skill-parser.test.ts", "source_location": "L1", "weight": 1.0}, {"source": "gstack_gstack_main_test_skill_parser_test_ts", "target": "gstack_gstack_main_test_helpers_skill_parser", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\skill-parser.test.ts", "source_location": "L2", "weight": 1.0}, {"source": "gstack_gstack_main_test_skill_parser_test_ts", "target": "fs", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\skill-parser.test.ts", "source_location": "L3", "weight": 1.0}, {"source": "gstack_gstack_main_test_skill_parser_test_ts", "target": "path", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\skill-parser.test.ts", "source_location": "L4", "weight": 1.0}, {"source": "gstack_gstack_main_test_skill_parser_test_ts", "target": "os", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\skill-parser.test.ts", "source_location": "L5", "weight": 1.0}, {"source": "gstack_gstack_main_test_skill_parser_test_ts", "target": "skill_parser_test_writefixture", "relation": "contains", "confidence": "EXTRACTED", "source_file": "gstack\\gstack-main\\test\\skill-parser.test.ts", "source_location": "L9", "weight": 1.0}]}
+```
+
+### File: graphify-out\cache\fd191274020647715026478a56e65414fa03697bd989c714a0aa09443699fae6.json
+```
+{"nodes": [{"id": "scripts_debug_fetch_ts", "label": "debug-fetch.ts", "file_type": "code", "source_file": "scripts\\debug-fetch.ts", "source_location": "L1"}], "edges": [{"source": "scripts_debug_fetch_ts", "target": "scripts_load_env", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\debug-fetch.ts", "source_location": "L1", "weight": 1.0}, {"source": "scripts_debug_fetch_ts", "target": "scripts_lib_db_firestore_rest", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\debug-fetch.ts", "source_location": "L3", "weight": 1.0}]}
 ```
 
 ### File: graphify-out\cache\fde9cf67451283964c6656e2c5adc6d107615ee116735c8725f1eac6785aea8a.json
