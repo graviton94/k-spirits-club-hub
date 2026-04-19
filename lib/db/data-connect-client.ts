@@ -21,6 +21,7 @@ import {
   upsertWorldCupResult,
   getWorldCupResult,
   listSpiritsForWorldCup,
+  adminListRawSpirits,
 } from '@/src/dataconnect-generated';
 
 /**
@@ -59,6 +60,11 @@ export const dbListSpirits = async (category?: string) => {
 
 export const dbListSpiritsForSitemap = async () => {
   const { data } = await listSpiritsForSitemap(getDC());
+  return data.spirits;
+};
+
+export const dbAdminListRawSpirits = async (limit: number, offset: number) => {
+  const { data } = await adminListRawSpirits(getDC(), { limit, offset });
   return data.spirits;
 };
 

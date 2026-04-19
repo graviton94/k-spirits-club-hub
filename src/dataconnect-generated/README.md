@@ -11,6 +11,7 @@ This README will guide you through the process of using the generated JavaScript
   - [*listSpirits*](#listspirits)
   - [*listNewArrivals*](#listnewarrivals)
   - [*getSpirit*](#getspirit)
+  - [*adminListRawSpirits*](#adminlistrawspirits)
   - [*getUserProfile*](#getuserprofile)
   - [*listNewsArticles*](#listnewsarticles)
   - [*getNewsArticle*](#getnewsarticle)
@@ -125,8 +126,11 @@ export interface ListSpiritsData {
     name: string;
     nameEn?: string | null;
     category: string;
+    categoryEn?: string | null;
     imageUrl: string;
     isPublished?: boolean | null;
+    abv?: number | null;
+    distillery?: string | null;
     rating?: number | null;
     reviewCount?: number | null;
   } & Spirit_Key)[];
@@ -248,6 +252,7 @@ export interface ListNewArrivalsData {
     nameEn?: string | null;
     imageUrl: string;
     category: string;
+    categoryEn?: string | null;
     country?: string | null;
     abv?: number | null;
     distillery?: string | null;
@@ -373,6 +378,7 @@ export interface GetSpiritData {
     name: string;
     nameEn?: string | null;
     category: string;
+    categoryEn?: string | null;
     mainCategory?: string | null;
     subcategory?: string | null;
     distillery?: string | null;
@@ -477,6 +483,131 @@ console.log(data.spirit);
 executeQuery(ref).then((response) => {
   const data = response.data;
   console.log(data.spirit);
+});
+```
+
+## adminListRawSpirits
+You can execute the `adminListRawSpirits` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
+```typescript
+adminListRawSpirits(vars?: AdminListRawSpiritsVariables, options?: ExecuteQueryOptions): QueryPromise<AdminListRawSpiritsData, AdminListRawSpiritsVariables>;
+
+interface AdminListRawSpiritsRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (vars?: AdminListRawSpiritsVariables): QueryRef<AdminListRawSpiritsData, AdminListRawSpiritsVariables>;
+}
+export const adminListRawSpiritsRef: AdminListRawSpiritsRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `QueryRef` function.
+```typescript
+adminListRawSpirits(dc: DataConnect, vars?: AdminListRawSpiritsVariables, options?: ExecuteQueryOptions): QueryPromise<AdminListRawSpiritsData, AdminListRawSpiritsVariables>;
+
+interface AdminListRawSpiritsRef {
+  ...
+  (dc: DataConnect, vars?: AdminListRawSpiritsVariables): QueryRef<AdminListRawSpiritsData, AdminListRawSpiritsVariables>;
+}
+export const adminListRawSpiritsRef: AdminListRawSpiritsRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the adminListRawSpiritsRef:
+```typescript
+const name = adminListRawSpiritsRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `adminListRawSpirits` query has an optional argument of type `AdminListRawSpiritsVariables`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+
+```typescript
+export interface AdminListRawSpiritsVariables {
+  limit?: number | null;
+  offset?: number | null;
+}
+```
+### Return Type
+Recall that executing the `adminListRawSpirits` query returns a `QueryPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `AdminListRawSpiritsData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface AdminListRawSpiritsData {
+  spirits: ({
+    id: string;
+    name: string;
+    nameEn?: string | null;
+    category: string;
+    categoryEn?: string | null;
+    isPublished?: boolean | null;
+    status?: string | null;
+    updatedAt: TimestampString;
+  } & Spirit_Key)[];
+}
+```
+### Using `adminListRawSpirits`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, adminListRawSpirits, AdminListRawSpiritsVariables } from '@k-spirits/dataconnect';
+
+// The `adminListRawSpirits` query has an optional argument of type `AdminListRawSpiritsVariables`:
+const adminListRawSpiritsVars: AdminListRawSpiritsVariables = {
+  limit: ..., // optional
+  offset: ..., // optional
+};
+
+// Call the `adminListRawSpirits()` function to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await adminListRawSpirits(adminListRawSpiritsVars);
+// Variables can be defined inline as well.
+const { data } = await adminListRawSpirits({ limit: ..., offset: ..., });
+// Since all variables are optional for this query, you can omit the `AdminListRawSpiritsVariables` argument.
+const { data } = await adminListRawSpirits();
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await adminListRawSpirits(dataConnect, adminListRawSpiritsVars);
+
+console.log(data.spirits);
+
+// Or, you can use the `Promise` API.
+adminListRawSpirits(adminListRawSpiritsVars).then((response) => {
+  const data = response.data;
+  console.log(data.spirits);
+});
+```
+
+### Using `adminListRawSpirits`'s `QueryRef` function
+
+```typescript
+import { getDataConnect, executeQuery } from 'firebase/data-connect';
+import { connectorConfig, adminListRawSpiritsRef, AdminListRawSpiritsVariables } from '@k-spirits/dataconnect';
+
+// The `adminListRawSpirits` query has an optional argument of type `AdminListRawSpiritsVariables`:
+const adminListRawSpiritsVars: AdminListRawSpiritsVariables = {
+  limit: ..., // optional
+  offset: ..., // optional
+};
+
+// Call the `adminListRawSpiritsRef()` function to get a reference to the query.
+const ref = adminListRawSpiritsRef(adminListRawSpiritsVars);
+// Variables can be defined inline as well.
+const ref = adminListRawSpiritsRef({ limit: ..., offset: ..., });
+// Since all variables are optional for this query, you can omit the `AdminListRawSpiritsVariables` argument.
+const ref = adminListRawSpiritsRef();
+
+// You can also pass in a `DataConnect` instance to the `QueryRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = adminListRawSpiritsRef(dataConnect, adminListRawSpiritsVars);
+
+// Call `executeQuery()` on the reference to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeQuery(ref);
+
+console.log(data.spirits);
+
+// Or, you can use the `Promise` API.
+executeQuery(ref).then((response) => {
+  const data = response.data;
+  console.log(data.spirits);
 });
 ```
 
@@ -1500,6 +1631,7 @@ export interface ListSpiritsForSitemapData {
     id: string;
     name: string;
     category: string;
+    categoryEn?: string | null;
     imageUrl: string;
     thumbnailUrl?: string | null;
     descriptionKo?: string | null;

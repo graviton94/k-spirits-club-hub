@@ -2,25 +2,36 @@
 # Queries for the App
 
 query listSpirits($category: String) @auth(level: PUBLIC) {
-  spirits(where: { category: { eq: $category } }) {
+  spirits(where: { 
+    isPublished: { eq: true },
+    category: { eq: $category } 
+  }) {
     id
     name
     nameEn
     category
+    categoryEn
     imageUrl
     isPublished
+    abv
+    distillery
     rating
     reviewCount
   }
 }
 
 query listNewArrivals($limit: Int) @auth(level: PUBLIC) {
-  spirits(limit: $limit, orderBy: [{ createdAt: DESC }]) {
+  spirits(
+    where: { isPublished: { eq: true } },
+    limit: $limit, 
+    orderBy: [{ createdAt: DESC }]
+  ) {
     id
     name
     nameEn
     imageUrl
     category
+    categoryEn
     country
     abv
     distillery
@@ -37,6 +48,7 @@ query getSpirit($id: String!) @auth(level: PUBLIC) {
     name
     nameEn
     category
+    categoryEn
     mainCategory
     subcategory
     distillery
@@ -78,6 +90,20 @@ query getSpirit($id: String!) @auth(level: PUBLIC) {
         role
       }
     }
+  }
+}
+
+# Admin only query for raw data access
+query adminListRawSpirits($limit: Int, $offset: Int) @auth(level: NO_ACCESS) {
+  spirits(limit: $limit, offset: $offset, orderBy: [{ updatedAt: DESC }]) {
+    id
+    name
+    nameEn
+    category
+    categoryEn
+    isPublished
+    status
+    updatedAt
   }
 }
 
@@ -193,10 +219,11 @@ query getSpiritReviewsCount @auth(level: PUBLIC) {
 }
 
 query listSpiritsForSitemap @auth(level: PUBLIC) {
-  spirits {
+  spirits(where: { isPublished: { eq: true } }) {
     id
     name
     category
+    categoryEn
     imageUrl
     thumbnailUrl
     descriptionKo

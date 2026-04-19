@@ -10,6 +10,24 @@ export type DateString = string;
 
 
 
+export interface AdminListRawSpiritsData {
+  spirits: ({
+    id: string;
+    name: string;
+    nameEn?: string | null;
+    category: string;
+    categoryEn?: string | null;
+    isPublished?: boolean | null;
+    status?: string | null;
+    updatedAt: TimestampString;
+  } & Spirit_Key)[];
+}
+
+export interface AdminListRawSpiritsVariables {
+  limit?: number | null;
+  offset?: number | null;
+}
+
 export interface AuditAllNewsData {
   newsArticles: ({
     id: string;
@@ -73,6 +91,7 @@ export interface GetSpiritData {
     name: string;
     nameEn?: string | null;
     category: string;
+    categoryEn?: string | null;
     mainCategory?: string | null;
     subcategory?: string | null;
     distillery?: string | null;
@@ -183,6 +202,7 @@ export interface ListNewArrivalsData {
     nameEn?: string | null;
     imageUrl: string;
     category: string;
+    categoryEn?: string | null;
     country?: string | null;
     abv?: number | null;
     distillery?: string | null;
@@ -250,8 +270,11 @@ export interface ListSpiritsData {
     name: string;
     nameEn?: string | null;
     category: string;
+    categoryEn?: string | null;
     imageUrl: string;
     isPublished?: boolean | null;
+    abv?: number | null;
+    distillery?: string | null;
     rating?: number | null;
     reviewCount?: number | null;
   } & Spirit_Key)[];
@@ -262,6 +285,7 @@ export interface ListSpiritsForSitemapData {
     id: string;
     name: string;
     category: string;
+    categoryEn?: string | null;
     imageUrl: string;
     thumbnailUrl?: string | null;
     descriptionKo?: string | null;
@@ -593,6 +617,18 @@ export const getSpiritRef: GetSpiritRef;
 
 export function getSpirit(vars: GetSpiritVariables, options?: ExecuteQueryOptions): QueryPromise<GetSpiritData, GetSpiritVariables>;
 export function getSpirit(dc: DataConnect, vars: GetSpiritVariables, options?: ExecuteQueryOptions): QueryPromise<GetSpiritData, GetSpiritVariables>;
+
+interface AdminListRawSpiritsRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars?: AdminListRawSpiritsVariables): QueryRef<AdminListRawSpiritsData, AdminListRawSpiritsVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars?: AdminListRawSpiritsVariables): QueryRef<AdminListRawSpiritsData, AdminListRawSpiritsVariables>;
+  operationName: string;
+}
+export const adminListRawSpiritsRef: AdminListRawSpiritsRef;
+
+export function adminListRawSpirits(vars?: AdminListRawSpiritsVariables, options?: ExecuteQueryOptions): QueryPromise<AdminListRawSpiritsData, AdminListRawSpiritsVariables>;
+export function adminListRawSpirits(dc: DataConnect, vars?: AdminListRawSpiritsVariables, options?: ExecuteQueryOptions): QueryPromise<AdminListRawSpiritsData, AdminListRawSpiritsVariables>;
 
 interface GetUserProfileRef {
   /* Allow users to create refs without passing in DataConnect */

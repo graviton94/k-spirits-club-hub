@@ -2,7 +2,7 @@
 
 import type { Spirit } from "@/lib/db/schema";
 import { useState } from "react";
-import { db } from "@/lib/db";
+import { publishSpiritAction, updateSpiritAction } from "@/app/[lang]/actions/spirits";
 
 interface AdminSpiritCardProps {
   spirit: Spirit;
@@ -16,17 +16,17 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
   const [isGeneratingDescription, setIsGeneratingDescription] = useState(false);
   const [enrichStep, setEnrichStep] = useState<'idle' | 'audit' | 'sensory' | 'pairing'>('idle');
 
-  const [nameEn, setNameEn] = useState(spirit.name_en || '');
-  const [descKo, setDescKo] = useState(spirit.metadata?.description_ko || spirit.description_ko || '');
-  const [descEn, setDescEn] = useState(spirit.metadata?.description_en || spirit.description_en || '');
-  const [pairingKo, setPairingKo] = useState(spirit.metadata?.pairing_guide_ko || spirit.pairing_guide_ko || '');
-  const [pairingEn, setPairingEn] = useState(spirit.metadata?.pairing_guide_en || spirit.pairing_guide_en || '');
+  const [nameEn, setNameEn] = useState(spirit.nameEn || '');
+  const [descKo, setDescKo] = useState(spirit.descriptionKo || '');
+  const [descEn, setDescEn] = useState(spirit.descriptionEn || '');
+  const [pairingKo, setPairingKo] = useState(spirit.pairingGuideKo || '');
+  const [pairingEn, setPairingEn] = useState(spirit.pairingGuideEn || '');
 
   // Sensory Tags
-  const [noseTags, setNoseTags] = useState<string[]>(spirit.nose_tags || spirit.metadata?.nose_tags || []);
-  const [palateTags, setPalateTags] = useState<string[]>(spirit.palate_tags || spirit.metadata?.palate_tags || []);
-  const [finishTags, setFinishTags] = useState<string[]>(spirit.finish_tags || spirit.metadata?.finish_tags || []);
-  const [tastingNote, setTastingNote] = useState(spirit.tasting_note || spirit.metadata?.tasting_note || '');
+  const [noseTags, setNoseTags] = useState<string[]>(spirit.noseTags || []);
+  const [palateTags, setPalateTags] = useState<string[]>(spirit.palateTags || []);
+  const [finishTags, setFinishTags] = useState<string[]>(spirit.finishTags || []);
+  const [tastingNote, setTastingNote] = useState(spirit.tastingNote || '');
 
   // Local states for metadata preview/edit
   const [distillery, setDistillery] = useState(spirit.distillery || '');
@@ -37,10 +37,14 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
   const [subcategory, setSubcategory] = useState(spirit.subcategory || '');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // GSC Offers/Price fields
   const [price, setPrice] = useState(spirit.metadata?.offer?.price || 0);
   const [currency, setCurrency] = useState(spirit.metadata?.offer?.priceCurrency || 'KRW');
   const [purchaseUrl, setPurchaseUrl] = useState(spirit.metadata?.offer?.url || '');
+
+  // Grounding states
+  const [confidence, setConfidence] = useState<number>(spirit.metadata?.confidence || 0);
+  const [sources, setSources] = useState<string[]>(spirit.metadata?.sources || []);
+  const [adminStatus, setAdminStatus] = useState<string>(spirit.status || 'PENDING');
 
   const handleEnrich = async () => {
     if (!spirit.name) return;
@@ -116,8 +120,25 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
       if (pairingData.pairing_guide_ko) setPairingKo(pairingData.pairing_guide_ko);
       if (pairingData.pairing_guide_en) setPairingEn(pairingData.pairing_guide_en);
 
+      // Aggregating Confidence & Sources
+      const avgConf = ((auditData.confidence_score || 0) + (sensoryData.confidence_score || 0) + (pairingData.confidence_score || 0)) / 3;
+      setConfidence(avgConf);
+      
+      const allSources = Array.from(new Set([
+        ...(auditData.sources || []),
+        ...(sensoryData.sources || []),
+        ...(pairingData.sources || [])
+      ]));
+      setSources(allSources);
+      
+      if (avgConf < 0.7) {
+        setAdminStatus('NEEDS_REVIEW');
+      } else {
+        setAdminStatus('ENRICHED');
+      }
+
       setEnrichStep('idle');
-      alert('✨ AI 데이터 순차 생성 완료!');
+      alert(`✨ AI 데이터 순차 생성 완료! (신뢰도: ${(avgConf * 100).toFixed(0)}%)`);
     } catch (error: any) {
       console.error("Enrichment failed:", error);
       setErrorMessage(`Enrichment failed at [${enrichStep}]: ${error.message}`);
@@ -166,29 +187,16 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
     setIsLoading(true);
     setErrorMessage(null);
     try {
-      const updateData: any = {
-        isPublished: true,
-        isReviewed: true,
-        reviewedBy: 'ADMIN',
-        reviewedAt: new Date(),
-        name_en: nameEn || null,
+      const updateData = {
+        nameEn: nameEn || null,
         abv: abv,
         distillery: distillery,
         region: region,
         country: country,
         category: category,
         subcategory: subcategory,
-        nose_tags: noseTags,
-        palate_tags: palateTags,
-        finish_tags: finishTags,
-        tasting_note: tastingNote,
         metadata: {
           ...spirit.metadata,
-          description_ko: descKo,
-          description_en: descEn,
-          pairing_guide_ko: pairingKo,
-          pairing_guide_en: pairingEn,
-          enriched_at: new Date().toISOString(),
           offer: price > 0 ? {
             price: Number(price),
             priceCurrency: currency,
@@ -199,12 +207,17 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
         }
       };
 
-      await db.updateSpirit(spirit.id, updateData);
+      const result = await publishSpiritAction(spirit.id, updateData);
+      
+      if (!result.success) {
+        throw new Error(result.error);
+      }
+
       setStatus('published');
       if (onRefresh) onRefresh();
-    } catch (error) {
+    } catch (error: any) {
       console.error("Failed to publish:", error);
-      setErrorMessage(`Failed to publish: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      setErrorMessage(`Failed to publish: ${error.message}`);
     } finally {
       setIsLoading(false);
     }
@@ -214,35 +227,38 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
     setIsLoading(true);
     setErrorMessage(null);
     try {
-      const updateData: any = {
-        name_en: nameEn || null,
-        abv: abv,
-        distillery: distillery,
-        region: region,
-        country: country,
-        category: category,
-        subcategory: subcategory,
-        nose_tags: noseTags,
-        palate_tags: palateTags,
-        finish_tags: finishTags,
-        tasting_note: tastingNote,
+      const result = await updateSpiritAction(spirit.id, {
+        nameEn,
+        abv,
+        distillery,
+        region,
+        country,
+        category,
+        subcategory,
+        noseTags,
+        palateTags,
+        finishTags,
+        tastingNote,
+        descriptionKo: descKo,
+        descriptionEn: descEn,
+        pairingGuideKo: pairingKo,
+        pairingGuideEn: pairingEn,
+        confidence,
+        sources,
         metadata: {
-          ...spirit.metadata,
-          description_ko: descKo,
-          description_en: descEn,
-          pairing_guide_ko: pairingKo,
-          pairing_guide_en: pairingEn,
           offer: {
             price: Number(price),
             priceCurrency: currency,
             url: purchaseUrl,
-            availability: 'OutOfStock', // Always OutOfStock as per aggregator policy
+            availability: 'OutOfStock', 
             updatedAt: new Date()
           }
-        }
-      };
+        },
+        status: adminStatus
+      });
 
-      await db.updateSpirit(spirit.id, updateData);
+      if (!result.success) throw new Error(result.error);
+      
       alert('✨ 정보 업데이트 완료!');
       if (onRefresh) onRefresh();
     } catch (error) {
@@ -256,10 +272,12 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
   const handleReject = async () => {
     setIsLoading(true);
     try {
-      await db.updateSpirit(spirit.id, {
+      const result = await updateSpiritAction(spirit.id, {
         isPublished: false,
-        isReviewed: true
+        isReviewed: true,
+        status: 'REJECTED'
       });
+      if (!result.success) throw new Error(result.error);
       setStatus('rejected');
     } catch (error) {
       console.error("Failed to reject:", error);
@@ -277,7 +295,19 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
 
         <div className="flex-1 min-w-0">
           <div className="flex justify-between items-start mb-1">
-            <h3 className="font-semibold text-lg truncate">{spirit.name}</h3>
+            <div className="flex items-center gap-2">
+              <h3 className="font-semibold text-lg truncate">{spirit.name}</h3>
+              {adminStatus === 'NEEDS_REVIEW' && (
+                <span className="px-1.5 py-0.5 bg-red-100 text-red-700 text-[10px] font-black rounded border border-red-200 animate-pulse">
+                  ⚠️ NEEDS REVIEW
+                </span>
+              )}
+              {confidence > 0 && (
+                <span className={`px-1.5 py-0.5 text-[10px] font-black rounded border ${confidence > 0.8 ? 'bg-green-100 text-green-700 border-green-200' : 'bg-amber-100 text-amber-700 border-amber-200'}`}>
+                  {(confidence * 100).toFixed(0)}% CONFIDENT
+                </span>
+              )}
+            </div>
             <span className="text-[10px] font-bold px-2 py-0.5 bg-secondary rounded uppercase tracking-widest">{spirit.category}</span>
           </div>
 
@@ -415,6 +445,25 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
                 </button>
               </div>
 
+              {sources.length > 0 && (
+                <div className="bg-secondary/30 rounded-lg p-3 border border-border/50">
+                  <label className="text-[10px] font-black uppercase text-muted-foreground block mb-2">Research Sources Found ({sources.length})</label>
+                  <div className="flex flex-wrap gap-2">
+                    {sources.map((src, idx) => (
+                      <a 
+                        key={idx} 
+                        href={src} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="text-[10px] text-blue-500 hover:underline truncate max-w-[200px]"
+                      >
+                        🔗 {new URL(src).hostname}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {errorMessage && (
                 <div className="text-xs text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 px-2 py-1 rounded">
                   ⚠️ {errorMessage}
@@ -436,9 +485,14 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
               <button
                 onClick={handlePublish}
                 disabled={isLoading}
-                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50 text-sm font-bold"
+                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50 text-sm font-bold min-w-[120px] transition-all"
               >
-                발행하기
+                {isLoading ? (
+                  <div className="flex items-center gap-2">
+                    <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <span>AI 소믈리에가 정보를 분석 중입니다...</span>
+                  </div>
+                ) : '발행하기'}
               </button>
               <button
                 onClick={handleReject}
@@ -461,6 +515,13 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
               >
                 정보 업데이트
               </button>
+              <button
+                onClick={handlePublish}
+                disabled={isLoading}
+                className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 disabled:opacity-50 text-sm font-bold flex items-center justify-center gap-2"
+              >
+                {isLoading ? <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : '✨ AI 정보 재생성'}
+              </button>
             </>
           )}
           {status === 'rejected' && (
@@ -474,6 +535,13 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
                 className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50 text-sm font-bold"
               >
                 정보 업데이트
+              </button>
+              <button
+                onClick={handlePublish}
+                disabled={isLoading}
+                className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 disabled:opacity-50 text-sm font-bold flex items-center justify-center gap-2"
+              >
+                {isLoading ? <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : '✨ AI 정보 재생성'}
               </button>
             </>
           )}

@@ -5,9 +5,8 @@ export const dynamic = 'force-dynamic';
 export const preferredRegion = 'iad1';
 import {
     auditSpiritInfo,
-    generateSensoryData,
+    generateSensoryProfile,
     generatePairingGuide,
-    generateDescriptionOnly,
     type SpiritEnrichmentInput
 } from '@/lib/services/gemini-translation';
 
@@ -28,13 +27,15 @@ export async function POST(req: NextRequest) {
                 result = await auditSpiritInfo(spiritInput);
                 break;
             case 'sensory':
-                result = await generateSensoryData(spiritInput);
+                // Mapping sensory/description stages to the unified sensory profile phase
+                result = await generateSensoryProfile(spiritInput);
                 break;
             case 'pairing':
                 result = await generatePairingGuide(spiritInput);
                 break;
             case 'description':
-                result = await generateDescriptionOnly(spiritInput);
+                // Fallback for legacy description-only requests
+                result = await generateSensoryProfile(spiritInput);
                 break;
             default:
                 return NextResponse.json({ error: 'Invalid stage' }, { status: 400 });

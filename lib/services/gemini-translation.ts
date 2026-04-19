@@ -7,7 +7,7 @@ if (!API_KEY) {
     console.error('[Gemini] 🔴 ERROR: GEMINI_API_KEY is missing from environment variables.');
 }
 
-// Category -> Subcategories mapping (inline to avoid JSON import issues in Edge Runtime)
+// Category -> Subcategories mapping
 const CATEGORY_SUBCATEGORIES: Record<string, string[]> = {
     "소주": ["희석식 소주", "증류식 소주", "혼카쿠 쇼추", "코루이 쇼추", "오토루이 쇼추", "이모 쇼추", "무기 쇼추", "코메 쇼추", "소바 쇼추", "아와모리", "숙성 아와모리"],
     "위스키": ["싱글 몰트 스카치 위스키", "블렌디드 스카치 위스키", "싱글 그레인 스카치 위스키", "블렌디드 몰트 스카치 위스키", "버번 위스키", "테네시 위스키", "라이 위스키", "콘 위스키", "아이리쉬 위스키", "일본 위스키", "캐나다 위스키", "타이완 위스키", "한국 위스키", "인도 위스키", "아우스트리아 위스키", "유럽 대륙 위스키"],
@@ -22,8 +22,7 @@ const CATEGORY_SUBCATEGORIES: Record<string, string[]> = {
     "리큐르": ["우메슈", "과일 리큐르", "크림 리큐르", "커피 리큐르", "허브 리큐르", "향신료 리큐르", "비터스"]
 };
 
-
-// ✅ 1. 용어 가이드 (기존 유지)
+// Term guidelines
 const TERM_GUIDELINES_TEXT = `
 - 'Makgeolli' for 막걸리/탁주 (Do not use Rice Wine)
 - 'Distilled Soju' for 증류식 소주
@@ -31,7 +30,7 @@ const TERM_GUIDELINES_TEXT = `
 - 'Gwasilju' for 과실주
 `;
 
-// ✅ 2. 뻔한 페어링을 막기 위한 [금지어 리스트]
+// Cliche ban list
 const CLICHE_BAN_LIST = `
 - Generic: "Steak", "Pasta", "Pizza", "Cheese Plate", "Fruit Platter", "Chocolate", "Nuts"
 - For Makgeolli/Takju: NO "Pajeon", "Kimchi-jeon", "Jeon", "Tofu Kimchi", "Bossam"
@@ -47,7 +46,10 @@ export interface EnrichmentAuditResult {
     country: string;
     abv: number;
     category: string;
+    category_en?: string;
     subcategory?: string;
+    confidence_score: number;
+    sources?: string[];
 }
 
 export interface EnrichmentSensoryResult {
@@ -57,11 +59,15 @@ export interface EnrichmentSensoryResult {
     palate_tags: string[];
     finish_tags: string[];
     tasting_note: string;
+    confidence_score: number;
+    sources?: string[];
 }
 
 export interface EnrichmentPairingResult {
     pairing_guide_ko: string;
     pairing_guide_en: string;
+    confidence_score: number;
+    sources?: string[];
 }
 
 export interface SpiritEnrichmentInput {
@@ -86,340 +92,111 @@ export interface SpiritEnrichmentInput {
 }
 
 /**
- * STEP 1: AUDIT & IDENTITY
- * Corrects basic info and verifies product details.
- * NOW WITH SUBCATEGORY INFERENCE from metadata.json
+ * PHASE 1: IDENTITY & AUDIT
+ * Discovers and verifies product facts using official records.
  */
 export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<EnrichmentAuditResult> {
     if (!API_KEY) throw new Error("GEMINI_API_KEY is not set");
     const genAI = new GoogleGenerativeAI(API_KEY);
-    const model = genAI.getGenerativeModel({ model: MODEL_ID, generationConfig: { responseMimeType: "application/json", temperature: 0.2 } });
+    const model = genAI.getGenerativeModel({ model: MODEL_ID, generationConfig: { responseMimeType: "application/json", temperature: 0.1 } });
 
-    // Get valid subcategories for the given category
     const categoryKey = spirit.category;
     const validSubcategories = CATEGORY_SUBCATEGORIES[categoryKey] || [];
-
     const subcategoryGuidance = validSubcategories.length > 0
-        ? `\n### VALID SUBCATEGORIES for "${categoryKey}":\n${validSubcategories.join(', ')}\n\nYou MUST choose the most appropriate subcategory from this list based on the product name and characteristics. If unsure, use the first one.`
+        ? `\n### VALID SUBCATEGORIES for "${categoryKey}":\n${validSubcategories.join(', ')}\n\nYou MUST choose the most appropriate subcategory from this list.`
         : '';
 
     const prompt = `
-    🔍 **CRITICAL: YOU MUST SEARCH THE WEB FOR ALL INFORMATION BELOW**
+    🔍 **MISSION: OFFICIAL DATA DISCOVERY & AUDIT**
     
-    You are a spirits database auditor. You MUST use web search to find factual, objective data.
-    DO NOT make up or guess any information. If you cannot find data via web search, return the original value.
+    You are a Professional Spirits Researcher & Data Auditor. Your mission is to verify the physical facts of this product.
+    YOU MUST use Google Search to find official records (Distillery Website, Food Safety Portal, Master of Malt, etc.).
     
-    ### PRODUCT TO RESEARCH:
+    ### PRODUCT TO AUDIT:
     - Product Name: "${spirit.name}"
-    - Current Category: ${spirit.category} (⚠️ LOCKED - return exactly as is)
-    - Current Subcategory: ${spirit.subcategory || 'Unknown'}
-    - Current ABV: ${spirit.abv}%
-    - Current Producer: ${spirit.distillery || 'Unknown'}
-    - Current Region: ${spirit.region || 'Unknown'}
-    - Current Country: ${spirit.country || 'Unknown'}
+    - Current Category: ${spirit.category} (LOCKED)
+    - Reported ABV: ${spirit.abv}%
+    - Reported Producer: ${spirit.distillery || 'Unknown'}
     
     ${subcategoryGuidance}
 
-    ### MANDATORY WEB SEARCH STEPS:
-    
-    **STEP 1: SEARCH THE PRODUCT**
-    - Google: "${spirit.name}" + "spirits" OR "wine" OR "whisky"
-    - Find OFFICIAL product pages (distillery/winery website, Master of Malt, Wine-Searcher, Vivino, etc.)
-    
-    **STEP 2: EXTRACT OBJECTIVE DATA**
-    From official sources, find and verify:
-    - ✅ **Official English Name**: Exact product name as written on the label
-    - ✅ **ABV (Alcohol %)**: Exact percentage from the label/website
-    - ✅ **Producer/Distillery**: Clean brand name (see rules below)
-    - ✅ **Region**: Specific production region (see rules below)
-    - ✅ **Country**: Country of production
-    
-    **CRITICAL RULES FOR DISTILLERY NAME**:
-    - Use the SHORT, CLEAN brand name - NOT the full legal company name
-    - Remove legal entities: "Ltd", "Inc", "GmbH", "KG", "G. SCHNEIDER & SOHN", etc.
-    - Use Title Case, NOT ALL CAPS
-    - Examples:
-      ✅ Good: "Schneider Weisse" 
-      ❌ Bad: "BRAUEREI SCHNEIDER WEISSE, G. SCHNEIDER & SOHN"
-      ✅ Good: "Glenfiddich"
-      ❌ Bad: "WILLIAM GRANT & SONS LTD"
-    
-    **CRITICAL RULES FOR REGION**:
-    - If you found the distillery/brewery, you MUST also find its location
-    - Region = City or production area (e.g., "Kelheim", "Speyside", "Jeju Island")
-    - DO NOT return "Unknown" if you know the producer - that's impossible!
-    - Search: "[Producer name] + location" to find the region
-    
-    **STEP 3: DETERMINE SUBCATEGORY**
-    
-    **FOR WINES (Category "과실주"):**
-    - Check wine color: Red/White/Rosé/Sparkling/Dessert/Fortified
-    - Spanish/French/Italian/Chilean wines = grape wines → MUST use wine color subcategories
-    - ONLY use "과실주"/"사이더" for fruit wines made from apples/plums/berries (NOT grapes)
-    
-    **FOR ALL OTHER SPIRITS:**
-    - Match the product type to the most specific subcategory from the valid list
-    - Use official product descriptions and classifications
-    
-    ### OUTPUT RULES:
-    - Return ONLY data you found via web search
-    - If you cannot find a field, return the original input value
-    - DO NOT invent, guess, or hallucinate any information
-    
-    ### CRITICAL OUTPUT FORMAT RULES:
-    
-    ⚠️ **name_en MUST BE IN ENGLISH ONLY - NO KOREAN CHARACTERS ALLOWED**
-    ✅ Good: "Glenfiddich 12 Year Old Single Malt Scotch Whisky"
-    ❌ Bad: "글렌피딕 12년산 싱글몰트 스카치 위스키"
-    
-    ⚠️ **subcategory MUST BE EXACT MATCH from the valid list above**
-    ✅ Good: "Red Wine" (for Spanish red wines)
-    ❌ Bad: "레드 와인" or "Red wine" or "red wine" (case-sensitive!)
+    ### MANDATORY INVESTIGATION PROTOCOL:
+    1. OFFICIAL SOURCING: Search "${spirit.name} official site" to find exact ABV, Distillery, and Region.
+    2. BRAND NORMALIZATION: Use clean brand names (e.g., "Macallan" not "The Macallan Distillers Ltd").
+    3. GEOGRAPHICAL AUDIT: Find the specific city/region of the producer.
     
     ### OUTPUT JSON SCHEMA:
     {
-      "name_en": "ENGLISH ONLY - Official English Product Name (Title Case)",
+      "name_en": "Official English Name (Title Case)",
       "category": "${spirit.category}",
-      "subcategory": "EXACT MATCH from valid subcategories list above",
-      "distillery": "Full producer name (from web search)",
-      "region": "Specific region (from web search)",
-      "country": "Country (from web search)",
-      "abv": ABV as number (from web search)
-    }
-    
-    ### EXAMPLE OUTPUT:
-    For a Spanish red wine "Vi de Taula Negre":
-    {
-      "name_en": "Vi de Taula Negre",
-      "category": "과실주",
-      "subcategory": "Red Wine",
-      "distillery": "Celler de Capcanes",
-      "region": "Montsant",
-      "country": "Spain",
-      "abv": 13.5
+      "category_en": "Category Translation",
+      "subcategory": "EXACT MATCH from valid subcategories list",
+      "distillery": "Cleaned Brand Name",
+      "region": "Specific Region/City",
+      "country": "Country of Origin",
+      "abv": number,
+      "confidence_score": number (0.0-1.0),
+      "sources": ["URL1", "URL2"]
     }
     `;
 
     try {
         const result = await model.generateContent(prompt);
         const text = result.response.text();
-        console.log('[Gemini Identity] ===== RAW RESPONSE =====', text);
-
         const cleanJson = text.replace(/```json|```/g, '').trim();
-        const parsed = JSON.parse(cleanJson);
-
-        // Handle if Gemini returns an array instead of a single object
-        let data = Array.isArray(parsed) ? parsed[0] : parsed;
-
-        // ⚠️ CRITICAL VALIDATION: Enforce output rules
-
-        // 1. Validate name_en is actually English (no Korean characters)
-        const koreanRegex = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
-        if (data.name_en && koreanRegex.test(data.name_en)) {
-            console.warn('[Gemini Identity] ⚠️ name_en contains Korean! Auto-translating...');
-            console.warn('[Gemini Identity] Original:', data.name_en);
-
-            // Auto-translate Korean to English
-            try {
-                const translateModel = genAI.getGenerativeModel({
-                    model: MODEL_ID,
-                    generationConfig: { responseMimeType: "text/plain", temperature: 0.1 }
-                });
-                const translatePrompt = `Translate this Korean product name to English. Return ONLY the English name, nothing else:\n\n"${data.name_en}"`;
-                const translateResult = await translateModel.generateContent(translatePrompt);
-                const englishName = translateResult.response.text().trim().replace(/["""]/g, '');
-
-                data.name_en = englishName;
-                console.log('[Gemini Identity] ✅ Auto-translated to:', englishName);
-            } catch (err) {
-                console.error('[Gemini Identity] ❌ Translation failed, using original Korean name');
-                // Keep the Korean name as last resort
-            }
-        }
-
-        // 2. Validate subcategory is from valid list
-        if (data.subcategory && validSubcategories.length > 0) {
-            if (!validSubcategories.includes(data.subcategory)) {
-                console.error('[Gemini Identity] ❌ Invalid subcategory:', data.subcategory);
-                console.error('[Gemini Identity] Valid options:', validSubcategories);
-                // Keep original subcategory
-                data.subcategory = spirit.subcategory;
-            }
-        }
-
-        // 3. AI-Powered Distillery Brand Verification
-        if (data.distillery) {
-            console.log('[Gemini Identity] 🔍 Verifying distillery brand name:', data.distillery);
-            try {
-                const brandModel = genAI.getGenerativeModel({
-                    model: MODEL_ID,
-                    generationConfig: { responseMimeType: "text/plain", temperature: 0.1 }
-                });
-
-                const brandPrompt = `
-                You are a global spirits brand expert. 
-                Extract the CLEAN, RECOGNIZABLE consumer BRAND name from this producer/company name: "${data.distillery}".
-
-                RULES:
-                1. Remove ALL legal suffixes (GmbH, Ltd, Inc, KG, S.A., Co., etc.)
-                2. Remove family initials or formal prefixes (e.g., "G. Schneider & Sohn", "W. & J.")
-                3. Remove "Brauerei", "Distillery", "Distillers" unless it's a core part of the brand.
-                4. Use Title Case (e.g., Macallan, not MACALLAN).
-                5. RETURN ONLY THE BRAND NAME. NO PUNCTUATION.
-
-                Examples:
-                - "Brauerei Schneider Weisse G. Schneider & Sohn" -> "Schneider Weisse"
-                - "THE MACALLAN DISTILLERS LTD" -> "Macallan"
-                - "WILLIAM GRANT & SONS LTD" -> "William Grant & Sons"
-                - "CHATEAU LAFITE ROTHSCHILD" -> "Chateau Lafite Rothschild"
-                
-                Product Context: ${data.name_en || spirit.name}
-                Current Input: "${data.distillery}"
-                `;
-
-                const brandResult = await brandModel.generateContent(brandPrompt);
-                const cleanBrand = brandResult.response.text().trim().replace(/["""]/g, '');
-
-                if (cleanBrand && cleanBrand !== 'Unknown' && cleanBrand !== data.distillery) {
-                    console.log('[Gemini Identity] ✅ Distillery Brand Verified:', data.distillery, '->', cleanBrand);
-                    data.distillery = cleanBrand;
-                }
-            } catch (err) {
-                console.error('[Gemini Identity] ❌ Distillery brand verification failed, falling back to basic cleanup');
-                // Basic fallback cleaning if AI fails
-                data.distillery = data.distillery
-                    .replace(/,?\s+(Ltd|Inc|GmbH|KG|S\.A\.|Co\.)\.?/gi, '')
-                    .trim();
-            }
-        }
-
-        // 4. Validate region is not Unknown when distillery is known
-        if (data.distillery && (data.region === 'Unknown' || !data.region)) {
-            console.warn('[Gemini Identity] ⚠️ Region is Unknown but distillery is known. Searching for brewery location...');
-            try {
-                const regionModel = genAI.getGenerativeModel({
-                    model: MODEL_ID,
-                    generationConfig: { responseMimeType: "text/plain", temperature: 0.1 }
-                });
-                const regionPrompt = `What city or region is "${data.distillery}" located in? Return ONLY the city/region name, nothing else.`;
-                const regionResult = await regionModel.generateContent(regionPrompt);
-                const foundRegion = regionResult.response.text().trim().replace(/["""]/g, '');
-
-                if (foundRegion && foundRegion !== 'Unknown') {
-                    data.region = foundRegion;
-                    console.log('[Gemini Identity] ✅ Found region:', foundRegion);
-                }
-            } catch (err) {
-                console.error('[Gemini Identity] ❌ Region search failed');
-            }
-        }
-
-        // 5. Ensure category is locked
-        data.category = spirit.category;
-
-        console.log('[Gemini Identity] subcategory:', data.subcategory, '| region:', data.region, '| country:', data.country);
-        console.log('[Gemini Identity] name_en:', data.name_en);
-        console.log('[Gemini Identity] distillery:', data.distillery);
-
+        const data = JSON.parse(cleanJson);
+        
+        // Defensive defaults
+        data.category = spirit.category; 
+        data.confidence_score = typeof data.confidence_score === 'number' ? data.confidence_score : 0;
+        data.sources = Array.isArray(data.sources) ? data.sources : [];
+        
         return data;
     } catch (e: any) {
-        console.error('[Gemini Identity] ❌ Error:', e.message);
-        // Fallback: Return original input if AI fails
+        console.error('[Gemini Audit] Failed:', e);
         return {
             name_en: spirit.name_en || spirit.name,
             category: spirit.category,
-            subcategory: spirit.subcategory || (validSubcategories[0] || ''),
             distillery: spirit.distillery || 'Unknown',
             region: spirit.region || 'Unknown',
             country: spirit.country || 'Unknown',
-            abv: spirit.abv || 0
+            abv: spirit.abv || 0,
+            confidence_score: 0,
+            sources: []
         };
     }
 }
 
 /**
- * STEP 2: SENSORY ANALYSIS
- * Generates flavor descriptions and tags.
+ * PHASE 2: COMMUNITY SENSORY
+ * Extracts flavor profiles from real user reviews.
  */
 export async function generateSensoryProfile(spirit: SpiritEnrichmentInput): Promise<EnrichmentSensoryResult> {
     if (!API_KEY) throw new Error("GEMINI_API_KEY is not set");
     const genAI = new GoogleGenerativeAI(API_KEY);
-    const model = genAI.getGenerativeModel({ model: MODEL_ID, generationConfig: { responseMimeType: "application/json", temperature: 0.8 } });
-
-    const existingTastingNote = spirit.metadata?.tasting_note || spirit.metadata?.description || '';
+    const model = genAI.getGenerativeModel({ model: MODEL_ID, generationConfig: { responseMimeType: "application/json", temperature: 0.5 } });
 
     const prompt = `
-    🔍 **CRITICAL: SEARCH THE WEB FOR USER REVIEWS & PROFESSIONAL TASTING NOTES**
+    🔍 **MISSION: COMMUNITY SENSORY DISCOVERY**
     
-    You are a spirits critic compiling objective data from real sources.
-    DO NOT create fictional tasting notes. Find REAL reviews and flavor descriptors.
+    You are a Spirits Sommelier researching community sentiment.
+    YOU MUST search sites like Whiskybase, Vivino, Reddit, and rating forums for real user reviews of: "${spirit.name}".
     
-    ### PRODUCT TO RESEARCH:
-    - Product: "${spirit.name}"
-    - Type: ${spirit.category} / ${spirit.subcategory || ''}
-    - ABV: ${spirit.abv}%
-    - Region: ${spirit.region || 'Unknown'}
-    - Existing Notes: ${existingTastingNote || 'None'}
-
-    ### MANDATORY WEB SEARCH STEPS:
-    
-    **STEP 1: SEARCH FOR REVIEWS**
-    Search these sources:
-    - Google: "${spirit.name}" + "review" OR "tasting notes"
-    - Whisky Advocate, Wine Enthusiast, Vivino, Distiller, Master of Malt
-    - Reddit, user forums, rating sites
-    
-    **STEP 2: EXTRACT RICH FLAVOR TAGS**
-    From user reviews and professional notes, identify the TOP 5-7 most commonly mentioned flavors for EACH category:
-    
-    - **Nose (향)**: 5-7 specific aroma descriptors
-      Examples: "Vanilla Pod", "Dark Caramel", "Toasted Oak", "Lemon Zest", "Wildflower Honey", "Green Apple", "Cinnamon"
-    
-    - **Palate (맛)**: 5-7 specific taste descriptors  
-      Examples: "Dark Chocolate", "Black Pepper", "Dried Apricot", "Toffee", "Charred Wood", "Sea Salt", "Almond"
-    
-    - **Finish (여운)**: 5-7 specific aftertaste descriptors
-      Examples: "Long", "Warming", "Sweet Spice", "Dry Oak", "Peppery Heat", "Smooth Vanilla", "Lingering Smoke"
-    
-    **CRITICAL RULES FOR TAGS**:
-    - Be SPECIFIC: "Vanilla Pod" not just "Vanilla", "Dark Chocolate" not just "Chocolate"
-    - Use 5-7 tags per category (not just 3)
-    - Tags MUST be in English, based on actual user reviews
-    - Include variety: primary flavors + secondary nuances + texture/mouthfeel descriptors
-    
-    **STEP 3: WRITE RICH, DETAILED DESCRIPTIONS**
-    Based on the reviews you found, create comprehensive descriptions:
-    
-    **description_en (4-5 sentences in English)**:
-    - Sentence 1: Production method, origin, or unique characteristics
-    - Sentence 2-3: Key flavor profile and tasting notes from reviews
-    - Sentence 4: Mouthfeel, texture, or finish characteristics
-    - Sentence 5: Overall impression or recommended drinking style
-    
-    **description_ko (4-5 sentences in Korean)**:
-    - Same structure as English, translated with professional tone
-    - Use rich vocabulary and descriptive language
-    
-    **tasting_note (5-6 sentences in Korean)**:
-    - More detailed expansion of the description
-    - Include specific tasting journey: appearance → nose → palate → finish
-    - Mention any unique production processes or aging
-    - Professional sommelier tone
-    
-    ### OUTPUT RULES:
-    - ALL flavor tags must come from actual reviews you found
-    - Descriptions must be RICH and DETAILED (minimum 4-5 sentences each)
-    - Use specific, evocative language - avoid generic phrases
-    - If you cannot find reviews, research the spirit type and create educated tasting notes based on category characteristics
+    ### INVESTIGATION PROTOCOL:
+    1. IDENTIFY REAL TAGS: Find descriptors users actually use (e.g., "Vanilla", "Peat Smoke").
+    2. CROSS-REFERENCE: Compare official notes with user feedback. If users say "it's salty" but official notes don't, include "Salt" in the tags.
+    3. DETAILED STORY: Write 4-5 sentences capturing the "Journey" of drinking this spirit.
     
     ### OUTPUT JSON SCHEMA:
     {
-      "description_ko": "Detailed Korean description (4-5 sentences, rich vocabulary)",
-      "description_en": "Detailed English description (4-5 sentences, professional)",
-      "nose_tags": ["Tag1", "Tag2", "Tag3"],
-      "palate_tags": ["Tag1", "Tag2", "Tag3"],
-      "finish_tags": ["Tag1", "Tag2", "Tag3"],
-      "tasting_note": "Comprehensive Korean tasting note (5-6 sentences, sommelier tone)"
+      "description_ko": "Detailed Korean description",
+      "description_en": "Detailed English description",
+      "nose_tags": ["Tag1", "Tag2"],
+      "palate_tags": ["Tag1", "Tag2"],
+      "finish_tags": ["Tag1", "Tag2"],
+      "tasting_note": "Sommelier-style detailed note",
+      "confidence_score": number,
+      "sources": ["URL1", "URL2"]
     }
     `;
 
@@ -427,203 +204,54 @@ export async function generateSensoryProfile(spirit: SpiritEnrichmentInput): Pro
         const result = await model.generateContent(prompt);
         const text = result.response.text();
         const cleanJson = text.replace(/```json|```/g, '').trim();
-        const parsed = JSON.parse(cleanJson);
-        const data = Array.isArray(parsed) ? parsed[0] : parsed;
-
-        console.log('[Gemini Sensory] Generated tags:', data.nose_tags, data.palate_tags, data.finish_tags);
+        const data = JSON.parse(cleanJson);
+        
+        // Defensive defaults
+        data.confidence_score = typeof data.confidence_score === 'number' ? data.confidence_score : 0;
+        data.sources = Array.isArray(data.sources) ? data.sources : [];
+        
         return data;
     } catch (e: any) {
-        console.error('[Gemini Sensory] ❌ Error:', e.message);
-        // Fallback: Simplified sensory data
+        console.error('[Gemini Sensory] Failed:', e);
         return {
-            description_ko: spirit.metadata?.description || spirit.name,
-            description_en: spirit.name_en || spirit.name,
-            nose_tags: spirit.nose_tags || ['#Spirits'],
-            palate_tags: spirit.palate_tags || [],
-            finish_tags: spirit.finish_tags || [],
-            tasting_note: spirit.metadata?.tasting_note || spirit.metadata?.description || spirit.name
+            description_ko: spirit.name,
+            description_en: spirit.name,
+            nose_tags: [],
+            palate_tags: [],
+            finish_tags: [],
+            tasting_note: spirit.name,
+            confidence_score: 0,
+            sources: []
         };
     }
 }
 
 /**
- * NEW: DESCRIPTION ONLY GENERATION
- * Generates only Korean and English descriptions based on current product info.
- */
-export async function generateDescriptionOnly(spirit: SpiritEnrichmentInput): Promise<{ description_ko: string; description_en: string }> {
-    if (!API_KEY) throw new Error("GEMINI_API_KEY is not set");
-    const genAI = new GoogleGenerativeAI(API_KEY);
-    const model = genAI.getGenerativeModel({ model: MODEL_ID, generationConfig: { responseMimeType: "application/json", temperature: 0.8 } });
-
-    const prompt = `
-    🔍 **SEARCH THE WEB FOR USER REVIEWS & PRODUCT INFORMATION**
-    
-    You are a spirits critic compiling objective descriptions from real sources.
-    
-    ### PRODUCT TO RESEARCH:
-    - Product: "${spirit.name}"
-    - Type: ${spirit.category} / ${spirit.subcategory || ''}
-    - ABV: ${spirit.abv}%
-    - Distillery: ${spirit.distillery || 'Unknown'}
-    - Region: ${spirit.region || 'Unknown'}
-    - Country: ${spirit.country || 'Unknown'}
-    - Flavor Tags (Nose): ${spirit.nose_tags?.join(', ') || 'None'}
-    - Flavor Tags (Palate): ${spirit.palate_tags?.join(', ') || 'None'}
-    - Flavor Tags (Finish): ${spirit.finish_tags?.join(', ') || 'None'}
-
-    ### MANDATORY WEB SEARCH STEPS:
-    
-    **STEP 1: SEARCH FOR REVIEWS & INFORMATION**
-    Search these sources:
-    - Google: "${spirit.name}" + "review" OR "tasting notes"
-    - Official distillery/winery websites, product pages
-    - Whisky Advocate, Wine Enthusiast, Vivino, Distiller, Master of Malt
-    - Reddit, user forums, rating sites
-    
-    **STEP 2: WRITE RICH, DETAILED DESCRIPTIONS**
-    Based on the reviews and information you found, create comprehensive descriptions:
-    
-    **description_en (4-5 sentences in English)**:
-    - Sentence 1: Production method, origin, or unique characteristics
-    - Sentence 2-3: Key flavor profile incorporating the provided flavor tags
-    - Sentence 4: Mouthfeel, texture, or finish characteristics
-    - Sentence 5: Overall impression or recommended drinking style
-    
-    **description_ko (4-5 sentences in Korean)**:
-    - Same structure as English, translated with professional tone
-    - Use rich vocabulary and descriptive language
-    - Incorporate the flavor tags naturally into the description
-    
-    ### OUTPUT RULES:
-    - Descriptions must be RICH and DETAILED (minimum 4-5 sentences each)
-    - Use specific, evocative language - avoid generic phrases
-    - Naturally incorporate the provided flavor tags into the descriptions
-    - If you cannot find reviews, research the spirit type and create educated descriptions based on category characteristics
-    
-    ### OUTPUT JSON SCHEMA:
-    {
-      "description_ko": "Detailed Korean description (4-5 sentences, rich vocabulary)",
-      "description_en": "Detailed English description (4-5 sentences, professional)"
-    }
-    `;
-
-    try {
-        const result = await model.generateContent(prompt);
-        const text = result.response.text();
-        const cleanJson = text.replace(/```json|```/g, '').trim();
-        const parsed = JSON.parse(cleanJson);
-        const data = Array.isArray(parsed) ? parsed[0] : parsed;
-
-        console.log('[Gemini Description] Generated descriptions:', data);
-        return data;
-    } catch (e: any) {
-        console.error('[Gemini Description] ❌ Error:', e.message);
-        // Fallback: Original or name-based descriptions
-        return {
-            description_ko: spirit.description_ko || spirit.metadata?.description || spirit.name,
-            description_en: spirit.description_en || spirit.name_en || spirit.name
-        };
-    }
-}
-
-/**
- * STEP 3: PAIRING GUIDE
- * Generates food pairing recommendations.
+ * PHASE 3: SOMMELIER & PAIRING
+ * Generates context-rich food pairings.
  */
 export async function generatePairingGuide(spirit: SpiritEnrichmentInput): Promise<EnrichmentPairingResult> {
     if (!API_KEY) throw new Error("GEMINI_API_KEY is not set");
     const genAI = new GoogleGenerativeAI(API_KEY);
-    const model = genAI.getGenerativeModel({ model: MODEL_ID, generationConfig: { responseMimeType: "application/json", temperature: 1.2 } });
-
-    // Get existing pairings to avoid duplicates
-    const existingPairings = [
-        spirit.metadata?.pairing_guide_ko,
-        spirit.metadata?.pairing_guide_en
-    ].filter(Boolean);
+    const model = genAI.getGenerativeModel({ model: MODEL_ID, generationConfig: { responseMimeType: "application/json", temperature: 0.8 } });
 
     const prompt = `
-    🔍 **SEARCH THE WEB FOR REAL FOOD PAIRING RECOMMENDATIONS**
+    🔍 **MISSION: CONTEXTUAL PAIRING DISCOVERY**
     
-    You are a sommelier compiling expert pairing suggestions.
-    Find REAL pairing recommendations from sommeliers, not fictional ones.
+    Search for "Real-world food pairings" for: "${spirit.name}".
+    Look for Instagram posts, sommelier blogs, and Reddit "What I ate with this" threads.
     
-    ### PRODUCT TO RESEARCH:
-    - Product: "${spirit.name}"
-    - Type: ${spirit.category} / ${spirit.subcategory || ''}
-    - Region: ${spirit.region || 'Unknown'}
-    - Country: ${spirit.country || 'Unknown'}
-    
-    ${spirit.description_en || spirit.description_ko ? `
-    ### PRODUCT DESCRIPTION (USE THIS AS PRIMARY REFERENCE):
-    ${spirit.description_en || spirit.description_ko}
-    
-    ### FLAVOR PROFILE (SECONDARY REFERENCE):
-    - Nose: ${spirit.nose_tags?.join(', ') || 'Unknown'}
-    - Palate: ${spirit.palate_tags?.join(', ') || 'Unknown'}
-    - Finish: ${spirit.finish_tags?.join(', ') || 'Unknown'}
-    ` : `
-    ### FLAVOR PROFILE (PRIMARY REFERENCE):
-    - Nose: ${spirit.nose_tags?.join(', ') || 'Unknown'}
-    - Palate: ${spirit.palate_tags?.join(', ') || 'Unknown'}
-    - Finish: ${spirit.finish_tags?.join(', ') || 'Unknown'}
-    `}
-    
-    ### EXISTING PAIRINGS (DO NOT REPEAT):
-    ${existingPairings?.join('\n') || 'None'}
-    
-    ### BANNED CLICHÉS:
-    ${CLICHE_BAN_LIST}
-
-    ### WEB SEARCH STEPS:
-    
-    ${spirit.description_en || spirit.description_ko ? `
-    **STEP 1: ANALYZE THE DESCRIPTION**
-    - Read the product description carefully to understand the flavor profile
-    - Identify key flavor notes, texture, and characteristics mentioned
-    - Use this as your PRIMARY guide for pairing recommendations
-    
-    **STEP 2: SEARCH FOR PAIRING RECOMMENDATIONS**
-    - Google: "${spirit.name}" + "food pairing" OR "what to eat with"
-    - Check sommelier blogs, distillery websites, wine pairing guides
-    - Reddit threads, food & wine magazines
-    - Find pairings that complement the flavors described in the PRODUCT DESCRIPTION
-    
-    **STEP 3: SELECT TWO PAIRINGS**
-    From your web search, select TWO unique pairings that align with the description:
-    1. **Terroir Pairing**: Traditional dish from the spirit's region/country (if available)
-    2. **Creative Pairing**: Innovative pairing recommended by sommeliers/experts that complements the flavor profile described
-    
-    - DO NOT repeat any dishes from "EXISTING PAIRINGS" above
-    - DO NOT use banned clichés
-    - Explain WHY each pairing works based on the description's flavor notes (2-3 sentences each)
-    - Reference specific flavors from the description when explaining pairings
-    ` : `
-    **STEP 1: ANALYZE THE FLAVOR PROFILE**
-    - Study the flavor tags carefully to understand the spirit's characteristics
-    - Identify key flavor notes from nose, palate, and finish
-    - Use these as your PRIMARY guide for pairing recommendations
-    
-    **STEP 2: SEARCH FOR PAIRING RECOMMENDATIONS**
-    - Google: "${spirit.name}" + "food pairing" OR "what to eat with"
-    - Check sommelier blogs, distillery websites, wine pairing guides
-    - Reddit threads, food & wine magazines
-    - Find pairings that complement the flavor profile
-    
-    **STEP 3: SELECT TWO PAIRINGS**
-    From your web search, select TWO unique pairings based on the flavor tags:
-    1. **Terroir Pairing**: Traditional dish from the spirit's region/country (if available)
-    2. **Creative Pairing**: Innovative pairing recommended by sommeliers/experts that complements the flavor profile
-    
-    - DO NOT repeat any dishes from "EXISTING PAIRINGS" above
-    - DO NOT use banned clichés
-    - Explain WHY each pairing works based on the flavor tags (2-3 sentences each)
-    - Reference specific flavors from the tags when explaining pairings
-    `}
+    ### PAIRING RULES:
+    1. Avoid generic pairings (Steak, Cheese).
+    2. Find a "Terroir Pairing" (Traditional dish from the region).
+    3. Find a "Creative Pairing" (Innovative combo found in reviews).
     
     ### OUTPUT JSON SCHEMA:
     {
-      "pairing_guide_ko": "Two pairings in Korean (professional tone)",
-      "pairing_guide_en": "Two pairings in English (professional tone)"
+      "pairing_guide_ko": "Pairing explanation in Korean",
+      "pairing_guide_en": "Pairing explanation in English",
+      "confidence_score": number,
+      "sources": ["URL1", "URL2"]
     }
     `;
 
@@ -631,84 +259,72 @@ export async function generatePairingGuide(spirit: SpiritEnrichmentInput): Promi
         const result = await model.generateContent(prompt);
         const text = result.response.text();
         const cleanJson = text.replace(/```json|```/g, '').trim();
-        const parsed = JSON.parse(cleanJson);
-        return Array.isArray(parsed) ? parsed[0] : parsed;
+        const data = JSON.parse(cleanJson);
+        
+        // Defensive defaults
+        data.confidence_score = typeof data.confidence_score === 'number' ? data.confidence_score : 0;
+        data.sources = Array.isArray(data.sources) ? data.sources : [];
+        
+        return data;
     } catch (e: any) {
-        console.error('[Gemini Pairing] ❌ Error:', e.message);
-        // Fallback: Generic pairings
+        console.error('[Gemini Pairing] Failed:', e);
         return {
-            pairing_guide_ko: "함께 즐기기 좋은 가벼운 스낵 또는 치즈와 잘 어울립니다.",
-            pairing_guide_en: "Pairs well with light snacks or assorted cheeses."
+            pairing_guide_ko: "추천 음식이 없습니다.",
+            pairing_guide_en: "No recommended pairings.",
+            confidence_score: 0,
+            sources: []
         };
     }
 }
 
 /**
- * MASTER ENRICHMENT FUNCTION
- * Orchestrates all AI enrichment steps.
+ * ORCHESTRATOR: ENRICH SPIRIT WITH AI
+ * Manages the multi-phase discovery pipeline.
  */
 export async function enrichSpiritWithAI(spirit: SpiritEnrichmentInput): Promise<any> {
-    console.log('[Gemini Enrichment] 🚀 Starting enrichment for:', spirit.name);
-
+    console.log('[Gemini Enrichment] 🚀 Phase 1: Identity & Audit for:', spirit.name);
+    
     try {
-        // Step 1: Audit & Identity (includes subcategory inference)
         const auditData = await auditSpiritInfo(spirit);
-
-        // Step 2: Sensory Analysis
+        
+        console.log('[Gemini Enrichment] 🚀 Phase 2: Community Sensory...');
         const sensoryData = await generateSensoryProfile({
             ...spirit,
+            ...auditData,
             subcategory: auditData.subcategory || spirit.subcategory
         });
 
-        // Step 3: Pairing Guide
+        console.log('[Gemini Enrichment] 🚀 Phase 3: Sommelier & Pairing...');
         const pairingData = await generatePairingGuide({
             ...spirit,
+            ...auditData,
+            ...sensoryData,
             subcategory: auditData.subcategory || spirit.subcategory
         });
 
-        console.log('[Gemini Enrichment] ✅ Enrichment complete');
+        const conf1 = typeof auditData.confidence_score === 'number' ? auditData.confidence_score : 0;
+        const conf2 = typeof sensoryData.confidence_score === 'number' ? sensoryData.confidence_score : 0;
+        const conf3 = typeof pairingData.confidence_score === 'number' ? pairingData.confidence_score : 0;
+
+        const totalConfidence = (conf1 + conf2 + conf3) / 3;
+        const allSources = [...(auditData.sources || []), ...(sensoryData.sources || []), ...(pairingData.sources || [])];
+
+        console.log('[Gemini Enrichment] ✅ Enrichment complete. Avg confidence:', totalConfidence);
 
         return {
             ...auditData,
             ...sensoryData,
-            ...pairingData
+            ...pairingData,
+            admin_status: totalConfidence < 0.7 ? "needs_review" : "verified",
+            metadata: {
+                confidence: totalConfidence,
+                sources: Array.from(new Set(allSources))
+            }
         };
     } catch (e: any) {
-        console.error('[Gemini Enrichment] ❌ Failed:', e);
+        console.error('[Gemini Enrichment] ❌ Orchestration failed:', e);
         throw new Error(`AI enrichment failed: ${e.message}`);
     }
 }
 
-// Export aliases for backward compatibility
-export const generateSensoryData = generateSensoryProfile;
-export { enrichSpiritWithAI as default };
-
-/**
- * Translates a spirit name to English using Gemini.
- */
-export async function translateSpiritName(name: string, category: string, distillery?: string): Promise<{ name_en: string }> {
-    if (!API_KEY) throw new Error("GEMINI_API_KEY is not set");
-    const genAI = new GoogleGenerativeAI(API_KEY);
-    const model = genAI.getGenerativeModel({ model: MODEL_ID, generationConfig: { responseMimeType: "application/json", temperature: 0.1 } });
-
-    const prompt = `
-    Translate the following spirit name to English.
-    Product Name: "${name}"
-    Category: ${category}
-    Distillery: ${distillery || 'Unknown'}
-
-    Return ONLY a JSON object with a single key "name_en" containing the translated English name in Title Case.
-    Example: {"name_en": "Glenfiddich 12 Year Old Single Malt Scotch Whisky"}
-    `;
-
-    try {
-        const result = await model.generateContent(prompt);
-        const text = result.response.text();
-        const cleanJson = text.replace(/```json|```/g, '').trim();
-        const parsed = JSON.parse(cleanJson);
-        return { name_en: parsed.name_en || name };
-    } catch (e: any) {
-        console.error('[Gemini Translation] Error:', e);
-        return { name_en: name }; // Fallback
-    }
-}
+export default enrichSpiritWithAI;

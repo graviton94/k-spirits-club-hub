@@ -150,6 +150,21 @@ exports.getSpirit = function getSpirit(dcOrVars, varsOrOptions, options) {
 }
 ;
 
+const adminListRawSpiritsRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'adminListRawSpirits', inputVars);
+}
+adminListRawSpiritsRef.operationName = 'adminListRawSpirits';
+exports.adminListRawSpiritsRef = adminListRawSpiritsRef;
+
+exports.adminListRawSpirits = function adminListRawSpirits(dcOrVars, varsOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, false);
+  return executeQuery(adminListRawSpiritsRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
+}
+;
+
 const getUserProfileRef = (dcOrVars, vars) => {
   const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
   dcInstance._useGeneratedSdk();

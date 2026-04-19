@@ -124,7 +124,9 @@ pip install -r requirements-dev.txt
 
 # Setup environment variables
 cp .env.example .env.local
-# Edit .env.local with your Firebase & Gemini API keys
+# Edit .env.local with your Firebase & Gemini API keys.
+# IMPORTANT: GEMINI_API_KEY is required for AI enrichment (Description, Sensory, Pairing).
+# When running scripts/backfill-ai-data.ts, ensure .env.local is correctly configured.
 
 # Start development server
 npm run dev

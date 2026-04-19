@@ -57,57 +57,44 @@ export interface SpiritSearchIndex {
 export interface Spirit {
   id: string;
   name: string;
-  /** [Global] Product Name (English) - Moved to Root for Search */
-  name_en: string | null;
+  nameEn: string | null;
   distillery: string | null;
   bottler: string | null;
   abv: number;
   volume: number | null;
-  category: string; // whisky, vodka, gin, rum, etc. (Legal/Wide classification)
-  // These are now legacy at root and moved to metadata
-  description_ko?: string | null;
-  description_en?: string | null;
-  pairing_guide_ko?: string | null;
-  pairing_guide_en?: string | null;
-
-  // New Root Flavor DNA (Moved from metadata for performance)
-  nose_tags?: string[];
-  palate_tags?: string[];
-  finish_tags?: string[];
-  tasting_note?: string;
-  mainCategory: string | null; // Structured grouping (e.g. whisky for bourbon) from metadata
-  subcategory: string | null; // single malt, blended, etc.
+  category: string;
+  categoryEn: string | null;
+  mainCategory: string | null;
+  subcategory: string | null;
   country: string | null;
   region: string | null;
-  imageUrl: string | null;
+  imageUrl: string;
   thumbnailUrl: string | null;
-
-  // Data source tracking
-  source: 'food_safety_korea' | 'imported_food_maru' | 'online' | 'manual' | 'other';
-  externalId: string | null;
+  descriptionKo: string | null;
+  descriptionEn: string | null;
+  pairingGuideKo: string | null;
+  pairingGuideEn: string | null;
+  noseTags: string[];
+  palateTags: string[];
+  finishTags: string[];
+  tastingNote: string | null;
 
   // Data quality & publishing
-  status: SpiritStatus;
+  status: string | null;
   isPublished: boolean;
   isReviewed: boolean;
   reviewedBy: string | null;
   reviewedAt: Date | null;
 
-  // Metadata (Enriched fields)
-  metadata: SpiritMetadata;
-
-  // Search optimization
-  searchKeywords?: string[]; // N-gram keywords for efficient searching
-
-  // SEO & Quality Signals
-  aggregateRating?: {
-    ratingValue: number;
-    reviewCount: number;
-  };
-  hasTastingNotes?: boolean;
+  // Metadata
+  metadata: any;
 
   createdAt: Date;
   updatedAt: Date;
+
+  // Legacy compatibility / snippet fields
+  rating?: number;
+  reviewCount?: number;
 }
 
 export interface SpiritOffer {
