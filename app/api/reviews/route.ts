@@ -1,20 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { reviewsDb } from '@/lib/db/firestore-rest';
-import { dbListSpiritReviews } from '@/lib/db/data-connect-client';
 
-/** Shape returned by dbListSpiritReviews – mirrors the Data Connect JOIN result. */
-interface DCReviewRow {
-  id: string;
-  rating: number;
-  content: string;
-  nose?: string;
-  palate?: string;
-  finish?: string;
-  imageUrls?: string[];
-  createdAt?: string;
-  spirit: { id: string; name: string; imageUrl?: string };
-  user?: { id: string; nickname?: string };
-}
+export const runtime = 'edge';
+
 
 // POST /api/reviews - Create a new review
 export async function POST(request: NextRequest) {
@@ -83,24 +71,23 @@ export async function GET(request: NextRequest) {
     const mode = searchParams.get('mode');
 
     if (mode === 'recent') {
-      const sqlReviews = await dbListSpiritReviews(3, 0);
-      const reviews = (sqlReviews as DCReviewRow[] || [])
-        .filter((r) => r?.spirit?.id)
-        .map((r) => ({
-          id: r.id,
-          spiritId: r.spirit.id,
-          spiritName: r.spirit.name,
-          imageUrl: r.spirit.imageUrl || '',
-          imageUrls: r.imageUrls || [],
-          userId: r.user?.id || '',
-          userName: r.user?.nickname || 'Anonymous',
-          rating: Number(r.rating || 0),
-          content: r.content || '',
-          nose: r.nose || '',
-          palate: r.palate || '',
-          finish: r.finish || '',
-          createdAt: r.createdAt || new Date().toISOString()
-        }));
+      // reviewsDb.getRecent() uses Firestore REST — edge-runtime compatible
+      const recentReviews = await reviewsDb.getRecent();
+      const reviews = (recentReviews || []).slice(0, 3).map((r: any) => ({
+        id: r.id || `${r.spiritId}_${r.userId}`,
+        spiritId: r.spiritId || '',
+        spiritName: r.spiritName || '',
+        imageUrl: r.imageUrl || '',
+        imageUrls: r.imageUrls || [],
+        userId: r.userId || '',
+        userName: r.userName || 'Anonymous',
+        rating: Number(r.rating || 0),
+        content: r.notes || r.content || '',
+        nose: r.tagsN || r.nose || '',
+        palate: r.tagsP || r.palate || '',
+        finish: r.tagsF || r.finish || '',
+        createdAt: r.createdAt || new Date().toISOString()
+      }));
 
       return NextResponse.json({
         reviews
