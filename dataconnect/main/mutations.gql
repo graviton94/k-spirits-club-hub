@@ -141,7 +141,7 @@ mutation upsertNews(
     link: $link,
     date: $date,
     translations: $translations,
-    tags: $tags
+    newsTags: $tags
   })
 }
 

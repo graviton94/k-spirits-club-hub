@@ -76,7 +76,7 @@ type NewsArticle @table {
   link: String
   date: String @index
   translations: Any
-  tags: Any
+  newsTags: Any
   createdAt: Timestamp @default(expr: "request.time") @index
   updatedAt: Timestamp @default(expr: "request.time")
 }

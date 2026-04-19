@@ -155,7 +155,7 @@ query listNewsArticles($limit: Int, $offset: Int) @auth(level: PUBLIC) {
     link
     date
     translations
-    tags
+    newsTags
     createdAt
   }
 }
@@ -171,7 +171,7 @@ query getNewsArticle($id: String!) @auth(level: PUBLIC) {
     link
     date
     translations
-    tags
+    newsTags
     createdAt
   }
 }

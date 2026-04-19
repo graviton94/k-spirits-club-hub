@@ -201,7 +201,7 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
 
                                     <div className="mt-6 pt-6 border-t border-border flex items-center justify-between">
                                         <div className="flex gap-2">
-                                            {(item.tags?.[lang] || item.tags?.ko || item.tags || [])?.slice(0, 2).map((tag: string, i: number) => {
+                                            {(item.newsTags?.[lang] || item.newsTags?.ko || item.newsTags || [])?.slice(0, 2).map((tag: string, i: number) => {
                                                 const cleanTag = tag.startsWith('#') ? tag.substring(1) : tag;
                                                 return (
                                                     <span key={i} className="text-[10px] font-bold text-indigo-500/60 transition-colors">

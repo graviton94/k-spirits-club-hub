@@ -51,7 +51,7 @@ export async function POST(request: Request) {
                     ko: item.translations.ko,
                     en: item.translations.en
                 },
-                tags: {
+                newsTags: {
                     ko: item.tags.ko,
                     en: item.tags.en
                 }

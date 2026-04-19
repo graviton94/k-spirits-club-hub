@@ -99,7 +99,7 @@ export interface GetNewsArticleData {
     link?: string | null;
     date?: string | null;
     translations?: unknown | null;
-    tags?: unknown | null;
+    newsTags?: unknown | null;
     createdAt?: TimestampString | null;
   } & NewsArticle_Key;
 }
@@ -279,7 +279,7 @@ export interface ListNewsArticlesData {
     link?: string | null;
     date?: string | null;
     translations?: unknown | null;
-    tags?: unknown | null;
+    newsTags?: unknown | null;
     createdAt?: TimestampString | null;
   } & NewsArticle_Key)[];
 }

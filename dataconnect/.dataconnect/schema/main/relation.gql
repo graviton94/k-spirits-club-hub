@@ -257,6 +257,15 @@ extend type NewsArticle {
     distinct: Boolean = false
   ): Int! @fdc_generated(from: "NewsArticle.link", purpose: QUERY_COUNT)
   """
+  ✨ Count the number of rows in the `NewsArticle` table where the `newsTags` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  newsTags_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "NewsArticle.newsTags", purpose: QUERY_COUNT)
+  """
   ✨ Count the number of rows in the `NewsArticle` table where the `source` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
   """
   source_count(
@@ -265,15 +274,6 @@ extend type NewsArticle {
     """
     distinct: Boolean = false
   ): Int! @fdc_generated(from: "NewsArticle.source", purpose: QUERY_COUNT)
-  """
-  ✨ Count the number of rows in the `NewsArticle` table where the `tags` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
-  """
-  tags_count(
-    """
-    Set to true to count the number of distinct values.
-    """
-    distinct: Boolean = false
-  ): Int! @fdc_generated(from: "NewsArticle.tags", purpose: QUERY_COUNT)
   """
   ✨ Count the number of rows in the `NewsArticle` table where the `title` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
   """
@@ -306,9 +306,9 @@ extend type NewsArticle {
   """
   createdAt_min: Timestamp @fdc_generated(from: "NewsArticle.createdAt", purpose: QUERY_MIN)
   """
-  ✨ Minimum of the `tags` field in the `NewsArticle` table.
+  ✨ Minimum of the `newsTags` field in the `NewsArticle` table.
   """
-  tags_min: Any @fdc_generated(from: "NewsArticle.tags", purpose: QUERY_MIN)
+  newsTags_min: Any @fdc_generated(from: "NewsArticle.newsTags", purpose: QUERY_MIN)
   """
   ✨ Minimum of the `translations` field in the `NewsArticle` table.
   """
@@ -322,9 +322,9 @@ extend type NewsArticle {
   """
   createdAt_max: Timestamp @fdc_generated(from: "NewsArticle.createdAt", purpose: QUERY_MAX)
   """
-  ✨ Maximum of the `tags` field in the `NewsArticle` table.
+  ✨ Maximum of the `newsTags` field in the `NewsArticle` table.
   """
-  tags_max: Any @fdc_generated(from: "NewsArticle.tags", purpose: QUERY_MAX)
+  newsTags_max: Any @fdc_generated(from: "NewsArticle.newsTags", purpose: QUERY_MAX)
   """
   ✨ Maximum of the `translations` field in the `NewsArticle` table.
   """
