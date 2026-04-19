@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { reviewsDb } from '@/lib/db/firestore-rest';
+import { dbListSpiritReviews } from '@/lib/db/data-connect-client';
 
 export const runtime = 'edge';
 
@@ -70,23 +71,27 @@ export async function GET(request: NextRequest) {
     const mode = searchParams.get('mode');
 
     if (mode === 'recent') {
-      const allRecent = await reviewsDb.getRecent();
-      // Only return the top 3 to the frontend (even if we store more)
-      const reviews = allRecent.slice(0, 3);
+      const sqlReviews = await dbListSpiritReviews(3, 0);
+      const reviews = (sqlReviews || [])
+        .filter((r: any) => r?.spirit?.id)
+        .map((r: any) => ({
+          id: r.id,
+          spiritId: r.spirit.id,
+          spiritName: r.spirit.name,
+          imageUrl: r.spirit.imageUrl || '',
+          imageUrls: r.imageUrls || [],
+          userId: r.user?.id || '',
+          userName: r.user?.nickname || 'Anonymous',
+          rating: Number(r.rating || 0),
+          content: r.content || '',
+          nose: r.nose || '',
+          palate: r.palate || '',
+          finish: r.finish || '',
+          createdAt: r.createdAt || new Date().toISOString()
+        }));
 
       return NextResponse.json({
-        reviews: reviews.map(r => ({
-          id: `${r.spiritId}_${r.userId}`,
-          ...r,
-          noseRating: r.ratingN,
-          palateRating: r.ratingP,
-          finishRating: r.ratingF,
-          content: r.notes,
-          nose: r.tagsN,
-          palate: r.tagsP,
-          finish: r.tagsF,
-          imageUrls: r.imageUrls || []
-        }))
+        reviews
       }, { status: 200 });
     }
 

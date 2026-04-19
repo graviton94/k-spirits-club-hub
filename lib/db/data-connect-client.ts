@@ -160,7 +160,17 @@ export const dbGetNewsCount = async () => {
 };
 
 export const dbUpsertNews = async (vars: any) => {
-  return await upsertNews(getDC(), vars);
+  const normalizedVars = {
+    ...vars,
+    title: typeof vars?.title === 'string'
+      ? vars.title
+      : (vars?.title?.title || vars?.translations?.ko?.title || vars?.translations?.en?.title || ''),
+    content: typeof vars?.content === 'string'
+      ? vars.content
+      : (vars?.content?.content || vars?.translations?.ko?.content || vars?.translations?.en?.content || ''),
+    tags: vars?.tags ?? vars?.newsTags
+  };
+  return await upsertNews(getDC(), normalizedVars);
 };
 
 export const dbDeleteNews = async (id: string) => {

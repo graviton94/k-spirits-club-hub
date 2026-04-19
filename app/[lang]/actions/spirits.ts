@@ -34,7 +34,7 @@ export async function getSpiritById(id: string) {
     if (!spirit) return null;
 
     // GQL에서 필터링되지 않는 경우를 대비한 가드 (spirit 단일 조회는 GQL level filter가 어려울 수 있음)
-    if (!spirit.isPublished) {
+    if (spirit.isPublished !== true) {
       console.warn(`[Action] Attempted to access unpublished spirit: ${id}`);
       return null;
     }
@@ -106,6 +106,7 @@ function mapToSQLFields(current: any, incoming: any) {
     status: incoming.status ?? current.status,
     isPublished: incoming.isPublished ?? current.isPublished,
     isReviewed: incoming.isReviewed ?? current.isReviewed,
+    rating: incoming.rating ?? current.rating,
     
     // Metadata block merging
     metadata: {

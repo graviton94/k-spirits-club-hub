@@ -47,6 +47,15 @@ export default function AdminDashboard() {
         document.title = `K-Spirits Club | 관리자 대시보드`;
     }, []);
 
+    useEffect(() => {
+        if (!editingId) return;
+        const prevOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = prevOverflow;
+        };
+    }, [editingId]);
+
     // State
     const [activeTab, setActiveTab] = useState<'spirits' | 'requests' | 'discovery'>('spirits');
     const [spirits, setSpirits] = useState<Spirit[]>([]);
@@ -587,13 +596,13 @@ export default function AdminDashboard() {
                                                         const docId = btoa(item.link).replace(/\//g, '_').replace(/\+/g, '-').replace(/=/g, '');
                                                         await dbUpsertNews({
                                                             id: docId,
-                                                            title: item.translations.ko,
-                                                            content: item.translations.ko,
+                                                            title: item.translations?.ko?.title || item.translations?.en?.title || item.originalTitle || '',
+                                                            content: item.translations?.ko?.content || item.translations?.en?.content || item.translations?.ko?.snippet || '',
                                                             link: item.link,
                                                             source: item.source,
                                                             date: item.date,
                                                             translations: { ko: item.translations.ko, en: item.translations.en },
-                                                            newsTags: { ko: item.tags.ko, en: item.tags.en }
+                                                            tags: { ko: item.tags.ko, en: item.tags.en }
                                                         });
                                                         count++;
                                                     }

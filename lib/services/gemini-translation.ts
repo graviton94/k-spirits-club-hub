@@ -91,6 +91,28 @@ export interface SpiritEnrichmentInput {
     };
 }
 
+function calculateDynamicEditorRating(spirit: Partial<SpiritEnrichmentInput>): number {
+    const descriptionKo = (spirit.descriptionKo || '').trim();
+    const descriptionEn = (spirit.descriptionEn || '').trim();
+    const pairingKo = (spirit as any).pairingGuideKo?.trim?.() || '';
+    const pairingEn = (spirit as any).pairingGuideEn?.trim?.() || '';
+    const sensoryCount = [
+        ...(spirit.noseTags || []),
+        ...(spirit.palateTags || []),
+        ...(spirit.finishTags || [])
+    ].filter(Boolean).length;
+
+    let score = 2.8;
+    if (descriptionKo.length >= 120) score += 0.5;
+    if (descriptionEn.length >= 120) score += 0.5;
+    if (descriptionKo.length >= 200 || descriptionEn.length >= 200) score += 0.3;
+    if (sensoryCount >= 6) score += 0.6;
+    else if (sensoryCount >= 3) score += 0.3;
+    if (pairingKo.length >= 40 || pairingEn.length >= 40) score += 0.3;
+
+    return Math.max(1, Math.min(5, Number(score.toFixed(1))));
+}
+
 /**
  * Robust JSON extraction and parsing helper.
  */
@@ -302,6 +324,12 @@ export async function enrichSpiritWithAI(spirit: SpiritEnrichmentInput): Promise
         const auditData = await auditSpiritInfo(spirit);
         const sensoryData = await generateSensoryProfile({ ...spirit, ...auditData });
         const pairingData = await generatePairingGuide({ ...spirit, ...auditData, ...sensoryData });
+        const editorRating = calculateDynamicEditorRating({
+            ...spirit,
+            ...auditData,
+            ...sensoryData,
+            ...(pairingData as any)
+        });
 
         const totalConfidence = ((auditData.confidenceScore || 0) + (sensoryData.confidenceScore || 0) + (pairingData.confidenceScore || 0)) / 3;
         const allSources = [...(auditData.sources || []), ...(sensoryData.sources || []), ...(pairingData.sources || [])];
@@ -310,10 +338,12 @@ export async function enrichSpiritWithAI(spirit: SpiritEnrichmentInput): Promise
             ...auditData,
             ...sensoryData,
             ...pairingData,
+            rating: editorRating,
             status: totalConfidence < 0.7 ? "NEEDS_REVIEW" : "ENRICHED",
             metadata: {
                 confidence: totalConfidence,
-                sources: Array.from(new Set(allSources))
+                sources: Array.from(new Set(allSources)),
+                editorRating
             }
         };
     } catch (e: any) {
