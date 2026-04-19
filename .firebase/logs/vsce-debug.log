@@ -1236,3 +1236,442 @@ I0419 19:12:58.791396   12580 load.go:109] Finished reloading
 [debug] [2026-04-19T10:21:31.557Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects [omitted]
 [debug] [2026-04-19T10:21:31.561Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects 200
 [debug] [2026-04-19T10:21:31.561Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects [omitted]
+[debug] [2026-04-19T10:32:28.661Z] I0419 19:32:28.646905   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 19:32:28.646905   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T10:32:28.807Z] W0419 19:32:28.806049   12580 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 6c7f] connector "main" has errors: main\mutations.gql:201:4: Unknown argument "insecure" on directive "@auth".
+
+sources: main\mutations.gql [4812B] main\queries.gql [3986B] 
+I0419 19:32:28.807048   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 6c7f] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2751B] 
+Connector "main": sources: main\mutations.gql [4812B] main\queries.gql [3986B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0419 19:32:28.806049   12580 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 6c7f] connector \"main\" has errors: main\\mutations.gql:201:4: Unknown argument \"insecure\" on directive \"@auth\".\n\nsources: main\\mutations.gql [4812B] main\\queries.gql [3986B] \nI0419 19:32:28.807048   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 6c7f] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2751B] \nConnector \"main\": sources: main\\mutations.gql [4812B] main\\queries.gql [3986B] \n"}}
+[debug] [2026-04-19T10:32:28.814Z] E0419 19:32:28.814716   12580 load.go:73] Could not load sources: 
+Errors: main\mutations.gql:201:4: Unknown argument "insecure" on directive "@auth".
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0419 19:32:28.814716   12580 load.go:73] Could not load sources: \nErrors: main\\mutations.gql:201:4: Unknown argument \"insecure\" on directive \"@auth\".\n"}}
+[debug] [2026-04-19T10:32:28.828Z] I0419 19:32:28.824675   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\mutation.gql [25814B] prelude.gql [82799B] main\implicit.gql [1322B] main\input.gql [106996B] main\relation.gql [53144B] main\query.gql [9588B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 19:32:28.824675   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\mutation.gql [25814B] prelude.gql [82799B] main\\implicit.gql [1322B] main\\input.gql [106996B] main\\relation.gql [53144B] main\\query.gql [9588B] \n"}}
+[debug] [2026-04-19T10:32:28.829Z] I0419 19:32:28.824675   12580 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 19:32:28.824675   12580 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-19T10:32:58.648Z] I0419 19:32:58.648472   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 19:32:58.648472   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T10:32:58.697Z] W0419 19:32:58.695885   12580 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 9944] connector "main" has errors: main\mutations.gql:201:4: Unknown argument "insecure" on directive "@auth".
+main\queries.gql:17:37: Unknown argument "insecure" on directive "@auth".
+main\queries.gql:98:52: Unknown argument "insecure" on directive "@auth".
+main\queries.gql:114:37: Unknown argument "insecure" on directive "@auth".
+main\queries.gql:131:22: Unknown argument "insecure" on directive "@auth".
+main\queries.gql:140:21: Unknown argument "insecure" on directive "@auth".
+main\queries.gql:148:24: Unknown argument "insecure" on directive "@auth".
+main\queries.gql:154:24: Unknown argument "insecure" on directive "@auth".
+main\queries.gql:168:53: Unknown argument "insecure" on directive "@auth".
+main\queries.gql:189:30: Unknown argument "insecure" on directive "@auth".
+main\queries.gql:195:30: Unknown argument "insecure" on directive "@auth".
+main\queries.gql:214:38: Unknown argument "insecure" on directive "@auth".
+main\queries.gql:241:77: Unknown argument "insecure" on directive "@auth".
+
+sources: main\mutations.gql [4812B] main\queries.gql [4470B] 
+I0419 19:32:58.695885   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 9944] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2751B] 
+Connector "main": sources: main\queries.gql [4470B] main\mutations.gql [4812B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0419 19:32:58.695885   12580 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 9944] connector \"main\" has errors: main\\mutations.gql:201:4: Unknown argument \"insecure\" on directive \"@auth\".\nmain\\queries.gql:17:37: Unknown argument \"insecure\" on directive \"@auth\".\nmain\\queries.gql:98:52: Unknown argument \"insecure\" on directive \"@auth\".\nmain\\queries.gql:114:37: Unknown argument \"insecure\" on directive \"@auth\".\nmain\\queries.gql:131:22: Unknown argument \"insecure\" on directive \"@auth\".\nmain\\queries.gql:140:21: Unknown argument \"insecure\" on directive \"@auth\".\nmain\\queries.gql:148:24: Unknown argument \"insecure\" on directive \"@auth\".\nmain\\queries.gql:154:24: Unknown argument \"insecure\" on directive \"@auth\".\nmain\\queries.gql:168:53: Unknown argument \"insecure\" on directive \"@auth\".\nmain\\queries.gql:189:30: Unknown argument \"insecure\" on directive \"@auth\".\nmain\\queries.gql:195:30: Unknown argument \"insecure\" on directive \"@auth\".\nmain\\queries.gql:214:38: Unknown argument \"insecure\" on directive \"@auth\".\nmain\\queries.gql:241:77: Unknown argument \"insecure\" on directive \"@auth\".\n\nsources: main\\mutations.gql [4812B] main\\queries.gql [4470B] \nI0419 19:32:58.695885   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 9944] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2751B] \nConnector \"main\": sources: main\\queries.gql [4470B] main\\mutations.gql [4812B] \n"}}
+[debug] [2026-04-19T10:32:58.699Z] E0419 19:32:58.699538   12580 load.go:73] Could not load sources: 
+Errors: main\mutations.gql:201:4: Unknown argument "insecure" on directive "@auth".
+main\queries.gql:17:37: Unknown argument "insecure" on directive "@auth".
+main\queries.gql:98:52: Unknown argument "insecure" on directive "@auth".
+main\queries.gql:114:37: Unknown argument "insecure" on directive "@auth".
+main\queries.gql:131:22: Unknown argument "insecure" on directive "@auth".
+main\queries.gql:140:21: Unknown argument "insecure" on directive "@auth".
+main\queries.gql:148:24: Unknown argument "insecure" on directive "@auth".
+main\queries.gql:154:24: Unknown argument "insecure" on directive "@auth".
+main\queries.gql:168:53: Unknown argument "insecure" on directive "@auth".
+main\queries.gql:189:30: Unknown argument "insecure" on directive "@auth".
+main\queries.gql:195:30: Unknown argument "insecure" on directive "@auth".
+main\queries.gql:214:38: Unknown argument "insecure" on directive "@auth".
+main\queries.gql:241:77: Unknown argument "insecure" on directive "@auth".
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0419 19:32:58.699538   12580 load.go:73] Could not load sources: \nErrors: main\\mutations.gql:201:4: Unknown argument \"insecure\" on directive \"@auth\".\nmain\\queries.gql:17:37: Unknown argument \"insecure\" on directive \"@auth\".\nmain\\queries.gql:98:52: Unknown argument \"insecure\" on directive \"@auth\".\nmain\\queries.gql:114:37: Unknown argument \"insecure\" on directive \"@auth\".\nmain\\queries.gql:131:22: Unknown argument \"insecure\" on directive \"@auth\".\nmain\\queries.gql:140:21: Unknown argument \"insecure\" on directive \"@auth\".\nmain\\queries.gql:148:24: Unknown argument \"insecure\" on directive \"@auth\".\nmain\\queries.gql:154:24: Unknown argument \"insecure\" on directive \"@auth\".\nmain\\queries.gql:168:53: Unknown argument \"insecure\" on directive \"@auth\".\nmain\\queries.gql:189:30: Unknown argument \"insecure\" on directive \"@auth\".\nmain\\queries.gql:195:30: Unknown argument \"insecure\" on directive \"@auth\".\nmain\\queries.gql:214:38: Unknown argument \"insecure\" on directive \"@auth\".\nmain\\queries.gql:241:77: Unknown argument \"insecure\" on directive \"@auth\".\n"}}
+[debug] [2026-04-19T10:32:58.703Z] I0419 19:32:58.703567   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\implicit.gql [1322B] main\input.gql [106996B] main\relation.gql [53144B] main\query.gql [9588B] main\mutation.gql [25814B] 
+I0419 19:32:58.703567   12580 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 19:32:58.703567   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\implicit.gql [1322B] main\\input.gql [106996B] main\\relation.gql [53144B] main\\query.gql [9588B] main\\mutation.gql [25814B] \nI0419 19:32:58.703567   12580 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-19T10:35:18.647Z] I0419 19:35:18.647675   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 19:35:18.647675   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T10:35:18.677Z] W0419 19:35:18.677496   12580 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 9798] connector "main" has errors: main\mutations.gql:201:4: Unknown argument "insecure" on directive "@auth".
+
+sources: main\mutations.gql [4812B] main\queries.gql [4239B] 
+I0419 19:35:18.677496   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 9798] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2751B] 
+Connector "main": sources: main\mutations.gql [4812B] main\queries.gql [4239B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0419 19:35:18.677496   12580 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 9798] connector \"main\" has errors: main\\mutations.gql:201:4: Unknown argument \"insecure\" on directive \"@auth\".\n\nsources: main\\mutations.gql [4812B] main\\queries.gql [4239B] \nI0419 19:35:18.677496   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 9798] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2751B] \nConnector \"main\": sources: main\\mutations.gql [4812B] main\\queries.gql [4239B] \n"}}
+[debug] [2026-04-19T10:35:18.681Z] E0419 19:35:18.680190   12580 load.go:73] Could not load sources: 
+Errors: main\mutations.gql:201:4: Unknown argument "insecure" on directive "@auth".
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0419 19:35:18.680190   12580 load.go:73] Could not load sources: \nErrors: main\\mutations.gql:201:4: Unknown argument \"insecure\" on directive \"@auth\".\n"}}
+[debug] [2026-04-19T10:35:18.686Z] I0419 19:35:18.684802   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\relation.gql [53144B] main\query.gql [9588B] main\mutation.gql [25814B] main\implicit.gql [1322B] main\input.gql [106996B] prelude.gql [82799B] 
+I0419 19:35:18.684802   12580 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 19:35:18.684802   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\relation.gql [53144B] main\\query.gql [9588B] main\\mutation.gql [25814B] main\\implicit.gql [1322B] main\\input.gql [106996B] prelude.gql [82799B] \nI0419 19:35:18.684802   12580 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-19T10:36:28.646Z] I0419 19:36:28.646518   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 19:36:28.646518   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T10:36:28.682Z] I0419 19:36:28.682112   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub ec4f] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2751B] 
+Connector "main": sources: main\mutations.gql [4643B] main\queries.gql [4239B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 19:36:28.682112   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub ec4f] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2751B] \nConnector \"main\": sources: main\\mutations.gql [4643B] main\\queries.gql [4239B] \n"}}
+[debug] [2026-04-19T10:36:28.741Z] I0419 19:36:28.740083   12580 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 19:36:28.740083   12580 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-19T10:36:28.781Z] I0419 19:36:28.780490   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\query.gql [9588B] main\mutation.gql [25814B] prelude.gql [82799B] main\implicit.gql [1322B] main\input.gql [106996B] main\relation.gql [53144B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 19:36:28.780490   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\query.gql [9588B] main\\mutation.gql [25814B] prelude.gql [82799B] main\\implicit.gql [1322B] main\\input.gql [106996B] main\\relation.gql [53144B] \n"}}
+[debug] [2026-04-19T10:36:28.810Z] I0419 19:36:28.808661   12580 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: esm\index.esm.js [13127B] index.cjs.js [14566B] package.json [612B] .guides/config.json [236B] index.d.ts [26546B] esm\package.json [17B] README.md [111300B] .guides/usage.md [2244B] .guides/setup.md [584B] 
+I0419 19:36:28.808661   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0419 19:36:28.810252   12580 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 19:36:28.808661   12580 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: esm\\index.esm.js [13127B] index.cjs.js [14566B] package.json [612B] .guides/config.json [236B] index.d.ts [26546B] esm\\package.json [17B] README.md [111300B] .guides/usage.md [2244B] .guides/setup.md [584B] \nI0419 19:36:28.808661   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0419 19:36:28.810252   12580 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-19T10:54:38.655Z] I0419 19:54:38.649204   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 19:54:38.649204   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T10:54:38.850Z] W0419 19:54:38.849670   12580 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub fbd6] connector "main" has errors: main\queries.gql:92:68: Value "USER_RW" does not exist in "AccessLevel" enum. Did you mean the enum value "USER"?
+
+sources: main\mutations.gql [4643B] main\queries.gql [4671B] 
+I0419 19:54:38.849670   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub fbd6] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2751B] 
+Connector "main": sources: main\mutations.gql [4643B] main\queries.gql [4671B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0419 19:54:38.849670   12580 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub fbd6] connector \"main\" has errors: main\\queries.gql:92:68: Value \"USER_RW\" does not exist in \"AccessLevel\" enum. Did you mean the enum value \"USER\"?\n\nsources: main\\mutations.gql [4643B] main\\queries.gql [4671B] \nI0419 19:54:38.849670   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub fbd6] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2751B] \nConnector \"main\": sources: main\\mutations.gql [4643B] main\\queries.gql [4671B] \n"}}
+[debug] [2026-04-19T10:54:38.856Z] E0419 19:54:38.855746   12580 load.go:73] Could not load sources: 
+Errors: main\queries.gql:92:68: Value "USER_RW" does not exist in "AccessLevel" enum. Did you mean the enum value "USER"?
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0419 19:54:38.855746   12580 load.go:73] Could not load sources: \nErrors: main\\queries.gql:92:68: Value \"USER_RW\" does not exist in \"AccessLevel\" enum. Did you mean the enum value \"USER\"?\n"}}
+[debug] [2026-04-19T10:54:38.868Z] I0419 19:54:38.866952   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\mutation.gql [25814B] prelude.gql [82799B] main\implicit.gql [1322B] main\input.gql [106996B] main\relation.gql [53144B] main\query.gql [9588B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 19:54:38.866952   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\mutation.gql [25814B] prelude.gql [82799B] main\\implicit.gql [1322B] main\\input.gql [106996B] main\\relation.gql [53144B] main\\query.gql [9588B] \n"}}
+[debug] [2026-04-19T10:54:38.871Z] I0419 19:54:38.868461   12580 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 19:54:38.868461   12580 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-19T10:55:18.647Z] I0419 19:55:18.647422   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 19:55:18.647422   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T10:55:18.682Z] I0419 19:55:18.682949   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 0334] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2751B] 
+Connector "main": sources: main\mutations.gql [4643B] main\queries.gql [4673B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 19:55:18.682949   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 0334] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2751B] \nConnector \"main\": sources: main\\mutations.gql [4643B] main\\queries.gql [4673B] \n"}}
+[debug] [2026-04-19T10:55:18.734Z] I0419 19:55:18.733516   12580 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 19:55:18.733516   12580 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-19T10:55:18.768Z] I0419 19:55:18.768677   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\relation.gql [53144B] main\query.gql [9588B] main\mutation.gql [25814B] main\implicit.gql [1322B] main\input.gql [106996B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 19:55:18.768677   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\relation.gql [53144B] main\\query.gql [9588B] main\\mutation.gql [25814B] main\\implicit.gql [1322B] main\\input.gql [106996B] \n"}}
+[debug] [2026-04-19T10:55:18.788Z] I0419 19:55:18.788180   12580 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: esm\package.json [17B] index.cjs.js [15295B] package.json [612B] README.md [116572B] .guides/usage.md [2244B] .guides/setup.md [584B] index.d.ts [27752B] .guides/config.json [236B] esm\index.esm.js [13781B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 19:55:18.788180   12580 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: esm\\package.json [17B] index.cjs.js [15295B] package.json [612B] README.md [116572B] .guides/usage.md [2244B] .guides/setup.md [584B] index.d.ts [27752B] .guides/config.json [236B] esm\\index.esm.js [13781B] \n"}}
+[debug] [2026-04-19T10:55:18.789Z] I0419 19:55:18.788704   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0419 19:55:18.788704   12580 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 19:55:18.788704   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0419 19:55:18.788704   12580 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-19T11:00:48.657Z] I0419 20:00:48.649248   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:00:48.649248   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T11:00:48.866Z] I0419 20:00:48.862557   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 2325] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2751B] 
+Connector "main": sources: main\mutations.gql [4643B] main\queries.gql [4682B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:00:48.862557   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 2325] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2751B] \nConnector \"main\": sources: main\\mutations.gql [4643B] main\\queries.gql [4682B] \n"}}
+[debug] [2026-04-19T11:00:48.929Z] I0419 20:00:48.924244   12580 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:00:48.924244   12580 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-19T11:00:48.975Z] I0419 20:00:48.973023   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\input.gql [106996B] main\relation.gql [53144B] main\query.gql [9588B] main\mutation.gql [25814B] prelude.gql [82799B] main\implicit.gql [1322B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:00:48.973023   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\input.gql [106996B] main\\relation.gql [53144B] main\\query.gql [9588B] main\\mutation.gql [25814B] prelude.gql [82799B] main\\implicit.gql [1322B] \n"}}
+[debug] [2026-04-19T11:00:48.994Z] I0419 20:00:48.993950   12580 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: README.md [116597B] .guides/usage.md [2001B] .guides/setup.md [584B] .guides/config.json [236B] index.d.ts [27777B] esm\package.json [17B] package.json [612B] esm\index.esm.js [13781B] index.cjs.js [15295B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:00:48.993950   12580 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: README.md [116597B] .guides/usage.md [2001B] .guides/setup.md [584B] .guides/config.json [236B] index.d.ts [27777B] esm\\package.json [17B] package.json [612B] esm\\index.esm.js [13781B] index.cjs.js [15295B] \n"}}
+[debug] [2026-04-19T11:00:48.996Z] I0419 20:00:48.996428   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:00:48.996428   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\n"}}
+[debug] [2026-04-19T11:00:48.998Z] I0419 20:00:48.996936   12580 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:00:48.996936   12580 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-19T11:01:08.649Z] I0419 20:01:08.649250   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:01:08.649250   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T11:01:08.687Z] I0419 20:01:08.687596   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub f836] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2751B] 
+Connector "main": sources: main\mutations.gql [4643B] main\queries.gql [4698B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:01:08.687596   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub f836] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2751B] \nConnector \"main\": sources: main\\mutations.gql [4643B] main\\queries.gql [4698B] \n"}}
+[debug] [2026-04-19T11:01:08.731Z] I0419 20:01:08.731058   12580 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:01:08.731058   12580 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-19T11:01:08.765Z] I0419 20:01:08.764614   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\mutation.gql [25814B] main\implicit.gql [1322B] prelude.gql [82799B] main\input.gql [106996B] main\relation.gql [53144B] main\query.gql [9588B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:01:08.764614   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\mutation.gql [25814B] main\\implicit.gql [1322B] prelude.gql [82799B] main\\input.gql [106996B] main\\relation.gql [53144B] main\\query.gql [9588B] \n"}}
+[debug] [2026-04-19T11:01:08.774Z] I0419 20:01:08.774132   12580 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: index.d.ts [27809B] package.json [612B] README.md [116629B] .guides/usage.md [2244B] .guides/setup.md [584B] .guides/config.json [236B] esm\index.esm.js [13781B] esm\package.json [17B] index.cjs.js [15295B] 
+I0419 20:01:08.774132   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0419 20:01:08.774132   12580 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:01:08.774132   12580 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: index.d.ts [27809B] package.json [612B] README.md [116629B] .guides/usage.md [2244B] .guides/setup.md [584B] .guides/config.json [236B] esm\\index.esm.js [13781B] esm\\package.json [17B] index.cjs.js [15295B] \nI0419 20:01:08.774132   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0419 20:01:08.774132   12580 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-19T11:24:58.659Z] I0419 20:24:58.649643   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:24:58.649643   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T11:24:58.858Z] I0419 20:24:58.856251   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 77ac] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2751B] 
+Connector "main": sources: main\mutations.gql [4643B] main\queries.gql [4762B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:24:58.856251   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 77ac] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2751B] \nConnector \"main\": sources: main\\mutations.gql [4643B] main\\queries.gql [4762B] \n"}}
+[debug] [2026-04-19T11:24:58.914Z] I0419 20:24:58.910119   12580 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:24:58.910119   12580 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-19T11:24:58.986Z] I0419 20:24:58.982875   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\implicit.gql [1322B] main\input.gql [106996B] main\relation.gql [53144B] main\query.gql [9588B] main\mutation.gql [25814B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:24:58.982875   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\implicit.gql [1322B] main\\input.gql [106996B] main\\relation.gql [53144B] main\\query.gql [9588B] main\\mutation.gql [25814B] \n"}}
+[debug] [2026-04-19T11:24:58.999Z] I0419 20:24:58.999001   12580 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: package.json [612B] README.md [116757B] .guides/config.json [236B] esm\index.esm.js [13781B] esm\package.json [17B] .guides/usage.md [2001B] .guides/setup.md [584B] index.d.ts [27937B] index.cjs.js [15295B] 
+I0419 20:24:58.999001   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:24:58.999001   12580 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: package.json [612B] README.md [116757B] .guides/config.json [236B] esm\\index.esm.js [13781B] esm\\package.json [17B] .guides/usage.md [2001B] .guides/setup.md [584B] index.d.ts [27937B] index.cjs.js [15295B] \nI0419 20:24:58.999001   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\n"}}
+[debug] [2026-04-19T11:24:59.001Z] I0419 20:24:58.999001   12580 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:24:58.999001   12580 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-19T11:25:18.650Z] I0419 20:25:18.650007   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:25:18.650007   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T11:25:18.688Z] I0419 20:25:18.688456   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 394c] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2751B] 
+Connector "main": sources: main\queries.gql [4778B] main\mutations.gql [4643B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:25:18.688456   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 394c] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2751B] \nConnector \"main\": sources: main\\queries.gql [4778B] main\\mutations.gql [4643B] \n"}}
+[debug] [2026-04-19T11:25:18.732Z] I0419 20:25:18.731755   12580 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:25:18.731755   12580 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-19T11:25:18.748Z] I0419 20:25:18.747872   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\implicit.gql [1322B] main\input.gql [106996B] main\relation.gql [53144B] main\query.gql [9588B] main\mutation.gql [25814B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:25:18.747872   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\implicit.gql [1322B] main\\input.gql [106996B] main\\relation.gql [53144B] main\\query.gql [9588B] main\\mutation.gql [25814B] \n"}}
+[debug] [2026-04-19T11:25:18.759Z] I0419 20:25:18.759835   12580 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: esm\package.json [17B] index.cjs.js [15295B] package.json [612B] README.md [116789B] .guides/usage.md [2244B] .guides/setup.md [584B] .guides/config.json [236B] esm\index.esm.js [13781B] index.d.ts [27969B] 
+I0419 20:25:18.759835   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0419 20:25:18.759835   12580 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:25:18.759835   12580 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: esm\\package.json [17B] index.cjs.js [15295B] package.json [612B] README.md [116789B] .guides/usage.md [2244B] .guides/setup.md [584B] .guides/config.json [236B] esm\\index.esm.js [13781B] index.d.ts [27969B] \nI0419 20:25:18.759835   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0419 20:25:18.759835   12580 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-19T11:49:28.663Z] I0419 20:49:28.649682   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:49:28.649682   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T11:49:28.841Z] I0419 20:49:28.841015   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 23fc] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2751B] 
+Connector "main": sources: main\mutations.gql [4643B] main\queries.gql [5152B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:49:28.841015   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 23fc] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2751B] \nConnector \"main\": sources: main\\mutations.gql [4643B] main\\queries.gql [5152B] \n"}}
+[debug] [2026-04-19T11:49:28.896Z] I0419 20:49:28.893608   12580 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:49:28.893608   12580 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-19T11:49:28.946Z] I0419 20:49:28.945002   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\relation.gql [53144B] main\query.gql [9588B] main\mutation.gql [25814B] prelude.gql [82799B] main\implicit.gql [1322B] main\input.gql [106996B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:49:28.945002   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\relation.gql [53144B] main\\query.gql [9588B] main\\mutation.gql [25814B] prelude.gql [82799B] main\\implicit.gql [1322B] main\\input.gql [106996B] \n"}}
+[debug] [2026-04-19T11:49:28.965Z] I0419 20:49:28.965727   12580 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: index.d.ts [28166B] esm\package.json [17B] index.cjs.js [15295B] package.json [612B] README.md [117350B] .guides/usage.md [2244B] .guides/setup.md [584B] .guides/config.json [236B] esm\index.esm.js [13781B] 
+I0419 20:49:28.965727   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:49:28.965727   12580 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: index.d.ts [28166B] esm\\package.json [17B] index.cjs.js [15295B] package.json [612B] README.md [117350B] .guides/usage.md [2244B] .guides/setup.md [584B] .guides/config.json [236B] esm\\index.esm.js [13781B] \nI0419 20:49:28.965727   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\n"}}
+[debug] [2026-04-19T11:49:28.967Z] I0419 20:49:28.965727   12580 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:49:28.965727   12580 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-19T11:51:08.647Z] I0419 20:51:08.648369   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:51:08.648369   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T11:51:08.703Z] I0419 20:51:08.704022   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub eafe] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2751B] 
+Connector "main": sources: main\mutations.gql [4733B] main\queries.gql [5152B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:51:08.704022   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub eafe] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2751B] \nConnector \"main\": sources: main\\mutations.gql [4733B] main\\queries.gql [5152B] \n"}}
+[debug] [2026-04-19T11:51:08.750Z] I0419 20:51:08.751064   12580 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:51:08.751064   12580 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-19T11:51:08.773Z] I0419 20:51:08.771615   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\query.gql [9588B] main\mutation.gql [25814B] main\implicit.gql [1322B] main\input.gql [106996B] prelude.gql [82799B] main\relation.gql [53144B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:51:08.771615   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\query.gql [9588B] main\\mutation.gql [25814B] main\\implicit.gql [1322B] main\\input.gql [106996B] prelude.gql [82799B] main\\relation.gql [53144B] \n"}}
+[debug] [2026-04-19T11:51:08.812Z] I0419 20:51:08.788918   12580 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: index.d.ts [28972B] esm\index.esm.js [14292B] index.cjs.js [15860B] README.md [121583B] .guides/usage.md [2259B] esm\package.json [17B] package.json [612B] .guides/setup.md [584B] .guides/config.json [236B] 
+I0419 20:51:08.788918   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0419 20:51:08.788918   12580 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:51:08.788918   12580 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: index.d.ts [28972B] esm\\index.esm.js [14292B] index.cjs.js [15860B] README.md [121583B] .guides/usage.md [2259B] esm\\package.json [17B] package.json [612B] .guides/setup.md [584B] .guides/config.json [236B] \nI0419 20:51:08.788918   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0419 20:51:08.788918   12580 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-19T11:54:48.653Z] I0419 20:54:48.653045   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:54:48.653045   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T11:54:48.735Z] I0419 20:54:48.732791   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub fec3] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2983B] 
+Connector "main": sources: main\mutations.gql [4733B] main\queries.gql [5152B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:54:48.732791   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub fec3] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2983B] \nConnector \"main\": sources: main\\mutations.gql [4733B] main\\queries.gql [5152B] \n"}}
+[debug] [2026-04-19T11:54:48.782Z] I0419 20:54:48.782413   12580 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:54:48.782413   12580 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-19T11:54:48.803Z] I0419 20:54:48.803675   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\input.gql [116697B] main\relation.gql [57141B] main\query.gql [11054B] main\mutation.gql [29754B] main\implicit.gql [1322B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:54:48.803675   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\input.gql [116697B] main\\relation.gql [57141B] main\\query.gql [11054B] main\\mutation.gql [29754B] main\\implicit.gql [1322B] \n"}}
+[debug] [2026-04-19T11:54:48.815Z] I0419 20:54:48.815112   12580 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: esm\index.esm.js [14292B] package.json [612B] README.md [121583B] .guides/setup.md [584B] .guides/config.json [236B] index.d.ts [29064B] esm\package.json [17B] index.cjs.js [15860B] .guides/usage.md [2259B] 
+I0419 20:54:48.815112   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0419 20:54:48.815112   12580 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:54:48.815112   12580 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: esm\\index.esm.js [14292B] package.json [612B] README.md [121583B] .guides/setup.md [584B] .guides/config.json [236B] index.d.ts [29064B] esm\\package.json [17B] index.cjs.js [15860B] .guides/usage.md [2259B] \nI0419 20:54:48.815112   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0419 20:54:48.815112   12580 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-19T11:54:58.650Z] I0419 20:54:58.650717   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:54:58.650717   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T11:54:58.699Z] I0419 20:54:58.699617   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 7167] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2983B] 
+Connector "main": sources: main\queries.gql [5152B] main\mutations.gql [5058B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:54:58.699617   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 7167] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2983B] \nConnector \"main\": sources: main\\queries.gql [5152B] main\\mutations.gql [5058B] \n"}}
+[debug] [2026-04-19T11:54:58.775Z] I0419 20:54:58.774990   12580 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:54:58.774990   12580 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-19T11:54:58.796Z] I0419 20:54:58.795883   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\implicit.gql [1322B] main\input.gql [116697B] main\relation.gql [57141B] main\query.gql [11054B] main\mutation.gql [29754B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:54:58.795883   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\implicit.gql [1322B] main\\input.gql [116697B] main\\relation.gql [57141B] main\\query.gql [11054B] main\\mutation.gql [29754B] \n"}}
+[debug] [2026-04-19T11:54:58.807Z] I0419 20:54:58.807032   12580 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: index.d.ts [30155B] esm\index.esm.js [14851B] package.json [612B] .guides/usage.md [2284B] esm\package.json [17B] index.cjs.js [16497B] README.md [126857B] .guides/setup.md [584B] .guides/config.json [236B] 
+I0419 20:54:58.807544   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0419 20:54:58.807544   12580 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:54:58.807032   12580 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: index.d.ts [30155B] esm\\index.esm.js [14851B] package.json [612B] .guides/usage.md [2284B] esm\\package.json [17B] index.cjs.js [16497B] README.md [126857B] .guides/setup.md [584B] .guides/config.json [236B] \nI0419 20:54:58.807544   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0419 20:54:58.807544   12580 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-19T11:55:18.648Z] I0419 20:55:18.648241   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:55:18.648241   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T11:55:18.683Z] I0419 20:55:18.683977   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 3c67] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2983B] 
+Connector "main": sources: main\mutations.gql [5058B] main\queries.gql [5387B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:55:18.683977   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 3c67] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2983B] \nConnector \"main\": sources: main\\mutations.gql [5058B] main\\queries.gql [5387B] \n"}}
+[debug] [2026-04-19T11:55:18.735Z] I0419 20:55:18.734411   12580 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:55:18.734411   12580 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-19T11:55:18.762Z] I0419 20:55:18.762503   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\query.gql [11054B] main\mutation.gql [29754B] prelude.gql [82799B] main\implicit.gql [1322B] main\input.gql [116697B] main\relation.gql [57141B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:55:18.762503   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\query.gql [11054B] main\\mutation.gql [29754B] prelude.gql [82799B] main\\implicit.gql [1322B] main\\input.gql [116697B] main\\relation.gql [57141B] \n"}}
+[debug] [2026-04-19T11:55:18.776Z] I0419 20:55:18.775948   12580 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: package.json [612B] esm\index.esm.js [15510B] esm\package.json [17B] index.cjs.js [17231B] README.md [131732B] .guides/usage.md [2284B] .guides/setup.md [584B] .guides/config.json [236B] index.d.ts [31350B] 
+I0419 20:55:18.775948   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0419 20:55:18.775948   12580 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:55:18.775948   12580 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: package.json [612B] esm\\index.esm.js [15510B] esm\\package.json [17B] index.cjs.js [17231B] README.md [131732B] .guides/usage.md [2284B] .guides/setup.md [584B] .guides/config.json [236B] index.d.ts [31350B] \nI0419 20:55:18.775948   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0419 20:55:18.775948   12580 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-19T11:55:58.650Z] I0419 20:55:58.650623   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:55:58.650623   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T11:55:58.783Z] I0419 20:55:58.782381   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 27eb] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2983B] 
+Connector "main": sources: main\mutations.gql [5058B] main\queries.gql [5614B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:55:58.782381   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 27eb] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2983B] \nConnector \"main\": sources: main\\mutations.gql [5058B] main\\queries.gql [5614B] \n"}}
+[debug] [2026-04-19T11:55:58.850Z] I0419 20:55:58.850603   12580 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:55:58.850603   12580 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-19T11:55:58.873Z] I0419 20:55:58.869162   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\input.gql [116697B] main\relation.gql [57141B] main\query.gql [11054B] main\mutation.gql [29754B] prelude.gql [82799B] main\implicit.gql [1322B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:55:58.869162   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\input.gql [116697B] main\\relation.gql [57141B] main\\query.gql [11054B] main\\mutation.gql [29754B] prelude.gql [82799B] main\\implicit.gql [1322B] \n"}}
+[debug] [2026-04-19T11:55:58.886Z] I0419 20:55:58.884452   12580 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: index.cjs.js [17951B] .guides/setup.md [584B] .guides/config.json [236B] index.d.ts [32336B] esm\package.json [17B] package.json [612B] README.md [135636B] .guides/usage.md [2284B] esm\index.esm.js [16140B] 
+I0419 20:55:58.884452   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0419 20:55:58.884452   12580 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:55:58.884452   12580 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: index.cjs.js [17951B] .guides/setup.md [584B] .guides/config.json [236B] index.d.ts [32336B] esm\\package.json [17B] package.json [612B] README.md [135636B] .guides/usage.md [2284B] esm\\index.esm.js [16140B] \nI0419 20:55:58.884452   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0419 20:55:58.884452   12580 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-19T11:56:48.654Z] I0419 20:56:48.654149   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:56:48.654149   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T11:56:48.706Z] W0419 20:56:48.703867   12580 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 56ba] connector "main" has errors: main\mutations.gql:144:11: Variable "$tags" of type "[String!]" used in position expecting type "Any".
+
+sources: main\mutations.gql [5058B] main\queries.gql [5614B] 
+I0419 20:56:48.703867   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 56ba] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2977B] 
+Connector "main": sources: main\queries.gql [5614B] main\mutations.gql [5058B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0419 20:56:48.703867   12580 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 56ba] connector \"main\" has errors: main\\mutations.gql:144:11: Variable \"$tags\" of type \"[String!]\" used in position expecting type \"Any\".\n\nsources: main\\mutations.gql [5058B] main\\queries.gql [5614B] \nI0419 20:56:48.703867   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 56ba] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2977B] \nConnector \"main\": sources: main\\queries.gql [5614B] main\\mutations.gql [5058B] \n"}}
+[debug] [2026-04-19T11:56:48.709Z] E0419 20:56:48.708534   12580 load.go:73] Could not load sources: 
+Errors: main\mutations.gql:144:11: Variable "$tags" of type "[String!]" used in position expecting type "Any".
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0419 20:56:48.708534   12580 load.go:73] Could not load sources: \nErrors: main\\mutations.gql:144:11: Variable \"$tags\" of type \"[String!]\" used in position expecting type \"Any\".\n"}}
+[debug] [2026-04-19T11:56:48.717Z] I0419 20:56:48.715835   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\relation.gql [57815B] main\query.gql [11054B] main\mutation.gql [29754B] main\implicit.gql [1322B] main\input.gql [117375B] 
+I0419 20:56:48.715835   12580 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:56:48.715835   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\relation.gql [57815B] main\\query.gql [11054B] main\\mutation.gql [29754B] main\\implicit.gql [1322B] main\\input.gql [117375B] \nI0419 20:56:48.715835   12580 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-19T11:57:08.648Z] I0419 20:57:08.648311   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:57:08.648311   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T11:57:08.692Z] I0419 20:57:08.692561   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub c204] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2977B] 
+Connector "main": sources: main\queries.gql [5614B] main\mutations.gql [5052B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:57:08.692561   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub c204] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2977B] \nConnector \"main\": sources: main\\queries.gql [5614B] main\\mutations.gql [5052B] \n"}}
+[debug] [2026-04-19T11:57:08.735Z] I0419 20:57:08.734433   12580 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:57:08.734433   12580 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-19T11:57:08.762Z] I0419 20:57:08.761594   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\relation.gql [57815B] main\query.gql [11054B] main\mutation.gql [29754B] prelude.gql [82799B] main\implicit.gql [1322B] main\input.gql [117375B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:57:08.761594   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\relation.gql [57815B] main\\query.gql [11054B] main\\mutation.gql [29754B] prelude.gql [82799B] main\\implicit.gql [1322B] main\\input.gql [117375B] \n"}}
+[debug] [2026-04-19T11:57:08.777Z] I0419 20:57:08.776747   12580 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: index.d.ts [32333B] esm\index.esm.js [16140B] esm\package.json [17B] index.cjs.js [17951B] package.json [612B] .guides/config.json [236B] README.md [135633B] .guides/usage.md [2284B] .guides/setup.md [584B] 
+I0419 20:57:08.776747   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0419 20:57:08.776747   12580 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:57:08.776747   12580 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: index.d.ts [32333B] esm\\index.esm.js [16140B] esm\\package.json [17B] index.cjs.js [17951B] package.json [612B] .guides/config.json [236B] README.md [135633B] .guides/usage.md [2284B] .guides/setup.md [584B] \nI0419 20:57:08.776747   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0419 20:57:08.776747   12580 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-19T11:58:38.659Z] I0419 20:58:38.656140   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:58:38.656140   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T11:58:38.756Z] I0419 20:58:38.753655   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 4063] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2977B] 
+Connector "main": sources: main\mutations.gql [5052B] main\queries.gql [5659B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:58:38.753655   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 4063] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2977B] \nConnector \"main\": sources: main\\mutations.gql [5052B] main\\queries.gql [5659B] \n"}}
+[debug] [2026-04-19T11:58:38.797Z] I0419 20:58:38.796580   12580 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:58:38.796580   12580 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-19T11:58:38.815Z] I0419 20:58:38.815130   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\query.gql [11054B] main\mutation.gql [29754B] prelude.gql [82799B] main\implicit.gql [1322B] main\input.gql [117375B] main\relation.gql [57815B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:58:38.815130   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\query.gql [11054B] main\\mutation.gql [29754B] prelude.gql [82799B] main\\implicit.gql [1322B] main\\input.gql [117375B] main\\relation.gql [57815B] \n"}}
+[debug] [2026-04-19T11:58:38.827Z] I0419 20:58:38.827593   12580 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: index.d.ts [32426B] esm\index.esm.js [16140B] esm\package.json [17B] index.cjs.js [17951B] README.md [135726B] package.json [612B] .guides/usage.md [2284B] .guides/setup.md [584B] .guides/config.json [236B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:58:38.827593   12580 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: index.d.ts [32426B] esm\\index.esm.js [16140B] esm\\package.json [17B] index.cjs.js [17951B] README.md [135726B] package.json [612B] .guides/usage.md [2284B] .guides/setup.md [584B] .guides/config.json [236B] \n"}}
+[debug] [2026-04-19T11:58:38.829Z] I0419 20:58:38.828498   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0419 20:58:38.828498   12580 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 20:58:38.828498   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0419 20:58:38.828498   12580 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-19T12:32:11.592Z] I0419 21:32:09.166013   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 21:32:09.166013   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T12:32:12.205Z] I0419 21:32:12.197656   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 1b29] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2977B] 
+Connector "main": sources: main\mutations.gql [5052B] main\queries.gql [5761B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 21:32:12.197656   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 1b29] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2977B] \nConnector \"main\": sources: main\\mutations.gql [5052B] main\\queries.gql [5761B] \n"}}
+[debug] [2026-04-19T12:32:12.269Z] I0419 21:32:12.266005   12580 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 21:32:12.266005   12580 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-19T12:32:12.310Z] I0419 21:32:12.308957   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\implicit.gql [1322B] main\input.gql [117375B] main\relation.gql [57815B] main\query.gql [11054B] main\mutation.gql [29754B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 21:32:12.308957   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\implicit.gql [1322B] main\\input.gql [117375B] main\\relation.gql [57815B] main\\query.gql [11054B] main\\mutation.gql [29754B] \n"}}
+[debug] [2026-04-19T12:32:12.330Z] I0419 21:32:12.330594   12580 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: .guides/setup.md [584B] esm\index.esm.js [16140B] esm\package.json [17B] package.json [612B] .guides/usage.md [2284B] .guides/config.json [236B] index.d.ts [32426B] index.cjs.js [17951B] README.md [135726B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 21:32:12.330594   12580 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: .guides/setup.md [584B] esm\\index.esm.js [16140B] esm\\package.json [17B] package.json [612B] .guides/usage.md [2284B] .guides/config.json [236B] index.d.ts [32426B] index.cjs.js [17951B] README.md [135726B] \n"}}
+[debug] [2026-04-19T12:32:12.331Z] I0419 21:32:12.330594   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0419 21:32:12.331139   12580 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 21:32:12.330594   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0419 21:32:12.331139   12580 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-19T12:32:18.647Z] I0419 21:32:18.647092   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 21:32:18.647092   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T12:32:18.683Z] I0419 21:32:18.683606   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 1f8a] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2977B] 
+Connector "main": sources: main\mutations.gql [5154B] main\queries.gql [5761B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 21:32:18.683606   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 1f8a] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2977B] \nConnector \"main\": sources: main\\mutations.gql [5154B] main\\queries.gql [5761B] \n"}}
+[debug] [2026-04-19T12:32:18.731Z] I0419 21:32:18.731566   12580 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 21:32:18.731566   12580 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-19T12:32:18.758Z] I0419 21:32:18.758333   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\input.gql [117375B] main\relation.gql [57815B] main\query.gql [11054B] main\mutation.gql [29754B] main\implicit.gql [1322B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 21:32:18.758333   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\input.gql [117375B] main\\relation.gql [57815B] main\\query.gql [11054B] main\\mutation.gql [29754B] main\\implicit.gql [1322B] \n"}}
+[debug] [2026-04-19T12:32:18.771Z] I0419 21:32:18.771014   12580 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: index.d.ts [32426B] package.json [612B] README.md [135726B] esm\index.esm.js [16140B] esm\package.json [17B] index.cjs.js [17951B] .guides/usage.md [2284B] .guides/setup.md [584B] .guides/config.json [236B] 
+I0419 21:32:18.771014   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0419 21:32:18.771014   12580 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 21:32:18.771014   12580 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: index.d.ts [32426B] package.json [612B] README.md [135726B] esm\\index.esm.js [16140B] esm\\package.json [17B] index.cjs.js [17951B] .guides/usage.md [2284B] .guides/setup.md [584B] .guides/config.json [236B] \nI0419 21:32:18.771014   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0419 21:32:18.771014   12580 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-19T12:32:28.650Z] I0419 21:32:28.649909   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 21:32:28.649909   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T12:32:28.709Z] I0419 21:32:28.708803   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 86d9] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2977B] 
+Connector "main": sources: main\mutations.gql [5324B] main\queries.gql [5761B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 21:32:28.708803   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 86d9] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2977B] \nConnector \"main\": sources: main\\mutations.gql [5324B] main\\queries.gql [5761B] \n"}}
+[debug] [2026-04-19T12:32:28.772Z] I0419 21:32:28.768651   12580 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 21:32:28.768651   12580 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-19T12:32:28.806Z] I0419 21:32:28.806420   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\input.gql [117375B] main\relation.gql [57815B] main\query.gql [11054B] main\mutation.gql [29754B] main\implicit.gql [1322B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 21:32:28.806420   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\input.gql [117375B] main\\relation.gql [57815B] main\\query.gql [11054B] main\\mutation.gql [29754B] main\\implicit.gql [1322B] \n"}}
+[debug] [2026-04-19T12:32:28.817Z] I0419 21:32:28.816678   12580 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: esm\index.esm.js [16140B] index.cjs.js [17951B] README.md [135726B] .guides/config.json [236B] index.d.ts [32426B] esm\package.json [17B] package.json [612B] .guides/usage.md [2284B] .guides/setup.md [584B] 
+I0419 21:32:28.816678   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0419 21:32:28.816678   12580 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 21:32:28.816678   12580 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: esm\\index.esm.js [16140B] index.cjs.js [17951B] README.md [135726B] .guides/config.json [236B] index.d.ts [32426B] esm\\package.json [17B] package.json [612B] .guides/usage.md [2284B] .guides/setup.md [584B] \nI0419 21:32:28.816678   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0419 21:32:28.816678   12580 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-19T12:41:48.658Z] I0419 21:41:48.650093   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 21:41:48.650093   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T12:41:48.721Z] W0419 21:41:48.721885   12580 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 5d5b] connector "main" has errors: main\mutations.gql:144:5: Field "tags" is not defined by type "NewsArticle_Data".
+main\queries.gql:158:6: Cannot query field "tags" on type "NewsArticle".
+main\queries.gql:174:6: Cannot query field "tags" on type "NewsArticle".
+
+sources: main\mutations.gql [5324B] main\queries.gql [5761B] 
+I0419 21:41:48.721885   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 5d5b] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2981B] 
+Connector "main": sources: main\queries.gql [5761B] main\mutations.gql [5324B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0419 21:41:48.721885   12580 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 5d5b] connector \"main\" has errors: main\\mutations.gql:144:5: Field \"tags\" is not defined by type \"NewsArticle_Data\".\nmain\\queries.gql:158:6: Cannot query field \"tags\" on type \"NewsArticle\".\nmain\\queries.gql:174:6: Cannot query field \"tags\" on type \"NewsArticle\".\n\nsources: main\\mutations.gql [5324B] main\\queries.gql [5761B] \nI0419 21:41:48.721885   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 5d5b] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2981B] \nConnector \"main\": sources: main\\queries.gql [5761B] main\\mutations.gql [5324B] \n"}}
+[debug] [2026-04-19T12:41:48.725Z] E0419 21:41:48.725465   12580 load.go:73] Could not load sources: 
+Errors: main\mutations.gql:144:5: Field "tags" is not defined by type "NewsArticle_Data".
+main\queries.gql:158:6: Cannot query field "tags" on type "NewsArticle".
+main\queries.gql:174:6: Cannot query field "tags" on type "NewsArticle".
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0419 21:41:48.725465   12580 load.go:73] Could not load sources: \nErrors: main\\mutations.gql:144:5: Field \"tags\" is not defined by type \"NewsArticle_Data\".\nmain\\queries.gql:158:6: Cannot query field \"tags\" on type \"NewsArticle\".\nmain\\queries.gql:174:6: Cannot query field \"tags\" on type \"NewsArticle\".\n"}}
+[debug] [2026-04-19T12:41:48.739Z] I0419 21:41:48.737270   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\relation.gql [57851B] main\query.gql [11054B] main\mutation.gql [29754B] prelude.gql [82799B] main\implicit.gql [1322B] main\input.gql [117459B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 21:41:48.737270   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\relation.gql [57851B] main\\query.gql [11054B] main\\mutation.gql [29754B] prelude.gql [82799B] main\\implicit.gql [1322B] main\\input.gql [117459B] \n"}}
+[debug] [2026-04-19T12:41:48.740Z] I0419 21:41:48.739267   12580 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 21:41:48.739267   12580 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-19T12:41:58.653Z] I0419 21:41:58.653187   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 21:41:58.653187   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T12:41:58.741Z] W0419 21:41:58.740847   12580 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub d3b6] connector "main" has errors: main\mutations.gql:144:5: Field "tags" is not defined by type "NewsArticle_Data".
+
+sources: main\mutations.gql [5324B] main\queries.gql [5769B] 
+I0419 21:41:58.742008   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub d3b6] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2981B] 
+Connector "main": sources: main\mutations.gql [5324B] main\queries.gql [5769B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0419 21:41:58.740847   12580 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub d3b6] connector \"main\" has errors: main\\mutations.gql:144:5: Field \"tags\" is not defined by type \"NewsArticle_Data\".\n\nsources: main\\mutations.gql [5324B] main\\queries.gql [5769B] \nI0419 21:41:58.742008   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub d3b6] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2981B] \nConnector \"main\": sources: main\\mutations.gql [5324B] main\\queries.gql [5769B] \n"}}
+[debug] [2026-04-19T12:41:58.743Z] E0419 21:41:58.744051   12580 load.go:73] Could not load sources: 
+Errors: main\mutations.gql:144:5: Field "tags" is not defined by type "NewsArticle_Data".
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0419 21:41:58.744051   12580 load.go:73] Could not load sources: \nErrors: main\\mutations.gql:144:5: Field \"tags\" is not defined by type \"NewsArticle_Data\".\n"}}
+[debug] [2026-04-19T12:41:58.748Z] I0419 21:41:58.746156   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\relation.gql [57851B] main\query.gql [11054B] main\mutation.gql [29754B] main\implicit.gql [1322B] main\input.gql [117459B] 
+I0419 21:41:58.746156   12580 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 21:41:58.746156   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\relation.gql [57851B] main\\query.gql [11054B] main\\mutation.gql [29754B] main\\implicit.gql [1322B] main\\input.gql [117459B] \nI0419 21:41:58.746156   12580 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-19T12:42:08.654Z] I0419 21:42:08.654382   12580 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 21:42:08.654382   12580 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-19T12:42:08.750Z] I0419 21:42:08.748171   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 2fc0] UpdateResources(): done
+Main schema: sources: schema\schema.gql [2981B] 
+Connector "main": sources: main\mutations.gql [5328B] main\queries.gql [5769B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 21:42:08.748171   12580 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 2fc0] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [2981B] \nConnector \"main\": sources: main\\mutations.gql [5328B] main\\queries.gql [5769B] \n"}}
+[debug] [2026-04-19T12:42:08.862Z] I0419 21:42:08.860023   12580 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 21:42:08.860023   12580 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-19T12:42:08.912Z] I0419 21:42:08.911564   12580 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\input.gql [117459B] main\relation.gql [57851B] main\query.gql [11054B] main\mutation.gql [29754B] prelude.gql [82799B] main\implicit.gql [1322B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 21:42:08.911564   12580 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\input.gql [117459B] main\\relation.gql [57851B] main\\query.gql [11054B] main\\mutation.gql [29754B] prelude.gql [82799B] main\\implicit.gql [1322B] \n"}}
+[debug] [2026-04-19T12:42:08.923Z] I0419 21:42:08.923204   12580 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: .guides/usage.md [2284B] index.d.ts [32434B] esm\package.json [17B] package.json [612B] README.md [135734B] .guides/setup.md [584B] .guides/config.json [236B] esm\index.esm.js [16140B] index.cjs.js [17951B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 21:42:08.923204   12580 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: .guides/usage.md [2284B] index.d.ts [32434B] esm\\package.json [17B] package.json [612B] README.md [135734B] .guides/setup.md [584B] .guides/config.json [236B] esm\\index.esm.js [16140B] index.cjs.js [17951B] \n"}}
+[debug] [2026-04-19T12:42:08.926Z] I0419 21:42:08.926492   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package
+I0419 21:42:08.926492   12580 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0419 21:42:08.926492   12580 installsdk.go:138] generate.javascriptSdk.packageJsonDir is not specified, skipping automatic installation of package\nI0419 21:42:08.926492   12580 load.go:109] Finished reloading\n"}}

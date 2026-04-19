@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { fetchNewsForCollection } from '@/lib/api/news';
 import { dbListNewsArticles, dbUpsertNews } from '@/lib/db/data-connect-client';
 
-// export const runtime = 'edge';
+export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
 export const preferredRegion = 'iad1';
 
@@ -19,48 +19,23 @@ export async function POST(request: Request) {
 
         console.log('[Collect API] 🚀 수집 프로세스 시작 (SQL Backend)');
 
-        // 2. 기존 뉴스 링크 목록 가져오기 (중복 체크용 - 최근 100개)
-        console.log('[Collect API] 📋 Fetching existing news links from SQL...');
-        const existingNews = await dbListNewsArticles(100, 0);
-        const existingLinks = new Set(existingNews.map((news: any) => news.link));
-        console.log('[Collect API] 📋 Found', existingLinks.size, 'existing news items');
+        const body = await request.json();
+        const existingLinksSet = new Set<string>(body.existingLinks || []);
+
+        console.log('[Collect API] 📋 Received', existingLinksSet.size, 'existing news items from client check');
 
         // 3. RSS 데이터 가져오기 (중복 제외하고 Gemini 처리)
-        const newsItems = await fetchNewsForCollection(existingLinks);
+        const newsItems = await fetchNewsForCollection(existingLinksSet);
 
-        console.log('[Collect API] 📊 수집 완료:', newsItems.length, '건 (새로운 뉴스만)');
+        console.log('[Collect API] 📊 파싱 완료:', newsItems.length, '건 (새로운 뉴스만)');
 
         if (!newsItems || newsItems.length === 0) {
             console.warn('[Collect API] ⚠️ 수집된 새로운 뉴스 없음');
-            return NextResponse.json({ success: true, count: 0, message: '수집된 새로운 뉴스 없음' });
+            return NextResponse.json({ success: true, newsItems: [], message: '수집된 새로운 뉴스 없음' });
         }
 
-        // 4. Data Connect (PostgreSQL)를 이용해 저장
-        let savedCount = 0;
-        for (const item of newsItems) {
-            const docId = generateSafeId(item.link);
-
-            await dbUpsertNews({
-                id: docId,
-                title: item.translations.ko, // We use translated title as primary title
-                content: item.translations.ko, // content is required in SQL schema
-                link: item.link,
-                source: item.source,
-                date: item.date,
-                translations: {
-                    ko: item.translations.ko,
-                    en: item.translations.en
-                },
-                newsTags: {
-                    ko: item.tags.ko,
-                    en: item.tags.en
-                }
-            });
-            savedCount++;
-        }
-
-        console.log('[Collect API] ✅ SQL 저장 완료:', savedCount, '건');
-        return NextResponse.json({ success: true, count: savedCount });
+        // Return parsed items to the client for secure Dataconnect DB insertion
+        return NextResponse.json({ success: true, newsItems });
 
     } catch (error: any) {
         console.error('[Collect API] ❌ 에러:', error);

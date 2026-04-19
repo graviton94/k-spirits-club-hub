@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState, useMemo } from 'react';
-import { dbListNewsArticles, dbGetNewsCount } from '@/lib/db/data-connect-client';
+import { dbListNewsArticles, dbGetNewsCount, dbDeleteNews } from '@/lib/db/data-connect-client';
 import { useAuth } from '@/app/[lang]/context/auth-context';
 import Link from 'next/link';
 import { Search, Loader2, ChevronLeft, ChevronRight, ArrowLeft, Trash2 } from 'lucide-react';
@@ -96,12 +96,10 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
     const handleDelete = async (id: string) => {
         if (!confirm(t.deleteConfirm)) return;
         try {
-            const res = await fetch(`/api/admin/news/delete?id=${id}`, { method: 'DELETE' });
-            if (res.ok) {
-                alert(t.deleteSuccess);
-                setNews(prev => prev.filter(item => item.id !== id));
-                setTotalCount(prev => prev - 1);
-            }
+            await dbDeleteNews(id);
+            alert(t.deleteSuccess);
+            setNews(prev => prev.filter(item => item.id !== id));
+            setTotalCount(prev => prev - 1);
         } catch (e) {
             console.error(e);
         }

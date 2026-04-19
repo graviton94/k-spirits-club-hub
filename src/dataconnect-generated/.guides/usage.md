@@ -14,38 +14,38 @@ If a user is not using a supported framework, they can use the generated SDK dir
 Here's an example of how to use it with the first 5 operations:
 
 ```js
-import { upsertUser, upsertSpirit, upsertReview, upsertNews, upsertCabinet, upsertModificationRequest, upsertWorldCupResult, deleteSpirit, upsertAiDiscoveryLog, listSpirits } from '@k-spirits/dataconnect';
+import { listSpirits, listNewArrivals, getSpirit, adminListRawSpirits, getUserProfile, listNewsArticles, getNewsArticle, auditAllUsers, auditAllNews, auditAllSpirits } from '@k-spirits/dataconnect';
 
-
-// Operation upsertUser:  For variables, look at type UpsertUserVars in ../index.d.ts
-const { data } = await UpsertUser(dataConnect, upsertUserVars);
-
-// Operation upsertSpirit:  For variables, look at type UpsertSpiritVars in ../index.d.ts
-const { data } = await UpsertSpirit(dataConnect, upsertSpiritVars);
-
-// Operation upsertReview:  For variables, look at type UpsertReviewVars in ../index.d.ts
-const { data } = await UpsertReview(dataConnect, upsertReviewVars);
-
-// Operation upsertNews:  For variables, look at type UpsertNewsVars in ../index.d.ts
-const { data } = await UpsertNews(dataConnect, upsertNewsVars);
-
-// Operation upsertCabinet:  For variables, look at type UpsertCabinetVars in ../index.d.ts
-const { data } = await UpsertCabinet(dataConnect, upsertCabinetVars);
-
-// Operation upsertModificationRequest:  For variables, look at type UpsertModificationRequestVars in ../index.d.ts
-const { data } = await UpsertModificationRequest(dataConnect, upsertModificationRequestVars);
-
-// Operation upsertWorldCupResult:  For variables, look at type UpsertWorldCupResultVars in ../index.d.ts
-const { data } = await UpsertWorldCupResult(dataConnect, upsertWorldCupResultVars);
-
-// Operation deleteSpirit:  For variables, look at type DeleteSpiritVars in ../index.d.ts
-const { data } = await DeleteSpirit(dataConnect, deleteSpiritVars);
-
-// Operation upsertAiDiscoveryLog:  For variables, look at type UpsertAiDiscoveryLogVars in ../index.d.ts
-const { data } = await UpsertAiDiscoveryLog(dataConnect, upsertAiDiscoveryLogVars);
 
 // Operation listSpirits:  For variables, look at type ListSpiritsVars in ../index.d.ts
 const { data } = await ListSpirits(dataConnect, listSpiritsVars);
+
+// Operation listNewArrivals:  For variables, look at type ListNewArrivalsVars in ../index.d.ts
+const { data } = await ListNewArrivals(dataConnect, listNewArrivalsVars);
+
+// Operation getSpirit:  For variables, look at type GetSpiritVars in ../index.d.ts
+const { data } = await GetSpirit(dataConnect, getSpiritVars);
+
+// Operation adminListRawSpirits:  For variables, look at type AdminListRawSpiritsVars in ../index.d.ts
+const { data } = await AdminListRawSpirits(dataConnect, adminListRawSpiritsVars);
+
+// Operation getUserProfile:  For variables, look at type GetUserProfileVars in ../index.d.ts
+const { data } = await GetUserProfile(dataConnect, getUserProfileVars);
+
+// Operation listNewsArticles:  For variables, look at type ListNewsArticlesVars in ../index.d.ts
+const { data } = await ListNewsArticles(dataConnect, listNewsArticlesVars);
+
+// Operation getNewsArticle:  For variables, look at type GetNewsArticleVars in ../index.d.ts
+const { data } = await GetNewsArticle(dataConnect, getNewsArticleVars);
+
+// Operation auditAllUsers: 
+const { data } = await AuditAllUsers(dataConnect);
+
+// Operation auditAllNews: 
+const { data } = await AuditAllNews(dataConnect);
+
+// Operation auditAllSpirits: 
+const { data } = await AuditAllSpirits(dataConnect);
 
 
 ```

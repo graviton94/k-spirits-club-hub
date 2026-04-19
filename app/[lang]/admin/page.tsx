@@ -9,6 +9,16 @@ import metadata from '@/lib/constants/spirits-metadata.json';
 import { TagMultiSelect } from '@/components/ui/TagMultiSelect';
 import { getOptimizedImageUrl } from '@/lib/utils/image-optimization';
 import DiscoveryLogsTable from '@/components/admin/DiscoveryLogsTable';
+import { 
+    getDC,
+    dbAdminListRawSpirits, 
+    dbUpsertSpirit, 
+    dbDeleteSpirit, 
+    dbListModificationRequests, 
+    dbUpsertModificationRequest,
+    dbListNewsArticles,
+    dbUpsertNews
+} from '@/lib/db/data-connect-client';
 
 interface EditFormState {
     name: string;
@@ -86,12 +96,18 @@ export default function AdminDashboard() {
             if (isPublishedFilter !== 'ALL') params.append('isPublished', isPublishedFilter);
             if (searchQuery) params.append('search', searchQuery);
 
-            const response = await fetch(`/api/admin/spirits?${params.toString()}`);
-            const data = await response.json();
+            // Direct SQL query using Client SDK with implicit Auth Token
+            const spiritsObj = await dbAdminListRawSpirits({
+                limit: pageSize,
+                offset: (page - 1) * pageSize,
+                category: categoryFilter === 'ALL' ? undefined : categoryFilter,
+                distillery: distilleryFilter === 'ALL' ? undefined : distilleryFilter,
+                isPublished: isPublishedFilter === 'ALL' ? undefined : (isPublishedFilter === 'true'),
+                search: searchQuery || undefined
+            });
 
-            setSpirits(data.data || []);
-            // SQL total response might be different, handle fallback
-            setTotalCount(data.total || 13000); 
+            setSpirits(spiritsObj || []);
+            setTotalCount(13000); // Pagination proxy
         } catch (error) {
             console.error('Failed to load spirits:', error);
         } finally {
@@ -110,9 +126,8 @@ export default function AdminDashboard() {
     const loadRequests = useCallback(async () => {
         setLoading(true);
         try {
-            const response = await fetch('/api/admin/modifications');
-            const data = await response.json();
-            setRequests(data.data || []);
+            const mods = await dbListModificationRequests();
+            setRequests(mods || []);
         } catch (error) {
             console.error('Failed to load requests:', error);
         } finally {
@@ -135,35 +150,25 @@ export default function AdminDashboard() {
     // Actions
     const updateRequestStatus = async (id: string, status: 'pending' | 'checked' | 'resolved') => {
         try {
-            const res = await fetch('/api/admin/modifications', {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id, status })
+            await dbUpsertModificationRequest({
+                id,
+                status
             });
-            if (res.ok) {
-                await loadRequests();
-            } else {
-                alert('상태 업데이트 실패');
-            }
+            await loadRequests();
         } catch (e) {
             alert('상태 업데이트 에러 발생');
         }
     };
     const publishSpirit = async (id: string) => {
         try {
-            const res = await fetch(`/api/admin/spirits/${id}`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    status: 'PUBLISHED',
-                    isPublished: true,
-                    reviewedBy: 'ADMIN',
-                    reviewedAt: new Date().toISOString()
-                })
+            await dbUpsertSpirit({
+                id,
+                status: 'PUBLISHED',
+                isPublished: true,
+                reviewedBy: 'ADMIN',
+                reviewedAt: new Date().toISOString()
             });
-            if (res.ok) {
-                await loadSpirits();
-            }
+            await loadSpirits();
         } catch (e) {
             alert('발행 실패');
         }
@@ -172,10 +177,8 @@ export default function AdminDashboard() {
     const deleteSpirit = async (id: string) => {
         if (!confirm('정말로 삭제하시겠습니까?')) return;
         try {
-            const res = await fetch(`/api/admin/spirits/${id}`, { method: 'DELETE' });
-            if (res.ok) {
-                await loadSpirits();
-            }
+            await dbDeleteSpirit(id);
+            await loadSpirits();
         } catch (e) {
             alert('삭제 실패');
         }
@@ -251,22 +254,17 @@ export default function AdminDashboard() {
                 payload.isPublished = true;
             }
 
-            const res = await fetch('/api/admin/spirits', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-
-            if (res.ok) {
-                const data = await res.json();
-                await loadSpirits();
-                setEditingId(null);
-                setIsCreating(false);
-                alert(`✅ 새 제품 등록${publish ? ' 및 발행' : ''} 완료 (ID: ${data.id})`);
-            } else {
-                const err = await res.text();
-                alert(`등록 실패: ${err}`);
-            }
+            const nextId = `kspt-${Math.random().toString(36).substring(2, 10)}`;
+            payload.id = nextId;
+            payload.createdAt = new Date().toISOString();
+            payload.updatedAt = new Date().toISOString();
+            payload.isReviewed = payload.isPublished || false;
+            
+            await dbUpsertSpirit(payload);
+            await loadSpirits();
+            setEditingId(null);
+            setIsCreating(false);
+            alert(`✅ 새 제품 등록${publish ? ' 및 발행' : ''} 완료 (ID: ${nextId})`);
         } catch (e) {
             console.error(e);
             alert('Error during create');
@@ -310,20 +308,11 @@ export default function AdminDashboard() {
                 payload.reviewedAt = new Date().toISOString();
             }
 
-            const res = await fetch(`/api/admin/spirits/${editingId}`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-
-            if (res.ok) {
-                await loadSpirits();
-                setEditingId(null);
-                alert(publish ? '✅ 저장 및 공개 완료' : '✅ 저장 완료');
-            } else {
-                const err = await res.text();
-                alert(`저장 실패: ${err}`);
-            }
+            payload.id = editingId;
+            await dbUpsertSpirit(payload);
+            await loadSpirits();
+            setEditingId(null);
+            alert(publish ? '✅ 저장 및 공개 완료' : '✅ 저장 완료');
         } catch (e) {
             console.error(e);
             alert('Error during save');
@@ -580,13 +569,41 @@ export default function AdminDashboard() {
                                             if (!confirm('최신 글로벌 주류 뉴스를 수집하시겠습니까?')) return;
                                             setIsProcessing(true);
                                             try {
-                                                const res = await fetch('/api/admin/news/collect', { method: 'POST' });
+                                                // Client-orchestrated News Collection
+                                                const existingNews = await dbListNewsArticles(200, 0);
+                                                const existingLinks = existingNews.map(n => n.link);
+
+                                                const res = await fetch('/api/admin/news/collect', {
+                                                    method: 'POST',
+                                                    headers: { 'Content-Type': 'application/json' },
+                                                    body: JSON.stringify({ existingLinks })
+                                                });
                                                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
                                                 const data = await res.json();
-                                                if (data.success) {
-                                                    alert(`✅ 뉴스 수집 완료! (${data.count ?? 0}건)`);
+                                                
+                                                if (data.newsItems && data.newsItems.length > 0) {
+                                                    let count = 0;
+                                                    for (const item of data.newsItems) {
+                                                        const docId = btoa(item.link).replace(/\//g, '_').replace(/\+/g, '-').replace(/=/g, '');
+                                                        await dbUpsertNews({
+                                                            id: docId,
+                                                            title: item.translations.ko,
+                                                            content: item.translations.ko,
+                                                            link: item.link,
+                                                            source: item.source,
+                                                            date: item.date,
+                                                            translations: { ko: item.translations.ko, en: item.translations.en },
+                                                            newsTags: { ko: item.tags.ko, en: item.tags.en }
+                                                        });
+                                                        count++;
+                                                    }
+                                                    alert(`✅ 뉴스 수집 완료! (${count}건 처리됨)`);
                                                 } else {
-                                                    alert(`❌ 실패: ${data.error || '알 수 없는 오류'}`);
+                                                    if (data.success) {
+                                                        alert(`✅ 최신 뉴스가 없습니다. (이미 최신 상태)`);
+                                                    } else {
+                                                        alert(`❌ 실패: ${data.error || '알 수 없는 오류'}`);
+                                                    }
                                                 }
                                             } catch (e: any) {
                                                 alert(`뉴스 수집 중 에러: ${e.message}`);

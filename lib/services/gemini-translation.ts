@@ -322,4 +322,46 @@ export async function enrichSpiritWithAI(spirit: SpiritEnrichmentInput): Promise
     }
 }
 
+/**
+ * Generates only Korean and English descriptions based on raw facts/tags.
+ */
+export async function generateDescriptionOnly(spiritData: any): Promise<{ descriptionKo: string; descriptionEn: string }> {
+    if (!API_KEY) throw new Error("GEMINI_API_KEY is not set");
+    const genAI = new GoogleGenerativeAI(API_KEY);
+    const model = genAI.getGenerativeModel({ model: MODEL_ID });
+
+    const prompt = `
+    Based on the following facts and sensory tags for this spirit, wrap them into a professional, engaging description in both Korean and English (about 3-4 sentences each).
+    Name: ${spiritData.name}
+    Category: ${spiritData.category}
+    ABV: ${spiritData.abv}%
+    Distillery: ${spiritData.distillery}
+    Region: ${spiritData.region}
+    Nose: ${spiritData.nose_tags?.join(', ') || ''}
+    Palate: ${spiritData.palate_tags?.join(', ') || ''}
+    Finish: ${spiritData.finish_tags?.join(', ') || ''}
+
+    Return ONLY JSON:
+    {
+      "descriptionKo": "Korean text",
+      "descriptionEn": "English text"
+    }
+    `;
+
+    try {
+        const result = await model.generateContent(prompt);
+        const data = extractAndParseJSON(result.response.text());
+        return {
+            descriptionKo: data.descriptionKo || spiritData.name,
+            descriptionEn: data.descriptionEn || spiritData.name_en || spiritData.name
+        };
+    } catch (e: any) {
+        console.error('[Gemini Description] Failed:', e);
+        return {
+            descriptionKo: spiritData.name,
+            descriptionEn: spiritData.name_en || spiritData.name
+        };
+    }
+}
+
 export default enrichSpiritWithAI;

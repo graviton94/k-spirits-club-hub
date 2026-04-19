@@ -31,6 +31,7 @@ This README will guide you through the process of using the generated JavaScript
   - [*upsertSpirit*](#upsertspirit)
   - [*upsertReview*](#upsertreview)
   - [*upsertNews*](#upsertnews)
+  - [*deleteNews*](#deletenews)
   - [*upsertCabinet*](#upsertcabinet)
   - [*upsertModificationRequest*](#upsertmodificationrequest)
   - [*upsertWorldCupResult*](#upsertworldcupresult)
@@ -2825,6 +2826,115 @@ console.log(data.newsArticle_upsert);
 executeMutation(ref).then((response) => {
   const data = response.data;
   console.log(data.newsArticle_upsert);
+});
+```
+
+## deleteNews
+You can execute the `deleteNews` mutation using the following action shortcut function, or by calling `executeMutation()` after calling the following `MutationRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
+```typescript
+deleteNews(vars: DeleteNewsVariables): MutationPromise<DeleteNewsData, DeleteNewsVariables>;
+
+interface DeleteNewsRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: DeleteNewsVariables): MutationRef<DeleteNewsData, DeleteNewsVariables>;
+}
+export const deleteNewsRef: DeleteNewsRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `MutationRef` function.
+```typescript
+deleteNews(dc: DataConnect, vars: DeleteNewsVariables): MutationPromise<DeleteNewsData, DeleteNewsVariables>;
+
+interface DeleteNewsRef {
+  ...
+  (dc: DataConnect, vars: DeleteNewsVariables): MutationRef<DeleteNewsData, DeleteNewsVariables>;
+}
+export const deleteNewsRef: DeleteNewsRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the deleteNewsRef:
+```typescript
+const name = deleteNewsRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `deleteNews` mutation requires an argument of type `DeleteNewsVariables`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+
+```typescript
+export interface DeleteNewsVariables {
+  id: string;
+}
+```
+### Return Type
+Recall that executing the `deleteNews` mutation returns a `MutationPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `DeleteNewsData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface DeleteNewsData {
+  newsArticle_delete?: NewsArticle_Key | null;
+}
+```
+### Using `deleteNews`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, deleteNews, DeleteNewsVariables } from '@k-spirits/dataconnect';
+
+// The `deleteNews` mutation requires an argument of type `DeleteNewsVariables`:
+const deleteNewsVars: DeleteNewsVariables = {
+  id: ..., 
+};
+
+// Call the `deleteNews()` function to execute the mutation.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await deleteNews(deleteNewsVars);
+// Variables can be defined inline as well.
+const { data } = await deleteNews({ id: ..., });
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await deleteNews(dataConnect, deleteNewsVars);
+
+console.log(data.newsArticle_delete);
+
+// Or, you can use the `Promise` API.
+deleteNews(deleteNewsVars).then((response) => {
+  const data = response.data;
+  console.log(data.newsArticle_delete);
+});
+```
+
+### Using `deleteNews`'s `MutationRef` function
+
+```typescript
+import { getDataConnect, executeMutation } from 'firebase/data-connect';
+import { connectorConfig, deleteNewsRef, DeleteNewsVariables } from '@k-spirits/dataconnect';
+
+// The `deleteNews` mutation requires an argument of type `DeleteNewsVariables`:
+const deleteNewsVars: DeleteNewsVariables = {
+  id: ..., 
+};
+
+// Call the `deleteNewsRef()` function to get a reference to the mutation.
+const ref = deleteNewsRef(deleteNewsVars);
+// Variables can be defined inline as well.
+const ref = deleteNewsRef({ id: ..., });
+
+// You can also pass in a `DataConnect` instance to the `MutationRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = deleteNewsRef(dataConnect, deleteNewsVars);
+
+// Call `executeMutation()` on the reference to execute the mutation.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeMutation(ref);
+
+console.log(data.newsArticle_delete);
+
+// Or, you can use the `Promise` API.
+executeMutation(ref).then((response) => {
+  const data = response.data;
+  console.log(data.newsArticle_delete);
 });
 ```
 

@@ -26,6 +26,7 @@ import {
   listAiDiscoveryLogs,
   upsertAiDiscoveryLog,
   listModificationRequests,
+  deleteNews,
 } from '@/src/dataconnect-generated';
 
 /**
@@ -160,6 +161,10 @@ export const dbGetNewsCount = async () => {
 
 export const dbUpsertNews = async (vars: any) => {
   return await upsertNews(getDC(), vars);
+};
+
+export const dbDeleteNews = async (id: string) => {
+  return await deleteNews(getDC(), { id });
 };
 
 // --- Cabinet ---

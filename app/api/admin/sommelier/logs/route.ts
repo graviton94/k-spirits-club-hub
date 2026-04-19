@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dbListAiDiscoveryLogs } from '@/lib/db/data-connect-client';
 
-// export const runtime = 'edge';
+export const runtime = 'edge';
 
 /**
  * Admin API to fetch AI Sommelier discovery logs from SQL (PostgreSQL)
