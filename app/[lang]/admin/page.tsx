@@ -598,7 +598,7 @@ export default function AdminDashboard() {
                                                         await dbUpsertNews({
                                                             id: docId,
                                                             title: item.translations?.ko?.title || item.translations?.en?.title || item.originalTitle || '',
-                                                            content: item.translations?.ko?.content || item.translations?.en?.content || item.translations?.ko?.snippet || '',
+                                                            content: item.translations?.ko?.content || item.translations?.ko?.snippet || item.translations?.en?.content || '',
                                                             link: item.link,
                                                             source: item.source,
                                                             date: item.date,
