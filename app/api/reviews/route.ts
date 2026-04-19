@@ -2,6 +2,20 @@ import { NextRequest, NextResponse } from 'next/server';
 import { reviewsDb } from '@/lib/db/firestore-rest';
 import { dbListSpiritReviews } from '@/lib/db/data-connect-client';
 
+/** Shape returned by dbListSpiritReviews – mirrors the Data Connect JOIN result. */
+interface DCReviewRow {
+  id: string;
+  rating: number;
+  content: string;
+  nose?: string;
+  palate?: string;
+  finish?: string;
+  imageUrls?: string[];
+  createdAt?: string;
+  spirit: { id: string; name: string; imageUrl?: string };
+  user?: { id: string; nickname?: string };
+}
+
 // POST /api/reviews - Create a new review
 export async function POST(request: NextRequest) {
   try {
@@ -70,9 +84,9 @@ export async function GET(request: NextRequest) {
 
     if (mode === 'recent') {
       const sqlReviews = await dbListSpiritReviews(3, 0);
-      const reviews = (sqlReviews || [])
-        .filter((r: any) => r?.spirit?.id)
-        .map((r: any) => ({
+      const reviews = (sqlReviews as DCReviewRow[] || [])
+        .filter((r) => r?.spirit?.id)
+        .map((r) => ({
           id: r.id,
           spiritId: r.spirit.id,
           spiritName: r.spirit.name,

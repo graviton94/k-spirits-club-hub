@@ -168,11 +168,20 @@ function extractString(value: any, fallback = ''): string {
   return fallback;
 }
 
+/** Pick the best available string from a translations payload (ko preferred, then en). */
+function pickTranslationTitle(translations: any): string {
+  return translations?.ko?.title || translations?.en?.title || '';
+}
+function pickTranslationContent(translations: any): string {
+  return translations?.ko?.content || translations?.ko?.snippet || translations?.en?.content || '';
+}
+
 export const dbUpsertNews = async (vars: any) => {
+  const t = vars?.translations;
   const normalizedVars = {
     ...vars,
-    title: extractString(vars?.title, vars?.translations?.ko?.title || vars?.translations?.en?.title || ''),
-    content: extractString(vars?.content, vars?.translations?.ko?.content || vars?.translations?.ko?.snippet || vars?.translations?.en?.content || ''),
+    title: extractString(vars?.title, pickTranslationTitle(t)),
+    content: extractString(vars?.content, pickTranslationContent(t)),
     tags: vars?.tags ?? vars?.newsTags
   };
   return await upsertNews(getDC(), normalizedVars);

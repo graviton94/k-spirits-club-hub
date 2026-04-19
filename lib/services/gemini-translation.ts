@@ -338,7 +338,7 @@ export async function enrichSpiritWithAI(spirit: SpiritEnrichmentInput): Promise
             ...spirit,
             ...auditData,
             ...sensoryData,
-            ...(pairingData as any)
+            ...pairingData
         });
 
         const totalConfidence = ((auditData.confidenceScore || 0) + (sensoryData.confidenceScore || 0) + (pairingData.confidenceScore || 0)) / 3;
