@@ -101,7 +101,7 @@ query adminListRawSpirits(
   $distillery: String, 
   $isPublished: Boolean, 
   $search: String
-) @auth(level: NO_ACCESS) {
+) @auth(expr: "auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   spirits(
     limit: $limit, 
     offset: $offset, 
@@ -313,7 +313,7 @@ query listSpiritsForWorldCup($category: String, $subcategories: [String!]) @auth
   }
 }
 
-query listAiDiscoveryLogs($limit: Int!) @auth(level: NO_ACCESS) {
+query listAiDiscoveryLogs($limit: Int!) @auth(expr: "auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   aiDiscoveryLogs(limit: $limit, orderBy: [{ createdAt: DESC }]) {
     id
     userId
@@ -324,7 +324,7 @@ query listAiDiscoveryLogs($limit: Int!) @auth(level: NO_ACCESS) {
   }
 }
 
-query listModificationRequests @auth(level: NO_ACCESS) {
+query listModificationRequests @auth(expr: "auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   modificationRequests(orderBy: [{ createdAt: DESC }]) {
     id
     spiritId

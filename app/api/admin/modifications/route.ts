@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dbListModificationRequests, dbUpsertModificationRequest } from '@/lib/db/data-connect-client';
 
-export const runtime = 'edge';
+// export const runtime = 'edge';
 
 // GET /api/admin/modifications
 export async function GET(req: NextRequest) {

@@ -1,4 +1,4 @@
-export const runtime = 'edge';
+// export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
 export const preferredRegion = 'iad1';
 
@@ -13,9 +13,9 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: 'Name is required' }, { status: 400 });
         }
 
-        const { name_en } = await translateSpiritName(name, category, distillery);
+        const { nameEn } = await translateSpiritName(name, category, distillery);
 
-        return NextResponse.json({ name_en });
+        return NextResponse.json({ nameEn });
     } catch (error: any) {
         console.error('Translation API Error:', error);
         return NextResponse.json({ error: error.message || 'Translation failed' }, { status: 500 });

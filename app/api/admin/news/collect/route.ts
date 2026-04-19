@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { fetchNewsForCollection } from '@/lib/api/news';
 import { dbListNewsArticles, dbUpsertNews } from '@/lib/db/data-connect-client';
 
-export const runtime = 'edge';
+// export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
 export const preferredRegion = 'iad1';
 

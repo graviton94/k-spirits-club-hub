@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { revalidateTag, revalidatePath } from 'next/cache';
 import { dbAdminListRawSpirits, dbUpsertSpirit } from '@/lib/db/data-connect-client';
 
-export const runtime = 'edge';
+
+// export const runtime = 'edge';
 
 // GET /api/admin/spirits?category=...&distillery=...&isPublished=...&search=...
 export async function GET(req: NextRequest) {
