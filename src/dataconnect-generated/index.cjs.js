@@ -7,6 +7,202 @@ const connectorConfig = {
 };
 exports.connectorConfig = connectorConfig;
 
+const upsertUserRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'upsertUser', inputVars);
+}
+upsertUserRef.operationName = 'upsertUser';
+exports.upsertUserRef = upsertUserRef;
+
+exports.upsertUser = function upsertUser(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(upsertUserRef(dcInstance, inputVars));
+}
+;
+
+const upsertSpiritRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'upsertSpirit', inputVars);
+}
+upsertSpiritRef.operationName = 'upsertSpirit';
+exports.upsertSpiritRef = upsertSpiritRef;
+
+exports.upsertSpirit = function upsertSpirit(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(upsertSpiritRef(dcInstance, inputVars));
+}
+;
+
+const upsertNewArrivalRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'upsertNewArrival', inputVars);
+}
+upsertNewArrivalRef.operationName = 'upsertNewArrival';
+exports.upsertNewArrivalRef = upsertNewArrivalRef;
+
+exports.upsertNewArrival = function upsertNewArrival(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(upsertNewArrivalRef(dcInstance, inputVars));
+}
+;
+
+const upsertReviewRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'upsertReview', inputVars);
+}
+upsertReviewRef.operationName = 'upsertReview';
+exports.upsertReviewRef = upsertReviewRef;
+
+exports.upsertReview = function upsertReview(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(upsertReviewRef(dcInstance, inputVars));
+}
+;
+
+const updateReviewRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'updateReview', inputVars);
+}
+updateReviewRef.operationName = 'updateReview';
+exports.updateReviewRef = updateReviewRef;
+
+exports.updateReview = function updateReview(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(updateReviewRef(dcInstance, inputVars));
+}
+;
+
+const upsertNewsRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'upsertNews', inputVars);
+}
+upsertNewsRef.operationName = 'upsertNews';
+exports.upsertNewsRef = upsertNewsRef;
+
+exports.upsertNews = function upsertNews(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(upsertNewsRef(dcInstance, inputVars));
+}
+;
+
+const deleteNewsRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'deleteNews', inputVars);
+}
+deleteNewsRef.operationName = 'deleteNews';
+exports.deleteNewsRef = deleteNewsRef;
+
+exports.deleteNews = function deleteNews(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(deleteNewsRef(dcInstance, inputVars));
+}
+;
+
+const upsertCabinetRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'upsertCabinet', inputVars);
+}
+upsertCabinetRef.operationName = 'upsertCabinet';
+exports.upsertCabinetRef = upsertCabinetRef;
+
+exports.upsertCabinet = function upsertCabinet(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(upsertCabinetRef(dcInstance, inputVars));
+}
+;
+
+const deleteCabinetRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'deleteCabinet', inputVars);
+}
+deleteCabinetRef.operationName = 'deleteCabinet';
+exports.deleteCabinetRef = deleteCabinetRef;
+
+exports.deleteCabinet = function deleteCabinet(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(deleteCabinetRef(dcInstance, inputVars));
+}
+;
+
+const upsertModificationRequestRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'upsertModificationRequest', inputVars);
+}
+upsertModificationRequestRef.operationName = 'upsertModificationRequest';
+exports.upsertModificationRequestRef = upsertModificationRequestRef;
+
+exports.upsertModificationRequest = function upsertModificationRequest(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(upsertModificationRequestRef(dcInstance, inputVars));
+}
+;
+
+const upsertWorldCupResultRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'upsertWorldCupResult', inputVars);
+}
+upsertWorldCupResultRef.operationName = 'upsertWorldCupResult';
+exports.upsertWorldCupResultRef = upsertWorldCupResultRef;
+
+exports.upsertWorldCupResult = function upsertWorldCupResult(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(upsertWorldCupResultRef(dcInstance, inputVars));
+}
+;
+
+const deleteSpiritRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'deleteSpirit', inputVars);
+}
+deleteSpiritRef.operationName = 'deleteSpirit';
+exports.deleteSpiritRef = deleteSpiritRef;
+
+exports.deleteSpirit = function deleteSpirit(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(deleteSpiritRef(dcInstance, inputVars));
+}
+;
+
+const upsertAiDiscoveryLogRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'upsertAiDiscoveryLog', inputVars);
+}
+upsertAiDiscoveryLogRef.operationName = 'upsertAiDiscoveryLog';
+exports.upsertAiDiscoveryLogRef = upsertAiDiscoveryLogRef;
+
+exports.upsertAiDiscoveryLog = function upsertAiDiscoveryLog(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(upsertAiDiscoveryLogRef(dcInstance, inputVars));
+}
+;
+
+const deleteReviewRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'deleteReview', inputVars);
+}
+deleteReviewRef.operationName = 'deleteReview';
+exports.deleteReviewRef = deleteReviewRef;
+
+exports.deleteReview = function deleteReview(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(deleteReviewRef(dcInstance, inputVars));
+}
+;
+
 const listSpiritsRef = (dcOrVars, vars) => {
   const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars);
   dcInstance._useGeneratedSdk();
@@ -349,201 +545,5 @@ exports.listUserReviews = function listUserReviews(dcOrVars, varsOrOptions, opti
   
   const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
   return executeQuery(listUserReviewsRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
-}
-;
-
-const upsertUserRef = (dcOrVars, vars) => {
-  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
-  dcInstance._useGeneratedSdk();
-  return mutationRef(dcInstance, 'upsertUser', inputVars);
-}
-upsertUserRef.operationName = 'upsertUser';
-exports.upsertUserRef = upsertUserRef;
-
-exports.upsertUser = function upsertUser(dcOrVars, vars) {
-  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
-  return executeMutation(upsertUserRef(dcInstance, inputVars));
-}
-;
-
-const upsertSpiritRef = (dcOrVars, vars) => {
-  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
-  dcInstance._useGeneratedSdk();
-  return mutationRef(dcInstance, 'upsertSpirit', inputVars);
-}
-upsertSpiritRef.operationName = 'upsertSpirit';
-exports.upsertSpiritRef = upsertSpiritRef;
-
-exports.upsertSpirit = function upsertSpirit(dcOrVars, vars) {
-  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
-  return executeMutation(upsertSpiritRef(dcInstance, inputVars));
-}
-;
-
-const upsertNewArrivalRef = (dcOrVars, vars) => {
-  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
-  dcInstance._useGeneratedSdk();
-  return mutationRef(dcInstance, 'upsertNewArrival', inputVars);
-}
-upsertNewArrivalRef.operationName = 'upsertNewArrival';
-exports.upsertNewArrivalRef = upsertNewArrivalRef;
-
-exports.upsertNewArrival = function upsertNewArrival(dcOrVars, vars) {
-  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
-  return executeMutation(upsertNewArrivalRef(dcInstance, inputVars));
-}
-;
-
-const upsertReviewRef = (dcOrVars, vars) => {
-  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
-  dcInstance._useGeneratedSdk();
-  return mutationRef(dcInstance, 'upsertReview', inputVars);
-}
-upsertReviewRef.operationName = 'upsertReview';
-exports.upsertReviewRef = upsertReviewRef;
-
-exports.upsertReview = function upsertReview(dcOrVars, vars) {
-  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
-  return executeMutation(upsertReviewRef(dcInstance, inputVars));
-}
-;
-
-const updateReviewRef = (dcOrVars, vars) => {
-  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
-  dcInstance._useGeneratedSdk();
-  return mutationRef(dcInstance, 'updateReview', inputVars);
-}
-updateReviewRef.operationName = 'updateReview';
-exports.updateReviewRef = updateReviewRef;
-
-exports.updateReview = function updateReview(dcOrVars, vars) {
-  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
-  return executeMutation(updateReviewRef(dcInstance, inputVars));
-}
-;
-
-const upsertNewsRef = (dcOrVars, vars) => {
-  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
-  dcInstance._useGeneratedSdk();
-  return mutationRef(dcInstance, 'upsertNews', inputVars);
-}
-upsertNewsRef.operationName = 'upsertNews';
-exports.upsertNewsRef = upsertNewsRef;
-
-exports.upsertNews = function upsertNews(dcOrVars, vars) {
-  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
-  return executeMutation(upsertNewsRef(dcInstance, inputVars));
-}
-;
-
-const deleteNewsRef = (dcOrVars, vars) => {
-  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
-  dcInstance._useGeneratedSdk();
-  return mutationRef(dcInstance, 'deleteNews', inputVars);
-}
-deleteNewsRef.operationName = 'deleteNews';
-exports.deleteNewsRef = deleteNewsRef;
-
-exports.deleteNews = function deleteNews(dcOrVars, vars) {
-  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
-  return executeMutation(deleteNewsRef(dcInstance, inputVars));
-}
-;
-
-const upsertCabinetRef = (dcOrVars, vars) => {
-  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
-  dcInstance._useGeneratedSdk();
-  return mutationRef(dcInstance, 'upsertCabinet', inputVars);
-}
-upsertCabinetRef.operationName = 'upsertCabinet';
-exports.upsertCabinetRef = upsertCabinetRef;
-
-exports.upsertCabinet = function upsertCabinet(dcOrVars, vars) {
-  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
-  return executeMutation(upsertCabinetRef(dcInstance, inputVars));
-}
-;
-
-const deleteCabinetRef = (dcOrVars, vars) => {
-  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
-  dcInstance._useGeneratedSdk();
-  return mutationRef(dcInstance, 'deleteCabinet', inputVars);
-}
-deleteCabinetRef.operationName = 'deleteCabinet';
-exports.deleteCabinetRef = deleteCabinetRef;
-
-exports.deleteCabinet = function deleteCabinet(dcOrVars, vars) {
-  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
-  return executeMutation(deleteCabinetRef(dcInstance, inputVars));
-}
-;
-
-const upsertModificationRequestRef = (dcOrVars, vars) => {
-  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
-  dcInstance._useGeneratedSdk();
-  return mutationRef(dcInstance, 'upsertModificationRequest', inputVars);
-}
-upsertModificationRequestRef.operationName = 'upsertModificationRequest';
-exports.upsertModificationRequestRef = upsertModificationRequestRef;
-
-exports.upsertModificationRequest = function upsertModificationRequest(dcOrVars, vars) {
-  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
-  return executeMutation(upsertModificationRequestRef(dcInstance, inputVars));
-}
-;
-
-const upsertWorldCupResultRef = (dcOrVars, vars) => {
-  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
-  dcInstance._useGeneratedSdk();
-  return mutationRef(dcInstance, 'upsertWorldCupResult', inputVars);
-}
-upsertWorldCupResultRef.operationName = 'upsertWorldCupResult';
-exports.upsertWorldCupResultRef = upsertWorldCupResultRef;
-
-exports.upsertWorldCupResult = function upsertWorldCupResult(dcOrVars, vars) {
-  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
-  return executeMutation(upsertWorldCupResultRef(dcInstance, inputVars));
-}
-;
-
-const deleteSpiritRef = (dcOrVars, vars) => {
-  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
-  dcInstance._useGeneratedSdk();
-  return mutationRef(dcInstance, 'deleteSpirit', inputVars);
-}
-deleteSpiritRef.operationName = 'deleteSpirit';
-exports.deleteSpiritRef = deleteSpiritRef;
-
-exports.deleteSpirit = function deleteSpirit(dcOrVars, vars) {
-  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
-  return executeMutation(deleteSpiritRef(dcInstance, inputVars));
-}
-;
-
-const upsertAiDiscoveryLogRef = (dcOrVars, vars) => {
-  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
-  dcInstance._useGeneratedSdk();
-  return mutationRef(dcInstance, 'upsertAiDiscoveryLog', inputVars);
-}
-upsertAiDiscoveryLogRef.operationName = 'upsertAiDiscoveryLog';
-exports.upsertAiDiscoveryLogRef = upsertAiDiscoveryLogRef;
-
-exports.upsertAiDiscoveryLog = function upsertAiDiscoveryLog(dcOrVars, vars) {
-  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
-  return executeMutation(upsertAiDiscoveryLogRef(dcInstance, inputVars));
-}
-;
-
-const deleteReviewRef = (dcOrVars, vars) => {
-  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
-  dcInstance._useGeneratedSdk();
-  return mutationRef(dcInstance, 'deleteReview', inputVars);
-}
-deleteReviewRef.operationName = 'deleteReview';
-exports.deleteReviewRef = deleteReviewRef;
-
-exports.deleteReview = function deleteReview(dcOrVars, vars) {
-  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
-  return executeMutation(deleteReviewRef(dcInstance, inputVars));
 }
 ;

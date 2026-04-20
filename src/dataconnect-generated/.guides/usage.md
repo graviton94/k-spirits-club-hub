@@ -12,28 +12,28 @@ For each operation, there is a wrapper hook that can be used to call the operati
 
 Here are all of the hooks that get generated:
 ```ts
-import { useListSpirits, useListTrendingSpirits, useListNewArrivals, useGetSpirit, useAdminListRawSpirits, useGetUserProfile, useListNewsArticles, useGetNewsArticle, useAuditAllUsers, useAuditAllNews } from '@dataconnect/generated/react';
+import { useUpsertUser, useUpsertSpirit, useUpsertNewArrival, useUpsertReview, useUpdateReview, useUpsertNews, useDeleteNews, useUpsertCabinet, useDeleteCabinet, useUpsertModificationRequest } from '@dataconnect/generated/react';
 // The types of these hooks are available in react/index.d.ts
 
-const { data, isPending, isSuccess, isError, error } = useListSpirits(listSpiritsVars);
+const { data, isPending, isSuccess, isError, error } = useUpsertUser(upsertUserVars);
 
-const { data, isPending, isSuccess, isError, error } = useListTrendingSpirits(listTrendingSpiritsVars);
+const { data, isPending, isSuccess, isError, error } = useUpsertSpirit(upsertSpiritVars);
 
-const { data, isPending, isSuccess, isError, error } = useListNewArrivals(listNewArrivalsVars);
+const { data, isPending, isSuccess, isError, error } = useUpsertNewArrival(upsertNewArrivalVars);
 
-const { data, isPending, isSuccess, isError, error } = useGetSpirit(getSpiritVars);
+const { data, isPending, isSuccess, isError, error } = useUpsertReview(upsertReviewVars);
 
-const { data, isPending, isSuccess, isError, error } = useAdminListRawSpirits(adminListRawSpiritsVars);
+const { data, isPending, isSuccess, isError, error } = useUpdateReview(updateReviewVars);
 
-const { data, isPending, isSuccess, isError, error } = useGetUserProfile(getUserProfileVars);
+const { data, isPending, isSuccess, isError, error } = useUpsertNews(upsertNewsVars);
 
-const { data, isPending, isSuccess, isError, error } = useListNewsArticles(listNewsArticlesVars);
+const { data, isPending, isSuccess, isError, error } = useDeleteNews(deleteNewsVars);
 
-const { data, isPending, isSuccess, isError, error } = useGetNewsArticle(getNewsArticleVars);
+const { data, isPending, isSuccess, isError, error } = useUpsertCabinet(upsertCabinetVars);
 
-const { data, isPending, isSuccess, isError, error } = useAuditAllUsers();
+const { data, isPending, isSuccess, isError, error } = useDeleteCabinet(deleteCabinetVars);
 
-const { data, isPending, isSuccess, isError, error } = useAuditAllNews();
+const { data, isPending, isSuccess, isError, error } = useUpsertModificationRequest(upsertModificationRequestVars);
 
 ```
 
@@ -72,38 +72,38 @@ If a user is not using a supported framework, they can use the generated SDK dir
 Here's an example of how to use it with the first 5 operations:
 
 ```js
-import { listSpirits, listTrendingSpirits, listNewArrivals, getSpirit, adminListRawSpirits, getUserProfile, listNewsArticles, getNewsArticle, auditAllUsers, auditAllNews } from '@dataconnect/generated';
+import { upsertUser, upsertSpirit, upsertNewArrival, upsertReview, updateReview, upsertNews, deleteNews, upsertCabinet, deleteCabinet, upsertModificationRequest } from '@dataconnect/generated';
 
 
-// Operation listSpirits:  For variables, look at type ListSpiritsVars in ../index.d.ts
-const { data } = await ListSpirits(dataConnect, listSpiritsVars);
+// Operation upsertUser:  For variables, look at type UpsertUserVars in ../index.d.ts
+const { data } = await UpsertUser(dataConnect, upsertUserVars);
 
-// Operation listTrendingSpirits:  For variables, look at type ListTrendingSpiritsVars in ../index.d.ts
-const { data } = await ListTrendingSpirits(dataConnect, listTrendingSpiritsVars);
+// Operation upsertSpirit:  For variables, look at type UpsertSpiritVars in ../index.d.ts
+const { data } = await UpsertSpirit(dataConnect, upsertSpiritVars);
 
-// Operation listNewArrivals:  For variables, look at type ListNewArrivalsVars in ../index.d.ts
-const { data } = await ListNewArrivals(dataConnect, listNewArrivalsVars);
+// Operation upsertNewArrival:  For variables, look at type UpsertNewArrivalVars in ../index.d.ts
+const { data } = await UpsertNewArrival(dataConnect, upsertNewArrivalVars);
 
-// Operation getSpirit:  For variables, look at type GetSpiritVars in ../index.d.ts
-const { data } = await GetSpirit(dataConnect, getSpiritVars);
+// Operation upsertReview:  For variables, look at type UpsertReviewVars in ../index.d.ts
+const { data } = await UpsertReview(dataConnect, upsertReviewVars);
 
-// Operation adminListRawSpirits:  For variables, look at type AdminListRawSpiritsVars in ../index.d.ts
-const { data } = await AdminListRawSpirits(dataConnect, adminListRawSpiritsVars);
+// Operation updateReview:  For variables, look at type UpdateReviewVars in ../index.d.ts
+const { data } = await UpdateReview(dataConnect, updateReviewVars);
 
-// Operation getUserProfile:  For variables, look at type GetUserProfileVars in ../index.d.ts
-const { data } = await GetUserProfile(dataConnect, getUserProfileVars);
+// Operation upsertNews:  For variables, look at type UpsertNewsVars in ../index.d.ts
+const { data } = await UpsertNews(dataConnect, upsertNewsVars);
 
-// Operation listNewsArticles:  For variables, look at type ListNewsArticlesVars in ../index.d.ts
-const { data } = await ListNewsArticles(dataConnect, listNewsArticlesVars);
+// Operation deleteNews:  For variables, look at type DeleteNewsVars in ../index.d.ts
+const { data } = await DeleteNews(dataConnect, deleteNewsVars);
 
-// Operation getNewsArticle:  For variables, look at type GetNewsArticleVars in ../index.d.ts
-const { data } = await GetNewsArticle(dataConnect, getNewsArticleVars);
+// Operation upsertCabinet:  For variables, look at type UpsertCabinetVars in ../index.d.ts
+const { data } = await UpsertCabinet(dataConnect, upsertCabinetVars);
 
-// Operation auditAllUsers: 
-const { data } = await AuditAllUsers(dataConnect);
+// Operation deleteCabinet:  For variables, look at type DeleteCabinetVars in ../index.d.ts
+const { data } = await DeleteCabinet(dataConnect, deleteCabinetVars);
 
-// Operation auditAllNews: 
-const { data } = await AuditAllNews(dataConnect);
+// Operation upsertModificationRequest:  For variables, look at type UpsertModificationRequestVars in ../index.d.ts
+const { data } = await UpsertModificationRequest(dataConnect, upsertModificationRequestVars);
 
 
 ```
