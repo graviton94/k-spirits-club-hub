@@ -28,8 +28,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Upsert to Data Connect (Relational Schema)
+    const reviewId = `${spiritId}_${userId}`;
     await dbUpsertReview({
-      id: `${spiritId}_${userId}`,
+      id: reviewId,
       spiritId,
       userId,
       rating: Number(rating),
@@ -43,7 +44,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      id: `${spiritId}_${userId}`
+      id: reviewId
     }, { status: 201 });
   } catch (error) {
     console.error('Error creating review:', error);
@@ -105,14 +106,11 @@ export async function DELETE(request: NextRequest) {
     }
 
     // Security: Only owner or logic-based admin can delete
-    // Note: Admin check is simplified here as we are purging service-account dependencies
     if (requestUserId !== targetUserId) {
-       // In a full implementation, we'd check the User table role in Data Connect
        return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
     // TODO: Implement dbDeleteReview in data-connect-client if needed.
-    // For now, we are focusing on the migration and purge of Firestore.
     
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {

@@ -128,12 +128,22 @@ export interface SpiritEnrichmentInput {
     noseTags?: string[];
     palateTags?: string[];
     finishTags?: string[];
+    pairingGuideKo?: string;
+    pairingGuideEn?: string;
     metadata?: {
         tasting_note?: string;
         description?: string;
         [key: string]: any;
     };
 }
+
+// --- Rating thresholds ---
+const RATING_BASE = 2.8;
+const RATING_DESC_MIN_CHARS = 120;   // minimum chars for a description score bonus
+const RATING_DESC_RICH_CHARS = 200;  // chars for bilingual-rich bonus
+const RATING_TAGS_RICH = 6;          // tag count threshold for full sensory bonus
+const RATING_TAGS_BASIC = 3;         // tag count threshold for partial sensory bonus
+const RATING_PAIRING_MIN_CHARS = 40; // minimum chars for a pairing guide bonus
 
 /**
  * Robust JSON extraction and parsing helper.
@@ -346,6 +356,12 @@ export async function enrichSpiritWithAI(spirit: SpiritEnrichmentInput): Promise
         const auditData = await auditSpiritInfo(spirit);
         const sensoryData = await generateSensoryProfile({ ...spirit, ...auditData });
         const pairingData = await generatePairingGuide({ ...spirit, ...auditData, ...sensoryData });
+        const editorRating = calculateDynamicEditorRating({
+            ...spirit,
+            ...auditData,
+            ...sensoryData,
+            ...pairingData
+        });
 
         const totalConfidence = ((auditData.confidenceScore || 0) + (sensoryData.confidenceScore || 0) + (pairingData.confidenceScore || 0)) / 3;
         const allSources = [...(auditData.sources || []), ...(sensoryData.sources || []), ...(pairingData.sources || [])];
@@ -354,11 +370,13 @@ export async function enrichSpiritWithAI(spirit: SpiritEnrichmentInput): Promise
             ...auditData,
             ...sensoryData,
             ...pairingData,
+            rating: editorRating,
             status: totalConfidence < 0.7 ? "NEEDS_REVIEW" : "ENRICHED",
             isReviewed: true, // Mark as vetted by AI
             metadata: {
                 confidence: totalConfidence,
-                sources: Array.from(new Set(allSources))
+                sources: Array.from(new Set(allSources)),
+                editorRating
             }
         };
     } catch (e: any) {

@@ -65,7 +65,7 @@ export function getDC(): DataConnect {
  */
 
 // --- Spirits ---
-export const dbListSpirits = async (vars: { category?: string, subcategory?: string, country?: string }) => {
+export const dbListSpirits = async (vars: { category?: string, subcategory?: string, country?: string } = {}) => {
   const { data } = await listSpirits(getDC(), vars);
   return data.spirits;
 };
@@ -171,27 +171,32 @@ export const dbGetNewsCount = async () => {
   return data.newsArticles.length;
 };
 
+/** Coerce a value that may be a plain string or a structured translation object into a string. */
+function extractString(value: any, fallback = ''): string {
+  if (typeof value === 'string') return value;
+  if (value && typeof value === 'object' && value !== null) {
+    return value.ko || value.en || value.title || value.content || value.snippet || fallback;
+  }
+  return fallback;
+}
+
+/** Pick the best available string from a translations payload (ko preferred, then en). */
+function pickTranslationTitle(translations: any): string {
+  return translations?.ko?.title || translations?.en?.title || '';
+}
+function pickTranslationContent(translations: any): string {
+  return translations?.ko?.content || translations?.ko?.snippet || translations?.en?.content || '';
+}
+
 export const dbUpsertNews = async (vars: any) => {
-  // 1. Sanitizer: News `title` and `content` MUST strictly be a 1D String for Data Connect.
-  // Gemini parsing sometimes nests standard Strings into structured i18n Objects causing GraphQL to crash.
-  let safeTitle = vars.title;
-  let safeContent = vars.content;
-
-  if (typeof safeTitle === 'object' && safeTitle !== null) {
-    safeTitle = safeTitle.ko || safeTitle.en || safeTitle.title || JSON.stringify(safeTitle);
-  }
-  
-  if (typeof safeContent === 'object' && safeContent !== null) {
-    safeContent = safeContent.ko || safeContent.en || safeContent.body || JSON.stringify(safeContent);
-  }
-
-  const safeVars = {
+  const t = vars?.translations;
+  const normalizedVars = {
     ...vars,
-    title: String(safeTitle || 'Untitled').trim(),
-    content: String(safeContent || '').trim()
+    title: String(extractString(vars?.title, pickTranslationTitle(t)) || 'Untitled').trim(),
+    content: String(extractString(vars?.content, pickTranslationContent(t)) || '').trim(),
+    newsTags: vars?.tags ?? vars?.newsTags
   };
-
-  return await upsertNews(getDC(), safeVars);
+  return await upsertNews(getDC(), normalizedVars);
 };
 
 export const dbDeleteNews = async (id: string) => {

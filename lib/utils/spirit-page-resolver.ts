@@ -30,9 +30,9 @@ export const resolveSpiritPageState = cache(
         return { status: 'NOT_FOUND', fetchMs };
       }
 
-      // [SECURITY GUARD] Block unpublished spirits from public view
-      if (!sqlSpirit.isPublished) {
-        console.log(
+      // Public page guard: unpublished spirits must never resolve to a visible page.
+      if (sqlSpirit.isPublished !== true) {
+        console.warn(
           `[SpiritResolver] id=${id} status=UNPUBLISHED_GUARD fetchMs=${fetchMs}ms`
         );
         return { status: 'NOT_FOUND', fetchMs };
