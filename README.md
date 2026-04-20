@@ -91,9 +91,9 @@
 
 ### **Backend & Infrastructure**
 - **Cloudflare Pages** (Hosting & Edge Runtime)
-- **Firebase Firestore** (NoSQL Database)
+- **Firebase Data Connect** (Relational SQL Database - PostgreSQL)
 - **Firebase Auth** (Google OAuth & Guest Mode)
-- **Edge Functions** (Serverless API)
+- **GraphQL API** (Type-safe Data Access Layer)
 
 ### **AI & Data**
 - **Google Gemini 2.0 Flash** (AI Analysis & Data Enrichment)
@@ -181,19 +181,20 @@ k-spirits-club-hub/
 │   └── admin/              # Admin-only components
 │
 ├── lib/                    # Core libraries
-│   ├── db/                 # Database layer (Firestore REST)
-│   │   ├── firestore-rest.ts  # DB abstraction
-│   │   └── schema.ts          # TypeScript types
+│   ├── db/                 # Database layer (Data Connect)
+│   │   ├── data-connect-client.ts # Unified client wrapper
+│   │   └── schema.ts          # TypeScript types & interfaces
+│   ├── services/           # External service integration
+│   │   └── gemini-translation.ts # Gemini AI logic
 │   ├── utils/              # Utility functions
-│   │   ├── image-optimization.ts
-│   │   ├── image-fallback.ts
-│   │   └── aiPromptBuilder.ts
 │   └── constants/          # App constants
 │
-├── scripts/                # Data Pipeline (Python)
+├── dataconnect/            # Firebase Data Connect & SQL Configuration
+│
+├── scripts/                # Data Pipeline (Python & TS)
 │   ├── fetch_food_safety.py    # Collect from public API
 │   ├── run_pipeline.py         # AI enrichment pipeline
-│   └── publish-ready-data.ts   # Bulk publish to production
+│   └── publish-ready-data.ts   # Bulk sync to production
 │
 ├── public/                 # Static assets
 │   ├── icons/              # App icons

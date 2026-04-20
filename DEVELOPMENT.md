@@ -9,9 +9,9 @@
 
 ### **Prerequisites**
 - **Node.js**: 18.x 이상
-- **Python**: 3.8 이상
+- **Python**: 3.10 이상
 - **Git**: 최신 버전
-- **Firebase Project**: Firestore 및 Auth 활성화
+- **Firebase Project**: Data Connect (PostgreSQL) 및 Auth 활성화
 
 ---
 
@@ -36,28 +36,12 @@ pip install -r requirements-dev.txt
 루트 디렉토리에 `.env.local` 파일을 생성합니다:
 
 ```env
-# Firebase Configuration
-NEXT_PUBLIC_FIREBASE_API_KEY=your-api-key
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=your-project-id
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your-project.appspot.com
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=123456789
-NEXT_PUBLIC_FIREBASE_APP_ID=1:123456789:web:abcdef
-NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=G-XXXXXXXXXX
+# Firebase Configuration (Data Connect)
+FIREBASE_PROJECT_ID=your-project-id
+FIREBASE_API_KEY=your-api-key
 
 # Google Gemini API
 GEMINI_API_KEY=your-gemini-api-key
-
-# Firebase Admin (Server-side)
-FIREBASE_PROJECT_ID=your-project-id
-FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
-FIREBASE_CLIENT_EMAIL=firebase-adminsdk@your-project.iam.gserviceaccount.com
-
-# Site Configuration
-NEXT_PUBLIC_BASE_URL=http://localhost:3000
-
-# Food Safety Korea API (Data Pipeline)
-FOOD_SAFETY_KOREA_API_KEY=your-api-key
 
 # Analytics
 NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
@@ -229,30 +213,34 @@ components/cabinet/
    curl http://localhost:3000/api/new-endpoint
    ```
 
-### **Modifying Data Schema**
-1. **Update TypeScript Interface**
-   ```typescript
-   // lib/db/schema.ts
-   export interface Spirit {
-     // ... existing fields
-     newField: string;  // Add new field
+### **Modifying Data Schema (Relational SQL)**
+1. **Update GraphQL Schema**
+   ```graphql
+   # dataconnect/schema/schema.gql
+   type Spirit @table {
+     # ... existing fields
+     newField: String
    }
    ```
 
-2. **Update Firestore Converters**
-   ```typescript
-   // lib/db/firestore-rest.ts
-   function parseFirestoreFields(fields: any): Spirit {
-     return {
-       // ... existing mappings
-       newField: fields.newField?.stringValue || '',
-     };
-   }
-   ```
-
-3. **Migration Script** (if needed)
+2. **Generate SDK & Types**
    ```bash
-   npx tsx scripts/migrate-new-field.ts
+   npx firebase-tools dataconnect:sdk:generate
+   ```
+
+3. **Update Queries/Mutations**
+   ```graphql
+   # dataconnect/main/mutations.gql
+   mutation updateSpirit($id: String!, $data: Spirit_UpdateInput!) {
+     spirit_update(id: $id, data: $data)
+   }
+   ```
+
+4. **Sync with Client**
+   ```typescript
+   import { getDC } from '@/lib/db/data-connect-client';
+   const dc = getDC();
+   // The new field is now available in the generated types
    ```
 
 ### **MBTI Development Notes**

@@ -23,24 +23,23 @@ K-Spirits Club은 Next.js 15 기반의 풀스택 웹 애플리케이션으로, C
 | **Cloudflare Pages** | Latest | 글로벌 CDN 호스팅 |
 | **Edge Runtime** | - | 서버리스 API 처리 |
 | **Firebase Auth** | 12.8.0 | 사용자 인증 (Google OAuth) |
-| **Firebase Firestore** | 12.8.0 | NoSQL 데이터베이스 |
-| **Firebase Admin SDK** | 13.6.0 | 서버 사이드 Firebase 제어 |
+| **Firebase Data Connect** | - | 관계형 SQL 데이터베이스 (PostgreSQL) |
+| **GraphQL API** | Generated | 타입 안정성이 보장된 데이터 쿼리 레이어 |
 
 ### **AI & Data Processing**
 | Technology | Version | Purpose |
 |-----------|---------|---------|
 | **Google GenAI** | Latest | Gemini 2.0 Flash API (v1 SDK) |
-| **Python** | 3.10+ | 데이터 수립 및 자동 보강 스크립트 |
+| **Python** | 3.10+ | 데이터 수립 및 자동 보강 파이프라인 (pipeline) |
 | **Fuse.js** | 7.x | 클라이언트 사이드 퍼지 검색 (i18n 지원) |
 | **Cheerio** | 1.x | HTML 파싱 및 웹 스크레이핑 |
 
 ### **Developer Tools**
 | Tool | Purpose |
 |------|---------|
-| **ESLint** | 코드 품질 검사 |
+| **Firebase CLI** | Data Connect 관리 및 스키마 배포 |
+| **Graphify** | 코드베이스 지식 그래프 및 정적 분석 |
 | **Sharp** | 이미지 최적화 |
-| **vercel CLI** | 배포 테스트 |
-| **@cloudflare/next-on-pages** | Cloudflare Pages 어댑터 |
 
 ---
 
@@ -55,7 +54,7 @@ K-Spirits Club은 Next.js 15 기반의 풀스택 웹 애플리케이션으로, C
 │  └──────────────┘  └──────────────┘  └──────────────┘      │
 └─────────────────────────────────────────────────────────────┘
                               ▲
-                              │ HTTPS
+                              │ HTTPS / WSS
                               ▼
 ┌─────────────────────────────────────────────────────────────┐
 │            CLOUDFLARE PAGES (Edge Network)                   │
@@ -65,17 +64,17 @@ K-Spirits Club은 Next.js 15 기반의 풀스택 웹 애플리케이션으로, C
 │  └──────────────┘  └──────────────┘  └──────────────┘      │
 └─────────────────────────────────────────────────────────────┘
                               ▲
-                              │ Firebase REST API
+                              │ GraphQL (Data Connect SDK)
                               ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                 FIREBASE (Google Cloud)                      │
+│          FIREBASE DATA CONNECT (Google Cloud)                │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
-│  │  Firestore   │  │  Auth Users  │  │  Storage     │      │
-│  │  (NoSQL DB)  │  │  (OAuth)     │  │  (Images)    │      │
+│  │  PostgreSQL  │  │  Auth Users  │  │  Storage     │      │
+│  │ (Cloud SQL)  │  │  (OAuth)     │  │  (Images)    │      │
 │  └──────────────┘  └──────────────┘  └──────────────┘      │
 └─────────────────────────────────────────────────────────────┘
                               ▲
-                              │ Upload
+                              │ Relational Sync
                               ▼
 ┌─────────────────────────────────────────────────────────────┐
 │             DATA PIPELINE (Python Scripts)                   │
@@ -143,25 +142,31 @@ k-spirits-club-hub/
 │
 ├── lib/                          # 핵심 라이브러리
 │   ├── db/                       # 데이터베이스 레이어
-│   │   ├── firestore-rest.ts     # Firestore REST API
-│   │   ├── firebase.ts           # Client Firebase
-│   │   └── schema.ts             # TypeScript 스키마
+│   │   ├── data-connect-client.ts # Unified Data Connect Client
+│   │   └── schema.ts             # TypeScript 스키마 및 타입
 │   ├── utils/                    # 유틸리티 함수
 │   │   ├── image-optimization.ts # 이미지 최적화 (wsrv.nl)
 │   │   ├── image-fallback.ts     # 카테고리별 폴백 이미지
-│   │   ├── spirit-adapters.ts    # 데이터 어댑터
-│   │   ├── aiPromptBuilder.ts    # AI 프롬프트 생성
+│   │   ├── spirit-page-resolver.ts # 페이지 접근 권한 관리
 │   │   └── ui-text.ts           # 다국어 UI 텍스트
+│   ├── services/                 # 외부 서비스 연동
+│   │   └── gemini-translation.ts # Gemini AI 번역 및 보강
 │   ├── constants/                # 상수 정의
-│   │   ├── mbti-data.ts          # MBTI 질문 및 결과 데이터
-│   │   └── categories.ts         # 카테고리 상수
 │   └── hooks/                    # Custom React Hooks
 │
-├── scripts/                      # Python 데이터 파이프라인
+├── dataconnect/                  # Firebase Data Connect 설정
+│   ├── schema/                   # PostgreSQL 스키마 정의 (GQL)
+│   └── main/                     # 쿼리 및 뮤테이션 정의
+│
+├── scripts/                      # 데이터 파이프라인 (pipeline)
 │   ├── fetch_food_safety.py      # 공공 API 수집 스크립트
 │   ├── run_pipeline.py           # AI 보강 파이프라인
-│   ├── publish-ready-data.ts     # 일괄 발행 스크립트
-│   └── migrate_to_firestore.js   # 데이터 마이그레이션
+│   └── publish-ready-data.ts     # 일괄 발행 및 동기화
+│
+├── docs/                         # 현대화된 기술 문서
+│   ├── plans/                    # 아카이브 패치 플랜
+│   ├── architecture/             # Graphify 및 시스템 구조
+│   └── context/                  # AI 교육용 코드 번들
 │
 ├── data/                         # 데이터 저장소
 │   ├── raw_imported/             # 원본 데이터
@@ -185,7 +190,7 @@ k-spirits-club-hub/
 
 ## 🔄 Data Flow Architecture
 
-### **1. 데이터 수집 및 처리 (Python Pipeline)**
+### **1. 데이터 수집 및 처리 (Relational Pipeline)**
 ```
 공공 API (식품안전나라)
     ↓
@@ -195,18 +200,13 @@ data/raw_imported/*.json (원본 저장)
     ↓
 run_pipeline.py (AI 분석 + 이미지 검색)
     ↓ 
-Firestore (spirits 컬렉션, isPublished: false)
+Data Connect (spirits 테이블, isPublished: false)
     ↓
 Admin Dashboard (검수 및 승인)
     ↓
-publish-ready-data.ts (일괄 발행)
+publish-ready-data.ts (일괄 발행 & GQL Sync)
     ↓
-Firestore (isPublished: true) + search_index (including name_en)
-```
-
-### **2. i18n Data Isolation Strategy**
-- **Root Fields**: 검색 및 핵심 식별에 필요한 필드 (`name_en`, `category_en`, `abv`, `distillery`)는 문서 루트에 저장하여 검색 인덱스 효율성 극대화.
-- **Metadata Fields**: 상세 설명 및 가이드 (`description_en`, `pairing_guide_en`, `nose_tags`)는 `metadata` 오브젝트 내부에 저장하여 제품 상세 조회 시에만 로드.
+PostgreSQL (isPublished: true)
 ```
 
 ### **2. 사용자 요청 처리 (Next.js App)**
@@ -217,7 +217,9 @@ Cloudflare Edge (Caching)
     ↓
 Next.js Server Component (SSR/SSG)
     ↓
-Firebase REST API (Firestore)
+Data Connect SDK (GraphQL)
+    ↓
+PostgreSQL (Relational SQL)
     ↓
 Response (HTML/JSON)
     ↓
