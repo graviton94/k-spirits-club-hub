@@ -1,7 +1,9 @@
+// components/admin/ModificationRequestsTable.tsx
+
 'use client';
 
 import { useState, useEffect } from 'react';
-import { modificationDb } from '@/lib/db/firestore-rest';
+import { dbListModificationRequests, dbUpsertModificationRequest } from '@/lib/db/data-connect-client';
 import { ModificationRequest } from '@/lib/db/schema';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
@@ -11,7 +13,6 @@ import {
   Clock, 
   AlertCircle, 
   MoreHorizontal,
-  ChevronRight,
   User,
   MessageSquare
 } from 'lucide-react';
@@ -34,8 +35,8 @@ export default function ModificationRequestsTable() {
   async function loadRequests() {
     setLoading(true);
     try {
-      const data = await modificationDb.getAll();
-      setRequests(data);
+      const data = await dbListModificationRequests();
+      setRequests(data as any as ModificationRequest[]);
     } catch (error) {
       console.error('Failed to load modification requests:', error);
     } finally {
@@ -43,11 +44,16 @@ export default function ModificationRequestsTable() {
     }
   }
 
-  async function handleStatusUpdate(id: string, status: 'pending' | 'checked' | 'resolved') {
+  async function handleStatusUpdate(request: ModificationRequest, status: 'pending' | 'checked' | 'resolved') {
     try {
-      await modificationDb.updateStatus(id, status);
-      setRequests(prev => prev.map(r => r.id === id ? { ...r, status } : r));
+      // Data Connect upsert works by providing the ID and fields to update
+      await dbUpsertModificationRequest({
+        ...request,
+        status
+      });
+      setRequests(prev => prev.map(r => r.id === request.id ? { ...r, status } : r));
     } catch (error) {
+      console.error('Status update failed:', error);
       alert('상태 업데이트에 실패했습니다.');
     }
   }
@@ -152,19 +158,19 @@ export default function ModificationRequestsTable() {
                       상태 변경
                     </div>
                     <DropdownMenuItem 
-                      onClick={() => handleStatusUpdate(request.id, 'pending')}
+                      onClick={() => handleStatusUpdate(request, 'pending')}
                       className="text-xs font-medium flex items-center gap-2"
                     >
                       <Clock size={14} className="text-amber-500" /> 대기 중
                     </DropdownMenuItem>
                     <DropdownMenuItem 
-                      onClick={() => handleStatusUpdate(request.id, 'checked')}
+                      onClick={() => handleStatusUpdate(request, 'checked')}
                       className="text-xs font-medium flex items-center gap-2"
                     >
                       <AlertCircle size={14} className="text-blue-500" /> 확인 중
                     </DropdownMenuItem>
                     <DropdownMenuItem 
-                      onClick={() => handleStatusUpdate(request.id, 'resolved')}
+                      onClick={() => handleStatusUpdate(request, 'resolved')}
                       className="text-xs font-medium flex items-center gap-2"
                     >
                       <CheckCircle2 size={14} className="text-emerald-500" /> 처리 완료

@@ -8,7 +8,7 @@ import DiscoveryLogsTable from "@/components/admin/DiscoveryLogsTable";
 import ModificationRequestsTable from "@/components/admin/ModificationRequestsTable";
 import type { Spirit } from "@/lib/db/schema";
 import { db } from "@/lib/db";
-import { modificationDb } from "@/lib/db/firestore-rest";
+import { dbListModificationRequests } from "@/lib/db/data-connect-client";
 import { 
   Database, 
   MessageSquare, 
@@ -44,8 +44,8 @@ export default function AdminContent() {
     // Load Counts for Badges
     async function loadCounts() {
       const { total: pendingSpirits } = await db.getSpirits({ isReviewed: false }, { page: 1, pageSize: 1 });
-      const mods = await modificationDb.getAll();
-      const pendingMods = mods.filter(m => m.status === 'pending').length;
+      const mods = await dbListModificationRequests();
+      const pendingMods = mods.filter((m: any) => m.status === 'pending').length;
       
       setCounts({
         pendingReview: pendingSpirits,

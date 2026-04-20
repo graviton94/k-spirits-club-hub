@@ -2,7 +2,7 @@
 # Mutations for Data Migration and App Logic
 
 # --- User Mutations ---
-mutation upsertUser($id: String!, $email: String, $nickname: String, $profileImage: String, $role: String, $themePreference: String, $isFirstLogin: Boolean, $reviewsWritten: Int, $heartsReceived: Int) @auth(expr: "auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
+mutation upsertUser($id: String!, $email: String, $nickname: String, $profileImage: String, $role: String, $themePreference: String, $isFirstLogin: Boolean, $reviewsWritten: Int, $heartsReceived: Int, $tasteProfile: Any) @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   user_upsert(data: {
     id: $id,
     email: $email,
@@ -12,7 +12,8 @@ mutation upsertUser($id: String!, $email: String, $nickname: String, $profileIma
     themePreference: $themePreference,
     isFirstLogin: $isFirstLogin,
     reviewsWritten: $reviewsWritten,
-    heartsReceived: $heartsReceived
+    heartsReceived: $heartsReceived,
+    tasteProfile: $tasteProfile
   })
 }
 
@@ -46,8 +47,10 @@ mutation upsertSpirit(
   $isReviewed: Boolean,
   $rating: Float,
   $reviewCount: Int,
+  $importer: String,
+  $rawCategory: String,
   $metadata: Any
-) @auth(expr: "auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
+) @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   spirit_upsert(data: {
     id: $id,
     name: $name,
@@ -73,11 +76,23 @@ mutation upsertSpirit(
     finishTags: $finishTags,
     tastingNote: $tastingNote,
     status: $status,
+    importer: $importer,
+    rawCategory: $rawCategory,
     isPublished: $isPublished,
     isReviewed: $isReviewed,
     rating: $rating,
     reviewCount: $reviewCount,
     metadata: $metadata
+  })
+}
+
+# --- Home Curation Mutations ---
+mutation upsertNewArrival($id: String!, $spiritId: String!, $displayOrder: Int, $tags: [String!]) @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
+  newArrival_upsert(data: {
+    id: $id,
+    spiritId: $spiritId,
+    displayOrder: $displayOrder,
+    tags: $tags
   })
 }
 
@@ -98,7 +113,7 @@ mutation upsertReview(
   $imageUrls: [String!],
   $createdAt: Timestamp,
   $updatedAt: Timestamp
-) @auth(expr: "auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
+) @auth(expr: "auth != null && auth.uid == vars.userId") {
   spiritReview_upsert(data: {
     id: $id,
     spiritId: $spiritId,
@@ -118,6 +133,17 @@ mutation upsertReview(
   })
 }
 
+mutation updateReview(
+  $id: UUID!,
+  $likes: Int,
+  $likedBy: [String!]
+) @auth(expr: "auth != null") {
+  spiritReview_update(id: $id, data: {
+    likes: $likes,
+    likedBy: $likedBy
+  })
+}
+
 # --- News Mutations ---
 mutation upsertNews(
   $id: String!,
@@ -130,7 +156,7 @@ mutation upsertNews(
   $date: String,
   $translations: Any,
   $tags: Any
-) @auth(expr: "auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
+) @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   newsArticle_upsert(data: {
     id: $id,
     title: $title,
@@ -145,7 +171,7 @@ mutation upsertNews(
   })
 }
 
-mutation deleteNews($id: String!) @auth(expr: "auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
+mutation deleteNews($id: String!) @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   newsArticle_delete(id: $id)
 }
 
@@ -157,7 +183,7 @@ mutation upsertCabinet(
   $notes: String,
   $rating: Int,
   $isFavorite: Boolean
-) @auth(expr: "auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
+) @auth(expr: "auth != null && auth.uid == vars.userId") {
   userCabinet_upsert(data: {
     userId: $userId,
     spiritId: $spiritId,
@@ -166,6 +192,10 @@ mutation upsertCabinet(
     rating: $rating,
     isFavorite: $isFavorite
   })
+}
+
+mutation deleteCabinet($userId: String!, $spiritId: String!) @auth(expr: "auth != null && auth.uid == vars.userId") {
+  userCabinet_delete(key: { userId: $userId, spiritId: $spiritId })
 }
 
 # --- ModificationRequest Mutations ---
@@ -178,7 +208,7 @@ mutation upsertModificationRequest(
   $content: String!,
   $status: String,
   $createdAt: Timestamp
-) @auth(expr: "auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
+) @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   modificationRequest_upsert(data: {
     id: $id,
     spiritId: $spiritId,
@@ -199,7 +229,7 @@ mutation upsertWorldCupResult(
   $subcategory: String,
   $initialRound: Int,
   $timestamp: Timestamp
-) @auth(level: PUBLIC) {
+) @auth(expr: "auth != null") {
   worldCupResult_upsert(data: {
     id: $id,
     winnerId: $winnerId,
@@ -210,11 +240,11 @@ mutation upsertWorldCupResult(
   })
 }
 
-mutation deleteSpirit($id: String!) @auth(expr: "auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
+mutation deleteSpirit($id: String!) @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   spirit_delete(id: $id)
 }
 
-mutation upsertAiDiscoveryLog($id: String!, $userId: String, $analysis: String, $recommendations: Any, $messageHistory: Any) @auth(expr: "auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
+mutation upsertAiDiscoveryLog($id: String!, $userId: String, $analysis: String, $recommendations: Any, $messageHistory: Any) @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   aiDiscoveryLog_upsert(data: {
     id: $id,
     userId: $userId,
@@ -222,4 +252,8 @@ mutation upsertAiDiscoveryLog($id: String!, $userId: String, $analysis: String, 
     recommendations: $recommendations,
     messageHistory: $messageHistory
   })
+}
+
+mutation deleteReview($id: UUID!) @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
+  spiritReview_delete(id: $id)
 }

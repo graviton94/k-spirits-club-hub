@@ -1,0 +1,24 @@
+﻿node.exe : E0421 00:45:46.770757   12868 generate_cmd.go:
+51] Failed to generate SDKs:
+위치 줄:1 문자:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\
+nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (E0421 00:45 
+   :46.... generate SDKs::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+schema validation failed: main\mutations.gql:210:1: On @a
+uth: invalid expression ("auth.uid != null"): ERROR: <inp
+ut>:1:10: found no matching overload for '_!=_' applied t
+o '(string, null)'
+ | auth.uid != null
+ | .........^
+main\queries.gql:237:2: On @auth: invalid expression ("au
+th.uid != null"): ERROR: <input>:1:10: found no matching 
+overload for '_!=_' applied to '(string, null)'
+ | auth.uid != null
+ | .........^
+
+[1m[31mError:[39m[22m An unexpected error has occurred.

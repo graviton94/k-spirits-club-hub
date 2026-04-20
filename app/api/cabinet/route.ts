@@ -1,5 +1,7 @@
+// app/api/cabinet/route.ts
+
 import { NextRequest, NextResponse } from 'next/server';
-import { cabinetDb, spiritsDb } from '@/lib/db/firestore-rest';
+import { dbListUserCabinet, dbUpsertCabinet, dbDeleteCabinet } from '@/lib/db/data-connect-client';
 
 export const runtime = 'edge';
 
@@ -10,40 +12,14 @@ export async function GET(req: NextRequest) {
     }
 
     try {
-        // 1. Get user's cabinet items
-        const cabinetItems = await cabinetDb.getAll(userId);
-
-        if (cabinetItems.length === 0) {
-            return NextResponse.json({ data: [] });
-        }
-
-        // 2. Get master spirits data
-        // cabinetItems should have 'id' which corresponds to spiritId
-        const spiritIds = Array.from(new Set(cabinetItems.map((i: any) => i.id))).filter(Boolean);
-
-        if (spiritIds.length === 0) {
-            return NextResponse.json({ data: [] });
-        }
-
-        const masterSpirits = await spiritsDb.getByIds(spiritIds);
-
-        // 3. Merge data
-        // Flavor engine expects { ...Spirit, isWishlist, userReview }
-        // cabinetItem should strictly contain user-specific overrides.
-        // We prioritize cabinetItem fields (like isWishlist, userReview).
-
-        const joined = cabinetItems.map((c: any) => {
-            const master = masterSpirits.find(m => m.id === c.id);
-            if (!master) {
-                // If master spirit is missing (deleted?), we might skip or return partial.
-                // For safety, we skip.
-                return null;
-            }
-            return {
-                ...master,
-                ...c, // user overrides
-            };
-        }).filter(Boolean);
+        const cabinetItems = await dbListUserCabinet(userId);
+        
+        // Map to flat structure for backward compatibility
+        const joined = cabinetItems.map((item: any) => ({
+            ...item.spirit,
+            ...item,
+            id: item.spiritId
+        }));
 
         return NextResponse.json({ data: joined });
     } catch (error) {
@@ -60,30 +36,21 @@ export async function POST(req: NextRequest) {
 
     try {
         const body = await req.json();
-        const { id, ...data } = body;
+        const { id, isWishlist, userReview } = body;
 
         if (!id) {
             return NextResponse.json({ error: 'Missing Spirit ID' }, { status: 400 });
         }
 
-        // We only save user-specific data to cabinet. 
-        // We shouldn't duplicate all Spirit fields if possible, 
-        // BUT current Frontend treats the object as a whole.
-        // For simplicity, we save the object as provided by frontend (which is merged).
-        // Optimally, we should only save { isWishlist, userReview, id }.
-        // However, saving full object is safer for offline-first architecture if we switch later,
-        // but bad for sync.
-        // Let's sanitize to save only user-context fields to keep DB clean?
-        // User fields: isWishlist, userReview, maybe rating/notes if we added them.
-
-        const userFields = {
-            id,
-            isWishlist: data.isWishlist ?? false,
-            userReview: data.userReview || null,
-            addedAt: new Date().toISOString()
-        };
-
-        await cabinetDb.upsert(userId, id, userFields);
+        // Logic check: if it's a wishlist item, rating is 0. 
+        // If it's a review, it has a rating.
+        await dbUpsertCabinet({
+            userId,
+            spiritId: id,
+            notes: userReview?.comment || '',
+            rating: userReview?.ratingOverall || 0,
+            isFavorite: false // Default
+        });
 
         return NextResponse.json({ success: true });
     } catch (error) {
@@ -106,7 +73,7 @@ export async function DELETE(req: NextRequest) {
     }
 
     try {
-        await cabinetDb.delete(userId, id);
+        await dbDeleteCabinet({ userId, spiritId: id });
         return NextResponse.json({ success: true });
     } catch (error) {
         console.error('Cabinet DELETE Error:', error);

@@ -1,21 +1,31 @@
+// app/api/users/stats/route.ts
+
 import { NextRequest, NextResponse } from 'next/server';
-import { reviewsDb } from '@/lib/db/firestore-rest';
+import { dbGetUserProfile } from '@/lib/db/data-connect-client';
 
 export const runtime = 'edge';
 
-// GET /api/users/stats - Get user statistics
+// GET /api/users/stats - Get user statistics from PostgreSQL
 export async function GET(request: NextRequest) {
   try {
+    // Note: In production, userId should come from a secure session/header
     const userId = request.headers.get('x-user-id');
     if (!userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const stats = await reviewsDb.getUserStats(userId);
+    const profile = await dbGetUserProfile(userId);
+
+    if (!profile) {
+       return NextResponse.json({
+        reviewCount: 0,
+        totalLikes: 0
+      }, { status: 200 });
+    }
 
     return NextResponse.json({
-      reviewCount: stats.reviewCount,
-      totalLikes: stats.totalLikes
+      reviewCount: profile.reviewsWritten || 0,
+      totalLikes: profile.heartsReceived || 0
     }, { status: 200 });
   } catch (error) {
     console.error('Error fetching user stats:', error);

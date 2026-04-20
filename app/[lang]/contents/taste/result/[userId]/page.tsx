@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import TastePublicReport from '@/components/cabinet/TastePublicReport'
-import { tasteProfileDb } from '@/lib/db/firestore-rest'
+import { dbGetUserProfile } from '@/lib/db/data-connect-client'
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url'
 
 export const revalidate = 3600
@@ -13,7 +13,11 @@ interface TasteResultPageProps {
 export async function generateMetadata({ params }: TasteResultPageProps): Promise<Metadata> {
     const { userId, lang } = await params
     const isEn = lang === 'en'
-    const profile = await tasteProfileDb.get(userId)
+    
+    // Fetch from User Profile JSONB field
+    const user = await dbGetUserProfile(userId)
+    const profile: any = user?.tasteProfile
+
     const canonicalUrl = getCanonicalUrl(`/${lang}/contents/taste/result/${userId}`)
     const hreflangAlternates = getHreflangAlternates(`/contents/taste/result/${userId}`)
 
@@ -72,7 +76,8 @@ export async function generateMetadata({ params }: TasteResultPageProps): Promis
 
 export default async function TasteResultPage({ params }: TasteResultPageProps) {
     const { userId } = await params
-    const profileData = await tasteProfileDb.get(userId)
+    const user = await dbGetUserProfile(userId)
+    const profileData: any = user?.tasteProfile
 
     if (!profileData) {
         notFound()

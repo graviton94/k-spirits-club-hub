@@ -39,6 +39,50 @@ const CLICHE_BAN_LIST = `
 - For Wine/Brandy: NO "Charcuterie Board", "Brie Cheese"
 `;
 
+/**
+ * Calculates a dynamic editor rating based on content richness and data density.
+ * Range: 3.0 (Thin) to 5.0 (Dense/Rich)
+ */
+export function calculateDynamicEditorRating(data: {
+    descriptionKo?: string;
+    descriptionEn?: string;
+    noseTags?: string[];
+    palateTags?: string[];
+    finishTags?: string[];
+    pairingGuideKo?: string;
+}): number {
+    let score = 2.5; // Base starting point
+
+    // 1. Description Length (KO/EN focus)
+    const dKo = (data.descriptionKo || '').trim().length;
+    const dEn = (data.descriptionEn || '').trim().length;
+    
+    if (dKo > 300) score += 0.8;
+    else if (dKo > 100) score += 0.4;
+    
+    if (dEn > 100) score += 0.3; // Bilingual bonus
+
+    // 2. Sensory Tag Diversity
+    const totalTags = [
+        ...(data.noseTags || []),
+        ...(data.palateTags || []),
+        ...(data.finishTags || [])
+    ].filter(Boolean).length;
+
+    if (totalTags >= 9) score += 0.9;
+    else if (totalTags >= 6) score += 0.6;
+    else if (totalTags >= 3) score += 0.3;
+
+    // 3. Pairing Guide Depth
+    const pKo = (data.pairingGuideKo || '').trim().length;
+    if (pKo > 50) score += 0.5;
+    else if (pKo > 0) score += 0.2;
+
+    // Clamp between 3.0 and 5.0
+    const finalRating = Math.max(3.0, Math.min(5.0, Number(score.toFixed(1))));
+    return finalRating;
+}
+
 export interface EnrichmentAuditResult {
     nameEn: string;
     distillery: string;
@@ -311,6 +355,7 @@ export async function enrichSpiritWithAI(spirit: SpiritEnrichmentInput): Promise
             ...sensoryData,
             ...pairingData,
             status: totalConfidence < 0.7 ? "NEEDS_REVIEW" : "ENRICHED",
+            isReviewed: true, // Mark as vetted by AI
             metadata: {
                 confidence: totalConfidence,
                 sources: Array.from(new Set(allSources))

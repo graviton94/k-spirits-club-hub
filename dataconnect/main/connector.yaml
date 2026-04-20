@@ -1,8 +1,11 @@
-
-connectorId: "main"
+connectorId: main
 generate:
   javascriptSdk:
-    outputDir: "../../src/dataconnect-generated"
-    package: "@k-spirits/dataconnect"
-  adminSdk: 
-    outputDir: "../../src/dataconnect-admin-generated"
+    - outputDir: ../../src/dataconnect-generated
+      package: "@dataconnect/generated"
+      packageJsonDir: ../..
+      react: true
+  adminNodeSdk:
+    - outputDir: ../../src/dataconnect-admin-generated
+      package: "@dataconnect/admin-generated"
+      packageJsonDir: ../..

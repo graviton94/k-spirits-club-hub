@@ -1,26 +1,28 @@
+// components/home/NewsSection.tsx
+
 import Link from 'next/link';
-import { newsDb } from '@/lib/db/firestore-rest';
+import { dbListNewsArticles } from '@/lib/db/data-connect-client';
 
 export default async function NewsSection({ lang }: { lang: string }) {
-    const rawNews = await newsDb.getLatest(3);
+    // Fetch latest 3 news articles from PostgreSQL
+    const rawNews = await dbListNewsArticles(3, 0);
 
     if (!rawNews || rawNews.length === 0) return null;
 
     const news = rawNews.map((item: any) => {
         const t = item.translations?.[lang] || item.translations?.['en'] || {};
-        const tags = item.tags?.[lang] || item.tags?.['en'] || [];
+        const tags = item.newsTags?.[lang] || item.newsTags?.['en'] || [];
         return {
-            title: t.title || item.originalTitle,
+            title: t.title || item.title,
             link: item.link,
-            snippet: t.snippet || item.originalSnippet,
+            snippet: t.snippet || (item.content ? item.content.substring(0, 100) : ''),
             source: item.source,
             date: item.date,
-            tags: tags.slice(0, 2) // Take top 2 tags
+            tags: Array.isArray(tags) ? tags.slice(0, 2) : []
         };
     });
 
     const title = lang === 'ko' ? '글로벌 주류 트렌드' : 'Global Spirits Trends';
-    const subtitle = lang === 'ko' ? '최신 소식' : 'Latest News';
 
     return (
         <section className="container max-w-4xl mx-auto px-4 mb-12 lg:mb-16">
@@ -42,7 +44,7 @@ export default async function NewsSection({ lang }: { lang: string }) {
                 {news.map((item, index) => (
                     <Link
                         key={index}
-                        href={item.link}
+                        href={item.link || '#'}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="group relative block py-2 px-1 hover:bg-accent/50 transition-colors"
@@ -65,7 +67,7 @@ export default async function NewsSection({ lang }: { lang: string }) {
 
                             {/* Date (Right Aligned) */}
                             <span className="ml-auto text-[10px] text-muted-foreground font-medium whitespace-nowrap flex-shrink-0">
-                                {new Date(item.date).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\.$/, '')}
+                                {item.date ? new Date(item.date).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\.$/, '') : ''}
                             </span>
                         </div>
 

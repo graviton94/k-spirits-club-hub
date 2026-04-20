@@ -1,8 +1,10 @@
+// app/[lang]/actions/reviews.ts
+
 "use server";
 
-import { spiritsDb, reviewsDb } from '@/lib/db/firestore-rest';
-import { Review } from '@/lib/db/schema';
+import { dbGetSpirit, dbUpsertReview, dbUpsertSpirit } from '@/lib/db/data-connect-client';
 import { revalidatePath } from 'next/cache';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Submits a micro-review and updates the target spirit's aggregate rating metadata.
@@ -16,40 +18,41 @@ export async function submitMicroReviewAction(
 ) {
   try {
     // 1. Fetch current spirit data to calculate new average
-    // In a REST-based environment, we fetch-calculate-update
-    const spirit = await spiritsDb.getById(spiritId);
+    const spirit = await dbGetSpirit(spiritId);
     if (!spirit) {
       throw new Error(`Spirit not found: ${spiritId}`);
     }
 
-    const oldRating = spirit.metadata?.aggregateRating?.ratingValue || 0;
-    const oldCount = spirit.metadata?.aggregateRating?.reviewCount || 0;
+    const metadata: any = spirit.metadata || {};
+    const oldRating = metadata.aggregateRating?.ratingValue || 0;
+    const oldCount = metadata.aggregateRating?.reviewCount || 0;
 
     // 2. Calculate new moving average
     const newCount = oldCount + 1;
     const newRatingValue = ((oldRating * oldCount) + rating) / newCount;
 
     // 3. Prepare the public review document
-    // Using a default comment for SEO compliance as requested
     const defaultComment = lang === 'en' ? "Highly recommended!" : "정말 추천합니다!";
     
-    // Construct simplified review payload
-    const reviewData: Partial<Review> = {
+    const reviewId = uuidv4();
+    
+    await dbUpsertReview({
+      id: reviewId,
       spiritId,
+      userId: "ANONYMOUS_EXPERT", // For micro-reviews without login
       rating,
       content: defaultComment,
-      nose: tags.filter((_, i) => i % 3 === 0).join(', '), // Simple heuristic for distributive tags
+      nose: tags.filter((_, i) => i % 3 === 0).join(', '),
       palate: tags.filter((_, i) => i % 3 === 1).join(', '),
       finish: tags.filter((_, i) => i % 3 === 2).join(', '),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      isPublished: true,
-      userName: lang === 'en' ? "Resident Expert" : "시음 전문가" // Default for quick reviews
-    };
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      isPublished: true
+    });
 
-    // 4. Atomic-ish update of parent spirit
+    // 4. Update parent spirit metadata
     const updatedMetadata = {
-      ...spirit.metadata,
+      ...metadata,
       aggregateRating: {
         ratingValue: parseFloat(newRatingValue.toFixed(1)),
         reviewCount: newCount,
@@ -58,13 +61,12 @@ export async function submitMicroReviewAction(
       }
     };
 
-    // Commit both: the new review and the updated spirit metadata
-    // Note: We use the existing REST helpers which perform sequential updates.
-    // In this specific architecture, this and trending logs are how engagement is tracked.
-    await reviewsDb.upsert(spiritId, `micro_${Date.now()}`, reviewData);
-    await spiritsDb.upsert(spiritId, { metadata: updatedMetadata });
+    await dbUpsertSpirit({
+      id: spiritId,
+      metadata: updatedMetadata
+    });
 
-    // 5. Revalidate the product page to show the gold stars immediately
+    // 5. Revalidate
     revalidatePath(`/${lang}/spirits/${spiritId}`);
 
     return { success: true };

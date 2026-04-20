@@ -1,3 +1,9 @@
+extend type NewArrival {
+  """
+  ✨ Implicit foreign key field based on `NewArrival`.`spirit`. It must match the value of `Spirit`.`id`. See `@ref` for how to customize it.
+  """
+  spiritId: String! @fdc_generated(from: "NewArrival.spirit", purpose: IMPLICIT_REF_FIELD)
+}
 extend type SpiritReview {
   """
   ✨ Implicit foreign key field based on `SpiritReview`.`spirit`. It must match the value of `Spirit`.`id`. See `@ref` for how to customize it.

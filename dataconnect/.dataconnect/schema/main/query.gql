@@ -48,6 +48,30 @@ extend type Query {
     first: ModificationRequest_FirstRow
   ): ModificationRequest @fdc_generated(from: "ModificationRequest", purpose: QUERY_SINGLE)
   """
+  ✨ Look up a single `NewArrival` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  newArrival(
+    """
+    The unique ID of the object.
+    """
+    id: String
+
+    """
+    ✨ `_expr` server value variant of `id` (The unique ID of the object.)
+    """
+    id_expr: String_Expr
+
+    """
+    The key used to identify the object.
+    """
+    key: NewArrival_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: NewArrival_FirstRow
+  ): NewArrival @fdc_generated(from: "NewArrival", purpose: QUERY_SINGLE)
+  """
   ✨ Look up a single `NewsArticle` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
   """
   newsArticle(
@@ -239,6 +263,40 @@ extend type Query {
     """
     having: ModificationRequest_Having
   ): [ModificationRequest!]! @fdc_generated(from: "ModificationRequest", purpose: QUERY_MULTIPLE)
+  """
+  ✨ List `NewArrival` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  newArrivals(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: NewArrival_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [NewArrival_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: NewArrival_Having
+  ): [NewArrival!]! @fdc_generated(from: "NewArrival", purpose: QUERY_MULTIPLE)
   """
   ✨ List `NewsArticle` objects in the table and return selected fields, optionally filtered by `where` conditions
   """

@@ -1,13 +1,18 @@
 // app/api/analyze-taste/route.ts
 
 import { NextRequest, NextResponse } from 'next/server';
-import { cabinetDb, tasteProfileDb, reviewsDb, spiritsDb } from '@/lib/db/firestore-rest';
+import { 
+    dbListUserCabinet, 
+    dbListUserReviews, 
+    dbGetUserProfile, 
+    dbUpsertUser,
+    dbListSpirits 
+} from '@/lib/db/data-connect-client';
 import { buildTasteAnalysisPrompt } from '@/lib/utils/aiPromptBuilder';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
-export const preferredRegion = 'iad1';
 
 const API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_GEMINI_API_KEY || '';
 
@@ -17,15 +22,14 @@ function getKSTDate() {
 
 async function tryFindSpiritInDb(name: string) {
     try {
-        // Search by name using exact match first, then broader
-        const results = await spiritsDb.getAll({ searchTerm: name, isPublished: true }, { page: 1, pageSize: 5 });
+        // Search by name using Data Connect
+        const results = await dbListSpirits({}); // Pass empty filter to get all for memory searching
         if (results && results.length > 0) {
-            // Find best name match
             const lowerName = name.toLowerCase();
             return results.find(s => 
                 s.name.toLowerCase().includes(lowerName) || 
-                (s.name_en && s.name_en.toLowerCase().includes(lowerName))
-            ) || results[0];
+                (s.nameEn && s.nameEn.toLowerCase().includes(lowerName))
+            ) || null;
         }
         return null;
     } catch (e) {
@@ -40,19 +44,21 @@ export async function GET(req: NextRequest) {
         const userId = searchParams.get('userId');
         if (!userId) return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
 
-        const [profile, usage] = await Promise.all([
-            tasteProfileDb.get(userId),
-            tasteProfileDb.getUsage(userId)
-        ]);
+        const user = await dbGetUserProfile(userId);
+        if (!user) return NextResponse.json({ error: 'User not found' }, { status: 404 });
 
         const today = getKSTDate();
-        let dailyCount = (usage && usage.date === today) ? usage.count : 0;
+        // Usage tracking now exists in User metadata or we can keep it in tasteProfile object
+        const profile: any = user.tasteProfile || {};
+        const usage = profile.usage || { date: today, count: 0 };
+        let dailyCount = (usage.date === today) ? usage.count : 0;
 
         return NextResponse.json({
-            profile: profile || null,
+            profile: user.tasteProfile || null,
             usage: { date: today, count: dailyCount, remaining: Math.max(0, 3 - dailyCount) }
         });
     } catch (error) {
+        console.error('[Analyze Taste GET Error]', error);
         return NextResponse.json({ error: 'Internal Error' }, { status: 500 });
     }
 }
@@ -67,15 +73,19 @@ export async function POST(req: NextRequest) {
 
         if (!userId) return NextResponse.json({ error: 'User ID missing' }, { status: 400 });
 
+        const user = await dbGetUserProfile(userId);
+        if (!user) return NextResponse.json({ error: 'User not found' }, { status: 404 });
+
         const today = getKSTDate();
-        let usage = await tasteProfileDb.getUsage(userId);
-        let currentCount = (usage && usage.date === today) ? usage.count : 0;
+        const existingProfile: any = user.tasteProfile || {};
+        const usage = existingProfile.usage || { date: today, count: 0 };
+        let currentCount = (usage.date === today) ? usage.count : 0;
 
         if (currentCount >= 3) return NextResponse.json({ error: 'Limit reached' }, { status: 429 });
 
         const [cabinetItems, userReviews] = await Promise.all([
-            cabinetDb.getAll(userId),
-            reviewsDb.getAllForUser(userId, true)
+            dbListUserCabinet(userId),
+            dbListUserReviews(userId)
         ]);
 
         const spiritsForAnalysis = cabinetItems.map((item: any) => {
@@ -84,8 +94,8 @@ export async function POST(req: NextRequest) {
                 ...item,
                 userReview: review ? {
                     ratingOverall: review.rating,
-                    tags: [...(review.tagsN || []), ...(review.tagsP || []), ...(review.tagsF || [])],
-                    comment: review.notes
+                    tags: [review.nose, review.palate, review.finish].filter(Boolean),
+                    comment: review.content
                 } : null
             };
         });
@@ -102,11 +112,7 @@ export async function POST(req: NextRequest) {
         6D VECTOR DIMENSIONS: sweet, fruity, floral, spicy, woody, peaty.
         
         CRITICAL RECOMMENDATION RULES:
-        - NEVER suggest pairing one spirit with another (e.g., "Goes well with Whiskey X"). Spirits are NOT food.
-        - ALWAYS explain the match based on the User's Flavor DNA (e.g., "Your high Peaty score at 85 makes this an ideal match").
-        - SUGGEST actual Food Pairings (e.g., "Matches perfectly with smoked salmon or dark chocolate").
-        - COMPARATIVE ANALYSIS: Use phrases like "If you enjoyed X in your cabinet, you'll appreciate the Y notes in this bottle."
-        - Avoid repetitive or generic brands. Aim for "Discovery".
+        - NEVER suggest pairing one spirit with another. Spirits are NOT food.
         - Respond strictly in the ${isEn ? 'English' : 'Professional Korean (Honorifics)'} language.
         
         JSON FORMAT:
@@ -119,7 +125,7 @@ export async function POST(req: NextRequest) {
               "category": "Whisky/Traditional/etc",
               "abv": 40.0,
               "matchRate": 95,
-              "reason": "Detailed sommelier insight (No spirit-to-spirit pairing!)",
+              "reason": "Detailed sommelier insight",
               "tastingNotes": "Brief profile."
             }
           ]
@@ -127,12 +133,16 @@ export async function POST(req: NextRequest) {
         `;
 
         const genAI = new GoogleGenerativeAI(API_KEY);
-        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash", systemInstruction, generationConfig: { responseMimeType: "application/json" } });
+        const model = genAI.getGenerativeModel({ 
+            model: "gemini-2.0-flash", 
+            systemInstruction, 
+            generationConfig: { responseMimeType: "application/json" } 
+        });
 
         const result = await model.generateContent(promptData);
         const analysisResult = JSON.parse(result.response.text());
 
-        // Process Recommendations with Live Firestore Sync
+        // Process Recommendations
         const enrichedRecs = await Promise.all(analysisResult.recommendations.slice(0, 3).map(async (rec: any) => {
             const dbMatch = await tryFindSpiritInDb(rec.name);
             if (dbMatch) {
@@ -152,17 +162,18 @@ export async function POST(req: NextRequest) {
         }));
 
         const profile = {
-            userId,
             analyzedAt: new Date().toISOString(),
             stats: analysisResult.stats,
             persona: analysisResult.persona,
-            recommendationEntries: enrichedRecs // New list format
+            recommendationEntries: enrichedRecs,
+            usage: { date: today, count: currentCount + 1 }
         };
 
-        await Promise.all([
-            tasteProfileDb.save(userId, profile),
-            tasteProfileDb.setUsage(userId, today, currentCount + 1)
-        ]);
+        // Save back to User.tasteProfile JSONB
+        await dbUpsertUser({
+            id: userId,
+            tasteProfile: profile
+        });
 
         return NextResponse.json({ success: true, profile });
     } catch (error: any) {

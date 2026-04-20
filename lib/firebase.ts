@@ -1,5 +1,4 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth'; // 1. GoogleAuthProvider 추가
 
 // Firebase 설정
@@ -17,7 +16,6 @@ const firebaseConfig = {
 const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 
 // 서비스 인스턴스 내보내기
-export const db = getFirestore(app);
 export const auth = getAuth(app);
 
 // 2. 구글 로그인 제공자 인스턴스 생성 및 내보내기

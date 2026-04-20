@@ -11,6 +11,7 @@ type User @table {
   isFirstLogin: Boolean @default(value: true)
   reviewsWritten: Int @default(value: 0)
   heartsReceived: Int @default(value: 0)
+  tasteProfile: Any
   createdAt: Timestamp @default(expr: "request.time")
 }
 
@@ -39,6 +40,8 @@ type Spirit @table {
   finishTags: [String!]
   tastingNote: String
   status: String @col(dataType: "varchar(50)")
+  importer: String @col(dataType: "varchar(200)")
+  rawCategory: String @col(dataType: "varchar(200)")
   isPublished: Boolean @default(value: false)
   isReviewed: Boolean @default(value: false)
   rating: Float @default(value: 0.0)
@@ -46,6 +49,15 @@ type Spirit @table {
   metadata: Any
   createdAt: Timestamp! @default(expr: "request.time")
   updatedAt: Timestamp! @default(expr: "request.time")
+}
+
+# --- Home Curation ---
+type NewArrival @table {
+  id: String!
+  spirit: Spirit!
+  displayOrder: Int @default(value: 0)
+  tags: [String!]
+  createdAt: Timestamp @default(expr: "request.time")
 }
 
 type SpiritReview @table {

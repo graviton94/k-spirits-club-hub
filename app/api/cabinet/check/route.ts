@@ -1,6 +1,7 @@
+// app/api/cabinet/check/route.ts
 
 import { NextRequest, NextResponse } from 'next/server';
-import { cabinetDb, spiritsDb } from '@/lib/db/firestore-rest';
+import { dbListUserCabinet, dbGetSpirit } from '@/lib/db/data-connect-client';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'edge';
@@ -15,29 +16,28 @@ export async function GET(request: NextRequest) {
     }
 
     try {
-        // Parallel Fetch: Cabinet Status & Master Data
-        const [cabinetItem, masterItem] = await Promise.all([
-            cabinetDb.getById(userId, spiritId),
-            spiritsDb.getById(spiritId).catch(() => null) // Allow master fetch fail (e.g. custom user item?)
+        // Parallel Fetch: Cabinet Status & Master Data via Data Connect
+        const [cabinetItems, masterItem] = await Promise.all([
+            dbListUserCabinet(userId),
+            dbGetSpirit(spiritId).catch(() => null)
         ]);
+
+        const cabinetItem = cabinetItems.find((i: any) => i.spiritId === spiritId);
 
         if (!cabinetItem) {
             return NextResponse.json({ isOwned: false, isWishlist: false, data: null });
         }
 
         // Merge: Master Data (Base) + Cabinet Snapshot (Overlay)
-        // Cabinet snapshot fields (like custom name/image) should take precedence if they differ? 
-        // Actually, usually Master > Snapshot for static fields, but Snapshot > Master for user fields.
-        // Let's do { ...masterItem, ...cabinetItem } to let cabinet properties override (e.g. if we allow editing)
-        // But for things like metadata tags, they are only in master.
         const mergedData = {
             ...(masterItem || {}),
             ...cabinetItem,
+            id: spiritId
         };
 
         return NextResponse.json({
-            isOwned: !cabinetItem.isWishlist,
-            isWishlist: cabinetItem.isWishlist === true,
+            isOwned: (cabinetItem.rating ?? 0) > 0,
+            isWishlist: (cabinetItem.rating ?? 0) === 0,
             data: mergedData
         });
     } catch (error) {

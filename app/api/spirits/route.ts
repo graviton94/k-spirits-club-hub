@@ -1,21 +1,14 @@
+// app/api/spirits/route.ts
+
 import { NextRequest, NextResponse } from 'next/server';
-import { spiritsDb } from '@/lib/db/firestore-rest';
-import { Spirit, SpiritSearchIndex } from '@/lib/db/schema';
+import { dbListSpirits } from '@/lib/db/data-connect-client';
 
 // Edge runtime for Cloudflare Pages compatibility
 export const runtime = 'edge';
 
 /**
  * GET /api/spirits
- * Public API endpoint for fetching published spirits data
- * 
- * Query Parameters:
- * - mode=index: Returns lightweight search index
- * - mode=full (default): Returns full spirits and search index
- * - q/searchTerm: Search term for server-side filtering
- * - category: Category filter
- * - subcategory: Subcategory filter
- * - country: Country filter
+ * Public API endpoint for fetching published spirits data from PostgreSQL
  */
 export async function GET(request: NextRequest) {
   try {
@@ -28,12 +21,8 @@ export async function GET(request: NextRequest) {
     const country = searchParams.get('country') || undefined;
     const searchTerm = searchParams.get('searchTerm') || searchParams.get('q') || undefined;
 
-    console.log(`[API] GET /api/spirits?mode=${mode}&q=${searchTerm || ''} - Fetching spirits...`);
-
-    // Fetch matching spirits from Firestore
-    // spiritsDb.getAll handles category/subcategory/country at DB level if provided
-    const spirits = await spiritsDb.getAll({
-      isPublished: true,
+    // Fetch matching spirits from Data Connect
+    const spirits = await dbListSpirits({
       category,
       subcategory,
       country
@@ -52,39 +41,28 @@ export async function GET(request: NextRequest) {
     let filteredResults = spirits;
     if (searchTerm) {
       const lowerSearch = searchTerm.toLowerCase();
-      filteredResults = spirits.filter(s =>
+      filteredResults = spirits.filter((s: any) =>
         (s.name && s.name.toLowerCase().includes(lowerSearch)) ||
-        (s.name_en && s.name_en.toLowerCase().includes(lowerSearch)) ||
-        (s.metadata?.name_en && s.metadata.name_en.toLowerCase().includes(lowerSearch)) ||
+        (s.nameEn && s.nameEn.toLowerCase().includes(lowerSearch)) ||
         (s.distillery && s.distillery.toLowerCase().includes(lowerSearch)) ||
         (s.category && s.category.toLowerCase().includes(lowerSearch))
       );
     }
 
-    // OPTIMIZATION: If no search filters are provided and we are in index mode, 
-    // we used to limit to 100, but now we send the full index (lightweight) 
-    // to allow instant client-side searching across all products.
-    const indexSizePreMap = JSON.stringify(filteredResults.map(s => ({ i: s.id }))).length; // Placeholder for size calculation before full map
-    console.log(`[API] Preparing search index for ${filteredResults.length} items.`);
-    // Create minimized search index
-    const searchIndex: SpiritSearchIndex[] = filteredResults.map(s => ({
+    // Create minimized search index for instant client-side search
+    const searchIndex = filteredResults.map((s: any) => ({
       i: s.id,
       n: s.name || '이름 없음',
-      en: s.name_en || null,
+      en: s.nameEn || null,
       c: s.category || '기타',
       sc: s.subcategory || null,
-      t: s.thumbnailUrl || s.imageUrl || null,
+      t: s.imageUrl || null,
       a: s.abv || 0,
       d: s.distillery || null,
-      tn: s.tasting_note || null, // Strictly use root tasting_note
+      tn: s.tastingNote || null,
     }));
 
-    const indexSize = JSON.stringify(searchIndex).length;
-    const indexSizeKB = (indexSize / 1024).toFixed(2);
-
     if (mode === 'index') {
-      console.log(`[OPTIMIZATION] Index-only mode: ${indexSizeKB} KB for ${searchIndex.length} items (Source: ${spirits.length})`);
-
       return NextResponse.json({
         searchIndex,
         count: searchIndex.length,
@@ -99,13 +77,9 @@ export async function GET(request: NextRequest) {
 
     // MODE: FULL
     const limitedSpirits = filteredResults.slice(0, 100);
-    const fullSize = JSON.stringify(limitedSpirits).length;
-    const fullSizeKB = (fullSize / 1024).toFixed(2);
-
-    console.log(`[OPTIMIZATION] Full mode: Index=${indexSizeKB} KB, Full Data=${fullSizeKB} KB`);
 
     return NextResponse.json({
-      publishedSpirits: limitedSpirits as Spirit[],
+      publishedSpirits: limitedSpirits,
       searchIndex,
       count: searchIndex.length,
       timestamp: Date.now()

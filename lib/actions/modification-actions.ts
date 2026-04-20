@@ -1,7 +1,7 @@
 'use server';
 
-import { modificationDb } from "@/lib/db/firestore-rest";
-import { ModificationRequest } from "@/lib/db/schema";
+import { dbUpsertModificationRequest } from "@/lib/db/data-connect-client";
+import { v4 as uuidv4 } from 'uuid';
 
 export async function submitModificationRequest(data: {
     spiritId: string;
@@ -10,26 +10,26 @@ export async function submitModificationRequest(data: {
     content: string;
     userId: string | null;
 }) {
-    // 1. 유효성 검사
+    // 1. Validation
     if (!data.spiritId || !data.title || !data.content) {
         throw new Error("필수 정보가 누락되었습니다.");
     }
 
-    // 2. DB 저장 (Firestore 'modification_requests' 컬렉션)
+    // 2. DB Save (PostgreSQL via Data Connect)
     try {
-        const newRequest: Omit<ModificationRequest, 'id'> = {
+        const id = uuidv4();
+        await dbUpsertModificationRequest({
+            id,
             spiritId: data.spiritId,
             spiritName: data.spiritName,
-            userId: data.userId,
+            userId: data.userId || 'anonymous',
             title: data.title,
             content: data.content,
             status: 'pending',
-            createdAt: new Date()
-        };
+            createdAt: new Date().toISOString()
+        });
 
-        const requestId = await modificationDb.add(newRequest);
-
-        return { success: true, id: requestId };
+        return { success: true, id };
     } catch (error: any) {
         console.error("Modification request submission failed:", error);
         throw new Error(error.message || "요청 저장에 실패했습니다.");

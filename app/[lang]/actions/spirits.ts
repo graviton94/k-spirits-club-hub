@@ -6,7 +6,7 @@ import {
   dbUpsertSpirit,
   dbAdminListRawSpirits
 } from '@/lib/db/data-connect-client';
-import { enrichSpiritWithAI } from '@/lib/services/gemini-translation';
+import { enrichSpiritWithAI, calculateDynamicEditorRating } from '@/lib/services/gemini-translation';
 import { revalidatePath, revalidateTag } from 'next/cache';
 
 /**
@@ -107,6 +107,19 @@ function mapToSQLFields(current: any, incoming: any) {
     isPublished: incoming.isPublished ?? current.isPublished,
     isReviewed: incoming.isReviewed ?? current.isReviewed,
     
+    // [DYNAMIC RATING] Intelligence Engine
+    // If not reviewed yet, rating should be null to avoid "False 4.0"
+    rating: (incoming.isReviewed ?? current.isReviewed) 
+      ? calculateDynamicEditorRating({
+          descriptionKo: incoming.descriptionKo ?? current.descriptionKo,
+          descriptionEn: incoming.descriptionEn ?? current.descriptionEn,
+          noseTags: incoming.noseTags ?? current.noseTags ?? [],
+          palateTags: incoming.palateTags ?? current.palateTags ?? [],
+          finishTags: incoming.finishTags ?? current.finishTags ?? [],
+          pairingGuideKo: incoming.pairingGuideKo ?? current.pairingGuideKo,
+        })
+      : null,
+
     // Metadata block merging
     metadata: {
       ...(current.metadata || {}),

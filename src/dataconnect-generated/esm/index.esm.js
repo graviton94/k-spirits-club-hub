@@ -18,6 +18,19 @@ export function listSpirits(dcOrVars, varsOrOptions, options) {
   return executeQuery(listSpiritsRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
 }
 
+export const listTrendingSpiritsRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'listTrendingSpirits', inputVars);
+}
+listTrendingSpiritsRef.operationName = 'listTrendingSpirits';
+
+export function listTrendingSpirits(dcOrVars, varsOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, false);
+  return executeQuery(listTrendingSpiritsRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
+}
+
 export const listNewArrivalsRef = (dcOrVars, vars) => {
   const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars);
   dcInstance._useGeneratedSdk();
@@ -174,6 +187,32 @@ export function getSpiritReviewsCount(dcOrOptions, options) {
   return executeQuery(getSpiritReviewsCountRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
 }
 
+export const findReviewRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'findReview', inputVars);
+}
+findReviewRef.operationName = 'findReview';
+
+export function findReview(dcOrVars, varsOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
+  return executeQuery(findReviewRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
+}
+
+export const getReviewRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'getReview', inputVars);
+}
+getReviewRef.operationName = 'getReview';
+
+export function getReview(dcOrVars, varsOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
+  return executeQuery(getReviewRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
+}
+
 export const listSpiritsForSitemapRef = (dc) => {
   const { dc: dcInstance} = validateArgs(connectorConfig, dc, undefined);
   dcInstance._useGeneratedSdk();
@@ -239,6 +278,32 @@ export function listModificationRequests(dcOrOptions, options) {
   return executeQuery(listModificationRequestsRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
 }
 
+export const listUserCabinetRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'listUserCabinet', inputVars);
+}
+listUserCabinetRef.operationName = 'listUserCabinet';
+
+export function listUserCabinet(dcOrVars, varsOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
+  return executeQuery(listUserCabinetRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
+}
+
+export const listUserReviewsRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'listUserReviews', inputVars);
+}
+listUserReviewsRef.operationName = 'listUserReviews';
+
+export function listUserReviews(dcOrVars, varsOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
+  return executeQuery(listUserReviewsRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
+}
+
 export const upsertUserRef = (dcOrVars, vars) => {
   const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
   dcInstance._useGeneratedSdk();
@@ -263,6 +328,18 @@ export function upsertSpirit(dcOrVars, vars) {
   return executeMutation(upsertSpiritRef(dcInstance, inputVars));
 }
 
+export const upsertNewArrivalRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'upsertNewArrival', inputVars);
+}
+upsertNewArrivalRef.operationName = 'upsertNewArrival';
+
+export function upsertNewArrival(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(upsertNewArrivalRef(dcInstance, inputVars));
+}
+
 export const upsertReviewRef = (dcOrVars, vars) => {
   const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
   dcInstance._useGeneratedSdk();
@@ -273,6 +350,18 @@ upsertReviewRef.operationName = 'upsertReview';
 export function upsertReview(dcOrVars, vars) {
   const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
   return executeMutation(upsertReviewRef(dcInstance, inputVars));
+}
+
+export const updateReviewRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'updateReview', inputVars);
+}
+updateReviewRef.operationName = 'updateReview';
+
+export function updateReview(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(updateReviewRef(dcInstance, inputVars));
 }
 
 export const upsertNewsRef = (dcOrVars, vars) => {
@@ -309,6 +398,18 @@ upsertCabinetRef.operationName = 'upsertCabinet';
 export function upsertCabinet(dcOrVars, vars) {
   const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
   return executeMutation(upsertCabinetRef(dcInstance, inputVars));
+}
+
+export const deleteCabinetRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'deleteCabinet', inputVars);
+}
+deleteCabinetRef.operationName = 'deleteCabinet';
+
+export function deleteCabinet(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(deleteCabinetRef(dcInstance, inputVars));
 }
 
 export const upsertModificationRequestRef = (dcOrVars, vars) => {
@@ -357,5 +458,17 @@ upsertAiDiscoveryLogRef.operationName = 'upsertAiDiscoveryLog';
 export function upsertAiDiscoveryLog(dcOrVars, vars) {
   const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
   return executeMutation(upsertAiDiscoveryLogRef(dcInstance, inputVars));
+}
+
+export const deleteReviewRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'deleteReview', inputVars);
+}
+deleteReviewRef.operationName = 'deleteReview';
+
+export function deleteReview(dcOrVars, vars) {
+  const { dc: dcInstance, vars: inputVars } = validateArgs(connectorConfig, dcOrVars, vars, true);
+  return executeMutation(deleteReviewRef(dcInstance, inputVars));
 }
 

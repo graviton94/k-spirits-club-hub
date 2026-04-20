@@ -1,10 +1,12 @@
 
 # Queries for the App
 
-query listSpirits($category: String) @auth(level: PUBLIC) {
+query listSpirits($category: String, $subcategory: String, $country: String) @auth(level: PUBLIC) {
   spirits(where: { 
     isPublished: { eq: true },
-    category: { eq: $category } 
+    category: { eq: $category },
+    subcategory: { eq: $subcategory },
+    country: { eq: $country }
   }) {
     id
     name
@@ -17,6 +19,25 @@ query listSpirits($category: String) @auth(level: PUBLIC) {
     distillery
     rating
     reviewCount
+  }
+}
+
+query listTrendingSpirits($limit: Int) @auth(level: PUBLIC) {
+  spirits(
+    where: { isPublished: { eq: true } },
+    orderBy: [{ reviewCount: DESC }, { rating: DESC }],
+    limit: $limit
+  ) {
+    id
+    name
+    nameEn
+    category
+    categoryEn
+    imageUrl
+    rating
+    reviewCount
+    distillery
+    abv
   }
 }
 
@@ -134,13 +155,13 @@ query getUserProfile($id: String!) @auth(level: PUBLIC) {
   user(id: $id) {
     id
     nickname
-    email
     profileImage
     role
     themePreference
     isFirstLogin
     reviewsWritten
     heartsReceived
+    tasteProfile
   }
 }
 
@@ -176,8 +197,8 @@ query getNewsArticle($id: String!) @auth(level: PUBLIC) {
   }
 }
 
-# --- Audit Queries ---
-query auditAllUsers @auth(level: PUBLIC) {
+# --- Audit Queries (ADMIN ONLY) ---
+query auditAllUsers @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   users {
     id
     nickname
@@ -186,7 +207,7 @@ query auditAllUsers @auth(level: PUBLIC) {
   }
 }
 
-query auditAllNews @auth(level: PUBLIC) {
+query auditAllNews @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   newsArticles {
     id
     title
@@ -194,13 +215,13 @@ query auditAllNews @auth(level: PUBLIC) {
   }
 }
 
-query auditAllSpirits @auth(level: PUBLIC) {
+query auditAllSpirits @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   spirits {
     id
   }
 }
 
-query auditAllReviews @auth(level: PUBLIC) {
+query auditAllReviews @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   spiritReviews {
     id
     spirit {
@@ -235,9 +256,25 @@ query listSpiritReviews($limit: Int, $offset: Int) @auth(level: PUBLIC) {
   }
 }
 
-query getSpiritReviewsCount @auth(level: PUBLIC) {
+query getSpiritReviewsCount @auth(expr: "auth != null") {
   spiritReviews {
     id
+  }
+}
+
+query findReview($userId: String!, $spiritId: String!) @auth(level: PUBLIC) {
+  spiritReviews(where: { userId: { eq: $userId }, spiritId: { eq: $spiritId } }) {
+    id
+    likedBy
+    likes
+  }
+}
+
+query getReview($id: UUID!) @auth(level: PUBLIC) {
+  spiritReview(id: $id) {
+    id
+    likedBy
+    likes
   }
 }
 
@@ -313,7 +350,7 @@ query listSpiritsForWorldCup($category: String, $subcategories: [String!]) @auth
   }
 }
 
-query listAiDiscoveryLogs($limit: Int!) @auth(expr: "auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
+query listAiDiscoveryLogs($limit: Int!) @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   aiDiscoveryLogs(limit: $limit, orderBy: [{ createdAt: DESC }]) {
     id
     userId
@@ -324,7 +361,7 @@ query listAiDiscoveryLogs($limit: Int!) @auth(expr: "auth.uid == 'fiO8qf1PjLZAPB
   }
 }
 
-query listModificationRequests @auth(expr: "auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
+query listModificationRequests @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   modificationRequests(orderBy: [{ createdAt: DESC }]) {
     id
     spiritId
@@ -336,3 +373,32 @@ query listModificationRequests @auth(expr: "auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cp
     createdAt
   }
 }
+query listUserCabinet($userId: String!) @auth(expr: "auth != null && auth.uid == vars.userId") {
+  userCabinets(where: { userId: { eq: $userId } }) {
+    spiritId
+    isFavorite
+    notes
+    rating
+    spirit {
+      id
+      name
+      category
+      abv
+      distillery
+    }
+  }
+}
+
+query listUserReviews($userId: String!) @auth(expr: "auth != null && auth.uid == vars.userId") {
+  spiritReviews(where: { userId: { eq: $userId } }) {
+    id
+    spiritId
+    rating
+    content
+    nose
+    palate
+    finish
+    createdAt
+  }
+}
+

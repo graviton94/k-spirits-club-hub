@@ -1,5 +1,4 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 // Firebase configuration using environment variables
@@ -15,9 +14,6 @@ const firebaseConfig = {
 
 // Initialize Firebase only once to prevent multiple instance errors during SSR/Hot Reload
 const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
-
-// Export Firestore instance
-export const db = getFirestore(app);
 
 // Export Storage instance
 export const storage = getStorage(app);

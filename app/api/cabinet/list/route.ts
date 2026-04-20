@@ -1,5 +1,7 @@
+// app/api/cabinet/list/route.ts
+
 import { NextRequest, NextResponse } from 'next/server';
-import { cabinetDb, spiritsDb } from '@/lib/db/firestore-rest';
+import { dbListUserCabinet } from '@/lib/db/data-connect-client';
 
 export const runtime = 'edge';
 
@@ -12,13 +14,14 @@ export async function GET(req: NextRequest) {
     }
 
     try {
-        // Get user's cabinet items - Snapshot data only (Fast)
-        const cabinetItems = await cabinetDb.getAll(userId);
+        // Get user's cabinet items - returns relational join data
+        const cabinetItems = await dbListUserCabinet(userId);
 
         if (cabinetItems.length === 0) {
             return NextResponse.json({ data: [] });
         }
 
+        // Return the cabinet items as-is (they contain spirit data + user data)
         return NextResponse.json({ data: cabinetItems });
 
     } catch (error: any) {

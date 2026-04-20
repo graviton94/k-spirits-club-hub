@@ -1,12 +1,14 @@
+// app/api/new-arrivals/route.ts
+
 import { NextRequest, NextResponse } from 'next/server';
-import { newArrivalsDb } from '@/lib/db/firestore-rest';
+import { dbListNewArrivals } from '@/lib/db/data-connect-client';
 
 export const runtime = 'edge';
 
-// GET /api/new-arrivals - Get the cached top 10 new arrivals
+// GET /api/new-arrivals - Get the top 10 new arrivals from PostgreSQL
 export async function GET(request: NextRequest) {
   try {
-    const spirits = await newArrivalsDb.getAll();
+    const spirits = await dbListNewArrivals(10);
     
     return NextResponse.json({
       spirits,

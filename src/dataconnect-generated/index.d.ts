@@ -80,6 +80,15 @@ export interface AuditAllUsersData {
   } & User_Key)[];
 }
 
+export interface DeleteCabinetData {
+  userCabinet_delete?: UserCabinet_Key | null;
+}
+
+export interface DeleteCabinetVariables {
+  userId: string;
+  spiritId: string;
+}
+
 export interface DeleteNewsData {
   newsArticle_delete?: NewsArticle_Key | null;
 }
@@ -88,12 +97,33 @@ export interface DeleteNewsVariables {
   id: string;
 }
 
+export interface DeleteReviewData {
+  spiritReview_delete?: SpiritReview_Key | null;
+}
+
+export interface DeleteReviewVariables {
+  id: UUIDString;
+}
+
 export interface DeleteSpiritData {
   spirit_delete?: Spirit_Key | null;
 }
 
 export interface DeleteSpiritVariables {
   id: string;
+}
+
+export interface FindReviewData {
+  spiritReviews: ({
+    id: UUIDString;
+    likedBy?: string[] | null;
+    likes?: number | null;
+  } & SpiritReview_Key)[];
+}
+
+export interface FindReviewVariables {
+  userId: string;
+  spiritId: string;
 }
 
 export interface GetNewsArticleData {
@@ -114,6 +144,18 @@ export interface GetNewsArticleData {
 
 export interface GetNewsArticleVariables {
   id: string;
+}
+
+export interface GetReviewData {
+  spiritReview?: {
+    id: UUIDString;
+    likedBy?: string[] | null;
+    likes?: number | null;
+  } & SpiritReview_Key;
+}
+
+export interface GetReviewVariables {
+  id: UUIDString;
 }
 
 export interface GetSpiritData {
@@ -181,13 +223,13 @@ export interface GetUserProfileData {
   user?: {
     id: string;
     nickname?: string | null;
-    email?: string | null;
     profileImage?: string | null;
     role?: string | null;
     themePreference?: string | null;
     isFirstLogin?: boolean | null;
     reviewsWritten?: number | null;
     heartsReceived?: number | null;
+    tasteProfile?: unknown | null;
   } & User_Key;
 }
 
@@ -387,11 +429,74 @@ export interface ListSpiritsForWorldCupVariables {
 
 export interface ListSpiritsVariables {
   category?: string | null;
+  subcategory?: string | null;
+  country?: string | null;
+}
+
+export interface ListTrendingSpiritsData {
+  spirits: ({
+    id: string;
+    name: string;
+    nameEn?: string | null;
+    category: string;
+    categoryEn?: string | null;
+    imageUrl: string;
+    rating?: number | null;
+    reviewCount?: number | null;
+    distillery?: string | null;
+    abv?: number | null;
+  } & Spirit_Key)[];
+}
+
+export interface ListTrendingSpiritsVariables {
+  limit?: number | null;
+}
+
+export interface ListUserCabinetData {
+  userCabinets: ({
+    spiritId: string;
+    isFavorite?: boolean | null;
+    notes?: string | null;
+    rating?: number | null;
+    spirit: {
+      id: string;
+      name: string;
+      category: string;
+      abv?: number | null;
+      distillery?: string | null;
+    } & Spirit_Key;
+  })[];
+}
+
+export interface ListUserCabinetVariables {
+  userId: string;
+}
+
+export interface ListUserReviewsData {
+  spiritReviews: ({
+    id: UUIDString;
+    spiritId: string;
+    rating: number;
+    content: string;
+    nose?: string | null;
+    palate?: string | null;
+    finish?: string | null;
+    createdAt: TimestampString;
+  } & SpiritReview_Key)[];
+}
+
+export interface ListUserReviewsVariables {
+  userId: string;
 }
 
 export interface ModificationRequest_Key {
   id: string;
   __typename?: 'ModificationRequest_Key';
+}
+
+export interface NewArrival_Key {
+  id: string;
+  __typename?: 'NewArrival_Key';
 }
 
 export interface NewsArticle_Key {
@@ -407,6 +512,16 @@ export interface SpiritReview_Key {
 export interface Spirit_Key {
   id: string;
   __typename?: 'Spirit_Key';
+}
+
+export interface UpdateReviewData {
+  spiritReview_update?: SpiritReview_Key | null;
+}
+
+export interface UpdateReviewVariables {
+  id: UUIDString;
+  likes?: number | null;
+  likedBy?: string[] | null;
 }
 
 export interface UpsertAiDiscoveryLogData {
@@ -447,6 +562,17 @@ export interface UpsertModificationRequestVariables {
   content: string;
   status?: string | null;
   createdAt?: TimestampString | null;
+}
+
+export interface UpsertNewArrivalData {
+  newArrival_upsert: NewArrival_Key;
+}
+
+export interface UpsertNewArrivalVariables {
+  id: string;
+  spiritId: string;
+  displayOrder?: number | null;
+  tags?: string[] | null;
 }
 
 export interface UpsertNewsData {
@@ -521,6 +647,8 @@ export interface UpsertSpiritVariables {
   isReviewed?: boolean | null;
   rating?: number | null;
   reviewCount?: number | null;
+  importer?: string | null;
+  rawCategory?: string | null;
   metadata?: unknown | null;
 }
 
@@ -538,6 +666,7 @@ export interface UpsertUserVariables {
   isFirstLogin?: boolean | null;
   reviewsWritten?: number | null;
   heartsReceived?: number | null;
+  tasteProfile?: unknown | null;
 }
 
 export interface UpsertWorldCupResultData {
@@ -580,6 +709,18 @@ export const listSpiritsRef: ListSpiritsRef;
 
 export function listSpirits(vars?: ListSpiritsVariables, options?: ExecuteQueryOptions): QueryPromise<ListSpiritsData, ListSpiritsVariables>;
 export function listSpirits(dc: DataConnect, vars?: ListSpiritsVariables, options?: ExecuteQueryOptions): QueryPromise<ListSpiritsData, ListSpiritsVariables>;
+
+interface ListTrendingSpiritsRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars?: ListTrendingSpiritsVariables): QueryRef<ListTrendingSpiritsData, ListTrendingSpiritsVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars?: ListTrendingSpiritsVariables): QueryRef<ListTrendingSpiritsData, ListTrendingSpiritsVariables>;
+  operationName: string;
+}
+export const listTrendingSpiritsRef: ListTrendingSpiritsRef;
+
+export function listTrendingSpirits(vars?: ListTrendingSpiritsVariables, options?: ExecuteQueryOptions): QueryPromise<ListTrendingSpiritsData, ListTrendingSpiritsVariables>;
+export function listTrendingSpirits(dc: DataConnect, vars?: ListTrendingSpiritsVariables, options?: ExecuteQueryOptions): QueryPromise<ListTrendingSpiritsData, ListTrendingSpiritsVariables>;
 
 interface ListNewArrivalsRef {
   /* Allow users to create refs without passing in DataConnect */
@@ -725,6 +866,30 @@ export const getSpiritReviewsCountRef: GetSpiritReviewsCountRef;
 export function getSpiritReviewsCount(options?: ExecuteQueryOptions): QueryPromise<GetSpiritReviewsCountData, undefined>;
 export function getSpiritReviewsCount(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<GetSpiritReviewsCountData, undefined>;
 
+interface FindReviewRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: FindReviewVariables): QueryRef<FindReviewData, FindReviewVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: FindReviewVariables): QueryRef<FindReviewData, FindReviewVariables>;
+  operationName: string;
+}
+export const findReviewRef: FindReviewRef;
+
+export function findReview(vars: FindReviewVariables, options?: ExecuteQueryOptions): QueryPromise<FindReviewData, FindReviewVariables>;
+export function findReview(dc: DataConnect, vars: FindReviewVariables, options?: ExecuteQueryOptions): QueryPromise<FindReviewData, FindReviewVariables>;
+
+interface GetReviewRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: GetReviewVariables): QueryRef<GetReviewData, GetReviewVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: GetReviewVariables): QueryRef<GetReviewData, GetReviewVariables>;
+  operationName: string;
+}
+export const getReviewRef: GetReviewRef;
+
+export function getReview(vars: GetReviewVariables, options?: ExecuteQueryOptions): QueryPromise<GetReviewData, GetReviewVariables>;
+export function getReview(dc: DataConnect, vars: GetReviewVariables, options?: ExecuteQueryOptions): QueryPromise<GetReviewData, GetReviewVariables>;
+
 interface ListSpiritsForSitemapRef {
   /* Allow users to create refs without passing in DataConnect */
   (): QueryRef<ListSpiritsForSitemapData, undefined>;
@@ -785,6 +950,30 @@ export const listModificationRequestsRef: ListModificationRequestsRef;
 export function listModificationRequests(options?: ExecuteQueryOptions): QueryPromise<ListModificationRequestsData, undefined>;
 export function listModificationRequests(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<ListModificationRequestsData, undefined>;
 
+interface ListUserCabinetRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: ListUserCabinetVariables): QueryRef<ListUserCabinetData, ListUserCabinetVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: ListUserCabinetVariables): QueryRef<ListUserCabinetData, ListUserCabinetVariables>;
+  operationName: string;
+}
+export const listUserCabinetRef: ListUserCabinetRef;
+
+export function listUserCabinet(vars: ListUserCabinetVariables, options?: ExecuteQueryOptions): QueryPromise<ListUserCabinetData, ListUserCabinetVariables>;
+export function listUserCabinet(dc: DataConnect, vars: ListUserCabinetVariables, options?: ExecuteQueryOptions): QueryPromise<ListUserCabinetData, ListUserCabinetVariables>;
+
+interface ListUserReviewsRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: ListUserReviewsVariables): QueryRef<ListUserReviewsData, ListUserReviewsVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: ListUserReviewsVariables): QueryRef<ListUserReviewsData, ListUserReviewsVariables>;
+  operationName: string;
+}
+export const listUserReviewsRef: ListUserReviewsRef;
+
+export function listUserReviews(vars: ListUserReviewsVariables, options?: ExecuteQueryOptions): QueryPromise<ListUserReviewsData, ListUserReviewsVariables>;
+export function listUserReviews(dc: DataConnect, vars: ListUserReviewsVariables, options?: ExecuteQueryOptions): QueryPromise<ListUserReviewsData, ListUserReviewsVariables>;
+
 interface UpsertUserRef {
   /* Allow users to create refs without passing in DataConnect */
   (vars: UpsertUserVariables): MutationRef<UpsertUserData, UpsertUserVariables>;
@@ -809,6 +998,18 @@ export const upsertSpiritRef: UpsertSpiritRef;
 export function upsertSpirit(vars: UpsertSpiritVariables): MutationPromise<UpsertSpiritData, UpsertSpiritVariables>;
 export function upsertSpirit(dc: DataConnect, vars: UpsertSpiritVariables): MutationPromise<UpsertSpiritData, UpsertSpiritVariables>;
 
+interface UpsertNewArrivalRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: UpsertNewArrivalVariables): MutationRef<UpsertNewArrivalData, UpsertNewArrivalVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: UpsertNewArrivalVariables): MutationRef<UpsertNewArrivalData, UpsertNewArrivalVariables>;
+  operationName: string;
+}
+export const upsertNewArrivalRef: UpsertNewArrivalRef;
+
+export function upsertNewArrival(vars: UpsertNewArrivalVariables): MutationPromise<UpsertNewArrivalData, UpsertNewArrivalVariables>;
+export function upsertNewArrival(dc: DataConnect, vars: UpsertNewArrivalVariables): MutationPromise<UpsertNewArrivalData, UpsertNewArrivalVariables>;
+
 interface UpsertReviewRef {
   /* Allow users to create refs without passing in DataConnect */
   (vars: UpsertReviewVariables): MutationRef<UpsertReviewData, UpsertReviewVariables>;
@@ -820,6 +1021,18 @@ export const upsertReviewRef: UpsertReviewRef;
 
 export function upsertReview(vars: UpsertReviewVariables): MutationPromise<UpsertReviewData, UpsertReviewVariables>;
 export function upsertReview(dc: DataConnect, vars: UpsertReviewVariables): MutationPromise<UpsertReviewData, UpsertReviewVariables>;
+
+interface UpdateReviewRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: UpdateReviewVariables): MutationRef<UpdateReviewData, UpdateReviewVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: UpdateReviewVariables): MutationRef<UpdateReviewData, UpdateReviewVariables>;
+  operationName: string;
+}
+export const updateReviewRef: UpdateReviewRef;
+
+export function updateReview(vars: UpdateReviewVariables): MutationPromise<UpdateReviewData, UpdateReviewVariables>;
+export function updateReview(dc: DataConnect, vars: UpdateReviewVariables): MutationPromise<UpdateReviewData, UpdateReviewVariables>;
 
 interface UpsertNewsRef {
   /* Allow users to create refs without passing in DataConnect */
@@ -856,6 +1069,18 @@ export const upsertCabinetRef: UpsertCabinetRef;
 
 export function upsertCabinet(vars: UpsertCabinetVariables): MutationPromise<UpsertCabinetData, UpsertCabinetVariables>;
 export function upsertCabinet(dc: DataConnect, vars: UpsertCabinetVariables): MutationPromise<UpsertCabinetData, UpsertCabinetVariables>;
+
+interface DeleteCabinetRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: DeleteCabinetVariables): MutationRef<DeleteCabinetData, DeleteCabinetVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: DeleteCabinetVariables): MutationRef<DeleteCabinetData, DeleteCabinetVariables>;
+  operationName: string;
+}
+export const deleteCabinetRef: DeleteCabinetRef;
+
+export function deleteCabinet(vars: DeleteCabinetVariables): MutationPromise<DeleteCabinetData, DeleteCabinetVariables>;
+export function deleteCabinet(dc: DataConnect, vars: DeleteCabinetVariables): MutationPromise<DeleteCabinetData, DeleteCabinetVariables>;
 
 interface UpsertModificationRequestRef {
   /* Allow users to create refs without passing in DataConnect */
@@ -904,4 +1129,16 @@ export const upsertAiDiscoveryLogRef: UpsertAiDiscoveryLogRef;
 
 export function upsertAiDiscoveryLog(vars: UpsertAiDiscoveryLogVariables): MutationPromise<UpsertAiDiscoveryLogData, UpsertAiDiscoveryLogVariables>;
 export function upsertAiDiscoveryLog(dc: DataConnect, vars: UpsertAiDiscoveryLogVariables): MutationPromise<UpsertAiDiscoveryLogData, UpsertAiDiscoveryLogVariables>;
+
+interface DeleteReviewRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: DeleteReviewVariables): MutationRef<DeleteReviewData, DeleteReviewVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: DeleteReviewVariables): MutationRef<DeleteReviewData, DeleteReviewVariables>;
+  operationName: string;
+}
+export const deleteReviewRef: DeleteReviewRef;
+
+export function deleteReview(vars: DeleteReviewVariables): MutationPromise<DeleteReviewData, DeleteReviewVariables>;
+export function deleteReview(dc: DataConnect, vars: DeleteReviewVariables): MutationPromise<DeleteReviewData, DeleteReviewVariables>;
 

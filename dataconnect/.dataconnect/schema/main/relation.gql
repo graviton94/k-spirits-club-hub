@@ -184,6 +184,90 @@ extend type ModificationRequest {
   """
   _id: ID! @fdc_generated(from: "ModificationRequest.id", purpose: ENTITY_ID)
 }
+extend type NewArrival {
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "NewArrival", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `NewArrival` table.
+  """
+  _count: Int! @fdc_generated(from: "NewArrival.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `NewArrival` table where the `createdAt` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  createdAt_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "NewArrival.createdAt", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `NewArrival` table where the `displayOrder` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  displayOrder_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "NewArrival.displayOrder", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `NewArrival` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  id_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "NewArrival.id", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `NewArrival` table where the `spiritId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  spiritId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "NewArrival.spiritId", purpose: QUERY_COUNT)
+  """
+  ✨ Sum the `displayOrder` field in the `NewArrival` table.
+  """
+  displayOrder_sum(
+    """
+    Set to true to sum the distinct values.
+    """
+    distinct: Boolean = false
+  ): Int @fdc_generated(from: "NewArrival.displayOrder", purpose: QUERY_SUM)
+  """
+  ✨ Average the `displayOrder` field in the `NewArrival` table.
+  """
+  displayOrder_avg(
+    """
+    Set to true to average the distinct values.
+    """
+    distinct: Boolean = false
+  ): Float @fdc_generated(from: "NewArrival.displayOrder", purpose: QUERY_AVG)
+  """
+  ✨ Minimum of the `createdAt` field in the `NewArrival` table.
+  """
+  createdAt_min: Timestamp @fdc_generated(from: "NewArrival.createdAt", purpose: QUERY_MIN)
+  """
+  ✨ Minimum of the `displayOrder` field in the `NewArrival` table.
+  """
+  displayOrder_min: Int @fdc_generated(from: "NewArrival.displayOrder", purpose: QUERY_MIN)
+  """
+  ✨ Maximum of the `createdAt` field in the `NewArrival` table.
+  """
+  createdAt_max: Timestamp @fdc_generated(from: "NewArrival.createdAt", purpose: QUERY_MAX)
+  """
+  ✨ Maximum of the `displayOrder` field in the `NewArrival` table.
+  """
+  displayOrder_max: Int @fdc_generated(from: "NewArrival.displayOrder", purpose: QUERY_MAX)
+  """
+  A generated field that is used for caching results in SDKs.
+  """
+  _id: ID! @fdc_generated(from: "NewArrival.id", purpose: ENTITY_ID)
+}
 extend type NewsArticle {
   """
   Implicit metadata field that cannot be written. It provides extra information about query results.
@@ -339,6 +423,40 @@ extend type NewsArticle {
   _id: ID! @fdc_generated(from: "NewsArticle.id", purpose: ENTITY_ID)
 }
 extend type Spirit {
+  """
+  ✨ List `NewArrival` objects in a one-to-many relationship (where `NewArrival`.`spirit` is this object).
+  """
+  newArrivals_on_spirit(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: NewArrival_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [NewArrival_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: NewArrival_Having
+  ): [NewArrival!]! @fdc_generated(from: "NewArrival.spirit", purpose: QUERY_MULTIPLE_ONE_TO_MANY)
   """
   ✨ List `SpiritReview` objects in a one-to-many relationship (where `SpiritReview`.`spirit` is this object).
   """
@@ -583,6 +701,15 @@ extend type Spirit {
     distinct: Boolean = false
   ): Int! @fdc_generated(from: "Spirit.imageUrl", purpose: QUERY_COUNT)
   """
+  ✨ Count the number of rows in the `Spirit` table where the `importer` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  importer_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Spirit.importer", purpose: QUERY_COUNT)
+  """
   ✨ Count the number of rows in the `Spirit` table where the `isPublished` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
   """
   isPublished_count(
@@ -663,6 +790,15 @@ extend type Spirit {
     """
     distinct: Boolean = false
   ): Int! @fdc_generated(from: "Spirit.rating", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Spirit` table where the `rawCategory` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  rawCategory_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Spirit.rawCategory", purpose: QUERY_COUNT)
   """
   ✨ Count the number of rows in the `Spirit` table where the `region` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
   """
@@ -1260,6 +1396,15 @@ extend type User {
     distinct: Boolean = false
   ): Int! @fdc_generated(from: "User.role", purpose: QUERY_COUNT)
   """
+  ✨ Count the number of rows in the `User` table where the `tasteProfile` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  tasteProfile_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "User.tasteProfile", purpose: QUERY_COUNT)
+  """
   ✨ Count the number of rows in the `User` table where the `themePreference` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
   """
   themePreference_count(
@@ -1317,6 +1462,10 @@ extend type User {
   """
   reviewsWritten_min: Int @fdc_generated(from: "User.reviewsWritten", purpose: QUERY_MIN)
   """
+  ✨ Minimum of the `tasteProfile` field in the `User` table.
+  """
+  tasteProfile_min: Any @fdc_generated(from: "User.tasteProfile", purpose: QUERY_MIN)
+  """
   ✨ Maximum of the `createdAt` field in the `User` table.
   """
   createdAt_max: Timestamp @fdc_generated(from: "User.createdAt", purpose: QUERY_MAX)
@@ -1328,6 +1477,10 @@ extend type User {
   ✨ Maximum of the `reviewsWritten` field in the `User` table.
   """
   reviewsWritten_max: Int @fdc_generated(from: "User.reviewsWritten", purpose: QUERY_MAX)
+  """
+  ✨ Maximum of the `tasteProfile` field in the `User` table.
+  """
+  tasteProfile_max: Any @fdc_generated(from: "User.tasteProfile", purpose: QUERY_MAX)
   """
   A generated field that is used for caching results in SDKs.
   """

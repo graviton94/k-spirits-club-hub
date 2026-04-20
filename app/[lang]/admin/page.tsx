@@ -19,6 +19,8 @@ import {
     dbListNewsArticles,
     dbUpsertNews
 } from '@/lib/db/data-connect-client';
+import { getSpiritById } from '@/app/[lang]/actions/spirits';
+
 
 interface EditFormState {
     name: string;
@@ -46,6 +48,19 @@ export default function AdminDashboard() {
     useEffect(() => {
         document.title = `K-Spirits Club | 관리자 대시보드`;
     }, []);
+
+    // [Task 3.2] Scroll Lock for Mobile Stability
+    useEffect(() => {
+        if (editingId || isCreating) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        // Cleanup function to prevent permanent lock
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [editingId, isCreating]);
 
     // State
     const [activeTab, setActiveTab] = useState<'spirits' | 'requests' | 'discovery'>('spirits');
@@ -184,30 +199,45 @@ export default function AdminDashboard() {
         }
     };
 
-    const startEdit = (spirit: Spirit) => {
-        setIsCreating(false);
-        setEditingId(spirit.id);
-        setEditForm({
-            name: spirit.name,
-            abv: spirit.abv,
-            imageUrl: spirit.imageUrl || '',
-            nameEn: spirit.nameEn || '',
-            category: spirit.category || '',
-            subcategory: spirit.subcategory || '',
-            country: spirit.country || '',
-            region: spirit.region || '',
-            distillery: spirit.distillery || '',
-            bottler: spirit.bottler || '',
-            volume: spirit.volume || 700,
-            tastingNote: spirit.tastingNote || '',
-            descriptionKo: spirit.descriptionKo || '',
-            descriptionEn: spirit.descriptionEn || '',
-            pairingGuideKo: spirit.pairingGuideKo || '',
-            pairingGuideEn: spirit.pairingGuideEn || '',
-            noseTags: (spirit.noseTags || []).join(', '),
-            palateTags: (spirit.palateTags || []).join(', '),
-            finishTags: (spirit.finishTags || []).join(', ')
-        });
+    const startEdit = async (spirit: Spirit) => {
+        setIsProcessing(true);
+        try {
+            // [Task 3.1] Fresh Fetch strategy
+            const freshSpirit = await getSpiritById(spirit.id);
+            if (!freshSpirit) {
+                alert('최신 데이터를 가져오는데 실패했습니다.');
+                return;
+            }
+
+            setIsCreating(false);
+            setEditingId(freshSpirit.id);
+            setEditForm({
+                name: freshSpirit.name,
+                abv: freshSpirit.abv,
+                imageUrl: freshSpirit.imageUrl || '',
+                nameEn: freshSpirit.nameEn || '',
+                category: freshSpirit.category || '',
+                subcategory: freshSpirit.subcategory || '',
+                country: freshSpirit.country || '',
+                region: freshSpirit.region || '',
+                distillery: freshSpirit.distillery || '',
+                bottler: freshSpirit.bottler || '',
+                volume: freshSpirit.volume || 700,
+                tastingNote: freshSpirit.tastingNote || '',
+                descriptionKo: freshSpirit.descriptionKo || '',
+                descriptionEn: freshSpirit.descriptionEn || '',
+                pairingGuideKo: freshSpirit.pairingGuideKo || '',
+                pairingGuideEn: freshSpirit.pairingGuideEn || '',
+                noseTags: (freshSpirit.noseTags || []).join(', '),
+                palateTags: (freshSpirit.palateTags || []).join(', '),
+                finishTags: (freshSpirit.finishTags || []).join(', ')
+            });
+        } catch (error) {
+            console.error('Failed to start edit:', error);
+            alert('데이터 로드 중 에러가 발생했습니다.');
+        } finally {
+            setIsProcessing(false);
+        }
     };
 
     const startCreate = () => {

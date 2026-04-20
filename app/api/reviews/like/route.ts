@@ -1,5 +1,7 @@
+// app/api/reviews/like/route.ts
+
 import { NextRequest, NextResponse } from 'next/server';
-import { reviewsDb } from '@/lib/db/firestore-rest';
+import { dbFindReview, dbUpdateReview } from '@/lib/db/data-connect-client';
 
 export const runtime = 'edge';
 
@@ -12,9 +14,37 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
         }
 
-        const result = await reviewsDb.toggleLike(spiritId, reviewUserId, likerUserId);
+        // 1. Find the review (Data Connect uses UUID, but legacy API passes user+spirit)
+        const review = await dbFindReview({ userId: reviewUserId, spiritId });
 
-        return NextResponse.json(result, { status: 200 });
+        if (!review) {
+            return NextResponse.json({ error: 'Review not found' }, { status: 404 });
+        }
+
+        // 2. Toggle legacy logic
+        const currentLikedBy = review.likedBy || [];
+        const isLiked = currentLikedBy.includes(likerUserId);
+        
+        let newLikedBy: string[];
+        if (isLiked) {
+            newLikedBy = currentLikedBy.filter((id: string) => id !== likerUserId);
+        } else {
+            newLikedBy = [...currentLikedBy, likerUserId];
+        }
+
+        // 3. Update in PostgreSQL
+        await dbUpdateReview({
+            id: review.id,
+            likes: newLikedBy.length,
+            likedBy: newLikedBy
+        });
+
+        return NextResponse.json({ 
+            success: true, 
+            isLiked: !isLiked, 
+            likes: newLikedBy.length 
+        }, { status: 200 });
+
     } catch (error) {
         console.error('Review like error:', error);
         return NextResponse.json({ error: 'Failed to toggle like' }, { status: 500 });

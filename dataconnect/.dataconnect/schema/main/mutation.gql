@@ -18,6 +18,15 @@ extend type Mutation {
     data: ModificationRequest_Data!
   ): ModificationRequest_KeyOutput! @fdc_generated(from: "ModificationRequest", purpose: INSERT_SINGLE)
   """
+  ✨ Insert a single `NewArrival` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  newArrival_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: NewArrival_Data!
+  ): NewArrival_KeyOutput! @fdc_generated(from: "NewArrival", purpose: INSERT_SINGLE)
+  """
   ✨ Insert a single `NewsArticle` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
   """
   newsArticle_insert(
@@ -89,6 +98,15 @@ extend type Mutation {
     """
     data: [ModificationRequest_Data!]!
   ): [ModificationRequest_KeyOutput!]! @fdc_generated(from: "ModificationRequest", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `NewArrival` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  newArrival_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [NewArrival_Data!]!
+  ): [NewArrival_KeyOutput!]! @fdc_generated(from: "NewArrival", purpose: INSERT_MULTIPLE)
   """
   ✨ Insert `NewsArticle` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
   """
@@ -162,6 +180,15 @@ extend type Mutation {
     data: ModificationRequest_Data!
   ): ModificationRequest_KeyOutput! @fdc_generated(from: "ModificationRequest", purpose: UPSERT_SINGLE)
   """
+  ✨ Insert or update a single `NewArrival` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `NewArrival`.
+  """
+  newArrival_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: NewArrival_Data!
+  ): NewArrival_KeyOutput! @fdc_generated(from: "NewArrival", purpose: UPSERT_SINGLE)
+  """
   ✨ Insert or update a single `NewsArticle` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `NewsArticle`.
   """
   newsArticle_upsert(
@@ -233,6 +260,15 @@ extend type Mutation {
     """
     data: [ModificationRequest_Data!]!
   ): [ModificationRequest_KeyOutput!]! @fdc_generated(from: "ModificationRequest", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `NewArrival` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `NewArrival`.
+  """
+  newArrival_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [NewArrival_Data!]!
+  ): [NewArrival_KeyOutput!]! @fdc_generated(from: "NewArrival", purpose: UPSERT_MULTIPLE)
   """
   ✨ Insert or update `NewsArticle` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `NewsArticle`.
   """
@@ -345,6 +381,35 @@ extend type Mutation {
     """
     data: ModificationRequest_Data!
   ): ModificationRequest_KeyOutput @fdc_generated(from: "ModificationRequest", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `NewArrival` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `NewArrival` or `null` if not found.
+  """
+  newArrival_update(
+    """
+    The unique ID of the object.
+    """
+    id: String
+
+    """
+    ✨ `_expr` server value variant of `id` (The unique ID of the object.)
+    """
+    id_expr: String_Expr
+
+    """
+    The key used to identify the object.
+    """
+    key: NewArrival_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: NewArrival_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: NewArrival_Data!
+  ): NewArrival_KeyOutput @fdc_generated(from: "NewArrival", purpose: UPDATE_SINGLE)
   """
   ✨ Update a single `NewsArticle` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `NewsArticle` or `null` if not found.
   """
@@ -538,6 +603,25 @@ extend type Mutation {
     data: ModificationRequest_Data!
   ): Int! @fdc_generated(from: "ModificationRequest", purpose: UPDATE_MULTIPLE)
   """
+  ✨ Update `NewArrival` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  newArrival_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: NewArrival_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: NewArrival_Data!
+  ): Int! @fdc_generated(from: "NewArrival", purpose: UPDATE_MULTIPLE)
+  """
   ✨ Update `NewsArticle` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
   """
   newsArticle_updateMany(
@@ -700,6 +784,30 @@ extend type Mutation {
     first: ModificationRequest_FirstRow
   ): ModificationRequest_KeyOutput @fdc_generated(from: "ModificationRequest", purpose: DELETE_SINGLE)
   """
+  ✨ Delete a single `NewArrival` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  newArrival_delete(
+    """
+    The unique ID of the object.
+    """
+    id: String
+
+    """
+    ✨ `_expr` server value variant of `id` (The unique ID of the object.)
+    """
+    id_expr: String_Expr
+
+    """
+    The key used to identify the object.
+    """
+    key: NewArrival_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: NewArrival_FirstRow
+  ): NewArrival_KeyOutput @fdc_generated(from: "NewArrival", purpose: DELETE_SINGLE)
+  """
   ✨ Delete a single `NewsArticle` based on `id`, `key` or `first` and return its key (or `null` if not found).
   """
   newsArticle_delete(
@@ -851,6 +959,20 @@ extend type Mutation {
     """
     all: Boolean = false
   ): Int! @fdc_generated(from: "ModificationRequest", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `NewArrival` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  newArrival_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: NewArrival_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "NewArrival", purpose: DELETE_MULTIPLE)
   """
   ✨ Delete `NewsArticle` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
   """

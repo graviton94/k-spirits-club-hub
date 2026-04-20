@@ -7,6 +7,7 @@ import {
   getUserProfile,
   listNewsArticles,
   listNewArrivals,
+  listTrendingSpirits,
   getNewsArticle,
   listSpiritReviews,
   getSpiritReviewsCount,
@@ -27,6 +28,12 @@ import {
   upsertAiDiscoveryLog,
   listModificationRequests,
   deleteNews,
+  listUserCabinet,
+  listUserReviews,
+  deleteCabinet,
+  getReview,
+  updateReview,
+  findReview,
 } from '@/src/dataconnect-generated';
 
 /**
@@ -58,8 +65,8 @@ export function getDC(): DataConnect {
  */
 
 // --- Spirits ---
-export const dbListSpirits = async (category?: string) => {
-  const { data } = await listSpirits(getDC(), { category });
+export const dbListSpirits = async (vars: { category?: string, subcategory?: string, country?: string }) => {
+  const { data } = await listSpirits(getDC(), vars);
   return data.spirits;
 };
 
@@ -82,6 +89,11 @@ export const dbAdminListRawSpirits = async (vars: {
 
 export const dbListNewArrivals = async (limit: number) => {
   const { data } = await listNewArrivals(getDC(), { limit });
+  return data.spirits;
+};
+
+export const dbListTrendingSpirits = async (limit: number) => {
+  const { data } = await listTrendingSpirits(getDC(), { limit });
   return data.spirits;
 };
 
@@ -160,7 +172,26 @@ export const dbGetNewsCount = async () => {
 };
 
 export const dbUpsertNews = async (vars: any) => {
-  return await upsertNews(getDC(), vars);
+  // 1. Sanitizer: News `title` and `content` MUST strictly be a 1D String for Data Connect.
+  // Gemini parsing sometimes nests standard Strings into structured i18n Objects causing GraphQL to crash.
+  let safeTitle = vars.title;
+  let safeContent = vars.content;
+
+  if (typeof safeTitle === 'object' && safeTitle !== null) {
+    safeTitle = safeTitle.ko || safeTitle.en || safeTitle.title || JSON.stringify(safeTitle);
+  }
+  
+  if (typeof safeContent === 'object' && safeContent !== null) {
+    safeContent = safeContent.ko || safeContent.en || safeContent.body || JSON.stringify(safeContent);
+  }
+
+  const safeVars = {
+    ...vars,
+    title: String(safeTitle || 'Untitled').trim(),
+    content: String(safeContent || '').trim()
+  };
+
+  return await upsertNews(getDC(), safeVars);
 };
 
 export const dbDeleteNews = async (id: string) => {
@@ -170,6 +201,33 @@ export const dbDeleteNews = async (id: string) => {
 // --- Cabinet ---
 export const dbUpsertCabinet = async (vars: any) => {
   return await upsertCabinet(getDC(), vars);
+};
+
+export const dbListUserCabinet = async (userId: string) => {
+  const { data } = await listUserCabinet(getDC(), { userId });
+  return data.userCabinets;
+};
+
+export const dbListUserReviews = async (userId: string) => {
+  const { data } = await listUserReviews(getDC(), { userId });
+  return data.spiritReviews;
+};
+export const dbDeleteCabinet = async (vars: { userId: string, spiritId: string }) => {
+  return await deleteCabinet(getDC(), vars);
+};
+
+export const dbGetReview = async (id: string) => {
+  const { data } = await getReview(getDC(), { id });
+  return data.spiritReview;
+};
+
+export const dbUpdateReview = async (vars: { id: string, likes?: number, likedBy?: string[] }) => {
+  return await updateReview(getDC(), vars);
+};
+
+export const dbFindReview = async (vars: { userId: string, spiritId: string }) => {
+  const { data } = await findReview(getDC(), vars);
+  return data.spiritReviews[0] || null;
 };
 
 
