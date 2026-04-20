@@ -21,8 +21,16 @@ export async function GET(req: NextRequest) {
             return NextResponse.json({ data: [] });
         }
 
-        // Return the cabinet items as-is (they contain spirit data + user data)
-        return NextResponse.json({ data: cabinetItems });
+        // Map to flat structure for UI compatibility
+        const mappedItems = cabinetItems.map((item: any) => ({
+            ...item,
+            ...item.spirit, // Flatten spirit properties
+            title: item.spirit?.name || 'Unknown', // Compatibility field
+            nameEn: item.spirit?.nameEn || null,
+            id: item.spirit?.id
+        }));
+
+        return NextResponse.json({ data: mappedItems });
 
     } catch (error: any) {
         console.error('Error fetching user cabinet:', error);

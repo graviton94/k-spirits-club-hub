@@ -1,14 +1,12 @@
 import { NextResponse } from 'next/server';
-import { spiritsDb } from '@/lib/db/index';
+import { dbListSpirits } from '@/lib/db/data-connect-client';
 
 export const runtime = 'edge';
 
 export async function GET() {
     try {
-        // 1. Fetch a batch of spirits (limiting for performance)
-        // In a real large-scale app, we'd use a more sophisticated random strategy, 
-        // but for this MVP, sampling 50 and picking 1 is efficient and effective.
-        const spirits = await spiritsDb.getAll({ isPublished: true });
+        // 1. Fetch a batch of published spirits
+        const spirits = await dbListSpirits();
 
         if (!spirits || spirits.length === 0) {
             return NextResponse.json({ error: 'No spirits found' }, { status: 404 });
@@ -21,11 +19,13 @@ export async function GET() {
         return NextResponse.json({
             id: spirit.id,
             name: spirit.name,
-            name_en: spirit.name_en || spirit.metadata?.name_en || null,
+            nameEn: spirit.nameEn || null,
             category: spirit.category,
+            imageUrl: spirit.imageUrl,
+            thumbnailUrl: spirit.thumbnailUrl
         });
-    } catch (error) {
+    } catch (error: any) {
         console.error('Failed to fetch random spirit:', error);
-        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+        return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 500 });
     }
 }

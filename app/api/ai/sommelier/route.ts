@@ -53,10 +53,10 @@ export async function POST(req: NextRequest) {
                     name: item.n,
                     category: item.c,
                     subcategory: item.sc,
-                    country: item.co,
-                    manufacturer: item.m,
+                    country: item.co || '',
+                    manufacturer: item.d || '',
                     abv: item.a,
-                    tags: item.f
+                    tags: item.tn || ''
                 });
             });
 
@@ -71,10 +71,10 @@ export async function POST(req: NextRequest) {
                     name: item.n,
                     category: item.c,
                     subcategory: item.sc,
-                    country: item.co,
-                    manufacturer: item.m,
+                    country: item.co || '',
+                    manufacturer: item.d || '',
                     abv: item.a,
-                    tags: item.f
+                    tags: item.tn || ''
                 })));
             });
             knowledgeBase = `[주류 추천 데이터 (전문가용)]\n${JSON.stringify(balancedIndex)}`;

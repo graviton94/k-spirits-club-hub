@@ -129,7 +129,7 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialRevi
                                             )}
                                         </div>
                                         <span className="font-bold text-xs text-center line-clamp-2 w-full px-1 text-foreground group-hover:text-amber-600 transition-colors">
-                                            {isEn ? (spirit.name_en || spirit.metadata?.name_en || spirit.name) : spirit.name}
+                                            {isEn ? (spirit.nameEn || spirit.name) : spirit.name}
                                         </span>
                                     </div>
                                 </Link>

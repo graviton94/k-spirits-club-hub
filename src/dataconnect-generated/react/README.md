@@ -182,6 +182,7 @@ export interface ListSpiritsData {
     category: string;
     categoryEn?: string | null;
     imageUrl: string;
+    thumbnailUrl?: string | null;
     isPublished?: boolean | null;
     abv?: number | null;
     distillery?: string | null;
@@ -284,6 +285,7 @@ export interface ListTrendingSpiritsData {
     category: string;
     categoryEn?: string | null;
     imageUrl: string;
+    thumbnailUrl?: string | null;
     rating?: number | null;
     reviewCount?: number | null;
     distillery?: string | null;
@@ -381,6 +383,7 @@ export interface ListNewArrivalsData {
     name: string;
     nameEn?: string | null;
     imageUrl: string;
+    thumbnailUrl?: string | null;
     category: string;
     categoryEn?: string | null;
     country?: string | null;
@@ -2130,6 +2133,8 @@ export interface ListUserCabinetData {
       id: string;
       name: string;
       category: string;
+      imageUrl: string;
+      thumbnailUrl?: string | null;
       abv?: number | null;
       distillery?: string | null;
     } & Spirit_Key;

@@ -14,6 +14,7 @@ query listSpirits($category: String, $subcategory: String, $country: String) @au
     category
     categoryEn
     imageUrl
+    thumbnailUrl
     isPublished
     abv
     distillery
@@ -34,6 +35,7 @@ query listTrendingSpirits($limit: Int) @auth(level: PUBLIC) {
     category
     categoryEn
     imageUrl
+    thumbnailUrl
     rating
     reviewCount
     distillery
@@ -51,6 +53,7 @@ query listNewArrivals($limit: Int) @auth(level: PUBLIC) {
     name
     nameEn
     imageUrl
+    thumbnailUrl
     category
     categoryEn
     country
@@ -383,6 +386,8 @@ query listUserCabinet($userId: String!) @auth(expr: "auth != null && auth.uid ==
       id
       name
       category
+      imageUrl
+      thumbnailUrl
       abv
       distillery
     }
