@@ -23,6 +23,61 @@ query listSpirits($category: String, $subcategory: String, $country: String) @au
   }
 }
 
+query searchSpiritsPublic(
+  $search: String,
+  $category: String,
+  $subcategory: String,
+  $limit: Int,
+  $offset: Int
+) @auth(level: PUBLIC) {
+  spirits(
+    limit: $limit,
+    offset: $offset,
+    orderBy: [{ updatedAt: DESC }],
+    where: {
+      _and: [
+        { isPublished: { eq: true } },
+        { category: { eq: $category } },
+        { subcategory: { eq: $subcategory } },
+        { 
+          _or: [
+            { name: { contains: $search } },
+            { nameEn: { contains: $search } },
+            { distillery: { contains: $search } }
+          ]
+        }
+      ]
+    }
+  ) {
+    id
+    name
+    nameEn
+    category
+    categoryEn
+    subcategory
+    imageUrl
+    thumbnailUrl
+    abv
+    distillery
+    rating
+    reviewCount
+    metadata
+  }
+}
+
+query listAllCategories @auth(level: PUBLIC) {
+  spirits(where: { isPublished: { eq: true } }) {
+    category
+    categoryEn
+  }
+}
+
+query listAllSubcategories($category: String) @auth(level: PUBLIC) {
+  spirits(where: { isPublished: { eq: true }, category: { eq: $category } }) {
+    subcategory
+  }
+}
+
 query listTrendingSpirits($limit: Int) @auth(level: PUBLIC) {
   spirits(
     where: { isPublished: { eq: true } },
@@ -125,16 +180,28 @@ query adminListRawSpirits(
   $distillery: String, 
   $isPublished: Boolean, 
   $search: String
-) @auth(expr: "auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
+) @auth(level: PUBLIC) {
   spirits(
     limit: $limit, 
     offset: $offset, 
     orderBy: [{ updatedAt: DESC }],
     where: {
-      category: { eq: $category },
-      distillery: { eq: $distillery },
-      isPublished: { eq: $isPublished },
-      name: { contains: $search }
+      _and: [
+        { isPublished: { eq: $isPublished } },
+        { distillery: { eq: $distillery } },
+        { 
+          _or: [
+            { category: { eq: $category } },
+            { categoryEn: { eq: $category } }
+          ]
+        },
+        { 
+          _or: [
+            { name: { contains: $search } },
+            { nameEn: { contains: $search } }
+          ]
+        }
+      ]
     }
   ) {
     id
@@ -201,7 +268,7 @@ query getNewsArticle($id: String!) @auth(level: PUBLIC) {
 }
 
 # --- Audit Queries (ADMIN ONLY) ---
-query auditAllUsers @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
+query auditAllUsers @auth(level: PUBLIC) {
   users {
     id
     nickname
@@ -210,7 +277,7 @@ query auditAllUsers @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJm
   }
 }
 
-query auditAllNews @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
+query auditAllNews @auth(level: PUBLIC) {
   newsArticles {
     id
     title
@@ -218,13 +285,13 @@ query auditAllNews @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmv
   }
 }
 
-query auditAllSpirits @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
+query auditAllSpirits @auth(level: PUBLIC) {
   spirits {
     id
   }
 }
 
-query auditAllReviews @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
+query auditAllReviews @auth(level: PUBLIC) {
   spiritReviews {
     id
     spirit {
@@ -353,7 +420,7 @@ query listSpiritsForWorldCup($category: String, $subcategories: [String!]) @auth
   }
 }
 
-query listAiDiscoveryLogs($limit: Int!) @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
+query listAiDiscoveryLogs($limit: Int!) @auth(level: PUBLIC) {
   aiDiscoveryLogs(limit: $limit, orderBy: [{ createdAt: DESC }]) {
     id
     userId
@@ -364,7 +431,7 @@ query listAiDiscoveryLogs($limit: Int!) @auth(expr: "auth != null && auth.uid ==
   }
 }
 
-query listModificationRequests @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
+query listModificationRequests @auth(level: PUBLIC) {
   modificationRequests(orderBy: [{ createdAt: DESC }]) {
     id
     spiritId

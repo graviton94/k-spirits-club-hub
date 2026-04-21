@@ -112,6 +112,27 @@ function listSpirits(dcOrVarsOrOptions, varsOrOptions, options) {
 }
 exports.listSpirits = listSpirits;
 
+function searchSpiritsPublic(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, false);
+  dcInstance.useGen(true);
+  return dcInstance.executeQuery('searchSpiritsPublic', inputVars, inputOpts);
+}
+exports.searchSpiritsPublic = searchSpiritsPublic;
+
+function listAllCategories(dcOrOptions, options) {
+  const { dc: dcInstance, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrOptions, options, undefined);
+  dcInstance.useGen(true);
+  return dcInstance.executeQuery('listAllCategories', undefined, inputOpts);
+}
+exports.listAllCategories = listAllCategories;
+
+function listAllSubcategories(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, false);
+  dcInstance.useGen(true);
+  return dcInstance.executeQuery('listAllSubcategories', inputVars, inputOpts);
+}
+exports.listAllSubcategories = listAllSubcategories;
+
 function listTrendingSpirits(dcOrVarsOrOptions, varsOrOptions, options) {
   const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, false);
   dcInstance.useGen(true);

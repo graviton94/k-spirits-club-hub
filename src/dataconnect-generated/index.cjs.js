@@ -218,6 +218,51 @@ exports.listSpirits = function listSpirits(dcOrVars, varsOrOptions, options) {
 }
 ;
 
+const searchSpiritsPublicRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'searchSpiritsPublic', inputVars);
+}
+searchSpiritsPublicRef.operationName = 'searchSpiritsPublic';
+exports.searchSpiritsPublicRef = searchSpiritsPublicRef;
+
+exports.searchSpiritsPublic = function searchSpiritsPublic(dcOrVars, varsOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, false);
+  return executeQuery(searchSpiritsPublicRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
+}
+;
+
+const listAllCategoriesRef = (dc) => {
+  const { dc: dcInstance} = validateArgs(connectorConfig, dc, undefined);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'listAllCategories');
+}
+listAllCategoriesRef.operationName = 'listAllCategories';
+exports.listAllCategoriesRef = listAllCategoriesRef;
+
+exports.listAllCategories = function listAllCategories(dcOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrOptions, options, undefined,false, false);
+  return executeQuery(listAllCategoriesRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
+}
+;
+
+const listAllSubcategoriesRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'listAllSubcategories', inputVars);
+}
+listAllSubcategoriesRef.operationName = 'listAllSubcategories';
+exports.listAllSubcategoriesRef = listAllSubcategoriesRef;
+
+exports.listAllSubcategories = function listAllSubcategories(dcOrVars, varsOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, false);
+  return executeQuery(listAllSubcategoriesRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
+}
+;
+
 const listTrendingSpiritsRef = (dcOrVars, vars) => {
   const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars);
   dcInstance._useGeneratedSdk();

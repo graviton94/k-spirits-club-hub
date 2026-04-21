@@ -18,6 +18,9 @@ You can also follow the instructions from the [Data Connect documentation](https
   - [*Connecting to the local Emulator*](#connecting-to-the-local-emulator)
 - [**Queries**](#queries)
   - [*listSpirits*](#listspirits)
+  - [*searchSpiritsPublic*](#searchspiritspublic)
+  - [*listAllCategories*](#listallcategories)
+  - [*listAllSubcategories*](#listallsubcategories)
   - [*listTrendingSpirits*](#listtrendingspirits)
   - [*listNewArrivals*](#listnewarrivals)
   - [*getSpirit*](#getspirit)
@@ -233,6 +236,278 @@ export default function ListSpiritsComponent() {
   const dataConnect = getDataConnect(connectorConfig);
   const options = { staleTime: 5 * 1000 };
   const query = useListSpirits(dataConnect, listSpiritsVars /** or undefined */, options);
+
+  // Then, you can render your component dynamically based on the status of the Query.
+  if (query.isPending) {
+    return <div>Loading...</div>;
+  }
+
+  if (query.isError) {
+    return <div>Error: {query.error.message}</div>;
+  }
+
+  // If the Query is successful, you can access the data returned using the `UseQueryResult.data` field.
+  if (query.isSuccess) {
+    console.log(query.data.spirits);
+  }
+  return <div>Query execution {query.isSuccess ? 'successful' : 'failed'}!</div>;
+}
+```
+
+## searchSpiritsPublic
+You can execute the `searchSpiritsPublic` Query using the following Query hook function, which is defined in [dataconnect-generated/react/index.d.ts](./index.d.ts):
+
+```javascript
+useSearchSpiritsPublic(dc: DataConnect, vars?: SearchSpiritsPublicVariables, options?: useDataConnectQueryOptions<SearchSpiritsPublicData>): UseDataConnectQueryResult<SearchSpiritsPublicData, SearchSpiritsPublicVariables>;
+```
+You can also pass in a `DataConnect` instance to the Query hook function.
+```javascript
+useSearchSpiritsPublic(vars?: SearchSpiritsPublicVariables, options?: useDataConnectQueryOptions<SearchSpiritsPublicData>): UseDataConnectQueryResult<SearchSpiritsPublicData, SearchSpiritsPublicVariables>;
+```
+
+### Variables
+The `searchSpiritsPublic` Query has an optional argument of type `SearchSpiritsPublicVariables`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+
+```javascript
+export interface SearchSpiritsPublicVariables {
+  search?: string | null;
+  category?: string | null;
+  subcategory?: string | null;
+  limit?: number | null;
+  offset?: number | null;
+}
+```
+### Return Type
+Recall that calling the `searchSpiritsPublic` Query hook function returns a `UseQueryResult` object. This object holds the state of your Query, including whether the Query is loading, has completed, or has succeeded/failed, and any data returned by the Query, among other things.
+
+To check the status of a Query, use the `UseQueryResult.status` field. You can also check for pending / success / error status using the `UseQueryResult.isPending`, `UseQueryResult.isSuccess`, and `UseQueryResult.isError` fields.
+
+To access the data returned by a Query, use the `UseQueryResult.data` field. The data for the `searchSpiritsPublic` Query is of type `SearchSpiritsPublicData`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+```javascript
+export interface SearchSpiritsPublicData {
+  spirits: ({
+    id: string;
+    name: string;
+    nameEn?: string | null;
+    category: string;
+    categoryEn?: string | null;
+    subcategory?: string | null;
+    imageUrl: string;
+    thumbnailUrl?: string | null;
+    abv?: number | null;
+    distillery?: string | null;
+    rating?: number | null;
+    reviewCount?: number | null;
+    metadata?: unknown | null;
+  } & Spirit_Key)[];
+}
+```
+
+To learn more about the `UseQueryResult` object, see the [TanStack React Query documentation](https://tanstack.com/query/v5/docs/framework/react/reference/useQuery).
+
+### Using `searchSpiritsPublic`'s Query hook function
+
+```javascript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, SearchSpiritsPublicVariables } from '@dataconnect/generated';
+import { useSearchSpiritsPublic } from '@dataconnect/generated/react'
+
+export default function SearchSpiritsPublicComponent() {
+  // The `useSearchSpiritsPublic` Query hook has an optional argument of type `SearchSpiritsPublicVariables`:
+  const searchSpiritsPublicVars: SearchSpiritsPublicVariables = {
+    search: ..., // optional
+    category: ..., // optional
+    subcategory: ..., // optional
+    limit: ..., // optional
+    offset: ..., // optional
+  };
+
+  // You don't have to do anything to "execute" the Query.
+  // Call the Query hook function to get a `UseQueryResult` object which holds the state of your Query.
+  const query = useSearchSpiritsPublic(searchSpiritsPublicVars);
+  // Variables can be defined inline as well.
+  const query = useSearchSpiritsPublic({ search: ..., category: ..., subcategory: ..., limit: ..., offset: ..., });
+  // Since all variables are optional for this Query, you can omit the `SearchSpiritsPublicVariables` argument.
+  // (as long as you don't want to provide any `options`!)
+  const query = useSearchSpiritsPublic();
+
+  // You can also pass in a `DataConnect` instance to the Query hook function.
+  const dataConnect = getDataConnect(connectorConfig);
+  const query = useSearchSpiritsPublic(dataConnect, searchSpiritsPublicVars);
+
+  // You can also pass in a `useDataConnectQueryOptions` object to the Query hook function.
+  const options = { staleTime: 5 * 1000 };
+  const query = useSearchSpiritsPublic(searchSpiritsPublicVars, options);
+  // If you'd like to provide options without providing any variables, you must
+  // pass `undefined` where you would normally pass the variables.
+  const query = useSearchSpiritsPublic(undefined, options);
+
+  // You can also pass both a `DataConnect` instance and a `useDataConnectQueryOptions` object.
+  const dataConnect = getDataConnect(connectorConfig);
+  const options = { staleTime: 5 * 1000 };
+  const query = useSearchSpiritsPublic(dataConnect, searchSpiritsPublicVars /** or undefined */, options);
+
+  // Then, you can render your component dynamically based on the status of the Query.
+  if (query.isPending) {
+    return <div>Loading...</div>;
+  }
+
+  if (query.isError) {
+    return <div>Error: {query.error.message}</div>;
+  }
+
+  // If the Query is successful, you can access the data returned using the `UseQueryResult.data` field.
+  if (query.isSuccess) {
+    console.log(query.data.spirits);
+  }
+  return <div>Query execution {query.isSuccess ? 'successful' : 'failed'}!</div>;
+}
+```
+
+## listAllCategories
+You can execute the `listAllCategories` Query using the following Query hook function, which is defined in [dataconnect-generated/react/index.d.ts](./index.d.ts):
+
+```javascript
+useListAllCategories(dc: DataConnect, options?: useDataConnectQueryOptions<ListAllCategoriesData>): UseDataConnectQueryResult<ListAllCategoriesData, undefined>;
+```
+You can also pass in a `DataConnect` instance to the Query hook function.
+```javascript
+useListAllCategories(options?: useDataConnectQueryOptions<ListAllCategoriesData>): UseDataConnectQueryResult<ListAllCategoriesData, undefined>;
+```
+
+### Variables
+The `listAllCategories` Query has no variables.
+### Return Type
+Recall that calling the `listAllCategories` Query hook function returns a `UseQueryResult` object. This object holds the state of your Query, including whether the Query is loading, has completed, or has succeeded/failed, and any data returned by the Query, among other things.
+
+To check the status of a Query, use the `UseQueryResult.status` field. You can also check for pending / success / error status using the `UseQueryResult.isPending`, `UseQueryResult.isSuccess`, and `UseQueryResult.isError` fields.
+
+To access the data returned by a Query, use the `UseQueryResult.data` field. The data for the `listAllCategories` Query is of type `ListAllCategoriesData`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+```javascript
+export interface ListAllCategoriesData {
+  spirits: ({
+    category: string;
+    categoryEn?: string | null;
+  })[];
+}
+```
+
+To learn more about the `UseQueryResult` object, see the [TanStack React Query documentation](https://tanstack.com/query/v5/docs/framework/react/reference/useQuery).
+
+### Using `listAllCategories`'s Query hook function
+
+```javascript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig } from '@dataconnect/generated';
+import { useListAllCategories } from '@dataconnect/generated/react'
+
+export default function ListAllCategoriesComponent() {
+  // You don't have to do anything to "execute" the Query.
+  // Call the Query hook function to get a `UseQueryResult` object which holds the state of your Query.
+  const query = useListAllCategories();
+
+  // You can also pass in a `DataConnect` instance to the Query hook function.
+  const dataConnect = getDataConnect(connectorConfig);
+  const query = useListAllCategories(dataConnect);
+
+  // You can also pass in a `useDataConnectQueryOptions` object to the Query hook function.
+  const options = { staleTime: 5 * 1000 };
+  const query = useListAllCategories(options);
+
+  // You can also pass both a `DataConnect` instance and a `useDataConnectQueryOptions` object.
+  const dataConnect = getDataConnect(connectorConfig);
+  const options = { staleTime: 5 * 1000 };
+  const query = useListAllCategories(dataConnect, options);
+
+  // Then, you can render your component dynamically based on the status of the Query.
+  if (query.isPending) {
+    return <div>Loading...</div>;
+  }
+
+  if (query.isError) {
+    return <div>Error: {query.error.message}</div>;
+  }
+
+  // If the Query is successful, you can access the data returned using the `UseQueryResult.data` field.
+  if (query.isSuccess) {
+    console.log(query.data.spirits);
+  }
+  return <div>Query execution {query.isSuccess ? 'successful' : 'failed'}!</div>;
+}
+```
+
+## listAllSubcategories
+You can execute the `listAllSubcategories` Query using the following Query hook function, which is defined in [dataconnect-generated/react/index.d.ts](./index.d.ts):
+
+```javascript
+useListAllSubcategories(dc: DataConnect, vars?: ListAllSubcategoriesVariables, options?: useDataConnectQueryOptions<ListAllSubcategoriesData>): UseDataConnectQueryResult<ListAllSubcategoriesData, ListAllSubcategoriesVariables>;
+```
+You can also pass in a `DataConnect` instance to the Query hook function.
+```javascript
+useListAllSubcategories(vars?: ListAllSubcategoriesVariables, options?: useDataConnectQueryOptions<ListAllSubcategoriesData>): UseDataConnectQueryResult<ListAllSubcategoriesData, ListAllSubcategoriesVariables>;
+```
+
+### Variables
+The `listAllSubcategories` Query has an optional argument of type `ListAllSubcategoriesVariables`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+
+```javascript
+export interface ListAllSubcategoriesVariables {
+  category?: string | null;
+}
+```
+### Return Type
+Recall that calling the `listAllSubcategories` Query hook function returns a `UseQueryResult` object. This object holds the state of your Query, including whether the Query is loading, has completed, or has succeeded/failed, and any data returned by the Query, among other things.
+
+To check the status of a Query, use the `UseQueryResult.status` field. You can also check for pending / success / error status using the `UseQueryResult.isPending`, `UseQueryResult.isSuccess`, and `UseQueryResult.isError` fields.
+
+To access the data returned by a Query, use the `UseQueryResult.data` field. The data for the `listAllSubcategories` Query is of type `ListAllSubcategoriesData`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+```javascript
+export interface ListAllSubcategoriesData {
+  spirits: ({
+    subcategory?: string | null;
+  })[];
+}
+```
+
+To learn more about the `UseQueryResult` object, see the [TanStack React Query documentation](https://tanstack.com/query/v5/docs/framework/react/reference/useQuery).
+
+### Using `listAllSubcategories`'s Query hook function
+
+```javascript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, ListAllSubcategoriesVariables } from '@dataconnect/generated';
+import { useListAllSubcategories } from '@dataconnect/generated/react'
+
+export default function ListAllSubcategoriesComponent() {
+  // The `useListAllSubcategories` Query hook has an optional argument of type `ListAllSubcategoriesVariables`:
+  const listAllSubcategoriesVars: ListAllSubcategoriesVariables = {
+    category: ..., // optional
+  };
+
+  // You don't have to do anything to "execute" the Query.
+  // Call the Query hook function to get a `UseQueryResult` object which holds the state of your Query.
+  const query = useListAllSubcategories(listAllSubcategoriesVars);
+  // Variables can be defined inline as well.
+  const query = useListAllSubcategories({ category: ..., });
+  // Since all variables are optional for this Query, you can omit the `ListAllSubcategoriesVariables` argument.
+  // (as long as you don't want to provide any `options`!)
+  const query = useListAllSubcategories();
+
+  // You can also pass in a `DataConnect` instance to the Query hook function.
+  const dataConnect = getDataConnect(connectorConfig);
+  const query = useListAllSubcategories(dataConnect, listAllSubcategoriesVars);
+
+  // You can also pass in a `useDataConnectQueryOptions` object to the Query hook function.
+  const options = { staleTime: 5 * 1000 };
+  const query = useListAllSubcategories(listAllSubcategoriesVars, options);
+  // If you'd like to provide options without providing any variables, you must
+  // pass `undefined` where you would normally pass the variables.
+  const query = useListAllSubcategories(undefined, options);
+
+  // You can also pass both a `DataConnect` instance and a `useDataConnectQueryOptions` object.
+  const dataConnect = getDataConnect(connectorConfig);
+  const options = { staleTime: 5 * 1000 };
+  const query = useListAllSubcategories(dataConnect, listAllSubcategoriesVars /** or undefined */, options);
 
   // Then, you can render your component dynamically based on the status of the Query.
   if (query.isPending) {

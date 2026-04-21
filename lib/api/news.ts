@@ -312,7 +312,8 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
             try {
                 // 🟢 [Plan A] 1차 시도: Cloudflare AI Gateway
                 console.log(`[News Collection] [Plan A] Batch ${batchIdx + 1} via Cloudflare AI Gateway...`);
-                const gatewayGenAI = new GoogleGenerativeAI("CF_MANAGED_KEY");
+                // FIX: Use real API Key instead of placeholder "CF_MANAGED_KEY"
+                const gatewayGenAI = new GoogleGenerativeAI(GEMINI_API_KEY);
                 const model = gatewayGenAI.getGenerativeModel(
                     { model: 'gemini-2.0-flash' },
                     {

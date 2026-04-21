@@ -281,6 +281,23 @@ export interface ListAiDiscoveryLogsVariables {
   limit: number;
 }
 
+export interface ListAllCategoriesData {
+  spirits: ({
+    category: string;
+    categoryEn?: string | null;
+  })[];
+}
+
+export interface ListAllSubcategoriesData {
+  spirits: ({
+    subcategory?: string | null;
+  })[];
+}
+
+export interface ListAllSubcategoriesVariables {
+  category?: string | null;
+}
+
 export interface ListModificationRequestsData {
   modificationRequests: ({
     id: string;
@@ -505,6 +522,32 @@ export interface NewArrival_Key {
 export interface NewsArticle_Key {
   id: string;
   __typename?: 'NewsArticle_Key';
+}
+
+export interface SearchSpiritsPublicData {
+  spirits: ({
+    id: string;
+    name: string;
+    nameEn?: string | null;
+    category: string;
+    categoryEn?: string | null;
+    subcategory?: string | null;
+    imageUrl: string;
+    thumbnailUrl?: string | null;
+    abv?: number | null;
+    distillery?: string | null;
+    rating?: number | null;
+    reviewCount?: number | null;
+    metadata?: unknown | null;
+  } & Spirit_Key)[];
+}
+
+export interface SearchSpiritsPublicVariables {
+  search?: string | null;
+  category?: string | null;
+  subcategory?: string | null;
+  limit?: number | null;
+  offset?: number | null;
 }
 
 export interface SpiritReview_Key {
@@ -775,6 +818,21 @@ export function deleteReview(vars: DeleteReviewVariables, options?: OperationOpt
 export function listSpirits(dc: DataConnect, vars?: ListSpiritsVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<ListSpiritsData>>;
 /** Generated Node Admin SDK operation action function for the 'ListSpirits' Query. Allow users to pass in custom DataConnect instances. */
 export function listSpirits(vars?: ListSpiritsVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<ListSpiritsData>>;
+
+/** Generated Node Admin SDK operation action function for the 'SearchSpiritsPublic' Query. Allow users to execute without passing in DataConnect. */
+export function searchSpiritsPublic(dc: DataConnect, vars?: SearchSpiritsPublicVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<SearchSpiritsPublicData>>;
+/** Generated Node Admin SDK operation action function for the 'SearchSpiritsPublic' Query. Allow users to pass in custom DataConnect instances. */
+export function searchSpiritsPublic(vars?: SearchSpiritsPublicVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<SearchSpiritsPublicData>>;
+
+/** Generated Node Admin SDK operation action function for the 'ListAllCategories' Query. Allow users to execute without passing in DataConnect. */
+export function listAllCategories(dc: DataConnect, options?: OperationOptions): Promise<ExecuteOperationResponse<ListAllCategoriesData>>;
+/** Generated Node Admin SDK operation action function for the 'ListAllCategories' Query. Allow users to pass in custom DataConnect instances. */
+export function listAllCategories(options?: OperationOptions): Promise<ExecuteOperationResponse<ListAllCategoriesData>>;
+
+/** Generated Node Admin SDK operation action function for the 'ListAllSubcategories' Query. Allow users to execute without passing in DataConnect. */
+export function listAllSubcategories(dc: DataConnect, vars?: ListAllSubcategoriesVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<ListAllSubcategoriesData>>;
+/** Generated Node Admin SDK operation action function for the 'ListAllSubcategories' Query. Allow users to pass in custom DataConnect instances. */
+export function listAllSubcategories(vars?: ListAllSubcategoriesVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<ListAllSubcategoriesData>>;
 
 /** Generated Node Admin SDK operation action function for the 'ListTrendingSpirits' Query. Allow users to execute without passing in DataConnect. */
 export function listTrendingSpirits(dc: DataConnect, vars?: ListTrendingSpiritsVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<ListTrendingSpiritsData>>;

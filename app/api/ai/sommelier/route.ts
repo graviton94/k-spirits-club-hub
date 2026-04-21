@@ -43,42 +43,42 @@ export async function POST(req: NextRequest) {
                 const name = (item.n || '').toLowerCase();
                 const keywords = userKeywords.toLowerCase();
                 return keywords.includes(name) || (name.length > 2 && keywords.includes(name.split(' ')[0]));
-            }).slice(0, 30);
+            }).slice(0, 20); // Reduced from 30
 
             const categories = [...new Set(searchIndex.map(s => s.c))];
             const balancedIndex: any[] = [];
 
             priorityMatches.forEach(item => {
                 balancedIndex.push({
-                    id: item.i,
-                    name: item.n,
-                    category: item.c,
-                    subcategory: item.sc,
-                    country: item.co || '',
-                    manufacturer: item.d || '',
-                    abv: item.a,
-                    tags: item.tn || ''
+                    i: item.i,
+                    n: item.n,
+                    c: item.c,
+                    sc: item.sc,
+                    co: item.co || '',
+                    m: item.d || '',
+                    a: item.a,
+                    t: item.tn || ''
                 });
             });
 
-            const SAMPLES_PER_CATEGORY = 20;
+            const SAMPLES_PER_CATEGORY = 5; // Heavily reduced from 20 to keep context small
             categories.forEach(cat => {
                 const catItems = searchIndex
-                    .filter(s => s.c === cat && !balancedIndex.some(existing => existing.id === s.i))
+                    .filter(s => s.c === cat && !balancedIndex.some(existing => existing.i === s.i))
                     .slice(0, SAMPLES_PER_CATEGORY);
 
                 balancedIndex.push(...catItems.map(item => ({
-                    id: item.i,
-                    name: item.n,
-                    category: item.c,
-                    subcategory: item.sc,
-                    country: item.co || '',
-                    manufacturer: item.d || '',
-                    abv: item.a,
-                    tags: item.tn || ''
+                    i: item.i,
+                    n: item.n,
+                    c: item.c,
+                    sc: item.sc,
+                    co: item.co || '',
+                    m: item.d || '',
+                    a: item.a,
+                    t: item.tn || ''
                 })));
             });
-            knowledgeBase = `[주류 추천 데이터 (전문가용)]\n${JSON.stringify(balancedIndex)}`;
+            knowledgeBase = `[Spirit Data]\n${JSON.stringify(balancedIndex)}`;
         } else {
             const summary = {
                 categories: ["소주", "위스키", "와인", "일반증류주", "탁주", "약주", "청주", "과실주", "브랜디", "리큐르"],

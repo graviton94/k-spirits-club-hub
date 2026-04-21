@@ -186,6 +186,45 @@ export function listSpirits(dcOrVars, varsOrOptions, options) {
   return executeQuery(listSpiritsRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
 }
 
+export const searchSpiritsPublicRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'searchSpiritsPublic', inputVars);
+}
+searchSpiritsPublicRef.operationName = 'searchSpiritsPublic';
+
+export function searchSpiritsPublic(dcOrVars, varsOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, false);
+  return executeQuery(searchSpiritsPublicRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
+}
+
+export const listAllCategoriesRef = (dc) => {
+  const { dc: dcInstance} = validateArgs(connectorConfig, dc, undefined);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'listAllCategories');
+}
+listAllCategoriesRef.operationName = 'listAllCategories';
+
+export function listAllCategories(dcOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrOptions, options, undefined,false, false);
+  return executeQuery(listAllCategoriesRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
+}
+
+export const listAllSubcategoriesRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'listAllSubcategories', inputVars);
+}
+listAllSubcategoriesRef.operationName = 'listAllSubcategories';
+
+export function listAllSubcategories(dcOrVars, varsOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, false);
+  return executeQuery(listAllSubcategoriesRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
+}
+
 export const listTrendingSpiritsRef = (dcOrVars, vars) => {
   const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars);
   dcInstance._useGeneratedSdk();

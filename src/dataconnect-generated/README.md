@@ -11,6 +11,9 @@ This README will guide you through the process of using the generated JavaScript
   - [*Connecting to the local Emulator*](#connecting-to-the-local-emulator)
 - [**Queries**](#queries)
   - [*listSpirits*](#listspirits)
+  - [*searchSpiritsPublic*](#searchspiritspublic)
+  - [*listAllCategories*](#listallcategories)
+  - [*listAllSubcategories*](#listallsubcategories)
   - [*listTrendingSpirits*](#listtrendingspirits)
   - [*listNewArrivals*](#listnewarrivals)
   - [*getSpirit*](#getspirit)
@@ -212,6 +215,354 @@ const ref = listSpiritsRef();
 // You can also pass in a `DataConnect` instance to the `QueryRef` function.
 const dataConnect = getDataConnect(connectorConfig);
 const ref = listSpiritsRef(dataConnect, listSpiritsVars);
+
+// Call `executeQuery()` on the reference to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeQuery(ref);
+
+console.log(data.spirits);
+
+// Or, you can use the `Promise` API.
+executeQuery(ref).then((response) => {
+  const data = response.data;
+  console.log(data.spirits);
+});
+```
+
+## searchSpiritsPublic
+You can execute the `searchSpiritsPublic` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
+```typescript
+searchSpiritsPublic(vars?: SearchSpiritsPublicVariables, options?: ExecuteQueryOptions): QueryPromise<SearchSpiritsPublicData, SearchSpiritsPublicVariables>;
+
+interface SearchSpiritsPublicRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (vars?: SearchSpiritsPublicVariables): QueryRef<SearchSpiritsPublicData, SearchSpiritsPublicVariables>;
+}
+export const searchSpiritsPublicRef: SearchSpiritsPublicRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `QueryRef` function.
+```typescript
+searchSpiritsPublic(dc: DataConnect, vars?: SearchSpiritsPublicVariables, options?: ExecuteQueryOptions): QueryPromise<SearchSpiritsPublicData, SearchSpiritsPublicVariables>;
+
+interface SearchSpiritsPublicRef {
+  ...
+  (dc: DataConnect, vars?: SearchSpiritsPublicVariables): QueryRef<SearchSpiritsPublicData, SearchSpiritsPublicVariables>;
+}
+export const searchSpiritsPublicRef: SearchSpiritsPublicRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the searchSpiritsPublicRef:
+```typescript
+const name = searchSpiritsPublicRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `searchSpiritsPublic` query has an optional argument of type `SearchSpiritsPublicVariables`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+
+```typescript
+export interface SearchSpiritsPublicVariables {
+  search?: string | null;
+  category?: string | null;
+  subcategory?: string | null;
+  limit?: number | null;
+  offset?: number | null;
+}
+```
+### Return Type
+Recall that executing the `searchSpiritsPublic` query returns a `QueryPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `SearchSpiritsPublicData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface SearchSpiritsPublicData {
+  spirits: ({
+    id: string;
+    name: string;
+    nameEn?: string | null;
+    category: string;
+    categoryEn?: string | null;
+    subcategory?: string | null;
+    imageUrl: string;
+    thumbnailUrl?: string | null;
+    abv?: number | null;
+    distillery?: string | null;
+    rating?: number | null;
+    reviewCount?: number | null;
+    metadata?: unknown | null;
+  } & Spirit_Key)[];
+}
+```
+### Using `searchSpiritsPublic`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, searchSpiritsPublic, SearchSpiritsPublicVariables } from '@dataconnect/generated';
+
+// The `searchSpiritsPublic` query has an optional argument of type `SearchSpiritsPublicVariables`:
+const searchSpiritsPublicVars: SearchSpiritsPublicVariables = {
+  search: ..., // optional
+  category: ..., // optional
+  subcategory: ..., // optional
+  limit: ..., // optional
+  offset: ..., // optional
+};
+
+// Call the `searchSpiritsPublic()` function to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await searchSpiritsPublic(searchSpiritsPublicVars);
+// Variables can be defined inline as well.
+const { data } = await searchSpiritsPublic({ search: ..., category: ..., subcategory: ..., limit: ..., offset: ..., });
+// Since all variables are optional for this query, you can omit the `SearchSpiritsPublicVariables` argument.
+const { data } = await searchSpiritsPublic();
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await searchSpiritsPublic(dataConnect, searchSpiritsPublicVars);
+
+console.log(data.spirits);
+
+// Or, you can use the `Promise` API.
+searchSpiritsPublic(searchSpiritsPublicVars).then((response) => {
+  const data = response.data;
+  console.log(data.spirits);
+});
+```
+
+### Using `searchSpiritsPublic`'s `QueryRef` function
+
+```typescript
+import { getDataConnect, executeQuery } from 'firebase/data-connect';
+import { connectorConfig, searchSpiritsPublicRef, SearchSpiritsPublicVariables } from '@dataconnect/generated';
+
+// The `searchSpiritsPublic` query has an optional argument of type `SearchSpiritsPublicVariables`:
+const searchSpiritsPublicVars: SearchSpiritsPublicVariables = {
+  search: ..., // optional
+  category: ..., // optional
+  subcategory: ..., // optional
+  limit: ..., // optional
+  offset: ..., // optional
+};
+
+// Call the `searchSpiritsPublicRef()` function to get a reference to the query.
+const ref = searchSpiritsPublicRef(searchSpiritsPublicVars);
+// Variables can be defined inline as well.
+const ref = searchSpiritsPublicRef({ search: ..., category: ..., subcategory: ..., limit: ..., offset: ..., });
+// Since all variables are optional for this query, you can omit the `SearchSpiritsPublicVariables` argument.
+const ref = searchSpiritsPublicRef();
+
+// You can also pass in a `DataConnect` instance to the `QueryRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = searchSpiritsPublicRef(dataConnect, searchSpiritsPublicVars);
+
+// Call `executeQuery()` on the reference to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeQuery(ref);
+
+console.log(data.spirits);
+
+// Or, you can use the `Promise` API.
+executeQuery(ref).then((response) => {
+  const data = response.data;
+  console.log(data.spirits);
+});
+```
+
+## listAllCategories
+You can execute the `listAllCategories` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
+```typescript
+listAllCategories(options?: ExecuteQueryOptions): QueryPromise<ListAllCategoriesData, undefined>;
+
+interface ListAllCategoriesRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (): QueryRef<ListAllCategoriesData, undefined>;
+}
+export const listAllCategoriesRef: ListAllCategoriesRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `QueryRef` function.
+```typescript
+listAllCategories(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<ListAllCategoriesData, undefined>;
+
+interface ListAllCategoriesRef {
+  ...
+  (dc: DataConnect): QueryRef<ListAllCategoriesData, undefined>;
+}
+export const listAllCategoriesRef: ListAllCategoriesRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the listAllCategoriesRef:
+```typescript
+const name = listAllCategoriesRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `listAllCategories` query has no variables.
+### Return Type
+Recall that executing the `listAllCategories` query returns a `QueryPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `ListAllCategoriesData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface ListAllCategoriesData {
+  spirits: ({
+    category: string;
+    categoryEn?: string | null;
+  })[];
+}
+```
+### Using `listAllCategories`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, listAllCategories } from '@dataconnect/generated';
+
+
+// Call the `listAllCategories()` function to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await listAllCategories();
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await listAllCategories(dataConnect);
+
+console.log(data.spirits);
+
+// Or, you can use the `Promise` API.
+listAllCategories().then((response) => {
+  const data = response.data;
+  console.log(data.spirits);
+});
+```
+
+### Using `listAllCategories`'s `QueryRef` function
+
+```typescript
+import { getDataConnect, executeQuery } from 'firebase/data-connect';
+import { connectorConfig, listAllCategoriesRef } from '@dataconnect/generated';
+
+
+// Call the `listAllCategoriesRef()` function to get a reference to the query.
+const ref = listAllCategoriesRef();
+
+// You can also pass in a `DataConnect` instance to the `QueryRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = listAllCategoriesRef(dataConnect);
+
+// Call `executeQuery()` on the reference to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeQuery(ref);
+
+console.log(data.spirits);
+
+// Or, you can use the `Promise` API.
+executeQuery(ref).then((response) => {
+  const data = response.data;
+  console.log(data.spirits);
+});
+```
+
+## listAllSubcategories
+You can execute the `listAllSubcategories` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
+```typescript
+listAllSubcategories(vars?: ListAllSubcategoriesVariables, options?: ExecuteQueryOptions): QueryPromise<ListAllSubcategoriesData, ListAllSubcategoriesVariables>;
+
+interface ListAllSubcategoriesRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (vars?: ListAllSubcategoriesVariables): QueryRef<ListAllSubcategoriesData, ListAllSubcategoriesVariables>;
+}
+export const listAllSubcategoriesRef: ListAllSubcategoriesRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `QueryRef` function.
+```typescript
+listAllSubcategories(dc: DataConnect, vars?: ListAllSubcategoriesVariables, options?: ExecuteQueryOptions): QueryPromise<ListAllSubcategoriesData, ListAllSubcategoriesVariables>;
+
+interface ListAllSubcategoriesRef {
+  ...
+  (dc: DataConnect, vars?: ListAllSubcategoriesVariables): QueryRef<ListAllSubcategoriesData, ListAllSubcategoriesVariables>;
+}
+export const listAllSubcategoriesRef: ListAllSubcategoriesRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the listAllSubcategoriesRef:
+```typescript
+const name = listAllSubcategoriesRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `listAllSubcategories` query has an optional argument of type `ListAllSubcategoriesVariables`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+
+```typescript
+export interface ListAllSubcategoriesVariables {
+  category?: string | null;
+}
+```
+### Return Type
+Recall that executing the `listAllSubcategories` query returns a `QueryPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `ListAllSubcategoriesData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface ListAllSubcategoriesData {
+  spirits: ({
+    subcategory?: string | null;
+  })[];
+}
+```
+### Using `listAllSubcategories`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, listAllSubcategories, ListAllSubcategoriesVariables } from '@dataconnect/generated';
+
+// The `listAllSubcategories` query has an optional argument of type `ListAllSubcategoriesVariables`:
+const listAllSubcategoriesVars: ListAllSubcategoriesVariables = {
+  category: ..., // optional
+};
+
+// Call the `listAllSubcategories()` function to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await listAllSubcategories(listAllSubcategoriesVars);
+// Variables can be defined inline as well.
+const { data } = await listAllSubcategories({ category: ..., });
+// Since all variables are optional for this query, you can omit the `ListAllSubcategoriesVariables` argument.
+const { data } = await listAllSubcategories();
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await listAllSubcategories(dataConnect, listAllSubcategoriesVars);
+
+console.log(data.spirits);
+
+// Or, you can use the `Promise` API.
+listAllSubcategories(listAllSubcategoriesVars).then((response) => {
+  const data = response.data;
+  console.log(data.spirits);
+});
+```
+
+### Using `listAllSubcategories`'s `QueryRef` function
+
+```typescript
+import { getDataConnect, executeQuery } from 'firebase/data-connect';
+import { connectorConfig, listAllSubcategoriesRef, ListAllSubcategoriesVariables } from '@dataconnect/generated';
+
+// The `listAllSubcategories` query has an optional argument of type `ListAllSubcategoriesVariables`:
+const listAllSubcategoriesVars: ListAllSubcategoriesVariables = {
+  category: ..., // optional
+};
+
+// Call the `listAllSubcategoriesRef()` function to get a reference to the query.
+const ref = listAllSubcategoriesRef(listAllSubcategoriesVars);
+// Variables can be defined inline as well.
+const ref = listAllSubcategoriesRef({ category: ..., });
+// Since all variables are optional for this query, you can omit the `ListAllSubcategoriesVariables` argument.
+const ref = listAllSubcategoriesRef();
+
+// You can also pass in a `DataConnect` instance to the `QueryRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = listAllSubcategoriesRef(dataConnect, listAllSubcategoriesVars);
 
 // Call `executeQuery()` on the reference to execute the query.
 // You can use the `await` keyword to wait for the promise to resolve.

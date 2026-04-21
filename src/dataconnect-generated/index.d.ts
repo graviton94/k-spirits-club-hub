@@ -283,6 +283,23 @@ export interface ListAiDiscoveryLogsVariables {
   limit: number;
 }
 
+export interface ListAllCategoriesData {
+  spirits: ({
+    category: string;
+    categoryEn?: string | null;
+  })[];
+}
+
+export interface ListAllSubcategoriesData {
+  spirits: ({
+    subcategory?: string | null;
+  })[];
+}
+
+export interface ListAllSubcategoriesVariables {
+  category?: string | null;
+}
+
 export interface ListModificationRequestsData {
   modificationRequests: ({
     id: string;
@@ -507,6 +524,32 @@ export interface NewArrival_Key {
 export interface NewsArticle_Key {
   id: string;
   __typename?: 'NewsArticle_Key';
+}
+
+export interface SearchSpiritsPublicData {
+  spirits: ({
+    id: string;
+    name: string;
+    nameEn?: string | null;
+    category: string;
+    categoryEn?: string | null;
+    subcategory?: string | null;
+    imageUrl: string;
+    thumbnailUrl?: string | null;
+    abv?: number | null;
+    distillery?: string | null;
+    rating?: number | null;
+    reviewCount?: number | null;
+    metadata?: unknown | null;
+  } & Spirit_Key)[];
+}
+
+export interface SearchSpiritsPublicVariables {
+  search?: string | null;
+  category?: string | null;
+  subcategory?: string | null;
+  limit?: number | null;
+  offset?: number | null;
 }
 
 export interface SpiritReview_Key {
@@ -882,6 +925,42 @@ export const listSpiritsRef: ListSpiritsRef;
 
 export function listSpirits(vars?: ListSpiritsVariables, options?: ExecuteQueryOptions): QueryPromise<ListSpiritsData, ListSpiritsVariables>;
 export function listSpirits(dc: DataConnect, vars?: ListSpiritsVariables, options?: ExecuteQueryOptions): QueryPromise<ListSpiritsData, ListSpiritsVariables>;
+
+interface SearchSpiritsPublicRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars?: SearchSpiritsPublicVariables): QueryRef<SearchSpiritsPublicData, SearchSpiritsPublicVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars?: SearchSpiritsPublicVariables): QueryRef<SearchSpiritsPublicData, SearchSpiritsPublicVariables>;
+  operationName: string;
+}
+export const searchSpiritsPublicRef: SearchSpiritsPublicRef;
+
+export function searchSpiritsPublic(vars?: SearchSpiritsPublicVariables, options?: ExecuteQueryOptions): QueryPromise<SearchSpiritsPublicData, SearchSpiritsPublicVariables>;
+export function searchSpiritsPublic(dc: DataConnect, vars?: SearchSpiritsPublicVariables, options?: ExecuteQueryOptions): QueryPromise<SearchSpiritsPublicData, SearchSpiritsPublicVariables>;
+
+interface ListAllCategoriesRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (): QueryRef<ListAllCategoriesData, undefined>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect): QueryRef<ListAllCategoriesData, undefined>;
+  operationName: string;
+}
+export const listAllCategoriesRef: ListAllCategoriesRef;
+
+export function listAllCategories(options?: ExecuteQueryOptions): QueryPromise<ListAllCategoriesData, undefined>;
+export function listAllCategories(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<ListAllCategoriesData, undefined>;
+
+interface ListAllSubcategoriesRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars?: ListAllSubcategoriesVariables): QueryRef<ListAllSubcategoriesData, ListAllSubcategoriesVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars?: ListAllSubcategoriesVariables): QueryRef<ListAllSubcategoriesData, ListAllSubcategoriesVariables>;
+  operationName: string;
+}
+export const listAllSubcategoriesRef: ListAllSubcategoriesRef;
+
+export function listAllSubcategories(vars?: ListAllSubcategoriesVariables, options?: ExecuteQueryOptions): QueryPromise<ListAllSubcategoriesData, ListAllSubcategoriesVariables>;
+export function listAllSubcategories(dc: DataConnect, vars?: ListAllSubcategoriesVariables, options?: ExecuteQueryOptions): QueryPromise<ListAllSubcategoriesData, ListAllSubcategoriesVariables>;
 
 interface ListTrendingSpiritsRef {
   /* Allow users to create refs without passing in DataConnect */

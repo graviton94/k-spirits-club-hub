@@ -96,6 +96,24 @@ export function listSpirits(dcOrVarsOrOptions, varsOrOptions, options) {
   return dcInstance.executeQuery('listSpirits', inputVars, inputOpts);
 }
 
+export function searchSpiritsPublic(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, false);
+  dcInstance.useGen(true);
+  return dcInstance.executeQuery('searchSpiritsPublic', inputVars, inputOpts);
+}
+
+export function listAllCategories(dcOrOptions, options) {
+  const { dc: dcInstance, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrOptions, options, undefined);
+  dcInstance.useGen(true);
+  return dcInstance.executeQuery('listAllCategories', undefined, inputOpts);
+}
+
+export function listAllSubcategories(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, false);
+  dcInstance.useGen(true);
+  return dcInstance.executeQuery('listAllSubcategories', inputVars, inputOpts);
+}
+
 export function listTrendingSpirits(dcOrVarsOrOptions, varsOrOptions, options) {
   const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, false);
   dcInstance.useGen(true);

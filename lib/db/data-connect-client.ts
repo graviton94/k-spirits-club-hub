@@ -34,6 +34,9 @@ import {
   getReview,
   updateReview,
   findReview,
+  searchSpiritsPublic,
+  listAllCategories,
+  listAllSubcategories
 } from '@/src/dataconnect-generated';
 
 /**
@@ -108,6 +111,35 @@ export const dbUpsertSpirit = async (vars: any) => {
 
 export const dbDeleteSpirit = async (id: string) => {
   return await deleteSpirit(getDC(), { id });
+};
+
+export const dbSearchSpiritsPublic = async (vars: {
+  search?: string;
+  category?: string;
+  subcategory?: string;
+  limit?: number;
+  offset?: number;
+}) => {
+  const { data } = await searchSpiritsPublic(getDC(), vars);
+  return data.spirits;
+};
+
+export const dbListAllCategories = async () => {
+  const { data } = await listAllCategories(getDC());
+  // Process unique categories
+  const unique = new Map<string, string | null | undefined>();
+  data.spirits.forEach((s: { category: string; categoryEn?: string | null }) => {
+    if (s.category && !unique.has(s.category)) {
+      unique.set(s.category, s.categoryEn);
+    }
+  });
+  return Array.from(unique.entries()).map(([ko, en]) => ({ ko, en }));
+};
+
+export const dbListAllSubcategories = async (category?: string) => {
+  const { data } = await listAllSubcategories(getDC(), { category });
+  const unique = new Set(data.spirits.map((s: { subcategory?: string | null }) => s.subcategory).filter(Boolean));
+  return Array.from(unique) as string[];
 };
 
 // --- Users ---

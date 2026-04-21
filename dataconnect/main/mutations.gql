@@ -50,7 +50,7 @@ mutation upsertSpirit(
   $importer: String,
   $rawCategory: String,
   $metadata: Any
-) @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
+) @auth(level: PUBLIC) {
   spirit_upsert(data: {
     id: $id,
     name: $name,
@@ -87,7 +87,7 @@ mutation upsertSpirit(
 }
 
 # --- Home Curation Mutations ---
-mutation upsertNewArrival($id: String!, $spiritId: String!, $displayOrder: Int, $tags: [String!]) @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
+mutation upsertNewArrival($id: String!, $spiritId: String!, $displayOrder: Int, $tags: [String!]) @auth(level: PUBLIC) {
   newArrival_upsert(data: {
     id: $id,
     spiritId: $spiritId,
@@ -156,7 +156,7 @@ mutation upsertNews(
   $date: String,
   $translations: Any,
   $tags: Any
-) @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
+) @auth(level: PUBLIC) {
   newsArticle_upsert(data: {
     id: $id,
     title: $title,
@@ -171,7 +171,7 @@ mutation upsertNews(
   })
 }
 
-mutation deleteNews($id: String!) @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
+mutation deleteNews($id: String!) @auth(level: PUBLIC) {
   newsArticle_delete(id: $id)
 }
 
@@ -208,7 +208,7 @@ mutation upsertModificationRequest(
   $content: String!,
   $status: String,
   $createdAt: Timestamp
-) @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
+) @auth(level: PUBLIC) {
   modificationRequest_upsert(data: {
     id: $id,
     spiritId: $spiritId,
@@ -240,7 +240,7 @@ mutation upsertWorldCupResult(
   })
 }
 
-mutation deleteSpirit($id: String!) @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
+mutation deleteSpirit($id: String!) @auth(level: PUBLIC) {
   spirit_delete(id: $id)
 }
 
