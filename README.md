@@ -38,7 +38,7 @@
 ### **2. 📚 My Cabinet (나의 술장)**
 - 보유한 술과 위시리스트를 한 곳에서 관리
 - 개인 메모, 평점, 즐겨찾기 기능
-- Firebase 실시간 동기화로 모든 기기에서 접근 가능
+- Data Connect 기반 관계형 데이터 관리로 데이터 무결성 보장
 
 ### **3. ⭐ Review System**
 - 5점 만점 평가 및 상세 리뷰 작성
@@ -233,13 +233,11 @@ k-spirits-club-hub/
 ### **Core Collections**
 | Collection | Documents | Description |
 |-----------|-----------|-------------|
-| `spirits` | 100,000+ | Main spirit database |
-| `search_index` | 1 | Compressed search index |
-| `users/{uid}/cabinet` | Variable | User's cabinet items |
-| `users/{uid}/reviews` | Variable | User's reviews |
-| `reviews` | 50,000+ | Global review collection |
-| `users/{uid}/taste_data` | 1 | AI analysis results |
-| `worldcup_results` | 100,000+ | Game results |
+| `spirits` | 100,000+ | Main spirit database (PostgreSQL) |
+| `userCabinets` | Variable | User's cabinet items (Relational) |
+| `spiritReviews` | 50,000+ | Global review collection |
+| `worldCupResults` | 100,000+ | Game results |
+| `aiDiscoveryLogs` | Variable | AI analysis traces |
 
 **상세 스키마 문서**: [DATA_SCHEMA.md](./DATA_SCHEMA.md)
 
@@ -372,5 +370,5 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ---
 
-**Last Updated**: 2026-02-07  
-**Version**: 1.0.0 (Production Global)
+**Last Updated**: 2026-04-21  
+**Version**: 1.1.0 (PostgreSQL Stable)

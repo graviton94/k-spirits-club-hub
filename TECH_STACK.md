@@ -252,7 +252,7 @@ Instant Results (no server call)
 
 ### **Backend**
 - **Edge Runtime**: Cloudflare의 300+ 글로벌 데이터센터에서 실행
-- **Firestore REST API**: Firebase Admin SDK 대신 REST API로 Edge 호환성 확보
+- **Data Connect SDK**: GraphQL 기반의 점진적 타입 안정성 및 고속 쿼리 실행
 - **Search Index Caching**: 검색 인덱스를 JSON으로 압축하여 100KB 이하로 유지
 - **Batch Processing**: 대량 데이터 업로드 시 10개 단위 배치 처리
 

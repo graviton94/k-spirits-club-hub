@@ -1,11 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+import { dbDeleteSpirit } from '@/lib/db/data-connect-client';
 
 export const runtime = 'edge';
 
-// POST /api/admin/spirits/bulk-delete
-// We use POST because some clients/proxies don't support bodies in DELETE requests well,
-// though standard DELETE is also fine if handled.
 export async function POST(req: NextRequest) {
     try {
         const { spiritIds } = await req.json();
@@ -17,8 +14,8 @@ export async function POST(req: NextRequest) {
         let deletedCount = 0;
         for (const id of spiritIds) {
             try {
-                const success = await db.deleteSpirit(id);
-                if (success) deletedCount++;
+                await dbDeleteSpirit(id);
+                deletedCount++;
             } catch (e) {
                 console.error(`Failed to delete spirit ${id}`, e);
             }

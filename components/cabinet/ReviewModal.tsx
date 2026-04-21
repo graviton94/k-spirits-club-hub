@@ -122,13 +122,13 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit, dict, l
                                 <button
                                     key={tag}
                                     onClick={() => toggleTag(tag)}
-                                    className={`
-text - [10px] sm: text - xs px - 2 sm: px - 3 py - 1 sm: py - 1.5 rounded - full border transition - all
-                     ${isSelected
+                                                                        className={`
+                                        text-[10px] sm:text-xs px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border transition-all
+                                        ${isSelected
                                             ? `${colors.bg} ${colors.text} ${colors.border} ring-2 ring-offset-1 ring-primary/50 font-bold`
                                             : 'bg-card text-muted-foreground border-border hover:bg-secondary'
                                         }
-`}
+                                    `}
                                 >
                                     {tag}
                                 </button>
@@ -144,7 +144,7 @@ text - [10px] sm: text - xs px - 2 sm: px - 3 py - 1 sm: py - 1.5 rounded - full
                             {selectedTags.map(tag => {
                                 const color = getTagColor(tag);
                                 return (
-                                    <span key={tag} className={`inline - flex items - center gap - 1 px - 2 py - 1 rounded - md text - xs font - semibold border ${color.bg} ${color.text} ${color.border} `}>
+                                    <span key={tag} className={`inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-semibold border ${color.bg} ${color.text} ${color.border}`}>
                                         {tag}
                                         <button onClick={() => toggleTag(tag)} className="hover:opacity-70">×</button>
                                     </span>
@@ -222,7 +222,7 @@ text - [10px] sm: text - xs px - 2 sm: px - 3 py - 1 sm: py - 1.5 rounded - full
                                             <button
                                                 key={star}
                                                 onClick={() => setRatingN(star)}
-                                                className={`text - 2xl transition - transform hover: scale - 110 focus: outline - none ${ratingN >= star ? 'text-primary' : 'text-muted-foreground/25'} `}
+                                                className={`text-2xl transition-transform hover:scale-110 focus:outline-none ${ratingN >= star ? 'text-primary' : 'text-muted-foreground/25'}`}
                                             >
                                                 ★
                                             </button>
@@ -254,7 +254,7 @@ text - [10px] sm: text - xs px - 2 sm: px - 3 py - 1 sm: py - 1.5 rounded - full
                                             <button
                                                 key={star}
                                                 onClick={() => setRatingP(star)}
-                                                className={`text - 2xl transition - transform hover: scale - 110 focus: outline - none ${ratingP >= star ? 'text-primary' : 'text-muted-foreground/25'} `}
+                                                className={`text-2xl transition-transform hover:scale-110 focus:outline-none ${ratingP >= star ? 'text-primary' : 'text-muted-foreground/25'}`}
                                             >
                                                 ★
                                             </button>
@@ -286,7 +286,7 @@ text - [10px] sm: text - xs px - 2 sm: px - 3 py - 1 sm: py - 1.5 rounded - full
                                             <button
                                                 key={star}
                                                 onClick={() => setRatingF(star)}
-                                                className={`text - 2xl transition - transform hover: scale - 110 focus: outline - none ${ratingF >= star ? 'text-primary' : 'text-muted-foreground/25'} `}
+                                                className={`text-2xl transition-transform hover:scale-110 focus:outline-none ${ratingF >= star ? 'text-primary' : 'text-muted-foreground/25'}`}
                                             >
                                                 ★
                                             </button>

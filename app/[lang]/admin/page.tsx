@@ -49,19 +49,6 @@ export default function AdminDashboard() {
         document.title = `K-Spirits Club | 관리자 대시보드`;
     }, []);
 
-    // [Task 3.2] Scroll Lock for Mobile Stability
-    useEffect(() => {
-        if (editingId || isCreating) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'unset';
-        }
-        // Cleanup function to prevent permanent lock
-        return () => {
-            document.body.style.overflow = 'unset';
-        };
-    }, [editingId, isCreating]);
-
     // State
     const [activeTab, setActiveTab] = useState<'spirits' | 'requests' | 'discovery'>('spirits');
     const [spirits, setSpirits] = useState<Spirit[]>([]);
@@ -93,6 +80,20 @@ export default function AdminDashboard() {
         tastingNote: '', descriptionKo: '', descriptionEn: '', pairingGuideKo: '', pairingGuideEn: '',
         noseTags: '', palateTags: '', finishTags: ''
     });
+
+    // [Task 3.2] Scroll Lock for Mobile Stability
+    useEffect(() => {
+        if (editingId || isCreating) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        // Cleanup function to prevent permanent lock
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [editingId, isCreating]);
+
 
     // Lock background scroll while modal is open to prevent mobile viewport shift / focus loss
     useEffect(() => {
@@ -131,8 +132,9 @@ export default function AdminDashboard() {
                 search: searchQuery || undefined
             });
 
-            setSpirits(spiritsObj || []);
+            setSpirits((spiritsObj || []) as any);
             setTotalCount(13000); // Pagination proxy
+
         } catch (error) {
             console.error('Failed to load spirits:', error);
         } finally {
@@ -152,7 +154,8 @@ export default function AdminDashboard() {
         setLoading(true);
         try {
             const mods = await dbListModificationRequests();
-            setRequests(mods || []);
+            setRequests((mods || []) as any);
+
         } catch (error) {
             console.error('Failed to load requests:', error);
         } finally {
@@ -223,7 +226,8 @@ export default function AdminDashboard() {
             setEditingId(freshSpirit.id);
             setEditForm({
                 name: freshSpirit.name,
-                abv: freshSpirit.abv,
+                abv: freshSpirit.abv ?? 0,
+
                 imageUrl: freshSpirit.imageUrl || '',
                 nameEn: freshSpirit.nameEn || '',
                 category: freshSpirit.category || '',
@@ -454,8 +458,8 @@ export default function AdminDashboard() {
             if (data.success && data.pairingData) {
                 setEditForm({
                     ...editForm,
-                    pairingGuideKo: data.pairingData.pairingGuideKo || data.pairingData.pairing_guide_ko,
-                    pairingGuideEn: data.pairingData.pairingGuideEn || data.pairingData.pairing_guide_en
+                    pairingGuideKo: data.pairingData.pairingGuideKo,
+                    pairingGuideEn: data.pairingData.pairingGuideEn
                 });
                 alert('✨ 페어링 가이드 생성 완료!');
             } else {
@@ -500,8 +504,8 @@ export default function AdminDashboard() {
             if (data.success && data.descriptionData) {
                 setEditForm({
                     ...editForm,
-                    descriptionKo: data.descriptionData.description_ko,
-                    descriptionEn: data.descriptionData.description_en
+                    descriptionKo: data.descriptionData.descriptionKo,
+                    descriptionEn: data.descriptionData.descriptionEn
                 });
                 alert('✨ 설명 생성 완료!');
             } else {

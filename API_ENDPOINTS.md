@@ -1,7 +1,7 @@
 # 🔌 K-Spirits Club - API Endpoints Documentation
 
 ## 📋 Overview
-K-Spirits Club의 모든 API는 Edge Runtime에서 실행되며, Firebase Firestore REST API를 통해 데이터를 처리합니다.
+K-Spirits Club의 모든 API는 Edge Runtime에서 실행되며, Firebase Data Connect (PostgreSQL)를 통해 고성능 관계형 데이터를 처리합니다.
 
 ---
 
@@ -563,35 +563,6 @@ fetch('/api/cabinet', {
 
 ## 🔄 Data Consistency
 
-### **Dual Path Strategy (Reviews)**
-리뷰는 2곳에 저장됩니다:
-1. `users/{userId}/reviews/{reviewId}` - 사용자별 조회
-2. `reviews/{reviewId}` - Spirit별 조회
-
-트랜잭션으로 동기화를 보장합니다.
-
-### **Eventual Consistency**
-- 검색 인덱스는 30초마다 재생성
-- 통계는 실시간이 아닌 캐시된 값 사용
-
----
-
-## 🧪 Testing Examples
-
-### **cURL**
-```bash
-# 검색 인덱스 조회
-curl https://k-spirits.club/api/spirits/search
-
-# 제품 상세 조회
-curl https://k-spirits.club/api/spirits/spirit_123456
-
-# 술장에 추가
-curl -X POST https://k-spirits.club/api/cabinet \
-  -H "x-user-id: user_abc123" \
-  -H "Content-Type: application/json" \
-  -d '{"spiritId":"spirit_123456","isWishlist":false}'
-
 # AI 분석 실행
 curl -X POST https://k-spirits.club/api/analyze-taste \
   -H "Content-Type: application/json" \
@@ -638,5 +609,5 @@ const review = await fetch('/api/reviews', {
 
 ---
 
-**Last Updated**: 2026-02-07  
-**API Version**: 1.0.0 (Sequential AI Support)
+**Last Updated**: 2026-04-21  
+**API Version**: 1.1.0 (Data Connect SQL Support)

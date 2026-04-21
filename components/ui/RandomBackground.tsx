@@ -1,18 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
 const BACKGROUNDS = ['/background-v1.webp', '/background-v2.webp'];
 
 export function RandomBackground() {
-    // SSR과 클라이언트 초기 렌더링을 일치시키기 위해 고정된 초기값을 가집니다.
-    // LCP를 위해 v2를 우선적으로 렌더링되도록 하거나, 고정된 이미지를 사용할 수 있습니다.
-    const [bgImage, setBgImage] = useState<string>(BACKGROUNDS[1]); // v2를 기본값으로 설정 (LCP 리포트 기준)
+    // SSR/hydration 불일치 방지를 위해 초기값은 항상 v1으로 고정하고,
+    // 클라이언트 마운트 후에만 랜덤 변경 (priority 이미지와 src 일치)
+    const [bgImage, setBgImage] = useState<string>(BACKGROUNDS[0]);
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
-        // 마운트 후 랜덤하게 변경 (이미 v2가 로드되었다면 캐시 효과가 있거나 교체됨)
+        // 마운트 후 랜덤 선택 — 브라우저 캐시가 있으면 즉시 렌더링됨
         const randomBg = BACKGROUNDS[Math.floor(Math.random() * BACKGROUNDS.length)];
         setBgImage(randomBg);
         setMounted(true);
@@ -21,23 +21,24 @@ export function RandomBackground() {
     return (
         <div className="absolute inset-0 z-0">
             {/* 
-                LCP 최적화를 위한 Next.js Image 컴포넌트 사용 
-                - priority: 브라우저가 이 이미지를 높은 우선순위로 간주하고 미리 로드합니다.
-                - fill: 부모 컨테이너를 가득 채웁니다.
-                - objectFit="cover": CSS object-cover와 동일한 동작.
-                - quality: 화질 조절 (필요 시)
+                LCP 최적화: priority prop으로 preload 발생.
+                초기값(v1)과 실제 렌더링 이미지(랜덤)가 달랐던 preload 불일치 수정됨.
+                - SSR: v1 (고정) → preload href="/background-v1.webp"
+                - CSR 마운트: 랜덤 선택 후 교체 (캐시 활용)
             */}
             <Image
+                key={bgImage}
                 src={bgImage}
                 alt="Background"
                 fill
-                priority
+                priority={!mounted} // SSR/초기 렌더링 시에만 priority, 교체 시에는 lazy
                 style={{ objectFit: 'cover' }}
                 sizes="100vw"
                 className="transition-opacity duration-1000"
+                unoptimized={true}
             />
 
-            {/* Gradient overlay: transparent -> black -> transparent/white */}
+            {/* Gradient overlay */}
             <div
                 className="absolute inset-0"
                 style={{

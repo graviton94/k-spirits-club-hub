@@ -11,12 +11,10 @@ import metadata from '@/lib/constants/spirits-metadata.json';
 interface RandomSpirit {
     id: string;
     name: string;
-    name_en?: string;
+    nameEn?: string;
     category: string;
-    metadata?: {
-        name_en?: string;
-    };
 }
+
 
 const UI_TEXT = {
     ko: {
@@ -114,8 +112,9 @@ export default function DailyPick({ lang: propLang }: { lang?: string }) {
                                         <div className="min-w-0 flex flex-col gap-1 text-left sm:flex-row sm:items-center sm:gap-3">
                                             {/* 이름: 순수한 화이트로 강조 */}
                                             <span className="truncate text-sm font-bold tracking-tight text-neutral-200 transition-colors duration-300 group-hover/link:text-white">
-                                                {lang === 'en' ? (spirit.name_en || spirit.metadata?.name_en || spirit.name) : spirit.name}
+                                                {lang === 'en' ? (spirit.nameEn || spirit.name) : spirit.name}
                                             </span>
+
 
                                             {/* 카테고리: 매우 절제된 태그 스타일 */}
                                             <span className="self-start sm:self-auto text-[9px] px-1.5 py-0.5 bg-neutral-900 border border-neutral-800 rounded text-neutral-500 font-semibold uppercase tracking-wider group-hover/link:border-neutral-700 group-hover/link:text-neutral-400 transition-colors">

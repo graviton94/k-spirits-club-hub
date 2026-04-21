@@ -2,8 +2,9 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { db } from '@/lib/db';
 import { dbUpsertAiDiscoveryLog } from '@/lib/db/data-connect-client';
+import { db } from '@/lib/db'; // Compatibility layer for getPublishedSearchIndex
+
 
 export const runtime = 'edge';
 

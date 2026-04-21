@@ -9,7 +9,6 @@ export async function POST(req: NextRequest) {
     try {
         const spiritData = await req.json();
 
-        // Generate description only using the provided data
         const descriptionData = await generateDescriptionOnly({
             name: spiritData.name,
             category: spiritData.category,
@@ -18,11 +17,12 @@ export async function POST(req: NextRequest) {
             abv: spiritData.abv,
             region: spiritData.region,
             country: spiritData.country,
-            name_en: spiritData.name_en,
-            nose_tags: spiritData.nose_tags,
-            palate_tags: spiritData.palate_tags,
-            finish_tags: spiritData.finish_tags
+            nameEn: spiritData.nameEn,
+            noseTags: spiritData.noseTags,
+            palateTags: spiritData.palateTags,
+            finishTags: spiritData.finishTags
         });
+
 
         return NextResponse.json({
             success: true,

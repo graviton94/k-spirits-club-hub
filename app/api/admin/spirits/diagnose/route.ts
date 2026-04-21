@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+import { dbAdminListRawSpirits } from '@/lib/db/data-connect-client';
 
 export const runtime = 'edge';
 
 /**
  * GET /api/admin/spirits/diagnose
- * 
+ *
  * Diagnostic endpoint to understand the current data state.
  * Returns statistics about spirits in the database.
  */
@@ -13,13 +13,13 @@ export async function GET(req: NextRequest) {
     try {
         console.log('[diagnose] Starting diagnostic check...');
 
-        // Fetch ALL spirits without any filter
-        // NOTE: Limited to 5000 spirits due to Firestore query limit
-        const allSpirits = await db.getSpirits({}, { page: 1, pageSize: 5000 });
+        // Fetch spirits via Data Connect (paginated, up to 5000)
+        const allSpirits = await dbAdminListRawSpirits({ limit: 5000, offset: 0 });
+        const total = allSpirits.length;
 
-        console.log(`[diagnose] Total spirits in database: ${allSpirits.total}`);
+        console.log(`[diagnose] Total spirits returned: ${total}`);
 
-        if (allSpirits.total === 0) {
+        if (total === 0) {
             return NextResponse.json({
                 success: true,
                 message: '⚠️ DATABASE IS EMPTY - No spirits found!',
@@ -28,38 +28,24 @@ export async function GET(req: NextRequest) {
             });
         }
 
-        // Warning if we hit the query limit
-        const hitQueryLimit = allSpirits.data.length >= 5000;
-        if (hitQueryLimit) {
-            console.warn('[diagnose] ⚠️ WARNING: Query limit reached (5000). Database may contain more spirits.');
-        }
+        const hitQueryLimit = total >= 5000;
 
-        // Initialize aggregation counters
         const statusCounts: Record<string, number> = {};
         const categoryCounts: Record<string, number> = {};
         const subcategoryCounts: Record<string, number> = {};
         const regionCounts: Record<string, number> = {};
         const distilleryCounts: Record<string, number> = {};
 
-        const publishedCounts = {
-            isPublishedTrue: 0,
-            isPublishedFalse: 0,
-            isPublishedUndefined: 0
-        };
+        const publishedCounts = { isPublishedTrue: 0, isPublishedFalse: 0, isPublishedUndefined: 0 };
         const statusAndPublished = {
-            publishedAndTrue: 0,
-            publishedButFalse: 0,
-            notPublishedButTrue: 0,
-            otherAndTrue: 0,
-            otherAndFalse: 0
+            publishedAndTrue: 0, publishedButFalse: 0,
+            notPublishedButTrue: 0, otherAndTrue: 0, otherAndFalse: 0
         };
 
-        allSpirits.data.forEach(spirit => {
-            // Count by status
+        allSpirits.forEach((spirit: any) => {
             const status = spirit.status || 'UNDEFINED';
             statusCounts[status] = (statusCounts[status] || 0) + 1;
 
-            // Aggregations
             const cat = spirit.category || 'Unknown';
             categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
 
@@ -72,98 +58,51 @@ export async function GET(req: NextRequest) {
             const dist = spirit.distillery || 'Unknown';
             distilleryCounts[dist] = (distilleryCounts[dist] || 0) + 1;
 
-            // Count by isPublished
-            if (spirit.isPublished === true) {
-                publishedCounts.isPublishedTrue++;
-            } else if (spirit.isPublished === false) {
-                publishedCounts.isPublishedFalse++;
-            } else {
-                publishedCounts.isPublishedUndefined++;
-            }
+            if (spirit.isPublished === true) publishedCounts.isPublishedTrue++;
+            else if (spirit.isPublished === false) publishedCounts.isPublishedFalse++;
+            else publishedCounts.isPublishedUndefined++;
 
-            // Cross-analysis
-            if (spirit.status === 'PUBLISHED' && spirit.isPublished === true) {
-                statusAndPublished.publishedAndTrue++;
-            } else if (spirit.status === 'PUBLISHED' && spirit.isPublished !== true) {
-                statusAndPublished.publishedButFalse++;
-            } else if (spirit.status !== 'PUBLISHED' && spirit.isPublished === true) {
-                statusAndPublished.notPublishedButTrue++;
-            } else if (spirit.isPublished === true) {
-                statusAndPublished.otherAndTrue++;
-            } else {
-                statusAndPublished.otherAndFalse++;
-            }
+            if (spirit.status === 'PUBLISHED' && spirit.isPublished === true) statusAndPublished.publishedAndTrue++;
+            else if (spirit.status === 'PUBLISHED' && spirit.isPublished !== true) statusAndPublished.publishedButFalse++;
+            else if (spirit.status !== 'PUBLISHED' && spirit.isPublished === true) statusAndPublished.notPublishedButTrue++;
+            else if (spirit.isPublished === true) statusAndPublished.otherAndTrue++;
+            else statusAndPublished.otherAndFalse++;
         });
 
-        // Sample spirits
-        const samplePublished = allSpirits.data.find(s => s.isPublished === true);
-        const sampleUnpublished = allSpirits.data.find(s => s.isPublished !== true);
+        const samplePublished = allSpirits.find((s: any) => s.isPublished === true);
+        const sampleUnpublished = allSpirits.find((s: any) => s.isPublished !== true);
 
-        const result = {
+        const recommendations: string[] = [];
+        if (hitQueryLimit) recommendations.push('⚠️ WARNING: Query limit reached (5000 spirits). Diagnostic may be incomplete.');
+        if (publishedCounts.isPublishedTrue === 0) {
+            recommendations.push('🚨 CRITICAL: No spirits with isPublished=true found!');
+            recommendations.push('ACTION: Use bulk publish endpoint or manually publish spirits in admin dashboard.');
+        }
+        if (statusAndPublished.publishedButFalse > 0) {
+            recommendations.push(`⚠️ Found ${statusAndPublished.publishedButFalse} spirits with status=PUBLISHED but isPublished=false`);
+            recommendations.push('ACTION: Run /api/admin/spirits/fix-published-sync to fix inconsistencies.');
+        }
+        if (statusAndPublished.notPublishedButTrue > 0) {
+            recommendations.push(`ℹ️ Found ${statusAndPublished.notPublishedButTrue} spirits with isPublished=true but status!=PUBLISHED`);
+        }
+
+        return NextResponse.json({
             success: true,
-            totalSpirits: allSpirits.total,
-            dataAnalyzed: allSpirits.data.length,
+            totalSpirits: total,
+            dataAnalyzed: total,
             queryLimitReached: hitQueryLimit,
-            schemaAnalysis: {
-                categories: categoryCounts,
-                subcategories: subcategoryCounts,
-                regions: regionCounts,
-                distilleries: distilleryCounts
-            },
+            schemaAnalysis: { categories: categoryCounts, subcategories: subcategoryCounts, regions: regionCounts, distilleries: distilleryCounts },
             statusBreakdown: statusCounts,
             publishedBreakdown: publishedCounts,
             crossAnalysis: statusAndPublished,
             samples: {
-                published: samplePublished ? {
-                    id: samplePublished.id,
-                    name: samplePublished.name,
-                    status: samplePublished.status,
-                    isPublished: samplePublished.isPublished
-                } : null,
-                unpublished: sampleUnpublished ? {
-                    id: sampleUnpublished.id,
-                    name: sampleUnpublished.name,
-                    status: sampleUnpublished.status,
-                    isPublished: sampleUnpublished.isPublished
-                } : null
+                published: samplePublished ? { id: samplePublished.id, name: samplePublished.name, status: samplePublished.status, isPublished: samplePublished.isPublished } : null,
+                unpublished: sampleUnpublished ? { id: sampleUnpublished.id, name: sampleUnpublished.name, status: sampleUnpublished.status, isPublished: sampleUnpublished.isPublished } : null
             },
-            recommendations: [] as string[]
-        };
-
-        // Add query limit warning
-        if (hitQueryLimit) {
-            result.recommendations.push('⚠️ WARNING: Query limit reached (5000 spirits). This diagnostic may be incomplete.');
-            result.recommendations.push('INFO: Database contains more than 5000 spirits. Consider implementing paginated diagnostics.');
-        }
-
-        // Add recommendations
-        if (publishedCounts.isPublishedTrue === 0) {
-            result.recommendations.push('🚨 CRITICAL: No spirits with isPublished=true found! Users will see ZERO data.');
-            result.recommendations.push('ACTION: Use bulk publish endpoint or manually publish spirits in admin dashboard.');
-        }
-
-        if (statusAndPublished.publishedButFalse > 0) {
-            result.recommendations.push(`⚠️ Found ${statusAndPublished.publishedButFalse} spirits with status='PUBLISHED' but isPublished=false`);
-            result.recommendations.push('ACTION: Run /api/admin/spirits/fix-published-sync to fix inconsistencies.');
-        }
-
-        if (statusAndPublished.notPublishedButTrue > 0) {
-            result.recommendations.push(`ℹ️ Found ${statusAndPublished.notPublishedButTrue} spirits with isPublished=true but status!='PUBLISHED'`);
-            result.recommendations.push('INFO: This is acceptable - these spirits will be visible to users.');
-        }
-
-        console.log('[diagnose] Diagnostic complete:', JSON.stringify(result, null, 2));
-
-        return NextResponse.json(result);
-
+            recommendations
+        });
     } catch (error: any) {
-        console.error('[diagnose] Error during diagnostic:', error);
-        return NextResponse.json(
-            {
-                error: 'Failed to run diagnostic',
-                details: error.message
-            },
-            { status: 500 }
-        );
+        console.error('[diagnose] Error:', error);
+        return NextResponse.json({ error: 'Failed to run diagnostic', details: error.message }, { status: 500 });
     }
 }

@@ -48,14 +48,12 @@ NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 ```
 
-> **중요**: `.env` 파일은 반드시 `KEY=VALUE` 형식을 따라야 합니다. JavaScript 객체 타입 (`const obj = { ... }`) 이나 다른 코드 문법을 포함하면 `python-dotenv` 파싱 에러가 발생합니다. 이 문제는 2026-02-06에 해결되었습니다.
+> **중요**: `.env` 파일은 반드시 `KEY=VALUE` 형식을 따라야 합니다. JavaScript 객체 타입이나 다른 코드 문법을 포함하면 파싱 에러가 발생합니다.
 
 ### **4. Start Development Server**
 ```bash
 npm run dev
 ```
-
-사이트는 `http://localhost:3000`에서 실행됩니다.
 
 ---
 
@@ -67,8 +65,7 @@ k-spirits-club-hub/
 │   ├── api/                # API Routes (Edge Runtime)
 │   ├── actions/            # Server Actions
 │   ├── context/            # React Contexts
-│   ├── (pages)/            # Feature pages
-│   └── layout.tsx          # Root layout
+│   └── (pages)/            # Feature pages
 │
 ├── components/             # React Components
 │   ├── layout/             # Layout components
@@ -77,296 +74,33 @@ k-spirits-club-hub/
 │   └── admin/              # Admin-only
 │
 ├── lib/                    # Core libraries
-│   ├── db/                 # Database layer
+│   ├── db/                 # Database layer (Data Connect)
 │   ├── utils/              # Utility functions
-│   ├── constants/          # Constants
 │   └── hooks/              # Custom hooks
 │
+├── dataconnect/            # Firebase Data Connect (SQL)
+│   ├── schema/             # PostgreSQL Schema
+│   └── main/               # Queries & Mutations
+│
 ├── scripts/                # Data pipeline scripts
-├── public/                 # Static assets
-└── data/                   # Data storage (gitignored)
-```
-
----
-
-## 🎨 Coding Conventions
-
-### **TypeScript**
-- **Strict Mode**: 모든 타입은 명시적으로 정의
-- **Interface vs Type**: 데이터 모델은 `interface`, 유틸리티는 `type`
-- **Naming**:
-  - Components: PascalCase (`SpiritCard.tsx`)
-  - Functions: camelCase (`getOptimizedImageUrl`)
-  - Constants: UPPER_SNAKE_CASE (`MAX_UPLOAD_SIZE`)
-
-```typescript
-// ✅ Good
-interface Spirit {
-  id: string;
-  name: string;
-}
-
-export function formatSpirit(spirit: Spirit): string {
-  return `${spirit.name} (${spirit.id})`;
-}
-
-// ❌ Bad
-const spirit: any = { ... };
-function format(s) { ... }
-```
-
-### **React Components**
-- **Functional Components**: 모든 컴포넌트는 함수형으로 작성
-- **Props Interface**: 모든 props는 인터페이스로 정의
-- **'use client' Directive**: 클라이언트 컴포넌트에만 추가
-
-```typescript
-'use client';
-
-interface SpiritCardProps {
-  spirit: Spirit;
-  onClick?: () => void;
-}
-
-export function SpiritCard({ spirit, onClick }: SpiritCardProps) {
-  return (
-    <div onClick={onClick}>
-      <h3>{spirit.name}</h3>
-    </div>
-  );
-}
-```
-
-### **CSS & Styling**
-- **Tailwind CSS**: 모든 스타일링은 Tailwind 유틸리티 클래스 사용
-- **Custom Classes**: 반복되는 패턴만 `globals.css`에 추가
-- **Dark Mode**: `dark:` prefix 사용
-
-```tsx
-// ✅ Good
-<div className="bg-card border border-border rounded-2xl p-4 dark:bg-card-dark">
-
-// ❌ Bad (inline styles)
-<div style={{ backgroundColor: '#fff', padding: '16px' }}>
-```
-
-### **File Organization**
-- **One Component Per File**: 하나의 파일에는 하나의 주요 컴포넌트만
-- **Index Files**: 여러 컴포넌트를 export할 때만 `index.ts` 사용
-- **Co-location**: 관련 파일들은 같은 디렉토리에 배치
-
-```
-components/cabinet/
-├── MyCabinet.tsx           # Main component
-├── CabinetSpiritCard.tsx   # Sub-component
-├── SearchSpiritModal.tsx   # Related modal
-└── TasteRadar.tsx          # Related visualization
+└── public/                 # Static assets
 ```
 
 ---
 
 ## 🔧 Development Workflows
 
-### **Adding a New Feature**
-1. **Create Feature Branch**
-   ```bash
-   git checkout -b feature/new-feature-name
-   ```
-
-2. **Implement Feature**
-   - Add components in `components/`
-   - Add page in `app/`
-   - Add API route in `app/api/` (if needed)
-
-3. **Test Locally**
-   ```bash
-   npm run dev
-   ```
-
-4. **Commit & Push**
-   ```bash
-   git add .
-   git commit -m "feat: Add new feature description"
-   git push origin feature/new-feature-name
-   ```
-
-### **Adding a New API Endpoint**
-1. **Create Route File**
-   ```
-   app/api/new-endpoint/route.ts
-   ```
-
-2. **Implement Handler**
-   ```typescript
-   import { NextRequest, NextResponse } from 'next/server';
-   
-   export const runtime = 'edge';
-   
-   export async function GET(req: NextRequest) {
-     // Implementation
-     return NextResponse.json({ data: [] });
-   }
-   ```
-
-3. **Test with cURL**
-   ```bash
-   curl http://localhost:3000/api/new-endpoint
-   ```
-
 ### **Modifying Data Schema (Relational SQL)**
-1. **Update GraphQL Schema**
-   ```graphql
-   # dataconnect/schema/schema.gql
-   type Spirit @table {
-     # ... existing fields
-     newField: String
-   }
-   ```
-
-2. **Generate SDK & Types**
+1. **Update GraphQL Schema** in `dataconnect/schema/schema.gql`.
+2. **Generate SDK & Types**:
    ```bash
    npx firebase-tools dataconnect:sdk:generate
    ```
-
-3. **Update Queries/Mutations**
-   ```graphql
-   # dataconnect/main/mutations.gql
-   mutation updateSpirit($id: String!, $data: Spirit_UpdateInput!) {
-     spirit_update(id: $id, data: $data)
-   }
-   ```
-
-4. **Sync with Client**
-   ```typescript
-   import { getDC } from '@/lib/db/data-connect-client';
-   const dc = getDC();
-   // The new field is now available in the generated types
-   ```
-
-### **MBTI Development Notes**
-1. **Image Generation**
-   - MBTI 결과 카드는 `html-to-image` 라이브러리를 사용하여 PNG로 변환
-   - `toPng()` 함수는 클라이언트 사이드에서만 동작 (DOM 접근 필요)
-   - 결과 카드의 `id="result-card"` 속성을 반드시 유지해야 함
-   
-2. **다국어 지원**
-   - 모든 MBTI 데이터는 `lib/constants/mbti-data.ts`에 한글/영문 병행 저장
-   - UI 텍스트는 `lib/utils/ui-text.ts`의 `UI_TEXT` 객체 사용
-   
-3. **테스트 데이터**
-   - 16가지 MBTI 타입이 모두 정의되어 있는지 확인
-   - 15개 질문의 A/B 매핑이 올바른지 검증 (E/I, N/S, F/T, J/P)
-
----
-
-## 🐛 Debugging
-
-### **Client-Side Debugging**
-- **React DevTools**: 컴포넌트 상태 및 props 검사
-- **Console Logs**: `console.log`, `console.error` 사용
-- **Network Tab**: API 호출 및 응답 확인
-
-### **Server-Side Debugging**
-- **Edge Runtime Logs**: Cloudflare Dashboard에서 실시간 로그 확인
-- **Local Development**: `console.log`는 터미널에 출력
-
-```typescript
-// API Route Debugging
-export async function GET(req: NextRequest) {
-  console.log('[API] Request received:', req.url);
-  
-  try {
-    const data = await fetchData();
-    console.log('[API] Data fetched:', data.length);
-    return NextResponse.json({ data });
-  } catch (error) {
-    console.error('[API] Error:', error);
-    return NextResponse.json({ error: 'Failed' }, { status: 500 });
-  }
-}
-```
-
-### **Firebase Debugging**
-- **Firestore Console**: Firebase Console에서 직접 데이터 확인
-- **Firestore Emulator**: 로컬 테스트 (선택 사항)
-  ```bash
-  firebase emulators:start --only firestore
-  ```
-
-### **Python Pipeline Debugging**
-```bash
-# Verbose mode
-python scripts/run_pipeline.py --source data/spirits.json --verbose
-
-# Skip upload (offline mode)
-python scripts/run_pipeline.py --source data/spirits.json --skip-upload
-
-# Single item test
-python scripts/run_pipeline.py --source data/test_single.json --batch-size 1
-```
-
----
-
-## 🧪 Testing
-
-### **Unit Testing** (Not yet implemented)
-```bash
-# Future: Jest + React Testing Library
-npm run test
-```
-
-### **Manual Testing Checklist**
-- [ ] Authentication (Google Login, Guest Mode)
-- [ ] Search functionality
-- [ ] Add/Remove from cabinet
-- [ ] Write/Edit/Delete review
-- [ ] AI Taste Analysis
-- [ ] World Cup game flow
-- [ ] Image loading & fallbacks
-- [ ] Mobile responsiveness
-- [ ] Dark mode
-
-### **Performance Testing**
-```bash
-# Lighthouse CI
-npm run lighthouse
-
-# Bundle Analysis
-npm run build
-npx @next/bundle-analyzer
-```
-
----
-
-## 📊 Common Tasks
-
-### **Regenerate Search Index**
-```typescript
-// app/api/spirits/search/route.ts
-// Just call the API endpoint - it automatically regenerates
-fetch('/api/spirits/search');
-```
+3. **Update Queries/Mutations** in `dataconnect/main/`.
 
 ### **Bulk Publish Spirits**
 ```bash
 npx tsx scripts/publish-ready-data.ts
-```
-
-### **Clear Local Data**
-```bash
-rm -rf data/processed_batches/*
-rm -rf data/temp_pipeline/*
-```
-
-### **Reset Firebase Data** (Caution!)
-```typescript
-// Use Firebase Console or Admin SDK
-// DO NOT use in production!
-const spiritsRef = collection(db, 'spirits');
-const batch = writeBatch(db);
-const querySnapshot = await getDocs(spiritsRef);
-querySnapshot.forEach(doc => batch.delete(doc.ref));
-await batch.commit();
 ```
 
 ---
@@ -377,134 +111,16 @@ await batch.commit();
 ```bash
 # 1. Build for production
 npm run build
-
-# 2. Build Cloudflare Pages adapter
-npm run pages:build
-
-# 3. Deploy
+# 2. Deploy
 npx wrangler pages deploy .next/out
 ```
 
-### **Environment Variables (Cloudflare)**
-1. Cloudflare Dashboard → Pages → Settings → Environment Variables
-2. Add all variables from `.env.local`
-3. Redeploy
-
 ### **Deployment Checklist**
 - [ ] All environment variables set
-- [ ] Firebase indexes deployed (`firebase deploy --only firestore:indexes`)
-- [ ] Search index generated
-- [ ] Test critical paths (search, cabinet, AI analysis)
-- [ ] Verify OG images for sharing
+- [ ] Firebase Data Connect schema deployed (`firebase deploy --only dataconnect`)
+- [ ] Search index generated (`/api/spirits/search`)
 
 ---
 
-## 🔍 Troubleshooting
-
-### **Issue: "Expected 1 arguments, but got 0" (TypeScript)**
-**Solution**: Use `document.createElement('img')` instead of `new Image()`
-```typescript
-// ❌ Wrong
-const img = new Image();
-
-// ✅ Correct
-const img = document.createElement('img') as HTMLImageElement;
-```
-
-### **Issue: Image not loading**
-**Solution**: Use fallback images
-```typescript
-<Image
-  src={imageUrl || getCategoryFallbackImage(category)}
-  onError={(e) => {
-    (e.target as HTMLImageElement).src = getCategoryFallbackImage(category);
-  }}
-/>
-```
-
-### **Issue: API 500 Error**
-**Solution**: Check Cloudflare logs and environment variables
-```bash
-# View logs
-npx wrangler pages deployment tail
-
-# Verify env vars
-npx wrangler pages deployment list
-```
-
-### **Issue: Search index not loading**
-**Solution**: Regenerate index
-```bash
-# Call API manually
-curl https://k-spirits.club/api/spirits/search
-```
-
-### **Issue: AI Analysis fails**
-**Solution**: Check Gemini API quota and key
-```bash
-# Verify API key is set
-echo $GEMINI_API_KEY
-
-# Check usage quota in Google Cloud Console
-```
-
----
-
-## 📚 Resources
-
-### **Documentation**
-- [Next.js Docs](https://nextjs.org/docs)
-- [Tailwind CSS](https://tailwindcss.com/docs)
-- [Firebase Docs](https://firebase.google.com/docs)
-- [Cloudflare Pages](https://developers.cloudflare.com/pages/)
-
-### **Internal Docs**
-- [TECH_STACK.md](./TECH_STACK.md)
-- [DATA_SCHEMA.md](./DATA_SCHEMA.md)
-- [API_ENDPOINTS.md](./API_ENDPOINTS.md)
-- [CODE_FLOW.md](./CODE_FLOW.md)
-
----
-
-## 🤝 Contributing
-
-### **Code Review Guidelines**
-- PR은 최소 1명의 승인 필요
-- 모든 TypeScript 에러 해결
-- 모바일 테스트 필수
-- 커밋 메시지는 Conventional Commits 형식
-
-### **Commit Message Format**
-```
-<type>(<scope>): <subject>
-
-<body>
-
-<footer>
-```
-
-**Types:**
-- `feat`: 새로운 기능
-- `fix`: 버그 수정
-- `docs`: 문서 변경
-- `style`: 코드 포맷팅
-- `refactor`: 리팩토링
-- `perf`: 성능 개선
-- `test`: 테스트 추가
-- `chore`: 빌드/도구 변경
-
-**Example:**
-```
-feat(worldcup): Add image preloading for faster game start
-
-- Implemented bulk image preloading at game initialization
-- Added 3-tier fallback system (optimized → original → category default)
-- Removed individual image preloader to avoid redundancy
-
-Closes #123
-```
-
----
-
-**Last Updated**: 2026-02-06  
-**Version**: 1.0.0
+**Last Updated**: 2026-04-21  
+**Version**: 1.1.0 (PostgreSQL/Data Connect)

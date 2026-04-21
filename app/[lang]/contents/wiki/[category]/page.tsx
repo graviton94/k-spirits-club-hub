@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { resolveWikiCategory } from '@/lib/utils/wiki-resolver'
-import { db } from '@/lib/db'
+import { dbListSpirits } from '@/lib/db/data-connect-client'
 import SpiritGuideLayout from '@/components/contents/SpiritGuideLayout'
 import { redirect } from 'next/navigation'
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url'
@@ -175,22 +175,22 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
         try {
             // High-Performance Fetch: Use the Search Index with short keys
             // Priority: Fetch top-rated spirits from the primary category
-            const results = await db.getTopInCategory(dbCategories[0], 12);
+            const results = await dbListSpirits({ category: dbCategories[0] });
+            const topResults = results.slice(0, 12);
             
-            // Map short keys to the UI model expected by the layout/cards
-            featuredSpirits = results.map((s: any) => ({
-                id: s.i,
-                name: s.n,
-                nameEn: s.en,
-                category: s.c,
-                subcategory: s.sc,
-                imageUrl: s.t,
-                rating: s.r
+            // Map direct Spirit schema fields (camelCase)
+            featuredSpirits = topResults.map((s: any) => ({
+                id: s.id,
+                name: s.name,
+                nameEn: s.nameEn,
+                category: s.category,
+                subcategory: s.subcategory,
+                imageUrl: s.imageUrl,
+                rating: s.rating
             }));
             
-            // If we have subcategory keywords, we can still do a light filter if needed, 
-            // but the indexed 'r' rating is now our primary quality signal.
             featuredSpirits = featuredSpirits.slice(0, 6);
+
         } catch (error) {
             console.error('[Wiki Featured] Search index fetch failed:', error);
         }

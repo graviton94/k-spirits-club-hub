@@ -128,12 +128,12 @@ export default function FlavorView({
                         <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-500/10 text-amber-600 dark:text-amber-500 text-[10px] font-black rounded-full mb-8 uppercase tracking-widest border border-amber-500/20 w-fit">
                             <Info className="w-3" /> {isEn ? "Active Palate DNA" : "활성 미각 DNA"}
                         </div>
-                        <h3 className="text-4xl lg:text-5xl font-black text-foreground mb-8 tracking-tighter italic leading-tight">{profile?.persona.title}</h3>
-                        <p className="text-muted-foreground text-base lg:text-lg leading-relaxed font-medium mb-10">{profile?.persona.description}</p>
+                        <h3 className="text-4xl lg:text-5xl font-black text-foreground mb-8 tracking-tighter italic leading-tight">{profile?.persona?.title || (isEn ? "Palate Analysis..." : "미각 분석 중...")}</h3>
+                        <p className="text-muted-foreground text-base lg:text-lg leading-relaxed font-medium mb-10">{profile?.persona?.description || (isEn ? "We are mapping your flavor DNA based on your cellar and reviews." : "술장과 리뷰를 바탕으로 당신의 풍미 DNA를 지도로 만들고 있습니다.")}</p>
                         <div className="flex flex-wrap gap-2">
-                            {profile?.persona.keywords.map((kw: string, i: number) => (
+                            {profile?.persona?.keywords?.map((kw: string, i: number) => (
                                 <span key={i} className="text-[10px] font-black text-amber-600 dark:text-amber-500/80 bg-amber-500/5 px-4 py-2 rounded-xl border border-amber-500/10 uppercase tracking-widest">{kw}</span>
-                            ))}
+                            )) || null}
                         </div>
                     </div>
                     <button className="h-14 w-full bg-foreground text-background hover:bg-amber-500 hover:text-black font-black rounded-2xl shadow-xl transition-all flex items-center justify-center gap-3 uppercase text-[11px] tracking-widest">

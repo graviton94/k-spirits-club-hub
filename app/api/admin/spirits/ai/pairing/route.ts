@@ -9,7 +9,6 @@ export async function POST(req: NextRequest) {
     try {
         const spiritData = await req.json();
 
-        // Generate pairings only using the provided data
         const pairingData = await generatePairingGuide({
             name: spiritData.name,
             category: spiritData.category,
@@ -18,15 +17,14 @@ export async function POST(req: NextRequest) {
             abv: spiritData.abv,
             region: spiritData.region,
             country: spiritData.country,
-            name_en: spiritData.name_en,
-            nose_tags: spiritData.nose_tags,
-            palate_tags: spiritData.palate_tags,
-            finish_tags: spiritData.finish_tags,
-            metadata: {
-                pairing_guide_ko: spiritData.pairing_guide_ko,
-                pairing_guide_en: spiritData.pairing_guide_en
-            }
+            nameEn: spiritData.nameEn,
+            noseTags: spiritData.noseTags,
+            palateTags: spiritData.palateTags,
+            finishTags: spiritData.finishTags,
+            pairingGuideKo: spiritData.pairingGuideKo,
+            pairingGuideEn: spiritData.pairingGuideEn
         });
+
 
         return NextResponse.json({
             success: true,
