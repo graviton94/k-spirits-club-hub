@@ -22,13 +22,18 @@ export async function GET(req: NextRequest) {
         }
 
         // Map to flat structure for UI compatibility
-        const mappedItems = cabinetItems.map((item: any) => ({
-            ...item,
-            ...item.spirit, // Flatten spirit properties
-            title: item.spirit?.name || 'Unknown', // Compatibility field
-            nameEn: item.spirit?.nameEn || null,
-            id: item.spirit?.id
-        }));
+        const mappedItems = cabinetItems.map((item: any) => {
+            if (!item) return null;
+            const spirit = item.spirit || {};
+            return {
+                ...item,
+                ...spirit,
+                title: spirit.name || 'Unknown Spirit',
+                nameEn: spirit.nameEn || '',
+                id: spirit.id || item.spiritId,
+                thumbnailUrl: spirit.thumbnailUrl || spirit.imageUrl || null
+            };
+        }).filter(Boolean);
 
         return NextResponse.json({ data: mappedItems });
 

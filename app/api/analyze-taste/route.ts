@@ -89,16 +89,19 @@ export async function POST(req: NextRequest) {
         ]);
 
         const spiritsForAnalysis = cabinetItems.map((item: any) => {
+            if (!item) return null;
+            const spirit = item.spirit || {};
             const review = userReviews.find((r: any) => r.spiritId === item.spiritId);
             return {
                 ...item,
+                ...spirit,
                 userReview: review ? {
                     ratingOverall: review.rating,
                     tags: [review.nose, review.palate, review.finish].filter(Boolean),
                     comment: review.content
                 } : null
             };
-        });
+        }).filter(Boolean);
 
         const promptData = buildTasteAnalysisPrompt(spiritsForAnalysis, isEn, []);
         

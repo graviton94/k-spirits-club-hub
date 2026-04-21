@@ -29,10 +29,13 @@ export async function GET(request: NextRequest) {
         }
 
         // Merge: Master Data (Base) + Cabinet Snapshot (Overlay)
+        const spiritData = (masterItem || {}) as any;
         const mergedData = {
-            ...(masterItem || {}),
+            ...spiritData,
             ...cabinetItem,
-            id: spiritId
+            id: spiritId,
+            title: spiritData.name || 'Unknown Spirit',
+            thumbnailUrl: spiritData.thumbnailUrl || spiritData.imageUrl || null
         };
 
         return NextResponse.json({

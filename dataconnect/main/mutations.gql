@@ -244,7 +244,7 @@ mutation deleteSpirit($id: String!) @auth(expr: "auth != null && auth.uid == 'fi
   spirit_delete(id: $id)
 }
 
-mutation upsertAiDiscoveryLog($id: String!, $userId: String, $analysis: String, $recommendations: Any, $messageHistory: Any) @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
+mutation upsertAiDiscoveryLog($id: String!, $userId: String, $analysis: String, $recommendations: Any, $messageHistory: Any) @auth(level: PUBLIC) {
   aiDiscoveryLog_upsert(data: {
     id: $id,
     userId: $userId,

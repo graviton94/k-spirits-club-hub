@@ -19,7 +19,7 @@ interface TasteRadarProps {
 
 export default function TasteRadar({ data }: TasteRadarProps) {
     return (
-        <div className="w-full h-full bg-card/40 backdrop-blur-xl rounded-[40px] p-6 border border-border shadow-2xl relative overflow-hidden group">
+        <div className="w-full h-full min-h-[300px] aspect-square bg-card/40 backdrop-blur-xl rounded-[40px] p-6 border border-border shadow-2xl relative overflow-hidden group">
             {/* Ambient Background Glow - Theme Aware */}
             <div className="absolute -top-24 -left-24 w-48 h-48 bg-amber-500/10 blur-[100px] rounded-full group-hover:bg-amber-500/20 transition-all duration-700" />
             <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-foreground/5 blur-[100px] rounded-full" />
