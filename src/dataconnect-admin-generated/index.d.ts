@@ -691,11 +691,14 @@ export interface UpsertSpiritVariables {
   status?: string | null;
   isPublished?: boolean | null;
   isReviewed?: boolean | null;
+  reviewedBy?: string | null;
+  reviewedAt?: TimestampString | null;
   rating?: number | null;
   reviewCount?: number | null;
   importer?: string | null;
   rawCategory?: string | null;
   metadata?: unknown | null;
+  updatedAt?: TimestampString | null;
 }
 
 export interface UpsertUserData {

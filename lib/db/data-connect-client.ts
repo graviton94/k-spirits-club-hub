@@ -68,6 +68,20 @@ export function getDC(): DataConnect {
  */
 
 // --- Spirits ---
+/**
+ * Generic field filter to prevent 'not expected' GQL variable errors.
+ * Safeguards against 'dirty' objects containing legacy or UI-specific fields.
+ */
+function filterAllowedFields(data: any, allowedKeys: string[]): any {
+  if (!data || typeof data !== 'object') return data;
+  const filtered: any = {};
+  allowedKeys.forEach(key => {
+    if (key in data) filtered[key] = data[key];
+  });
+  return filtered;
+}
+
+// --- Spirits ---
 export const dbListSpirits = async (vars: { category?: string, subcategory?: string, country?: string } = {}) => {
   const { data } = await listSpirits(getDC(), vars);
   return data.spirits;
@@ -106,7 +120,20 @@ export const dbGetSpirit = async (id: string) => {
 };
 
 export const dbUpsertSpirit = async (vars: any) => {
-  return await upsertSpirit(getDC(), vars);
+  const normalized = {
+    ...vars,
+    imageUrl: vars.imageUrl?.replace(/^http:\/\//i, 'https://'),
+    thumbnailUrl: vars.thumbnailUrl?.replace(/^http:\/\//i, 'https://')
+  };
+  const allowed = [
+    'id', 'name', 'nameEn', 'category', 'categoryEn', 'mainCategory', 'subcategory',
+    'distillery', 'bottler', 'abv', 'volume', 'country', 'region', 'imageUrl', 'thumbnailUrl',
+    'descriptionKo', 'descriptionEn', 'pairingGuideKo', 'pairingGuideEn',
+    'noseTags', 'palateTags', 'finishTags', 'tastingNote', 'status',
+    'isPublished', 'isReviewed', 'reviewedBy', 'reviewedAt', 'rating', 'reviewCount',
+    'importer', 'rawCategory', 'metadata', 'updatedAt'
+  ];
+  return await upsertSpirit(getDC(), filterAllowedFields(normalized, allowed));
 };
 
 export const dbDeleteSpirit = async (id: string) => {
@@ -149,7 +176,22 @@ export const dbGetUserProfile = async (id: string) => {
 };
 
 export const dbUpsertUser = async (vars: any) => {
-  return await upsertUser(getDC(), vars);
+  const allowed = [
+    'id', 'email', 'nickname', 'profileImage', 'role', 'themePreference',
+    'isFirstLogin', 'reviewsWritten', 'heartsReceived', 'tasteProfile'
+  ];
+  return await upsertUser(getDC(), filterAllowedFields(vars, allowed));
+};
+
+export const dbIncrementUserReviews = async (userId: string) => {
+  if (userId === 'ANONYMOUS_EXPERT') return;
+  const profile = await dbGetUserProfile(userId);
+  if (profile) {
+    return await dbUpsertUser({
+      id: userId,
+      reviewsWritten: (profile.reviewsWritten || 0) + 1
+    });
+  }
 };
 
 // --- Reviews ---
@@ -174,7 +216,8 @@ export const dbListAiDiscoveryLogs = async (limit: number) => {
 };
 
 export const dbUpsertAiDiscoveryLog = async (vars: any) => {
-  return await upsertAiDiscoveryLog(getDC(), vars);
+  const allowed = ['id', 'userId', 'analysis', 'recommendations', 'messageHistory'];
+  return await upsertAiDiscoveryLog(getDC(), filterAllowedFields(vars, allowed));
 };
 
 // --- Modification Requests ---
@@ -184,7 +227,8 @@ export const dbListModificationRequests = async () => {
 };
 
 export const dbUpsertModificationRequest = async (vars: any) => {
-  return await upsertModificationRequest(getDC(), vars);
+  const allowed = ['id', 'spiritId', 'spiritName', 'userId', 'title', 'content', 'status', 'createdAt'];
+  return await upsertModificationRequest(getDC(), filterAllowedFields(vars, allowed));
 };
 
 // --- News ---
@@ -226,9 +270,12 @@ export const dbUpsertNews = async (vars: any) => {
     ...vars,
     title: String(extractString(vars?.title, pickTranslationTitle(t)) || 'Untitled').trim(),
     content: String(extractString(vars?.content, pickTranslationContent(t)) || '').trim(),
-    newsTags: vars?.tags ?? vars?.newsTags
+    newsTags: vars?.tags ?? vars?.newsTags,
+    // Upgrade insecure links to https
+    link: (vars?.link || '').replace(/^http:\/\//i, 'https://')
   };
-  return await upsertNews(getDC(), normalizedVars);
+  const allowed = ['id', 'title', 'content', 'imageUrl', 'category', 'source', 'link', 'date', 'translations', 'tags'];
+  return await upsertNews(getDC(), filterAllowedFields(normalizedVars, allowed));
 };
 
 export const dbDeleteNews = async (id: string) => {

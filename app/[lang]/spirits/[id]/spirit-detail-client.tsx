@@ -413,7 +413,12 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
             )}
 
             {/* 3. Flavor Profile with Dynamic Colors */}
-            {(spirit.nose_tags || spirit.palate_tags || spirit.finish_tags || (spirit.metadata as any)?.nose_tags) && (
+            {(
+                (spirit.nose_tags && spirit.nose_tags.length > 0) || 
+                (spirit.palate_tags && spirit.palate_tags.length > 0) || 
+                (spirit.finish_tags && spirit.finish_tags.length > 0) || 
+                ((spirit.metadata as any)?.nose_tags && (spirit.metadata as any).nose_tags.length > 0)
+            ) && (
                 <div className="mb-10 p-6 bg-secondary/30 rounded-3xl border border-dashed border-border">
                     <h2 className="text-xl font-black mb-6 flex items-center gap-2">
                         <span className="w-2 h-6 bg-amber-500 rounded-full"></span>

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Star, X, Check, Zap } from 'lucide-react';
 import { submitMicroReviewAction } from '@/app/[lang]/actions/reviews';
+import { useAuth } from '@/app/[lang]/context/auth-context';
 
 interface MicroReviewModalProps {
   spiritId: string;
@@ -15,6 +16,7 @@ interface MicroReviewModalProps {
 
 export default function MicroReviewModal({ spiritId, spiritName, isOpen, onClose, lang = 'ko' }: MicroReviewModalProps) {
   const isEn = lang === 'en';
+  const { user } = useAuth();
   const [rating, setRating] = useState(0);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -32,18 +34,31 @@ export default function MicroReviewModal({ spiritId, spiritName, isOpen, onClose
 
   const handleSubmit = async () => {
     if (rating === 0) return;
+    if (!user) {
+        window.dispatchEvent(new CustomEvent('openLoginModal'));
+        return;
+    }
+
     setIsSubmitting(true);
     
     try {
-      const result = await submitMicroReviewAction(spiritId, rating, selectedTags, lang);
+      const result = await submitMicroReviewAction(spiritId, rating, selectedTags, lang, user.uid);
       if (result.success) {
-        onClose();
         // Reset state for next potentially different spirit in same session
         setRating(0);
         setSelectedTags([]);
+        
+        // Show success and close
+        onClose();
+        
+        // Dispatch event for UI sync
+        window.dispatchEvent(new CustomEvent('reviewSubmitted'));
+      } else {
+        alert(isEn ? "Failed to submit review." : "리뷰 제출에 실패했습니다.");
       }
     } catch (error) {
       console.error("Submission failed", error);
+      alert(isEn ? "An unexpected error occurred." : "알 수 없는 오류가 발생했습니다.");
     } finally {
       setIsSubmitting(false);
     }

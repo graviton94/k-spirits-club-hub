@@ -2737,11 +2737,14 @@ export interface UpsertSpiritVariables {
   status?: string | null;
   isPublished?: boolean | null;
   isReviewed?: boolean | null;
+  reviewedBy?: string | null;
+  reviewedAt?: TimestampString | null;
   rating?: number | null;
   reviewCount?: number | null;
   importer?: string | null;
   rawCategory?: string | null;
   metadata?: unknown | null;
+  updatedAt?: TimestampString | null;
 }
 ```
 ### Return Type
@@ -2817,15 +2820,18 @@ export default function UpsertSpiritComponent() {
     status: ..., // optional
     isPublished: ..., // optional
     isReviewed: ..., // optional
+    reviewedBy: ..., // optional
+    reviewedAt: ..., // optional
     rating: ..., // optional
     reviewCount: ..., // optional
     importer: ..., // optional
     rawCategory: ..., // optional
     metadata: ..., // optional
+    updatedAt: ..., // optional
   };
   mutation.mutate(upsertSpiritVars);
   // Variables can be defined inline as well.
-  mutation.mutate({ id: ..., name: ..., nameEn: ..., category: ..., categoryEn: ..., mainCategory: ..., subcategory: ..., distillery: ..., bottler: ..., abv: ..., volume: ..., country: ..., region: ..., imageUrl: ..., thumbnailUrl: ..., descriptionKo: ..., descriptionEn: ..., pairingGuideKo: ..., pairingGuideEn: ..., noseTags: ..., palateTags: ..., finishTags: ..., tastingNote: ..., status: ..., isPublished: ..., isReviewed: ..., rating: ..., reviewCount: ..., importer: ..., rawCategory: ..., metadata: ..., });
+  mutation.mutate({ id: ..., name: ..., nameEn: ..., category: ..., categoryEn: ..., mainCategory: ..., subcategory: ..., distillery: ..., bottler: ..., abv: ..., volume: ..., country: ..., region: ..., imageUrl: ..., thumbnailUrl: ..., descriptionKo: ..., descriptionEn: ..., pairingGuideKo: ..., pairingGuideEn: ..., noseTags: ..., palateTags: ..., finishTags: ..., tastingNote: ..., status: ..., isPublished: ..., isReviewed: ..., reviewedBy: ..., reviewedAt: ..., rating: ..., reviewCount: ..., importer: ..., rawCategory: ..., metadata: ..., updatedAt: ..., });
 
   // You can also pass in a `useDataConnectMutationOptions` object to `UseMutationResult.mutate()`.
   const options = {

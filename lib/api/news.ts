@@ -344,18 +344,26 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
             }
 
             try {
-                const text = result.response.text();
-                const cleanJson = text.replace(/```json|```/g, '').trim();
+                const response = await result.response;
+                const text = response.text();
+                // Robust JSON extraction
+                const jsonMatch = text.match(/\[[\s\S]*\]/);
+                const cleanJson = jsonMatch ? jsonMatch[0] : text.replace(/```json|```/g, '').trim();
                 const processedList = JSON.parse(cleanJson);
 
                 processedList.forEach((proc: any) => {
                     if (proc.tempId) {
+                        // Ensure image URLs are HTTPS if they exist in the processed data
+                        if (proc.imageUrl) {
+                            proc.imageUrl = proc.imageUrl.replace(/^http:\/\//i, 'https://');
+                        }
                         processedMap.set(proc.tempId, proc);
                     }
                 });
                 console.log(`[News Collection] ✅ Batch ${batchIdx + 1} processed: ${processedList.length}/${batch.length} items match`);
             } catch (error) {
-                console.error(`[News Collection] ❌ Batch ${batchIdx + 1} failed:`, error);
+                console.error(`[News Collection] ❌ Batch ${batchIdx + 1} JSON failure:`, error);
+                console.error(`[News Collection] ❌ Text was:`, result.response.text());
             }
         }
 

@@ -49,9 +49,9 @@ export const resolveSpiritPageState = cache(
         description_en: sqlSpirit.descriptionEn,
         pairing_guide_ko: sqlSpirit.pairingGuideKo,
         pairing_guide_en: sqlSpirit.pairingGuideEn,
-        nose_tags: sqlSpirit.noseTags,
-        palate_tags: sqlSpirit.palateTags,
-        finish_tags: sqlSpirit.finishTags,
+        nose_tags: typeof sqlSpirit.noseTags === 'string' ? sqlSpirit.noseTags.split(',').map((s: string) => s.trim()).filter(Boolean) : (sqlSpirit.noseTags || []),
+        palate_tags: typeof sqlSpirit.palateTags === 'string' ? sqlSpirit.palateTags.split(',').map((s: string) => s.trim()).filter(Boolean) : (sqlSpirit.palateTags || []),
+        finish_tags: typeof sqlSpirit.finishTags === 'string' ? sqlSpirit.finishTags.split(',').map((s: string) => s.trim()).filter(Boolean) : (sqlSpirit.finishTags || []),
         tasting_note: sqlSpirit.tastingNote,
         aggregateRating: {
           ratingValue: sqlSpirit.rating || 0,

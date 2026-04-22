@@ -1,0 +1,14 @@
+# Graphify Ignore Patterns
+node_modules/
+.next/
+dist/
+out/
+.gemini/
+.agents/
+ai_improvement_machine/knowledge/
+graphify-out/
+*.log
+.env
+.env.local
+public/fonts/
+public/images/

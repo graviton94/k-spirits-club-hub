@@ -1637,6 +1637,30 @@ input Spirit_Data {
   """
   reviewCount_update: [Int_Update!] @fdc_forbiddenInVariables
   """
+  ✨ Generated from Field `Spirit`.`reviewedAt` of type `Timestamp`
+  """
+  reviewedAt: Timestamp
+  """
+  ✨ `_expr` server value variant of `reviewedAt` (✨ Generated from Field `Spirit`.`reviewedAt` of type `Timestamp`)
+  """
+  reviewedAt_expr: Timestamp_Expr @fdc_forbiddenInVariables
+  """
+  ✨ `_time` server value variant of `reviewedAt` (✨ Generated from Field `Spirit`.`reviewedAt` of type `Timestamp`)
+  """
+  reviewedAt_time: Timestamp_Relative @fdc_forbiddenInVariables
+  """
+  ✨ `_update` server value variant of `reviewedAt` (✨ Generated from Field `Spirit`.`reviewedAt` of type `Timestamp`)
+  """
+  reviewedAt_update: [Timestamp_Update!] @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `Spirit`.`reviewedBy` of type `String`
+  """
+  reviewedBy: String
+  """
+  ✨ `_expr` server value variant of `reviewedBy` (✨ Generated from Field `Spirit`.`reviewedBy` of type `String`)
+  """
+  reviewedBy_expr: String_Expr @fdc_forbiddenInVariables
+  """
   ✨ Generated from Field `Spirit`.`status` of type `String`
   """
   status: String
@@ -1822,6 +1846,14 @@ input Spirit_Filter {
   """
   reviewCount: Int_Filter
   """
+  ✨ Generated from Field `Spirit`.`reviewedAt` of type `Timestamp`
+  """
+  reviewedAt: Timestamp_Filter
+  """
+  ✨ Generated from Field `Spirit`.`reviewedBy` of type `String`
+  """
+  reviewedBy: String_Filter
+  """
   ✨ Generated from Field `Spirit`.`status` of type `String`
   """
   status: String_Filter
@@ -2000,6 +2032,14 @@ input Spirit_Having {
   """
   reviewCount_count: Int_Filter
   """
+  ✨ Generated from Field `Spirit`.`reviewedAt_count` of type `Int!`
+  """
+  reviewedAt_count: Int_Filter
+  """
+  ✨ Generated from Field `Spirit`.`reviewedBy_count` of type `Int!`
+  """
+  reviewedBy_count: Int_Filter
+  """
   ✨ Generated from Field `Spirit`.`status_count` of type `Int!`
   """
   status_count: Int_Filter
@@ -2076,6 +2116,10 @@ input Spirit_Having {
   """
   reviewCount_min: Int_Filter
   """
+  ✨ Generated from Field `Spirit`.`reviewedAt_min` of type `Timestamp`
+  """
+  reviewedAt_min: Timestamp_Filter
+  """
   ✨ Generated from Field `Spirit`.`updatedAt_min` of type `Timestamp`
   """
   updatedAt_min: Timestamp_Filter
@@ -2103,6 +2147,10 @@ input Spirit_Having {
   ✨ Generated from Field `Spirit`.`reviewCount_max` of type `Int`
   """
   reviewCount_max: Int_Filter
+  """
+  ✨ Generated from Field `Spirit`.`reviewedAt_max` of type `Timestamp`
+  """
+  reviewedAt_max: Timestamp_Filter
   """
   ✨ Generated from Field `Spirit`.`updatedAt_max` of type `Timestamp`
   """
@@ -2239,6 +2287,14 @@ input Spirit_Order {
   """
   reviewCount: OrderDirection
   """
+  ✨ Generated from Field `Spirit`.`reviewedAt` of type `Timestamp`
+  """
+  reviewedAt: OrderDirection
+  """
+  ✨ Generated from Field `Spirit`.`reviewedBy` of type `String`
+  """
+  reviewedBy: OrderDirection
+  """
   ✨ Generated from Field `Spirit`.`status` of type `String`
   """
   status: OrderDirection
@@ -2363,6 +2419,14 @@ input Spirit_Order {
   """
   reviewCount_count: OrderDirection
   """
+  ✨ Generated from Field `Spirit`.`reviewedAt_count` of type `Int!`
+  """
+  reviewedAt_count: OrderDirection
+  """
+  ✨ Generated from Field `Spirit`.`reviewedBy_count` of type `Int!`
+  """
+  reviewedBy_count: OrderDirection
+  """
   ✨ Generated from Field `Spirit`.`status_count` of type `Int!`
   """
   status_count: OrderDirection
@@ -2439,6 +2503,10 @@ input Spirit_Order {
   """
   reviewCount_min: OrderDirection
   """
+  ✨ Generated from Field `Spirit`.`reviewedAt_min` of type `Timestamp`
+  """
+  reviewedAt_min: OrderDirection
+  """
   ✨ Generated from Field `Spirit`.`updatedAt_min` of type `Timestamp`
   """
   updatedAt_min: OrderDirection
@@ -2466,6 +2534,10 @@ input Spirit_Order {
   ✨ Generated from Field `Spirit`.`reviewCount_max` of type `Int`
   """
   reviewCount_max: OrderDirection
+  """
+  ✨ Generated from Field `Spirit`.`reviewedAt_max` of type `Timestamp`
+  """
+  reviewedAt_max: OrderDirection
   """
   ✨ Generated from Field `Spirit`.`updatedAt_max` of type `Timestamp`
   """

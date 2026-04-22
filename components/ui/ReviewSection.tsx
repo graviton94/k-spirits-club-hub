@@ -935,8 +935,6 @@ function RatingSection({ label, shortLabel, rating, tags, onRatingChange, onTags
             onPointerMove={handlePointer}
             onPointerLeave={() => setHoverRating(null)}
             onPointerDown={handlePointer}
-            onMouseDown={(e) => e.preventDefault()}
-            onTouchStart={(e) => e.preventDefault()}
             className="flex justify-between gap-1 px-3 py-2 rounded-xl bg-secondary/30 cursor-pointer touch-none select-none hover:bg-secondary/50 transition-colors"
           >
             {[1, 2, 3, 4, 5].map((s) => {

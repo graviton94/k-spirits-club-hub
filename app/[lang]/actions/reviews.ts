@@ -2,7 +2,7 @@
 
 "use server";
 
-import { dbGetSpirit, dbUpsertReview, dbUpsertSpirit } from '@/lib/db/data-connect-client';
+import { dbGetSpirit, dbUpsertReview, dbUpsertSpirit, dbIncrementUserReviews } from '@/lib/db/data-connect-client';
 import { revalidatePath } from 'next/cache';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -14,7 +14,8 @@ export async function submitMicroReviewAction(
   spiritId: string, 
   rating: number, 
   tags: string[], 
-  lang: string = 'ko'
+  lang: string = 'ko',
+  userId: string = 'ANONYMOUS_EXPERT'
 ) {
   try {
     // 1. Fetch current spirit data to calculate new average
@@ -39,7 +40,7 @@ export async function submitMicroReviewAction(
     await dbUpsertReview({
       id: reviewId,
       spiritId,
-      userId: "ANONYMOUS_EXPERT", // For micro-reviews without login
+      userId, // Use passed userId
       rating,
       content: defaultComment,
       nose: tags.filter((_, i) => i % 3 === 0).join(', '),
@@ -50,7 +51,14 @@ export async function submitMicroReviewAction(
       isPublished: true
     });
 
-    // 4. Update parent spirit metadata
+    // 4. Increment user stats
+    try {
+      await dbIncrementUserReviews(userId);
+    } catch (e) {
+      console.error('Failed to increment user stats in action:', e);
+    }
+
+    // 5. Update parent spirit metadata
     const updatedMetadata = {
       ...metadata,
       aggregateRating: {

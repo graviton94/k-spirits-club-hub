@@ -45,11 +45,14 @@ mutation upsertSpirit(
   $status: String,
   $isPublished: Boolean,
   $isReviewed: Boolean,
+  $reviewedBy: String,
+  $reviewedAt: Timestamp,
   $rating: Float,
   $reviewCount: Int,
   $importer: String,
   $rawCategory: String,
-  $metadata: Any
+  $metadata: Any,
+  $updatedAt: Timestamp
 ) @auth(level: PUBLIC) {
   spirit_upsert(data: {
     id: $id,
@@ -80,9 +83,12 @@ mutation upsertSpirit(
     rawCategory: $rawCategory,
     isPublished: $isPublished,
     isReviewed: $isReviewed,
+    reviewedBy: $reviewedBy,
+    reviewedAt: $reviewedAt,
     rating: $rating,
     reviewCount: $reviewCount,
-    metadata: $metadata
+    metadata: $metadata,
+    updatedAt: $updatedAt
   })
 }
 

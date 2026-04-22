@@ -109,21 +109,42 @@ export async function POST(req: NextRequest) {
         });
 
         const responseText = result.response.text();
-        let parsed = JSON.parse(responseText);
+        if (!responseText) {
+            throw new Error('Empty response from AI');
+        }
+
+        let parsed;
+        try {
+            parsed = JSON.parse(responseText);
+        } catch (e) {
+            console.error('[Sommelier API] JSON Parse Error:', e, responseText);
+            // Fallback for malformed JSON
+            return NextResponse.json({ 
+                message: isEn ? "I'm having trouble processing that right now. Could you rephrase?" : "죄송합니다. 현재 처리에 문제가 생겼습니다. 다시 한번 말씀해 주시겠어요?",
+                nextStep: currentStep,
+                analysis: ""
+            });
+        }
 
         // Enrich recommendations with real DB data
         if (parsed.recommendations && parsed.recommendations.length > 0) {
-            if (searchIndex.length === 0) {
-                searchIndex = await db.getPublishedSearchIndex();
+            if (!searchIndex || searchIndex.length === 0) {
+                try {
+                    searchIndex = await db.getPublishedSearchIndex();
+                } catch (e) {
+                    console.error('Failed to fetch search index for enrichment:', e);
+                }
             }
 
-            parsed.recommendations = parsed.recommendations.map((rec: any) => {
-                const match = searchIndex.find(s => s.i === rec.id) || searchIndex.find(s => (s.n === rec.name));
-                if (match) {
-                    return { ...rec, id: match.i, inDb: true, thumbnailUrl: match.t };
-                }
-                return { ...rec, inDb: false };
-            });
+            if (searchIndex && searchIndex.length > 0) {
+                parsed.recommendations = parsed.recommendations.map((rec: any) => {
+                    const match = searchIndex.find(s => s.i === rec.id) || searchIndex.find(s => (s.n === rec.name));
+                    if (match) {
+                        return { ...rec, id: match.i, inDb: true, thumbnailUrl: match.t };
+                    }
+                    return { ...rec, inDb: false };
+                });
+            }
 
             // Log selection to PostgreSQL
             if (parsed.nextStep === 6) {
@@ -145,6 +166,10 @@ export async function POST(req: NextRequest) {
 
     } catch (error: any) {
         console.error('[Sommelier API Error]', error);
-        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+        return NextResponse.json({ 
+            error: 'Internal Server Error',
+            message: "Our sommelier is currently resting. Please try again in a moment.",
+            debug: process.env.NODE_ENV === 'development' ? error.message : undefined
+        }, { status: 500 });
     }
 }

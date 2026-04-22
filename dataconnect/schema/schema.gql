@@ -44,6 +44,8 @@ type Spirit @table {
   rawCategory: String @col(dataType: "varchar(200)")
   isPublished: Boolean @default(value: false)
   isReviewed: Boolean @default(value: false)
+  reviewedBy: String
+  reviewedAt: Timestamp
   rating: Float @default(value: 0.0)
   reviewCount: Int @default(value: 0)
   metadata: Any

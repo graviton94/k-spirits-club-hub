@@ -818,6 +818,24 @@ extend type Spirit {
     distinct: Boolean = false
   ): Int! @fdc_generated(from: "Spirit.reviewCount", purpose: QUERY_COUNT)
   """
+  ✨ Count the number of rows in the `Spirit` table where the `reviewedAt` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  reviewedAt_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Spirit.reviewedAt", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Spirit` table where the `reviewedBy` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  reviewedBy_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Spirit.reviewedBy", purpose: QUERY_COUNT)
+  """
   ✨ Count the number of rows in the `Spirit` table where the `status` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
   """
   status_count(
@@ -964,6 +982,10 @@ extend type Spirit {
   """
   reviewCount_min: Int @fdc_generated(from: "Spirit.reviewCount", purpose: QUERY_MIN)
   """
+  ✨ Minimum of the `reviewedAt` field in the `Spirit` table.
+  """
+  reviewedAt_min: Timestamp @fdc_generated(from: "Spirit.reviewedAt", purpose: QUERY_MIN)
+  """
   ✨ Minimum of the `updatedAt` field in the `Spirit` table.
   """
   updatedAt_min: Timestamp @fdc_generated(from: "Spirit.updatedAt", purpose: QUERY_MIN)
@@ -991,6 +1013,10 @@ extend type Spirit {
   ✨ Maximum of the `reviewCount` field in the `Spirit` table.
   """
   reviewCount_max: Int @fdc_generated(from: "Spirit.reviewCount", purpose: QUERY_MAX)
+  """
+  ✨ Maximum of the `reviewedAt` field in the `Spirit` table.
+  """
+  reviewedAt_max: Timestamp @fdc_generated(from: "Spirit.reviewedAt", purpose: QUERY_MAX)
   """
   ✨ Maximum of the `updatedAt` field in the `Spirit` table.
   """

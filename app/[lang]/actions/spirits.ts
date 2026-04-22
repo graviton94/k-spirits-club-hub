@@ -71,39 +71,38 @@ export async function getSpiritsSearchIndex() {
  * Uses nullish coalescing (??) to allow persistence of empty strings (clearing fields).
  */
 function mapToSQLFields(current: any, incoming: any) {
+  // STRICT MAPPING: only allow fields that exist in GQL mutation variables
   return {
-    ...current,
-    // Basic Info
+    id: current.id,
+    name: incoming.name ?? current.name,
     nameEn: incoming.nameEn ?? current.nameEn,
+    category: incoming.category ?? current.category,
     categoryEn: incoming.categoryEn ?? current.categoryEn,
+    mainCategory: incoming.mainCategory ?? current.mainCategory,
     subcategory: incoming.subcategory ?? current.subcategory,
     distillery: incoming.distillery ?? current.distillery,
-    region: incoming.region ?? current.region,
-    country: incoming.country ?? current.country,
+    bottler: incoming.bottler ?? current.bottler,
     abv: incoming.abv !== undefined 
       ? (typeof incoming.abv === 'string' ? parseFloat(incoming.abv) : incoming.abv) 
       : current.abv,
-    
-    // Detailed Content
+    volume: incoming.volume !== undefined ? Number(incoming.volume) : current.volume,
+    country: incoming.country ?? current.country,
+    region: incoming.region ?? current.region,
+    imageUrl: incoming.imageUrl ?? current.imageUrl,
+    thumbnailUrl: incoming.thumbnailUrl ?? current.thumbnailUrl ?? incoming.imageUrl ?? current.imageUrl,
     descriptionKo: incoming.descriptionKo ?? current.descriptionKo,
     descriptionEn: incoming.descriptionEn ?? current.descriptionEn,
     pairingGuideKo: incoming.pairingGuideKo ?? current.pairingGuideKo,
     pairingGuideEn: incoming.pairingGuideEn ?? current.pairingGuideEn,
-    
-    // Sensory DNA
     noseTags: incoming.noseTags ?? current.noseTags ?? [],
     palateTags: incoming.palateTags ?? current.palateTags ?? [],
     finishTags: incoming.finishTags ?? current.finishTags ?? [],
     tastingNote: incoming.tastingNote ?? current.tastingNote,
-    
-    // Administrative Status
     status: incoming.status ?? current.status,
     isPublished: incoming.isPublished ?? current.isPublished,
     isReviewed: incoming.isReviewed ?? current.isReviewed,
-    rating: incoming.rating ?? current.rating,
-    
-    // [DYNAMIC RATING] Intelligence Engine
-    // If not reviewed yet, rating should be null to avoid "False 4.0"
+    reviewedBy: incoming.reviewedBy ?? current.reviewedBy,
+    reviewedAt: incoming.reviewedAt ?? current.reviewedAt,
     rating: (incoming.isReviewed ?? current.isReviewed) 
       ? calculateDynamicEditorRating({
           descriptionKo: incoming.descriptionKo ?? current.descriptionKo,
@@ -113,13 +112,13 @@ function mapToSQLFields(current: any, incoming: any) {
           finishTags: incoming.finishTags ?? current.finishTags ?? [],
           pairingGuideKo: incoming.pairingGuideKo ?? current.pairingGuideKo,
         })
-      : null,
-
-    // Metadata block merging
+      : (incoming.rating ?? current.rating ?? null),
+    reviewCount: incoming.reviewCount ?? current.reviewCount,
+    importer: incoming.importer ?? current.importer,
+    rawCategory: incoming.rawCategory ?? current.rawCategory,
     metadata: {
       ...(current.metadata || {}),
       ...(incoming.metadata || {}),
-      // Flattening AI confidence/sources if they came in root
       confidence: incoming.confidence ?? incoming.metadata?.confidence ?? current.metadata?.confidence,
       sources: incoming.sources ?? incoming.metadata?.sources ?? current.metadata?.sources,
     },

@@ -2,7 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { 
   dbListSpiritReviews, 
   dbUpsertReview,
-  dbGetSpirit
+  dbGetSpirit,
+  dbListUserReviews,
+  dbGetUserProfile,
+  dbUpsertUser,
+  dbIncrementUserReviews
 } from '@/lib/db/data-connect-client';
 
 export const runtime = 'edge';
@@ -42,6 +46,13 @@ export async function POST(request: NextRequest) {
       createdAt: new Date().toISOString()
     });
 
+    // Increment user stats
+    try {
+      await dbIncrementUserReviews(userId);
+    } catch (e) {
+      console.error('Failed to increment user reviews stat:', e);
+    }
+
     return NextResponse.json({
       success: true,
       id: reviewId
@@ -60,6 +71,27 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const mode = searchParams.get('mode');
+
+    const userIdParam = searchParams.get('userId');
+
+    if (userIdParam) {
+      const userReviews = await dbListUserReviews(userIdParam);
+      const reviews = userReviews.map((r: any) => ({
+        id: r.id,
+        spiritId: r.spiritId,
+        spiritName: r.spirit?.name || 'Unknown',
+        imageUrl: r.spirit?.imageUrl,
+        category: r.spirit?.category,
+        rating: r.rating,
+        content: r.content,
+        nose: r.nose,
+        palate: r.palate,
+        finish: r.finish,
+        createdAt: r.createdAt,
+        imageUrls: r.imageUrls || []
+      }));
+      return NextResponse.json({ reviews }, { status: 200 });
+    }
 
     if (mode === 'recent') {
       const allRecent = await dbListSpiritReviews(10, 0);

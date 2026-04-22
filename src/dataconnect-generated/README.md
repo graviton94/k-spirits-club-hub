@@ -3377,11 +3377,14 @@ export interface UpsertSpiritVariables {
   status?: string | null;
   isPublished?: boolean | null;
   isReviewed?: boolean | null;
+  reviewedBy?: string | null;
+  reviewedAt?: TimestampString | null;
   rating?: number | null;
   reviewCount?: number | null;
   importer?: string | null;
   rawCategory?: string | null;
   metadata?: unknown | null;
+  updatedAt?: TimestampString | null;
 }
 ```
 ### Return Type
@@ -3427,18 +3430,21 @@ const upsertSpiritVars: UpsertSpiritVariables = {
   status: ..., // optional
   isPublished: ..., // optional
   isReviewed: ..., // optional
+  reviewedBy: ..., // optional
+  reviewedAt: ..., // optional
   rating: ..., // optional
   reviewCount: ..., // optional
   importer: ..., // optional
   rawCategory: ..., // optional
   metadata: ..., // optional
+  updatedAt: ..., // optional
 };
 
 // Call the `upsertSpirit()` function to execute the mutation.
 // You can use the `await` keyword to wait for the promise to resolve.
 const { data } = await upsertSpirit(upsertSpiritVars);
 // Variables can be defined inline as well.
-const { data } = await upsertSpirit({ id: ..., name: ..., nameEn: ..., category: ..., categoryEn: ..., mainCategory: ..., subcategory: ..., distillery: ..., bottler: ..., abv: ..., volume: ..., country: ..., region: ..., imageUrl: ..., thumbnailUrl: ..., descriptionKo: ..., descriptionEn: ..., pairingGuideKo: ..., pairingGuideEn: ..., noseTags: ..., palateTags: ..., finishTags: ..., tastingNote: ..., status: ..., isPublished: ..., isReviewed: ..., rating: ..., reviewCount: ..., importer: ..., rawCategory: ..., metadata: ..., });
+const { data } = await upsertSpirit({ id: ..., name: ..., nameEn: ..., category: ..., categoryEn: ..., mainCategory: ..., subcategory: ..., distillery: ..., bottler: ..., abv: ..., volume: ..., country: ..., region: ..., imageUrl: ..., thumbnailUrl: ..., descriptionKo: ..., descriptionEn: ..., pairingGuideKo: ..., pairingGuideEn: ..., noseTags: ..., palateTags: ..., finishTags: ..., tastingNote: ..., status: ..., isPublished: ..., isReviewed: ..., reviewedBy: ..., reviewedAt: ..., rating: ..., reviewCount: ..., importer: ..., rawCategory: ..., metadata: ..., updatedAt: ..., });
 
 // You can also pass in a `DataConnect` instance to the action shortcut function.
 const dataConnect = getDataConnect(connectorConfig);
@@ -3487,17 +3493,20 @@ const upsertSpiritVars: UpsertSpiritVariables = {
   status: ..., // optional
   isPublished: ..., // optional
   isReviewed: ..., // optional
+  reviewedBy: ..., // optional
+  reviewedAt: ..., // optional
   rating: ..., // optional
   reviewCount: ..., // optional
   importer: ..., // optional
   rawCategory: ..., // optional
   metadata: ..., // optional
+  updatedAt: ..., // optional
 };
 
 // Call the `upsertSpiritRef()` function to get a reference to the mutation.
 const ref = upsertSpiritRef(upsertSpiritVars);
 // Variables can be defined inline as well.
-const ref = upsertSpiritRef({ id: ..., name: ..., nameEn: ..., category: ..., categoryEn: ..., mainCategory: ..., subcategory: ..., distillery: ..., bottler: ..., abv: ..., volume: ..., country: ..., region: ..., imageUrl: ..., thumbnailUrl: ..., descriptionKo: ..., descriptionEn: ..., pairingGuideKo: ..., pairingGuideEn: ..., noseTags: ..., palateTags: ..., finishTags: ..., tastingNote: ..., status: ..., isPublished: ..., isReviewed: ..., rating: ..., reviewCount: ..., importer: ..., rawCategory: ..., metadata: ..., });
+const ref = upsertSpiritRef({ id: ..., name: ..., nameEn: ..., category: ..., categoryEn: ..., mainCategory: ..., subcategory: ..., distillery: ..., bottler: ..., abv: ..., volume: ..., country: ..., region: ..., imageUrl: ..., thumbnailUrl: ..., descriptionKo: ..., descriptionEn: ..., pairingGuideKo: ..., pairingGuideEn: ..., noseTags: ..., palateTags: ..., finishTags: ..., tastingNote: ..., status: ..., isPublished: ..., isReviewed: ..., reviewedBy: ..., reviewedAt: ..., rating: ..., reviewCount: ..., importer: ..., rawCategory: ..., metadata: ..., updatedAt: ..., });
 
 // You can also pass in a `DataConnect` instance to the `MutationRef` function.
 const dataConnect = getDataConnect(connectorConfig);

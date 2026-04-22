@@ -22,14 +22,18 @@ function getKSTDate() {
 
 async function tryFindSpiritInDb(name: string) {
     try {
-        // Search by name using Data Connect
-        const results = await dbListSpirits({}); // Pass empty filter to get all for memory searching
+        // Optimization: Use keyword search instead of loading full DB
+        const results = await dbSearchSpiritsPublic({
+            search: name,
+            limit: 5
+        });
+        
         if (results && results.length > 0) {
             const lowerName = name.toLowerCase();
             return results.find(s => 
                 s.name.toLowerCase().includes(lowerName) || 
-                (s.nameEn && s.nameEn.toLowerCase().includes(lowerName))
-            ) || null;
+                (s.name_en && s.name_en.toLowerCase().includes(lowerName))
+            ) || results[0]; // Return closest match if no perfect include
         }
         return null;
     } catch (e) {
