@@ -33,6 +33,8 @@ This document lists strictly forbidden actions and coding patterns identified du
     - Background logging (e.g., Discovery Logs) in public routes should generally be `PUBLIC` or handled gracefully.
 3.  **Do NOT leave unmatched trailing braces in TS/TSX files (especially at component tail).**
     - **Correct Pattern**: ensure every component ends with a single function/class closing brace and run build parsing checks before deploy.
+4.  **Do NOT use `motion.*` / `<motion.*>` without importing `motion` from `framer-motion`.**
+    - **Correct Pattern**: when using animated elements, explicitly add `import { motion } from "framer-motion";` in that file.
 
 ## 💡 Lessons Learned
 - **GQL Validation**: Cloud Data Connect is stricter than the local emulator in some cases. Standardize on `_and` wrapping.

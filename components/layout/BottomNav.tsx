@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, Search, Library, Gamepad2, User } from "lucide-react";
+import { motion } from "framer-motion";
 import { Locale } from "@/i18n-config";
 
 export function BottomNav({ lang, dict }: { lang: Locale, dict: any }) {
