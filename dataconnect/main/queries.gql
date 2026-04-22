@@ -180,7 +180,7 @@ query adminListRawSpirits(
   $distillery: String, 
   $isPublished: Boolean, 
   $search: String
-) @auth(level: PUBLIC) {
+) @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   spirits(
     limit: $limit, 
     offset: $offset, 
@@ -505,7 +505,7 @@ query listModificationRequests @auth(level: PUBLIC) {
   }
 }
 
-query listUserCabinet($userId: String!) @auth(level: PUBLIC) {
+query listUserCabinet($userId: String!) @auth(expr: "auth != null && auth.uid == vars.userId") {
   userCabinets(where: { userId: { eq: $userId } }) {
     spiritId
     isFavorite
@@ -523,7 +523,7 @@ query listUserCabinet($userId: String!) @auth(level: PUBLIC) {
   }
 }
 
-query listUserReviews($userId: String!) @auth(level: PUBLIC) {
+query listUserReviews($userId: String!) @auth(expr: "auth != null && auth.uid == vars.userId") {
   spiritReviews(where: { userId: { eq: $userId } }) {
     id
     spiritId

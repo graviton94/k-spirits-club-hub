@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { dbAdminListRawSpirits, dbUpsertSpirit } from '@/lib/db/data-connect-client';
+import { dbAdminListRawSpirits, dbAdminUpsertSpirit } from '@/lib/db/data-connect-admin';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 /**
  * POST /api/admin/spirits/fix-published-sync
@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
 
         for (const spirit of inconsistentSpirits) {
             try {
-                await dbUpsertSpirit({ id: spirit.id, isPublished: true });
+                await dbAdminUpsertSpirit({ id: spirit.id, isPublished: true });
                 fixedSpirits.push({ id: spirit.id, name: spirit.name });
                 console.log(`[fix-published-sync] Fixed: ${spirit.id} - ${spirit.name}`);
             } catch (error: any) {

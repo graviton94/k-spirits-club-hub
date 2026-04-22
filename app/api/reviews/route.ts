@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { 
   dbListSpiritReviews, 
-  dbListUserReviews,
   dbIncrementUserReviews,
   dbFindReview
 } from '@/lib/db/data-connect-client';
-import { dbAdminUpsertReview, dbAdminDeleteReview } from '@/lib/db/data-connect-admin';
+import { dbAdminUpsertReview, dbAdminDeleteReview, dbAdminListUserReviews } from '@/lib/db/data-connect-admin';
 import { v4 as uuidv4 } from 'uuid';
 
 export const runtime = 'nodejs';
@@ -81,7 +80,7 @@ export async function GET(request: NextRequest) {
     const userIdParam = searchParams.get('userId');
 
     if (userIdParam) {
-      const userReviews = await dbListUserReviews(userIdParam);
+      const userReviews = await dbAdminListUserReviews(userIdParam);
       const reviews = userReviews.map((r: any) => ({
         id: r.id,
         spiritId: r.spiritId,

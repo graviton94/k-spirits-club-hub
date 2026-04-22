@@ -9,6 +9,11 @@ import {
 	upsertReview,
 	updateReview,
 	deleteReview,
+	adminListRawSpirits,
+	upsertCabinet,
+	deleteCabinet,
+	listUserCabinet,
+	listUserReviews,
 } from '@/src/dataconnect-admin-generated';
 
 let adminDC: DataConnect | null = null;
@@ -70,4 +75,34 @@ export async function dbAdminUpdateReview(vars: Record<string, unknown>) {
 
 export async function dbAdminDeleteReview(id: string) {
 	return deleteReview(getAdminDC(), { id });
+}
+
+export async function dbAdminListRawSpirits(vars: {
+	limit?: number;
+	offset?: number;
+	category?: string;
+	distillery?: string;
+	isPublished?: boolean;
+	search?: string;
+}) {
+	const { data } = await adminListRawSpirits(getAdminDC(), vars);
+	return data.spirits;
+}
+
+export async function dbAdminUpsertCabinet(vars: Record<string, unknown>) {
+	return upsertCabinet(getAdminDC(), vars as any);
+}
+
+export async function dbAdminDeleteCabinet(vars: { userId: string; spiritId: string }) {
+	return deleteCabinet(getAdminDC(), vars);
+}
+
+export async function dbAdminListUserCabinet(userId: string) {
+	const { data } = await listUserCabinet(getAdminDC(), { userId });
+	return data.userCabinets;
+}
+
+export async function dbAdminListUserReviews(userId: string) {
+	const { data } = await listUserReviews(getAdminDC(), { userId });
+	return data.spiritReviews;
 }

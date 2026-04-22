@@ -26,6 +26,18 @@ This document lists strictly forbidden actions and coding patterns identified du
 -   **ALWAYS** use `@latest` with `firebase-tools` during deployment to avoid cached CLI bugs.
 -   **NEVER** modify `dataconnect-generated` files manually; always regenerate via CLI.
 
+### Admin API Route Runtime
+- **NEVER** set `export const runtime = 'edge'` in API routes that call `dbUpsertSpirit`, `dbDeleteSpirit`, `dbUpsertNews`, or any mutation with `@auth(expr: "... auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'")`.
+  - **Correct Pattern**: Admin mutation routes MUST use `export const runtime = 'nodejs'` AND import from `lib/db/data-connect-admin.ts` (Admin SDK path), never from `lib/db/data-connect-client.ts`.
+
+### Public GQL Query Exposure
+- **NEVER** leave `adminListRawSpirits`, `auditAll*`, `listUserCabinet`, or `listUserReviews` queries at `@auth(level: PUBLIC)` in production.
+  - **Correct Pattern**: admin queries → `@auth(expr: "auth != null && auth.uid == '...'")`, user-scoped queries → `@auth(expr: "auth != null && auth.uid == vars.userId")`.
+
+### Concurrent Admin Enrichment
+- **NEVER** use `Promise.all(items.map(async () => { await enrichSpiritWithAI(...) }))` for batch operations.
+  - **Correct Pattern**: Use `for...of` sequential loop or limit concurrency to ≤4 to prevent Gemini 429 and Data Connect connection saturation.
+
 ### General Development
 1.  **Do NOT use snake_case for UI components when the core `Spirit` interface is camelCase.**
     - Always map database fields (SQL) to the designated UI model fields.
