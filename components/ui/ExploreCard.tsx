@@ -208,11 +208,11 @@ function ExploreCardComponent({
       {/* 📄 Intelligence Content */}
       <div className="flex-1 min-w-0 flex flex-col justify-center gap-1.5">
         <div className="flex items-center gap-2">
-            <span className={`${chips.primary} !px-2 !py-0.5 !text-[9px] !rounded-lg`}>
+            <span className={`${chips.primarySm} !px-2 !py-0.5 !rounded-lg`}>
                 {displayCategory}
             </span>
              {spirit.abv > 0 && (
-                <span className="text-[10px] font-black text-foreground/30 uppercase italic">
+              <span className="text-xs font-black text-foreground/30 uppercase italic">
                     {spirit.abv}% ABV
                 </span>
             )}
@@ -231,7 +231,7 @@ function ExploreCardComponent({
             {displaySubCategory !== displayCategory && (
                 <>
                     <span className="w-1 h-1 rounded-full bg-border" />
-                    <p className="text-[10px] font-black text-foreground/20 uppercase tracking-tighter">
+                    <p className="text-xs font-black text-foreground/20 uppercase tracking-tighter">
                         {displaySubCategory}
                     </p>
                 </>
@@ -241,7 +241,7 @@ function ExploreCardComponent({
         {/* 🛡️ Expert Rating & Badges */}
         <div className="flex items-center gap-3">
           {spirit.aggregateRating && spirit.aggregateRating.ratingValue > 0 && (
-            <div className={`flex items-center gap-1.5 ${chips.primary} !px-2 !py-1 !text-[10px] !rounded-xl`}>
+            <div className={`flex items-center gap-1.5 ${chips.primarySm} !px-2 !py-1 !rounded-xl`}>
               <span className="text-xs">★</span>
               <span>{Number(spirit.aggregateRating.ratingValue).toFixed(1)}</span>
               {(spirit.aggregateRating.reviewCount ?? 0) > 0 && (

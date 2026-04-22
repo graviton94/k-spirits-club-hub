@@ -21,6 +21,7 @@ import { Spirit } from "@/lib/db/schema";
 import { getTagStyle } from "@/lib/constants/tag-styles";
 import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
 import { CATEGORY_NAME_MAP } from "@/lib/constants/categories";
+import { chips, surfaces } from "@/lib/design/patterns";
 
 interface SpiritDetailClientProps {
     spirit: Spirit;
@@ -112,6 +113,22 @@ const UI_TEXT = {
 import { formatSpiritFieldValue, localizeDataSource } from "@/lib/utils/localize-field";
 import Link from "next/link"; // added for crawlable internal linking
 
+function normalizeTagList(value: unknown): string[] {
+    if (!value) return [];
+    if (Array.isArray(value)) {
+        return value
+            .map((item) => String(item).trim())
+            .filter(Boolean);
+    }
+    if (typeof value === 'string') {
+        return value
+            .split(',')
+            .map((item) => item.trim())
+            .filter(Boolean);
+    }
+    return [];
+}
+
 export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [], lang, dict }: SpiritDetailClientProps) {
     const router = useRouter();
     const pathname = usePathname();
@@ -125,6 +142,12 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
     const displayDescription = isEn
         ? (spirit.metadata?.description_en || spirit.metadata?.description_ko || dict?.noDescription || UI_TEXT.en.noDescription)
         : (spirit.metadata?.description_ko || spirit.metadata?.description_en || dict?.noDescription || UI_TEXT.ko.noDescription);
+
+    const noseTags = normalizeTagList(spirit.noseTags ?? spirit.nose_tags ?? (spirit.metadata as any)?.noseTags ?? (spirit.metadata as any)?.nose_tags);
+    const palateTags = normalizeTagList(spirit.palateTags ?? spirit.palate_tags ?? (spirit.metadata as any)?.palateTags ?? (spirit.metadata as any)?.palate_tags);
+    const finishTags = normalizeTagList(spirit.finishTags ?? spirit.finish_tags ?? (spirit.metadata as any)?.finishTags ?? (spirit.metadata as any)?.finish_tags);
+    const tastingNote = (spirit.tastingNote || spirit.tasting_note || '').trim();
+    const hasTastingProfile = Boolean(tastingNote) || noseTags.length > 0 || palateTags.length > 0 || finishTags.length > 0;
 
     const { user } = useAuth();
     const [isInCabinet, setIsInCabinet] = useState(false);
@@ -413,35 +436,29 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
             )}
 
             {/* 3. Flavor Profile with Dynamic Colors */}
-            {(
-                (spirit.nose_tags && spirit.nose_tags.length > 0) || 
-                (spirit.palate_tags && spirit.palate_tags.length > 0) || 
-                (spirit.finish_tags && spirit.finish_tags.length > 0) || 
-                ((spirit.metadata as any)?.nose_tags && (spirit.metadata as any).nose_tags.length > 0) ||
-                spirit.tasting_note
-            ) && (
-                <div className="mb-10 p-6 bg-secondary/30 rounded-3xl border border-dashed border-border">
+            {hasTastingProfile && (
+                <div className={`mb-10 p-6 rounded-3xl border border-dashed border-border ${surfaces.panelSoft}`}>
                     <h2 className="text-xl font-black mb-6 flex items-center gap-2">
-                        <span className="w-2 h-6 bg-amber-500 rounded-full"></span>
+                        <span className="w-2 h-6 bg-primary rounded-full"></span>
                         {dict?.tastingNote || t.tastingNote || t.flavor}
                     </h2>
                     
                     {/* Paragraph Tasting Note */}
-                    {spirit.tasting_note && (
+                    {tastingNote && (
                         <div className="mb-6 p-4 bg-background/50 rounded-2xl border border-border/50 italic text-sm sm:text-base leading-relaxed text-muted-foreground">
-                            {spirit.tasting_note}
+                            {tastingNote}
                         </div>
                     )}
 
                     <div className="space-y-6">
-                        {spirit.nose_tags && spirit.nose_tags.length > 0 && (
-                            <FlavorSection title={t.nose} tags={spirit.nose_tags} />
+                        {noseTags.length > 0 && (
+                            <FlavorSection title={t.nose} tags={noseTags} />
                         )}
-                        {spirit.palate_tags && spirit.palate_tags.length > 0 && (
-                            <FlavorSection title={t.palate} tags={spirit.palate_tags} />
+                        {palateTags.length > 0 && (
+                            <FlavorSection title={t.palate} tags={palateTags} />
                         )}
-                        {spirit.finish_tags && spirit.finish_tags.length > 0 && (
-                            <FlavorSection title={t.finish} tags={spirit.finish_tags} />
+                        {finishTags.length > 0 && (
+                            <FlavorSection title={t.finish} tags={finishTags} />
                         )}
                     </div>
                 </div>
@@ -663,7 +680,7 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
 function FlavorSection({ title, tags }: { title: string; tags: string[] }) {
     return (
         <div>
-            <h3 className="text-xs font-black text-muted-foreground mb-3 tracking-widest">{title}</h3>
+            <h3 className={`text-xs font-black text-muted-foreground mb-3 tracking-widest inline-flex items-center ${chips.subtle} !py-0.5 !px-2`}>{title}</h3>
             <div className="flex flex-wrap gap-2">
                 {tags.map((tag, index) => {
                     const styles = getTagStyle(tag);

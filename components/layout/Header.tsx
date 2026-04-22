@@ -28,7 +28,7 @@ export function Header({ lang, dict }: { lang: Locale, dict: any }) {
                          <span className="truncate text-foreground text-xl font-black tracking-tighter leading-none">
                             K-SPIRITS
                         </span>
-                        <span className={`${chips.accent} !px-2 !py-0 !rounded-md !bg-transparent !border-0 text-[10px] leading-none`}>
+                        <span className={`${chips.accentSm} !px-2 !py-0 !rounded-md !bg-transparent !border-0 leading-none`}>
                             Club Hub
                         </span>
                     </div>
@@ -46,7 +46,7 @@ export function Header({ lang, dict }: { lang: Locale, dict: any }) {
                             className={`flex min-w-0 items-center gap-3 rounded-2xl py-1.5 pl-3 pr-2 transition-all ${interactive.hoverSurface} border border-transparent ${interactive.hoverBorder} group`}
                         >
                             <div className="hidden whitespace-nowrap text-right sm:block">
-                                <p className="text-[9px] font-black text-foreground/30 uppercase tracking-widest">
+                                <p className="text-[11px] font-black text-foreground/30 uppercase tracking-widest">
                                     Member
                                 </p>
                                 <p className="text-sm font-black text-foreground group-hover:text-primary transition-colors uppercase tracking-tighter">

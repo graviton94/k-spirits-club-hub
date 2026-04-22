@@ -72,17 +72,19 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialRevi
                 <div className="absolute inset-0 z-0">
                     <RandomBackground />
                 </div>
+                <div className="absolute inset-0 z-10 bg-linear-to-b from-black/55 via-black/35 to-black/60 pointer-events-none" />
+                <div className="absolute inset-0 z-10 bg-radial-[ellipse_at_center] from-transparent via-black/10 to-black/35 pointer-events-none" />
 
                 {/* Content Layer */}
                 <div className="relative z-30 w-full max-w-6xl px-6 text-center space-y-12">
                     <div className="space-y-6">
                         <div className="flex justify-center flex-wrap gap-3 animate-fade-in-up">
-                            <span className={`${chips.primary} backdrop-blur-md`}>
+                            <span className={`${chips.primarySm} backdrop-blur-md`}>
                                 {dict.heroSubtitle}
                             </span>
                         </div>
                         
-                        <h1 className="text-6xl md:text-8xl font-black text-white leading-[0.9] md:leading-[0.85] tracking-tighter animate-fade-in-up delay-100 drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+                        <h1 className="text-5xl md:text-8xl font-black text-white leading-[0.92] md:leading-[0.85] tracking-tight animate-fade-in-up delay-100 drop-shadow-[0_12px_32px_rgba(0,0,0,0.56)]">
                             {dict.heroTitle} <br />
                             <span className="text-brand-gradient drop-shadow-none">
                                 Spirit
@@ -174,7 +176,7 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialRevi
                         <div className="w-8 h-8 rounded-xl bg-accent/10 flex items-center justify-center border border-accent/20 text-accent">
                             <Flame className="w-4 h-4" />
                         </div>
-                        <h2 className={typography.sectionTitle}>{dict.recentReviews || t.liveReviews}</h2>
+                        <h2 className={typography.sectionTitleSoft}>{dict.recentReviews || t.liveReviews}</h2>
                     </div>
                     <Link
                         href={`/${lang}/contents/reviews`}

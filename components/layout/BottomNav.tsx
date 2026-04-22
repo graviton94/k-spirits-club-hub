@@ -45,7 +45,7 @@ export function BottomNav({ lang, dict }: { lang: Locale, dict: any }) {
                                     className={`w-6 h-6 transition-all duration-500 ${active ? "scale-100" : "group-hover:scale-110"}`}
                                     strokeWidth={active ? 3 : 2}
                                 />
-                                <span className={`text-[9px] font-black uppercase tracking-tighter absolute -bottom-8 opacity-0 transition-all duration-300 ${active ? "opacity-40 translate-y-0" : "group-hover:opacity-100 group-hover:-translate-y-1"}`}>
+                                <span className={`text-[11px] font-black uppercase tracking-tight absolute -bottom-8 opacity-0 transition-all duration-300 ${active ? "opacity-40 translate-y-0" : "group-hover:opacity-100 group-hover:-translate-y-1"}`}>
                                     {item.label}
                                 </span>
 

@@ -6,7 +6,7 @@ import { dbUpsertAiDiscoveryLog } from '@/lib/db/data-connect-client';
 import { db } from '@/lib/db'; // Compatibility layer for getPublishedSearchIndex
 
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 const API_KEY = process.env.GEMINI_API_KEY || '';
 const MODEL_ID = "gemini-2.0-flash";
@@ -16,23 +16,29 @@ const MODEL_ID = "gemini-2.0-flash";
  * Handles multi-step professional profiling and spirit recommendations.
  */
 export async function POST(req: NextRequest) {
+    const fallbackResponse = (lang: string, nextStep = 1, detail?: string) => NextResponse.json({
+        message: lang === 'en'
+            ? 'Our sommelier is taking a short break. Please try again in a moment.'
+            : '소믈리에가 잠시 숨을 고르고 있습니다. 잠시 후 다시 시도해주세요.',
+        nextStep,
+        analysis: '',
+        recommendations: [],
+        ...(process.env.NODE_ENV === 'development' && detail ? { debug: detail } : {})
+    });
+
     if (!API_KEY) {
         const body = await req.json().catch(() => ({} as any));
         const lang = body?.lang === 'en' ? 'en' : 'ko';
-        return NextResponse.json({
-            message: lang === 'en'
-                ? 'Sommelier service is preparing. Please try again shortly.'
-                : '소믈리에 서비스 준비 중입니다. 잠시 후 다시 시도해주세요.',
-            nextStep: body?.currentStep || 1,
-            analysis: '',
-            recommendations: []
-        });
+        return fallbackResponse(lang, body?.currentStep || 1);
     }
 
     try {
         const body = await req.json();
         const { messages, lang = 'ko', currentStep = 1, userId = 'guest' } = body;
         const isEn = lang === 'en';
+        if (!Array.isArray(messages) || messages.length === 0) {
+            return fallbackResponse(lang, currentStep, 'Missing messages');
+        }
 
         // --- RATE LIMITING (Post-Migration Placeholder) ---
         // Note: Legacy firestore-rest rate limiting removed.
@@ -171,14 +177,16 @@ export async function POST(req: NextRequest) {
             }
         }
 
-        return NextResponse.json(parsed);
+        return NextResponse.json({
+            message: parsed.message || (isEn ? 'Let me think a bit more about your taste.' : '취향을 조금 더 분석해볼게요.'),
+            nextStep: parsed.nextStep || currentStep,
+            analysis: parsed.analysis || '',
+            recommendations: Array.isArray(parsed.recommendations) ? parsed.recommendations : []
+        });
 
     } catch (error: any) {
         console.error('[Sommelier API Error]', error);
-        return NextResponse.json({ 
-            error: 'Internal Server Error',
-            message: "Our sommelier is currently resting. Please try again in a moment.",
-            debug: process.env.NODE_ENV === 'development' ? error.message : undefined
-        }, { status: 500 });
+        const body = await req.clone().json().catch(() => ({} as any));
+        return fallbackResponse(body?.lang === 'en' ? 'en' : 'ko', body?.currentStep || 1, error?.message);
     }
 }

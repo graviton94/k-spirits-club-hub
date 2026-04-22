@@ -41,6 +41,10 @@ This document lists strictly forbidden actions and coding patterns identified du
     - **Correct Pattern**: when consuming recommendation responses, support both single-object (`recommendation`) and array (`recommendations`) contracts to avoid runtime 500s.
 7.  **Do NOT add navigation links to routes that are not implemented.**
     - **Correct Pattern**: before adding `href`, verify the target page exists in `app/[lang]` (e.g., list pages should route to existing `/explore` when `/spirits` list page is absent).
+8.  **Do NOT force all section titles to uppercase + italic by default.**
+    - **Correct Pattern**: split title roles with dedicated tokens (`sectionTitle`, `sectionTitleSoft`, `eyebrow`) and apply per-section hierarchy.
+9.  **Do NOT use sub-12px text for core interactive or metadata labels on mobile-facing UI.**
+    - **Correct Pattern**: keep minimum readable size at `text-xs` (or 11px for strictly secondary labels), and use tokenized chip sizes (`*Sm`, `*Md`) instead of hardcoded `text-[9px]`/`text-[10px]`.
 
 ## 💡 Lessons Learned
 - **GQL Validation**: Cloud Data Connect is stricter than the local emulator in some cases. Standardize on `_and` wrapping.

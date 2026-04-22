@@ -155,9 +155,9 @@ function extractTastingNoteTags(rawValue: string | null | undefined): string[] {
 }
 
 function getPreferredMetaTags(spirit: Spirit, lang: 'ko' | 'en'): string[] {
-  const tastingNoteTags = extractTastingNoteTags(spirit.tasting_note);
+  const tastingNoteTags = extractTastingNoteTags(spirit.tastingNote || spirit.tasting_note);
   const sensoryTags = dedupeTokens(
-    [...(spirit.nose_tags || []), ...(spirit.palate_tags || []), ...(spirit.finish_tags || [])]
+    [...(spirit.noseTags || spirit.nose_tags || []), ...(spirit.palateTags || spirit.palate_tags || []), ...(spirit.finishTags || spirit.finish_tags || [])]
       .map((tag) => normalizeSnippetToken(String(tag))).filter(Boolean)
   );
   if (lang === 'en') return (sensoryTags.length > 0 ? sensoryTags : tastingNoteTags).slice(0, 3);
@@ -209,7 +209,9 @@ function buildSpiritMetaDescription(spirit: Spirit, lang: 'ko' | 'en', reviewCou
   const tags = getPreferredMetaTags(spirit, lang);
   const abvLine = typeof spirit.abv === 'number' ? (isEn ? `ABV ${spirit.abv}%. ` : `도수 ${spirit.abv}%. `) : '';
   const typeLine = isEn ? `${typeLabel}${countryLabel ? ` from ${countryLabel}` : ''}. ` : `${countryLabel ? `${countryLabel} ` : ''}${typeLabel}. `;
-  const pairingGuideRaw = isEn ? (spirit.pairing_guide_en || spirit.pairing_guide_ko) : (spirit.pairing_guide_ko || spirit.pairing_guide_en);
+  const pairingGuideRaw = isEn
+    ? (spirit.pairingGuideEn || spirit.pairing_guide_en || spirit.pairingGuideKo || spirit.pairing_guide_ko)
+    : (spirit.pairingGuideKo || spirit.pairing_guide_ko || spirit.pairingGuideEn || spirit.pairing_guide_en);
   const firstPairing = pairingGuideRaw ? pairingGuideRaw.split(/[,.,。]/)[0]?.trim().slice(0, 30) : null;
   const pairingLine = firstPairing ? (isEn ? `Pairs well with ${firstPairing}. ` : `${firstPairing}과 페어링. `) : '';
   const notesLine = tags.length > 0 ? (isEn ? `Notes: ${tags.join(', ')}. ` : `향·맛: ${tags.join(', ')}. `) : '';

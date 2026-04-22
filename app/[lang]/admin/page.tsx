@@ -13,8 +13,8 @@ import DiscoveryLogsTable from '@/components/admin/DiscoveryLogsTable';
 import { 
     getDC,
     dbAdminListRawSpirits, 
-    dbUpsertSpirit, 
-    dbDeleteSpirit, 
+    dbUpsertSpirit,
+    dbDeleteSpirit,
     dbListModificationRequests, 
     dbUpsertModificationRequest,
     dbListNewsArticles,
@@ -194,12 +194,21 @@ export default function AdminDashboard() {
     };
     const publishSpirit = async (id: string) => {
         try {
+            const current = spirits.find(s => s.id === id);
+            if (!current) throw new Error('Spirit not found');
+
             await dbUpsertSpirit({
-                id,
+                id: current.id,
+                name: current.name,
+                category: current.category,
+                imageUrl: current.imageUrl || current.thumbnailUrl || '/mys-4.webp',
+                thumbnailUrl: current.thumbnailUrl || current.imageUrl || '/mys-4.webp',
                 status: 'PUBLISHED',
                 isPublished: true,
+                isReviewed: true,
                 reviewedBy: 'ADMIN',
-                reviewedAt: new Date().toISOString()
+                reviewedAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString()
             });
             await loadSpirits();
         } catch (e) {
@@ -309,7 +318,16 @@ export default function AdminDashboard() {
             payload.updatedAt = new Date().toISOString();
             payload.isReviewed = payload.isPublished || false;
             
-            await dbUpsertSpirit(payload);
+            await dbUpsertSpirit({
+                ...payload,
+                imageUrl: payload.imageUrl || '/mys-4.webp',
+                thumbnailUrl: payload.imageUrl || '/mys-4.webp',
+                isPublished: publish ? true : false,
+                status: publish ? 'PUBLISHED' : 'DRAFT',
+                isReviewed: publish ? true : false,
+                reviewedBy: publish ? 'ADMIN' : null,
+                reviewedAt: publish ? new Date().toISOString() : null,
+            });
             await loadSpirits();
             setEditingId(null);
             setIsCreating(false);
@@ -358,7 +376,21 @@ export default function AdminDashboard() {
             }
 
             payload.id = editingId;
-            await dbUpsertSpirit(payload);
+            await dbUpsertSpirit({
+                ...payload,
+                id: editingId,
+                name: payload.name || editForm.name,
+                category: payload.category || editForm.category,
+                imageUrl: payload.imageUrl || '/mys-4.webp',
+                thumbnailUrl: payload.imageUrl || '/mys-4.webp',
+                ...(publish ? {
+                    status: 'PUBLISHED',
+                    isPublished: true,
+                    isReviewed: true,
+                    reviewedBy: 'ADMIN',
+                    reviewedAt: new Date().toISOString(),
+                } : {}),
+            });
             await loadSpirits();
             setEditingId(null);
             alert(publish ? '✅ 저장 및 공개 완료' : '✅ 저장 완료');

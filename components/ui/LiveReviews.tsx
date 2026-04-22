@@ -153,7 +153,7 @@ export function LiveReviews({ initialReviews = [] }: LiveReviewsProps) {
 
                 <div className="flex flex-wrap items-center gap-2">
                   {/* Author Capsule */}
-                  <div className={`flex items-center gap-1.5 ${chips.subtle} !py-1 !rounded-full`}>
+                  <div className={`flex items-center gap-1.5 ${chips.subtleSm} !py-1 !rounded-full`}>
                     <span className="truncate max-w-[80px]">{review.userName}</span>
                   </div>
 
@@ -161,7 +161,7 @@ export function LiveReviews({ initialReviews = [] }: LiveReviewsProps) {
                   {(() => {
                     const ratingColors = getRatingColor(review.rating);
                     return (
-                      <div className={`px-3 py-1 ${ratingColors.bg} border ${ratingColors.border} rounded-full text-[10px] font-black ${ratingColors.text}`}>
+                      <div className={`px-3 py-1 ${ratingColors.bg} border ${ratingColors.border} rounded-full text-xs font-black ${ratingColors.text}`}>
                         ★ {review.rating.toFixed(1)}
                       </div>
                     );
@@ -195,7 +195,7 @@ export function LiveReviews({ initialReviews = [] }: LiveReviewsProps) {
                       'bg-primary/5 text-primary/80 border-primary/15'
                     ];
                     return (
-                      <span key={idx} className={`text-[9px] px-2 py-0.5 rounded-full border font-black uppercase tracking-tight ${colors[idx % colors.length]}`}>
+                      <span key={idx} className={`text-xs px-2 py-0.5 rounded-full border font-black uppercase tracking-tight ${colors[idx % colors.length]}`}>
                         #{tag}
                       </span>
                     );

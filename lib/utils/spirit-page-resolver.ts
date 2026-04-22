@@ -3,6 +3,22 @@ import { Spirit } from '@/lib/db/schema';
 import { isIndexableSpirit } from './indexable-tier';
 import { dbGetSpirit } from '@/lib/db/data-connect-client';
 
+function normalizeTagList(value: unknown): string[] {
+  if (!value) return [];
+  if (Array.isArray(value)) {
+    return value
+      .map((item) => String(item).trim())
+      .filter(Boolean);
+  }
+  if (typeof value === 'string') {
+    return value
+      .split(',')
+      .map((item) => item.trim())
+      .filter(Boolean);
+  }
+  return [];
+}
+
 /**
  * Route-level state model for spirit detail pages.
  */
@@ -39,6 +55,10 @@ export const resolveSpiritPageState = cache(
       }
 
       // Map SQL fields (Data Connect) to the Spirit interface
+      const noseTags = normalizeTagList(sqlSpirit.noseTags);
+      const palateTags = normalizeTagList(sqlSpirit.palateTags);
+      const finishTags = normalizeTagList(sqlSpirit.finishTags);
+
       const spirit: Spirit = {
         ...sqlSpirit,
         name_en: sqlSpirit.nameEn,
@@ -49,10 +69,14 @@ export const resolveSpiritPageState = cache(
         description_en: sqlSpirit.descriptionEn,
         pairing_guide_ko: sqlSpirit.pairingGuideKo,
         pairing_guide_en: sqlSpirit.pairingGuideEn,
-        nose_tags: typeof sqlSpirit.noseTags === 'string' ? sqlSpirit.noseTags.split(',').map((s: string) => s.trim()).filter(Boolean) : (sqlSpirit.noseTags || []),
-        palate_tags: typeof sqlSpirit.palateTags === 'string' ? sqlSpirit.palateTags.split(',').map((s: string) => s.trim()).filter(Boolean) : (sqlSpirit.palateTags || []),
-        finish_tags: typeof sqlSpirit.finishTags === 'string' ? sqlSpirit.finishTags.split(',').map((s: string) => s.trim()).filter(Boolean) : (sqlSpirit.finishTags || []),
-        tasting_note: sqlSpirit.tastingNote,
+        noseTags,
+        palateTags,
+        finishTags,
+        tastingNote: sqlSpirit.tastingNote || null,
+        nose_tags: noseTags,
+        palate_tags: palateTags,
+        finish_tags: finishTags,
+        tasting_note: sqlSpirit.tastingNote || null,
         aggregateRating: {
           ratingValue: sqlSpirit.rating || 0,
           reviewCount: sqlSpirit.reviewCount || 0

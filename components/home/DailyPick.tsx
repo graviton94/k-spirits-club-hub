@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import { CATEGORY_NAME_MAP } from '@/lib/constants/categories';
 import metadata from '@/lib/constants/spirits-metadata.json';
-import { chips, surfaces } from '@/lib/design/patterns';
+import { chips, surfaces, typography } from '@/lib/design/patterns';
 
 interface RandomSpirit {
     id: string;
@@ -64,7 +64,7 @@ export default function DailyPick({ lang: propLang }: { lang?: string }) {
     return (
         <div className="mt-10 w-full flex flex-col items-center animate-fade-in">
             {/* 1. Label: 은은한 메탈 실버 톤 */}
-            <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground mb-4 uppercase tracking-[0.25em] opacity-80">
+            <div className={`flex items-center gap-2 ${typography.eyebrow} mb-4 opacity-80`}>
                 <Sparkles className="w-3 h-3 text-primary/70" /> {t.label}
             </div>
 
@@ -118,7 +118,7 @@ export default function DailyPick({ lang: propLang }: { lang?: string }) {
 
 
                                             {/* 카테고리: 매우 절제된 태그 스타일 */}
-                                            <span className={`self-start sm:self-auto ${chips.subtle} !px-1.5 !py-0.5 !text-[9px] !rounded group-hover/link:border-primary/30 group-hover/link:text-primary transition-colors`}>
+                                            <span className={`self-start sm:self-auto ${chips.subtleSm} !px-1.5 !py-0.5 !rounded group-hover/link:border-primary/30 group-hover/link:text-primary transition-colors`}>
                                                 {lang === 'en' ? ((metadata as any).display_names_en?.[spirit.category] || spirit.category) : (CATEGORY_NAME_MAP[spirit.category] || spirit.category)}
                                             </span>
                                         </div>

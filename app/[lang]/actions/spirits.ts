@@ -4,6 +4,7 @@ import {
   dbListSpirits, 
   dbGetSpirit, 
   dbUpsertSpirit,
+  dbDeleteSpirit,
   dbAdminListRawSpirits
 } from '@/lib/db/data-connect-client';
 import { enrichSpiritWithAI, calculateDynamicEditorRating } from '@/lib/services/gemini-translation';
@@ -186,6 +187,46 @@ export async function updateSpiritAction(id: string, data: any) {
     return { success: true };
   } catch (error: any) {
     console.error('[Action] updateSpiritAction Error:', error);
+    return { success: false, error: error.message };
+  }
+}
+
+export async function createSpiritAction(data: any, publish = false) {
+  try {
+    const spiritId = data.id;
+    if (!spiritId) throw new Error('Spirit id is required');
+
+    const payload = {
+      ...data,
+      imageUrl: data.imageUrl || data.thumbnailUrl || '/mys-4.webp',
+      thumbnailUrl: data.thumbnailUrl || data.imageUrl || '/mys-4.webp',
+      updatedAt: data.updatedAt || new Date().toISOString(),
+      isPublished: publish ? true : (data.isPublished ?? false),
+      isReviewed: publish ? true : (data.isReviewed ?? false),
+      status: publish ? 'PUBLISHED' : (data.status ?? 'DRAFT'),
+      reviewedBy: publish ? 'ADMIN' : data.reviewedBy,
+      reviewedAt: publish ? (data.reviewedAt || new Date().toISOString()) : data.reviewedAt,
+    };
+
+    await dbUpsertSpirit(payload);
+
+    revalidatePath('/[lang]/admin/spirits', 'page');
+    revalidateTag('spirits');
+    return { success: true, id: spiritId };
+  } catch (error: any) {
+    console.error('[Action] createSpiritAction Error:', error);
+    return { success: false, error: error.message };
+  }
+}
+
+export async function deleteSpiritAction(id: string) {
+  try {
+    await dbDeleteSpirit(id);
+    revalidatePath('/[lang]/admin/spirits', 'page');
+    revalidateTag('spirits');
+    return { success: true };
+  } catch (error: any) {
+    console.error('[Action] deleteSpiritAction Error:', error);
     return { success: false, error: error.message };
   }
 }

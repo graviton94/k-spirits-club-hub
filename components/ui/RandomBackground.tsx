@@ -34,7 +34,7 @@ export function RandomBackground() {
                 priority={!mounted} // SSR/초기 렌더링 시에만 priority, 교체 시에는 lazy
                 style={{ objectFit: 'cover' }}
                 sizes="100vw"
-                className="transition-opacity duration-1000"
+                className="transition-opacity duration-1000 brightness-75 contrast-110"
                 unoptimized={true}
             />
 
@@ -43,18 +43,6 @@ export function RandomBackground() {
             
             {/* Subtle Texture / Noise */}
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-20 mix-blend-overlay bg-[url('/noise.png')] bg-repeat" />
-
-            <Image
-                key={bgImage}
-                src={bgImage}
-                alt="Background"
-                fill
-                priority={!mounted}
-                style={{ objectFit: 'cover' }}
-                sizes="100vw"
-                className="transition-opacity duration-1000 brightness-75 contrast-110"
-                unoptimized={true}
-            />
 
             {/* Glowing Accent Layer */}
             <div className="absolute inset-0 z-10 pointer-events-none">

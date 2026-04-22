@@ -1,15 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { 
   dbListSpiritReviews, 
-  dbUpsertReview,
-  dbGetSpirit,
   dbListUserReviews,
-  dbGetUserProfile,
-  dbUpsertUser,
-  dbIncrementUserReviews
+  dbIncrementUserReviews,
+  dbFindReview
 } from '@/lib/db/data-connect-client';
+import { dbAdminUpsertReview, dbAdminDeleteReview } from '@/lib/db/data-connect-admin';
+import { v4 as uuidv4 } from 'uuid';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 /**
  * Reviews API Route
@@ -32,18 +31,25 @@ export async function POST(request: NextRequest) {
     }
 
     // Upsert to Data Connect (Relational Schema)
-    const reviewId = `${spiritId}_${userId}`;
-    await dbUpsertReview({
+    const existingReview = await dbFindReview({ userId, spiritId });
+    const reviewId = existingReview?.id || uuidv4();
+    const now = new Date().toISOString();
+    await dbAdminUpsertReview({
       id: reviewId,
       spiritId,
       userId,
-      rating: Number(rating),
+      rating: Math.max(1, Math.min(5, Math.round(Number(rating)))),
+      title: body.title || '',
       content,
       nose: nose || '',
       palate: palate || '',
       finish: finish || '',
+      likes: existingReview?.likes || 0,
+      likedBy: existingReview?.likedBy || [],
+      isPublished: true,
       imageUrls: imageUrls || [],
-      createdAt: new Date().toISOString()
+      createdAt: now,
+      updatedAt: now
     });
 
     // Increment user stats
@@ -142,7 +148,12 @@ export async function DELETE(request: NextRequest) {
        return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
-    // TODO: Implement dbDeleteReview in data-connect-client if needed.
+    const existingReview = await dbFindReview({ userId: targetUserId, spiritId });
+    if (!existingReview?.id) {
+      return NextResponse.json({ error: 'Review not found' }, { status: 404 });
+    }
+
+    await dbAdminDeleteReview(existingReview.id);
     
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {

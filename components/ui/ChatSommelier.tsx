@@ -42,6 +42,15 @@ const AiHeaderProfile = () => (
 );
 
 export default function ChatSommelier({ lang }: ChatSommelierProps) {
+    const getLastAssistantMessage = () => {
+      for (let index = messages.length - 1; index >= 0; index -= 1) {
+        if (messages[index]?.role === 'assistant') {
+          return messages[index];
+        }
+      }
+      return undefined;
+    };
+
   const { user } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
@@ -168,7 +177,7 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
   // assistant message actually carries recommendations. This prevents the UI
   // from locking up (showing only a restart button) when the AI declared step 6
   // but returned an empty recommendations array.
-  const lastAssistantMsg = messages.findLast(m => m.role === 'assistant');
+  const lastAssistantMsg = getLastAssistantMessage();
   const isFinished = currentStep === 6 && (lastAssistantMsg?.recommendations?.length ?? 0) > 0;
 
   // Only show on main page and spirits pages
@@ -311,7 +320,7 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
                             </p>
                             {message.recommendations.map((rec, rIdx) => (
                               <div key={rIdx} className="relative group">
-                                {rec.inDb ? (
+                                {rec?.inDb ? (
                                   <>
                                     <SpiritCard
                                       spirit={rec}
@@ -336,14 +345,14 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
                                           <Search size={14} className="text-amber-600" />
                                         </div>
                                         <div>
-                                          <h4 className="text-xs font-bold text-amber-900">{rec.name}</h4>
+                                          <h4 className="text-xs font-bold text-amber-900">{rec?.name || (isEn ? 'External recommendation' : '외부 추천')}</h4>
                                           <span className="text-[10px] text-amber-600 font-medium">Coming Soon / External</span>
                                         </div>
                                       </div>
                                     </div>
                                     <div className="flex gap-2">
                                       <a
-                                        href={rec.googleSearchLink}
+                                        href={rec?.googleSearchLink || `https://www.google.com/search?q=${encodeURIComponent(rec?.name || '')}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-white border border-border rounded-xl text-[10px] font-bold hover:bg-muted transition-colors"
@@ -351,7 +360,7 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
                                         <Search size={10} /> Google
                                       </a>
                                       <a
-                                        href={rec.naverSearchLink}
+                                        href={rec?.naverSearchLink || `https://search.naver.com/search.naver?query=${encodeURIComponent(rec?.name || '')}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-[#03C75A] text-white rounded-xl text-[10px] font-bold hover:opacity-90 transition-opacity"
@@ -363,7 +372,7 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
                                 )}
 
                                 <div className="mt-2 text-[11px] text-muted-foreground bg-muted/30 p-2.5 rounded-xl border border-border italic leading-relaxed">
-                                  {renderMessageContent(rec.reason)}
+                                  {renderMessageContent(rec?.reason || '')}
                                 </div>
                               </div>
                             ))}
