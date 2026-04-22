@@ -1,6 +1,6 @@
 'use client';
 
-import { Search, Plus, Bookmark } from "lucide-react";
+import { Search, Plus, Bookmark, Sparkles } from "lucide-react";
 import { useState, KeyboardEvent, useMemo, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter, usePathname } from "next/navigation";
@@ -9,6 +9,7 @@ import SuccessToast from "@/components/ui/SuccessToast";
 import { useAuth } from "@/app/[lang]/context/auth-context";
 import { addToCabinet } from "@/app/[lang]/actions/cabinet";
 import Link from "next/link";
+import { surfaces, interactive } from "@/lib/design/patterns";
 
 const BLUR_DELAY_MS = 200; // Delay to allow clicking dropdown results before blur
 
@@ -89,11 +90,11 @@ export function SearchBar({ isHero = false, dict }: { isHero?: boolean, dict?: a
         className={`
                 relative flex items-center gap-3 px-5 py-4 
                 ${isHero
-            ? 'bg-black/40 border-primary/30 text-white'
+          ? 'bg-background/75 border-border text-foreground'
             : 'bg-card border-border hover:border-primary/40 text-foreground'} 
                 border-2 backdrop-blur-md rounded-2xl shadow-lg
                 transition-all duration-300
-                ${isFocused ? 'ring-2 ring-primary/50 border-primary shadow-primary/10' : ''}
+                ${isFocused ? interactive.focusRing : ''}
             `}
         layout
       >
@@ -104,7 +105,7 @@ export function SearchBar({ isHero = false, dict }: { isHero?: boolean, dict?: a
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           onKeyDown={handleKeyDown}
-          className={`w-full bg-transparent border-none outline-none text-lg ${isHero ? 'text-white placeholder:text-neutral-400' : 'text-foreground placeholder:text-muted-foreground'
+          className={`w-full bg-transparent border-none outline-none text-lg ${isHero ? 'text-foreground placeholder:text-muted-foreground' : 'text-foreground placeholder:text-muted-foreground'
             }`}
           onFocus={handleFocus}
           onBlur={handleBlur}
@@ -118,7 +119,7 @@ export function SearchBar({ isHero = false, dict }: { isHero?: boolean, dict?: a
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
-            className={`absolute top-full left-0 right-0 mt-3 backdrop-blur-md border-2 rounded-2xl shadow-2xl overflow-hidden ${isHero ? 'bg-neutral-900/90 border-white/20 text-white' : 'bg-popover border-border'
+            className={`absolute top-full left-0 right-0 mt-3 backdrop-blur-md border-2 rounded-2xl shadow-2xl overflow-hidden ${isHero ? `${surfaces.panel} text-foreground` : 'bg-popover border-border'
               }`}
           >
             {instantResults.length > 0 ? (
@@ -148,7 +149,7 @@ export function SearchBar({ isHero = false, dict }: { isHero?: boolean, dict?: a
                         <span className="truncate text-sm font-black tracking-tight text-foreground/90 transition-colors duration-300 group-hover/link:text-primary">
                             {item.n}
                         </span>
-                        <div className={`text-sm truncate ${isHero ? 'text-neutral-400' : 'text-muted-foreground'}`}>
+                        <div className={`text-sm truncate ${isHero ? 'text-muted-foreground' : 'text-muted-foreground'}`}>
                           {item.en ? `${item.en}` : item.d ? `🏭 ${item.d}` : item.c}
                         </div>
                       </div>
@@ -230,8 +231,7 @@ export function SearchBar({ isHero = false, dict }: { isHero?: boolean, dict?: a
                 </button>
               </div>
             ) : (
-              <div className={`p-4 text-center text-sm ${isHero ? 'text-neutral-400' : 'text-muted-foreground'
-                }`}>
+              <div className={`p-4 text-center text-sm ${isHero ? 'text-muted-foreground' : 'text-muted-foreground'}`}>
                 No results found for &quot;{searchValue}&quot;
               </div>
             )}
@@ -242,7 +242,7 @@ export function SearchBar({ isHero = false, dict }: { isHero?: boolean, dict?: a
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
-            className={`absolute top-full left-0 right-0 mt-3 p-2 backdrop-blur-md border-2 rounded-2xl shadow-2xl overflow-hidden ${isHero ? 'bg-neutral-900/90 border-white/20 text-white' : 'bg-popover border-border'
+            className={`absolute top-full left-0 right-0 mt-3 p-2 backdrop-blur-md border-2 rounded-2xl shadow-2xl overflow-hidden ${isHero ? `${surfaces.panel} text-foreground` : 'bg-popover border-border'
               }`}
           >
             <div className="flex items-center gap-2 text-[10px] font-black text-primary/50 mb-4 uppercase tracking-[0.25em]">

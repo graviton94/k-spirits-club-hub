@@ -19,23 +19,23 @@ interface ChatSommelierProps {
   lang: string;
 }
 
-// AI Profile Image Component
+// Sommelier Profile Image Component
 const AiProfile = () => (
   <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 bg-primary/10 border border-primary/20 flex items-center justify-center">
     <img
       src="/icons/user/user-3.webp"
-      alt="AI"
+      alt="Sommelier"
       className="w-full h-full object-cover"
     />
   </div>
 );
 
-// Large Header AI Profile
+// Large Header Sommelier Profile
 const AiHeaderProfile = () => (
   <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 bg-white/20 border border-white/30 flex items-center justify-center">
     <img
       src="/icons/user/user-3.webp"
-      alt="AI"
+      alt="Sommelier"
       className="w-full h-full object-cover"
     />
   </div>
@@ -194,7 +194,7 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
               </span>
-              {isEn ? "Get AI Recommendation" : "AI 제품추천 받기"}
+              {isEn ? "Get Recommendation" : "제품추천 받기"}
               <div className="absolute -bottom-1 right-3 w-2.5 h-2.5 bg-amber-500 rotate-45" />
               <div className="absolute inset-0 rounded-2xl bg-amber-400 animate-pulse -z-10 opacity-50" />
             </motion.div>
@@ -212,7 +212,7 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
             <>
               <img 
                 src="/icons/user/user-3.webp" 
-                alt="AI Sommelier" 
+                alt="Sommelier" 
                 className="w-full h-full object-cover transition-transform group-hover:scale-110" 
               />
               <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />
@@ -250,7 +250,7 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
                       <h3 className="font-black text-lg">K-Sommelier</h3>
                       <p className="text-xs text-white/70 flex items-center gap-1">
                         <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                        {isEn ? 'AI Professional Profiling' : 'AI 전문 상담 중'}
+                        {isEn ? 'Professional Profiling' : '전문 상담 중'}
                       </p>
                     </div>
                   </div>
@@ -307,7 +307,7 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
                         {message.recommendations && message.recommendations.length > 0 && (
                           <div className="space-y-3 mt-4">
                             <p className="text-[11px] font-black uppercase tracking-widest text-muted-foreground ml-1">
-                              {isEn ? 'AI Top Picks' : '오늘의 추천 리스트'}
+                              {isEn ? 'Top Picks' : '오늘의 추천 리스트'}
                             </p>
                             {message.recommendations.map((rec, rIdx) => (
                               <div key={rIdx} className="relative group">

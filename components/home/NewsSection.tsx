@@ -92,8 +92,8 @@ export default async function NewsSection({ lang }: { lang: string }) {
             <div className="mt-2 text-right">
                 <p className="text-[10px] text-muted-foreground/50 tracking-tight">
                     {lang === 'ko'
-                        ? '* AI 번역 및 요약으로, 실제 기사 내용과 다를 수 있습니다.'
-                        : '* Content is AI-summarized and may contain inaccuracies.'}
+                        ? '* 자동 번역 및 요약으로 실제 기사 내용과 차이가 있을 수 있습니다.'
+                        : '* Automatically translated and summarized content may differ from the original article.'}
                 </p>
             </div>
         </section>

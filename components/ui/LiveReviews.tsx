@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { getOptimizedImageUrl } from '@/lib/utils/image-optimization';
 import { getRatingColor } from '@/lib/utils/rating-colors';
+import { surfaces, chips } from '@/lib/design/patterns';
 
 interface LiveReview {
   id: string;
@@ -89,7 +90,7 @@ export function LiveReviews({ initialReviews = [] }: LiveReviewsProps) {
     return (
       <div className="space-y-4">
         {[1, 2, 3].map((i) => (
-          <div key={i} className="flex items-start gap-4 p-4 rounded-xl bg-card border border-border animate-pulse">
+          <div key={i} className={`flex items-start gap-4 p-4 rounded-xl ${surfaces.panelSoft} animate-pulse`}>
             <div className="w-10 h-10 rounded-full bg-secondary" />
             <div className="flex-1 space-y-2">
               <div className="h-4 bg-secondary rounded w-1/4" />
@@ -120,7 +121,7 @@ export function LiveReviews({ initialReviews = [] }: LiveReviewsProps) {
           href={`/${lang}/spirits/${review.spiritId}`}
           className="block group"
         >
-          <div className="relative bg-card border border-border rounded-[2.5rem] p-5 sm:p-6 transition-all hover:border-amber-500/30 hover:shadow-xl">
+          <div className={`relative ${surfaces.panel} rounded-[2.5rem] p-5 sm:p-6 transition-all hover:border-primary/30 hover:shadow-xl`}>
             {/* Row 1 & 2: Image + Meta */}
             <div className="flex gap-4 sm:gap-6 mb-4">
               {/* Product Image */}
@@ -146,13 +147,13 @@ export function LiveReviews({ initialReviews = [] }: LiveReviewsProps) {
 
               {/* Info Right */}
               <div className="flex-1 flex flex-col justify-center min-w-0">
-                <div className="text-base sm:text-lg font-black text-foreground group-hover:text-amber-600 transition-colors truncate mb-2">
+                <div className="text-base sm:text-lg font-black text-foreground group-hover:text-primary transition-colors truncate mb-2">
                   {review.spiritName}
                 </div>
 
                 <div className="flex flex-wrap items-center gap-2">
                   {/* Author Capsule */}
-                  <div className="flex items-center gap-1.5 px-3 py-1 bg-secondary border border-border rounded-full text-[10px] font-black text-foreground">
+                  <div className={`flex items-center gap-1.5 ${chips.subtle} !py-1 !rounded-full`}>
                     <span className="truncate max-w-[80px]">{review.userName}</span>
                   </div>
 
@@ -167,7 +168,7 @@ export function LiveReviews({ initialReviews = [] }: LiveReviewsProps) {
                   })()}
 
                   {/* Date Capsule */}
-                  <div className="px-3 py-1 bg-slate-500/10 border border-slate-500/20 rounded-full text-[10px] font-black text-muted-foreground">
+                  <div className={`px-3 py-1 rounded-full ${chips.subtle}`}>
                     {getTimeAgo(review.createdAt)}
                   </div>
                 </div>
@@ -188,10 +189,10 @@ export function LiveReviews({ initialReviews = [] }: LiveReviewsProps) {
                 <div className="flex flex-wrap gap-1.5 mb-4 pt-4 border-t border-border/50">
                   {allTags.slice(0, 4).map((tag, idx) => {
                     const colors = [
-                      'bg-blue-500/10 text-blue-600 border-blue-500/20',
-                      'bg-orange-500/10 text-orange-600 border-orange-500/20',
-                      'bg-purple-500/10 text-purple-600 border-purple-500/20',
-                      'bg-emerald-500/10 text-emerald-600 border-emerald-500/20'
+                      'bg-primary/10 text-primary border-primary/20',
+                      'bg-accent/10 text-accent border-accent/20',
+                      'bg-muted/70 text-foreground/70 border-border/50',
+                      'bg-primary/5 text-primary/80 border-primary/15'
                     ];
                     return (
                       <span key={idx} className={`text-[9px] px-2 py-0.5 rounded-full border font-black uppercase tracking-tight ${colors[idx % colors.length]}`}>

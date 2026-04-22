@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import { CATEGORY_NAME_MAP } from '@/lib/constants/categories';
 import metadata from '@/lib/constants/spirits-metadata.json';
+import { chips, surfaces } from '@/lib/design/patterns';
 
 interface RandomSpirit {
     id: string;
@@ -63,22 +64,22 @@ export default function DailyPick({ lang: propLang }: { lang?: string }) {
     return (
         <div className="mt-10 w-full flex flex-col items-center animate-fade-in">
             {/* 1. Label: 은은한 메탈 실버 톤 */}
-            <div className="flex items-center gap-2 text-[10px] font-bold text-neutral-400 mb-4 uppercase tracking-[0.25em] opacity-70">
-                <Sparkles className="w-3 h-3 text-neutral-300" /> {t.label}
+            <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground mb-4 uppercase tracking-[0.25em] opacity-80">
+                <Sparkles className="w-3 h-3 text-primary/70" /> {t.label}
             </div>
 
             <div className="relative group w-full max-w-md">
                 {/* 2. Glow Effect: 핑크 대신 차가운 화이트/실버의 미묘한 빛 번짐 */}
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-neutral-700/50 via-neutral-500/30 to-neutral-700/50 rounded-full blur-md opacity-0 group-hover:opacity-40 transition duration-700 ease-out"></div>
+                <div className="absolute -inset-0.5 bg-linear-to-r from-primary/20 via-accent/15 to-primary/20 rounded-full blur-md opacity-0 group-hover:opacity-40 transition duration-700 ease-out"></div>
 
                 {/* 3. Container: 깊이감 있는 유리 질감 (Glassmorphism Dark) */}
-                <div className="relative flex w-full items-center rounded-full border border-white/10 bg-neutral-950/80 p-1.5 pr-3 shadow-2xl backdrop-blur-xl transition-all duration-300 group-hover:border-white/20 min-[380px]:pr-6">
+                <div className={`relative flex w-full items-center rounded-full p-1.5 pr-3 shadow-2xl transition-all duration-300 group-hover:border-primary/30 min-[380px]:pr-6 ${surfaces.panel}`}>
 
                     {/* Refresh Button: 미니멀한 원형 버튼 */}
                     <button
                         onClick={fetchRandomSpirit}
                         disabled={loading}
-                        className="p-3 rounded-full bg-neutral-900 border border-neutral-800 text-neutral-500 hover:text-white hover:border-neutral-600 hover:bg-neutral-800 transition-all active:scale-95 disabled:opacity-30 group/btn"
+                        className="p-3 rounded-full bg-muted/40 border border-border/60 text-muted-foreground hover:text-foreground hover:border-primary/40 hover:bg-primary/10 transition-all active:scale-95 disabled:opacity-30 group/btn"
                         aria-label="Get another recommendation"
                     >
                         <RefreshCw className={`w-4 h-4 transition-transform duration-500 ${loading ? 'animate-spin' : 'group-hover/btn:rotate-180'}`} />
@@ -93,7 +94,7 @@ export default function DailyPick({ lang: propLang }: { lang?: string }) {
                                     initial={{ opacity: 0, y: 5, filter: 'blur(4px)' }}
                                     animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                                     exit={{ opacity: 0, y: -5, filter: 'blur(4px)' }}
-                                    className="text-sm text-neutral-600 font-medium block text-center tracking-wide"
+                                    className="text-sm text-muted-foreground font-medium block text-center tracking-wide"
                                 >
                                     {t.finding}
                                 </motion.span>
@@ -111,23 +112,23 @@ export default function DailyPick({ lang: propLang }: { lang?: string }) {
                                     >
                                         <div className="min-w-0 flex flex-col gap-1 text-left sm:flex-row sm:items-center sm:gap-3">
                                             {/* 이름: 순수한 화이트로 강조 */}
-                                            <span className="truncate text-sm font-bold tracking-tight text-neutral-200 transition-colors duration-300 group-hover/link:text-white">
+                                            <span className="truncate text-sm font-bold tracking-tight text-foreground/90 transition-colors duration-300 group-hover/link:text-foreground">
                                                 {lang === 'en' ? (spirit.nameEn || spirit.name) : spirit.name}
                                             </span>
 
 
                                             {/* 카테고리: 매우 절제된 태그 스타일 */}
-                                            <span className="self-start sm:self-auto text-[9px] px-1.5 py-0.5 bg-neutral-900 border border-neutral-800 rounded text-neutral-500 font-semibold uppercase tracking-wider group-hover/link:border-neutral-700 group-hover/link:text-neutral-400 transition-colors">
+                                            <span className={`self-start sm:self-auto ${chips.subtle} !px-1.5 !py-0.5 !text-[9px] !rounded group-hover/link:border-primary/30 group-hover/link:text-primary transition-colors`}>
                                                 {lang === 'en' ? ((metadata as any).display_names_en?.[spirit.category] || spirit.category) : (CATEGORY_NAME_MAP[spirit.category] || spirit.category)}
                                             </span>
                                         </div>
 
                                         {/* 화살표: 기본적으로 숨겨져 있다가 호버 시 등장하거나 밝아짐 */}
-                                        <ArrowRight className="w-4 h-4 text-white opacity-30 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all duration-300 ease-out" />
+                                        <ArrowRight className="w-4 h-4 text-foreground opacity-30 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all duration-300 ease-out" />
                                     </Link>
                                 </motion.div>
                             ) : (
-                                <span className="text-sm text-neutral-600">{t.noInfo}</span>
+                                <span className="text-sm text-muted-foreground">{t.noInfo}</span>
                             )}
                         </AnimatePresence>
                     </div>

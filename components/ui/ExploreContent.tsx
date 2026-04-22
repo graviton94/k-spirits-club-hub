@@ -6,7 +6,7 @@ import { useAuth } from '@/app/[lang]/context/auth-context';
 import { getCabinetStatusInfo } from '@/app/[lang]/actions/cabinet';
 import { ExploreCard } from './ExploreCard';
 import { ExploreGridSkeleton } from './ExploreSkeleton';
-import { Search, Loader2, ChevronDown } from 'lucide-react';
+import { Search, Loader2, ChevronDown, ArrowRight } from 'lucide-react';
 import GoogleAd from '@/components/ui/GoogleAd';
 import metadata from '@/lib/constants/spirits-metadata.json';
 

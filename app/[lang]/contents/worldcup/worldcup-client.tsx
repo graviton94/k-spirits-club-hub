@@ -8,6 +8,7 @@ import {
     Trophy,
     Play,
     ChevronRight,
+    ArrowRight,
     Info,
     Loader2
 } from 'lucide-react';

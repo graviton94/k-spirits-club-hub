@@ -69,8 +69,6 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-    if (!API_KEY) return NextResponse.json({ error: 'API Key missing' }, { status: 500 });
-
     try {
         const body = await req.json();
         const { userId, lang = 'ko' } = body;
@@ -118,6 +116,36 @@ export async function POST(req: NextRequest) {
         }).filter(Boolean);
 
         const promptData = buildTasteAnalysisPrompt(spiritsForAnalysis, isEn, []);
+
+        if (!API_KEY) {
+            const fallbackProfile = {
+                analyzedAt: new Date().toISOString(),
+                stats: {
+                    sweet: 50,
+                    fruity: 50,
+                    floral: 50,
+                    spicy: 50,
+                    woody: 50,
+                    peaty: 50,
+                },
+                persona: {
+                    title: isEn ? 'Tasting Profile Pending' : '테이스팅 프로필 준비 중',
+                    description: isEn
+                        ? 'Your profile was initialized. Full analysis will appear when the recommendation engine is available.'
+                        : '프로필이 초기화되었습니다. 추천 엔진이 준비되면 정밀 분석 결과가 표시됩니다.',
+                    keywords: [isEn ? '#Profile' : '#프로필']
+                },
+                recommendationEntries: [],
+                usage: { date: today, count: currentCount + 1 }
+            };
+
+            await dbUpsertUser({
+                id: userId,
+                tasteProfile: fallbackProfile
+            });
+
+            return NextResponse.json({ success: true, profile: fallbackProfile });
+        }
         
         const systemInstruction = `
         You are a World-Class AI Sommelier.
@@ -160,13 +188,17 @@ export async function POST(req: NextRequest) {
         const analysisResult = JSON.parse(result.response.text());
 
         // Process Recommendations
-        const enrichedRecs = await Promise.all(analysisResult.recommendations.slice(0, 3).map(async (rec: any) => {
+        const rawRecommendations = Array.isArray(analysisResult.recommendations)
+            ? analysisResult.recommendations
+            : (analysisResult.recommendation ? [analysisResult.recommendation] : []);
+
+        const enrichedRecs = await Promise.all(rawRecommendations.slice(0, 3).map(async (rec: any) => {
             const dbMatch = await tryFindSpiritInDb(rec.name);
             if (dbMatch) {
                 return {
                     ...dbMatch,
                     id: dbMatch.id,
-                    score: rec.matchRate / 100,
+                    score: (rec.matchRate || 0) / 100,
                     analysisReason: rec.reason,
                     isAiDiscovery: false
                 };

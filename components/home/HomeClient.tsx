@@ -2,18 +2,17 @@
 
 import { SearchBar } from "@/components/ui/SearchBar";
 import DailyPick from "@/components/home/DailyPick";
-import { SpiritCard } from "@/components/ui/SpiritCard";
 import { LiveReviews } from "@/components/ui/LiveReviews";
 import Link from "next/link";
 import Image from "next/image";
 import { Sparkles, Flame, ArrowRight } from "lucide-react";
 import styles from "@/app/[lang]/page.module.css";
 import { RandomBackground } from "@/components/ui/RandomBackground";
-import { useSpiritsCache } from "@/app/[lang]/context/spirits-cache-context";
-import { useMemo, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
 import { Spirit } from "@/lib/db/schema";
 import WikiSnippetSection from "@/components/home/WikiSnippetSection";
+import { surfaces, typography, chips } from "@/lib/design/patterns";
 
 interface HomeClientProps {
     lang: string;
@@ -78,11 +77,8 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialRevi
                 <div className="relative z-30 w-full max-w-6xl px-6 text-center space-y-12">
                     <div className="space-y-6">
                         <div className="flex justify-center flex-wrap gap-3 animate-fade-in-up">
-                            <span className="capsule-premium bg-primary/20 backdrop-blur-md">
+                            <span className={`${chips.primary} backdrop-blur-md`}>
                                 {dict.heroSubtitle}
-                            </span>
-                            <span className="capsule-accent bg-accent/20 backdrop-blur-md">
-                                {lang === 'ko' ? 'AI 전문가 추천' : 'AI Powered'}
                             </span>
                         </div>
                         
@@ -95,7 +91,7 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialRevi
                     </div>
 
                     <div className="w-full max-w-2xl mx-auto animate-fade-in-up delay-200 relative z-30 space-y-4">
-                        <div className="card-premium p-1 md:p-1.5 shadow-primary/10">
+                        <div>
                              <SearchBar isHero={true} dict={dict} />
                         </div>
                         <div className="flex justify-center">
@@ -115,9 +111,9 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialRevi
                         <div className="w-8 h-8 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20 text-primary">
                             <Sparkles className="w-4 h-4" />
                         </div>
-                        <h2 className="text-2xl font-black tracking-tighter text-foreground uppercase italic">{dict.newArrivals}</h2>
+                        <h2 className={typography.sectionTitle}>{dict.newArrivals}</h2>
                     </div>
-                    <Link href={`/${lang}/spirits`} className="text-xs font-black text-foreground/40 hover:text-primary transition-all uppercase tracking-widest flex items-center gap-2 group">
+                    <Link href={`/${lang}/explore`} className={`${typography.sectionMeta} hover:text-primary transition-all flex items-center gap-2 group`}>
                         {isEn ? 'Explore Gallery' : '전체보기'}
                         <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                     </Link>
@@ -132,8 +128,8 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialRevi
                                     key={`${spirit.id}-${index}`}
                                     className="shrink-0 block"
                                 >
-                                    <div className="w-[200px] flex flex-col items-center gap-5 transition-all duration-500 hover:scale-105">
-                                        <div className="relative w-full aspect-[3/4] rounded-[40px] bg-card border border-border/50 shadow-2xl overflow-hidden flex items-center justify-center p-8 group-hover:border-primary/50 transition-all hover:shadow-primary/10">
+                                    <div className="w-[200px] flex flex-col items-center gap-4 transition-all duration-500 hover:scale-105">
+                                        <div className={`relative w-full aspect-[3/4] rounded-[40px] ${surfaces.panelSoft} overflow-hidden flex items-center justify-center p-8 group-hover:border-primary/50 transition-all`}>
                                             {/* Reflection Effect */}
                                             <div className="absolute inset-x-0 top-0 h-1/2 bg-linear-to-b from-white/5 to-transparent pointer-events-none" />
                                             
@@ -144,17 +140,14 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialRevi
                                                     loading="lazy"
                                                     fill
                                                     sizes="200px"
-                                                    className="object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.3)]"
+                                                    className="object-contain"
                                                     unoptimized={true}
                                                 />
                                             </div>
                                         </div>
-                                        <div className="space-y-1 text-center w-full px-2">
-                                            <p className="text-[10px] font-black tracking-[0.2em] text-foreground/30 uppercase opacity-60">
-                                                {spirit.category}
-                                            </p>
+                                        <div className="text-center w-full px-2">
                                             <h3 className="font-black text-sm text-foreground line-clamp-1 w-full tracking-tight">
-                                                {isEn ? (spirit.nameEn || spirit.name) : spirit.name}
+                                                {isEn ? (spirit.nameEn || spirit.name_en || spirit.name) : spirit.name}
                                             </h3>
                                         </div>
                                     </div>
@@ -181,23 +174,23 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialRevi
                         <div className="w-8 h-8 rounded-xl bg-accent/10 flex items-center justify-center border border-accent/20 text-accent">
                             <Flame className="w-4 h-4" />
                         </div>
-                        <h2 className="text-2xl font-black tracking-tighter text-foreground uppercase italic">{dict.recentReviews || t.liveReviews}</h2>
+                        <h2 className={typography.sectionTitle}>{dict.recentReviews || t.liveReviews}</h2>
                     </div>
                     <Link
                         href={`/${lang}/contents/reviews`}
-                        className="text-xs font-black text-foreground/40 hover:text-primary transition-all uppercase tracking-widest flex items-center gap-2 group"
+                        className={`${typography.sectionMeta} hover:text-primary transition-all flex items-center gap-2 group`}
                     >
                         {isEn ? 'Read All Stories' : '리뷰 더보기'}
                         <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                     </Link>
                 </div>
-                <div className="p-8 bg-card/30 rounded-[48px] border border-border/30 backdrop-blur-sm">
+                <div className={`p-8 ${surfaces.panelSoft} rounded-[48px]`}>
                     <LiveReviews initialReviews={initialReviews} />
                 </div>
             </section>
 
             {/* 📖 5. Institutional FAQ / Wiki */}
-            <section className="bg-foreground text-background py-24 md:py-32">
+            <section className="bg-background py-24 md:py-32 border-t border-border/40">
                 <div className="max-w-7xl mx-auto px-6">
                     <WikiSnippetSection lang={lang} initialSnippet={dailySnippet} />
                 </div>

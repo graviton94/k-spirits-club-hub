@@ -157,7 +157,7 @@ export default async function RootLayout({
 
         {/* Static Footer Ad Banner (Replaces Sticky Footer Ad) */}
         {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT && (
-          <div className="w-full bg-slate-50 dark:bg-neutral-950 border-t border-slate-200 dark:border-white/5 py-6 flex justify-center">
+          <div className="w-full bg-secondary/60 dark:bg-secondary/40 border-t border-border py-6 flex justify-center">
             <div className="container max-w-4xl mx-auto px-4 overflow-hidden">
               <GoogleAd
                 client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT}
@@ -172,44 +172,44 @@ export default async function RootLayout({
         )}
 
         {/* Footer */}
-        <footer className="bg-[#f8fafc] dark:bg-neutral-950 border-t border-[#e2e8f0] dark:border-white/5 py-12 pb-32">
+        <footer className="bg-secondary/70 dark:bg-secondary/50 border-t border-border py-12 pb-32">
           <div className="container max-w-6xl mx-auto px-4">
             {/* Grid Layout */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
 
               {/* Column 1: About */}
               <div>
-                <h3 className="font-black text-sm mb-4 text-slate-900 dark:text-slate-100">K-Spirits Club</h3>
-                <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                <h3 className="font-black text-sm mb-4 text-foreground">K-Spirits Club</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
                   {lang === 'en'
-                    ? 'Your trusted source for spirits information, powered by data and AI'
-                    : '데이터와 AI로 만드는 신뢰할 수 있는 주류 정보 플랫폼'}
+                    ? 'Your trusted source for premium spirits information.'
+                    : '신뢰할 수 있는 프리미엄 주류 정보 플랫폼'}
                 </p>
               </div>
 
               {/* Column 2: Links */}
               <div>
-                <h3 className="font-black text-sm mb-4 text-slate-900 dark:text-slate-100">
+                <h3 className="font-black text-sm mb-4 text-foreground">
                   {lang === 'en' ? 'Information' : '정보'}
                 </h3>
                 <ul className="space-y-2 text-xs">
                   <li>
-                    <Link href={`/${lang}/contents/about`} className="text-slate-600 dark:text-slate-400 hover:text-amber-500 transition">
+                    <Link href={`/${lang}/contents/about`} className="text-muted-foreground hover:text-primary transition">
                       {lang === 'en' ? 'About Us' : '소개'}
                     </Link>
                   </li>
                   <li>
-                    <Link href={`/${lang}/contents/privacy`} className="text-slate-600 dark:text-slate-400 hover:text-amber-500 transition">
+                    <Link href={`/${lang}/contents/privacy`} className="text-muted-foreground hover:text-primary transition">
                       {lang === 'en' ? 'Privacy Policy' : '개인정보처리방침'}
                     </Link>
                   </li>
                   <li>
-                    <Link href={`/${lang}/contents/terms`} className="text-slate-600 dark:text-slate-400 hover:text-amber-500 transition">
+                    <Link href={`/${lang}/contents/terms`} className="text-muted-foreground hover:text-primary transition">
                       {lang === 'en' ? 'Terms of Service' : '이용약관'}
                     </Link>
                   </li>
                   <li>
-                    <Link href={`/${lang}/contents/contact`} className="text-slate-600 dark:text-slate-400 hover:text-amber-500 transition">
+                    <Link href={`/${lang}/contents/contact`} className="text-muted-foreground hover:text-primary transition">
                       {lang === 'en' ? 'Contact' : '문의하기'}
                     </Link>
                   </li>
@@ -218,11 +218,11 @@ export default async function RootLayout({
 
               {/* Column 3: Contact */}
               <div>
-                <h3 className="font-black text-sm mb-4 text-slate-900 dark:text-slate-100">
+                <h3 className="font-black text-sm mb-4 text-foreground">
                   {lang === 'en' ? 'Contact' : '연락처'}
                 </h3>
-                <p className="text-xs text-slate-600 dark:text-slate-400">
-                  <a href="mailto:ruahn49@gmail.com" className="text-amber-500 hover:text-amber-400 transition">
+                <p className="text-xs text-muted-foreground">
+                  <a href="mailto:ruahn49@gmail.com" className="text-primary hover:text-accent transition">
                     ruahn49@gmail.com
                   </a>
                 </p>
@@ -240,22 +240,22 @@ export default async function RootLayout({
 
               {/* Legal Warnings */}
               <div className="space-y-3 mb-8">
-                <p className="text-slate-600 dark:text-slate-500 text-[10px] leading-relaxed break-keep">
-                  <strong className="text-slate-800 dark:text-slate-400">경고:</strong> 지나친 음주는 뇌졸중, 기억력 손상이나 치매를 유발합니다. 임신 중 음주는 기형아 출생 위험을 높입니다.
+                <p className="text-muted-foreground text-[10px] leading-relaxed break-keep">
+                  <strong className="text-foreground">경고:</strong> 지나친 음주는 뇌졸중, 기억력 손상이나 치매를 유발합니다. 임신 중 음주는 기형아 출생 위험을 높입니다.
                 </p>
-                <p className="text-slate-500 dark:text-slate-600 text-[10px] leading-relaxed italic">
-                  <strong className="text-slate-700 dark:text-slate-500">WARNING:</strong> Excessive drinking can cause stroke, memory loss, or dementia. Drinking during pregnancy increases the risk of birth defects.
+                <p className="text-muted-foreground/80 text-[10px] leading-relaxed italic">
+                  <strong className="text-foreground/90">WARNING:</strong> Excessive drinking can cause stroke, memory loss, or dementia. Drinking during pregnancy increases the risk of birth defects.
                 </p>
               </div>
 
-              <p className="text-slate-500 dark:text-slate-400 text-sm mb-2">
+              <p className="text-muted-foreground text-sm mb-2">
                 © 2026 K-Spirits Club. All rights reserved.
               </p>
-              <p className="text-slate-500 text-xs">
+              <p className="text-muted-foreground text-xs">
                 Developed by{" "}
                 <a
                   href="mailto:ruahn49@gmail.com"
-                  className="text-amber-500 hover:text-amber-400 transition-colors"
+                  className="text-primary hover:text-accent transition-colors"
                   target="_blank"
                   rel="noreferrer"
                 >

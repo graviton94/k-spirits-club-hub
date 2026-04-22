@@ -20,7 +20,7 @@ export default function TasteRecommendationSection({
                         {dict?.cabinet?.recommendation_title || "Discovery Flywheel"}
                     </h2>
                     <p className="text-muted-foreground text-sm font-bold uppercase tracking-widest mt-1">
-                        Tailored Matches via AI Sommelier Logic
+                        Tailored Matches from Your Flavor Profile
                     </p>
                 </div>
                 <div className="hidden sm:block text-[10px] font-black py-1 px-3 bg-secondary border border-border rounded-full text-muted-foreground uppercase opacity-60">

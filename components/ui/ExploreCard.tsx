@@ -16,6 +16,7 @@ import SuccessToast from "./SuccessToast";
 import { Bookmark, Plus, Minus, Loader2 } from "lucide-react";
 import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
 import metadata from "@/lib/constants/spirits-metadata.json";
+import { surfaces, chips } from "@/lib/design/patterns";
 
 interface ExploreCardProps {
   spirit: Spirit;
@@ -182,7 +183,7 @@ function ExploreCardComponent({
   const content = (
     <motion.div
       ref={observerRef}
-      className="group flex gap-4 p-4 rounded-[2rem] bg-card/40 backdrop-blur-3xl border border-border/30 hover:bg-card/60 transition-all cursor-pointer shadow-lg relative overflow-hidden"
+      className={`group flex gap-4 p-4 rounded-[2rem] ${surfaces.panelSoft} hover:bg-card/60 transition-all cursor-pointer shadow-lg relative overflow-hidden`}
       whileHover={{ y: -4 }}
       transition={{ type: "spring", stiffness: 400, damping: 20 }}
       onClick={() => onClick?.(spirit)}
@@ -207,7 +208,7 @@ function ExploreCardComponent({
       {/* 📄 Intelligence Content */}
       <div className="flex-1 min-w-0 flex flex-col justify-center gap-1.5">
         <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 bg-primary/10 text-primary text-[9px] font-black rounded-lg border border-primary/20 uppercase tracking-widest">
+            <span className={`${chips.primary} !px-2 !py-0.5 !text-[9px] !rounded-lg`}>
                 {displayCategory}
             </span>
              {spirit.abv > 0 && (
@@ -240,7 +241,7 @@ function ExploreCardComponent({
         {/* 🛡️ Expert Rating & Badges */}
         <div className="flex items-center gap-3">
           {spirit.aggregateRating && spirit.aggregateRating.ratingValue > 0 && (
-            <div className="flex items-center gap-1.5 px-2 py-1 rounded-xl bg-primary/5 text-primary text-[10px] font-black border border-primary/10">
+            <div className={`flex items-center gap-1.5 ${chips.primary} !px-2 !py-1 !text-[10px] !rounded-xl`}>
               <span className="text-xs">★</span>
               <span>{Number(spirit.aggregateRating.ratingValue).toFixed(1)}</span>
               {(spirit.aggregateRating.reviewCount ?? 0) > 0 && (

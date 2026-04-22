@@ -78,8 +78,8 @@ export default function FlavorView({
             <div className="flex flex-col items-center justify-center py-24 text-center">
                 <div className="w-20 h-20 bg-card rounded-3xl flex items-center justify-center mb-8 shadow-2xl border border-border"><Sparkles className="w-8 h-8 text-amber-500" /></div>
                 <h2 className="text-3xl font-black mb-4 tracking-tighter text-foreground">{isEn ? "Decode Your Spirits DNA" : "당신의 미각 DNA를 해독하세요"}</h2>
-                <p className="text-muted-foreground max-w-sm mb-12 text-sm font-medium">{isEn ? "AI Sommelier analyzes your cellar to build a 6D Flavor Vector." : "AI 소믈리에가 당신의 술장을 분석하여 6차원 풍미 지도를 만듭니다."}</p>
-                <button onClick={handleAnalyze} className="h-16 px-12 bg-foreground text-background rounded-2xl font-black hover:bg-amber-500 hover:text-black transition-all shadow-xl flex items-center gap-3 uppercase tracking-tight text-sm"><Sparkles className="w-5 h-5" /> {isEn ? "Generate AI Analysis" : "AI 소믈리에 분석 시작"}</button>
+                <p className="text-muted-foreground max-w-sm mb-12 text-sm font-medium">{isEn ? "Analyze your cellar and build a 6D flavor vector." : "술장을 분석해 6차원 풍미 지도를 만듭니다."}</p>
+                <button onClick={handleAnalyze} className="h-16 px-12 bg-foreground text-background rounded-2xl font-black hover:bg-amber-500 hover:text-black transition-all shadow-xl flex items-center gap-3 uppercase tracking-tight text-sm"><Sparkles className="w-5 h-5" /> {isEn ? "Generate Analysis" : "분석 시작"}</button>
             </div>
         );
     }

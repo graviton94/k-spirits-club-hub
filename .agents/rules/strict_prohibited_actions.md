@@ -35,6 +35,12 @@ This document lists strictly forbidden actions and coding patterns identified du
     - **Correct Pattern**: ensure every component ends with a single function/class closing brace and run build parsing checks before deploy.
 4.  **Do NOT use `motion.*` / `<motion.*>` without importing `motion` from `framer-motion`.**
     - **Correct Pattern**: when using animated elements, explicitly add `import { motion } from "framer-motion";` in that file.
+5.  **Do NOT render Lucide icons in JSX without importing the exact icon symbol.**
+    - **Correct Pattern**: if `<ArrowRight />` is used, `ArrowRight` must be included in `from "lucide-react"` import list in the same file.
+6.  **Do NOT assume AI API output schema is fixed to one shape.**
+    - **Correct Pattern**: when consuming recommendation responses, support both single-object (`recommendation`) and array (`recommendations`) contracts to avoid runtime 500s.
+7.  **Do NOT add navigation links to routes that are not implemented.**
+    - **Correct Pattern**: before adding `href`, verify the target page exists in `app/[lang]` (e.g., list pages should route to existing `/explore` when `/spirits` list page is absent).
 
 ## 💡 Lessons Learned
 - **GQL Validation**: Cloud Data Connect is stricter than the local emulator in some cases. Standardize on `_and` wrapping.

@@ -17,7 +17,16 @@ const MODEL_ID = "gemini-2.0-flash";
  */
 export async function POST(req: NextRequest) {
     if (!API_KEY) {
-        return NextResponse.json({ error: 'API Key missing' }, { status: 500 });
+        const body = await req.json().catch(() => ({} as any));
+        const lang = body?.lang === 'en' ? 'en' : 'ko';
+        return NextResponse.json({
+            message: lang === 'en'
+                ? 'Sommelier service is preparing. Please try again shortly.'
+                : '소믈리에 서비스 준비 중입니다. 잠시 후 다시 시도해주세요.',
+            nextStep: body?.currentStep || 1,
+            analysis: '',
+            recommendations: []
+        });
     }
 
     try {

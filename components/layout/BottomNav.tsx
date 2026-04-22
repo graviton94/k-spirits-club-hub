@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { Home, Search, Library, Gamepad2, User } from "lucide-react";
 import { motion } from "framer-motion";
 import { Locale } from "@/i18n-config";
+import { surfaces, interactive } from "@/lib/design/patterns";
 
 export function BottomNav({ lang, dict }: { lang: Locale, dict: any }) {
   const pathname = usePathname() || "";
@@ -27,8 +28,8 @@ export function BottomNav({ lang, dict }: { lang: Locale, dict: any }) {
   ];
 
     return (
-        <div className="fixed bottom-6 left-0 right-0 flex justify-center px-6 z-50 pointer-events-none md:hidden">
-            <nav className="w-full max-w-sm glass-premium border-border/10 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] pointer-events-auto border">
+        <div className="fixed bottom-6 left-0 right-0 flex justify-center px-6 z-50 pointer-events-none">
+            <nav className={`w-full max-w-sm ${surfaces.glassNav} border-border/10 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] pointer-events-auto border`}>
                 <div className="flex justify-between items-center h-20 px-4">
                     {navItems.map((item) => {
                         const active = isActive(item.href);
@@ -38,7 +39,7 @@ export function BottomNav({ lang, dict }: { lang: Locale, dict: any }) {
                                 href={`/${lang}${item.href === "/" ? "" : item.href}`}
                                 prefetch={false}
                                 className={`relative flex flex-col items-center justify-center w-14 h-14 rounded-[1.5rem] transition-all duration-500 group
-                                    ${active ? "bg-primary text-primary-foreground shadow-2xl shadow-primary/20 scale-110" : "text-foreground/40 hover:text-primary hover:bg-primary/5"}`}
+                                        ${active ? "bg-primary text-primary-foreground shadow-2xl shadow-primary/20 scale-110" : `text-foreground/40 hover:text-primary ${interactive.hoverSurface}`}`}
                             >
                                 <item.icon
                                     className={`w-6 h-6 transition-all duration-500 ${active ? "scale-100" : "group-hover:scale-110"}`}

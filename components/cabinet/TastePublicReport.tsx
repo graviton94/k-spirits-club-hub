@@ -41,7 +41,7 @@ export default function TastePublicReport({ profile, isPublic = false }: TastePu
                     </Link>
                     <div>
                         <h1 className="text-xl font-bold text-foreground tracking-tight">{isEn ? 'Taste DNA Report' : '미각 DNA 리포트'}</h1>
-                        <p className="text-xs text-muted-foreground font-medium">{isEn ? 'AI-Analyzed Profile' : 'AI가 분석한 미각 데이터입니다'}</p>
+                        <p className="text-xs text-muted-foreground font-medium">{isEn ? 'Analyzed flavor profile' : '분석된 미각 데이터입니다'}</p>
                     </div>
                 </div>
             )}
@@ -138,7 +138,7 @@ export default function TastePublicReport({ profile, isPublic = false }: TastePu
                             {isEn ? 'Want to decode your DNA?' : '나만의 취향 지도를 만드세요'}
                         </p>
                         <h3 className="text-3xl font-black text-foreground tracking-tighter italic">
-                            {isEn ? 'Join K-Spirits for AI Analysis' : 'K-Spirits에서 AI 정규화 분석을 시작하세요'}
+                            {isEn ? 'Join K-Spirits to map your taste' : 'K-Spirits에서 나만의 취향 지도를 시작하세요'}
                         </h3>
                     </div>
 

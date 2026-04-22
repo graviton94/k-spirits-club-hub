@@ -154,7 +154,7 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
                   )}
                   {isAiDiscovery && (
                       <span className="px-3 py-1 bg-accent text-accent-foreground text-[10px] font-black rounded-full flex items-center gap-1.5 shadow-lg shadow-accent/20 uppercase tracking-widest">
-                          <Sparkles className="w-3 h-3" /> AI DISCOVERY
+                        <Sparkles className="w-3 h-3" /> DISCOVERY
                       </span>
                   )}
               </div>

@@ -46,7 +46,7 @@ export default function CabinetClient({ lang, dict }: CabinetClientProps) {
     useEffect(() => {
         document.title = isEn
             ? `My Cabinet | K-Spirits Club`
-            : `K-Spirits Club | 나만의 술장 만들기 & AI 취향 분석`;
+            : `K-Spirits Club | 나만의 술장 만들기 & 취향 분석`;
     }, [isEn]);
 
     const fetchCabinet = useCallback(async () => {
