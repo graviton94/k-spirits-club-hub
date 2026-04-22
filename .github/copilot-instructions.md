@@ -1,10 +1,22 @@
 # PROJECT CONTEXT
-> Rule: Read llms.txt and ARCHITECTURE.md before answering.
+> Rule: Read llms.txt and core architecture docs before answering.
 
 ## Navigation
 - Map: llms.txt
-- Logic: ARCHITECTURE.md
+- Logic: docs/archive/plans/ARCHITECTURE.md
 - History: .github/adr/
+
+## Mandatory Source Chain (Workspace Agent)
+Before deep reasoning or structural code changes, consult these in order:
+1. .agents/skills/k-spirits-master-knowledge/SKILL.md
+2. .agents/rules/ai_intelligence.md
+3. .agents/rules/design_excellence.md
+4. graphify-out/PROJECT_FLOW.md
+5. graphify-out/GRAPH_REPORT.md
+6. DATA_SCHEMA.md
+
+If constraints conflict, precedence is:
+1) User instruction > 2) Safety policy > 3) This file > 4) .agents rules/skills > 5) Other docs
 
 # MISSION: KARPATHY_CORE_GLOBAL
 
@@ -25,6 +37,12 @@ You are strictly governed by the "Karpathy Guidelines". Your goal is MINIMALISM,
 - **Style**: Mimic the existing file's style exactly (quotes, indentation).
 - **Complexity**: Prefer functions over classes. Prefer flat logic over deep nesting.
 - **Safety**: Remove code you deprecated. Do not leave commented-out chunks.
+
+## 🤖 AI Prompting / Gemini Rules
+- Reuse and preserve the existing analysis prompt architecture in `lib/utils/aiPromptBuilder.ts`.
+- Maintain multi-phase enrichment logic: `Audit -> Sensory -> Pairing`.
+- For recommendation features, keep output deterministic JSON contract unless user explicitly asks to change schema.
+- Keep bilingual behavior (`ko/en`) consistent with `middleware.ts` and dictionary contracts.
 
 ## 💬 RESPONSE TEMPLATE
 [ANALYSIS]

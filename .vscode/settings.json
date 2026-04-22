@@ -2,5 +2,28 @@
     "css.lint.unknownAtRules": "ignore",
     "scss.lint.unknownAtRules": "ignore",
     "search.useGlobalIgnoreFiles": true,
-    "search.useParentIgnoreFiles": true
+    "search.useParentIgnoreFiles": true,
+    "github.copilot.chat.codeGeneration.instructions": [
+        {
+            "file": ".github/copilot-instructions.md"
+        },
+        {
+            "file": ".agents/skills/k-spirits-master-knowledge/SKILL.md"
+        },
+        {
+            "file": ".agents/rules/ai_intelligence.md"
+        },
+        {
+            "file": ".agents/rules/design_excellence.md"
+        },
+        {
+            "file": ".agents/rules/strict_prohibited_actions.md"
+        }
+    ],
+    "chat.agentFilesLocations": [
+        ".github/agents"
+    ],
+    "chat.promptFilesLocations": [
+        ".github/prompts"
+    ]
 }

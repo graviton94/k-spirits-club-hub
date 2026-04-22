@@ -31,6 +31,8 @@ This document lists strictly forbidden actions and coding patterns identified du
     - Always map database fields (SQL) to the designated UI model fields.
 2.  **Do NOT assume an Edge API route can access restricted mutations without Auth context.**
     - Background logging (e.g., Discovery Logs) in public routes should generally be `PUBLIC` or handled gracefully.
+3.  **Do NOT leave unmatched trailing braces in TS/TSX files (especially at component tail).**
+    - **Correct Pattern**: ensure every component ends with a single function/class closing brace and run build parsing checks before deploy.
 
 ## 💡 Lessons Learned
 - **GQL Validation**: Cloud Data Connect is stricter than the local emulator in some cases. Standardize on `_and` wrapping.

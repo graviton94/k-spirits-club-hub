@@ -155,7 +155,8 @@
   }
 
   .btn-premium {
-    @apply bg-brand-gradient text-primary-foreground font-black rounded-xl shadow-lg shadow-primary/20 transition-all active:scale-95 hover:brightness-110 disabled:opacity-50 flex items-center justify-center gap-2;
+    background-image: linear-gradient(to right, hsl(var(--primary)), #f97316);
+    @apply text-primary-foreground font-black rounded-xl shadow-lg shadow-primary/20 transition-all active:scale-95 hover:brightness-110 disabled:opacity-50 flex items-center justify-center gap-2;
   }
 
   .btn-premium-outline {

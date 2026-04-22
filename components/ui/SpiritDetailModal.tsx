@@ -400,4 +400,3 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
         </AnimatePresence>
     );
 }
-}

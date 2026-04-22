@@ -206,4 +206,3 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialRevi
         </div>
     );
 }
-}
