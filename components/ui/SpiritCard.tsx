@@ -113,55 +113,55 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
   const content = (
     <motion.div
       ref={observerRef}
-      className={`group flex flex-col sm:flex-row gap-6 p-5 sm:p-6 rounded-[32px] bg-card border border-border hover:bg-secondary/40 transition-all cursor-pointer shadow-sm relative overflow-hidden h-full ${isAiDiscovery ? 'border-amber-500/30' : ''}`}
-      whileHover={{ y: -4, scale: 1.01 }}
+      className={`group flex flex-col sm:flex-row gap-6 p-6 md:p-8 rounded-[40px] bg-card border border-border/50 hover:bg-primary/5 transition-all cursor-pointer shadow-xl relative overflow-hidden h-full ${isAiDiscovery ? 'border-primary/40' : ''}`}
+      whileHover={{ y: -8, scale: 1.02 }}
       onClick={() => {
           if (isAiDiscovery) window.open(spirit.externalSearchUrl, '_blank');
           else if (onClick) onClick(spirit);
       }}
     >
-      {/* Background Glow for Discovery */}
-      {isAiDiscovery && <div className="absolute inset-x-0 top-0 h-40 bg-amber-500/5 -z-10 animate-pulse sm:h-full sm:w-40" />}
+      {/* Background Glow Layer */}
+      <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-linear-to-br ${isAiDiscovery ? 'from-accent/5 to-transparent' : 'from-primary/5 to-transparent'}`} />
 
-      {/* Thumbnail */}
-      <div className="relative shrink-0 w-full h-52 sm:w-32 sm:h-32 rounded-2xl overflow-hidden bg-muted border border-border shadow-inner">
+      {/* 📸 Thumbnail Component */}
+      <div className="relative shrink-0 w-full h-[240px] sm:w-[160px] sm:h-full min-h-[160px] rounded-[32px] overflow-hidden bg-muted/50 border border-border/50 shadow-inner group-hover:border-primary/30 transition-all duration-500">
         <Image
           src={imgSrc}
           alt={`Thumbnail for ${localizedName}`}
           fill
-          className="object-cover transition-transform duration-500 group-hover:scale-110"
-          sizes="(max-width: 640px) 100vw, 128px"
+          className="object-contain p-6 transition-transform duration-1000 group-hover:scale-110 drop-shadow-2xl"
+          sizes="(max-width: 640px) 100vw, 160px"
           priority={index < 4}
           onError={() => setImgSrc(getCategoryFallbackImage(spirit.category))}
           unoptimized={true}
         />
         {isAiDiscovery && (
-            <div className="absolute inset-0 bg-black/40 flex items-center justify-center backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity">
-                <ExternalLink className="w-8 h-8 text-white" />
+            <div className="absolute inset-0 bg-accent/10 flex items-center justify-center backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity">
+                <Sparkles className="w-8 h-8 text-accent" />
             </div>
         )}
       </div>
-
-      {/* Content */}
-      <div className="flex-1 min-w-0 flex flex-col justify-between">
+      
+      {/* 📄 Content Area */}
+      <div className="flex-1 min-w-0 flex flex-col justify-between relative z-10">
         <div>
-          <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2.5 flex-wrap">
                   {matchRate > 0 && (
-                      <span className="text-[10px] font-black bg-amber-500 text-black px-2 py-0.5 rounded-full shadow-lg shadow-amber-500/20">
+                      <span className="px-3 py-1 bg-primary text-primary-foreground text-[10px] font-black rounded-full shadow-lg shadow-primary/20 uppercase tracking-widest">
                           {matchRate}% MATCH
                       </span>
                   )}
                   {isAiDiscovery && (
-                      <span className="text-[10px] font-black bg-foreground text-background px-2 py-0.5 rounded-full flex items-center gap-1">
-                          <Sparkles className="w-2.5 h-2.5" /> AI DISCOVERY
+                      <span className="px-3 py-1 bg-accent text-accent-foreground text-[10px] font-black rounded-full flex items-center gap-1.5 shadow-lg shadow-accent/20 uppercase tracking-widest">
+                          <Sparkles className="w-3 h-3" /> AI DISCOVERY
                       </span>
                   )}
               </div>
               
               {!isAiDiscovery ? (
                   <button
-                    className={`p-1 transition-colors ${isInCabinet ? 'text-red-500' : 'text-muted-foreground/30 hover:text-red-500'}`}
+                    className={`p-2 rounded-2xl transition-all active:scale-75 ${isInCabinet ? 'bg-primary/10 text-primary' : 'text-foreground/20 hover:text-primary hover:bg-primary/5'}`}
                     onClick={(e) => { e.stopPropagation(); e.preventDefault(); 
                         if (!user) triggerLoginModal();
                         else setShowSelectionModal(true);
@@ -170,66 +170,71 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
                     <Heart className={`w-5 h-5 ${isInCabinet ? 'fill-current' : ''}`} />
                   </button>
               ) : (
-                  <div className="p-1 text-muted-foreground/20">
-                      <ExternalLink className="w-4 h-4" />
+                  <div className="p-2 text-foreground/20">
+                      <ExternalLink className="w-5 h-5" />
                   </div>
               )}
           </div>
 
-          <h3 className="font-black text-foreground text-xl leading-tight mb-2">
+          <h3 className="font-black text-foreground text-2xl md:text-3xl leading-[1.1] mb-3 tracking-tighter group-hover:text-primary transition-colors duration-500">
             {localizedName}
           </h3>
 
-          <p className="text-[11px] font-black text-muted-foreground flex items-center gap-1 uppercase tracking-widest opacity-70 mb-1">
-            <span>{isEn ? "Category" : "분류"}</span>
-            <span className="text-foreground/80">
-              {localizedCategory}
-              {spirit.subcategory && ` · ${isEn ? ((metadata as any).display_names_en?.[spirit.subcategory] || spirit.subcategory) : spirit.subcategory}`}
+          <div className="flex items-center gap-2 mb-4">
+            <span className="px-2.5 py-1 bg-muted rounded-lg text-[10px] font-black text-foreground/40 uppercase tracking-widest border border-border/50">
+               {localizedCategory}
             </span>
-          </p>
+            {spirit.subcategory && (
+               <span className="text-[10px] font-bold text-foreground/60 uppercase tracking-tighter italic">
+                 {isEn ? ((metadata as any).display_names_en?.[spirit.subcategory] || spirit.subcategory) : spirit.subcategory}
+               </span>
+            )}
+          </div>
 
           {localizedDistillery && (
-            <p className="text-[11px] text-muted-foreground/60 mb-2 truncate font-bold">
-              🏭 {localizedDistillery}
+            <p className="text-[11px] font-black text-foreground/30 mb-4 flex items-center gap-1.5 uppercase tracking-widest">
+              <span className="opacity-40 italic">DISTILLERY</span>
+              <span className="text-foreground/60">{localizedDistillery}</span>
             </p>
           )}
 
-          {/* Rating & Notes Badge */}
-          <div className="flex items-center gap-3 mb-5">
+          {/* 🛡️ Performance / Rating */}
+          <div className="flex items-center gap-3 mb-6">
             {spirit.aggregateRating && spirit.aggregateRating.ratingValue > 0 && (
               <div 
-                className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 text-xs font-black border border-amber-500/20"
-                title={isEn ? "AI & Expert data quality score" : "AI와 전문가가 함께 분석한 데이터 품질 점수입니다"}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-primary/5 text-primary text-xs font-black border border-primary/20 shadow-sm"
+                title={isEn ? "Expert analysis score" : "분석 점수"}
               >
-                <ShieldCheck className="w-3.5 h-3.5" />
-                <span className="text-sm">★</span>
-                <span>{Number(spirit.aggregateRating.ratingValue).toFixed(1)}</span>
-                <span className="opacity-60 font-bold ml-1 text-[10px]">
-                  ({spirit.aggregateRating.reviewCount})
+                <ShieldCheck className="w-4 h-4" />
+                <span className="text-sm font-black">{Number(spirit.aggregateRating.ratingValue).toFixed(1)}</span>
+                <span className="opacity-40 font-bold text-[10px]">
+                  / 5.0
                 </span>
               </div>
             )}
             {spirit.hasTastingNotes && (
-              <div className="px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-[10px] font-black uppercase tracking-wider border border-indigo-500/20">
-                {isEn ? 'Notes' : '시음노트'}
+              <div className="capsule-premium border-primary/40 bg-primary/10 shadow-lg shadow-primary/5">
+                {isEn ? 'PREMIUM DATA' : '시음노트 포함'}
               </div>
             )}
           </div>
 
           {matchReason && (
-              <p className="text-[12px] text-foreground/90 leading-relaxed font-medium bg-secondary/30 p-4 rounded-2xl italic border border-secondary/50">
-                  "{matchReason}"
-              </p>
+              <div className="relative">
+                <div className="absolute -left-3 top-0 bottom-0 w-1 bg-primary/20 rounded-full" />
+                <p className="text-[13px] text-foreground/80 leading-relaxed font-medium pl-2 italic">
+                    "{matchReason}"
+                </p>
+              </div>
           )}
         </div>
 
+        {/* 🏷️ Flavor Tags */}
         {tastingTags.length > 0 && (
-          <div className="flex flex-wrap gap-2 mt-6">
+          <div className="flex flex-wrap gap-2 mt-8 border-t border-border/50 pt-6">
             {tastingTags.map((tag: string, i: number) => {
-              const styles = getTagStyle(tag);
               return (
-                <span key={i} className="text-[10px] px-3 py-1 rounded-full font-black border transition-colors whitespace-nowrap opacity-90"
-                  style={{ backgroundColor: styles.light.bg, color: styles.light.text, borderColor: styles.light.border }}>
+                <span key={i} className="text-[10px] px-3 py-1.5 rounded-xl font-black bg-muted/50 text-foreground/60 border border-border/30 hover:border-primary/40 hover:text-primary transition-all uppercase tracking-tighter">
                   #{tag}
                 </span>
               );
@@ -237,6 +242,9 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
           </div>
         )}
       </div>
+
+      {/* 💎 Bottom Highlight */}
+      <div className="absolute inset-x-0 bottom-0 h-1.5 bg-linear-to-r from-primary/50 to-primary opacity-0 group-hover:opacity-100 transition-opacity shadow-[0_0_30px_rgba(var(--primary),0.6)]" />
     </motion.div>
   );
 

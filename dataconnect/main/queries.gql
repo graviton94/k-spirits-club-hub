@@ -397,10 +397,71 @@ query getWorldCupResult($id: UUID!) @auth(level: PUBLIC) {
 
 query listSpiritsForWorldCup($category: String, $subcategories: [String!]) @auth(level: PUBLIC) {
   spirits(where: {
-    isPublished: { eq: true },
-    category: { eq: $category },
-    subcategory: { in: $subcategories }
-  }, limit: 300) {
+    _and: [
+      { isPublished: { eq: true } },
+      {
+        _or: [
+          { category: { eq: $category } },
+          { categoryEn: { eq: $category } }
+        ]
+      },
+      { subcategory: { in: $subcategories } }
+    ]
+  }, limit: 500) {
+    id
+    name
+    nameEn
+    imageUrl
+    thumbnailUrl
+    category
+    categoryEn
+    subcategory
+    distillery
+    abv
+    country
+    region
+    noseTags
+    palateTags
+    finishTags
+    createdAt
+  }
+}
+
+query listAllSpiritsForWorldCup @auth(level: PUBLIC) {
+  spirits(where: {
+    isPublished: { eq: true }
+  }, limit: 500) {
+    id
+    name
+    nameEn
+    imageUrl
+    thumbnailUrl
+    category
+    categoryEn
+    subcategory
+    distillery
+    abv
+    country
+    region
+    noseTags
+    palateTags
+    finishTags
+    createdAt
+  }
+}
+
+query listSpiritsByCategoryForWorldCup($category: String) @auth(level: PUBLIC) {
+  spirits(where: {
+    _and: [
+      { isPublished: { eq: true } },
+      { 
+        _or: [
+          { category: { eq: $category } },
+          { categoryEn: { eq: $category } }
+        ]
+      }
+    ]
+  }, limit: 500) {
     id
     name
     nameEn

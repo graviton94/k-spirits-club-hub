@@ -168,13 +168,13 @@ export default function ReviewsPage() {
     <div className="container mx-auto px-4 py-12 max-w-4xl">
       {/* Header */}
       <div className="mb-8">
-        <Link
-          href={`/${lang}/me`}
+        <button
+          onClick={() => router.back()}
           className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-4"
         >
           <ArrowLeft className="w-4 h-4" />
           <span className="text-sm font-bold">{t.back}</span>
-        </Link>
+        </button>
 
         <h1 className="text-3xl font-black mb-2 bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">
           {t.title}

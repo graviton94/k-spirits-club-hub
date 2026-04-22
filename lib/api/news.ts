@@ -310,40 +310,40 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
 
             let result;
             try {
-                // 🟢 [Plan A] 1차 시도: Cloudflare AI Gateway
-                console.log(`[News Collection] [Plan A] Batch ${batchIdx + 1} via Cloudflare AI Gateway...`);
-                // FIX: Use real API Key instead of placeholder "CF_MANAGED_KEY"
-                const gatewayGenAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-                const model = gatewayGenAI.getGenerativeModel(
-                    { model: 'gemini-2.0-flash' },
-                    {
-                        baseUrl: process.env.CF_GATEWAY_URL,
-                        customHeaders: {
-                            "cf-aig-authorization": `Bearer ${process.env.CF_AIG_TOKEN}`
+                try {
+                    // 🟢 [Plan A] 1차 시도: Cloudflare AI Gateway
+                    console.log(`[News Collection] [Plan A] Batch ${batchIdx + 1} via Cloudflare AI Gateway...`);
+                    const gatewayGenAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+                    const model = gatewayGenAI.getGenerativeModel(
+                        { model: 'gemini-2.0-flash' },
+                        {
+                            baseUrl: process.env.CF_GATEWAY_URL,
+                            customHeaders: {
+                                "cf-aig-authorization": `Bearer ${process.env.CF_AIG_TOKEN || ''}`
+                            }
                         }
-                    }
-                );
-                result = await model.generateContent({
-                    contents: [{ role: 'user', parts: [{ text: prompt }] }],
-                    generationConfig
-                });
-                console.log(`[News Collection] [Plan A] Success for Batch ${batchIdx + 1}`);
+                    );
+                    result = await model.generateContent({
+                        contents: [{ role: 'user', parts: [{ text: prompt }] }],
+                        generationConfig
+                    });
+                    console.log(`[News Collection] [Plan A] Success for Batch ${batchIdx + 1}`);
 
-            } catch (gatewayError: any) {
-                // ⚠️ Fallback
-                console.warn(`⚠️ [Fallback] News Batch ${batchIdx + 1} Gateway 실패, Direct로 우회:`, gatewayError.message);
+                } catch (gatewayError: any) {
+                    // ⚠️ Fallback
+                    console.warn(`⚠️ [Fallback] News Batch ${batchIdx + 1} Gateway 실패, Direct로 우회:`, gatewayError.message);
 
-                // 🟠 [Plan B] 2차 시도: Direct Gemini API
-                const directGenAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-                const fallbackModel = directGenAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
-                result = await fallbackModel.generateContent({
-                    contents: [{ role: 'user', parts: [{ text: prompt }] }],
-                    generationConfig
-                });
-                console.log(`[News Collection] [Plan B] Success for Batch ${batchIdx + 1}`);
-            }
+                    // 🟠 [Plan B] 2차 시도: Direct Gemini API
+                    const directGenAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+                    const fallbackModel = directGenAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+                    result = await fallbackModel.generateContent({
+                        contents: [{ role: 'user', parts: [{ text: prompt }] }],
+                        generationConfig
+                    });
+                    console.log(`[News Collection] [Plan B] Success for Batch ${batchIdx + 1}`);
+                }
 
-            try {
+                // Parse Result
                 const response = await result.response;
                 const text = response.text();
                 // Robust JSON extraction
@@ -353,17 +353,13 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
 
                 processedList.forEach((proc: any) => {
                     if (proc.tempId) {
-                        // Ensure image URLs are HTTPS if they exist in the processed data
-                        if (proc.imageUrl) {
-                            proc.imageUrl = proc.imageUrl.replace(/^http:\/\//i, 'https://');
-                        }
                         processedMap.set(proc.tempId, proc);
                     }
                 });
-                console.log(`[News Collection] ✅ Batch ${batchIdx + 1} processed: ${processedList.length}/${batch.length} items match`);
-            } catch (error) {
-                console.error(`[News Collection] ❌ Batch ${batchIdx + 1} JSON failure:`, error);
-                console.error(`[News Collection] ❌ Text was:`, result.response.text());
+                console.log(`[News Collection] ✅ Batch ${batchIdx + 1} processed: ${processedList.length}/${batch.length} items`);
+            } catch (err: any) {
+                console.error(`[News Collection] ❌ Critical failure for Batch ${batchIdx + 1}:`, err.message);
+                // We don't throw here; we let the downstream fallback handle it
             }
         }
 

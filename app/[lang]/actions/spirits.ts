@@ -189,3 +189,29 @@ export async function updateSpiritAction(id: string, data: any) {
     return { success: false, error: error.message };
   }
 }
+
+/**
+ * 월드컵 필터용 데이터 조회 액션 (카테고리 목록)
+ */
+export async function getWorldCupCategoriesAction() {
+  try {
+    const { dbListAllCategories } = await import('@/lib/db/data-connect-client');
+    return await dbListAllCategories();
+  } catch (error) {
+    console.error('[Action] getWorldCupCategoriesAction Error:', error);
+    return [];
+  }
+}
+
+/**
+ * 카테고리별 서브카테고리 조회 액션
+ */
+export async function getSubcategoriesAction(category?: string) {
+  try {
+    const { dbListAllSubcategories } = await import('@/lib/db/data-connect-client');
+    return await dbListAllSubcategories(category === 'ALL' ? undefined : category);
+  } catch (error) {
+    console.error('[Action] getSubcategoriesAction Error:', error);
+    return [];
+  }
+}

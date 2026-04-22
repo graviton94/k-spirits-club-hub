@@ -288,6 +288,27 @@ export interface ListAllCategoriesData {
   })[];
 }
 
+export interface ListAllSpiritsForWorldCupData {
+  spirits: ({
+    id: string;
+    name: string;
+    nameEn?: string | null;
+    imageUrl: string;
+    thumbnailUrl?: string | null;
+    category: string;
+    categoryEn?: string | null;
+    subcategory?: string | null;
+    distillery?: string | null;
+    abv?: number | null;
+    country?: string | null;
+    region?: string | null;
+    noseTags?: string[] | null;
+    palateTags?: string[] | null;
+    finishTags?: string[] | null;
+    createdAt: TimestampString;
+  } & Spirit_Key)[];
+}
+
 export interface ListAllSubcategoriesData {
   spirits: ({
     subcategory?: string | null;
@@ -379,6 +400,31 @@ export interface ListSpiritReviewsData {
 export interface ListSpiritReviewsVariables {
   limit?: number | null;
   offset?: number | null;
+}
+
+export interface ListSpiritsByCategoryForWorldCupData {
+  spirits: ({
+    id: string;
+    name: string;
+    nameEn?: string | null;
+    imageUrl: string;
+    thumbnailUrl?: string | null;
+    category: string;
+    categoryEn?: string | null;
+    subcategory?: string | null;
+    distillery?: string | null;
+    abv?: number | null;
+    country?: string | null;
+    region?: string | null;
+    noseTags?: string[] | null;
+    palateTags?: string[] | null;
+    finishTags?: string[] | null;
+    createdAt: TimestampString;
+  } & Spirit_Key)[];
+}
+
+export interface ListSpiritsByCategoryForWorldCupVariables {
+  category?: string | null;
 }
 
 export interface ListSpiritsData {
@@ -926,6 +972,16 @@ export function getWorldCupResult(vars: GetWorldCupResultVariables, options?: Op
 export function listSpiritsForWorldCup(dc: DataConnect, vars?: ListSpiritsForWorldCupVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<ListSpiritsForWorldCupData>>;
 /** Generated Node Admin SDK operation action function for the 'ListSpiritsForWorldCup' Query. Allow users to pass in custom DataConnect instances. */
 export function listSpiritsForWorldCup(vars?: ListSpiritsForWorldCupVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<ListSpiritsForWorldCupData>>;
+
+/** Generated Node Admin SDK operation action function for the 'ListAllSpiritsForWorldCup' Query. Allow users to execute without passing in DataConnect. */
+export function listAllSpiritsForWorldCup(dc: DataConnect, options?: OperationOptions): Promise<ExecuteOperationResponse<ListAllSpiritsForWorldCupData>>;
+/** Generated Node Admin SDK operation action function for the 'ListAllSpiritsForWorldCup' Query. Allow users to pass in custom DataConnect instances. */
+export function listAllSpiritsForWorldCup(options?: OperationOptions): Promise<ExecuteOperationResponse<ListAllSpiritsForWorldCupData>>;
+
+/** Generated Node Admin SDK operation action function for the 'ListSpiritsByCategoryForWorldCup' Query. Allow users to execute without passing in DataConnect. */
+export function listSpiritsByCategoryForWorldCup(dc: DataConnect, vars?: ListSpiritsByCategoryForWorldCupVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<ListSpiritsByCategoryForWorldCupData>>;
+/** Generated Node Admin SDK operation action function for the 'ListSpiritsByCategoryForWorldCup' Query. Allow users to pass in custom DataConnect instances. */
+export function listSpiritsByCategoryForWorldCup(vars?: ListSpiritsByCategoryForWorldCupVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<ListSpiritsByCategoryForWorldCupData>>;
 
 /** Generated Node Admin SDK operation action function for the 'ListAiDiscoveryLogs' Query. Allow users to execute without passing in DataConnect. */
 export function listAiDiscoveryLogs(dc: DataConnect, vars: ListAiDiscoveryLogsVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<ListAiDiscoveryLogsData>>;

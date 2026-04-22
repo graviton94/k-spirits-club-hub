@@ -533,6 +533,36 @@ exports.listSpiritsForWorldCup = function listSpiritsForWorldCup(dcOrVars, varsO
 }
 ;
 
+const listAllSpiritsForWorldCupRef = (dc) => {
+  const { dc: dcInstance} = validateArgs(connectorConfig, dc, undefined);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'listAllSpiritsForWorldCup');
+}
+listAllSpiritsForWorldCupRef.operationName = 'listAllSpiritsForWorldCup';
+exports.listAllSpiritsForWorldCupRef = listAllSpiritsForWorldCupRef;
+
+exports.listAllSpiritsForWorldCup = function listAllSpiritsForWorldCup(dcOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrOptions, options, undefined,false, false);
+  return executeQuery(listAllSpiritsForWorldCupRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
+}
+;
+
+const listSpiritsByCategoryForWorldCupRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'listSpiritsByCategoryForWorldCup', inputVars);
+}
+listSpiritsByCategoryForWorldCupRef.operationName = 'listSpiritsByCategoryForWorldCup';
+exports.listSpiritsByCategoryForWorldCupRef = listSpiritsByCategoryForWorldCupRef;
+
+exports.listSpiritsByCategoryForWorldCup = function listSpiritsByCategoryForWorldCup(dcOrVars, varsOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, false);
+  return executeQuery(listSpiritsByCategoryForWorldCupRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
+}
+;
+
 const listAiDiscoveryLogsRef = (dcOrVars, vars) => {
   const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
   dcInstance._useGeneratedSdk();

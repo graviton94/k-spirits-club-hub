@@ -53,8 +53,8 @@ import { Locale } from "@/i18n-config";
 function WorldCupGameFallback() {
     return (
         <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-background">
-            <Loader2 className="w-12 h-12 text-amber-500 animate-spin mb-4" />
-            <p className="text-muted-foreground font-bold animate-pulse">Loading world cup match...</p>
+            <Loader2 className="w-12 h-12 text-primary animate-spin mb-4" />
+            <p className="text-foreground/40 font-black animate-pulse uppercase tracking-widest text-xs italic">Synchronizing Palate Data...</p>
         </div>
     );
 }
@@ -102,10 +102,23 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
         const fetchSpirits = async () => {
             try {
                 setLoading(true);
-                const fetchedDataRaw = await dbListSpiritsForWorldCup(
-                    cat === 'ALL' ? '' : cat,
-                    sub === 'ALL' ? [] : sub.split(',')
-                );
+                let fetchedDataRaw: any[] = [];
+                
+                if (cat === 'ALL') {
+                    // 전체 주류 모드: 모든 카테고리에서 모든 제품을 가져옴
+                    const { dbListAllSpiritsForWorldCup } = await import('@/lib/db/data-connect-client');
+                    fetchedDataRaw = await dbListAllSpiritsForWorldCup();
+                } else if (sub === 'ALL') {
+                    // 특정 카테고리의 전체 주류 모드: 하위 카테고리 필터링 없이 카테고리만 매칭
+                    const { dbListSpiritsByCategoryForWorldCup } = await import('@/lib/db/data-connect-client');
+                    fetchedDataRaw = await dbListSpiritsByCategoryForWorldCup(cat);
+                } else {
+                    // 특정 카테고리 및 하위 카테고리 선택 모드
+                    fetchedDataRaw = await dbListSpiritsForWorldCup(
+                        cat,
+                        sub.split(',')
+                    );
+                }
 
                 const fetchedData: Spirit[] = fetchedDataRaw.map(data => {
                     return {
@@ -129,7 +142,7 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
                             .filter((v, i, a) => v && a.indexOf(v) === i)
                             .map(tag => tag.startsWith('#') ? tag.slice(1) : tag)
                     };
-                }).filter(s => s.imageUrl || s.thumbnailUrl);
+                }).filter(s => s.name); // Just ensure name exists, images will fallback
 
                 if (fetchedData.length < 2) {
                     setError(dict?.common?.notEnoughSpirits || (isEn ? 'Not enough spirits found (Min 2 required)' : '조건에 맞는 술이 충분하지 않습니다. (최소 2개 필요)'));
@@ -162,15 +175,21 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
         };
 
         fetchSpirits();
-    }, [cat, sub, requestedRound]);
+    }, [cat, sub, requestedRound, dict, isEn]);
 
     // 이미지 일괄 프리로딩 함수 (최적화 → 원본 → 폴백 순)
     const preloadAllImages = async (items: Spirit[]) => {
         const imagePromises = items.map(item => {
             return new Promise<void>((resolve) => {
                 const originalUrl = item.imageUrl || item.thumbnailUrl || '';
-                const optimizedUrl = getOptimizedImageUrl(originalUrl, 400);
-                const fallbackUrl = getCategoryFallbackImage(item.category);
+                const optimizedUrl = originalUrl ? getOptimizedImageUrl(originalUrl, 400) : '';
+                const fallbackUrl = '/mys-4.webp'; // Institutional global fallback
+
+                if (!optimizedUrl) {
+                    item.preloadedImageUrl = fallbackUrl;
+                    resolve();
+                    return;
+                }
 
                 // 1차 시도: 최적화된 이미지
                 const img1 = document.createElement('img') as HTMLImageElement;
@@ -179,27 +198,8 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
                     resolve();
                 };
                 img1.onerror = () => {
-                    // 2차 시도: 원본 이미지
-                    const img2 = document.createElement('img') as HTMLImageElement;
-                    img2.onload = () => {
-                        item.preloadedImageUrl = originalUrl;
-                        resolve();
-                    };
-                    img2.onerror = () => {
-                        // 3차 시도: 카테고리 폴백
-                        const img3 = document.createElement('img') as HTMLImageElement;
-                        img3.onload = () => {
-                            item.preloadedImageUrl = fallbackUrl;
-                            resolve();
-                        };
-                        img3.onerror = () => {
-                            // 최종 폴백
-                            item.preloadedImageUrl = fallbackUrl;
-                            resolve();
-                        };
-                        img3.src = fallbackUrl;
-                    };
-                    img2.src = originalUrl;
+                    item.preloadedImageUrl = fallbackUrl;
+                    resolve();
                 };
                 img1.src = optimizedUrl;
 
@@ -271,11 +271,11 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
             setNextRoundItems(nextRound);
             setCurrentIndex(prev => prev + 2);
         }
-    }, [currentIndex, currentRoundItems, nextRoundItems]);
+    }, [currentIndex, currentRoundItems, nextRoundItems, cat, requestedRound, sub]);
 
     // Handle Image Save
     const handleSaveImage = useCallback(async () => {
-        if (!resultCardRef.current) return;
+        if (!resultCardRef.current || !winner) return;
 
         try {
             const wrapper = resultCardRef.current;
@@ -329,7 +329,7 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
             console.error('Failed to save image', err);
             alert(dict?.worldcup?.saveError || (isEn ? 'Error saving image.' : '이미지 생성 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.'));
         }
-    }, [winner]);
+    }, [winner, dict, isEn]);
 
     // Handle Share
     const handleShare = useCallback(async () => {
@@ -356,14 +356,16 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
         } catch (err) {
             console.error('Share failed', err);
         }
-    }, [winner, resultId]);
+    }, [winner, resultId, dict, isEn, lang]);
 
     // Loading Screen
     if (loading || !dict) {
         return (
             <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-background">
-                <Loader2 className="w-12 h-12 text-amber-500 animate-spin mb-4" />
-                <p className="text-muted-foreground font-bold animate-pulse">{dict?.common?.loadingData || "주류 데이터를 수집 중입니다..."}</p>
+                <Loader2 className="w-12 h-12 text-primary animate-spin mb-4" />
+                <p className="text-foreground/40 font-black animate-pulse uppercase tracking-widest text-xs italic">
+                    {dict?.common?.loadingData || "ANALYZING SPIRITS..."}
+                </p>
             </div>
         );
     }
@@ -389,159 +391,123 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
         return (
             <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 relative overflow-hidden">
                 {/* Glow Background */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-amber-500/10 blur-[120px] rounded-full pointer-events-none" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 blur-[150px] rounded-full pointer-events-none animate-pulse" />
 
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
+                    initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="relative z-10 text-center"
+                    className="relative z-10 text-center max-w-lg w-full"
                 >
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-amber-500/10 border border-amber-500/20 rounded-full mb-6">
-                        <Trophy className="w-4 h-4 text-amber-500" />
-                        <span className="text-amber-500 text-xs font-black uppercase tracking-widest">Grand Champion</span>
+                    <div className="inline-flex items-center gap-2 px-6 py-2 bg-primary/10 border border-primary/20 rounded-2xl mb-8">
+                        <Trophy className="w-5 h-5 text-primary" />
+                        <span className="text-primary text-xs font-black uppercase tracking-[0.2em]">Grand Champion</span>
                     </div>
 
-                    <h2 className="text-3xl font-black text-foreground mb-8 tracking-tighter">{dict?.worldcup?.champion || "당신의 최종 선택은!"}</h2>
+                    <h2 className="text-4xl md:text-5xl font-black text-foreground mb-10 tracking-tighter italic">
+                        {dict?.worldcup?.champion || "당신의 최종 선택은!"}
+                    </h2>
 
-                    {/* Winner Card Container for Capture - Forced Light Theme for Image Export */}
+                    {/* Winner Card Container for Capture */}
                     <div
                         ref={resultCardRef}
-                        className="bg-white p-8 rounded-[32px] mb-10 mx-auto w-fit shadow-xl"
+                        className="bg-card p-10 rounded-[48px] mb-12 mx-auto w-fit shadow-[0_40px_100px_rgba(0,0,0,0.4)] border border-border relative overflow-hidden group"
                     >
-                        <div className="flex flex-col items-center gap-4">
+                        <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        
+                        <div className="flex flex-col items-center gap-6 relative z-10">
                             {/* Capture Header */}
-                            <div className="flex flex-col items-center gap-1 mb-2">
-                                <span className="text-amber-600 text-[10px] font-black uppercase tracking-[0.3em]">
+                            <div className="flex flex-col items-center gap-1.5 mb-2">
+                                <span className="text-primary text-[10px] font-black uppercase tracking-[0.4em] opacity-60">
                                     K-Spirits World Cup
                                 </span>
-                                <div className="flex items-center gap-2">
-                                    <Trophy className="w-5 h-5 text-amber-500 fill-amber-500/20" />
-                                    <h4 className="text-xl font-black text-[#1a1a1a] tracking-tighter italic">CHAMPION</h4>
+                                <div className="flex items-center gap-3">
+                                    <div className="h-px w-8 bg-primary/30" />
+                                    <h4 className="text-2xl font-black text-foreground tracking-widest italic">CHAMPION</h4>
+                                    <div className="h-px w-8 bg-primary/30" />
                                 </div>
                             </div>
 
-                            {/* Main Card - Explicit Light Styles */}
-                            <div className="w-64 bg-white border border-[#e5e5e5] rounded-[24px] overflow-hidden shadow-lg relative">
+                            {/* Main Card */}
+                            <div className="w-[280px] md:w-[320px] bg-white rounded-[32px] overflow-hidden shadow-2xl border border-white/10 relative">
                                 {/* 1. Image Block */}
-                                <div className="aspect-square relative p-6 bg-[#f8f8f8] border-b border-[#e5e5e5]">
+                                <div className="aspect-square relative p-10 bg-muted/50 border-b border-border/50">
                                     <Image
-                                        src={winner.preloadedImageUrl || getCategoryFallbackImage(winner.category)}
+                                        src={winner.preloadedImageUrl || '/mys-4.webp'}
                                         alt={winner.name}
                                         fill
                                         className="object-contain p-2"
                                         unoptimized
-                                        onError={(e) => {
-                                            (e.target as HTMLImageElement).src = getCategoryFallbackImage(winner.category);
-                                        }}
                                     />
                                 </div>
 
-                                {/* 2~5. Info Blocks */}
-                                <div className="p-5 flex flex-col gap-3 text-center bg-white items-center">
-                                    {/* 1단. Category / Subcategory Capsules */}
-                                    <div className="flex flex-wrap justify-center gap-1.5">
-                                        <span className="px-2 py-0.5 bg-amber-500 text-white text-[10px] font-black rounded-full uppercase tracking-wider">
+                                {/* 2. Info Blocks */}
+                                <div className="p-8 flex flex-col gap-4 text-center bg-card items-center">
+                                    <div className="flex flex-wrap justify-center gap-2">
+                                        <span className="px-3 py-1 bg-primary text-primary-foreground text-[10px] font-black rounded-lg uppercase tracking-widest shadow-lg shadow-primary/20">
                                             {(isEn && winner.category_en) ? winner.category_en : winner.category}
                                         </span>
                                         {winner.subcategory && (
-                                            <span className="px-2 py-0.5 bg-slate-100 text-slate-500 text-[10px] font-bold rounded-full uppercase tracking-tighter">
+                                            <span className="px-3 py-1 bg-secondary text-secondary-foreground text-[10px] font-bold rounded-lg uppercase tracking-tighter border border-border">
                                                 {winner.subcategory}
                                             </span>
                                         )}
                                     </div>
 
-                                    {/* 2단. Product Name */}
-                                    <h3 className="text-lg font-black text-[#1a1a1a] leading-tight line-clamp-2 px-1">
+                                    <h3 className="text-xl md:text-2xl font-black text-foreground leading-tight tracking-tighter px-2">
                                         {winner.name}
                                     </h3>
 
-                                    {/* 3단. Country / Region Capsules */}
-                                    <div className="flex flex-wrap justify-center gap-1.5">
+                                    <div className="flex flex-wrap justify-center gap-2 opacity-60">
                                         {winner.country && (
-                                            <span className="px-2 py-0.5 bg-blue-600 text-white text-[10px] font-bold rounded-full uppercase">
-                                                {winner.country}
-                                            </span>
+                                            <span className="text-[11px] font-black uppercase tracking-widest">{winner.country}</span>
                                         )}
-                                        {winner.region && (
-                                            <span className="px-2 py-0.5 bg-indigo-600 text-white text-[10px] font-medium rounded-full uppercase">
-                                                {winner.region}
-                                            </span>
-                                        )}
-                                    </div>
-
-                                    {/* 4단. ABV / Distillery Capsules */}
-                                    <div className="flex flex-wrap justify-center gap-1.5">
                                         {winner.abv !== null && (
-                                            <span className="px-2 py-0.5 bg-rose-600 text-white text-[10px] font-black rounded-full">
-                                                {winner.abv}%
-                                            </span>
-                                        )}
-                                        {winner.distillery && (
-                                            <span className="px-2 py-0.5 bg-gray-500 text-white text-[10px] font-medium rounded-full">
-                                                {winner.distillery}
-                                            </span>
+                                            <span className="text-[11px] font-black text-primary">— {winner.abv}% VOL</span>
                                         )}
                                     </div>
-
-                                    {/* 5단. Flavor Tags (Capsule Style) */}
-                                    {winner.tags && winner.tags.length > 0 && (
-                                        <div className="flex flex-wrap justify-center gap-1.5 mt-2">
-                                            {winner.tags.slice(0, 3).map(tag => (
-                                                <span
-                                                    key={tag}
-                                                    className="px-2 py-0.5 bg-amber-50 border border-amber-100 rounded-full text-[9px] text-amber-600 font-bold whitespace-nowrap"
-                                                    style={{ display: 'inline-block' }}
-                                                >
-                                                    #{tag}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    )}
                                 </div>
                             </div>
 
                             {/* Capture Footer */}
-                            <div className="mt-2 opacity-30">
-                                <span className="text-[8px] text-[#1a1a1a] font-bold tracking-widest uppercase">
+                            <div className="mt-4 flex items-center gap-2 opacity-30">
+                                <Image src="/logo.png" width={16} height={16} alt="" className="grayscale invert" />
+                                <span className="text-[10px] text-foreground font-black tracking-[0.3em] uppercase">
                                     k-spirits.club
                                 </span>
                             </div>
                         </div>
                     </div>
 
-                    <div className="flex flex-col gap-3 w-72 mx-auto">
-                        {/* 1. Results Row */}
-                        <div className="grid grid-cols-2 gap-3">
+                    <div className="flex flex-col gap-4 w-80 mx-auto">
+                        <div className="grid grid-cols-2 gap-4">
                             <button
                                 onClick={handleSaveImage}
-                                className="py-3.5 bg-card border border-border text-foreground text-sm font-bold rounded-2xl hover:bg-muted transition-all flex flex-col items-center justify-center gap-1.5 active:scale-95"
+                                className="py-4 bg-card border border-border text-foreground text-xs font-black rounded-2xl hover:bg-muted transition-all flex flex-col items-center justify-center gap-2 active:scale-95 shadow-lg uppercase tracking-widest"
                             >
-                                <Download className="w-5 h-5 text-pink-500" />
-                                <span>{dict?.worldcup?.saveResult || "결과 저장"}</span>
+                                <Download className="w-5 h-5 text-primary" />
+                                <span>{isEn ? "Save Card" : "카드 저장"}</span>
                             </button>
                             <button
                                 onClick={handleShare}
-                                className="py-3.5 bg-card border border-border text-foreground text-sm font-bold rounded-2xl hover:bg-muted transition-all flex flex-col items-center justify-center gap-1.5 active:scale-95"
+                                className="py-4 bg-card border border-border text-foreground text-xs font-black rounded-2xl hover:bg-muted transition-all flex flex-col items-center justify-center gap-2 active:scale-95 shadow-lg uppercase tracking-widest"
                             >
-                                <Share2 className="w-5 h-5 text-purple-500" />
-                                <span>{dict?.worldcup?.shareResult || "친구에게 공유"}</span>
+                                <Share2 className="w-5 h-5 text-primary" />
+                                <span>{isEn ? "Share" : "공유하기"}</span>
                             </button>
                         </div>
 
-                        {/* 2. Explore More */}
                         <button
                             onClick={() => router.push(`/${lang}/contents/worldcup`)}
-                            className="w-full py-4 bg-amber-500 hover:bg-amber-400 text-white font-black rounded-2xl flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg shadow-amber-500/20"
+                            className="w-full py-5 bg-primary text-primary-foreground font-black rounded-2xl flex items-center justify-center gap-3 transition-all active:scale-95 shadow-xl shadow-primary/20 uppercase tracking-widest"
                         >
-                            <Gamepad2 className="w-5 h-5" /> {dict?.worldcup?.playAgain || "다른 월드컵 하러 가기"}
+                            <Gamepad2 className="w-5 h-5" /> {isEn ? "Try Another World Cup" : "다른 월드컵 도전"}
                         </button>
 
-                        {/* 3. Restart */}
                         <button
                             onClick={() => window.location.reload()}
-                            className="mt-2 py-2 text-muted-foreground text-xs font-bold hover:text-foreground transition-colors flex items-center justify-center gap-1.5 underline underline-offset-4"
+                            className="mt-2 py-2 text-foreground/40 text-[10px] font-black hover:text-foreground transition-colors flex items-center justify-center gap-2 uppercase tracking-[0.2em]"
                         >
-                            <RotateCcw className="w-3.5 h-3.5" /> {dict?.worldcup?.restart || "대결 다시하기 (이 설정으로)"}
+                            <RotateCcw className="w-3.5 h-3.5" /> {isEn ? "Rematch with same settings" : "이 설정으로 다시 대결"}
                         </button>
                     </div>
                 </motion.div>
@@ -553,7 +519,7 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
     const leftItem = currentRoundItems[currentIndex];
     const rightItem = currentRoundItems[currentIndex + 1];
 
-    if (!leftItem || !rightItem) return null;
+    if (!leftItem || !rightItem) return <WorldCupGameFallback />;
 
     return (
         <div className="min-h-screen bg-background text-foreground flex flex-col relative overflow-hidden">
@@ -564,75 +530,104 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[100] flex items-center justify-center bg-background/60 backdrop-blur-md"
+                        className="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-2xl"
                     >
                         <motion.div
-                            initial={{ scale: 0.9, opacity: 0 }}
+                            initial={{ scale: 0.8, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 1.05, opacity: 0 }}
+                            exit={{ scale: 1.1, opacity: 0 }}
                             className="text-center"
                         >
-                            <div className="text-amber-500 text-[10px] font-black uppercase tracking-[0.4em] mb-2 opacity-80">{dict?.worldcup?.nextRound || "Next Round"}</div>
-                            <h2 className="text-6xl md:text-8xl font-black text-foreground tracking-tighter italic">
-                                {totalRound / 2 === 1 ? (dict?.worldcup?.final || '결승전') : (dict?.worldcup?.round?.replace('{round}', (totalRound / 2).toString()) || `${totalRound / 2}강`)}
+                            <div className="text-primary text-[10px] md:text-xs font-black uppercase tracking-[0.5em] mb-4 opacity-100">{isEn ? 'Tournament' : '토너먼트'}</div>
+                            <h2 className="text-7xl md:text-9xl font-black text-foreground tracking-tighter italic uppercase drop-shadow-[0_0_50px_rgba(var(--primary),0.3)]">
+                                {totalRound / 2 === 1 ? (dict?.worldcup?.final || 'FINAL') : (dict?.worldcup?.round?.replace('{round}', (totalRound / 2).toString()) || `${totalRound / 2} ROUND`)}
                             </h2>
                         </motion.div>
                     </motion.div>
                 )}
             </AnimatePresence>
-            {/* 1. Header & Progress (Fixed top-16 to avoid overlapping with main site header) */}
-            <div className="fixed top-16 left-0 right-0 p-4 z-40 bg-gradient-to-b from-background via-background/40 to-transparent flex flex-col items-center">
-                <div className="w-full max-w-2xl flex items-center justify-between mb-2">
+
+            {/* Arena Background */}
+            <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+                <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-primary/10 blur-[150px] rounded-full" />
+                <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-primary/5 blur-[150px] rounded-full" />
+            </div>
+
+            {/* 1. Header & Progress */}
+            <div className="fixed top-16 md:top-20 left-0 right-0 p-4 z-40 glass-premium border-b border-border/10 flex flex-col items-center gap-4">
+                <div className="w-full max-w-7xl flex items-center justify-between px-2">
                     <button
-                        onClick={() => router.push(`/${lang}/contents/worldcup`)}
-                        className="p-2.5 bg-card/50 backdrop-blur-md rounded-2xl border border-border hover:bg-muted transition-all"
+                        onClick={() => router.back()}
+                        className="p-3 bg-muted/30 border border-border/50 rounded-2xl hover:bg-muted transition-all active:scale-95 shadow-xl"
                     >
-                        <ChevronLeft className="w-5 h-5 text-foreground" />
+                        <ChevronLeft className="w-6 h-6 text-foreground" />
                     </button>
-                    <div className="flex flex-col items-center px-4 py-2 bg-card/80 backdrop-blur-md border border-border rounded-2xl shadow-sm">
-                        <h2 className="text-xl font-black text-amber-500 tracking-tighter drop-shadow-md">
-                            {totalRound === 2 ? (dict?.worldcup?.final || '결승전') : (dict?.worldcup?.round?.replace('{round}', totalRound.toString()) || `${totalRound}강`)}
-                        </h2>
-                        <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest px-2 py-0.5 mt-0.5">
-                            Game {Math.floor(currentIndex / 2) + 1} / {currentRoundItems.length / 2}
-                        </p>
+                    
+                    <div className="flex flex-col items-center">
+                        <div className="px-8 py-2 bg-primary text-primary-foreground rounded-2xl shadow-2xl shadow-primary/20 mb-1.5 transition-all hover:scale-105 cursor-default">
+                            <h2 className="text-sm md:text-lg font-black tracking-[0.2em] italic uppercase">
+                                {totalRound === 2 ? (dict?.worldcup?.final || 'FINAL') : (dict?.worldcup?.round?.replace('{round}', totalRound.toString()) || `${totalRound} ROUND`)}
+                            </h2>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 bg-primary rounded-full animate-ping" />
+                            <p className="text-[10px] md:text-xs text-foreground/40 font-black uppercase tracking-[0.3em]">
+                                MATCH {Math.floor(currentIndex / 2) + 1} OF {currentRoundItems.length / 2}
+                            </p>
+                        </div>
                     </div>
-                    <div className="w-10 h-10" /> {/* Spacer */}
+
+                    <div className="hidden md:block w-12 h-12" />
                 </div>
+
                 {/* Progress Bar */}
-                <div className="w-full max-w-sm h-1.5 bg-muted rounded-full overflow-hidden border border-border/50">
+                <div className="w-full max-w-xl h-1.5 bg-muted/30 rounded-full overflow-hidden border border-border/10 relative">
                     <motion.div
-                        className="h-full bg-gradient-to-r from-amber-600 to-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.5)]"
+                        className="h-full bg-brand-gradient shadow-[0_0_20px_rgba(var(--primary),0.5)] relative z-10"
                         initial={false}
                         animate={{ width: `${(currentIndex / currentRoundItems.length) * 100}%` }}
+                        transition={{ type: 'spring', stiffness: 80, damping: 20 }}
                     />
                 </div>
             </div>
 
             {/* VS Badge */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none md:top-[55%]">
-                <div className="w-12 h-12 md:w-20 md:h-20 bg-background/60 backdrop-blur-xl border-2 border-amber-500 rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(245,158,11,0.4)]">
-                    <span className="text-xl md:text-3xl font-black italic text-amber-500">{dict?.worldcup?.vs || "VS"}</span>
-                </div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none md:top-[55%] lg:top-[50%]">
+                <motion.div 
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    className="w-20 h-20 md:w-32 md:h-32 glass-premium border-2 border-primary/50 rounded-full flex items-center justify-center shadow-2xl shadow-primary/20 relative"
+                >
+                    <div className="absolute inset-0 border border-primary/20 rounded-full animate-ping opacity-30" />
+                    <span className="text-3xl md:text-5xl font-black italic text-primary drop-shadow-2xl italic tracking-tighter">VS</span>
+                </motion.div>
             </div>
 
-            {/* Choice Section - Relative z-20 for clear click area, pt-44 to avoid header overlap */}
-            <div className="flex-1 flex flex-row items-center justify-center pt-44 pb-8 px-3 gap-3 max-w-4xl mx-auto w-full mb-12 relative z-20">
-                {/* Left Side */}
-                <ChoiceCard item={leftItem} onClick={() => selectWinner(leftItem)} pos="left" isEn={isEn} />
+            {/* Choice Section */}
+            <div className="flex-1 flex flex-col md:flex-row items-center justify-center pt-48 pb-12 px-4 md:px-8 gap-8 max-w-[1800px] mx-auto w-full relative z-20 overflow-hidden">
+                <AnimatePresence mode="wait">
+                    <motion.div 
+                        key={leftItem.id}
+                        initial={{ opacity: 0, x: -100 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -100 }}
+                        className="flex-1 w-full h-full max-h-[700px] flex"
+                    >
+                        <ChoiceCard item={leftItem} onClick={() => selectWinner(leftItem)} pos="left" isEn={isEn} />
+                    </motion.div>
 
-                {/* Right Side */}
-                <ChoiceCard item={rightItem} onClick={() => selectWinner(rightItem)} pos="right" isEn={isEn} />
+                    <motion.div 
+                        key={rightItem.id}
+                        initial={{ opacity: 0, x: 100 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: 100 }}
+                        className="flex-1 w-full h-full max-h-[700px] flex"
+                    >
+                        <ChoiceCard item={rightItem} onClick={() => selectWinner(rightItem)} pos="right" isEn={isEn} />
+                    </motion.div>
+                </AnimatePresence>
             </div>
         </div>
-    );
-}
-
-export default function WorldCupGamePage({ params }: { params: Promise<{ lang: string }> }) {
-    return (
-        <Suspense fallback={<WorldCupGameFallback />}>
-            <WorldCupGamePageContent params={params} />
-        </Suspense>
     );
 }
 
@@ -640,85 +635,52 @@ function ChoiceCard({ item, onClick, pos, isEn }: { item: Spirit, onClick: () =>
     return (
         <motion.button
             onClick={onClick}
-            className="flex-1 group relative outline-none flex flex-col bg-card border border-border rounded-[28px] overflow-hidden shadow-xl max-h-[700px]"
-            whileTap={{ scale: 0.97 }}
-            transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+            className="flex-1 w-full h-full group relative outline-none flex flex-col bg-card border border-border/40 rounded-[3rem] overflow-hidden shadow-2xl transition-all hover:border-primary/50 hover:shadow-primary/20 hover:bg-card/80 hover:scale-[1.02]"
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 25 }}
         >
-            {/* 1. Image Block (Reduced height on PC) */}
-            <div className="aspect-[4/5] md:aspect-[16/10] relative w-full bg-muted/10 border-b border-border overflow-hidden">
+            <div className="aspect-[4/3] md:aspect-square relative w-full bg-muted/10 border-b border-border/30 overflow-hidden">
                 <Image
-                    src={item.preloadedImageUrl || getCategoryFallbackImage(item.category)}
+                    src={item.preloadedImageUrl || '/mys-4.webp'}
                     alt={item.name}
                     fill
-                    className="object-contain p-4 md:p-6 transition-transform duration-500 group-hover:scale-110"
+                    className="object-contain p-12 md:p-20 transition-transform duration-1000 group-hover:scale-110 drop-shadow-2xl"
                     priority
                     unoptimized
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-all duration-500" />
             </div>
 
-            {/* 2~6. Info Blocks (Structured) */}
-            <div className="p-4 md:p-6 flex flex-col items-center text-center gap-3 flex-1 justify-center">
-                {/* 1단. Category / Subcategory Capsules */}
-                <div className="flex flex-wrap justify-center gap-1.5 md:gap-2">
-                    <span className="px-2 md:px-3 py-1 bg-amber-500 text-white text-[10px] md:text-[11px] font-black rounded-full uppercase tracking-wider">
+            <div className="p-8 md:p-12 flex flex-col items-center text-center gap-6 flex-1 justify-center relative">
+                <div className="flex flex-wrap justify-center gap-3">
+                    <span className="capsule-premium">
                         {(isEn && item.category_en) ? item.category_en : item.category}
                     </span>
                     {item.subcategory && (
-                        <span className="px-2 md:px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-[10px] md:text-[11px] font-bold rounded-full uppercase tracking-tighter">
+                        <span className="px-4 py-1.5 bg-secondary text-secondary-foreground border border-border text-[9px] font-black rounded-xl uppercase tracking-tighter">
                             {item.subcategory}
                         </span>
                     )}
                 </div>
 
-                {/* 2단. Product Name */}
-                <h3 className="text-sm md:text-2xl font-black text-foreground leading-tight line-clamp-2 md:line-clamp-3">
-                    {typeof window !== 'undefined' && window.location.pathname.startsWith('/en') && item.name_en ? item.name_en : item.name}
+                <h3 className="text-2xl md:text-5xl font-black text-foreground leading-[1] tracking-tight px-2 line-clamp-3 group-hover:text-primary transition-colors duration-500 italic uppercase">
+                    {(isEn && item.name_en) ? item.name_en : item.name}
                 </h3>
 
-                {/* 3단. Country / Region Capsules */}
-                <div className="flex flex-wrap justify-center gap-1.5 md:gap-2">
-                    {item.country && (
-                        <span className="px-2 md:px-3 py-1 bg-blue-600 text-white text-[10px] md:text-[11px] font-bold rounded-full uppercase">
-                            {item.country}
-                        </span>
-                    )}
-                    {item.region && (
-                        <span className="px-2 md:px-3 py-1 bg-indigo-600 text-white text-[10px] md:text-[11px] font-medium rounded-full uppercase">
-                            {item.region}
-                        </span>
-                    )}
-                </div>
-
-                {/* 4단. ABV / Distillery Capsules */}
-                <div className="flex flex-wrap justify-center gap-1.5 md:gap-2">
-                    {item.abv !== null && (
-                        <span className="px-2 md:px-3 py-1 bg-rose-600 text-white text-[10px] md:text-[11px] font-black rounded-full">
-                            {item.abv}%
-                        </span>
-                    )}
-                    {item.distillery && (
-                        <span className="px-2 md:px-3 py-1 bg-gray-500 text-white text-[10px] md:text-[11px] font-medium rounded-full">
-                            {item.distillery}
-                        </span>
-                    )}
-                </div>
-
-                {/* 5단. Flavor Tags (Capsule Style) */}
-                {item.tags && item.tags.length > 0 && (
-                    <div className="flex flex-wrap justify-center gap-1.5 mt-2 border-t border-border/30 pt-3 w-full">
-                        {item.tags.slice(0, 3).map(tag => (
-                            <span key={tag} className="px-2 py-0.5 bg-muted border border-border/50 rounded-full text-[9px] md:text-[10px] text-muted-foreground font-bold">
-                                #{tag}
-                            </span>
-                        ))}
+                <div className="flex flex-wrap justify-center gap-4 opacity-40 group-hover:opacity-100 transition-all duration-500">
+                    <div className="px-4 py-1.5 bg-muted rounded-xl border border-border/50">
+                        <span className="text-[10px] font-black uppercase tracking-widest">{item.country}</span>
                     </div>
-                )}
+                    {item.abv !== null && (
+                        <div className="px-4 py-1.5 bg-primary/10 border border-primary/20 rounded-xl">
+                            <span className="text-[10px] font-black text-primary uppercase tracking-widest">{item.abv}% ABV</span>
+                        </div>
+                    )}
+                </div>
             </div>
 
-            {/* Hover Glow & Overlay - pointer-events-none for safe clicking */}
-            <div className="absolute inset-0 border-2 border-transparent group-hover:border-amber-500/20 rounded-[28px] transition-all pointer-events-none" />
-            <div className="absolute inset-0 bg-amber-500/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+            {/* Selection Highlight */}
+            <div className="absolute inset-x-0 bottom-0 h-1.5 bg-brand-gradient opacity-0 group-hover:opacity-100 transition-opacity shadow-[0_0_20px_rgba(var(--primary),0.5)]" />
         </motion.button>
     );
 }

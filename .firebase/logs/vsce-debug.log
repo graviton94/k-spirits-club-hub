@@ -3110,3 +3110,135 @@ Generated sources: package.json [629B] index.d.ts [40857B] esm\index.esm.js [133
 [debug] [2026-04-22T12:21:45.361Z] I0422 21:21:45.361513   27376 installsdk.go:55] Package @dataconnect/admin-generated is already installed. Skipping installation
 I0422 21:21:45.361513   27376 load.go:109] Finished reloading
  {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 21:21:45.361513   27376 installsdk.go:55] Package @dataconnect/admin-generated is already installed. Skipping installation\nI0422 21:21:45.361513   27376 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-22T13:57:35.168Z] I0422 22:57:35.151049   27376 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 22:57:35.151049   27376 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-22T13:57:35.442Z] W0422 22:57:35.433122   27376 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 8253] connector "main" has errors: main\queries.gql:399:4: spirits (where: Spirit_Filter): cannot mix  _and/_or/_not with specific fields [_or] and [isPublished subcategory]
+
+sources: main\mutations.gql [6315B] main\queries.gql [8502B] 
+I0422 22:57:35.441961   27376 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 8253] UpdateResources(): done
+Main schema: sources: schema\schema.gql [3344B] 
+Connector "main": sources: main\mutations.gql [6315B] main\queries.gql [8502B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0422 22:57:35.433122   27376 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 8253] connector \"main\" has errors: main\\queries.gql:399:4: spirits (where: Spirit_Filter): cannot mix  _and/_or/_not with specific fields [_or] and [isPublished subcategory]\n\nsources: main\\mutations.gql [6315B] main\\queries.gql [8502B] \nI0422 22:57:35.441961   27376 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 8253] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [3344B] \nConnector \"main\": sources: main\\mutations.gql [6315B] main\\queries.gql [8502B] \n"}}
+[debug] [2026-04-22T13:57:35.449Z] E0422 22:57:35.444226   27376 load.go:73] Could not load sources: 
+Errors: main\queries.gql:399:4: spirits (where: Spirit_Filter): cannot mix  _and/_or/_not with specific fields [_or] and [isPublished subcategory]
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0422 22:57:35.444226   27376 load.go:73] Could not load sources: \nErrors: main\\queries.gql:399:4: spirits (where: Spirit_Filter): cannot mix  _and/_or/_not with specific fields [_or] and [isPublished subcategory]\n"}}
+[debug] [2026-04-22T13:57:35.462Z] I0422 22:57:35.459587   27376 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\implicit.gql [1595B] main\input.gql [131310B] main\relation.gql [64498B] main\query.gql [12468B] main\mutation.gql [33514B] prelude.gql [82799B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 22:57:35.459587   27376 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\implicit.gql [1595B] main\\input.gql [131310B] main\\relation.gql [64498B] main\\query.gql [12468B] main\\mutation.gql [33514B] prelude.gql [82799B] \n"}}
+[debug] [2026-04-22T13:57:35.463Z] I0422 22:57:35.459587   27376 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 22:57:35.459587   27376 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-22T13:58:45.148Z] I0422 22:58:45.148033   27376 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 22:58:45.148033   27376 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-22T13:58:45.197Z] W0422 22:58:45.196351   27376 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 36ab] connector "main" has errors: main\queries.gql:399:4: spirits (where: Spirit_Filter): cannot mix  _and/_or/_not with specific fields [_and] and [isPublished]
+
+sources: main\mutations.gql [6315B] main\queries.gql [8919B] 
+I0422 22:58:45.196351   27376 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 36ab] UpdateResources(): done
+Main schema: sources: schema\schema.gql [3344B] 
+Connector "main": sources: main\mutations.gql [6315B] main\queries.gql [8919B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0422 22:58:45.196351   27376 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 36ab] connector \"main\" has errors: main\\queries.gql:399:4: spirits (where: Spirit_Filter): cannot mix  _and/_or/_not with specific fields [_and] and [isPublished]\n\nsources: main\\mutations.gql [6315B] main\\queries.gql [8919B] \nI0422 22:58:45.196351   27376 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 36ab] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [3344B] \nConnector \"main\": sources: main\\mutations.gql [6315B] main\\queries.gql [8919B] \n"}}
+[debug] [2026-04-22T13:58:45.199Z] E0422 22:58:45.196351   27376 load.go:73] Could not load sources: 
+Errors: main\queries.gql:399:4: spirits (where: Spirit_Filter): cannot mix  _and/_or/_not with specific fields [_and] and [isPublished]
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0422 22:58:45.196351   27376 load.go:73] Could not load sources: \nErrors: main\\queries.gql:399:4: spirits (where: Spirit_Filter): cannot mix  _and/_or/_not with specific fields [_and] and [isPublished]\n"}}
+[debug] [2026-04-22T13:58:45.203Z] I0422 22:58:45.196351   27376 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\relation.gql [64498B] main\query.gql [12468B] main\mutation.gql [33514B] prelude.gql [82799B] main\implicit.gql [1595B] main\input.gql [131310B] 
+I0422 22:58:45.196351   27376 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 22:58:45.196351   27376 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\relation.gql [64498B] main\\query.gql [12468B] main\\mutation.gql [33514B] prelude.gql [82799B] main\\implicit.gql [1595B] main\\input.gql [131310B] \nI0422 22:58:45.196351   27376 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-22T14:01:55.154Z] I0422 23:01:55.154228   27376 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 23:01:55.154228   27376 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-22T14:01:55.382Z] W0422 23:01:55.381901   27376 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub f4e4] connector "main" has errors: main\queries.gql:399:4: spirits (where: Spirit_Filter): cannot mix  _and/_or/_not with specific fields [_and] and [isPublished]
+
+sources: main\mutations.gql [6624B] main\queries.gql [8919B] 
+I0422 23:01:55.382437   27376 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub f4e4] UpdateResources(): done
+Main schema: sources: schema\schema.gql [3344B] 
+Connector "main": sources: main\mutations.gql [6624B] main\queries.gql [8919B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0422 23:01:55.381901   27376 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub f4e4] connector \"main\" has errors: main\\queries.gql:399:4: spirits (where: Spirit_Filter): cannot mix  _and/_or/_not with specific fields [_and] and [isPublished]\n\nsources: main\\mutations.gql [6624B] main\\queries.gql [8919B] \nI0422 23:01:55.382437   27376 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub f4e4] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [3344B] \nConnector \"main\": sources: main\\mutations.gql [6624B] main\\queries.gql [8919B] \n"}}
+[debug] [2026-04-22T14:01:55.391Z] E0422 23:01:55.391990   27376 load.go:73] Could not load sources: 
+Errors: main\queries.gql:399:4: spirits (where: Spirit_Filter): cannot mix  _and/_or/_not with specific fields [_and] and [isPublished]
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0422 23:01:55.391990   27376 load.go:73] Could not load sources: \nErrors: main\\queries.gql:399:4: spirits (where: Spirit_Filter): cannot mix  _and/_or/_not with specific fields [_and] and [isPublished]\n"}}
+[debug] [2026-04-22T14:01:55.405Z] I0422 23:01:55.405019   27376 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\implicit.gql [1595B] main\input.gql [131310B] main\relation.gql [64498B] main\query.gql [12468B] main\mutation.gql [33514B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 23:01:55.405019   27376 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\implicit.gql [1595B] main\\input.gql [131310B] main\\relation.gql [64498B] main\\query.gql [12468B] main\\mutation.gql [33514B] \n"}}
+[debug] [2026-04-22T14:01:55.407Z] I0422 23:01:55.405019   27376 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 23:01:55.405019   27376 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-22T14:04:55.167Z] I0422 23:04:55.152252   27376 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 23:04:55.152252   27376 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-22T14:04:55.389Z] W0422 23:04:55.370994   27376 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 40bd] connector "main" has errors: main\queries.gql:399:4: spirits (where: Spirit_Filter): cannot mix  _and/_or/_not with specific fields [_and] and [isPublished]
+main\queries.gql:454:4: spirits (where: Spirit_Filter): cannot mix  _and/_or/_not with specific fields [_or] and [isPublished]
+
+sources: main\mutations.gql [6624B] main\queries.gql [9403B] 
+I0422 23:04:55.370994   27376 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 40bd] UpdateResources(): done
+Main schema: sources: schema\schema.gql [3344B] 
+Connector "main": sources: main\mutations.gql [6624B] main\queries.gql [9403B] 
+E0422 23:04:55.376672   27376 load.go:73] Could not load sources: 
+Errors: main\queries.gql:399:4: spirits (where: Spirit_Filter): cannot mix  _and/_or/_not with specific fields [_and] and [isPublished]
+main\queries.gql:454:4: spirits (where: Spirit_Filter): cannot mix  _and/_or/_not with specific fields [_or] and [isPublished]
+I0422 23:04:55.388685   27376 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\implicit.gql [1595B] main\input.gql [131310B] main\relation.gql [64498B] main\query.gql [12468B] main\mutation.gql [33514B] 
+I0422 23:04:55.389220   27376 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0422 23:04:55.370994   27376 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 40bd] connector \"main\" has errors: main\\queries.gql:399:4: spirits (where: Spirit_Filter): cannot mix  _and/_or/_not with specific fields [_and] and [isPublished]\nmain\\queries.gql:454:4: spirits (where: Spirit_Filter): cannot mix  _and/_or/_not with specific fields [_or] and [isPublished]\n\nsources: main\\mutations.gql [6624B] main\\queries.gql [9403B] \nI0422 23:04:55.370994   27376 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 40bd] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [3344B] \nConnector \"main\": sources: main\\mutations.gql [6624B] main\\queries.gql [9403B] \nE0422 23:04:55.376672   27376 load.go:73] Could not load sources: \nErrors: main\\queries.gql:399:4: spirits (where: Spirit_Filter): cannot mix  _and/_or/_not with specific fields [_and] and [isPublished]\nmain\\queries.gql:454:4: spirits (where: Spirit_Filter): cannot mix  _and/_or/_not with specific fields [_or] and [isPublished]\nI0422 23:04:55.388685   27376 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\implicit.gql [1595B] main\\input.gql [131310B] main\\relation.gql [64498B] main\\query.gql [12468B] main\\mutation.gql [33514B] \nI0422 23:04:55.389220   27376 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-22T14:06:05.153Z] I0422 23:06:05.152291   27376 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 23:06:05.152291   27376 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-22T14:06:05.239Z] W0422 23:06:05.240099   27376 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 88b5] connector "main" has errors: main\queries.gql:399:4: spirits (where: Spirit_Filter): cannot mix  _and/_or/_not with specific fields [_and] and [isPublished]
+
+sources: main\mutations.gql [6624B] main\queries.gql [9464B] 
+I0422 23:06:05.240654   27376 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 88b5] UpdateResources(): done
+Main schema: sources: schema\schema.gql [3344B] 
+Connector "main": sources: main\mutations.gql [6624B] main\queries.gql [9464B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0422 23:06:05.240099   27376 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 88b5] connector \"main\" has errors: main\\queries.gql:399:4: spirits (where: Spirit_Filter): cannot mix  _and/_or/_not with specific fields [_and] and [isPublished]\n\nsources: main\\mutations.gql [6624B] main\\queries.gql [9464B] \nI0422 23:06:05.240654   27376 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 88b5] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [3344B] \nConnector \"main\": sources: main\\mutations.gql [6624B] main\\queries.gql [9464B] \n"}}
+[debug] [2026-04-22T14:06:05.243Z] E0422 23:06:05.243077   27376 load.go:73] Could not load sources: 
+Errors: main\queries.gql:399:4: spirits (where: Spirit_Filter): cannot mix  _and/_or/_not with specific fields [_and] and [isPublished]
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0422 23:06:05.243077   27376 load.go:73] Could not load sources: \nErrors: main\\queries.gql:399:4: spirits (where: Spirit_Filter): cannot mix  _and/_or/_not with specific fields [_and] and [isPublished]\n"}}
+[debug] [2026-04-22T14:06:05.252Z] I0422 23:06:05.251825   27376 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\implicit.gql [1595B] main\input.gql [131310B] main\relation.gql [64498B] main\query.gql [12468B] main\mutation.gql [33514B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 23:06:05.251825   27376 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\implicit.gql [1595B] main\\input.gql [131310B] main\\relation.gql [64498B] main\\query.gql [12468B] main\\mutation.gql [33514B] \n"}}
+[debug] [2026-04-22T14:06:05.252Z] I0422 23:06:05.252823   27376 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 23:06:05.252823   27376 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-22T14:06:35.148Z] I0422 23:06:35.148051   27376 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 23:06:35.148051   27376 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-22T14:06:35.303Z] I0422 23:06:35.303005   27376 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 1ee9] UpdateResources(): done
+Main schema: sources: schema\schema.gql [3344B] 
+Connector "main": sources: main\mutations.gql [6624B] main\queries.gql [9470B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 23:06:35.303005   27376 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 1ee9] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [3344B] \nConnector \"main\": sources: main\\mutations.gql [6624B] main\\queries.gql [9470B] \n"}}
+[debug] [2026-04-22T14:06:35.430Z] I0422 23:06:35.428443   27376 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 23:06:35.428443   27376 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-22T14:06:35.492Z] I0422 23:06:35.492940   27376 codegen.go:101] [connector "main" adminSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-admin-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 23:06:35.492940   27376 codegen.go:101] [connector \"main\" adminSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-admin-generated\"\n"}}
+[debug] [2026-04-22T14:06:35.504Z] I0422 23:06:35.504795   27376 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\implicit.gql [1595B] main\input.gql [131310B] main\relation.gql [64498B] main\query.gql [12468B] main\mutation.gql [33514B] prelude.gql [82799B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 23:06:35.504795   27376 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\implicit.gql [1595B] main\\input.gql [131310B] main\\relation.gql [64498B] main\\query.gql [12468B] main\\mutation.gql [33514B] prelude.gql [82799B] \n"}}
+[debug] [2026-04-22T14:06:35.545Z] I0422 23:06:35.545287   27376 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: .guides/setup.md [1682B] .guides/config.json [236B] README.md [206895B] react\index.d.ts [19711B] react\esm\index.esm.js [15385B] .guides/usage.md [4228B] index.d.ts [48767B] esm\package.json [17B] package.json [850B] react\package.json [457B] react\index.cjs.js [16359B] react\README.md [205369B] esm\index.esm.js [25111B] index.cjs.js [27924B] react\esm\package.json [17B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 23:06:35.545287   27376 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: .guides/setup.md [1682B] .guides/config.json [236B] README.md [206895B] react\\index.d.ts [19711B] react\\esm\\index.esm.js [15385B] .guides/usage.md [4228B] index.d.ts [48767B] esm\\package.json [17B] package.json [850B] react\\package.json [457B] react\\index.cjs.js [16359B] react\\README.md [205369B] esm\\index.esm.js [25111B] index.cjs.js [27924B] react\\esm\\package.json [17B] \n"}}
+[debug] [2026-04-22T14:06:35.599Z] I0422 23:06:35.599520   27376 installsdk.go:55] Package @dataconnect/generated is already installed. Skipping installation
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 23:06:35.599520   27376 installsdk.go:55] Package @dataconnect/generated is already installed. Skipping installation\n"}}
+[debug] [2026-04-22T14:06:35.607Z] I0422 23:06:35.607094   27376 collector.go:107] connector "main" adminSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-admin-generated"
+Generated sources: index.d.ts [43378B] esm\index.esm.js [13981B] esm\package.json [17B] index.cjs.js [15618B] package.json [629B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 23:06:35.607094   27376 collector.go:107] connector \"main\" adminSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-admin-generated\"\nGenerated sources: index.d.ts [43378B] esm\\index.esm.js [13981B] esm\\package.json [17B] index.cjs.js [15618B] package.json [629B] \n"}}
+[debug] [2026-04-22T14:06:35.613Z] I0422 23:06:35.613395   27376 installsdk.go:55] Package @dataconnect/admin-generated is already installed. Skipping installation
+I0422 23:06:35.613395   27376 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 23:06:35.613395   27376 installsdk.go:55] Package @dataconnect/admin-generated is already installed. Skipping installation\nI0422 23:06:35.613395   27376 load.go:109] Finished reloading\n"}}
+[debug] [2026-04-22T14:10:05.169Z] I0422 23:10:05.152951   27376 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 23:10:05.152951   27376 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-22T14:10:05.433Z] I0422 23:10:05.428755   27376 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 23d5] UpdateResources(): done
+Main schema: sources: schema\schema.gql [3344B] 
+Connector "main": sources: main\queries.gql [9470B] main\mutations.gql [6617B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 23:10:05.428755   27376 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 23d5] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [3344B] \nConnector \"main\": sources: main\\queries.gql [9470B] main\\mutations.gql [6617B] \n"}}
+[debug] [2026-04-22T14:10:05.509Z] I0422 23:10:05.507624   27376 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 23:10:05.507624   27376 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-22T14:10:05.563Z] I0422 23:10:05.562699   27376 codegen.go:101] [connector "main" adminSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-admin-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 23:10:05.562699   27376 codegen.go:101] [connector \"main\" adminSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-admin-generated\"\n"}}
+[debug] [2026-04-22T14:10:05.583Z] I0422 23:10:05.578599   27376 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\implicit.gql [1595B] main\input.gql [131310B] main\relation.gql [64498B] main\query.gql [12468B] main\mutation.gql [33514B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 23:10:05.578599   27376 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\implicit.gql [1595B] main\\input.gql [131310B] main\\relation.gql [64498B] main\\query.gql [12468B] main\\mutation.gql [33514B] \n"}}
+[debug] [2026-04-22T14:10:05.612Z] I0422 23:10:05.612408   27376 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: esm\index.esm.js [25111B] index.cjs.js [27924B] react\package.json [457B] .guides/usage.md [4228B] package.json [850B] react\README.md [205369B] .guides/setup.md [1682B] esm\package.json [17B] README.md [206895B] react\index.d.ts [19711B] react\esm\package.json [17B] react\esm\index.esm.js [15385B] .guides/config.json [236B] react\index.cjs.js [16359B] index.d.ts [48767B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 23:10:05.612408   27376 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: esm\\index.esm.js [25111B] index.cjs.js [27924B] react\\package.json [457B] .guides/usage.md [4228B] package.json [850B] react\\README.md [205369B] .guides/setup.md [1682B] esm\\package.json [17B] README.md [206895B] react\\index.d.ts [19711B] react\\esm\\package.json [17B] react\\esm\\index.esm.js [15385B] .guides/config.json [236B] react\\index.cjs.js [16359B] index.d.ts [48767B] \n"}}
+[debug] [2026-04-22T14:10:05.634Z] I0422 23:10:05.633986   27376 installsdk.go:55] Package @dataconnect/generated is already installed. Skipping installation
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 23:10:05.633986   27376 installsdk.go:55] Package @dataconnect/generated is already installed. Skipping installation\n"}}
+[debug] [2026-04-22T14:10:05.642Z] I0422 23:10:05.643059   27376 collector.go:107] connector "main" adminSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-admin-generated"
+Generated sources: index.d.ts [43378B] esm\index.esm.js [13981B] esm\package.json [17B] index.cjs.js [15618B] package.json [629B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 23:10:05.643059   27376 collector.go:107] connector \"main\" adminSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-admin-generated\"\nGenerated sources: index.d.ts [43378B] esm\\index.esm.js [13981B] esm\\package.json [17B] index.cjs.js [15618B] package.json [629B] \n"}}
+[debug] [2026-04-22T14:10:05.652Z] I0422 23:10:05.651959   27376 installsdk.go:55] Package @dataconnect/admin-generated is already installed. Skipping installation
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 23:10:05.651959   27376 installsdk.go:55] Package @dataconnect/admin-generated is already installed. Skipping installation\n"}}
+[debug] [2026-04-22T14:10:05.653Z] I0422 23:10:05.651959   27376 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0422 23:10:05.651959   27376 load.go:109] Finished reloading\n"}}

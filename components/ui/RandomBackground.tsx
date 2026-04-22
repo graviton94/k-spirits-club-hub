@@ -38,18 +38,29 @@ export function RandomBackground() {
                 unoptimized={true}
             />
 
-            {/* Gradient overlay */}
-            <div
-                className="absolute inset-0"
-                style={{
-                    background: `linear-gradient(to bottom,
-            transparent 0%,
-            transparent 40%,
-            rgba(0, 0, 0, 0.8) 70%,
-            transparent 100%
-          )`
-                }}
+            {/* Premium Overlays */}
+            <div className="absolute inset-0 bg-linear-to-b from-transparent via-background/20 to-background z-10" />
+            
+            {/* Subtle Texture / Noise */}
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-20 mix-blend-overlay bg-[url('/noise.png')] bg-repeat" />
+
+            <Image
+                key={bgImage}
+                src={bgImage}
+                alt="Background"
+                fill
+                priority={!mounted}
+                style={{ objectFit: 'cover' }}
+                sizes="100vw"
+                className="transition-opacity duration-1000 brightness-75 contrast-110"
+                unoptimized={true}
             />
+
+            {/* Glowing Accent Layer */}
+            <div className="absolute inset-0 z-10 pointer-events-none">
+                <div className="absolute top-1/4 -left-1/4 w-[600px] h-[600px] bg-primary/10 blur-[150px] rounded-full animate-pulse" />
+                <div className="absolute bottom-1/4 -right-1/4 w-[600px] h-[600px] bg-accent/5 blur-[150px] rounded-full animate-pulse" style={{ animationDelay: '2s' }} />
+            </div>
         </div>
     );
 }

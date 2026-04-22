@@ -182,18 +182,19 @@ function ExploreCardComponent({
   const content = (
     <motion.div
       ref={observerRef}
-      className="group flex gap-3 p-3 rounded-2xl bg-white/60 dark:bg-slate-900/40 backdrop-blur-md border border-white/40 dark:border-white/10 hover:bg-white/80 dark:hover:bg-slate-900/60 transition-all cursor-pointer shadow-sm"
-      whileHover={{ scale: 0.99 }}
-      transition={{ type: "spring", stiffness: 400, damping: 17 }}
+      className="group flex gap-4 p-4 rounded-[2rem] bg-card/40 backdrop-blur-3xl border border-border/30 hover:bg-card/60 transition-all cursor-pointer shadow-lg relative overflow-hidden"
+      whileHover={{ y: -4 }}
+      transition={{ type: "spring", stiffness: 400, damping: 20 }}
       onClick={() => onClick?.(spirit)}
     >
-      <div className="shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-muted border border-border relative aspect-square">
+      {/* 🖼️ Thumbnail */}
+      <div className="shrink-0 w-24 h-24 rounded-2xl overflow-hidden bg-muted/50 border border-border/50 relative shadow-inner group-hover:border-primary/30 transition-colors">
         <Image
-          src={spirit.imageUrl && spirit.imageUrl.trim() ? getOptimizedImageUrl(spirit.imageUrl, 120, 60) : getCategoryFallbackImage(spirit.category)}
+          src={spirit.imageUrl && spirit.imageUrl.trim() ? getOptimizedImageUrl(spirit.imageUrl, 200) : getCategoryFallbackImage(spirit.category)}
           alt={displayName}
           fill
-          className={`object-cover transition-transform duration-300 group-hover:scale-110 ${!spirit.imageUrl || !spirit.imageUrl.trim() ? 'opacity-50 grayscale' : 'opacity-100'}`}
-          sizes="80px"
+          className={`object-contain p-3 transition-transform duration-700 group-hover:scale-110 drop-shadow-xl ${!spirit.imageUrl || !spirit.imageUrl.trim() ? 'opacity-30 grayscale' : 'opacity-100'}`}
+          sizes="96px"
           priority={priority}
           onError={(e) => {
             const target = e.target as HTMLImageElement;
@@ -203,89 +204,98 @@ function ExploreCardComponent({
         />
       </div>
 
-      {/* Middle: Content */}
-      <div className="flex-1 min-w-0 flex flex-col justify-center py-0.5">
-        <h3 className="font-black text-sm text-foreground leading-tight line-clamp-2 mb-1">
-          <span className="mr-1 text-base inline-block align-middle">
-            {
-              {
-                "소주": "🍶", "위스키": "🥃", "맥주": "🍺", "일반증류주": "🍸",
-                "기타 주류": "🥂", "탁주": "🥛", "약주": "🍵", "청주": "🍶",
-                "과실주": "🍾", "브랜디": "🍷", "리큐르": "🍹"
-              }[spirit.category] || "🍾"
-            }
-          </span>
+      {/* 📄 Intelligence Content */}
+      <div className="flex-1 min-w-0 flex flex-col justify-center gap-1.5">
+        <div className="flex items-center gap-2">
+            <span className="px-2 py-0.5 bg-primary/10 text-primary text-[9px] font-black rounded-lg border border-primary/20 uppercase tracking-widest">
+                {displayCategory}
+            </span>
+             {spirit.abv > 0 && (
+                <span className="text-[10px] font-black text-foreground/30 uppercase italic">
+                    {spirit.abv}% ABV
+                </span>
+            )}
+        </div>
+
+        <h3 className="font-black text-base md:text-lg text-foreground leading-[1.1] tracking-tight line-clamp-1 group-hover:text-primary transition-colors">
           {displayName}
         </h3>
 
-        <div className="text-[10px] font-bold text-muted-foreground flex items-center gap-1.5 flex-wrap">
-          <span className="uppercase tracking-widest opacity-70">{displaySubCategory}</span>
-          {spirit.abv > 0 && <span className="opacity-40">|</span>}
-          {spirit.abv > 0 && <span className="opacity-70">{spirit.abv}%</span>}
+        <div className="flex items-center gap-2">
+             {displayDistillery && (
+                <p className="text-[11px] font-bold text-foreground/40 truncate">
+                    {displayDistillery}
+                </p>
+            )}
+            {displaySubCategory !== displayCategory && (
+                <>
+                    <span className="w-1 h-1 rounded-full bg-border" />
+                    <p className="text-[10px] font-black text-foreground/20 uppercase tracking-tighter">
+                        {displaySubCategory}
+                    </p>
+                </>
+            )}
         </div>
 
-        {displayDistillery && (
-          <p className="text-[10px] text-muted-foreground/60 mt-0.5 truncate">
-                {displayDistillery}
-          </p>
-        )}
-
-        {/* Rating & Badge */}
-        <div className="flex items-center gap-2 mt-1">
+        {/* 🛡️ Expert Rating & Badges */}
+        <div className="flex items-center gap-3">
           {spirit.aggregateRating && spirit.aggregateRating.ratingValue > 0 && (
-            <div className="flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-amber-500/10 text-amber-600 dark:text-amber-400 text-[10px] font-black">
-              <span>★</span>
+            <div className="flex items-center gap-1.5 px-2 py-1 rounded-xl bg-primary/5 text-primary text-[10px] font-black border border-primary/10">
+              <span className="text-xs">★</span>
               <span>{Number(spirit.aggregateRating.ratingValue).toFixed(1)}</span>
-              {(spirit.aggregateRating.reviewCount ?? 0) > 1 && (
-                <span className="opacity-60 font-medium ml-0.5">({spirit.aggregateRating.reviewCount})</span>
+              {(spirit.aggregateRating.reviewCount ?? 0) > 0 && (
+                 <span className="opacity-40 ml-0.5">({spirit.aggregateRating.reviewCount})</span>
               )}
             </div>
           )}
           {spirit.hasTastingNotes && (
-            <div className="px-1.5 py-0.5 rounded-md bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-[9px] font-black uppercase tracking-tighter">
-              Notes
-            </div>
+             <div className="capsule-premium">
+                NOTES
+             </div>
           )}
         </div>
       </div>
 
-      {/* Right: Two Action Buttons */}
-      <div className="flex items-center gap-1.5 relative z-10 pl-1">
+      {/* 🔮 Premium Action Command Bar */}
+      <div className="flex items-center gap-2 relative z-10 pl-2">
         <button
           onClick={handleCabinetAction}
           disabled={isToggling || isLoadingStatus}
-          className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all shadow-lg active:scale-90 disabled:opacity-50 
+          className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all shadow-2xl active:scale-75 disabled:opacity-50 
             ${isInCabinet
-              ? 'bg-rose-500 text-white shadow-rose-500/20'
-              : 'bg-emerald-500 text-white shadow-emerald-500/20 hover:bg-emerald-600'
+              ? 'bg-primary text-primary-foreground shadow-primary/20'
+              : 'bg-muted/50 text-foreground border border-border/50 hover:bg-primary/10 hover:text-primary hover:border-primary/30'
             }`}
-          title={isInCabinet ? '술장에서 제거' : '술장에 추가'}
+          title={isInCabinet ? 'Remove from cabinet' : 'Add to cabinet'}
         >
           {isToggling ? (
-            <Loader2 className="w-4 h-4 animate-spin" />
+            <Loader2 className="w-5 h-5 animate-spin" />
           ) : isInCabinet ? (
-            <Minus className="w-5 h-5" />
+            <Minus className="w-6 h-6" />
           ) : (
-            <Plus className="w-5 h-5" />
+            <Plus className="w-6 h-6" />
           )}
         </button>
         <button
           onClick={handleWishlistAction}
           disabled={isToggling || isLoadingStatus}
-          className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all border shadow-lg active:scale-90 disabled:opacity-50
+          className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all border shadow-2xl active:scale-75 disabled:opacity-50
             ${isWishlist
-              ? 'bg-amber-500 text-white border-amber-500 shadow-amber-500/20'
-              : 'bg-slate-800 text-white border-white/10 hover:bg-slate-700 shadow-black/20'
+              ? 'bg-accent text-accent-foreground border-accent shadow-accent/20'
+              : 'bg-muted/30 text-foreground/40 border-border/30 hover:bg-accent/10 hover:text-accent hover:border-accent/40'
             }`}
-          title={isWishlist ? '위시리스트 삭제' : '위시리스트 담기'}
+          title={isWishlist ? 'Remove from wishlist' : 'Save for later'}
         >
           {isToggling ? (
-            <Loader2 className="w-4 h-4 animate-spin" />
+            <Loader2 className="w-5 h-5 animate-spin" />
           ) : (
-            <Bookmark className={`w-4 h-4 ${isWishlist ? 'fill-current' : ''}`} />
+            <Bookmark className={`w-5 h-5 ${isWishlist ? 'fill-current' : ''}`} />
           )}
         </button>
       </div>
+
+      {/* Accent Glow */}
+      <div className="absolute inset-x-0 bottom-0 h-1 bg-linear-to-r from-primary/30 via-primary/60 to-primary/30 opacity-0 group-hover:opacity-100 transition-opacity" />
     </motion.div>
   );
 

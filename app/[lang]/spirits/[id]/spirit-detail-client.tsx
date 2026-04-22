@@ -417,13 +417,22 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                 (spirit.nose_tags && spirit.nose_tags.length > 0) || 
                 (spirit.palate_tags && spirit.palate_tags.length > 0) || 
                 (spirit.finish_tags && spirit.finish_tags.length > 0) || 
-                ((spirit.metadata as any)?.nose_tags && (spirit.metadata as any).nose_tags.length > 0)
+                ((spirit.metadata as any)?.nose_tags && (spirit.metadata as any).nose_tags.length > 0) ||
+                spirit.tasting_note
             ) && (
                 <div className="mb-10 p-6 bg-secondary/30 rounded-3xl border border-dashed border-border">
                     <h2 className="text-xl font-black mb-6 flex items-center gap-2">
                         <span className="w-2 h-6 bg-amber-500 rounded-full"></span>
                         {dict?.tastingNote || t.tastingNote || t.flavor}
                     </h2>
+                    
+                    {/* Paragraph Tasting Note */}
+                    {spirit.tasting_note && (
+                        <div className="mb-6 p-4 bg-background/50 rounded-2xl border border-border/50 italic text-sm sm:text-base leading-relaxed text-muted-foreground">
+                            {spirit.tasting_note}
+                        </div>
+                    )}
+
                     <div className="space-y-6">
                         {spirit.nose_tags && spirit.nose_tags.length > 0 && (
                             <FlavorSection title={t.nose} tags={spirit.nose_tags} />

@@ -89,11 +89,11 @@ export function SearchBar({ isHero = false, dict }: { isHero?: boolean, dict?: a
         className={`
                 relative flex items-center gap-3 px-5 py-4 
                 ${isHero
-            ? 'bg-neutral-900 border-white dark:border-border text-white'
+            ? 'bg-black/40 border-primary/30 text-white'
             : 'bg-card border-border hover:border-primary/40 text-foreground'} 
-                border-2 backdrop-blur-sm rounded-2xl shadow-lg
+                border-2 backdrop-blur-md rounded-2xl shadow-lg
                 transition-all duration-300
-                ${isFocused ? 'ring-2 ring-primary/50 border-primary' : ''}
+                ${isFocused ? 'ring-2 ring-primary/50 border-primary shadow-primary/10' : ''}
             `}
         layout
       >
@@ -130,7 +130,7 @@ export function SearchBar({ isHero = false, dict }: { isHero?: boolean, dict?: a
                   >
                     <Link
                       href={`/${lang}/spirits/${item.i}`}
-                      className="flex gap-3 items-center flex-1 min-w-0"
+                      className="flex gap-3 items-center flex-1 min-w-0 group/link"
                     >
                       {item.t ? (
                         <img
@@ -140,15 +140,14 @@ export function SearchBar({ isHero = false, dict }: { isHero?: boolean, dict?: a
                         />
                       ) : (
                         <div className="w-12 h-12 bg-secondary rounded-lg flex items-center justify-center text-xl">
-                          {/* Fallback Icon based on category could go here, or just generic */}
                           🥃
                         </div>
                       )}
 
                       <div className="flex-1 min-w-0">
-                        <div className={`font-semibold truncate ${isHero ? 'text-white' : 'text-foreground'}`}>
-                          {item.n}
-                        </div>
+                        <span className="truncate text-sm font-black tracking-tight text-foreground/90 transition-colors duration-300 group-hover/link:text-primary">
+                            {item.n}
+                        </span>
                         <div className={`text-sm truncate ${isHero ? 'text-neutral-400' : 'text-muted-foreground'}`}>
                           {item.en ? `${item.en}` : item.d ? `🏭 ${item.d}` : item.c}
                         </div>
@@ -174,7 +173,6 @@ export function SearchBar({ isHero = false, dict }: { isHero?: boolean, dict?: a
                               distillery: item.d || undefined,
                               imageUrl: item.t || undefined,
                               category: item.c,
-                              // abv: item.a // SearchIndex might not have abv, check schema
                             });
                             setToastMessage('술장에 추가되었습니다! 🥃');
                             setToastVariant('success');
@@ -183,7 +181,7 @@ export function SearchBar({ isHero = false, dict }: { isHero?: boolean, dict?: a
                             console.error(err);
                           }
                         }}
-                        className="p-2 rounded-full hover:bg-amber-100 dark:hover:bg-amber-900/50 text-amber-500 transition-colors"
+                        className="p-2 rounded-full hover:bg-primary/10 text-primary transition-colors"
                         title="술장에 담기"
                       >
                         <Plus className="w-4 h-4" />
@@ -213,7 +211,7 @@ export function SearchBar({ isHero = false, dict }: { isHero?: boolean, dict?: a
                             console.error(err);
                           }
                         }}
-                        className="p-2 rounded-full hover:bg-purple-100 dark:hover:bg-purple-900/50 text-purple-500 transition-colors"
+                        className="p-3 rounded-full bg-secondary border border-border text-primary hover:text-primary hover:border-primary/50 hover:bg-secondary/80 transition-all active:scale-95 disabled:opacity-30 group/btn shadow-sm"
                         title="위시리스트 담기"
                       >
                         <Bookmark className="w-4 h-4" />
@@ -223,8 +221,8 @@ export function SearchBar({ isHero = false, dict }: { isHero?: boolean, dict?: a
                 ))}
                 <button
                   onClick={handleSearch}
-                  className={`w-full p-3 text-center text-sm font-medium transition-colors ${isHero
-                    ? 'text-amber-400 hover:bg-amber-400/10'
+                  className={`w-full p-3 text-center text-sm font-black transition-colors ${isHero
+                    ? 'text-primary hover:bg-primary/10'
                     : 'text-primary hover:bg-primary/10'
                     }`}
                 >
@@ -247,8 +245,8 @@ export function SearchBar({ isHero = false, dict }: { isHero?: boolean, dict?: a
             className={`absolute top-full left-0 right-0 mt-3 p-2 backdrop-blur-md border-2 rounded-2xl shadow-2xl overflow-hidden ${isHero ? 'bg-neutral-900/90 border-white/20 text-white' : 'bg-popover border-border'
               }`}
           >
-            <div className={`p-3 text-center text-sm ${isHero ? 'text-neutral-400' : 'text-muted-foreground'}`}>
-              Type to search across published spirits
+            <div className="flex items-center gap-2 text-[10px] font-black text-primary/50 mb-4 uppercase tracking-[0.25em]">
+                <Sparkles className="w-3 h-3 text-primary/40" /> Search
             </div>
           </motion.div>
         )}

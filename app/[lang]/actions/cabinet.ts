@@ -18,7 +18,14 @@ import { v4 as uuidv4 } from 'uuid';
 export async function updateCabinetEntry(
     userId: string,
     spiritId: string,
-    data: { personalRating?: number; personalNotes?: string; isFavorite?: boolean }
+    data: { 
+        personalRating?: number; 
+        personalNotes?: string; 
+        isFavorite?: boolean;
+        distillery?: string;
+        category?: string;
+        abv?: number;
+    }
 ) {
     if (!userId) throw new Error('User not authenticated');
 
@@ -74,6 +81,9 @@ export async function addToCabinet(
         userName?: string;
         name?: string;
         imageUrl?: string;
+        distillery?: string;
+        category?: string;
+        abv?: number;
     }
 ) {
     if (!userId) throw new Error('User not authenticated');

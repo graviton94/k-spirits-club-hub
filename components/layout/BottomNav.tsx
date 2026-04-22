@@ -25,34 +25,39 @@ export function BottomNav({ lang, dict }: { lang: Locale, dict: any }) {
     { href: "/me", icon: User, label: dict.profile },
   ];
 
-  return (
-    <div className="fixed bottom-0 left-0 right-0 flex justify-center p-4 pb-[calc(1rem+env(safe-area-inset-bottom,0px))] z-50 pointer-events-none">
-      <nav className="w-full max-w-md bg-card/90 backdrop-blur-xl border-2 border-border rounded-full shadow-2xl pointer-events-auto animate-fade-in-up">
-        <div className="flex justify-evenly items-center h-16 px-2">
-          {navItems.map((item) => (
-            <Link
-              key={`nav-item-${item.href}`}
-              href={`/${lang}${item.href === "/" ? "" : item.href}`}
-              prefetch={false}
-              className={`relative flex flex-col items-center justify-center p-2 rounded-2xl transition-all duration-300 group hover:bg-secondary w-16 h-16 ${isActive(item.href)
-                ? "text-primary"
-                : "text-muted-foreground hover:text-foreground"
-                }`}
-            >
-              <item.icon
-                className={`w-6 h-6 mb-1 transition-all duration-300 ${isActive(item.href) ? "-translate-y-1" : "group-hover:-translate-y-1"}`}
-                strokeWidth={isActive(item.href) ? 2.5 : 2}
-              />
-              <span className={`text-[10px] font-medium absolute bottom-1.5 opacity-0 transition-all duration-300 ${isActive(item.href) ? "opacity-100 translate-y-0" : "translate-y-2 group-hover:opacity-100 group-hover:translate-y-0"}`}>{item.label}</span>
+    return (
+        <div className="fixed bottom-6 left-0 right-0 flex justify-center px-6 z-50 pointer-events-none md:hidden">
+            <nav className="w-full max-w-sm glass-premium border-border/10 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] pointer-events-auto border">
+                <div className="flex justify-between items-center h-20 px-4">
+                    {navItems.map((item) => {
+                        const active = isActive(item.href);
+                        return (
+                            <Link
+                                key={`nav-item-${item.href}`}
+                                href={`/${lang}${item.href === "/" ? "" : item.href}`}
+                                prefetch={false}
+                                className={`relative flex flex-col items-center justify-center w-14 h-14 rounded-[1.5rem] transition-all duration-500 group
+                                    ${active ? "bg-primary text-primary-foreground shadow-2xl shadow-primary/20 scale-110" : "text-foreground/40 hover:text-primary hover:bg-primary/5"}`}
+                            >
+                                <item.icon
+                                    className={`w-6 h-6 transition-all duration-500 ${active ? "scale-100" : "group-hover:scale-110"}`}
+                                    strokeWidth={active ? 3 : 2}
+                                />
+                                <span className={`text-[9px] font-black uppercase tracking-tighter absolute -bottom-8 opacity-0 transition-all duration-300 ${active ? "opacity-40 translate-y-0" : "group-hover:opacity-100 group-hover:-translate-y-1"}`}>
+                                    {item.label}
+                                </span>
 
-              {/* Active Indicator Dot */}
-              {isActive(item.href) && (
-                <span className="absolute top-2 right-3 w-1.5 h-1.5 rounded-full bg-primary shadow-lg shadow-primary/50" />
-              )}
-            </Link>
-          ))}
+                                {active && (
+                                    <motion.div 
+                                        layoutId="bottom-nav-active"
+                                        className="absolute -bottom-1 w-1 h-1 rounded-full bg-white shadow-xl"
+                                    />
+                                )}
+                            </Link>
+                        );
+                    })}
+                </div>
+            </nav>
         </div>
-      </nav>
-    </div>
-  );
+    );
 }

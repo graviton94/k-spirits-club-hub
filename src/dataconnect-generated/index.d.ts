@@ -290,6 +290,27 @@ export interface ListAllCategoriesData {
   })[];
 }
 
+export interface ListAllSpiritsForWorldCupData {
+  spirits: ({
+    id: string;
+    name: string;
+    nameEn?: string | null;
+    imageUrl: string;
+    thumbnailUrl?: string | null;
+    category: string;
+    categoryEn?: string | null;
+    subcategory?: string | null;
+    distillery?: string | null;
+    abv?: number | null;
+    country?: string | null;
+    region?: string | null;
+    noseTags?: string[] | null;
+    palateTags?: string[] | null;
+    finishTags?: string[] | null;
+    createdAt: TimestampString;
+  } & Spirit_Key)[];
+}
+
 export interface ListAllSubcategoriesData {
   spirits: ({
     subcategory?: string | null;
@@ -381,6 +402,31 @@ export interface ListSpiritReviewsData {
 export interface ListSpiritReviewsVariables {
   limit?: number | null;
   offset?: number | null;
+}
+
+export interface ListSpiritsByCategoryForWorldCupData {
+  spirits: ({
+    id: string;
+    name: string;
+    nameEn?: string | null;
+    imageUrl: string;
+    thumbnailUrl?: string | null;
+    category: string;
+    categoryEn?: string | null;
+    subcategory?: string | null;
+    distillery?: string | null;
+    abv?: number | null;
+    country?: string | null;
+    region?: string | null;
+    noseTags?: string[] | null;
+    palateTags?: string[] | null;
+    finishTags?: string[] | null;
+    createdAt: TimestampString;
+  } & Spirit_Key)[];
+}
+
+export interface ListSpiritsByCategoryForWorldCupVariables {
+  category?: string | null;
 }
 
 export interface ListSpiritsData {
@@ -1180,6 +1226,30 @@ export const listSpiritsForWorldCupRef: ListSpiritsForWorldCupRef;
 
 export function listSpiritsForWorldCup(vars?: ListSpiritsForWorldCupVariables, options?: ExecuteQueryOptions): QueryPromise<ListSpiritsForWorldCupData, ListSpiritsForWorldCupVariables>;
 export function listSpiritsForWorldCup(dc: DataConnect, vars?: ListSpiritsForWorldCupVariables, options?: ExecuteQueryOptions): QueryPromise<ListSpiritsForWorldCupData, ListSpiritsForWorldCupVariables>;
+
+interface ListAllSpiritsForWorldCupRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (): QueryRef<ListAllSpiritsForWorldCupData, undefined>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect): QueryRef<ListAllSpiritsForWorldCupData, undefined>;
+  operationName: string;
+}
+export const listAllSpiritsForWorldCupRef: ListAllSpiritsForWorldCupRef;
+
+export function listAllSpiritsForWorldCup(options?: ExecuteQueryOptions): QueryPromise<ListAllSpiritsForWorldCupData, undefined>;
+export function listAllSpiritsForWorldCup(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<ListAllSpiritsForWorldCupData, undefined>;
+
+interface ListSpiritsByCategoryForWorldCupRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars?: ListSpiritsByCategoryForWorldCupVariables): QueryRef<ListSpiritsByCategoryForWorldCupData, ListSpiritsByCategoryForWorldCupVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars?: ListSpiritsByCategoryForWorldCupVariables): QueryRef<ListSpiritsByCategoryForWorldCupData, ListSpiritsByCategoryForWorldCupVariables>;
+  operationName: string;
+}
+export const listSpiritsByCategoryForWorldCupRef: ListSpiritsByCategoryForWorldCupRef;
+
+export function listSpiritsByCategoryForWorldCup(vars?: ListSpiritsByCategoryForWorldCupVariables, options?: ExecuteQueryOptions): QueryPromise<ListSpiritsByCategoryForWorldCupData, ListSpiritsByCategoryForWorldCupVariables>;
+export function listSpiritsByCategoryForWorldCup(dc: DataConnect, vars?: ListSpiritsByCategoryForWorldCupVariables, options?: ExecuteQueryOptions): QueryPromise<ListSpiritsByCategoryForWorldCupData, ListSpiritsByCategoryForWorldCupVariables>;
 
 interface ListAiDiscoveryLogsRef {
   /* Allow users to create refs without passing in DataConnect */

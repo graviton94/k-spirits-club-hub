@@ -32,6 +32,8 @@ This README will guide you through the process of using the generated JavaScript
   - [*listSpiritsForSitemap*](#listspiritsforsitemap)
   - [*getWorldCupResult*](#getworldcupresult)
   - [*listSpiritsForWorldCup*](#listspiritsforworldcup)
+  - [*listAllSpiritsForWorldCup*](#listallspiritsforworldcup)
+  - [*listSpiritsByCategoryForWorldCup*](#listspiritsbycategoryforworldcup)
   - [*listAiDiscoveryLogs*](#listaidiscoverylogs)
   - [*listModificationRequests*](#listmodificationrequests)
   - [*listUserCabinet*](#listusercabinet)
@@ -2695,6 +2697,244 @@ const ref = listSpiritsForWorldCupRef();
 // You can also pass in a `DataConnect` instance to the `QueryRef` function.
 const dataConnect = getDataConnect(connectorConfig);
 const ref = listSpiritsForWorldCupRef(dataConnect, listSpiritsForWorldCupVars);
+
+// Call `executeQuery()` on the reference to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeQuery(ref);
+
+console.log(data.spirits);
+
+// Or, you can use the `Promise` API.
+executeQuery(ref).then((response) => {
+  const data = response.data;
+  console.log(data.spirits);
+});
+```
+
+## listAllSpiritsForWorldCup
+You can execute the `listAllSpiritsForWorldCup` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
+```typescript
+listAllSpiritsForWorldCup(options?: ExecuteQueryOptions): QueryPromise<ListAllSpiritsForWorldCupData, undefined>;
+
+interface ListAllSpiritsForWorldCupRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (): QueryRef<ListAllSpiritsForWorldCupData, undefined>;
+}
+export const listAllSpiritsForWorldCupRef: ListAllSpiritsForWorldCupRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `QueryRef` function.
+```typescript
+listAllSpiritsForWorldCup(dc: DataConnect, options?: ExecuteQueryOptions): QueryPromise<ListAllSpiritsForWorldCupData, undefined>;
+
+interface ListAllSpiritsForWorldCupRef {
+  ...
+  (dc: DataConnect): QueryRef<ListAllSpiritsForWorldCupData, undefined>;
+}
+export const listAllSpiritsForWorldCupRef: ListAllSpiritsForWorldCupRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the listAllSpiritsForWorldCupRef:
+```typescript
+const name = listAllSpiritsForWorldCupRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `listAllSpiritsForWorldCup` query has no variables.
+### Return Type
+Recall that executing the `listAllSpiritsForWorldCup` query returns a `QueryPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `ListAllSpiritsForWorldCupData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface ListAllSpiritsForWorldCupData {
+  spirits: ({
+    id: string;
+    name: string;
+    nameEn?: string | null;
+    imageUrl: string;
+    thumbnailUrl?: string | null;
+    category: string;
+    categoryEn?: string | null;
+    subcategory?: string | null;
+    distillery?: string | null;
+    abv?: number | null;
+    country?: string | null;
+    region?: string | null;
+    noseTags?: string[] | null;
+    palateTags?: string[] | null;
+    finishTags?: string[] | null;
+    createdAt: TimestampString;
+  } & Spirit_Key)[];
+}
+```
+### Using `listAllSpiritsForWorldCup`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, listAllSpiritsForWorldCup } from '@dataconnect/generated';
+
+
+// Call the `listAllSpiritsForWorldCup()` function to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await listAllSpiritsForWorldCup();
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await listAllSpiritsForWorldCup(dataConnect);
+
+console.log(data.spirits);
+
+// Or, you can use the `Promise` API.
+listAllSpiritsForWorldCup().then((response) => {
+  const data = response.data;
+  console.log(data.spirits);
+});
+```
+
+### Using `listAllSpiritsForWorldCup`'s `QueryRef` function
+
+```typescript
+import { getDataConnect, executeQuery } from 'firebase/data-connect';
+import { connectorConfig, listAllSpiritsForWorldCupRef } from '@dataconnect/generated';
+
+
+// Call the `listAllSpiritsForWorldCupRef()` function to get a reference to the query.
+const ref = listAllSpiritsForWorldCupRef();
+
+// You can also pass in a `DataConnect` instance to the `QueryRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = listAllSpiritsForWorldCupRef(dataConnect);
+
+// Call `executeQuery()` on the reference to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeQuery(ref);
+
+console.log(data.spirits);
+
+// Or, you can use the `Promise` API.
+executeQuery(ref).then((response) => {
+  const data = response.data;
+  console.log(data.spirits);
+});
+```
+
+## listSpiritsByCategoryForWorldCup
+You can execute the `listSpiritsByCategoryForWorldCup` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
+```typescript
+listSpiritsByCategoryForWorldCup(vars?: ListSpiritsByCategoryForWorldCupVariables, options?: ExecuteQueryOptions): QueryPromise<ListSpiritsByCategoryForWorldCupData, ListSpiritsByCategoryForWorldCupVariables>;
+
+interface ListSpiritsByCategoryForWorldCupRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (vars?: ListSpiritsByCategoryForWorldCupVariables): QueryRef<ListSpiritsByCategoryForWorldCupData, ListSpiritsByCategoryForWorldCupVariables>;
+}
+export const listSpiritsByCategoryForWorldCupRef: ListSpiritsByCategoryForWorldCupRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `QueryRef` function.
+```typescript
+listSpiritsByCategoryForWorldCup(dc: DataConnect, vars?: ListSpiritsByCategoryForWorldCupVariables, options?: ExecuteQueryOptions): QueryPromise<ListSpiritsByCategoryForWorldCupData, ListSpiritsByCategoryForWorldCupVariables>;
+
+interface ListSpiritsByCategoryForWorldCupRef {
+  ...
+  (dc: DataConnect, vars?: ListSpiritsByCategoryForWorldCupVariables): QueryRef<ListSpiritsByCategoryForWorldCupData, ListSpiritsByCategoryForWorldCupVariables>;
+}
+export const listSpiritsByCategoryForWorldCupRef: ListSpiritsByCategoryForWorldCupRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the listSpiritsByCategoryForWorldCupRef:
+```typescript
+const name = listSpiritsByCategoryForWorldCupRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `listSpiritsByCategoryForWorldCup` query has an optional argument of type `ListSpiritsByCategoryForWorldCupVariables`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+
+```typescript
+export interface ListSpiritsByCategoryForWorldCupVariables {
+  category?: string | null;
+}
+```
+### Return Type
+Recall that executing the `listSpiritsByCategoryForWorldCup` query returns a `QueryPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `ListSpiritsByCategoryForWorldCupData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface ListSpiritsByCategoryForWorldCupData {
+  spirits: ({
+    id: string;
+    name: string;
+    nameEn?: string | null;
+    imageUrl: string;
+    thumbnailUrl?: string | null;
+    category: string;
+    categoryEn?: string | null;
+    subcategory?: string | null;
+    distillery?: string | null;
+    abv?: number | null;
+    country?: string | null;
+    region?: string | null;
+    noseTags?: string[] | null;
+    palateTags?: string[] | null;
+    finishTags?: string[] | null;
+    createdAt: TimestampString;
+  } & Spirit_Key)[];
+}
+```
+### Using `listSpiritsByCategoryForWorldCup`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, listSpiritsByCategoryForWorldCup, ListSpiritsByCategoryForWorldCupVariables } from '@dataconnect/generated';
+
+// The `listSpiritsByCategoryForWorldCup` query has an optional argument of type `ListSpiritsByCategoryForWorldCupVariables`:
+const listSpiritsByCategoryForWorldCupVars: ListSpiritsByCategoryForWorldCupVariables = {
+  category: ..., // optional
+};
+
+// Call the `listSpiritsByCategoryForWorldCup()` function to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await listSpiritsByCategoryForWorldCup(listSpiritsByCategoryForWorldCupVars);
+// Variables can be defined inline as well.
+const { data } = await listSpiritsByCategoryForWorldCup({ category: ..., });
+// Since all variables are optional for this query, you can omit the `ListSpiritsByCategoryForWorldCupVariables` argument.
+const { data } = await listSpiritsByCategoryForWorldCup();
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await listSpiritsByCategoryForWorldCup(dataConnect, listSpiritsByCategoryForWorldCupVars);
+
+console.log(data.spirits);
+
+// Or, you can use the `Promise` API.
+listSpiritsByCategoryForWorldCup(listSpiritsByCategoryForWorldCupVars).then((response) => {
+  const data = response.data;
+  console.log(data.spirits);
+});
+```
+
+### Using `listSpiritsByCategoryForWorldCup`'s `QueryRef` function
+
+```typescript
+import { getDataConnect, executeQuery } from 'firebase/data-connect';
+import { connectorConfig, listSpiritsByCategoryForWorldCupRef, ListSpiritsByCategoryForWorldCupVariables } from '@dataconnect/generated';
+
+// The `listSpiritsByCategoryForWorldCup` query has an optional argument of type `ListSpiritsByCategoryForWorldCupVariables`:
+const listSpiritsByCategoryForWorldCupVars: ListSpiritsByCategoryForWorldCupVariables = {
+  category: ..., // optional
+};
+
+// Call the `listSpiritsByCategoryForWorldCupRef()` function to get a reference to the query.
+const ref = listSpiritsByCategoryForWorldCupRef(listSpiritsByCategoryForWorldCupVars);
+// Variables can be defined inline as well.
+const ref = listSpiritsByCategoryForWorldCupRef({ category: ..., });
+// Since all variables are optional for this query, you can omit the `ListSpiritsByCategoryForWorldCupVariables` argument.
+const ref = listSpiritsByCategoryForWorldCupRef();
+
+// You can also pass in a `DataConnect` instance to the `QueryRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = listSpiritsByCategoryForWorldCupRef(dataConnect, listSpiritsByCategoryForWorldCupVars);
 
 // Call `executeQuery()` on the reference to execute the query.
 // You can use the `await` keyword to wait for the promise to resolve.

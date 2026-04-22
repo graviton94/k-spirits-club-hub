@@ -33,7 +33,7 @@ export default async function NewsSection({ lang }: { lang: string }) {
                 </div>
                 <Link
                     href={`/${lang}/contents/news`}
-                    className="text-xs font-bold text-muted-foreground hover:text-amber-500 transition-colors flex items-center gap-1 group/link"
+                    className="text-xs font-black text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 group/link uppercase tracking-wider"
                 >
                     {lang === 'ko' ? '전체 보러가기' : 'View All'}
                     <span className="group-hover/link:translate-x-1 transition-transform">→</span>
@@ -58,7 +58,7 @@ export default async function NewsSection({ lang }: { lang: string }) {
                             {item.tags && item.tags.length > 0 && (
                                 <div className="flex items-center gap-1.5 overflow-hidden">
                                     {item.tags.map((tag: string, i: number) => (
-                                        <span key={i} className="text-[10px] font-medium text-amber-700 bg-amber-50 border border-amber-100 px-1.5 py-0.5 rounded-full whitespace-nowrap">
+                                        <span key={i} className="capsule-premium border-none shadow-none text-[9px] px-1.5 py-0.5">
                                             {tag}
                                         </span>
                                     ))}
@@ -72,7 +72,7 @@ export default async function NewsSection({ lang }: { lang: string }) {
                         </div>
 
                         {/* Title */}
-                        <h3 className="font-bold text-sm text-foreground group-hover:text-amber-600 transition-colors mb-1 truncate">
+                        <h3 className="font-black text-sm text-foreground group-hover:text-primary transition-colors mb-1 truncate">
                             {item.title}
                         </h3>
 
@@ -80,7 +80,7 @@ export default async function NewsSection({ lang }: { lang: string }) {
                         <div className="text-xs text-muted-foreground leading-relaxed overflow-hidden">
                             <p className="line-clamp-1 md:line-clamp-1">
                                 {item.snippet}
-                                <span className="text-muted-foreground/60 ml-1 group-hover:text-amber-500 font-medium transition-colors whitespace-nowrap">
+                                <span className="text-primary ml-1 font-black transition-colors whitespace-nowrap">
                                     {lang === 'ko' ? '...더보기' : '...More'}
                                 </span>
                             </p>

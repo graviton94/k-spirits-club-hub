@@ -6,7 +6,8 @@ import {
     dbListUserReviews, 
     dbGetUserProfile, 
     dbUpsertUser,
-    dbListSpirits 
+    dbListSpirits,
+    dbSearchSpiritsPublic
 } from '@/lib/db/data-connect-client';
 import { buildTasteAnalysisPrompt } from '@/lib/utils/aiPromptBuilder';
 import { GoogleGenerativeAI } from '@google/generative-ai';
@@ -96,9 +97,18 @@ export async function POST(req: NextRequest) {
             if (!item) return null;
             const spirit = item.spirit || {};
             const review = userReviews.find((r: any) => r.spiritId === item.spiritId);
+            
+            // Map camelCase (SQL) to snake_case (AI Analysis Expectations)
             return {
                 ...item,
                 ...spirit,
+                name_en: spirit.nameEn,
+                description_ko: spirit.descriptionKo,
+                description_en: spirit.descriptionEn,
+                nose_tags: spirit.noseTags,
+                palate_tags: spirit.palateTags,
+                finish_tags: spirit.finishTags,
+                tasting_note: spirit.tastingNote,
                 userReview: review ? {
                     ratingOverall: review.rating,
                     tags: [review.nose, review.palate, review.finish].filter(Boolean),

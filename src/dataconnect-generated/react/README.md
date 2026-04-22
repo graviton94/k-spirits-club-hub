@@ -39,6 +39,8 @@ You can also follow the instructions from the [Data Connect documentation](https
   - [*listSpiritsForSitemap*](#listspiritsforsitemap)
   - [*getWorldCupResult*](#getworldcupresult)
   - [*listSpiritsForWorldCup*](#listspiritsforworldcup)
+  - [*listAllSpiritsForWorldCup*](#listallspiritsforworldcup)
+  - [*listSpiritsByCategoryForWorldCup*](#listspiritsbycategoryforworldcup)
   - [*listAiDiscoveryLogs*](#listaidiscoverylogs)
   - [*listModificationRequests*](#listmodificationrequests)
   - [*listUserCabinet*](#listusercabinet)
@@ -2187,6 +2189,197 @@ export default function ListSpiritsForWorldCupComponent() {
   const dataConnect = getDataConnect(connectorConfig);
   const options = { staleTime: 5 * 1000 };
   const query = useListSpiritsForWorldCup(dataConnect, listSpiritsForWorldCupVars /** or undefined */, options);
+
+  // Then, you can render your component dynamically based on the status of the Query.
+  if (query.isPending) {
+    return <div>Loading...</div>;
+  }
+
+  if (query.isError) {
+    return <div>Error: {query.error.message}</div>;
+  }
+
+  // If the Query is successful, you can access the data returned using the `UseQueryResult.data` field.
+  if (query.isSuccess) {
+    console.log(query.data.spirits);
+  }
+  return <div>Query execution {query.isSuccess ? 'successful' : 'failed'}!</div>;
+}
+```
+
+## listAllSpiritsForWorldCup
+You can execute the `listAllSpiritsForWorldCup` Query using the following Query hook function, which is defined in [dataconnect-generated/react/index.d.ts](./index.d.ts):
+
+```javascript
+useListAllSpiritsForWorldCup(dc: DataConnect, options?: useDataConnectQueryOptions<ListAllSpiritsForWorldCupData>): UseDataConnectQueryResult<ListAllSpiritsForWorldCupData, undefined>;
+```
+You can also pass in a `DataConnect` instance to the Query hook function.
+```javascript
+useListAllSpiritsForWorldCup(options?: useDataConnectQueryOptions<ListAllSpiritsForWorldCupData>): UseDataConnectQueryResult<ListAllSpiritsForWorldCupData, undefined>;
+```
+
+### Variables
+The `listAllSpiritsForWorldCup` Query has no variables.
+### Return Type
+Recall that calling the `listAllSpiritsForWorldCup` Query hook function returns a `UseQueryResult` object. This object holds the state of your Query, including whether the Query is loading, has completed, or has succeeded/failed, and any data returned by the Query, among other things.
+
+To check the status of a Query, use the `UseQueryResult.status` field. You can also check for pending / success / error status using the `UseQueryResult.isPending`, `UseQueryResult.isSuccess`, and `UseQueryResult.isError` fields.
+
+To access the data returned by a Query, use the `UseQueryResult.data` field. The data for the `listAllSpiritsForWorldCup` Query is of type `ListAllSpiritsForWorldCupData`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+```javascript
+export interface ListAllSpiritsForWorldCupData {
+  spirits: ({
+    id: string;
+    name: string;
+    nameEn?: string | null;
+    imageUrl: string;
+    thumbnailUrl?: string | null;
+    category: string;
+    categoryEn?: string | null;
+    subcategory?: string | null;
+    distillery?: string | null;
+    abv?: number | null;
+    country?: string | null;
+    region?: string | null;
+    noseTags?: string[] | null;
+    palateTags?: string[] | null;
+    finishTags?: string[] | null;
+    createdAt: TimestampString;
+  } & Spirit_Key)[];
+}
+```
+
+To learn more about the `UseQueryResult` object, see the [TanStack React Query documentation](https://tanstack.com/query/v5/docs/framework/react/reference/useQuery).
+
+### Using `listAllSpiritsForWorldCup`'s Query hook function
+
+```javascript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig } from '@dataconnect/generated';
+import { useListAllSpiritsForWorldCup } from '@dataconnect/generated/react'
+
+export default function ListAllSpiritsForWorldCupComponent() {
+  // You don't have to do anything to "execute" the Query.
+  // Call the Query hook function to get a `UseQueryResult` object which holds the state of your Query.
+  const query = useListAllSpiritsForWorldCup();
+
+  // You can also pass in a `DataConnect` instance to the Query hook function.
+  const dataConnect = getDataConnect(connectorConfig);
+  const query = useListAllSpiritsForWorldCup(dataConnect);
+
+  // You can also pass in a `useDataConnectQueryOptions` object to the Query hook function.
+  const options = { staleTime: 5 * 1000 };
+  const query = useListAllSpiritsForWorldCup(options);
+
+  // You can also pass both a `DataConnect` instance and a `useDataConnectQueryOptions` object.
+  const dataConnect = getDataConnect(connectorConfig);
+  const options = { staleTime: 5 * 1000 };
+  const query = useListAllSpiritsForWorldCup(dataConnect, options);
+
+  // Then, you can render your component dynamically based on the status of the Query.
+  if (query.isPending) {
+    return <div>Loading...</div>;
+  }
+
+  if (query.isError) {
+    return <div>Error: {query.error.message}</div>;
+  }
+
+  // If the Query is successful, you can access the data returned using the `UseQueryResult.data` field.
+  if (query.isSuccess) {
+    console.log(query.data.spirits);
+  }
+  return <div>Query execution {query.isSuccess ? 'successful' : 'failed'}!</div>;
+}
+```
+
+## listSpiritsByCategoryForWorldCup
+You can execute the `listSpiritsByCategoryForWorldCup` Query using the following Query hook function, which is defined in [dataconnect-generated/react/index.d.ts](./index.d.ts):
+
+```javascript
+useListSpiritsByCategoryForWorldCup(dc: DataConnect, vars?: ListSpiritsByCategoryForWorldCupVariables, options?: useDataConnectQueryOptions<ListSpiritsByCategoryForWorldCupData>): UseDataConnectQueryResult<ListSpiritsByCategoryForWorldCupData, ListSpiritsByCategoryForWorldCupVariables>;
+```
+You can also pass in a `DataConnect` instance to the Query hook function.
+```javascript
+useListSpiritsByCategoryForWorldCup(vars?: ListSpiritsByCategoryForWorldCupVariables, options?: useDataConnectQueryOptions<ListSpiritsByCategoryForWorldCupData>): UseDataConnectQueryResult<ListSpiritsByCategoryForWorldCupData, ListSpiritsByCategoryForWorldCupVariables>;
+```
+
+### Variables
+The `listSpiritsByCategoryForWorldCup` Query has an optional argument of type `ListSpiritsByCategoryForWorldCupVariables`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+
+```javascript
+export interface ListSpiritsByCategoryForWorldCupVariables {
+  category?: string | null;
+}
+```
+### Return Type
+Recall that calling the `listSpiritsByCategoryForWorldCup` Query hook function returns a `UseQueryResult` object. This object holds the state of your Query, including whether the Query is loading, has completed, or has succeeded/failed, and any data returned by the Query, among other things.
+
+To check the status of a Query, use the `UseQueryResult.status` field. You can also check for pending / success / error status using the `UseQueryResult.isPending`, `UseQueryResult.isSuccess`, and `UseQueryResult.isError` fields.
+
+To access the data returned by a Query, use the `UseQueryResult.data` field. The data for the `listSpiritsByCategoryForWorldCup` Query is of type `ListSpiritsByCategoryForWorldCupData`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+```javascript
+export interface ListSpiritsByCategoryForWorldCupData {
+  spirits: ({
+    id: string;
+    name: string;
+    nameEn?: string | null;
+    imageUrl: string;
+    thumbnailUrl?: string | null;
+    category: string;
+    categoryEn?: string | null;
+    subcategory?: string | null;
+    distillery?: string | null;
+    abv?: number | null;
+    country?: string | null;
+    region?: string | null;
+    noseTags?: string[] | null;
+    palateTags?: string[] | null;
+    finishTags?: string[] | null;
+    createdAt: TimestampString;
+  } & Spirit_Key)[];
+}
+```
+
+To learn more about the `UseQueryResult` object, see the [TanStack React Query documentation](https://tanstack.com/query/v5/docs/framework/react/reference/useQuery).
+
+### Using `listSpiritsByCategoryForWorldCup`'s Query hook function
+
+```javascript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, ListSpiritsByCategoryForWorldCupVariables } from '@dataconnect/generated';
+import { useListSpiritsByCategoryForWorldCup } from '@dataconnect/generated/react'
+
+export default function ListSpiritsByCategoryForWorldCupComponent() {
+  // The `useListSpiritsByCategoryForWorldCup` Query hook has an optional argument of type `ListSpiritsByCategoryForWorldCupVariables`:
+  const listSpiritsByCategoryForWorldCupVars: ListSpiritsByCategoryForWorldCupVariables = {
+    category: ..., // optional
+  };
+
+  // You don't have to do anything to "execute" the Query.
+  // Call the Query hook function to get a `UseQueryResult` object which holds the state of your Query.
+  const query = useListSpiritsByCategoryForWorldCup(listSpiritsByCategoryForWorldCupVars);
+  // Variables can be defined inline as well.
+  const query = useListSpiritsByCategoryForWorldCup({ category: ..., });
+  // Since all variables are optional for this Query, you can omit the `ListSpiritsByCategoryForWorldCupVariables` argument.
+  // (as long as you don't want to provide any `options`!)
+  const query = useListSpiritsByCategoryForWorldCup();
+
+  // You can also pass in a `DataConnect` instance to the Query hook function.
+  const dataConnect = getDataConnect(connectorConfig);
+  const query = useListSpiritsByCategoryForWorldCup(dataConnect, listSpiritsByCategoryForWorldCupVars);
+
+  // You can also pass in a `useDataConnectQueryOptions` object to the Query hook function.
+  const options = { staleTime: 5 * 1000 };
+  const query = useListSpiritsByCategoryForWorldCup(listSpiritsByCategoryForWorldCupVars, options);
+  // If you'd like to provide options without providing any variables, you must
+  // pass `undefined` where you would normally pass the variables.
+  const query = useListSpiritsByCategoryForWorldCup(undefined, options);
+
+  // You can also pass both a `DataConnect` instance and a `useDataConnectQueryOptions` object.
+  const dataConnect = getDataConnect(connectorConfig);
+  const options = { staleTime: 5 * 1000 };
+  const query = useListSpiritsByCategoryForWorldCup(dataConnect, listSpiritsByCategoryForWorldCupVars /** or undefined */, options);
 
   // Then, you can render your component dynamically based on the status of the Query.
   if (query.isPending) {

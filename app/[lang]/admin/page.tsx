@@ -2,9 +2,10 @@
 
 export const dynamic = 'force-dynamic';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Spirit, SpiritStatus, ModificationRequest } from '@/lib/db/schema';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import metadata from '@/lib/constants/spirits-metadata.json';
 import { TagMultiSelect } from '@/components/ui/TagMultiSelect';
 import { getOptimizedImageUrl } from '@/lib/utils/image-optimization';
@@ -45,9 +46,13 @@ interface EditFormState {
 }
 
 export default function AdminDashboard() {
+    const pathname = usePathname() || '';
+    const lang = pathname.split('/')[1] === 'en' ? 'en' : 'ko';
+    const isEn = lang === 'en';
+
     useEffect(() => {
-        document.title = `K-Spirits Club | 관리자 대시보드`;
-    }, []);
+        document.title = `K-Spirits Club | ${isEn ? 'Admin Dashboard' : '관리자 대시보드'}`;
+    }, [isEn]);
 
     // State
     const [activeTab, setActiveTab] = useState<'spirits' | 'requests' | 'discovery'>('spirits');
@@ -522,35 +527,35 @@ export default function AdminDashboard() {
     const totalPages = Math.ceil(totalCount / pageSize);
 
     return (
-        <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white">
+        <div className="min-h-screen bg-background text-foreground">
             <div className="container mx-auto px-4 py-4 md:py-8 max-w-[1600px]">
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-                    <h1 className="text-2xl md:text-3xl font-black">🏭 관리자 대시보드</h1>
-                    <Link href="/" prefetch={false} className="text-sm font-bold bg-gray-100 dark:bg-gray-900 px-4 py-2 rounded-xl hover:opacity-80">
-                        홈으로
+                    <h1 className="text-2xl md:text-3xl font-black">🏭 {lang === 'en' ? 'Admin Dashboard' : '관리자 대시보드'}</h1>
+                    <Link href={`/${lang}`} prefetch={false} className="text-sm font-black bg-secondary text-foreground px-4 py-2 rounded-xl hover:brightness-110 shadow-sm">
+                        {lang === 'en' ? 'Back Home' : '홈으로'}
                     </Link>
                 </div>
 
                 {/* Tabs */}
-                <div className="flex gap-4 mb-6 border-b border-gray-200 dark:border-gray-800 pb-2">
+                <div className="flex gap-4 mb-6 border-b border-border pb-2">
                     <button
                         onClick={() => setActiveTab('spirits')}
-                        className={`text-lg font-bold pb-2 border-b-2 transition-colors ${activeTab === 'spirits' ? 'border-amber-500 text-amber-500' : 'border-transparent text-gray-400 hover:text-gray-500 dark:hover:text-gray-300'}`}
+                        className={`text-lg font-black pb-2 border-b-2 transition-colors ${activeTab === 'spirits' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground'}`}
                     >
-                        주류 관리
+                        {lang === 'en' ? 'Spirits' : '주류 관리'}
                     </button>
                     <button
                         onClick={() => setActiveTab('requests')}
-                        className={`text-lg font-bold pb-2 border-b-2 transition-colors ${activeTab === 'requests' ? 'border-amber-500 text-amber-500' : 'border-transparent text-gray-400 hover:text-gray-500 dark:hover:text-gray-300'}`}
+                        className={`text-lg font-black pb-2 border-b-2 transition-colors ${activeTab === 'requests' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground'}`}
                     >
-                        정보 수정 요청
+                        {lang === 'en' ? 'Requests' : '정보 수정 요청'}
                     </button>
                     <button
                         onClick={() => setActiveTab('discovery')}
-                        className={`text-lg font-bold pb-2 border-b-2 transition-colors ${activeTab === 'discovery' ? 'border-amber-500 text-amber-500' : 'border-transparent text-gray-400 hover:text-gray-500 dark:hover:text-gray-300'}`}
+                        className={`text-lg font-black pb-2 border-b-2 transition-colors ${activeTab === 'discovery' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground'}`}
                     >
-                        AI 발굴 로그
+                        {lang === 'en' ? 'AI Logs' : 'AI 발굴 로그'}
                     </button>
                 </div>
 
@@ -590,8 +595,8 @@ export default function AdminDashboard() {
                                     </select>
 
                                     <input
-                                        placeholder="제품명 검색..."
-                                        className="px-3 py-2 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-800 bg-white dark:bg-black"
+                                        placeholder={isEn ? "Search products..." : "제품명 검색..."}
+                                        className="px-3 py-2 rounded-lg text-xs font-black border border-border bg-background"
                                         value={localSearchQuery}
                                         onChange={e => setLocalSearchQuery(e.target.value)}
                                         onKeyDown={e => e.key === 'Enter' && handleApplyFilters()}
@@ -602,9 +607,9 @@ export default function AdminDashboard() {
                                 <div className="flex flex-wrap gap-2">
                                     <button
                                         onClick={handleApplyFilters}
-                                        className="bg-amber-500 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-amber-600"
+                                        className="bg-primary text-primary-foreground px-4 py-2 rounded-xl text-xs font-black shadow-lg shadow-primary/20 hover:brightness-110 active:scale-95"
                                     >
-                                        🔍 필터 적용
+                                        🔍 {isEn ? 'Apply Filters' : '필터 적용'}
                                     </button>
 
                                     <button
@@ -655,65 +660,65 @@ export default function AdminDashboard() {
                                                 setIsProcessing(false);
                                             }
                                         }}
-                                        className="bg-cyan-600 text-white px-4 py-2 rounded-xl text-xs font-bold disabled:opacity-30 hover:bg-cyan-500"
+                                        className="bg-accent text-accent-foreground px-4 py-2 rounded-xl text-xs font-black shadow-lg shadow-accent/20 disabled:opacity-30 hover:brightness-110 active:scale-95"
                                     >
-                                        📰 뉴스 수집
+                                        📰 {lang === 'en' ? 'Collect News' : '뉴스 수집'}
                                     </button>
 
                                     <button
                                         onClick={startCreate}
-                                        className="bg-green-600 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-green-500"
+                                        className="bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-black shadow-lg shadow-emerald-500/20 hover:brightness-110 active:scale-95"
                                     >
-                                        ➕ 새 제품 등록
+                                        ➕ {lang === 'en' ? 'Register Product' : '새 제품 등록'}
                                     </button>
                                 </div>
 
                                 {/* Count */}
-                                <div className="text-xs font-bold text-gray-500 pt-3 border-t border-gray-100 dark:border-gray-900">
-                                    총 <span className="text-amber-600 dark:text-amber-400 text-base mx-1">{totalCount.toLocaleString()}</span>건
-                                    (현재 페이지: {spirits.length}건)
+                                <div className="text-[10px] font-black text-foreground/40 pt-4 border-t border-border flex items-baseline gap-1.5 uppercase tracking-widest">
+                                    {isEn ? 'Total' : '총'} <span className="text-primary text-base font-black">{totalCount.toLocaleString()}</span> {isEn ? 'Items' : '건'}
+                                    <span className="opacity-50">({isEn ? 'Current Page' : '현재 페이지'}: {spirits.length})</span>
                                 </div>
                             </div>
                         </div>
 
                         {/* Data Table */}
-                        <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-2xl shadow-sm overflow-hidden">
+                        <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden">
                             <div className="overflow-x-auto">
                                 <table className="w-full text-left text-sm border-collapse min-w-[600px]">
-                                    <thead className="bg-gray-50 dark:bg-gray-900 text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-800">
+                                    <thead className="bg-muted text-muted-foreground border-b border-border">
                                         <tr>
-                                            <th className="p-3 md:p-4">주류 정보</th>
-                                            <th className="p-3 md:p-4">상태</th>
-                                            <th className="p-3 md:p-4 hidden sm:table-cell">이미지</th>
-                                            <th className="p-3 md:p-4">작업</th>
+                                            <th className="p-3 md:p-4 font-black uppercase tracking-wider text-[10px]">{lang === 'en' ? 'Product' : '주류 정보'}</th>
+                                            <th className="p-3 md:p-4 font-black uppercase tracking-wider text-[10px]">{lang === 'en' ? 'Status' : '상태'}</th>
+                                            <th className="p-3 md:p-4 hidden sm:table-cell font-black uppercase tracking-wider text-[10px]">{lang === 'en' ? 'Image' : '이미지'}</th>
+                                            <th className="p-3 md:p-4 font-black uppercase tracking-wider text-[10px]">{lang === 'en' ? 'Actions' : '작업'}</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="divide-y divide-gray-100 dark:divide-gray-900">
+                                    <tbody className="divide-y divide-border">
                                         {spirits.map(spirit => (
-                                            <tr key={spirit.id} className="hover:bg-amber-500/5">
+                                            <tr key={spirit.id} className="hover:bg-primary/5 transition-colors group">
                                                 <td className="p-3 md:p-4">
-                                                    <div className="font-bold text-sm md:text-base max-w-[200px] md:max-w-[300px] truncate">
+                                                    <div className="font-black text-sm md:text-base max-w-[200px] md:max-w-[300px] truncate group-hover:text-primary transition-colors">
                                                         {spirit.name}
                                                     </div>
-                                                    <div className="text-[10px] md:text-[11px] text-gray-500">
+                                                    <div className="text-[10px] md:text-[11px] text-muted-foreground font-bold">
                                                         {spirit.distillery || '-'} | {spirit.abv}% | {spirit.category}
                                                     </div>
                                                 </td>
                                                 <td className="p-3 md:p-4">
-                                                    <span className={`px-2 py-1 rounded text-[9px] md:text-[10px] font-black ${spirit.isPublished
-                                                        ? 'bg-green-100 text-green-700'
-                                                        : 'bg-gray-100 text-gray-700'
+                                                    <span className={`px-2 py-1 rounded text-[9px] md:text-[10px] font-black uppercase tracking-tighter ${spirit.isPublished
+                                                        ? 'bg-primary/10 text-primary border border-primary/20'
+                                                        : 'bg-muted text-muted-foreground border border-border'
                                                         }`}>
-                                                        {spirit.isPublished ? '✅ 발행' : '❌ 미발행'}
+                                                        {spirit.isPublished ? (lang === 'en' ? 'PUBLISHED' : 'PUBLISHED') : (lang === 'en' ? 'DRAFT' : '미발행')}
                                                     </span>
                                                 </td>
                                                 <td className="p-3 md:p-4 hidden sm:table-cell">
                                                     {spirit.imageUrl ? (
                                                         <img src={getOptimizedImageUrl(spirit.imageUrl, 80)}
-                                                            className="w-8 h-8 md:w-10 md:h-10 object-contain bg-white rounded-lg border"
+                                                            className="w-8 h-8 md:w-10 md:h-10 object-contain bg-white rounded-lg border border-border shadow-sm group-hover:scale-110 transition-transform"
                                                             alt="Bottle" />
                                                     ) : (
-                                                        <div className="w-8 h-8 md:w-10 md:h-10 bg-gray-100 dark:bg-gray-900 rounded-lg border border-dashed" />
+                                                        <div className="w-8 h-8 md:w-10 md:h-10 bg-muted rounded-lg border border-dashed border-border" />
                                                     )}
                                                 </td>
                                                 <td className="p-3 md:p-4">
@@ -775,56 +780,68 @@ export default function AdminDashboard() {
                         </div>
                     </>
                 ) : activeTab === 'requests' ? (
-                    /* Modification Requests View */
-                    <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-2xl shadow-sm overflow-hidden">
+                    <div className="bg-card border border-border rounded-[32px] p-6 md:p-10 shadow-2xl shadow-primary/5">
+                        <div className="flex items-center gap-3 mb-8">
+                            <div className="w-10 h-10 bg-primary/10 rounded-2xl flex items-center justify-center">
+                                <span className="text-xl">📩</span>
+                            </div>
+                            <div>
+                                <h3 className="text-xl font-black">{isEn ? 'Modification Requests' : '정보 수정 요청'}</h3>
+                                <p className="text-xs text-foreground/40 font-bold uppercase tracking-widest">{isEn ? 'Review and update spirit data' : '사용자가 제보한 정보를 검토하세요'}</p>
+                            </div>
+                        </div>
                         <div className="overflow-x-auto">
-                            <table className="w-full text-left text-sm border-collapse min-w-[800px]">
-                                <thead className="bg-gray-50 dark:bg-gray-900 text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-800">
+                            <table className="w-full text-left">
+                                <thead className="text-foreground/40 text-[10px] font-black uppercase tracking-[0.3em] border-b border-border">
                                     <tr>
-                                        <th className="p-3 md:p-4">대상 주류명</th>
-                                        <th className="p-3 md:p-4">요청 제목 & 내용</th>
-                                        <th className="p-3 md:p-4">접수된 날짜</th>
-                                        <th className="p-3 md:p-4">상태 (클릭하여 변경)</th>
+                                        <th className="p-4 md:p-6">{isEn ? 'SPIRIT' : '대상 주류'}</th>
+                                        <th className="p-4 md:p-6">{isEn ? 'CONTENT' : '요청 내용'}</th>
+                                        <th className="p-4 md:p-6 text-center">{isEn ? 'STATUS' : '처리 상태'}</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-gray-100 dark:divide-gray-900">
+                                <tbody className="divide-y divide-border">
                                     {requests.map(req => (
-                                        <tr key={req.id} className="hover:bg-amber-500/5">
-                                            <td className="p-3 md:p-4 font-bold text-sm">
-                                                <a href={`/ko/spirits/${req.spiritId}`} target="_blank" className="hover:underline text-indigo-500">
-                                                    {req.spiritName}
-                                                </a>
+                                        <tr key={req.id} className="hover:bg-primary/5 transition-all group">
+                                            <td className="p-4 md:p-6 align-top">
+                                                <div className="flex flex-col gap-1">
+                                                    <a href={`/${lang}/spirits/${req.spiritId}`} target="_blank" className="font-black text-sm text-foreground hover:text-primary transition-colors flex items-center gap-2">
+                                                        {req.spiritName}
+                                                        <span className="text-[10px] opacity-0 group-hover:opacity-100 transition-opacity">↗</span>
+                                                    </a>
+                                                    <span className="text-[10px] text-foreground/30 font-black tracking-tighter">{req.createdAt ? new Date(req.createdAt).toLocaleDateString() : '-'}</span>
+                                                </div>
                                             </td>
-                                            <td className="p-3 md:p-4 w-1/2">
-                                                <div className="font-bold text-sm mb-1">{req.title}</div>
-                                                <div className="text-xs text-gray-600 dark:text-gray-400 whitespace-pre-wrap">{req.content}</div>
+                                            <td className="p-4 md:p-6 align-top max-w-md">
+                                                <div className="font-bold text-sm mb-1.5">{req.title}</div>
+                                                <p className="text-xs text-foreground/60 leading-relaxed whitespace-pre-wrap bg-muted/30 p-3 rounded-xl border border-border/50">{req.content}</p>
                                             </td>
-                                            <td className="p-3 md:p-4 text-xs">
-                                                {req.createdAt ? new Date(req.createdAt).toLocaleString() : '-'}
-                                            </td>
-                                            <td className="p-3 md:p-4">
-                                                <div className="flex flex-wrap gap-2">
+                                            <td className="p-4 md:p-6 align-top">
+                                                <div className="flex flex-col gap-2 min-w-[120px]">
                                                     <button
                                                         onClick={() => updateRequestStatus(req.id, 'pending')}
-                                                        className={`px-2 py-1 rounded text-xs font-bold border ${req.status === 'pending' ? 'bg-amber-100 text-amber-700 border-amber-200' : 'bg-transparent text-gray-400'}`}
-                                                    >대기중</button>
+                                                        className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${req.status === 'pending' ? 'bg-amber-500 text-black border-amber-600 shadow-lg shadow-amber-500/20' : 'bg-transparent text-foreground/40 border-border hover:border-border-hover'}`}
+                                                    >{isEn ? 'Pending' : '대기중'}</button>
                                                     <button
                                                         onClick={() => updateRequestStatus(req.id, 'checked')}
-                                                        className={`px-2 py-1 rounded text-xs font-bold border ${req.status === 'checked' ? 'bg-blue-100 text-blue-700 border-blue-200' : 'bg-transparent text-gray-400'}`}
-                                                    >확인중</button>
+                                                        className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${req.status === 'checked' ? 'bg-secondary text-secondary-foreground border-secondary shadow-lg shadow-secondary/20' : 'bg-transparent text-foreground/40 border-border hover:border-border-hover'}`}
+                                                    >{isEn ? 'Checked' : '확인됨'}</button>
                                                     <button
                                                         onClick={() => updateRequestStatus(req.id, 'resolved')}
-                                                        className={`px-2 py-1 rounded text-xs font-bold border ${req.status === 'resolved' ? 'bg-green-100 text-green-700 border-green-200' : 'bg-transparent text-gray-400'}`}
-                                                    >완료</button>
+                                                        className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${req.status === 'resolved' ? 'bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20' : 'bg-transparent text-foreground/40 border-border hover:border-border-hover'}`}
+                                                    >{isEn ? 'Resolved' : '완료'}</button>
                                                 </div>
                                             </td>
                                         </tr>
                                     ))}
                                     {requests.length === 0 && !loading && (
-                                        <tr><td colSpan={4} className="p-12 text-center text-gray-500">접수된 정보 수정 요청이 없습니다.</td></tr>
-                                    )}
-                                    {loading && (
-                                        <tr><td colSpan={4} className="p-12 text-center text-amber-500 animate-pulse font-bold">로딩 중...</td></tr>
+                                        <tr>
+                                            <td colSpan={3} className="p-20 text-center">
+                                                <div className="flex flex-col items-center gap-3">
+                                                    <span className="text-4xl opacity-20">🍃</span>
+                                                    <p className="text-xs text-foreground/40 font-black uppercase tracking-widest">{isEn ? 'No modification requests found' : '접수된 정보 수정 요청이 없습니다'}</p>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     )}
                                 </tbody>
                             </table>
@@ -832,7 +849,7 @@ export default function AdminDashboard() {
                     </div>
                 ) : (
                     /* Discovery Logs View */
-                    <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-2xl p-4 md:p-8 shadow-sm">
+                    <div className="bg-card border border-border rounded-2xl p-4 md:p-8 shadow-sm">
                         <DiscoveryLogsTable />
                     </div>
                 )}
@@ -843,18 +860,18 @@ export default function AdminDashboard() {
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-start justify-center p-2 md:p-4 overflow-y-auto">
                     <div className="bg-white dark:bg-black w-full max-w-4xl rounded-2xl md:rounded-3xl shadow-2xl border p-4 md:p-8 my-4 md:my-8">
                         {/* Header */}
-                        <div className="flex justify-between items-center mb-6 pb-4 border-b">
+                        <div className="flex justify-between items-center mb-8 pb-6 border-b border-border">
                             <div>
-                                <h2 className="text-xl md:text-2xl font-black">{isCreating ? '새 제품 등록' : '제품 편집'}</h2>
-                                <p className="text-gray-500 text-xs md:text-sm mt-1">
-                                    {isCreating ? 'ID는 저장 시 자동 생성됩니다 (kspt-XXXXXXXX)' : `ID: ${editingId}`}
+                                <h2 className="text-2xl font-black tracking-tight">{isCreating ? (isEn ? 'New Product' : '새 제품 등록') : (isEn ? 'Edit Product' : '제품 편집')}</h2>
+                                <p className="text-foreground/40 text-xs font-bold uppercase tracking-widest mt-1.5">
+                                    {isCreating ? (isEn ? 'ID will be auto-generated' : 'ID는 저장 시 자동 생성됩니다') : `Product ID: ${editingId}`}
                                 </p>
                             </div>
                             <button
                                 onClick={() => { setEditingId(null); setIsCreating(false); }}
-                                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-900 text-xl md:text-2xl"
+                                className="p-3 rounded-2xl hover:bg-muted text-foreground/60 transition-all active:scale-90"
                             >
-                                ✕
+                                <span className="text-2xl">✕</span>
                             </button>
                         </div>
 
@@ -1084,29 +1101,29 @@ export default function AdminDashboard() {
                         </div>
 
                         {/* Footer Actions */}
-                        <div className="flex flex-col sm:flex-row gap-2 mt-6 pt-6 border-t">
+                        <div className="flex flex-col sm:flex-row gap-3 mt-8 pt-8 border-t border-border">
                             <button
                                 disabled={isProcessing}
                                 onClick={() => { setEditingId(null); setIsCreating(false); }}
-                                className="flex-1 px-4 py-3 bg-gray-100 dark:bg-gray-900 text-black dark:text-white font-bold rounded-xl hover:bg-gray-200 dark:hover:bg-gray-800 disabled:opacity-50"
+                                className="flex-1 px-6 py-4 bg-muted text-foreground font-black rounded-2xl hover:bg-muted/80 transition-all active:scale-95 disabled:opacity-50"
                             >
-                                취소
+                                {isEn ? 'Cancel' : '취소'}
                             </button>
                             {isCreating ? (
                                 <>
                                     <button
                                         disabled={isProcessing}
                                         onClick={() => createSpirit(false)}
-                                        className="flex-1 px-4 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-500 disabled:opacity-50"
+                                        className="flex-1 px-6 py-4 bg-background border border-border text-foreground font-black rounded-2xl hover:bg-muted transition-all active:scale-95 disabled:opacity-50"
                                     >
-                                        {isProcessing ? '등록 중...' : '💾 등록만'}
+                                        {isProcessing ? (isEn ? 'Saving...' : '등록 중...') : `💾 ${isEn ? 'Save Only' : '등록만'}`}
                                     </button>
                                     <button
                                         disabled={isProcessing}
                                         onClick={() => createSpirit(true)}
-                                        className="flex-1 px-4 py-3 bg-green-600 text-white font-bold rounded-xl hover:bg-green-500 disabled:opacity-50"
+                                        className="flex-1 px-6 py-4 bg-primary text-primary-foreground font-black rounded-2xl shadow-lg shadow-primary/20 hover:brightness-110 transition-all active:scale-95 disabled:opacity-50"
                                     >
-                                        {isProcessing ? '처리 중...' : '✨ 등록 및 발행'}
+                                        {isProcessing ? (isEn ? 'Processing...' : '처리 중...') : `✨ ${isEn ? 'Save & Publish' : '등록 및 발행'}`}
                                     </button>
                                 </>
                             ) : (
@@ -1114,16 +1131,16 @@ export default function AdminDashboard() {
                                     <button
                                         disabled={isProcessing}
                                         onClick={() => saveEdit(false)}
-                                        className="flex-1 px-4 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-500 disabled:opacity-50"
+                                        className="flex-1 px-6 py-4 bg-background border border-border text-foreground font-black rounded-2xl hover:bg-muted transition-all active:scale-95 disabled:opacity-50"
                                     >
-                                        {isProcessing ? '저장 중...' : '💾 저장만'}
+                                        {isProcessing ? (isEn ? 'Saving...' : '저장 중...') : `💾 ${isEn ? 'Save Only' : '저장만'}`}
                                     </button>
                                     <button
                                         disabled={isProcessing}
                                         onClick={() => saveEdit(true)}
-                                        className="flex-1 px-4 py-3 bg-green-600 text-white font-bold rounded-xl hover:bg-green-500 disabled:opacity-50"
+                                        className="flex-1 px-6 py-4 bg-primary text-primary-foreground font-black rounded-2xl shadow-lg shadow-primary/20 hover:brightness-110 transition-all active:scale-95 disabled:opacity-50"
                                     >
-                                        {isProcessing ? '처리 중...' : '✨ 저장 및 발행'}
+                                        {isProcessing ? (isEn ? 'Processing...' : '처리 중...') : `✨ ${isEn ? 'Save & Publish' : '저장 및 발행'}`}
                                     </button>
                                 </>
                             )}

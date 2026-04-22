@@ -79,6 +79,17 @@ export interface Spirit {
   finishTags: string[];
   tastingNote: string | null;
 
+  // --- Legacy Aliases (Snake Case) for compatibility ---
+  name_en?: string | null;
+  description_ko?: string | null;
+  description_en?: string | null;
+  pairing_guide_ko?: string | null;
+  pairing_guide_en?: string | null;
+  nose_tags?: string[];
+  palate_tags?: string[];
+  finish_tags?: string[];
+  tasting_note?: string | null;
+
   // Data quality & publishing
   status: string | null;
   isPublished: boolean;
@@ -91,6 +102,13 @@ export interface Spirit {
 
   createdAt: Date;
   updatedAt: Date;
+
+  // SEO & Data Quality for UI
+  aggregateRating?: {
+    ratingValue: number;
+    reviewCount: number;
+  };
+  hasTastingNotes?: boolean;
 
   // Legacy compatibility / snippet fields
   rating?: number;

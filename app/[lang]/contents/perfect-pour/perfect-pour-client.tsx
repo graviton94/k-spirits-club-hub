@@ -4,12 +4,13 @@ import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, RefreshCw, Trophy, AlertTriangle, Share2 } from 'lucide-react';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import confetti from 'canvas-confetti';
 import SuccessToast from '@/components/ui/SuccessToast';
 import GoogleAd from '@/components/ui/GoogleAd';
 
 export default function PerfectPourPage() {
+    const router = useRouter();
     const params = useParams();
     const lang = params?.lang as string || 'ko';
     const isEn = lang === 'en';
@@ -284,12 +285,12 @@ export default function PerfectPourPage() {
         <div className="container mx-auto px-4 pt-8 pb-32 max-w-lg min-h-screen flex flex-col">
             {/* Header */}
             <div className="flex items-center gap-4 mb-8">
-                <Link
-                    href={`/${lang}/contents`}
+                <button
+                    onClick={() => router.back()}
                     className="p-2.5 bg-card/50 backdrop-blur-md border border-border rounded-2xl hover:bg-muted transition-all"
                 >
                     <ChevronLeft className="w-5 h-5 text-foreground" />
-                </Link>
+                </button>
                 <h1 className="text-2xl font-black text-foreground">{isEn ? "Somaek Master" : "소맥 마스터"}</h1>
             </div>
 

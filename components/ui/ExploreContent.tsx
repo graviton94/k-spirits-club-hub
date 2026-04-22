@@ -180,239 +180,246 @@ export default function ExploreContent({ dict }: { dict?: any }) {
   }, []);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
-        <div className="flex flex-col">
-          <h1 className="text-3xl font-extrabold text-foreground tracking-tight">
+    <div className="max-w-7xl mx-auto px-6 py-12 md:py-16 selection:bg-primary/30">
+      
+      {/* 🏰 1. Institutional Header */}
+      <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-8 border-b border-border/50 pb-8">
+        <div className="flex flex-col gap-2">
+           <div className="flex items-center gap-3 mb-2">
+              <span className="capsule-premium">INTELLIGENCE</span>
+              <span className="text-[10px] font-black text-foreground/30 uppercase tracking-widest italic">REAL-TIME DB</span>
+           </div>
+          <h1 className="text-4xl md:text-6xl font-black text-foreground tracking-tighter leading-[0.9]">
             {dict?.title || (isEn ? "Explore spirits" : "전체 둘러보기")}
           </h1>
-          <p className="text-muted-foreground text-sm mt-1">
+          <p className="text-foreground/40 text-sm font-medium max-w-md">
             {isEn 
-                ? (isSearching && searchResults.length === 0 ? "Searching database..." : `Real-time database search results.`) 
-                : (isSearching && searchResults.length === 0 ? "데이터베이스 검색 중..." : `실시간 데이터베이스 검색 결과입니다.`)}
+                ? (isSearching && searchResults.length === 0 ? "Analyzing global catalogue..." : `Accessing the institution's primary data vault.`) 
+                : (isSearching && searchResults.length === 0 ? "데이터 분석 중..." : `기관의 공식 통합 주류 데이터 센터입니다.`)}
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto items-center">
-          {/* Category Filter */}
-          <div className="relative w-full sm:w-auto">
-            <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full sm:w-auto px-4 py-3 pr-10 rounded-2xl bg-white text-black dark:bg-black dark:text-white border border-border outline-none focus:ring-2 focus:ring-indigo-500 min-w-[140px] appearance-none cursor-pointer"
-            >
-                <option value="">{dict?.filters?.all || (isEn ? "All Categories" : "모든 주종")}</option>
-                {dbCategories.map((cat) => (
-                <option key={cat.ko} value={cat.ko}>
-                    {isEn ? (cat.en || cat.ko) : cat.ko}
-                </option>
-                ))}
-            </select>
-            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground" size={16} />
-          </div>
-
-          {/* Subcategory Filter */}
-          <div className="relative w-full sm:w-auto">
-            <select
-                value={selectedSubCategory}
-                onChange={(e) => setSelectedSubCategory(e.target.value)}
-                disabled={!selectedCategory || dbSubCategories.length === 0}
-                className="w-full sm:w-auto px-4 py-3 pr-10 rounded-2xl bg-white text-black dark:bg-black dark:text-white border border-border outline-none focus:ring-2 focus:ring-indigo-500 min-w-[140px] disabled:opacity-50 appearance-none cursor-pointer"
-            >
-                <option value="">{isEn ? "Subcategory" : "상세 분류"}</option>
-                {dbSubCategories.map((sub) => (
-                <option key={sub} value={sub}>
-                    {sub}
-                </option>
-                ))}
-            </select>
-            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground" size={16} />
-          </div>
-
-          {/* Search Input and Button */}
-          <div className="relative flex w-full md:w-80 gap-2">
+        {/* Search Command Bar */}
+        <div className="relative flex w-full md:w-[400px] gap-3">
             <div className="relative flex-1">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
-              <input
-                type="text"
-                placeholder={dict?.filters?.searchPlaceholder || (isEn ? "Search spirit..." : "이름, 증류소 검색...")}
-                className="w-full pl-12 pr-4 py-3 rounded-2xl bg-background border border-border shadow-sm focus:ring-2 focus:ring-indigo-500 outline-none"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && performSearch()}
-              />
+                <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-foreground/20" size={20} />
+                <input
+                    type="text"
+                    placeholder={dict?.filters?.searchPlaceholder || (isEn ? "Search spirit..." : "제품명, 증류소...")}
+                    className="w-full pl-14 pr-6 py-4 rounded-3xl bg-muted/30 border border-border/50 shadow-inner focus:ring-2 focus:ring-primary/50 focus:border-primary/50 outline-none font-medium transition-all"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && performSearch()}
+                />
             </div>
             <button
-              onClick={() => performSearch()}
-              disabled={isSearching}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-2xl font-bold transition-all disabled:opacity-50 flex items-center gap-2 shrink-0 shadow-lg shadow-indigo-500/20 active:scale-95"
-            >
-              {isSearching ? <Loader2 className="w-5 h-5 animate-spin" /> : <Search className="w-5 h-5" />}
-              <span className="hidden sm:inline">{isEn ? "Search" : "검색"}</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Quick Filters */}
-      <div className="mb-8 rounded-3xl border border-border/60 bg-card/40 p-5 shadow-sm">
-        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-          <div className="space-y-1">
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-              {isEn ? "Quick Filters" : "빠른 카테고리"}
-            </p>
-            <p className="text-sm text-muted-foreground">
-              {isEn
-                ? "Select a category and click search to explore the full database."
-                : "자주 찾는 주종을 선택하고 검색 버튼을 눌러 전체 데이터베이스를 탐색하세요."}
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={resetFilters}
-            className="self-start rounded-full border border-border px-3 py-1.5 text-xs font-semibold text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground"
-          >
-            {isEn ? "Reset Filters" : "필터 초기화"}
-          </button>
-        </div>
-
-        <div className="mt-4 flex flex-wrap gap-2">
-          {QUICK_CATEGORY_KEYS.map((categoryKey) => {
-            const isActive = selectedCategory === categoryKey;
-            const label = isEn ? QUICK_CATEGORY_LABELS[categoryKey].en : QUICK_CATEGORY_LABELS[categoryKey].ko;
-
-            return (
-              <button
-                key={categoryKey}
-                type="button"
-                onClick={() => applyQuickCategory(categoryKey)}
-                className={`rounded-full px-4 py-2 text-sm font-bold transition-all ${
-                  isActive
-                    ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20'
-                    : 'border border-border bg-background hover:border-indigo-500/40 hover:text-indigo-600'
-                }`}
-              >
-                {label}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Results View */}
-      {isSearching && searchResults.length === 0 ? (
-        <ExploreGridSkeleton count={12} />
-      ) : searchResults.length > 0 ? (
-        <div className="grid grid-cols-1 gap-4">
-          {searchResults.map((item, index) => (
-            <React.Fragment key={`${item.i}-${index}`}>
-              <ExploreCard
-                spirit={{
-                  id: item.i,
-                  name: item.n,
-                  category: item.c,
-                  subcategory: item.sc,
-                  imageUrl: item.t,
-                  thumbnailUrl: item.t,
-                  abv: item.a || 0,
-                  volume: null,
-                  distillery: item.d || null,
-                  bottler: null,
-                  mainCategory: item.mc,
-                  country: null,
-                  region: null,
-                  source: 'online',
-                  externalId: null,
-                  status: 'PUBLISHED',
-                  isPublished: true,
-                  isReviewed: false,
-                  reviewedBy: null,
-                  reviewedAt: null,
-                  name_en: item.en || null,
-                  metadata: item.m || {},
-                  aggregateRating: {
-                    ratingValue: item.r,
-                    reviewCount: item.rc || 0
-                  },
-                  hasTastingNotes: item.h,
-                  createdAt: item.cre ? new Date(item.cre) : new Date(),
-                  updatedAt: new Date()
-                } as any}
-                isEn={isEn}
-                isOwned={cabinetStatus.ownedIds.has(item.i)}
-                isWishlisted={cabinetStatus.wishlistIds.has(item.i)}
-                onStatusChange={handleStatusChange}
-                priority={index < 6}
-              />
-
-              {/* In-feed Ad Integration */}
-              {(index + 1) % 8 === 0 && (
-                <div className="w-full my-6">
-                  <GoogleAd
-                    key={`ad-explore-${index}`}
-                    client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
-                    slot={process.env.NEXT_PUBLIC_ADSENSE_INFEED_SLOT || ''}
-                    format="fluid"
-                    layoutKey="-fb+5w+4e-db+86"
-                    className="rounded-3xl overflow-hidden shadow-sm bg-card"
-                  />
-                </div>
-              )}
-            </React.Fragment>
-          ))}
-
-          {hasMore && (
-            <div className="flex justify-center mt-12 pb-12">
-              <button
-                onClick={() => performSearch(true)}
+                onClick={() => performSearch()}
                 disabled={isSearching}
-                className="px-10 py-4 rounded-2xl bg-indigo-600/10 hover:bg-indigo-600/20 text-indigo-600 font-bold transition-all flex items-center gap-3 active:scale-95"
-              >
-                {isSearching ? <Loader2 className="w-5 h-5 animate-spin" /> : null}
-                {isEn ? "Load More" : "더 많은 주류 보기"}
-              </button>
+                className="btn-premium px-8 py-4 shrink-0 shadow-primary/20"
+            >
+                {isSearching ? <Loader2 className="w-5 h-5 animate-spin" /> : <Search className="w-5 h-5" />}
+            </button>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-12">
+        
+        {/* 🛠️ 2. Advanced Filters Sidebar */}
+        <aside className="space-y-10">
+            <div className="surface-elevated p-8 space-y-8">
+                <div className="flex items-center justify-between border-b border-border/50 pb-4 mb-4">
+                    <h3 className="text-xs font-black text-foreground uppercase tracking-[0.2em] italic">Parameters</h3>
+                    <button
+                        onClick={resetFilters}
+                        className="text-[10px] font-black text-foreground/30 hover:text-primary transition-colors underline decoration-dotted"
+                    >
+                        RESET
+                    </button>
+                </div>
+
+                {/* Main Category */}
+                <div className="space-y-4">
+                    <label className="text-[10px] font-black text-foreground/40 uppercase tracking-widest pl-1">Primary Classification</label>
+                    <div className="relative">
+                        <select
+                            value={selectedCategory}
+                            onChange={(e) => setSelectedCategory(e.target.value)}
+                            className="w-full pl-5 pr-10 py-4 rounded-2xl bg-background border border-border/50 outline-none focus:border-primary/50 appearance-none cursor-pointer font-black text-sm uppercase tracking-tighter"
+                        >
+                            <option value="">{dict?.filters?.all || (isEn ? "EVERYTHING" : "모든 주종")}</option>
+                            {dbCategories.map((cat) => (
+                                <option key={cat.ko} value={cat.ko}>
+                                    {isEn ? (cat.en || cat.ko) : cat.ko}
+                                </option>
+                            ))}
+                        </select>
+                        <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-foreground/20" size={18} />
+                    </div>
+                </div>
+
+                {/* Sub Category */}
+                <div className="space-y-4">
+                    <label className="text-[10px] font-black text-foreground/40 uppercase tracking-widest pl-1">Sub Classification</label>
+                    <div className="relative">
+                        <select
+                            value={selectedSubCategory}
+                            onChange={(e) => setSelectedSubCategory(e.target.value)}
+                            disabled={!selectedCategory || dbSubCategories.length === 0}
+                            className="w-full pl-5 pr-10 py-4 rounded-2xl bg-background border border-border/50 outline-none focus:border-primary/50 appearance-none cursor-pointer font-black text-sm uppercase tracking-tighter disabled:opacity-20"
+                        >
+                            <option value="">{isEn ? "SELECT SUB TYPE" : "상세 분류"}</option>
+                            {dbSubCategories.map((sub) => (
+                                <option key={sub} value={sub}>
+                                    {sub}
+                                </option>
+                            ))}
+                        </select>
+                        <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-foreground/20" size={18} />
+                    </div>
+                </div>
             </div>
-          )}
-        </div>
-      ) : hasSearched ? (
-        <div className="flex flex-col items-center justify-center py-32 bg-muted/30 rounded-3xl border border-dashed border-border">
-          <div className="text-7xl mb-6">🔍</div>
-          <p className="text-2xl font-bold text-foreground">
-            {isEn ? "No matches found in database" : "데이터베이스에 해당 항목이 없습니다."}
-          </p>
-          <p className="text-muted-foreground mt-2 text-center max-w-sm">
-            {isEn ? "Try different keywords or broader filter options." : "다른 검색어로나 필터 조건을 조정해 보세요."}
-          </p>
-          <button 
-            onClick={resetFilters}
-            className="mt-8 px-6 py-2 border border-border rounded-xl hover:bg-background transition-colors font-medium"
-          >
-            {isEn ? "Clear all filters" : "필터 모두 지우기"}
-          </button>
-        </div>
-      ) : (
-        <div 
-          className="flex flex-col items-center justify-center py-24 bg-indigo-600/5 rounded-3xl border border-dashed border-indigo-500/30 group hover:bg-indigo-600/10 transition-all cursor-pointer" 
-          onClick={() => performSearch()}
-        >
-          <div className="w-24 h-24 rounded-full bg-indigo-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-            <Search className="w-12 h-12 text-indigo-500" />
-          </div>
-          <h2 className="text-2xl font-bold text-foreground mb-2">
-            {isEn ? "Start Exploring the Spirits database" : "전체 주류 데이터베이스 탐색"}
-          </h2>
-          <p className="text-muted-foreground max-w-md text-center">
-            {isEn 
-                ? "Enter keywords or filter by category to search through thousands of records." 
-                : "수천 건의 데이터를 실시간으로 탐색할 수 있습니다. 검색어를 입력하거나 카테고리를 선택한 후 검색 버튼을 눌러주세요."}
-          </p>
-          <button className="mt-8 px-10 py-4 bg-indigo-600 text-white rounded-2xl font-bold shadow-xl shadow-indigo-500/30 active:scale-95 transition-all flex items-center gap-2">
-            {isEn ? "Execute Search" : "탐색 시작하기"}
-            <Search className="w-5 h-5 ml-1" />
-          </button>
-        </div>
-      )}
+
+            {/* Quick Exhibit Filters */}
+            <div className="p-8 pb-4">
+                <p className="text-[10px] font-black text-foreground/30 uppercase tracking-[0.2em] mb-6">CURATED EXHIBITS</p>
+                <div className="flex flex-col gap-2">
+                    {QUICK_CATEGORY_KEYS.map((categoryKey) => {
+                        const isActive = selectedCategory === categoryKey;
+                        const label = isEn ? QUICK_CATEGORY_LABELS[categoryKey].en : QUICK_CATEGORY_LABELS[categoryKey].ko;
+
+                        return (
+                            <button
+                                key={categoryKey}
+                                onClick={() => applyQuickCategory(categoryKey)}
+                                className={`group flex items-center justify-between p-4 rounded-2xl transition-all font-black text-sm uppercase tracking-tighter border
+                                    ${isActive 
+                                        ? 'bg-primary text-primary-foreground border-primary shadow-xl shadow-primary/10 scale-[1.02]' 
+                                        : 'bg-muted/30 text-foreground/60 border-transparent hover:bg-muted/50 hover:border-border'}`}
+                            >
+                                <span>{label}</span>
+                                <ArrowRight className={`w-4 h-4 transition-transform ${isActive ? 'translate-x-0' : '-translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100'}`} />
+                            </button>
+                        );
+                    })}
+                </div>
+            </div>
+        </aside>
+
+        {/* 🎬 3. Discovery Grid */}
+        <main>
+            {isSearching && searchResults.length === 0 ? (
+                <ExploreGridSkeleton count={12} />
+            ) : searchResults.length > 0 ? (
+                <div className="grid grid-cols-1 gap-6">
+                {searchResults.map((item, index) => (
+                    <React.Fragment key={`${item.i}-${index}`}>
+                    <ExploreCard
+                        spirit={{
+                        id: item.i,
+                        name: item.n,
+                        category: item.c,
+                        subcategory: item.sc,
+                        imageUrl: item.t,
+                        thumbnailUrl: item.t,
+                        abv: item.a || 0,
+                        volume: null,
+                        distillery: item.d || null,
+                        bottler: null,
+                        mainCategory: item.mc,
+                        country: null,
+                        region: null,
+                        source: 'online',
+                        externalId: null,
+                        status: 'PUBLISHED',
+                        isPublished: true,
+                        isReviewed: false,
+                        reviewedBy: null,
+                        reviewedAt: null,
+                        name_en: item.en || null,
+                        metadata: item.m || {},
+                        aggregateRating: {
+                            ratingValue: item.r,
+                            reviewCount: item.rc || 0
+                        },
+                        hasTastingNotes: item.h,
+                        createdAt: item.cre ? new Date(item.cre) : new Date(),
+                        updatedAt: new Date()
+                        } as any}
+                        isEn={isEn}
+                        isOwned={cabinetStatus.ownedIds.has(item.i)}
+                        isWishlisted={cabinetStatus.wishlistIds.has(item.i)}
+                        onStatusChange={handleStatusChange}
+                        priority={index < 6}
+                    />
+
+                    {/* In-feed Ad Integration */}
+                    {(index + 1) % 8 === 0 && (
+                        <div className="w-full my-8">
+                        <GoogleAd
+                            key={`ad-explore-${index}`}
+                            client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
+                            slot={process.env.NEXT_PUBLIC_ADSENSE_INFEED_SLOT || ''}
+                            format="fluid"
+                            layoutKey="-fb+5w+4e-db+86"
+                            className="rounded-[3rem] overflow-hidden shadow-2xl bg-card border border-border/30 p-8"
+                        />
+                        </div>
+                    )}
+                    </React.Fragment>
+                ))}
+
+                {hasMore && (
+                    <div className="flex justify-center mt-12 pb-12">
+                    <button
+                        onClick={() => performSearch(true)}
+                        disabled={isSearching}
+                        className="btn-premium-outline px-12 py-5 shadow-2xl"
+                    >
+                        {isSearching ? <Loader2 className="w-5 h-5 animate-spin" /> : null}
+                        {isEn ? "DECRYPT MORE DATA" : "더 많은 주류 탐색"}
+                    </button>
+                    </div>
+                )}
+                </div>
+            ) : hasSearched ? (
+                <div className="surface-elevated flex flex-col items-center justify-center py-32 text-center border-dashed border-2">
+                    <div className="w-24 h-24 rounded-full bg-muted/50 flex items-center justify-center mb-8 text-4xl grayscale opacity-30">🔍</div>
+                    <h2 className="text-3xl font-black text-foreground tracking-tighter mb-3">
+                        {isEn ? "Null Set Detected" : "항목을 찾을 수 없습니다"}
+                    </h2>
+                    <p className="text-foreground/40 max-w-sm font-medium">
+                        {isEn ? "No records matching your parameters were found in the institutional database." : "요청하신 조건에 부합하는 데이터가 데이터베이스에 존재하지 않습니다."}
+                    </p>
+                    <button 
+                        onClick={resetFilters}
+                        className="mt-10 btn-premium-outline px-8 py-3 text-xs"
+                    >
+                        {isEn ? "REBOOT FILTERS" : "필터 리셋"}
+                    </button>
+                </div>
+            ) : (
+                <div 
+                    className="surface-elevated flex flex-col items-center justify-center py-40 border-dashed border-2 group hover:bg-primary/5 transition-all cursor-pointer" 
+                    onClick={() => performSearch()}
+                >
+                    <div className="w-28 h-28 rounded-3xl bg-primary/10 flex items-center justify-center mb-10 group-hover:scale-110 transition-transform duration-500 shadow-2xl">
+                        <Search className="w-12 h-12 text-primary" />
+                    </div>
+                    <h2 className="text-4xl font-black text-foreground tracking-tighter mb-4 text-center">
+                        {isEn ? "Institutional Database Access" : "데이터베이스 전체 탐색"}
+                    </h2>
+                    <p className="text-foreground/40 max-w-md text-center font-medium px-8">
+                        {isEn 
+                            ? "Initiate a full-spectrum analysis across thousands of curated entries." 
+                            : "수천 건의 전문 큐레이션 데이터를 실시간으로 동기화하여 분석을 시작할 수 있습니다."}
+                    </p>
+                    <button className="mt-12 btn-premium py-5 px-16 shadow-2xl">
+                        {isEn ? "EXECUTE GLOBAL SCAN" : "분석 시작"}
+                    </button>
+                </div>
+            )}
+        </main>
+      </div>
     </div>
   );
 }

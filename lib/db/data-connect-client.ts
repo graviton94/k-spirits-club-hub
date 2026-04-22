@@ -22,6 +22,8 @@ import {
   upsertWorldCupResult,
   getWorldCupResult,
   listSpiritsForWorldCup,
+  listAllSpiritsForWorldCup,
+  listSpiritsByCategoryForWorldCup,
   adminListRawSpirits,
   deleteSpirit,
   listAiDiscoveryLogs,
@@ -334,6 +336,16 @@ export const dbGetWorldCupResult = async (id: string) => {
 
 export const dbListSpiritsForWorldCup = async (category: string, subcategories: string[]) => {
   const { data } = await listSpiritsForWorldCup(getDC(), { category, subcategories });
+  return data.spirits;
+};
+
+export const dbListAllSpiritsForWorldCup = async () => {
+  const { data } = await listAllSpiritsForWorldCup(getDC());
+  return data.spirits;
+};
+
+export const dbListSpiritsByCategoryForWorldCup = async (category: string) => {
+  const { data } = await listSpiritsByCategoryForWorldCup(getDC(), { category });
   return data.spirits;
 };
 

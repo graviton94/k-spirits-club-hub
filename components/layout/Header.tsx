@@ -17,56 +17,72 @@ export function Header({ lang, dict }: { lang: Locale, dict: any }) {
     const profileImage = user && (profile?.profileImage || user.photoURL);
 
     return (
-        <header className="sticky top-0 z-40 w-full border-b border-border bg-card/90 backdrop-blur-xl">
-            <div className="mobile-safe-x container mx-auto flex h-16 max-w-4xl items-center justify-between gap-2 md:gap-4">
-                <Link href={`/${lang}`} prefetch={false} className="flex min-w-0 items-center gap-2">
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-linear-to-r from-amber-500 to-orange-600 text-sm font-black text-white">
-                        K
-                    </span>
-                    <span className="truncate bg-linear-to-r from-amber-500 to-orange-600 bg-clip-text text-base font-black text-transparent min-[380px]:text-lg sm:text-xl">
-                        K-SPIRITS
-                    </span>
+        <header className="sticky top-0 z-40 w-full glass-premium border-b border-border/10">
+            <div className="mobile-safe-x container mx-auto flex h-16 md:h-20 max-w-7xl items-center justify-between gap-4">
+                <Link href={`/${lang}`} prefetch={false} className="flex min-w-0 items-center gap-3 group">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-brand-gradient text-lg font-black text-white group-hover:scale-110 transition-transform shadow-2xl skew-x-[-12deg]">
+                        <span className="skew-x-[12deg]">K</span>
+                    </div>
+                    <div className="flex flex-col -gap-1">
+                         <span className="truncate text-foreground text-xl font-black tracking-tighter leading-none">
+                            K-SPIRITS
+                        </span>
+                        <span className="text-[10px] font-black text-primary uppercase tracking-[0.2em] leading-none">
+                            Club Hub
+                        </span>
+                    </div>
                 </Link>
 
-                <div className="flex min-w-0 items-center gap-1.5 min-[380px]:gap-2 md:gap-3">
-                    <LanguageSwitcher />
-                    <ThemeToggle />
+                <div className="flex min-w-0 items-center gap-2 md:gap-4">
+                    <div className="hidden md:flex items-center gap-1 mr-4">
+                        <LanguageSwitcher />
+                        <ThemeToggle />
+                    </div>
 
                     {user ? (
                         <Link
                             href={`/${lang}/me`}
-                            className="flex min-w-0 items-center gap-2 rounded-full py-1 pl-2 transition-colors hover:bg-secondary min-[380px]:gap-3 md:pl-4"
+                            className="flex min-w-0 items-center gap-3 rounded-2xl py-1.5 pl-3 pr-2 transition-all hover:bg-primary/10 border border-transparent hover:border-primary/20 group"
                         >
                             <div className="hidden whitespace-nowrap text-right sm:block">
-                                <p className="text-xs text-muted-foreground">
-                                    {dict.welcome || 'Welcome back,'}
+                                <p className="text-[9px] font-black text-foreground/30 uppercase tracking-widest">
+                                    Member
                                 </p>
-                                <p className="text-sm font-bold leading-none text-primary">
+                                <p className="text-sm font-black text-foreground group-hover:text-primary transition-colors uppercase tracking-tighter">
                                     {displayName}
                                 </p>
                             </div>
-                            <div className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-primary/50 bg-secondary shadow-sm">
+                            <div className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-muted/50 border border-border/50 group-hover:border-primary/50 transition-all shadow-inner">
                                 {profileImage ? (
                                     <img
                                         src={profileImage}
                                         alt={displayName}
-                                        className="h-full w-full object-cover"
+                                        className="h-full w-full object-cover grayscale-[0.5] group-hover:grayscale-0 transition-all"
                                     />
                                 ) : (
-                                    <User className="h-5 w-5 text-primary" />
+                                    <User className="h-5 w-5 text-foreground/40 group-hover:text-primary transition-colors" />
                                 )}
                             </div>
                         </Link>
                     ) : (
                         <Link
                             href={`/${lang}/login`}
-                            className="flex shrink-0 items-center gap-1.5 rounded-full bg-linear-to-r from-amber-500 to-orange-600 px-2.5 py-2 text-sm font-bold text-white shadow-lg shadow-primary/20 transition-all hover:from-amber-600 hover:to-orange-700 min-[380px]:gap-2 min-[380px]:px-3 md:px-4"
-                            aria-label="Login"
+                            className="btn-premium px-6 py-2.5 text-sm md:flex hidden"
                         >
                             <LogIn className="h-4 w-4" />
-                            <span className="hidden min-[380px]:inline">Login</span>
+                            <span>ACCESS HUB</span>
                         </Link>
                     )}
+                    
+                    {/* Mobile Menu Icon or compact login for mobile */}
+                     {!user && (
+                        <Link
+                         href={`/${lang}/login`}
+                         className="md:hidden flex h-10 w-10 items-center justify-center rounded-2xl bg-primary text-white shadow-lg"
+                        >
+                             <LogIn className="h-5 w-5" />
+                        </Link>
+                     )}
                 </div>
             </div>
         </header>

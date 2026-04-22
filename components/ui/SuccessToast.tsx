@@ -45,9 +45,9 @@ export default function SuccessToast({
           className="fixed top-4 left-1/2 w-full max-w-sm -translate-x-1/2 px-4"
           style={{ zIndex: TOAST_Z_INDEX }}
         >
-          <div className="flex w-full items-center gap-3 rounded-2xl border border-gray-100 bg-white/90 px-4 py-4 shadow-xl backdrop-blur-md min-[380px]:px-6">
+          <div className="flex w-full items-center gap-3 rounded-2xl border border-border/50 bg-card/90 px-4 py-4 shadow-xl backdrop-blur-md min-[380px]:px-6">
             <Icon className={`w-6 h-6 ${iconColor} flex-shrink-0`} />
-            <span className="min-w-0 break-words text-sm font-bold text-gray-900">{message}</span>
+            <span className="min-w-0 break-words text-sm font-bold text-foreground">{message}</span>
           </div>
         </motion.div>
       )}

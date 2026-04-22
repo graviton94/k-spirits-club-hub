@@ -2,7 +2,7 @@
 # Mutations for Data Migration and App Logic
 
 # --- User Mutations ---
-mutation upsertUser($id: String!, $email: String, $nickname: String, $profileImage: String, $role: String, $themePreference: String, $isFirstLogin: Boolean, $reviewsWritten: Int, $heartsReceived: Int, $tasteProfile: Any) @auth(level: PUBLIC) {
+mutation upsertUser($id: String!, $email: String, $nickname: String, $profileImage: String, $role: String, $themePreference: String, $isFirstLogin: Boolean, $reviewsWritten: Int, $heartsReceived: Int, $tasteProfile: Any) @auth(expr: "auth != null && auth.uid == vars.id") {
   user_upsert(data: {
     id: $id,
     email: $email,
@@ -53,7 +53,7 @@ mutation upsertSpirit(
   $rawCategory: String,
   $metadata: Any,
   $updatedAt: Timestamp
-) @auth(level: PUBLIC) {
+) @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   spirit_upsert(data: {
     id: $id,
     name: $name,
@@ -93,7 +93,7 @@ mutation upsertSpirit(
 }
 
 # --- Home Curation Mutations ---
-mutation upsertNewArrival($id: String!, $spiritId: String!, $displayOrder: Int, $tags: [String!]) @auth(level: PUBLIC) {
+mutation upsertNewArrival($id: String!, $spiritId: String!, $displayOrder: Int, $tags: [String!]) @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   newArrival_upsert(data: {
     id: $id,
     spiritId: $spiritId,
@@ -162,7 +162,7 @@ mutation upsertNews(
   $date: String,
   $translations: Any,
   $tags: Any
-) @auth(level: PUBLIC) {
+) @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   newsArticle_upsert(data: {
     id: $id,
     title: $title,
@@ -177,7 +177,7 @@ mutation upsertNews(
   })
 }
 
-mutation deleteNews($id: String!) @auth(level: PUBLIC) {
+mutation deleteNews($id: String!) @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   newsArticle_delete(id: $id)
 }
 
@@ -214,7 +214,7 @@ mutation upsertModificationRequest(
   $content: String!,
   $status: String,
   $createdAt: Timestamp
-) @auth(level: PUBLIC) {
+) @auth(expr: "auth != null") {
   modificationRequest_upsert(data: {
     id: $id,
     spiritId: $spiritId,
@@ -246,7 +246,7 @@ mutation upsertWorldCupResult(
   })
 }
 
-mutation deleteSpirit($id: String!) @auth(level: PUBLIC) {
+mutation deleteSpirit($id: String!) @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   spirit_delete(id: $id)
 }
 

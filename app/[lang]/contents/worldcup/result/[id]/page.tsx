@@ -1,11 +1,12 @@
 import { Metadata } from 'next';
-import { Trophy, ChevronLeft, Gamepad2 } from 'lucide-react';
+import { Trophy, Gamepad2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getOptimizedImageUrl } from '@/lib/utils/image-optimization';
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url';
 import { dbGetWorldCupResult } from '@/lib/db/data-connect-client';
+import WorldCupBackButton from '@/components/contents/worldcup/WorldCupBackButton';
 
 interface WinnerData {
   id: string;
@@ -127,12 +128,7 @@ export default async function WorldCupResultPage({
 
       <div className="relative z-10 w-full max-w-lg mx-auto text-center">
         <div className="absolute -top-12 left-0 right-0 flex justify-between items-center px-4">
-          <Link
-            href={`/${lang}/contents/worldcup`}
-            className="p-2.5 bg-card/50 backdrop-blur-md rounded-2xl border border-border hover:bg-muted transition-all"
-          >
-            <ChevronLeft className="w-5 h-5 text-foreground" />
-          </Link>
+          <WorldCupBackButton />
         </div>
 
         <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-amber-500/10 border border-amber-500/20 rounded-full mb-6">

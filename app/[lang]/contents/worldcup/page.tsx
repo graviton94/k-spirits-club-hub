@@ -49,9 +49,13 @@ export default async function WorldCupPage({ params }: WorldCupPageProps) {
   const { lang } = await params;
   const isEn = lang === 'en';
 
+  // DB에서 카테고리 목록을 서버사이드에서 미리 가져옴
+  const { getWorldCupCategoriesAction } = await import('@/app/[lang]/actions/spirits');
+  const dbCategories = await getWorldCupCategoriesAction();
+
   return (
     <>
-      <WorldCupSelectionPage />
+      <WorldCupSelectionPage initialCategories={dbCategories} />
 
       {/* SSR landing content — provides substantial indexed copy for both KO and EN */}
       <section className="bg-background border-t border-border/40 py-14 px-4">

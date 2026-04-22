@@ -7,6 +7,12 @@ These rules define the "Deep Intelligence" of the Antigravity agent for the K-Sp
 - **God Nodes**: Respect the "God Nodes" identified in the report. Any modification to these nodes requires a mandatory regression audit.
 - **Structural Integrity**: Use `/graphify path` (or MCP queries) to trace dependencies if a change spans multiple components.
 
+### 4. Post-Task Discipline & Scaling
+- **Activity Review**: After every major task or walkthrough, review the actions taken.
+- **Rule Hardening**: If an error was encountered or a new pattern discovered, update [strict_prohibited_actions.md](file:///c:/k-spirits-club-hub/.agents/rules/strict_prohibited_actions.md) immediately.
+- **Workflow Adherence**: Never skip the [dataconnect_workflow](file:///c:/k-spirits-club-hub/.agents/rules/dataconnect_workflow.md). Deployment is the final step of all data-related tasks.
+- **Persistence**: Rules established in the `.agents/rules` directory must be treated as "Core Directives" that override general assumptions.
+
 ## 2. Context Resilience (AI Improvement Machine)
 - **Reorientation**: At the start of a session or after complex tasks, check `ai_improvement_machine/reports/LATEST_REORIENTATION.md`.
 - **Technique Mastery**: Always adhere to the logic in `ai_improvement_machine/knowledge/MASTER_TECHNIQUE_MANUAL.md`.

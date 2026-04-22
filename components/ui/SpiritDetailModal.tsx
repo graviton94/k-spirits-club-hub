@@ -194,100 +194,107 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
     return (
         <AnimatePresence>
             <motion.div
-                className="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-6 bg-black/70 backdrop-blur-md"
+                className="fixed inset-0 z-100 flex items-center justify-center p-0 md:p-6 bg-background/60 backdrop-blur-3xl"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={onClose}
             >
                 <motion.div
-                    className="relative w-full max-w-md bg-zinc-900 rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10 max-h-[90vh] flex flex-col"
-                    initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                    className="relative w-full max-w-2xl bg-card rounded-none md:rounded-[3rem] overflow-hidden shadow-[0_0_100px_rgba(0,0,0,0.5)] border-x md:border border-border/20 h-full md:h-auto md:max-h-[85vh] flex flex-col"
+                    initial={{ opacity: 0, scale: 0.95, y: 30 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                    transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                    exit={{ opacity: 0, scale: 0.95, y: 30 }}
+                    transition={{ type: "spring", damping: 30, stiffness: 400 }}
                     onClick={(e) => e.stopPropagation()}
                 >
-                    {/* ... (Header Image code remains unchanged) ... */}
-                    {/* (Omitted for brevity, but it's part of the replacement block) */}
-                    <div className="relative h-[28vh] w-full bg-zinc-800 shrink-0 aspect-video overflow-hidden">
-                        {/* Close Button (Top Left) */}
+                    {/* 🏰 1. Hero Dossier Header */}
+                    <div className="relative h-[35vh] md:h-[400px] w-full bg-muted/30 shrink-0 overflow-hidden">
+                        {/* Close Button */}
                         <button
                             onClick={onClose}
-                            className="absolute top-5 left-5 z-20 p-2.5 bg-black/40 hover:bg-black/60 backdrop-blur-xl rounded-full text-white transition-all active:scale-90 shadow-lg border border-white/10"
+                            className="absolute top-8 right-8 z-30 p-3 bg-black/20 hover:bg-black/40 backdrop-blur-xl rounded-2xl text-white transition-all active:scale-90 border border-white/10 group shadow-2xl"
                         >
-                            <X className="w-5 h-5" />
+                            <X className="w-6 h-6 group-hover:rotate-90 transition-transform duration-500" />
                         </button>
 
+                        <div className="absolute inset-0 z-10 bg-linear-to-t from-card via-card/20 to-transparent" />
+                        
                         {localSpirit.imageUrl ? (
-                            <img
-                                src={getOptimizedImageUrl(localSpirit.imageUrl, 800)}
+                            <Image
+                                src={getOptimizedImageUrl(localSpirit.imageUrl, 1200)}
                                 alt={localSpirit.name}
-                                className="w-full h-full object-cover object-center"
-                                loading="eager"
+                                fill
+                                className="object-contain p-12 md:p-20 drop-shadow-[0_30px_60px_rgba(0,0,0,0.4)]"
+                                priority
+                                unoptimized={true}
                             />
                         ) : (
-                            <div className="w-full h-full flex items-center justify-center text-6xl">
+                            <div className="w-full h-full flex items-center justify-center text-8xl grayscale opacity-20">
                                 🥃
                             </div>
                         )}
-                    </div>
 
-                    {/* 2. Actions & Detailed Info */}
-                    <div className="p-6 space-y-6 overflow-y-auto custom-scrollbar bg-neutral-900 text-white pb-12">
-                        {/* Title Section */}
-                        <div className="mb-2">
-                            <span className="inline-block px-2 py-0.5 mb-2 text-[10px] font-bold bg-amber-500/90 text-black rounded uppercase tracking-wider">
+                        {/* Title Overlay */}
+                        <div className="absolute bottom-0 inset-x-0 p-8 md:p-12 z-20 space-y-2">
+                             <span className="capsule-premium bg-primary text-primary-foreground border-none">
                                 {getLocalizedCategory(localSpirit.category)}
                             </span>
-                            <h2 className="text-3xl font-black text-white leading-tight mb-1">
+                            <h2 className="text-4xl md:text-6xl font-black text-foreground leading-[0.9] tracking-tighter">
                                 {localSpirit.name}
                             </h2>
                             {localSpirit.distillery && (
-                                <p className="text-lg text-amber-500 font-bold">{localSpirit.distillery}</p>
+                                <p className="text-lg md:text-xl text-primary font-black opacity-80 uppercase tracking-widest">{localSpirit.distillery}</p>
                             )}
                         </div>
+                    </div>
 
-                        {/* Action Buttons */}
-                        <div className="flex gap-2">
+                    {/* 📄 2. Detailed Intelligence Section */}
+                    <div className="flex-1 overflow-y-auto px-8 md:px-12 py-8 bg-card text-foreground pb-24 md:pb-12 scrollbar-hide">
+                        
+                        {/* Dossier Meta Grid */}
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+                             {[
+                                { label: 'ABV', value: `${localSpirit.abv}%` },
+                                { label: 'CATEGORY', value: localSpirit.category },
+                                { label: 'STATUS', value: cabinetStatus.isOwned ? 'COLLECTED' : 'NOT OWNED' },
+                                { label: 'ID', value: `#${localSpirit.id.slice(0,6)}` }
+                             ].map((item, idx) => (
+                                <div key={idx} className="p-4 rounded-3xl bg-muted/30 border border-border/30">
+                                    <p className="text-[10px] font-black text-foreground/30 uppercase tracking-[0.2em] mb-1">{item.label}</p>
+                                    <p className="text-sm font-black text-foreground truncate">{item.value}</p>
+                                </div>
+                             ))}
+                        </div>
+
+                        {/* Action Command Bar */}
+                        <div className="flex flex-col sm:flex-row gap-4 mb-12">
                             {!cabinetStatus.isOwned ? (
-                                <div className="w-full flex gap-2">
+                                <>
                                     <button
                                         disabled={isProcessing}
                                         onClick={() => handleAction('add')}
-                                        className="flex-2 flex items-center justify-center gap-2 py-3 px-4 bg-linear-to-r from-emerald-500 to-green-600 text-white font-black rounded-xl hover:from-emerald-600 hover:to-green-700 transition-all scale-100 active:scale-95 disabled:opacity-50 shadow-lg shadow-emerald-900/20"
+                                        className="btn-premium flex-1 py-4 text-sm"
                                     >
-                                        {isProcessing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
+                                        {isProcessing ? <Loader2 className="w-5 h-5 animate-spin" /> : <Plus className="w-5 h-5" />}
                                         <span>{t.add_cabinet}</span>
                                     </button>
-                                    {cabinetStatus.isWishlist && (
-                                        <button
-                                            disabled={isProcessing}
-                                            onClick={async () => {
-                                                if (!confirm(t.confirm_remove_wishlist)) return;
-                                                setIsProcessing(true);
-                                                try {
-                                                    await import('@/app/[lang]/actions/cabinet').then(({ removeFromCabinet }) =>
-                                                        removeFromCabinet(user!.uid, spirit.id)
-                                                    );
-                                                    setCabinetStatus({ isOwned: false, isWishlist: false });
-                                                    if (onStatusChange) onStatusChange();
-                                                } catch (e) { console.error(e); }
-                                                finally { setIsProcessing(false); }
-                                            }}
-                                            className="flex-1 flex items-center justify-center gap-2 py-3 bg-red-500/10 text-red-500 border border-red-500/50 hover:bg-red-500/20 rounded-xl font-bold text-sm transition-colors"
-                                        >
-                                            <Check className="w-4 h-4" /> {t.remove_cabinet}
-                                        </button>
-                                    )}
-                                </div>
+                                    <button
+                                        disabled={isProcessing}
+                                        onClick={() => handleAction('wishlist')}
+                                        className={`btn-premium-outline flex-1 py-4 text-sm ${cabinetStatus.isWishlist ? 'bg-primary/20 border-primary shadow-lg shadow-primary/20' : ''}`}
+                                    >
+                                        <Bookmark className={`w-5 h-5 ${cabinetStatus.isWishlist ? 'fill-current' : ''}`} />
+                                        <span>{cabinetStatus.isWishlist ? 'WISHLISTED' : 'SAVE FOR LATER'}</span>
+                                    </button>
+                                </>
                             ) : (
-                                <div className="w-full flex gap-2">
+                                <>
                                     <button
                                         onClick={() => router.push(`/${isEn ? 'en' : 'ko'}/spirits/${localSpirit.id}`)}
-                                        className="flex-2 flex items-center justify-center gap-2 py-3 bg-linear-to-r from-amber-500 to-orange-600 text-white rounded-xl font-bold text-sm shadow-lg shadow-primary/20 hover:from-amber-600 hover:to-orange-700 hover:scale-105 transition-all"
+                                        className="btn-premium flex-1 py-4 text-sm"
                                     >
-                                        <Pencil className="w-4 h-4" />
+                                        <Pencil className="w-5 h-5" />
                                         {localSpirit.userReview ? t.edit_review : t.write_review}
                                     </button>
                                     <button
@@ -304,137 +311,82 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                             } catch (e) { console.error(e); }
                                             finally { setIsProcessing(false); }
                                         }}
-                                        className="flex-1 flex items-center justify-center gap-2 py-3 bg-red-500/10 text-red-500 border border-red-500/50 hover:bg-red-500/20 rounded-xl font-bold text-sm transition-colors"
+                                        className="btn-premium-outline flex-1 py-4 text-sm border-red-500/30 text-red-500 hover:bg-red-500/10 hover:border-red-500"
                                     >
-                                        <Check className="w-4 h-4" /> {t.remove_cabinet}
+                                        <Check className="w-5 h-5" /> {t.remove_cabinet}
                                     </button>
-                                </div>
+                                </>
                             )}
                         </div>
 
-                        {/* Description */}
+                        {/* Description Block */}
                         {(isEn ? localSpirit.metadata?.description_en : localSpirit.metadata?.description_ko) && (
-                            <div className="mb-2">
-                                <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">{t.description}</h3>
-                                <p className="text-sm text-gray-200 leading-relaxed font-light">
+                            <div className="mb-12 relative p-8 rounded-[2rem] bg-foreground text-background">
+                                <h3 className="text-[10px] font-black opacity-40 uppercase tracking-[0.25em] mb-4">{t.description}</h3>
+                                <p className="text-base md:text-lg leading-relaxed font-medium">
                                     {isEn ? localSpirit.metadata?.description_en : localSpirit.metadata?.description_ko}
                                 </p>
-                            </div>
-                        )}
-
-                        {/* User Rating Summary (if exists) */}
-                        {localSpirit.userReview && (
-                            <div className="bg-primary/5 rounded-2xl p-4 border-2 border-primary/10">
-                                <div className="flex items-center gap-3 mb-2">
-                                    <div className="flex items-center gap-1 text-primary font-black text-xl">
-                                        <span>★</span> {localSpirit.userReview.ratingOverall.toFixed(1)}
-                                    </div>
-                                    <div className="h-4 w-px bg-primary/20"></div>
-                                    <span className="text-[10px] text-amber-500 font-black uppercase tracking-widest">Master Review</span>
+                                <div className="absolute top-0 right-0 p-8 opacity-10">
+                                    <Sparkles className="w-12 h-12" />
                                 </div>
-                                <p className="text-sm text-gray-200 italic leading-relaxed">
-                                    "{localSpirit.userReview.comment}"
-                                </p>
                             </div>
                         )}
 
-                        {/* Tasting Profile - N/P/F */}
-                        <div>
-                            <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4">
-                                {t.tastingProfile}
-                            </h3>
+                        {/* 📊 Tasting Profile Intelligence */}
+                        <div className="space-y-12 mb-12">
+                            <div>
+                                <h3 className="text-[10px] font-black text-foreground/30 uppercase tracking-[0.25em] mb-8 flex items-center gap-3">
+                                    <div className="h-px flex-1 bg-border/50"></div>
+                                    {t.tastingProfile}
+                                    <div className="h-px flex-1 bg-border/50"></div>
+                                </h3>
 
-                            <div className="space-y-5">
-                                {/* Nose */}
-                                {(localSpirit.userReview?.tagsN?.length || localSpirit.nose_tags?.length) && (
-                                    <div>
-                                        <div className="flex items-center gap-2 mb-2">
-                                            <span className="text-xs font-bold text-white">{t.aroma}</span>
-                                            <div className="h-px flex-1 bg-white/20"></div>
-                                        </div>
-                                        <div className="flex flex-wrap gap-1.5">
-                                            {(localSpirit.userReview?.tagsN || localSpirit.nose_tags || []).map((tag: string, i: number) => {
-                                                const color = getTagColor(tag);
-                                                return (
-                                                    <span key={i} className={`inline-block text-[10px] px-2.5 py-1 rounded-md border font-bold ${color.bg} ${color.text} ${color.border}`}>
-                                                        {tag}
+                                <div className="grid gap-10">
+                                    {/* Aroma, Palate, Finish Sections */}
+                                    {[
+                                        { label: t.aroma, tags: localSpirit.userReview?.tagsN || localSpirit.nose_tags, color: 'primary' },
+                                        { label: t.palate, tags: localSpirit.userReview?.tagsP || localSpirit.palate_tags, color: 'accent' },
+                                        { label: t.finish, tags: localSpirit.finish_tags || localSpirit.userReview?.tagsF, color: 'primary' }
+                                    ].map((section, idx) => section.tags?.length ? (
+                                        <div key={idx} className="space-y-4">
+                                            <div className="flex items-center gap-4">
+                                                <span className="text-sm font-black text-foreground uppercase tracking-widest">{section.label}</span>
+                                            </div>
+                                            <div className="flex flex-wrap gap-2">
+                                                {section.tags.map((tag: string, i: number) => (
+                                                    <span key={i} className={`px-4 py-2 rounded-2xl text-[11px] font-black border transition-all hover:scale-105 cursor-default
+                                                        ${section.color === 'primary' 
+                                                            ? 'bg-primary/5 text-primary border-primary/20' 
+                                                            : 'bg-accent/5 text-accent border-accent/20'}`}>
+                                                        #{tag}
                                                     </span>
-                                                )
-                                            })}
+                                                ))}
+                                            </div>
                                         </div>
-                                    </div>
-                                )}
-
-                                {/* Palate */}
-                                {(localSpirit.userReview?.tagsP?.length || localSpirit.palate_tags?.length) && (
-                                    <div>
-                                        <div className="flex items-center gap-2 mb-2">
-                                            <span className="text-xs font-bold text-white">{t.palate}</span>
-                                            <div className="h-px flex-1 bg-white/20"></div>
-                                        </div>
-                                        <div className="flex flex-wrap gap-1.5">
-                                            {(localSpirit.userReview?.tagsP || localSpirit.palate_tags || []).map((tag: string, i: number) => {
-                                                const color = getTagColor(tag);
-                                                return (
-                                                    <span key={i} className={`inline-block text-[10px] px-2.5 py-1 rounded-md border font-bold ${color.bg} ${color.text} ${color.border}`}>
-                                                        {tag}
-                                                    </span>
-                                                )
-                                            })}
-                                        </div>
-                                    </div>
-                                )}
-
-                                {/* Finish */}
-                                {(localSpirit.userReview?.tagsF?.length || localSpirit.finish_tags?.length) && (
-                                    <div>
-                                        <div className="flex items-center gap-2 mb-2">
-                                            <span className="text-xs font-bold text-white">{t.finish}</span>
-                                            <div className="h-px flex-1 bg-white/20"></div>
-                                        </div>
-                                        <div className="flex flex-wrap gap-1.5">
-                                            {(localSpirit.userReview?.tagsF || localSpirit.finish_tags || []).map((tag: string, i: number) => {
-                                                const color = getTagColor(tag);
-                                                return (
-                                                    <span key={i} className={`inline-block text-[10px] px-2.5 py-1 rounded-md border font-bold ${color.bg} ${color.text} ${color.border}`}>
-                                                        {tag}
-                                                    </span>
-                                                )
-                                            })}
-                                        </div>
-                                    </div>
-                                )}
+                                    ) : null)}
+                                </div>
                             </div>
                         </div>
 
-                        {/* AI Global Pairing Guide */}
-                        {/* Skeleton Loading State */}
-                        {!localSpirit.metadata && isProcessing ? (
-                            <div className="mt-6 space-y-3">
-                                <div className="h-4 w-32 bg-gray-800 rounded animate-pulse" />
-                                <div className="h-24 w-full bg-gray-800 rounded-2xl animate-pulse" />
-                            </div>
-                        ) : (
-                            ((isEn ? localSpirit.metadata?.pairing_guide_en : localSpirit.metadata?.pairing_guide_ko) || localSpirit.metadata?.pairing_guide_en) && (
-                                <div className="mt-6">
-                                    <div className="flex items-center gap-2 mb-3">
-                                        <span className="text-[10px] font-black text-transparent bg-clip-text bg-linear-to-r from-purple-400 to-pink-400 uppercase tracking-widest flex items-center gap-1">
-                                            ✨ {isEn ? 'Pairing Guide' : '페어링 추천'}
-                                        </span>
-                                        <div className="h-px flex-1 bg-white/20"></div>
+                        {/* 🍹 Institutional Pairing Guide */}
+                        {((isEn ? localSpirit.metadata?.pairing_guide_en : localSpirit.metadata?.pairing_guide_ko) || localSpirit.metadata?.pairing_guide_en) && (
+                            <div className="relative overflow-hidden rounded-[2.5rem] bg-linear-to-br from-primary/10 via-background to-accent/10 border border-border/50 p-8 md:p-10 mb-8 shadow-2xl">
+                                <div className="flex items-center gap-4 mb-6">
+                                    <div className="w-10 h-10 rounded-2xl bg-brand-gradient flex items-center justify-center text-white shadow-lg">
+                                        <Sparkles className="w-5 h-5" />
                                     </div>
-
-                                    <div className="relative overflow-hidden rounded-2xl p-px bg-linear-to-br from-purple-500/30 via-pink-500/30 to-orange-500/30">
-                                        <div className="relative bg-neutral-900/80 backdrop-blur-xl p-4 rounded-2xl">
-                                            <p className="text-sm text-gray-200 leading-relaxed wrap-break-word font-medium">
-                                                {isEn
-                                                    ? localSpirit.metadata?.pairing_guide_en
-                                                    : (localSpirit.metadata?.pairing_guide_ko || localSpirit.metadata?.pairing_guide_en)}
-                                            </p>
-                                        </div>
-                                    </div>
+                                    <h3 className="text-lg font-black text-foreground uppercase tracking-tighter italic">
+                                        {isEn ? 'Sommelier Pairing Selection' : '소믈리에 페어링 가이드'}
+                                    </h3>
                                 </div>
-                            ))}
+
+                                <p className="text-base md:text-lg text-foreground/90 leading-relaxed font-medium pl-2 border-l-4 border-primary/30">
+                                    {isEn
+                                        ? localSpirit.metadata?.pairing_guide_en
+                                        : (localSpirit.metadata?.pairing_guide_ko || localSpirit.metadata?.pairing_guide_en)}
+                                </p>
+                            </div>
+                        )}
                     </div>
                 </motion.div>
 
@@ -447,4 +399,5 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
             </motion.div>
         </AnimatePresence>
     );
+}
 }
