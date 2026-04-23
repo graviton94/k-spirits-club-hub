@@ -23,7 +23,7 @@ const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit", display: 
 
 // Explicitly allow dynamic params for locale routing
 export const dynamicParams = true;
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
   const { lang } = await params;
