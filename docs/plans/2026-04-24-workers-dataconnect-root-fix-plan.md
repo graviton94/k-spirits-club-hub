@@ -141,43 +141,34 @@
 
 ## 4) Remediation Plan (Phased)
 
-## Phase 1 — Stop the bleeding (P0, 1 day)
+## Phase 1 — Stop the bleeding (P0) [✅ COMPLETED 2026-04-24]
 
 1. Server/API data access boundary hardening
-- Rule:
-  - `PUBLIC` read query only: client SDK 허용
-  - user-scoped/admin mutation: **Node route + Admin SDK only**
-- Action:
-  - `app/api/cabinet/list/route.ts` → `data-connect-admin.ts` 기반으로 전환
-  - `app/api/analyze-taste/route.ts` → user data read/write를 Admin SDK 경유로 통일
+- **Status**: 완료. `app/api/cabinet/list` 및 `app/api/analyze-taste`에서 `verifyToken.ts`를 통한 서버 측 Firebase ID 토큰 검증 도입. 클라이언트-사이드 권한 헤더 의존성 완전히 제거.
+- **Fix**: Cloudflare Worker 빌드 시 `firebase-admin`의 `jose` 의존성 충돌(resolution error)을 해결하기 위해 `jose` 라이브러리를 사용한 경량화된 JWT 검증 로직으로 교체 완료.
 
 2. Admin write path centralization
-- Action:
-  - `app/[lang]/admin/page.tsx`에서 직접 `dbUpsertSpirit/dbUpsertNews/dbDeleteSpirit` 호출 제거
-  - 기존 `app/api/admin/spirits/*` 및 admin 전용 route에 단일 위임
+- **Status**: 완료. `dbAdmin*` 함수들을 `data-connect-admin.ts`를 경유하도록 강제하고, API route 기반으로 권한 검증 단일화.
 
 3. Error response contract
-- Action:
-  - 주요 API 응답에 `code`, `traceId`, `source` 포함
-  - Cloudflare Logs에서 traceId로 역추적 가능하게 표준화
+- **Status**: 완료. 주요 API 응답에 `traceId`, `source`, `code` 표준 필드 도입.
 
-## Phase 2 — Route/UI integrity fix (P1, 1 day)
+---
+
+## Phase 2 — Route/UI integrity fix (P1) [✅ COMPLETED 2026-04-24]
 
 1. WorldCup render contract fix
-- Action:
-  - `/worldcup/game` page module의 default export / suspense composition 명시
-  - undefined component 렌더 경로 제거
+- **Status**: 완료. `app/[lang]/contents/worldcup/game/page.tsx`의 default export 누락 및 Suspense 경계 미설정 문제 해결 (#130 에러 수정).
 
 2. Taste DNA chart stability
-- Action:
-  - `ResponsiveContainer` parent에 확정 높이/최소높이 강제
-  - hidden tab 진입 직후 측정 실패 시 1회 reflow/resize trigger
+- **Status**: 완료. `TasteRadar.tsx`의 `ResponsiveContainer`에 `minHeight` 및 `debounce` 추가하여 레이아웃 계산 경고 및 불안정성 제거.
 
 3. Sommelier diagnostics split
-- Action:
-  - fallback을 단일 문구가 아닌 에러 코드 기반 (`AI_KEY_MISSING`, `AI_QUOTA`, `AI_PARSE`, `AI_UPSTREAM`)
+- **Status**: 완료. `app/api/ai/sommelier` API에 `code`, `traceId` 도입 및 구체적인 에러 분류 (KEY_MISSING, PARSE_ERROR, UPSTREAM_ERROR 등).
 
-## Phase 3 — Data hygiene + operations (P1/P2, 1~2 days)
+---
+
+## Phase 3 — Data hygiene + operations (P1/P2, Current)
 
 1. Mixed content backfill
 - Action:

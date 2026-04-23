@@ -16,28 +16,42 @@ const MODEL_ID = "gemini-2.0-flash";
  * Handles multi-step professional profiling and spirit recommendations.
  */
 export async function POST(req: NextRequest) {
-    const fallbackResponse = (lang: string, nextStep = 1, detail?: string) => NextResponse.json({
+    const traceId = crypto.randomUUID();
+    const fallbackResponse = (lang: string, nextStep = 1, detail?: string, code = 'AI_SOMMELIER_GENERAL_ERROR') => NextResponse.json({
         message: lang === 'en'
             ? 'Our sommelier is taking a short break. Please try again in a moment.'
             : '소믈리에가 잠시 숨을 고르고 있습니다. 잠시 후 다시 시도해주세요.',
         nextStep,
         analysis: '',
         recommendations: [],
+        code,
+        traceId,
+        source: 'api/ai/sommelier',
         ...(process.env.NODE_ENV === 'development' && detail ? { debug: detail } : {})
     });
 
     if (!API_KEY) {
-        const body = await req.json().catch(() => ({} as any));
-        const lang = body?.lang === 'en' ? 'en' : 'ko';
-        return fallbackResponse(lang, body?.currentStep || 1);
+        let lang = 'ko';
+        let currentStep = 1;
+        try {
+            const body = await req.clone().json();
+            lang = body?.lang === 'en' ? 'en' : 'ko';
+            currentStep = body?.currentStep || 1;
+        } catch (e) {}
+        return fallbackResponse(lang, currentStep, 'GEMINI_API_KEY is missing', 'AI_SOMMELIER_KEY_MISSING');
     }
+
+    let lang = 'ko';
+    let currentStep = 1;
 
     try {
         const body = await req.json();
-        const { messages, lang = 'ko', currentStep = 1, userId = 'guest' } = body;
+        const { messages, userId = 'guest' } = body;
+        lang = body.lang === 'en' ? 'en' : 'ko';
+        currentStep = body.currentStep || 1;
         const isEn = lang === 'en';
         if (!Array.isArray(messages) || messages.length === 0) {
-            return fallbackResponse(lang, currentStep, 'Missing messages');
+            return fallbackResponse(lang, currentStep, 'Missing messages', 'AI_SOMMELIER_EMPTY_MESSAGES');
         }
 
         // --- RATE LIMITING (Post-Migration Placeholder) ---
@@ -50,7 +64,12 @@ export async function POST(req: NextRequest) {
 
         // Loading searchable index for recommendations (Step 3+)
         if (currentStep >= 3) {
-            searchIndex = await db.getPublishedSearchIndex();
+            try {
+                searchIndex = await db.getPublishedSearchIndex();
+            } catch (e: any) {
+                console.error('[Sommelier API] Index Fetch Failed:', e);
+                // Non-critical, can continue but with limited knowledge
+            }
 
             // Prepare context for the AI
             const userKeywords = messages.map((m: any) => m.content).join(' ');
@@ -131,14 +150,9 @@ export async function POST(req: NextRequest) {
         let parsed;
         try {
             parsed = JSON.parse(responseText);
-        } catch (e) {
+        } catch (e: any) {
             console.error('[Sommelier API] JSON Parse Error:', e, responseText);
-            // Fallback for malformed JSON
-            return NextResponse.json({ 
-                message: isEn ? "I'm having trouble processing that right now. Could you rephrase?" : "죄송합니다. 현재 처리에 문제가 생겼습니다. 다시 한번 말씀해 주시겠어요?",
-                nextStep: currentStep,
-                analysis: ""
-            });
+            return fallbackResponse(lang, currentStep, 'JSON Parse Failed', 'AI_SOMMELIER_PARSE_ERROR');
         }
 
         // Enrich recommendations with real DB data
@@ -146,7 +160,7 @@ export async function POST(req: NextRequest) {
             if (!searchIndex || searchIndex.length === 0) {
                 try {
                     searchIndex = await db.getPublishedSearchIndex();
-                } catch (e) {
+                } catch (e: any) {
                     console.error('Failed to fetch search index for enrichment:', e);
                 }
             }
@@ -171,22 +185,23 @@ export async function POST(req: NextRequest) {
                         recommendations: parsed.recommendations,
                         messageHistory: messages.concat([{ role: 'model', content: parsed.message }])
                     });
-                } catch (e) {
+                } catch (e: any) {
                     console.error('Discovery Logging failed:', e);
                 }
             }
         }
 
         return NextResponse.json({
+            success: true,
             message: parsed.message || (isEn ? 'Let me think a bit more about your taste.' : '취향을 조금 더 분석해볼게요.'),
             nextStep: parsed.nextStep || currentStep,
             analysis: parsed.analysis || '',
-            recommendations: Array.isArray(parsed.recommendations) ? parsed.recommendations : []
+            recommendations: Array.isArray(parsed.recommendations) ? parsed.recommendations : [],
+            traceId
         });
 
     } catch (error: any) {
         console.error('[Sommelier API Error]', error);
-        const body = await req.clone().json().catch(() => ({} as any));
-        return fallbackResponse(body?.lang === 'en' ? 'en' : 'ko', body?.currentStep || 1, error?.message);
+        return fallbackResponse(lang, currentStep, error?.message, 'AI_SOMMELIER_UPSTREAM_ERROR');
     }
 }

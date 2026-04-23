@@ -684,3 +684,10 @@ function ChoiceCard({ item, onClick, pos, isEn }: { item: Spirit, onClick: () =>
         </motion.button>
     );
 }
+export default function WorldCupGamePage({ params }: { params: Promise<{ lang: string }> }) {
+    return (
+        <Suspense fallback={<WorldCupGameFallback />}>
+            <WorldCupGamePageContent params={params} />
+        </Suspense>
+    );
+}
