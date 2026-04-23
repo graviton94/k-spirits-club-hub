@@ -72,5 +72,8 @@
     "eslint-config-next": "^15.1.4",
     "sharp": "^0.34.5",
     "wrangler": "^4.84.1"
+  },
+  "overrides": {
+    "jose": "^6.2.2"
   }
 }

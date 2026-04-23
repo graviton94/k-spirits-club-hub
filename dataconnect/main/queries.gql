@@ -350,7 +350,7 @@ query getReview($id: UUID!) @auth(level: PUBLIC) {
 }
 
 query listSpiritsForSitemap @auth(level: PUBLIC) {
-  spirits(where: { isPublished: { eq: true } }) {
+  spirits(where: { isPublished: { eq: true } }, limit: 5000) {
     id
     name
     category
