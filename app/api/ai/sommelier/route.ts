@@ -8,7 +8,6 @@ import { db } from '@/lib/db'; // Compatibility layer for getPublishedSearchInde
 
 export const runtime = 'nodejs';
 
-const API_KEY = process.env.GEMINI_API_KEY || '';
 const MODEL_ID = "gemini-2.0-flash";
 
 /**
@@ -16,6 +15,7 @@ const MODEL_ID = "gemini-2.0-flash";
  * Handles multi-step professional profiling and spirit recommendations.
  */
 export async function POST(req: NextRequest) {
+    const apiKey = process.env.GEMINI_API_KEY || '';
     const traceId = crypto.randomUUID();
     const fallbackResponse = (lang: string, nextStep = 1, detail?: string, code = 'AI_SOMMELIER_GENERAL_ERROR') => NextResponse.json({
         message: lang === 'en'
@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
         ...(process.env.NODE_ENV === 'development' && detail ? { debug: detail } : {})
     });
 
-    if (!API_KEY) {
+    if (!apiKey) {
         let lang = 'ko';
         let currentStep = 1;
         try {
@@ -123,7 +123,7 @@ export async function POST(req: NextRequest) {
 
         const systemInstruction = `전략 소믈리에 지침... (생략/유지)`; // System instruction remains same logic
 
-        const directGenAI = new GoogleGenerativeAI(API_KEY);
+        const directGenAI = new GoogleGenerativeAI(apiKey);
         const model = directGenAI.getGenerativeModel({
             model: MODEL_ID,
             systemInstruction

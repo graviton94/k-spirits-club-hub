@@ -7,21 +7,21 @@ import { getGoogleAccessToken } from '@/lib/auth/google-auth';
  * This saves ~15MB of bundle size caused by firebase-admin dependencies.
  */
 
-const PROJECT_ID = process.env.FIREBASE_PROJECT_ID || process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
 const LOCATION = 'asia-northeast3';
 const SERVICE_ID = 'k-spirits-club-hub';
 
 async function executeGraphql(operationName: string, query: string, variables: any = {}) {
+    const projectId = process.env.FIREBASE_PROJECT_ID || process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
     const accessToken = await getGoogleAccessToken();
-    const url = `https://dataconnect.googleapis.com/v1/projects/${PROJECT_ID}/locations/${LOCATION}/services/${SERVICE_ID}:executeGraphql`;
+    const url = `https://dataconnect.googleapis.com/v1/projects/${projectId}/locations/${LOCATION}/services/${SERVICE_ID}:executeGraphql`;
 
     const res = await fetch(url, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${accessToken}`,
             'Content-Type': 'application/json',
-            'X-Goog-Cloud-Resource-Prefix': `projects/${PROJECT_ID}/locations/${LOCATION}/services/${SERVICE_ID}`
-        },
+            'X-Goog-Cloud-Resource-Prefix': `projects/${projectId}/locations/${LOCATION}/services/${SERVICE_ID}`
+        } as any,
         body: JSON.stringify({
             operationName,
             query,
@@ -29,9 +29,16 @@ async function executeGraphql(operationName: string, query: string, variables: a
         }),
     });
 
-    const body = await res.json() as any;
     if (!res.ok) {
-        throw new Error(`Data Connect Admin Error: ${JSON.stringify(body)}`);
+        const errorText = await res.text();
+        console.error(`[Data Connect Admin] ❌ REST Error (${res.status}):`, errorText);
+        throw new Error(`Data Connect Admin Error (${res.status}): ${errorText}`);
+    }
+
+    const body = await res.json() as any;
+    if (body.errors) {
+        console.error(`[Data Connect Admin] ❌ GQL Error:`, JSON.stringify(body.errors));
+        throw new Error(`Data Connect GQL Error: ${JSON.stringify(body.errors)}`);
     }
     return body;
 }
@@ -56,15 +63,24 @@ export const dbAdminListRawSpirits = async (vars: {
     offset?: number;
     category?: string;
     isPublished?: boolean;
+    search?: string;
 }) => {
     const query = `
-        query adminListRawSpirits($limit: Int, $offset: Int, $category: String, $isPublished: Boolean) {
+        query adminListRawSpirits($limit: Int, $offset: Int, $category: String, $isPublished: Boolean, $search: String) {
             spirits(
                 limit: $limit,
                 offset: $offset,
                 where: {
-                    category: { eq: $category },
-                    isPublished: { eq: $isPublished }
+                    _and: [
+                        { category: { eq: $category } },
+                        { isPublished: { eq: $isPublished } },
+                        {
+                            _or: [
+                                { name: { contains: $search } },
+                                { nameEn: { contains: $search } }
+                            ]
+                        }
+                    ]
                 },
                 orderBy: [{ updatedAt: DESC }]
             ) {
@@ -131,6 +147,127 @@ export const dbAdminDeleteSpirit = async (id: string) => {
         }
     `;
     return await executeGraphql('deleteSpirit', query, { id });
+};
+
+export const dbAdminListUserCabinet = async (userId: string) => {
+    const query = `
+        query listUserCabinet($userId: String!) {
+            userCabinets(where: { userId: { eq: $userId } }) {
+                spiritId
+                isFavorite
+                notes
+                rating
+                spirit {
+                    id
+                    name
+                    category
+                    imageUrl
+                    thumbnailUrl
+                    abv
+                    distillery
+                }
+            }
+        }
+    `;
+    const { data } = await executeGraphql('listUserCabinet', query, { userId });
+    return data.userCabinets;
+};
+
+export const dbAdminListUserReviews = async (userId: string) => {
+    const query = `
+        query listUserReviews($userId: String!) {
+            spiritReviews(where: { userId: { eq: $userId } }) {
+                id
+                spiritId
+                rating
+                content
+                nose
+                palate
+                finish
+                createdAt
+            }
+        }
+    `;
+    const { data } = await executeGraphql('listUserReviews', query, { userId });
+    return data.spiritReviews;
+};
+
+export const dbAdminGetUserProfile = async (id: string) => {
+    const query = `
+        query getUserProfile($id: String!) {
+            user(id: $id) {
+                id
+                nickname
+                profileImage
+                role
+                themePreference
+                isFirstLogin
+                reviewsWritten
+                heartsReceived
+                tasteProfile
+            }
+        }
+    `;
+    const { data } = await executeGraphql('getUserProfile', query, { id });
+    return data.user;
+};
+
+export const dbAdminUpsertUser = async (vars: any) => {
+    const query = `
+        mutation upsertUser($id: String!, $email: String, $nickname: String, $profileImage: String, $role: String, $themePreference: String, $isFirstLogin: Boolean, $reviewsWritten: Int, $heartsReceived: Int, $tasteProfile: Any) {
+            user_upsert(data: {
+                id: $id,
+                email: $email,
+                nickname: $nickname,
+                profileImage: $profileImage,
+                role: $role,
+                themePreference: $themePreference,
+                isFirstLogin: $isFirstLogin,
+                reviewsWritten: $reviewsWritten,
+                heartsReceived: $heartsReceived,
+                tasteProfile: $tasteProfile
+            })
+        }
+    `;
+    return await executeGraphql('upsertUser', query, vars);
+};
+
+export const dbAdminSearchSpiritsPublic = async (vars: {
+    search: string;
+    limit?: number;
+    offset?: number;
+}) => {
+    const query = `
+        query searchSpiritsPublic($search: String, $limit: Int, $offset: Int) {
+            spirits(
+                limit: $limit,
+                offset: $offset,
+                where: {
+                    _and: [
+                        { isPublished: { eq: true } },
+                        {
+                            _or: [
+                                { name: { contains: $search } },
+                                { nameEn: { contains: $search } },
+                                { distillery: { contains: $search } }
+                            ]
+                        }
+                    ]
+                }
+            ) {
+                id
+                name
+                nameEn
+                category
+                imageUrl
+                thumbnailUrl
+                abv
+                distillery
+            }
+        }
+    `;
+    const { data } = await executeGraphql('searchSpiritsPublic', query, vars);
+    return data.spirits;
 };
 
 // Export audit queries as requested by other modules

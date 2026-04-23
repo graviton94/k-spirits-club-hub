@@ -15,7 +15,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-const API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_GEMINI_API_KEY || '';
+
 
 function getKSTDate() {
     return new Date().toLocaleString("en-CA", { timeZone: "Asia/Seoul" }).split(' ')[0];
@@ -31,7 +31,7 @@ async function tryFindSpiritInDb(name: string) {
         
         if (results && results.length > 0) {
             const lowerName = name.toLowerCase();
-            return results.find(s => 
+            return results.find((s: any) => 
                 s.name.toLowerCase().includes(lowerName) || 
                 (s.name_en && s.name_en.toLowerCase().includes(lowerName))
             ) || results[0]; // Return closest match if no perfect include
@@ -44,6 +44,7 @@ async function tryFindSpiritInDb(name: string) {
 }
 
 export async function GET(req: NextRequest) {
+    const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_GEMINI_API_KEY || '';
     const traceId = crypto.randomUUID();
     try {
         const { searchParams } = new URL(req.url);
@@ -75,6 +76,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+    const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_GEMINI_API_KEY || '';
     const traceId = crypto.randomUUID();
     try {
         const body = await req.json();
@@ -128,7 +130,7 @@ export async function POST(req: NextRequest) {
 
         const promptData = buildTasteAnalysisPrompt(spiritsForAnalysis, isEn, []);
 
-        if (!API_KEY) {
+        if (!apiKey) {
             const fallbackProfile = {
                 analyzedAt: new Date().toISOString(),
                 stats: {
@@ -188,7 +190,7 @@ export async function POST(req: NextRequest) {
         }
         `;
 
-        const genAI = new GoogleGenerativeAI(API_KEY);
+        const genAI = new GoogleGenerativeAI(apiKey);
         const model = genAI.getGenerativeModel({ 
             model: "gemini-2.0-flash", 
             systemInstruction, 

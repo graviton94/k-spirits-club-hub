@@ -1,6 +1,7 @@
 // lib/db/index.ts
 
 import * as dc from './data-connect-client';
+import * as admin from './data-connect-admin';
 import { Spirit, SpiritFilter, PaginationParams, PaginatedResponse, SpiritSearchIndex } from './schema';
 
 /**
@@ -19,7 +20,8 @@ export const db = {
     const offset = (pagination.page - 1) * pagination.pageSize;
 
     // Use our new admin raw list query which supports listing and searching
-    const data = await dc.dbAdminListRawSpirits({
+    // CRITICAL: Must use admin-level REST call to bypass GQL @auth restrictions
+    const data = await admin.dbAdminListRawSpirits({
       limit,
       offset,
       category: filter.category !== 'ALL' ? filter.category : undefined,
