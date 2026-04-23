@@ -7,8 +7,7 @@
 	"routes": [
 		{
 			"pattern": "*.kspiritsclub.com/*",
-			"zone_name": "kspiritsclub.com",
-			"custom_domain": true
+			"zone_name": "kspiritsclub.com"
 		}
 	],
 	"compatibility_date": "2026-04-23",

@@ -26,6 +26,10 @@ This document lists strictly forbidden actions and coding patterns identified du
 -   **ALWAYS** use `@latest` with `firebase-tools` during deployment to avoid cached CLI bugs.
 -   **NEVER** modify `dataconnect-generated` files manually; always regenerate via CLI.
 
+### Cloudflare Wrangler Route Configuration
+- **NEVER** set `custom_domain: true` on a route pattern containing `*` or `/*` (e.g. `*.example.com/*`).
+    - **Correct Pattern**: For wildcard/path routes use standard zone routes (`pattern` + `zone_name`) without `custom_domain`; for custom domains use exact hostnames only (no wildcard, no path).
+
 ### Admin API Route Runtime
 - **NEVER** set `export const runtime = 'edge'` in API routes that call `dbUpsertSpirit`, `dbDeleteSpirit`, `dbUpsertNews`, or any mutation with `@auth(expr: "... auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'")`.
   - **Correct Pattern**: Admin mutation routes MUST use `export const runtime = 'nodejs'` AND import from `lib/db/data-connect-admin.ts` (Admin SDK path), never from `lib/db/data-connect-client.ts`.
