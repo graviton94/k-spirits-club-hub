@@ -13,12 +13,9 @@ import DiscoveryLogsTable from '@/components/admin/DiscoveryLogsTable';
 import { 
     getDC,
     dbAdminListRawSpirits, 
-    dbUpsertSpirit,
-    dbDeleteSpirit,
     dbListModificationRequests, 
     dbUpsertModificationRequest,
-    dbListNewsArticles,
-    dbUpsertNews
+    dbListNewsArticles
 } from '@/lib/db/data-connect-client';
 import { getSpiritById } from '@/app/[lang]/actions/spirits';
 
@@ -197,7 +194,10 @@ export default function AdminDashboard() {
             const current = spirits.find(s => s.id === id);
             if (!current) throw new Error('Spirit not found');
 
-            await dbUpsertSpirit({
+            const res = await fetch('/api/admin/spirits/upsert', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
                 id: current.id,
                 name: current.name,
                 category: current.category,
@@ -209,7 +209,12 @@ export default function AdminDashboard() {
                 reviewedBy: 'ADMIN',
                 reviewedAt: new Date().toISOString(),
                 updatedAt: new Date().toISOString()
+                })
             });
+            if (!res.ok) {
+                const err = await res.json().catch(() => ({}));
+                throw new Error(err.error || `HTTP ${res.status}`);
+            }
             await loadSpirits();
         } catch (e) {
             alert('발행 실패');
@@ -219,7 +224,15 @@ export default function AdminDashboard() {
     const deleteSpirit = async (id: string) => {
         if (!confirm('정말로 삭제하시겠습니까?')) return;
         try {
-            await dbDeleteSpirit(id);
+            const res = await fetch('/api/admin/spirits/delete', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id })
+            });
+            if (!res.ok) {
+                const err = await res.json().catch(() => ({}));
+                throw new Error(err.error || `HTTP ${res.status}`);
+            }
             await loadSpirits();
         } catch (e) {
             alert('삭제 실패');
@@ -318,7 +331,10 @@ export default function AdminDashboard() {
             payload.updatedAt = new Date().toISOString();
             payload.isReviewed = payload.isPublished || false;
             
-            await dbUpsertSpirit({
+            const res = await fetch('/api/admin/spirits/upsert', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
                 ...payload,
                 imageUrl: payload.imageUrl || '/mys-4.webp',
                 thumbnailUrl: payload.imageUrl || '/mys-4.webp',
@@ -327,7 +343,12 @@ export default function AdminDashboard() {
                 isReviewed: publish ? true : false,
                 reviewedBy: publish ? 'ADMIN' : null,
                 reviewedAt: publish ? new Date().toISOString() : null,
+                })
             });
+            if (!res.ok) {
+                const err = await res.json().catch(() => ({}));
+                throw new Error(err.error || `HTTP ${res.status}`);
+            }
             await loadSpirits();
             setEditingId(null);
             setIsCreating(false);
@@ -376,7 +397,10 @@ export default function AdminDashboard() {
             }
 
             payload.id = editingId;
-            await dbUpsertSpirit({
+            const res = await fetch('/api/admin/spirits/upsert', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
                 ...payload,
                 id: editingId,
                 name: payload.name || editForm.name,
@@ -390,7 +414,12 @@ export default function AdminDashboard() {
                     reviewedBy: 'ADMIN',
                     reviewedAt: new Date().toISOString(),
                 } : {}),
+                })
             });
+            if (!res.ok) {
+                const err = await res.json().catch(() => ({}));
+                throw new Error(err.error || `HTTP ${res.status}`);
+            }
             await loadSpirits();
             setEditingId(null);
             alert(publish ? '✅ 저장 및 공개 완료' : '✅ 저장 완료');
@@ -661,30 +690,16 @@ export default function AdminDashboard() {
                                                 });
                                                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
                                                 const data = await res.json();
-                                                
-                                                if (data.newsItems && data.newsItems.length > 0) {
-                                                    let count = 0;
-                                                    for (const item of data.newsItems) {
-                                                        const docId = btoa(item.link).replace(/\//g, '_').replace(/\+/g, '-').replace(/=/g, '');
-                                                        await dbUpsertNews({
-                                                            id: docId,
-                                                            title: item.translations?.ko?.title || item.translations?.en?.title || item.originalTitle || '',
-                                                            content: item.translations?.ko?.content || item.translations?.ko?.snippet || item.translations?.en?.content || '',
-                                                            link: item.link,
-                                                            source: item.source,
-                                                            date: item.date,
-                                                            translations: { ko: item.translations.ko, en: item.translations.en },
-                                                            tags: { ko: item.tags.ko, en: item.tags.en }
-                                                        });
-                                                        count++;
-                                                    }
-                                                    alert(`✅ 뉴스 수집 완료! (${count}건 처리됨)`);
-                                                } else {
-                                                    if (data.success) {
-                                                        alert(`✅ 최신 뉴스가 없습니다. (이미 최신 상태)`);
+
+                                                if (data.success) {
+                                                    const count = Number(data.insertedCount || 0);
+                                                    if (count > 0) {
+                                                        alert(`✅ 뉴스 수집 완료! (${count}건 처리됨)`);
                                                     } else {
-                                                        alert(`❌ 실패: ${data.error || '알 수 없는 오류'}`);
+                                                        alert(`✅ 최신 뉴스가 없습니다. (이미 최신 상태)`);
                                                     }
+                                                } else {
+                                                    alert(`❌ 실패: ${data.error || '알 수 없는 오류'}`);
                                                 }
                                             } catch (e: any) {
                                                 alert(`뉴스 수집 중 에러: ${e.message}`);

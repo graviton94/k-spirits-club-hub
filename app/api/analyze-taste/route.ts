@@ -2,14 +2,14 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { 
-    dbListUserCabinet, 
-    dbListUserReviews, 
-    dbGetUserProfile, 
-    dbUpsertUser,
-    dbListSpirits,
-    dbSearchSpiritsPublic
-} from '@/lib/db/data-connect-client';
+    dbAdminListUserCabinet,
+    dbAdminListUserReviews,
+    dbAdminGetUserProfile,
+    dbAdminUpsertUser,
+    dbAdminSearchSpiritsPublic
+} from '@/lib/db/data-connect-admin';
 import { buildTasteAnalysisPrompt } from '@/lib/utils/aiPromptBuilder';
+import { verifyRequestToken } from '@/lib/auth/verifyToken';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 export const runtime = 'nodejs';
@@ -24,7 +24,7 @@ function getKSTDate() {
 async function tryFindSpiritInDb(name: string) {
     try {
         // Optimization: Use keyword search instead of loading full DB
-        const results = await dbSearchSpiritsPublic({
+        const results = await dbAdminSearchSpiritsPublic({
             search: name,
             limit: 5
         });
@@ -44,13 +44,18 @@ async function tryFindSpiritInDb(name: string) {
 }
 
 export async function GET(req: NextRequest) {
+    const traceId = crypto.randomUUID();
     try {
         const { searchParams } = new URL(req.url);
         const userId = searchParams.get('userId');
-        if (!userId) return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
+        if (!userId) return NextResponse.json({ error: 'User ID is required', code: 'ANALYZE_UID_REQUIRED', traceId, source: 'api/analyze-taste' }, { status: 400 });
 
-        const user = await dbGetUserProfile(userId);
-        if (!user) return NextResponse.json({ error: 'User not found' }, { status: 404 });
+        const verified = await verifyRequestToken(req.headers.get('authorization'));
+        if (!verified) return NextResponse.json({ error: 'Unauthorized', code: 'ANALYZE_UNAUTHORIZED', traceId, source: 'api/analyze-taste' }, { status: 401 });
+        if (verified.uid !== userId && !verified.isAdmin) return NextResponse.json({ error: 'Forbidden', code: 'ANALYZE_FORBIDDEN', traceId, source: 'api/analyze-taste' }, { status: 403 });
+
+        const user = await dbAdminGetUserProfile(userId);
+        if (!user) return NextResponse.json({ error: 'User not found', code: 'ANALYZE_USER_NOT_FOUND', traceId, source: 'api/analyze-taste' }, { status: 404 });
 
         const today = getKSTDate();
         // Usage tracking now exists in User metadata or we can keep it in tasteProfile object
@@ -60,35 +65,41 @@ export async function GET(req: NextRequest) {
 
         return NextResponse.json({
             profile: user.tasteProfile || null,
-            usage: { date: today, count: dailyCount, remaining: Math.max(0, 3 - dailyCount) }
+            usage: { date: today, count: dailyCount, remaining: Math.max(0, 3 - dailyCount) },
+            traceId
         });
     } catch (error) {
-        console.error('[Analyze Taste GET Error]', error);
-        return NextResponse.json({ error: 'Internal Error' }, { status: 500 });
+        console.error(`[Analyze Taste GET Error][${traceId}]`, error);
+        return NextResponse.json({ error: 'Internal Error', code: 'ANALYZE_GET_FAILED', traceId, source: 'api/analyze-taste' }, { status: 500 });
     }
 }
 
 export async function POST(req: NextRequest) {
+    const traceId = crypto.randomUUID();
     try {
         const body = await req.json();
         const { userId, lang = 'ko' } = body;
         const isEn = lang === 'en';
 
-        if (!userId) return NextResponse.json({ error: 'User ID missing' }, { status: 400 });
+        if (!userId) return NextResponse.json({ error: 'User ID missing', code: 'ANALYZE_UID_MISSING', traceId, source: 'api/analyze-taste' }, { status: 400 });
 
-        const user = await dbGetUserProfile(userId);
-        if (!user) return NextResponse.json({ error: 'User not found' }, { status: 404 });
+        const verified = await verifyRequestToken(req.headers.get('authorization'));
+        if (!verified) return NextResponse.json({ error: 'Unauthorized', code: 'ANALYZE_UNAUTHORIZED', traceId, source: 'api/analyze-taste' }, { status: 401 });
+        if (verified.uid !== userId && !verified.isAdmin) return NextResponse.json({ error: 'Forbidden', code: 'ANALYZE_FORBIDDEN', traceId, source: 'api/analyze-taste' }, { status: 403 });
+
+        const user = await dbAdminGetUserProfile(userId);
+        if (!user) return NextResponse.json({ error: 'User not found', code: 'ANALYZE_USER_NOT_FOUND', traceId, source: 'api/analyze-taste' }, { status: 404 });
 
         const today = getKSTDate();
         const existingProfile: any = user.tasteProfile || {};
         const usage = existingProfile.usage || { date: today, count: 0 };
         let currentCount = (usage.date === today) ? usage.count : 0;
 
-        if (currentCount >= 3) return NextResponse.json({ error: 'Limit reached' }, { status: 429 });
+        if (currentCount >= 3) return NextResponse.json({ error: 'Limit reached', code: 'ANALYZE_DAILY_LIMIT', traceId, source: 'api/analyze-taste' }, { status: 429 });
 
         const [cabinetItems, userReviews] = await Promise.all([
-            dbListUserCabinet(userId),
-            dbListUserReviews(userId)
+            dbAdminListUserCabinet(userId),
+            dbAdminListUserReviews(userId)
         ]);
 
         const spiritsForAnalysis = cabinetItems.map((item: any) => {
@@ -139,12 +150,12 @@ export async function POST(req: NextRequest) {
                 usage: { date: today, count: currentCount + 1 }
             };
 
-            await dbUpsertUser({
+            await dbAdminUpsertUser({
                 id: userId,
                 tasteProfile: fallbackProfile
             });
 
-            return NextResponse.json({ success: true, profile: fallbackProfile });
+            return NextResponse.json({ success: true, profile: fallbackProfile, traceId });
         }
         
         const systemInstruction = `
@@ -219,14 +230,14 @@ export async function POST(req: NextRequest) {
         };
 
         // Save back to User.tasteProfile JSONB
-        await dbUpsertUser({
+        await dbAdminUpsertUser({
             id: userId,
             tasteProfile: profile
         });
 
-        return NextResponse.json({ success: true, profile });
+        return NextResponse.json({ success: true, profile, traceId });
     } catch (error: any) {
-        console.error('[Analyze Taste Error]', error);
-        return NextResponse.json({ error: 'AI Error', details: error.message }, { status: 500 });
+        console.error(`[Analyze Taste Error][${traceId}]`, error);
+        return NextResponse.json({ error: 'AI Error', details: error.message, code: 'ANALYZE_POST_FAILED', traceId, source: 'api/analyze-taste' }, { status: 500 });
     }
 }

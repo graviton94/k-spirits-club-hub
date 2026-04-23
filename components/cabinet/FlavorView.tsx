@@ -42,10 +42,14 @@ export default function FlavorView({
 
     useEffect(() => {
         if (!user) return;
-        fetch(`/api/analyze-taste?userId=${user.uid}`).then(res => res.json()).then(data => {
-            if (data.profile) setProfile(data.profile);
-            if (data.usage) setUsage(data.usage);
-        }).catch(e => console.error(e));
+        user.getIdToken().then(idToken => {
+            fetch(`/api/analyze-taste?userId=${user.uid}`, {
+                headers: { 'authorization': `Bearer ${idToken}` }
+            }).then(res => res.json()).then(data => {
+                if (data.profile) setProfile(data.profile);
+                if (data.usage) setUsage(data.usage);
+            }).catch(e => console.error(e));
+        });
     }, [user]);
 
     const handleAnalyze = async () => {
@@ -54,9 +58,10 @@ export default function FlavorView({
 
         setIsAnalyzing(true);
         try {
+            const idToken = await user.getIdToken();
             const res = await fetch('/api/analyze-taste', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', 'authorization': `Bearer ${idToken}` },
                 body: JSON.stringify({ userId: user.uid, lang: isEn ? 'en' : 'ko' })
             });
 

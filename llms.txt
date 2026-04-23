@@ -1,7 +1,7 @@
 # K-Spirits Club Hub
 
 ## Project Summary
-K-Spirits Club is a production-grade global spirits database and community platform featuring 100,000+ spirits with advanced search, personal collection management ("Cabinet"), AI-powered taste analysis using Gemini 2.0 Flash, community reviews with sensory analysis, and interactive games (MBTI Quiz, World Cup, Perfect Pour). Built on Next.js 15 with Firebase Firestore backend, deployed on Cloudflare Pages edge network, supporting full internationalization (Korean/English) with middleware-based routing. Target users: spirits enthusiasts, bartenders, and collectors worldwide.
+K-Spirits Club is a production-grade global spirits database and community platform featuring 100,000+ spirits with advanced search, personal collection management ("Cabinet"), AI-powered taste analysis using Gemini 2.0 Flash, community reviews with sensory analysis, and interactive games (MBTI Quiz, World Cup, Perfect Pour). Built on Next.js 15 with Firebase Data Connect (PostgreSQL) and deployed on Cloudflare Workers via OpenNext, supporting full internationalization (Korean/English) with middleware-based routing. Target users: spirits enthusiasts, bartenders, and collectors worldwide.
 
 ## File Map
 
@@ -78,10 +78,10 @@ DEVELOPMENT.md                      - Development guidelines
 - canvas-confetti 1.9.4 (celebration effects)
 
 ### Backend & Infrastructure
-- Cloudflare Pages (Edge Network CDN, global hosting)
+- Cloudflare Workers + OpenNext (Edge Runtime hosting)
 - Firebase 12.8.0 (client SDK)
 - Firebase Admin 13.6.0 (server SDK)
-- Firestore (NoSQL database - 100K+ documents)
+- Firebase Data Connect (PostgreSQL relational backend)
 - Firebase Auth (Google OAuth + Guest mode)
 - Edge Runtime (Serverless API processing)
 
@@ -95,7 +95,8 @@ DEVELOPMENT.md                      - Development guidelines
 ### Developer Tools
 - ESLint 9.39.2 (linting with Next.js config)
 - Sharp 0.34.5 (image optimization)
-- @cloudflare/next-on-pages 1.13.16 (Cloudflare adapter)
+- @opennextjs/cloudflare 1.19.3 (Cloudflare adapter)
+- Wrangler 4.x (Worker deployment CLI)
 - dotenv 17.2.3 (environment variables)
 - tsx (TypeScript execution for scripts)
 

@@ -268,7 +268,7 @@ query getNewsArticle($id: String!) @auth(level: PUBLIC) {
 }
 
 # --- Audit Queries (ADMIN ONLY) ---
-query auditAllUsers @auth(level: PUBLIC) {
+query auditAllUsers @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   users {
     id
     nickname
@@ -277,7 +277,7 @@ query auditAllUsers @auth(level: PUBLIC) {
   }
 }
 
-query auditAllNews @auth(level: PUBLIC) {
+query auditAllNews @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   newsArticles {
     id
     title
@@ -285,13 +285,13 @@ query auditAllNews @auth(level: PUBLIC) {
   }
 }
 
-query auditAllSpirits @auth(level: PUBLIC) {
+query auditAllSpirits @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   spirits {
     id
   }
 }
 
-query auditAllReviews @auth(level: PUBLIC) {
+query auditAllReviews @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   spiritReviews {
     id
     spirit {

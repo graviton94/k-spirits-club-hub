@@ -69,7 +69,12 @@ export default function CabinetClient({ lang, dict }: CabinetClientProps) {
         }
 
         try {
-            const response = await fetch(`/api/cabinet/list?uid=${user.uid}`);
+            const idToken = await user.getIdToken();
+            const response = await fetch(`/api/cabinet/list?uid=${user.uid}`, {
+                headers: {
+                    'authorization': `Bearer ${idToken}`
+                }
+            });
             if (!response.ok) {
                 throw new Error('Failed to fetch cabinet data');
             }

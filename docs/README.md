@@ -24,6 +24,8 @@ docs/
 - [API_ENDPOINTS.md](../API_ENDPOINTS.md) - API 문서
 - [CODE_FLOW.md](../CODE_FLOW.md) - 코드 플로우 다이어그램
 - [DEVELOPMENT.md](../DEVELOPMENT.md) - 개발 가이드
+- [deployment/WORKERS_OPERATION_GUIDE.md](./deployment/WORKERS_OPERATION_GUIDE.md) - Workers 운영 표준
+- [deployment/ENVIRONMENT_VARIABLES_WORKER.md](./deployment/ENVIRONMENT_VARIABLES_WORKER.md) - Workers 환경변수 정의
 
 ### **읽기 순서 (신규 개발자)**
 1. **README.md** - 프로젝트 전체 개요

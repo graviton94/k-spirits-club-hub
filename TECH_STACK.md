@@ -1,7 +1,7 @@
 # 🏗️ K-Spirits Club - Technology Stack & Architecture
 
 ## 📋 Overview
-K-Spirits Club은 Next.js 15 기반의 풀스택 웹 애플리케이션으로, Cloudflare Pages에서 Edge Runtime으로 실행됩니다. Firebase를 백엔드로 사용하며, Python 기반의 데이터 파이프라인으로 주류 정보를 수집·가공·배포합니다.
+K-Spirits Club은 Next.js 15 기반의 풀스택 웹 애플리케이션으로, OpenNext를 통해 Cloudflare Workers에서 Edge Runtime으로 실행됩니다. Firebase Data Connect를 백엔드로 사용하며, Python 기반의 데이터 파이프라인으로 주류 정보를 수집·가공·배포합니다.
 
 ---
 
@@ -20,7 +20,8 @@ K-Spirits Club은 Next.js 15 기반의 풀스택 웹 애플리케이션으로, C
 ### **Backend & Infrastructure**
 | Technology | Version | Purpose |
 |-----------|---------|---------|
-| **Cloudflare Pages** | Latest | 글로벌 CDN 호스팅 |
+| **Cloudflare Workers** | Latest | 글로벌 Edge Runtime 호스팅 |
+| **@opennextjs/cloudflare** | 1.19.x | Next.js to Workers 번들/배포 어댑터 |
 | **Edge Runtime** | - | 서버리스 API 처리 |
 | **Firebase Auth** | 12.8.0 | 사용자 인증 (Google OAuth) |
 | **Firebase Data Connect** | - | 관계형 SQL 데이터베이스 (PostgreSQL) |
@@ -57,7 +58,7 @@ K-Spirits Club은 Next.js 15 기반의 풀스택 웹 애플리케이션으로, C
                               │ HTTPS / WSS
                               ▼
 ┌─────────────────────────────────────────────────────────────┐
-│            CLOUDFLARE PAGES (Edge Network)                   │
+│       CLOUDFLARE WORKERS (OpenNext Edge Network)             │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
 │  │  Static SSG  │  │  Edge APIs   │  │  ISR Cache   │      │
 │  │   (Next.js)  │  │  (Serverless)│  │  (30s-1h)    │      │
@@ -309,30 +310,29 @@ Instant Results (no server call)
 ## 🌐 Deployment Strategy
 
 ### **Production Environment**
-- **Platform**: Cloudflare Pages
+- **Platform**: Cloudflare Workers (OpenNext)
 - **Domain**: `k-spirits.club`
 - **SSL**: Cloudflare Universal SSL (자동)
 - **CDN**: 전 세계 300+ PoP (Point of Presence)
 
 ### **Build Process**
 ```bash
-# 1. Next.js 빌드
-npm run build
+# 1. OpenNext 빌드 (내부적으로 Next.js build 포함)
+npm run worker:build
 
-# 2. Cloudflare Pages 어댑터 적용
-npm run pages:build
-
-# 3. Cloudflare Pages 배포
-npx wrangler pages deploy .next/out
+# 2. Cloudflare Workers 배포
+npm run worker:deploy
 ```
 
 ### **Environment Variables**
 | Variable | Purpose | Location |
 |----------|---------|----------|
-| `FIREBASE_PROJECT_ID` | Firebase 프로젝트 ID | Cloudflare Pages |
-| `GEMINI_API_KEY` | Google AI API 키 | Cloudflare Pages |
+| `FIREBASE_PROJECT_ID` | Firebase 프로젝트 ID | Cloudflare Workers Variables |
+| `GEMINI_API_KEY` | Google AI API 키 | Cloudflare Workers Secrets |
 | `NEXT_PUBLIC_BASE_URL` | 사이트 기본 URL | `.env.local` |
 | `FOOD_SAFETY_KOREA_API_KEY` | 공공 API 키 | `.env` (로컬) |
+
+전체 키 정의/스코프/Secret 분류는 [docs/deployment/ENVIRONMENT_VARIABLES_WORKER.md](./docs/deployment/ENVIRONMENT_VARIABLES_WORKER.md) 기준으로 관리합니다.
 
 ---
 

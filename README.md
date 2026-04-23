@@ -24,7 +24,7 @@
 - 🤖 **AI Sommelier**: Gemini 2.0 Flash를 활용한 순차적 데이터 보강 (Audit -> Sensory -> Pairing)
 - ⚡ **Zero Layout Shift**: Skeleton UI 및 최적화된 이미지 로딩으로 CLS 0 달성
 - 📱 **Mobile First**: PWA 수준의 부드러운 모바일 UX 및 터치 인터랙션
-- 🚀 **Edge Runtime**: Cloudflare Pages의 글로벌 엣지 네트워크에서 초고속 API 처리
+- 🚀 **Edge Runtime**: Cloudflare Workers(OpenNext) 기반 글로벌 엣지 네트워크에서 초고속 API 처리
 
 ---
 
@@ -90,7 +90,7 @@
 - **Recharts** (Data visualization)
 
 ### **Backend & Infrastructure**
-- **Cloudflare Pages** (Hosting & Edge Runtime)
+- **Cloudflare Workers + OpenNext** (Hosting & Edge Runtime)
 - **Firebase Data Connect** (Relational SQL Database - PostgreSQL)
 - **Firebase Auth** (Google OAuth & Guest Mode)
 - **GraphQL API** (Type-safe Data Access Layer)
@@ -336,7 +336,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 - **식품안전나라**: 신뢰성 있는 공공 데이터 제공
 - **Google Gemini**: AI 데이터 보강 및 취향 분석
-- **Cloudflare Pages**: 빠르고 안정적인 글로벌 호스팅
+- **Cloudflare Workers**: 빠르고 안정적인 글로벌 엣지 호스팅
 - **Firebase**: 강력한 백엔드 인프라
 - **Open Source Community**: 훌륭한 라이브러리와 도구들
 
@@ -357,6 +357,8 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 - [API_ENDPOINTS.md](./API_ENDPOINTS.md) - API 문서
 - [CODE_FLOW.md](./CODE_FLOW.md) - 코드 플로우 다이어그램
 - [DEVELOPMENT.md](./DEVELOPMENT.md) - 개발 가이드
+- [docs/deployment/WORKERS_OPERATION_GUIDE.md](./docs/deployment/WORKERS_OPERATION_GUIDE.md) - Workers 운영 가이드
+- [docs/deployment/ENVIRONMENT_VARIABLES_WORKER.md](./docs/deployment/ENVIRONMENT_VARIABLES_WORKER.md) - Workers 환경변수 정의
 
 ---
 

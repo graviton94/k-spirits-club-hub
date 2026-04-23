@@ -6,6 +6,7 @@ import {
 	upsertSpirit,
 	deleteSpirit,
 	upsertNews,
+	upsertUser,
 	upsertReview,
 	updateReview,
 	deleteReview,
@@ -14,6 +15,8 @@ import {
 	deleteCabinet,
 	listUserCabinet,
 	listUserReviews,
+	getUserProfile,
+	searchSpiritsPublic,
 } from '@/src/dataconnect-admin-generated';
 
 let adminDC: DataConnect | null = null;
@@ -59,8 +62,36 @@ export async function dbAdminDeleteSpirit(id: string) {
 }
 
 export async function dbAdminUpsertNews(vars: Record<string, unknown>) {
+	const normalized = {
+		...vars,
+		link: typeof vars.link === 'string' ? vars.link.replace(/^http:\/\//i, 'https://') : vars.link,
+	};
 	const allowed = ['id', 'title', 'content', 'imageUrl', 'category', 'source', 'link', 'date', 'translations', 'tags'];
-	return upsertNews(getAdminDC(), filterAllowedFields(vars, allowed) as any);
+	return upsertNews(getAdminDC(), filterAllowedFields(normalized, allowed) as any);
+}
+
+export async function dbAdminGetUserProfile(id: string) {
+	const { data } = await getUserProfile(getAdminDC(), { id });
+	return data.user;
+}
+
+export async function dbAdminUpsertUser(vars: Record<string, unknown>) {
+	const allowed = [
+		'id', 'email', 'nickname', 'profileImage', 'role', 'themePreference',
+		'isFirstLogin', 'reviewsWritten', 'heartsReceived', 'tasteProfile'
+	];
+	return upsertUser(getAdminDC(), filterAllowedFields(vars, allowed) as any);
+}
+
+export async function dbAdminSearchSpiritsPublic(vars: {
+	search?: string;
+	category?: string;
+	subcategory?: string;
+	limit?: number;
+	offset?: number;
+}) {
+	const { data } = await searchSpiritsPublic(getAdminDC(), vars);
+	return data.spirits;
 }
 
 export async function dbAdminUpsertReview(vars: Record<string, unknown>) {

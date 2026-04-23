@@ -64,6 +64,12 @@ This document lists strictly forbidden actions and coding patterns identified du
 10. **Do NOT reference variables in Server Components that are only declared in other functions/scopes (e.g., `generateMetadata`).**
     - **Correct Pattern**: redeclare runtime env variables (`process.env.*`) inside the component/function that uses them, then run a production request smoke test for `/ko` and `/en` after deploy.
 
+### API Auth Header Standard
+- **NEVER** use `x-user-id` or `userId` from request headers/body as an authorization basis in server routes.
+  - **Correct Pattern**: Always extract the Firebase ID token via `Authorization: Bearer <token>` and verify with `verifyRequestToken()` in `lib/auth/verifyToken.ts`. Client must call `user.getIdToken()` before any protected fetch.
+- **NEVER** determine admin status by checking headers or body fields client-side.
+  - **Correct Pattern**: Admin判定은 `verifyToken.ts`의 `isAdmin` (서버 검증 결과)만 신뢰.
+
 ## 💡 Lessons Learned
 - **GQL Validation**: Cloud Data Connect is stricter than the local emulator in some cases. Standardize on `_and` wrapping.
 - **Reference Errors**: Always double-check imports in API routes, especially when moving logic from Cloud Functions to Next.js Edge routes.
