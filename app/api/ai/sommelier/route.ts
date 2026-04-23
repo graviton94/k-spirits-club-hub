@@ -15,7 +15,7 @@ const MODEL_ID = "gemini-2.0-flash";
  * Handles multi-step professional profiling and spirit recommendations.
  */
 export async function POST(req: NextRequest) {
-    const apiKey = process.env.GEMINI_API_KEY || '';
+    const apiKey = process.env.GEMINI_API_KEY || (globalThis as any).GEMINI_API_KEY || '';
     const traceId = crypto.randomUUID();
     const fallbackResponse = (lang: string, nextStep = 1, detail?: string, code = 'AI_SOMMELIER_GENERAL_ERROR') => NextResponse.json({
         message: lang === 'en'

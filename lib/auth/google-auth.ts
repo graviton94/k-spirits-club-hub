@@ -2,24 +2,21 @@
 import * as jose from 'jose';
 
 /**
- * Robust Google OAuth2 Token Generator
- * Handles edge cases like escaped newlines and literal quotes in env variables.
+ * Enhanced Google OAuth2 Token Generator for Cloudflare Workers
+ * Forcefully searches for environment variables in multiple locations.
  */
 export async function getGoogleAccessToken() {
-    const rawEmail = process.env.FIREBASE_CLIENT_EMAIL;
-    const rawKey = process.env.FIREBASE_PRIVATE_KEY;
+    // Try to get from process.env first (Next.js standard)
+    // Then fallback to global context (Cloudflare standard)
+    const rawEmail = process.env.FIREBASE_CLIENT_EMAIL || (globalThis as any).FIREBASE_CLIENT_EMAIL;
+    const rawKey = process.env.FIREBASE_PRIVATE_KEY || (globalThis as any).FIREBASE_PRIVATE_KEY;
 
     if (!rawEmail || !rawKey) {
-        throw new Error(`[Google Auth] Missing Credentials: EMAIL=${!!rawEmail}, KEY=${!!rawKey}`);
+        const availableKeys = Object.keys(process.env).filter(k => !k.includes('KEY') && !k.includes('SECRET'));
+        throw new Error(`[Google Auth] Missing Credentials. Available Env Keys: ${availableKeys.join(', ')}`);
     }
 
-    // Sanitize Email (Remove any accidental quotes)
     const clientEmail = rawEmail.replace(/['"]/g, '').trim();
-    
-    // Sanitize Private Key
-    // 1. Remove quotes
-    // 2. Fix escaped newlines
-    // 3. Ensure it starts/ends correctly
     let privateKey = rawKey.replace(/['"]/g, '').trim();
     privateKey = privateKey.replace(/\\n/g, '\n');
     
@@ -30,7 +27,6 @@ export async function getGoogleAccessToken() {
     const now = Math.floor(Date.now() / 1000);
     
     try {
-        // Create JWT
         const jwt = await new jose.SignJWT({
             iss: clientEmail,
             sub: clientEmail,
@@ -42,7 +38,6 @@ export async function getGoogleAccessToken() {
         .setProtectedHeader({ alg: 'RS256' })
         .sign(await jose.importPKCS8(privateKey, 'RS256'));
 
-        // Exchange for Access Token
         const res = await fetch('https://oauth2.googleapis.com/token', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -59,7 +54,6 @@ export async function getGoogleAccessToken() {
 
         return data.access_token as string;
     } catch (err: any) {
-        console.error('[Google Auth] Fatal Token Error:', err.message);
-        throw new Error(`[Google Auth] Error: ${err.message}`);
+        throw new Error(`[Google Auth] Fatal: ${err.message}`);
     }
 }

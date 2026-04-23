@@ -2,25 +2,27 @@
 import { getGoogleAccessToken } from '@/lib/auth/google-auth';
 
 /**
- * LITE VERSION for Cloudflare Workers (Extreme Reliability Edition)
- * Replaces 'firebase-admin/data-connect' with standard REST calls.
+ * LITE VERSION for Cloudflare Workers (High Compatibility Edition)
  */
 
 const LOCATION = 'asia-northeast3';
 const SERVICE_ID = 'k-spirits-club-hub';
 
 async function executeGraphql(operationName: string, query: string, variables: any = {}) {
-    const projectId = process.env.FIREBASE_PROJECT_ID || process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
-    const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
-    const privateKey = process.env.FIREBASE_PRIVATE_KEY;
+    const projectId = process.env.FIREBASE_PROJECT_ID || 
+                      process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 
+                      (globalThis as any).FIREBASE_PROJECT_ID;
+                      
+    const clientEmail = process.env.FIREBASE_CLIENT_EMAIL || (globalThis as any).FIREBASE_CLIENT_EMAIL;
+    const privateKey = process.env.FIREBASE_PRIVATE_KEY || (globalThis as any).FIREBASE_PRIVATE_KEY;
 
-    // Validate Environment
+    // Validate Environment with detailed missing info
     if (!projectId || !clientEmail || !privateKey) {
         const missing = [];
         if (!projectId) missing.push('PROJECT_ID');
         if (!clientEmail) missing.push('CLIENT_EMAIL');
         if (!privateKey) missing.push('PRIVATE_KEY');
-        throw new Error(`[Data Connect Admin] Missing Credentials: ${missing.join(', ')}`);
+        throw new Error(`[Data Connect Admin] Missing: ${missing.join(', ')}. Scanned process.env & globalThis.`);
     }
 
     try {
@@ -43,23 +45,21 @@ async function executeGraphql(operationName: string, query: string, variables: a
 
         if (!res.ok) {
             const errorText = await res.text();
-            console.error(`[Data Connect Admin] ❌ REST API Failure (${res.status}):`, errorText);
-            throw new Error(`Data Connect REST API Failed (${res.status}): ${errorText}`);
+            throw new Error(`REST Error (${res.status}): ${errorText}`);
         }
 
         const body = await res.json() as any;
         if (body.errors) {
-            console.error(`[Data Connect Admin] ❌ GraphQL Error:`, JSON.stringify(body.errors));
-            throw new Error(`Data Connect GQL Error: ${JSON.stringify(body.errors[0]?.message || body.errors)}`);
+            throw new Error(`GQL Error: ${body.errors[0]?.message || JSON.stringify(body.errors)}`);
         }
         return body;
     } catch (err: any) {
-        console.error(`[Data Connect Admin] ❌ Execution Panic:`, err.message);
+        console.error(`[Data Connect Admin] ${operationName} failed:`, err.message);
         throw err;
     }
 }
 
-// --- REST Admin Implementation Functions ---
+// --- Admin REST Implementation Functions ---
 
 export const dbAdminListUserCabinet = async (userId: string) => {
     const query = `
@@ -233,12 +233,7 @@ export const dbAdminUpsertSpirit = async (vars: any) => {
             }
         }
     `;
-    const normalized = {
-        ...vars,
-        imageUrl: vars.imageUrl?.replace(/^http:\/\//i, 'https://'),
-        thumbnailUrl: vars.thumbnailUrl?.replace(/^http:\/\//i, 'https://')
-    };
-    return await executeGraphql('upsertSpirit', query, normalized);
+    return await executeGraphql('upsertSpirit', query, vars);
 };
 
 export const dbAdminDeleteSpirit = async (id: string) => {
@@ -285,7 +280,6 @@ export const dbAdminUpsertNews = async (vars: any) => {
     return await executeGraphql('upsertNews', query, vars);
 };
 
-// --- Audit Queries ---
 export const auditAllNews = async () => {
     const query = `
         query auditAllNews {
