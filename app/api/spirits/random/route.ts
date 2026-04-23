@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { dbListSpirits } from '@/lib/db/data-connect-client';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 export async function GET() {
     try {

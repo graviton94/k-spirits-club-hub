@@ -3,7 +3,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dbListUserCabinet, dbUpsertCabinet, dbDeleteCabinet } from '@/lib/db/data-connect-client';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 export async function GET(req: NextRequest) {
     const userId = req.headers.get('x-user-id');

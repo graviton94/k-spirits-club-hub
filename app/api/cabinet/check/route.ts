@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { dbListUserCabinet, dbGetSpirit } from '@/lib/db/data-connect-client';
 
 export const dynamic = 'force-dynamic';
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;

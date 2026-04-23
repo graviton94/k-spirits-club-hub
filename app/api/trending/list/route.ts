@@ -3,7 +3,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dbListTrendingSpirits } from '@/lib/db/data-connect-client';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 export async function GET(request: NextRequest) {
     try {

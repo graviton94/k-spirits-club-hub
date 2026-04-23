@@ -1,7 +1,7 @@
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 /**
  * GET /api/spirits/[id]

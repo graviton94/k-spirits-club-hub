@@ -4,7 +4,7 @@ import { dbGetSpirit, dbUpsertSpirit } from '@/lib/db/data-connect-client';
 import { enrichSpiritWithAI } from '@/lib/services/gemini-translation';
 import { normalizeSpiritData } from '@/lib/utils/normalization';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 // PATCH /api/admin/spirits/bulk-patch
 export async function PATCH(req: NextRequest) {

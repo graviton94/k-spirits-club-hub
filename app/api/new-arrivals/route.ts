@@ -3,7 +3,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dbListNewArrivals } from '@/lib/db/data-connect-client';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 // GET /api/new-arrivals - Get the top 10 new arrivals from PostgreSQL
 export async function GET(request: NextRequest) {

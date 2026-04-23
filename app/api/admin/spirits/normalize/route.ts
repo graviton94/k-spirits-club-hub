@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dbAdminListRawSpirits, dbUpsertSpirit } from '@/lib/db/data-connect-client';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 // Mappings for Normalization - Preserved from legacy
 const REGION_MAP: Record<string, string> = {

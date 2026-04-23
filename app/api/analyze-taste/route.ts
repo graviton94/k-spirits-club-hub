@@ -12,7 +12,7 @@ import {
 import { buildTasteAnalysisPrompt } from '@/lib/utils/aiPromptBuilder';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 const API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_GEMINI_API_KEY || '';

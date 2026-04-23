@@ -3,7 +3,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dbListUserCabinet } from '@/lib/db/data-connect-client';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);

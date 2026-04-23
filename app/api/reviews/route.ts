@@ -8,7 +8,7 @@ import {
 } from '@/lib/db/data-connect-client';
 import { v4 as uuidv4 } from 'uuid';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 /**
  * Reviews API Route

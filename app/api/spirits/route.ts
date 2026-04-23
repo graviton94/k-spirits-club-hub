@@ -3,7 +3,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dbSearchSpiritsPublic, dbListAllCategories, dbListAllSubcategories } from '@/lib/db/data-connect-client';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 /**
  * GET /api/spirits

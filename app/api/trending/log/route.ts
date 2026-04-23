@@ -2,7 +2,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 /**
  * Trending Log API

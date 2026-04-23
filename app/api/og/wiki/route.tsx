@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 import { NextRequest } from 'next/server';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 const COLOR_MAP: Record<string, string> = {
     orange: '#ea580c',  // amber-600 mostly

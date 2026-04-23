@@ -3,7 +3,7 @@ import { revalidateTag } from 'next/cache';
 import { dbAdminListRawSpirits, dbGetSpirit, dbUpsertSpirit } from '@/lib/db/data-connect-client';
 import { enrichSpiritWithAI, type SpiritEnrichmentInput } from '@/lib/services/gemini-translation';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 /**
  * POST /api/admin/spirits/bulk-publish

@@ -3,7 +3,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dbGetUserProfile } from '@/lib/db/data-connect-client';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 // GET /api/users/stats - Get user statistics from PostgreSQL
 export async function GET(request: NextRequest) {

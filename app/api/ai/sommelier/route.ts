@@ -6,7 +6,7 @@ import { dbUpsertAiDiscoveryLog } from '@/lib/db/data-connect-client';
 import { db } from '@/lib/db'; // Compatibility layer for getPublishedSearchIndex
 
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 const API_KEY = process.env.GEMINI_API_KEY || '';
 const MODEL_ID = "gemini-2.0-flash";
