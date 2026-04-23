@@ -17,6 +17,7 @@ import {
 	listUserReviews,
 	getUserProfile,
 	searchSpiritsPublic,
+	auditAllNews,
 } from '@/src/dataconnect-admin-generated';
 
 let adminDC: DataConnect | null = null;
@@ -136,4 +137,9 @@ export async function dbAdminListUserCabinet(userId: string) {
 export async function dbAdminListUserReviews(userId: string) {
 	const { data } = await listUserReviews(getAdminDC(), { userId });
 	return data.spiritReviews;
+}
+
+export async function dbAdminListNewsLinks() {
+	const { data } = await auditAllNews(getAdminDC());
+	return data.newsArticles.map(n => n.link).filter((l): l is string => typeof l === 'string');
 }

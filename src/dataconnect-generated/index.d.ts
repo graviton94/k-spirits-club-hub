@@ -47,6 +47,7 @@ export interface AuditAllNewsData {
   newsArticles: ({
     id: string;
     title: string;
+    link?: string | null;
     translations?: unknown | null;
   } & NewsArticle_Key)[];
 }

@@ -168,22 +168,16 @@
 
 ---
 
-## Phase 3 — Data hygiene + operations (P1/P2, Current)
+## Phase 3 — Data hygiene + operations (P1/P2) [✅ COMPLETED 2026-04-24]
 
 1. Mixed content backfill
-- Action:
-  - Spirit image URL 전체 백필: `http://` → `https://`
-  - invalid URL은 category fallback (`/mys-4.webp`)로 정규화
+- **Status**: 완료. `/api/admin/spirits/backfill` API를 통해 안전하게 `http://` URL을 `https://`로 전환하는 프로세스 구축. (Weserv 프록시로 인한 UI 안전성 확보 병행)
 
 2. News collection path unification
-- Action:
-  - 수집 + 저장을 server route에서 원자적으로 처리
-  - client는 orchestration 제거하고 결과만 수신
+- **Status**: 완료. 수집 API(`app/api/admin/news/collect`)가 DB에서 직접 기존 링크를 조회하여 중복을 거르도록 수정. 클라이언트 측 orchestration 의존성 제거.
 
 3. Worker secret audit
-- Action:
-  - `GEMINI_API_KEY`, Firebase Admin 키를 Preview/Production 모두 점검
-  - secret 존재 여부 health-check endpoint 추가
+- **Status**: 완료. `/api/health` 엔드포인트를 신설하여 배포 환경의 필수 환경변수 및 Secret 유무를 상시 점검 가능하도록 함.
 
 ---
 

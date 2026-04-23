@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { fetchNewsForCollection } from '@/lib/api/news';
-import { dbAdminUpsertNews } from '@/lib/db/data-connect-admin';
+import { dbAdminUpsertNews, dbAdminListNewsLinks } from '@/lib/db/data-connect-admin';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -26,10 +26,11 @@ export async function POST(request: Request) {
 
         console.log('[Collect API] 🚀 수집 프로세스 시작 (SQL Backend)');
 
-        const body = await request.json();
-        const existingLinksSet = new Set<string>(body.existingLinks || []);
+        // 2. DB에서 기존 뉴스 링크 가져오기 (서버측 원자적 처리)
+        const existingLinks = await dbAdminListNewsLinks();
+        const existingLinksSet = new Set<string>(existingLinks);
 
-        console.log('[Collect API] 📋 Received', existingLinksSet.size, 'existing news items from client check');
+        console.log('[Collect API] 📋 Found', existingLinksSet.size, 'existing news items in DB');
 
         // 3. RSS 데이터 가져오기 (중복 제외하고 Gemini 처리)
         const newsItems = await fetchNewsForCollection(existingLinksSet);
