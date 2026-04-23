@@ -41,8 +41,8 @@ export function RandomBackground() {
             {/* Premium Overlays */}
             <div className="absolute inset-0 bg-linear-to-b from-transparent via-background/20 to-background z-10" />
             
-            {/* Subtle Texture / Noise */}
-            <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-20 mix-blend-overlay bg-[url('/noise.png')] bg-repeat" />
+            {/* Subtle Texture */}
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-20 mix-blend-overlay bg-[radial-gradient(circle_at_1px_1px,hsl(var(--foreground))_1px,transparent_0)] [background-size:14px_14px]" />
 
             {/* Glowing Accent Layer */}
             <div className="absolute inset-0 z-10 pointer-events-none">

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState, useMemo } from 'react';
-import { dbListSpiritReviews, dbGetSpiritReviewsCount } from '@/lib/db/data-connect-client';
+import { dbListSpiritReviews } from '@/lib/db/data-connect-client';
 import { useAuth } from '@/app/[lang]/context/auth-context';
 import { getCategoryFallbackImage } from '@/lib/utils/image-fallback';
 import { getOptimizedImageUrl } from '@/lib/utils/image-optimization';
@@ -23,7 +23,7 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
     const [reviews, setReviews] = useState<any[]>(initialReviews ?? []);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(initialPage);
-    const [totalCount, setTotalCount] = useState(0);
+    const [totalCount, setTotalCount] = useState(initialReviews?.length ?? 0);
     const [searchInput, setSearchInput] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
 
@@ -56,15 +56,6 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
         anonymous: isEn ? "Anonymous" : "익명",
     };
 
-    const fetchTotalCount = async () => {
-        try {
-            const count = await dbGetSpiritReviewsCount();
-            setTotalCount(count);
-        } catch (error) {
-            console.error('Error fetching reviews count:', error);
-        }
-    };
-
     const fetchPage = async (page: number) => {
         try {
             setLoading(true);
@@ -87,6 +78,9 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
 
             setReviews(mappedData);
             setCurrentPage(page);
+            const isLastPage = data.length < pageSize;
+            const inferredCount = isLastPage ? ((page - 1) * pageSize + data.length) : (page * pageSize + 1);
+            setTotalCount(prev => Math.max(prev, inferredCount));
         } catch (error) {
             console.error('Error fetching reviews page:', error);
         } finally {
@@ -95,7 +89,6 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
     };
 
     useEffect(() => {
-        fetchTotalCount();
         if (!hasInitial) {
             fetchPage(initialPage);
         }

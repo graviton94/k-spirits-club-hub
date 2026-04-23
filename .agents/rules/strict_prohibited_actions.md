@@ -57,6 +57,8 @@ This document lists strictly forbidden actions and coding patterns identified du
     - **Correct Pattern**: split title roles with dedicated tokens (`sectionTitle`, `sectionTitleSoft`, `eyebrow`) and apply per-section hierarchy.
 9.  **Do NOT use sub-12px text for core interactive or metadata labels on mobile-facing UI.**
     - **Correct Pattern**: keep minimum readable size at `text-xs` (or 11px for strictly secondary labels), and use tokenized chip sizes (`*Sm`, `*Md`) instead of hardcoded `text-[9px]`/`text-[10px]`.
+10. **Do NOT reference variables in Server Components that are only declared in other functions/scopes (e.g., `generateMetadata`).**
+    - **Correct Pattern**: redeclare runtime env variables (`process.env.*`) inside the component/function that uses them, then run a production request smoke test for `/ko` and `/en` after deploy.
 
 ## 💡 Lessons Learned
 - **GQL Validation**: Cloud Data Connect is stricter than the local emulator in some cases. Standardize on `_and` wrapping.

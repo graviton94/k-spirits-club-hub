@@ -350,7 +350,7 @@ export default async function ContentsPage({ params }: ContentsPageProps) {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
           <Link href={`/${lang}/contents/reviews`} className="flex flex-col gap-1 p-4 rounded-xl border border-border bg-card/50 hover:border-blue-500/50 hover:bg-blue-500/5 transition-colors">
             <span className="font-semibold text-foreground">{isEn ? 'Spirit Tasting Review Board' : '주류 시음 리뷰 보드'}</span>
-            <span className="text-xs text-muted-foreground">{isEn ? 'Authentic nose, palate, and finish notes from real drinkers across whisky, soju, makgeolli, and more.' : '위스키, 소주, 막걸리 등 실제 음주자의 향·맛·여운 시음 노트 모음.'}</span>
+            <span className="text-xs text-muted-foreground">{isEn ? 'Authentic nose, palate, and finish notes from real drinkers across whisky, soju, makgeolli, and more.' : '위스키, 소주, 막걸리 등 실제 경험자의 향·맛·여운 시음 노트 모음.'}</span>
           </Link>
           <Link href={`/${lang}/contents/news`} className="flex flex-col gap-1 p-4 rounded-xl border border-border bg-card/50 hover:border-indigo-500/50 hover:bg-indigo-500/5 transition-colors">
             <span className="font-semibold text-foreground">{isEn ? 'AI-Analyzed Global Spirits News' : 'AI가 분석한 글로벌 주류 뉴스'}</span>

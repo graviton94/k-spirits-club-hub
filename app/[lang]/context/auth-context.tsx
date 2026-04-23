@@ -155,6 +155,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const loginWithGoogle = async (redirectPath?: string) => {
         try {
+            if (typeof window !== 'undefined' && window.location.hostname.endsWith('.workers.dev')) {
+                alert('Preview domain login is disabled. Use the production domain or add this workers.dev domain to Firebase Auth authorized domains.');
+                return;
+            }
             const provider = new GoogleAuthProvider();
             await signInWithPopup(auth, provider);
             router.push(redirectPath || '/');
