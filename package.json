@@ -6,7 +6,6 @@
   "scripts": {
     "build": "next build --no-lint",
     "dev": "next dev",
-    "pages:build": "npx @cloudflare/next-on-pages",
     "worker:build": "opennextjs-cloudflare build",
     "worker:deploy": "opennextjs-cloudflare deploy",
     "start": "next start",
@@ -21,7 +20,7 @@
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
-    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
+    "cf-typegen": "opennextjs-cloudflare types"
   },
   "keywords": [],
   "author": "",
@@ -62,7 +61,6 @@
     "uuid": "^13.0.0"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1.13.16",
     "@opennextjs/cloudflare": "^1.19.3",
     "@types/canvas-confetti": "^1.9.0",
     "@types/jest": "^30.0.0",
@@ -72,7 +70,9 @@
     "eslint": "9.39.2",
     "eslint-config-next": "^15.1.4",
     "sharp": "^0.34.5",
-    "vercel": "^50.5.0",
     "wrangler": "^4.84.1"
+  },
+  "overrides": {
+    "esbuild": "0.25.4"
   }
 }
