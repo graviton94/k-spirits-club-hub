@@ -1,145 +1,148 @@
-import 'server-only';
+// lib/db/data-connect-admin.ts
+import { getGoogleAccessToken } from '@/lib/auth/google-auth';
 
-import '@/lib/firebase-admin';
-import { getDataConnect, DataConnect } from 'firebase-admin/data-connect';
-import {
-	upsertSpirit,
-	deleteSpirit,
-	upsertNews,
-	upsertUser,
-	upsertReview,
-	updateReview,
-	deleteReview,
-	adminListRawSpirits,
-	upsertCabinet,
-	deleteCabinet,
-	listUserCabinet,
-	listUserReviews,
-	getUserProfile,
-	searchSpiritsPublic,
-	auditAllNews,
-} from '@/src/dataconnect-admin-generated';
+/**
+ * LITE VERSION for Cloudflare Workers.
+ * Replaces 'firebase-admin/data-connect' with standard REST calls.
+ * This saves ~15MB of bundle size caused by firebase-admin dependencies.
+ */
 
-let adminDC: DataConnect | null = null;
+const PROJECT_ID = process.env.FIREBASE_PROJECT_ID || process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
+const LOCATION = 'asia-northeast3';
+const SERVICE_ID = 'k-spirits-club-hub';
 
-function getAdminDC(): DataConnect {
-	if (!adminDC) {
-		adminDC = getDataConnect({
-			serviceId: 'k-spirits-club-hub',
-			location: 'asia-northeast3',
-			connector: 'main',
-		});
-	}
-	return adminDC;
+async function executeGraphql(operationName: string, query: string, variables: any = {}) {
+    const accessToken = await getGoogleAccessToken();
+    const url = `https://dataconnect.googleapis.com/v1/projects/${PROJECT_ID}/locations/${LOCATION}/services/${SERVICE_ID}:executeGraphql`;
+
+    const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+            'X-Goog-Cloud-Resource-Prefix': `projects/${PROJECT_ID}/locations/${LOCATION}/services/${SERVICE_ID}`
+        },
+        body: JSON.stringify({
+            operationName,
+            query,
+            variables
+        }),
+    });
+
+    const body = await res.json() as any;
+    if (!res.ok) {
+        throw new Error(`Data Connect Admin Error: ${JSON.stringify(body)}`);
+    }
+    return body;
 }
 
-function filterAllowedFields(data: Record<string, unknown>, allowedKeys: string[]) {
-	const filtered: Record<string, unknown> = {};
-	allowedKeys.forEach((key) => {
-		if (key in data) filtered[key] = data[key];
-	});
-	return filtered;
-}
+// --- Admin Queries ---
 
-export async function dbAdminUpsertSpirit(vars: Record<string, unknown>) {
-	const normalized = {
-		...vars,
-		imageUrl: typeof vars.imageUrl === 'string' ? vars.imageUrl.replace(/^http:\/\//i, 'https://') : vars.imageUrl,
-		thumbnailUrl: typeof vars.thumbnailUrl === 'string' ? vars.thumbnailUrl.replace(/^http:\/\//i, 'https://') : vars.thumbnailUrl,
-	};
-	const allowed = [
-		'id', 'name', 'nameEn', 'category', 'categoryEn', 'mainCategory', 'subcategory',
-		'distillery', 'bottler', 'abv', 'volume', 'country', 'region', 'imageUrl', 'thumbnailUrl',
-		'descriptionKo', 'descriptionEn', 'pairingGuideKo', 'pairingGuideEn',
-		'noseTags', 'palateTags', 'finishTags', 'tastingNote', 'status',
-		'isPublished', 'isReviewed', 'reviewedBy', 'reviewedAt', 'rating', 'reviewCount',
-		'importer', 'rawCategory', 'metadata', 'updatedAt'
-	];
-	return upsertSpirit(getAdminDC(), filterAllowedFields(normalized, allowed) as any);
-}
+export const dbAdminListNewsLinks = async () => {
+    const query = `
+        query auditAllNews {
+            newsArticles {
+                id
+                link
+            }
+        }
+    `;
+    const { data } = await executeGraphql('auditAllNews', query);
+    return data.newsArticles.map((n: any) => n.link).filter(Boolean);
+};
 
-export async function dbAdminDeleteSpirit(id: string) {
-	return deleteSpirit(getAdminDC(), { id });
-}
+export const dbAdminListRawSpirits = async (vars: {
+    limit?: number;
+    offset?: number;
+    category?: string;
+    isPublished?: boolean;
+}) => {
+    const query = `
+        query adminListRawSpirits($limit: Int, $offset: Int, $category: String, $isPublished: Boolean) {
+            spirits(
+                limit: $limit,
+                offset: $offset,
+                where: {
+                    category: { eq: $category },
+                    isPublished: { eq: $isPublished }
+                },
+                orderBy: [{ updatedAt: DESC }]
+            ) {
+                id
+                name
+                imageUrl
+                updatedAt
+            }
+        }
+    `;
+    const { data } = await executeGraphql('adminListRawSpirits', query, vars);
+    return data.spirits;
+};
 
-export async function dbAdminUpsertNews(vars: Record<string, unknown>) {
-	const normalized = {
-		...vars,
-		link: typeof vars.link === 'string' ? vars.link.replace(/^http:\/\//i, 'https://') : vars.link,
-	};
-	const allowed = ['id', 'title', 'content', 'imageUrl', 'category', 'source', 'link', 'date', 'translations', 'tags'];
-	return upsertNews(getAdminDC(), filterAllowedFields(normalized, allowed) as any);
-}
+export const dbAdminUpsertSpirit = async (vars: any) => {
+    const query = `
+        mutation upsertSpirit($id: String!, $name: String!, $imageUrl: String, $thumbnailUrl: String, $isPublished: Boolean) {
+            spirit_upsert(data: {
+                id: $id,
+                name: $name,
+                imageUrl: $imageUrl,
+                thumbnailUrl: $thumbnailUrl,
+                isPublished: $isPublished
+            }) {
+                id
+            }
+        }
+    `;
+    // We assume the normalization (http -> https) happens at a higher level or here
+    const normalized = {
+        ...vars,
+        imageUrl: vars.imageUrl?.replace(/^http:\/\//i, 'https://'),
+        thumbnailUrl: vars.thumbnailUrl?.replace(/^http:\/\//i, 'https://')
+    };
+    return await executeGraphql('upsertSpirit', query, normalized);
+};
 
-export async function dbAdminGetUserProfile(id: string) {
-	const { data } = await getUserProfile(getAdminDC(), { id });
-	return data.user;
-}
+export const dbAdminUpsertNews = async (vars: any) => {
+    const query = `
+        mutation upsertNews($id: String!, $title: String!, $content: String!, $link: String, $source: String, $date: String, $translations: Any, $tags: Any) {
+            newsArticle_upsert(data: {
+                id: $id,
+                title: $title,
+                content: $content,
+                link: $link,
+                source: $source,
+                date: $date,
+                translations: $translations,
+                tags: $tags
+            }) {
+                id
+            }
+        }
+    `;
+    return await executeGraphql('upsertNews', query, vars);
+};
 
-export async function dbAdminUpsertUser(vars: Record<string, unknown>) {
-	const allowed = [
-		'id', 'email', 'nickname', 'profileImage', 'role', 'themePreference',
-		'isFirstLogin', 'reviewsWritten', 'heartsReceived', 'tasteProfile'
-	];
-	return upsertUser(getAdminDC(), filterAllowedFields(vars, allowed) as any);
-}
+export const dbAdminDeleteSpirit = async (id: string) => {
+    const query = `
+        mutation deleteSpirit($id: String!) {
+            spirit_delete(key: { id: $id }) {
+                id
+            }
+        }
+    `;
+    return await executeGraphql('deleteSpirit', query, { id });
+};
 
-export async function dbAdminSearchSpiritsPublic(vars: {
-	search?: string;
-	category?: string;
-	subcategory?: string;
-	limit?: number;
-	offset?: number;
-}) {
-	const { data } = await searchSpiritsPublic(getAdminDC(), vars);
-	return data.spirits;
-}
-
-export async function dbAdminUpsertReview(vars: Record<string, unknown>) {
-	const allowed = ['id', 'spiritId', 'userId', 'rating', 'title', 'content', 'nose', 'palate', 'finish', 'likes', 'likedBy', 'isPublished', 'imageUrls', 'createdAt', 'updatedAt'];
-	return upsertReview(getAdminDC(), filterAllowedFields(vars, allowed) as any);
-}
-
-export async function dbAdminUpdateReview(vars: Record<string, unknown>) {
-	const allowed = ['id', 'likes', 'likedBy'];
-	return updateReview(getAdminDC(), filterAllowedFields(vars, allowed) as any);
-}
-
-export async function dbAdminDeleteReview(id: string) {
-	return deleteReview(getAdminDC(), { id });
-}
-
-export async function dbAdminListRawSpirits(vars: {
-	limit?: number;
-	offset?: number;
-	category?: string;
-	distillery?: string;
-	isPublished?: boolean;
-	search?: string;
-}) {
-	const { data } = await adminListRawSpirits(getAdminDC(), vars);
-	return data.spirits;
-}
-
-export async function dbAdminUpsertCabinet(vars: Record<string, unknown>) {
-	return upsertCabinet(getAdminDC(), vars as any);
-}
-
-export async function dbAdminDeleteCabinet(vars: { userId: string; spiritId: string }) {
-	return deleteCabinet(getAdminDC(), vars);
-}
-
-export async function dbAdminListUserCabinet(userId: string) {
-	const { data } = await listUserCabinet(getAdminDC(), { userId });
-	return data.userCabinets;
-}
-
-export async function dbAdminListUserReviews(userId: string) {
-	const { data } = await listUserReviews(getAdminDC(), { userId });
-	return data.spiritReviews;
-}
-
-export async function dbAdminListNewsLinks() {
-	const { data } = await auditAllNews(getAdminDC());
-	return data.newsArticles.map(n => n.link).filter((l): l is string => typeof l === 'string');
-}
+// Export audit queries as requested by other modules
+export const auditAllNews = async () => {
+    const query = `
+        query auditAllNews {
+            newsArticles {
+                id
+                title
+                link
+            }
+        }
+    `;
+    return await executeGraphql('auditAllNews', query);
+};
