@@ -97,6 +97,7 @@ export default async function RootLayout({
   params: Promise<{ lang: Locale }>;
 }) {
   const { lang } = await params;
+  const clarityProjectId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID;
 
   // Validate that the locale is supported
   if (!i18n.locales.includes(lang as any)) {
