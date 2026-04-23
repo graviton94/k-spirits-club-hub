@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidateTag } from 'next/cache';
-import { dbGetSpirit } from '@/lib/db/data-connect-client';
-import { dbAdminUpsertSpirit } from '@/lib/db/data-connect-admin';
+import { dbGetSpirit, dbUpsertSpirit } from '@/lib/db/data-connect-client';
 import { enrichSpiritWithAI } from '@/lib/services/gemini-translation';
 import { normalizeSpiritData } from '@/lib/utils/normalization';
 
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 
 // PATCH /api/admin/spirits/bulk-patch
 export async function PATCH(req: NextRequest) {
@@ -74,7 +73,7 @@ export async function PATCH(req: NextRequest) {
                     }
                 }
 
-                await dbAdminUpsertSpirit({ id: spirit.id, ...currentUpdates });
+                await dbUpsertSpirit({ id: spirit.id, ...currentUpdates });
                 updatedCount++;
             } catch (e) {
                 console.error(`Failed to update spirit ${spirit.id}`, e);

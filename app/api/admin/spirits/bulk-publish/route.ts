@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidateTag } from 'next/cache';
-import { dbGetSpirit } from '@/lib/db/data-connect-client';
+import { dbAdminListRawSpirits, dbGetSpirit, dbUpsertSpirit } from '@/lib/db/data-connect-client';
 import { enrichSpiritWithAI, type SpiritEnrichmentInput } from '@/lib/services/gemini-translation';
-import { dbAdminUpsertSpirit, dbAdminListRawSpirits } from '@/lib/db/data-connect-admin';
 
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 
 /**
  * POST /api/admin/spirits/bulk-publish
@@ -99,7 +98,7 @@ export async function POST(req: NextRequest) {
                     }
                 }
 
-                await dbAdminUpsertSpirit(updateData);
+                await dbUpsertSpirit(updateData);
                 results.success.push(spirit.id);
                 console.log(`[bulk-publish] ✓ Published: ${spirit.id} - ${spirit.name}`);
             } catch (error: any) {

@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { 
   dbListSpiritReviews, 
+  dbListUserReviews,
   dbIncrementUserReviews,
-  dbFindReview
+  dbFindReview,
+  dbUpsertReview
 } from '@/lib/db/data-connect-client';
-import { dbAdminUpsertReview, dbAdminDeleteReview, dbAdminListUserReviews } from '@/lib/db/data-connect-admin';
 import { v4 as uuidv4 } from 'uuid';
 
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 
 /**
  * Reviews API Route
@@ -33,7 +34,7 @@ export async function POST(request: NextRequest) {
     const existingReview = await dbFindReview({ userId, spiritId });
     const reviewId = existingReview?.id || uuidv4();
     const now = new Date().toISOString();
-    await dbAdminUpsertReview({
+    await dbUpsertReview({
       id: reviewId,
       spiritId,
       userId,
@@ -80,7 +81,7 @@ export async function GET(request: NextRequest) {
     const userIdParam = searchParams.get('userId');
 
     if (userIdParam) {
-      const userReviews = await dbAdminListUserReviews(userIdParam);
+      const userReviews = await dbListUserReviews(userIdParam);
       const reviews = userReviews.map((r: any) => ({
         id: r.id,
         spiritId: r.spiritId,
@@ -152,7 +153,22 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'Review not found' }, { status: 404 });
     }
 
-    await dbAdminDeleteReview(existingReview.id);
+    await dbUpsertReview({
+      id: existingReview.id,
+      spiritId,
+      userId: targetUserId,
+      rating: 1,
+      title: '',
+      content: '[deleted]',
+      nose: '',
+      palate: '',
+      finish: '',
+      likes: 0,
+      likedBy: [],
+      isPublished: false,
+      imageUrls: [],
+      updatedAt: new Date().toISOString()
+    });
     
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {

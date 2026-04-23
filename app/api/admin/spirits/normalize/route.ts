@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { dbAdminListRawSpirits, dbAdminUpsertSpirit } from '@/lib/db/data-connect-admin';
+import { dbAdminListRawSpirits, dbUpsertSpirit } from '@/lib/db/data-connect-client';
 
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 
 // Mappings for Normalization - Preserved from legacy
 const REGION_MAP: Record<string, string> = {
@@ -234,7 +234,7 @@ export async function GET(req: NextRequest) {
                 }
 
                 if (isChanged) {
-                    await dbAdminUpsertSpirit({
+                    await dbUpsertSpirit({
                         id: spirit.id,
                         ...changes
                     });

@@ -1,9 +1,9 @@
 // app/api/cabinet/route.ts
 
 import { NextRequest, NextResponse } from 'next/server';
-import { dbAdminListUserCabinet, dbAdminUpsertCabinet, dbAdminDeleteCabinet } from '@/lib/db/data-connect-admin';
+import { dbListUserCabinet, dbUpsertCabinet, dbDeleteCabinet } from '@/lib/db/data-connect-client';
 
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 
 export async function GET(req: NextRequest) {
     const userId = req.headers.get('x-user-id');
@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
     }
 
     try {
-        const cabinetItems = await dbAdminListUserCabinet(userId);
+        const cabinetItems = await dbListUserCabinet(userId);
         
         // Map to flat structure for backward compatibility
         const joined = cabinetItems.map((item: any) => ({
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
 
         // Logic check: if it's a wishlist item, rating is 0. 
         // If it's a review, it has a rating.
-        await dbAdminUpsertCabinet({
+        await dbUpsertCabinet({
             userId,
             spiritId: id,
             notes: userReview?.comment || '',
@@ -73,7 +73,7 @@ export async function DELETE(req: NextRequest) {
     }
 
     try {
-        await dbAdminDeleteCabinet({ userId, spiritId: id });
+        await dbDeleteCabinet({ userId, spiritId: id });
         return NextResponse.json({ success: true });
     } catch (error) {
         console.error('Cabinet DELETE Error:', error);

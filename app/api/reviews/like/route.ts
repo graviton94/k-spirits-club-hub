@@ -1,10 +1,9 @@
 // app/api/reviews/like/route.ts
 
 import { NextRequest, NextResponse } from 'next/server';
-import { dbFindReview } from '@/lib/db/data-connect-client';
-import { dbAdminUpdateReview } from '@/lib/db/data-connect-admin';
+import { dbFindReview, dbUpdateReview } from '@/lib/db/data-connect-client';
 
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 
 export async function POST(request: NextRequest) {
     try {
@@ -34,7 +33,7 @@ export async function POST(request: NextRequest) {
         }
 
         // 3. Update in PostgreSQL
-        await dbAdminUpdateReview({
+        await dbUpdateReview({
             id: review.id,
             likes: newLikedBy.length,
             likedBy: newLikedBy
