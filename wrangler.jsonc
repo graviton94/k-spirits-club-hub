@@ -4,6 +4,13 @@
 	"name": "k-spirits-club-hub-worker",
 	"workers_dev": true,
 	"preview_urls": true,
+	"routes": [
+		{
+			"pattern": "*.kspiritsclub.com/*",
+			"zone_name": "kspiritsclub.com",
+			"custom_domain": true
+		}
+	],
 	"compatibility_date": "2026-04-23",
 	"compatibility_flags": [
 		"nodejs_compat",
