@@ -61,3 +61,7 @@ gstack/
 
 # Firebase Data Connect
 .dataconnect/
+
+# OpenNext
+.open-next
+.dev.vars
