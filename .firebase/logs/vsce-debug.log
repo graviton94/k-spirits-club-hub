@@ -3367,3 +3367,5 @@ Generated sources: index.d.ts [43404B] esm\index.esm.js [13981B] esm\package.jso
 [debug] [2026-04-23T16:38:15.667Z] I0424 01:38:15.667502   30888 installsdk.go:55] Package @dataconnect/admin-generated is already installed. Skipping installation
 I0424 01:38:15.667502   30888 load.go:109] Finished reloading
  {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0424 01:38:15.667502   30888 installsdk.go:55] Package @dataconnect/admin-generated is already installed. Skipping installation\nI0424 01:38:15.667502   30888 load.go:109] Finished reloading\n"}}
+[info] [Firebase Plugin] Stopping SQL Connect toolkit
+[warn] !  SQL Connect Emulator has exited upon receiving signal: SIGINT 
