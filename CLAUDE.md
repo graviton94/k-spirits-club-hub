@@ -28,3 +28,13 @@ The project is 100% Relational SQL via **Firebase Data Connect (PostgreSQL)**. L
 - Run `npx firebase dataconnect:sdk:generate` after GQL schema changes.
 - Ensure CLS 0 performance via Skeleton UI implementation.
 - Validate all admin actions against UID `fiO8qf1PjLZAPBNcJmvy1cpqrY52`.
+
+## 🩸 Safety Rules (Written in Blood)
+These rules were established after a catastrophic failure involving token waste and environment degradation. **NEVER VIOLATE THESE.**
+
+1.  **DASHBOARD IS TRUTH**: If the Cloudflare Dashboard uses "Variables" (Plaintext), **NEVER** convert them to "Secrets" via CLI. This breaks OpenNext/Cloudflare runtime binding and site functionality.
+2.  **PERSISTENCE THROUGH CONFIG**: To prevent variables from being cleared during CLI deployments, define them in `wrangler.jsonc`. To prevent leaks, **`wrangler.jsonc` MUST BE IN `.gitignore`**. 
+3.  **PLAIN TEXT ONLY**: Stick to Plain Text variables as requested. Do not over-engineer security at the cost of uptime.
+4.  **TOTAL REFACTORING**: When renaming exported functions (e.g., `getRelatedIcon` -> `getRelatedIconKey`), you **MUST** perform a workspace-wide search and update **EVERY SINGLE IMPORT** immediately. Do not leave broken imports that crash the build.
+5.  **BUILD FAILURE DIAGNOSIS**: If a deployment fails with an `ENOENT` error (e.g., missing fonts), do not blindly repeat the deployment. Mock the missing assets or diagnose why they aren't being picked up by OpenNext on Windows.
+6.  **UNTRACK SENSITIVE CONFIG**: If a file contains sensitive Plain Text (like `wrangler.jsonc`), ensure it is not only in `.gitignore` but also removed from Git tracking (`git rm --cached`).

@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url';
 import WorldCupSelectionPage from './worldcup-client';
-import { RelatedContentLinks, getRelatedIcon } from '@/components/common/related-content-links';
+import { RelatedContentLinks, getRelatedIconKey } from '@/components/common/related-content-links';
 
 interface WorldCupPageProps {
   params: Promise<{ lang: string }>;
@@ -154,12 +154,12 @@ export default async function WorldCupPage({ params }: WorldCupPageProps) {
           <RelatedContentLinks 
             title={isEn ? 'Explore Related Content' : '관련 콘텐츠 탐색'}
             links={[
-              { href: `/${lang}/contents`, label: isEn ? 'Contents Hub' : '콘텐츠 허브', icon: getRelatedIcon('hub', '/contents') },
-              { href: `/${lang}/contents/mbti`, label: isEn ? 'Spirit MBTI Test' : '주류 MBTI 테스트', icon: getRelatedIcon('mbti', '/contents/mbti') },
-              { href: `/${lang}/contents/wiki/soju-guide`, label: isEn ? 'Korean Soju Guide' : '소주 가이드', icon: getRelatedIcon('wiki', '/contents/wiki/soju-guide') },
-              { href: `/${lang}/contents/wiki/korean-traditional-spirits`, label: isEn ? 'Korean Traditional Spirits' : '전통주 종류', icon: getRelatedIcon('wiki', '/contents/wiki/korean-traditional-spirits') },
-              { href: `/${lang}/contents/wiki`, label: isEn ? 'Spirits Wiki' : '주류 백과사전', icon: getRelatedIcon('wiki', '/contents/wiki') },
-              { href: `/${lang}/explore`, label: isEn ? 'Explore Spirits' : '주류 탐색', icon: getRelatedIcon('explore', '/explore') },
+              { href: `/${lang}/contents`, label: isEn ? 'Contents Hub' : '콘텐츠 허브', icon: getRelatedIconKey('hub', '/contents') },
+              { href: `/${lang}/contents/mbti`, label: isEn ? 'Spirit MBTI Test' : '주류 MBTI 테스트', icon: getRelatedIconKey('mbti', '/contents/mbti') },
+              { href: `/${lang}/contents/wiki/soju-guide`, label: isEn ? 'Korean Soju Guide' : '소주 가이드', icon: getRelatedIconKey('wiki', '/contents/wiki/soju-guide') },
+              { href: `/${lang}/contents/wiki/korean-traditional-spirits`, label: isEn ? 'Korean Traditional Spirits' : '전통주 종류', icon: getRelatedIconKey('wiki', '/contents/wiki/korean-traditional-spirits') },
+              { href: `/${lang}/contents/wiki`, label: isEn ? 'Spirits Wiki' : '주류 백과사전', icon: getRelatedIconKey('wiki', '/contents/wiki') },
+              { href: `/${lang}/explore`, label: isEn ? 'Explore Spirits' : '주류 탐색', icon: getRelatedIconKey('explore', '/explore') },
             ]}
           />
 

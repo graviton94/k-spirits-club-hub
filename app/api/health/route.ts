@@ -4,7 +4,6 @@ export const runtime = 'nodejs';
 
 const MANDATORY_SECRETS = [
     'GEMINI_API_KEY',
-    'CF_AIG_TOKEN',
     'FIREBASE_PRIVATE_KEY',
     'FIREBASE_PROJECT_ID',
     'FIREBASE_CLIENT_EMAIL'

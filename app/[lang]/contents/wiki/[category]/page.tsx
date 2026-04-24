@@ -9,7 +9,7 @@ import SpiritGuideLayout from '@/components/contents/SpiritGuideLayout'
 import { redirect } from 'next/navigation'
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url'
 import { selectFeaturedSpiritsForWiki } from '@/lib/utils/wiki-spirit-match'
-import { RelatedContentLinks, getRelatedIcon } from '@/components/common/related-content-links'
+import { RelatedContentLinks, getRelatedIconKey } from '@/components/common/related-content-links'
 
 const KO_TO_EN_MAP: Record<string, string> = {
     '소주-가이드': 'soju-guide',
@@ -322,13 +322,13 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
                         ...comparisonLinks.map((comparison) => ({
                             href: `/${lang}/contents/wiki/${comparison.slug}`,
                             label: isEn ? comparison.nameEn : comparison.nameKo,
-                            icon: getRelatedIcon('comparison', `/contents/wiki/${comparison.slug}`)
+                            icon: getRelatedIconKey('comparison', `/contents/wiki/${comparison.slug}`)
                         })),
-                        { href: `/${lang}/contents/wiki`, label: isEn ? 'All Spirit Categories' : '주류 백과사전 전체', icon: getRelatedIcon('wiki', '/contents/wiki') },
-                        { href: `/${lang}/contents`, label: isEn ? 'Contents Hub' : '콘텐츠 허브', icon: getRelatedIcon('hub', '/contents') },
-                        { href: `/${lang}/contents/reviews`, label: isEn ? 'Spirit Tasting Reviews' : '주류 시음 리뷰', icon: getRelatedIcon('reviews', '/contents/reviews') },
-                        { href: `/${lang}/contents/mbti`, label: isEn ? 'Spirit MBTI Test' : '주류 MBTI 테스트', icon: getRelatedIcon('mbti', '/contents/mbti') },
-                        { href: `/${lang}/explore`, label: isEn ? 'Explore Spirits' : '주류 탐색', icon: getRelatedIcon('explore', '/explore') },
+                        { href: `/${lang}/contents/wiki`, label: isEn ? 'All Spirit Categories' : '주류 백과사전 전체', icon: getRelatedIconKey('wiki', '/contents/wiki') },
+                        { href: `/${lang}/contents`, label: isEn ? 'Contents Hub' : '콘텐츠 허브', icon: getRelatedIconKey('hub', '/contents') },
+                        { href: `/${lang}/contents/reviews`, label: isEn ? 'Spirit Tasting Reviews' : '주류 시음 리뷰', icon: getRelatedIconKey('reviews', '/contents/reviews') },
+                        { href: `/${lang}/contents/mbti`, label: isEn ? 'Spirit MBTI Test' : '주류 MBTI 테스트', icon: getRelatedIconKey('mbti', '/contents/mbti') },
+                        { href: `/${lang}/explore`, label: isEn ? 'Explore Spirits' : '주류 탐색', icon: getRelatedIconKey('explore', '/explore') },
                     ]}
                 />
             </div>

@@ -65,6 +65,8 @@ gstack/
 # OpenNext
 .open-next
 .dev.vars
+wrangler.jsonc
+wrangler.jsonc.example
 
 # Secret Management (Manual)
 set_secrets.js
