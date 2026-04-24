@@ -171,7 +171,7 @@ ${exclusionList}
 
 ### Required Output (JSON Only):
 {
-  "stats": { "woody": 0, "peaty": 0, "floral": 0, "fruity": 0, "nutty": 0, "richness": 0 },
+  "stats": { "sweet": 0, "fruity": 0, "floral": 0, "spicy": 0, "woody": 0, "peaty": 0 },
   "persona": {
     "title": "A creative and fitting title (${langSuffix})",
     "description": "2-3 insightful sentences about their taste journey (${langSuffix}, ${toneSuffix})",

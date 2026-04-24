@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import { getCanonicalUrl, getHreflangAlternates, toAbsoluteUrl } from '@/lib/utils/seo-url';
 import ReviewBoardPage from './reviews-client';
 import { dbListSpiritReviews } from '@/lib/db/data-connect-client';
-import { RelatedContentLinks, getRelatedIcon } from '@/components/common/related-content-links';
+import { RelatedContentLinks, getRelatedIconKey } from '@/components/common/related-content-links';
 
 interface ReviewsPageProps {
   params: Promise<{ lang: string }>;
@@ -126,17 +126,40 @@ export default async function ReviewsPage({ params, searchParams }: ReviewsPageP
     mainEntity: faqQuestions
   };
 
+  const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: isEn ? 'Home' : '홈',
+        item: `https://kspiritsclub.com/${lang}`
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: isEn ? 'Spirits Review Board' : '주류 리뷰 보드',
+        item: `https://kspiritsclub.com/${lang}/contents/reviews`
+      }
+    ]
+  };
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+      />
       <ReviewBoardPage key={`page-${page}`} initialReviews={initialReviews} initialPage={page} />
 
       {/* SSR landing content — moved below main content for better UX */}
-      <section className="bg-background border-t border-border/40 py-14 px-4">
-        <div className="container mx-auto max-w-2xl space-y-10">
+      <section className="bg-background border-t border-border/40 py-8 md:py-14 px-4">
+        <div className="container mx-auto max-w-2xl space-y-6 md:space-y-10">
 
           {/* Introduction */}
           <div className="space-y-4">
@@ -224,10 +247,10 @@ export default async function ReviewsPage({ params, searchParams }: ReviewsPageP
           <RelatedContentLinks 
             title={isEn ? 'Explore Related Content' : '관련 콘텐츠 탐색'}
             links={[
-              { href: `/${lang}/contents`, label: isEn ? 'Contents Hub' : '콘텐츠 허브', icon: getRelatedIcon('hub', '/contents') },
-              { href: `/${lang}/explore`, label: isEn ? 'Explore Spirits' : '주류 탐색', icon: getRelatedIcon('explore', '/explore') },
-              { href: `/${lang}/contents/mbti`, label: isEn ? 'Spirit MBTI Test' : '주류 MBTI 테스트', icon: getRelatedIcon('mbti', '/contents/mbti') },
-              { href: `/${lang}/contents/news`, label: isEn ? 'Global Spirits News' : '글로벌 주류 뉴스', icon: getRelatedIcon('news', '/contents/news') },
+              { href: `/${lang}/contents`, label: isEn ? 'Contents Hub' : '콘텐츠 허브', icon: getRelatedIconKey('hub', '/contents') },
+              { href: `/${lang}/explore`, label: isEn ? 'Explore Spirits' : '주류 탐색', icon: getRelatedIconKey('explore', '/explore') },
+              { href: `/${lang}/contents/mbti`, label: isEn ? 'Spirit MBTI Test' : '주류 MBTI 테스트', icon: getRelatedIconKey('mbti', '/contents/mbti') },
+              { href: `/${lang}/contents/news`, label: isEn ? 'Global Spirits News' : '글로벌 주류 뉴스', icon: getRelatedIconKey('news', '/contents/news') },
             ]}
           />
 

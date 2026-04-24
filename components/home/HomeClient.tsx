@@ -107,21 +107,21 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialRevi
             </section>
 
             {/* ✨ 2. New Arrivals (Curated Exhibit) */}
-            <section className="max-w-7xl mx-auto px-6 -mt-20 md:-mt-24 relative z-30 mb-20 md:mb-32">
-                <div className="flex items-center justify-between mb-8 pb-4 border-b border-border/50">
-                    <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20 text-primary">
-                            <Sparkles className="w-4 h-4" />
+            <section className="max-w-7xl mx-auto px-4 md:px-6 -mt-10 md:-mt-24 relative z-30 mb-16 md:mb-32">
+                <div className="flex items-center justify-between mb-6 pb-3 border-b border-border/50">
+                    <div className="flex items-center gap-2 md:gap-3">
+                        <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg md:rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20 text-primary">
+                            <Sparkles className="w-3.5 h-3.5 md:w-4 md:h-4" />
                         </div>
                         <h2 className={typography.sectionTitle}>{dict.newArrivals}</h2>
                     </div>
-                    <Link href={`/${lang}/explore`} className={`${typography.sectionMeta} hover:text-primary transition-all flex items-center gap-2 group`}>
-                        {isEn ? 'Explore Gallery' : '전체보기'}
-                        <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                    <Link href={`/${lang}/explore`} className={`${typography.sectionMeta} hover:text-primary transition-all flex items-center gap-1.5 group`}>
+                        {isEn ? 'Explore' : '전체보기'}
+                        <ArrowRight className="w-2.5 h-2.5 md:w-3 md:h-3 group-hover:translate-x-1 transition-transform" />
                     </Link>
                 </div>
 
-                <div className="relative overflow-hidden w-full h-[320px] py-4 group/marquee">
+                <div className="relative overflow-hidden w-full h-[240px] md:h-[320px] py-2 md:py-4 group/marquee">
                     {newArrivals.length > 0 ? (
                         <div className={`flex items-start gap-10 absolute ${styles.marquee} group-hover/marquee:[animation-play-state:paused]`}>
                             {carouselItems.map((spirit, index) => (
@@ -130,18 +130,18 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialRevi
                                     key={`${spirit.id}-${index}`}
                                     className="shrink-0 block"
                                 >
-                                    <div className="w-[200px] flex flex-col items-center gap-4 transition-all duration-500 hover:scale-105">
-                                        <div className={`relative w-full aspect-[3/4] rounded-[40px] ${surfaces.panelSoft} overflow-hidden flex items-center justify-center p-8 group-hover:border-primary/50 transition-all`}>
+                                    <div className="w-[140px] md:w-[200px] flex flex-col items-center gap-3 md:gap-4 transition-all duration-500 hover:scale-105">
+                                        <div className={`relative w-full aspect-[3/4] rounded-[24px] md:rounded-[40px] ${surfaces.panelSoft} overflow-hidden flex items-center justify-center p-4 md:p-8 group-hover:border-primary/50 transition-all`}>
                                             {/* Reflection Effect */}
                                             <div className="absolute inset-x-0 top-0 h-1/2 bg-linear-to-b from-white/5 to-transparent pointer-events-none" />
                                             
                                             <div className="relative w-full h-full">
                                                 <Image
-                                                    src={getOptimizedImageUrl(spirit.thumbnailUrl || spirit.imageUrl || '/mys-4.webp', 400)}
+                                                    src={getOptimizedImageUrl(spirit.thumbnailUrl || spirit.imageUrl || '/mys-4.webp', 300)}
                                                     alt={spirit.name}
                                                     loading="lazy"
                                                     fill
-                                                    sizes="200px"
+                                                    sizes="(max-width: 768px) 140px, 200px"
                                                     className="object-contain"
                                                     unoptimized={true}
                                                 />
@@ -165,35 +165,35 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialRevi
             </section>
 
             {/* 🗞️ 3. Global News Feed (Replaces Trending) */}
-            <div className="max-w-7xl mx-auto px-6 mb-24 md:mb-32">
+            <div className="max-w-7xl mx-auto px-4 md:px-6 mb-16 md:mb-32">
                 {children}
             </div>
 
             {/* 💬 4. Live Reviews (Social Proof) */}
-            <section className="max-w-7xl mx-auto px-6 mb-32">
-                <div className="flex items-center justify-between mb-8 pb-4 border-b border-border/50">
-                    <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-xl bg-accent/10 flex items-center justify-center border border-accent/20 text-accent">
-                            <Flame className="w-4 h-4" />
+            <section className="max-w-7xl mx-auto px-4 md:px-6 mb-16 md:mb-32">
+                <div className="flex items-center justify-between mb-6 pb-3 border-b border-border/50">
+                    <div className="flex items-center gap-2 md:gap-3">
+                        <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg md:rounded-xl bg-accent/10 flex items-center justify-center border border-accent/20 text-accent">
+                            <Flame className="w-3.5 h-3.5 md:w-4 md:h-4" />
                         </div>
-                        <h2 className={typography.sectionTitleSoft}>{dict.recentReviews || t.liveReviews}</h2>
+                        <h2 className={typography.sectionTitle}>{dict.recentReviews || t.liveReviews}</h2>
                     </div>
                     <Link
                         href={`/${lang}/contents/reviews`}
-                        className={`${typography.sectionMeta} hover:text-primary transition-all flex items-center gap-2 group`}
+                        className={`${typography.sectionMeta} hover:text-primary transition-all flex items-center gap-1.5 group`}
                     >
-                        {isEn ? 'Read All Stories' : '리뷰 더보기'}
-                        <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                        {isEn ? 'Stories' : '리뷰 더보기'}
+                        <ArrowRight className="w-2.5 h-2.5 md:w-3 md:h-3 group-hover:translate-x-1 transition-transform" />
                     </Link>
                 </div>
-                <div className={`p-8 ${surfaces.panelSoft} rounded-[48px]`}>
+                <div className={`p-4 md:p-8 ${surfaces.panelSoft} rounded-[32px] md:rounded-[48px]`}>
                     <LiveReviews initialReviews={initialReviews} />
                 </div>
             </section>
 
             {/* 📖 5. Institutional FAQ / Wiki */}
-            <section className="bg-background py-24 md:py-32 border-t border-border/40">
-                <div className="max-w-7xl mx-auto px-6">
+            <section className="bg-background py-16 md:py-32 border-t border-border/40">
+                <div className="max-w-7xl mx-auto px-4 md:px-6">
                     <WikiSnippetSection lang={lang} initialSnippet={dailySnippet} />
                 </div>
             </section>

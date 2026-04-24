@@ -304,9 +304,35 @@ export default async function SpiritDetailPage({ params }: { params: Promise<{ i
     url: pageUrl,
   };
 
+  const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: isEn ? 'Home' : '홈',
+        item: `https://kspiritsclub.com/${lang}`
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: isEn ? 'Explore' : '탐색',
+        item: `https://kspiritsclub.com/${lang}/explore`
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: isEn ? (spirit.name_en || spirit.name) : spirit.name,
+        item: pageUrl
+      }
+    ]
+  };
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
       <SpiritDetailClient spirit={spirit} reviews={reviews} relatedSpirits={relatedSpirits} lang={lang as Locale} dict={dictionary.detail} />
       {wikiMetadata && wikiGuide && (
         <div className="container mx-auto px-4 max-w-4xl">

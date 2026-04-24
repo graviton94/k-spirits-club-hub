@@ -12,12 +12,14 @@ export default function WikiSnippetSection({ lang, initialSnippet }: { lang: str
     if (!initialSnippet) return null;
 
     return (
-        <section className="container max-w-4xl mx-auto px-4 mb-20">
-            <div className="flex items-center justify-between mb-4 border-b border-border pb-3">
-                <div className="flex items-center gap-2">
-                    <BookOpen className="w-5 h-5 text-primary" />
-                    <h2 className={`${typography.sectionTitle} !text-lg normal-case not-italic`}>
-                        {isEn ? 'Spirits Wiki Knowledge' : '오늘의 주류 백과사전 한 토막 (FAQ)'}
+        <section>
+            <div className="flex items-center justify-between mb-6 pb-3 border-b border-border/50">
+                <div className="flex items-center gap-2 md:gap-3">
+                    <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg md:rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20 text-primary">
+                        <BookOpen className="w-3.5 h-3.5 md:w-4 md:h-4 text-primary" />
+                    </div>
+                    <h2 className={typography.sectionTitle}>
+                        {isEn ? 'Spirits Wiki' : '주류 백과사전'}
                     </h2>
                 </div>
             </div>
@@ -34,10 +36,10 @@ export default function WikiSnippetSection({ lang, initialSnippet }: { lang: str
                             <BookOpen className="w-24 h-24 text-primary" />
                         </div>
 
-                        <h3 className="text-xl md:text-2xl font-black mb-3 text-primary group-hover:text-accent transition-colors drop-shadow-sm">
+                        <h3 className="text-lg md:text-2xl font-black mb-2 md:mb-3 text-primary group-hover:text-accent transition-colors drop-shadow-sm leading-tight">
                             Q. {initialSnippet.title}
                         </h3>
-                        <p className="text-sm md:text-base text-muted-foreground leading-relaxed md:leading-loose font-medium mb-6 relative z-10 line-clamp-3">
+                        <p className="text-[13px] md:text-base text-muted-foreground leading-relaxed md:leading-loose font-medium mb-4 md:mb-6 relative z-10 line-clamp-3">
                             A. {initialSnippet.content}
                         </p>
 

@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import { getCanonicalUrl, getHreflangAlternates, toAbsoluteUrl } from '@/lib/utils/seo-url';
 import NewsContentPage from './news-client';
 import { dbListNewsArticles } from '@/lib/db/data-connect-client';
-import { RelatedContentLinks, getRelatedIcon } from '@/components/common/related-content-links';
+import { RelatedContentLinks, getRelatedIconKey } from '@/components/common/related-content-links';
 
 interface NewsPageProps {
   params: Promise<{ lang: string }>;
@@ -75,13 +75,76 @@ export default async function NewsPage({ params, searchParams }: NewsPageProps) 
 
   const initialNews = await dbListNewsArticles(PAGE_SIZE, (page - 1) * PAGE_SIZE).catch(() => []);
 
+  // FAQ Schema
+  const faqLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: isEn ? [
+      {
+        '@type': 'Question',
+        name: 'How often is the news updated?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'New articles are added regularly as significant industry news breaks.'
+        }
+      },
+      {
+        '@type': 'Question',
+        name: 'Can I follow a specific category or region?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes. You can filter articles by spirit category and region.'
+        }
+      }
+    ] : [
+      {
+        '@type': 'Question',
+        name: '뉴스는 얼마나 자주 업데이트되나요?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: '주요 업계 소식이 생기는 즉시 새 기사가 추가됩니다.'
+        }
+      },
+      {
+        '@type': 'Question',
+        name: '특정 카테고리나 지역을 팔로우할 수 있나요?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: '네. 카테고리나 지역별로 최신 소식을 확인하실 수 있습니다.'
+        }
+      }
+    ]
+  };
+
+  // Breadcrumb Schema
+  const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: isEn ? 'Home' : '홈',
+        item: `https://kspiritsclub.com/${lang}`
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: isEn ? 'Global Spirits News' : '글로벌 주류 뉴스',
+        item: `https://kspiritsclub.com/${lang}/contents/news`
+      }
+    ]
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
       <NewsContentPage key={`page-${page}`} initialNews={initialNews} initialPage={page} />
 
       {/* SSR landing content — moved to bottom for better UX (content first) */}
-      <section className="bg-background border-t border-border/40 py-14 px-4">
-        <div className="container mx-auto max-w-2xl space-y-10">
+      <section className="bg-background border-t border-border/40 py-8 md:py-14 px-4">
+        <div className="container mx-auto max-w-2xl space-y-6 md:space-y-10">
           <div className="space-y-4">
             <h2 className="text-2xl md:text-3xl font-bold tracking-tight">
               {isEn ? 'About Global Spirits News' : '글로벌 주류 뉴스 안내'}
@@ -164,10 +227,10 @@ export default async function NewsPage({ params, searchParams }: NewsPageProps) 
           <RelatedContentLinks 
             title={isEn ? 'Explore Related Content' : '관련 콘텐츠 탐색'}
             links={[
-              { href: `/${lang}/contents`, label: isEn ? 'Contents Hub' : '콘텐츠 허브', icon: getRelatedIcon('hub', '/contents') },
-              { href: `/${lang}/contents/wiki`, label: isEn ? 'Spirits Wiki' : '주류 백과사전', icon: getRelatedIcon('wiki', '/contents/wiki') },
-              { href: `/${lang}/contents/reviews`, label: isEn ? 'Spirit Tasting Reviews' : '커뮤니티 리뷰', icon: getRelatedIcon('reviews', '/contents/reviews') },
-              { href: `/${lang}/explore`, label: isEn ? 'Explore Spirits' : '주류 탐색', icon: getRelatedIcon('explore', '/explore') },
+              { href: `/${lang}/contents`, label: isEn ? 'Contents Hub' : '콘텐츠 허브', icon: getRelatedIconKey('hub', '/contents') },
+              { href: `/${lang}/contents/wiki`, label: isEn ? 'Spirits Wiki' : '주류 백과사전', icon: getRelatedIconKey('wiki', '/contents/wiki') },
+              { href: `/${lang}/contents/reviews`, label: isEn ? 'Spirit Tasting Reviews' : '커뮤니티 리뷰', icon: getRelatedIconKey('reviews', '/contents/reviews') },
+              { href: `/${lang}/explore`, label: isEn ? 'Explore Spirits' : '주류 탐색', icon: getRelatedIconKey('explore', '/explore') },
             ]}
           />
         </div>

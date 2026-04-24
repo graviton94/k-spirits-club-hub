@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { MBTIClient } from './mbti-client';
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url';
-import { RelatedContentLinks, getRelatedIcon } from '@/components/common/related-content-links';
+import { RelatedContentLinks, getRelatedIconKey } from '@/components/common/related-content-links';
 
 interface MbtiPageProps {
   params: Promise<{ lang: string }>;
@@ -47,8 +47,8 @@ export default async function MbtiPage({ params }: MbtiPageProps) {
       <MBTIClient lang={lang} />
 
       {/* Landing Description Section - Below the fold for better UX */}
-      <section className="bg-background border-t border-border/40 py-20 px-4">
-        <div className="container mx-auto max-w-2xl space-y-12">
+      <section className="bg-background border-t border-border/40 py-12 md:py-20 px-4">
+        <div className="container mx-auto max-w-2xl space-y-8 md:space-y-12">
           
           <div className="space-y-6">
             <h2 className="text-3xl font-black italic uppercase tracking-tighter text-foreground">
@@ -90,10 +90,10 @@ export default async function MbtiPage({ params }: MbtiPageProps) {
           <RelatedContentLinks 
             title={isEn ? 'Explore More' : '관련 콘텐츠 탐색'}
             links={[
-              { href: `/${lang}/contents`, label: isEn ? 'Contents Hub' : '콘텐츠 허브', icon: getRelatedIcon('hub', '/contents') },
-              { href: `/${lang}/contents/worldcup`, label: isEn ? 'Spirit World Cup' : '주류 월드컵', icon: getRelatedIcon('worldcup', '/contents/worldcup') },
-              { href: `/${lang}/contents/news`, label: isEn ? 'Global News' : '글로벌 뉴스', icon: getRelatedIcon('news', '/contents/news') },
-              { href: `/${lang}/explore`, label: isEn ? 'Explore' : '주류 탐색', icon: getRelatedIcon('explore', '/explore') },
+              { href: `/${lang}/contents`, label: isEn ? 'Contents Hub' : '콘텐츠 허브', icon: getRelatedIconKey('hub', '/contents') },
+              { href: `/${lang}/contents/worldcup`, label: isEn ? 'Spirit World Cup' : '주류 월드컵', icon: getRelatedIconKey('worldcup', '/contents/worldcup') },
+              { href: `/${lang}/contents/news`, label: isEn ? 'Global News' : '글로벌 뉴스', icon: getRelatedIconKey('news', '/contents/news') },
+              { href: `/${lang}/explore`, label: isEn ? 'Explore' : '주류 탐색', icon: getRelatedIconKey('explore', '/explore') },
             ]}
           />
         </div>

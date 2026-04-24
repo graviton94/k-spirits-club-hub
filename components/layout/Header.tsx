@@ -35,7 +35,7 @@ export function Header({ lang, dict }: { lang: Locale, dict: any }) {
                 </Link>
 
                 <div className="flex min-w-0 items-center gap-2 md:gap-4">
-                    <div className="hidden md:flex items-center gap-1 mr-4">
+                    <div className="flex items-center gap-1">
                         <LanguageSwitcher />
                         <ThemeToggle />
                     </div>
@@ -45,11 +45,11 @@ export function Header({ lang, dict }: { lang: Locale, dict: any }) {
                             href={`/${lang}/me`}
                             className={`flex min-w-0 items-center gap-3 rounded-2xl py-1.5 pl-3 pr-2 transition-all ${interactive.hoverSurface} border border-transparent ${interactive.hoverBorder} group`}
                         >
-                            <div className="hidden whitespace-nowrap text-right sm:block">
-                                <p className="text-[11px] font-black text-foreground/30 uppercase tracking-widest">
+                            <div className="whitespace-nowrap text-right">
+                                <p className="text-[9px] md:text-[11px] font-black text-foreground/30 uppercase tracking-widest hidden xs:block">
                                     Member
                                 </p>
-                                <p className="text-sm font-black text-foreground group-hover:text-primary transition-colors uppercase tracking-tighter">
+                                <p className="text-xs md:text-sm font-black text-foreground group-hover:text-primary transition-colors uppercase tracking-tighter max-w-[60px] md:max-w-none truncate">
                                     {displayName}
                                 </p>
                             </div>
@@ -68,22 +68,15 @@ export function Header({ lang, dict }: { lang: Locale, dict: any }) {
                     ) : (
                         <Link
                             href={`/${lang}/login`}
-                            className="btn-premium px-6 py-2.5 text-sm md:flex hidden"
+                            className="btn-premium px-4 py-2 md:px-6 md:py-2.5 text-xs md:text-sm"
                         >
-                            <LogIn className="h-4 w-4" />
-                            <span>ACCESS HUB</span>
+                            <LogIn className="h-3.5 w-3.5 md:h-4 w-4" />
+                            <span>ACCESS</span>
                         </Link>
                     )}
                     
                     {/* Mobile Menu Icon or compact login for mobile */}
-                     {!user && (
-                        <Link
-                         href={`/${lang}/login`}
-                         className="md:hidden flex h-10 w-10 items-center justify-center rounded-2xl bg-primary text-white shadow-lg"
-                        >
-                             <LogIn className="h-5 w-5" />
-                        </Link>
-                     )}
+
                 </div>
             </div>
         </header>

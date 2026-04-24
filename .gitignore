@@ -65,3 +65,8 @@ gstack/
 # OpenNext
 .open-next
 .dev.vars
+
+# Secret Management (Manual)
+set_secrets.js
+set_secrets.ps1
+/scripts/vault/

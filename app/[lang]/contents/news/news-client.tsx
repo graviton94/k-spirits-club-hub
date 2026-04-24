@@ -108,7 +108,7 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
     const router = useRouter();
 
     return (
-        <div className="min-h-screen bg-background text-foreground pt-16 pb-12 px-4 relative overflow-hidden">
+        <div className="min-h-screen bg-background text-foreground pt-8 md:pt-16 pb-12 px-4 relative overflow-hidden">
             {/* Ambient Atmosphere */}
             <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
 
@@ -116,45 +116,45 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
                 {/* Back Button */}
                 <button
                     onClick={() => router.back()}
-                    className="mb-8 flex items-center gap-2 text-muted-foreground hover:text-primary transition-all group"
+                    className="mb-4 md:mb-8 flex items-center gap-2 text-muted-foreground hover:text-primary transition-all group"
                 >
-                    <div className="p-2 bg-card/40 rounded-xl border border-white/5 group-hover:scale-110 transition-transform">
-                        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                    <div className="p-1 md:p-2 bg-card/40 rounded-lg md:rounded-xl border border-white/5 group-hover:scale-110 transition-transform">
+                        <ArrowLeft className="w-3.5 h-3.5 md:w-4 md:h-4 group-hover:-translate-x-1 transition-transform" />
                     </div>
-                    <span className="text-[10px] font-black uppercase tracking-widest">{isEn ? 'Back' : '뒤로가기'}</span>
+                    <span className="text-[9px] md:text-[10px] font-black uppercase tracking-widest">{isEn ? 'Back' : '뒤로가기'}</span>
                 </button>
 
                 {/* Header */}
-                <div className="mb-14 space-y-6">
-                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
+                <div className="mb-8 md:mb-14 space-y-4 md:space-y-6">
+                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-2 md:space-y-4">
                         <div className="flex items-center gap-3">
-                             <div className="w-1.5 h-10 bg-brand-gradient rounded-full shadow-lg shadow-primary/20" />
-                             <h1 className="text-5xl md:text-7xl font-black bg-brand-gradient bg-clip-text text-transparent tracking-tighter italic uppercase leading-none">
+                             <div className="w-1 md:w-1.5 h-8 md:h-10 bg-brand-gradient rounded-full shadow-lg shadow-primary/20" />
+                             <h1 className="text-3xl md:text-7xl font-black bg-brand-gradient bg-clip-text text-transparent tracking-tighter italic uppercase leading-none">
                                 {t.title}
                              </h1>
                         </div>
-                        <p className="text-lg text-muted-foreground font-medium flex items-center gap-3 tracking-tight">
-                            <Sparkles className="w-5 h-5 text-primary/60 animate-pulse" />
+                        <p className="text-sm md:text-lg text-muted-foreground font-medium flex items-center gap-2 md:gap-3 tracking-tight">
+                            <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-primary/60 animate-pulse" />
                             {t.desc}
                         </p>
                     </motion.div>
                 </div>
 
                 {/* Search Bar */}
-                <form onSubmit={handleSearch} className="relative mb-20 flex gap-4 max-w-3xl">
+                <form onSubmit={handleSearch} className="relative mb-12 md:mb-20 flex gap-2 md:gap-4 max-w-3xl">
                     <div className="relative flex-1 group">
-                        <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                        <Search className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
                         <input
                             type="text"
                             placeholder={t.searchPlaceholder}
                             value={searchInput}
                             onChange={(e) => setSearchInput(e.target.value)}
-                            className="w-full bg-card/20 backdrop-blur-3xl border border-white/5 rounded-3xl py-5 pl-14 pr-8 text-sm font-black focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/40 transition-all shadow-2xl"
+                            className="w-full bg-card/20 backdrop-blur-3xl border border-white/5 rounded-2xl md:rounded-3xl py-3 pl-11 pr-4 md:py-5 md:pl-14 md:pr-8 text-xs md:text-sm font-black focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/40 transition-all shadow-2xl"
                         />
                     </div>
                     <button
                         type="submit"
-                        className="px-10 py-5 bg-primary text-primary-foreground rounded-3xl font-black text-sm hover:brightness-110 transition-all shadow-xl shadow-primary/20 active:scale-95 whitespace-nowrap uppercase tracking-widest"
+                        className="px-6 py-3 md:px-10 md:py-5 bg-primary text-primary-foreground rounded-2xl md:rounded-3xl font-black text-xs md:text-sm hover:brightness-110 transition-all shadow-xl shadow-primary/20 active:scale-95 whitespace-nowrap uppercase tracking-widest"
                     >
                         {t.searchBtn}
                     </button>
@@ -179,9 +179,9 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                                    className="group relative bg-card/20 backdrop-blur-3xl border border-white/5 rounded-[3.5rem] overflow-hidden hover:border-primary/30 hover:shadow-[0_60px_120px_-30px_rgba(0,0,0,0.4)] transition-all duration-700"
+                                    className="group relative bg-card/20 backdrop-blur-3xl border border-white/5 rounded-3xl md:rounded-[3.5rem] overflow-hidden hover:border-primary/30 hover:shadow-[0_60px_120px_-30px_rgba(0,0,0,0.4)] transition-all duration-700"
                                 >
-                                    <div className="flex flex-col md:flex-row p-8 md:p-14 gap-12">
+                                    <div className="flex flex-col md:flex-row p-6 md:p-14 gap-6 md:gap-12">
                                         {/* Optional Image Section */}
                                         {item.imageUrl && (
                                             <div className="md:w-1/3 shrink-0">
@@ -220,20 +220,20 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
                                                 </span>
                                             </div>
 
-                                            <Link href={item.link} target="_blank" className="block group/title mb-6">
-                                                <h2 className="text-3xl md:text-4xl font-black group-hover/title:text-primary transition-all duration-500 leading-tight tracking-tighter italic uppercase">
+                                            <Link href={item.link} target="_blank" className="block group/title mb-4 md:mb-6">
+                                                <h2 className="text-xl md:text-4xl font-black group-hover/title:text-primary transition-all duration-500 leading-tight tracking-tighter italic uppercase">
                                                     {String(item.translations?.[lang]?.title || item.translations?.ko?.title || item.title || '')}
                                                 </h2>
                                             </Link>
 
-                                            <p className="text-muted-foreground/80 leading-relaxed text-base md:text-lg font-medium mb-12 line-clamp-4 italic border-l-2 border-primary/10 pl-6">
+                                            <p className="text-muted-foreground/80 leading-relaxed text-[13px] md:text-lg font-medium mb-6 md:mb-12 line-clamp-4 italic border-l-2 border-primary/10 pl-4 md:pl-6">
                                                 &ldquo;{String(item.translations?.[lang]?.content || item.translations?.ko?.content || item.content || '')}&rdquo;
                                             </p>
 
-                                            <div className="flex flex-wrap items-center justify-between gap-6 mt-auto pt-8 border-t border-white/5">
-                                                <div className="flex flex-wrap gap-2.5">
+                                            <div className="flex flex-wrap items-center justify-between gap-4 md:gap-6 mt-auto pt-6 md:pt-8 border-t border-white/5">
+                                                <div className="flex flex-wrap gap-1.5 md:gap-2.5">
                                                     {(item.newsTags?.[lang] || item.newsTags?.ko || item.newsTags || [])?.slice(0, 4).map((tag: string, i: number) => (
-                                                        <span key={i} className="text-[9px] font-black px-4 py-1.5 rounded-xl bg-card border border-white/5 text-muted-foreground/40 uppercase tracking-tight group-hover:text-primary transition-colors">
+                                                        <span key={i} className="text-[8px] md:text-[9px] font-black px-3 py-1 md:px-4 md:py-1.5 rounded-lg md:rounded-xl bg-card border border-white/5 text-muted-foreground/40 uppercase tracking-tight group-hover:text-primary transition-colors">
                                                             #{tag.replace('#', '')}
                                                         </span>
                                                     ))}
@@ -241,7 +241,7 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
                                                 <Link 
                                                     href={item.link} 
                                                     target="_blank" 
-                                                    className="inline-flex items-center gap-2 px-8 py-3 rounded-2xl bg-primary text-primary-foreground text-[10px] font-black hover:brightness-110 transition-all shadow-xl shadow-primary/20 uppercase tracking-[0.2em]"
+                                                    className="inline-flex items-center gap-2 px-6 py-2.5 md:px-8 md:py-3 rounded-xl md:rounded-2xl bg-primary text-primary-foreground text-[9px] md:text-[10px] font-black hover:brightness-110 transition-all shadow-xl shadow-primary/20 uppercase tracking-[0.2em]"
                                                 >
                                                     {t.viewOriginal}
                                                 </Link>
