@@ -32,12 +32,27 @@ export async function GET() {
 
     const allOk = missing.length === 0;
 
+    // Diagnose available keys for systemic troubleshooting
+    const processEnvKeys = Object.keys(process.env).filter(k => !k.includes('KEY') && !k.includes('SECRET') && !k.includes('PRIVATE'));
+    
+    let ctxEnvKeys: string[] = [];
+    try {
+        const { getRequestContext } = require("@opennextjs/cloudflare");
+        const ctx = getRequestContext();
+        if (ctx?.env) ctxEnvKeys = Object.keys(ctx.env).filter(k => !k.includes('KEY') && !k.includes('SECRET') && !k.includes('PRIVATE'));
+    } catch(e) {}
+
     return NextResponse.json({
         status: allOk ? 'healthy' : 'degraded',
         timestamp: new Date().toISOString(),
         missing: missing.length > 0 ? missing : undefined,
-        environment: process.env.NODE_ENV,
-        runtime: 'edge'
+        diagnostics: {
+            processEnvKeyCount: Object.keys(process.env).length,
+            processEnvPublicKeys: processEnvKeys,
+            requestContextEnvKeys: ctxEnvKeys,
+            runtime: 'nodejs (compat)'
+        },
+        environment: process.env.NODE_ENV
     }, {
         status: allOk ? 200 : 503
     });

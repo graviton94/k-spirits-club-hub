@@ -1,37 +1,45 @@
 /**
  * Unified Environment Variable Accessor
- * 
- * Specifically designed for Cloudflare Workers (OpenNext) environments 
- * where secrets might not be on process.env but in the Request Context.
  */
-
 export function getEnv(key: string): string {
-    // 1. Try Next.js process.env (Development / Build / Some Worker configs)
+    let value = "";
+    let source = "none";
+
+    // 1. Try process.env
     if (process.env[key]) {
-        return process.env[key] as string;
+        value = process.env[key] as string;
+        source = "process.env";
     }
 
-    // 2. Try globalThis (Injected by Cloudflare in some runtimes)
-    const globalVal = (globalThis as any)[key];
-    if (globalVal && typeof globalVal === 'string') {
-        return globalVal;
-    }
-
-    // 3. Try getRequestContext (OpenNext specific)
-    try {
-        // Dynamic import to avoid errors in environments that don't support it
-        // Or if running in a context where it's not needed.
-        // However, OpenNext usually makes this available.
-        const { getRequestContext } = require("@opennextjs/cloudflare");
-        const ctx = getRequestContext();
-        if (ctx?.env && ctx.env[key]) {
-            return String(ctx.env[key]);
+    // 2. Try getRequestContext (OpenNext / Cloudflare)
+    if (!value) {
+        try {
+            // Using a more standard ESM-safe approach for OpenNext
+            const { getRequestContext } = require("@opennextjs/cloudflare");
+            const ctx = getRequestContext();
+            if (ctx?.env && ctx.env[key]) {
+                value = String(ctx.env[key]);
+                source = "getRequestContext().env";
+            }
+        } catch (e) {
+            // Context not available
         }
-    } catch (e) {
-        // Not on Cloudflare or getRequestContext failed
     }
 
-    return "";
+    // 3. Try globalThis
+    if (!value && (globalThis as any)[key]) {
+        value = String((globalThis as any)[key]);
+        source = "globalThis";
+    }
+
+    if (value) {
+        // Helpful for production log auditing without leaking values
+        console.log(`[Env] Found ${key} from ${source}`);
+    } else {
+        console.warn(`[Env] ${key} NOT found in any source (checked process.env, ctx.env, globalThis)`);
+    }
+
+    return value;
 }
 
 /**

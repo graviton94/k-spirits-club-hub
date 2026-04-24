@@ -70,7 +70,11 @@ export async function POST(request: Request) {
             error: error.message || 'Unknown error',
             code: 'ADMIN_NEWS_COLLECT_FAILED',
             traceId,
-            source: 'api/admin/news/collect'
+            source: 'api/admin/news/collect',
+            debug: {
+                message: error.message,
+                stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+            }
         }, { status: 500 });
     }
 }

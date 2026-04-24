@@ -76,7 +76,13 @@ export default function CabinetClient({ lang, dict }: CabinetClientProps) {
                 }
             });
             if (!response.ok) {
-                throw new Error('Failed to fetch cabinet data');
+                const errorBody = await response.json().catch(() => ({}));
+                console.group('❌ Cabinet Fetch Failed (500/Internal)');
+                console.error('Status:', response.status);
+                console.error('Trace ID:', errorBody.traceId);
+                console.table(errorBody);
+                console.groupEnd();
+                throw new Error(errorBody.error || 'Failed to fetch cabinet data');
             }
             const { data: cabinetData } = await response.json();
 
@@ -94,8 +100,14 @@ export default function CabinetClient({ lang, dict }: CabinetClientProps) {
             const enrichedSpirits = enrichedData as Spirit[];
             setSpirits(enrichedSpirits);
             localStorage.setItem(cacheKey, JSON.stringify(enrichedSpirits));
-        } catch (error) {
+        } catch (error: any) {
             console.error('Failed to fetch cabinet:', error);
+            if (error.response) {
+                try {
+                    const errorDetails = await error.response.json();
+                    console.table(errorDetails);
+                } catch (e) {}
+            }
             if (!cachedData) setSpirits([]);
         } finally {
             setIsLoadingCabinet(false);

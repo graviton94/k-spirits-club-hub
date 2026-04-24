@@ -241,7 +241,16 @@ export async function POST(req: NextRequest) {
 
         return NextResponse.json({ success: true, profile, traceId });
     } catch (error: any) {
-        console.error(`[Analyze Taste Error][${traceId}]`, error);
-        return NextResponse.json({ error: 'AI Error', details: error.message, code: 'ANALYZE_POST_FAILED', traceId, source: 'api/analyze-taste' }, { status: 500 });
+        console.error(`[analyze-taste][${traceId}] Error during taste analysis:`, error);
+        return NextResponse.json({
+            error: error.message || 'Internal Server Error',
+            code: 'TASTE_ANALYSIS_FAILED',
+            traceId,
+            debug: {
+                message: error.message,
+                stack: process.env.NODE_ENV === 'development' ? error.stack : undefined,
+                hint: 'Confirm GEMINI_API_KEY is in Cloudflare Secrets'
+            }
+        }, { status: 500 });
     }
 }

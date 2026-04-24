@@ -688,7 +688,14 @@ export default function AdminDashboard() {
                                                     headers: { 'Content-Type': 'application/json' },
                                                     body: JSON.stringify({ existingLinks })
                                                 });
-                                                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                                                if (!res.ok) {
+                                                    const errorData = await res.json().catch(() => ({}));
+                                                    console.group('❌ News Collection Failed');
+                                                    console.error('Status:', res.status);
+                                                    console.table(errorData);
+                                                    console.groupEnd();
+                                                    throw new Error(errorData.error || `HTTP ${res.status}`);
+                                                }
                                                 const data = await res.json();
 
                                                 if (data.success) {
@@ -702,6 +709,7 @@ export default function AdminDashboard() {
                                                     alert(`❌ 실패: ${data.error || '알 수 없는 오류'}`);
                                                 }
                                             } catch (e: any) {
+                                                console.error('Collection process error:', e);
                                                 alert(`뉴스 수집 중 에러: ${e.message}`);
                                             } finally {
                                                 setIsProcessing(false);

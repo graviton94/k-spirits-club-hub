@@ -70,7 +70,12 @@ export async function GET(req: NextRequest) {
             error: error.message,
             code: 'CABINET_FETCH_FAILED',
             traceId,
-            source: 'api/cabinet/list'
+            source: 'api/cabinet/list',
+            debug: {
+                message: error.message,
+                stack: process.env.NODE_ENV === 'development' ? error.stack : undefined,
+                envAudit: 'Check /api/health for environment variable status'
+            }
         }, { status: 500 });
     }
 }

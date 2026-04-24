@@ -110,6 +110,10 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
       }
 
       if (!response.ok || !data.message) {
+        console.group('❌ Sommelier API Error');
+        console.error('Status:', response.status);
+        console.table(data);
+        console.groupEnd();
         throw new Error(data.error || data.details || 'API Error');
       }
 

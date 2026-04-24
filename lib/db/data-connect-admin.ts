@@ -17,10 +17,13 @@ async function executeGraphql(operationName: string, query: string, variables: a
     // Validate Environment with detailed missing info
     if (!projectId || !clientEmail || !privateKey) {
         const missing = [];
-        if (!projectId) missing.push('PROJECT_ID');
-        if (!clientEmail) missing.push('CLIENT_EMAIL');
-        if (!privateKey) missing.push('PRIVATE_KEY');
-        throw new Error(`[Data Connect Admin] Missing: ${missing.join(', ')}. Scanned process.env & globalThis.`);
+        if (!projectId) missing.push('PROJECT_ID (FIREBASE_PROJECT_ID or NEXT_PUBLIC_FIREBASE_PROJECT_ID)');
+        if (!clientEmail) missing.push('CLIENT_EMAIL (FIREBASE_CLIENT_EMAIL)');
+        if (!privateKey) missing.push('PRIVATE_KEY (FIREBASE_PRIVATE_KEY)');
+        
+        const errorMsg = `[Data Connect Admin] Critical Missing Vars: ${missing.join(', ')}. Please check Cloudflare Worker Secrets and /api/health for diagnostics.`;
+        console.error(errorMsg);
+        throw new Error(errorMsg);
     }
 
     try {
