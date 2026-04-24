@@ -14,8 +14,11 @@ const MODEL_ID = "gemini-2.0-flash";
  * AI Sommelier Q&A Bot API
  * Handles multi-step professional profiling and spirit recommendations.
  */
+import { getEnv } from '@/lib/env';
+
+
 export async function POST(req: NextRequest) {
-    const apiKey = process.env.GEMINI_API_KEY || (globalThis as any).GEMINI_API_KEY || '';
+    const apiKey = getEnv('GEMINI_API_KEY');
     const traceId = crypto.randomUUID();
     const fallbackResponse = (lang: string, nextStep = 1, detail?: string, code = 'AI_SOMMELIER_GENERAL_ERROR') => NextResponse.json({
         message: lang === 'en'
@@ -38,7 +41,8 @@ export async function POST(req: NextRequest) {
             lang = body?.lang === 'en' ? 'en' : 'ko';
             currentStep = body?.currentStep || 1;
         } catch (e) {}
-        return fallbackResponse(lang, currentStep, 'GEMINI_API_KEY is missing', 'AI_SOMMELIER_KEY_MISSING');
+        console.error(`[Sommelier API][${traceId}] ❌ GEMINI_API_KEY is missing in getEnv()`);
+        return fallbackResponse(lang, currentStep, 'GEMINI_API_KEY is missing from all sources', 'AI_SOMMELIER_KEY_MISSING');
     }
 
     let lang = 'ko';

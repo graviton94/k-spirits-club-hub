@@ -1,19 +1,17 @@
 // lib/auth/google-auth.ts
 import * as jose from 'jose';
+import { getEnv } from '@/lib/env';
 
 /**
  * Enhanced Google OAuth2 Token Generator for Cloudflare Workers
  * Forcefully searches for environment variables in multiple locations.
  */
 export async function getGoogleAccessToken() {
-    // Try to get from process.env first (Next.js standard)
-    // Then fallback to global context (Cloudflare standard)
-    const rawEmail = process.env.FIREBASE_CLIENT_EMAIL || (globalThis as any).FIREBASE_CLIENT_EMAIL;
-    const rawKey = process.env.FIREBASE_PRIVATE_KEY || (globalThis as any).FIREBASE_PRIVATE_KEY;
+    const rawEmail = getEnv('FIREBASE_CLIENT_EMAIL');
+    const rawKey = getEnv('FIREBASE_PRIVATE_KEY');
 
     if (!rawEmail || !rawKey) {
-        const availableKeys = Object.keys(process.env).filter(k => !k.includes('KEY') && !k.includes('SECRET'));
-        throw new Error(`[Google Auth] Missing Credentials. Available Env Keys: ${availableKeys.join(', ')}`);
+        throw new Error(`[Google Auth] Missing Credentials (EMAIL or KEY). Please check Cloudflare Secrets.`);
     }
 
     const clientEmail = rawEmail.replace(/['"]/g, '').trim();

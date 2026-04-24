@@ -10,11 +10,14 @@ function generateSafeId(url: string): string {
     return btoa(url).replace(/\//g, '_').replace(/\+/g, '-').replace(/=/g, '');
 }
 
+import { getEnv } from '@/lib/env';
+
 export async function POST(request: Request) {
     const traceId = crypto.randomUUID();
     try {
-        if (!process.env.GEMINI_API_KEY) {
-            console.error('[Collect API] ❌ GEMINI_API_KEY is missing');
+        const apiKey = getEnv('GEMINI_API_KEY');
+        if (!apiKey) {
+            console.error(`[Collect API][${traceId}] ❌ GEMINI_API_KEY is missing`);
             return NextResponse.json({
                 success: false,
                 error: 'GEMINI_API_KEY가 설정되지 않았습니다.',

@@ -1,5 +1,6 @@
 // lib/db/data-connect-admin.ts
 import { getGoogleAccessToken } from '@/lib/auth/google-auth';
+import { getEnv } from '@/lib/env';
 
 /**
  * LITE VERSION for Cloudflare Workers (High Compatibility Edition)
@@ -9,12 +10,9 @@ const LOCATION = 'asia-northeast3';
 const SERVICE_ID = 'k-spirits-club-hub';
 
 async function executeGraphql(operationName: string, query: string, variables: any = {}) {
-    const projectId = process.env.FIREBASE_PROJECT_ID || 
-                      process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 
-                      (globalThis as any).FIREBASE_PROJECT_ID;
-                      
-    const clientEmail = process.env.FIREBASE_CLIENT_EMAIL || (globalThis as any).FIREBASE_CLIENT_EMAIL;
-    const privateKey = process.env.FIREBASE_PRIVATE_KEY || (globalThis as any).FIREBASE_PRIVATE_KEY;
+    const projectId = getEnv('FIREBASE_PROJECT_ID') || getEnv('NEXT_PUBLIC_FIREBASE_PROJECT_ID');
+    const clientEmail = getEnv('FIREBASE_CLIENT_EMAIL');
+    const privateKey = getEnv('FIREBASE_PRIVATE_KEY');
 
     // Validate Environment with detailed missing info
     if (!projectId || !clientEmail || !privateKey) {

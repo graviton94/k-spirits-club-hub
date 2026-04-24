@@ -17,12 +17,14 @@ const MANDATORY_VARS = [
     'NEXT_PUBLIC_APP_ID'
 ];
 
+import { getEnv } from '@/lib/env';
+
 export async function GET() {
     const results: Record<string, boolean> = {};
     const missing: string[] = [];
 
     [...MANDATORY_SECRETS, ...MANDATORY_VARS].forEach(key => {
-        const val = process.env[key];
+        const val = getEnv(key);
         const exists = !!val && val.length > 0;
         results[key] = exists;
         if (!exists) missing.push(key);
