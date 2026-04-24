@@ -33,26 +33,19 @@ pip install -r requirements-dev.txt
 ```
 
 ### **3. Environment Variables**
-루트 디렉토리에 `.env.local` 파일을 생성합니다:
+본 프로젝트는 **Cloudflare Workers (OpenNext)** 환경에서 구동됩니다. 환경변수 관리는 아래의 원칙을 반드시 따릅니다.
+
+1. **로컬 개발**: `.env.local` 파일에 모든 키를 저장합니다.
+2. **배포 환경 (Cloudflare)**: 
+   - 모든 환경변수는 Cloudflare 대시보드의 **Settings > Variables** 메뉴에서 **"Variable" (평문)** 타입으로 등록합니다.
+   - **Secret** 타입은 프레임워크(OpenNext) 바인딩 이슈를 방지하기 위해 지양합니다.
+3. **Wrangler 선언**: 새로운 환경변수를 추가할 경우, 반드시 [wrangler.jsonc](file:///c:/k-spirits-club-hub/wrangler.jsonc)의 `vars` 섹션에도 키 이름을 등록해야 합니다.
 
 ```env
-# Firebase Configuration (Data Connect)
-FIREBASE_PROJECT_ID=your-project-id
-FIREBASE_API_KEY=your-api-key
-
-# Google Gemini API
+# Essential Keys
+FIREBASE_PROJECT_ID=k-spirits-club
 GEMINI_API_KEY=your-gemini-api-key
-
-# Analytics
-NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
-NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
-```
-
-> **중요**: `.env` 파일은 반드시 `KEY=VALUE` 형식을 따라야 합니다. JavaScript 객체 타입이나 다른 코드 문법을 포함하면 파싱 에러가 발생합니다.
-
-### **4. Start Development Server**
-```bash
-npm run dev
+... (기타 모든 변수 리스트)
 ```
 
 ---
@@ -105,20 +98,19 @@ npx tsx scripts/publish-ready-data.ts
 
 ---
 
-## 🚢 Deployment
+## 🚢 Deployment (Cloudflare Workers)
 
-### **Cloudflare Pages Deployment**
+### **Deployment Command**
+OpenNext를 사용하여 Cloudflare Workers로 배포합니다.
 ```bash
-# 1. Build for production
-npm run build
-# 2. Deploy
-npx wrangler pages deploy .next/out
+# 1. Build and Deploy
+npm run worker:deploy
 ```
 
 ### **Deployment Checklist**
-- [ ] All environment variables set
-- [ ] Firebase Data Connect schema deployed (`firebase deploy --only dataconnect`)
-- [ ] Search index generated (`/api/spirits/search`)
+- [ ] [wrangler.jsonc](file:///c:/k-spirits-club-hub/wrangler.jsonc)의 `vars` 섹션에 키가 모두 등록되어 있는가?
+- [ ] Cloudflare 대시보드에 모든 값이 **Variable**로 입력되어 있는가?
+- [ ] Firebase Data Connect 스키마가 배포되었는가?
 
 ---
 

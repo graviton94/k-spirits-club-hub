@@ -19,9 +19,12 @@ The project is 100% Relational SQL via **Firebase Data Connect (PostgreSQL)**. L
 - **Security:** Strict GQL `@auth` directives are required for all mutations.
 - **i18n:** URL-based localization (`/ko`, `/en`) enforced via middleware.
 - **AI Integration:** Multi-stage enrichment using Gemini 2.0 Flash.
+- **Environment Management:** 
+  - ALWAYS use [wrangler.jsonc](file:///c:/k-spirits-club-hub/wrangler.jsonc) `vars` for cloud variable declarations.
+  - Deployment MUST use `npm run worker:deploy`.
+  - All Cloudflare variables are managed as **"Variable" (Plaintext)**, NOT Secrets.
 
 ## 🛠️ Verification Checklist
 - Run `npx firebase dataconnect:sdk:generate` after GQL schema changes.
 - Ensure CLS 0 performance via Skeleton UI implementation.
 - Validate all admin actions against UID `fiO8qf1PjLZAPBNcJmvy1cpqrY52`.
-
