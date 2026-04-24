@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { getCanonicalUrl, getHreflangAlternates, toAbsoluteUrl } from '@/lib/utils/seo-url';
 import ReviewBoardPage from './reviews-client';
 import { dbListSpiritReviews } from '@/lib/db/data-connect-client';
+import { RelatedContentLinks, getRelatedIcon } from '@/components/common/related-content-links';
 
 interface ReviewsPageProps {
   params: Promise<{ lang: string }>;
@@ -131,15 +132,17 @@ export default async function ReviewsPage({ params, searchParams }: ReviewsPageP
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
       />
-      {/* SSR landing content — provides substantial indexed copy for both KO and EN */}
+      <ReviewBoardPage key={`page-${page}`} initialReviews={initialReviews} initialPage={page} />
+
+      {/* SSR landing content — moved below main content for better UX */}
       <section className="bg-background border-t border-border/40 py-14 px-4">
         <div className="container mx-auto max-w-2xl space-y-10">
 
           {/* Introduction */}
           <div className="space-y-4">
-            <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
-              {isEn ? 'Spirits Review Board' : '주류 리뷰 보드'}
-            </h1>
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight">
+              {isEn ? 'About the Spirits Review Board' : '시음 리뷰 보드 안내'}
+            </h2>
             {isEn ? (
               <>
                 <p className="text-muted-foreground leading-relaxed">
@@ -163,9 +166,9 @@ export default async function ReviewsPage({ params, searchParams }: ReviewsPageP
 
           {/* What You Can Discover */}
           <div className="space-y-3">
-            <h2 className="text-xl font-semibold">
+            <h3 className="text-xl font-semibold">
               {isEn ? 'What You Can Discover in Reviews' : '리뷰에서 발견할 수 있는 것들'}
-            </h2>
+            </h3>
             {isEn ? (
               <ul className="list-disc list-inside space-y-2 text-muted-foreground text-sm leading-relaxed">
                 <li>Detailed tasting notes on aroma, palate, and finish — not just star ratings.</li>
@@ -187,9 +190,9 @@ export default async function ReviewsPage({ params, searchParams }: ReviewsPageP
 
           {/* FAQ */}
           <div className="space-y-4">
-            <h2 className="text-xl font-semibold">
+            <h3 className="text-xl font-semibold">
               {isEn ? 'Frequently Asked Questions' : '자주 묻는 질문'}
-            </h2>
+            </h3>
             <dl className="space-y-4 text-sm">
               {isEn ? (
                 <>
@@ -199,11 +202,7 @@ export default async function ReviewsPage({ params, searchParams }: ReviewsPageP
                   </div>
                   <div>
                     <dt className="font-semibold text-foreground">What spirits can be reviewed?</dt>
-                    <dd className="text-muted-foreground mt-1">Any spirit in our catalog of 100,000+ products can be reviewed, including whisky, soju, makgeolli, sake, wine, gin, rum, tequila, and Korean traditional spirits.</dd>
-                  </div>
-                  <div>
-                    <dt className="font-semibold text-foreground">Are reviews moderated?</dt>
-                    <dd className="text-muted-foreground mt-1">Yes. Community reviews go through a basic moderation step to keep content authentic and spam-free. Offensive or clearly fabricated reviews are removed.</dd>
+                    <dd className="text-muted-foreground mt-1">Any spirit in our catalog can be reviewed, including whisky, soju, makgeolli, sake, wine, gin, rum, tequila, and Korean traditional spirits.</dd>
                   </div>
                 </>
               ) : (
@@ -214,11 +213,7 @@ export default async function ReviewsPage({ params, searchParams }: ReviewsPageP
                   </div>
                   <div>
                     <dt className="font-semibold text-foreground">어떤 주류를 리뷰할 수 있나요?</dt>
-                    <dd className="text-muted-foreground mt-1">위스키, 소주, 막걸리, 사케, 와인, 진, 럼, 데킬라, 전통주 등 10만 종 이상의 카탈로그에 등록된 모든 주류를 리뷰할 수 있습니다.</dd>
-                  </div>
-                  <div>
-                    <dt className="font-semibold text-foreground">리뷰는 검토되나요?</dt>
-                    <dd className="text-muted-foreground mt-1">네. 커뮤니티 리뷰는 콘텐츠의 진정성을 유지하고 스팸을 방지하기 위해 기본 검토 과정을 거칩니다. 모욕적이거나 명백히 허위인 리뷰는 삭제됩니다.</dd>
+                    <dd className="text-muted-foreground mt-1">위스키, 소주, 막걸리, 사케, 와인, 진, 럼, 데킬라, 전통주 등 카탈로그에 등록된 모든 주류를 리뷰할 수 있습니다.</dd>
                   </div>
                 </>
               )}
@@ -226,24 +221,18 @@ export default async function ReviewsPage({ params, searchParams }: ReviewsPageP
           </div>
 
           {/* Internal Links */}
-          <div className="space-y-3 pt-2 border-t border-border/40">
-            <h2 className="font-semibold text-muted-foreground uppercase tracking-widest text-sm">
-              {isEn ? 'Explore Related Content' : '관련 콘텐츠 탐색'}
-            </h2>
-            <ul className="flex flex-wrap gap-2 text-sm">
-              <li><Link href={`/${lang}/contents`} className="px-3 py-1.5 rounded-full border border-border hover:border-blue-500/60 hover:text-blue-500 transition-colors">{isEn ? 'Contents Hub' : '콘텐츠 허브'}</Link></li>
-              <li><Link href={`/${lang}/explore`} className="px-3 py-1.5 rounded-full border border-border hover:border-blue-500/60 hover:text-blue-500 transition-colors">{isEn ? 'Explore Spirits' : '주류 탐색'}</Link></li>
-              <li><Link href={`/${lang}/contents/wiki/soju-guide`} className="px-3 py-1.5 rounded-full border border-border hover:border-blue-500/60 hover:text-blue-500 transition-colors">{isEn ? 'Korean Soju Guide' : '소주 가이드'}</Link></li>
-              <li><Link href={`/${lang}/contents/wiki/makgeolli-guide`} className="px-3 py-1.5 rounded-full border border-border hover:border-blue-500/60 hover:text-blue-500 transition-colors">{isEn ? 'Makgeolli Guide' : '막걸리 가이드'}</Link></li>
-              <li><Link href={`/${lang}/contents/mbti`} className="px-3 py-1.5 rounded-full border border-border hover:border-blue-500/60 hover:text-blue-500 transition-colors">{isEn ? 'Spirit MBTI Test' : '주류 MBTI 테스트'}</Link></li>
-              <li><Link href={`/${lang}/contents/news`} className="px-3 py-1.5 rounded-full border border-border hover:border-blue-500/60 hover:text-blue-500 transition-colors">{isEn ? 'Global Spirits News' : '글로벌 주류 뉴스'}</Link></li>
-            </ul>
-          </div>
+          <RelatedContentLinks 
+            title={isEn ? 'Explore Related Content' : '관련 콘텐츠 탐색'}
+            links={[
+              { href: `/${lang}/contents`, label: isEn ? 'Contents Hub' : '콘텐츠 허브', icon: getRelatedIcon('hub', '/contents') },
+              { href: `/${lang}/explore`, label: isEn ? 'Explore Spirits' : '주류 탐색', icon: getRelatedIcon('explore', '/explore') },
+              { href: `/${lang}/contents/mbti`, label: isEn ? 'Spirit MBTI Test' : '주류 MBTI 테스트', icon: getRelatedIcon('mbti', '/contents/mbti') },
+              { href: `/${lang}/contents/news`, label: isEn ? 'Global Spirits News' : '글로벌 주류 뉴스', icon: getRelatedIcon('news', '/contents/news') },
+            ]}
+          />
 
         </div>
       </section>
-
-      <ReviewBoardPage key={`page-${page}`} initialReviews={initialReviews} initialPage={page} />
     </>
   );
 }

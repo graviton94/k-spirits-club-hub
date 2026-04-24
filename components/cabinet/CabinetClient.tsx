@@ -220,65 +220,76 @@ export default function CabinetClient({ lang, dict }: CabinetClientProps) {
     }
 
     return (
-        <div className="container mx-auto px-4 py-8 max-w-6xl pb-32">
-            <div className="mb-12 relative">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-amber-500/10 blur-[100px] pointer-events-none" />
+        <div className="container mx-auto px-4 py-12 max-w-6xl pb-32">
+            <div className="mb-14 relative">
+                {/* Immersive Background Atmosphere */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-96 bg-primary/10 blur-[120px] pointer-events-none" />
 
-                <div className="text-center mb-10 relative z-10">
-                    <h1 className="text-4xl md:text-5xl font-black mb-3 tracking-tighter bg-gradient-to-r from-amber-200 via-amber-500 to-orange-600 bg-clip-text text-transparent drop-shadow-sm">
-                        {dict.title || (isEn ? "My Cabinet" : "내 술장")}
-                    </h1>
-                    <p className="text-sm font-bold text-muted-foreground/60 tracking-widest uppercase">
-                        {dict.subtitle || "Curated Spirits & Tasting Journey"}
-                    </p>
+                <div className="text-center mb-12 relative z-10">
+                    <motion.div
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                    >
+                        <h1 className="text-5xl md:text-7xl font-black mb-4 tracking-tighter bg-brand-gradient bg-clip-text text-transparent italic uppercase drop-shadow-2xl leading-none">
+                            {dict.title || (isEn ? "My Cabinet" : "내 술장")}
+                        </h1>
+                        <p className="text-[10px] md:text-xs font-black text-muted-foreground/40 tracking-[0.6em] uppercase flex items-center justify-center gap-3">
+                            <span className="w-10 h-px bg-primary/20" />
+                            {dict.subtitle || "Curated Spirits & Tasting Journey"}
+                            <span className="w-10 h-px bg-primary/20" />
+                        </p>
+                    </motion.div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-3 sm:gap-6 mb-10 max-w-2xl mx-auto relative z-10">
-                    <div className="bg-card/40 backdrop-blur-md border border-border/50 rounded-2xl p-4 sm:p-6 text-center shadow-xl shadow-black/5 hover:border-amber-500/30 transition-colors group">
-                        <p className="text-2xl sm:text-3xl font-black text-foreground group-hover:scale-110 transition-transform duration-300">{spirits.length}</p>
-                        <p className="text-[9px] sm:text-[10px] font-black text-muted-foreground uppercase tracking-widest mt-1 opacity-60">
+                <div className="grid grid-cols-3 gap-4 md:gap-10 mb-16 max-w-4xl mx-auto relative z-10">
+                    <div className="bg-card/20 backdrop-blur-3xl border border-white/5 rounded-[2.5rem] p-6 md:p-10 text-center shadow-2xl hover:border-primary/30 transition-all duration-700 group relative overflow-hidden">
+                        <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <p className="text-4xl md:text-5xl font-black text-foreground group-hover:scale-110 transition-transform duration-700 leading-none mb-2 italic">{spirits.length}</p>
+                        <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest opacity-30">
                             {dict.stats?.bottles || "Bottles"}
                         </p>
                     </div>
-                    <div className="bg-card/40 backdrop-blur-md border border-border/50 rounded-2xl p-4 sm:p-6 text-center shadow-xl shadow-black/5 hover:border-amber-500/30 transition-colors group">
-                        <p className="text-2xl sm:text-3xl font-black text-foreground group-hover:scale-110 transition-transform duration-300">{isLoadingStats ? '...' : reviewCount}</p>
-                        <p className="text-[9px] sm:text-[10px] font-black text-muted-foreground uppercase tracking-widest mt-1 opacity-60">
+                    <div className="bg-card/20 backdrop-blur-3xl border border-white/5 rounded-[2.5rem] p-6 md:p-10 text-center shadow-2xl hover:border-primary/30 transition-all duration-700 group relative overflow-hidden">
+                        <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <p className="text-4xl md:text-5xl font-black text-foreground group-hover:scale-110 transition-transform duration-700 leading-none mb-2 italic">{isLoadingStats ? '...' : reviewCount}</p>
+                        <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest opacity-30">
                             {dict.stats?.reviews || "Reviews"}
                         </p>
                     </div>
-                    <div className="bg-card/40 backdrop-blur-md border border-border/50 rounded-2xl p-4 sm:p-6 text-center shadow-xl shadow-black/5 hover:border-rose-500/30 transition-colors group">
-                        <p className="text-2xl sm:text-3xl font-black text-rose-500 group-hover:scale-110 transition-transform duration-300">{isLoadingStats ? '...' : likesReceived}</p>
-                        <p className="text-[9px] sm:text-[10px] font-black text-muted-foreground uppercase tracking-widest mt-1 opacity-60">
+                    <div className="bg-card/20 backdrop-blur-3xl border border-white/5 rounded-[2.5rem] p-6 md:p-10 text-center shadow-2xl hover:border-rose-500/30 transition-all duration-700 group relative overflow-hidden">
+                        <div className="absolute inset-0 bg-rose-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <p className="text-4xl md:text-5xl font-black text-rose-500 group-hover:scale-110 transition-transform duration-700 leading-none mb-2 italic">{isLoadingStats ? '...' : likesReceived}</p>
+                        <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest opacity-30">
                             {dict.stats?.hearts || "Hearts"}
                         </p>
                     </div>
                 </div>
 
                 <div className="flex justify-center relative z-10">
-                    <div className="inline-flex p-1.5 bg-secondary/50 backdrop-blur-md border border-border/50 rounded-2xl shadow-inner mb-2">
+                    <div className="inline-flex p-2 bg-muted/20 backdrop-blur-2xl border border-white/10 rounded-[2rem] shadow-2xl mb-2">
                         <button
                             onClick={() => setViewMode('cellar')}
                             className={`
-                flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-black transition-all duration-300
-                ${viewMode === 'cellar'
-                                    ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/40 scale-105'
+                                flex items-center gap-2.5 px-8 py-3 rounded-[1.5rem] text-sm font-black transition-all duration-500
+                                ${viewMode === 'cellar'
+                                    ? 'bg-primary text-primary-foreground shadow-[0_10px_30px_-5px_rgba(var(--primary-rgb),0.5)] scale-105'
                                     : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
                                 }
-              `}
+                            `}
                         >
-                            <span>🍾</span> {dict.viewMode?.cabinet || (isEn ? "Cabinet" : "술장")}
+                            <span className="text-lg">🍾</span> {dict.viewMode?.cabinet || (isEn ? "Cabinet" : "술장")}
                         </button>
                         <button
                             onClick={() => setViewMode('flavor')}
                             className={`
-                flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-black transition-all duration-300
-                ${viewMode === 'flavor'
-                                    ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/40 scale-105'
+                                flex items-center gap-2.5 px-8 py-3 rounded-[1.5rem] text-sm font-black transition-all duration-500
+                                ${viewMode === 'flavor'
+                                    ? 'bg-primary text-primary-foreground shadow-[0_10px_30px_-5px_rgba(var(--primary-rgb),0.5)] scale-105'
                                     : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
                                 }
-              `}
+                            `}
                         >
-                            <span>🌌</span> {dict.viewMode?.tasteDna || (isEn ? "Taste DNA" : "취향 탐색")}
+                            <span className="text-lg">🌌</span> {dict.viewMode?.tasteDna || (isEn ? "Taste DNA" : "취향 탐색")}
                         </button>
                     </div>
                 </div>

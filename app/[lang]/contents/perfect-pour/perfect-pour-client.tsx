@@ -1,9 +1,8 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, RefreshCw, Trophy, AlertTriangle, Share2 } from 'lucide-react';
-import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
 import confetti from 'canvas-confetti';
 import SuccessToast from '@/components/ui/SuccessToast';
@@ -17,11 +16,9 @@ export default function PerfectPourPage() {
 
     const [gameState, setGameState] = useState<'IDLE' | 'POURING_SOJU' | 'POURING_BEER' | 'FINISHED'>('IDLE');
 
-    // UI 렌더링용 State
     const [sojuLevel, setSojuLevel] = useState(0);
     const [beerLevel, setBeerLevel] = useState(0);
 
-    // 로직 계산용 Ref (실시간 동기화) - 이전 턴 수정사항 유지
     const levelsRef = useRef({ soju: 0, beer: 0 });
 
     const [score, setScore] = useState<number | null>(null);
@@ -32,7 +29,6 @@ export default function PerfectPourPage() {
     const requestRef = useRef<number | null>(null);
     const animationIdCounter = useRef<number>(0);
 
-    // 값을 업데이트할 때 State와 Ref를 동시에 업데이트
     const updateLevel = (type: 'soju' | 'beer', value: number) => {
         if (type === 'soju') {
             setSojuLevel(value);
@@ -85,18 +81,10 @@ export default function PerfectPourPage() {
         }
     };
 
-    /**
-     * 🎯 점수 계산 로직 (완화된 버전)
-     * - 비율 가중치: 80%
-     * - 총량 가중치: 20%
-     * - 채점 방식: 감점 폭을 줄이고(로그형/완만한 곡선), 허용 오차를 넓힘
-     */
     const calculateScore = (overflow: boolean, sLevel: number, bLevel: number) => {
         const total = sLevel + bLevel;
-        // 0으로 나누기 방지
         const sojuRatio = total > 0 ? sLevel / total : 0;
 
-        // 1. 즉시 실패 조건 (너무 극단적인 경우)
         if (overflow || total >= 99.9 || sLevel >= 99.9) {
             setScore(0);
             setMessage(getMessage('overflow'));
@@ -108,42 +96,30 @@ export default function PerfectPourPage() {
             return;
         }
 
-        // 2. 점수 계산 (각 항목 100점 만점 기준)
-
-        // [A] 비율 점수 (목표: 0.3)
-        // 오차가 0.02(2%) 이내면 100점, 그 외에는 완만하게 감점
         const ratioDiff = Math.abs(sojuRatio - 0.3);
         let ratioScore = 0;
         if (ratioDiff <= 0.02) {
-            ratioScore = 100; // Perfect Zone
+            ratioScore = 100;
         } else {
-            // 허용 오차 0.2 (0.1 ~ 0.5 범위까지 점수 부여)
-            // 제곱근(Math.pow(..., 0.5)) 등을 쓰면 감점이 더 천천히 일어남
             const tolerance = 0.2;
             const normalizedDiff = Math.min(ratioDiff / tolerance, 1);
-            // 1 - x^1.5 : 선형보다 조금 더 관대함 (초반 감점이 적음)
             ratioScore = 100 * Math.max(0, 1 - Math.pow(normalizedDiff, 1.2));
         }
 
-        // [B] 총량 점수 (목표: 90)
-        // 오차가 3 이내면 100점
         const totalDiff = Math.abs(total - 90);
         let totalScore = 0;
         if (totalDiff <= 3) {
-            totalScore = 100; // Perfect Zone
+            totalScore = 100;
         } else {
-            // 허용 오차 40 (50 ~ 130 범위까지 점수 부여)
             const tolerance = 40;
             const normalizedDiff = Math.min(totalDiff / tolerance, 1);
             totalScore = 100 * Math.max(0, 1 - Math.pow(normalizedDiff, 1.5));
         }
 
-        // 3. 최종 가중치 합산 (비율 80% + 총량 20%)
         let finalScore = Math.round((ratioScore * 0.8) + (totalScore * 0.2));
 
-        // 4. 메시지 및 효과
         if (finalScore >= 98) {
-            finalScore = 100; // 98점 이상은 그냥 100점 처리 (기분 좋게)
+            finalScore = 100;
             setMessage(getMessage('perfect'));
             confetti({
                 particleCount: 200,
@@ -168,14 +144,11 @@ export default function PerfectPourPage() {
         if (requestRef.current) cancelAnimationFrame(requestRef.current);
         requestRef.current = null;
         animationIdCounter.current++;
-
         setGameState('FINISHED');
-
-        // Ref에서 최신 값을 가져와 계산
         const currentSoju = levelsRef.current.soju;
         const currentBeer = levelsRef.current.beer;
         calculateScore(overflow, currentSoju, currentBeer);
-    }, []); // calculateScore is defined outside or use useCallback if inside
+    }, []);
 
     const handleShare = () => {
         const shareTitle = isEn ? 'Somaek Master 🍺' : '소맥 제조기 🍺';
@@ -196,9 +169,7 @@ export default function PerfectPourPage() {
     };
 
     const switchAction = (e?: any) => {
-        // 모바일/PC 중복 이벤트 방지
         if (e && e.cancelable) e.preventDefault();
-
         if (gameState === 'POURING_SOJU') {
             setGameState('POURING_BEER');
             startAnimation('beer');
@@ -209,28 +180,22 @@ export default function PerfectPourPage() {
 
     const startAnimation = (type: 'soju' | 'beer') => {
         if (requestRef.current) cancelAnimationFrame(requestRef.current);
-
         const currentAnimId = ++animationIdCounter.current;
-        const speedPerSecond = 40; // 초당 40% 채움 (조금 더 정교한 조작 가능)
+        const speedPerSecond = 40;
         let lastTime: number | null = null;
 
         const animate = (time: number) => {
             if (currentAnimId !== animationIdCounter.current) return;
-
             if (lastTime === null) {
                 lastTime = time;
                 requestRef.current = requestAnimationFrame(animate);
                 return;
             }
-
             const delta = (time - lastTime) / 1000;
             lastTime = time;
-
-            const validDelta = Math.min(delta, 0.05); // More frequent updates limit
+            const validDelta = Math.min(delta, 0.05);
             const increment = speedPerSecond * validDelta;
-
             let stopped = false;
-
             const currentSoju = levelsRef.current.soju;
             const currentBeer = levelsRef.current.beer;
 
@@ -238,7 +203,7 @@ export default function PerfectPourPage() {
                 const next = currentSoju + increment;
                 if (next >= 100) {
                     updateLevel('soju', 100);
-                    finishGame(true); // Overflow
+                    finishGame(true);
                     stopped = true;
                 } else {
                     updateLevel('soju', next);
@@ -247,18 +212,16 @@ export default function PerfectPourPage() {
                 const next = currentBeer + increment;
                 if (currentSoju + next >= 100) {
                     updateLevel('beer', 100 - currentSoju);
-                    finishGame(true); // Overflow
+                    finishGame(true);
                     stopped = true;
                 } else {
                     updateLevel('beer', next);
                 }
             }
-
             if (!stopped) {
                 requestRef.current = requestAnimationFrame(animate);
             }
         };
-
         requestRef.current = requestAnimationFrame(animate);
     };
 
@@ -269,49 +232,59 @@ export default function PerfectPourPage() {
         };
     }, []);
 
-    // 시각적 렌더링용 변수
     const displayTotal = sojuLevel + beerLevel;
     const displaySojuPercent = displayTotal > 0 ? (sojuLevel / displayTotal) * 100 : 0;
 
     const liquidBackground = gameState === 'POURING_SOJU' || gameState === 'IDLE'
-        ? 'linear-gradient(to top, #e2e8f0 0%, #cbd5e1 100%)'
+        ? 'linear-gradient(to top, #f8fafc 0%, #cbd5e1 100%)' 
         : `linear-gradient(to top, 
-            #e2e8f0 0%, 
+            #f8fafc 0%, 
             #cbd5e1 ${Math.max(0, displaySojuPercent - 5)}%, 
-            #f59e0b ${Math.min(100, displaySojuPercent + 5)}%, 
-            #d97706 100%)`;
+            #fbbf24 ${Math.min(100, displaySojuPercent + 5)}%, 
+            #d97706 100%)`; 
 
     return (
-        <div className="container mx-auto px-4 pt-8 pb-32 max-w-lg min-h-screen flex flex-col">
-            {/* Header */}
-            <div className="flex items-center gap-4 mb-8">
+        <div className="container mx-auto px-4 pt-12 pb-32 max-w-lg min-h-screen flex flex-col relative overflow-hidden">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[500px] bg-primary/5 blur-[120px] pointer-events-none" />
+
+            <div className="flex items-center gap-5 mb-10 relative z-10">
                 <button
                     onClick={() => router.back()}
-                    className="p-2.5 bg-card/50 backdrop-blur-md border border-border rounded-2xl hover:bg-muted transition-all"
+                    className="p-3 bg-card/30 backdrop-blur-xl border border-white/5 rounded-2xl hover:bg-muted transition-all group"
                 >
-                    <ChevronLeft className="w-5 h-5 text-foreground" />
+                    <ChevronLeft className="w-5 h-5 text-foreground group-hover:-translate-x-1 transition-transform" />
                 </button>
-                <h1 className="text-2xl font-black text-foreground">{isEn ? "Somaek Master" : "소맥 마스터"}</h1>
+                <div>
+                    <h1 className="text-3xl font-black italic uppercase tracking-tighter bg-brand-gradient bg-clip-text text-transparent">
+                        {isEn ? "Perfect Pour" : "퍼펙트 푸어"}
+                    </h1>
+                    <p className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-widest">{isEn ? "Somaek Mastery" : "소맥 마스터리"}</p>
+                </div>
             </div>
 
-            <div className="flex-1 flex flex-col items-center justify-center">
-                <div className="text-center mb-12">
-                    <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-gray-200 to-yellow-400 bg-clip-text text-transparent">
-                        {isEn ? "Somaek Maker" : "소맥 제조기"}
+            <div className="flex-1 flex flex-col items-center justify-center relative z-10">
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-center mb-14"
+                >
+                    <h2 className="text-2xl font-black mb-3 text-foreground tracking-tight italic">
+                        {isEn ? "Master of Proportion" : "황금 비율의 연금술사"}
                     </h2>
-                    <p className="text-neutral-400 text-xs">
-                        {isEn ? "1. Soju 🍶 -> 2. Beer 🍺 -> 3. Cheers! 🥂" : "1. 소주 🍶 -> 2. 맥주 🍺 -> 3. 완성! 🥂"}<br />
-                        <span className="text-yellow-500 font-bold">
-                            {isEn ? "Goal: Total 90% & Golden Ratio!" : "목표: 총량 90% & 비밀의 황금 비율!"}
+                    <div className="inline-flex gap-2 p-1.5 bg-muted/20 backdrop-blur-xl border border-white/5 rounded-2xl">
+                        <span className="text-[10px] font-black uppercase text-muted-foreground/60 px-3 py-1">
+                            {isEn ? "Goal: 90% Volume" : "목표: 총량 90%"}
                         </span>
-                    </p>
-                </div>
+                        <div className="w-px h-full bg-white/5" />
+                        <span className="text-[10px] font-black uppercase text-primary px-3 py-1">
+                            {isEn ? "30% Soju Ratio" : "소주 비율 30%"}
+                        </span>
+                    </div>
+                </motion.div>
 
-                {/* Game Container */}
-                <div className="relative w-40 h-80 bg-white/5 border-4 border-sky-300/50 rounded-b-3xl rounded-t-lg backdrop-blur-sm overflow-hidden mb-12 shadow-2xl">
-                    {/* Liquid Layer */}
+                <div className="relative w-44 h-80 bg-white/5 border-[5px] border-white/10 rounded-b-[3rem] rounded-t-xl backdrop-blur-md overflow-hidden mb-16 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)]">
                     <div
-                        className="absolute w-full shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+                        className="absolute w-full transition-all duration-100 ease-linear"
                         style={{
                             bottom: 0,
                             height: `${Math.min(100, displayTotal)}%`,
@@ -319,108 +292,148 @@ export default function PerfectPourPage() {
                             zIndex: 10
                         }}
                     >
-                        <div className="absolute top-0 w-full h-1 bg-white/50 blur-[1px] animate-pulse" />
+                        <div className="absolute top-0 w-full h-2 bg-white/40 blur-[2px] animate-pulse" />
+                        {gameState === 'POURING_BEER' && (
+                            <div className="absolute inset-0 overflow-hidden">
+                                {Array.from({ length: 15 }).map((_, i) => (
+                                    <motion.div
+                                        key={i}
+                                        initial={{ y: '100%', opacity: 0 }}
+                                        animate={{ y: '-10%', opacity: [0, 0.5, 0] }}
+                                        transition={{ 
+                                            duration: 1 + Math.random() * 2, 
+                                            repeat: Infinity, 
+                                            delay: Math.random() * 2 
+                                        }}
+                                        className="absolute w-1 h-1 bg-white/30 rounded-full"
+                                        style={{ left: `${Math.random() * 100}%` }}
+                                    />
+                                ))}
+                            </div>
+                        )}
                     </div>
-                    {/* Reflection */}
-                    <div className="absolute top-0 left-2 w-3 h-full bg-gradient-to-r from-white/20 to-transparent rounded-l-full blur-[1px] z-20 pointer-events-none" />
+                    <div className="absolute top-0 left-3 w-4 h-full bg-gradient-to-r from-white/10 to-transparent blur-[1px] z-20 pointer-events-none" />
+                    <div className="absolute top-0 right-3 w-2 h-full bg-gradient-to-l from-white/5 to-transparent blur-[1px] z-20 pointer-events-none" />
                 </div>
 
-                {/* Controls */}
-                <div className="w-full max-w-xs relative h-40 select-none">
-                    {gameState === 'IDLE' && (
-                        <button
-                            onClick={startGame}
-                            className="w-full py-5 rounded-2xl font-black text-xl shadow-lg bg-slate-200 text-slate-900 hover:scale-105 transition-transform active:scale-95"
-                        >
-                            {isEn ? "Pour Soju 🍶" : "소주 따르기 🍶"}
-                        </button>
-                    )}
+                <div className="w-full max-w-xs relative h-44 select-none flex items-center justify-center">
+                    <AnimatePresence mode="wait">
+                        {gameState === 'IDLE' && (
+                            <motion.button
+                                key="start"
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.9 }}
+                                onClick={startGame}
+                                className="w-full py-6 rounded-[2rem] font-black text-xl shadow-2xl bg-foreground text-background hover:scale-105 transition-all active:scale-95 italic uppercase tracking-tighter"
+                            >
+                                {isEn ? "Initiate Pour 🍶" : "제조 시작 🍶"}
+                            </motion.button>
+                        )}
 
-                    {gameState === 'POURING_SOJU' && (
-                        <button
-                            onPointerDown={switchAction}
-                            className="w-full py-5 rounded-2xl font-black text-2xl shadow-lg bg-amber-500 text-white animate-pulse active:scale-95"
-                        >
-                            {isEn ? "Pour Beer! 🍺" : "맥주로 변경! 🍺"}
-                        </button>
-                    )}
+                        {gameState === 'POURING_SOJU' && (
+                            <motion.button
+                                key="soju"
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.9 }}
+                                onPointerDown={switchAction}
+                                className="w-full py-6 rounded-[2rem] font-black text-2xl shadow-2xl bg-primary text-primary-foreground animate-pulse active:scale-95 shadow-primary/20 italic uppercase tracking-tighter"
+                            >
+                                {isEn ? "Brew Mode! 🍺" : "맥주 투입! 🍺"}
+                            </motion.button>
+                        )}
 
-                    {gameState === 'POURING_BEER' && (
-                        <button
-                            onPointerDown={switchAction}
-                            className="w-full py-5 rounded-2xl font-black text-2xl shadow-lg bg-red-600 text-white animate-pulse active:scale-95"
-                        >
-                            STOP! 🛑
-                        </button>
-                    )}
+                        {gameState === 'POURING_BEER' && (
+                            <motion.button
+                                key="beer"
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.9 }}
+                                onPointerDown={switchAction}
+                                className="w-full py-6 rounded-[2rem] font-black text-2xl shadow-2xl bg-rose-600 text-white animate-pulse active:scale-95 shadow-rose-600/20 uppercase tracking-tighter"
+                            >
+                                HALT! 🛑
+                            </motion.button>
+                        )}
 
-                    {gameState === 'FINISHED' && (
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            className="bg-neutral-900/90 backdrop-blur-xl rounded-2xl border border-neutral-700 p-6 text-center shadow-2xl relative overflow-hidden"
-                        >
-                            {/* ... score display ... */}
-                            {score === 100 && <div className="absolute inset-0 bg-amber-500/20 blur-xl animate-pulse" />}
+                        {gameState === 'FINISHED' && (
+                            <motion.div
+                                key="result"
+                                initial={{ opacity: 0, scale: 0.9, y: 40 }}
+                                animate={{ opacity: 1, scale: 1, y: 0 }}
+                                className="w-full bg-card/20 backdrop-blur-3xl rounded-[3.5rem] border border-white/5 p-10 md:p-14 text-center shadow-[0_60px_120px_-30px_rgba(0,0,0,0.6)] relative overflow-hidden group"
+                            >
+                                <div className="absolute inset-0 bg-linear-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                                
+                                {score === 100 && (
+                                    <div className="absolute inset-0 bg-primary/5 blur-[100px] animate-pulse pointer-events-none" />
+                                )}
 
-                            <div className="relative z-10">
-                                <div className="text-5xl mb-2 animate-bounce">
-                                    {score === 100 ? '👑' : score && score >= 90 ? '😎' : score && score >= 60 ? '👍' : '😱'}
-                                </div>
+                                <div className="relative z-10 space-y-10">
+                                    <div className="space-y-4">
+                                        <div className="text-7xl group-hover:scale-110 transition-transform duration-700 block">
+                                            {score === 100 ? '👑' : score && score >= 90 ? '🥃' : score && score >= 60 ? '👌' : '💀'}
+                                        </div>
+                                        <div className="text-[10px] font-black text-primary uppercase tracking-[0.4em]">{isEn ? "Appraisal Verdict" : "정밀 감정 결과"}</div>
+                                    </div>
 
-                                <div className="mb-4">
-                                    <div className="text-sm text-neutral-400 uppercase tracking-widest mb-1">Final Score</div>
-                                    <div className={`text-6xl font-black ${score === 100 ? 'text-amber-400' : 'text-white'}`}>
-                                        {score}
+                                    <div className="relative inline-block">
+                                        <div className={`text-9xl font-black italic tracking-tighter leading-none ${score === 100 ? 'bg-brand-gradient bg-clip-text text-transparent' : 'text-foreground'}`}>
+                                            {score}
+                                        </div>
+                                        <div className="absolute -right-6 -top-2 text-2xl font-black text-muted-foreground/30 italic">PTS</div>
+                                    </div>
+
+                                    <div className="bg-card/30 backdrop-blur-3xl border border-white/5 rounded-[2.5rem] p-8">
+                                        <h3 className="text-xl md:text-2xl font-black text-foreground italic leading-tight tracking-tight uppercase">
+                                            &ldquo;{message}&rdquo;
+                                        </h3>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div className="p-6 bg-card/40 rounded-3xl border border-white/5 hover:border-primary/30 transition-all">
+                                            <p className="text-[10px] font-black text-muted-foreground uppercase mb-2 tracking-widest">{isEn ? "Volume" : "총량"}</p>
+                                            <p className={`text-xl font-black italic ${Math.abs(displayTotal - 90) < 5 ? "text-primary" : "text-foreground"}`}>
+                                                {displayTotal.toFixed(1)}%
+                                            </p>
+                                        </div>
+                                        <div className="p-6 bg-card/40 rounded-3xl border border-white/5 hover:border-primary/30 transition-all">
+                                            <p className="text-[10px] font-black text-muted-foreground uppercase mb-2 tracking-widest">{isEn ? "Ratio" : "비율"}</p>
+                                            <p className={`text-xl font-black italic ${Math.abs(displaySojuPercent - 30) < 3 ? "text-primary" : "text-foreground"}`}>
+                                                {displaySojuPercent.toFixed(1)}%
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex gap-4">
+                                        <button
+                                            onClick={resetGame}
+                                            className="grow py-6 bg-primary text-primary-foreground rounded-[2rem] font-black text-sm flex items-center justify-center gap-3 hover:brightness-110 transition-all active:scale-95 shadow-2xl shadow-primary/30 uppercase tracking-widest italic"
+                                        >
+                                            <RefreshCw className="w-5 h-5" /> {isEn ? "RETRY" : "다시 도전"}
+                                        </button>
+
+                                        <button
+                                            onClick={handleShare}
+                                            className="aspect-square w-20 bg-card/40 hover:bg-card/60 text-foreground rounded-[2rem] font-bold flex items-center justify-center transition-all active:scale-95 border border-white/10 shadow-2xl group/share"
+                                        >
+                                            <Share2 className="w-6 h-6 text-primary group-hover/share:scale-110 transition-transform" />
+                                        </button>
                                     </div>
                                 </div>
-
-                                <h3 className={`text-xl font-bold mb-4 ${score === 100 ? 'text-amber-400' : 'text-white'}`}>
-                                    {message}
-                                </h3>
-
-                                <div className="flex flex-col gap-1 text-xs text-neutral-400 mb-6 font-mono bg-black/30 py-3 rounded-lg border border-white/5">
-                                    <div className="flex justify-between px-8 mb-1">
-                                        <span>
-                                            {isEn ? "Total: " : "총량: "}
-                                            <span className={Math.abs(displayTotal - 90) < 5 ? "text-green-400" : "text-white"}>{displayTotal.toFixed(1)}%</span>
-                                            {isEn ? " (Goal 90%)" : " (목표 90%)"}
-                                        </span>
-                                    </div>
-                                    <div className="flex justify-between px-8 mb-2">
-                                        <span>
-                                            {isEn ? "Soju: " : "소주 비율: "}
-                                            <span className={Math.abs(displaySojuPercent - 30) < 3 ? "text-green-400" : "text-white"}>{displaySojuPercent.toFixed(1)}%</span>
-                                            {isEn ? " (Goal 30%)" : " (목표 30%)"}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <button
-                                    onClick={resetGame}
-                                    className="w-full py-4 bg-amber-500 hover:bg-amber-400 text-black rounded-xl font-black text-lg flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg shadow-amber-500/20"
-                                >
-                                    <RefreshCw className="w-5 h-5" /> {isEn ? "Retry" : "다시 도전"}
-                                </button>
-
-                                <button
-                                    onClick={handleShare}
-                                    className="w-full mt-3 py-4 bg-neutral-800 hover:bg-neutral-700 text-white rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all active:scale-95"
-                                >
-                                    <Share2 className="w-5 h-5 text-purple-500" />
-                                    {isEn ? "Share" : "친구에게 공유"}
-                                </button>
-                            </div>
-                        </motion.div>
-                    )}
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
 
                 <div className="w-full mt-12 flex justify-center pb-8 border-b-0">
-                    {/* PC/모바일 하단 안내 겸 수익화를 위한 배너 추가 */}
                     <GoogleAd
+                        key="ad-games"
                         client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
                         slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || ''}
                         format="horizontal"
+                        className="rounded-3xl overflow-hidden shadow-2xl border border-white/5"
                     />
                 </div>
             </div>
@@ -429,6 +442,6 @@ export default function PerfectPourPage() {
                 message={toastMessage}
                 onClose={() => setShowToast(false)}
             />
-        </div >
+        </div>
     );
 }

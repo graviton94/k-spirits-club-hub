@@ -4,7 +4,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { dbListNewsArticles, dbGetNewsCount, dbDeleteNews } from '@/lib/db/data-connect-client';
 import { useAuth } from '@/app/[lang]/context/auth-context';
 import Link from 'next/link';
-import { Search, Loader2, ChevronLeft, ChevronRight, ArrowLeft, Trash2 } from 'lucide-react';
+import { Search, Loader2, ChevronLeft, ChevronRight, ArrowLeft, Trash2, Sparkles } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import GoogleAd from '@/components/ui/GoogleAd';
@@ -108,121 +108,157 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
     const router = useRouter();
 
     return (
-        <div className="min-h-screen bg-background text-foreground pt-16 pb-12 px-4 transition-colors duration-300">
-            <div className="max-w-3xl mx-auto">
+        <div className="min-h-screen bg-background text-foreground pt-16 pb-12 px-4 relative overflow-hidden">
+            {/* Ambient Atmosphere */}
+            <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+
+            <div className="max-w-5xl mx-auto relative z-10">
                 {/* Back Button */}
                 <button
                     onClick={() => router.back()}
-                    className="mb-6 flex items-center gap-2 text-muted-foreground hover:text-foreground transition-all group"
+                    className="mb-8 flex items-center gap-2 text-muted-foreground hover:text-primary transition-all group"
                 >
-                    <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-                    <span className="text-sm font-bold">{isEn ? 'Back' : '뒤로가기'}</span>
+                    <div className="p-2 bg-card/40 rounded-xl border border-white/5 group-hover:scale-110 transition-transform">
+                        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                    </div>
+                    <span className="text-[10px] font-black uppercase tracking-widest">{isEn ? 'Back' : '뒤로가기'}</span>
                 </button>
+
                 {/* Header */}
-                <div className="mb-8 flex justify-between items-end">
-                    <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
-                        <h1 className="text-3xl font-black mb-2 text-indigo-600 dark:text-indigo-400 tracking-tight">{t.title}</h1>
-                        <p className="text-muted-foreground font-medium">{t.desc}</p>
+                <div className="mb-14 space-y-6">
+                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
+                        <div className="flex items-center gap-3">
+                             <div className="w-1.5 h-10 bg-brand-gradient rounded-full shadow-lg shadow-primary/20" />
+                             <h1 className="text-5xl md:text-7xl font-black bg-brand-gradient bg-clip-text text-transparent tracking-tighter italic uppercase leading-none">
+                                {t.title}
+                             </h1>
+                        </div>
+                        <p className="text-lg text-muted-foreground font-medium flex items-center gap-3 tracking-tight">
+                            <Sparkles className="w-5 h-5 text-primary/60 animate-pulse" />
+                            {t.desc}
+                        </p>
                     </motion.div>
                 </div>
 
                 {/* Search Bar */}
-                <form onSubmit={handleSearch} className="relative mb-12 flex gap-2">
+                <form onSubmit={handleSearch} className="relative mb-20 flex gap-4 max-w-3xl">
                     <div className="relative flex-1 group">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-indigo-500 transition-colors" />
+                        <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
                         <input
                             type="text"
                             placeholder={t.searchPlaceholder}
                             value={searchInput}
                             onChange={(e) => setSearchInput(e.target.value)}
-                            className="w-full bg-card/50 backdrop-blur-sm border border-border rounded-2xl py-3.5 pl-11 pr-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all shadow-sm"
+                            className="w-full bg-card/20 backdrop-blur-3xl border border-white/5 rounded-3xl py-5 pl-14 pr-8 text-sm font-black focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/40 transition-all shadow-2xl"
                         />
                     </div>
                     <button
                         type="submit"
-                        className="px-6 py-3.5 bg-indigo-600 text-white rounded-2xl font-black text-sm hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-500/20 active:scale-95 whitespace-nowrap"
+                        className="px-10 py-5 bg-primary text-primary-foreground rounded-3xl font-black text-sm hover:brightness-110 transition-all shadow-xl shadow-primary/20 active:scale-95 whitespace-nowrap uppercase tracking-widest"
                     >
                         {t.searchBtn}
                     </button>
                 </form>
 
                 {loading ? (
-                    <div className="flex flex-col items-center justify-center py-20 gap-4">
-                        <Loader2 className="w-8 h-8 text-indigo-500 animate-spin" />
-                        <p className="text-sm font-bold text-muted-foreground">{t.loading}</p>
+                    <div className="flex flex-col items-center justify-center py-32 gap-8">
+                        <Loader2 className="w-12 h-12 text-primary animate-spin" />
+                        <p className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-[0.5em] animate-pulse">{t.loading}</p>
                     </div>
                 ) : filteredNews.length === 0 ? (
-                    <div className="text-center py-20 bg-muted/30 rounded-3xl border border-dashed border-border text-muted-foreground font-bold">
-                        {searchQuery ? t.noResult : t.noNews}
+                    <div className="text-center py-40 bg-card/10 backdrop-blur-xl rounded-[4rem] border border-white/5 border-dashed text-muted-foreground">
+                        <div className="text-6xl mb-8 grayscale opacity-20">📰</div>
+                        <p className="text-xl font-black tracking-tighter uppercase italic">{searchQuery ? t.noResult : t.noNews}</p>
                     </div>
                 ) : (
-                    <div className="space-y-12">
+                    <div className="space-y-16">
                         {filteredNews.map((item, idx) => (
                             <React.Fragment key={item.id}>
                                 <motion.article
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: idx * 0.05 }}
-                                    className="bg-card/40 backdrop-blur-sm border border-border rounded-3xl p-6 md:p-8 relative group hover:border-indigo-500 transition-all shadow-sm"
+                                    initial={{ opacity: 0, y: 40 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                                    className="group relative bg-card/20 backdrop-blur-3xl border border-white/5 rounded-[3.5rem] overflow-hidden hover:border-primary/30 hover:shadow-[0_60px_120px_-30px_rgba(0,0,0,0.4)] transition-all duration-700"
                                 >
-                                    {isAdmin && (
-                                        <button
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                handleDelete(item.id);
-                                            }}
-                                            className="absolute top-6 right-6 p-3 text-rose-500 bg-white/80 dark:bg-black/80 hover:bg-rose-500 hover:text-white rounded-2xl transition-all z-30 shadow-lg border border-rose-100 dark:border-rose-900/30 group/del"
-                                            title={t.deleteBtn}
-                                        >
-                                            <Trash2 className="w-5 h-5 group-hover/del:scale-110 transition-transform" />
-                                        </button>
-                                    )}
+                                    <div className="flex flex-col md:flex-row p-8 md:p-14 gap-12">
+                                        {/* Optional Image Section */}
+                                        {item.imageUrl && (
+                                            <div className="md:w-1/3 shrink-0">
+                                                <Link href={item.link} target="_blank" className="block relative aspect-video md:aspect-[4/5] overflow-hidden rounded-[2.5rem] border border-white/5 shadow-2xl bg-black">
+                                                    <img 
+                                                        src={item.imageUrl} 
+                                                        alt="" 
+                                                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-80 group-hover:opacity-100"
+                                                    />
+                                                    <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                                </Link>
+                                            </div>
+                                        )}
 
-                                    <div className="flex items-center gap-2 mb-4">
-                                        <span className="px-2.5 py-1 bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-[10px] font-bold rounded-lg uppercase tracking-wider">
-                                            {typeof item.source === 'object' ? (item.source?.['#text'] || 'News') : (item.source || 'News')}
-                                        </span>
-                                        <span className="text-muted-foreground text-[10px] font-medium">
-                                            {item.date?.split('T')[0]}
-                                        </span>
-                                    </div>
+                                        <div className="flex-1 min-w-0 flex flex-col">
+                                            {isAdmin && (
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        handleDelete(item.id);
+                                                    }}
+                                                    className="absolute top-8 right-8 p-3 text-rose-500 bg-rose-500/5 hover:bg-rose-500 hover:text-white rounded-2xl transition-all z-30 border border-rose-500/10"
+                                                    title={t.deleteBtn}
+                                                >
+                                                    <Trash2 className="w-5 h-5" />
+                                                </button>
+                                            )}
 
-                                    <Link href={item.link} target="_blank">
-                                        <h2 className="text-xl md:text-2xl font-bold mb-4 hover:text-indigo-600 transition-colors leading-tight">
-                                            {String(item.translations?.[lang]?.title || item.translations?.ko?.title || item.title || '')}
-                                        </h2>
-                                    </Link>
+                                            <div className="flex items-center gap-3 mb-8">
+                                                <div className="px-4 py-1.5 bg-primary/10 border border-primary/20 text-primary text-[10px] font-black rounded-full uppercase tracking-[0.2em]">
+                                                    {typeof item.source === 'object' ? (item.source?.['#text'] || 'Industry') : (item.source || 'Industry')}
+                                                </div>
+                                                <div className="h-1 w-1 rounded-full bg-border/40" />
+                                                <span className="text-[10px] font-black text-muted-foreground/40 tracking-widest uppercase">
+                                                    {new Date(item.date || item.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
+                                                </span>
+                                            </div>
 
-                                    <div className="text-muted-foreground leading-relaxed space-y-4 whitespace-pre-wrap text-sm md:text-base font-medium mb-6">
-                                        {String(item.translations?.[lang]?.content || item.translations?.ko?.content || item.content || '')}
-                                    </div>
+                                            <Link href={item.link} target="_blank" className="block group/title mb-6">
+                                                <h2 className="text-3xl md:text-4xl font-black group-hover/title:text-primary transition-all duration-500 leading-tight tracking-tighter italic uppercase">
+                                                    {String(item.translations?.[lang]?.title || item.translations?.ko?.title || item.title || '')}
+                                                </h2>
+                                            </Link>
 
-                                    <div className="mt-6 pt-6 border-t border-border flex items-center justify-between">
-                                        <div className="flex gap-2">
-                                            {(item.newsTags?.[lang] || item.newsTags?.ko || item.newsTags || [])?.slice(0, 2).map((tag: string, i: number) => {
-                                                const cleanTag = tag.startsWith('#') ? tag.substring(1) : tag;
-                                                return (
-                                                    <span key={i} className="text-[10px] font-bold text-indigo-500/60 transition-colors">
-                                                        #{cleanTag}
-                                                    </span>
-                                                );
-                                            })}
+                                            <p className="text-muted-foreground/80 leading-relaxed text-base md:text-lg font-medium mb-12 line-clamp-4 italic border-l-2 border-primary/10 pl-6">
+                                                &ldquo;{String(item.translations?.[lang]?.content || item.translations?.ko?.content || item.content || '')}&rdquo;
+                                            </p>
+
+                                            <div className="flex flex-wrap items-center justify-between gap-6 mt-auto pt-8 border-t border-white/5">
+                                                <div className="flex flex-wrap gap-2.5">
+                                                    {(item.newsTags?.[lang] || item.newsTags?.ko || item.newsTags || [])?.slice(0, 4).map((tag: string, i: number) => (
+                                                        <span key={i} className="text-[9px] font-black px-4 py-1.5 rounded-xl bg-card border border-white/5 text-muted-foreground/40 uppercase tracking-tight group-hover:text-primary transition-colors">
+                                                            #{tag.replace('#', '')}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                                <Link 
+                                                    href={item.link} 
+                                                    target="_blank" 
+                                                    className="inline-flex items-center gap-2 px-8 py-3 rounded-2xl bg-primary text-primary-foreground text-[10px] font-black hover:brightness-110 transition-all shadow-xl shadow-primary/20 uppercase tracking-[0.2em]"
+                                                >
+                                                    {t.viewOriginal}
+                                                </Link>
+                                            </div>
                                         </div>
-                                        <Link href={item.link} target="_blank" className="text-[10px] sm:text-xs font-black text-indigo-600 dark:text-indigo-400 hover:underline flex items-center">
-                                            {t.viewOriginal}
-                                        </Link>
                                     </div>
                                 </motion.article>
 
                                 {(idx + 1) % 4 === 0 && (
-                                    <div className="w-full my-8">
+                                    <div className="w-full my-12">
                                         <GoogleAd
                                             key={`ad-news-${currentPage}-${idx}`}
                                             client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
                                             slot={process.env.NEXT_PUBLIC_ADSENSE_INFEED_SLOT || ''}
                                             format="fluid"
                                             layoutKey="-fb+5w+4e-db+86"
-                                            className="rounded-3xl overflow-hidden border border-border bg-card/40 backdrop-blur-sm"
+                                            className="rounded-[3.5rem] overflow-hidden border border-white/5 bg-card/20 backdrop-blur-3xl shadow-2xl"
                                         />
                                     </div>
                                 )}
@@ -230,69 +266,71 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
                         ))}
 
                         {!searchQuery && totalPages > 1 && (
-                            <div className="flex flex-col items-center gap-6 mt-12 pb-12">
-                                <div className="flex justify-center items-center gap-2">
+                            <div className="flex flex-col items-center gap-10 mt-20 pb-20">
+                                <div className="flex justify-center items-center gap-3">
                                     <Link
                                         href="?"
                                         aria-disabled={currentPage === 1}
                                         onClick={(e) => { e.preventDefault(); if (currentPage > 1) fetchPage(1); }}
-                                        className={`p-2 rounded-xl bg-card border border-border hover:bg-muted transition-all flex items-center ${currentPage === 1 ? 'pointer-events-none opacity-20' : ''}`}
+                                        className={`p-4 rounded-2xl bg-card border border-white/5 hover:bg-muted transition-all flex items-center shadow-2xl ${currentPage === 1 ? 'pointer-events-none opacity-20' : ''}`}
                                         title={isEn ? "First Page" : "첫 페이지"}
                                     >
-                                        <ChevronLeft className="w-5 h-5 -mr-3" />
-                                        <ChevronLeft className="w-5 h-5" />
+                                        <ChevronLeft className="w-6 h-6 -mr-4" />
+                                        <ChevronLeft className="w-6 h-6" />
                                     </Link>
 
                                     <Link
                                         href={currentPage > 2 ? `?page=${currentPage - 1}` : '?'}
                                         aria-disabled={currentPage === 1}
                                         onClick={(e) => { e.preventDefault(); if (currentPage > 1) fetchPage(currentPage - 1); }}
-                                        className={`p-2 rounded-xl bg-card border border-border hover:bg-muted transition-all ${currentPage === 1 ? 'pointer-events-none opacity-20' : ''}`}
+                                        className={`p-4 rounded-2xl bg-card border border-white/5 hover:bg-muted transition-all shadow-2xl ${currentPage === 1 ? 'pointer-events-none opacity-20' : ''}`}
                                     >
-                                        <ChevronLeft className="w-5 h-5" />
+                                        <ChevronLeft className="w-6 h-6" />
                                     </Link>
 
-                                    {Array.from({ length: totalPages }, (_, i) => i + 1)
-                                        .filter(p => p >= currentPage - 2 && p <= currentPage + 2)
-                                        .map(num => (
-                                            <Link
-                                                key={num}
-                                                href={num === 1 ? '?' : `?page=${num}`}
-                                                onClick={(e) => { e.preventDefault(); fetchPage(num); }}
-                                                className={`w-10 h-10 rounded-xl text-sm font-black transition-all flex items-center justify-center ${currentPage === num
-                                                    ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/30'
-                                                    : 'bg-card border border-border text-muted-foreground hover:bg-muted font-bold'
-                                                    }`}
-                                            >
-                                                {num}
-                                            </Link>
-                                        ))}
+                                    <div className="flex gap-2.5">
+                                        {Array.from({ length: totalPages }, (_, i) => i + 1)
+                                            .filter(p => p >= currentPage - 2 && p <= currentPage + 2)
+                                            .map(num => (
+                                                <Link
+                                                    key={num}
+                                                    href={num === 1 ? '?' : `?page=${num}`}
+                                                    onClick={(e) => { e.preventDefault(); fetchPage(num); }}
+                                                    className={`w-14 h-14 rounded-2xl text-base font-black transition-all shadow-2xl flex items-center justify-center ${currentPage === num
+                                                        ? 'bg-primary text-primary-foreground shadow-primary/30 scale-110'
+                                                        : 'bg-card border border-white/5 text-muted-foreground hover:bg-muted/50 font-bold'
+                                                        }`}
+                                                >
+                                                    {num}
+                                                </Link>
+                                            ))}
+                                    </div>
 
                                     <Link
                                         href={`?page=${currentPage + 1}`}
                                         aria-disabled={currentPage === totalPages}
                                         onClick={(e) => { e.preventDefault(); if (currentPage < totalPages) fetchPage(currentPage + 1); }}
-                                        className={`p-2 rounded-xl bg-card border border-border hover:bg-muted transition-all ${currentPage === totalPages ? 'pointer-events-none opacity-20' : ''}`}
+                                        className={`p-4 rounded-2xl bg-card border border-white/5 hover:bg-muted transition-all shadow-2xl ${currentPage === totalPages ? 'pointer-events-none opacity-20' : ''}`}
                                     >
-                                        <ChevronRight className="w-5 h-5" />
+                                        <ChevronRight className="w-6 h-6" />
                                     </Link>
 
                                     <Link
                                         href={`?page=${totalPages}`}
                                         aria-disabled={currentPage === totalPages}
                                         onClick={(e) => { e.preventDefault(); if (currentPage < totalPages) fetchPage(totalPages); }}
-                                        className={`p-2 rounded-xl bg-card border border-border hover:bg-muted transition-all flex items-center ${currentPage === totalPages ? 'pointer-events-none opacity-20' : ''}`}
+                                        className={`p-4 rounded-2xl bg-card border border-white/5 hover:bg-muted transition-all flex items-center shadow-2xl ${currentPage === totalPages ? 'pointer-events-none opacity-20' : ''}`}
                                         title={isEn ? "Last Page" : "마지막 페이지"}
                                     >
-                                        <ChevronRight className="w-5 h-5" />
-                                        <ChevronRight className="w-5 h-5 -ml-3" />
+                                        <ChevronRight className="w-6 h-6" />
+                                        <ChevronRight className="w-6 h-6 -ml-4" />
                                     </Link>
                                 </div>
 
-                                <p className="text-[10px] sm:text-xs text-muted-foreground/60 font-medium text-center italic">
+                                <p className="text-[10px] sm:text-xs text-muted-foreground/30 font-black uppercase tracking-[0.4em] text-center italic">
                                     {isEn
-                                        ? "※ News summaries are generated by AI and may contain inaccuracies. Please check the original source for critical information."
-                                        : "※ AI가 원문 뉴스를 요약 및 번역한 정보로, 실제 내용과 차이가 있을 수 있습니다. 정확한 정보는 원문을 통해 확인하시기 바랍니다."}
+                                        ? "※ News summaries are generated by AI and may contain inaccuracies."
+                                        : "※ AI가 원문 뉴스를 요약 및 번역한 정보로, 실제 내용과 차이가 있을 수 있습니다."}
                                 </p>
                             </div>
                         )}

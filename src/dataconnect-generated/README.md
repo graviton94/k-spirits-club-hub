@@ -1934,12 +1934,17 @@ export interface ListSpiritReviewsData {
     rating: number;
     title?: string | null;
     content: string;
+    nose?: string | null;
+    palate?: string | null;
+    finish?: string | null;
     imageUrls?: string[] | null;
     createdAt: TimestampString;
     spirit: {
       id: string;
       name: string;
+      nameEn?: string | null;
       imageUrl: string;
+      distillery?: string | null;
     } & Spirit_Key;
       user: {
         id: string;

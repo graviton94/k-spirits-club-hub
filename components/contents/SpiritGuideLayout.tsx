@@ -26,17 +26,18 @@ interface SpiritGuideLayoutProps {
 // ─── 색상 맵 ────────────────────────────────────────────────────────────────
 
 const COLOR_MAP: Record<string, { bg: string; border: string; text: string; badge: string }> = {
-    amber: { bg: 'bg-amber-500/10', border: 'border-amber-500/30', text: 'text-amber-900 dark:text-amber-400', badge: 'bg-amber-500/10 text-black dark:text-amber-300' },
-    rose: { bg: 'bg-rose-500/10', border: 'border-rose-500/30', text: 'text-rose-900 dark:text-rose-400', badge: 'bg-rose-500/10 text-black dark:text-rose-300' },
-    sky: { bg: 'bg-sky-500/10', border: 'border-sky-500/30', text: 'text-sky-900 dark:text-sky-400', badge: 'bg-sky-500/10 text-black dark:text-sky-300' },
-    cyan: { bg: 'bg-cyan-500/10', border: 'border-cyan-500/30', text: 'text-cyan-900 dark:text-cyan-400', badge: 'bg-cyan-500/10 text-black dark:text-cyan-300' },
-    emerald: { bg: 'bg-emerald-500/10', border: 'border-emerald-500/30', text: 'text-emerald-900 dark:text-emerald-400', badge: 'bg-emerald-500/10 text-black dark:text-emerald-300' },
-    orange: { bg: 'bg-orange-500/10', border: 'border-orange-500/30', text: 'text-orange-900 dark:text-orange-400', badge: 'bg-orange-500/10 text-black dark:text-orange-300' },
-    blue: { bg: 'bg-blue-500/10', border: 'border-blue-500/30', text: 'text-blue-900 dark:text-blue-400', badge: 'bg-blue-500/10 text-black dark:text-blue-300' },
-    lime: { bg: 'bg-lime-500/10', border: 'border-lime-500/30', text: 'text-lime-900 dark:text-lime-400', badge: 'bg-lime-500/10 text-black dark:text-lime-300' },
-    purple: { bg: 'bg-purple-500/10', border: 'border-purple-500/30', text: 'text-purple-900 dark:text-purple-400', badge: 'bg-purple-500/10 text-black dark:text-purple-300' },
-    yellow: { bg: 'bg-yellow-500/10', border: 'border-yellow-500/30', text: 'text-yellow-700 dark:text-yellow-400', badge: 'bg-yellow-500/10 text-black dark:text-yellow-300' },
-    red: { bg: 'bg-red-500/10', border: 'border-red-500/30', text: 'text-red-900 dark:text-red-400', badge: 'bg-red-500/10 text-black dark:text-red-300' },
+    amber: { bg: 'bg-primary/5', border: 'border-primary/20', text: 'text-primary dark:text-primary', badge: 'bg-primary/10 text-primary dark:text-primary' },
+    // Standardizing all to primary/institutional colors for consistency
+    rose: { bg: 'bg-primary/5', border: 'border-primary/20', text: 'text-primary', badge: 'bg-primary/10 text-primary' },
+    sky: { bg: 'bg-primary/5', border: 'border-primary/20', text: 'text-primary', badge: 'bg-primary/10 text-primary' },
+    cyan: { bg: 'bg-primary/5', border: 'border-primary/20', text: 'text-primary', badge: 'bg-primary/10 text-primary' },
+    emerald: { bg: 'bg-primary/5', border: 'border-primary/20', text: 'text-primary', badge: 'bg-primary/10 text-primary' },
+    orange: { bg: 'bg-primary/5', border: 'border-primary/20', text: 'text-primary', badge: 'bg-primary/10 text-primary' },
+    blue: { bg: 'bg-primary/5', border: 'border-primary/20', text: 'text-primary', badge: 'bg-primary/10 text-primary' },
+    lime: { bg: 'bg-primary/5', border: 'border-primary/20', text: 'text-primary', badge: 'bg-primary/10 text-primary' },
+    purple: { bg: 'bg-primary/5', border: 'border-primary/20', text: 'text-primary', badge: 'bg-primary/10 text-primary' },
+    yellow: { bg: 'bg-primary/5', border: 'border-primary/20', text: 'text-primary', badge: 'bg-primary/10 text-primary' },
+    red: { bg: 'bg-primary/5', border: 'border-primary/20', text: 'text-primary', badge: 'bg-primary/10 text-primary' },
 }
 
 const PARENT_EMOJI_MAP: Record<string, string> = {
@@ -64,12 +65,17 @@ function Section({
 }) {
     const c = COLOR_MAP[color] ?? COLOR_MAP.amber
     return (
-        <section id={id} className={`rounded-3xl border border-white/40 dark:border-white/10 bg-transparent p-6 backdrop-blur-xl shadow-sm overflow-hidden`}>
-            <h2 className={`flex items-center gap-2 text-lg font-black ${c.text} mb-4 uppercase tracking-tight`}>
-                {icon}
+        <section id={id} className="relative group rounded-[2.5rem] border border-white/5 bg-card/20 backdrop-blur-3xl p-8 md:p-12 shadow-2xl overflow-hidden transition-all duration-700 hover:border-primary/20">
+            <div className="absolute -top-24 -right-24 w-64 h-64 bg-primary/5 blur-[80px] rounded-full pointer-events-none group-hover:bg-primary/10 transition-colors" />
+            <h2 className={`flex items-center gap-3 text-xl font-black ${c.text} mb-8 uppercase tracking-tighter italic`}>
+                <div className="p-2.5 bg-card/40 rounded-xl border border-white/5 shadow-xl">
+                    {icon}
+                </div>
                 {title}
             </h2>
-            {children}
+            <div className="relative z-10">
+                {children}
+            </div>
         </section>
     )
 }

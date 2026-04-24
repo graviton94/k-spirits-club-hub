@@ -181,8 +181,8 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
       {liveReviews.length > 0 && (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8 p-4 sm:p-6 bg-card border border-border rounded-3xl shadow-sm">
           <RatingSummaryItem label="OVERALL" value={avgOverall} icon={<Quote className="w-4 h-4" />} />
-          <RatingSummaryItem label="NOSE" value={avgNose} icon={<Wind className="w-4 h-4" />} color="text-blue-500" />
-          <RatingSummaryItem label="PALATE" value={avgPalate} icon={<Utensils className="w-4 h-4" />} color="text-orange-500" />
+          <RatingSummaryItem label="NOSE" value={avgNose} icon={<Wind className="w-4 h-4" />} color="text-primary" />
+          <RatingSummaryItem label="PALATE" value={avgPalate} icon={<Utensils className="w-4 h-4" />} color="text-accent" />
           <RatingSummaryItem label="FINISH" value={avgFinish} icon={<Zap className="w-4 h-4" />} color="text-purple-500" />
         </div>
       )}
@@ -269,47 +269,47 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-md z-100 flex items-center justify-center p-4 transition-all"
+            className="fixed inset-0 bg-black/80 backdrop-blur-xl z-[100] flex items-center justify-center p-4 transition-all"
             onClick={() => !isDeleting && setDeleteTarget(null)}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              className="bg-white dark:bg-zinc-900 w-full max-w-sm rounded-[2.5rem] shadow-2xl overflow-hidden border border-border relative"
+              className="bg-card/40 backdrop-blur-3xl w-full max-w-sm rounded-[3rem] shadow-2xl overflow-hidden border border-white/10 relative"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Decorative Header Background */}
-              <div className="absolute top-0 left-0 w-full h-32 bg-linear-to-br from-rose-500/10 to-orange-500/10 z-0" />
+              <div className="absolute top-0 left-0 w-full h-32 bg-brand-gradient opacity-10 z-0" />
 
-              <div className="relative z-10 p-8 flex flex-col items-center text-center">
+              <div className="relative z-10 p-10 flex flex-col items-center text-center">
                 {/* Icon Bubble */}
-                <div className="w-20 h-20 bg-rose-50 dark:bg-rose-900/20 rounded-full flex items-center justify-center mb-6 shadow-inner ring-1 ring-rose-500/20">
+                <div className="w-24 h-24 bg-rose-500/10 rounded-full flex items-center justify-center mb-6 shadow-inner border border-rose-500/20">
                   <Trash2 className="w-10 h-10 text-rose-500" />
                 </div>
 
-                <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2">
+                <h2 className="text-3xl font-black text-foreground mb-3 italic uppercase tracking-tighter">
                   {isEn ? 'Delete Review' : '리뷰 삭제'}
                 </h2>
 
-                <p className="text-slate-500 dark:text-slate-400 mb-8 text-sm leading-relaxed font-medium">
+                <p className="text-muted-foreground mb-10 text-sm leading-relaxed font-medium">
                   {isEn
                     ? 'Are you sure you want to delete this review? This action cannot be undone.'
                     : '정말로 이 리뷰를 삭제하시겠습니까? 삭제된 리뷰는 복구할 수 없습니다.'}
                 </p>
 
-                <div className="flex gap-3 w-full">
+                <div className="flex gap-4 w-full">
                   <button
                     onClick={() => setDeleteTarget(null)}
                     disabled={isDeleting}
-                    className="flex-1 py-4 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-black rounded-2xl transition-all active:scale-[0.98]"
+                    className="flex-1 py-4 bg-muted/20 hover:bg-muted/30 text-foreground font-black rounded-2xl transition-all active:scale-[0.98] border border-white/5 uppercase text-xs tracking-widest"
                   >
                     {isEn ? 'Cancel' : '취소'}
                   </button>
                   <button
                     onClick={handleDeleteReview}
                     disabled={isDeleting}
-                    className="flex-1 py-4 bg-linear-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 text-white shadow-lg shadow-rose-500/30 font-black rounded-2xl transition-all active:scale-[0.98] flex items-center justify-center"
+                    className="flex-1 py-4 bg-rose-600 hover:bg-rose-700 text-white shadow-xl shadow-rose-600/20 font-black rounded-2xl transition-all active:scale-[0.98] flex items-center justify-center uppercase text-xs tracking-widest"
                   >
                     {isDeleting ? (
                       <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -513,8 +513,8 @@ function ReviewCard({ review, isOwner, onEdit, onDelete, onToast }: {
 
 function ReviewMetricsItem({ title, rating, tags, icon, color }: { title: string, rating: number, tags: string | null, icon: any, color: string }) {
   const colors: Record<string, string> = {
-    blue: "text-blue-500 bg-blue-500/10 border-blue-500/20",
-    orange: "text-orange-500 bg-orange-500/10 border-orange-500/20",
+    blue: "text-primary bg-primary/10 border-primary/20",
+    orange: "text-accent bg-accent/10 border-accent/20",
     purple: "text-purple-500 bg-purple-500/10 border-purple-500/20"
   };
 
@@ -534,12 +534,11 @@ function ReviewMetricsItem({ title, rating, tags, icon, color }: { title: string
           const cleanTag = t.trim();
           if (!cleanTag) return null;
           const colors = [
-            'bg-blue-500/10 text-blue-600 border-blue-500/20',
-            'bg-orange-500/10 text-orange-600 border-orange-500/20',
+            'bg-primary/10 text-primary border-primary/20',
+            'bg-accent/10 text-accent border-accent/20',
             'bg-purple-500/10 text-purple-600 border-purple-500/20',
             'bg-emerald-500/10 text-emerald-600 border-emerald-500/20',
-            'bg-rose-500/10 text-rose-600 border-rose-500/20',
-            'bg-indigo-500/10 text-indigo-600 border-indigo-500/20'
+            'bg-rose-500/10 text-rose-600 border-rose-500/20'
           ];
           return (
             <span key={idx} className={`text-[9px] px-2 py-0.5 rounded-full border font-black uppercase tracking-tight ${colors[idx % colors.length]}`}>
@@ -719,7 +718,7 @@ function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitte
             tags={formData.nose}
             onRatingChange={(r) => setFormData({ ...formData, noseRating: r })}
             onTagsChange={(t) => setFormData({ ...formData, nose: t })}
-            color="blue"
+            color="primary"
             icon={<Wind className="w-4 h-4" />}
             metadataKey="nose"
             isEn={isEn}
@@ -733,7 +732,7 @@ function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitte
             tags={formData.palate}
             onRatingChange={(r) => setFormData({ ...formData, palateRating: r })}
             onTagsChange={(t) => setFormData({ ...formData, palate: t })}
-            color="orange"
+            color="accent"
             icon={<Utensils className="w-4 h-4" />}
             metadataKey="palate"
             isEn={isEn}

@@ -312,12 +312,17 @@ query listSpiritReviews($limit: Int, $offset: Int) @auth(level: PUBLIC) {
     rating
     title
     content
+    nose
+    palate
+    finish
     imageUrls
     createdAt
     spirit {
       id
       name
+      nameEn
       imageUrl
+      distillery
     }
     user {
       id

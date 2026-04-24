@@ -70,20 +70,24 @@ export default async function WikiHubPage({ params }: WikiHubPageProps) {
             <BackButton fallbackUrl={`/${lang}/contents`} label={isEn ? 'Back' : '뒤로가기'} />
 
             {/* Header */}
-            <div className="mb-8 relative text-center">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-48 bg-emerald-500/10 blur-[80px] pointer-events-none" />
-                <div className="relative z-10">
-                    <div className="flex items-center justify-center gap-2 mb-3">
-                        <div className="p-2.5 bg-emerald-500/10 rounded-xl border border-emerald-500/20">
-                            <BookOpen className="w-6 h-6 text-emerald-400" />
+            <div className="mb-14 relative text-center">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-primary/10 blur-[120px] pointer-events-none" />
+                <div className="relative z-10 space-y-6">
+                    <div className="flex items-center justify-center">
+                         <div className="p-4 bg-card/20 backdrop-blur-3xl rounded-3xl border border-white/10 shadow-2xl">
+                            <BookOpen className="w-10 h-10 text-primary" />
                         </div>
                     </div>
-                    <h1 className="text-3xl md:text-4xl font-black mb-2 tracking-tighter bg-linear-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-sm">
-                        {isEn ? 'Spirits Wiki' : '주류 백과사전'}
-                    </h1>
-                    <p className="text-xs font-bold text-muted-foreground/60 tracking-widest uppercase">
-                        {isEn ? 'Everything about the world of spirits' : '세계의 주류를 한눈에'}
-                    </p>
+                    <div className="space-y-4">
+                        <h1 className="text-5xl md:text-7xl font-black tracking-tighter bg-brand-gradient bg-clip-text text-transparent uppercase italic leading-none">
+                            {isEn ? 'Spirits Wiki' : '주류 백과사전'}
+                        </h1>
+                        <p className="text-[10px] md:text-sm font-black text-muted-foreground/40 tracking-[0.5em] uppercase flex items-center justify-center gap-3">
+                            <span className="w-12 h-px bg-primary/20" />
+                            {isEn ? 'Universal Spirits Compendium' : '글로벌 주류 지식의 모든 것'}
+                            <span className="w-12 h-px bg-primary/20" />
+                        </p>
+                    </div>
                 </div>
             </div>
 
@@ -127,43 +131,37 @@ export default async function WikiHubPage({ params }: WikiHubPageProps) {
             </div>
 
             {/* Category Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 relative z-10">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6 relative z-10">
                 {gridCategories.map((cat) => {
-                    const c = COLOR_CARD_MAP[cat.color] ?? COLOR_CARD_MAP.amber
                     return (
                         <Link
                             key={cat.slug}
                             href={`/${lang}/contents/wiki/${cat.slug}`}
-                            className={`
-                group relative overflow-hidden
-                bg-card/40 backdrop-blur-md border border-border/50
-                rounded-2xl p-4
-                transition-all duration-300
-                hover:scale-[1.02] hover:shadow-xl hover:shadow-black/20
-                ${c.border}
-              `}
+                            className="group relative overflow-hidden bg-card/20 backdrop-blur-3xl border border-white/5 rounded-[2.5rem] p-6 md:p-8 transition-all duration-700 hover:scale-[1.05] hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.5)] hover:border-primary/30"
                         >
                             {/* Hover gradient */}
-                            <div className={`absolute inset-0 bg-linear-to-br ${c.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                            <div className="absolute inset-0 bg-linear-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-                            <div className="relative z-10 flex flex-col gap-2">
-                                <span className="text-3xl">{cat.emoji}</span>
-                                <div>
-                                    <p className="font-bold text-sm text-foreground group-hover:text-white transition-colors">
+                            <div className="relative z-10 flex flex-col gap-6">
+                                <div className="text-5xl group-hover:scale-110 transition-transform duration-700 block grayscale group-hover:grayscale-0 opacity-40 group-hover:opacity-100">
+                                    {cat.emoji}
+                                </div>
+                                <div className="space-y-1">
+                                    <h3 className="text-lg md:text-xl font-black text-foreground group-hover:text-primary transition-colors italic uppercase tracking-tighter">
                                         {isEn ? cat.nameEn : cat.nameKo}
-                                    </p>
+                                    </h3>
                                     {!isEn && (
-                                        <p className={`text-[10px] font-semibold ${c.text} opacity-70`}>{cat.nameEn}</p>
+                                        <p className="text-[10px] font-black text-muted-foreground/30 uppercase tracking-widest leading-none">{cat.nameEn}</p>
                                     )}
                                 </div>
-                                <p className="text-[10px] text-muted-foreground/60 group-hover:text-white/70 transition-colors line-clamp-2 leading-relaxed">
+                                <p className="text-[10px] md:text-xs text-muted-foreground/50 group-hover:text-foreground/70 transition-colors line-clamp-3 leading-relaxed font-medium">
                                     {isEn ? cat.taglineEn : cat.taglineKo}
                                 </p>
                             </div>
 
                             {/* Arrow */}
-                            <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300">
-                                <ChevronRight className="w-4 h-4 text-white/70" />
+                            <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transform translate-x-4 group-hover:translate-x-0 transition-all duration-700">
+                                <ChevronRight className="w-6 h-6 text-primary" />
                             </div>
                         </Link>
                     )

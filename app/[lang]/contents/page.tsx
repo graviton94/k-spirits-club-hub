@@ -13,6 +13,7 @@ import {
   MessageSquare,
   BookOpen
 } from "lucide-react";
+import { motion } from "framer-motion";
 import { getCanonicalUrl, getHreflangAlternates } from "@/lib/utils/seo-url";
 
 interface ContentsPageProps {
@@ -67,303 +68,193 @@ export default async function ContentsPage({ params }: ContentsPageProps) {
   const contents = [
     {
       title: isEn ? "Spirit World Cup" : "술 취향 월드컵",
-      description: isEn ? "What's your favorite spirit? Ranking Tournament." : "당신의 최애 술은? 랭킹 토너먼트.",
-      icon: <Trophy className="w-8 h-8 text-amber-500" />,
+      description: isEn ? "Ranking Tournament! Find your ultimate favorite spirit from 500k+ options." : "50만 종 이상의 술 중 당신의 진짜 최애 주류를 가려내는 토너먼트.",
+      icon: <Trophy className="w-8 h-8 text-primary" />,
       link: `/${lang}/contents/worldcup`,
       status: "OPEN",
-      gradient: "from-amber-500/20 to-orange-600/20",
-      borderHover: "group-hover:border-amber-500/50"
+      gradient: "from-primary/10 to-transparent",
+      glow: "bg-primary/20"
     },
     {
-      title: isEn ? "Spirit MBTI" : "내 술 취향 MBTI",
-      description: isEn ? "Find your alcohol ego! Character analysis." : "12가지 질문으로 알아보는 나의 알코올 자아 찾기.",
-      icon: <Fingerprint className="w-8 h-8 text-pink-500" />,
+      title: isEn ? "Spirit Persona" : "내 술 취향 MBTI",
+      description: isEn ? "12 questions to uncover your hidden spirit personality and drink ego." : "12가지 질문으로 정밀 분석하는 나의 숨겨진 주류 성격과 자아 찾기.",
+      icon: <Fingerprint className="w-8 h-8 text-primary" />,
       link: `/${lang}/contents/mbti`,
-      status: "OPEN",
-      gradient: "from-pink-500/20 to-rose-600/20",
-      borderHover: "group-hover:border-pink-500/50"
+      status: "HOT",
+      gradient: "from-primary/10 to-transparent",
+      glow: "bg-primary/20"
     },
     {
-      title: isEn ? "Golden Ratio Master" : "황금 비율 마스터",
-      description: isEn ? "Test your pouring skills! Somaek Mini Game." : "당신의 소맥 비율은 몇 점? 타이밍 미니게임.",
-      icon: <Beer className="w-8 h-8 text-amber-400" />,
+      title: isEn ? "Golden Pour Master" : "퍼펙트 푸어",
+      description: isEn ? "Test your precision! Pour the legendary golden ratio in this timing game." : "전설의 황금 비율에 도전하라! 타이밍과 감각을 시험하는 미니게임.",
+      icon: <Beer className="w-8 h-8 text-primary" />,
       link: `/${lang}/contents/perfect-pour`,
       status: "NEW",
-      gradient: "from-amber-400/20 to-yellow-500/20",
-      borderHover: "group-hover:border-amber-400/50"
+      gradient: "from-primary/10 to-transparent",
+      glow: "bg-primary/20"
     },
     {
-      title: isEn ? "Review Board" : "리뷰 보드",
-      description: isEn ? "Check and share real tasting reviews from other users." : "다른 사용자들의 리얼한 시음평을 확인하고 공유해보세요.",
-      icon: <MessageSquare className="w-8 h-8 text-blue-500" />,
+      title: isEn ? "Community Reviews" : "주류 리뷰 보드",
+      description: isEn ? "Authentic tasting notes from real enthusiasts. Discover hidden gems." : "주류 애호가들의 리얼한 시음 노트. 숨겨진 명작을 발견해보세요.",
+      icon: <MessageSquare className="w-8 h-8 text-primary" />,
       link: `/${lang}/contents/reviews`,
       status: "OPEN",
-      gradient: "from-blue-500/20 to-cyan-600/20",
-      borderHover: "group-hover:border-blue-500/50"
+      gradient: "from-primary/10 to-transparent",
+      glow: "bg-primary/20"
     },
     {
-      title: isEn ? "Global Spirits News" : "글로벌 주류 뉴스",
-      description: isEn ? "Latest trends and in-depth reports analyzed by AI." : "AI가 분석한 글로벌 주류 트렌드와 심층 리포트.",
-      icon: <Newspaper className="w-8 h-8 text-indigo-500" />,
+      title: isEn ? "AI Sommelier News" : "글로벌 뉴스 피드",
+      description: isEn ? "Latest global trends and distillery updates, analyzed by our AI Sommelier." : "AI 소믈리에가 분석한 글로벌 주류 트렌드와 증류소 최신 소식.",
+      icon: <Newspaper className="w-8 h-8 text-primary" />,
       link: `/${lang}/contents/news`,
-      status: "OPEN",
-      gradient: "from-indigo-500/20 to-purple-600/20",
-      borderHover: "group-hover:border-indigo-500/50"
+      status: "AI",
+      gradient: "from-primary/10 to-transparent",
+      glow: "bg-primary/20"
     },
     {
-      title: isEn ? "Spirits Wiki" : "주류 백과사전",
-      description: isEn ? "Explore definitions, history, and pairing tips for every spirit." : "위스키부터 고량주까지 — 세계 주류의 정의, 역사, 페어링을 한눈에.",
-      icon: <BookOpen className="w-8 h-8 text-emerald-500" />,
+      title: isEn ? "Spirits Encyclopedia" : "주류 백과사전",
+      description: isEn ? "The ultimate guide to every spirit category. History, production, and pairing." : "모든 주류 카테고리를 총망라한 가이드. 역사, 공정, 페어링의 모든 것.",
+      icon: <BookOpen className="w-8 h-8 text-primary" />,
       link: `/${lang}/contents/wiki`,
       status: "NEW",
-      gradient: "from-emerald-500/20 to-teal-600/20",
-      borderHover: "group-hover:border-emerald-500/50"
+      gradient: "from-primary/10 to-transparent",
+      glow: "bg-primary/20"
     }
   ];
 
   return (
-    <div className="container mx-auto px-4 py-6 max-w-5xl pb-24">
-      {/* Header Section matching Cabinet Page */}
-      <div className="mb-8 relative text-center">
-        {/* Ambient Glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-48 bg-purple-500/10 blur-[80px] pointer-events-none" />
+    <div className="container mx-auto px-4 py-12 max-w-6xl pb-32 relative overflow-hidden">
+      {/* Background Atmosphere */}
+      <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-primary/5 blur-[100px] rounded-full pointer-events-none" />
 
-        <div className="relative z-10">
-          <h1 className="text-3xl md:text-4xl font-black mb-2 tracking-tighter bg-linear-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent drop-shadow-sm">
-            {isEn ? 'Contents Hub' : '콘텐츠 허브'}
+      {/* Header Section */}
+      <div className="mb-16 relative text-center">
+        <motion.div
+           initial={{ opacity: 0, y: 20 }}
+           animate={{ opacity: 1, y: 0 }}
+           className="space-y-6"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-card/40 backdrop-blur-xl border border-white/5 rounded-full mb-4 shadow-xl">
+            <Sparkles className="w-3.5 h-3.5 text-primary animate-pulse" />
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground/80">
+              {isEn ? 'Experience Playground' : '익스피리언스 플레이그라운드'}
+            </span>
+          </div>
+          
+          <h1 className="text-5xl md:text-7xl font-black mb-4 tracking-tighter italic uppercase leading-none">
+            <span className="text-foreground">Contents</span><br />
+            <span className="bg-brand-gradient bg-clip-text text-transparent">Hub</span>
           </h1>
-          <p className="text-xs font-bold text-muted-foreground/60 tracking-widest uppercase flex items-center justify-center gap-1.5">
-            <Sparkles className="w-3 h-3" /> {isEn ? 'Playground for Spirits Enthusiasts' : '주류 애호가를 위한 놀이터'}
+          
+          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto font-medium leading-relaxed">
+            {isEn
+              ? 'Your interactive gateway to the world of spirits. Explore tournaments, character tests, and AI-powered insights all in one place.'
+              : '주류 문화를 즐기는 가장 완벽한 방법. 토너먼트, 성격 테스트, AI 분석 소식까지 한곳에서 모두 경험해보세요.'}
           </p>
-        </div>
+        </motion.div>
       </div>
 
       {/* Grid Layout */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto relative z-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
         {contents.map((item, idx) => (
-          <Link
+          <motion.div
             key={idx}
-            href={item.link}
-            className={`
-              group relative overflow-hidden 
-              bg-card/40 backdrop-blur-md border border-border/50 
-              rounded-2xl p-5
-              transition-all duration-300 
-              hover:scale-[1.01] hover:shadow-xl hover:shadow-black/20
-              ${item.borderHover}
-            `}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: idx * 0.1 }}
           >
-            {/* Hover Gradient Background */}
-            <div className={`absolute inset-0 bg-linear-to-br ${item.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+            <Link
+              href={item.link}
+              className="group relative h-full flex flex-col bg-card/20 backdrop-blur-3xl border border-white/5 rounded-[2.5rem] p-8 transition-all duration-500 hover:scale-[1.02] hover:bg-card/30 hover:border-primary/30 hover:shadow-[0_30px_100px_-20px_rgba(0,0,0,0.5)] overflow-hidden"
+            >
+              <div className={`absolute -top-24 -right-24 w-48 h-48 ${item.glow} blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity`} />
+              <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-100 transition-opacity`} />
 
-            <div className="relative z-10 flex flex-col h-full">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="p-2.5 bg-background/50 backdrop-blur-sm rounded-xl border border-white/5 shadow-inner group-hover:scale-110 transition-transform duration-300">
-                  {item.icon}
+              <div className="relative z-10 flex flex-col h-full space-y-6">
+                <div className="flex justify-between items-start">
+                  <div className="p-4 bg-background/50 backdrop-blur-xl rounded-2xl border border-white/5 shadow-2xl group-hover:scale-110 transition-transform duration-500 group-hover:shadow-primary/10">
+                    {item.icon}
+                  </div>
+                  <span className="text-[10px] font-black px-3 py-1 bg-primary text-primary-foreground rounded-full shadow-lg shadow-primary/20 translate-y-1 group-hover:-translate-y-1 transition-transform">
+                    {item.status}
+                  </span>
                 </div>
-                <h3 className="text-lg font-bold text-foreground group-hover:text-white transition-colors">
-                  {item.title}
-                </h3>
-              </div>
 
-              <div className="mt-auto pl-1">
-                <p className="text-muted-foreground text-xs font-medium leading-relaxed group-hover:text-white/80 transition-colors">
-                  {item.description}
-                </p>
-              </div>
+                <div className="space-y-3">
+                  <h3 className="text-2xl font-black text-foreground italic uppercase tracking-tight leading-none group-hover:text-primary transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs text-muted-foreground font-medium leading-relaxed group-hover:text-foreground/80 transition-colors">
+                    {item.description}
+                  </p>
+                </div>
 
-              {/* Arrow Indicator */}
-              <div className="absolute bottom-5 right-5 opacity-0 group-hover:opacity-100 transform translate-x-4 group-hover:translate-x-0 transition-all duration-300">
-                <div className="p-1.5 bg-white/10 rounded-full backdrop-blur-sm">
-                  <ChevronRight className="w-4 h-4 text-white" />
+                <div className="mt-auto pt-4 flex items-center gap-2 text-[10px] font-black text-primary uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-x-4 group-hover:translate-x-0 transition-all duration-500">
+                  {isEn ? 'Proceed' : '입장하기'} <ChevronRight className="w-3 h-3" />
                 </div>
               </div>
-            </div>
-          </Link>
+            </Link>
+          </motion.div>
         ))}
       </div>
 
-      {/* Localized intro copy for SEO */}
-      <div className="mt-10 max-w-2xl mx-auto text-center relative z-10 px-4">
-        <p className="text-sm text-muted-foreground leading-relaxed">
-          {isEn
-            ? 'Welcome to the K-Spirits Club Contents Hub — your interactive gateway to the world of spirits. Uncover your drinking personality with our Spirit MBTI test, vote for your all-time favorite drink in the Spirit World Cup tournament, discover new bottles through authentic community tasting reviews, stay updated with AI-analyzed global spirits news, and dive deep into categories with our comprehensive Spirits Wiki.'
-            : 'K-Spirits Club 콘텐츠 허브에 오신 것을 환영합니다. 주류 MBTI 테스트로 나만의 음주 성격을 발견하고, 술 취향 월드컵에서 최애 주류를 가려보세요. 커뮤니티 시음 리뷰로 새로운 술을 발견하고, AI가 분석한 글로벌 주류 뉴스로 업계 트렌드를 따라가며, 주류 백과사전에서 위스키·소주·막걸리·데킬라 등 세계 주류의 모든 것을 탐구해보세요.'}
-        </p>
-      </div>
+      {/* SEO & Wiki Section Elevation */}
+      <div className="mt-32 space-y-24 relative z-10">
+        <div className="p-10 md:p-16 bg-card/10 backdrop-blur-2xl border border-white/5 rounded-[4rem] shadow-2xl overflow-hidden group">
+          <div className="absolute inset-0 bg-brand-gradient opacity-0 group-hover:opacity-[0.02] transition-opacity" />
+          
+          <div className="max-w-4xl mx-auto space-y-12">
+            <div className="text-center space-y-4">
+              <h2 className="text-3xl md:text-5xl font-black text-foreground italic uppercase tracking-tighter">
+                {isEn ? "The Global" : "글로벌"}<br />
+                <span className="bg-brand-gradient bg-clip-text text-transparent italic">Spirits Encyclopedia</span>
+              </h2>
+              <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto font-medium leading-relaxed">
+                {isEn
+                  ? 'Dive deep into the rich history, complex production processes, and curated pairing tips for every category of fine spirits from around the world.'
+                  : '전 세계 모든 주류 카테고리의 깊은 역사, 복잡한 제조 공정, 그리고 엄선된 페어링 팁을 한눈에 살펴보세요.'}
+              </p>
+            </div>
 
-
-      {/* Korean Spirits Wiki Section */}
-      <div className="mt-16 max-w-4xl mx-auto relative z-10 px-4">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="h-px flex-1 bg-border/50"></div>
-          <h2 className="text-sm font-bold text-muted-foreground uppercase tracking-widest whitespace-nowrap">
-            {isEn ? "Korean Spirits Guides" : "한국 주류 가이드"}
-          </h2>
-          <div className="h-px flex-1 bg-border/50"></div>
-        </div>
-        <p className="text-xs text-muted-foreground/70 text-center mb-4 leading-relaxed">
-          {isEn
-            ? 'In-depth guides to Korean traditional and modern spirits — definitions, history, ABV ranges, and food pairings.'
-            : '한국 전통주부터 현대 주류까지 — 정의, 역사, 도수, 안주 페어링을 담은 심층 가이드.'}
-        </p>
-        <div className="flex flex-wrap justify-center gap-3">
-          <Link href={`/${lang}/contents/wiki/soju-guide`} className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">
-            {isEn ? 'Korean Soju Guide' : '소주 가이드'}
-          </Link>
-          <Link href={`/${lang}/contents/wiki/makgeolli-guide`} className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">
-            {isEn ? 'Makgeolli Brewing Guide' : '막걸리 가이드'}
-          </Link>
-          <Link href={`/${lang}/contents/wiki/korean-whisky`} className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">
-            {isEn ? 'Korean Whisky Distilleries' : '한국 위스키 증류소'}
-          </Link>
-          <Link href={`/${lang}/contents/wiki/korean-traditional-spirits`} className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">
-            {isEn ? 'Korean Traditional Spirits Overview' : '전통주 종류 정리'}
-          </Link>
-          <Link href={`/${lang}/contents/wiki/korean-spirits-by-abv`} className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">
-            {isEn ? 'Korean Spirits Ranked by ABV' : '도수별 증류주 추천'}
-          </Link>
-          <Link href={`/${lang}/contents/wiki/soju-distilled`} className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">
-            {isEn ? 'Distilled Soju Guide' : '증류식 소주 가이드'}
-          </Link>
-          <Link href={`/${lang}/contents/wiki/makgeolli`} className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">
-            {isEn ? 'Makgeolli Encyclopedia' : '막걸리 백과사전'}
-          </Link>
-          <Link href={`/${lang}/contents/wiki/cheongju`} className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">
-            {isEn ? 'Cheongju Guide' : '청주 가이드'}
-          </Link>
-          <Link href={`/${lang}/contents/wiki/yakju`} className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-amber-500 transition-colors">
-            {isEn ? 'Yakju — Premium Rice Wine' : '약주 가이드'}
-          </Link>
-        </div>
-      </div>
-
-      {/* Global Spirits Wiki Section */}
-      <div className="mt-10 max-w-4xl mx-auto relative z-10 px-4">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="h-px flex-1 bg-border/50"></div>
-          <h2 className="text-sm font-bold text-muted-foreground uppercase tracking-widest whitespace-nowrap">
-            {isEn ? "Comparison Guides" : "비교 가이드"}
-          </h2>
-          <div className="h-px flex-1 bg-border/50"></div>
-        </div>
-        <p className="text-xs text-muted-foreground/70 text-center mb-4 leading-relaxed">
-          {isEn
-            ? 'Fast side-by-side guides for the questions users search most often before buying or tasting.'
-            : '구매 전과 입문 단계에서 가장 많이 검색하는 비교 질문을 빠르게 정리한 가이드.'}
-        </p>
-        <div className="flex flex-wrap justify-center gap-3 mb-10">
-          <Link href={`/${lang}/contents/wiki/yakju-vs-cheongju`} className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-cyan-500 transition-colors">
-            {isEn ? 'Yakju vs Cheongju' : '약주 vs 청주'}
-          </Link>
-          <Link href={`/${lang}/contents/wiki/cheongju-vs-sake`} className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-cyan-500 transition-colors">
-            {isEn ? 'Cheongju vs Sake' : '청주 vs 사케'}
-          </Link>
-          <Link href={`/${lang}/contents/wiki/single-malt-vs-blended`} className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-cyan-500 transition-colors">
-            {isEn ? 'Single Malt vs Blended' : '싱글 몰트 vs 블렌디드'}
-          </Link>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+               {[
+                 { href: 'soju-guide', title: isEn ? 'Soju Guide' : '소주 가이드' },
+                 { href: 'makgeolli-guide', title: isEn ? 'Makgeolli' : '막걸리 가이드' },
+                 { href: 'korean-whisky', title: isEn ? 'K-Whisky' : '한국 위스키' },
+                 { href: 'single-malt', title: isEn ? 'Single Malt' : '싱글 몰트' },
+                 { href: 'bourbon', title: isEn ? 'Bourbon' : '버번 가이드' },
+                 { href: 'gin', title: isEn ? 'Gin Guide' : '진 백과사전' },
+                 { href: 'tequila', title: isEn ? 'Tequila' : '데킬라 가이드' },
+                 { href: 'sake', title: isEn ? 'Sake Guide' : '사케 양조' },
+                 { href: 'rum', title: isEn ? 'Rum Guide' : '럼 대사전' },
+                 { href: 'cognac', title: isEn ? 'Cognac' : '코냑 가이드' },
+                 { href: 'vodka', title: isEn ? 'Vodka' : '보드카 가이드' },
+               ].map((wiki, i) => (
+                 <Link 
+                   key={i}
+                   href={`/${lang}/contents/wiki/${wiki.href}`} 
+                   className="p-4 bg-muted/10 border border-white/5 rounded-2xl text-[11px] font-black text-center uppercase tracking-tighter hover:bg-primary/10 hover:border-primary/30 hover:text-primary transition-all active:scale-95 whitespace-nowrap"
+                 >
+                   {wiki.title}
+                 </Link>
+               ))}
+               <Link 
+                 href={`/${lang}/contents/wiki`} 
+                 className="p-4 bg-primary text-primary-foreground shadow-lg shadow-primary/20 rounded-2xl text-[11px] font-black text-center uppercase tracking-tighter hover:scale-105 transition-all active:scale-95"
+               >
+                 {isEn ? '→ Browse All' : '→ 전체 보기'}
+               </Link>
+            </div>
+          </div>
         </div>
 
-      </div>
-
-      <div className="mt-10 max-w-4xl mx-auto relative z-10 px-4">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="h-px flex-1 bg-border/50"></div>
-          <h2 className="text-sm font-bold text-muted-foreground uppercase tracking-widest whitespace-nowrap">
-            {isEn ? "Global Spirits Wiki" : "세계 주류 백과사전"}
-          </h2>
-          <div className="h-px flex-1 bg-border/50"></div>
+        {/* Footer Ambience */}
+        <div className="text-center">
+          <p className="text-muted-foreground/30 text-[10px] font-black uppercase tracking-[0.4em] animate-pulse italic">
+            Expanding the Liquor Universe
+          </p>
         </div>
-        <p className="text-xs text-muted-foreground/70 text-center mb-4 leading-relaxed">
-          {isEn
-            ? 'Explore whisky, gin, rum, sake, tequila, and more — detailed category guides covering history, production, and tasting notes.'
-            : '위스키, 진, 럼, 사케, 데킬라 등 세계 주류의 역사, 제조 공정, 시음 노트를 담은 카테고리 가이드.'}
-        </p>
-        <div className="flex flex-wrap justify-center gap-3">
-          <Link href={`/${lang}/contents/wiki/single-malt`} className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-sky-500 transition-colors">
-            {isEn ? 'Single Malt Whisky' : '싱글 몰트 위스키'}
-          </Link>
-          <Link href={`/${lang}/contents/wiki/bourbon`} className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-sky-500 transition-colors">
-            {isEn ? 'Bourbon Whiskey Guide' : '버번 위스키 가이드'}
-          </Link>
-          <Link href={`/${lang}/contents/wiki/whisky`} className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-sky-500 transition-colors">
-            {isEn ? 'Blended Whisky Guide' : '블렌디드 위스키 가이드'}
-          </Link>
-          <Link href={`/${lang}/contents/wiki/gin`} className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-sky-500 transition-colors">
-            {isEn ? 'Gin Distillation & Botanicals' : '진 증류 & 보태니컬'}
-          </Link>
-          <Link href={`/${lang}/contents/wiki/rum`} className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-sky-500 transition-colors">
-            {isEn ? 'Rum Varieties & Origins' : '럼 종류와 원산지'}
-          </Link>
-          <Link href={`/${lang}/contents/wiki/tequila`} className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-sky-500 transition-colors">
-            {isEn ? 'Tequila & Agave Spirits' : '데킬라 & 아가베 증류주'}
-          </Link>
-          <Link href={`/${lang}/contents/wiki/sake`} className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-sky-500 transition-colors">
-            {isEn ? 'Japanese Sake Brewing Guide' : '일본 사케 양조 가이드'}
-          </Link>
-          <Link href={`/${lang}/contents/wiki/cognac`} className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-sky-500 transition-colors">
-            {isEn ? 'Cognac & Brandy Guide' : '코냑 & 브랜디 가이드'}
-          </Link>
-          <Link href={`/${lang}/contents/wiki/vodka`} className="text-sm px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-secondary hover:text-sky-500 transition-colors">
-            {isEn ? 'Vodka Production & Styles' : '보드카 제조 & 스타일'}
-          </Link>
-          <Link href={`/${lang}/contents/wiki`} className="text-sm px-4 py-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-500 transition-colors font-semibold">
-            {isEn ? '→ Browse All Spirit Categories' : '→ 전체 주류 카테고리 보기'}
-          </Link>
-        </div>
-      </div>
-
-      {/* Interactive Experiences Section */}
-      <div className="mt-10 max-w-4xl mx-auto relative z-10 px-4">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="h-px flex-1 bg-border/50"></div>
-          <h2 className="text-sm font-bold text-muted-foreground uppercase tracking-widest whitespace-nowrap">
-            {isEn ? "Interactive Experiences" : "인터랙티브 경험"}
-          </h2>
-          <div className="h-px flex-1 bg-border/50"></div>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
-          <Link href={`/${lang}/contents/mbti`} className="flex flex-col gap-1 p-4 rounded-xl border border-border bg-card/50 hover:border-pink-500/50 hover:bg-pink-500/5 transition-colors">
-            <span className="font-semibold text-foreground">{isEn ? 'Spirit MBTI Test' : '주류 MBTI 테스트'}</span>
-            <span className="text-xs text-muted-foreground">{isEn ? 'Discover your drink personality across 12 types — Soju Socialite, Whisky Contemplator, and more.' : '12가지 유형 중 나의 주류 성격을 찾아보세요 — 소주 소셜라이트, 위스키 사색가 등.'}</span>
-          </Link>
-          <Link href={`/${lang}/contents/worldcup`} className="flex flex-col gap-1 p-4 rounded-xl border border-border bg-card/50 hover:border-amber-500/50 hover:bg-amber-500/5 transition-colors">
-            <span className="font-semibold text-foreground">{isEn ? 'Spirit World Cup Tournament' : '술 취향 월드컵 토너먼트'}</span>
-            <span className="text-xs text-muted-foreground">{isEn ? 'Head-to-head bracket to crown your all-time favourite spirit from 100K+ options.' : '10만 종 이상의 주류 중 나의 진짜 최애 주류를 토너먼트로 가려보세요.'}</span>
-          </Link>
-          <Link href={`/${lang}/contents/perfect-pour`} className="flex flex-col gap-1 p-4 rounded-xl border border-border bg-card/50 hover:border-amber-400/50 hover:bg-amber-400/5 transition-colors">
-            <span className="font-semibold text-foreground">{isEn ? 'Golden Ratio Pouring Game' : '황금 비율 붓기 게임'}</span>
-            <span className="text-xs text-muted-foreground">{isEn ? 'Test your timing and pour the perfect Somaek ratio in this mini-game.' : '타이밍 미니게임으로 나만의 소맥 황금 비율을 찾아보세요.'}</span>
-          </Link>
-        </div>
-      </div>
-
-      {/* Community & News Section */}
-      <div className="mt-10 max-w-4xl mx-auto relative z-10 px-4">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="h-px flex-1 bg-border/50"></div>
-          <h2 className="text-sm font-bold text-muted-foreground uppercase tracking-widest whitespace-nowrap">
-            {isEn ? "Community & News" : "커뮤니티 & 뉴스"}
-          </h2>
-          <div className="h-px flex-1 bg-border/50"></div>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-          <Link href={`/${lang}/contents/reviews`} className="flex flex-col gap-1 p-4 rounded-xl border border-border bg-card/50 hover:border-blue-500/50 hover:bg-blue-500/5 transition-colors">
-            <span className="font-semibold text-foreground">{isEn ? 'Spirit Tasting Review Board' : '주류 시음 리뷰 보드'}</span>
-            <span className="text-xs text-muted-foreground">{isEn ? 'Authentic nose, palate, and finish notes from real drinkers across whisky, soju, makgeolli, and more.' : '위스키, 소주, 막걸리 등 실제 경험자의 향·맛·여운 시음 노트 모음.'}</span>
-          </Link>
-          <Link href={`/${lang}/contents/news`} className="flex flex-col gap-1 p-4 rounded-xl border border-border bg-card/50 hover:border-indigo-500/50 hover:bg-indigo-500/5 transition-colors">
-            <span className="font-semibold text-foreground">{isEn ? 'AI-Analyzed Global Spirits News' : 'AI가 분석한 글로벌 주류 뉴스'}</span>
-            <span className="text-xs text-muted-foreground">{isEn ? 'New distillery launches, award results, and market trends — analyzed and contextualized by AI.' : '신규 증류소, 수상 결과, 시장 트렌드를 AI가 분석하고 맥락화한 주류 뉴스.'}</span>
-          </Link>
-        </div>
-      </div>
-
-      {/* Footer Text */}
-      <div className="mt-12 text-center relative z-10">
-        <p className="text-muted-foreground/40 text-[10px] font-medium uppercase tracking-widest">
-          More Experiences Coming Soon
-        </p>
       </div>
     </div>
   );

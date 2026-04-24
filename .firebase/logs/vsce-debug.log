@@ -3415,3 +3415,126 @@ I0424 22:04:27.837906   22168 dev.go:104] Listening on address (HTTP + gRPC): 12
  {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0424 22:04:28.982279   22168 engine.go:209] [projects/emulator/locations/emulator/services/k-spirits-club-hub a820] ExecuteGraphqlRead query IntrospectionQuery: succeeded. \n"}}
 [debug] [2026-04-24T13:04:29.708Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects 200
 [debug] [2026-04-24T13:04:29.709Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects [omitted]
+[debug] [2026-04-24T14:56:47.773Z] I0424 23:56:47.758528   22168 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0424 23:56:47.758528   22168 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-24T14:56:48.027Z] I0424 23:56:48.024686   22168 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 6e33] UpdateResources(): done
+Main schema: sources: schema\schema.gql [3344B] 
+Connector "main": sources: main\mutations.gql [6617B] main\queries.gql [9892B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0424 23:56:48.024686   22168 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 6e33] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [3344B] \nConnector \"main\": sources: main\\mutations.gql [6617B] main\\queries.gql [9892B] \n"}}
+[debug] [2026-04-24T14:56:48.153Z] I0424 23:56:48.150842   22168 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0424 23:56:48.150842   22168 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-24T14:56:48.201Z] I0424 23:56:48.200668   22168 codegen.go:101] [connector "main" adminSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-admin-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0424 23:56:48.200668   22168 codegen.go:101] [connector \"main\" adminSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-admin-generated\"\n"}}
+[debug] [2026-04-24T14:56:48.223Z] I0424 23:56:48.220784   22168 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\implicit.gql [1595B] main\input.gql [131310B] main\relation.gql [64498B] main\query.gql [12468B] main\mutation.gql [33514B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0424 23:56:48.220784   22168 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\implicit.gql [1595B] main\\input.gql [131310B] main\\relation.gql [64498B] main\\query.gql [12468B] main\\mutation.gql [33514B] \n"}}
+[debug] [2026-04-24T14:56:48.255Z] I0424 23:56:48.255157   22168 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: esm\index.esm.js [25111B] esm\package.json [17B] react\esm\package.json [17B] .guides/usage.md [4228B] index.d.ts [48939B] index.cjs.js [27924B] .guides/config.json [236B] react\index.cjs.js [16359B] react\esm\index.esm.js [15385B] react\README.md [205541B] .guides/setup.md [1682B] package.json [850B] README.md [207067B] react\index.d.ts [19711B] react\package.json [457B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0424 23:56:48.255157   22168 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: esm\\index.esm.js [25111B] esm\\package.json [17B] react\\esm\\package.json [17B] .guides/usage.md [4228B] index.d.ts [48939B] index.cjs.js [27924B] .guides/config.json [236B] react\\index.cjs.js [16359B] react\\esm\\index.esm.js [15385B] react\\README.md [205541B] .guides/setup.md [1682B] package.json [850B] README.md [207067B] react\\index.d.ts [19711B] react\\package.json [457B] \n"}}
+[debug] [2026-04-24T14:56:48.273Z] I0424 23:56:48.273210   22168 installsdk.go:55] Package @dataconnect/generated is already installed. Skipping installation
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0424 23:56:48.273210   22168 installsdk.go:55] Package @dataconnect/generated is already installed. Skipping installation\n"}}
+[debug] [2026-04-24T14:56:48.286Z] I0424 23:56:48.284899   22168 collector.go:107] connector "main" adminSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-admin-generated"
+Generated sources: esm\package.json [17B] index.cjs.js [15618B] package.json [629B] index.d.ts [43550B] esm\index.esm.js [13981B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0424 23:56:48.284899   22168 collector.go:107] connector \"main\" adminSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-admin-generated\"\nGenerated sources: esm\\package.json [17B] index.cjs.js [15618B] package.json [629B] index.d.ts [43550B] esm\\index.esm.js [13981B] \n"}}
+[debug] [2026-04-24T14:56:48.295Z] I0424 23:56:48.294472   22168 installsdk.go:55] Package @dataconnect/admin-generated is already installed. Skipping installation
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0424 23:56:48.294472   22168 installsdk.go:55] Package @dataconnect/admin-generated is already installed. Skipping installation\n"}}
+[debug] [2026-04-24T14:56:48.296Z] I0424 23:56:48.294472   22168 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0424 23:56:48.294472   22168 load.go:109] Finished reloading\n"}}
+[info] [Firebase Plugin] Stopping SQL Connect toolkit
+[warn] !  SQL Connect Emulator has exited upon receiving signal: SIGINT 
+[debug] [2026-04-24T15:02:57.438Z] [Firebase Plugin] Activating Firebase extension.
+[debug] [2026-04-24T15:03:08.259Z] [Firebase Plugin] requireAuthWrapper
+[debug] [2026-04-24T15:03:08.261Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-04-24T15:03:08.262Z] > authorizing via signed-in user (ruahn49@gmail.com)
+[debug] [2026-04-24T15:03:08.265Z] Checked if tokens are valid: false, expires at: 1777039467796
+[debug] [2026-04-24T15:03:08.266Z] Checked if tokens are valid: false, expires at: 1777039467796
+[debug] [2026-04-24T15:03:08.267Z] > refreshing access token with scopes: []
+[debug] [2026-04-24T15:03:08.268Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-04-24T15:03:08.269Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-04-24T15:03:08.280Z] [Firebase Plugin] VSCode notification server listening on port 40001
+[info] [Firebase Plugin] Starting SQL Connect toolkit (version 3.4.5) on port 50001
+[debug] [2026-04-24T15:03:11.265Z] I0425 00:03:11.149008   17496 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 3ead] UpdateResources(): done
+Main schema: sources: schema\schema.gql [3344B] 
+Connector "main": sources: main\mutations.gql [6617B] main\queries.gql [9892B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 00:03:11.149008   17496 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 3ead] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [3344B] \nConnector \"main\": sources: main\\mutations.gql [6617B] main\\queries.gql [9892B] \n"}}
+[debug] [2026-04-24T15:03:11.267Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"dataconnect"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2026-04-24T15:03:11.267Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"dataconnect"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2026-04-24T15:03:11.268Z] Starting SQL Connect Emulator with command {"binary":"C:\\Users\\CHOI JUN YEONG\\.cache\\firebase\\emulators\\dataconnect-emulator-3.4.5.exe","args":["--logtostderr","-v=2","dev","--listen=localhost:50001","--config_dir=c:\\k-spirits-club-hub\\dataconnect","--enable_output_schema_extensions=true","--enable_output_generated_sdk=true"],"optionalArgs":["listen","config_dir","enable_output_schema_extensions","enable_output_generated_sdk"],"joinArgs":true,"shell":false,"port":9399} {"metadata":{"emulator":{"name":"dataconnect"},"message":"Starting SQL Connect Emulator with command {\"binary\":\"C:\\\\Users\\\\CHOI JUN YEONG\\\\.cache\\\\firebase\\\\emulators\\\\dataconnect-emulator-3.4.5.exe\",\"args\":[\"--logtostderr\",\"-v=2\",\"dev\",\"--listen=localhost:50001\",\"--config_dir=c:\\\\k-spirits-club-hub\\\\dataconnect\",\"--enable_output_schema_extensions=true\",\"--enable_output_generated_sdk=true\"],\"optionalArgs\":[\"listen\",\"config_dir\",\"enable_output_schema_extensions\",\"enable_output_generated_sdk\"],\"joinArgs\":true,\"shell\":false,\"port\":9399}"}}
+[info] i  dataconnect: SQL Connect Emulator logging to dataconnect-debug.log {"metadata":{"emulator":{"name":"dataconnect"},"message":"SQL Connect Emulator logging to \u001b[1mdataconnect-debug.log\u001b[22m"}}
+[debug] [2026-04-24T15:03:11.554Z] I0425 00:03:11.361322   21592 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 00:03:11.361322   21592 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-24T15:03:11.766Z] I0425 00:03:11.759757   21592 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub f6e3] UpdateResources(): done
+Main schema: sources: schema\schema.gql [3344B] 
+Connector "main": sources: main\mutations.gql [6617B] main\queries.gql [9892B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 00:03:11.759757   21592 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub f6e3] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [3344B] \nConnector \"main\": sources: main\\mutations.gql [6617B] main\\queries.gql [9892B] \n"}}
+[debug] [2026-04-24T15:03:12.941Z] I0425 00:03:12.132496   21592 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+I0425 00:03:12.251426   21592 codegen.go:101] [connector "main" adminSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-admin-generated"
+I0425 00:03:12.314823   21592 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\input.gql [131310B] main\relation.gql [64498B] main\query.gql [12468B] main\mutation.gql [33514B] main\implicit.gql [1595B] 
+I0425 00:03:12.424588   21592 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: esm\package.json [17B] react\index.d.ts [19711B] .guides/usage.md [4228B] .guides/setup.md [1682B] .guides/config.json [236B] index.d.ts [48939B] README.md [207067B] react\esm\package.json [17B] react\index.cjs.js [16359B] react\esm\index.esm.js [15385B] package.json [850B] react\package.json [457B] react\README.md [205541B] esm\index.esm.js [25111B] index.cjs.js [27924B] 
+I0425 00:03:12.616809   21592 installsdk.go:55] Package @dataconnect/generated is already installed. Skipping installation
+I0425 00:03:12.635650   21592 collector.go:107] connector "main" adminSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-admin-generated"
+Generated sources: index.cjs.js [15618B] package.json [629B] index.d.ts [43550B] esm\index.esm.js [13981B] esm\package.json [17B] 
+I0425 00:03:12.658418   21592 installsdk.go:55] Package @dataconnect/admin-generated is already installed. Skipping installation
+I0425 00:03:12.658418   21592 load.go:109] Finished reloading
+I0425 00:03:12.813443   21592 dev.go:104] Listening on address (HTTP + gRPC): 127.0.0.1:50001
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 00:03:12.132496   21592 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nI0425 00:03:12.251426   21592 codegen.go:101] [connector \"main\" adminSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-admin-generated\"\nI0425 00:03:12.314823   21592 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\input.gql [131310B] main\\relation.gql [64498B] main\\query.gql [12468B] main\\mutation.gql [33514B] main\\implicit.gql [1595B] \nI0425 00:03:12.424588   21592 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: esm\\package.json [17B] react\\index.d.ts [19711B] .guides/usage.md [4228B] .guides/setup.md [1682B] .guides/config.json [236B] index.d.ts [48939B] README.md [207067B] react\\esm\\package.json [17B] react\\index.cjs.js [16359B] react\\esm\\index.esm.js [15385B] package.json [850B] react\\package.json [457B] react\\README.md [205541B] esm\\index.esm.js [25111B] index.cjs.js [27924B] \nI0425 00:03:12.616809   21592 installsdk.go:55] Package @dataconnect/generated is already installed. Skipping installation\nI0425 00:03:12.635650   21592 collector.go:107] connector \"main\" adminSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-admin-generated\"\nGenerated sources: index.cjs.js [15618B] package.json [629B] index.d.ts [43550B] esm\\index.esm.js [13981B] esm\\package.json [17B] \nI0425 00:03:12.658418   21592 installsdk.go:55] Package @dataconnect/admin-generated is already installed. Skipping installation\nI0425 00:03:12.658418   21592 load.go:109] Finished reloading\nI0425 00:03:12.813443   21592 dev.go:104] Listening on address (HTTP + gRPC): 127.0.0.1:50001\n"}}
+[debug] [2026-04-24T15:03:13.340Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-04-24T15:03:13.342Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-04-24T15:03:13.434Z] [Firebase Plugin] User found:  ruahn49@gmail.com
+[info] [Firebase Plugin] (Core:Project) New user detected, fetching projects
+[debug] [2026-04-24T15:03:13.439Z] Checked if tokens are valid: true, expires at: 1777046592345
+[debug] [2026-04-24T15:03:13.441Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects pageSize=1000
+[debug] [2026-04-24T15:03:13.498Z] I0425 00:03:13.489743   21592 engine.go:209] [projects/emulator/locations/emulator/services/k-spirits-club-hub f6e3] ExecuteGraphqlRead query IntrospectionQuery: succeeded. 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 00:03:13.489743   21592 engine.go:209] [projects/emulator/locations/emulator/services/k-spirits-club-hub f6e3] ExecuteGraphqlRead query IntrospectionQuery: succeeded. \n"}}
+[debug] [2026-04-24T15:03:14.252Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects 200
+[debug] [2026-04-24T15:03:14.254Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects [omitted]
+[info] [Firebase Plugin] Stopping SQL Connect toolkit
+[warn] !  SQL Connect Emulator has exited upon receiving signal: SIGINT 
+[debug] [2026-04-24T15:04:42.061Z] [Firebase Plugin] Activating Firebase extension.
+[debug] [2026-04-24T15:04:46.534Z] [Firebase Plugin] requireAuthWrapper
+[debug] [2026-04-24T15:04:46.537Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-04-24T15:04:46.539Z] > authorizing via signed-in user (ruahn49@gmail.com)
+[debug] [2026-04-24T15:04:46.545Z] Checked if tokens are valid: true, expires at: 1777046592345
+[debug] [2026-04-24T15:04:46.546Z] Checked if tokens are valid: true, expires at: 1777046592345
+[debug] [2026-04-24T15:04:46.546Z] [Firebase Plugin] User found:  ruahn49@gmail.com
+[info] [Firebase Plugin] (Core:Project) New user detected, fetching projects
+[debug] [2026-04-24T15:04:46.550Z] Checked if tokens are valid: true, expires at: 1777046592345
+[debug] [2026-04-24T15:04:46.553Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects pageSize=1000
+[debug] [2026-04-24T15:04:46.572Z] [Firebase Plugin] VSCode notification server listening on port 40001
+[info] [Firebase Plugin] Starting SQL Connect toolkit (version 3.4.5) on port 50001
+[debug] [2026-04-24T15:04:49.863Z] I0425 00:04:49.683940    8952 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 70ef] UpdateResources(): done
+Main schema: sources: schema\schema.gql [3344B] 
+Connector "main": sources: main\mutations.gql [6617B] main\queries.gql [9892B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 00:04:49.683940    8952 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 70ef] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [3344B] \nConnector \"main\": sources: main\\mutations.gql [6617B] main\\queries.gql [9892B] \n"}}
+[debug] [2026-04-24T15:04:49.865Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"dataconnect"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2026-04-24T15:04:49.865Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"dataconnect"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2026-04-24T15:04:49.866Z] Starting SQL Connect Emulator with command {"binary":"C:\\Users\\CHOI JUN YEONG\\.cache\\firebase\\emulators\\dataconnect-emulator-3.4.5.exe","args":["--logtostderr","-v=2","dev","--listen=localhost:50001","--config_dir=c:\\k-spirits-club-hub\\dataconnect","--enable_output_schema_extensions=true","--enable_output_generated_sdk=true"],"optionalArgs":["listen","config_dir","enable_output_schema_extensions","enable_output_generated_sdk"],"joinArgs":true,"shell":false,"port":9399} {"metadata":{"emulator":{"name":"dataconnect"},"message":"Starting SQL Connect Emulator with command {\"binary\":\"C:\\\\Users\\\\CHOI JUN YEONG\\\\.cache\\\\firebase\\\\emulators\\\\dataconnect-emulator-3.4.5.exe\",\"args\":[\"--logtostderr\",\"-v=2\",\"dev\",\"--listen=localhost:50001\",\"--config_dir=c:\\\\k-spirits-club-hub\\\\dataconnect\",\"--enable_output_schema_extensions=true\",\"--enable_output_generated_sdk=true\"],\"optionalArgs\":[\"listen\",\"config_dir\",\"enable_output_schema_extensions\",\"enable_output_generated_sdk\"],\"joinArgs\":true,\"shell\":false,\"port\":9399}"}}
+[info] i  dataconnect: SQL Connect Emulator logging to dataconnect-debug.log {"metadata":{"emulator":{"name":"dataconnect"},"message":"SQL Connect Emulator logging to \u001b[1mdataconnect-debug.log\u001b[22m"}}
+[debug] [2026-04-24T15:04:50.685Z] I0425 00:04:50.066859   14736 load.go:31] Reloading schema and connectors...
+I0425 00:04:50.348129   14736 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 9071] UpdateResources(): done
+Main schema: sources: schema\schema.gql [3344B] 
+Connector "main": sources: main\mutations.gql [6617B] main\queries.gql [9892B] 
+I0425 00:04:50.480060   14736 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+I0425 00:04:50.538042   14736 codegen.go:101] [connector "main" adminSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-admin-generated"
+I0425 00:04:50.563767   14736 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\query.gql [12468B] main\mutation.gql [33514B] main\implicit.gql [1595B] main\input.gql [131310B] main\relation.gql [64498B] 
+I0425 00:04:50.645348   14736 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: .guides/config.json [236B] index.d.ts [48939B] esm\index.esm.js [25111B] esm\package.json [17B] README.md [207067B] react\index.cjs.js [16359B] package.json [850B] react\package.json [457B] react\esm\index.esm.js [15385B] react\README.md [205541B] .guides/usage.md [4228B] .guides/setup.md [1682B] index.cjs.js [27924B] react\index.d.ts [19711B] react\esm\package.json [17B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 00:04:50.066859   14736 load.go:31] Reloading schema and connectors...\nI0425 00:04:50.348129   14736 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 9071] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [3344B] \nConnector \"main\": sources: main\\mutations.gql [6617B] main\\queries.gql [9892B] \nI0425 00:04:50.480060   14736 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nI0425 00:04:50.538042   14736 codegen.go:101] [connector \"main\" adminSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-admin-generated\"\nI0425 00:04:50.563767   14736 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\query.gql [12468B] main\\mutation.gql [33514B] main\\implicit.gql [1595B] main\\input.gql [131310B] main\\relation.gql [64498B] \nI0425 00:04:50.645348   14736 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: .guides/config.json [236B] index.d.ts [48939B] esm\\index.esm.js [25111B] esm\\package.json [17B] README.md [207067B] react\\index.cjs.js [16359B] package.json [850B] react\\package.json [457B] react\\esm\\index.esm.js [15385B] react\\README.md [205541B] .guides/usage.md [4228B] .guides/setup.md [1682B] index.cjs.js [27924B] react\\index.d.ts [19711B] react\\esm\\package.json [17B] \n"}}
+[debug] [2026-04-24T15:04:51.046Z] I0425 00:04:50.980676   14736 installsdk.go:55] Package @dataconnect/generated is already installed. Skipping installation
+I0425 00:04:51.023674   14736 collector.go:107] connector "main" adminSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-admin-generated"
+Generated sources: index.cjs.js [15618B] package.json [629B] index.d.ts [43550B] esm\index.esm.js [13981B] esm\package.json [17B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 00:04:50.980676   14736 installsdk.go:55] Package @dataconnect/generated is already installed. Skipping installation\nI0425 00:04:51.023674   14736 collector.go:107] connector \"main\" adminSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-admin-generated\"\nGenerated sources: index.cjs.js [15618B] package.json [629B] index.d.ts [43550B] esm\\index.esm.js [13981B] esm\\package.json [17B] \n"}}
+[debug] [2026-04-24T15:04:51.255Z] I0425 00:04:51.074340   14736 installsdk.go:55] Package @dataconnect/admin-generated is already installed. Skipping installation
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 00:04:51.074340   14736 installsdk.go:55] Package @dataconnect/admin-generated is already installed. Skipping installation\n"}}
+[debug] [2026-04-24T15:04:51.341Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects 200
+[debug] [2026-04-24T15:04:51.343Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects [omitted]
+[debug] [2026-04-24T15:04:51.973Z] I0425 00:04:51.074340   14736 load.go:109] Finished reloading
+I0425 00:04:51.716861   14736 dev.go:104] Listening on address (HTTP + gRPC): 127.0.0.1:50001
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 00:04:51.074340   14736 load.go:109] Finished reloading\nI0425 00:04:51.716861   14736 dev.go:104] Listening on address (HTTP + gRPC): 127.0.0.1:50001\n"}}
+[debug] [2026-04-24T15:04:55.159Z] I0425 00:04:53.682081   14736 engine.go:209] [projects/emulator/locations/emulator/services/k-spirits-club-hub 9071] ExecuteGraphqlRead query IntrospectionQuery: succeeded. 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 00:04:53.682081   14736 engine.go:209] [projects/emulator/locations/emulator/services/k-spirits-club-hub 9071] ExecuteGraphqlRead query IntrospectionQuery: succeeded. \n"}}
+[info] [Firebase Plugin] Stopping SQL Connect toolkit
+[warn] !  SQL Connect Emulator has exited upon receiving signal: SIGINT 

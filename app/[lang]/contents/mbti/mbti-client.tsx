@@ -156,46 +156,56 @@ export function MBTIClient({ lang }: { lang: string }) {
     const router = useRouter();
 
     return (
-        <div className="max-w-2xl mx-auto px-4 py-8 md:py-12 min-h-[80vh] flex flex-col items-center bg-neutral-900 text-white relative">
+        <div className="max-w-2xl mx-auto px-4 py-12 md:py-16 min-h-[85vh] flex flex-col items-center relative overflow-hidden">
+            {/* Background Atmosphere */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[600px] bg-primary/5 blur-[120px] pointer-events-none" />
+
             {/* Back Button */}
             <button
                 onClick={() => router.back()}
-                className="absolute top-6 left-6 flex items-center gap-2 text-neutral-500 hover:text-white transition-all group z-50"
+                className="absolute top-8 left-6 p-2 bg-card/20 backdrop-blur-xl border border-white/5 rounded-2xl hover:bg-muted transition-all group z-50 shadow-2xl"
             >
-                <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-                <span className="text-sm font-bold">{isEn ? 'Back' : '뒤로가기'}</span>
+                <ArrowLeft className="w-5 h-5 text-foreground group-hover:-translate-x-1 transition-transform" />
             </button>
+
             <AnimatePresence mode="wait">
                 {step === 'intro' && (
                     <motion.div
                         key="intro"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        className="text-center space-y-8"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 1.05 }}
+                        className="text-center space-y-12 relative z-10"
                     >
-                        <div className="space-y-4">
-                            <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight">
-                                {t.titlePrefix}<br /><span className="text-amber-500">MBTI{t.titleSuffix}</span>
-                            </h1>
-                            <p className="text-neutral-300 text-lg">
+                        <div className="space-y-6">
+                            <motion.div
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                            >
+                                <h1 className="text-5xl md:text-6xl font-black text-foreground tracking-tighter italic uppercase leading-none">
+                                    {t.titlePrefix}<br />
+                                    <span className="bg-brand-gradient bg-clip-text text-transparent">MBTI{t.titleSuffix}</span>
+                                </h1>
+                            </motion.div>
+                            <p className="text-muted-foreground text-lg font-medium max-w-sm mx-auto">
                                 {t.subtitle}
                             </p>
                         </div>
 
-                        <div className="relative w-72 h-64 mx-auto flex items-center justify-center">
-                            {/* Subtle decorative glow */}
-                            <div className="absolute w-40 h-40 bg-amber-500/10 rounded-full blur-3xl" />
-
-                            {/* Static Container (No bounce) */}
-                            <div className="relative z-10 w-32 h-32 flex items-center justify-center">
+                        <div className="relative w-80 h-72 mx-auto flex items-center justify-center">
+                            <div className="absolute w-56 h-56 bg-primary/20 rounded-full blur-[80px] animate-pulse" />
+                            <div className="relative z-10 w-40 h-40 flex items-center justify-center bg-card/10 backdrop-blur-2xl border border-white/10 rounded-[3rem] shadow-2xl">
                                 <AnimatePresence mode="wait">
                                     <motion.span
                                         key={introEmojiIdx}
-                                        initial={{ opacity: 0, scale: 0.5 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        exit={{ opacity: 0, scale: 1.5 }}
-                                        transition={{ duration: 0.5 }}
+                                        initial={{ opacity: 0, rotate: -20, scale: 0.5 }}
+                                        animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                                        exit={{ opacity: 0, rotate: 20, scale: 1.5 }}
+                                        transition={{ 
+                                            type: "spring",
+                                            stiffness: 260,
+                                            damping: 20
+                                        }}
                                         className="text-8xl select-none"
                                     >
                                         {SPIRIT_EMOJIS[introEmojiIdx]}
@@ -206,16 +216,17 @@ export function MBTIClient({ lang }: { lang: string }) {
 
                         <button
                             onClick={startQuiz}
-                            className="px-12 py-4 bg-amber-600 hover:bg-amber-700 text-white rounded-full font-bold text-xl shadow-lg transition-all active:scale-95"
+                            className="px-16 py-6 bg-primary text-primary-foreground rounded-[2.5rem] font-black text-xl shadow-[0_25px_50px_-12px_rgba(var(--primary-rgb),0.5)] hover:scale-105 transition-all active:scale-95 italic uppercase tracking-tighter"
                         >
                             {t.startBtn}
                         </button>
 
-                        <div className="w-full mt-10 flex justify-center">
+                        <div className="w-full mt-10">
                             <GoogleAd
                                 client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
                                 slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || ''}
                                 format="horizontal"
+                                className="rounded-3xl border border-white/5 opacity-80"
                             />
                         </div>
                     </motion.div>
@@ -224,51 +235,64 @@ export function MBTIClient({ lang }: { lang: string }) {
                 {step === 'quiz' && (
                     <motion.div
                         key="quiz"
-                        initial={{ opacity: 0, x: 50 }}
+                        initial={{ opacity: 0, x: 100 }}
                         animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -50 }}
-                        className="w-full space-y-8"
+                        exit={{ opacity: 0, x: -100 }}
+                        className="w-full space-y-12 relative z-10"
                     >
-                        {/* Sticky Progress Bar */}
-                        <div className="sticky top-0 z-50 bg-black/60 backdrop-blur-md py-4 -mx-4 px-4 space-y-2 border-b border-white/5">
-                            <div className="flex justify-between text-xs font-bold tracking-tighter uppercase text-amber-500/80">
-                                <span>{t.progress}</span>
-                                <span>{Math.round(((currentIdx + 1) / MBTI_QUESTIONS.length) * 100)}%</span>
+                        {/* Progress Atmosphere */}
+                        <div className="space-y-4">
+                            <div className="flex justify-between items-end">
+                                <div className="space-y-1">
+                                    <p className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-[0.3em]">{t.progress}</p>
+                                    <h3 className="text-3xl font-black text-primary italic tracking-tighter">
+                                        {Math.round(((currentIdx + 1) / MBTI_QUESTIONS.length) * 100)}%
+                                    </h3>
+                                </div>
+                                <span className="text-[10px] font-bold text-muted-foreground opacity-40 italic">
+                                    {currentIdx + 1} / {MBTI_QUESTIONS.length}
+                                </span>
                             </div>
-                            <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+                            <div className="h-2.5 w-full bg-card/20 border border-white/5 rounded-full overflow-hidden shadow-inner">
                                 <motion.div
-                                    className="h-full bg-gradient-to-r from-amber-600 to-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.5)]"
+                                    className="h-full bg-brand-gradient shadow-[0_0_25px_rgba(var(--primary-rgb),0.5)]"
                                     initial={{ width: 0 }}
                                     animate={{ width: `${((currentIdx + 1) / MBTI_QUESTIONS.length) * 100}%` }}
+                                    transition={{ type: "spring", stiffness: 100, damping: 20 }}
                                 />
                             </div>
                         </div>
 
                         {/* Question Card */}
-                        <div className="bg-neutral-800 border border-white/10 p-5 md:p-6 rounded-3xl shadow-sm text-center space-y-4">
+                        <div className="bg-card/20 backdrop-blur-3xl border border-white/10 p-6 md:p-10 rounded-[3rem] shadow-2xl space-y-8 relative overflow-hidden group">
+                            <div className="absolute -top-24 -right-24 w-64 h-64 bg-primary/10 blur-[80px] rounded-full pointer-events-none group-hover:bg-primary/20 transition-colors" />
+
                             {MBTI_QUESTIONS[currentIdx].imagePath && (
-                                <div className="relative w-full aspect-[4/3] md:aspect-[16/9] rounded-2xl overflow-hidden mb-4">
+                                <div className="relative w-full aspect-video rounded-[2rem] overflow-hidden shadow-2xl border border-white/5">
                                     <Image
                                         src={MBTI_QUESTIONS[currentIdx].imagePath}
                                         alt="Question"
                                         fill
-                                        className="object-cover"
+                                        className="object-cover transition-transform duration-700 group-hover:scale-110"
                                         priority
                                     />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                                 </div>
                             )}
-                            <h2 className="text-xl md:text-2xl font-bold leading-tight whitespace-pre-line text-white">
+
+                            <h2 className="text-2xl md:text-3xl font-black leading-tight tracking-tight text-foreground italic">
                                 {isEn ? MBTI_QUESTIONS[currentIdx].question_en : MBTI_QUESTIONS[currentIdx].question_ko}
                             </h2>
 
-                            <div className="grid gap-2.5">
+                            <div className="grid gap-3.5">
                                 {MBTI_QUESTIONS[currentIdx].answers.map((ans, i) => (
                                     <button
                                         key={i}
                                         onClick={() => handleAnswer(ans.value)}
-                                        className="w-full p-4 text-base md:text-lg border-2 border-amber-900/30 bg-amber-900/10 hover:border-amber-500 hover:bg-amber-900/20 rounded-2xl transition-all active:scale-98 text-center whitespace-pre-line text-white"
+                                        className="w-full p-6 text-lg md:text-xl font-black bg-card/30 border border-white/5 hover:border-primary/50 hover:bg-primary/5 rounded-3xl transition-all active:scale-[0.98] text-center leading-snug shadow-xl group/btn relative overflow-hidden"
                                     >
-                                        {isEn ? ans.text_en : ans.text_ko}
+                                        <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+                                        <span className="relative z-10 italic uppercase tracking-tight">{isEn ? ans.text_en : ans.text_ko}</span>
                                     </button>
                                 ))}
                             </div>
@@ -282,15 +306,15 @@ export function MBTIClient({ lang }: { lang: string }) {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="flex flex-col items-center justify-center space-y-8 mt-[15vh] md:mt-[20vh]"
+                        className="flex flex-col items-center justify-center space-y-10 mt-[15vh] md:mt-[20vh] relative z-10"
                     >
-                        <div className="relative">
-                            <Loader2 className="w-20 h-20 text-amber-500 animate-spin" />
-                            <span className="absolute inset-0 flex items-center justify-center text-2xl">🧊</span>
+                        <div className="relative p-10 bg-card/20 backdrop-blur-3xl border border-white/10 rounded-[3rem] shadow-2xl">
+                            <Loader2 className="w-24 h-24 text-primary animate-spin" />
+                            <span className="absolute inset-0 flex items-center justify-center text-4xl animate-bounce">🥃</span>
                         </div>
-                        <div className="text-center space-y-2">
-                            <h3 className="text-2xl font-bold text-white">{t.loadingTitle}</h3>
-                            <p className="text-neutral-300 animate-pulse">
+                        <div className="text-center space-y-3">
+                            <h3 className="text-3xl font-black text-foreground italic uppercase tracking-tighter">{t.loadingTitle}</h3>
+                            <p className="text-muted-foreground font-medium animate-pulse">
                                 {t.loadingSub}
                             </p>
                         </div>
@@ -300,54 +324,50 @@ export function MBTIClient({ lang }: { lang: string }) {
                 {step === 'result' && resultType && (
                     <motion.div
                         key="result"
-                        initial={{ opacity: 0, scale: 0.9 }}
+                        initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="w-full space-y-8 pb-20"
+                        className="w-full space-y-10 pb-24 relative z-10"
                     >
-                        {/* Final Result Display to Capture */}
                         <div
                             ref={resultRef}
-                            className="bg-black p-6 rounded-[40px] border border-white/5 space-y-8"
+                            className="bg-card p-4 md:p-8 rounded-[3rem] border border-white/10 space-y-10 shadow-2xl relative overflow-hidden"
                         >
-                            {/* Result Profile */}
-                            <div className="text-center space-y-4">
+                            {/* Texture Overlay */}
+                            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')] opacity-20 pointer-events-none" />
+
+                            <div className="text-center space-y-6 relative z-10">
                                 <div className="space-y-1">
-                                    <h2 className="text-3xl md:text-4xl font-black text-white">
+                                    <p className="text-[11px] font-black text-primary uppercase tracking-[0.4em] mb-2">My Spirit Persona</p>
+                                    <h2 className="text-4xl md:text-6xl font-black italic tracking-tighter bg-brand-gradient bg-clip-text text-transparent leading-tight uppercase">
                                         {isEn ? MBTI_RESULTS[resultType].title_en : MBTI_RESULTS[resultType].title_ko}
                                     </h2>
                                 </div>
 
-                                <div className="relative w-full aspect-video rounded-3xl overflow-hidden bg-neutral-800 shadow-xl border border-white/10">
+                                <div className="relative w-full aspect-video rounded-[2.5rem] overflow-hidden bg-neutral-900 shadow-2xl border border-white/10">
                                     <Image
                                         src={MBTI_RESULTS[resultType].imagePath}
                                         alt={resultType}
                                         fill
                                         className="object-cover"
                                     />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                                 </div>
 
-                                <div className="bg-amber-900/10 p-5 rounded-2xl border border-amber-900/30">
-                                    <p className="text-lg leading-relaxed text-neutral-200 whitespace-pre-line text-center">
+                                <div className="bg-muted/5 p-6 md:p-8 rounded-[2rem] border border-white/5 backdrop-blur-md">
+                                    <p className="text-base md:text-lg leading-relaxed text-foreground/90 font-medium whitespace-pre-line text-center">
                                         {isEn ? MBTI_RESULTS[resultType].description_en : MBTI_RESULTS[resultType].description_ko}
                                     </p>
                                 </div>
 
                                 {/* Tasting Tags (Pills) */}
-                                <div className="flex flex-wrap gap-1.5 justify-center">
+                                <div className="flex flex-wrap gap-2 justify-center">
                                     {(isEn ? MBTI_RESULTS[resultType].tastingNotes_en : MBTI_RESULTS[resultType].tastingNotes_ko).map((tag: string, i: number) => {
-                                        const colors = [
-                                            "bg-pink-500/10 text-pink-500 border-pink-500/20",
-                                            "bg-amber-500/10 text-amber-500 border-amber-500/20",
-                                            "bg-blue-500/10 text-blue-500 border-blue-500/20",
-                                            "bg-emerald-500/10 text-emerald-500 border-emerald-500/20",
-                                            "bg-violet-500/10 text-violet-500 border-violet-500/20"
-                                        ];
                                         return (
                                             <span
                                                 key={i}
-                                                className={`px-3 py-0.5 rounded-full text-[11px] font-bold border whitespace-nowrap ${colors[i % colors.length]}`}
+                                                className="px-5 py-2 rounded-full text-[12px] font-black border border-white/5 bg-secondary/30 backdrop-blur-xl text-foreground/80 uppercase tracking-tighter"
                                             >
-                                                {tag}
+                                                # {tag}
                                             </span>
                                         );
                                     })}
@@ -355,18 +375,18 @@ export function MBTIClient({ lang }: { lang: string }) {
                             </div>
 
                             {/* Harmony Section */}
-                            <div className="grid grid-cols-2 gap-3 md:gap-4">
-                                <div className="bg-blue-500/5 p-4 rounded-2xl border border-blue-500/20 backdrop-blur-sm flex flex-col items-center justify-center min-h-[90px] md:min-h-[100px]">
-                                    <p className="text-[9px] md:text-[10px] text-blue-400 font-black mb-1.5 uppercase tracking-widest">{t.bestFriend}</p>
-                                    <p className="font-bold text-[11px] md:text-xs leading-tight whitespace-pre-line text-blue-100/90 text-center">
+                            <div className="grid grid-cols-2 gap-4 relative z-10">
+                                <div className="bg-primary/5 p-6 rounded-[2rem] border border-primary/20 backdrop-blur-3xl flex flex-col items-center justify-center min-h-[120px] shadow-xl group/buddy">
+                                    <p className="text-[10px] text-primary font-black mb-3 uppercase tracking-widest">{t.bestFriend}</p>
+                                    <p className="font-black text-sm md:text-base leading-tight whitespace-pre-line text-foreground italic text-center transition-transform group-hover/buddy:scale-105">
                                         {MBTI_RESULTS[resultType].compatible.map(type =>
                                             isEn ? MBTI_RESULTS[type].title_en : MBTI_RESULTS[type].title_ko
                                         ).join('\n')}
                                     </p>
                                 </div>
-                                <div className="bg-red-500/5 p-4 rounded-2xl border border-red-500/20 backdrop-blur-sm flex flex-col items-center justify-center min-h-[90px] md:min-h-[100px]">
-                                    <p className="text-[9px] md:text-[10px] text-red-400 font-black mb-1.5 uppercase tracking-widest">{t.worstFriend}</p>
-                                    <p className="font-bold text-[11px] md:text-xs leading-tight whitespace-pre-line text-red-100/90 text-center">
+                                <div className="bg-rose-500/5 p-6 rounded-[2rem] border border-rose-500/20 backdrop-blur-3xl flex flex-col items-center justify-center min-h-[120px] shadow-xl group/nobuddy">
+                                    <p className="text-[10px] text-rose-500 font-black mb-3 uppercase tracking-widest">{t.worstFriend}</p>
+                                    <p className="font-black text-sm md:text-base leading-tight whitespace-pre-line text-foreground italic text-center transition-transform group-hover/nobuddy:scale-105">
                                         {MBTI_RESULTS[resultType].incompatible.map(type =>
                                             isEn ? MBTI_RESULTS[type].title_en : MBTI_RESULTS[type].title_ko
                                         ).join('\n')}
@@ -375,80 +395,49 @@ export function MBTIClient({ lang }: { lang: string }) {
                             </div>
                         </div>
 
-                        {/* Explore Link */}
-                        <div className="px-1">
-                            {resultType && (
-                                <Link
-                                    href={`/${lang}/explore?q=${encodeURIComponent(
-                                        (isEn ? MBTI_RESULTS[resultType].title_en : MBTI_RESULTS[resultType].title_ko)
-                                            .replace(/[\uD83C-\uDBFF\uDC00-\uDFFF]+/g, '') // Remove emojis
-                                            .split(' ').pop() || "" // Get the last word (usually the spirit name)
-                                    )}`}
-                                    className="group relative flex items-center justify-between w-full p-6 bg-gradient-to-r from-amber-500/10 to-orange-600/10 border border-amber-500/20 rounded-3xl overflow-hidden hover:border-amber-500/40 transition-all"
-                                >
-                                    <div className="z-10 flex flex-col">
-                                        <span className="text-[11px] font-bold text-amber-500/80 mb-1 uppercase tracking-widest">
-                                            {isEn ? "Find your perfect" : "나에게 딱 맞는"}
-                                        </span>
-                                        <span className="text-xl md:text-2xl font-black text-amber-500 tracking-tight leading-tight">
-                                            "{(isEn ? MBTI_RESULTS[resultType].title_en : MBTI_RESULTS[resultType].title_ko)
-                                                .replace(/[\uD83C-\uDBFF\uDC00-\uDFFF]+/g, '').trim()}"
-                                        </span>
-                                        <span className="text-[11px] font-bold text-neutral-400 mt-1 uppercase tracking-widest">
-                                            {isEn ? "right now!" : "보러가기"}
-                                        </span>
-                                    </div>
-                                    <div className="z-10 bg-amber-500 text-white p-3 rounded-2xl group-hover:scale-110 transition-transform shadow-lg shadow-amber-500/20">
-                                        <Search size={24} />
-                                    </div>
-                                    <div className="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl" />
-                                </Link>
-                            )}
-                        </div>
-
                         {/* Actions */}
-                        <div className="flex flex-col gap-3">
-                            <div className="grid grid-cols-2 gap-3">
+                        <div className="flex flex-col gap-4 relative z-10">
+                            <div className="grid grid-cols-2 gap-4">
                                 <button
                                     onClick={saveImage}
-                                    className="py-4 bg-neutral-800 hover:bg-neutral-700 text-white rounded-2xl font-bold text-sm md:text-base flex items-center justify-center gap-2 transition-all active:scale-95 border border-white/5"
+                                    className="py-5 bg-card/40 backdrop-blur-2xl hover:bg-card/60 text-foreground rounded-3xl font-black text-sm md:text-base flex items-center justify-center gap-3 transition-all active:scale-95 border border-white/10 shadow-2xl group"
                                 >
-                                    <Download size={18} className="text-blue-400" /> {isEn ? "Save Image" : "이미지 저장"}
+                                    <Download size={20} className="text-primary group-hover:scale-110 transition-transform" /> {isEn ? "EXPORT IMAGE" : "이미지 저장"}
                                 </button>
 
                                 <button
                                     onClick={copyLink}
-                                    className="py-4 bg-neutral-800 hover:bg-neutral-700 text-white rounded-2xl font-bold text-sm md:text-base flex items-center justify-center gap-2 transition-all active:scale-95 border border-white/5"
+                                    className="py-5 bg-card/40 backdrop-blur-2xl hover:bg-card/60 text-foreground rounded-3xl font-black text-sm md:text-base flex items-center justify-center gap-3 transition-all active:scale-95 border border-white/10 shadow-2xl group"
                                 >
-                                    <Share2 size={18} className="text-purple-400" /> {isEn ? "Share" : "결과 공유"}
+                                    <Share2 size={20} className="text-primary group-hover:scale-110 transition-transform" /> {isEn ? "SHARE URL" : "결과 공유"}
                                 </button>
                             </div>
 
                             <button
                                 onClick={reset}
-                                className="w-full py-4 bg-amber-500 hover:bg-amber-400 text-black rounded-2xl font-black text-lg flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg shadow-amber-500/20"
+                                className="w-full py-5 bg-foreground text-background rounded-3xl font-black text-lg flex items-center justify-center gap-3 transition-all active:scale-95 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.5)] italic uppercase tracking-tighter"
                             >
-                                <RefreshCw size={20} /> {t.retryBtn}
+                                <RefreshCw size={24} /> {t.retryBtn}
                             </button>
                         </div>
 
-                        <div className="w-full mt-8 flex justify-center">
+                        <div className="w-full mt-10 relative z-10">
                             <GoogleAd
                                 client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
                                 slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || ''}
                                 format="horizontal"
+                                className="rounded-3xl border border-white/5"
                             />
                         </div>
                     </motion.div>
                 )}
             </AnimatePresence>
 
-            {/* Success Toast for Sharing */}
             <SuccessToast
                 isVisible={showToast}
                 message={isEn ? "Link copied to clipboard!" : "링크가 복사되었습니다!"}
                 onClose={() => setShowToast(false)}
             />
-        </div >
+        </div>
     );
 }

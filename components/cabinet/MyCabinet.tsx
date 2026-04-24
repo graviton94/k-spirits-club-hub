@@ -47,23 +47,23 @@ export default function MyCabinet({
             )}
 
             {/* Filter Tabs */}
-            <div className="flex justify-center mb-8">
-                <div className="inline-flex p-1 bg-secondary/30 rounded-xl border border-border/50">
+            <div className="flex justify-center mb-10">
+                <div className="inline-flex p-1.5 bg-muted/20 backdrop-blur-xl rounded-2xl border border-white/5 shadow-2xl">
                     <button
                         onClick={() => setFilter('all')}
-                        className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${filter === 'all' ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
+                        className={`px-6 py-2 rounded-xl text-xs font-black transition-all duration-300 ${filter === 'all' ? 'bg-primary text-primary-foreground shadow-[0_5px_15px_-3px_rgba(var(--primary-rgb),0.3)]' : 'text-muted-foreground hover:text-foreground hover:bg-white/5'}`}
                     >
                         {dict?.all || "전체"}
                     </button>
                     <button
                         onClick={() => setFilter('owned')}
-                        className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${filter === 'owned' ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
+                        className={`px-6 py-2 rounded-xl text-xs font-black transition-all duration-300 ${filter === 'owned' ? 'bg-primary text-primary-foreground shadow-[0_5px_15px_-3px_rgba(var(--primary-rgb),0.3)]' : 'text-muted-foreground hover:text-foreground hover:bg-white/5'}`}
                     >
                         {dict?.cabinet || "보유 중"}
                     </button>
                     <button
                         onClick={() => setFilter('wish')}
-                        className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${filter === 'wish' ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
+                        className={`px-6 py-2 rounded-xl text-xs font-black transition-all duration-300 ${filter === 'wish' ? 'bg-primary text-primary-foreground shadow-[0_5px_15px_-3px_rgba(var(--primary-rgb),0.3)]' : 'text-muted-foreground hover:text-foreground hover:bg-white/5'}`}
                     >
                         {dict?.wishlist || "위시리스트"}
                     </button>
@@ -71,11 +71,11 @@ export default function MyCabinet({
             </div>
 
             {/* Spirits Grid */}
-            <section className="mb-16">
-                <div className="relative bg-[#0f172a] rounded-[2.5rem] px-3 py-6 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/5 overflow-hidden">
-                    {/* Neon Glow Effects */}
-                    <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-amber-500/10 blur-[80px] rounded-full pointer-events-none" />
-                    <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-orange-600/10 blur-[80px] rounded-full pointer-events-none" />
+            <section className="mb-20">
+                <div className="relative bg-card/10 backdrop-blur-3xl rounded-[3rem] px-4 py-8 sm:p-12 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.4)] border border-white/5 overflow-hidden">
+                    {/* Immersive Glow Effects */}
+                    <div className="absolute -top-24 -left-24 w-64 h-64 bg-primary/10 blur-[100px] rounded-full pointer-events-none" />
+                    <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-orange-600/10 blur-[100px] rounded-full pointer-events-none" />
 
                     <div className="relative">
                         <motion.div
@@ -84,7 +84,7 @@ export default function MyCabinet({
                             variants={{
                                 visible: { transition: { staggerChildren: filteredSpirits.length > 50 ? 0.01 : 0.03 } }
                             }}
-                            className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2 sm:gap-3"
+                            className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3 sm:gap-6"
                         >
                             {filteredSpirits.map((spirit, index) => (
                                 <CabinetSpiritCard

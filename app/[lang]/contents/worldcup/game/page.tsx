@@ -428,9 +428,9 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
                             </div>
 
                             {/* Main Card */}
-                            <div className="w-[280px] md:w-[320px] bg-white rounded-[32px] overflow-hidden shadow-2xl border border-white/10 relative">
+                            <div className="w-[280px] md:w-[320px] bg-background rounded-[32px] overflow-hidden shadow-2xl border border-border relative">
                                 {/* 1. Image Block */}
-                                <div className="aspect-square relative p-10 bg-muted/50 border-b border-border/50">
+                                <div className="aspect-square relative p-10 bg-muted/30 border-b border-border/50">
                                     <Image
                                         src={winner.preloadedImageUrl || '/mys-4.webp'}
                                         alt={winner.name}
@@ -459,7 +459,7 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
 
                                     <div className="flex flex-wrap justify-center gap-2 opacity-60">
                                         {winner.country && (
-                                            <span className="text-[11px] font-black uppercase tracking-widest">{winner.country}</span>
+                                            <span className="text-[11px] font-black uppercase tracking-widest text-foreground">{winner.country}</span>
                                         )}
                                         {winner.abv !== null && (
                                             <span className="text-[11px] font-black text-primary">— {winner.abv}% VOL</span>
@@ -470,7 +470,7 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
 
                             {/* Capture Footer */}
                             <div className="mt-4 flex items-center gap-2 opacity-30">
-                                <Image src="/logo.png" width={16} height={16} alt="" className="grayscale invert" />
+                                <Image src="/logo.png" width={16} height={16} alt="" className="grayscale dark:invert" />
                                 <span className="text-[10px] text-foreground font-black tracking-[0.3em] uppercase">
                                     k-spirits.club
                                 </span>
@@ -554,36 +554,42 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
             </div>
 
             {/* 1. Header & Progress */}
-            <div className="fixed top-16 md:top-20 left-0 right-0 p-4 z-40 glass-premium border-b border-border/10 flex flex-col items-center gap-4">
-                <div className="w-full max-w-7xl flex items-center justify-between px-2">
+            <div className="fixed top-0 left-0 right-0 pt-16 md:pt-20 px-3 md:px-6 pb-6 z-50 glass-premium border-b border-border/10 flex flex-col items-center gap-4">
+                <div className="w-full max-w-7xl flex items-center justify-between">
                     <button
                         onClick={() => router.back()}
-                        className="p-3 bg-muted/30 border border-border/50 rounded-2xl hover:bg-muted transition-all active:scale-95 shadow-xl"
+                        className="p-2.5 md:p-3 bg-muted/40 backdrop-blur-md border border-border/50 rounded-2xl hover:bg-muted transition-all active:scale-95 shadow-xl"
                     >
-                        <ChevronLeft className="w-6 h-6 text-foreground" />
+                        <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-foreground" />
                     </button>
                     
                     <div className="flex flex-col items-center">
-                        <div className="px-8 py-2 bg-primary text-primary-foreground rounded-2xl shadow-2xl shadow-primary/20 mb-1.5 transition-all hover:scale-105 cursor-default">
-                            <h2 className="text-sm md:text-lg font-black tracking-[0.2em] italic uppercase">
+                        <motion.div 
+                            key={totalRound}
+                            initial={{ y: -10, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            className="px-6 md:px-12 py-2 md:py-3 bg-primary text-primary-foreground rounded-2xl shadow-2xl shadow-primary/30 mb-2 transition-all hover:scale-105 cursor-default relative overflow-hidden group"
+                        >
+                            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <h2 className="text-xs md:text-xl font-black tracking-[0.2em] md:tracking-[0.3em] italic uppercase relative z-10">
                                 {totalRound === 2 ? (dict?.worldcup?.final || 'FINAL') : (dict?.worldcup?.round?.replace('{round}', totalRound.toString()) || `${totalRound} ROUND`)}
                             </h2>
-                        </div>
+                        </motion.div>
                         <div className="flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 bg-primary rounded-full animate-ping" />
-                            <p className="text-[10px] md:text-xs text-foreground/40 font-black uppercase tracking-[0.3em]">
-                                MATCH {Math.floor(currentIndex / 2) + 1} OF {currentRoundItems.length / 2}
+                            <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
+                            <p className="text-[10px] md:text-xs text-foreground/50 font-black uppercase tracking-[0.3em] md:tracking-[0.4em]">
+                                MATCH {Math.floor(currentIndex / 2) + 1} / {currentRoundItems.length / 2}
                             </p>
                         </div>
                     </div>
 
-                    <div className="hidden md:block w-12 h-12" />
+                    <div className="w-11 h-11 md:w-14 md:h-14" />
                 </div>
 
                 {/* Progress Bar */}
-                <div className="w-full max-w-xl h-1.5 bg-muted/30 rounded-full overflow-hidden border border-border/10 relative">
+                <div className="w-full max-w-2xl h-1.5 md:h-2 bg-muted/30 rounded-full overflow-hidden border border-border/5 relative">
                     <motion.div
-                        className="h-full bg-brand-gradient shadow-[0_0_20px_rgba(var(--primary),0.5)] relative z-10"
+                        className="h-full bg-brand-gradient shadow-[0_0_20px_rgba(var(--primary-rgb),0.5)]"
                         initial={false}
                         animate={{ width: `${(currentIndex / currentRoundItems.length) * 100}%` }}
                         transition={{ type: 'spring', stiffness: 80, damping: 20 }}
@@ -591,37 +597,38 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
                 </div>
             </div>
 
-            {/* VS Badge */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none md:top-[55%] lg:top-[50%]">
+            {/* VS Badge — Centralized for both layouts */}
+            <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 pointer-events-none mt-12 md:mt-24">
                 <motion.div 
-                    initial={{ scale: 0.8, opacity: 0 }}
+                    initial={{ scale: 0.5, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    className="w-20 h-20 md:w-32 md:h-32 glass-premium border-2 border-primary/50 rounded-full flex items-center justify-center shadow-2xl shadow-primary/20 relative"
+                    transition={{ type: 'spring', bounce: 0.6, duration: 1 }}
+                    className="w-16 h-16 md:w-40 md:h-40 glass-premium border-2 border-primary/40 rounded-full flex items-center justify-center shadow-[0_0_100px_rgba(var(--primary-rgb),0.3)] relative"
                 >
-                    <div className="absolute inset-0 border border-primary/20 rounded-full animate-ping opacity-30" />
-                    <span className="text-3xl md:text-5xl font-black italic text-primary drop-shadow-2xl italic tracking-tighter">VS</span>
+                    <div className="absolute inset-0 border border-primary/20 rounded-full animate-ping opacity-20" />
+                    <span className="text-2xl md:text-6xl font-black italic text-primary drop-shadow-[0_0_15px_rgba(var(--primary-rgb),0.8)] tracking-tighter">VS</span>
                 </motion.div>
             </div>
 
-            {/* Choice Section */}
-            <div className="flex-1 flex flex-col md:flex-row items-center justify-center pt-48 pb-12 px-4 md:px-8 gap-8 max-w-[1800px] mx-auto w-full relative z-20 overflow-hidden">
+            {/* Choice Arena — Dynamic Layout */}
+            <div className="flex-1 flex flex-col md:flex-row items-stretch justify-center pt-56 md:pt-72 pb-12 px-3 md:px-12 gap-3 md:gap-12 max-w-[2400px] mx-auto w-full relative z-20">
                 <AnimatePresence mode="wait">
                     <motion.div 
                         key={leftItem.id}
-                        initial={{ opacity: 0, x: -100 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -100 }}
-                        className="flex-1 w-full h-full max-h-[700px] flex"
+                        initial={{ opacity: 0, scale: 0.95, x: -20 }}
+                        animate={{ opacity: 1, scale: 1, x: 0 }}
+                        exit={{ opacity: 0, scale: 1.05, x: -20 }}
+                        className="flex-1 flex"
                     >
                         <ChoiceCard item={leftItem} onClick={() => selectWinner(leftItem)} pos="left" isEn={isEn} />
                     </motion.div>
 
                     <motion.div 
                         key={rightItem.id}
-                        initial={{ opacity: 0, x: 100 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: 100 }}
-                        className="flex-1 w-full h-full max-h-[700px] flex"
+                        initial={{ opacity: 0, scale: 0.95, x: 20 }}
+                        animate={{ opacity: 1, scale: 1, x: 0 }}
+                        exit={{ opacity: 0, scale: 1.05, x: 20 }}
+                        className="flex-1 flex"
                     >
                         <ChoiceCard item={rightItem} onClick={() => selectWinner(rightItem)} pos="right" isEn={isEn} />
                     </motion.div>
@@ -632,55 +639,84 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
 }
 
 function ChoiceCard({ item, onClick, pos, isEn }: { item: Spirit, onClick: () => void, pos: 'left' | 'right', isEn: boolean }) {
+    const topTags = item.tags?.slice(0, 4) || [];
+
     return (
         <motion.button
             onClick={onClick}
-            className="flex-1 w-full h-full group relative outline-none flex flex-col bg-card border border-border/40 rounded-[3rem] overflow-hidden shadow-2xl transition-all hover:border-primary/50 hover:shadow-primary/20 hover:bg-card/80 hover:scale-[1.02]"
+            className="flex-1 w-full flex flex-row md:flex-col bg-card/60 backdrop-blur-xl border border-border/40 rounded-[2.5rem] md:rounded-[4rem] overflow-hidden shadow-2xl hover:border-primary/50 hover:shadow-primary/30 hover:bg-card/80 transition-all duration-500 group relative"
+            whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 25 }}
         >
-            <div className="aspect-[4/3] md:aspect-square relative w-full bg-muted/10 border-b border-border/30 overflow-hidden">
+            {/* Image Section */}
+            <div className="w-[35%] md:w-full aspect-square md:aspect-[4/3] lg:aspect-square relative flex items-center justify-center p-4 md:p-12 bg-gradient-to-br from-muted/5 to-primary/5 border-r md:border-r-0 md:border-b border-border/30 overflow-hidden group-hover:from-primary/5 group-hover:to-primary/10 transition-all duration-700">
                 <Image
                     src={item.preloadedImageUrl || '/mys-4.webp'}
                     alt={item.name}
                     fill
-                    className="object-contain p-12 md:p-20 transition-transform duration-1000 group-hover:scale-110 drop-shadow-2xl"
+                    className="object-contain p-4 md:p-14 transition-transform duration-1000 group-hover:scale-110 drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
                     priority
                     unoptimized
                 />
-                <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-all duration-500" />
-            </div>
-
-            <div className="p-8 md:p-12 flex flex-col items-center text-center gap-6 flex-1 justify-center relative">
-                <div className="flex flex-wrap justify-center gap-3">
-                    <span className="capsule-premium">
+                
+                {/* Floating Meta */}
+                <div className="hidden md:flex absolute top-6 left-6 flex-col gap-2 pointer-events-none">
+                    <span className="px-3 py-1 bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-[0.2em] rounded-lg shadow-lg">
                         {(isEn && item.category_en) ? item.category_en : item.category}
                     </span>
-                    {item.subcategory && (
-                        <span className="px-4 py-1.5 bg-secondary text-secondary-foreground border border-border text-[9px] font-black rounded-xl uppercase tracking-tighter">
-                            {item.subcategory}
-                        </span>
-                    )}
-                </div>
-
-                <h3 className="text-2xl md:text-5xl font-black text-foreground leading-[1] tracking-tight px-2 line-clamp-3 group-hover:text-primary transition-colors duration-500 italic uppercase">
-                    {(isEn && item.name_en) ? item.name_en : item.name}
-                </h3>
-
-                <div className="flex flex-wrap justify-center gap-4 opacity-40 group-hover:opacity-100 transition-all duration-500">
-                    <div className="px-4 py-1.5 bg-muted rounded-xl border border-border/50">
-                        <span className="text-[10px] font-black uppercase tracking-widest">{item.country}</span>
-                    </div>
-                    {item.abv !== null && (
-                        <div className="px-4 py-1.5 bg-primary/10 border border-primary/20 rounded-xl">
-                            <span className="text-[10px] font-black text-primary uppercase tracking-widest">{item.abv}% ABV</span>
-                        </div>
-                    )}
                 </div>
             </div>
 
-            {/* Selection Highlight */}
-            <div className="absolute inset-x-0 bottom-0 h-1.5 bg-brand-gradient opacity-0 group-hover:opacity-100 transition-opacity shadow-[0_0_20px_rgba(var(--primary),0.5)]" />
+            {/* Content Section */}
+            <div className="flex-1 p-5 md:p-12 flex flex-col justify-center text-left md:text-center relative">
+                <div className="space-y-1.5 md:space-y-4">
+                    {/* Producer/Distillery Info */}
+                    <div className="flex items-center md:justify-center gap-2 opacity-60 group-hover:opacity-100 transition-opacity">
+                         <span className="text-[9px] md:text-sm font-black text-primary uppercase tracking-[0.2em] italic">
+                            {item.distillery || "Artisanal Producer"}
+                        </span>
+                    </div>
+                    
+                    {/* Product Name */}
+                    <h3 className="text-lg md:text-5xl font-black text-foreground leading-[1.1] tracking-tighter group-hover:text-primary transition-colors duration-500 italic uppercase line-clamp-2 md:line-clamp-3">
+                        {(isEn && item.name_en) ? item.name_en : item.name}
+                    </h3>
+                </div>
+
+                {/* Tags & Meta Details */}
+                <div className="mt-4 md:mt-10 flex flex-col gap-4 md:gap-8">
+                    {/* Flavor Tags */}
+                    <div className="flex flex-wrap md:justify-center gap-1.5 md:gap-2">
+                        {topTags.map((tag, idx) => (
+                            <span 
+                                key={idx} 
+                                className="px-2.5 md:px-4 py-1 bg-muted/50 backdrop-blur-sm rounded-full border border-border/40 text-[8px] md:text-xs font-bold text-foreground/70 group-hover:text-primary group-hover:border-primary/30 transition-all"
+                            >
+                                #{tag}
+                            </span>
+                        ))}
+                    </div>
+
+                    {/* Technical Specs */}
+                    <div className="flex items-center md:justify-center gap-3 pt-3 md:pt-6 border-t border-border/10">
+                        <span className="text-[9px] md:text-xs font-black text-foreground/40 uppercase tracking-[0.3em]">
+                            {item.country || "Global Origin"}
+                        </span>
+                        {item.abv !== null && (
+                            <>
+                                <div className="w-1 h-1 bg-border/40 rounded-full" />
+                                <span className="text-[9px] md:text-xs font-black text-primary/80 uppercase tracking-widest leading-none">
+                                    {item.abv}% ABV
+                                </span>
+                            </>
+                        )}
+                    </div>
+                </div>
+            </div>
+
+            {/* Interaction Glow */}
+            <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+            <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-brand-gradient transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 shadow-[0_-5px_20px_rgba(var(--primary-rgb),0.5)]" />
         </motion.button>
     );
 }

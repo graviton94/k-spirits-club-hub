@@ -9,6 +9,7 @@ import SpiritGuideLayout from '@/components/contents/SpiritGuideLayout'
 import { redirect } from 'next/navigation'
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url'
 import { selectFeaturedSpiritsForWiki } from '@/lib/utils/wiki-spirit-match'
+import { RelatedContentLinks, getRelatedIcon } from '@/components/common/related-content-links'
 
 const KO_TO_EN_MAP: Record<string, string> = {
     '소주-가이드': 'soju-guide',
@@ -315,25 +316,21 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
 
             {/* Bidirectional navigation links */}
             <div className="container mx-auto max-w-3xl px-4 pb-6">
-                <div className="space-y-3 pt-4 border-t border-border/40">
-                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">
-                        {isEn ? 'Explore Related Content' : '관련 콘텐츠 탐색'}
-                    </p>
-                    <ul className="flex flex-wrap gap-2 text-sm">
-                        {comparisonLinks.map((comparison) => (
-                            <li key={comparison.slug}>
-                                <Link href={`/${lang}/contents/wiki/${comparison.slug}`} className="px-3 py-1.5 rounded-full border border-border hover:border-cyan-500/60 hover:text-cyan-500 transition-colors">
-                                    {isEn ? comparison.nameEn : comparison.nameKo}
-                                </Link>
-                            </li>
-                        ))}
-                        <li><Link href={`/${lang}/contents/wiki`} className="px-3 py-1.5 rounded-full border border-border hover:border-emerald-500/60 hover:text-emerald-500 transition-colors">{isEn ? 'All Spirit Categories — Spirits Wiki' : '주류 백과사전 전체 카테고리'}</Link></li>
-                        <li><Link href={`/${lang}/contents`} className="px-3 py-1.5 rounded-full border border-border hover:border-emerald-500/60 hover:text-emerald-500 transition-colors">{isEn ? 'Contents Hub' : '콘텐츠 허브'}</Link></li>
-                        <li><Link href={`/${lang}/contents/reviews`} className="px-3 py-1.5 rounded-full border border-border hover:border-emerald-500/60 hover:text-emerald-500 transition-colors">{isEn ? 'Spirit Tasting Reviews' : '주류 시음 리뷰'}</Link></li>
-                        <li><Link href={`/${lang}/contents/mbti`} className="px-3 py-1.5 rounded-full border border-border hover:border-emerald-500/60 hover:text-emerald-500 transition-colors">{isEn ? 'Spirit MBTI Test' : '주류 MBTI 테스트'}</Link></li>
-                        <li><Link href={`/${lang}/explore`} className="px-3 py-1.5 rounded-full border border-border hover:border-emerald-500/60 hover:text-emerald-500 transition-colors">{isEn ? 'Explore Spirits' : '주류 탐색'}</Link></li>
-                    </ul>
-                </div>
+                <RelatedContentLinks 
+                    title={isEn ? 'Explore Related Content' : '관련 콘텐츠 탐색'}
+                    links={[
+                        ...comparisonLinks.map((comparison) => ({
+                            href: `/${lang}/contents/wiki/${comparison.slug}`,
+                            label: isEn ? comparison.nameEn : comparison.nameKo,
+                            icon: getRelatedIcon('comparison', `/contents/wiki/${comparison.slug}`)
+                        })),
+                        { href: `/${lang}/contents/wiki`, label: isEn ? 'All Spirit Categories' : '주류 백과사전 전체', icon: getRelatedIcon('wiki', '/contents/wiki') },
+                        { href: `/${lang}/contents`, label: isEn ? 'Contents Hub' : '콘텐츠 허브', icon: getRelatedIcon('hub', '/contents') },
+                        { href: `/${lang}/contents/reviews`, label: isEn ? 'Spirit Tasting Reviews' : '주류 시음 리뷰', icon: getRelatedIcon('reviews', '/contents/reviews') },
+                        { href: `/${lang}/contents/mbti`, label: isEn ? 'Spirit MBTI Test' : '주류 MBTI 테스트', icon: getRelatedIcon('mbti', '/contents/mbti') },
+                        { href: `/${lang}/explore`, label: isEn ? 'Explore Spirits' : '주류 탐색', icon: getRelatedIcon('explore', '/explore') },
+                    ]}
+                />
             </div>
 
         </>
