@@ -65,7 +65,7 @@ gstack/
 # OpenNext
 .open-next
 .dev.vars
-wrangler.jsonc
+# wrangler.jsonc (Added back for Git Build, but stripped of secrets)
 wrangler.jsonc.example
 
 # Secret Management (Manual)

@@ -5,38 +5,36 @@ export function getEnv(key: string): string {
     let value = "";
     let source = "none";
 
-    // 1. Try process.env
-    if (process.env[key]) {
+    // 1. MUST try getRequestContext FIRST (This is where Cloudflare Secrets live)
+    try {
+        const { getRequestContext } = require("@opennextjs/cloudflare");
+        const ctx = getRequestContext();
+        if (ctx?.env && ctx.env[key]) {
+            value = String(ctx.env[key]);
+            source = "Cloudflare Context (Secret/Var)";
+        }
+    } catch (e) {
+        // Not in Cloudflare request context or not supported
+    }
+
+    // 2. Try process.env (Next.js fallback / Local dev)
+    if (!value && process.env[key]) {
         value = process.env[key] as string;
         source = "process.env";
     }
 
-    // 2. Try getRequestContext (OpenNext / Cloudflare)
-    if (!value) {
-        try {
-            // Using a more standard ESM-safe approach for OpenNext
-            const { getRequestContext } = require("@opennextjs/cloudflare");
-            const ctx = getRequestContext();
-            if (ctx?.env && ctx.env[key]) {
-                value = String(ctx.env[key]);
-                source = "getRequestContext().env";
-            }
-        } catch (e) {
-            // Context not available
-        }
-    }
-
-    // 3. Try globalThis
+    // 3. Try globalThis (Last resort)
     if (!value && (globalThis as any)[key]) {
         value = String((globalThis as any)[key]);
         source = "globalThis";
     }
 
     if (value) {
-        // Helpful for production log auditing without leaking values
-        console.log(`[Env] Found ${key} from ${source}`);
+        // Only log public keys or log existence to prevent leak in logs
+        const isSecret = key.includes('KEY') || key.includes('SECRET') || key.includes('PRIVATE');
+        console.log(`[Env] Found ${key} from ${source} ${isSecret ? '(Protected Value)' : `(${value})`}`);
     } else {
-        console.warn(`[Env] ${key} NOT found in any source (checked process.env, ctx.env, globalThis)`);
+        console.warn(`[Env] ${key} NOT FOUND in any source!`);
     }
 
     return value;
