@@ -6,36 +6,43 @@ import { getEnv } from '@/lib/env';
  * LITE VERSION for Cloudflare Workers (High Compatibility Edition)
  */
 
-const LOCATION = 'asia-northeast3';
-const SERVICE_ID = 'k-spirits-club-hub';
+const DEFAULT_LOCATION = 'asia-northeast3';
+const DEFAULT_SERVICE_ID = 'k-spirits-club-hub';
 
 async function executeGraphql(operationName: string, query: string, variables: any = {}) {
     const projectId = getEnv('FIREBASE_PROJECT_ID') || getEnv('NEXT_PUBLIC_FIREBASE_PROJECT_ID');
     const clientEmail = getEnv('FIREBASE_CLIENT_EMAIL');
     const privateKey = getEnv('FIREBASE_PRIVATE_KEY');
+    
+    // Allow overriding from env or use defaults
+    const location = getEnv('DATA_CONNECT_LOCATION') || DEFAULT_LOCATION;
+    const serviceId = getEnv('DATA_CONNECT_SERVICE_ID') || DEFAULT_SERVICE_ID;
 
     // Validate Environment with detailed missing info
     if (!projectId || !clientEmail || !privateKey) {
         const missing = [];
-        if (!projectId) missing.push('PROJECT_ID (FIREBASE_PROJECT_ID or NEXT_PUBLIC_FIREBASE_PROJECT_ID)');
-        if (!clientEmail) missing.push('CLIENT_EMAIL (FIREBASE_CLIENT_EMAIL)');
-        if (!privateKey) missing.push('PRIVATE_KEY (FIREBASE_PRIVATE_KEY)');
+        if (!projectId) missing.push('PROJECT_ID');
+        if (!clientEmail) missing.push('CLIENT_EMAIL');
+        if (!privateKey) missing.push('PRIVATE_KEY');
         
-        const errorMsg = `[Data Connect Admin] Critical Missing Vars: ${missing.join(', ')}. Please check Cloudflare Worker Secrets and /api/health for diagnostics.`;
+        const errorMsg = `[Data Connect Admin] Missing Vars: ${missing.join(', ')}. Check /api/health.`;
         console.error(errorMsg);
         throw new Error(errorMsg);
     }
 
     try {
         const accessToken = await getGoogleAccessToken();
-        const url = `https://dataconnect.googleapis.com/v1/projects/${projectId}/locations/${LOCATION}/services/${SERVICE_ID}:executeGraphql`;
+        // CORRECT ENDPOINT: firebasedataconnect.googleapis.com
+        const url = `https://firebasedataconnect.googleapis.com/v1/projects/${projectId}/locations/${location}/services/${serviceId}:executeGraphql`;
+
+        console.log(`[Data Connect Admin] Calling ${operationName} at ${location}/${serviceId}`);
 
         const res = await fetch(url, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
-                'X-Goog-Cloud-Resource-Prefix': `projects/${projectId}/locations/${LOCATION}/services/${SERVICE_ID}`
+                'X-Goog-Cloud-Resource-Prefix': `projects/${projectId}/locations/${location}/services/${serviceId}`
             },
             body: JSON.stringify({
                 operationName,
@@ -46,16 +53,19 @@ async function executeGraphql(operationName: string, query: string, variables: a
 
         if (!res.ok) {
             const errorText = await res.text();
-            throw new Error(`REST Error (${res.status}): ${errorText}`);
+            const logMsg = `[Data Connect Admin] REST Error (${res.status}) for ${operationName} at ${url}: ${errorText}`;
+            console.error(logMsg);
+            throw new Error(`Data Connect REST Error (${res.status}): ${errorText.substring(0, 200)}...`);
         }
 
         const body = await res.json() as any;
         if (body.errors) {
-            throw new Error(`GQL Error: ${body.errors[0]?.message || JSON.stringify(body.errors)}`);
+            console.error(`[Data Connect Admin] GQL Errors for ${operationName}:`, JSON.stringify(body.errors));
+            throw new Error(`GQL Error: ${body.errors[0]?.message || 'Unknown GraphQL error'}`);
         }
         return body;
     } catch (err: any) {
-        console.error(`[Data Connect Admin] ${operationName} failed:`, err.message);
+        console.error(`[Data Connect Admin] ${operationName} CRITICAL FAILURE:`, err.message);
         throw err;
     }
 }
