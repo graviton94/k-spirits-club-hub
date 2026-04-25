@@ -73,7 +73,13 @@ export default async function NewsPage({ params, searchParams }: NewsPageProps) 
 
   const page = Math.max(1, parseInt(sp.page || '1', 10) || 1);
 
-  const initialNews = await dbListNewsArticles(PAGE_SIZE, (page - 1) * PAGE_SIZE).catch(() => []);
+  let initialNews: any[] = [];
+  try {
+    initialNews = await dbListNewsArticles(PAGE_SIZE, (page - 1) * PAGE_SIZE);
+  } catch (err) {
+    console.error('[NewsPage] Failed to fetch initial news:', err);
+    // initialNews remains [] as fallback
+  }
 
   // FAQ Schema
   const faqLd = {

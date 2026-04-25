@@ -4,7 +4,7 @@
 - Large corpus: 789 files · ~2,535,179 words. Semantic extraction will be expensive (many Claude tokens). Consider running on a subfolder, or use --no-semantic to run AST-only.
 
 ## Summary
-- 1889 nodes · 2009 edges · 509 communities detected
+- 1885 nodes · 2012 edges · 503 communities detected
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
@@ -512,12 +512,6 @@
 - [[_COMMUNITY_Module 500|Module 500]]
 - [[_COMMUNITY_Module 501|Module 501]]
 - [[_COMMUNITY_Module 502|Module 502]]
-- [[_COMMUNITY_Module 503|Module 503]]
-- [[_COMMUNITY_Module 504|Module 504]]
-- [[_COMMUNITY_Module 505|Module 505]]
-- [[_COMMUNITY_Module 506|Module 506]]
-- [[_COMMUNITY_Module 507|Module 507]]
-- [[_COMMUNITY_Module 508|Module 508]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `BrowserManager` - 48 edges
@@ -2557,30 +2551,6 @@ Nodes (0):
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 503 - "Module 503"
-Cohesion: 1.0
-Nodes (0): 
-
-### Community 504 - "Module 504"
-Cohesion: 1.0
-Nodes (0): 
-
-### Community 505 - "Module 505"
-Cohesion: 1.0
-Nodes (0): 
-
-### Community 506 - "Module 506"
-Cohesion: 1.0
-Nodes (0): 
-
-### Community 507 - "Module 507"
-Cohesion: 1.0
-Nodes (0): 
-
-### Community 508 - "Module 508"
-Cohesion: 1.0
-Nodes (0): 
-
 ## Knowledge Gaps
 - **45 isolated node(s):** `Analyze ALL spirits for normalization needs  This script checks all 2308 spiri`, `Check if a spirit name needs normalization`, `Spirit Data Normalization Analyzer  This script analyzes spirits data from Fir`, `Analyze a spirit name for patterns that should be extracted.`, `Load ALL spirits data from the API.` (+40 more)
   These have ≤1 connection - possible missing edges or undocumented components.
@@ -2816,423 +2786,411 @@ Nodes (0):
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 - **Thin community `Module 299`** (2 nodes): `resetArtifacts()`, `reset_artifacts.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 300`** (2 nodes): `structuralMigration()`, `schema-phase2-cleanup.ts`
+- **Thin community `Module 300`** (2 nodes): `run_ast()`, `run_graphify_ast.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 301`** (2 nodes): `set_admin.js`, `setAdmin()`
+- **Thin community `Module 301`** (2 nodes): `run_cache_check()`, `run_graphify_cache_check.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 302`** (2 nodes): `sync-thumbnail-urls.js`, `syncThumbnailUrls()`
+- **Thin community `Module 302`** (2 nodes): `structuralMigration()`, `schema-phase2-cleanup.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 303`** (2 nodes): `test_pairing.ts`, `dryRun()`
+- **Thin community `Module 303`** (2 nodes): `set_admin.js`, `setAdmin()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 304`** (2 nodes): `verify-alignment.js`, `verify()`
+- **Thin community `Module 304`** (2 nodes): `sync-thumbnail-urls.js`, `syncThumbnailUrls()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 305`** (2 nodes): `refFactory()`, `index.cjs.js`
+- **Thin community `Module 305`** (2 nodes): `test_pairing.ts`, `dryRun()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 306`** (1 nodes): `fix-all-colors.js`
+- **Thin community `Module 306`** (2 nodes): `verify-alignment.js`, `verify()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 307`** (1 nodes): `fix-clean-vibrant.js`
+- **Thin community `Module 307`** (2 nodes): `refFactory()`, `index.cjs.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 308`** (1 nodes): `fix-colors.js`
+- **Thin community `Module 308`** (1 nodes): `fix_wiki_constants.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 309`** (1 nodes): `fix-pure-vibrant.js`
+- **Thin community `Module 309`** (1 nodes): `i18n-config.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 310`** (1 nodes): `fix-solid-colors.js`
+- **Thin community `Module 310`** (1 nodes): `merge-hubs.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 311`** (1 nodes): `fix-solid-ultimate.js`
+- **Thin community `Module 311`** (1 nodes): `next-env.d.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 312`** (1 nodes): `fix-ultimate-clean.js`
+- **Thin community `Module 312`** (1 nodes): `next.config.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 313`** (1 nodes): `fix-ultra-contrast.js`
+- **Thin community `Module 313`** (1 nodes): `open-next.config.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 314`** (1 nodes): `fix_wiki_constants.py`
+- **Thin community `Module 314`** (1 nodes): `test_localization.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 315`** (1 nodes): `i18n-config.ts`
+- **Thin community `Module 315`** (1 nodes): `reorient.ps1`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 316`** (1 nodes): `merge-hubs.js`
+- **Thin community `Module 316`** (1 nodes): `route.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 317`** (1 nodes): `next-env.d.ts`
+- **Thin community `Module 317`** (1 nodes): `route.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 318`** (1 nodes): `next.config.js`
+- **Thin community `Module 318`** (1 nodes): `page.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 319`** (1 nodes): `open-next.config.ts`
+- **Thin community `Module 319`** (1 nodes): `page.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 320`** (1 nodes): `test_localization.ts`
+- **Thin community `Module 320`** (1 nodes): `page.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 321`** (1 nodes): `reorient.ps1`
+- **Thin community `Module 321`** (1 nodes): `GuestOverlay.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 322`** (1 nodes): `route.tsx`
+- **Thin community `Module 322`** (1 nodes): `TasteRadar.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 323`** (1 nodes): `route.tsx`
+- **Thin community `Module 323`** (1 nodes): `HomeClient.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 324`** (1 nodes): `page.tsx`
+- **Thin community `Module 324`** (1 nodes): `NewsSection.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 325`** (1 nodes): `page.tsx`
+- **Thin community `Module 325`** (1 nodes): `Header.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 326`** (1 nodes): `page.tsx`
+- **Thin community `Module 326`** (1 nodes): `AvatarSelector.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 327`** (1 nodes): `GuestOverlay.tsx`
+- **Thin community `Module 327`** (1 nodes): `RelatedWikiSection.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 328`** (1 nodes): `TasteRadar.tsx`
+- **Thin community `Module 328`** (1 nodes): `CabinetSelectionModal.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 329`** (1 nodes): `HomeClient.tsx`
+- **Thin community `Module 329`** (1 nodes): `ChatSommelier.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 330`** (1 nodes): `NewsSection.tsx`
+- **Thin community `Module 330`** (1 nodes): `RandomBackground.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 331`** (1 nodes): `Header.tsx`
+- **Thin community `Module 331`** (1 nodes): `ThemeSwitcher.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 332`** (1 nodes): `AvatarSelector.tsx`
+- **Thin community `Module 332`** (1 nodes): `commands.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 333`** (1 nodes): `RelatedWikiSection.tsx`
+- **Thin community `Module 333`** (1 nodes): `activity.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 334`** (1 nodes): `CabinetSelectionModal.tsx`
+- **Thin community `Module 334`** (1 nodes): `browser-manager-unit.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 335`** (1 nodes): `ChatSommelier.tsx`
+- **Thin community `Module 335`** (1 nodes): `bun-polyfill.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 336`** (1 nodes): `RandomBackground.tsx`
+- **Thin community `Module 336`** (1 nodes): `commands.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 337`** (1 nodes): `ThemeSwitcher.tsx`
+- **Thin community `Module 337`** (1 nodes): `config.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 338`** (1 nodes): `commands.ts`
+- **Thin community `Module 338`** (1 nodes): `find-browse.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 339`** (1 nodes): `activity.test.ts`
+- **Thin community `Module 339`** (1 nodes): `handoff.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 340`** (1 nodes): `browser-manager-unit.test.ts`
+- **Thin community `Module 340`** (1 nodes): `path-validation.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 341`** (1 nodes): `bun-polyfill.test.ts`
+- **Thin community `Module 341`** (1 nodes): `platform.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 342`** (1 nodes): `commands.test.ts`
+- **Thin community `Module 342`** (1 nodes): `sidebar-unit.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 343`** (1 nodes): `config.test.ts`
+- **Thin community `Module 343`** (1 nodes): `url-validation.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 344`** (1 nodes): `find-browse.test.ts`
+- **Thin community `Module 344`** (1 nodes): `watch.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 345`** (1 nodes): `handoff.test.ts`
+- **Thin community `Module 345`** (1 nodes): `commands.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 346`** (1 nodes): `path-validation.test.ts`
+- **Thin community `Module 346`** (1 nodes): `eval-list.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 347`** (1 nodes): `platform.test.ts`
+- **Thin community `Module 347`** (1 nodes): `eval-select.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 348`** (1 nodes): `sidebar-unit.test.ts`
+- **Thin community `Module 348`** (1 nodes): `eval-summary.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 349`** (1 nodes): `url-validation.test.ts`
+- **Thin community `Module 349`** (1 nodes): `skill-check.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 350`** (1 nodes): `watch.test.ts`
+- **Thin community `Module 350`** (1 nodes): `index.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 351`** (1 nodes): `commands.ts`
+- **Thin community `Module 351`** (1 nodes): `types.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 352`** (1 nodes): `eval-list.ts`
+- **Thin community `Module 352`** (1 nodes): `index.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 353`** (1 nodes): `eval-select.ts`
+- **Thin community `Module 353`** (1 nodes): `index.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 354`** (1 nodes): `eval-summary.ts`
+- **Thin community `Module 354`** (1 nodes): `index.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 355`** (1 nodes): `skill-check.ts`
+- **Thin community `Module 355`** (1 nodes): `global-discover.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 356`** (1 nodes): `index.ts`
+- **Thin community `Module 356`** (1 nodes): `uninstall.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 357`** (1 nodes): `types.ts`
+- **Thin community `Module 357`** (1 nodes): `gemini-session-runner.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 358`** (1 nodes): `index.ts`
+- **Thin community `Module 358`** (1 nodes): `observability.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 359`** (1 nodes): `index.ts`
+- **Thin community `Module 359`** (1 nodes): `session-runner.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 360`** (1 nodes): `index.ts`
+- **Thin community `Module 360`** (1 nodes): `firebase-admin.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 361`** (1 nodes): `global-discover.test.ts`
+- **Thin community `Module 361`** (1 nodes): `firebase.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 362`** (1 nodes): `uninstall.test.ts`
+- **Thin community `Module 362`** (1 nodes): `about-content.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 363`** (1 nodes): `gemini-session-runner.test.ts`
+- **Thin community `Module 363`** (1 nodes): `api-codes.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 364`** (1 nodes): `observability.test.ts`
+- **Thin community `Module 364`** (1 nodes): `mbti-data.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 365`** (1 nodes): `session-runner.test.ts`
+- **Thin community `Module 365`** (1 nodes): `baijiu.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 366`** (1 nodes): `firebase-admin.ts`
+- **Thin community `Module 366`** (1 nodes): `beer.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 367`** (1 nodes): `firebase.ts`
+- **Thin community `Module 367`** (1 nodes): `blended-whisky.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 368`** (1 nodes): `about-content.ts`
+- **Thin community `Module 368`** (1 nodes): `bourbon.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 369`** (1 nodes): `api-codes.ts`
+- **Thin community `Module 369`** (1 nodes): `brandy-regions.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 370`** (1 nodes): `mbti-data.ts`
+- **Thin community `Module 370`** (1 nodes): `brandy.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 371`** (1 nodes): `baijiu.ts`
+- **Thin community `Module 371`** (1 nodes): `champagne.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 372`** (1 nodes): `beer.ts`
+- **Thin community `Module 372`** (1 nodes): `cheongju-vs-sake.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 373`** (1 nodes): `blended-whisky.ts`
+- **Thin community `Module 373`** (1 nodes): `cheongju.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 374`** (1 nodes): `bourbon.ts`
+- **Thin community `Module 374`** (1 nodes): `cognac.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 375`** (1 nodes): `brandy-regions.ts`
+- **Thin community `Module 375`** (1 nodes): `gin.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 376`** (1 nodes): `brandy.ts`
+- **Thin community `Module 376`** (1 nodes): `grain-whisky.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 377`** (1 nodes): `champagne.ts`
+- **Thin community `Module 377`** (1 nodes): `korean-spirits-by-abv.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 378`** (1 nodes): `cheongju-vs-sake.ts`
+- **Thin community `Module 378`** (1 nodes): `korean-traditional-spirits.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 379`** (1 nodes): `cheongju.ts`
+- **Thin community `Module 379`** (1 nodes): `korean-whisky.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 380`** (1 nodes): `cognac.ts`
+- **Thin community `Module 380`** (1 nodes): `liqueur.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 381`** (1 nodes): `gin.ts`
+- **Thin community `Module 381`** (1 nodes): `makgeolli-guide.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 382`** (1 nodes): `grain-whisky.ts`
+- **Thin community `Module 382`** (1 nodes): `makgeolli.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 383`** (1 nodes): `korean-spirits-by-abv.ts`
+- **Thin community `Module 383`** (1 nodes): `mezcal.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 384`** (1 nodes): `korean-traditional-spirits.ts`
+- **Thin community `Module 384`** (1 nodes): `oak-barrel.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 385`** (1 nodes): `korean-whisky.ts`
+- **Thin community `Module 385`** (1 nodes): `red-wine-regions.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 386`** (1 nodes): `liqueur.ts`
+- **Thin community `Module 386`** (1 nodes): `red-wine.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 387`** (1 nodes): `makgeolli-guide.ts`
+- **Thin community `Module 387`** (1 nodes): `rum.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 388`** (1 nodes): `makgeolli.ts`
+- **Thin community `Module 388`** (1 nodes): `sake.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 389`** (1 nodes): `mezcal.ts`
+- **Thin community `Module 389`** (1 nodes): `scotch-whisky-regions.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 390`** (1 nodes): `oak-barrel.ts`
+- **Thin community `Module 390`** (1 nodes): `shochu.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 391`** (1 nodes): `red-wine-regions.ts`
+- **Thin community `Module 391`** (1 nodes): `single-malt-vs-blended.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 392`** (1 nodes): `red-wine.ts`
+- **Thin community `Module 392`** (1 nodes): `single-malt.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 393`** (1 nodes): `rum.ts`
+- **Thin community `Module 393`** (1 nodes): `soju-diluted.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 394`** (1 nodes): `sake.ts`
+- **Thin community `Module 394`** (1 nodes): `soju-distilled.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 395`** (1 nodes): `scotch-whisky-regions.ts`
+- **Thin community `Module 395`** (1 nodes): `soju-guide.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 396`** (1 nodes): `shochu.ts`
+- **Thin community `Module 396`** (1 nodes): `tequila.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 397`** (1 nodes): `single-malt-vs-blended.ts`
+- **Thin community `Module 397`** (1 nodes): `types.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 398`** (1 nodes): `single-malt.ts`
+- **Thin community `Module 398`** (1 nodes): `types.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 399`** (1 nodes): `soju-diluted.ts`
+- **Thin community `Module 399`** (1 nodes): `us-whiskey-regions.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 400`** (1 nodes): `soju-distilled.ts`
+- **Thin community `Module 400`** (1 nodes): `vodka.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 401`** (1 nodes): `soju-guide.ts`
+- **Thin community `Module 401`** (1 nodes): `white-wine-regions.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 402`** (1 nodes): `tequila.ts`
+- **Thin community `Module 402`** (1 nodes): `white-wine.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 403`** (1 nodes): `types.js`
+- **Thin community `Module 403`** (1 nodes): `wine.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 404`** (1 nodes): `types.ts`
+- **Thin community `Module 404`** (1 nodes): `yakju-vs-cheongju.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 405`** (1 nodes): `us-whiskey-regions.ts`
+- **Thin community `Module 405`** (1 nodes): `yakju.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 406`** (1 nodes): `vodka.ts`
+- **Thin community `Module 406`** (1 nodes): `airen.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 407`** (1 nodes): `white-wine-regions.ts`
+- **Thin community `Module 407`** (1 nodes): `alicante-bouschet.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 408`** (1 nodes): `white-wine.ts`
+- **Thin community `Module 408`** (1 nodes): `aligote.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 409`** (1 nodes): `wine.ts`
+- **Thin community `Module 409`** (1 nodes): `aramon.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 410`** (1 nodes): `yakju-vs-cheongju.ts`
+- **Thin community `Module 410`** (1 nodes): `auxerrois.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 411`** (1 nodes): `yakju.ts`
+- **Thin community `Module 411`** (1 nodes): `barbera.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 412`** (1 nodes): `airen.ts`
+- **Thin community `Module 412`** (1 nodes): `blaufrankisch.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 413`** (1 nodes): `alicante-bouschet.ts`
+- **Thin community `Module 413`** (1 nodes): `cabernet-franc.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 414`** (1 nodes): `aligote.ts`
+- **Thin community `Module 414`** (1 nodes): `cabernet-sauvignon.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 415`** (1 nodes): `aramon.ts`
+- **Thin community `Module 415`** (1 nodes): `carmenere.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 416`** (1 nodes): `auxerrois.ts`
+- **Thin community `Module 416`** (1 nodes): `chardonnay.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 417`** (1 nodes): `barbera.ts`
+- **Thin community `Module 417`** (1 nodes): `chenin-blanc.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 418`** (1 nodes): `blaufrankisch.ts`
+- **Thin community `Module 418`** (1 nodes): `cinsault.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 419`** (1 nodes): `cabernet-franc.ts`
+- **Thin community `Module 419`** (1 nodes): `colombard.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 420`** (1 nodes): `cabernet-sauvignon.ts`
+- **Thin community `Module 420`** (1 nodes): `cortese.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 421`** (1 nodes): `carmenere.ts`
+- **Thin community `Module 421`** (1 nodes): `folle-blanche.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 422`** (1 nodes): `chardonnay.ts`
+- **Thin community `Module 422`** (1 nodes): `furmint.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 423`** (1 nodes): `chenin-blanc.ts`
+- **Thin community `Module 423`** (1 nodes): `gamay.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 424`** (1 nodes): `cinsault.ts`
+- **Thin community `Module 424`** (1 nodes): `gewurztraminer.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 425`** (1 nodes): `colombard.ts`
+- **Thin community `Module 425`** (1 nodes): `glera.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 426`** (1 nodes): `cortese.ts`
+- **Thin community `Module 426`** (1 nodes): `goldriesling.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 427`** (1 nodes): `folle-blanche.ts`
+- **Thin community `Module 427`** (1 nodes): `grenache.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 428`** (1 nodes): `furmint.ts`
+- **Thin community `Module 428`** (1 nodes): `gruner-veltliner.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 429`** (1 nodes): `gamay.ts`
+- **Thin community `Module 429`** (1 nodes): `harslevelu.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 430`** (1 nodes): `gewurztraminer.ts`
+- **Thin community `Module 430`** (1 nodes): `index.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 431`** (1 nodes): `glera.ts`
+- **Thin community `Module 431`** (1 nodes): `kadarka.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 432`** (1 nodes): `goldriesling.ts`
+- **Thin community `Module 432`** (1 nodes): `kerner.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 433`** (1 nodes): `grenache.ts`
+- **Thin community `Module 433`** (1 nodes): `koshu.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 434`** (1 nodes): `gruner-veltliner.ts`
+- **Thin community `Module 434`** (1 nodes): `lambrusco.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 435`** (1 nodes): `harslevelu.ts`
+- **Thin community `Module 435`** (1 nodes): `macabeo.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 436`** (1 nodes): `index.ts`
+- **Thin community `Module 436`** (1 nodes): `malbec.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 437`** (1 nodes): `kadarka.ts`
+- **Thin community `Module 437`** (1 nodes): `marsanne.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 438`** (1 nodes): `kerner.ts`
+- **Thin community `Module 438`** (1 nodes): `mazuelo.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 439`** (1 nodes): `koshu.ts`
+- **Thin community `Module 439`** (1 nodes): `melon-de-bourgogne.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 440`** (1 nodes): `lambrusco.ts`
+- **Thin community `Module 440`** (1 nodes): `merlot.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 441`** (1 nodes): `macabeo.ts`
+- **Thin community `Module 441`** (1 nodes): `monastrell.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 442`** (1 nodes): `malbec.ts`
+- **Thin community `Module 442`** (1 nodes): `montepulciano.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 443`** (1 nodes): `marsanne.ts`
+- **Thin community `Module 443`** (1 nodes): `moscato.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 444`** (1 nodes): `mazuelo.ts`
+- **Thin community `Module 444`** (1 nodes): `mourvedre.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 445`** (1 nodes): `melon-de-bourgogne.ts`
+- **Thin community `Module 445`** (1 nodes): `muller-thurgau.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 446`** (1 nodes): `merlot.ts`
+- **Thin community `Module 446`** (1 nodes): `muscadelle.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 447`** (1 nodes): `monastrell.ts`
+- **Thin community `Module 447`** (1 nodes): `muscat.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 448`** (1 nodes): `montepulciano.ts`
+- **Thin community `Module 448`** (1 nodes): `nebbiolo.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 449`** (1 nodes): `moscato.ts`
+- **Thin community `Module 449`** (1 nodes): `negroamaro.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 450`** (1 nodes): `mourvedre.ts`
+- **Thin community `Module 450`** (1 nodes): `nero-davola.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 451`** (1 nodes): `muller-thurgau.ts`
+- **Thin community `Module 451`** (1 nodes): `palomino.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 452`** (1 nodes): `muscadelle.ts`
+- **Thin community `Module 452`** (1 nodes): `parellada.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 453`** (1 nodes): `muscat.ts`
+- **Thin community `Module 453`** (1 nodes): `pedro-ximenez.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 454`** (1 nodes): `nebbiolo.ts`
+- **Thin community `Module 454`** (1 nodes): `petit-manseng.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 455`** (1 nodes): `negroamaro.ts`
+- **Thin community `Module 455`** (1 nodes): `petit-verdot.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 456`** (1 nodes): `nero-davola.ts`
+- **Thin community `Module 456`** (1 nodes): `petite-sirah.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 457`** (1 nodes): `palomino.ts`
+- **Thin community `Module 457`** (1 nodes): `pinot-blanc.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 458`** (1 nodes): `parellada.ts`
+- **Thin community `Module 458`** (1 nodes): `pinot-gris.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 459`** (1 nodes): `pedro-ximenez.ts`
+- **Thin community `Module 459`** (1 nodes): `pinot-meunier.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 460`** (1 nodes): `petit-manseng.ts`
+- **Thin community `Module 460`** (1 nodes): `pinot-noir.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 461`** (1 nodes): `petit-verdot.ts`
+- **Thin community `Module 461`** (1 nodes): `pinotage.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 462`** (1 nodes): `petite-sirah.ts`
+- **Thin community `Module 462`** (1 nodes): `primitivo.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 463`** (1 nodes): `pinot-blanc.ts`
+- **Thin community `Module 463`** (1 nodes): `riesling.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 464`** (1 nodes): `pinot-gris.ts`
+- **Thin community `Module 464`** (1 nodes): `roussanne.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 465`** (1 nodes): `pinot-meunier.ts`
+- **Thin community `Module 465`** (1 nodes): `sangiovese.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 466`** (1 nodes): `pinot-noir.ts`
+- **Thin community `Module 466`** (1 nodes): `sauvignon-blanc.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 467`** (1 nodes): `pinotage.ts`
+- **Thin community `Module 467`** (1 nodes): `sauvignon-grise.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 468`** (1 nodes): `primitivo.ts`
+- **Thin community `Module 468`** (1 nodes): `savagnin.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 469`** (1 nodes): `riesling.ts`
+- **Thin community `Module 469`** (1 nodes): `scheurebe.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 470`** (1 nodes): `roussanne.ts`
+- **Thin community `Module 470`** (1 nodes): `semillon.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 471`** (1 nodes): `sangiovese.ts`
+- **Thin community `Module 471`** (1 nodes): `silvaner.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 472`** (1 nodes): `sauvignon-blanc.ts`
+- **Thin community `Module 472`** (1 nodes): `st-laurent.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 473`** (1 nodes): `sauvignon-grise.ts`
+- **Thin community `Module 473`** (1 nodes): `syrah.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 474`** (1 nodes): `savagnin.ts`
+- **Thin community `Module 474`** (1 nodes): `tempranillo.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 475`** (1 nodes): `scheurebe.ts`
+- **Thin community `Module 475`** (1 nodes): `tinta-amarela.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 476`** (1 nodes): `semillon.ts`
+- **Thin community `Module 476`** (1 nodes): `tinta-barroca.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 477`** (1 nodes): `silvaner.ts`
+- **Thin community `Module 477`** (1 nodes): `touriga-franca.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 478`** (1 nodes): `st-laurent.ts`
+- **Thin community `Module 478`** (1 nodes): `touriga-nacional.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 479`** (1 nodes): `syrah.ts`
+- **Thin community `Module 479`** (1 nodes): `trebbiano.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 480`** (1 nodes): `tempranillo.ts`
+- **Thin community `Module 480`** (1 nodes): `welschriesling.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 481`** (1 nodes): `tinta-amarela.ts`
+- **Thin community `Module 481`** (1 nodes): `xarello.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 482`** (1 nodes): `tinta-barroca.ts`
+- **Thin community `Module 482`** (1 nodes): `zinfandel.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 483`** (1 nodes): `touriga-franca.ts`
+- **Thin community `Module 483`** (1 nodes): `zweigelt.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 484`** (1 nodes): `touriga-nacional.ts`
+- **Thin community `Module 484`** (1 nodes): `firebase.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 485`** (1 nodes): `trebbiano.ts`
+- **Thin community `Module 485`** (1 nodes): `index.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 486`** (1 nodes): `welschriesling.ts`
+- **Thin community `Module 486`** (1 nodes): `schema.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 487`** (1 nodes): `xarello.ts`
+- **Thin community `Module 487`** (1 nodes): `patterns.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 488`** (1 nodes): `zinfandel.ts`
+- **Thin community `Module 488`** (1 nodes): `related-spirits.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 489`** (1 nodes): `zweigelt.ts`
+- **Thin community `Module 489`** (1 nodes): `bot-detection.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 490`** (1 nodes): `firebase.ts`
+- **Thin community `Module 490`** (1 nodes): `localize-field.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 491`** (1 nodes): `index.ts`
+- **Thin community `Module 491`** (1 nodes): `analyze_audit_report.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 492`** (1 nodes): `schema.ts`
+- **Thin community `Module 492`** (1 nodes): `bare.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 493`** (1 nodes): `patterns.ts`
+- **Thin community `Module 493`** (1 nodes): `check-distilleries.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 494`** (1 nodes): `related-spirits.ts`
+- **Thin community `Module 494`** (1 nodes): `check_audit_status.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 495`** (1 nodes): `bot-detection.test.ts`
+- **Thin community `Module 495`** (1 nodes): `load-env.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 496`** (1 nodes): `localize-field.test.ts`
+- **Thin community `Module 496`** (1 nodes): `run_sequence.ps1`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 497`** (1 nodes): `analyze_audit_report.py`
+- **Thin community `Module 497`** (1 nodes): `run_sequence.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 498`** (1 nodes): `bare.js`
+- **Thin community `Module 498`** (1 nodes): `test_firestore.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 499`** (1 nodes): `check-distilleries.py`
+- **Thin community `Module 499`** (1 nodes): `upload_processed.ps1`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 500`** (1 nodes): `check_audit_status.py`
+- **Thin community `Module 500`** (1 nodes): `index.d.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 501`** (1 nodes): `load-env.ts`
+- **Thin community `Module 501`** (1 nodes): `index.d.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 502`** (1 nodes): `run_sequence.ps1`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 503`** (1 nodes): `run_sequence.py`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 504`** (1 nodes): `test_firestore.py`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 505`** (1 nodes): `upload_processed.ps1`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 506`** (1 nodes): `index.d.ts`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 507`** (1 nodes): `index.d.ts`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Module 508`** (1 nodes): `index.d.ts`
+- **Thin community `Module 502`** (1 nodes): `index.d.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 
 ## Suggested Questions

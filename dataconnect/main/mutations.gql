@@ -161,7 +161,7 @@ mutation upsertNews(
   $link: String,
   $date: String,
   $translations: Any,
-  $tags: Any
+  $newsTags: Any
 ) @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   newsArticle_upsert(data: {
     id: $id,
@@ -173,7 +173,7 @@ mutation upsertNews(
     link: $link,
     date: $date,
     translations: $translations,
-    newsTags: $tags
+    newsTags: $newsTags
   })
 }
 

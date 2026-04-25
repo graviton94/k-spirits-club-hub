@@ -35,6 +35,8 @@ export async function GET(request: NextRequest) {
             ...cabinetItem,
             id: spiritId,
             title: spiritData.name || 'Unknown Spirit',
+            name: spiritData.name || 'Unknown Spirit',
+            category: spiritData.category || 'Unknown',
             thumbnailUrl: spiritData.thumbnailUrl || spiritData.imageUrl || null
         };
 

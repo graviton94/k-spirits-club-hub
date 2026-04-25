@@ -3399,7 +3399,7 @@ export interface UpsertNewsVariables {
   link?: string | null;
   date?: string | null;
   translations?: unknown | null;
-  tags?: unknown | null;
+  newsTags?: unknown | null;
 }
 ```
 ### Return Type
@@ -3458,11 +3458,11 @@ export default function UpsertNewsComponent() {
     link: ..., // optional
     date: ..., // optional
     translations: ..., // optional
-    tags: ..., // optional
+    newsTags: ..., // optional
   };
   mutation.mutate(upsertNewsVars);
   // Variables can be defined inline as well.
-  mutation.mutate({ id: ..., title: ..., content: ..., imageUrl: ..., category: ..., source: ..., link: ..., date: ..., translations: ..., tags: ..., });
+  mutation.mutate({ id: ..., title: ..., content: ..., imageUrl: ..., category: ..., source: ..., link: ..., date: ..., translations: ..., newsTags: ..., });
 
   // You can also pass in a `useDataConnectMutationOptions` object to `UseMutationResult.mutate()`.
   const options = {

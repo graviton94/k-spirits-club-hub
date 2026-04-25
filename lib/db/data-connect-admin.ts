@@ -232,20 +232,60 @@ export const dbAdminListRawSpirits = async (vars: {
 
 export const dbAdminUpsertSpirit = async (vars: any) => {
     const query = `
-        mutation upsertSpirit($id: String!, $name: String!, $imageUrl: String, $thumbnailUrl: String, $isPublished: Boolean, $category: String) {
+        mutation upsertSpirit(
+            $id: String!, 
+            $name: String!, 
+            $category: String!,
+            $nameEn: String,
+            $categoryEn: String,
+            $mainCategory: String,
+            $subcategory: String,
+            $distillery: String,
+            $bottler: String,
+            $abv: Float,
+            $volume: Int,
+            $country: String,
+            $region: String,
+            $imageUrl: String!, 
+            $thumbnailUrl: String, 
+            $descriptionKo: String,
+            $descriptionEn: String,
+            $isPublished: Boolean
+        ) {
             spirit_upsert(data: {
                 id: $id,
                 name: $name,
                 category: $category,
+                nameEn: $nameEn,
+                categoryEn: $categoryEn,
+                mainCategory: $mainCategory,
+                subcategory: $subcategory,
+                distillery: $distillery,
+                bottler: $bottler,
+                abv: $abv,
+                volume: $volume,
+                country: $country,
+                region: $region,
                 imageUrl: $imageUrl,
                 thumbnailUrl: $thumbnailUrl,
+                descriptionKo: $descriptionKo,
+                descriptionEn: $descriptionEn,
                 isPublished: $isPublished
             }) {
                 id
             }
         }
     `;
-    return await executeGraphql('upsertSpirit', query, vars);
+    // Clean variables to only include those in the mutation signature
+    const allowed = [
+        'id', 'name', 'category', 'nameEn', 'categoryEn', 'mainCategory', 'subcategory',
+        'distillery', 'bottler', 'abv', 'volume', 'country', 'region', 'imageUrl', 
+        'thumbnailUrl', 'descriptionKo', 'descriptionEn', 'isPublished'
+    ];
+    const filtered = {};
+    allowed.forEach(key => { if (key in vars) (filtered as any)[key] = vars[key]; });
+    
+    return await executeGraphql('upsertSpirit', query, filtered);
 };
 
 export const dbAdminDeleteSpirit = async (id: string) => {

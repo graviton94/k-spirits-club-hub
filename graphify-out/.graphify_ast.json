@@ -29,62 +29,6 @@
       "source_location": "L17"
     },
     {
-      "id": "fix_all_colors_js",
-      "label": "fix-all-colors.js",
-      "file_type": "code",
-      "source_file": "fix-all-colors.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "fix_clean_vibrant_js",
-      "label": "fix-clean-vibrant.js",
-      "file_type": "code",
-      "source_file": "fix-clean-vibrant.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "fix_colors_js",
-      "label": "fix-colors.js",
-      "file_type": "code",
-      "source_file": "fix-colors.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "fix_pure_vibrant_js",
-      "label": "fix-pure-vibrant.js",
-      "file_type": "code",
-      "source_file": "fix-pure-vibrant.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "fix_solid_colors_js",
-      "label": "fix-solid-colors.js",
-      "file_type": "code",
-      "source_file": "fix-solid-colors.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "fix_solid_ultimate_js",
-      "label": "fix-solid-ultimate.js",
-      "file_type": "code",
-      "source_file": "fix-solid-ultimate.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "fix_ultimate_clean_js",
-      "label": "fix-ultimate-clean.js",
-      "file_type": "code",
-      "source_file": "fix-ultimate-clean.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "fix_ultra_contrast_js",
-      "label": "fix-ultra-contrast.js",
-      "file_type": "code",
-      "source_file": "fix-ultra-contrast.js",
-      "source_location": "L1"
-    },
-    {
       "id": "fix_wiki_constants_py",
       "label": "fix_wiki_constants.py",
       "file_type": "code",
@@ -9154,28 +9098,28 @@
       "label": "dbAdminDeleteSpirit()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-admin.ts",
-      "source_location": "L251"
+      "source_location": "L291"
     },
     {
       "id": "data_connect_admin_dbadminlistnewslinks",
       "label": "dbAdminListNewsLinks()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-admin.ts",
-      "source_location": "L262"
+      "source_location": "L302"
     },
     {
       "id": "data_connect_admin_dbadminupsertnews",
       "label": "dbAdminUpsertNews()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-admin.ts",
-      "source_location": "L275"
+      "source_location": "L315"
     },
     {
       "id": "data_connect_admin_auditallnews",
       "label": "auditAllNews()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-admin.ts",
-      "source_location": "L295"
+      "source_location": "L335"
     },
     {
       "id": "lib_db_data_connect_client_ts",
@@ -9252,245 +9196,245 @@
       "label": "dbDeleteSpirit()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L141"
+      "source_location": "L142"
     },
     {
       "id": "data_connect_client_dbsearchspiritspublic",
       "label": "dbSearchSpiritsPublic()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L145"
+      "source_location": "L146"
     },
     {
       "id": "data_connect_client_dblistallcategories",
       "label": "dbListAllCategories()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L156"
+      "source_location": "L157"
     },
     {
       "id": "data_connect_client_dblistallsubcategories",
       "label": "dbListAllSubcategories()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L168"
+      "source_location": "L169"
     },
     {
       "id": "data_connect_client_dbgetuserprofile",
       "label": "dbGetUserProfile()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L175"
+      "source_location": "L176"
     },
     {
       "id": "data_connect_client_dbupsertuser",
       "label": "dbUpsertUser()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L180"
+      "source_location": "L181"
     },
     {
       "id": "data_connect_client_dbincrementuserreviews",
       "label": "dbIncrementUserReviews()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L188"
+      "source_location": "L189"
     },
     {
       "id": "data_connect_client_dblistspiritreviews",
       "label": "dbListSpiritReviews()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L200"
+      "source_location": "L201"
     },
     {
       "id": "data_connect_client_dbgetspiritreviewscount",
       "label": "dbGetSpiritReviewsCount()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L205"
+      "source_location": "L206"
     },
     {
       "id": "data_connect_client_dbupsertreview",
       "label": "dbUpsertReview()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L210"
+      "source_location": "L211"
     },
     {
       "id": "data_connect_client_dblistaidiscoverylogs",
       "label": "dbListAiDiscoveryLogs()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L215"
+      "source_location": "L217"
     },
     {
       "id": "data_connect_client_dbupsertaidiscoverylog",
       "label": "dbUpsertAiDiscoveryLog()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L220"
+      "source_location": "L222"
     },
     {
       "id": "data_connect_client_dblistmodificationrequests",
       "label": "dbListModificationRequests()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L226"
+      "source_location": "L228"
     },
     {
       "id": "data_connect_client_dbupsertmodificationrequest",
       "label": "dbUpsertModificationRequest()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L231"
+      "source_location": "L233"
     },
     {
       "id": "data_connect_client_dblistnewsarticles",
       "label": "dbListNewsArticles()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L237"
+      "source_location": "L239"
     },
     {
       "id": "data_connect_client_dbgetnewsarticle",
       "label": "dbGetNewsArticle()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L242"
+      "source_location": "L244"
     },
     {
       "id": "data_connect_client_dbgetnewscount",
       "label": "dbGetNewsCount()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L247"
+      "source_location": "L249"
     },
     {
       "id": "data_connect_client_extractstring",
       "label": "extractString()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L253"
+      "source_location": "L255"
     },
     {
       "id": "data_connect_client_picktranslationtitle",
       "label": "pickTranslationTitle()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L262"
+      "source_location": "L264"
     },
     {
       "id": "data_connect_client_picktranslationcontent",
       "label": "pickTranslationContent()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L265"
+      "source_location": "L267"
     },
     {
       "id": "data_connect_client_dbupsertnews",
       "label": "dbUpsertNews()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L269"
+      "source_location": "L271"
     },
     {
       "id": "data_connect_client_dbdeletenews",
       "label": "dbDeleteNews()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L283"
+      "source_location": "L285"
     },
     {
       "id": "data_connect_client_dbupsertcabinet",
       "label": "dbUpsertCabinet()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L288"
+      "source_location": "L290"
     },
     {
       "id": "data_connect_client_dblistusercabinet",
       "label": "dbListUserCabinet()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L292"
+      "source_location": "L296"
     },
     {
       "id": "data_connect_client_dblistuserreviews",
       "label": "dbListUserReviews()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L297"
+      "source_location": "L306"
     },
     {
       "id": "data_connect_client_dbdeletecabinet",
       "label": "dbDeleteCabinet()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L301"
+      "source_location": "L310"
     },
     {
       "id": "data_connect_client_dbgetreview",
       "label": "dbGetReview()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L305"
+      "source_location": "L314"
     },
     {
       "id": "data_connect_client_dbupdatereview",
       "label": "dbUpdateReview()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L310"
+      "source_location": "L319"
     },
     {
       "id": "data_connect_client_dbfindreview",
       "label": "dbFindReview()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L314"
+      "source_location": "L323"
     },
     {
       "id": "data_connect_client_dbupsertworldcupresult",
       "label": "dbUpsertWorldCupResult()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L321"
+      "source_location": "L330"
     },
     {
       "id": "data_connect_client_dbgetworldcupresult",
       "label": "dbGetWorldCupResult()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L332"
+      "source_location": "L341"
     },
     {
       "id": "data_connect_client_dblistspiritsforworldcup",
       "label": "dbListSpiritsForWorldCup()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L337"
+      "source_location": "L346"
     },
     {
       "id": "data_connect_client_dblistallspiritsforworldcup",
       "label": "dbListAllSpiritsForWorldCup()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L342"
+      "source_location": "L351"
     },
     {
       "id": "data_connect_client_dblistspiritsbycategoryforworldcup",
       "label": "dbListSpiritsByCategoryForWorldCup()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L347"
+      "source_location": "L356"
     },
     {
       "id": "data_connect_client_closedc",
       "label": "closeDC()",
       "file_type": "code",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L353"
+      "source_location": "L362"
     },
     {
       "id": "lib_db_firebase_ts",
@@ -11864,6 +11808,34 @@
       "file_type": "code",
       "source_file": "scripts\\restore-home-shortcuts.ts",
       "source_location": "L30"
+    },
+    {
+      "id": "scripts_run_graphify_ast_py",
+      "label": "run_graphify_ast.py",
+      "file_type": "code",
+      "source_file": "scripts\\run_graphify_ast.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "run_graphify_ast_run_ast",
+      "label": "run_ast()",
+      "file_type": "code",
+      "source_file": "scripts\\run_graphify_ast.py",
+      "source_location": "L6"
+    },
+    {
+      "id": "scripts_run_graphify_cache_check_py",
+      "label": "run_graphify_cache_check.py",
+      "file_type": "code",
+      "source_file": "scripts\\run_graphify_cache_check.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "run_graphify_cache_check_run_cache_check",
+      "label": "run_cache_check()",
+      "file_type": "code",
+      "source_file": "scripts\\run_graphify_cache_check.py",
+      "source_location": "L6"
     },
     {
       "id": "scripts_run_pipeline_py",
@@ -39296,7 +39268,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-admin.ts",
-      "source_location": "L251",
+      "source_location": "L291",
       "weight": 1.0
     },
     {
@@ -39305,7 +39277,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-admin.ts",
-      "source_location": "L262",
+      "source_location": "L302",
       "weight": 1.0
     },
     {
@@ -39314,7 +39286,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-admin.ts",
-      "source_location": "L275",
+      "source_location": "L315",
       "weight": 1.0
     },
     {
@@ -39323,7 +39295,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-admin.ts",
-      "source_location": "L295",
+      "source_location": "L335",
       "weight": 1.0
     },
     {
@@ -39386,7 +39358,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-admin.ts",
-      "source_location": "L248",
+      "source_location": "L288",
       "weight": 1.0
     },
     {
@@ -39395,7 +39367,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-admin.ts",
-      "source_location": "L259",
+      "source_location": "L299",
       "weight": 1.0
     },
     {
@@ -39404,7 +39376,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-admin.ts",
-      "source_location": "L271",
+      "source_location": "L311",
       "weight": 1.0
     },
     {
@@ -39413,7 +39385,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-admin.ts",
-      "source_location": "L292",
+      "source_location": "L332",
       "weight": 1.0
     },
     {
@@ -39422,7 +39394,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-admin.ts",
-      "source_location": "L306",
+      "source_location": "L346",
       "weight": 1.0
     },
     {
@@ -39539,7 +39511,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L141",
+      "source_location": "L142",
       "weight": 1.0
     },
     {
@@ -39548,7 +39520,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L145",
+      "source_location": "L146",
       "weight": 1.0
     },
     {
@@ -39557,7 +39529,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L156",
+      "source_location": "L157",
       "weight": 1.0
     },
     {
@@ -39566,7 +39538,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L168",
+      "source_location": "L169",
       "weight": 1.0
     },
     {
@@ -39575,7 +39547,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L175",
+      "source_location": "L176",
       "weight": 1.0
     },
     {
@@ -39584,7 +39556,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L180",
+      "source_location": "L181",
       "weight": 1.0
     },
     {
@@ -39593,7 +39565,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L188",
+      "source_location": "L189",
       "weight": 1.0
     },
     {
@@ -39602,7 +39574,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L200",
+      "source_location": "L201",
       "weight": 1.0
     },
     {
@@ -39611,7 +39583,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L205",
+      "source_location": "L206",
       "weight": 1.0
     },
     {
@@ -39620,7 +39592,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L210",
+      "source_location": "L211",
       "weight": 1.0
     },
     {
@@ -39629,7 +39601,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L215",
+      "source_location": "L217",
       "weight": 1.0
     },
     {
@@ -39638,7 +39610,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L220",
+      "source_location": "L222",
       "weight": 1.0
     },
     {
@@ -39647,7 +39619,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L226",
+      "source_location": "L228",
       "weight": 1.0
     },
     {
@@ -39656,7 +39628,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L231",
+      "source_location": "L233",
       "weight": 1.0
     },
     {
@@ -39665,7 +39637,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L237",
+      "source_location": "L239",
       "weight": 1.0
     },
     {
@@ -39674,7 +39646,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L242",
+      "source_location": "L244",
       "weight": 1.0
     },
     {
@@ -39683,7 +39655,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L247",
+      "source_location": "L249",
       "weight": 1.0
     },
     {
@@ -39692,7 +39664,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L253",
+      "source_location": "L255",
       "weight": 1.0
     },
     {
@@ -39701,7 +39673,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L262",
+      "source_location": "L264",
       "weight": 1.0
     },
     {
@@ -39710,7 +39682,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L265",
+      "source_location": "L267",
       "weight": 1.0
     },
     {
@@ -39719,7 +39691,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L269",
+      "source_location": "L271",
       "weight": 1.0
     },
     {
@@ -39728,7 +39700,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L283",
+      "source_location": "L285",
       "weight": 1.0
     },
     {
@@ -39737,7 +39709,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L288",
+      "source_location": "L290",
       "weight": 1.0
     },
     {
@@ -39746,7 +39718,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L292",
+      "source_location": "L296",
       "weight": 1.0
     },
     {
@@ -39755,7 +39727,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L297",
+      "source_location": "L306",
       "weight": 1.0
     },
     {
@@ -39764,7 +39736,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L301",
+      "source_location": "L310",
       "weight": 1.0
     },
     {
@@ -39773,7 +39745,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L305",
+      "source_location": "L314",
       "weight": 1.0
     },
     {
@@ -39782,7 +39754,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L310",
+      "source_location": "L319",
       "weight": 1.0
     },
     {
@@ -39791,7 +39763,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L314",
+      "source_location": "L323",
       "weight": 1.0
     },
     {
@@ -39800,7 +39772,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L321",
+      "source_location": "L330",
       "weight": 1.0
     },
     {
@@ -39809,7 +39781,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L332",
+      "source_location": "L341",
       "weight": 1.0
     },
     {
@@ -39818,7 +39790,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L337",
+      "source_location": "L346",
       "weight": 1.0
     },
     {
@@ -39827,7 +39799,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L342",
+      "source_location": "L351",
       "weight": 1.0
     },
     {
@@ -39836,7 +39808,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L347",
+      "source_location": "L356",
       "weight": 1.0
     },
     {
@@ -39845,7 +39817,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L353",
+      "source_location": "L362",
       "weight": 1.0
     },
     {
@@ -39908,7 +39880,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L138",
+      "source_location": "L139",
       "weight": 1.0
     },
     {
@@ -39917,7 +39889,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L138",
+      "source_location": "L139",
       "weight": 1.0
     },
     {
@@ -39926,7 +39898,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L142",
+      "source_location": "L143",
       "weight": 1.0
     },
     {
@@ -39935,7 +39907,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L152",
+      "source_location": "L153",
       "weight": 1.0
     },
     {
@@ -39944,7 +39916,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L157",
+      "source_location": "L158",
       "weight": 1.0
     },
     {
@@ -39953,7 +39925,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L169",
+      "source_location": "L170",
       "weight": 1.0
     },
     {
@@ -39962,7 +39934,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L176",
+      "source_location": "L177",
       "weight": 1.0
     },
     {
@@ -39971,7 +39943,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L185",
+      "source_location": "L186",
       "weight": 1.0
     },
     {
@@ -39980,7 +39952,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L185",
+      "source_location": "L186",
       "weight": 1.0
     },
     {
@@ -39989,7 +39961,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L190",
+      "source_location": "L191",
       "weight": 1.0
     },
     {
@@ -39998,7 +39970,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L192",
+      "source_location": "L193",
       "weight": 1.0
     },
     {
@@ -40007,7 +39979,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L201",
+      "source_location": "L202",
       "weight": 1.0
     },
     {
@@ -40016,7 +39988,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L206",
+      "source_location": "L207",
       "weight": 1.0
     },
     {
@@ -40025,7 +39997,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L211",
+      "source_location": "L213",
       "weight": 1.0
     },
     {
@@ -40034,7 +40006,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L216",
+      "source_location": "L218",
       "weight": 1.0
     },
     {
@@ -40043,7 +40015,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L222",
+      "source_location": "L224",
       "weight": 1.0
     },
     {
@@ -40052,7 +40024,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L222",
+      "source_location": "L224",
       "weight": 1.0
     },
     {
@@ -40061,7 +40033,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L227",
+      "source_location": "L229",
       "weight": 1.0
     },
     {
@@ -40070,7 +40042,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L233",
+      "source_location": "L235",
       "weight": 1.0
     },
     {
@@ -40079,7 +40051,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L233",
+      "source_location": "L235",
       "weight": 1.0
     },
     {
@@ -40088,7 +40060,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L238",
+      "source_location": "L240",
       "weight": 1.0
     },
     {
@@ -40097,7 +40069,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L243",
+      "source_location": "L245",
       "weight": 1.0
     },
     {
@@ -40106,7 +40078,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L248",
+      "source_location": "L250",
       "weight": 1.0
     },
     {
@@ -40115,7 +40087,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L273",
+      "source_location": "L275",
       "weight": 1.0
     },
     {
@@ -40124,7 +40096,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L273",
+      "source_location": "L275",
       "weight": 1.0
     },
     {
@@ -40133,7 +40105,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L274",
+      "source_location": "L276",
       "weight": 1.0
     },
     {
@@ -40142,7 +40114,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L280",
+      "source_location": "L282",
       "weight": 1.0
     },
     {
@@ -40151,7 +40123,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L280",
+      "source_location": "L282",
       "weight": 1.0
     },
     {
@@ -40160,7 +40132,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L284",
+      "source_location": "L286",
       "weight": 1.0
     },
     {
@@ -40169,7 +40141,16 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L289",
+      "source_location": "L293",
+      "weight": 1.0
+    },
+    {
+      "source": "data_connect_client_dbupsertcabinet",
+      "target": "data_connect_client_filterallowedfields",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "lib\\db\\data-connect-client.ts",
+      "source_location": "L293",
       "weight": 1.0
     },
     {
@@ -40178,7 +40159,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L293",
+      "source_location": "L298",
       "weight": 1.0
     },
     {
@@ -40187,7 +40168,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L298",
+      "source_location": "L307",
       "weight": 1.0
     },
     {
@@ -40196,7 +40177,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L302",
+      "source_location": "L311",
       "weight": 1.0
     },
     {
@@ -40205,7 +40186,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L306",
+      "source_location": "L315",
       "weight": 1.0
     },
     {
@@ -40214,7 +40195,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L311",
+      "source_location": "L320",
       "weight": 1.0
     },
     {
@@ -40223,7 +40204,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L315",
+      "source_location": "L324",
       "weight": 1.0
     },
     {
@@ -40232,7 +40213,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L329",
+      "source_location": "L338",
       "weight": 1.0
     },
     {
@@ -40241,7 +40222,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L333",
+      "source_location": "L342",
       "weight": 1.0
     },
     {
@@ -40250,7 +40231,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L338",
+      "source_location": "L347",
       "weight": 1.0
     },
     {
@@ -40259,7 +40240,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L343",
+      "source_location": "L352",
       "weight": 1.0
     },
     {
@@ -40268,7 +40249,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\db\\data-connect-client.ts",
-      "source_location": "L348",
+      "source_location": "L357",
       "weight": 1.0
     },
     {
@@ -45498,6 +45479,96 @@
       "confidence": "EXTRACTED",
       "source_file": "scripts\\restore-home-shortcuts.ts",
       "source_location": "L68",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_run_graphify_ast_py",
+      "target": "sys",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\run_graphify_ast.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_run_graphify_ast_py",
+      "target": "json",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\run_graphify_ast.py",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_run_graphify_ast_py",
+      "target": "graphify_extract",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\run_graphify_ast.py",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_run_graphify_ast_py",
+      "target": "pathlib",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\run_graphify_ast.py",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_run_graphify_ast_py",
+      "target": "run_graphify_ast_run_ast",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\run_graphify_ast.py",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_run_graphify_cache_check_py",
+      "target": "json",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\run_graphify_cache_check.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_run_graphify_cache_check_py",
+      "target": "sys",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\run_graphify_cache_check.py",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_run_graphify_cache_check_py",
+      "target": "graphify_cache",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\run_graphify_cache_check.py",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_run_graphify_cache_check_py",
+      "target": "pathlib",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\run_graphify_cache_check.py",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_run_graphify_cache_check_py",
+      "target": "run_graphify_cache_check_run_cache_check",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\run_graphify_cache_check.py",
+      "source_location": "L6",
       "weight": 1.0
     },
     {

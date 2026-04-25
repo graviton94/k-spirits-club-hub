@@ -4198,7 +4198,7 @@ export interface UpsertNewsVariables {
   link?: string | null;
   date?: string | null;
   translations?: unknown | null;
-  tags?: unknown | null;
+  newsTags?: unknown | null;
 }
 ```
 ### Return Type
@@ -4227,14 +4227,14 @@ const upsertNewsVars: UpsertNewsVariables = {
   link: ..., // optional
   date: ..., // optional
   translations: ..., // optional
-  tags: ..., // optional
+  newsTags: ..., // optional
 };
 
 // Call the `upsertNews()` function to execute the mutation.
 // You can use the `await` keyword to wait for the promise to resolve.
 const { data } = await upsertNews(upsertNewsVars);
 // Variables can be defined inline as well.
-const { data } = await upsertNews({ id: ..., title: ..., content: ..., imageUrl: ..., category: ..., source: ..., link: ..., date: ..., translations: ..., tags: ..., });
+const { data } = await upsertNews({ id: ..., title: ..., content: ..., imageUrl: ..., category: ..., source: ..., link: ..., date: ..., translations: ..., newsTags: ..., });
 
 // You can also pass in a `DataConnect` instance to the action shortcut function.
 const dataConnect = getDataConnect(connectorConfig);
@@ -4266,13 +4266,13 @@ const upsertNewsVars: UpsertNewsVariables = {
   link: ..., // optional
   date: ..., // optional
   translations: ..., // optional
-  tags: ..., // optional
+  newsTags: ..., // optional
 };
 
 // Call the `upsertNewsRef()` function to get a reference to the mutation.
 const ref = upsertNewsRef(upsertNewsVars);
 // Variables can be defined inline as well.
-const ref = upsertNewsRef({ id: ..., title: ..., content: ..., imageUrl: ..., category: ..., source: ..., link: ..., date: ..., translations: ..., tags: ..., });
+const ref = upsertNewsRef({ id: ..., title: ..., content: ..., imageUrl: ..., category: ..., source: ..., link: ..., date: ..., translations: ..., newsTags: ..., });
 
 // You can also pass in a `DataConnect` instance to the `MutationRef` function.
 const dataConnect = getDataConnect(connectorConfig);

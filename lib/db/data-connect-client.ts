@@ -125,15 +125,16 @@ export const dbUpsertSpirit = async (vars: any) => {
   const normalized = {
     ...vars,
     imageUrl: vars.imageUrl?.replace(/^http:\/\//i, 'https://'),
-    thumbnailUrl: vars.thumbnailUrl?.replace(/^http:\/\//i, 'https://')
+    thumbnailUrl: vars.thumbnailUrl?.replace(/^http:\/\//i, 'https://'),
+    updatedAt: new Date().toISOString()
   };
   const allowed = [
     'id', 'name', 'nameEn', 'category', 'categoryEn', 'mainCategory', 'subcategory',
     'distillery', 'bottler', 'abv', 'volume', 'country', 'region', 'imageUrl', 'thumbnailUrl',
     'descriptionKo', 'descriptionEn', 'pairingGuideKo', 'pairingGuideEn',
-    'noseTags', 'palateTags', 'finishTags', 'tastingNote', 'status',
+    'noseTags', 'palateTags', 'finishTags', 'tastingNote', 'status', 'importer', 'rawCategory',
     'isPublished', 'isReviewed', 'reviewedBy', 'reviewedAt', 'rating', 'reviewCount',
-    'importer', 'rawCategory', 'metadata', 'updatedAt'
+    'metadata'
   ];
   return await upsertSpirit(getDC(), filterAllowedFields(normalized, allowed));
 };
@@ -208,6 +209,7 @@ export const dbGetSpiritReviewsCount = async () => {
 };
 
 export const dbUpsertReview = async (vars: any) => {
+  // Ensure UUID format or generation if missing
   return await upsertReview(getDC(), vars);
 };
 
@@ -253,7 +255,7 @@ export const dbGetNewsCount = async () => {
 function extractString(value: any, fallback = ''): string {
   if (typeof value === 'string') return value;
   if (value && typeof value === 'object' && value !== null) {
-    return value.ko || value.en || value.title || value.content || value.snippet || fallback;
+    return (value as any).ko || (value as any).en || (value as any).title || (value as any).content || (value as any).snippet || fallback;
   }
   return fallback;
 }
@@ -272,7 +274,7 @@ export const dbUpsertNews = async (vars: any) => {
     ...vars,
     title: String(extractString(vars?.title, pickTranslationTitle(t)) || 'Untitled').trim(),
     content: String(extractString(vars?.content, pickTranslationContent(t)) || '').trim(),
-    newsTags: vars?.tags ?? vars?.newsTags,
+    tags: vars?.newsTags ?? vars?.tags, // Sync the discrepancy
     // Upgrade insecure links to https
     link: (vars?.link || '').replace(/^http:\/\//i, 'https://')
   };
@@ -286,12 +288,19 @@ export const dbDeleteNews = async (id: string) => {
 
 // --- Cabinet ---
 export const dbUpsertCabinet = async (vars: any) => {
-  return await upsertCabinet(getDC(), vars);
+  // Ensure the variable names match the mutation (spiritId, userId)
+  const allowed = ['userId', 'spiritId', 'addedAt', 'notes', 'rating', 'isFavorite'];
+  return await upsertCabinet(getDC(), filterAllowedFields(vars, allowed));
 };
 
 export const dbListUserCabinet = async (userId: string) => {
-  const { data } = await listUserCabinet(getDC(), { userId });
-  return data.userCabinets;
+  try {
+    const { data } = await listUserCabinet(getDC(), { userId });
+    return data?.userCabinets || [];
+  } catch (err) {
+    console.error('[dbListUserCabinet] Error:', err);
+    return [];
+  }
 };
 
 export const dbListUserReviews = async (userId: string) => {
