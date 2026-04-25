@@ -3689,3 +3689,92 @@ Generated sources: index.cjs.js [15618B] package.json [629B] index.d.ts [43554B]
  {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 13:33:02.700689   41524 dev.go:104] Listening on address (HTTP + gRPC): 127.0.0.1:50001\n"}}
 [debug] [2026-04-25T04:33:03.830Z] I0425 13:33:03.768577   41524 engine.go:209] [projects/emulator/locations/emulator/services/k-spirits-club-hub b6b8] ExecuteGraphqlRead query IntrospectionQuery: succeeded. 
  {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 13:33:03.768577   41524 engine.go:209] [projects/emulator/locations/emulator/services/k-spirits-club-hub b6b8] ExecuteGraphqlRead query IntrospectionQuery: succeeded. \n"}}
+[debug] [2026-04-25T05:29:31.952Z] I0425 14:29:31.934041   41524 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 14:29:31.934041   41524 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-25T05:29:32.229Z] W0425 14:29:32.229450   41524 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 79a5] connector "main" has errors: main\mutations.gql:134:5: Field "likedBy" is not defined by type "SpiritReview_Data". Did you mean "likes"?
+main\mutations.gql:149:5: Field "likedBy" is not defined by type "SpiritReview_Data". Did you mean "likes"?
+main\queries.gql:162:8: Cannot query field "likedBy" on type "SpiritReview". Did you mean "likes"?
+main\queries.gql:344:6: Cannot query field "likedBy" on type "SpiritReview". Did you mean "likes"?
+main\queries.gql:352:6: Cannot query field "likedBy" on type "SpiritReview". Did you mean "likes"?
+
+sources: main\mutations.gql [6625B] main\queries.gql [9892B] 
+I0425 14:29:32.230670   41524 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 79a5] UpdateResources(): done
+Main schema: sources: schema\schema.gql [3762B] 
+Connector "main": sources: main\mutations.gql [6625B] main\queries.gql [9892B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0425 14:29:32.229450   41524 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 79a5] connector \"main\" has errors: main\\mutations.gql:134:5: Field \"likedBy\" is not defined by type \"SpiritReview_Data\". Did you mean \"likes\"?\nmain\\mutations.gql:149:5: Field \"likedBy\" is not defined by type \"SpiritReview_Data\". Did you mean \"likes\"?\nmain\\queries.gql:162:8: Cannot query field \"likedBy\" on type \"SpiritReview\". Did you mean \"likes\"?\nmain\\queries.gql:344:6: Cannot query field \"likedBy\" on type \"SpiritReview\". Did you mean \"likes\"?\nmain\\queries.gql:352:6: Cannot query field \"likedBy\" on type \"SpiritReview\". Did you mean \"likes\"?\n\nsources: main\\mutations.gql [6625B] main\\queries.gql [9892B] \nI0425 14:29:32.230670   41524 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 79a5] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [3762B] \nConnector \"main\": sources: main\\mutations.gql [6625B] main\\queries.gql [9892B] \n"}}
+[debug] [2026-04-25T05:29:32.239Z] E0425 14:29:32.238671   41524 load.go:73] Could not load sources: 
+Errors: main\mutations.gql:134:5: Field "likedBy" is not defined by type "SpiritReview_Data". Did you mean "likes"?
+main\mutations.gql:149:5: Field "likedBy" is not defined by type "SpiritReview_Data". Did you mean "likes"?
+main\queries.gql:162:8: Cannot query field "likedBy" on type "SpiritReview". Did you mean "likes"?
+main\queries.gql:344:6: Cannot query field "likedBy" on type "SpiritReview". Did you mean "likes"?
+main\queries.gql:352:6: Cannot query field "likedBy" on type "SpiritReview". Did you mean "likes"?
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0425 14:29:32.238671   41524 load.go:73] Could not load sources: \nErrors: main\\mutations.gql:134:5: Field \"likedBy\" is not defined by type \"SpiritReview_Data\". Did you mean \"likes\"?\nmain\\mutations.gql:149:5: Field \"likedBy\" is not defined by type \"SpiritReview_Data\". Did you mean \"likes\"?\nmain\\queries.gql:162:8: Cannot query field \"likedBy\" on type \"SpiritReview\". Did you mean \"likes\"?\nmain\\queries.gql:344:6: Cannot query field \"likedBy\" on type \"SpiritReview\". Did you mean \"likes\"?\nmain\\queries.gql:352:6: Cannot query field \"likedBy\" on type \"SpiritReview\". Did you mean \"likes\"?\n"}}
+[debug] [2026-04-25T05:29:32.261Z] I0425 14:29:32.260681   41524 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: prelude.gql [82799B] main\query.gql [15032B] main\mutation.gql [40563B] main\implicit.gql [2640B] main\input.gql [148987B] main\relation.gql [75210B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 14:29:32.260681   41524 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: prelude.gql [82799B] main\\query.gql [15032B] main\\mutation.gql [40563B] main\\implicit.gql [2640B] main\\input.gql [148987B] main\\relation.gql [75210B] \n"}}
+[debug] [2026-04-25T05:29:32.261Z] I0425 14:29:32.262307   41524 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 14:29:32.262307   41524 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-25T05:29:41.917Z] I0425 14:29:41.918185   41524 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 14:29:41.918185   41524 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-25T05:29:41.975Z] W0425 14:29:41.976628   41524 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 0acb] connector "main" has errors: main\queries.gql:162:8: Cannot query field "likedBy" on type "SpiritReview". Did you mean "likes"?
+main\queries.gql:344:6: Cannot query field "likedBy" on type "SpiritReview". Did you mean "likes"?
+main\queries.gql:352:6: Cannot query field "likedBy" on type "SpiritReview". Did you mean "likes"?
+
+sources: main\mutations.gql [7402B] main\queries.gql [9892B] 
+I0425 14:29:41.976628   41524 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 0acb] UpdateResources(): done
+Main schema: sources: schema\schema.gql [3762B] 
+Connector "main": sources: main\queries.gql [9892B] main\mutations.gql [7402B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0425 14:29:41.976628   41524 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 0acb] connector \"main\" has errors: main\\queries.gql:162:8: Cannot query field \"likedBy\" on type \"SpiritReview\". Did you mean \"likes\"?\nmain\\queries.gql:344:6: Cannot query field \"likedBy\" on type \"SpiritReview\". Did you mean \"likes\"?\nmain\\queries.gql:352:6: Cannot query field \"likedBy\" on type \"SpiritReview\". Did you mean \"likes\"?\n\nsources: main\\mutations.gql [7402B] main\\queries.gql [9892B] \nI0425 14:29:41.976628   41524 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 0acb] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [3762B] \nConnector \"main\": sources: main\\queries.gql [9892B] main\\mutations.gql [7402B] \n"}}
+[debug] [2026-04-25T05:29:41.979Z] E0425 14:29:41.980595   41524 load.go:73] Could not load sources: 
+Errors: main\queries.gql:162:8: Cannot query field "likedBy" on type "SpiritReview". Did you mean "likes"?
+main\queries.gql:344:6: Cannot query field "likedBy" on type "SpiritReview". Did you mean "likes"?
+main\queries.gql:352:6: Cannot query field "likedBy" on type "SpiritReview". Did you mean "likes"?
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0425 14:29:41.980595   41524 load.go:73] Could not load sources: \nErrors: main\\queries.gql:162:8: Cannot query field \"likedBy\" on type \"SpiritReview\". Did you mean \"likes\"?\nmain\\queries.gql:344:6: Cannot query field \"likedBy\" on type \"SpiritReview\". Did you mean \"likes\"?\nmain\\queries.gql:352:6: Cannot query field \"likedBy\" on type \"SpiritReview\". Did you mean \"likes\"?\n"}}
+[debug] [2026-04-25T05:29:41.984Z] I0425 14:29:41.984030   41524 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\implicit.gql [2640B] prelude.gql [82799B] main\input.gql [148987B] main\relation.gql [75210B] main\query.gql [15032B] main\mutation.gql [40563B] 
+I0425 14:29:41.984030   41524 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 14:29:41.984030   41524 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\implicit.gql [2640B] prelude.gql [82799B] main\\input.gql [148987B] main\\relation.gql [75210B] main\\query.gql [15032B] main\\mutation.gql [40563B] \nI0425 14:29:41.984030   41524 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-25T05:31:51.980Z] I0425 14:31:51.924238   41524 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 14:31:51.924238   41524 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-25T05:31:52.257Z] W0425 14:31:52.256170   41524 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 4442] connector "main" has errors: main\queries.gql:162:8: Cannot query field "likedBy" on type "SpiritReview". Did you mean "likes"?
+main\queries.gql:344:6: Cannot query field "likedBy" on type "SpiritReview". Did you mean "likes"?
+
+sources: main\queries.gql [10870B] main\mutations.gql [7402B] 
+I0425 14:31:52.257741   41524 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 4442] UpdateResources(): done
+Main schema: sources: schema\schema.gql [3762B] 
+Connector "main": sources: main\mutations.gql [7402B] main\queries.gql [10870B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"W0425 14:31:52.256170   41524 control.go:74] [projects/emulator/locations/emulator/services/k-spirits-club-hub 4442] connector \"main\" has errors: main\\queries.gql:162:8: Cannot query field \"likedBy\" on type \"SpiritReview\". Did you mean \"likes\"?\nmain\\queries.gql:344:6: Cannot query field \"likedBy\" on type \"SpiritReview\". Did you mean \"likes\"?\n\nsources: main\\queries.gql [10870B] main\\mutations.gql [7402B] \nI0425 14:31:52.257741   41524 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub 4442] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [3762B] \nConnector \"main\": sources: main\\mutations.gql [7402B] main\\queries.gql [10870B] \n"}}
+[debug] [2026-04-25T05:31:52.265Z] E0425 14:31:52.265417   41524 load.go:73] Could not load sources: 
+Errors: main\queries.gql:162:8: Cannot query field "likedBy" on type "SpiritReview". Did you mean "likes"?
+main\queries.gql:344:6: Cannot query field "likedBy" on type "SpiritReview". Did you mean "likes"?
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"E0425 14:31:52.265417   41524 load.go:73] Could not load sources: \nErrors: main\\queries.gql:162:8: Cannot query field \"likedBy\" on type \"SpiritReview\". Did you mean \"likes\"?\nmain\\queries.gql:344:6: Cannot query field \"likedBy\" on type \"SpiritReview\". Did you mean \"likes\"?\n"}}
+[debug] [2026-04-25T05:31:52.279Z] I0425 14:31:52.276219   41524 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\input.gql [148987B] main\relation.gql [75210B] main\query.gql [15032B] main\mutation.gql [40563B] prelude.gql [82799B] main\implicit.gql [2640B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 14:31:52.276219   41524 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\input.gql [148987B] main\\relation.gql [75210B] main\\query.gql [15032B] main\\mutation.gql [40563B] prelude.gql [82799B] main\\implicit.gql [2640B] \n"}}
+[debug] [2026-04-25T05:31:52.280Z] I0425 14:31:52.278220   41524 load.go:74] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 14:31:52.278220   41524 load.go:74] Finished reloading\n"}}
+[debug] [2026-04-25T05:34:01.935Z] I0425 14:34:01.924928   41524 load.go:31] Reloading schema and connectors...
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 14:34:01.924928   41524 load.go:31] Reloading schema and connectors...\n"}}
+[debug] [2026-04-25T05:34:02.148Z] I0425 14:34:02.144060   41524 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub d6f1] UpdateResources(): done
+Main schema: sources: schema\schema.gql [3762B] 
+Connector "main": sources: main\mutations.gql [7402B] main\queries.gql [10855B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 14:34:02.144060   41524 control.go:100] [projects/emulator/locations/emulator/services/k-spirits-club-hub d6f1] UpdateResources(): done\nMain schema: sources: schema\\schema.gql [3762B] \nConnector \"main\": sources: main\\mutations.gql [7402B] main\\queries.gql [10855B] \n"}}
+[debug] [2026-04-25T05:34:02.291Z] I0425 14:34:02.289628   41524 codegen.go:101] [connector "main" javascriptSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 14:34:02.289628   41524 codegen.go:101] [connector \"main\" javascriptSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\n"}}
+[debug] [2026-04-25T05:34:02.377Z] I0425 14:34:02.375986   41524 codegen.go:101] [connector "main" adminSdk] Generating sources into "c:\\k-spirits-club-hub\\src\\dataconnect-admin-generated"
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 14:34:02.375986   41524 codegen.go:101] [connector \"main\" adminSdk] Generating sources into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-admin-generated\"\n"}}
+[debug] [2026-04-25T05:34:02.403Z] I0425 14:34:02.402029   41524 collector.go:107] schema extensions wrote into "c:\\k-spirits-club-hub\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\relation.gql [75210B] main\query.gql [15032B] main\mutation.gql [40563B] prelude.gql [82799B] main\implicit.gql [2640B] main\input.gql [148987B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 14:34:02.402029   41524 collector.go:107] schema extensions wrote into \"c:\\\\k-spirits-club-hub\\\\dataconnect\\\\.dataconnect\\\\schema\"\nGenerated sources: main\\relation.gql [75210B] main\\query.gql [15032B] main\\mutation.gql [40563B] prelude.gql [82799B] main\\implicit.gql [2640B] main\\input.gql [148987B] \n"}}
+[debug] [2026-04-25T05:34:02.489Z] I0425 14:34:02.488179   41524 collector.go:107] connector "main" javascriptSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-generated"
+Generated sources: .guides/config.json [236B] README.md [232640B] .guides/usage.md [4325B] esm\package.json [17B] react\index.d.ts [22514B] react\package.json [457B] react\esm\package.json [17B] react\index.cjs.js [18380B] react\esm\index.esm.js [17267B] index.d.ts [55319B] esm\index.esm.js [28036B] index.cjs.js [31251B] react\README.md [230740B] .guides/setup.md [1682B] package.json [850B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 14:34:02.488179   41524 collector.go:107] connector \"main\" javascriptSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-generated\"\nGenerated sources: .guides/config.json [236B] README.md [232640B] .guides/usage.md [4325B] esm\\package.json [17B] react\\index.d.ts [22514B] react\\package.json [457B] react\\esm\\package.json [17B] react\\index.cjs.js [18380B] react\\esm\\index.esm.js [17267B] index.d.ts [55319B] esm\\index.esm.js [28036B] index.cjs.js [31251B] react\\README.md [230740B] .guides/setup.md [1682B] package.json [850B] \n"}}
+[debug] [2026-04-25T05:34:02.556Z] I0425 14:34:02.555906   41524 installsdk.go:55] Package @dataconnect/generated is already installed. Skipping installation
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 14:34:02.555906   41524 installsdk.go:55] Package @dataconnect/generated is already installed. Skipping installation\n"}}
+[debug] [2026-04-25T05:34:02.593Z] I0425 14:34:02.592762   41524 collector.go:107] connector "main" adminSdk wrote into "c:\\k-spirits-club-hub\\src\\dataconnect-admin-generated"
+Generated sources: index.d.ts [49058B] esm\index.esm.js [15741B] esm\package.json [17B] index.cjs.js [17616B] package.json [629B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 14:34:02.592762   41524 collector.go:107] connector \"main\" adminSdk wrote into \"c:\\\\k-spirits-club-hub\\\\src\\\\dataconnect-admin-generated\"\nGenerated sources: index.d.ts [49058B] esm\\index.esm.js [15741B] esm\\package.json [17B] index.cjs.js [17616B] package.json [629B] \n"}}
+[debug] [2026-04-25T05:34:02.614Z] I0425 14:34:02.614284   41524 installsdk.go:55] Package @dataconnect/admin-generated is already installed. Skipping installation
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 14:34:02.614284   41524 installsdk.go:55] Package @dataconnect/admin-generated is already installed. Skipping installation\n"}}
+[debug] [2026-04-25T05:34:02.617Z] I0425 14:34:02.614853   41524 load.go:109] Finished reloading
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0425 14:34:02.614853   41524 load.go:109] Finished reloading\n"}}

@@ -45,7 +45,6 @@ export async function POST(request: NextRequest) {
       palate: palate || '',
       finish: finish || '',
       likes: existingReview?.likes || 0,
-      likedBy: existingReview?.likedBy || [],
       isPublished: true,
       imageUrls: imageUrls || [],
       createdAt: now,
@@ -164,7 +163,6 @@ export async function DELETE(request: NextRequest) {
       palate: '',
       finish: '',
       likes: 0,
-      likedBy: [],
       isPublished: false,
       imageUrls: [],
       updatedAt: new Date().toISOString()

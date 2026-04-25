@@ -16,7 +16,7 @@ import { UserReview } from "@/lib/utils/flavor-engine";
 import { toFlavorSpirit, triggerLoginModal } from "@/lib/utils/spirit-adapters";
 import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
 import SuccessToast from "./SuccessToast";
-import Image from 'next/image';
+import NextImage from 'next/image';
 import metadata from "@/lib/constants/spirits-metadata.json";
 
 interface SpiritCardProps {
@@ -125,7 +125,7 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
 
       {/* 📸 Thumbnail Component */}
       <div className="relative shrink-0 w-full h-[240px] sm:w-[160px] sm:h-full min-h-[160px] rounded-[32px] overflow-hidden bg-muted/50 border border-border/50 shadow-inner group-hover:border-primary/30 transition-all duration-500">
-        <Image
+        <NextImage
           src={imgSrc}
           alt={`Thumbnail for ${localizedName}`}
           fill

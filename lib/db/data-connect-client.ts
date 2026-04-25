@@ -33,8 +33,6 @@ import {
   listUserCabinet,
   listUserReviews,
   deleteCabinet,
-  getReview,
-  updateReview,
   findReview,
   searchSpiritsPublic,
   listAllCategories,
@@ -216,8 +214,12 @@ export const dbGetSpiritReviewsCount = async () => {
 };
 
 export const dbUpsertReview = async (vars: any) => {
-  // Ensure UUID format or generation if missing
-  return await upsertReview(getDC(), vars);
+  const allowed = [
+    'id', 'spiritId', 'userId', 'rating', 'title', 'content', 
+    'nose', 'palate', 'finish', 'likes', 'isPublished', 'imageUrls', 
+    'createdAt', 'updatedAt'
+  ];
+  return await upsertReview(getDC(), filterAllowedFields(vars, allowed));
 };
 
 // --- AI Logs ---
@@ -318,14 +320,6 @@ export const dbDeleteCabinet = async (vars: { userId: string, spiritId: string }
   return await deleteCabinet(getDC(), vars);
 };
 
-export const dbGetReview = async (id: string) => {
-  const { data } = await getReview(getDC(), { id });
-  return data.spiritReview;
-};
-
-export const dbUpdateReview = async (vars: { id: string, likes?: number, likedBy?: string[] }) => {
-  return await updateReview(getDC(), vars);
-};
 
 export const dbFindReview = async (vars: { userId: string, spiritId: string }) => {
   const { data } = await findReview(getDC(), vars);

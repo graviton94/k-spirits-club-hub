@@ -80,8 +80,8 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
         if (!searchQuery.trim()) return news;
         const lowQuery = searchQuery.toLowerCase();
         return news.filter(item => {
-            const title = (item.translations?.[lang]?.title || item.translations?.ko?.title || item.title || '').toLowerCase();
-            const content = (item.translations?.[lang]?.content || item.translations?.ko?.content || item.content || '').toLowerCase();
+            const title = (item.translations?.[lang]?.title || item.translations?.['ko']?.title || item.title || '').toLowerCase();
+            const content = (item.translations?.[lang]?.content || item.translations?.['ko']?.content || item.content || '').toLowerCase();
             return title.includes(lowQuery) || content.includes(lowQuery);
         });
     }, [news, searchQuery, lang]);
@@ -222,17 +222,17 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
 
                                             <Link href={item.link} target="_blank" className="block group/title mb-4 md:mb-6">
                                                 <h2 className="text-xl md:text-4xl font-black group-hover/title:text-primary transition-all duration-500 leading-tight tracking-tighter italic uppercase">
-                                                    {String(item.translations?.[lang]?.title || item.translations?.ko?.title || item.title || '')}
+                                                    {String(item.translations?.[lang]?.title || item.translations?.['ko']?.title || item.title || '')}
                                                 </h2>
                                             </Link>
 
                                             <p className="text-muted-foreground/80 leading-relaxed text-[13px] md:text-lg font-medium mb-6 md:mb-12 line-clamp-4 italic border-l-2 border-primary/10 pl-4 md:pl-6">
-                                                &ldquo;{String(item.translations?.[lang]?.content || item.translations?.ko?.content || item.content || '')}&rdquo;
+                                                &ldquo;{String(item.translations?.[lang]?.content || item.translations?.['ko']?.content || item.content || '')}&rdquo;
                                             </p>
 
                                             <div className="flex flex-wrap items-center justify-between gap-4 md:gap-6 mt-auto pt-6 md:pt-8 border-t border-white/5">
                                                 <div className="flex flex-wrap gap-1.5 md:gap-2.5">
-                                                    {(item.newsTags?.[lang] || item.newsTags?.ko || item.newsTags || [])?.slice(0, 4).map((tag: string, i: number) => (
+                                                    {(item.newsTags?.[lang] || item.newsTags?.['ko'] || item.newsTags || [])?.slice(0, 4).map((tag: string, i: number) => (
                                                         <span key={i} className="text-[8px] md:text-[9px] font-black px-3 py-1 md:px-4 md:py-1.5 rounded-lg md:rounded-xl bg-card border border-white/5 text-muted-foreground/40 uppercase tracking-tight group-hover:text-primary transition-colors">
                                                             #{tag.replace('#', '')}
                                                         </span>
