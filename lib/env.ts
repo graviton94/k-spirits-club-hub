@@ -1,36 +1,42 @@
 /**
  * Unified Environment Variable Accessor
  */
-export function getEnv(key: string): string {
+export function getEnvDetail(key: string): { value: string, source: string } {
     let value = "";
-    let source = "none";
+    let source = "missing";
 
-    // 1. MUST try getRequestContext FIRST (This is where Cloudflare Secrets live)
+    // 1. Cloudflare Context
     try {
         const { getRequestContext } = require("@opennextjs/cloudflare");
         const ctx = getRequestContext();
         if (ctx?.env && ctx.env[key]) {
             value = String(ctx.env[key]);
             source = "Cloudflare Context (Secret/Var)";
+            return { value, source };
         }
-    } catch (e) {
-        // Not in Cloudflare request context or not supported
-    }
+    } catch (e) {}
 
-    // 2. Try process.env (Next.js fallback / Local dev)
-    if (!value && process.env[key]) {
+    // 2. process.env
+    if (process.env[key]) {
         value = process.env[key] as string;
         source = "process.env";
+        return { value, source };
     }
 
-    // 3. Try globalThis (Last resort)
-    if (!value && (globalThis as any)[key]) {
+    // 3. globalThis
+    if ((globalThis as any)[key]) {
         value = String((globalThis as any)[key]);
         source = "globalThis";
+        return { value, source };
     }
 
+    return { value: "", source: "missing" };
+}
+
+export function getEnv(key: string): string {
+    const { value, source } = getEnvDetail(key);
+    
     if (value) {
-        // Only log public keys or log existence to prevent leak in logs
         const isSecret = key.includes('KEY') || key.includes('SECRET') || key.includes('PRIVATE');
         console.log(`[Env] Found ${key} from ${source} ${isSecret ? '(Protected Value)' : `(${value})`}`);
     } else {
