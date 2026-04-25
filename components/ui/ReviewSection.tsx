@@ -12,6 +12,8 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '@/lib/db/firebase';
 import imageCompression from 'browser-image-compression';
 import MicroReviewModal from '@/components/ui/MicroReviewModal';
+import { toggleReviewLike } from '@/app/[lang]/actions/social';
+import Link from 'next/link';
 
 interface ExtendedReview extends Review {
   noseRating?: number;
@@ -371,41 +373,28 @@ function ReviewCard({ review, isOwner, onEdit, onDelete, onToast }: {
     e.stopPropagation();
     if (!user) {
       onToast?.('로그인이 필요한 기능입니다. 👤', 'error');
+      window.dispatchEvent(new CustomEvent('openLoginModal'));
       return;
     }
     if (isLiking) return;
 
-    // Optimistic UI update
-    const prevLiked = isLiked;
-    const prevLikesCount = likes;
-    setIsLiked(!prevLiked);
-    setLikes(prevLiked ? prevLikesCount - 1 : prevLikesCount + 1);
     setIsLiking(true);
+    
+    // Call server action
+    const result = await toggleReviewLike(
+      user.uid, 
+      review.id, 
+      likes, 
+      isLiked
+    );
 
-    try {
-      const res = await fetch('/api/reviews/like', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          spiritId: review.spiritId,
-          reviewUserId: review.userId,
-          likerUserId: user.uid
-        })
-      });
-
-      if (!res.ok) throw new Error('Failed to like');
-      const data = await res.json();
-      // Update with real count from server
-      setLikes(data.likes);
-      setIsLiked(data.isLiked);
-    } catch (err) {
-      // Rollback on error
-      setIsLiked(prevLiked);
-      setLikes(prevLikesCount);
-      console.error(err);
-    } finally {
-      setIsLiking(false);
+    if (result.success) {
+      setLikes(result.newCount || 0);
+      setIsLiked(!isLiked);
+    } else {
+      onToast?.('좋아요 처리 중 오류가 발생했습니다.', 'error');
     }
+    setIsLiking(false);
   };
 
   return (
@@ -444,6 +433,15 @@ function ReviewCard({ review, isOwner, onEdit, onDelete, onToast }: {
             <Heart className={`w-3 h-3 ${isLiked ? 'fill-rose-500' : ''}`} />
             <span>{likes}</span>
           </button>
+
+          {/* Comment Counter & Link */}
+          <Link
+            href={`/${(review as any).lang || 'ko'}/contents/reviews/${review.id}`}
+            className="flex items-center gap-2 px-4 py-2 bg-slate-500/5 text-muted-foreground border border-transparent hover:border-primary/20 hover:text-primary rounded-full text-[10px] font-black transition-all"
+          >
+            <MessageSquare className="w-3 h-3" />
+            <span>{(review as any).commentCount || 0}</span>
+          </Link>
         </div>
 
         {isOwner && (

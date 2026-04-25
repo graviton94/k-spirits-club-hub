@@ -69,54 +69,54 @@ export async function POST(req: NextRequest) {
         // Loading searchable index for recommendations (Step 3+)
         if (currentStep >= 3) {
             try {
-                searchIndex = await db.getPublishedSearchIndex();
+                // Compatibility check for db.getPublishedSearchIndex
+                if (db && typeof db.getPublishedSearchIndex === 'function') {
+                    searchIndex = await db.getPublishedSearchIndex();
+                }
             } catch (e: any) {
-                console.error('[Sommelier API] Index Fetch Failed:', e);
-                // Non-critical, can continue but with limited knowledge
+                console.error('[Sommelier API] Index Fetch Failed or Unsupported:', e.message);
+                // Non-critical: we can still perform interview steps without the local index
+                searchIndex = [];
             }
 
             // Prepare context for the AI
-            const userKeywords = messages.map((m: any) => m.content).join(' ');
-            const priorityMatches = searchIndex.filter(item => {
-                const name = (item.n || '').toLowerCase();
-                const keywords = userKeywords.toLowerCase();
-                return keywords.includes(name) || (name.length > 2 && keywords.includes(name.split(' ')[0]));
-            }).slice(0, 20); // Reduced from 30
+            const userKeywords = messages.map((m: any) => m.content).join(' ').toLowerCase();
+            
+            // Smarter filtering: Priority matches + balancing categories
+            const priorityMatches = (searchIndex || [])
+                .filter(item => {
+                    const name = (item.n || '').toLowerCase();
+                    return name.length > 1 && (userKeywords.includes(name) || name.includes(userKeywords));
+                })
+                .slice(0, 15);
 
-            const categories = [...new Set(searchIndex.map(s => s.c))];
+            const categories = [...new Set((searchIndex || []).map(s => s.c))];
             const balancedIndex: any[] = [];
 
+            // Add priority matches first
             priorityMatches.forEach(item => {
                 balancedIndex.push({
-                    i: item.i,
-                    n: item.n,
-                    c: item.c,
-                    sc: item.sc,
-                    co: item.co || '',
-                    m: item.d || '',
-                    a: item.a,
-                    t: item.tn || ''
+                    i: item.i, n: item.n, c: item.c, sc: item.sc, 
+                    co: item.co || '', m: item.d || '', a: item.a, t: item.tn || ''
                 });
             });
 
-            const SAMPLES_PER_CATEGORY = 5; // Heavily reduced from 20 to keep context small
+            // Sample from each category to give AI a broad scope
+            const SAMPLES_PER_CATEGORY = 3;
             categories.forEach(cat => {
+                if (!cat) return;
                 const catItems = searchIndex
                     .filter(s => s.c === cat && !balancedIndex.some(existing => existing.i === s.i))
                     .slice(0, SAMPLES_PER_CATEGORY);
 
                 balancedIndex.push(...catItems.map(item => ({
-                    i: item.i,
-                    n: item.n,
-                    c: item.c,
-                    sc: item.sc,
-                    co: item.co || '',
-                    m: item.d || '',
-                    a: item.a,
-                    t: item.tn || ''
+                    i: item.i, n: item.n, c: item.c, sc: item.sc,
+                    co: item.co || '', m: item.d || '', a: item.a, t: item.tn || ''
                 })));
             });
-            knowledgeBase = `[Spirit Data]\n${JSON.stringify(balancedIndex)}`;
+
+            // Final safety slice to keep JSON payload within reasonable limits
+            knowledgeBase = `[Spirit Data Index Snippet]\n${JSON.stringify(balancedIndex.slice(0, 50))}`;
         } else {
             const summary = {
                 categories: ["소주", "위스키", "와인", "일반증류주", "탁주", "약주", "청주", "과실주", "브랜디", "리큐르"],

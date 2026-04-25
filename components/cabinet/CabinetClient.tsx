@@ -88,8 +88,11 @@ export default function CabinetClient({ lang, dict }: CabinetClientProps) {
 
             const enrichedData = cabinetData.map((item: any) => {
                 const indexItem = searchIndex.find(s => s.i === item.id);
+                // Logic Fix: rating > 0 is Owned, otherwise it's Wishlist
+                const hasRating = item.rating > 0;
                 return {
                     ...item,
+                    isWishlist: !hasRating,
                     name_en: item.name_en || indexItem?.en || null,
                     thumbnailUrl: item.thumbnailUrl || indexItem?.t || item.imageUrl,
                     imageUrl: item.imageUrl || indexItem?.t,

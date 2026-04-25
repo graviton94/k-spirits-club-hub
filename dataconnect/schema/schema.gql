@@ -73,11 +73,26 @@ type SpiritReview @table {
   palate: String
   finish: String
   likes: Int @default(value: 0)
-  likedBy: [String!]
   isPublished: Boolean @default(value: true)
   imageUrls: [String!]
   createdAt: Timestamp! @default(expr: "request.time")
   updatedAt: Timestamp! @default(expr: "request.time")
+}
+
+# --- Social Interaction ---
+type ReviewLike @table(key: ["user", "review"]) {
+  user: User!
+  review: SpiritReview!
+  createdAt: Timestamp @default(expr: "request.time")
+}
+
+type ReviewComment @table {
+  id: UUID! @default(expr: "uuidV4()")
+  review: SpiritReview!
+  user: User!
+  content: String @col(dataType: "varchar(500)")
+  createdAt: Timestamp @default(expr: "request.time")
+  updatedAt: Timestamp @default(expr: "request.time")
 }
 
 type NewsArticle @table {

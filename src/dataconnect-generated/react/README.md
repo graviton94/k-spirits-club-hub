@@ -35,7 +35,8 @@ You can also follow the instructions from the [Data Connect documentation](https
   - [*listSpiritReviews*](#listspiritreviews)
   - [*getSpiritReviewsCount*](#getspiritreviewscount)
   - [*findReview*](#findreview)
-  - [*getReview*](#getreview)
+  - [*getReviewDetail*](#getreviewdetail)
+  - [*listReviewComments*](#listreviewcomments)
   - [*listSpiritsForSitemap*](#listspiritsforsitemap)
   - [*getWorldCupResult*](#getworldcupresult)
   - [*listSpiritsForWorldCup*](#listspiritsforworldcup)
@@ -50,7 +51,11 @@ You can also follow the instructions from the [Data Connect documentation](https
   - [*upsertSpirit*](#upsertspirit)
   - [*upsertNewArrival*](#upsertnewarrival)
   - [*upsertReview*](#upsertreview)
-  - [*updateReview*](#updatereview)
+  - [*updateReviewLikesCount*](#updatereviewlikescount)
+  - [*upsertReviewLike*](#upsertreviewlike)
+  - [*deleteReviewLike*](#deletereviewlike)
+  - [*upsertReviewComment*](#upsertreviewcomment)
+  - [*deleteReviewComment*](#deletereviewcomment)
   - [*upsertNews*](#upsertnews)
   - [*deleteNews*](#deletenews)
   - [*upsertCabinet*](#upsertcabinet)
@@ -795,7 +800,7 @@ export interface GetSpiritData {
       nose?: string | null;
       palate?: string | null;
       finish?: string | null;
-      likedBy?: string[] | null;
+      likes?: number | null;
       imageUrls?: string[] | null;
       createdAt: TimestampString;
       updatedAt: TimestampString;
@@ -1772,7 +1777,6 @@ To access the data returned by a Query, use the `UseQueryResult.data` field. The
 export interface FindReviewData {
   spiritReviews: ({
     id: UUIDString;
-    likedBy?: string[] | null;
     likes?: number | null;
   } & SpiritReview_Key)[];
 }
@@ -1830,74 +1834,110 @@ export default function FindReviewComponent() {
 }
 ```
 
-## getReview
-You can execute the `getReview` Query using the following Query hook function, which is defined in [dataconnect-generated/react/index.d.ts](./index.d.ts):
+## getReviewDetail
+You can execute the `getReviewDetail` Query using the following Query hook function, which is defined in [dataconnect-generated/react/index.d.ts](./index.d.ts):
 
 ```javascript
-useGetReview(dc: DataConnect, vars: GetReviewVariables, options?: useDataConnectQueryOptions<GetReviewData>): UseDataConnectQueryResult<GetReviewData, GetReviewVariables>;
+useGetReviewDetail(dc: DataConnect, vars: GetReviewDetailVariables, options?: useDataConnectQueryOptions<GetReviewDetailData>): UseDataConnectQueryResult<GetReviewDetailData, GetReviewDetailVariables>;
 ```
 You can also pass in a `DataConnect` instance to the Query hook function.
 ```javascript
-useGetReview(vars: GetReviewVariables, options?: useDataConnectQueryOptions<GetReviewData>): UseDataConnectQueryResult<GetReviewData, GetReviewVariables>;
+useGetReviewDetail(vars: GetReviewDetailVariables, options?: useDataConnectQueryOptions<GetReviewDetailData>): UseDataConnectQueryResult<GetReviewDetailData, GetReviewDetailVariables>;
 ```
 
 ### Variables
-The `getReview` Query requires an argument of type `GetReviewVariables`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+The `getReviewDetail` Query requires an argument of type `GetReviewDetailVariables`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
 
 ```javascript
-export interface GetReviewVariables {
+export interface GetReviewDetailVariables {
   id: UUIDString;
+  currentUserId?: string | null;
 }
 ```
 ### Return Type
-Recall that calling the `getReview` Query hook function returns a `UseQueryResult` object. This object holds the state of your Query, including whether the Query is loading, has completed, or has succeeded/failed, and any data returned by the Query, among other things.
+Recall that calling the `getReviewDetail` Query hook function returns a `UseQueryResult` object. This object holds the state of your Query, including whether the Query is loading, has completed, or has succeeded/failed, and any data returned by the Query, among other things.
 
 To check the status of a Query, use the `UseQueryResult.status` field. You can also check for pending / success / error status using the `UseQueryResult.isPending`, `UseQueryResult.isSuccess`, and `UseQueryResult.isError` fields.
 
-To access the data returned by a Query, use the `UseQueryResult.data` field. The data for the `getReview` Query is of type `GetReviewData`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+To access the data returned by a Query, use the `UseQueryResult.data` field. The data for the `getReviewDetail` Query is of type `GetReviewDetailData`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
 ```javascript
-export interface GetReviewData {
+export interface GetReviewDetailData {
   spiritReview?: {
     id: UUIDString;
-    likedBy?: string[] | null;
+    rating: number;
+    title?: string | null;
+    content: string;
+    nose?: string | null;
+    palate?: string | null;
+    finish?: string | null;
     likes?: number | null;
+    imageUrls?: string[] | null;
+    createdAt: TimestampString;
+    spirit: {
+      id: string;
+      name: string;
+      nameEn?: string | null;
+      imageUrl: string;
+      category: string;
+      distillery?: string | null;
+      abv?: number | null;
+    } & Spirit_Key;
+      user: {
+        id: string;
+        nickname?: string | null;
+        profileImage?: string | null;
+      } & User_Key;
+        comments: ({
+          id: UUIDString;
+          content?: string | null;
+          createdAt?: TimestampString | null;
+          user: {
+            id: string;
+            nickname?: string | null;
+            profileImage?: string | null;
+          } & User_Key;
+        } & ReviewComment_Key)[];
+          userLike: ({
+            userId: string;
+          })[];
   } & SpiritReview_Key;
 }
 ```
 
 To learn more about the `UseQueryResult` object, see the [TanStack React Query documentation](https://tanstack.com/query/v5/docs/framework/react/reference/useQuery).
 
-### Using `getReview`'s Query hook function
+### Using `getReviewDetail`'s Query hook function
 
 ```javascript
 import { getDataConnect } from 'firebase/data-connect';
-import { connectorConfig, GetReviewVariables } from '@dataconnect/generated';
-import { useGetReview } from '@dataconnect/generated/react'
+import { connectorConfig, GetReviewDetailVariables } from '@dataconnect/generated';
+import { useGetReviewDetail } from '@dataconnect/generated/react'
 
-export default function GetReviewComponent() {
-  // The `useGetReview` Query hook requires an argument of type `GetReviewVariables`:
-  const getReviewVars: GetReviewVariables = {
+export default function GetReviewDetailComponent() {
+  // The `useGetReviewDetail` Query hook requires an argument of type `GetReviewDetailVariables`:
+  const getReviewDetailVars: GetReviewDetailVariables = {
     id: ..., 
+    currentUserId: ..., // optional
   };
 
   // You don't have to do anything to "execute" the Query.
   // Call the Query hook function to get a `UseQueryResult` object which holds the state of your Query.
-  const query = useGetReview(getReviewVars);
+  const query = useGetReviewDetail(getReviewDetailVars);
   // Variables can be defined inline as well.
-  const query = useGetReview({ id: ..., });
+  const query = useGetReviewDetail({ id: ..., currentUserId: ..., });
 
   // You can also pass in a `DataConnect` instance to the Query hook function.
   const dataConnect = getDataConnect(connectorConfig);
-  const query = useGetReview(dataConnect, getReviewVars);
+  const query = useGetReviewDetail(dataConnect, getReviewDetailVars);
 
   // You can also pass in a `useDataConnectQueryOptions` object to the Query hook function.
   const options = { staleTime: 5 * 1000 };
-  const query = useGetReview(getReviewVars, options);
+  const query = useGetReviewDetail(getReviewDetailVars, options);
 
   // You can also pass both a `DataConnect` instance and a `useDataConnectQueryOptions` object.
   const dataConnect = getDataConnect(connectorConfig);
   const options = { staleTime: 5 * 1000 };
-  const query = useGetReview(dataConnect, getReviewVars, options);
+  const query = useGetReviewDetail(dataConnect, getReviewDetailVars, options);
 
   // Then, you can render your component dynamically based on the status of the Query.
   if (query.isPending) {
@@ -1911,6 +1951,97 @@ export default function GetReviewComponent() {
   // If the Query is successful, you can access the data returned using the `UseQueryResult.data` field.
   if (query.isSuccess) {
     console.log(query.data.spiritReview);
+  }
+  return <div>Query execution {query.isSuccess ? 'successful' : 'failed'}!</div>;
+}
+```
+
+## listReviewComments
+You can execute the `listReviewComments` Query using the following Query hook function, which is defined in [dataconnect-generated/react/index.d.ts](./index.d.ts):
+
+```javascript
+useListReviewComments(dc: DataConnect, vars: ListReviewCommentsVariables, options?: useDataConnectQueryOptions<ListReviewCommentsData>): UseDataConnectQueryResult<ListReviewCommentsData, ListReviewCommentsVariables>;
+```
+You can also pass in a `DataConnect` instance to the Query hook function.
+```javascript
+useListReviewComments(vars: ListReviewCommentsVariables, options?: useDataConnectQueryOptions<ListReviewCommentsData>): UseDataConnectQueryResult<ListReviewCommentsData, ListReviewCommentsVariables>;
+```
+
+### Variables
+The `listReviewComments` Query requires an argument of type `ListReviewCommentsVariables`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+
+```javascript
+export interface ListReviewCommentsVariables {
+  reviewId: UUIDString;
+}
+```
+### Return Type
+Recall that calling the `listReviewComments` Query hook function returns a `UseQueryResult` object. This object holds the state of your Query, including whether the Query is loading, has completed, or has succeeded/failed, and any data returned by the Query, among other things.
+
+To check the status of a Query, use the `UseQueryResult.status` field. You can also check for pending / success / error status using the `UseQueryResult.isPending`, `UseQueryResult.isSuccess`, and `UseQueryResult.isError` fields.
+
+To access the data returned by a Query, use the `UseQueryResult.data` field. The data for the `listReviewComments` Query is of type `ListReviewCommentsData`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+```javascript
+export interface ListReviewCommentsData {
+  reviewComments: ({
+    id: UUIDString;
+    content?: string | null;
+    createdAt?: TimestampString | null;
+    user: {
+      id: string;
+      nickname?: string | null;
+      profileImage?: string | null;
+    } & User_Key;
+  } & ReviewComment_Key)[];
+}
+```
+
+To learn more about the `UseQueryResult` object, see the [TanStack React Query documentation](https://tanstack.com/query/v5/docs/framework/react/reference/useQuery).
+
+### Using `listReviewComments`'s Query hook function
+
+```javascript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, ListReviewCommentsVariables } from '@dataconnect/generated';
+import { useListReviewComments } from '@dataconnect/generated/react'
+
+export default function ListReviewCommentsComponent() {
+  // The `useListReviewComments` Query hook requires an argument of type `ListReviewCommentsVariables`:
+  const listReviewCommentsVars: ListReviewCommentsVariables = {
+    reviewId: ..., 
+  };
+
+  // You don't have to do anything to "execute" the Query.
+  // Call the Query hook function to get a `UseQueryResult` object which holds the state of your Query.
+  const query = useListReviewComments(listReviewCommentsVars);
+  // Variables can be defined inline as well.
+  const query = useListReviewComments({ reviewId: ..., });
+
+  // You can also pass in a `DataConnect` instance to the Query hook function.
+  const dataConnect = getDataConnect(connectorConfig);
+  const query = useListReviewComments(dataConnect, listReviewCommentsVars);
+
+  // You can also pass in a `useDataConnectQueryOptions` object to the Query hook function.
+  const options = { staleTime: 5 * 1000 };
+  const query = useListReviewComments(listReviewCommentsVars, options);
+
+  // You can also pass both a `DataConnect` instance and a `useDataConnectQueryOptions` object.
+  const dataConnect = getDataConnect(connectorConfig);
+  const options = { staleTime: 5 * 1000 };
+  const query = useListReviewComments(dataConnect, listReviewCommentsVars, options);
+
+  // Then, you can render your component dynamically based on the status of the Query.
+  if (query.isPending) {
+    return <div>Loading...</div>;
+  }
+
+  if (query.isError) {
+    return <div>Error: {query.error.message}</div>;
+  }
+
+  // If the Query is successful, you can access the data returned using the `UseQueryResult.data` field.
+  if (query.isSuccess) {
+    console.log(query.data.reviewComments);
   }
   return <div>Query execution {query.isSuccess ? 'successful' : 'failed'}!</div>;
 }
@@ -3180,7 +3311,6 @@ export interface UpsertReviewVariables {
   palate?: string | null;
   finish?: string | null;
   likes?: number | null;
-  likedBy?: string[] | null;
   isPublished?: boolean | null;
   imageUrls?: string[] | null;
   createdAt?: TimestampString | null;
@@ -3244,7 +3374,6 @@ export default function UpsertReviewComponent() {
     palate: ..., // optional
     finish: ..., // optional
     likes: ..., // optional
-    likedBy: ..., // optional
     isPublished: ..., // optional
     imageUrls: ..., // optional
     createdAt: ..., // optional
@@ -3252,7 +3381,7 @@ export default function UpsertReviewComponent() {
   };
   mutation.mutate(upsertReviewVars);
   // Variables can be defined inline as well.
-  mutation.mutate({ id: ..., spiritId: ..., userId: ..., rating: ..., title: ..., content: ..., nose: ..., palate: ..., finish: ..., likes: ..., likedBy: ..., isPublished: ..., imageUrls: ..., createdAt: ..., updatedAt: ..., });
+  mutation.mutate({ id: ..., spiritId: ..., userId: ..., rating: ..., title: ..., content: ..., nose: ..., palate: ..., finish: ..., likes: ..., isPublished: ..., imageUrls: ..., createdAt: ..., updatedAt: ..., });
 
   // You can also pass in a `useDataConnectMutationOptions` object to `UseMutationResult.mutate()`.
   const options = {
@@ -3277,86 +3406,84 @@ export default function UpsertReviewComponent() {
 }
 ```
 
-## updateReview
-You can execute the `updateReview` Mutation using the `UseMutationResult` object returned by the following Mutation hook function (which is defined in [dataconnect-generated/react/index.d.ts](./index.d.ts)):
+## updateReviewLikesCount
+You can execute the `updateReviewLikesCount` Mutation using the `UseMutationResult` object returned by the following Mutation hook function (which is defined in [dataconnect-generated/react/index.d.ts](./index.d.ts)):
 ```javascript
-useUpdateReview(options?: useDataConnectMutationOptions<UpdateReviewData, FirebaseError, UpdateReviewVariables>): UseDataConnectMutationResult<UpdateReviewData, UpdateReviewVariables>;
+useUpdateReviewLikesCount(options?: useDataConnectMutationOptions<UpdateReviewLikesCountData, FirebaseError, UpdateReviewLikesCountVariables>): UseDataConnectMutationResult<UpdateReviewLikesCountData, UpdateReviewLikesCountVariables>;
 ```
 You can also pass in a `DataConnect` instance to the Mutation hook function.
 ```javascript
-useUpdateReview(dc: DataConnect, options?: useDataConnectMutationOptions<UpdateReviewData, FirebaseError, UpdateReviewVariables>): UseDataConnectMutationResult<UpdateReviewData, UpdateReviewVariables>;
+useUpdateReviewLikesCount(dc: DataConnect, options?: useDataConnectMutationOptions<UpdateReviewLikesCountData, FirebaseError, UpdateReviewLikesCountVariables>): UseDataConnectMutationResult<UpdateReviewLikesCountData, UpdateReviewLikesCountVariables>;
 ```
 
 ### Variables
-The `updateReview` Mutation requires an argument of type `UpdateReviewVariables`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+The `updateReviewLikesCount` Mutation requires an argument of type `UpdateReviewLikesCountVariables`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
 
 ```javascript
-export interface UpdateReviewVariables {
+export interface UpdateReviewLikesCountVariables {
   id: UUIDString;
   likes?: number | null;
-  likedBy?: string[] | null;
 }
 ```
 ### Return Type
-Recall that calling the `updateReview` Mutation hook function returns a `UseMutationResult` object. This object holds the state of your Mutation, including whether the Mutation is loading, has completed, or has succeeded/failed, among other things.
+Recall that calling the `updateReviewLikesCount` Mutation hook function returns a `UseMutationResult` object. This object holds the state of your Mutation, including whether the Mutation is loading, has completed, or has succeeded/failed, among other things.
 
 To check the status of a Mutation, use the `UseMutationResult.status` field. You can also check for pending / success / error status using the `UseMutationResult.isPending`, `UseMutationResult.isSuccess`, and `UseMutationResult.isError` fields.
 
 To execute the Mutation, call `UseMutationResult.mutate()`. This function executes the Mutation, but does not return the data from the Mutation.
 
-To access the data returned by a Mutation, use the `UseMutationResult.data` field. The data for the `updateReview` Mutation is of type `UpdateReviewData`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+To access the data returned by a Mutation, use the `UseMutationResult.data` field. The data for the `updateReviewLikesCount` Mutation is of type `UpdateReviewLikesCountData`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
 ```javascript
-export interface UpdateReviewData {
+export interface UpdateReviewLikesCountData {
   spiritReview_update?: SpiritReview_Key | null;
 }
 ```
 
 To learn more about the `UseMutationResult` object, see the [TanStack React Query documentation](https://tanstack.com/query/v5/docs/framework/react/reference/useMutation).
 
-### Using `updateReview`'s Mutation hook function
+### Using `updateReviewLikesCount`'s Mutation hook function
 
 ```javascript
 import { getDataConnect } from 'firebase/data-connect';
-import { connectorConfig, UpdateReviewVariables } from '@dataconnect/generated';
-import { useUpdateReview } from '@dataconnect/generated/react'
+import { connectorConfig, UpdateReviewLikesCountVariables } from '@dataconnect/generated';
+import { useUpdateReviewLikesCount } from '@dataconnect/generated/react'
 
-export default function UpdateReviewComponent() {
+export default function UpdateReviewLikesCountComponent() {
   // Call the Mutation hook function to get a `UseMutationResult` object which holds the state of your Mutation.
-  const mutation = useUpdateReview();
+  const mutation = useUpdateReviewLikesCount();
 
   // You can also pass in a `DataConnect` instance to the Mutation hook function.
   const dataConnect = getDataConnect(connectorConfig);
-  const mutation = useUpdateReview(dataConnect);
+  const mutation = useUpdateReviewLikesCount(dataConnect);
 
   // You can also pass in a `useDataConnectMutationOptions` object to the Mutation hook function.
   const options = {
     onSuccess: () => { console.log('Mutation succeeded!'); }
   };
-  const mutation = useUpdateReview(options);
+  const mutation = useUpdateReviewLikesCount(options);
 
   // You can also pass both a `DataConnect` instance and a `useDataConnectMutationOptions` object.
   const dataConnect = getDataConnect(connectorConfig);
   const options = {
     onSuccess: () => { console.log('Mutation succeeded!'); }
   };
-  const mutation = useUpdateReview(dataConnect, options);
+  const mutation = useUpdateReviewLikesCount(dataConnect, options);
 
   // After calling the Mutation hook function, you must call `UseMutationResult.mutate()` to execute the Mutation.
-  // The `useUpdateReview` Mutation requires an argument of type `UpdateReviewVariables`:
-  const updateReviewVars: UpdateReviewVariables = {
+  // The `useUpdateReviewLikesCount` Mutation requires an argument of type `UpdateReviewLikesCountVariables`:
+  const updateReviewLikesCountVars: UpdateReviewLikesCountVariables = {
     id: ..., 
     likes: ..., // optional
-    likedBy: ..., // optional
   };
-  mutation.mutate(updateReviewVars);
+  mutation.mutate(updateReviewLikesCountVars);
   // Variables can be defined inline as well.
-  mutation.mutate({ id: ..., likes: ..., likedBy: ..., });
+  mutation.mutate({ id: ..., likes: ..., });
 
   // You can also pass in a `useDataConnectMutationOptions` object to `UseMutationResult.mutate()`.
   const options = {
     onSuccess: () => { console.log('Mutation succeeded!'); }
   };
-  mutation.mutate(updateReviewVars, options);
+  mutation.mutate(updateReviewLikesCountVars, options);
 
   // Then, you can render your component dynamically based on the status of the Mutation.
   if (mutation.isPending) {
@@ -3370,6 +3497,394 @@ export default function UpdateReviewComponent() {
   // If the Mutation is successful, you can access the data returned using the `UseMutationResult.data` field.
   if (mutation.isSuccess) {
     console.log(mutation.data.spiritReview_update);
+  }
+  return <div>Mutation execution {mutation.isSuccess ? 'successful' : 'failed'}!</div>;
+}
+```
+
+## upsertReviewLike
+You can execute the `upsertReviewLike` Mutation using the `UseMutationResult` object returned by the following Mutation hook function (which is defined in [dataconnect-generated/react/index.d.ts](./index.d.ts)):
+```javascript
+useUpsertReviewLike(options?: useDataConnectMutationOptions<UpsertReviewLikeData, FirebaseError, UpsertReviewLikeVariables>): UseDataConnectMutationResult<UpsertReviewLikeData, UpsertReviewLikeVariables>;
+```
+You can also pass in a `DataConnect` instance to the Mutation hook function.
+```javascript
+useUpsertReviewLike(dc: DataConnect, options?: useDataConnectMutationOptions<UpsertReviewLikeData, FirebaseError, UpsertReviewLikeVariables>): UseDataConnectMutationResult<UpsertReviewLikeData, UpsertReviewLikeVariables>;
+```
+
+### Variables
+The `upsertReviewLike` Mutation requires an argument of type `UpsertReviewLikeVariables`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+
+```javascript
+export interface UpsertReviewLikeVariables {
+  userId: string;
+  reviewId: UUIDString;
+}
+```
+### Return Type
+Recall that calling the `upsertReviewLike` Mutation hook function returns a `UseMutationResult` object. This object holds the state of your Mutation, including whether the Mutation is loading, has completed, or has succeeded/failed, among other things.
+
+To check the status of a Mutation, use the `UseMutationResult.status` field. You can also check for pending / success / error status using the `UseMutationResult.isPending`, `UseMutationResult.isSuccess`, and `UseMutationResult.isError` fields.
+
+To execute the Mutation, call `UseMutationResult.mutate()`. This function executes the Mutation, but does not return the data from the Mutation.
+
+To access the data returned by a Mutation, use the `UseMutationResult.data` field. The data for the `upsertReviewLike` Mutation is of type `UpsertReviewLikeData`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+```javascript
+export interface UpsertReviewLikeData {
+  reviewLike_upsert: ReviewLike_Key;
+}
+```
+
+To learn more about the `UseMutationResult` object, see the [TanStack React Query documentation](https://tanstack.com/query/v5/docs/framework/react/reference/useMutation).
+
+### Using `upsertReviewLike`'s Mutation hook function
+
+```javascript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, UpsertReviewLikeVariables } from '@dataconnect/generated';
+import { useUpsertReviewLike } from '@dataconnect/generated/react'
+
+export default function UpsertReviewLikeComponent() {
+  // Call the Mutation hook function to get a `UseMutationResult` object which holds the state of your Mutation.
+  const mutation = useUpsertReviewLike();
+
+  // You can also pass in a `DataConnect` instance to the Mutation hook function.
+  const dataConnect = getDataConnect(connectorConfig);
+  const mutation = useUpsertReviewLike(dataConnect);
+
+  // You can also pass in a `useDataConnectMutationOptions` object to the Mutation hook function.
+  const options = {
+    onSuccess: () => { console.log('Mutation succeeded!'); }
+  };
+  const mutation = useUpsertReviewLike(options);
+
+  // You can also pass both a `DataConnect` instance and a `useDataConnectMutationOptions` object.
+  const dataConnect = getDataConnect(connectorConfig);
+  const options = {
+    onSuccess: () => { console.log('Mutation succeeded!'); }
+  };
+  const mutation = useUpsertReviewLike(dataConnect, options);
+
+  // After calling the Mutation hook function, you must call `UseMutationResult.mutate()` to execute the Mutation.
+  // The `useUpsertReviewLike` Mutation requires an argument of type `UpsertReviewLikeVariables`:
+  const upsertReviewLikeVars: UpsertReviewLikeVariables = {
+    userId: ..., 
+    reviewId: ..., 
+  };
+  mutation.mutate(upsertReviewLikeVars);
+  // Variables can be defined inline as well.
+  mutation.mutate({ userId: ..., reviewId: ..., });
+
+  // You can also pass in a `useDataConnectMutationOptions` object to `UseMutationResult.mutate()`.
+  const options = {
+    onSuccess: () => { console.log('Mutation succeeded!'); }
+  };
+  mutation.mutate(upsertReviewLikeVars, options);
+
+  // Then, you can render your component dynamically based on the status of the Mutation.
+  if (mutation.isPending) {
+    return <div>Loading...</div>;
+  }
+
+  if (mutation.isError) {
+    return <div>Error: {mutation.error.message}</div>;
+  }
+
+  // If the Mutation is successful, you can access the data returned using the `UseMutationResult.data` field.
+  if (mutation.isSuccess) {
+    console.log(mutation.data.reviewLike_upsert);
+  }
+  return <div>Mutation execution {mutation.isSuccess ? 'successful' : 'failed'}!</div>;
+}
+```
+
+## deleteReviewLike
+You can execute the `deleteReviewLike` Mutation using the `UseMutationResult` object returned by the following Mutation hook function (which is defined in [dataconnect-generated/react/index.d.ts](./index.d.ts)):
+```javascript
+useDeleteReviewLike(options?: useDataConnectMutationOptions<DeleteReviewLikeData, FirebaseError, DeleteReviewLikeVariables>): UseDataConnectMutationResult<DeleteReviewLikeData, DeleteReviewLikeVariables>;
+```
+You can also pass in a `DataConnect` instance to the Mutation hook function.
+```javascript
+useDeleteReviewLike(dc: DataConnect, options?: useDataConnectMutationOptions<DeleteReviewLikeData, FirebaseError, DeleteReviewLikeVariables>): UseDataConnectMutationResult<DeleteReviewLikeData, DeleteReviewLikeVariables>;
+```
+
+### Variables
+The `deleteReviewLike` Mutation requires an argument of type `DeleteReviewLikeVariables`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+
+```javascript
+export interface DeleteReviewLikeVariables {
+  userId: string;
+  reviewId: UUIDString;
+}
+```
+### Return Type
+Recall that calling the `deleteReviewLike` Mutation hook function returns a `UseMutationResult` object. This object holds the state of your Mutation, including whether the Mutation is loading, has completed, or has succeeded/failed, among other things.
+
+To check the status of a Mutation, use the `UseMutationResult.status` field. You can also check for pending / success / error status using the `UseMutationResult.isPending`, `UseMutationResult.isSuccess`, and `UseMutationResult.isError` fields.
+
+To execute the Mutation, call `UseMutationResult.mutate()`. This function executes the Mutation, but does not return the data from the Mutation.
+
+To access the data returned by a Mutation, use the `UseMutationResult.data` field. The data for the `deleteReviewLike` Mutation is of type `DeleteReviewLikeData`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+```javascript
+export interface DeleteReviewLikeData {
+  reviewLike_delete?: ReviewLike_Key | null;
+}
+```
+
+To learn more about the `UseMutationResult` object, see the [TanStack React Query documentation](https://tanstack.com/query/v5/docs/framework/react/reference/useMutation).
+
+### Using `deleteReviewLike`'s Mutation hook function
+
+```javascript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, DeleteReviewLikeVariables } from '@dataconnect/generated';
+import { useDeleteReviewLike } from '@dataconnect/generated/react'
+
+export default function DeleteReviewLikeComponent() {
+  // Call the Mutation hook function to get a `UseMutationResult` object which holds the state of your Mutation.
+  const mutation = useDeleteReviewLike();
+
+  // You can also pass in a `DataConnect` instance to the Mutation hook function.
+  const dataConnect = getDataConnect(connectorConfig);
+  const mutation = useDeleteReviewLike(dataConnect);
+
+  // You can also pass in a `useDataConnectMutationOptions` object to the Mutation hook function.
+  const options = {
+    onSuccess: () => { console.log('Mutation succeeded!'); }
+  };
+  const mutation = useDeleteReviewLike(options);
+
+  // You can also pass both a `DataConnect` instance and a `useDataConnectMutationOptions` object.
+  const dataConnect = getDataConnect(connectorConfig);
+  const options = {
+    onSuccess: () => { console.log('Mutation succeeded!'); }
+  };
+  const mutation = useDeleteReviewLike(dataConnect, options);
+
+  // After calling the Mutation hook function, you must call `UseMutationResult.mutate()` to execute the Mutation.
+  // The `useDeleteReviewLike` Mutation requires an argument of type `DeleteReviewLikeVariables`:
+  const deleteReviewLikeVars: DeleteReviewLikeVariables = {
+    userId: ..., 
+    reviewId: ..., 
+  };
+  mutation.mutate(deleteReviewLikeVars);
+  // Variables can be defined inline as well.
+  mutation.mutate({ userId: ..., reviewId: ..., });
+
+  // You can also pass in a `useDataConnectMutationOptions` object to `UseMutationResult.mutate()`.
+  const options = {
+    onSuccess: () => { console.log('Mutation succeeded!'); }
+  };
+  mutation.mutate(deleteReviewLikeVars, options);
+
+  // Then, you can render your component dynamically based on the status of the Mutation.
+  if (mutation.isPending) {
+    return <div>Loading...</div>;
+  }
+
+  if (mutation.isError) {
+    return <div>Error: {mutation.error.message}</div>;
+  }
+
+  // If the Mutation is successful, you can access the data returned using the `UseMutationResult.data` field.
+  if (mutation.isSuccess) {
+    console.log(mutation.data.reviewLike_delete);
+  }
+  return <div>Mutation execution {mutation.isSuccess ? 'successful' : 'failed'}!</div>;
+}
+```
+
+## upsertReviewComment
+You can execute the `upsertReviewComment` Mutation using the `UseMutationResult` object returned by the following Mutation hook function (which is defined in [dataconnect-generated/react/index.d.ts](./index.d.ts)):
+```javascript
+useUpsertReviewComment(options?: useDataConnectMutationOptions<UpsertReviewCommentData, FirebaseError, UpsertReviewCommentVariables>): UseDataConnectMutationResult<UpsertReviewCommentData, UpsertReviewCommentVariables>;
+```
+You can also pass in a `DataConnect` instance to the Mutation hook function.
+```javascript
+useUpsertReviewComment(dc: DataConnect, options?: useDataConnectMutationOptions<UpsertReviewCommentData, FirebaseError, UpsertReviewCommentVariables>): UseDataConnectMutationResult<UpsertReviewCommentData, UpsertReviewCommentVariables>;
+```
+
+### Variables
+The `upsertReviewComment` Mutation requires an argument of type `UpsertReviewCommentVariables`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+
+```javascript
+export interface UpsertReviewCommentVariables {
+  id: UUIDString;
+  reviewId: UUIDString;
+  userId: string;
+  content: string;
+  updatedAt?: TimestampString | null;
+}
+```
+### Return Type
+Recall that calling the `upsertReviewComment` Mutation hook function returns a `UseMutationResult` object. This object holds the state of your Mutation, including whether the Mutation is loading, has completed, or has succeeded/failed, among other things.
+
+To check the status of a Mutation, use the `UseMutationResult.status` field. You can also check for pending / success / error status using the `UseMutationResult.isPending`, `UseMutationResult.isSuccess`, and `UseMutationResult.isError` fields.
+
+To execute the Mutation, call `UseMutationResult.mutate()`. This function executes the Mutation, but does not return the data from the Mutation.
+
+To access the data returned by a Mutation, use the `UseMutationResult.data` field. The data for the `upsertReviewComment` Mutation is of type `UpsertReviewCommentData`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+```javascript
+export interface UpsertReviewCommentData {
+  reviewComment_upsert: ReviewComment_Key;
+}
+```
+
+To learn more about the `UseMutationResult` object, see the [TanStack React Query documentation](https://tanstack.com/query/v5/docs/framework/react/reference/useMutation).
+
+### Using `upsertReviewComment`'s Mutation hook function
+
+```javascript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, UpsertReviewCommentVariables } from '@dataconnect/generated';
+import { useUpsertReviewComment } from '@dataconnect/generated/react'
+
+export default function UpsertReviewCommentComponent() {
+  // Call the Mutation hook function to get a `UseMutationResult` object which holds the state of your Mutation.
+  const mutation = useUpsertReviewComment();
+
+  // You can also pass in a `DataConnect` instance to the Mutation hook function.
+  const dataConnect = getDataConnect(connectorConfig);
+  const mutation = useUpsertReviewComment(dataConnect);
+
+  // You can also pass in a `useDataConnectMutationOptions` object to the Mutation hook function.
+  const options = {
+    onSuccess: () => { console.log('Mutation succeeded!'); }
+  };
+  const mutation = useUpsertReviewComment(options);
+
+  // You can also pass both a `DataConnect` instance and a `useDataConnectMutationOptions` object.
+  const dataConnect = getDataConnect(connectorConfig);
+  const options = {
+    onSuccess: () => { console.log('Mutation succeeded!'); }
+  };
+  const mutation = useUpsertReviewComment(dataConnect, options);
+
+  // After calling the Mutation hook function, you must call `UseMutationResult.mutate()` to execute the Mutation.
+  // The `useUpsertReviewComment` Mutation requires an argument of type `UpsertReviewCommentVariables`:
+  const upsertReviewCommentVars: UpsertReviewCommentVariables = {
+    id: ..., 
+    reviewId: ..., 
+    userId: ..., 
+    content: ..., 
+    updatedAt: ..., // optional
+  };
+  mutation.mutate(upsertReviewCommentVars);
+  // Variables can be defined inline as well.
+  mutation.mutate({ id: ..., reviewId: ..., userId: ..., content: ..., updatedAt: ..., });
+
+  // You can also pass in a `useDataConnectMutationOptions` object to `UseMutationResult.mutate()`.
+  const options = {
+    onSuccess: () => { console.log('Mutation succeeded!'); }
+  };
+  mutation.mutate(upsertReviewCommentVars, options);
+
+  // Then, you can render your component dynamically based on the status of the Mutation.
+  if (mutation.isPending) {
+    return <div>Loading...</div>;
+  }
+
+  if (mutation.isError) {
+    return <div>Error: {mutation.error.message}</div>;
+  }
+
+  // If the Mutation is successful, you can access the data returned using the `UseMutationResult.data` field.
+  if (mutation.isSuccess) {
+    console.log(mutation.data.reviewComment_upsert);
+  }
+  return <div>Mutation execution {mutation.isSuccess ? 'successful' : 'failed'}!</div>;
+}
+```
+
+## deleteReviewComment
+You can execute the `deleteReviewComment` Mutation using the `UseMutationResult` object returned by the following Mutation hook function (which is defined in [dataconnect-generated/react/index.d.ts](./index.d.ts)):
+```javascript
+useDeleteReviewComment(options?: useDataConnectMutationOptions<DeleteReviewCommentData, FirebaseError, DeleteReviewCommentVariables>): UseDataConnectMutationResult<DeleteReviewCommentData, DeleteReviewCommentVariables>;
+```
+You can also pass in a `DataConnect` instance to the Mutation hook function.
+```javascript
+useDeleteReviewComment(dc: DataConnect, options?: useDataConnectMutationOptions<DeleteReviewCommentData, FirebaseError, DeleteReviewCommentVariables>): UseDataConnectMutationResult<DeleteReviewCommentData, DeleteReviewCommentVariables>;
+```
+
+### Variables
+The `deleteReviewComment` Mutation requires an argument of type `DeleteReviewCommentVariables`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+
+```javascript
+export interface DeleteReviewCommentVariables {
+  id: UUIDString;
+}
+```
+### Return Type
+Recall that calling the `deleteReviewComment` Mutation hook function returns a `UseMutationResult` object. This object holds the state of your Mutation, including whether the Mutation is loading, has completed, or has succeeded/failed, among other things.
+
+To check the status of a Mutation, use the `UseMutationResult.status` field. You can also check for pending / success / error status using the `UseMutationResult.isPending`, `UseMutationResult.isSuccess`, and `UseMutationResult.isError` fields.
+
+To execute the Mutation, call `UseMutationResult.mutate()`. This function executes the Mutation, but does not return the data from the Mutation.
+
+To access the data returned by a Mutation, use the `UseMutationResult.data` field. The data for the `deleteReviewComment` Mutation is of type `DeleteReviewCommentData`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+```javascript
+export interface DeleteReviewCommentData {
+  reviewComment_delete?: ReviewComment_Key | null;
+}
+```
+
+To learn more about the `UseMutationResult` object, see the [TanStack React Query documentation](https://tanstack.com/query/v5/docs/framework/react/reference/useMutation).
+
+### Using `deleteReviewComment`'s Mutation hook function
+
+```javascript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, DeleteReviewCommentVariables } from '@dataconnect/generated';
+import { useDeleteReviewComment } from '@dataconnect/generated/react'
+
+export default function DeleteReviewCommentComponent() {
+  // Call the Mutation hook function to get a `UseMutationResult` object which holds the state of your Mutation.
+  const mutation = useDeleteReviewComment();
+
+  // You can also pass in a `DataConnect` instance to the Mutation hook function.
+  const dataConnect = getDataConnect(connectorConfig);
+  const mutation = useDeleteReviewComment(dataConnect);
+
+  // You can also pass in a `useDataConnectMutationOptions` object to the Mutation hook function.
+  const options = {
+    onSuccess: () => { console.log('Mutation succeeded!'); }
+  };
+  const mutation = useDeleteReviewComment(options);
+
+  // You can also pass both a `DataConnect` instance and a `useDataConnectMutationOptions` object.
+  const dataConnect = getDataConnect(connectorConfig);
+  const options = {
+    onSuccess: () => { console.log('Mutation succeeded!'); }
+  };
+  const mutation = useDeleteReviewComment(dataConnect, options);
+
+  // After calling the Mutation hook function, you must call `UseMutationResult.mutate()` to execute the Mutation.
+  // The `useDeleteReviewComment` Mutation requires an argument of type `DeleteReviewCommentVariables`:
+  const deleteReviewCommentVars: DeleteReviewCommentVariables = {
+    id: ..., 
+  };
+  mutation.mutate(deleteReviewCommentVars);
+  // Variables can be defined inline as well.
+  mutation.mutate({ id: ..., });
+
+  // You can also pass in a `useDataConnectMutationOptions` object to `UseMutationResult.mutate()`.
+  const options = {
+    onSuccess: () => { console.log('Mutation succeeded!'); }
+  };
+  mutation.mutate(deleteReviewCommentVars, options);
+
+  // Then, you can render your component dynamically based on the status of the Mutation.
+  if (mutation.isPending) {
+    return <div>Loading...</div>;
+  }
+
+  if (mutation.isError) {
+    return <div>Error: {mutation.error.message}</div>;
+  }
+
+  // If the Mutation is successful, you can access the data returned using the `UseMutationResult.data` field.
+  if (mutation.isSuccess) {
+    console.log(mutation.data.reviewComment_delete);
   }
   return <div>Mutation execution {mutation.isSuccess ? 'successful' : 'failed'}!</div>;
 }

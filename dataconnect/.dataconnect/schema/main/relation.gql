@@ -422,6 +422,139 @@ extend type NewsArticle {
   """
   _id: ID! @fdc_generated(from: "NewsArticle.id", purpose: ENTITY_ID)
 }
+extend type ReviewComment {
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "ReviewComment", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `ReviewComment` table.
+  """
+  _count: Int! @fdc_generated(from: "ReviewComment.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `ReviewComment` table where the `content` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  content_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "ReviewComment.content", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `ReviewComment` table where the `createdAt` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  createdAt_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "ReviewComment.createdAt", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `ReviewComment` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  id_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "ReviewComment.id", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `ReviewComment` table where the `reviewId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  reviewId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "ReviewComment.reviewId", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `ReviewComment` table where the `updatedAt` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  updatedAt_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "ReviewComment.updatedAt", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `ReviewComment` table where the `userId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  userId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "ReviewComment.userId", purpose: QUERY_COUNT)
+  """
+  ✨ Minimum of the `createdAt` field in the `ReviewComment` table.
+  """
+  createdAt_min: Timestamp @fdc_generated(from: "ReviewComment.createdAt", purpose: QUERY_MIN)
+  """
+  ✨ Minimum of the `updatedAt` field in the `ReviewComment` table.
+  """
+  updatedAt_min: Timestamp @fdc_generated(from: "ReviewComment.updatedAt", purpose: QUERY_MIN)
+  """
+  ✨ Maximum of the `createdAt` field in the `ReviewComment` table.
+  """
+  createdAt_max: Timestamp @fdc_generated(from: "ReviewComment.createdAt", purpose: QUERY_MAX)
+  """
+  ✨ Maximum of the `updatedAt` field in the `ReviewComment` table.
+  """
+  updatedAt_max: Timestamp @fdc_generated(from: "ReviewComment.updatedAt", purpose: QUERY_MAX)
+  """
+  A generated field that is used for caching results in SDKs.
+  """
+  _id: ID! @fdc_generated(from: "ReviewComment.id", purpose: ENTITY_ID)
+}
+extend type ReviewLike {
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "ReviewLike", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `ReviewLike` table.
+  """
+  _count: Int! @fdc_generated(from: "ReviewLike.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `ReviewLike` table where the `createdAt` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  createdAt_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "ReviewLike.createdAt", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `ReviewLike` table where the `reviewId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  reviewId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "ReviewLike.reviewId", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `ReviewLike` table where the `userId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  userId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "ReviewLike.userId", purpose: QUERY_COUNT)
+  """
+  ✨ Minimum of the `createdAt` field in the `ReviewLike` table.
+  """
+  createdAt_min: Timestamp @fdc_generated(from: "ReviewLike.createdAt", purpose: QUERY_MIN)
+  """
+  ✨ Maximum of the `createdAt` field in the `ReviewLike` table.
+  """
+  createdAt_max: Timestamp @fdc_generated(from: "ReviewLike.createdAt", purpose: QUERY_MAX)
+  """
+  A generated field that is used for caching results in SDKs.
+  """
+  _id: ID! @fdc_generated(from: "ReviewLike.userId,reviewId", purpose: ENTITY_ID)
+}
 extend type Spirit {
   """
   ✨ List `NewArrival` objects in a one-to-many relationship (where `NewArrival`.`spirit` is this object).
@@ -1032,6 +1165,108 @@ extend type Spirit {
 }
 extend type SpiritReview {
   """
+  ✨ List `ReviewComment` objects in a one-to-many relationship (where `ReviewComment`.`review` is this object).
+  """
+  reviewComments_on_review(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: ReviewComment_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [ReviewComment_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: ReviewComment_Having
+  ): [ReviewComment!]! @fdc_generated(from: "ReviewComment.review", purpose: QUERY_MULTIPLE_ONE_TO_MANY)
+  """
+  ✨ List `ReviewLike` objects in a one-to-many relationship (where `ReviewLike`.`review` is this object).
+  """
+  reviewLikes_on_review(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: ReviewLike_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [ReviewLike_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: ReviewLike_Having
+  ): [ReviewLike!]! @fdc_generated(from: "ReviewLike.review", purpose: QUERY_MULTIPLE_ONE_TO_MANY)
+  """
+  ✨ List `User` objects using `ReviewLike` as the join table (a `ReviewLike` object exists where its `review` is this and its `user` is that).
+  """
+  users_via_ReviewLike(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: ReviewLike_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [ReviewLike_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: ReviewLike_Having
+  ): [User!]! @fdc_generated(from: "ReviewLike", purpose: QUERY_MULTIPLE_MANY_TO_MANY)
+  """
   Implicit metadata field that cannot be written. It provides extra information about query results.
   """
   _metadata: _Metadata @fdc_generated(from: "SpiritReview", purpose: METADATA_FIELD)
@@ -1231,6 +1466,74 @@ extend type SpiritReview {
 }
 extend type User {
   """
+  ✨ List `ReviewComment` objects in a one-to-many relationship (where `ReviewComment`.`user` is this object).
+  """
+  reviewComments_on_user(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: ReviewComment_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [ReviewComment_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: ReviewComment_Having
+  ): [ReviewComment!]! @fdc_generated(from: "ReviewComment.user", purpose: QUERY_MULTIPLE_ONE_TO_MANY)
+  """
+  ✨ List `ReviewLike` objects in a one-to-many relationship (where `ReviewLike`.`user` is this object).
+  """
+  reviewLikes_on_user(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: ReviewLike_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [ReviewLike_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: ReviewLike_Having
+  ): [ReviewLike!]! @fdc_generated(from: "ReviewLike.user", purpose: QUERY_MULTIPLE_ONE_TO_MANY)
+  """
   ✨ List `SpiritReview` objects in a one-to-many relationship (where `SpiritReview`.`user` is this object).
   """
   spiritReviews_on_user(
@@ -1332,6 +1635,40 @@ extend type User {
     """
     having: UserCabinet_Having
   ): [Spirit!]! @fdc_generated(from: "UserCabinet", purpose: QUERY_MULTIPLE_MANY_TO_MANY)
+  """
+  ✨ List `SpiritReview` objects using `ReviewLike` as the join table (a `ReviewLike` object exists where its `user` is this and its `review` is that).
+  """
+  spiritReviews_via_ReviewLike(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: ReviewLike_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [ReviewLike_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: ReviewLike_Having
+  ): [SpiritReview!]! @fdc_generated(from: "ReviewLike", purpose: QUERY_MULTIPLE_MANY_TO_MANY)
   """
   Implicit metadata field that cannot be written. It provides extra information about query results.
   """

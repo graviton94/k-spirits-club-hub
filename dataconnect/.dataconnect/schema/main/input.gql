@@ -23,6 +23,18 @@ It has the same format as `NewsArticle_Key`, but is only used as mutation return
 """
 scalar NewsArticle_KeyOutput
 """
+✨ `ReviewComment_KeyOutput` returns the primary key fields of table type `ReviewComment`.
+
+It has the same format as `ReviewComment_Key`, but is only used as mutation return value.
+"""
+scalar ReviewComment_KeyOutput
+"""
+✨ `ReviewLike_KeyOutput` returns the primary key fields of table type `ReviewLike`.
+
+It has the same format as `ReviewLike_Key`, but is only used as mutation return value.
+"""
+scalar ReviewLike_KeyOutput
+"""
 ✨ `Spirit_KeyOutput` returns the primary key fields of table type `Spirit`.
 
 It has the same format as `Spirit_Key`, but is only used as mutation return value.
@@ -1397,6 +1409,540 @@ input NewsArticle_Order {
   updatedAt_max: OrderDirection
 }
 """
+✨ Generated data input type for table 'ReviewComment'. It includes all necessary fields for creating or upserting rows into table.
+"""
+input ReviewComment_Data {
+  """
+  ✨ Generated from Field `ReviewComment`.`id` of type `UUID!`
+  """
+  id: UUID
+  """
+  ✨ `_expr` server value variant of `id` (✨ Generated from Field `ReviewComment`.`id` of type `UUID!`)
+  """
+  id_expr: UUID_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `ReviewComment`.`reviewId` of type `UUID!`
+  """
+  reviewId: UUID
+  """
+  ✨ `_expr` server value variant of `reviewId` (✨ Generated from Field `ReviewComment`.`reviewId` of type `UUID!`)
+  """
+  reviewId_expr: UUID_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `ReviewComment`.`userId` of type `String!`
+  """
+  userId: String
+  """
+  ✨ `_expr` server value variant of `userId` (✨ Generated from Field `ReviewComment`.`userId` of type `String!`)
+  """
+  userId_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `ReviewComment`.`review` of type `SpiritReview!`
+  """
+  review: SpiritReview_Key @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `ReviewComment`.`user` of type `User!`
+  """
+  user: User_Key @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `ReviewComment`.`content` of type `String`
+  """
+  content: String
+  """
+  ✨ `_expr` server value variant of `content` (✨ Generated from Field `ReviewComment`.`content` of type `String`)
+  """
+  content_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `ReviewComment`.`createdAt` of type `Timestamp`
+  """
+  createdAt: Timestamp
+  """
+  ✨ `_expr` server value variant of `createdAt` (✨ Generated from Field `ReviewComment`.`createdAt` of type `Timestamp`)
+  """
+  createdAt_expr: Timestamp_Expr @fdc_forbiddenInVariables
+  """
+  ✨ `_time` server value variant of `createdAt` (✨ Generated from Field `ReviewComment`.`createdAt` of type `Timestamp`)
+  """
+  createdAt_time: Timestamp_Relative @fdc_forbiddenInVariables
+  """
+  ✨ `_update` server value variant of `createdAt` (✨ Generated from Field `ReviewComment`.`createdAt` of type `Timestamp`)
+  """
+  createdAt_update: [Timestamp_Update!] @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `ReviewComment`.`updatedAt` of type `Timestamp`
+  """
+  updatedAt: Timestamp
+  """
+  ✨ `_expr` server value variant of `updatedAt` (✨ Generated from Field `ReviewComment`.`updatedAt` of type `Timestamp`)
+  """
+  updatedAt_expr: Timestamp_Expr @fdc_forbiddenInVariables
+  """
+  ✨ `_time` server value variant of `updatedAt` (✨ Generated from Field `ReviewComment`.`updatedAt` of type `Timestamp`)
+  """
+  updatedAt_time: Timestamp_Relative @fdc_forbiddenInVariables
+  """
+  ✨ `_update` server value variant of `updatedAt` (✨ Generated from Field `ReviewComment`.`updatedAt` of type `Timestamp`)
+  """
+  updatedAt_update: [Timestamp_Update!] @fdc_forbiddenInVariables
+}
+"""
+✨ Generated filter input type for table 'ReviewComment'. This input allows filtering objects using various conditions. Use `_or`, `_and`, and `_not` to compose complex filters.
+"""
+input ReviewComment_Filter {
+  """
+  Apply multiple filter conditions using `AND` logic.
+  """
+  _and: [ReviewComment_Filter!]
+  """
+  Negate the result of the provided filter condition.
+  """
+  _not: ReviewComment_Filter
+  """
+  Apply multiple filter conditions using `OR` logic.
+  """
+  _or: [ReviewComment_Filter!]
+  """
+  ✨ Generated from Field `ReviewComment`.`id` of type `UUID!`
+  """
+  id: UUID_Filter
+  """
+  ✨ Generated from Field `ReviewComment`.`reviewId` of type `UUID!`
+  """
+  reviewId: UUID_Filter
+  """
+  ✨ Generated from Field `ReviewComment`.`userId` of type `String!`
+  """
+  userId: String_Filter
+  """
+  ✨ Generated from Field `ReviewComment`.`review` of type `SpiritReview!`
+  """
+  review: SpiritReview_Filter
+  """
+  ✨ Generated from Field `ReviewComment`.`user` of type `User!`
+  """
+  user: User_Filter
+  """
+  ✨ Generated from Field `ReviewComment`.`content` of type `String`
+  """
+  content: String_Filter
+  """
+  ✨ Generated from Field `ReviewComment`.`createdAt` of type `Timestamp`
+  """
+  createdAt: Timestamp_Filter
+  """
+  ✨ Generated from Field `ReviewComment`.`updatedAt` of type `Timestamp`
+  """
+  updatedAt: Timestamp_Filter
+}
+"""
+✨ Generated first-row input type for table 'ReviewComment'. This input selects the first row matching the filter criteria, ordered according to the specified conditions.
+"""
+input ReviewComment_FirstRow {
+  """
+  Order the result by the specified fields.
+  """
+  orderBy: [ReviewComment_Order!]
+  """
+  Filters rows based on the specified conditions.
+  """
+  where: ReviewComment_Filter
+}
+"""
+✨ Generated having input type for table 'ReviewComment'. This input allows you to filter groups during aggregate queries using various conditions. Use `_or`, `_and`, and `_not` to compose complex filters.
+"""
+input ReviewComment_Having {
+  """
+  Apply multiple Having conditions using `AND` logic.
+  """
+  _and: [ReviewComment_Having!]
+  """
+  Whether to apply DISTINCT to the aggregate function.
+  """
+  _distinct: Boolean
+  """
+  Negate the result of the provided Having condition.
+  """
+  _not: ReviewComment_Having
+  """
+  Apply multiple Having conditions using `OR` logic.
+  """
+  _or: [ReviewComment_Having!]
+  """
+  ✨ Generated from Field `ReviewComment`.`_count` of type `Int!`
+  """
+  _count: Int_Filter
+  """
+  ✨ Generated from Field `ReviewComment`.`content_count` of type `Int!`
+  """
+  content_count: Int_Filter
+  """
+  ✨ Generated from Field `ReviewComment`.`createdAt_count` of type `Int!`
+  """
+  createdAt_count: Int_Filter
+  """
+  ✨ Generated from Field `ReviewComment`.`id_count` of type `Int!`
+  """
+  id_count: Int_Filter
+  """
+  ✨ Generated from Field `ReviewComment`.`reviewId_count` of type `Int!`
+  """
+  reviewId_count: Int_Filter
+  """
+  ✨ Generated from Field `ReviewComment`.`updatedAt_count` of type `Int!`
+  """
+  updatedAt_count: Int_Filter
+  """
+  ✨ Generated from Field `ReviewComment`.`userId_count` of type `Int!`
+  """
+  userId_count: Int_Filter
+  """
+  ✨ Generated from Field `ReviewComment`.`createdAt_min` of type `Timestamp`
+  """
+  createdAt_min: Timestamp_Filter
+  """
+  ✨ Generated from Field `ReviewComment`.`updatedAt_min` of type `Timestamp`
+  """
+  updatedAt_min: Timestamp_Filter
+  """
+  ✨ Generated from Field `ReviewComment`.`createdAt_max` of type `Timestamp`
+  """
+  createdAt_max: Timestamp_Filter
+  """
+  ✨ Generated from Field `ReviewComment`.`updatedAt_max` of type `Timestamp`
+  """
+  updatedAt_max: Timestamp_Filter
+}
+"""
+✨ Generated key input type for table 'ReviewComment'. It represents the primary key fields used to uniquely identify a row in the table.
+"""
+input ReviewComment_Key {
+  """
+  ✨ Generated from Field `ReviewComment`.`id` of type `UUID!`
+  """
+  id: UUID
+  """
+  ✨ `_expr` server value variant of `id` (✨ Generated from Field `ReviewComment`.`id` of type `UUID!`)
+  """
+  id_expr: UUID_Expr @fdc_forbiddenInVariables
+}
+"""
+✨ Generated list filter input type for table 'ReviewComment'. This input applies filtering logic based on the count or existence of related objects that matches certain criteria.
+"""
+input ReviewComment_ListFilter {
+  """
+  The desired number of objects that match the condition (defaults to at least one).
+  """
+  count: Int_Filter = {gt:0}
+  """
+  Condition of the related objects to filter for.
+  """
+  exist: ReviewComment_Filter
+}
+"""
+✨ Generated order input type for table 'ReviewComment'. This input defines the sorting order of rows in query results based on one or more fields.
+"""
+input ReviewComment_Order {
+  """
+  ✨ Generated from Field `ReviewComment`.`id` of type `UUID!`
+  """
+  id: OrderDirection
+  """
+  ✨ Generated from Field `ReviewComment`.`reviewId` of type `UUID!`
+  """
+  reviewId: OrderDirection
+  """
+  ✨ Generated from Field `ReviewComment`.`userId` of type `String!`
+  """
+  userId: OrderDirection
+  """
+  ✨ Generated from Field `ReviewComment`.`review` of type `SpiritReview!`
+  """
+  review: SpiritReview_Order
+  """
+  ✨ Generated from Field `ReviewComment`.`user` of type `User!`
+  """
+  user: User_Order
+  """
+  ✨ Generated from Field `ReviewComment`.`content` of type `String`
+  """
+  content: OrderDirection
+  """
+  ✨ Generated from Field `ReviewComment`.`createdAt` of type `Timestamp`
+  """
+  createdAt: OrderDirection
+  """
+  ✨ Generated from Field `ReviewComment`.`updatedAt` of type `Timestamp`
+  """
+  updatedAt: OrderDirection
+  """
+  ✨ Generated from Field `ReviewComment`.`_count` of type `Int!`
+  """
+  _count: OrderDirection
+  """
+  ✨ Generated from Field `ReviewComment`.`content_count` of type `Int!`
+  """
+  content_count: OrderDirection
+  """
+  ✨ Generated from Field `ReviewComment`.`createdAt_count` of type `Int!`
+  """
+  createdAt_count: OrderDirection
+  """
+  ✨ Generated from Field `ReviewComment`.`id_count` of type `Int!`
+  """
+  id_count: OrderDirection
+  """
+  ✨ Generated from Field `ReviewComment`.`reviewId_count` of type `Int!`
+  """
+  reviewId_count: OrderDirection
+  """
+  ✨ Generated from Field `ReviewComment`.`updatedAt_count` of type `Int!`
+  """
+  updatedAt_count: OrderDirection
+  """
+  ✨ Generated from Field `ReviewComment`.`userId_count` of type `Int!`
+  """
+  userId_count: OrderDirection
+  """
+  ✨ Generated from Field `ReviewComment`.`createdAt_min` of type `Timestamp`
+  """
+  createdAt_min: OrderDirection
+  """
+  ✨ Generated from Field `ReviewComment`.`updatedAt_min` of type `Timestamp`
+  """
+  updatedAt_min: OrderDirection
+  """
+  ✨ Generated from Field `ReviewComment`.`createdAt_max` of type `Timestamp`
+  """
+  createdAt_max: OrderDirection
+  """
+  ✨ Generated from Field `ReviewComment`.`updatedAt_max` of type `Timestamp`
+  """
+  updatedAt_max: OrderDirection
+}
+"""
+✨ Generated data input type for table 'ReviewLike'. It includes all necessary fields for creating or upserting rows into table.
+"""
+input ReviewLike_Data {
+  """
+  ✨ Generated from Field `ReviewLike`.`userId` of type `String!`
+  """
+  userId: String
+  """
+  ✨ `_expr` server value variant of `userId` (✨ Generated from Field `ReviewLike`.`userId` of type `String!`)
+  """
+  userId_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `ReviewLike`.`reviewId` of type `UUID!`
+  """
+  reviewId: UUID
+  """
+  ✨ `_expr` server value variant of `reviewId` (✨ Generated from Field `ReviewLike`.`reviewId` of type `UUID!`)
+  """
+  reviewId_expr: UUID_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `ReviewLike`.`review` of type `SpiritReview!`
+  """
+  review: SpiritReview_Key @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `ReviewLike`.`user` of type `User!`
+  """
+  user: User_Key @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `ReviewLike`.`createdAt` of type `Timestamp`
+  """
+  createdAt: Timestamp
+  """
+  ✨ `_expr` server value variant of `createdAt` (✨ Generated from Field `ReviewLike`.`createdAt` of type `Timestamp`)
+  """
+  createdAt_expr: Timestamp_Expr @fdc_forbiddenInVariables
+  """
+  ✨ `_time` server value variant of `createdAt` (✨ Generated from Field `ReviewLike`.`createdAt` of type `Timestamp`)
+  """
+  createdAt_time: Timestamp_Relative @fdc_forbiddenInVariables
+  """
+  ✨ `_update` server value variant of `createdAt` (✨ Generated from Field `ReviewLike`.`createdAt` of type `Timestamp`)
+  """
+  createdAt_update: [Timestamp_Update!] @fdc_forbiddenInVariables
+}
+"""
+✨ Generated filter input type for table 'ReviewLike'. This input allows filtering objects using various conditions. Use `_or`, `_and`, and `_not` to compose complex filters.
+"""
+input ReviewLike_Filter {
+  """
+  Apply multiple filter conditions using `AND` logic.
+  """
+  _and: [ReviewLike_Filter!]
+  """
+  Negate the result of the provided filter condition.
+  """
+  _not: ReviewLike_Filter
+  """
+  Apply multiple filter conditions using `OR` logic.
+  """
+  _or: [ReviewLike_Filter!]
+  """
+  ✨ Generated from Field `ReviewLike`.`userId` of type `String!`
+  """
+  userId: String_Filter
+  """
+  ✨ Generated from Field `ReviewLike`.`reviewId` of type `UUID!`
+  """
+  reviewId: UUID_Filter
+  """
+  ✨ Generated from Field `ReviewLike`.`review` of type `SpiritReview!`
+  """
+  review: SpiritReview_Filter
+  """
+  ✨ Generated from Field `ReviewLike`.`user` of type `User!`
+  """
+  user: User_Filter
+  """
+  ✨ Generated from Field `ReviewLike`.`createdAt` of type `Timestamp`
+  """
+  createdAt: Timestamp_Filter
+}
+"""
+✨ Generated first-row input type for table 'ReviewLike'. This input selects the first row matching the filter criteria, ordered according to the specified conditions.
+"""
+input ReviewLike_FirstRow {
+  """
+  Order the result by the specified fields.
+  """
+  orderBy: [ReviewLike_Order!]
+  """
+  Filters rows based on the specified conditions.
+  """
+  where: ReviewLike_Filter
+}
+"""
+✨ Generated having input type for table 'ReviewLike'. This input allows you to filter groups during aggregate queries using various conditions. Use `_or`, `_and`, and `_not` to compose complex filters.
+"""
+input ReviewLike_Having {
+  """
+  Apply multiple Having conditions using `AND` logic.
+  """
+  _and: [ReviewLike_Having!]
+  """
+  Whether to apply DISTINCT to the aggregate function.
+  """
+  _distinct: Boolean
+  """
+  Negate the result of the provided Having condition.
+  """
+  _not: ReviewLike_Having
+  """
+  Apply multiple Having conditions using `OR` logic.
+  """
+  _or: [ReviewLike_Having!]
+  """
+  ✨ Generated from Field `ReviewLike`.`_count` of type `Int!`
+  """
+  _count: Int_Filter
+  """
+  ✨ Generated from Field `ReviewLike`.`createdAt_count` of type `Int!`
+  """
+  createdAt_count: Int_Filter
+  """
+  ✨ Generated from Field `ReviewLike`.`reviewId_count` of type `Int!`
+  """
+  reviewId_count: Int_Filter
+  """
+  ✨ Generated from Field `ReviewLike`.`userId_count` of type `Int!`
+  """
+  userId_count: Int_Filter
+  """
+  ✨ Generated from Field `ReviewLike`.`createdAt_min` of type `Timestamp`
+  """
+  createdAt_min: Timestamp_Filter
+  """
+  ✨ Generated from Field `ReviewLike`.`createdAt_max` of type `Timestamp`
+  """
+  createdAt_max: Timestamp_Filter
+}
+"""
+✨ Generated key input type for table 'ReviewLike'. It represents the primary key fields used to uniquely identify a row in the table.
+"""
+input ReviewLike_Key {
+  """
+  ✨ Generated from Field `ReviewLike`.`userId` of type `String!`
+  """
+  userId: String
+  """
+  ✨ `_expr` server value variant of `userId` (✨ Generated from Field `ReviewLike`.`userId` of type `String!`)
+  """
+  userId_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `ReviewLike`.`reviewId` of type `UUID!`
+  """
+  reviewId: UUID
+  """
+  ✨ `_expr` server value variant of `reviewId` (✨ Generated from Field `ReviewLike`.`reviewId` of type `UUID!`)
+  """
+  reviewId_expr: UUID_Expr @fdc_forbiddenInVariables
+}
+"""
+✨ Generated list filter input type for table 'ReviewLike'. This input applies filtering logic based on the count or existence of related objects that matches certain criteria.
+"""
+input ReviewLike_ListFilter {
+  """
+  The desired number of objects that match the condition (defaults to at least one).
+  """
+  count: Int_Filter = {gt:0}
+  """
+  Condition of the related objects to filter for.
+  """
+  exist: ReviewLike_Filter
+}
+"""
+✨ Generated order input type for table 'ReviewLike'. This input defines the sorting order of rows in query results based on one or more fields.
+"""
+input ReviewLike_Order {
+  """
+  ✨ Generated from Field `ReviewLike`.`userId` of type `String!`
+  """
+  userId: OrderDirection
+  """
+  ✨ Generated from Field `ReviewLike`.`reviewId` of type `UUID!`
+  """
+  reviewId: OrderDirection
+  """
+  ✨ Generated from Field `ReviewLike`.`review` of type `SpiritReview!`
+  """
+  review: SpiritReview_Order
+  """
+  ✨ Generated from Field `ReviewLike`.`user` of type `User!`
+  """
+  user: User_Order
+  """
+  ✨ Generated from Field `ReviewLike`.`createdAt` of type `Timestamp`
+  """
+  createdAt: OrderDirection
+  """
+  ✨ Generated from Field `ReviewLike`.`_count` of type `Int!`
+  """
+  _count: OrderDirection
+  """
+  ✨ Generated from Field `ReviewLike`.`createdAt_count` of type `Int!`
+  """
+  createdAt_count: OrderDirection
+  """
+  ✨ Generated from Field `ReviewLike`.`reviewId_count` of type `Int!`
+  """
+  reviewId_count: OrderDirection
+  """
+  ✨ Generated from Field `ReviewLike`.`userId_count` of type `Int!`
+  """
+  userId_count: OrderDirection
+  """
+  ✨ Generated from Field `ReviewLike`.`createdAt_min` of type `Timestamp`
+  """
+  createdAt_min: OrderDirection
+  """
+  ✨ Generated from Field `ReviewLike`.`createdAt_max` of type `Timestamp`
+  """
+  createdAt_max: OrderDirection
+}
+"""
 ✨ Generated data input type for table 'Spirit'. It includes all necessary fields for creating or upserting rows into table.
 """
 input Spirit_Data {
@@ -2632,14 +3178,6 @@ input SpiritReview_Data {
   """
   isPublished_expr: Boolean_Expr @fdc_forbiddenInVariables
   """
-  ✨ Generated from Field `SpiritReview`.`likedBy` of type `[String!]`
-  """
-  likedBy: [String!]
-  """
-  ✨ `_update` server value variant of `likedBy` (✨ Generated from Field `SpiritReview`.`likedBy` of type `[String!]`)
-  """
-  likedBy_update: [String_ListUpdate!] @fdc_forbiddenInVariables
-  """
   ✨ Generated from Field `SpiritReview`.`likes` of type `Int`
   """
   likes: Int
@@ -2761,10 +3299,6 @@ input SpiritReview_Filter {
   """
   isPublished: Boolean_Filter
   """
-  ✨ Generated from Field `SpiritReview`.`likedBy` of type `[String!]`
-  """
-  likedBy: String_ListFilter
-  """
   ✨ Generated from Field `SpiritReview`.`likes` of type `Int`
   """
   likes: Int_Filter
@@ -2788,6 +3322,18 @@ input SpiritReview_Filter {
   ✨ Generated from Field `SpiritReview`.`updatedAt` of type `Timestamp!`
   """
   updatedAt: Timestamp_Filter
+  """
+  ✨ Generated from Field `SpiritReview`.`reviewComments_on_review` of type `[ReviewComment!]!`
+  """
+  reviewComments_on_review: ReviewComment_ListFilter
+  """
+  ✨ Generated from Field `SpiritReview`.`reviewLikes_on_review` of type `[ReviewLike!]!`
+  """
+  reviewLikes_on_review: ReviewLike_ListFilter
+  """
+  ✨ Generated from Field `SpiritReview`.`users_via_ReviewLike` of type `[User!]!`
+  """
+  users_via_ReviewLike: User_ListFilter
 }
 """
 ✨ Generated first-row input type for table 'SpiritReview'. This input selects the first row matching the filter criteria, ordered according to the specified conditions.
@@ -3292,6 +3838,14 @@ input User_Filter {
   """
   themePreference: String_Filter
   """
+  ✨ Generated from Field `User`.`reviewComments_on_user` of type `[ReviewComment!]!`
+  """
+  reviewComments_on_user: ReviewComment_ListFilter
+  """
+  ✨ Generated from Field `User`.`reviewLikes_on_user` of type `[ReviewLike!]!`
+  """
+  reviewLikes_on_user: ReviewLike_ListFilter
+  """
   ✨ Generated from Field `User`.`spiritReviews_on_user` of type `[SpiritReview!]!`
   """
   spiritReviews_on_user: SpiritReview_ListFilter
@@ -3303,6 +3857,10 @@ input User_Filter {
   ✨ Generated from Field `User`.`spirits_via_UserCabinet` of type `[Spirit!]!`
   """
   spirits_via_UserCabinet: Spirit_ListFilter
+  """
+  ✨ Generated from Field `User`.`spiritReviews_via_ReviewLike` of type `[SpiritReview!]!`
+  """
+  spiritReviews_via_ReviewLike: SpiritReview_ListFilter
 }
 """
 ✨ Generated first-row input type for table 'User'. This input selects the first row matching the filter criteria, ordered according to the specified conditions.

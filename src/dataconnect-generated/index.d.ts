@@ -98,8 +98,25 @@ export interface DeleteNewsVariables {
   id: string;
 }
 
+export interface DeleteReviewCommentData {
+  reviewComment_delete?: ReviewComment_Key | null;
+}
+
+export interface DeleteReviewCommentVariables {
+  id: UUIDString;
+}
+
 export interface DeleteReviewData {
   spiritReview_delete?: SpiritReview_Key | null;
+}
+
+export interface DeleteReviewLikeData {
+  reviewLike_delete?: ReviewLike_Key | null;
+}
+
+export interface DeleteReviewLikeVariables {
+  userId: string;
+  reviewId: UUIDString;
 }
 
 export interface DeleteReviewVariables {
@@ -117,7 +134,6 @@ export interface DeleteSpiritVariables {
 export interface FindReviewData {
   spiritReviews: ({
     id: UUIDString;
-    likedBy?: string[] | null;
     likes?: number | null;
   } & SpiritReview_Key)[];
 }
@@ -147,16 +163,51 @@ export interface GetNewsArticleVariables {
   id: string;
 }
 
-export interface GetReviewData {
+export interface GetReviewDetailData {
   spiritReview?: {
     id: UUIDString;
-    likedBy?: string[] | null;
+    rating: number;
+    title?: string | null;
+    content: string;
+    nose?: string | null;
+    palate?: string | null;
+    finish?: string | null;
     likes?: number | null;
+    imageUrls?: string[] | null;
+    createdAt: TimestampString;
+    spirit: {
+      id: string;
+      name: string;
+      nameEn?: string | null;
+      imageUrl: string;
+      category: string;
+      distillery?: string | null;
+      abv?: number | null;
+    } & Spirit_Key;
+      user: {
+        id: string;
+        nickname?: string | null;
+        profileImage?: string | null;
+      } & User_Key;
+        comments: ({
+          id: UUIDString;
+          content?: string | null;
+          createdAt?: TimestampString | null;
+          user: {
+            id: string;
+            nickname?: string | null;
+            profileImage?: string | null;
+          } & User_Key;
+        } & ReviewComment_Key)[];
+          userLike: ({
+            userId: string;
+          })[];
   } & SpiritReview_Key;
 }
 
-export interface GetReviewVariables {
+export interface GetReviewDetailVariables {
   id: UUIDString;
+  currentUserId?: string | null;
 }
 
 export interface GetSpiritData {
@@ -197,7 +248,7 @@ export interface GetSpiritData {
       nose?: string | null;
       palate?: string | null;
       finish?: string | null;
-      likedBy?: string[] | null;
+      likes?: number | null;
       imageUrls?: string[] | null;
       createdAt: TimestampString;
       updatedAt: TimestampString;
@@ -377,6 +428,23 @@ export interface ListNewsArticlesData {
 export interface ListNewsArticlesVariables {
   limit?: number | null;
   offset?: number | null;
+}
+
+export interface ListReviewCommentsData {
+  reviewComments: ({
+    id: UUIDString;
+    content?: string | null;
+    createdAt?: TimestampString | null;
+    user: {
+      id: string;
+      nickname?: string | null;
+      profileImage?: string | null;
+    } & User_Key;
+  } & ReviewComment_Key)[];
+}
+
+export interface ListReviewCommentsVariables {
+  reviewId: UUIDString;
 }
 
 export interface ListSpiritReviewsData {
@@ -578,6 +646,17 @@ export interface NewsArticle_Key {
   __typename?: 'NewsArticle_Key';
 }
 
+export interface ReviewComment_Key {
+  id: UUIDString;
+  __typename?: 'ReviewComment_Key';
+}
+
+export interface ReviewLike_Key {
+  userId: string;
+  reviewId: UUIDString;
+  __typename?: 'ReviewLike_Key';
+}
+
 export interface SearchSpiritsPublicData {
   spirits: ({
     id: string;
@@ -614,14 +693,13 @@ export interface Spirit_Key {
   __typename?: 'Spirit_Key';
 }
 
-export interface UpdateReviewData {
+export interface UpdateReviewLikesCountData {
   spiritReview_update?: SpiritReview_Key | null;
 }
 
-export interface UpdateReviewVariables {
+export interface UpdateReviewLikesCountVariables {
   id: UUIDString;
   likes?: number | null;
-  likedBy?: string[] | null;
 }
 
 export interface UpsertAiDiscoveryLogData {
@@ -692,8 +770,29 @@ export interface UpsertNewsVariables {
   newsTags?: unknown | null;
 }
 
+export interface UpsertReviewCommentData {
+  reviewComment_upsert: ReviewComment_Key;
+}
+
+export interface UpsertReviewCommentVariables {
+  id: UUIDString;
+  reviewId: UUIDString;
+  userId: string;
+  content: string;
+  updatedAt?: TimestampString | null;
+}
+
 export interface UpsertReviewData {
   spiritReview_upsert: SpiritReview_Key;
+}
+
+export interface UpsertReviewLikeData {
+  reviewLike_upsert: ReviewLike_Key;
+}
+
+export interface UpsertReviewLikeVariables {
+  userId: string;
+  reviewId: UUIDString;
 }
 
 export interface UpsertReviewVariables {
@@ -707,7 +806,6 @@ export interface UpsertReviewVariables {
   palate?: string | null;
   finish?: string | null;
   likes?: number | null;
-  likedBy?: string[] | null;
   isPublished?: boolean | null;
   imageUrls?: string[] | null;
   createdAt?: TimestampString | null;
@@ -800,6 +898,222 @@ export interface WorldCupResult_Key {
   id: UUIDString;
   __typename?: 'WorldCupResult_Key';
 }
+
+interface UpsertUserRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: UpsertUserVariables): MutationRef<UpsertUserData, UpsertUserVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: UpsertUserVariables): MutationRef<UpsertUserData, UpsertUserVariables>;
+  operationName: string;
+}
+export const upsertUserRef: UpsertUserRef;
+
+export function upsertUser(vars: UpsertUserVariables): MutationPromise<UpsertUserData, UpsertUserVariables>;
+export function upsertUser(dc: DataConnect, vars: UpsertUserVariables): MutationPromise<UpsertUserData, UpsertUserVariables>;
+
+interface UpsertSpiritRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: UpsertSpiritVariables): MutationRef<UpsertSpiritData, UpsertSpiritVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: UpsertSpiritVariables): MutationRef<UpsertSpiritData, UpsertSpiritVariables>;
+  operationName: string;
+}
+export const upsertSpiritRef: UpsertSpiritRef;
+
+export function upsertSpirit(vars: UpsertSpiritVariables): MutationPromise<UpsertSpiritData, UpsertSpiritVariables>;
+export function upsertSpirit(dc: DataConnect, vars: UpsertSpiritVariables): MutationPromise<UpsertSpiritData, UpsertSpiritVariables>;
+
+interface UpsertNewArrivalRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: UpsertNewArrivalVariables): MutationRef<UpsertNewArrivalData, UpsertNewArrivalVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: UpsertNewArrivalVariables): MutationRef<UpsertNewArrivalData, UpsertNewArrivalVariables>;
+  operationName: string;
+}
+export const upsertNewArrivalRef: UpsertNewArrivalRef;
+
+export function upsertNewArrival(vars: UpsertNewArrivalVariables): MutationPromise<UpsertNewArrivalData, UpsertNewArrivalVariables>;
+export function upsertNewArrival(dc: DataConnect, vars: UpsertNewArrivalVariables): MutationPromise<UpsertNewArrivalData, UpsertNewArrivalVariables>;
+
+interface UpsertReviewRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: UpsertReviewVariables): MutationRef<UpsertReviewData, UpsertReviewVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: UpsertReviewVariables): MutationRef<UpsertReviewData, UpsertReviewVariables>;
+  operationName: string;
+}
+export const upsertReviewRef: UpsertReviewRef;
+
+export function upsertReview(vars: UpsertReviewVariables): MutationPromise<UpsertReviewData, UpsertReviewVariables>;
+export function upsertReview(dc: DataConnect, vars: UpsertReviewVariables): MutationPromise<UpsertReviewData, UpsertReviewVariables>;
+
+interface UpdateReviewLikesCountRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: UpdateReviewLikesCountVariables): MutationRef<UpdateReviewLikesCountData, UpdateReviewLikesCountVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: UpdateReviewLikesCountVariables): MutationRef<UpdateReviewLikesCountData, UpdateReviewLikesCountVariables>;
+  operationName: string;
+}
+export const updateReviewLikesCountRef: UpdateReviewLikesCountRef;
+
+export function updateReviewLikesCount(vars: UpdateReviewLikesCountVariables): MutationPromise<UpdateReviewLikesCountData, UpdateReviewLikesCountVariables>;
+export function updateReviewLikesCount(dc: DataConnect, vars: UpdateReviewLikesCountVariables): MutationPromise<UpdateReviewLikesCountData, UpdateReviewLikesCountVariables>;
+
+interface UpsertReviewLikeRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: UpsertReviewLikeVariables): MutationRef<UpsertReviewLikeData, UpsertReviewLikeVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: UpsertReviewLikeVariables): MutationRef<UpsertReviewLikeData, UpsertReviewLikeVariables>;
+  operationName: string;
+}
+export const upsertReviewLikeRef: UpsertReviewLikeRef;
+
+export function upsertReviewLike(vars: UpsertReviewLikeVariables): MutationPromise<UpsertReviewLikeData, UpsertReviewLikeVariables>;
+export function upsertReviewLike(dc: DataConnect, vars: UpsertReviewLikeVariables): MutationPromise<UpsertReviewLikeData, UpsertReviewLikeVariables>;
+
+interface DeleteReviewLikeRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: DeleteReviewLikeVariables): MutationRef<DeleteReviewLikeData, DeleteReviewLikeVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: DeleteReviewLikeVariables): MutationRef<DeleteReviewLikeData, DeleteReviewLikeVariables>;
+  operationName: string;
+}
+export const deleteReviewLikeRef: DeleteReviewLikeRef;
+
+export function deleteReviewLike(vars: DeleteReviewLikeVariables): MutationPromise<DeleteReviewLikeData, DeleteReviewLikeVariables>;
+export function deleteReviewLike(dc: DataConnect, vars: DeleteReviewLikeVariables): MutationPromise<DeleteReviewLikeData, DeleteReviewLikeVariables>;
+
+interface UpsertReviewCommentRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: UpsertReviewCommentVariables): MutationRef<UpsertReviewCommentData, UpsertReviewCommentVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: UpsertReviewCommentVariables): MutationRef<UpsertReviewCommentData, UpsertReviewCommentVariables>;
+  operationName: string;
+}
+export const upsertReviewCommentRef: UpsertReviewCommentRef;
+
+export function upsertReviewComment(vars: UpsertReviewCommentVariables): MutationPromise<UpsertReviewCommentData, UpsertReviewCommentVariables>;
+export function upsertReviewComment(dc: DataConnect, vars: UpsertReviewCommentVariables): MutationPromise<UpsertReviewCommentData, UpsertReviewCommentVariables>;
+
+interface DeleteReviewCommentRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: DeleteReviewCommentVariables): MutationRef<DeleteReviewCommentData, DeleteReviewCommentVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: DeleteReviewCommentVariables): MutationRef<DeleteReviewCommentData, DeleteReviewCommentVariables>;
+  operationName: string;
+}
+export const deleteReviewCommentRef: DeleteReviewCommentRef;
+
+export function deleteReviewComment(vars: DeleteReviewCommentVariables): MutationPromise<DeleteReviewCommentData, DeleteReviewCommentVariables>;
+export function deleteReviewComment(dc: DataConnect, vars: DeleteReviewCommentVariables): MutationPromise<DeleteReviewCommentData, DeleteReviewCommentVariables>;
+
+interface UpsertNewsRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: UpsertNewsVariables): MutationRef<UpsertNewsData, UpsertNewsVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: UpsertNewsVariables): MutationRef<UpsertNewsData, UpsertNewsVariables>;
+  operationName: string;
+}
+export const upsertNewsRef: UpsertNewsRef;
+
+export function upsertNews(vars: UpsertNewsVariables): MutationPromise<UpsertNewsData, UpsertNewsVariables>;
+export function upsertNews(dc: DataConnect, vars: UpsertNewsVariables): MutationPromise<UpsertNewsData, UpsertNewsVariables>;
+
+interface DeleteNewsRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: DeleteNewsVariables): MutationRef<DeleteNewsData, DeleteNewsVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: DeleteNewsVariables): MutationRef<DeleteNewsData, DeleteNewsVariables>;
+  operationName: string;
+}
+export const deleteNewsRef: DeleteNewsRef;
+
+export function deleteNews(vars: DeleteNewsVariables): MutationPromise<DeleteNewsData, DeleteNewsVariables>;
+export function deleteNews(dc: DataConnect, vars: DeleteNewsVariables): MutationPromise<DeleteNewsData, DeleteNewsVariables>;
+
+interface UpsertCabinetRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: UpsertCabinetVariables): MutationRef<UpsertCabinetData, UpsertCabinetVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: UpsertCabinetVariables): MutationRef<UpsertCabinetData, UpsertCabinetVariables>;
+  operationName: string;
+}
+export const upsertCabinetRef: UpsertCabinetRef;
+
+export function upsertCabinet(vars: UpsertCabinetVariables): MutationPromise<UpsertCabinetData, UpsertCabinetVariables>;
+export function upsertCabinet(dc: DataConnect, vars: UpsertCabinetVariables): MutationPromise<UpsertCabinetData, UpsertCabinetVariables>;
+
+interface DeleteCabinetRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: DeleteCabinetVariables): MutationRef<DeleteCabinetData, DeleteCabinetVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: DeleteCabinetVariables): MutationRef<DeleteCabinetData, DeleteCabinetVariables>;
+  operationName: string;
+}
+export const deleteCabinetRef: DeleteCabinetRef;
+
+export function deleteCabinet(vars: DeleteCabinetVariables): MutationPromise<DeleteCabinetData, DeleteCabinetVariables>;
+export function deleteCabinet(dc: DataConnect, vars: DeleteCabinetVariables): MutationPromise<DeleteCabinetData, DeleteCabinetVariables>;
+
+interface UpsertModificationRequestRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: UpsertModificationRequestVariables): MutationRef<UpsertModificationRequestData, UpsertModificationRequestVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: UpsertModificationRequestVariables): MutationRef<UpsertModificationRequestData, UpsertModificationRequestVariables>;
+  operationName: string;
+}
+export const upsertModificationRequestRef: UpsertModificationRequestRef;
+
+export function upsertModificationRequest(vars: UpsertModificationRequestVariables): MutationPromise<UpsertModificationRequestData, UpsertModificationRequestVariables>;
+export function upsertModificationRequest(dc: DataConnect, vars: UpsertModificationRequestVariables): MutationPromise<UpsertModificationRequestData, UpsertModificationRequestVariables>;
+
+interface UpsertWorldCupResultRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: UpsertWorldCupResultVariables): MutationRef<UpsertWorldCupResultData, UpsertWorldCupResultVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: UpsertWorldCupResultVariables): MutationRef<UpsertWorldCupResultData, UpsertWorldCupResultVariables>;
+  operationName: string;
+}
+export const upsertWorldCupResultRef: UpsertWorldCupResultRef;
+
+export function upsertWorldCupResult(vars: UpsertWorldCupResultVariables): MutationPromise<UpsertWorldCupResultData, UpsertWorldCupResultVariables>;
+export function upsertWorldCupResult(dc: DataConnect, vars: UpsertWorldCupResultVariables): MutationPromise<UpsertWorldCupResultData, UpsertWorldCupResultVariables>;
+
+interface DeleteSpiritRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: DeleteSpiritVariables): MutationRef<DeleteSpiritData, DeleteSpiritVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: DeleteSpiritVariables): MutationRef<DeleteSpiritData, DeleteSpiritVariables>;
+  operationName: string;
+}
+export const deleteSpiritRef: DeleteSpiritRef;
+
+export function deleteSpirit(vars: DeleteSpiritVariables): MutationPromise<DeleteSpiritData, DeleteSpiritVariables>;
+export function deleteSpirit(dc: DataConnect, vars: DeleteSpiritVariables): MutationPromise<DeleteSpiritData, DeleteSpiritVariables>;
+
+interface UpsertAiDiscoveryLogRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: UpsertAiDiscoveryLogVariables): MutationRef<UpsertAiDiscoveryLogData, UpsertAiDiscoveryLogVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: UpsertAiDiscoveryLogVariables): MutationRef<UpsertAiDiscoveryLogData, UpsertAiDiscoveryLogVariables>;
+  operationName: string;
+}
+export const upsertAiDiscoveryLogRef: UpsertAiDiscoveryLogRef;
+
+export function upsertAiDiscoveryLog(vars: UpsertAiDiscoveryLogVariables): MutationPromise<UpsertAiDiscoveryLogData, UpsertAiDiscoveryLogVariables>;
+export function upsertAiDiscoveryLog(dc: DataConnect, vars: UpsertAiDiscoveryLogVariables): MutationPromise<UpsertAiDiscoveryLogData, UpsertAiDiscoveryLogVariables>;
+
+interface DeleteReviewRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: DeleteReviewVariables): MutationRef<DeleteReviewData, DeleteReviewVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: DeleteReviewVariables): MutationRef<DeleteReviewData, DeleteReviewVariables>;
+  operationName: string;
+}
+export const deleteReviewRef: DeleteReviewRef;
+
+export function deleteReview(vars: DeleteReviewVariables): MutationPromise<DeleteReviewData, DeleteReviewVariables>;
+export function deleteReview(dc: DataConnect, vars: DeleteReviewVariables): MutationPromise<DeleteReviewData, DeleteReviewVariables>;
 
 interface ListSpiritsRef {
   /* Allow users to create refs without passing in DataConnect */
@@ -1017,17 +1331,29 @@ export const findReviewRef: FindReviewRef;
 export function findReview(vars: FindReviewVariables, options?: ExecuteQueryOptions): QueryPromise<FindReviewData, FindReviewVariables>;
 export function findReview(dc: DataConnect, vars: FindReviewVariables, options?: ExecuteQueryOptions): QueryPromise<FindReviewData, FindReviewVariables>;
 
-interface GetReviewRef {
+interface GetReviewDetailRef {
   /* Allow users to create refs without passing in DataConnect */
-  (vars: GetReviewVariables): QueryRef<GetReviewData, GetReviewVariables>;
+  (vars: GetReviewDetailVariables): QueryRef<GetReviewDetailData, GetReviewDetailVariables>;
   /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars: GetReviewVariables): QueryRef<GetReviewData, GetReviewVariables>;
+  (dc: DataConnect, vars: GetReviewDetailVariables): QueryRef<GetReviewDetailData, GetReviewDetailVariables>;
   operationName: string;
 }
-export const getReviewRef: GetReviewRef;
+export const getReviewDetailRef: GetReviewDetailRef;
 
-export function getReview(vars: GetReviewVariables, options?: ExecuteQueryOptions): QueryPromise<GetReviewData, GetReviewVariables>;
-export function getReview(dc: DataConnect, vars: GetReviewVariables, options?: ExecuteQueryOptions): QueryPromise<GetReviewData, GetReviewVariables>;
+export function getReviewDetail(vars: GetReviewDetailVariables, options?: ExecuteQueryOptions): QueryPromise<GetReviewDetailData, GetReviewDetailVariables>;
+export function getReviewDetail(dc: DataConnect, vars: GetReviewDetailVariables, options?: ExecuteQueryOptions): QueryPromise<GetReviewDetailData, GetReviewDetailVariables>;
+
+interface ListReviewCommentsRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: ListReviewCommentsVariables): QueryRef<ListReviewCommentsData, ListReviewCommentsVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: ListReviewCommentsVariables): QueryRef<ListReviewCommentsData, ListReviewCommentsVariables>;
+  operationName: string;
+}
+export const listReviewCommentsRef: ListReviewCommentsRef;
+
+export function listReviewComments(vars: ListReviewCommentsVariables, options?: ExecuteQueryOptions): QueryPromise<ListReviewCommentsData, ListReviewCommentsVariables>;
+export function listReviewComments(dc: DataConnect, vars: ListReviewCommentsVariables, options?: ExecuteQueryOptions): QueryPromise<ListReviewCommentsData, ListReviewCommentsVariables>;
 
 interface ListSpiritsForSitemapRef {
   /* Allow users to create refs without passing in DataConnect */
@@ -1136,172 +1462,4 @@ export const listUserReviewsRef: ListUserReviewsRef;
 
 export function listUserReviews(vars: ListUserReviewsVariables, options?: ExecuteQueryOptions): QueryPromise<ListUserReviewsData, ListUserReviewsVariables>;
 export function listUserReviews(dc: DataConnect, vars: ListUserReviewsVariables, options?: ExecuteQueryOptions): QueryPromise<ListUserReviewsData, ListUserReviewsVariables>;
-
-interface UpsertUserRef {
-  /* Allow users to create refs without passing in DataConnect */
-  (vars: UpsertUserVariables): MutationRef<UpsertUserData, UpsertUserVariables>;
-  /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars: UpsertUserVariables): MutationRef<UpsertUserData, UpsertUserVariables>;
-  operationName: string;
-}
-export const upsertUserRef: UpsertUserRef;
-
-export function upsertUser(vars: UpsertUserVariables): MutationPromise<UpsertUserData, UpsertUserVariables>;
-export function upsertUser(dc: DataConnect, vars: UpsertUserVariables): MutationPromise<UpsertUserData, UpsertUserVariables>;
-
-interface UpsertSpiritRef {
-  /* Allow users to create refs without passing in DataConnect */
-  (vars: UpsertSpiritVariables): MutationRef<UpsertSpiritData, UpsertSpiritVariables>;
-  /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars: UpsertSpiritVariables): MutationRef<UpsertSpiritData, UpsertSpiritVariables>;
-  operationName: string;
-}
-export const upsertSpiritRef: UpsertSpiritRef;
-
-export function upsertSpirit(vars: UpsertSpiritVariables): MutationPromise<UpsertSpiritData, UpsertSpiritVariables>;
-export function upsertSpirit(dc: DataConnect, vars: UpsertSpiritVariables): MutationPromise<UpsertSpiritData, UpsertSpiritVariables>;
-
-interface UpsertNewArrivalRef {
-  /* Allow users to create refs without passing in DataConnect */
-  (vars: UpsertNewArrivalVariables): MutationRef<UpsertNewArrivalData, UpsertNewArrivalVariables>;
-  /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars: UpsertNewArrivalVariables): MutationRef<UpsertNewArrivalData, UpsertNewArrivalVariables>;
-  operationName: string;
-}
-export const upsertNewArrivalRef: UpsertNewArrivalRef;
-
-export function upsertNewArrival(vars: UpsertNewArrivalVariables): MutationPromise<UpsertNewArrivalData, UpsertNewArrivalVariables>;
-export function upsertNewArrival(dc: DataConnect, vars: UpsertNewArrivalVariables): MutationPromise<UpsertNewArrivalData, UpsertNewArrivalVariables>;
-
-interface UpsertReviewRef {
-  /* Allow users to create refs without passing in DataConnect */
-  (vars: UpsertReviewVariables): MutationRef<UpsertReviewData, UpsertReviewVariables>;
-  /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars: UpsertReviewVariables): MutationRef<UpsertReviewData, UpsertReviewVariables>;
-  operationName: string;
-}
-export const upsertReviewRef: UpsertReviewRef;
-
-export function upsertReview(vars: UpsertReviewVariables): MutationPromise<UpsertReviewData, UpsertReviewVariables>;
-export function upsertReview(dc: DataConnect, vars: UpsertReviewVariables): MutationPromise<UpsertReviewData, UpsertReviewVariables>;
-
-interface UpdateReviewRef {
-  /* Allow users to create refs without passing in DataConnect */
-  (vars: UpdateReviewVariables): MutationRef<UpdateReviewData, UpdateReviewVariables>;
-  /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars: UpdateReviewVariables): MutationRef<UpdateReviewData, UpdateReviewVariables>;
-  operationName: string;
-}
-export const updateReviewRef: UpdateReviewRef;
-
-export function updateReview(vars: UpdateReviewVariables): MutationPromise<UpdateReviewData, UpdateReviewVariables>;
-export function updateReview(dc: DataConnect, vars: UpdateReviewVariables): MutationPromise<UpdateReviewData, UpdateReviewVariables>;
-
-interface UpsertNewsRef {
-  /* Allow users to create refs without passing in DataConnect */
-  (vars: UpsertNewsVariables): MutationRef<UpsertNewsData, UpsertNewsVariables>;
-  /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars: UpsertNewsVariables): MutationRef<UpsertNewsData, UpsertNewsVariables>;
-  operationName: string;
-}
-export const upsertNewsRef: UpsertNewsRef;
-
-export function upsertNews(vars: UpsertNewsVariables): MutationPromise<UpsertNewsData, UpsertNewsVariables>;
-export function upsertNews(dc: DataConnect, vars: UpsertNewsVariables): MutationPromise<UpsertNewsData, UpsertNewsVariables>;
-
-interface DeleteNewsRef {
-  /* Allow users to create refs without passing in DataConnect */
-  (vars: DeleteNewsVariables): MutationRef<DeleteNewsData, DeleteNewsVariables>;
-  /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars: DeleteNewsVariables): MutationRef<DeleteNewsData, DeleteNewsVariables>;
-  operationName: string;
-}
-export const deleteNewsRef: DeleteNewsRef;
-
-export function deleteNews(vars: DeleteNewsVariables): MutationPromise<DeleteNewsData, DeleteNewsVariables>;
-export function deleteNews(dc: DataConnect, vars: DeleteNewsVariables): MutationPromise<DeleteNewsData, DeleteNewsVariables>;
-
-interface UpsertCabinetRef {
-  /* Allow users to create refs without passing in DataConnect */
-  (vars: UpsertCabinetVariables): MutationRef<UpsertCabinetData, UpsertCabinetVariables>;
-  /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars: UpsertCabinetVariables): MutationRef<UpsertCabinetData, UpsertCabinetVariables>;
-  operationName: string;
-}
-export const upsertCabinetRef: UpsertCabinetRef;
-
-export function upsertCabinet(vars: UpsertCabinetVariables): MutationPromise<UpsertCabinetData, UpsertCabinetVariables>;
-export function upsertCabinet(dc: DataConnect, vars: UpsertCabinetVariables): MutationPromise<UpsertCabinetData, UpsertCabinetVariables>;
-
-interface DeleteCabinetRef {
-  /* Allow users to create refs without passing in DataConnect */
-  (vars: DeleteCabinetVariables): MutationRef<DeleteCabinetData, DeleteCabinetVariables>;
-  /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars: DeleteCabinetVariables): MutationRef<DeleteCabinetData, DeleteCabinetVariables>;
-  operationName: string;
-}
-export const deleteCabinetRef: DeleteCabinetRef;
-
-export function deleteCabinet(vars: DeleteCabinetVariables): MutationPromise<DeleteCabinetData, DeleteCabinetVariables>;
-export function deleteCabinet(dc: DataConnect, vars: DeleteCabinetVariables): MutationPromise<DeleteCabinetData, DeleteCabinetVariables>;
-
-interface UpsertModificationRequestRef {
-  /* Allow users to create refs without passing in DataConnect */
-  (vars: UpsertModificationRequestVariables): MutationRef<UpsertModificationRequestData, UpsertModificationRequestVariables>;
-  /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars: UpsertModificationRequestVariables): MutationRef<UpsertModificationRequestData, UpsertModificationRequestVariables>;
-  operationName: string;
-}
-export const upsertModificationRequestRef: UpsertModificationRequestRef;
-
-export function upsertModificationRequest(vars: UpsertModificationRequestVariables): MutationPromise<UpsertModificationRequestData, UpsertModificationRequestVariables>;
-export function upsertModificationRequest(dc: DataConnect, vars: UpsertModificationRequestVariables): MutationPromise<UpsertModificationRequestData, UpsertModificationRequestVariables>;
-
-interface UpsertWorldCupResultRef {
-  /* Allow users to create refs without passing in DataConnect */
-  (vars: UpsertWorldCupResultVariables): MutationRef<UpsertWorldCupResultData, UpsertWorldCupResultVariables>;
-  /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars: UpsertWorldCupResultVariables): MutationRef<UpsertWorldCupResultData, UpsertWorldCupResultVariables>;
-  operationName: string;
-}
-export const upsertWorldCupResultRef: UpsertWorldCupResultRef;
-
-export function upsertWorldCupResult(vars: UpsertWorldCupResultVariables): MutationPromise<UpsertWorldCupResultData, UpsertWorldCupResultVariables>;
-export function upsertWorldCupResult(dc: DataConnect, vars: UpsertWorldCupResultVariables): MutationPromise<UpsertWorldCupResultData, UpsertWorldCupResultVariables>;
-
-interface DeleteSpiritRef {
-  /* Allow users to create refs without passing in DataConnect */
-  (vars: DeleteSpiritVariables): MutationRef<DeleteSpiritData, DeleteSpiritVariables>;
-  /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars: DeleteSpiritVariables): MutationRef<DeleteSpiritData, DeleteSpiritVariables>;
-  operationName: string;
-}
-export const deleteSpiritRef: DeleteSpiritRef;
-
-export function deleteSpirit(vars: DeleteSpiritVariables): MutationPromise<DeleteSpiritData, DeleteSpiritVariables>;
-export function deleteSpirit(dc: DataConnect, vars: DeleteSpiritVariables): MutationPromise<DeleteSpiritData, DeleteSpiritVariables>;
-
-interface UpsertAiDiscoveryLogRef {
-  /* Allow users to create refs without passing in DataConnect */
-  (vars: UpsertAiDiscoveryLogVariables): MutationRef<UpsertAiDiscoveryLogData, UpsertAiDiscoveryLogVariables>;
-  /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars: UpsertAiDiscoveryLogVariables): MutationRef<UpsertAiDiscoveryLogData, UpsertAiDiscoveryLogVariables>;
-  operationName: string;
-}
-export const upsertAiDiscoveryLogRef: UpsertAiDiscoveryLogRef;
-
-export function upsertAiDiscoveryLog(vars: UpsertAiDiscoveryLogVariables): MutationPromise<UpsertAiDiscoveryLogData, UpsertAiDiscoveryLogVariables>;
-export function upsertAiDiscoveryLog(dc: DataConnect, vars: UpsertAiDiscoveryLogVariables): MutationPromise<UpsertAiDiscoveryLogData, UpsertAiDiscoveryLogVariables>;
-
-interface DeleteReviewRef {
-  /* Allow users to create refs without passing in DataConnect */
-  (vars: DeleteReviewVariables): MutationRef<DeleteReviewData, DeleteReviewVariables>;
-  /* Allow users to pass in custom DataConnect instances */
-  (dc: DataConnect, vars: DeleteReviewVariables): MutationRef<DeleteReviewData, DeleteReviewVariables>;
-  operationName: string;
-}
-export const deleteReviewRef: DeleteReviewRef;
-
-export function deleteReview(vars: DeleteReviewVariables): MutationPromise<DeleteReviewData, DeleteReviewVariables>;
-export function deleteReview(dc: DataConnect, vars: DeleteReviewVariables): MutationPromise<DeleteReviewData, DeleteReviewVariables>;
 

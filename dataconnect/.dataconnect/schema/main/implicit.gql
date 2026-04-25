@@ -4,6 +4,26 @@ extend type NewArrival {
   """
   spiritId: String! @fdc_generated(from: "NewArrival.spirit", purpose: IMPLICIT_REF_FIELD)
 }
+extend type ReviewComment {
+  """
+  ✨ Implicit foreign key field based on `ReviewComment`.`review`. It must match the value of `SpiritReview`.`id`. See `@ref` for how to customize it.
+  """
+  reviewId: UUID! @fdc_generated(from: "ReviewComment.review", purpose: IMPLICIT_REF_FIELD)
+  """
+  ✨ Implicit foreign key field based on `ReviewComment`.`user`. It must match the value of `User`.`id`. See `@ref` for how to customize it.
+  """
+  userId: String! @fdc_generated(from: "ReviewComment.user", purpose: IMPLICIT_REF_FIELD)
+}
+extend type ReviewLike {
+  """
+  ✨ Implicit foreign key field based on `ReviewLike`.`user`. It must match the value of `User`.`id`. See `@ref` for how to customize it.
+  """
+  userId: String! @fdc_generated(from: "ReviewLike.user", purpose: IMPLICIT_REF_FIELD)
+  """
+  ✨ Implicit foreign key field based on `ReviewLike`.`review`. It must match the value of `SpiritReview`.`id`. See `@ref` for how to customize it.
+  """
+  reviewId: UUID! @fdc_generated(from: "ReviewLike.review", purpose: IMPLICIT_REF_FIELD)
+}
 extend type SpiritReview {
   """
   ✨ Implicit foreign key field based on `SpiritReview`.`spirit`. It must match the value of `Spirit`.`id`. See `@ref` for how to customize it.

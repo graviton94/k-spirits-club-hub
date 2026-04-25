@@ -159,7 +159,7 @@ query getSpirit($id: String!) @auth(level: PUBLIC) {
       nose
       palate
       finish
-      likedBy
+      likes
       imageUrls
       createdAt
       updatedAt
@@ -341,16 +341,64 @@ query getSpiritReviewsCount @auth(expr: "auth != null") {
 query findReview($userId: String!, $spiritId: String!) @auth(level: PUBLIC) {
   spiritReviews(where: { userId: { eq: $userId }, spiritId: { eq: $spiritId } }) {
     id
-    likedBy
     likes
   }
 }
 
-query getReview($id: UUID!) @auth(level: PUBLIC) {
+query getReviewDetail($id: UUID!, $currentUserId: String) @auth(level: PUBLIC) {
   spiritReview(id: $id) {
     id
-    likedBy
+    rating
+    title
+    content
+    nose
+    palate
+    finish
     likes
+    imageUrls
+    createdAt
+    spirit {
+      id
+      name
+      nameEn
+      imageUrl
+      category
+      distillery
+      abv
+    }
+    user {
+      id
+      nickname
+      profileImage
+    }
+    # Comments linked to this review
+    comments: reviewComments_on_review(orderBy: [{ createdAt: ASC }]) {
+      id
+      content
+      createdAt
+      user {
+        id
+        nickname
+        profileImage
+      }
+    }
+    # Check if current user liked this review (returns row if exists)
+    userLike: reviewLikes_on_review(where: { userId: { eq: $currentUserId } }) {
+      userId
+    }
+  }
+}
+
+query listReviewComments($reviewId: UUID!) @auth(level: PUBLIC) {
+  reviewComments(where: { reviewId: { eq: $reviewId } }, orderBy: [{ createdAt: ASC }]) {
+    id
+    content
+    createdAt
+    user {
+      id
+      nickname
+      profileImage
+    }
   }
 }
 

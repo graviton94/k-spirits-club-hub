@@ -36,6 +36,24 @@ extend type Mutation {
     data: NewsArticle_Data!
   ): NewsArticle_KeyOutput! @fdc_generated(from: "NewsArticle", purpose: INSERT_SINGLE)
   """
+  ✨ Insert a single `ReviewComment` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  reviewComment_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: ReviewComment_Data!
+  ): ReviewComment_KeyOutput! @fdc_generated(from: "ReviewComment", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `ReviewLike` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  reviewLike_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: ReviewLike_Data!
+  ): ReviewLike_KeyOutput! @fdc_generated(from: "ReviewLike", purpose: INSERT_SINGLE)
+  """
   ✨ Insert a single `Spirit` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
   """
   spirit_insert(
@@ -116,6 +134,24 @@ extend type Mutation {
     """
     data: [NewsArticle_Data!]!
   ): [NewsArticle_KeyOutput!]! @fdc_generated(from: "NewsArticle", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `ReviewComment` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  reviewComment_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [ReviewComment_Data!]!
+  ): [ReviewComment_KeyOutput!]! @fdc_generated(from: "ReviewComment", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `ReviewLike` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  reviewLike_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [ReviewLike_Data!]!
+  ): [ReviewLike_KeyOutput!]! @fdc_generated(from: "ReviewLike", purpose: INSERT_MULTIPLE)
   """
   ✨ Insert `Spirit` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
   """
@@ -198,6 +234,24 @@ extend type Mutation {
     data: NewsArticle_Data!
   ): NewsArticle_KeyOutput! @fdc_generated(from: "NewsArticle", purpose: UPSERT_SINGLE)
   """
+  ✨ Insert or update a single `ReviewComment` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `ReviewComment`.
+  """
+  reviewComment_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: ReviewComment_Data!
+  ): ReviewComment_KeyOutput! @fdc_generated(from: "ReviewComment", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `ReviewLike` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `ReviewLike`.
+  """
+  reviewLike_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: ReviewLike_Data!
+  ): ReviewLike_KeyOutput! @fdc_generated(from: "ReviewLike", purpose: UPSERT_SINGLE)
+  """
   ✨ Insert or update a single `Spirit` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Spirit`.
   """
   spirit_upsert(
@@ -278,6 +332,24 @@ extend type Mutation {
     """
     data: [NewsArticle_Data!]!
   ): [NewsArticle_KeyOutput!]! @fdc_generated(from: "NewsArticle", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `ReviewComment` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `ReviewComment`.
+  """
+  reviewComment_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [ReviewComment_Data!]!
+  ): [ReviewComment_KeyOutput!]! @fdc_generated(from: "ReviewComment", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `ReviewLike` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `ReviewLike`.
+  """
+  reviewLike_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [ReviewLike_Data!]!
+  ): [ReviewLike_KeyOutput!]! @fdc_generated(from: "ReviewLike", purpose: UPSERT_MULTIPLE)
   """
   ✨ Insert or update `Spirit` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Spirit`.
   """
@@ -439,6 +511,49 @@ extend type Mutation {
     """
     data: NewsArticle_Data!
   ): NewsArticle_KeyOutput @fdc_generated(from: "NewsArticle", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `ReviewComment` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `ReviewComment` or `null` if not found.
+  """
+  reviewComment_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: ReviewComment_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: ReviewComment_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: ReviewComment_Data!
+  ): ReviewComment_KeyOutput @fdc_generated(from: "ReviewComment", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `ReviewLike` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `ReviewLike` or `null` if not found.
+  """
+  reviewLike_update(
+    """
+    The key used to identify the object.
+    """
+    key: ReviewLike_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: ReviewLike_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: ReviewLike_Data!
+  ): ReviewLike_KeyOutput @fdc_generated(from: "ReviewLike", purpose: UPDATE_SINGLE)
   """
   ✨ Update a single `Spirit` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Spirit` or `null` if not found.
   """
@@ -641,6 +756,44 @@ extend type Mutation {
     data: NewsArticle_Data!
   ): Int! @fdc_generated(from: "NewsArticle", purpose: UPDATE_MULTIPLE)
   """
+  ✨ Update `ReviewComment` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  reviewComment_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: ReviewComment_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: ReviewComment_Data!
+  ): Int! @fdc_generated(from: "ReviewComment", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `ReviewLike` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  reviewLike_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: ReviewLike_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: ReviewLike_Data!
+  ): Int! @fdc_generated(from: "ReviewLike", purpose: UPDATE_MULTIPLE)
+  """
   ✨ Update `Spirit` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
   """
   spirit_updateMany(
@@ -832,6 +985,39 @@ extend type Mutation {
     first: NewsArticle_FirstRow
   ): NewsArticle_KeyOutput @fdc_generated(from: "NewsArticle", purpose: DELETE_SINGLE)
   """
+  ✨ Delete a single `ReviewComment` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  reviewComment_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: ReviewComment_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: ReviewComment_FirstRow
+  ): ReviewComment_KeyOutput @fdc_generated(from: "ReviewComment", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `ReviewLike` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  reviewLike_delete(
+    """
+    The key used to identify the object.
+    """
+    key: ReviewLike_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: ReviewLike_FirstRow
+  ): ReviewLike_KeyOutput @fdc_generated(from: "ReviewLike", purpose: DELETE_SINGLE)
+  """
   ✨ Delete a single `Spirit` based on `id`, `key` or `first` and return its key (or `null` if not found).
   """
   spirit_delete(
@@ -987,6 +1173,34 @@ extend type Mutation {
     """
     all: Boolean = false
   ): Int! @fdc_generated(from: "NewsArticle", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `ReviewComment` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  reviewComment_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: ReviewComment_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "ReviewComment", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `ReviewLike` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  reviewLike_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: ReviewLike_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "ReviewLike", purpose: DELETE_MULTIPLE)
   """
   ✨ Delete `Spirit` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
   """

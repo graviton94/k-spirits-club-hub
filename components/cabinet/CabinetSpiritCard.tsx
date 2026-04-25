@@ -53,7 +53,7 @@ function CabinetSpiritCardComponent({
                 <div className="relative h-full rounded-[1.8rem] overflow-hidden bg-black/40 group-hover:scale-[0.98] transition-all duration-700">
                     <Image
                         src={imgSrc}
-                        alt={spirit.name}
+                        alt={spirit.name || 'Spirit Image'}
                         fill
                         className={`object-cover transition-transform duration-1000 group-hover:scale-110 ${!spirit.imageUrl || !spirit.imageUrl.trim() ? 'opacity-20 blur-sm' : 'opacity-80'} group-hover:opacity-100`}
                         sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 150px"

@@ -96,6 +96,39 @@ extend type Query {
     first: NewsArticle_FirstRow
   ): NewsArticle @fdc_generated(from: "NewsArticle", purpose: QUERY_SINGLE)
   """
+  ✨ Look up a single `ReviewComment` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  reviewComment(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: ReviewComment_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: ReviewComment_FirstRow
+  ): ReviewComment @fdc_generated(from: "ReviewComment", purpose: QUERY_SINGLE)
+  """
+  ✨ Look up a single `ReviewLike` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  reviewLike(
+    """
+    The key used to identify the object.
+    """
+    key: ReviewLike_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: ReviewLike_FirstRow
+  ): ReviewLike @fdc_generated(from: "ReviewLike", purpose: QUERY_SINGLE)
+  """
   ✨ Look up a single `Spirit` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
   """
   spirit(
@@ -331,6 +364,74 @@ extend type Query {
     """
     having: NewsArticle_Having
   ): [NewsArticle!]! @fdc_generated(from: "NewsArticle", purpose: QUERY_MULTIPLE)
+  """
+  ✨ List `ReviewComment` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  reviewComments(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: ReviewComment_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [ReviewComment_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: ReviewComment_Having
+  ): [ReviewComment!]! @fdc_generated(from: "ReviewComment", purpose: QUERY_MULTIPLE)
+  """
+  ✨ List `ReviewLike` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  reviewLikes(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: ReviewLike_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [ReviewLike_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: ReviewLike_Having
+  ): [ReviewLike!]! @fdc_generated(from: "ReviewLike", purpose: QUERY_MULTIPLE)
   """
   ✨ List `Spirit` objects in the table and return selected fields, optionally filtered by `where` conditions
   """

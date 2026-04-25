@@ -38,7 +38,14 @@ import {
   findReview,
   searchSpiritsPublic,
   listAllCategories,
-  listAllSubcategories
+  listAllSubcategories,
+  upsertReviewLike,
+  deleteReviewLike,
+  updateReviewLikesCount,
+  upsertReviewComment,
+  deleteReviewComment,
+  getReviewDetail,
+  listReviewComments
 } from '@/src/dataconnect-generated';
 
 /**
@@ -323,6 +330,37 @@ export const dbUpdateReview = async (vars: { id: string, likes?: number, likedBy
 export const dbFindReview = async (vars: { userId: string, spiritId: string }) => {
   const { data } = await findReview(getDC(), vars);
   return data.spiritReviews[0] || null;
+};
+
+// --- Social ---
+export const dbUpsertReviewLike = async (vars: { userId: string, reviewId: string }) => {
+  return await upsertReviewLike(getDC(), vars);
+};
+
+export const dbDeleteReviewLike = async (vars: { userId: string, reviewId: string }) => {
+  return await deleteReviewLike(getDC(), vars);
+};
+
+export const dbUpdateReviewLikesCount = async (vars: { id: string, likes: number }) => {
+  return await updateReviewLikesCount(getDC(), vars);
+};
+
+export const dbUpsertReviewComment = async (vars: { id: string, reviewId: string, userId: string, content: string, updatedAt?: string }) => {
+  return await upsertReviewComment(getDC(), vars);
+};
+
+export const dbDeleteReviewComment = async (id: string) => {
+  return await deleteReviewComment(getDC(), { id });
+};
+
+export const dbGetReviewDetail = async (id: string, currentUserId?: string) => {
+  const { data } = await getReviewDetail(getDC(), { id, currentUserId });
+  return data.spiritReview;
+};
+
+export const dbListReviewComments = async (reviewId: string) => {
+  const { data } = await listReviewComments(getDC(), { reviewId });
+  return data.reviewComments;
 };
 
 

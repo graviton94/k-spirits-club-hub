@@ -114,7 +114,6 @@ mutation upsertReview(
   $palate: String,
   $finish: String,
   $likes: Int,
-  $likedBy: [String!],
   $isPublished: Boolean,
   $imageUrls: [String!],
   $createdAt: Timestamp,
@@ -131,7 +130,6 @@ mutation upsertReview(
     palate: $palate,
     finish: $finish,
     likes: $likes,
-    likedBy: $likedBy,
     isPublished: $isPublished,
     imageUrls: $imageUrls,
     createdAt: $createdAt,
@@ -139,15 +137,42 @@ mutation upsertReview(
   })
 }
 
-mutation updateReview(
+mutation updateReviewLikesCount(
   $id: UUID!,
-  $likes: Int,
-  $likedBy: [String!]
+  $likes: Int
 ) @auth(expr: "auth != null") {
   spiritReview_update(id: $id, data: {
-    likes: $likes,
-    likedBy: $likedBy
+    likes: $likes
   })
+}
+
+# --- Social Interaction Mutations ---
+mutation upsertReviewLike($userId: String!, $reviewId: UUID!) @auth(expr: "auth != null && auth.uid == vars.userId") {
+  reviewLike_upsert(data: { userId: $userId, reviewId: $reviewId })
+}
+
+mutation deleteReviewLike($userId: String!, $reviewId: UUID!) @auth(expr: "auth != null && auth.uid == vars.userId") {
+  reviewLike_delete(key: { userId: $userId, reviewId: $reviewId })
+}
+
+mutation upsertReviewComment(
+  $id: UUID!,
+  $reviewId: UUID!,
+  $userId: String!,
+  $content: String!,
+  $updatedAt: Timestamp
+) @auth(expr: "auth != null && auth.uid == vars.userId") {
+  reviewComment_upsert(data: {
+    id: $id,
+    reviewId: $reviewId,
+    userId: $userId,
+    content: $content,
+    updatedAt: $updatedAt
+  })
+}
+
+mutation deleteReviewComment($id: UUID!) @auth(expr: "auth != null") {
+  reviewComment_delete(id: $id)
 }
 
 # --- News Mutations ---
