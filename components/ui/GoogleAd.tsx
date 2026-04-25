@@ -66,20 +66,26 @@ export default function GoogleAd({
       document.head.appendChild(script);
     }
 
-    // 2. Push ad initialization exactly once per component instance
-    const timer = setTimeout(() => {
-      if (adRef.current && !adRef.current.getAttribute('data-ad-pushed')) {
+    // 2. Push ad initialization with extreme caution
+    const pushAd = () => {
+      if (adRef.current && !adRef.current.getAttribute('data-ad-status')) {
         try {
-          adRef.current.setAttribute('data-ad-pushed', 'true');
           (window.adsbygoogle = window.adsbygoogle || []).push({});
-        } catch (error) {
-          console.error('AdSense push error:', error);
-          adRef.current.removeAttribute('data-ad-pushed');
+          adRef.current.setAttribute('data-ad-status', 'filled');
+        } catch (error: any) {
+          // If already pushed or error, mark to prevent retry
+          console.warn('[AdSense] Push skipped or failed:', error.message);
+          adRef.current.setAttribute('data-ad-status', 'error');
         }
       }
-    }, 150);
+    };
 
-    return () => clearTimeout(timer);
+    // Delay slightly to ensure DOM is ready and prevent hydration mismatches
+    const timer = setTimeout(pushAd, 200);
+
+    return () => {
+      clearTimeout(timer);
+    };
   }, [client, slot, format, layoutKey]);
 
   return (
