@@ -18,9 +18,13 @@ This manual distills the redundant "flavor text" from the READMEs into a hard-hi
 - **Safety Checks**: Before deleting any field, run a lineage audit to ensure no hidden "Intermediate Tables" or "Target Tables" depend on it.
 
 ## 4. Agentic Resilience (OpenHarness/ohmo)
-- **Persistent Memory**: Maintain a `SESSION_LOG.md` (soul.md style) to track "Mental States", "Pending Decisions", and "Environment Gotchas".
-- **Tool-Call Cycle**: Emulate the "oh setup" flow for external integrations, ensuring a structured "Dry-Run" before execution.
-- **Multi-Agent Coordination**: If a task is too big, simulate a "Subagent Spawn" by creating a dedicated `task.md` for a specific sub-component and finishing it before returning to the main loop.
+- **Persistent Memory**: Maintain a `SESSION_LOG.md` to track "Mental States" and "Environment Gotchas".
+- **Infrastructure Safety**: 
+    - Use the **"Empty Wrangler Vars"** trick: Keep `vars` empty in `wrangler.jsonc` and use `wrangler secret put` for persistent production secrets.
+    - **Endpoint Guard**: Always use `firebasedataconnect.googleapis.com` for Data Connect REST calls.
+- **Resource Management**: 
+    - **Token Caching**: Implement in-memory caching for OAuth tokens to prevent Cloudflare's "Too many subrequests" error (50 limit per invocation).
+- **Tool-Call Cycle**: Structuring "Dry-Run" before execution to avoid breaking production deployments.
 
 ## 5. Premium Design (Awesome Design Systems)
 - **WOW Rule #1**: Never use browser default colors. Use curate HSL palettes.

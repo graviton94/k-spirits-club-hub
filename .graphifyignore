@@ -1,14 +1,32 @@
-# Graphify Ignore Patterns
+# .graphifyignore
 node_modules/
-.next/
 dist/
-out/
-.gemini/
-.agents/
-ai_improvement_machine/knowledge/
+.next/
+.git/
 graphify-out/
 *.log
-.env
-.env.local
-public/fonts/
-public/images/
+*.txt
+tmp/
+temp/
+out/
+build/
+.agent/
+.gemini/
+scripts/vault/
+*.generated.py
+*.bak
+*.swp
+# Exclude specific junk files seen in detect
+audit-junk-output.txt
+audit_deep_results.txt
+audit_report_utf8.txt
+audit_results.txt
+audit_results_v2.txt
+big-bang-final.txt
+big-bang-output.txt
+cabinet-mig-output.txt
+context_bundle.xml
+@repomix-output.txt
+repomix-output.txt
+*.pyc
+__pycache__/

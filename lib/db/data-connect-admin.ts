@@ -232,10 +232,11 @@ export const dbAdminListRawSpirits = async (vars: {
 
 export const dbAdminUpsertSpirit = async (vars: any) => {
     const query = `
-        mutation upsertSpirit($id: String!, $name: String!, $imageUrl: String, $thumbnailUrl: String, $isPublished: Boolean) {
+        mutation upsertSpirit($id: String!, $name: String!, $imageUrl: String, $thumbnailUrl: String, $isPublished: Boolean, $category: String) {
             spirit_upsert(data: {
                 id: $id,
                 name: $name,
+                category: $category,
                 imageUrl: $imageUrl,
                 thumbnailUrl: $thumbnailUrl,
                 isPublished: $isPublished

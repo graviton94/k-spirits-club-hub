@@ -1,40 +1,38 @@
-# K-Spirits Club Hub - AI Assistant Instructions
+# K-Spirits Club Hub - Project Guide
+[Structural Knowledge Graph Active at graphify-out/]
 
-This file defines the mandatory operational framework for this repository.
+## 1. Tech Stack
+- **Framework**: Next.js 15 (App Router)
+- **Runtime**: Cloudflare Workers (OpenNext)
+- **Database**: Firebase Data Connect (PostgreSQL / SQL-Native Mode)
+- **AI**: Google Gemini-2.0-flash-exp (via `@google/generative-ai`)
+- **Auth**: Firebase Auth + Google OAuth2 (Custom for Workers)
 
-## ⚖️ Mandatory Workspace Rules
-All AI agents **MUST** follow the **[Master Workspace Rules](file:///c:/k-spirits-club-hub/.agents/skills/k-spirits-master-knowledge/SKILL.md)**. This skill provides the definitive technical and architectural constraints for the project.
+## 2. Infrastructure Best Practices (CRITICAL)
+- **Environment Variables**:
+    - **Cloudflare Secrets**: MUST be set via `wrangler secret put NAME`.
+    - **Git-Sync Reset Bypass**: `wrangler.jsonc` should keep `vars: {}` empty to prevent Git push from wiping dashboard secrets.
+    - **Access**: Always use `getEnv(key)` from `@/lib/env` which prioritizes Cloudflare context over `process.env`.
+- **Subrequest Limits**:
+    - Cloudflare Workers have a 50-subrequest limit per invocation.
+    - **Google Auth**: Tokens MUST be cached in-memory (implemented in `lib/auth/google-auth.ts`) to avoid redundant requests during batch operations.
 
-## 🏗️ Core Architecture (Post-Migration)
-The project is 100% Relational SQL via **Firebase Data Connect (PostgreSQL)**. Legacy Firestore REST/SDK usage is strictly prohibited.
+## 3. Database Operations (Data Connect)
+- **Endpoint**: Use `firebasedataconnect.googleapis.com` (NOT `dataconnect.googleapis.com`).
+- **Relational Integrity**: Always ensure mandatory fields (e.g., `category`, `imageUrl`) are included in `upsert` mutations as defined in `dataconnect/schema/schema.gql`.
 
-### Mandatory First Step
-**BEFORE** any structural modification or deep reasoning, you **MUST** consult:
-1. **[Master Knowledge Skill](file:///c:/k-spirits-club-hub/.agents/skills/k-spirits-master-knowledge/SKILL.md)**: Global operational rules.
-2. **[PROJECT_FLOW.md](file:///c:/k-spirits-club-hub/graphify-out/PROJECT_FLOW.md)**: Current system paradigm and data flow.
-3. **[DATA_SCHEMA.md](file:///c:/k-spirits-club-hub/DATA_SCHEMA.md)**: Primary database specification.
+## 4. Key Commands
+- **Deploy**: `git push origin main` (Triggers Cloudflare Pages Build)
+- **Local Dev**: `npm run dev`
+- **Set Secrets (Local Script)**: `node scripts/vault/set_secrets.js`
 
-## 📚 Global Standards & Security
-- **Data Access:** Centralized via `lib/db/data-connect-client.ts`.
-- **Security:** Strict GQL `@auth` directives are required for all mutations.
-- **i18n:** URL-based localization (`/ko`, `/en`) enforced via middleware.
-- **AI Integration:** Multi-stage enrichment using Gemini 2.0 Flash.
-- **Environment Management:** 
-  - ALWAYS use [wrangler.jsonc](file:///c:/k-spirits-club-hub/wrangler.jsonc) `vars` for cloud variable declarations.
-  - Deployment MUST use `npm run worker:deploy`.
-  - All Cloudflare variables are managed as **"Variable" (Plaintext)**, NOT Secrets.
-
-## 🛠️ Verification Checklist
-- Run `npx firebase dataconnect:sdk:generate` after GQL schema changes.
-- Ensure CLS 0 performance via Skeleton UI implementation.
-- Validate all admin actions against UID `fiO8qf1PjLZAPBNcJmvy1cpqrY52`.
-
-## 🩸 Safety Rules (Written in Blood)
-These rules were established after a catastrophic failure involving token waste and environment degradation. **NEVER VIOLATE THESE.**
-
-1.  **DASHBOARD IS TRUTH**: If the Cloudflare Dashboard uses "Variables" (Plaintext), **NEVER** convert them to "Secrets" via CLI. This breaks OpenNext/Cloudflare runtime binding and site functionality.
-2.  **PERSISTENCE THROUGH CONFIG**: To prevent variables from being cleared during CLI deployments, define them in `wrangler.jsonc`. To prevent leaks, **`wrangler.jsonc` MUST BE IN `.gitignore`**. 
-3.  **PLAIN TEXT ONLY**: Stick to Plain Text variables as requested. Do not over-engineer security at the cost of uptime.
-4.  **TOTAL REFACTORING**: When renaming exported functions (e.g., `getRelatedIcon` -> `getRelatedIconKey`), you **MUST** perform a workspace-wide search and update **EVERY SINGLE IMPORT** immediately. Do not leave broken imports that crash the build.
-5.  **BUILD FAILURE DIAGNOSIS**: If a deployment fails with an `ENOENT` error (e.g., missing fonts), do not blindly repeat the deployment. Mock the missing assets or diagnose why they aren't being picked up by OpenNext on Windows.
-6.  **UNTRACK SENSITIVE CONFIG**: If a file contains sensitive Plain Text (like `wrangler.jsonc`), ensure it is not only in `.gitignore` but also removed from Git tracking (`git rm --cached`).
+## 5. Development Strategy
+- **Design**: Premium Amber, Deep Brown, Beige, and Purple identity. Use semantic CSS tokens.
+- **AI Architecture**: Unified `getEnv` access and 6D Flavor Vector logic for the Sommelier.
+- **Core Abstractions (Graphify God Nodes)**:
+    - `BrowserManager`: Primary logic orchestrator.
+    - `getDC()`: Central Data Connect entry point.
+    - `executeGraphql()`: Unified GQL communication layer.
+- **Cross-Domain Insights**:
+    - SEO (`generateMetadata`) is tightly coupled with World Cup results (`getResult`).
+    - API logging (`POST`) depends on global KST date utility (`getKSTDate`).

@@ -9,8 +9,8 @@ npx -y repomix@latest --compress --output ai_improvement_machine/reports/context
 
 # 2. Structural Analysis (Graphify)
 Write-Host "📊 Refreshing Knowledge Graph with Graphify..." -ForegroundColor Yellow
-# Run graphify silently to update report
-graphify --update --no-viz
+# Run graphify using absolute path to ensure binary access
+& "C:\Users\CHOI JUN YEONG\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\Scripts\graphify.exe" . --update --no-viz
 
 # 3. Memory Consolidation
 Write-Host "🧠 Consolidating Session Memory..." -ForegroundColor Yellow
