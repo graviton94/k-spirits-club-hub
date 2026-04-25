@@ -32,9 +32,11 @@ export async function verifyRequestToken(
     const idToken = authHeader.slice(7);
 
     try {
-        const projectId = process.env.FIREBASE_PROJECT_ID || process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
+        const { getEnv } = await import('@/lib/env');
+        const projectId = getEnv('FIREBASE_PROJECT_ID') || getEnv('NEXT_PUBLIC_FIREBASE_PROJECT_ID');
+        
         if (!projectId) {
-            console.error('[verifyRequestToken] FIREBASE_PROJECT_ID is missing');
+            console.error('[verifyRequestToken] FIREBASE_PROJECT_ID is missing from all sources');
             return null;
         }
 
