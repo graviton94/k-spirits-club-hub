@@ -693,3 +693,33 @@ exports.listUserReviews = function listUserReviews(dcOrVars, varsOrOptions, opti
   return executeQuery(listUserReviewsRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
 }
 ;
+
+const getReviewLikeRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'getReviewLike', inputVars);
+}
+getReviewLikeRef.operationName = 'getReviewLike';
+exports.getReviewLikeRef = getReviewLikeRef;
+
+exports.getReviewLike = function getReviewLike(dcOrVars, varsOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
+  return executeQuery(getReviewLikeRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
+}
+;
+
+const listReviewLikesRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return queryRef(dcInstance, 'listReviewLikes', inputVars);
+}
+listReviewLikesRef.operationName = 'listReviewLikes';
+exports.listReviewLikesRef = listReviewLikesRef;
+
+exports.listReviewLikes = function listReviewLikes(dcOrVars, varsOrOptions, options) {
+  
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateArgsWithOptions(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
+  return executeQuery(listReviewLikesRef(dcInstance, inputVars), inputOpts && inputOpts.fetchPolicy);
+}
+;

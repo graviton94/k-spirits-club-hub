@@ -41,8 +41,8 @@ export async function GET(request: NextRequest) {
         };
 
         return NextResponse.json({
-            isOwned: (cabinetItem.rating ?? 0) > 0,
-            isWishlist: (cabinetItem.rating ?? 0) === 0,
+            isOwned: !cabinetItem.isWishlist,
+            isWishlist: !!cabinetItem.isWishlist,
             data: mergedData
         });
     } catch (error) {

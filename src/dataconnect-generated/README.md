@@ -39,6 +39,8 @@ This README will guide you through the process of using the generated JavaScript
   - [*listModificationRequests*](#listmodificationrequests)
   - [*listUserCabinet*](#listusercabinet)
   - [*listUserReviews*](#listuserreviews)
+  - [*getReviewLike*](#getreviewlike)
+  - [*listReviewLikes*](#listreviewlikes)
 - [**Mutations**](#mutations)
   - [*upsertUser*](#upsertuser)
   - [*upsertSpirit*](#upsertspirit)
@@ -3569,6 +3571,232 @@ console.log(data.spiritReviews);
 executeQuery(ref).then((response) => {
   const data = response.data;
   console.log(data.spiritReviews);
+});
+```
+
+## getReviewLike
+You can execute the `getReviewLike` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
+```typescript
+getReviewLike(vars: GetReviewLikeVariables, options?: ExecuteQueryOptions): QueryPromise<GetReviewLikeData, GetReviewLikeVariables>;
+
+interface GetReviewLikeRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: GetReviewLikeVariables): QueryRef<GetReviewLikeData, GetReviewLikeVariables>;
+}
+export const getReviewLikeRef: GetReviewLikeRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `QueryRef` function.
+```typescript
+getReviewLike(dc: DataConnect, vars: GetReviewLikeVariables, options?: ExecuteQueryOptions): QueryPromise<GetReviewLikeData, GetReviewLikeVariables>;
+
+interface GetReviewLikeRef {
+  ...
+  (dc: DataConnect, vars: GetReviewLikeVariables): QueryRef<GetReviewLikeData, GetReviewLikeVariables>;
+}
+export const getReviewLikeRef: GetReviewLikeRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the getReviewLikeRef:
+```typescript
+const name = getReviewLikeRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `getReviewLike` query requires an argument of type `GetReviewLikeVariables`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+
+```typescript
+export interface GetReviewLikeVariables {
+  userId: string;
+  reviewId: UUIDString;
+}
+```
+### Return Type
+Recall that executing the `getReviewLike` query returns a `QueryPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `GetReviewLikeData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface GetReviewLikeData {
+  reviewLike?: {
+    userId: string;
+    reviewId: UUIDString;
+  } & ReviewLike_Key;
+}
+```
+### Using `getReviewLike`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, getReviewLike, GetReviewLikeVariables } from '@dataconnect/generated';
+
+// The `getReviewLike` query requires an argument of type `GetReviewLikeVariables`:
+const getReviewLikeVars: GetReviewLikeVariables = {
+  userId: ..., 
+  reviewId: ..., 
+};
+
+// Call the `getReviewLike()` function to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await getReviewLike(getReviewLikeVars);
+// Variables can be defined inline as well.
+const { data } = await getReviewLike({ userId: ..., reviewId: ..., });
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await getReviewLike(dataConnect, getReviewLikeVars);
+
+console.log(data.reviewLike);
+
+// Or, you can use the `Promise` API.
+getReviewLike(getReviewLikeVars).then((response) => {
+  const data = response.data;
+  console.log(data.reviewLike);
+});
+```
+
+### Using `getReviewLike`'s `QueryRef` function
+
+```typescript
+import { getDataConnect, executeQuery } from 'firebase/data-connect';
+import { connectorConfig, getReviewLikeRef, GetReviewLikeVariables } from '@dataconnect/generated';
+
+// The `getReviewLike` query requires an argument of type `GetReviewLikeVariables`:
+const getReviewLikeVars: GetReviewLikeVariables = {
+  userId: ..., 
+  reviewId: ..., 
+};
+
+// Call the `getReviewLikeRef()` function to get a reference to the query.
+const ref = getReviewLikeRef(getReviewLikeVars);
+// Variables can be defined inline as well.
+const ref = getReviewLikeRef({ userId: ..., reviewId: ..., });
+
+// You can also pass in a `DataConnect` instance to the `QueryRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = getReviewLikeRef(dataConnect, getReviewLikeVars);
+
+// Call `executeQuery()` on the reference to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeQuery(ref);
+
+console.log(data.reviewLike);
+
+// Or, you can use the `Promise` API.
+executeQuery(ref).then((response) => {
+  const data = response.data;
+  console.log(data.reviewLike);
+});
+```
+
+## listReviewLikes
+You can execute the `listReviewLikes` query using the following action shortcut function, or by calling `executeQuery()` after calling the following `QueryRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
+```typescript
+listReviewLikes(vars: ListReviewLikesVariables, options?: ExecuteQueryOptions): QueryPromise<ListReviewLikesData, ListReviewLikesVariables>;
+
+interface ListReviewLikesRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: ListReviewLikesVariables): QueryRef<ListReviewLikesData, ListReviewLikesVariables>;
+}
+export const listReviewLikesRef: ListReviewLikesRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `QueryRef` function.
+```typescript
+listReviewLikes(dc: DataConnect, vars: ListReviewLikesVariables, options?: ExecuteQueryOptions): QueryPromise<ListReviewLikesData, ListReviewLikesVariables>;
+
+interface ListReviewLikesRef {
+  ...
+  (dc: DataConnect, vars: ListReviewLikesVariables): QueryRef<ListReviewLikesData, ListReviewLikesVariables>;
+}
+export const listReviewLikesRef: ListReviewLikesRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the listReviewLikesRef:
+```typescript
+const name = listReviewLikesRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `listReviewLikes` query requires an argument of type `ListReviewLikesVariables`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+
+```typescript
+export interface ListReviewLikesVariables {
+  reviewId: UUIDString;
+}
+```
+### Return Type
+Recall that executing the `listReviewLikes` query returns a `QueryPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `ListReviewLikesData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface ListReviewLikesData {
+  reviewLikes: ({
+    userId: string;
+  })[];
+}
+```
+### Using `listReviewLikes`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, listReviewLikes, ListReviewLikesVariables } from '@dataconnect/generated';
+
+// The `listReviewLikes` query requires an argument of type `ListReviewLikesVariables`:
+const listReviewLikesVars: ListReviewLikesVariables = {
+  reviewId: ..., 
+};
+
+// Call the `listReviewLikes()` function to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await listReviewLikes(listReviewLikesVars);
+// Variables can be defined inline as well.
+const { data } = await listReviewLikes({ reviewId: ..., });
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await listReviewLikes(dataConnect, listReviewLikesVars);
+
+console.log(data.reviewLikes);
+
+// Or, you can use the `Promise` API.
+listReviewLikes(listReviewLikesVars).then((response) => {
+  const data = response.data;
+  console.log(data.reviewLikes);
+});
+```
+
+### Using `listReviewLikes`'s `QueryRef` function
+
+```typescript
+import { getDataConnect, executeQuery } from 'firebase/data-connect';
+import { connectorConfig, listReviewLikesRef, ListReviewLikesVariables } from '@dataconnect/generated';
+
+// The `listReviewLikes` query requires an argument of type `ListReviewLikesVariables`:
+const listReviewLikesVars: ListReviewLikesVariables = {
+  reviewId: ..., 
+};
+
+// Call the `listReviewLikesRef()` function to get a reference to the query.
+const ref = listReviewLikesRef(listReviewLikesVars);
+// Variables can be defined inline as well.
+const ref = listReviewLikesRef({ reviewId: ..., });
+
+// You can also pass in a `DataConnect` instance to the `QueryRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = listReviewLikesRef(dataConnect, listReviewLikesVars);
+
+// Call `executeQuery()` on the reference to execute the query.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeQuery(ref);
+
+console.log(data.reviewLikes);
+
+// Or, you can use the `Promise` API.
+executeQuery(ref).then((response) => {
+  const data = response.data;
+  console.log(data.reviewLikes);
 });
 ```
 

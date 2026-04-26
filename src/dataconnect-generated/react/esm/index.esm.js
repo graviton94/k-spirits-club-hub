@@ -1,4 +1,4 @@
-import { upsertUserRef, upsertSpiritRef, upsertNewArrivalRef, upsertReviewRef, updateReviewLikesCountRef, upsertReviewLikeRef, deleteReviewLikeRef, upsertReviewCommentRef, deleteReviewCommentRef, upsertNewsRef, deleteNewsRef, upsertCabinetRef, deleteCabinetRef, upsertModificationRequestRef, upsertWorldCupResultRef, deleteSpiritRef, upsertAiDiscoveryLogRef, deleteReviewRef, listSpiritsRef, searchSpiritsPublicRef, listAllCategoriesRef, listAllSubcategoriesRef, listTrendingSpiritsRef, listNewArrivalsRef, getSpiritRef, adminListRawSpiritsRef, getUserProfileRef, listNewsArticlesRef, getNewsArticleRef, auditAllUsersRef, auditAllNewsRef, auditAllSpiritsRef, auditAllReviewsRef, listSpiritReviewsRef, getSpiritReviewsCountRef, findReviewRef, getReviewDetailRef, listReviewCommentsRef, listSpiritsForSitemapRef, getWorldCupResultRef, listSpiritsForWorldCupRef, listAllSpiritsForWorldCupRef, listSpiritsByCategoryForWorldCupRef, listAiDiscoveryLogsRef, listModificationRequestsRef, listUserCabinetRef, listUserReviewsRef, connectorConfig } from '../../esm/index.esm.js';
+import { upsertUserRef, upsertSpiritRef, upsertNewArrivalRef, upsertReviewRef, updateReviewLikesCountRef, upsertReviewLikeRef, deleteReviewLikeRef, upsertReviewCommentRef, deleteReviewCommentRef, upsertNewsRef, deleteNewsRef, upsertCabinetRef, deleteCabinetRef, upsertModificationRequestRef, upsertWorldCupResultRef, deleteSpiritRef, upsertAiDiscoveryLogRef, deleteReviewRef, listSpiritsRef, searchSpiritsPublicRef, listAllCategoriesRef, listAllSubcategoriesRef, listTrendingSpiritsRef, listNewArrivalsRef, getSpiritRef, adminListRawSpiritsRef, getUserProfileRef, listNewsArticlesRef, getNewsArticleRef, auditAllUsersRef, auditAllNewsRef, auditAllSpiritsRef, auditAllReviewsRef, listSpiritReviewsRef, getSpiritReviewsCountRef, findReviewRef, getReviewDetailRef, listReviewCommentsRef, listSpiritsForSitemapRef, getWorldCupResultRef, listSpiritsForWorldCupRef, listAllSpiritsForWorldCupRef, listSpiritsByCategoryForWorldCupRef, listAiDiscoveryLogsRef, listModificationRequestsRef, listUserCabinetRef, listUserReviewsRef, getReviewLikeRef, listReviewLikesRef, connectorConfig } from '../../esm/index.esm.js';
 import { validateArgs, CallerSdkTypeEnum } from 'firebase/data-connect';
 import { useDataConnectQuery, useDataConnectMutation, validateReactArgs } from '@tanstack-query-firebase/react/data-connect';
 
@@ -318,5 +318,17 @@ export function useListUserCabinet(dcOrVars, varsOrOptions, options) {
 export function useListUserReviews(dcOrVars, varsOrOptions, options) {
   const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateReactArgs(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
   const ref = listUserReviewsRef(dcInstance, inputVars);
+  return useDataConnectQuery(ref, inputOpts, CallerSdkTypeEnum.GeneratedReact);
+}
+
+export function useGetReviewLike(dcOrVars, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateReactArgs(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
+  const ref = getReviewLikeRef(dcInstance, inputVars);
+  return useDataConnectQuery(ref, inputOpts, CallerSdkTypeEnum.GeneratedReact);
+}
+
+export function useListReviewLikes(dcOrVars, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts } = validateReactArgs(connectorConfig, dcOrVars, varsOrOptions, options, true, true);
+  const ref = listReviewLikesRef(dcInstance, inputVars);
   return useDataConnectQuery(ref, inputOpts, CallerSdkTypeEnum.GeneratedReact);
 }

@@ -336,3 +336,17 @@ function listUserReviews(dcOrVarsOrOptions, varsOrOptions, options) {
 }
 exports.listUserReviews = listUserReviews;
 
+function getReviewLike(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
+  dcInstance.useGen(true);
+  return dcInstance.executeQuery('getReviewLike', inputVars, inputOpts);
+}
+exports.getReviewLike = getReviewLike;
+
+function listReviewLikes(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
+  dcInstance.useGen(true);
+  return dcInstance.executeQuery('listReviewLikes', inputVars, inputOpts);
+}
+exports.listReviewLikes = listReviewLikes;
+

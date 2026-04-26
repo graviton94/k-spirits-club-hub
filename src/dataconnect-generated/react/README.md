@@ -46,6 +46,8 @@ You can also follow the instructions from the [Data Connect documentation](https
   - [*listModificationRequests*](#listmodificationrequests)
   - [*listUserCabinet*](#listusercabinet)
   - [*listUserReviews*](#listuserreviews)
+  - [*getReviewLike*](#getreviewlike)
+  - [*listReviewLikes*](#listreviewlikes)
 - [**Mutations**](#mutations)
   - [*upsertUser*](#upsertuser)
   - [*upsertSpirit*](#upsertspirit)
@@ -2885,6 +2887,177 @@ export default function ListUserReviewsComponent() {
   // If the Query is successful, you can access the data returned using the `UseQueryResult.data` field.
   if (query.isSuccess) {
     console.log(query.data.spiritReviews);
+  }
+  return <div>Query execution {query.isSuccess ? 'successful' : 'failed'}!</div>;
+}
+```
+
+## getReviewLike
+You can execute the `getReviewLike` Query using the following Query hook function, which is defined in [dataconnect-generated/react/index.d.ts](./index.d.ts):
+
+```javascript
+useGetReviewLike(dc: DataConnect, vars: GetReviewLikeVariables, options?: useDataConnectQueryOptions<GetReviewLikeData>): UseDataConnectQueryResult<GetReviewLikeData, GetReviewLikeVariables>;
+```
+You can also pass in a `DataConnect` instance to the Query hook function.
+```javascript
+useGetReviewLike(vars: GetReviewLikeVariables, options?: useDataConnectQueryOptions<GetReviewLikeData>): UseDataConnectQueryResult<GetReviewLikeData, GetReviewLikeVariables>;
+```
+
+### Variables
+The `getReviewLike` Query requires an argument of type `GetReviewLikeVariables`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+
+```javascript
+export interface GetReviewLikeVariables {
+  userId: string;
+  reviewId: UUIDString;
+}
+```
+### Return Type
+Recall that calling the `getReviewLike` Query hook function returns a `UseQueryResult` object. This object holds the state of your Query, including whether the Query is loading, has completed, or has succeeded/failed, and any data returned by the Query, among other things.
+
+To check the status of a Query, use the `UseQueryResult.status` field. You can also check for pending / success / error status using the `UseQueryResult.isPending`, `UseQueryResult.isSuccess`, and `UseQueryResult.isError` fields.
+
+To access the data returned by a Query, use the `UseQueryResult.data` field. The data for the `getReviewLike` Query is of type `GetReviewLikeData`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+```javascript
+export interface GetReviewLikeData {
+  reviewLike?: {
+    userId: string;
+    reviewId: UUIDString;
+  } & ReviewLike_Key;
+}
+```
+
+To learn more about the `UseQueryResult` object, see the [TanStack React Query documentation](https://tanstack.com/query/v5/docs/framework/react/reference/useQuery).
+
+### Using `getReviewLike`'s Query hook function
+
+```javascript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, GetReviewLikeVariables } from '@dataconnect/generated';
+import { useGetReviewLike } from '@dataconnect/generated/react'
+
+export default function GetReviewLikeComponent() {
+  // The `useGetReviewLike` Query hook requires an argument of type `GetReviewLikeVariables`:
+  const getReviewLikeVars: GetReviewLikeVariables = {
+    userId: ..., 
+    reviewId: ..., 
+  };
+
+  // You don't have to do anything to "execute" the Query.
+  // Call the Query hook function to get a `UseQueryResult` object which holds the state of your Query.
+  const query = useGetReviewLike(getReviewLikeVars);
+  // Variables can be defined inline as well.
+  const query = useGetReviewLike({ userId: ..., reviewId: ..., });
+
+  // You can also pass in a `DataConnect` instance to the Query hook function.
+  const dataConnect = getDataConnect(connectorConfig);
+  const query = useGetReviewLike(dataConnect, getReviewLikeVars);
+
+  // You can also pass in a `useDataConnectQueryOptions` object to the Query hook function.
+  const options = { staleTime: 5 * 1000 };
+  const query = useGetReviewLike(getReviewLikeVars, options);
+
+  // You can also pass both a `DataConnect` instance and a `useDataConnectQueryOptions` object.
+  const dataConnect = getDataConnect(connectorConfig);
+  const options = { staleTime: 5 * 1000 };
+  const query = useGetReviewLike(dataConnect, getReviewLikeVars, options);
+
+  // Then, you can render your component dynamically based on the status of the Query.
+  if (query.isPending) {
+    return <div>Loading...</div>;
+  }
+
+  if (query.isError) {
+    return <div>Error: {query.error.message}</div>;
+  }
+
+  // If the Query is successful, you can access the data returned using the `UseQueryResult.data` field.
+  if (query.isSuccess) {
+    console.log(query.data.reviewLike);
+  }
+  return <div>Query execution {query.isSuccess ? 'successful' : 'failed'}!</div>;
+}
+```
+
+## listReviewLikes
+You can execute the `listReviewLikes` Query using the following Query hook function, which is defined in [dataconnect-generated/react/index.d.ts](./index.d.ts):
+
+```javascript
+useListReviewLikes(dc: DataConnect, vars: ListReviewLikesVariables, options?: useDataConnectQueryOptions<ListReviewLikesData>): UseDataConnectQueryResult<ListReviewLikesData, ListReviewLikesVariables>;
+```
+You can also pass in a `DataConnect` instance to the Query hook function.
+```javascript
+useListReviewLikes(vars: ListReviewLikesVariables, options?: useDataConnectQueryOptions<ListReviewLikesData>): UseDataConnectQueryResult<ListReviewLikesData, ListReviewLikesVariables>;
+```
+
+### Variables
+The `listReviewLikes` Query requires an argument of type `ListReviewLikesVariables`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+
+```javascript
+export interface ListReviewLikesVariables {
+  reviewId: UUIDString;
+}
+```
+### Return Type
+Recall that calling the `listReviewLikes` Query hook function returns a `UseQueryResult` object. This object holds the state of your Query, including whether the Query is loading, has completed, or has succeeded/failed, and any data returned by the Query, among other things.
+
+To check the status of a Query, use the `UseQueryResult.status` field. You can also check for pending / success / error status using the `UseQueryResult.isPending`, `UseQueryResult.isSuccess`, and `UseQueryResult.isError` fields.
+
+To access the data returned by a Query, use the `UseQueryResult.data` field. The data for the `listReviewLikes` Query is of type `ListReviewLikesData`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+```javascript
+export interface ListReviewLikesData {
+  reviewLikes: ({
+    userId: string;
+  })[];
+}
+```
+
+To learn more about the `UseQueryResult` object, see the [TanStack React Query documentation](https://tanstack.com/query/v5/docs/framework/react/reference/useQuery).
+
+### Using `listReviewLikes`'s Query hook function
+
+```javascript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, ListReviewLikesVariables } from '@dataconnect/generated';
+import { useListReviewLikes } from '@dataconnect/generated/react'
+
+export default function ListReviewLikesComponent() {
+  // The `useListReviewLikes` Query hook requires an argument of type `ListReviewLikesVariables`:
+  const listReviewLikesVars: ListReviewLikesVariables = {
+    reviewId: ..., 
+  };
+
+  // You don't have to do anything to "execute" the Query.
+  // Call the Query hook function to get a `UseQueryResult` object which holds the state of your Query.
+  const query = useListReviewLikes(listReviewLikesVars);
+  // Variables can be defined inline as well.
+  const query = useListReviewLikes({ reviewId: ..., });
+
+  // You can also pass in a `DataConnect` instance to the Query hook function.
+  const dataConnect = getDataConnect(connectorConfig);
+  const query = useListReviewLikes(dataConnect, listReviewLikesVars);
+
+  // You can also pass in a `useDataConnectQueryOptions` object to the Query hook function.
+  const options = { staleTime: 5 * 1000 };
+  const query = useListReviewLikes(listReviewLikesVars, options);
+
+  // You can also pass both a `DataConnect` instance and a `useDataConnectQueryOptions` object.
+  const dataConnect = getDataConnect(connectorConfig);
+  const options = { staleTime: 5 * 1000 };
+  const query = useListReviewLikes(dataConnect, listReviewLikesVars, options);
+
+  // Then, you can render your component dynamically based on the status of the Query.
+  if (query.isPending) {
+    return <div>Loading...</div>;
+  }
+
+  if (query.isError) {
+    return <div>Error: {query.error.message}</div>;
+  }
+
+  // If the Query is successful, you can access the data returned using the `UseQueryResult.data` field.
+  if (query.isSuccess) {
+    console.log(query.data.reviewLikes);
   }
   return <div>Query execution {query.isSuccess ? 'successful' : 'failed'}!</div>;
 }

@@ -591,3 +591,15 @@ query listUserReviews($userId: String!) @auth(expr: "auth != null && auth.uid ==
   }
 }
 
+query getReviewLike($userId: String!, $reviewId: UUID!) @auth(level: PUBLIC) {
+  reviewLike(key: { userId: $userId, reviewId: $reviewId }) {
+    userId
+    reviewId
+  }
+}
+
+query listReviewLikes($reviewId: UUID!) @auth(level: PUBLIC) {
+  reviewLikes(where: { reviewId: { eq: $reviewId } }) {
+    userId
+  }
+}

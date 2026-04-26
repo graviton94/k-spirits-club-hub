@@ -210,6 +210,18 @@ export interface GetReviewDetailVariables {
   currentUserId?: string | null;
 }
 
+export interface GetReviewLikeData {
+  reviewLike?: {
+    userId: string;
+    reviewId: UUIDString;
+  } & ReviewLike_Key;
+}
+
+export interface GetReviewLikeVariables {
+  userId: string;
+  reviewId: UUIDString;
+}
+
 export interface GetSpiritData {
   spirit?: {
     id: string;
@@ -444,6 +456,16 @@ export interface ListReviewCommentsData {
 }
 
 export interface ListReviewCommentsVariables {
+  reviewId: UUIDString;
+}
+
+export interface ListReviewLikesData {
+  reviewLikes: ({
+    userId: string;
+  })[];
+}
+
+export interface ListReviewLikesVariables {
   reviewId: UUIDString;
 }
 
@@ -1464,4 +1486,28 @@ export const listUserReviewsRef: ListUserReviewsRef;
 
 export function listUserReviews(vars: ListUserReviewsVariables, options?: ExecuteQueryOptions): QueryPromise<ListUserReviewsData, ListUserReviewsVariables>;
 export function listUserReviews(dc: DataConnect, vars: ListUserReviewsVariables, options?: ExecuteQueryOptions): QueryPromise<ListUserReviewsData, ListUserReviewsVariables>;
+
+interface GetReviewLikeRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: GetReviewLikeVariables): QueryRef<GetReviewLikeData, GetReviewLikeVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: GetReviewLikeVariables): QueryRef<GetReviewLikeData, GetReviewLikeVariables>;
+  operationName: string;
+}
+export const getReviewLikeRef: GetReviewLikeRef;
+
+export function getReviewLike(vars: GetReviewLikeVariables, options?: ExecuteQueryOptions): QueryPromise<GetReviewLikeData, GetReviewLikeVariables>;
+export function getReviewLike(dc: DataConnect, vars: GetReviewLikeVariables, options?: ExecuteQueryOptions): QueryPromise<GetReviewLikeData, GetReviewLikeVariables>;
+
+interface ListReviewLikesRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: ListReviewLikesVariables): QueryRef<ListReviewLikesData, ListReviewLikesVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: ListReviewLikesVariables): QueryRef<ListReviewLikesData, ListReviewLikesVariables>;
+  operationName: string;
+}
+export const listReviewLikesRef: ListReviewLikesRef;
+
+export function listReviewLikes(vars: ListReviewLikesVariables, options?: ExecuteQueryOptions): QueryPromise<ListReviewLikesData, ListReviewLikesVariables>;
+export function listReviewLikes(dc: DataConnect, vars: ListReviewLikesVariables, options?: ExecuteQueryOptions): QueryPromise<ListReviewLikesData, ListReviewLikesVariables>;
 

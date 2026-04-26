@@ -208,6 +208,18 @@ export interface GetReviewDetailVariables {
   currentUserId?: string | null;
 }
 
+export interface GetReviewLikeData {
+  reviewLike?: {
+    userId: string;
+    reviewId: UUIDString;
+  } & ReviewLike_Key;
+}
+
+export interface GetReviewLikeVariables {
+  userId: string;
+  reviewId: UUIDString;
+}
+
 export interface GetSpiritData {
   spirit?: {
     id: string;
@@ -442,6 +454,16 @@ export interface ListReviewCommentsData {
 }
 
 export interface ListReviewCommentsVariables {
+  reviewId: UUIDString;
+}
+
+export interface ListReviewLikesData {
+  reviewLikes: ({
+    userId: string;
+  })[];
+}
+
+export interface ListReviewLikesVariables {
   reviewId: UUIDString;
 }
 
@@ -1133,4 +1155,14 @@ export function listUserCabinet(vars: ListUserCabinetVariables, options?: Operat
 export function listUserReviews(dc: DataConnect, vars: ListUserReviewsVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<ListUserReviewsData>>;
 /** Generated Node Admin SDK operation action function for the 'ListUserReviews' Query. Allow users to pass in custom DataConnect instances. */
 export function listUserReviews(vars: ListUserReviewsVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<ListUserReviewsData>>;
+
+/** Generated Node Admin SDK operation action function for the 'GetReviewLike' Query. Allow users to execute without passing in DataConnect. */
+export function getReviewLike(dc: DataConnect, vars: GetReviewLikeVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<GetReviewLikeData>>;
+/** Generated Node Admin SDK operation action function for the 'GetReviewLike' Query. Allow users to pass in custom DataConnect instances. */
+export function getReviewLike(vars: GetReviewLikeVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<GetReviewLikeData>>;
+
+/** Generated Node Admin SDK operation action function for the 'ListReviewLikes' Query. Allow users to execute without passing in DataConnect. */
+export function listReviewLikes(dc: DataConnect, vars: ListReviewLikesVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<ListReviewLikesData>>;
+/** Generated Node Admin SDK operation action function for the 'ListReviewLikes' Query. Allow users to pass in custom DataConnect instances. */
+export function listReviewLikes(vars: ListReviewLikesVariables, options?: OperationOptions): Promise<ExecuteOperationResponse<ListReviewLikesData>>;
 

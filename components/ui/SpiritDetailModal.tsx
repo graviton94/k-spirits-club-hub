@@ -8,7 +8,8 @@ import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import { getTagColor } from "@/lib/constants/tag-colors";
 import type { Spirit, UserReview } from "@/lib/utils/flavor-engine";
 import ReviewModal from "@/components/cabinet/ReviewModal";
-import { Bookmark, Plus, Pencil, Check, Loader2, X } from "lucide-react";
+import { Bookmark, Plus, Pencil, Check, Loader2, X, Sparkles } from "lucide-react";
+import NextImage from "next/image";
 import { addToCabinet } from "@/app/[lang]/actions/cabinet";
 import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
 import metadata from "@/lib/constants/spirits-metadata.json";
@@ -221,7 +222,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                         <div className="absolute inset-0 z-10 bg-linear-to-t from-card via-card/20 to-transparent" />
                         
                         {localSpirit.imageUrl ? (
-                            <Image
+                            <NextImage
                                 src={getOptimizedImageUrl(localSpirit.imageUrl, 1200)}
                                 alt={localSpirit.name}
                                 fill

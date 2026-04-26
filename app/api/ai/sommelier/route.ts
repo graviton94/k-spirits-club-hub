@@ -2,7 +2,10 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { dbUpsertAiDiscoveryLog } from '@/lib/db/data-connect-client';
+import { 
+    dbUpsertAiDiscoveryLog,
+    dbSearchSpiritsPublic 
+} from '@/lib/db/data-connect-client';
 import { db } from '@/lib/db'; // Compatibility layer for getPublishedSearchIndex
 
 
@@ -187,19 +190,25 @@ export async function POST(req: NextRequest) {
 
         let parsed;
         try {
-            parsed = JSON.parse(responseText);
+            // Flexible JSON extraction in case AI wraps it in markdown blocks
+            const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+            parsed = JSON.parse(jsonMatch ? jsonMatch[0] : responseText);
         } catch (e: any) {
             console.error('[Sommelier API] JSON Parse Error:', e, responseText);
             return fallbackResponse(lang, currentStep, 'JSON Parse Failed', 'AI_SOMMELIER_PARSE_ERROR');
         }
 
         // Enrich recommendations with real DB data
-        if (parsed.recommendations && parsed.recommendations.length > 0) {
+        if (parsed.recommendations && Array.isArray(parsed.recommendations) && parsed.recommendations.length > 0) {
             if (!searchIndex || searchIndex.length === 0) {
                 try {
-                    searchIndex = await db.getPublishedSearchIndex();
+                    // Try Data Connect search if Index is unavailable
+                    if (parsed.recommendations[0]?.name) {
+                        const recMatch = await dbSearchSpiritsPublic({ search: parsed.recommendations[0].name, limit: 1 });
+                        if (recMatch && recMatch.length > 0) searchIndex = recMatch;
+                    }
                 } catch (e: any) {
-                    console.error('Failed to fetch search index for enrichment:', e);
+                    console.error('Failed to fetch fallback search results:', e);
                 }
             }
 
@@ -207,7 +216,15 @@ export async function POST(req: NextRequest) {
                 parsed.recommendations = parsed.recommendations.map((rec: any) => {
                     const match = searchIndex.find(s => s.i === rec.id) || searchIndex.find(s => (s.n === rec.name));
                     if (match) {
-                        return { ...rec, id: match.i, inDb: true, thumbnailUrl: match.t };
+                        return { 
+                            ...rec, 
+                            id: match.i, 
+                            inDb: true, 
+                            thumbnailUrl: match.t,
+                            name: match.n,
+                            category: match.c,
+                            abv: match.a
+                        };
                     }
                     return { ...rec, inDb: false };
                 });
@@ -217,7 +234,7 @@ export async function POST(req: NextRequest) {
             if (parsed.nextStep === 6) {
                 try {
                     await dbUpsertAiDiscoveryLog({
-                        id: `log_${Date.now()}`,
+                        id: crypto.randomUUID(), // Fix: Use real UUID for PostgreSQL
                         userId,
                         analysis: parsed.analysis,
                         recommendations: parsed.recommendations,

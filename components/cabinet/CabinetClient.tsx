@@ -88,13 +88,13 @@ export default function CabinetClient({ lang, dict }: CabinetClientProps) {
 
             const enrichedData = cabinetData.map((item: any) => {
                 const indexItem = searchIndex.find(s => s.i === item.id);
-                // REAL SCHEMA BINDING: isFavorite exists, isWishlist does NOT
-                const isFavorite = !!item.isFavorite; // Boolean in schema
-                const hasRating = (Number(item.rating) || 0) > 0;
+                // Schema uses isWishlist directly now
+                const isWishlist = !!item.isWishlist;
                 
                 return {
                     ...item,
-                    isWishlist: !isFavorite && !hasRating, // True ONLY if both are false/empty
+                    isWishlist,
+                    isFavorite: !!item.isFavorite,
                     name_en: item.name_en || indexItem?.en || null,
                     thumbnailUrl: item.thumbnailUrl || indexItem?.t || item.imageUrl,
                     imageUrl: item.imageUrl || indexItem?.t,

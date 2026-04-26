@@ -21,48 +21,35 @@ interface ContentsPageProps {
 }
 
 export async function generateMetadata({ params }: ContentsPageProps): Promise<Metadata> {
-  const { lang = 'ko' } = await params;
-  const isEn = lang === 'en';
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://kspiritsclub.com';
-  const ogImageUrl = `${baseUrl}/default-og.jpg`;
+  try {
+    const { lang = 'ko' } = await params;
+    const isEn = lang === 'en';
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://kspiritsclub.com';
+    const ogImageUrl = `${baseUrl}/default-og.jpg`;
 
-  const canonicalUrl = getCanonicalUrl(`/${lang}/contents`);
-  const hreflangAlternates = getHreflangAlternates('/contents');
+    const canonicalUrl = getCanonicalUrl(`/${lang}/contents`);
+    const hreflangAlternates = getHreflangAlternates('/contents');
 
-  return {
-    title: isEn
-      ? "Contents Hub — Spirit MBTI, World Cup, Reviews & Wiki"
-      : "콘텐츠 허브 — 주류 MBTI · 월드컵 · 리뷰 · 백과사전",
-    description: isEn
-      ? "Discover your spirit personality with our MBTI test, vote in the Spirit World Cup, read community tasting reviews, follow AI-powered global spirits news, and explore the Spirits Wiki and comparison guides — all in one place."
-      : "주류 MBTI 테스트로 나의 취향을 분석하고, 술 취향 월드컵에서 최애 주류를 뽑고, 커뮤니티 리뷰를 읽고, AI가 분석한 글로벌 주류 뉴스와 주류 백과사전·비교 가이드까지 — K-Spirits Club 콘텐츠 허브에서 모두 만나보세요.",
-    alternates: {
-      canonical: canonicalUrl,
-      languages: hreflangAlternates,
-    },
-    openGraph: {
-      title: isEn ? "Contents Hub | K-Spirits Club" : "콘텐츠 허브 | K-Spirits Club",
+    return {
+      title: isEn
+        ? "Contents Hub — Spirit MBTI, World Cup, Reviews & Wiki"
+        : "콘텐츠 허브 — 주류 MBTI · 월드컵 · 리뷰 · 백과사전",
       description: isEn
-        ? "Spirit MBTI, World Cup tournament, tasting reviews, AI news, and Spirits Wiki — explore all spirits contents in one place."
-        : "주류 MBTI, 월드컵 토너먼트, 시음 리뷰, AI 뉴스, 주류 백과사전 — 주류 콘텐츠의 모든 것.",
-      type: "website",
-      siteName: "K-Spirits Club",
-      url: canonicalUrl,
-      images: [ogImageUrl]
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: isEn ? "Contents Hub | K-Spirits Club" : "콘텐츠 허브 | K-Spirits Club",
-      description: isEn
-        ? "Spirit MBTI, World Cup tournament, tasting reviews, AI news, and Spirits Wiki."
-        : "주류 MBTI, 월드컵 토너먼트, 시음 리뷰, AI 뉴스, 주류 백과사전.",
-      images: [ogImageUrl]
-    }
-  };
+        ? "Discover your spirit personality with our MBTI test, vote in the Spirit World Cup, read community tasting reviews, follow AI-powered global spirits news, and explore the Spirits Wiki and comparison guides."
+        : "주류 MBTI 테스트로 나의 취향을 분석하고, 술 취향 월드컵에서 최애 주류를 뽑고, 커뮤니티 리뷰를 읽고, AI 뉴스까지 한곳에서 만나보세요.",
+      alternates: {
+        canonical: canonicalUrl,
+        languages: hreflangAlternates,
+      },
+    };
+  } catch (e) {
+    return { title: 'Contents Hub | K-Spirits Club' };
+  }
 }
 
 export default async function ContentsPage({ params }: ContentsPageProps) {
-  const { lang = 'ko' } = await params;
+  const resolvedParams = await params.catch(() => ({ lang: 'ko' }));
+  const lang = resolvedParams?.lang || 'ko';
   const isEn = lang === 'en';
 
   const contents = [

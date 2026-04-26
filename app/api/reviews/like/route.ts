@@ -1,7 +1,15 @@
 // app/api/reviews/like/route.ts
 
 import { NextRequest, NextResponse } from 'next/server';
-import { dbFindReview, dbUpdateReview } from '@/lib/db/data-connect-client';
+import { 
+    dbFindReview, 
+    dbUpsertReviewLike, 
+    dbDeleteReviewLike, 
+    dbGetReviewDetail,
+    dbUpsertReview,
+    dbGetReviewLikesCount,
+    dbGetReviewLike
+} from '@/lib/db/data-connect-client';
 
 export const runtime = 'nodejs';
 
@@ -14,35 +22,38 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
         }
 
-        // 1. Find the review (Data Connect uses UUID, but legacy API passes user+spirit)
+        // 1. Find the review (using user + spirit mapping)
         const review = await dbFindReview({ userId: reviewUserId, spiritId });
+        if (!review) return NextResponse.json({ error: 'Review not found' }, { status: 404 });
 
-        if (!review) {
-            return NextResponse.json({ error: 'Review not found' }, { status: 404 });
-        }
+        const reviewId = review.id;
 
-        // 2. Toggle legacy logic
-        const currentLikedBy = review.likedBy || [];
-        const isLiked = currentLikedBy.includes(likerUserId);
-        
-        let newLikedBy: string[];
+        // 2. Check current status via explicit ReviewLike check
+        const userLike = await dbGetReviewLike(likerUserId, reviewId);
+        const isLiked = !!userLike;
+
+        // 3. Toggle Relational Like
         if (isLiked) {
-            newLikedBy = currentLikedBy.filter((id: string) => id !== likerUserId);
+            await dbDeleteReviewLike({ userId: likerUserId, reviewId });
         } else {
-            newLikedBy = [...currentLikedBy, likerUserId];
+            await dbUpsertReviewLike({ userId: likerUserId, reviewId });
         }
 
-        // 3. Update in PostgreSQL
-        await dbUpdateReview({
-            id: review.id,
-            likes: newLikedBy.length,
-            likedBy: newLikedBy
+        // 4. Sync Total Likes Count on the Review object (Denormalization for performance)
+        const newTotalLikes = await dbGetReviewLikesCount(reviewId);
+        
+        // Update the review object with the new likes count
+        await dbUpsertReview({ 
+            id: reviewId, 
+            spiritId, 
+            userId: reviewUserId,
+            likes: newTotalLikes 
         });
 
         return NextResponse.json({ 
             success: true, 
             isLiked: !isLiked, 
-            likes: newLikedBy.length 
+            likes: newTotalLikes
         }, { status: 200 });
 
     } catch (error) {

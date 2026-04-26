@@ -6,6 +6,7 @@ import { MessageCircle, X, Send, User, Sparkles, ChevronRight, Search, RefreshCc
 import { SpiritCard } from './SpiritCard';
 import { useAuth } from '@/app/[lang]/context/auth-context';
 import { useRouter, usePathname } from 'next/navigation';
+import NextImage from 'next/image';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -21,22 +22,26 @@ interface ChatSommelierProps {
 
 // Sommelier Profile Image Component
 const AiProfile = () => (
-  <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 bg-primary/10 border border-primary/20 flex items-center justify-center">
-    <img
+  <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 bg-primary/10 border border-primary/20 flex items-center justify-center relative">
+    <NextImage
       src="/icons/user/user-3.webp"
       alt="Sommelier"
-      className="w-full h-full object-cover"
+      fill
+      className="object-cover"
+      unoptimized
     />
   </div>
 );
 
 // Large Header Sommelier Profile
 const AiHeaderProfile = () => (
-  <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 bg-white/20 border border-white/30 flex items-center justify-center">
-    <img
+  <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 bg-white/20 border border-white/30 flex items-center justify-center relative">
+    <NextImage
       src="/icons/user/user-3.webp"
       alt="Sommelier"
+      fill
       className="w-full h-full object-cover"
+      unoptimized
     />
   </div>
 );
@@ -184,17 +189,14 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
   const lastAssistantMsg = getLastAssistantMessage();
   const isFinished = currentStep === 6 && (lastAssistantMsg?.recommendations?.length ?? 0) > 0;
 
-  // Only show on main page and spirits pages
-  const isVisible = pathname !== null && (
-    /^\/(ko|en)\/?$/.test(pathname) ||
-    /^\/(ko|en)\/spirits(\/.*)?$/.test(pathname)
-  );
+  // Visibility Logic: Hide on admin pages
+  const isVisible = pathname !== null && !pathname.includes('/admin');
 
   if (!isVisible) return null;
 
   return (
     <>
-      <div className="fixed bottom-24 right-6 z-50 flex flex-col items-end gap-2 pr-2 pb-2">
+      <div className="fixed bottom-24 right-6 z-[110] flex flex-col items-end gap-2 pr-2 pb-2">
         <AnimatePresence>
           {!isOpen && (
             <motion.div
@@ -223,10 +225,12 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
             <X size={28} className="z-10" />
           ) : (
             <>
-              <img 
+              <NextImage 
                 src="/icons/user/user-3.webp" 
                 alt="Sommelier" 
-                className="w-full h-full object-cover transition-transform group-hover:scale-110" 
+                fill
+                className="object-cover transition-transform group-hover:scale-110" 
+                unoptimized
               />
               <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />
             </>
@@ -250,7 +254,7 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed bottom-0 left-0 right-0 z-50 w-full h-[75vh] md:bottom-28 md:right-6 md:left-auto md:w-[440px] md:h-[620px] bg-card/95 backdrop-blur-xl border border-border rounded-t-[2.5rem] md:rounded-[2.5rem] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden bottom-nav-safe"
+              className="fixed bottom-0 left-0 right-0 z-[120] w-full h-[75vh] md:bottom-28 md:right-6 md:left-auto md:w-[440px] md:h-[620px] bg-card/95 backdrop-blur-xl border border-border rounded-t-[2.5rem] md:rounded-[2.5rem] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden bottom-nav-safe"
             >
               {/* Header */}
               <div className="p-6 bg-primary text-white shrink-0 relative">

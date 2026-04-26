@@ -14,6 +14,7 @@ import imageCompression from 'browser-image-compression';
 import MicroReviewModal from '@/components/ui/MicroReviewModal';
 import { toggleReviewLike } from '@/app/[lang]/actions/social';
 import Link from 'next/link';
+import NextImage from 'next/image';
 
 interface ExtendedReview extends Review {
   noseRating?: number;
@@ -234,6 +235,7 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
           <ReviewCard
             key={review.id}
             review={review}
+            spiritId={spiritId}
             isOwner={user?.uid === review.userId}
             onEdit={() => handleEdit(review)}
             onDelete={() => setDeleteTarget(review)}
@@ -357,8 +359,9 @@ function RatingSummaryItem({ label, value, icon, color = "text-amber-500" }: { l
   );
 }
 
-function ReviewCard({ review, isOwner, onEdit, onDelete, onToast }: {
+function ReviewCard({ review, isOwner, onEdit, onDelete, onToast, spiritId }: {
   review: ExtendedReview,
+  spiritId?: string,
   isOwner?: boolean,
   onEdit?: () => void,
   onDelete?: () => void,
@@ -380,19 +383,28 @@ function ReviewCard({ review, isOwner, onEdit, onDelete, onToast }: {
 
     setIsLiking(true);
     
-    // Call server action
-    const result = await toggleReviewLike(
-      user.uid, 
-      review.id, 
-      likes, 
-      isLiked
-    );
+    // Call API route
+    try {
+      const response = await fetch('/api/reviews/like', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          spiritId: review.spiritId || spiritId, // Fallback to prop spiritId
+          reviewUserId: review.userId,
+          likerUserId: user.uid
+        })
+      });
 
-    if (result.success) {
-      setLikes(result.newCount || 0);
-      setIsLiked(!isLiked);
-    } else {
-      onToast?.('좋아요 처리 중 오류가 발생했습니다.', 'error');
+      if (response.ok) {
+        const data = await response.json();
+        setLikes(data.likes);
+        setIsLiked(data.isLiked);
+      } else {
+        onToast?.('좋아요 처리 중 오류가 발생했습니다.', 'error');
+      }
+    } catch (error) {
+      console.error('Like toggle error:', error);
+      onToast?.('오류가 발생했습니다.', 'error');
     }
     setIsLiking(false);
   };
@@ -476,7 +488,15 @@ function ReviewCard({ review, isOwner, onEdit, onDelete, onToast }: {
       {review.imageUrls && review.imageUrls.length > 0 && (
         <div className="flex gap-2 mb-6 overflow-x-auto pb-2 custom-scrollbar">
           {review.imageUrls.map((url, i) => (
-            <img key={i} src={url} alt={`Review photo ${i + 1}`} className="h-32 w-auto object-cover rounded-xl border border-border/50 shrink-0" />
+            <div key={i} className="h-32 w-48 relative shrink-0">
+              <NextImage 
+                src={url} 
+                alt={`Review photo ${i + 1}`} 
+                fill
+                className="object-cover rounded-xl border border-border/50" 
+                unoptimized
+              />
+            </div>
           ))}
         </div>
       )}

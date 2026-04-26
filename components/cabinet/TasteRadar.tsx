@@ -28,32 +28,48 @@ export default function TasteRadar({ data }: TasteRadarProps) {
                 <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
                     <PolarGrid 
                         stroke="currentColor" 
-                        className="text-muted-foreground/20" 
-                        strokeDasharray="3 3" 
+                        className="text-muted-foreground/10" 
+                        strokeDasharray="4 4" 
                     />
                     <PolarAngleAxis 
                         dataKey="subject" 
                         tick={{ 
                             fill: 'currentColor', 
-                            fontSize: 10, 
-                            fontWeight: 800, 
+                            fontSize: 11, 
+                            fontFamily: 'inherit',
+                            fontWeight: 900, 
                             letterSpacing: '0.05em' 
                         }} 
-                        className="text-foreground/70"
+                        className="text-foreground/60"
                     />
-                    <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
+                    <PolarRadiusAxis 
+                        angle={30} 
+                        domain={[0, 100]} 
+                        tick={false} 
+                        axisLine={false} 
+                    />
                     <Radar
                         name="Palate DNA"
                         dataKey="A"
                         stroke="#FFBF00"
-                        strokeWidth={2}
+                        strokeWidth={3}
                         fill="#FFBF00"
-                        fillOpacity={0.15}
-                        animationBegin={0}
-                        animationDuration={1500}
-                        dot={{ r: 3, fill: '#FFBF00', stroke: 'currentColor', strokeWidth: 1 }}
-                        className="text-background"
-                        activeDot={{ r: 5, fill: '#FFBF00', stroke: 'currentColor', strokeWidth: 2 }}
+                        fillOpacity={0.25}
+                        animationBegin={200}
+                        animationDuration={2000}
+                        dot={{ 
+                            r: 4, 
+                            fill: '#FFBF00', 
+                            stroke: 'white', 
+                            strokeWidth: 2 
+                        }}
+                        activeDot={{ 
+                            r: 6, 
+                            fill: '#FFBF00', 
+                            stroke: 'white', 
+                            strokeWidth: 3,
+                            className: "shadow-2xl" 
+                        }}
                     />
                 </RadarChart>
             </ResponsiveContainer>

@@ -34,6 +34,8 @@ import {
   listUserReviews,
   deleteCabinet,
   findReview,
+  getReviewLike,
+  listReviewLikes,
   searchSpiritsPublic,
   listAllCategories,
   listAllSubcategories,
@@ -222,6 +224,11 @@ export const dbUpsertReview = async (vars: any) => {
   return await upsertReview(getDC(), filterAllowedFields(vars, allowed));
 };
 
+export const dbGetReview = async (id: string) => {
+  const { data } = await getReviewDetail(getDC(), { id: id as any });
+  return data.spiritReview;
+};
+
 // --- AI Logs ---
 export const dbListAiDiscoveryLogs = async (limit: number) => {
   const { data } = await listAiDiscoveryLogs(getDC(), { limit });
@@ -242,6 +249,12 @@ export const dbListModificationRequests = async () => {
 export const dbUpsertModificationRequest = async (vars: any) => {
   const allowed = ['id', 'spiritId', 'spiritName', 'userId', 'title', 'content', 'status', 'createdAt'];
   return await upsertModificationRequest(getDC(), filterAllowedFields(vars, allowed));
+};
+
+// --- Review Likes ---
+export const dbGetReviewLikesCount = async (reviewId: string) => {
+  const { data } = await listReviewLikes(getDC(), { reviewId });
+  return data.reviewLikes.length;
 };
 
 // --- News ---
@@ -337,6 +350,11 @@ export const dbDeleteReviewLike = async (vars: { userId: string, reviewId: strin
 
 export const dbUpdateReviewLikesCount = async (vars: { id: string, likes: number }) => {
   return await updateReviewLikesCount(getDC(), vars);
+};
+
+export const dbGetReviewLike = async (userId: string, reviewId: string) => {
+  const { data } = await getReviewLike(getDC(), { userId, reviewId: reviewId as any });
+  return data.reviewLike;
 };
 
 export const dbUpsertReviewComment = async (vars: { id: string, reviewId: string, userId: string, content: string, updatedAt?: string }) => {

@@ -116,6 +116,15 @@ export async function POST(req: NextRequest) {
 
         console.log(`[analyze-taste][${traceId}] 📦 Cabinet: ${cabinetItems.length} items, Reviews: ${userReviews.length} items`);
 
+        if (cabinetItems.length === 0) {
+            return NextResponse.json({ 
+                error: 'Collection too small', 
+                code: 'ANALYZE_INSUFFICIENT_DATA', 
+                traceId,
+                message: isEn ? "Add more spirits to your cabinet first!" : "먼저 술장에 최소 1개 이상의 술을 담아주세요!"
+            }, { status: 400 });
+        }
+
         const spiritsForAnalysis = cabinetItems.map((item: any) => {
             if (!item) return null;
             const spirit = item.spirit || {};
@@ -124,16 +133,16 @@ export async function POST(req: NextRequest) {
             // Map REAL SCHEMA (CamelCase) to AI Expected (Snake_Case)
             return {
                 name: spirit.name,
-                name_en: spirit.nameEn,
+                nameEn: spirit.nameEn,
                 category: spirit.category,
                 distillery: spirit.distillery,
                 abv: spirit.abv,
-                isWishlist: !item.isFavorite && !(item.rating > 0), // Derived from real schema
+                isWishlist: item.isWishlist || (!item.isFavorite && !(item.rating > 0)),
                 addedAt: item.addedAt,
-                nose_tags: spirit.noseTags || [],
-                palate_tags: spirit.palateTags || [],
-                finish_tags: spirit.finishTags || [],
-                tasting_note: spirit.tastingNote,
+                noseTags: spirit.noseTags || [],
+                palateTags: spirit.palateTags || [],
+                finishTags: spirit.finishTags || [],
+                tastingNote: spirit.tastingNote,
                 userReview: review ? {
                     ratingOverall: Number(review.rating) || 0,
                     tagsN: typeof review.nose === 'string' ? review.nose.split(',') : [],
