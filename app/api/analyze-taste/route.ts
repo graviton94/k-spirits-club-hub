@@ -31,10 +31,10 @@ async function tryFindSpiritInDb(name: string) {
         
         if (results && results.length > 0) {
             const lowerName = name.toLowerCase();
-            return results.find((s: any) => 
-                s.name.toLowerCase().includes(lowerName) || 
-                (s.name_en && s.name_en.toLowerCase().includes(lowerName))
-            ) || results[0]; // Return closest match if no perfect include
+            return results.find((s: any) =>
+                s.name.toLowerCase().includes(lowerName) ||
+                (s.nameEn && s.nameEn.toLowerCase().includes(lowerName))
+            ) || results[0];
         }
         return null;
     } catch (e) {
@@ -233,7 +233,7 @@ export async function POST(req: NextRequest) {
 
         const genAI = new GoogleGenerativeAI(apiKey);
         const model = genAI.getGenerativeModel({ 
-            model: "gemini-1.5-flash", 
+            model: "gemini-1.5-flash-latest", 
             systemInstruction, 
             generationConfig: { 
                 responseMimeType: "application/json",
@@ -243,7 +243,16 @@ export async function POST(req: NextRequest) {
         });
 
         const result = await model.generateContent(promptData);
-        const analysisResult = JSON.parse(result.response.text());
+        const rawText = result.response.text();
+        let analysisResult;
+        try {
+            const cleanText = rawText.replace(/```json|```/g, '').trim();
+            const jsonMatch = cleanText.match(/\{[\s\S]*\}/);
+            analysisResult = JSON.parse(jsonMatch ? jsonMatch[0] : cleanText);
+        } catch (e) {
+            console.error('[Analyze Taste] Parse Error:', e, rawText);
+            throw new Error('AI 분석 결과 형식이 올바르지 않습니다.');
+        }
 
         // Process Recommendations
         const rawRecommendations = Array.isArray(analysisResult.recommendations)

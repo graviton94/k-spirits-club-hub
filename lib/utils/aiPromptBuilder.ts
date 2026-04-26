@@ -3,7 +3,7 @@
 // 1. route.ts에서 넘어오는 실제 데이터 구조 정의 (Cabinet 스냅샷 + 리뷰)
 export interface AnalysisInputItem {
     name: string;             // 필수 (Cabinet)
-    name_en?: string | null;  // [추가] 영문 제품명 (Global Sync)
+    nameEn?: string | null;   // 영문 제품명 (Global Sync)
     category?: string;        // 선택 (Cabinet)
     distillery?: string;      // 선택 (Cabinet)
     abv?: number;             // 선택 (Cabinet)
@@ -11,14 +11,14 @@ export interface AnalysisInputItem {
     region?: string;          // 선택 (원본에만 있을 수 있음)
     subcategory?: string;     // 선택 (원본에만 있을 수 있음)
     isWishlist?: boolean;     // 필수
-    addedAt?: string;         // [추가] 술장에 추가된 날짜 (ISO)
-    lastActivityAt?: string;  // [추가] 마지막 활동(리뷰 등) 날짜 (ISO)
+    addedAt?: string;         // 술장에 추가된 날짜 (ISO)
+    lastActivityAt?: string;  // 마지막 활동(리뷰 등) 날짜 (ISO)
 
     // Spirit-level flavor DNA
-    nose_tags?: string[];
-    palate_tags?: string[];
-    finish_tags?: string[];
-    tasting_note?: string;
+    noseTags?: string[];
+    palateTags?: string[];
+    finishTags?: string[];
+    tastingNote?: string;
 
     // 조립된 리뷰 데이터
     userReview?: {
@@ -34,10 +34,10 @@ export interface AnalysisInputItem {
     } | null;
 
     metadata?: {
-        tasting_note?: string;
-        nose_tags?: string[];
-        palate_tags?: string[];
-        finish_tags?: string[];
+        tastingNote?: string;
+        noseTags?: string[];
+        palateTags?: string[];
+        finishTags?: string[];
         [key: string]: any;
     };
 }
@@ -95,13 +95,13 @@ export function buildTasteAnalysisPrompt(
             entry.spec = specParts.join(', ');
         }
 
-        // (4) Inherent Flavor DNA
+        // (4) Inherent Flavor DNA — strictly CamelCase per SSoT
         const inherentTags = [
-            ...(item.nose_tags || item.metadata?.nose_tags || []),
-            ...(item.palate_tags || item.metadata?.palate_tags || []),
-            ...(item.finish_tags || item.metadata?.finish_tags || [])
+            ...(item.noseTags || item.metadata?.noseTags || []),
+            ...(item.palateTags || item.metadata?.palateTags || []),
+            ...(item.finishTags || item.metadata?.finishTags || [])
         ].filter(Boolean);
-        const inherentNote = item.tasting_note || item.metadata?.tasting_note;
+        const inherentNote = item.tastingNote || item.metadata?.tastingNote;
 
         if (inherentTags.length > 0) entry.inherentFlavor = inherentTags.join(', ');
         if (inherentNote) entry.inherentNote = inherentNote;

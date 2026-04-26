@@ -389,6 +389,7 @@ function ReviewCard({ review, isOwner, onEdit, onDelete, onToast, spiritId }: {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          reviewId: review.id,
           spiritId: review.spiritId || spiritId, // Fallback to prop spiritId
           reviewUserId: review.userId,
           likerUserId: user.uid

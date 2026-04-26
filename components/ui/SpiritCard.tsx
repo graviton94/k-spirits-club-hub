@@ -43,8 +43,8 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
   const isAiDiscovery = spirit.isAiDiscovery === true;
   const matchRate = spirit.score ? Math.round(spirit.score * 100) : 0;
 
-  const localizedName = isEn ? (spirit.name_en || spirit.metadata?.name_en || spirit.name) : spirit.name;
-  const localizedDistillery = isEn ? (spirit.metadata?.distillery_en || spirit.distillery) : spirit.distillery;
+  const localizedName = isEn ? (spirit.nameEn || spirit.metadata?.nameEn || spirit.name) : spirit.name;
+  const localizedDistillery = isEn ? (spirit.metadata?.distilleryEn || spirit.distillery) : spirit.distillery;
   const localizedCategory = isEn ? ((metadata as any).display_names_en?.[spirit.category] || spirit.category) : spirit.category;
   const matchReason = spirit.analysisReason || spirit.reason;
   

@@ -92,6 +92,9 @@ export interface Spirit {
 
   // Data quality & publishing
   status: string | null;
+  source: string | null;   // Data source label (e.g. 'manual', 'ai', 'external')
+  importer: string | null;
+  rawCategory: string | null;
   isPublished: boolean;
   isReviewed: boolean;
   reviewedBy: string | null;

@@ -78,6 +78,7 @@ export const dbAdminListUserCabinet = async (userId: string) => {
             userCabinets(where: { userId: { eq: $userId } }) {
                 spiritId
                 isFavorite
+                isWishlist
                 notes
                 rating
                 spirit {
@@ -88,6 +89,10 @@ export const dbAdminListUserCabinet = async (userId: string) => {
                     thumbnailUrl
                     abv
                     distillery
+                    noseTags
+                    palateTags
+                    finishTags
+                    tastingNote
                 }
             }
         }

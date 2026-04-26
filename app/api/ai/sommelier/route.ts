@@ -11,7 +11,7 @@ import { db } from '@/lib/db'; // Compatibility layer for getPublishedSearchInde
 
 export const runtime = 'nodejs';
 
-const MODEL_ID = "gemini-1.5-flash";
+const MODEL_ID = "gemini-1.5-flash-latest";
 
 /**
  * AI Sommelier Q&A Bot API
@@ -164,10 +164,12 @@ export async function POST(req: NextRequest) {
         }
         `;
 
+        console.log(`[Sommelier API][${traceId}] Calling Gemini with step: ${currentStep}, knowledgeBase length: ${knowledgeBase.length}`);
+
         const directGenAI = new GoogleGenerativeAI(apiKey);
         const model = directGenAI.getGenerativeModel({
             model: MODEL_ID,
-            systemInstruction
+            systemInstruction: systemInstruction.trim()
         });
 
         const conversationMessages = messages.map((m: any) => ({
@@ -190,12 +192,13 @@ export async function POST(req: NextRequest) {
 
         let parsed;
         try {
-            // Flexible JSON extraction in case AI wraps it in markdown blocks
-            const jsonMatch = responseText.match(/\{[\s\S]*\}/);
-            parsed = JSON.parse(jsonMatch ? jsonMatch[0] : responseText);
+            // Robust JSON extraction
+            const cleanText = responseText.replace(/```json|```/g, '').trim();
+            const jsonMatch = cleanText.match(/\{[\s\S]*\}/);
+            parsed = JSON.parse(jsonMatch ? jsonMatch[0] : cleanText);
         } catch (e: any) {
             console.error('[Sommelier API] JSON Parse Error:', e, responseText);
-            return fallbackResponse(lang, currentStep, 'JSON Parse Failed', 'AI_SOMMELIER_PARSE_ERROR');
+            return fallbackResponse(lang, currentStep, 'AI returned invalid JSON format', 'AI_SOMMELIER_PARSE_ERROR');
         }
 
         // Enrich recommendations with real DB data
@@ -214,16 +217,19 @@ export async function POST(req: NextRequest) {
 
             if (searchIndex && searchIndex.length > 0) {
                 parsed.recommendations = parsed.recommendations.map((rec: any) => {
-                    const match = searchIndex.find(s => s.i === rec.id) || searchIndex.find(s => (s.n === rec.name));
-                    if (match) {
+                    // Standardize match object to use either minified (i/n/c) or full (id/name/category) keys
+                    const m = searchIndex.find(s => (s.i || s.id) === rec.id) || 
+                              searchIndex.find(s => (s.n || s.name) === rec.name);
+                    
+                    if (m) {
                         return { 
                             ...rec, 
-                            id: match.i, 
+                            id: m.i || m.id, 
                             inDb: true, 
-                            thumbnailUrl: match.t,
-                            name: match.n,
-                            category: match.c,
-                            abv: match.a
+                            thumbnailUrl: m.t || m.thumbnailUrl || m.imageUrl,
+                            name: m.n || m.name,
+                            category: m.c || m.category,
+                            abv: m.a || m.abv
                         };
                     }
                     return { ...rec, inDb: false };

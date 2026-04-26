@@ -171,14 +171,14 @@ function ExploreCardComponent({
 
   // Extract first 2 tags (Strict Schema) - Memoized for performance
   const tastingTags = useMemo(() => {
-    if (spirit.tasting_note) {
-      return spirit.tasting_note.split(/[,\s#]+/).filter(Boolean).slice(0, 2);
+    if (spirit.tastingNote) {
+      return spirit.tastingNote.split(/[,\s#]+/).filter(Boolean).slice(0, 2);
     }
-    if (spirit.nose_tags && spirit.nose_tags.length > 0) {
-      return spirit.nose_tags.slice(0, 2);
+    if (spirit.noseTags && spirit.noseTags.length > 0) {
+      return spirit.noseTags.slice(0, 2);
     }
     return [];
-  }, [spirit.tasting_note, spirit.nose_tags]);
+  }, [spirit.tastingNote, spirit.noseTags]);
 
   const content = (
     <motion.div

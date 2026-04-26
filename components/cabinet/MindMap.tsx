@@ -1,8 +1,24 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { FlavorAnalysis, HierarchicalNode } from '@/lib/utils/flavor-engine';
 import { useState, useMemo } from 'react';
+
+// Local type definitions (flavor-engine does not export these)
+interface HierarchicalNode {
+  id: string;
+  label: string;
+  type: 'user' | 'product' | 'tag';
+  category?: string;
+  position: { x: number; y: number };
+  connections: string[];
+}
+
+interface FlavorAnalysis {
+  totalSpirits: number;
+  persona: string;
+  hierarchicalNodes?: HierarchicalNode[];
+  categoryDistribution: { category: string; percentage: number }[];
+}
 
 interface MindMapProps {
   analysis: FlavorAnalysis;
@@ -81,7 +97,7 @@ export default function MindMap({ analysis, profileImage }: MindMapProps) {
     }
     if (node.type === 'tag' && node.connections.length > 0) {
       const parentId = node.connections[0];
-      const parent = nodes.find(n => n.id === parentId);
+      const parent = nodes.find((n: HierarchicalNode) => n.id === parentId);
       return parent ? parent.position : { x: 0, y: 0 };
     }
     return { x: 0, y: 0 };
@@ -90,7 +106,7 @@ export default function MindMap({ analysis, profileImage }: MindMapProps) {
   // Render node content (without lines)
   const renderNodeContent = (node: HierarchicalNode, index: number) => {
     const isSelected = selectedNode === node.id;
-    const isConnected = selectedNode && nodes.find(n => n.id === selectedNode)?.connections.includes(node.id);
+    const isConnected = selectedNode && nodes.find((n: HierarchicalNode) => n.id === selectedNode)?.connections.includes(node.id);
     const shouldHighlight = !selectedNode || isSelected || isConnected;
 
     if (node.type === 'user') {
@@ -244,7 +260,7 @@ export default function MindMap({ analysis, profileImage }: MindMapProps) {
 
         {/* Global Connections Layer (SVG) */}
         <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
-          {nodes.map((node, index) => {
+          {nodes.map((node: HierarchicalNode, index: number) => {
             if (node.type === 'user') return null;
 
             const parentPos = getParentPosition(node);
@@ -286,7 +302,7 @@ export default function MindMap({ analysis, profileImage }: MindMapProps) {
 
         {/* Nodes Layer */}
         <div className="relative w-full h-full min-h-[50vh]">
-          {nodes.map((node, index) => renderNodeContent(node, index))}
+          {nodes.map((node: HierarchicalNode, index: number) => renderNodeContent(node, index))}
         </div>
 
         {/* Info text overlay */}
@@ -318,7 +334,7 @@ export default function MindMap({ analysis, profileImage }: MindMapProps) {
             Collection Analysis
           </h3>
           <div className="flex flex-wrap gap-4 justify-center items-end">
-            {analysis.categoryDistribution.map((cat, index) => (
+            {analysis.categoryDistribution.map((cat: { category: string; percentage: number }, index: number) => (
               <div key={cat.category} className="flex flex-col items-center gap-2 group cursor-default">
                 {/* Bar visual */}
                 <div className="relative w-8 bg-gray-100 dark:bg-gray-800 rounded-t-lg overflow-hidden group-hover:scale-110 transition-transform">

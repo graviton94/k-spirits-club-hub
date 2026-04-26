@@ -16,6 +16,8 @@ export interface CollectedNewsItem {
     source: string;
     date: string;
     originalTitle: string;
+    imageUrl?: string | null;
+    category?: string | null;
     translations: {
         en: { title: string; snippet: string; content: string };
         ko: { title: string; snippet: string; content: string };

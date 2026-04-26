@@ -21,14 +21,39 @@ export interface Spirit {
     id: string;
     name: string;
     category: string;
-    category_en?: string | null;
-    subcategory?: string;
+    categoryEn?: string | null;
+    // CamelCase — SSoT (Data Connect schema)
+    nameEn?: string | null;
+    descriptionEn?: string | null;
+    descriptionKo?: string | null;
+    pairingGuideEn?: string | null;
+    pairingGuideKo?: string | null;
+    noseTags?: string[];
+    palateTags?: string[];
+    finishTags?: string[];
+    tastingNote?: string | null;
+    subcategory?: string | null;
+    country?: string | null;
+    region?: string | null;
     abv: number;
+    volume?: number | null;
     imageUrl?: string;
     thumbnailUrl?: string;
-    distillery?: string;
+    distillery?: string | null;
+    bottler?: string | null;
+    status?: string | null;
+    importer?: string | null;
+    rawCategory?: string | null;
+    isPublished?: boolean;
+    isReviewed?: boolean;
+    rating?: number;
+    reviewCount?: number;
     isWishlist: boolean;
     userReview?: UserReview;
+    metadata?: any;
+    score?: number; // For recommendations
+    // Legacy snake_case aliases (ingested-data.json / backward compat)
+    category_en?: string | null;
     name_en?: string | null;
     description_en?: string | null;
     description_ko?: string | null;
@@ -36,8 +61,6 @@ export interface Spirit {
     palate_tags?: string[];
     finish_tags?: string[];
     tasting_note?: string;
-    metadata?: any;
-    score?: number; // For recommendations
 }
 
 export type FlavorVector = [number, number, number, number, number, number];

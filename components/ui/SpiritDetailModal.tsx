@@ -321,11 +321,11 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                         </div>
 
                         {/* Description Block */}
-                        {(isEn ? localSpirit.metadata?.description_en : localSpirit.metadata?.description_ko) && (
+                        {(isEn ? localSpirit.descriptionEn : localSpirit.descriptionKo) && (
                             <div className="mb-12 relative p-8 rounded-[2rem] bg-foreground text-background">
                                 <h3 className="text-[10px] font-black opacity-40 uppercase tracking-[0.25em] mb-4">{t.description}</h3>
                                 <p className="text-base md:text-lg leading-relaxed font-medium">
-                                    {isEn ? localSpirit.metadata?.description_en : localSpirit.metadata?.description_ko}
+                                    {isEn ? localSpirit.descriptionEn : localSpirit.descriptionKo}
                                 </p>
                                 <div className="absolute top-0 right-0 p-8 opacity-10">
                                     <Sparkles className="w-12 h-12" />
@@ -345,9 +345,9 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                 <div className="grid gap-10">
                                     {/* Aroma, Palate, Finish Sections */}
                                     {[
-                                        { label: t.aroma, tags: localSpirit.userReview?.tagsN || localSpirit.nose_tags, color: 'primary' },
-                                        { label: t.palate, tags: localSpirit.userReview?.tagsP || localSpirit.palate_tags, color: 'accent' },
-                                        { label: t.finish, tags: localSpirit.finish_tags || localSpirit.userReview?.tagsF, color: 'primary' }
+                                        { label: t.aroma, tags: localSpirit.userReview?.tagsN || localSpirit.noseTags, color: 'primary' },
+                                        { label: t.palate, tags: localSpirit.userReview?.tagsP || localSpirit.palateTags, color: 'accent' },
+                                        { label: t.finish, tags: localSpirit.finishTags || localSpirit.userReview?.tagsF, color: 'primary' }
                                     ].map((section, idx) => section.tags?.length ? (
                                         <div key={idx} className="space-y-4">
                                             <div className="flex items-center gap-4">
@@ -370,7 +370,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                         </div>
 
                         {/* 🍹 Institutional Pairing Guide */}
-                        {((isEn ? localSpirit.metadata?.pairing_guide_en : localSpirit.metadata?.pairing_guide_ko) || localSpirit.metadata?.pairing_guide_en) && (
+                        {(isEn ? localSpirit.pairingGuideEn : (localSpirit.pairingGuideKo || localSpirit.pairingGuideEn)) && (
                             <div className="relative overflow-hidden rounded-[2.5rem] bg-linear-to-br from-primary/10 via-background to-accent/10 border border-border/50 p-8 md:p-10 mb-8 shadow-2xl">
                                 <div className="flex items-center gap-4 mb-6">
                                     <div className="w-10 h-10 rounded-2xl bg-brand-gradient flex items-center justify-center text-white shadow-lg">
@@ -380,11 +380,11 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                         {isEn ? 'Sommelier Pairing Selection' : '소믈리에 페어링 가이드'}
                                     </h3>
                                 </div>
-
+ 
                                 <p className="text-base md:text-lg text-foreground/90 leading-relaxed font-medium pl-2 border-l-4 border-primary/30">
                                     {isEn
-                                        ? localSpirit.metadata?.pairing_guide_en
-                                        : (localSpirit.metadata?.pairing_guide_ko || localSpirit.metadata?.pairing_guide_en)}
+                                        ? localSpirit.pairingGuideEn
+                                        : (localSpirit.pairingGuideKo || localSpirit.pairingGuideEn)}
                                 </p>
                             </div>
                         )}

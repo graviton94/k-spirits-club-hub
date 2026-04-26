@@ -71,7 +71,7 @@ function CabinetSpiritCardComponent({
                             </span>
                             {/* Name */}
                             <p className="text-[10px] sm:text-xs font-black text-white/90 text-left leading-tight line-clamp-2 italic uppercase tracking-tight">
-                                {spirit.name_en && isEn ? spirit.name_en : spirit.name}
+                                {spirit.nameEn && isEn ? spirit.nameEn : spirit.name}
                             </p>
                         </div>
                     </div>

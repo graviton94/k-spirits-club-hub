@@ -88,9 +88,9 @@ export default async function ReviewDetailPage({ params }: PageProps) {
 
                 {/* Flavor Tags Section */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-10 border-t border-border/50">
-                  <FlavorItem title="NOSE" tags={review.nose} icon={<Wind className="w-4 h-4" />} color="text-primary" />
-                  <FlavorItem title="PALATE" tags={review.palate} icon={<Utensils className="w-4 h-4" />} color="text-accent" />
-                  <FlavorItem title="FINISH" tags={review.finish} icon={<Zap className="w-4 h-4" />} color="text-purple-500" />
+                  <FlavorItem title="NOSE" tags={review.nose ?? null} icon={<Wind className="w-4 h-4" />} color="text-primary" />
+                  <FlavorItem title="PALATE" tags={review.palate ?? null} icon={<Utensils className="w-4 h-4" />} color="text-accent" />
+                  <FlavorItem title="FINISH" tags={review.finish ?? null} icon={<Zap className="w-4 h-4" />} color="text-purple-500" />
                 </div>
               </div>
             </div>
@@ -134,10 +134,10 @@ export default async function ReviewDetailPage({ params }: PageProps) {
                <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-4">
                      <div className="w-10 h-10 rounded-full bg-rose-500/10 flex items-center justify-center text-rose-500">
-                        <Heart className={review.likes > 0 ? "fill-current" : ""} />
+                        <Heart className={(review.likes ?? 0) > 0 ? "fill-current" : ""} />
                      </div>
                      <div>
-                        <div className="text-xl font-black text-foreground">{review.likes}</div>
+                        <div className="text-xl font-black text-foreground">{review.likes ?? 0}</div>
                         <div className="text-[10px] font-black text-muted-foreground uppercase tracking-widest italic">{isEn ? 'CHEERS' : '좋아요'}</div>
                      </div>
                   </div>

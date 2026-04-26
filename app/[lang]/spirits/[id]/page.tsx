@@ -155,9 +155,9 @@ function extractTastingNoteTags(rawValue: string | null | undefined): string[] {
 }
 
 function getPreferredMetaTags(spirit: Spirit, lang: 'ko' | 'en'): string[] {
-  const tastingNoteTags = extractTastingNoteTags(spirit.tastingNote || spirit.tasting_note);
+  const tastingNoteTags = extractTastingNoteTags(spirit.tastingNote);
   const sensoryTags = dedupeTokens(
-    [...(spirit.noseTags || spirit.nose_tags || []), ...(spirit.palateTags || spirit.palate_tags || []), ...(spirit.finishTags || spirit.finish_tags || [])]
+    [...(spirit.noseTags || []), ...(spirit.palateTags || []), ...(spirit.finishTags || [])]
       .map((tag) => normalizeSnippetToken(String(tag))).filter(Boolean)
   );
   if (lang === 'en') return (sensoryTags.length > 0 ? sensoryTags : tastingNoteTags).slice(0, 3);
@@ -210,8 +210,8 @@ function buildSpiritMetaDescription(spirit: Spirit, lang: 'ko' | 'en', reviewCou
   const abvLine = typeof spirit.abv === 'number' ? (isEn ? `ABV ${spirit.abv}%. ` : `도수 ${spirit.abv}%. `) : '';
   const typeLine = isEn ? `${typeLabel}${countryLabel ? ` from ${countryLabel}` : ''}. ` : `${countryLabel ? `${countryLabel} ` : ''}${typeLabel}. `;
   const pairingGuideRaw = isEn
-    ? (spirit.pairingGuideEn || spirit.pairing_guide_en || spirit.pairingGuideKo || spirit.pairing_guide_ko)
-    : (spirit.pairingGuideKo || spirit.pairing_guide_ko || spirit.pairingGuideEn || spirit.pairing_guide_en);
+    ? (spirit.pairingGuideEn || spirit.pairingGuideKo)
+    : (spirit.pairingGuideKo || spirit.pairingGuideEn);
   const firstPairing = pairingGuideRaw ? pairingGuideRaw.split(/[,.,。]/)[0]?.trim().slice(0, 30) : null;
   const pairingLine = firstPairing ? (isEn ? `Pairs well with ${firstPairing}. ` : `${firstPairing}과 페어링. `) : '';
   const notesLine = tags.length > 0 ? (isEn ? `Notes: ${tags.join(', ')}. ` : `향·맛: ${tags.join(', ')}. `) : '';
@@ -232,7 +232,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
   const spirit = pageState.spirit;
   const koName = spirit.name || '';
-  const enName = spirit.name_en || '';
+  const enName = spirit.nameEn || '';
   const brand = spirit.distillery || '';
   const abv = typeof spirit.abv === 'number' ? `${spirit.abv}` : '';
   const aggregateRating = spirit.aggregateRating || { ratingValue: 0, reviewCount: 0 };
@@ -294,9 +294,9 @@ export default async function SpiritDetailPage({ params }: { params: Promise<{ i
   const jsonLd: any = {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    name: isEn ? (spirit.name_en || spirit.name) : spirit.name,
+    name: isEn ? (spirit.nameEn || spirit.name) : spirit.name,
     image: getSpiritSeoImageCandidates(spirit, baseUrl),
-    description: buildSpiritMetaDescription(spirit, lang as any, aggregateRating.reviewCount, isEn ? (spirit.name_en || spirit.name) : spirit.name),
+    description: buildSpiritMetaDescription(spirit, lang as any, aggregateRating.reviewCount, isEn ? (spirit.nameEn || spirit.name) : spirit.name),
     sku: spirit.id,
     brand: { '@type': 'Brand', name: spirit.distillery || 'K-Spirits Club' },
     aggregateRating: { '@type': 'AggregateRating', ratingValue: (aggregateRating.ratingValue || 5.0).toFixed(1), reviewCount: aggregateRating.reviewCount || 1, bestRating: 5, worstRating: 1 },

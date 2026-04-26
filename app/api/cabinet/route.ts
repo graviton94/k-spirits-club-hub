@@ -49,7 +49,9 @@ export async function POST(req: NextRequest) {
             spiritId: id,
             notes: userReview?.comment || '',
             rating: userReview?.ratingOverall || 0,
-            isFavorite: false // Default
+            isFavorite: false,
+            isWishlist: !!isWishlist,
+            addedAt: new Date().toISOString()
         });
 
         return NextResponse.json({ success: true });

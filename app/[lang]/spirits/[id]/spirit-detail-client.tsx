@@ -136,17 +136,17 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
     const t = isEn ? UI_TEXT.en : UI_TEXT.ko;
 
     // Helpers for localized display (Strict Schema)
-    const displayName = isEn ? (spirit.metadata?.name_en || spirit.name_en || spirit.name) : spirit.name;
-    const displayDistillery = isEn ? (spirit.metadata?.distillery_en || spirit.distillery) : spirit.distillery;
+    const displayName = isEn ? (spirit.nameEn || spirit.name) : spirit.name;
+    const displayDistillery = isEn ? (spirit.distillery || spirit.distillery) : spirit.distillery;
 
     const displayDescription = isEn
-        ? (spirit.metadata?.description_en || spirit.metadata?.description_ko || dict?.noDescription || UI_TEXT.en.noDescription)
-        : (spirit.metadata?.description_ko || spirit.metadata?.description_en || dict?.noDescription || UI_TEXT.ko.noDescription);
+        ? (spirit.descriptionEn || spirit.descriptionKo || dict?.noDescription || UI_TEXT.en.noDescription)
+        : (spirit.descriptionKo || spirit.descriptionEn || dict?.noDescription || UI_TEXT.ko.noDescription);
 
-    const noseTags = normalizeTagList(spirit.noseTags ?? spirit.nose_tags ?? (spirit.metadata as any)?.noseTags ?? (spirit.metadata as any)?.nose_tags);
-    const palateTags = normalizeTagList(spirit.palateTags ?? spirit.palate_tags ?? (spirit.metadata as any)?.palateTags ?? (spirit.metadata as any)?.palate_tags);
-    const finishTags = normalizeTagList(spirit.finishTags ?? spirit.finish_tags ?? (spirit.metadata as any)?.finishTags ?? (spirit.metadata as any)?.finish_tags);
-    const tastingNote = (spirit.tastingNote || spirit.tasting_note || '').trim();
+    const noseTags = normalizeTagList(spirit.noseTags);
+    const palateTags = normalizeTagList(spirit.palateTags);
+    const finishTags = normalizeTagList(spirit.finishTags);
+    const tastingNote = (spirit.tastingNote || '').trim();
     const hasTastingProfile = Boolean(tastingNote) || noseTags.length > 0 || palateTags.length > 0 || finishTags.length > 0;
 
     const { user } = useAuth();
@@ -342,9 +342,9 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                     <h1 className="text-2xl sm:text-4xl font-black mb-1 leading-tight text-foreground uppercase tracking-tight">
                         {displayName}
                     </h1>
-                    {spirit.metadata?.name_en && (
+                    {spirit.nameEn && (
                         <p className="text-lg text-muted-foreground font-medium mb-3 italic">
-                            {spirit.metadata.name_en}
+                            {spirit.nameEn}
                         </p>
                     )}
                     <div className="flex flex-col gap-1 mb-6">
@@ -473,7 +473,7 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
             </div>
 
             {/* AI Global Pairing Guide */}
-            {(spirit.metadata?.pairing_guide_en || spirit.metadata?.pairing_guide_ko) && (
+            {(spirit.pairingGuideEn || spirit.pairingGuideKo) && (
                 <div className="mb-10 p-6 rounded-3xl bg-secondary/20 border border-border shadow-sm">
                     <div className="flex items-center gap-2 mb-4">
                         <span className="text-xs font-black text-amber-500 uppercase tracking-widest flex items-center gap-1">
@@ -483,8 +483,8 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                     </div>
                     <p className="text-sm sm:text-base text-foreground/90 leading-relaxed font-medium whitespace-pre-wrap">
                         <FormattedText text={isEn
-                            ? (spirit.metadata?.pairing_guide_en || spirit.metadata?.pairing_guide_ko)
-                            : (spirit.metadata?.pairing_guide_ko || spirit.metadata?.pairing_guide_en)} />
+                            ? (spirit.pairingGuideEn || spirit.pairingGuideKo)
+                            : (spirit.pairingGuideKo || spirit.pairingGuideEn)} />
                     </p>
                 </div>
             )}
@@ -548,7 +548,7 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                         {t.searchDailyshot}
                     </a>
                     <a
-                        href={`https://www.wine-searcher.com/find/${encodeURIComponent((spirit.metadata?.name_en || spirit.name_en || spirit.name).replace(/\([^)]*\)/g, '').trim())}`}
+                        href={`https://www.wine-searcher.com/find/${encodeURIComponent((spirit.nameEn || spirit.name).replace(/\([^)]*\)/g, '').trim())}`}
                         target="_blank"
                         rel="nofollow noopener noreferrer"
                         onClick={() => handleOutboundClick('wine-searcher')}
@@ -569,7 +569,7 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                     </h2>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                         {relatedSpirits.map((item: any) => {
-                            const itemName = isEn ? (item.name_en || item.name) : item.name;
+                            const itemName = isEn ? (item.nameEn || item.name) : item.name;
                             const fallbackImage = getCategoryFallbackImage(item.category);
 
                             return (

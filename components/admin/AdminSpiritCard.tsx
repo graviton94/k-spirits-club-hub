@@ -69,7 +69,7 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
       });
       if (!auditRes.ok) throw new Error('Audit failed');
       const auditData = await auditRes.json();
-      if (auditData.name_en) setNameEn(auditData.name_en);
+      if (auditData.nameEn) setNameEn(auditData.nameEn);
       if (auditData.distillery) setDistillery(auditData.distillery);
       if (auditData.region) setRegion(auditData.region);
       if (auditData.country) setCountry(auditData.country);
@@ -85,19 +85,19 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
         body: JSON.stringify({
           stage: 'sensory',
           name: spirit.name,
-          name_en: auditData.name_en || nameEn,
+          nameEn: auditData.nameEn || nameEn,
           category: auditData.category || category || spirit.category,
           abv: auditData.abv || abv || spirit.abv
         })
       });
       if (!sensoryRes.ok) throw new Error('Sensory data generation failed');
       const sensoryData = await sensoryRes.json();
-      if (sensoryData.description_ko) setDescKo(sensoryData.description_ko);
-      if (sensoryData.description_en) setDescEn(sensoryData.description_en);
-      if (sensoryData.nose_tags) setNoseTags(sensoryData.nose_tags);
-      if (sensoryData.palate_tags) setPalateTags(sensoryData.palate_tags);
-      if (sensoryData.finish_tags) setFinishTags(sensoryData.finish_tags);
-      if (sensoryData.tasting_note) setTastingNote(sensoryData.tasting_note);
+      if (sensoryData.descriptionKo) setDescKo(sensoryData.descriptionKo);
+      if (sensoryData.descriptionEn) setDescEn(sensoryData.descriptionEn);
+      if (sensoryData.noseTags) setNoseTags(sensoryData.noseTags);
+      if (sensoryData.palateTags) setPalateTags(sensoryData.palateTags);
+      if (sensoryData.finishTags) setFinishTags(sensoryData.finishTags);
+      if (sensoryData.tastingNote) setTastingNote(sensoryData.tastingNote);
 
       // STEP 3: PAIRING
       setEnrichStep('pairing');
@@ -108,17 +108,17 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
           stage: 'pairing',
           name: spirit.name,
           category: auditData.category || category || spirit.category,
-          description_en: sensoryData.description_en,
-          description_ko: sensoryData.description_ko,
-          nose_tags: sensoryData.nose_tags,
-          palate_tags: sensoryData.palate_tags,
-          finish_tags: sensoryData.finish_tags
+          descriptionEn: sensoryData.descriptionEn,
+          descriptionKo: sensoryData.descriptionKo,
+          noseTags: sensoryData.noseTags,
+          palateTags: sensoryData.palateTags,
+          finishTags: sensoryData.finishTags
         })
       });
       if (!pairingRes.ok) throw new Error('Pairing guide generation failed');
       const pairingData = await pairingRes.json();
-      if (pairingData.pairing_guide_ko) setPairingKo(pairingData.pairing_guide_ko);
-      if (pairingData.pairing_guide_en) setPairingEn(pairingData.pairing_guide_en);
+      if (pairingData.pairingGuideKo) setPairingKo(pairingData.pairingGuideKo);
+      if (pairingData.pairingGuideEn) setPairingEn(pairingData.pairingGuideEn);
 
       // Aggregating Confidence & Sources
       const avgConf = ((auditData.confidence_score || 0) + (sensoryData.confidence_score || 0) + (pairingData.confidence_score || 0)) / 3;
@@ -164,9 +164,9 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
           abv: abv || spirit.abv,
           region: region || spirit.region,
           country: country || spirit.country,
-          nose_tags: noseTags,
-          palate_tags: palateTags,
-          finish_tags: finishTags
+          noseTags: noseTags,
+          palateTags: palateTags,
+          finishTags: finishTags
         })
       });
       if (!descRes.ok) throw new Error('Description generation failed');

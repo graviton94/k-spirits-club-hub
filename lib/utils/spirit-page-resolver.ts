@@ -61,22 +61,10 @@ export const resolveSpiritPageState = cache(
 
       const spirit: Spirit = {
         ...sqlSpirit,
-        name_en: sqlSpirit.nameEn,
         category: sqlSpirit.category || 'Other',
-        mainCategory: sqlSpirit.mainCategory,
-        subcategory: sqlSpirit.subcategory,
-        description_ko: sqlSpirit.descriptionKo,
-        description_en: sqlSpirit.descriptionEn,
-        pairing_guide_ko: sqlSpirit.pairingGuideKo,
-        pairing_guide_en: sqlSpirit.pairingGuideEn,
         noseTags,
         palateTags,
         finishTags,
-        tastingNote: sqlSpirit.tastingNote || null,
-        nose_tags: noseTags,
-        palate_tags: palateTags,
-        finish_tags: finishTags,
-        tasting_note: sqlSpirit.tastingNote || null,
         aggregateRating: {
           ratingValue: sqlSpirit.rating || 0,
           reviewCount: sqlSpirit.reviewCount || 0
