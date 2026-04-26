@@ -1,10 +1,12 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { getEnv } from '@/lib/env';
 
-const API_KEY = process.env.GEMINI_API_KEY || '';
 const MODEL_ID = "gemini-2.0-flash";
 
-if (!API_KEY) {
-    console.error('[Gemini] 🔴 ERROR: GEMINI_API_KEY is missing from environment variables.');
+function getApiKey(): string {
+    const key = getEnv('GEMINI_API_KEY');
+    if (!key) throw new Error("GEMINI_API_KEY is not set");
+    return key;
 }
 
 // Category -> Subcategories mapping
@@ -167,8 +169,7 @@ function extractAndParseJSON(text: string): any {
  * Lightweight version for rapid UI translation.
  */
 export async function translateSpiritName(name: string, category: string, distillery?: string): Promise<{ nameEn: string }> {
-    if (!API_KEY) throw new Error("GEMINI_API_KEY is not set");
-    const genAI = new GoogleGenerativeAI(API_KEY);
+    const genAI = new GoogleGenerativeAI(getApiKey());
     const model = genAI.getGenerativeModel({ model: MODEL_ID });
 
     const prompt = `
@@ -193,8 +194,7 @@ export async function translateSpiritName(name: string, category: string, distil
  * PHASE 1: IDENTITY & AUDIT
  */
 export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<EnrichmentAuditResult> {
-    if (!API_KEY) throw new Error("GEMINI_API_KEY is not set");
-    const genAI = new GoogleGenerativeAI(API_KEY);
+    const genAI = new GoogleGenerativeAI(getApiKey());
     const model = genAI.getGenerativeModel({ 
         model: MODEL_ID, 
         tools: [{ googleSearch: {} }] as any,
@@ -261,8 +261,7 @@ export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<En
  * PHASE 2: COMMUNITY SENSORY
  */
 export async function generateSensoryProfile(spirit: SpiritEnrichmentInput): Promise<EnrichmentSensoryResult> {
-    if (!API_KEY) throw new Error("GEMINI_API_KEY is not set");
-    const genAI = new GoogleGenerativeAI(API_KEY);
+    const genAI = new GoogleGenerativeAI(getApiKey());
     const model = genAI.getGenerativeModel({ 
         model: MODEL_ID, 
         tools: [{ googleSearch: {} }] as any,
@@ -313,8 +312,7 @@ export async function generateSensoryProfile(spirit: SpiritEnrichmentInput): Pro
  * PHASE 3: SOMMELIER & PAIRING
  */
 export async function generatePairingGuide(spirit: SpiritEnrichmentInput): Promise<EnrichmentPairingResult> {
-    if (!API_KEY) throw new Error("GEMINI_API_KEY is not set");
-    const genAI = new GoogleGenerativeAI(API_KEY);
+    const genAI = new GoogleGenerativeAI(getApiKey());
     const model = genAI.getGenerativeModel({ 
         model: MODEL_ID, 
         tools: [{ googleSearch: {} }] as any,
@@ -389,8 +387,7 @@ export async function enrichSpiritWithAI(spirit: SpiritEnrichmentInput): Promise
  * Generates only Korean and English descriptions based on raw facts/tags.
  */
 export async function generateDescriptionOnly(spiritData: any): Promise<{ descriptionKo: string; descriptionEn: string }> {
-    if (!API_KEY) throw new Error("GEMINI_API_KEY is not set");
-    const genAI = new GoogleGenerativeAI(API_KEY);
+    const genAI = new GoogleGenerativeAI(getApiKey());
     const model = genAI.getGenerativeModel({ model: MODEL_ID });
 
     const prompt = `

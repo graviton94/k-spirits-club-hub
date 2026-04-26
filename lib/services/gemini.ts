@@ -4,12 +4,9 @@ import metadataFn from '../constants/spirits-metadata.json';
 import { inferHierarchy } from '../constants/categories';
 import fs from 'fs/promises';
 import path from 'path';
+import { getEnv } from '@/lib/env';
 
-const API_KEY = process.env.GEMINI_API_KEY || '';
 const MODEL_ID = "gemini-2.0-flash";
-
-const genAI = new GoogleGenerativeAI(API_KEY);
-const model = genAI.getGenerativeModel({ model: MODEL_ID });
 
 // We read this for initial prompt context, but for updates we'll read 'fs' to be safe against caching issues
 const METADATA_PATH = path.join(process.cwd(), 'lib/constants/spirits-metadata.json');
@@ -67,9 +64,13 @@ async function updateMetadataFile(category: string, mainCategory: string | null,
 }
 
 export async function enrichSpiritMetadata(spirit: Spirit): Promise<Partial<Spirit>> {
+    const API_KEY = getEnv('GEMINI_API_KEY');
     if (!API_KEY) {
         throw new Error("GEMINI_API_KEY is not set");
     }
+
+    const genAI = new GoogleGenerativeAI(API_KEY);
+    const model = genAI.getGenerativeModel({ model: MODEL_ID });
 
     const categoryStructure = getCategoryPrompt(spirit.category);
     const tagIndex = (metadataFn as any).tag_index;

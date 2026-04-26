@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-
-const API_KEY = process.env.GEMINI_API_KEY || '';
+import { getEnv } from '@/lib/env';
 
 export const runtime = 'nodejs';
 
@@ -54,9 +53,9 @@ export async function POST(req: NextRequest) {
             const model = gatewayGenAI.getGenerativeModel(
                 { model: "gemini-2.0-flash" },
                 {
-                    baseUrl: process.env.CF_GATEWAY_URL,
+                    baseUrl: getEnv('CF_GATEWAY_URL'),
                     customHeaders: {
-                        "cf-aig-authorization": `Bearer ${process.env.CF_AIG_TOKEN}`
+                        "cf-aig-authorization": `Bearer ${getEnv('CF_AIG_TOKEN')}`
                     }
                 }
             );
@@ -68,7 +67,7 @@ export async function POST(req: NextRequest) {
             console.warn("⚠️ [Fallback] AI Gateway 호출 실패, Direct API로 우회합니다.", gatewayError.message);
 
             // 🟠 [Plan B] 2차 시도: Direct Gemini API
-            const directGenAI = new GoogleGenerativeAI(API_KEY);
+            const directGenAI = new GoogleGenerativeAI(getEnv('GEMINI_API_KEY'));
             const fallbackModel = directGenAI.getGenerativeModel({ model: "gemini-2.0-flash" });
             result = await fallbackModel.generateContent(prompt);
             console.log('[Audit API] [Plan B] Success via Direct API');

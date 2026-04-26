@@ -1,9 +1,5 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
-
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
-if (!GEMINI_API_KEY) {
-    console.error('[Gemini News] 🔴 ERROR: GEMINI_API_KEY is missing!');
-}
+import { getEnv } from '@/lib/env';
 
 const TRUSTED_SOURCES = [
     'thespiritsbusiness.com', 'whiskyadvocate.com', 'decanter.com',
@@ -236,6 +232,7 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
         console.log('[News Collection] 📝 Sample item:', rawItems[0]?.title);
 
         // 3. AI 분석 요청 (배치 처리)
+        const GEMINI_API_KEY = getEnv('GEMINI_API_KEY');
         if (!GEMINI_API_KEY) {
             console.error('[News Collection] ❌ GEMINI_API_KEY is missing!');
             throw new Error('GEMINI_API_KEY is not configured');
@@ -319,9 +316,9 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
                     const model = gatewayGenAI.getGenerativeModel(
                         { model: 'gemini-2.0-flash' },
                         {
-                            baseUrl: process.env.CF_GATEWAY_URL,
+                            baseUrl: getEnv('CF_GATEWAY_URL'),
                             customHeaders: {
-                                "cf-aig-authorization": `Bearer ${process.env.CF_AIG_TOKEN || ''}`
+                                "cf-aig-authorization": `Bearer ${getEnv('CF_AIG_TOKEN')}`
                             }
                         }
                     );

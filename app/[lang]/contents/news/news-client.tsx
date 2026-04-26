@@ -232,7 +232,7 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
 
                                             <div className="flex flex-wrap items-center justify-between gap-4 md:gap-6 mt-auto pt-6 md:pt-8 border-t border-white/5">
                                                 <div className="flex flex-wrap gap-1.5 md:gap-2.5">
-                                                    {(Array.isArray(item.newsTags?.[lang]) ? item.newsTags?.[lang] : Array.isArray(item.newsTags?.['ko']) ? item.newsTags?.['ko'] : Array.isArray(item.newsTags) ? item.newsTags : [])?.slice(0, 4).map((tag: string, i: number) => (
+                                                    {(Array.isArray(item.tags?.[lang]) ? item.tags?.[lang] : Array.isArray(item.tags?.['ko']) ? item.tags?.['ko'] : Array.isArray(item.tags) ? item.tags : [])?.slice(0, 4).map((tag: string, i: number) => (
                                                         <span key={i} className="text-[8px] md:text-[9px] font-black px-3 py-1 md:px-4 md:py-1.5 rounded-lg md:rounded-xl bg-card border border-white/5 text-muted-foreground/40 uppercase tracking-tight group-hover:text-primary transition-colors">
                                                             #{tag.replace('#', '')}
                                                         </span>
