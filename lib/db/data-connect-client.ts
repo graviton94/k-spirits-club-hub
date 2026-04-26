@@ -204,6 +204,25 @@ export const dbIncrementUserReviews = async (userId: string) => {
   }
 };
 
+export const dbUpdateUserHearts = async (userId: string, hearts: number) => {
+  if (userId === 'ANONYMOUS_EXPERT') return;
+  return await dbUpsertUser({
+    id: userId,
+    heartsReceived: hearts
+  });
+};
+
+export const dbIncrementUserHeartsReceived = async (userId: string, increment: number) => {
+  if (userId === 'ANONYMOUS_EXPERT') return;
+  const profile = await dbGetUserProfile(userId);
+  if (profile) {
+    return await dbUpsertUser({
+      id: userId,
+      heartsReceived: (profile.heartsReceived || 0) + increment
+    });
+  }
+};
+
 // --- Reviews ---
 export const dbListSpiritReviews = async (limit: number, offset: number) => {
   const { data } = await listSpiritReviews(getDC(), { limit, offset });

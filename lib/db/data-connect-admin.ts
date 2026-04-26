@@ -255,7 +255,14 @@ export const dbAdminUpsertSpirit = async (vars: any) => {
             $thumbnailUrl: String, 
             $descriptionKo: String,
             $descriptionEn: String,
-            $isPublished: Boolean
+            $isPublished: Boolean,
+            $noseTags: Any,
+            $palateTags: Any,
+            $finishTags: Any,
+            $tastingNote: String,
+            $importer: String,
+            $rawCategory: String,
+            $metadata: Any
         ) {
             spirit_upsert(data: {
                 id: $id,
@@ -275,7 +282,14 @@ export const dbAdminUpsertSpirit = async (vars: any) => {
                 thumbnailUrl: $thumbnailUrl,
                 descriptionKo: $descriptionKo,
                 descriptionEn: $descriptionEn,
-                isPublished: $isPublished
+                isPublished: $isPublished,
+                noseTags: $noseTags,
+                palateTags: $palateTags,
+                finishTags: $finishTags,
+                tastingNote: $tastingNote,
+                importer: $importer,
+                rawCategory: $rawCategory,
+                metadata: $metadata
             }) {
                 id
             }
@@ -285,7 +299,8 @@ export const dbAdminUpsertSpirit = async (vars: any) => {
     const allowed = [
         'id', 'name', 'category', 'nameEn', 'categoryEn', 'mainCategory', 'subcategory',
         'distillery', 'bottler', 'abv', 'volume', 'country', 'region', 'imageUrl', 
-        'thumbnailUrl', 'descriptionKo', 'descriptionEn', 'isPublished'
+        'thumbnailUrl', 'descriptionKo', 'descriptionEn', 'isPublished',
+        'noseTags', 'palateTags', 'finishTags', 'tastingNote', 'importer', 'rawCategory', 'metadata'
     ];
     const filtered = {};
     allowed.forEach(key => { if (key in vars) (filtered as any)[key] = vars[key]; });

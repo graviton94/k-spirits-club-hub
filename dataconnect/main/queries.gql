@@ -307,7 +307,12 @@ query auditAllReviews @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNc
 }
 
 query listSpiritReviews($limit: Int, $offset: Int) @auth(level: PUBLIC) {
-  spiritReviews(limit: $limit, offset: $offset, orderBy: [{ createdAt: DESC }]) {
+  spiritReviews(
+    where: { isPublished: { eq: true } },
+    limit: $limit, 
+    offset: $offset, 
+    orderBy: [{ createdAt: DESC }]
+  ) {
     id
     rating
     title

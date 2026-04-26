@@ -19,25 +19,6 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
     const lang = (params?.lang as string) || 'ko';
     const isEn = lang === 'en';
 
-    const hasInitial = Array.isArray(initialReviews) && initialReviews.length > 0;
-    const [reviews, setReviews] = useState<any[]>(initialReviews ?? []);
-    const [loading, setLoading] = useState(false);
-    const [currentPage, setCurrentPage] = useState(initialPage);
-    const [totalCount, setTotalCount] = useState(initialReviews?.length ?? 0);
-    const [searchInput, setSearchInput] = useState('');
-    const [searchQuery, setSearchQuery] = useState('');
-
-    // Modal & Toast states
-    const [deleteTarget, setDeleteTarget] = useState<any | null>(null);
-    const [isDeleting, setIsDeleting] = useState(false);
-    const [showToast, setShowToast] = useState(false);
-    const [toastMessage, setToastMessage] = useState('');
-    const [toastVariant, setToastVariant] = useState<'success' | 'error'>('success');
-
-    const pageSize = 12;
-    const ADMIN_EMAILS = ['ruahn49@gmail.com'];
-    const isAdmin = role === 'ADMIN' || (user?.email && ADMIN_EMAILS.includes(user.email));
-
     const t = {
         title: isEn ? "Review Board" : "리뷰 보드",
         desc: isEn ? "Live comments and professional analysis reports from spirits enthusiasts." : "유저들의 생생한 리뷰와 분석",
@@ -55,6 +36,40 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
         delete: isEn ? "Delete" : "삭제하기",
         anonymous: isEn ? "Anonymous" : "익명",
     };
+
+    const mappedInitial = useMemo(() => {
+        if (!Array.isArray(initialReviews)) return [];
+        return initialReviews.map((r: any) => ({
+            ...r,
+            spiritId: r.spirit?.id,
+            userName: r.user?.nickname || t.anonymous,
+            userId: r.user?.id,
+            profileImage: r.user?.profileImage,
+            tags: [
+                ...(typeof r.nose === 'string' ? r.nose.split(',') : []),
+                ...(typeof r.palate === 'string' ? r.palate.split(',') : []),
+                ...(typeof r.finish === 'string' ? r.finish.split(',') : [])
+            ].map((tag: string) => tag.trim()).filter(Boolean)
+        }));
+    }, [initialReviews, t.anonymous]);
+
+    const [reviews, setReviews] = useState<any[]>(mappedInitial);
+    const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(initialPage);
+    const [totalCount, setTotalCount] = useState(initialReviews?.length ?? 0);
+    const [searchInput, setSearchInput] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
+
+    // Modal & Toast states
+    const [deleteTarget, setDeleteTarget] = useState<any | null>(null);
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [toastVariant, setToastVariant] = useState<'success' | 'error'>('success');
+
+    const pageSize = 12;
+    const ADMIN_EMAILS = ['ruahn49@gmail.com'];
+    const isAdmin = role === 'ADMIN' || (user?.email && ADMIN_EMAILS.includes(user.email));
 
     const fetchPage = async (page: number) => {
         try {
@@ -88,10 +103,10 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
     };
 
     useEffect(() => {
-        if (!hasInitial) {
+        if (mappedInitial.length === 0) {
             fetchPage(initialPage);
         }
-    }, [initialPage, hasInitial]);
+    }, [initialPage, mappedInitial.length]);
 
     const filteredReviews = useMemo(() => {
         if (!searchQuery.trim()) return reviews;

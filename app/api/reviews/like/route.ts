@@ -9,7 +9,8 @@ import {
     dbUpdateReviewLikesCount,
     dbGetReviewLikesCount,
     dbGetReviewLike,
-    dbGetReview
+    dbGetReview,
+    dbIncrementUserHeartsReceived
 } from '@/lib/db/data-connect-client';
 
 export const runtime = 'nodejs';
@@ -62,6 +63,11 @@ export async function POST(request: NextRequest) {
             id: reviewId,
             likes: newTotalLikes
         });
+
+        // 5. Sync Author's total heartsReceived count
+        if (finalReviewUserId) {
+            await dbIncrementUserHeartsReceived(finalReviewUserId, isLiked ? -1 : 1);
+        }
 
         return NextResponse.json({ 
             success: true, 

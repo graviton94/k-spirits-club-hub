@@ -104,12 +104,12 @@ export async function GET(request: NextRequest) {
       // Flat mapping for backward compatibility with legacy Home components
       const reviews = allRecent.map((r: any) => ({
         id: r.id,
-        spiritId: r.spirit.id,
-        spiritName: r.spirit.name,
-        imageUrl: r.spirit.imageUrl,
-        userId: r.user.id,
-        userName: r.user.nickname || 'Guest',
-        profileImage: r.user.profileImage,
+        spiritId: r.spirit?.id,
+        spiritName: r.spirit?.name || 'Unknown Bottle',
+        imageUrl: r.spirit?.imageUrl,
+        userId: r.user?.id,
+        userName: r.user?.nickname || 'Guest',
+        profileImage: r.user?.profileImage,
         rating: r.rating,
         content: r.content,
         createdAt: r.createdAt,
