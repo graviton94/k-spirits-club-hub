@@ -186,7 +186,7 @@ mutation upsertNews(
   $link: String,
   $date: String,
   $translations: Any,
-  $newsTags: Any
+  $tags: Any
 ) @auth(expr: "auth != null && auth.uid == 'fiO8qf1PjLZAPBNcJmvy1cpqrY52'") {
   newsArticle_upsert(data: {
     id: $id,
@@ -198,7 +198,7 @@ mutation upsertNews(
     link: $link,
     date: $date,
     translations: $translations,
-    newsTags: $newsTags
+    tags: $tags
   })
 }
 
@@ -213,7 +213,8 @@ mutation upsertCabinet(
   $addedAt: Timestamp,
   $notes: String,
   $rating: Int,
-  $isFavorite: Boolean
+  $isFavorite: Boolean,
+  $isWishlist: Boolean
 ) @auth(expr: "auth != null && auth.uid == vars.userId") {
   userCabinet_upsert(data: {
     userId: $userId,
@@ -221,7 +222,8 @@ mutation upsertCabinet(
     addedAt: $addedAt,
     notes: $notes,
     rating: $rating,
-    isFavorite: $isFavorite
+    isFavorite: $isFavorite,
+    isWishlist: $isWishlist
   })
 }
 

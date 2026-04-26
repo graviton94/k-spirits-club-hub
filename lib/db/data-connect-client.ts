@@ -298,7 +298,7 @@ export const dbDeleteNews = async (id: string) => {
 // --- Cabinet ---
 export const dbUpsertCabinet = async (vars: any) => {
   // Ensure the variable names match the mutation (spiritId, userId)
-  const allowed = ['userId', 'spiritId', 'addedAt', 'notes', 'rating', 'isFavorite'];
+  const allowed = ['userId', 'spiritId', 'addedAt', 'notes', 'rating', 'isFavorite', 'isWishlist'];
   return await upsertCabinet(getDC(), filterAllowedFields(vars, allowed));
 };
 

@@ -1014,14 +1014,6 @@ input NewsArticle_Data {
   """
   link_expr: String_Expr @fdc_forbiddenInVariables
   """
-  ✨ Generated from Field `NewsArticle`.`newsTags` of type `Any`
-  """
-  newsTags: Any
-  """
-  ✨ `_expr` server value variant of `newsTags` (✨ Generated from Field `NewsArticle`.`newsTags` of type `Any`)
-  """
-  newsTags_expr: Any_Expr @fdc_forbiddenInVariables
-  """
   ✨ Generated from Field `NewsArticle`.`source` of type `String`
   """
   source: String
@@ -1029,6 +1021,14 @@ input NewsArticle_Data {
   ✨ `_expr` server value variant of `source` (✨ Generated from Field `NewsArticle`.`source` of type `String`)
   """
   source_expr: String_Expr @fdc_forbiddenInVariables
+  """
+  ✨ Generated from Field `NewsArticle`.`tags` of type `Any`
+  """
+  tags: Any
+  """
+  ✨ `_expr` server value variant of `tags` (✨ Generated from Field `NewsArticle`.`tags` of type `Any`)
+  """
+  tags_expr: Any_Expr @fdc_forbiddenInVariables
   """
   ✨ Generated from Field `NewsArticle`.`title` of type `String!`
   """
@@ -1107,13 +1107,13 @@ input NewsArticle_Filter {
   """
   link: String_Filter
   """
-  ✨ Generated from Field `NewsArticle`.`newsTags` of type `Any`
-  """
-  newsTags: Any_Filter
-  """
   ✨ Generated from Field `NewsArticle`.`source` of type `String`
   """
   source: String_Filter
+  """
+  ✨ Generated from Field `NewsArticle`.`tags` of type `Any`
+  """
+  tags: Any_Filter
   """
   ✨ Generated from Field `NewsArticle`.`title` of type `String!`
   """
@@ -1193,13 +1193,13 @@ input NewsArticle_Having {
   """
   link_count: Int_Filter
   """
-  ✨ Generated from Field `NewsArticle`.`newsTags_count` of type `Int!`
-  """
-  newsTags_count: Int_Filter
-  """
   ✨ Generated from Field `NewsArticle`.`source_count` of type `Int!`
   """
   source_count: Int_Filter
+  """
+  ✨ Generated from Field `NewsArticle`.`tags_count` of type `Int!`
+  """
+  tags_count: Int_Filter
   """
   ✨ Generated from Field `NewsArticle`.`title_count` of type `Int!`
   """
@@ -1217,9 +1217,9 @@ input NewsArticle_Having {
   """
   createdAt_min: Timestamp_Filter
   """
-  ✨ Generated from Field `NewsArticle`.`newsTags_min` of type `Any`
+  ✨ Generated from Field `NewsArticle`.`tags_min` of type `Any`
   """
-  newsTags_min: Any_Filter
+  tags_min: Any_Filter
   """
   ✨ Generated from Field `NewsArticle`.`translations_min` of type `Any`
   """
@@ -1233,9 +1233,9 @@ input NewsArticle_Having {
   """
   createdAt_max: Timestamp_Filter
   """
-  ✨ Generated from Field `NewsArticle`.`newsTags_max` of type `Any`
+  ✨ Generated from Field `NewsArticle`.`tags_max` of type `Any`
   """
-  newsTags_max: Any_Filter
+  tags_max: Any_Filter
   """
   ✨ Generated from Field `NewsArticle`.`translations_max` of type `Any`
   """
@@ -1304,13 +1304,13 @@ input NewsArticle_Order {
   """
   link: OrderDirection
   """
-  ✨ Generated from Field `NewsArticle`.`newsTags` of type `Any`
-  """
-  newsTags: OrderDirection
-  """
   ✨ Generated from Field `NewsArticle`.`source` of type `String`
   """
   source: OrderDirection
+  """
+  ✨ Generated from Field `NewsArticle`.`tags` of type `Any`
+  """
+  tags: OrderDirection
   """
   ✨ Generated from Field `NewsArticle`.`title` of type `String!`
   """
@@ -1356,13 +1356,13 @@ input NewsArticle_Order {
   """
   link_count: OrderDirection
   """
-  ✨ Generated from Field `NewsArticle`.`newsTags_count` of type `Int!`
-  """
-  newsTags_count: OrderDirection
-  """
   ✨ Generated from Field `NewsArticle`.`source_count` of type `Int!`
   """
   source_count: OrderDirection
+  """
+  ✨ Generated from Field `NewsArticle`.`tags_count` of type `Int!`
+  """
+  tags_count: OrderDirection
   """
   ✨ Generated from Field `NewsArticle`.`title_count` of type `Int!`
   """
@@ -1380,9 +1380,9 @@ input NewsArticle_Order {
   """
   createdAt_min: OrderDirection
   """
-  ✨ Generated from Field `NewsArticle`.`newsTags_min` of type `Any`
+  ✨ Generated from Field `NewsArticle`.`tags_min` of type `Any`
   """
-  newsTags_min: OrderDirection
+  tags_min: OrderDirection
   """
   ✨ Generated from Field `NewsArticle`.`translations_min` of type `Any`
   """
@@ -1396,9 +1396,9 @@ input NewsArticle_Order {
   """
   createdAt_max: OrderDirection
   """
-  ✨ Generated from Field `NewsArticle`.`newsTags_max` of type `Any`
+  ✨ Generated from Field `NewsArticle`.`tags_max` of type `Any`
   """
-  newsTags_max: OrderDirection
+  tags_max: OrderDirection
   """
   ✨ Generated from Field `NewsArticle`.`translations_max` of type `Any`
   """
@@ -4216,6 +4216,14 @@ input UserCabinet_Data {
   """
   isFavorite_expr: Boolean_Expr @fdc_forbiddenInVariables
   """
+  ✨ Generated from Field `UserCabinet`.`isWishlist` of type `Boolean`
+  """
+  isWishlist: Boolean
+  """
+  ✨ `_expr` server value variant of `isWishlist` (✨ Generated from Field `UserCabinet`.`isWishlist` of type `Boolean`)
+  """
+  isWishlist_expr: Boolean_Expr @fdc_forbiddenInVariables
+  """
   ✨ Generated from Field `UserCabinet`.`notes` of type `String`
   """
   notes: String
@@ -4277,6 +4285,10 @@ input UserCabinet_Filter {
   """
   isFavorite: Boolean_Filter
   """
+  ✨ Generated from Field `UserCabinet`.`isWishlist` of type `Boolean`
+  """
+  isWishlist: Boolean_Filter
+  """
   ✨ Generated from Field `UserCabinet`.`notes` of type `String`
   """
   notes: String_Filter
@@ -4330,6 +4342,10 @@ input UserCabinet_Having {
   ✨ Generated from Field `UserCabinet`.`isFavorite_count` of type `Int!`
   """
   isFavorite_count: Int_Filter
+  """
+  ✨ Generated from Field `UserCabinet`.`isWishlist_count` of type `Int!`
+  """
+  isWishlist_count: Int_Filter
   """
   ✨ Generated from Field `UserCabinet`.`notes_count` of type `Int!`
   """
@@ -4434,6 +4450,10 @@ input UserCabinet_Order {
   """
   isFavorite: OrderDirection
   """
+  ✨ Generated from Field `UserCabinet`.`isWishlist` of type `Boolean`
+  """
+  isWishlist: OrderDirection
+  """
   ✨ Generated from Field `UserCabinet`.`notes` of type `String`
   """
   notes: OrderDirection
@@ -4453,6 +4473,10 @@ input UserCabinet_Order {
   ✨ Generated from Field `UserCabinet`.`isFavorite_count` of type `Int!`
   """
   isFavorite_count: OrderDirection
+  """
+  ✨ Generated from Field `UserCabinet`.`isWishlist_count` of type `Int!`
+  """
+  isWishlist_count: OrderDirection
   """
   ✨ Generated from Field `UserCabinet`.`notes_count` of type `Int!`
   """

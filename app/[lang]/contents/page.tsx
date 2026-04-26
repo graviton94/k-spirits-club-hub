@@ -21,7 +21,7 @@ interface ContentsPageProps {
 }
 
 export async function generateMetadata({ params }: ContentsPageProps): Promise<Metadata> {
-  const { lang } = await params;
+  const { lang = 'ko' } = await params;
   const isEn = lang === 'en';
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://kspiritsclub.com';
   const ogImageUrl = `${baseUrl}/default-og.jpg`;
@@ -62,7 +62,7 @@ export async function generateMetadata({ params }: ContentsPageProps): Promise<M
 }
 
 export default async function ContentsPage({ params }: ContentsPageProps) {
-  const { lang } = await params;
+  const { lang = 'ko' } = await params;
   const isEn = lang === 'en';
 
   const contents = [

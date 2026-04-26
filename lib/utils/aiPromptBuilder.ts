@@ -109,7 +109,8 @@ export function buildTasteAnalysisPrompt(
         // (5) 리뷰 데이터 처리
         if (item.userReview) {
             const r = item.userReview;
-            let ratingText = `Total:${r.ratingOverall.toFixed(1)}`;
+            const overallRating = Number(r.ratingOverall) || 0;
+            let ratingText = `Total:${overallRating.toFixed(1)}`;
             if (r.ratingOverall >= 4.0) ratingText = `[Favorite] ${ratingText}`;
             else if (r.ratingOverall <= 2.5) ratingText = `[Disliked] ${ratingText}`;
 

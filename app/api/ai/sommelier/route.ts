@@ -8,7 +8,7 @@ import { db } from '@/lib/db'; // Compatibility layer for getPublishedSearchInde
 
 export const runtime = 'nodejs';
 
-const MODEL_ID = "gemini-2.0-flash";
+const MODEL_ID = "gemini-1.5-flash";
 
 /**
  * AI Sommelier Q&A Bot API

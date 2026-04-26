@@ -1012,9 +1012,9 @@ export interface GetUserProfileData {
     role?: string | null;
     themePreference?: string | null;
     isFirstLogin?: boolean | null;
+    tasteProfile?: unknown | null;
     reviewsWritten?: number | null;
     heartsReceived?: number | null;
-    tasteProfile?: unknown | null;
   } & User_Key;
 }
 ```
@@ -1108,7 +1108,7 @@ export interface ListNewsArticlesData {
     link?: string | null;
     date?: string | null;
     translations?: unknown | null;
-    newsTags?: unknown | null;
+    tags?: unknown | null;
     createdAt?: TimestampString | null;
   } & NewsArticle_Key)[];
 }
@@ -1209,7 +1209,7 @@ export interface GetNewsArticleData {
     link?: string | null;
     date?: string | null;
     translations?: unknown | null;
-    newsTags?: unknown | null;
+    tags?: unknown | null;
     createdAt?: TimestampString | null;
   } & NewsArticle_Key;
 }
@@ -2732,6 +2732,7 @@ export interface ListUserCabinetData {
   userCabinets: ({
     spiritId: string;
     isFavorite?: boolean | null;
+    isWishlist?: boolean | null;
     notes?: string | null;
     rating?: number | null;
     spirit: {
@@ -3914,7 +3915,7 @@ export interface UpsertNewsVariables {
   link?: string | null;
   date?: string | null;
   translations?: unknown | null;
-  newsTags?: unknown | null;
+  tags?: unknown | null;
 }
 ```
 ### Return Type
@@ -3973,11 +3974,11 @@ export default function UpsertNewsComponent() {
     link: ..., // optional
     date: ..., // optional
     translations: ..., // optional
-    newsTags: ..., // optional
+    tags: ..., // optional
   };
   mutation.mutate(upsertNewsVars);
   // Variables can be defined inline as well.
-  mutation.mutate({ id: ..., title: ..., content: ..., imageUrl: ..., category: ..., source: ..., link: ..., date: ..., translations: ..., newsTags: ..., });
+  mutation.mutate({ id: ..., title: ..., content: ..., imageUrl: ..., category: ..., source: ..., link: ..., date: ..., translations: ..., tags: ..., });
 
   // You can also pass in a `useDataConnectMutationOptions` object to `UseMutationResult.mutate()`.
   const options = {
@@ -4117,6 +4118,7 @@ export interface UpsertCabinetVariables {
   notes?: string | null;
   rating?: number | null;
   isFavorite?: boolean | null;
+  isWishlist?: boolean | null;
 }
 ```
 ### Return Type
@@ -4172,10 +4174,11 @@ export default function UpsertCabinetComponent() {
     notes: ..., // optional
     rating: ..., // optional
     isFavorite: ..., // optional
+    isWishlist: ..., // optional
   };
   mutation.mutate(upsertCabinetVars);
   // Variables can be defined inline as well.
-  mutation.mutate({ userId: ..., spiritId: ..., addedAt: ..., notes: ..., rating: ..., isFavorite: ..., });
+  mutation.mutate({ userId: ..., spiritId: ..., addedAt: ..., notes: ..., rating: ..., isFavorite: ..., isWishlist: ..., });
 
   // You can also pass in a `useDataConnectMutationOptions` object to `UseMutationResult.mutate()`.
   const options = {

@@ -154,7 +154,7 @@ export interface GetNewsArticleData {
     link?: string | null;
     date?: string | null;
     translations?: unknown | null;
-    newsTags?: unknown | null;
+    tags?: unknown | null;
     createdAt?: TimestampString | null;
   } & NewsArticle_Key;
 }
@@ -279,9 +279,9 @@ export interface GetUserProfileData {
     role?: string | null;
     themePreference?: string | null;
     isFirstLogin?: boolean | null;
+    tasteProfile?: unknown | null;
     reviewsWritten?: number | null;
     heartsReceived?: number | null;
-    tasteProfile?: unknown | null;
   } & User_Key;
 }
 
@@ -420,7 +420,7 @@ export interface ListNewsArticlesData {
     link?: string | null;
     date?: string | null;
     translations?: unknown | null;
-    newsTags?: unknown | null;
+    tags?: unknown | null;
     createdAt?: TimestampString | null;
   } & NewsArticle_Key)[];
 }
@@ -596,6 +596,7 @@ export interface ListUserCabinetData {
   userCabinets: ({
     spiritId: string;
     isFavorite?: boolean | null;
+    isWishlist?: boolean | null;
     notes?: string | null;
     rating?: number | null;
     spirit: {
@@ -725,6 +726,7 @@ export interface UpsertCabinetVariables {
   notes?: string | null;
   rating?: number | null;
   isFavorite?: boolean | null;
+  isWishlist?: boolean | null;
 }
 
 export interface UpsertModificationRequestData {
@@ -767,7 +769,7 @@ export interface UpsertNewsVariables {
   link?: string | null;
   date?: string | null;
   translations?: unknown | null;
-  newsTags?: unknown | null;
+  tags?: unknown | null;
 }
 
 export interface UpsertReviewCommentData {

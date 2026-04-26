@@ -105,7 +105,7 @@ type NewsArticle @table {
   link: String
   date: String @index
   translations: Any
-  newsTags: Any
+  tags: Any
   createdAt: Timestamp @default(expr: "request.time") @index
   updatedAt: Timestamp @default(expr: "request.time")
 }
@@ -117,6 +117,7 @@ type UserCabinet @table(key: ["user", "spirit"]) {
   notes: String
   rating: Int
   isFavorite: Boolean @default(value: false)
+  isWishlist: Boolean @default(value: false)
 }
 
 type ModificationRequest @table {

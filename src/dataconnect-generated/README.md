@@ -1186,9 +1186,9 @@ export interface GetUserProfileData {
     role?: string | null;
     themePreference?: string | null;
     isFirstLogin?: boolean | null;
+    tasteProfile?: unknown | null;
     reviewsWritten?: number | null;
     heartsReceived?: number | null;
-    tasteProfile?: unknown | null;
   } & User_Key;
 }
 ```
@@ -1309,7 +1309,7 @@ export interface ListNewsArticlesData {
     link?: string | null;
     date?: string | null;
     translations?: unknown | null;
-    newsTags?: unknown | null;
+    tags?: unknown | null;
     createdAt?: TimestampString | null;
   } & NewsArticle_Key)[];
 }
@@ -1436,7 +1436,7 @@ export interface GetNewsArticleData {
     link?: string | null;
     date?: string | null;
     translations?: unknown | null;
-    newsTags?: unknown | null;
+    tags?: unknown | null;
     createdAt?: TimestampString | null;
   } & NewsArticle_Key;
 }
@@ -3376,6 +3376,7 @@ export interface ListUserCabinetData {
   userCabinets: ({
     spiritId: string;
     isFavorite?: boolean | null;
+    isWishlist?: boolean | null;
     notes?: string | null;
     rating?: number | null;
     spirit: {
@@ -4805,7 +4806,7 @@ export interface UpsertNewsVariables {
   link?: string | null;
   date?: string | null;
   translations?: unknown | null;
-  newsTags?: unknown | null;
+  tags?: unknown | null;
 }
 ```
 ### Return Type
@@ -4834,14 +4835,14 @@ const upsertNewsVars: UpsertNewsVariables = {
   link: ..., // optional
   date: ..., // optional
   translations: ..., // optional
-  newsTags: ..., // optional
+  tags: ..., // optional
 };
 
 // Call the `upsertNews()` function to execute the mutation.
 // You can use the `await` keyword to wait for the promise to resolve.
 const { data } = await upsertNews(upsertNewsVars);
 // Variables can be defined inline as well.
-const { data } = await upsertNews({ id: ..., title: ..., content: ..., imageUrl: ..., category: ..., source: ..., link: ..., date: ..., translations: ..., newsTags: ..., });
+const { data } = await upsertNews({ id: ..., title: ..., content: ..., imageUrl: ..., category: ..., source: ..., link: ..., date: ..., translations: ..., tags: ..., });
 
 // You can also pass in a `DataConnect` instance to the action shortcut function.
 const dataConnect = getDataConnect(connectorConfig);
@@ -4873,13 +4874,13 @@ const upsertNewsVars: UpsertNewsVariables = {
   link: ..., // optional
   date: ..., // optional
   translations: ..., // optional
-  newsTags: ..., // optional
+  tags: ..., // optional
 };
 
 // Call the `upsertNewsRef()` function to get a reference to the mutation.
 const ref = upsertNewsRef(upsertNewsVars);
 // Variables can be defined inline as well.
-const ref = upsertNewsRef({ id: ..., title: ..., content: ..., imageUrl: ..., category: ..., source: ..., link: ..., date: ..., translations: ..., newsTags: ..., });
+const ref = upsertNewsRef({ id: ..., title: ..., content: ..., imageUrl: ..., category: ..., source: ..., link: ..., date: ..., translations: ..., tags: ..., });
 
 // You can also pass in a `DataConnect` instance to the `MutationRef` function.
 const dataConnect = getDataConnect(connectorConfig);
@@ -5047,6 +5048,7 @@ export interface UpsertCabinetVariables {
   notes?: string | null;
   rating?: number | null;
   isFavorite?: boolean | null;
+  isWishlist?: boolean | null;
 }
 ```
 ### Return Type
@@ -5072,13 +5074,14 @@ const upsertCabinetVars: UpsertCabinetVariables = {
   notes: ..., // optional
   rating: ..., // optional
   isFavorite: ..., // optional
+  isWishlist: ..., // optional
 };
 
 // Call the `upsertCabinet()` function to execute the mutation.
 // You can use the `await` keyword to wait for the promise to resolve.
 const { data } = await upsertCabinet(upsertCabinetVars);
 // Variables can be defined inline as well.
-const { data } = await upsertCabinet({ userId: ..., spiritId: ..., addedAt: ..., notes: ..., rating: ..., isFavorite: ..., });
+const { data } = await upsertCabinet({ userId: ..., spiritId: ..., addedAt: ..., notes: ..., rating: ..., isFavorite: ..., isWishlist: ..., });
 
 // You can also pass in a `DataConnect` instance to the action shortcut function.
 const dataConnect = getDataConnect(connectorConfig);
@@ -5107,12 +5110,13 @@ const upsertCabinetVars: UpsertCabinetVariables = {
   notes: ..., // optional
   rating: ..., // optional
   isFavorite: ..., // optional
+  isWishlist: ..., // optional
 };
 
 // Call the `upsertCabinetRef()` function to get a reference to the mutation.
 const ref = upsertCabinetRef(upsertCabinetVars);
 // Variables can be defined inline as well.
-const ref = upsertCabinetRef({ userId: ..., spiritId: ..., addedAt: ..., notes: ..., rating: ..., isFavorite: ..., });
+const ref = upsertCabinetRef({ userId: ..., spiritId: ..., addedAt: ..., notes: ..., rating: ..., isFavorite: ..., isWishlist: ..., });
 
 // You can also pass in a `DataConnect` instance to the `MutationRef` function.
 const dataConnect = getDataConnect(connectorConfig);

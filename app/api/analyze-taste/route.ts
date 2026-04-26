@@ -78,8 +78,14 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-    const apiKey = getEnv('GEMINI_API_KEY') || getEnv('GOOGLE_GEMINI_API_KEY');
+    const apiKey = getEnv('GEMINI_API_KEY');
     const traceId = crypto.randomUUID();
+    
+    console.log(`[analyze-taste][${traceId}] 🔍 Start Analysis. API Key present: ${!!apiKey}`);
+    if (apiKey) {
+        console.log(`[analyze-taste][${traceId}] 🔑 Key Hint: ${apiKey.substring(0, 4)}...${apiKey.substring(apiKey.length - 4)}`);
+    }
+
     try {
         const body = await req.json();
         const { userId, lang = 'ko' } = body;
@@ -99,6 +105,8 @@ export async function POST(req: NextRequest) {
         const usage = existingProfile.usage || { date: today, count: 0 };
         let currentCount = (usage.date === today) ? usage.count : 0;
 
+        console.log(`[analyze-taste][${traceId}] 📈 Usage: ${currentCount}/3 for user ${userId}`);
+
         if (currentCount >= 3) return NextResponse.json({ error: 'Limit reached', code: 'ANALYZE_DAILY_LIMIT', traceId, source: 'api/analyze-taste' }, { status: 429 });
 
         const [cabinetItems, userReviews] = await Promise.all([
@@ -106,25 +114,31 @@ export async function POST(req: NextRequest) {
             dbAdminListUserReviews(userId)
         ]);
 
+        console.log(`[analyze-taste][${traceId}] 📦 Cabinet: ${cabinetItems.length} items, Reviews: ${userReviews.length} items`);
+
         const spiritsForAnalysis = cabinetItems.map((item: any) => {
             if (!item) return null;
             const spirit = item.spirit || {};
-            const review = userReviews.find((r: any) => r.spiritId === item.spiritId);
+            const review = userReviews.find((r: any) => r.spiritId === (spirit.id || item.spiritId));
             
-            // Map camelCase (SQL) to snake_case (AI Analysis Expectations)
+            // Map REAL SCHEMA (CamelCase) to AI Expected (Snake_Case)
             return {
-                ...item,
-                ...spirit,
+                name: spirit.name,
                 name_en: spirit.nameEn,
-                description_ko: spirit.descriptionKo,
-                description_en: spirit.descriptionEn,
-                nose_tags: spirit.noseTags,
-                palate_tags: spirit.palateTags,
-                finish_tags: spirit.finishTags,
+                category: spirit.category,
+                distillery: spirit.distillery,
+                abv: spirit.abv,
+                isWishlist: !item.isFavorite && !(item.rating > 0), // Derived from real schema
+                addedAt: item.addedAt,
+                nose_tags: spirit.noseTags || [],
+                palate_tags: spirit.palateTags || [],
+                finish_tags: spirit.finishTags || [],
                 tasting_note: spirit.tastingNote,
                 userReview: review ? {
-                    ratingOverall: review.rating,
-                    tags: [review.nose, review.palate, review.finish].filter(Boolean),
+                    ratingOverall: Number(review.rating) || 0,
+                    tagsN: typeof review.nose === 'string' ? review.nose.split(',') : [],
+                    tagsP: typeof review.palate === 'string' ? review.palate.split(',') : [],
+                    tagsF: typeof review.finish === 'string' ? review.finish.split(',') : [],
                     comment: review.content
                 } : null
             };
@@ -210,7 +224,7 @@ export async function POST(req: NextRequest) {
 
         const genAI = new GoogleGenerativeAI(apiKey);
         const model = genAI.getGenerativeModel({ 
-            model: "gemini-2.0-flash", 
+            model: "gemini-1.5-flash", 
             systemInstruction, 
             generationConfig: { 
                 responseMimeType: "application/json",

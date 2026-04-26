@@ -3,7 +3,7 @@
 import { useState, memo } from "react";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
-import Image from 'next/image';
+import NextImage from 'next/image';
 import { Spirit } from "@/lib/utils/flavor-engine";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
@@ -51,7 +51,7 @@ function CabinetSpiritCardComponent({
                 <div className="absolute inset-0 bg-linear-to-br from-primary/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
                 <div className="relative h-full rounded-[1.8rem] overflow-hidden bg-black/40 group-hover:scale-[0.98] transition-all duration-700">
-                    <Image
+                    <NextImage
                         src={imgSrc}
                         alt={spirit.name || 'Spirit Image'}
                         fill

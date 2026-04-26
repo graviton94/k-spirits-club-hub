@@ -95,7 +95,8 @@ export async function addToCabinet(
             spiritId,
             notes: data?.userReview?.comment || '',
             rating: data?.userReview?.ratingOverall || 0,
-            isFavorite: false // Default
+            isFavorite: false,
+            isWishlist: !!data?.isWishlist
         });
 
         // 2. If there's a review, save to public reviews
@@ -153,8 +154,8 @@ export async function checkCabinetStatus(userId: string, spiritId: string) {
         if (!item) return { isOwned: false, isWishlist: false, data: null };
 
         return {
-            isOwned: (item.rating ?? 0) > 0, // Simplified logic for migration
-            isWishlist: (item.rating ?? 0) === 0,
+            isOwned: !item.isWishlist, 
+            isWishlist: !!item.isWishlist,
             data: item
         };
     } catch (error) {
@@ -176,10 +177,10 @@ export async function getCabinetStatusInfo(userId: string) {
         const wishlistIds: string[] = [];
 
         items.forEach((item: any) => {
-            if ((item.rating ?? 0) > 0) {
-                ownedIds.push(item.spiritId);
-            } else {
+            if (item.isWishlist) {
                 wishlistIds.push(item.spiritId);
+            } else {
+                ownedIds.push(item.spiritId);
             }
         });
 

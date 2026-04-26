@@ -229,9 +229,9 @@ query getUserProfile($id: String!) @auth(level: PUBLIC) {
     role
     themePreference
     isFirstLogin
+    tasteProfile
     reviewsWritten
     heartsReceived
-    tasteProfile
   }
 }
 
@@ -246,7 +246,7 @@ query listNewsArticles($limit: Int, $offset: Int) @auth(level: PUBLIC) {
     link
     date
     translations
-    newsTags
+    tags
     createdAt
   }
 }
@@ -262,7 +262,7 @@ query getNewsArticle($id: String!) @auth(level: PUBLIC) {
     link
     date
     translations
-    newsTags
+    tags
     createdAt
   }
 }
@@ -563,6 +563,7 @@ query listUserCabinet($userId: String!) @auth(expr: "auth != null && auth.uid ==
   userCabinets(where: { userId: { eq: $userId } }) {
     spiritId
     isFavorite
+    isWishlist
     notes
     rating
     spirit {
