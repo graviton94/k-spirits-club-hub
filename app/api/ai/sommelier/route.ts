@@ -239,7 +239,14 @@ export async function POST(req: NextRequest) {
         });
 
     } catch (error: any) {
-        console.error('[Sommelier API Error]', error);
-        return fallbackResponse(lang, currentStep, error?.message, 'AI_SOMMELIER_UPSTREAM_ERROR');
+        const errorStack = error instanceof Error ? error.stack : '';
+        const errorMsg = error instanceof Error ? error.message : String(error);
+        console.error(`[Sommelier API][${traceId}] ❌ CRITICAL:`, {
+            message: errorMsg,
+            stack: errorStack,
+            name: error?.name,
+            code: error?.code
+        });
+        return fallbackResponse(lang, currentStep, errorMsg, 'AI_SOMMELIER_UPSTREAM_ERROR');
     }
 }

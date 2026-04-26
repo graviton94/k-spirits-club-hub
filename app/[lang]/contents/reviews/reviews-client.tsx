@@ -69,10 +69,10 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                 userId: r.user?.id,
                 profileImage: r.user?.profileImage,
                 tags: [
-                    ...(r.nose ? r.nose.split(',') : []),
-                    ...(r.palate ? r.palate.split(',') : []),
-                    ...(r.finish ? r.finish.split(',') : [])
-                ].map((t: string) => t.trim()).filter(Boolean)
+                    ...(typeof r.nose === 'string' ? r.nose.split(',') : []),
+                    ...(typeof r.palate === 'string' ? r.palate.split(',') : []),
+                    ...(typeof r.finish === 'string' ? r.finish.split(',') : [])
+                ].map((tag: string) => tag.trim()).filter(Boolean)
             }));
 
             setReviews(mappedData);
