@@ -317,7 +317,7 @@ export const dbUpsertNews = async (vars: any) => {
     ...vars,
     title: String(extractString(vars?.title, pickTranslationTitle(t)) || 'Untitled').trim(),
     content: String(extractString(vars?.content, pickTranslationContent(t)) || '').trim(),
-    tags: vars?.newsTags ?? vars?.tags, // Sync the discrepancy
+    tags: vars?.tags,
     // Upgrade insecure links to https
     link: (vars?.link || '').replace(/^http:\/\//i, 'https://')
   };

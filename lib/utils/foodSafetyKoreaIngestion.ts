@@ -3,7 +3,8 @@
  * Refer to: http://openapi.foodsafetykorea.go.kr/
  */
 
-const API_KEY = process.env.FOOD_SAFETY_KOREA_API_KEY;
+import { getEnv } from '@/lib/env';
+
 const BASE_URL = 'http://openapi.foodsafetykorea.go.kr/api';
 
 /**
@@ -43,6 +44,7 @@ export interface MappedSpiritData {
  * Fetches spirits data from Food Safety Korea API with pagination
  */
 export async function ingestFoodSafetyData() {
+  const API_KEY = getEnv('FOOD_SAFETY_KOREA_API_KEY');
   if (!API_KEY) {
     console.error('❌ 에러: FOOD_SAFETY_KOREA_API_KEY가 .env 파일에 설정되어 있지 않습니다.');
     return;

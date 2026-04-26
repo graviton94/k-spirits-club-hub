@@ -343,7 +343,7 @@ export const dbAdminUpsertNews = async (vars: any) => {
                 source: $source,
                 date: $date,
                 translations: $translations,
-                newsTags: $tags
+                tags: $tags
             }) {
                 id
             }

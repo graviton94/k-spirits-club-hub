@@ -2,6 +2,7 @@
 
 import { fetchNewsForCollection } from '@/lib/api/news';
 import { dbAdminUpsertNews } from '@/lib/db/data-connect-admin';
+import { getEnv } from '@/lib/env';
 
 function generateSafeId(url: string): string {
   return Buffer.from(url).toString('base64').replace(/\//g, '_').replace(/\+/g, '-').replace(/=/g, '');
@@ -9,7 +10,7 @@ function generateSafeId(url: string): string {
 
 export async function collectNewsAdminAction(existingLinks: string[] = []) {
   try {
-    if (!process.env.GEMINI_API_KEY) {
+    if (!getEnv('GEMINI_API_KEY')) {
       throw new Error('GEMINI_API_KEY가 설정되지 않았습니다.');
     }
 
