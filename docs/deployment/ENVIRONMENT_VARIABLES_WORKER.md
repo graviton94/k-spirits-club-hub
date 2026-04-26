@@ -38,3 +38,132 @@ Cloudflare 대시보드에서 아래 두 메뉴에 **동일한 변수 리스트*
 ---
 **최종 정책 확정일**: 2026-04-24  
 **사유**: 빌드타임(Client)과 런타임(Server)의 환경변수 누락 없는 완벽한 바인딩 보장
+
+## Example
+Type
+Name
+Value
+
+Secret
+ADMIN_PASSWORD
+Value encrypted
+
+
+Secret
+CF_GATEWAY_URL
+Value encrypted
+
+
+Secret
+CRON_SECRET
+Value encrypted
+
+
+Secret
+ENV_BINDING_TEST
+Value encrypted
+
+
+Secret
+FIREBASE_CLIENT_EMAIL
+Value encrypted
+
+
+Secret
+FIREBASE_PRIVATE_KEY
+Value encrypted
+
+
+Secret
+FIREBASE_PROJECT_ID
+Value encrypted
+
+
+Secret
+FOOD_SAFETY_API_KEY
+Value encrypted
+
+
+Secret
+FOOD_SAFETY_KOREA_API_KEY
+Value encrypted
+
+
+Secret
+FOOD_SAFETY_SERVICE_ID
+Value encrypted
+
+
+Secret
+GEMINI_API_KEY
+Value encrypted
+
+
+Secret
+GOOGLE_NEWS_API_KEY
+Value encrypted
+
+
+Secret
+GOOGLE_NEWS_CX_ID
+Value encrypted
+
+
+Secret
+NEXT_PUBLIC_ADSENSE_CLIENT
+Value encrypted
+
+
+Secret
+NEXT_PUBLIC_ADSENSE_FOOTER_SLOT
+Value encrypted
+
+
+Secret
+NEXT_PUBLIC_ADSENSE_INFEED_SLOT
+Value encrypted
+
+
+Secret
+NEXT_PUBLIC_APP_ID
+Value encrypted
+
+
+Secret
+NEXT_PUBLIC_FIREBASE_API_KEY
+Value encrypted
+
+
+Secret
+NEXT_PUBLIC_FIREBASE_APP_ID
+Value encrypted
+
+
+Secret
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+Value encrypted
+
+
+Secret
+NEXT_PUBLIC_FIREBASE_CONFIG
+Value encrypted
+
+
+Secret
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+Value encrypted
+
+
+Secret
+NEXT_PUBLIC_FIREBASE_PROJECT_ID
+Value encrypted
+
+
+Secret
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+Value encrypted
+
+
+Secret
+TARGET_ALCOHOL_TYPES
+Value encrypted
