@@ -46,7 +46,10 @@ export async function GET(request: NextRequest) {
       offset
     });
 
-    if (!spirits || spirits.length === 0) {
+    // Safety Filter: Remove any entries with 'undefined' or missing IDs
+    const validSpirits = (spirits || []).filter((s: any) => s.id && String(s.id).toLowerCase() !== 'undefined');
+
+    if (!validSpirits || validSpirits.length === 0) {
       return NextResponse.json({
         spirits: [],
         count: 0,
@@ -56,7 +59,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Map to simplified search index format for the frontend
-    const mappedSpirits = spirits.map((s: any) => ({
+    const mappedSpirits = validSpirits.map((s: any) => ({
       i: s.id,
       n: s.name || '이름 없음',
       en: s.nameEn || null,

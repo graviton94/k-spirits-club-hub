@@ -262,7 +262,7 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                                                 
                                                 <div className="flex flex-col items-center justify-center w-20 h-20 bg-primary shadow-2xl shadow-primary/20 rounded-[2rem] text-primary-foreground transform group-hover:scale-105 transition-transform">
                                                     <Star className="w-5 h-5 fill-current mb-0.5" />
-                                                    <span className="text-xl font-black italic">{review.rating.toFixed(1)}</span>
+                                                    <span className="text-xl font-black italic">{Number(review.rating || 0).toFixed(1)}</span>
                                                 </div>
                                             </div>
                                         </div>

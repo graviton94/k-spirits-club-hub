@@ -219,7 +219,8 @@ export async function POST(req: NextRequest) {
                 parsed.recommendations = parsed.recommendations.map((rec: any) => {
                     // Standardize match object to use either minified (i/n/c) or full (id/name/category) keys
                     const m = searchIndex.find(s => (s.i || s.id) === rec.id) || 
-                              searchIndex.find(s => (s.n || s.name) === rec.name);
+                              searchIndex.find(s => (s.n || s.name) === rec.name) ||
+                              searchIndex.find(s => (s.n || s.name)?.toLowerCase().includes(String(rec.name || '').toLowerCase()));
                     
                     if (m) {
                         return { 
