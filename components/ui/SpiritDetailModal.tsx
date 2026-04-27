@@ -187,7 +187,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
         if (!confirm(confirmMsg)) return;
         setIsProcessing(true);
         try {
-            await removeFromCabinet(user!.uid, spirit.id);
+            await removeFromCabinet(user.uid, spirit.id);
             setCabinetStatus({ isOwned: false, isWishlist: false });
             if (onStatusChange) onStatusChange();
             setToastMessage(t.toast_removed);
