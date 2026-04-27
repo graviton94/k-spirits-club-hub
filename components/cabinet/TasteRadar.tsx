@@ -24,7 +24,7 @@ export default function TasteRadar({ data }: TasteRadarProps) {
             <div className="absolute -top-24 -left-24 w-48 h-48 bg-amber-500/10 blur-[100px] rounded-full group-hover:bg-amber-500/20 transition-all duration-700" />
             <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-foreground/5 blur-[100px] rounded-full" />
 
-            <ResponsiveContainer width="100%" height="100%" minHeight={300} debounce={50}>
+            <ResponsiveContainer width="100%" height={300} minHeight={300} debounce={50}>
                 <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
                     <PolarGrid 
                         stroke="currentColor" 

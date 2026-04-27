@@ -3,8 +3,6 @@ import Link from "next/link";
 import {
   Trophy,
   Gamepad2,
-  PenTool,
-  BarChart3,
   ChevronRight,
   Sparkles,
   Beer,
@@ -13,8 +11,8 @@ import {
   MessageSquare,
   BookOpen
 } from "lucide-react";
-import { motion } from "framer-motion";
 import { getCanonicalUrl, getHreflangAlternates } from "@/lib/utils/seo-url";
+import { ContentsHeaderAnimated, ContentsCardAnimated } from "./contents-animated";
 
 interface ContentsPageProps {
   params: Promise<{ lang: string }>;
@@ -117,11 +115,7 @@ export default async function ContentsPage({ params }: ContentsPageProps) {
 
       {/* Header Section */}
       <div className="mb-16 relative text-center">
-        <motion.div
-           initial={{ opacity: 0, y: 20 }}
-           animate={{ opacity: 1, y: 0 }}
-           className="space-y-6"
-        >
+        <ContentsHeaderAnimated>
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-card/40 backdrop-blur-xl border border-white/5 rounded-full mb-4 shadow-xl">
             <Sparkles className="w-3.5 h-3.5 text-primary animate-pulse" />
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground/80">
@@ -139,18 +133,13 @@ export default async function ContentsPage({ params }: ContentsPageProps) {
               ? 'Your interactive gateway to the world of spirits. Explore tournaments, character tests, and AI-powered insights all in one place.'
               : '주류 문화를 즐기는 가장 완벽한 방법. 토너먼트, 성격 테스트, AI 분석 소식까지 한곳에서 모두 경험해보세요.'}
           </p>
-        </motion.div>
+        </ContentsHeaderAnimated>
       </div>
 
       {/* Grid Layout */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
         {contents.map((item, idx) => (
-          <motion.div
-            key={idx}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: idx * 0.1 }}
-          >
+          <ContentsCardAnimated key={idx} delay={idx * 0.1}>
             <Link
               href={item.link}
               className="group relative h-full flex flex-col bg-card/20 backdrop-blur-3xl border border-white/5 rounded-[2.5rem] p-8 transition-all duration-500 hover:scale-[1.02] hover:bg-card/30 hover:border-primary/30 hover:shadow-[0_30px_100px_-20px_rgba(0,0,0,0.5)] overflow-hidden"
@@ -182,7 +171,7 @@ export default async function ContentsPage({ params }: ContentsPageProps) {
                 </div>
               </div>
             </Link>
-          </motion.div>
+          </ContentsCardAnimated>
         ))}
       </div>
 

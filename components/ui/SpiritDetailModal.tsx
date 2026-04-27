@@ -14,7 +14,7 @@ import { addToCabinet } from "@/app/[lang]/actions/cabinet";
 import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
 import metadata from "@/lib/constants/spirits-metadata.json";
 
-import SuccessToast from "@/components/ui/SuccessToast";
+import { useModal } from "@/app/[lang]/context/modal-context";
 
 interface SpiritDetailModalProps {
     spirit: any; // Flexible for now
@@ -60,12 +60,15 @@ const UI_TEXT = {
     }
 };
 
+import SuccessToast from "@/components/ui/SuccessToast";
+
 export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusChange }: SpiritDetailModalProps) {
     const { user, profile } = useAuth();
     const router = useRouter();
     const pathname = usePathname() || "";
     const isEn = pathname.split('/')[1] === 'en';
     const t = isEn ? UI_TEXT.en : UI_TEXT.ko;
+    const { openModal, closeModal } = useModal();
 
     // Helper to get localized category name
     const getLocalizedCategory = (cat: string) => {
@@ -107,16 +110,18 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
         checkStatus();
     }, [user, spirit, isOpen]);
 
-    // Body scroll lock
+    // Body scroll lock + modal context
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
-            // Also prevent touchmove on the backdrop if needed, but 'hidden' usually works for desktop/modern mobile
+            openModal();
         } else {
             document.body.style.overflow = '';
+            closeModal();
         }
         return () => {
             document.body.style.overflow = '';
+            closeModal();
         };
     }, [isOpen]);
 
@@ -209,67 +214,83 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                     transition={{ type: "spring", damping: 30, stiffness: 400 }}
                     onClick={(e) => e.stopPropagation()}
                 >
-                    {/* 🏰 1. Hero Dossier Header */}
-                    <div className="relative h-[35vh] md:h-[400px] w-full bg-muted/30 shrink-0 overflow-hidden">
+                    {/* 🏰 1. Product Image Section - Clean White Background */}
+                    <div className="relative h-[42vw] max-h-[300px] w-full bg-white shrink-0 overflow-hidden">
                         {/* Close Button */}
                         <button
                             onClick={onClose}
-                            className="absolute top-8 right-8 z-30 p-3 bg-black/20 hover:bg-black/40 backdrop-blur-xl rounded-2xl text-white transition-all active:scale-90 border border-white/10 group shadow-2xl"
+                            className="absolute top-4 right-4 z-30 p-2.5 bg-black/10 hover:bg-black/20 backdrop-blur-xl rounded-xl text-foreground/70 transition-all active:scale-90 border border-black/10 group shadow-sm"
                         >
-                            <X className="w-6 h-6 group-hover:rotate-90 transition-transform duration-500" />
+                            <X className="w-5 h-5 group-hover:rotate-90 transition-transform duration-500" />
                         </button>
 
-                        <div className="absolute inset-0 z-10 bg-linear-to-t from-card via-card/20 to-transparent" />
-                        
                         {localSpirit.imageUrl ? (
                             <NextImage
                                 src={getOptimizedImageUrl(localSpirit.imageUrl, 1200)}
                                 alt={localSpirit.name}
                                 fill
-                                className="object-contain p-12 md:p-20 drop-shadow-[0_30px_60px_rgba(0,0,0,0.4)]"
+                                className="object-contain p-8"
                                 priority
                                 unoptimized={true}
                             />
                         ) : (
-                            <div className="w-full h-full flex items-center justify-center text-8xl grayscale opacity-20">
+                            <div className="w-full h-full flex items-center justify-center text-8xl opacity-20">
                                 🥃
                             </div>
                         )}
+                    </div>
 
-                        {/* Title Overlay */}
-                        <div className="absolute bottom-0 inset-x-0 p-8 md:p-12 z-20 space-y-2">
-                             <span className="capsule-premium bg-primary text-primary-foreground border-none">
-                                {getLocalizedCategory(localSpirit.category)}
-                            </span>
-                            <h2 className="text-4xl md:text-6xl font-black text-foreground leading-[0.9] tracking-tighter">
-                                {localSpirit.name}
-                            </h2>
-                            {localSpirit.distillery && (
-                                <p className="text-lg md:text-xl text-primary font-black opacity-80 uppercase tracking-widest">{localSpirit.distillery}</p>
-                            )}
+                    {/* Product Identity Block */}
+                    <div className="px-6 md:px-8 pt-6 pb-4 border-b border-border/20">
+                        <div className="flex items-start justify-between gap-4">
+                            <div>
+                                <span className="capsule-premium bg-primary text-primary-foreground border-none text-[10px] mb-2 inline-block">
+                                    {getLocalizedCategory(localSpirit.category)}
+                                </span>
+                                <h2 className="text-2xl md:text-3xl font-black text-foreground leading-tight tracking-tighter">
+                                    {localSpirit.name}
+                                </h2>
+                                {localSpirit.distillery && (
+                                    <p className="text-sm text-primary font-bold opacity-70 uppercase tracking-widest mt-1">{localSpirit.distillery}</p>
+                                )}
+                            </div>
                         </div>
                     </div>
 
                     {/* 📄 2. Detailed Intelligence Section */}
-                    <div className="flex-1 overflow-y-auto px-8 md:px-12 py-8 bg-card text-foreground pb-24 md:pb-12 scrollbar-hide">
+                    <div className="flex-1 overflow-y-auto px-6 md:px-8 py-6 bg-card text-foreground pb-24 md:pb-8 scrollbar-hide">
                         
-                        {/* Dossier Meta Grid */}
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-                             {[
-                                { label: 'ABV', value: `${localSpirit.abv}%` },
-                                { label: 'CATEGORY', value: localSpirit.category },
-                                { label: 'STATUS', value: cabinetStatus.isOwned ? 'COLLECTED' : 'NOT OWNED' },
-                                { label: 'ID', value: `#${localSpirit.id.slice(0,6)}` }
-                             ].map((item, idx) => (
-                                <div key={idx} className="p-4 rounded-3xl bg-muted/30 border border-border/30">
-                                    <p className="text-[10px] font-black text-foreground/30 uppercase tracking-[0.2em] mb-1">{item.label}</p>
-                                    <p className="text-sm font-black text-foreground truncate">{item.value}</p>
+                        {/* Enterprise Meta Grid: DISTILLERY, ABV, CATEGORY, SUBCATEGORY */}
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                            {[
+                                { label: isEn ? 'DISTILLERY' : '증류소', value: localSpirit.distillery || '—' },
+                                { label: 'ABV', value: localSpirit.abv ? `${localSpirit.abv}%` : '—' },
+                                { label: isEn ? 'CATEGORY' : '주종', value: getLocalizedCategory(localSpirit.category) || '—' },
+                                { label: isEn ? 'STYLE' : '세부주종', value: (localSpirit as any).subcategory || (localSpirit as any).mainCategory || '—' }
+                            ].map((item, idx) => (
+                                <div key={idx} className="p-3 rounded-2xl bg-muted/30 border border-border/30">
+                                    <p className="text-[9px] font-black text-foreground/30 uppercase tracking-[0.2em] mb-1">{item.label}</p>
+                                    <p className="text-xs font-black text-foreground truncate">{item.value}</p>
                                 </div>
-                             ))}
+                            ))}
                         </div>
 
+                        {/* Flavor Tags Section */}
+                        {(localSpirit.noseTags?.length || localSpirit.palateTags?.length || localSpirit.finishTags?.length) && (
+                            <div className="mb-6 p-4 rounded-2xl bg-muted/20 border border-border/20">
+                                <p className="text-[9px] font-black text-foreground/30 uppercase tracking-[0.2em] mb-3">{isEn ? 'FLAVOR PROFILE' : '플레이버 태그'}</p>
+                                <div className="flex flex-wrap gap-1.5">
+                                    {[...(localSpirit.noseTags || []), ...(localSpirit.palateTags || []), ...(localSpirit.finishTags || [])].map((tag: string, i: number) => (
+                                        <span key={i} className="px-2.5 py-1 rounded-xl text-[10px] font-bold bg-primary/10 text-primary border border-primary/20">
+                                            #{tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
                         {/* Action Command Bar */}
-                        <div className="flex flex-col sm:flex-row gap-4 mb-12">
+                        <div className="flex flex-col sm:flex-row gap-3 mb-6">
                             {!cabinetStatus.isOwned ? (
                                 <>
                                     <button
@@ -322,40 +343,40 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
 
                         {/* Description Block */}
                         {(isEn ? localSpirit.descriptionEn : localSpirit.descriptionKo) && (
-                            <div className="mb-12 relative p-8 rounded-[2rem] bg-foreground text-background">
-                                <h3 className="text-[10px] font-black opacity-40 uppercase tracking-[0.25em] mb-4">{t.description}</h3>
-                                <p className="text-base md:text-lg leading-relaxed font-medium">
+                            <div className="mb-6 relative p-6 rounded-2xl bg-foreground text-background">
+                                <h3 className="text-[10px] font-black opacity-40 uppercase tracking-[0.25em] mb-3">{t.description}</h3>
+                                <p className="text-sm leading-relaxed font-medium">
                                     {isEn ? localSpirit.descriptionEn : localSpirit.descriptionKo}
                                 </p>
-                                <div className="absolute top-0 right-0 p-8 opacity-10">
-                                    <Sparkles className="w-12 h-12" />
+                                <div className="absolute top-0 right-0 p-6 opacity-10">
+                                    <Sparkles className="w-10 h-10" />
                                 </div>
                             </div>
                         )}
 
                         {/* 📊 Tasting Profile Intelligence */}
-                        <div className="space-y-12 mb-12">
+                        <div className="space-y-6 mb-6">
                             <div>
-                                <h3 className="text-[10px] font-black text-foreground/30 uppercase tracking-[0.25em] mb-8 flex items-center gap-3">
+                                <h3 className="text-[10px] font-black text-foreground/30 uppercase tracking-[0.25em] mb-5 flex items-center gap-3">
                                     <div className="h-px flex-1 bg-border/50"></div>
                                     {t.tastingProfile}
                                     <div className="h-px flex-1 bg-border/50"></div>
                                 </h3>
 
-                                <div className="grid gap-10">
+                                <div className="grid gap-6">
                                     {/* Aroma, Palate, Finish Sections */}
                                     {[
                                         { label: t.aroma, tags: localSpirit.userReview?.tagsN || localSpirit.noseTags, color: 'primary' },
                                         { label: t.palate, tags: localSpirit.userReview?.tagsP || localSpirit.palateTags, color: 'accent' },
                                         { label: t.finish, tags: localSpirit.finishTags || localSpirit.userReview?.tagsF, color: 'primary' }
                                     ].map((section, idx) => section.tags?.length ? (
-                                        <div key={idx} className="space-y-4">
+                                        <div key={idx} className="space-y-3">
                                             <div className="flex items-center gap-4">
-                                                <span className="text-sm font-black text-foreground uppercase tracking-widest">{section.label}</span>
+                                                <span className="text-xs font-black text-foreground uppercase tracking-widest">{section.label}</span>
                                             </div>
-                                            <div className="flex flex-wrap gap-2">
+                                            <div className="flex flex-wrap gap-1.5">
                                                 {section.tags.map((tag: string, i: number) => (
-                                                    <span key={i} className={`px-4 py-2 rounded-2xl text-[11px] font-black border transition-all hover:scale-105 cursor-default
+                                                    <span key={i} className={`px-3 py-1.5 rounded-xl text-[10px] font-black border transition-all hover:scale-105 cursor-default
                                                         ${section.color === 'primary' 
                                                             ? 'bg-primary/5 text-primary border-primary/20' 
                                                             : 'bg-accent/5 text-accent border-accent/20'}`}>
@@ -371,17 +392,17 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
 
                         {/* 🍹 Institutional Pairing Guide */}
                         {(isEn ? localSpirit.pairingGuideEn : (localSpirit.pairingGuideKo || localSpirit.pairingGuideEn)) && (
-                            <div className="relative overflow-hidden rounded-[2.5rem] bg-linear-to-br from-primary/10 via-background to-accent/10 border border-border/50 p-8 md:p-10 mb-8 shadow-2xl">
-                                <div className="flex items-center gap-4 mb-6">
-                                    <div className="w-10 h-10 rounded-2xl bg-brand-gradient flex items-center justify-center text-white shadow-lg">
-                                        <Sparkles className="w-5 h-5" />
+                            <div className="relative overflow-hidden rounded-2xl bg-linear-to-br from-primary/10 via-background to-accent/10 border border-border/50 p-6 shadow-xl">
+                                <div className="flex items-center gap-3 mb-4">
+                                    <div className="w-8 h-8 rounded-xl bg-brand-gradient flex items-center justify-center text-white shadow-md">
+                                        <Sparkles className="w-4 h-4" />
                                     </div>
-                                    <h3 className="text-lg font-black text-foreground uppercase tracking-tighter italic">
+                                    <h3 className="text-sm font-black text-foreground uppercase tracking-tighter italic">
                                         {isEn ? 'Sommelier Pairing Selection' : '소믈리에 페어링 가이드'}
                                     </h3>
                                 </div>
- 
-                                <p className="text-base md:text-lg text-foreground/90 leading-relaxed font-medium pl-2 border-l-4 border-primary/30">
+  
+                                <p className="text-sm text-foreground/90 leading-relaxed font-medium pl-3 border-l-4 border-primary/30">
                                     {isEn
                                         ? localSpirit.pairingGuideEn
                                         : (localSpirit.pairingGuideKo || localSpirit.pairingGuideEn)}

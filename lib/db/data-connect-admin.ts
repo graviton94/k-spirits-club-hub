@@ -205,33 +205,61 @@ export const dbAdminListRawSpirits = async (vars: {
     isPublished?: boolean;
     search?: string;
 }) => {
+    // Build WHERE conditions dynamically to avoid null-filter mismatches
+    const andConditions: string[] = [];
+    const variables: Record<string, any> = {
+        limit: vars.limit,
+        offset: vars.offset
+    };
+
+    if (vars.category !== undefined) {
+        andConditions.push('{ category: { eq: $category } }');
+        variables.category = vars.category;
+    }
+    if (vars.isPublished !== undefined) {
+        andConditions.push('{ isPublished: { eq: $isPublished } }');
+        variables.isPublished = vars.isPublished;
+    }
+    if (vars.search) {
+        andConditions.push('{ _or: [{ name: { contains: $search } }, { nameEn: { contains: $search } }] }');
+        variables.search = vars.search;
+    }
+
+    const whereClause = andConditions.length > 0
+        ? `, where: { _and: [${andConditions.join(', ')}] }`
+        : '';
+
+    const paramDeclarations = [
+        '$limit: Int', '$offset: Int',
+        vars.category !== undefined ? '$category: String' : null,
+        vars.isPublished !== undefined ? '$isPublished: Boolean' : null,
+        vars.search ? '$search: String' : null,
+    ].filter(Boolean).join(', ');
+
     const query = `
-        query adminListRawSpirits($limit: Int, $offset: Int, $category: String, $isPublished: Boolean, $search: String) {
+        query adminListRawSpirits(${paramDeclarations}) {
             spirits(
                 limit: $limit,
-                offset: $offset,
-                where: {
-                    _and: [
-                        { category: { eq: $category } },
-                        { isPublished: { eq: $isPublished } },
-                        {
-                            _or: [
-                                { name: { contains: $search } },
-                                { nameEn: { contains: $search } }
-                            ]
-                        }
-                    ]
-                },
+                offset: $offset${whereClause},
                 orderBy: [{ updatedAt: DESC }]
             ) {
                 id
                 name
+                nameEn
+                category
+                subcategory
+                distillery
+                abv
                 imageUrl
+                thumbnailUrl
+                isPublished
+                isReviewed
+                status
                 updatedAt
             }
         }
     `;
-    const { data } = await executeGraphql('adminListRawSpirits', query, vars);
+    const { data } = await executeGraphql('adminListRawSpirits', query, variables);
     return data?.spirits || [];
 };
 
@@ -255,14 +283,21 @@ export const dbAdminUpsertSpirit = async (vars: any) => {
             $thumbnailUrl: String, 
             $descriptionKo: String,
             $descriptionEn: String,
+            $pairingGuideKo: String,
+            $pairingGuideEn: String,
             $isPublished: Boolean,
-            $noseTags: Any,
-            $palateTags: Any,
-            $finishTags: Any,
+            $noseTags: [String!],
+            $palateTags: [String!],
+            $finishTags: [String!],
             $tastingNote: String,
+            $status: String,
+            $isReviewed: Boolean,
+            $reviewedBy: String,
+            $reviewedAt: Timestamp,
             $importer: String,
             $rawCategory: String,
-            $metadata: Any
+            $metadata: Any,
+            $updatedAt: Timestamp
         ) {
             spirit_upsert(data: {
                 id: $id,
@@ -282,14 +317,21 @@ export const dbAdminUpsertSpirit = async (vars: any) => {
                 thumbnailUrl: $thumbnailUrl,
                 descriptionKo: $descriptionKo,
                 descriptionEn: $descriptionEn,
+                pairingGuideKo: $pairingGuideKo,
+                pairingGuideEn: $pairingGuideEn,
                 isPublished: $isPublished,
                 noseTags: $noseTags,
                 palateTags: $palateTags,
                 finishTags: $finishTags,
                 tastingNote: $tastingNote,
+                status: $status,
+                isReviewed: $isReviewed,
+                reviewedBy: $reviewedBy,
+                reviewedAt: $reviewedAt,
                 importer: $importer,
                 rawCategory: $rawCategory,
-                metadata: $metadata
+                metadata: $metadata,
+                updatedAt: $updatedAt
             }) {
                 id
             }
@@ -299,11 +341,13 @@ export const dbAdminUpsertSpirit = async (vars: any) => {
     const allowed = [
         'id', 'name', 'category', 'nameEn', 'categoryEn', 'mainCategory', 'subcategory',
         'distillery', 'bottler', 'abv', 'volume', 'country', 'region', 'imageUrl', 
-        'thumbnailUrl', 'descriptionKo', 'descriptionEn', 'isPublished',
-        'noseTags', 'palateTags', 'finishTags', 'tastingNote', 'importer', 'rawCategory', 'metadata'
+        'thumbnailUrl', 'descriptionKo', 'descriptionEn', 'pairingGuideKo', 'pairingGuideEn',
+        'isPublished', 'noseTags', 'palateTags', 'finishTags', 'tastingNote',
+        'status', 'isReviewed', 'reviewedBy', 'reviewedAt',
+        'importer', 'rawCategory', 'metadata', 'updatedAt'
     ];
-    const filtered = {};
-    allowed.forEach(key => { if (key in vars) (filtered as any)[key] = vars[key]; });
+    const filtered: any = { updatedAt: new Date().toISOString() };
+    allowed.forEach(key => { if (key in vars) filtered[key] = vars[key]; });
     
     return await executeGraphql('upsertSpirit', query, filtered);
 };
@@ -364,4 +408,90 @@ export const auditAllNews = async () => {
         }
     `;
     return await executeGraphql('auditAllNews', query);
+};
+
+export const dbAdminFindReview = async (vars: { userId: string; spiritId: string }) => {
+    const query = `
+        query findReview($userId: String!, $spiritId: String!) {
+            spiritReviews(where: { userId: { eq: $userId }, spiritId: { eq: $spiritId } }) {
+                id
+                likes
+            }
+        }
+    `;
+    const { data } = await executeGraphql('findReview', query, vars);
+    return data?.spiritReviews?.[0] || null;
+};
+
+export const dbAdminUpsertReview = async (vars: {
+    id: string;
+    spiritId: string;
+    userId: string;
+    rating: number;
+    title?: string;
+    content: string;
+    nose?: string;
+    palate?: string;
+    finish?: string;
+    likes?: number;
+    isPublished?: boolean;
+    imageUrls?: string[];
+    createdAt?: string;
+    updatedAt?: string;
+}) => {
+    const query = `
+        mutation upsertReview(
+            $id: UUID!,
+            $spiritId: String!,
+            $userId: String!,
+            $rating: Int!,
+            $title: String,
+            $content: String!,
+            $nose: String,
+            $palate: String,
+            $finish: String,
+            $likes: Int,
+            $isPublished: Boolean,
+            $imageUrls: [String!],
+            $createdAt: Timestamp,
+            $updatedAt: Timestamp
+        ) {
+            spiritReview_upsert(data: {
+                id: $id,
+                spiritId: $spiritId,
+                userId: $userId,
+                rating: $rating,
+                title: $title,
+                content: $content,
+                nose: $nose,
+                palate: $palate,
+                finish: $finish,
+                likes: $likes,
+                isPublished: $isPublished,
+                imageUrls: $imageUrls,
+                createdAt: $createdAt,
+                updatedAt: $updatedAt
+            }) {
+                id
+            }
+        }
+    `;
+    return await executeGraphql('upsertReview', query, vars);
+};
+
+export const dbAdminIncrementUserReviews = async (userId: string) => {
+    const profile = await dbAdminGetUserProfile(userId);
+    if (!profile) return;
+    const query = `
+        mutation upsertUser($id: String!, $reviewsWritten: Int) {
+            user_upsert(data: {
+                id: $id,
+                reviewsWritten: $reviewsWritten
+            })
+        }
+    `;
+    return await executeGraphql('upsertUser', query, {
+        id: userId,
+        reviewsWritten: (profile.reviewsWritten || 0) + 1
+    });
 };

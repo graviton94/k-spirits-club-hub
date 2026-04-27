@@ -7,6 +7,7 @@ import { Spirit, UserReview } from "@/lib/utils/flavor-engine";
 import { TAG_COLORS, TagColorVariant, getTagColor, TAG_COLOR_MAPPING } from "@/lib/constants/tag-colors";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import SPIRITS_METADATA from "@/lib/constants/spirits-metadata.json";
+import { useModal } from "@/app/[lang]/context/modal-context";
 
 interface ReviewModalProps {
     spirit: Spirit;
@@ -26,6 +27,7 @@ const getMetadataTags = (category: TagCategory) => {
 
 export default function ReviewModal({ spirit, isOpen, onClose, onSubmit, dict, lang }: ReviewModalProps) {
     const isEn = lang === 'en';
+    const { openModal, closeModal } = useModal();
     // Ratings
     const [ratingN, setRatingN] = useState(spirit.userReview?.ratingN || 3.0);
     const [ratingP, setRatingP] = useState(spirit.userReview?.ratingP || 3.0);
@@ -39,10 +41,11 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit, dict, l
     const [tagsP, setTagsP] = useState<string[]>([]);
     const [tagsF, setTagsF] = useState<string[]>([]);
 
-    // Initialize state
+    // Initialize state + modal context
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
+            openModal();
             if (spirit.userReview) {
                 setTagsN(spirit.userReview.tagsN || []);
                 setTagsP(spirit.userReview.tagsP || []);
@@ -54,9 +57,11 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit, dict, l
             }
         } else {
             document.body.style.overflow = '';
+            closeModal();
         }
         return () => {
             document.body.style.overflow = '';
+            closeModal();
         };
     }, [isOpen, spirit]);
 

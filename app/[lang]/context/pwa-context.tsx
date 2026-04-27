@@ -42,8 +42,9 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
 
         // 2. Listen for the install prompt from Chromium browsers
         const handleBeforeInstallPrompt = (e: Event) => {
-            // Prevent the mini-infobar from appearing on mobile
-            e.preventDefault();
+            // Store the event for later use – do NOT call e.preventDefault() here,
+            // because that suppresses the browser mini-infobar and Chrome warns when
+            // prompt() is never called (e.g. the user is logged in or hasn't engaged enough).
             setDeferredPrompt(e);
             setIsInstallable(true);
         };

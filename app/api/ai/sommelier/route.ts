@@ -21,7 +21,7 @@ import { getEnv } from '@/lib/env';
 
 
 export async function POST(req: NextRequest) {
-    const apiKey = getEnv('GEMINI_API_KEY');
+    const apiKey = getEnv('GEMINI_API_KEY') || getEnv('GOOGLE_GEMINI_API_KEY');
     const traceId = crypto.randomUUID();
     const fallbackResponse = (lang: string, nextStep = 1, detail?: string, code = 'AI_SOMMELIER_GENERAL_ERROR') => NextResponse.json({
         message: lang === 'en'
