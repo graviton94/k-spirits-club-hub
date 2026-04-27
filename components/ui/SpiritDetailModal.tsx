@@ -293,9 +293,12 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                         <h2 className="text-2xl md:text-3xl font-black text-foreground leading-tight tracking-tighter">
                             {localSpirit.name}
                         </h2>
-                        {(localSpirit as any).nameEn && (localSpirit as any).nameEn !== localSpirit.name && (
-                            <p className="text-sm text-foreground/50 font-medium mt-0.5">{(localSpirit as any).nameEn}</p>
-                        )}
+                        {(() => {
+                            const nameEn = (localSpirit as any).nameEn;
+                            return nameEn && nameEn !== localSpirit.name ? (
+                                <p className="text-sm text-foreground/50 font-medium mt-0.5">{nameEn}</p>
+                            ) : null;
+                        })()}
                         {localSpirit.distillery && (
                             <p className="text-sm text-primary font-bold opacity-70 uppercase tracking-widest mt-1">{localSpirit.distillery}</p>
                         )}

@@ -239,9 +239,11 @@ export async function POST(req: NextRequest) {
                 });
             }
 
-            // Log selection to PostgreSQL (best-effort, non-critical)
+            // TODO: Re-implement AI discovery logging using dbAdminUpsertAiDiscoveryLog
+            // once an admin-level mutation for aiDiscoveryLog is added to data-connect-admin.ts.
+            // Currently skipped as it's non-critical and the operation requires server-auth context.
             if (parsed.nextStep === 6) {
-                // AI discovery logging skipped - non-critical operation
+                // AI discovery logging intentionally skipped (non-critical)
             }
         }
 

@@ -16,6 +16,8 @@ export async function GET(request: NextRequest) {
 
     // 3. Handle Index Mode (lightweight search index for client-side Fuse.js)
     if (mode === 'index') {
+      // Fetches up to 500 spirits for the client-side search index.
+      // This covers typical catalog sizes; increase if the catalog grows beyond 500 entries.
       const spirits = await dbAdminSearchSpiritsPublic({ limit: 500 });
       const searchIndex = (spirits || [])
         .filter((s: any) => s.id && String(s.id).toLowerCase() !== 'undefined')
@@ -33,7 +35,8 @@ export async function GET(request: NextRequest) {
         { searchIndex, timestamp: Date.now() },
         {
           status: 200,
-          headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },
+          // Cache for 15 minutes (spirits catalog is relatively stable)
+          headers: { 'Cache-Control': 'public, s-maxage=900, stale-while-revalidate=1800' },
         }
       );
     }
