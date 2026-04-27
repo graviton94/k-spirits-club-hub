@@ -14,6 +14,7 @@ import { BottomNav } from "@/components/layout/BottomNav";
 import GoogleAd from '@/components/ui/GoogleAd';
 import { getDictionary } from '@/lib/get-dictionary';
 import { PwaProvider } from './context/pwa-context';
+import { ModalProvider } from './context/modal-context';
 import { PwaInstallPrompt } from '@/components/ui/PwaInstallPrompt';
 import { ScrollToTop } from '@/components/layout/ScrollToTop';
 import ChatSommelier from "@/components/ui/ChatSommelier";
@@ -145,17 +146,19 @@ export default async function RootLayout({
 
         <AuthProvider>
           <SpiritsCacheProvider>
-            <PwaProvider>
-              <Header lang={lang} dict={dictionary.nav} />
-              <ScrollToTop />
-              <PwaInstallPrompt />
-              <OnboardingModal dict={dictionary.onboarding} />
-              <main className="relative min-h-screen overflow-x-hidden pb-20 md:pb-0">
-                {children}
-              </main>
-              <BottomNav lang={lang} dict={dictionary.nav} />
-              <ChatSommelier lang={lang} />
-            </PwaProvider>
+            <ModalProvider>
+              <PwaProvider>
+                <Header lang={lang} dict={dictionary.nav} />
+                <ScrollToTop />
+                <PwaInstallPrompt />
+                <OnboardingModal dict={dictionary.onboarding} />
+                <main className="relative min-h-screen overflow-x-hidden pb-20 md:pb-0">
+                  {children}
+                </main>
+                <BottomNav lang={lang} dict={dictionary.nav} />
+                <ChatSommelier lang={lang} />
+              </PwaProvider>
+            </ModalProvider>
           </SpiritsCacheProvider>
         </AuthProvider>
 

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send, User, Sparkles, ChevronRight, Search, RefreshCcw } from 'lucide-react';
 import { SpiritCard } from './SpiritCard';
 import { useAuth } from '@/app/[lang]/context/auth-context';
+import { useModal } from '@/app/[lang]/context/modal-context';
 import { useRouter, usePathname } from 'next/navigation';
 import NextImage from 'next/image';
 
@@ -57,6 +58,7 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
     };
 
   const { user } = useAuth();
+  const { openModal, closeModal } = useModal();
   const router = useRouter();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
@@ -69,6 +71,10 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const isEn = lang === 'en';
+
+  useEffect(() => {
+    if (isOpen) { openModal(); } else { closeModal(); }
+  }, [isOpen]);
 
   useEffect(() => {
     if (isOpen && messages.length === 0) {

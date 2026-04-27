@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { 
-  dbListSpiritReviews, 
-  dbListUserReviews,
-  dbIncrementUserReviews,
-  dbFindReview,
-  dbUpsertReview
+  dbListSpiritReviews
 } from '@/lib/db/data-connect-client';
+import {
+  dbAdminFindReview,
+  dbAdminUpsertReview,
+  dbAdminIncrementUserReviews,
+  dbAdminListUserReviews
+} from '@/lib/db/data-connect-admin';
 import { v4 as uuidv4 } from 'uuid';
 
 export const runtime = 'nodejs';
@@ -30,11 +32,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    // Upsert to Data Connect (Relational Schema)
-    const existingReview = await dbFindReview({ userId, spiritId });
+    // Upsert to Data Connect using admin REST module (bypasses @auth for server-side context)
+    const existingReview = await dbAdminFindReview({ userId, spiritId });
     const reviewId = existingReview?.id || uuidv4();
     const now = new Date().toISOString();
-    await dbUpsertReview({
+    await dbAdminUpsertReview({
       id: reviewId,
       spiritId,
       userId,
@@ -53,7 +55,7 @@ export async function POST(request: NextRequest) {
 
     // Increment user stats
     try {
-      await dbIncrementUserReviews(userId);
+      await dbAdminIncrementUserReviews(userId);
     } catch (e) {
       console.error('Failed to increment user reviews stat:', e);
     }
@@ -80,7 +82,7 @@ export async function GET(request: NextRequest) {
     const userIdParam = searchParams.get('userId');
 
     if (userIdParam) {
-      const userReviews = await dbListUserReviews(userIdParam);
+      const userReviews = await dbAdminListUserReviews(userIdParam);
       const reviews = userReviews.map((r: any) => ({
         id: r.id,
         spiritId: r.spiritId,
@@ -147,12 +149,12 @@ export async function DELETE(request: NextRequest) {
        return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
-    const existingReview = await dbFindReview({ userId: targetUserId, spiritId });
+    const existingReview = await dbAdminFindReview({ userId: targetUserId, spiritId });
     if (!existingReview?.id) {
       return NextResponse.json({ error: 'Review not found' }, { status: 404 });
     }
 
-    await dbUpsertReview({
+    await dbAdminUpsertReview({
       id: existingReview.id,
       spiritId,
       userId: targetUserId,

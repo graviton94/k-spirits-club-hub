@@ -18,6 +18,7 @@ import {
     dbListNewsArticles
 } from '@/lib/db/data-connect-client';
 import { getSpiritById } from '@/app/[lang]/actions/spirits';
+import { useModal } from '@/app/[lang]/context/modal-context';
 
 
 interface EditFormState {
@@ -46,6 +47,7 @@ export default function AdminDashboard() {
     const pathname = usePathname() || '';
     const lang = pathname.split('/')[1] === 'en' ? 'en' : 'ko';
     const isEn = lang === 'en';
+    const { openModal, closeModal } = useModal();
 
     useEffect(() => {
         document.title = `K-Spirits Club | ${isEn ? 'Admin Dashboard' : '관리자 대시보드'}`;
@@ -83,14 +85,15 @@ export default function AdminDashboard() {
         noseTags: '', palateTags: '', finishTags: ''
     });
 
-    // [Task 3.2] Scroll Lock for Mobile Stability
+    // [Task 3.2] Scroll Lock for Mobile Stability + Modal Context
     useEffect(() => {
         if (editingId || isCreating) {
             document.body.style.overflow = 'hidden';
+            openModal();
         } else {
             document.body.style.overflow = 'unset';
+            closeModal();
         }
-        // Cleanup function to prevent permanent lock
         return () => {
             document.body.style.overflow = 'unset';
         };

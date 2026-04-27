@@ -6,10 +6,12 @@ import { Home, Search, Library, Gamepad2, User } from "lucide-react";
 import { motion } from "framer-motion";
 import { Locale } from "@/i18n-config";
 import { surfaces, interactive } from "@/lib/design/patterns";
+import { useModal } from "@/app/[lang]/context/modal-context";
 
 export function BottomNav({ lang, dict }: { lang: Locale, dict: any }) {
   const pathname = usePathname() || "";
   const isEn = lang === 'en';
+  const { isAnyModalOpen } = useModal();
 
   const isActive = (path: string) => {
     // path examples: "/explore", "/"
@@ -26,6 +28,8 @@ export function BottomNav({ lang, dict }: { lang: Locale, dict: any }) {
     { href: "/contents", icon: Gamepad2, label: "Contents" }, // Dictionary doesn't have "contents", using hardcoded for now or keeping as is if user didn't specify
     { href: "/me", icon: User, label: dict.profile },
   ];
+
+  if (isAnyModalOpen) return null;
 
     return (
         <div className="fixed bottom-6 left-0 right-0 flex justify-center px-6 z-50 pointer-events-none">

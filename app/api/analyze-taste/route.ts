@@ -78,7 +78,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-    const apiKey = getEnv('GEMINI_API_KEY');
+    const apiKey = getEnv('GEMINI_API_KEY') || getEnv('GOOGLE_GEMINI_API_KEY');
     const traceId = crypto.randomUUID();
     
     console.log(`[analyze-taste][${traceId}] 🔍 Start Analysis. API Key present: ${!!apiKey}`);
