@@ -3,10 +3,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { 
-    dbUpsertAiDiscoveryLog,
-    dbSearchSpiritsPublic 
-} from '@/lib/db/data-connect-client';
-import { db } from '@/lib/db'; // Compatibility layer for getPublishedSearchIndex
+    dbAdminSearchSpiritsPublic
+} from '@/lib/db/data-connect-admin';
 
 
 export const runtime = 'nodejs';
@@ -72,13 +70,13 @@ export async function POST(req: NextRequest) {
         // Loading searchable index for recommendations (Step 3+)
         if (currentStep >= 3) {
             try {
-                // Compatibility check for db.getPublishedSearchIndex
-                if (db && typeof db.getPublishedSearchIndex === 'function') {
-                    searchIndex = await db.getPublishedSearchIndex();
-                }
+                const spirits = await dbAdminSearchSpiritsPublic({ limit: 200 });
+                searchIndex = (spirits || []).map((s: any) => ({
+                    i: s.id, n: s.name, en: s.nameEn, c: s.category,
+                    sc: s.subcategory, a: s.abv, d: s.distillery, t: s.imageUrl
+                }));
             } catch (e: any) {
-                console.error('[Sommelier API] Index Fetch Failed or Unsupported:', e.message);
-                // Non-critical: we can still perform interview steps without the local index
+                console.error('[Sommelier API] Index Fetch Failed:', e.message);
                 searchIndex = [];
             }
 
@@ -205,10 +203,14 @@ export async function POST(req: NextRequest) {
         if (parsed.recommendations && Array.isArray(parsed.recommendations) && parsed.recommendations.length > 0) {
             if (!searchIndex || searchIndex.length === 0) {
                 try {
-                    // Try Data Connect search if Index is unavailable
+                    // Try Admin Data Connect search if Index is unavailable
                     if (parsed.recommendations[0]?.name) {
-                        const recMatch = await dbSearchSpiritsPublic({ search: parsed.recommendations[0].name, limit: 1 });
-                        if (recMatch && recMatch.length > 0) searchIndex = recMatch;
+                        const recMatch = await dbAdminSearchSpiritsPublic({ search: parsed.recommendations[0].name, limit: 1 });
+                        if (recMatch && recMatch.length > 0) {
+                            searchIndex = recMatch.map((s: any) => ({
+                                i: s.id, n: s.name, c: s.category, a: s.abv, t: s.imageUrl
+                            }));
+                        }
                     }
                 } catch (e: any) {
                     console.error('Failed to fetch fallback search results:', e);
@@ -237,19 +239,11 @@ export async function POST(req: NextRequest) {
                 });
             }
 
-            // Log selection to PostgreSQL
+            // TODO: Re-implement AI discovery logging using dbAdminUpsertAiDiscoveryLog
+            // once an admin-level mutation for aiDiscoveryLog is added to data-connect-admin.ts.
+            // Currently skipped as it's non-critical and the operation requires server-auth context.
             if (parsed.nextStep === 6) {
-                try {
-                    await dbUpsertAiDiscoveryLog({
-                        id: crypto.randomUUID(), // Fix: Use real UUID for PostgreSQL
-                        userId,
-                        analysis: parsed.analysis,
-                        recommendations: parsed.recommendations,
-                        messageHistory: messages.concat([{ role: 'model', content: parsed.message }])
-                    });
-                } catch (e: any) {
-                    console.error('Discovery Logging failed:', e);
-                }
+                // AI discovery logging intentionally skipped (non-critical)
             }
         }
 

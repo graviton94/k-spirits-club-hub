@@ -3,12 +3,11 @@
 "use server";
 
 import { 
-    dbListUserCabinet, 
-    dbUpsertCabinet, 
-    dbDeleteCabinet,
-    dbGetSpirit,
-    dbUpsertReview
-} from '@/lib/db/data-connect-client';
+    dbAdminListUserCabinet, 
+    dbAdminUpsertCabinet, 
+    dbAdminDeleteCabinet,
+    dbAdminUpsertReview
+} from '@/lib/db/data-connect-admin';
 import { revalidatePath } from 'next/cache';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -30,7 +29,7 @@ export async function updateCabinetEntry(
     if (!userId) throw new Error('User not authenticated');
 
     try {
-        await dbUpsertCabinet({
+        await dbAdminUpsertCabinet({
             userId,
             spiritId,
             rating: data.personalRating,
@@ -54,7 +53,7 @@ export async function getUserCabinet(userId: string) {
     if (!userId) return [];
 
     try {
-        const cabinetItems = await dbListUserCabinet(userId);
+        const cabinetItems = await dbAdminListUserCabinet(userId);
         
         // Data Connect listUserCabinet already joins with spirit data
         return cabinetItems.map((item: any) => ({
@@ -90,7 +89,7 @@ export async function addToCabinet(
 
     try {
         // 1. Save to cabinet
-        await dbUpsertCabinet({
+        await dbAdminUpsertCabinet({
             userId,
             spiritId,
             notes: data?.userReview?.comment || '',
@@ -101,7 +100,7 @@ export async function addToCabinet(
 
         // 2. If there's a review, save to public reviews
         if (!data?.isWishlist && data?.userReview) {
-            await dbUpsertReview({
+            await dbAdminUpsertReview({
                 id: uuidv4(),
                 spiritId,
                 userId,
@@ -132,7 +131,7 @@ export async function removeFromCabinet(userId: string, spiritId: string) {
     if (!userId) throw new Error('User not authenticated');
 
     try {
-        await dbDeleteCabinet({ userId, spiritId });
+        await dbAdminDeleteCabinet({ userId, spiritId });
         revalidatePath(`/cabinet`);
         return { success: true };
     } catch (error) {
@@ -148,7 +147,7 @@ export async function checkCabinetStatus(userId: string, spiritId: string) {
     if (!userId) return { isOwned: false, isWishlist: false, data: null };
 
     try {
-        const items = await dbListUserCabinet(userId);
+        const items = await dbAdminListUserCabinet(userId);
         const item = items.find((i: any) => i.spiritId === spiritId);
 
         if (!item) return { isOwned: false, isWishlist: false, data: null };
@@ -172,7 +171,7 @@ export async function getCabinetStatusInfo(userId: string) {
     if (!userId) return { ownedIds: [], wishlistIds: [] };
 
     try {
-        const items = await dbListUserCabinet(userId);
+        const items = await dbAdminListUserCabinet(userId);
         const ownedIds: string[] = [];
         const wishlistIds: string[] = [];
 
