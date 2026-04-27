@@ -1,7 +1,7 @@
 // app/api/cabinet/check/route.ts
 
 import { NextRequest, NextResponse } from 'next/server';
-import { dbListUserCabinet, dbGetSpirit } from '@/lib/db/data-connect-client';
+import { dbAdminListUserCabinet, dbAdminGetSpirit } from '@/lib/db/data-connect-admin';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -16,16 +16,16 @@ export async function GET(request: NextRequest) {
     }
 
     try {
-        // Parallel Fetch: Cabinet Status & Master Data via Data Connect
+        // Parallel Fetch: Cabinet Status & Master Data via Admin Data Connect
         const [cabinetItems, masterItem] = await Promise.all([
-            dbListUserCabinet(userId),
-            dbGetSpirit(spiritId).catch(() => null)
+            dbAdminListUserCabinet(userId),
+            dbAdminGetSpirit(spiritId).catch(() => null)
         ]);
 
         const cabinetItem = cabinetItems.find((i: any) => i.spiritId === spiritId);
 
         if (!cabinetItem) {
-            return NextResponse.json({ isOwned: false, isWishlist: false, data: null });
+            return NextResponse.json({ isOwned: false, isWishlist: false, data: masterItem || null });
         }
 
         // Merge: Master Data (Base) + Cabinet Snapshot (Overlay)

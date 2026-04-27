@@ -1,4 +1,4 @@
-import { dbGetReviewDetail } from '@/lib/db/data-connect-client';
+import { dbAdminGetReviewDetail } from '@/lib/db/data-connect-admin';
 import { getRatingColor } from '@/lib/utils/rating-colors';
 import { Star, Heart, MessageSquare, Quote, Wind, Utensils, Zap, ChevronLeft, Share2 } from 'lucide-react';
 import Link from 'next/link';
@@ -20,7 +20,7 @@ export default async function ReviewDetailPage({ params }: PageProps) {
   // Fetch detailed review data via Data Connect (SSR)
   // Note: We don't have currentUserId here easily in SSR without cookies/headers auth
   // But common public info is fine.
-  const review = await dbGetReviewDetail(id);
+  const review = await dbAdminGetReviewDetail(id);
 
   if (!review) {
     notFound();

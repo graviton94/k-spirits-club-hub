@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getOptimizedImageUrl } from '@/lib/utils/image-optimization';
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url';
-import { dbGetWorldCupResult } from '@/lib/db/data-connect-client';
+import { dbAdminGetWorldCupResult } from '@/lib/db/data-connect-admin';
 import WorldCupBackButton from '@/components/contents/worldcup/WorldCupBackButton';
 
 interface WinnerData {
@@ -35,7 +35,7 @@ interface ResultData {
 
 async function getResult(id: string): Promise<ResultData | null> {
   try {
-    const raw = await dbGetWorldCupResult(id);
+    const raw = await dbAdminGetWorldCupResult(id);
     if (!raw || !raw.winner) return null;
     return raw as ResultData;
   } catch (error) {
