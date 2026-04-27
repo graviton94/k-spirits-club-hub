@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useCallback, useEffect, useRef, useState } from 'react';
+import React, { createContext, useContext, useCallback, useState } from 'react';
 
 interface ModalContextType {
     openModal: () => void;

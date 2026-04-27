@@ -61,6 +61,7 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit, dict, l
         }
         return () => {
             document.body.style.overflow = '';
+            closeModal();
         };
     }, [isOpen, spirit]);
 

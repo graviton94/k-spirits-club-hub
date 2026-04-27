@@ -74,6 +74,7 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
 
   useEffect(() => {
     if (isOpen) { openModal(); } else { closeModal(); }
+    return () => { closeModal(); };
   }, [isOpen]);
 
   useEffect(() => {

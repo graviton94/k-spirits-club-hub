@@ -121,6 +121,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
         }
         return () => {
             document.body.style.overflow = '';
+            closeModal();
         };
     }, [isOpen]);
 

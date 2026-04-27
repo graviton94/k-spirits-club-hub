@@ -96,6 +96,7 @@ export default function AdminDashboard() {
         }
         return () => {
             document.body.style.overflow = 'unset';
+            closeModal();
         };
     }, [editingId, isCreating]);
 
