@@ -51,8 +51,13 @@ export default async function WorldCupPage({ params }: WorldCupPageProps) {
   const isEn = lang === 'en';
 
   // DB에서 카테고리 목록을 서버사이드에서 미리 가져옴
-  const { getWorldCupCategoriesAction } = await import('@/app/[lang]/actions/spirits');
-  const dbCategories = await getWorldCupCategoriesAction();
+  let dbCategories: { ko: string; en?: string | null }[] = [];
+  try {
+    const { getWorldCupCategoriesAction } = await import('@/app/[lang]/actions/spirits');
+    dbCategories = await getWorldCupCategoriesAction();
+  } catch (error) {
+    console.error('[WorldCupPage] Failed to load categories:', error);
+  }
 
   return (
     <>

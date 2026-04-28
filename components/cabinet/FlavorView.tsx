@@ -65,7 +65,13 @@ export default function FlavorView({
                 body: JSON.stringify({ userId: user.uid, lang: isEn ? 'en' : 'ko' })
             });
 
-            if (!res.ok) throw new Error((await res.json()).message || 'Analysis Failed');
+            if (!res.ok) {
+                const errBody = await res.json().catch((parseErr) => {
+                    console.error('[FlavorView] Failed to parse error response:', parseErr);
+                    return {};
+                });
+                throw new Error(errBody.message || errBody.error || 'Analysis Failed');
+            }
             const data = await res.json();
             setProfile(data.profile);
             if (data.usage) setUsage(data.usage);
