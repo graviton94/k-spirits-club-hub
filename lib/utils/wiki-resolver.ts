@@ -10,6 +10,7 @@ import { SpiritCategory } from '../constants/wiki/types';
 
 // Mapping of slugs to their respective static data files
 const WIKI_LOADERS: Record<string, () => Promise<any>> = {
+    'whisky': () => import('../constants/wiki/whisky'),
     'blended-whisky': () => import('../constants/wiki/blended-whisky'),
     'single-malt': () => import('../constants/wiki/single-malt'),
     'bourbon': () => import('../constants/wiki/bourbon'),
