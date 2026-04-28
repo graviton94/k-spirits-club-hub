@@ -2,7 +2,8 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { MBTIClient } from './mbti-client';
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url';
-import { RelatedContentLinks, getRelatedIcon } from '@/components/common/related-content-links';
+import { RelatedContentLinks } from '@/components/common/related-content-links';
+import { getRelatedIconKey } from '@/components/common/related-content-icon-key';
 
 interface MbtiPageProps {
   params: Promise<{ lang: string }>;
@@ -98,9 +99,9 @@ export default async function MbtiPage({ params }: MbtiPageProps) {
           <RelatedContentLinks 
             title={isEn ? 'Explore Related Content' : '관련 콘텐츠 탐색'}
             links={[
-              { href: `/${lang}/contents`, label: isEn ? 'Contents Hub' : '콘텐츠 허브', icon: getRelatedIcon('hub', '/contents') },
-              { href: `/${lang}/contents/worldcup`, label: isEn ? 'Spirit World Cup' : '주류 월드컵', icon: getRelatedIcon('worldcup', '/contents/worldcup') },
-              { href: `/${lang}/explore`, label: isEn ? 'Explore Spirits' : '주류 탐색', icon: getRelatedIcon('explore', '/explore') },
+              { href: `/${lang}/contents`, label: isEn ? 'Contents Hub' : '콘텐츠 허브', icon: getRelatedIconKey('hub', '/contents') },
+              { href: `/${lang}/contents/worldcup`, label: isEn ? 'Spirit World Cup' : '주류 월드컵', icon: getRelatedIconKey('worldcup', '/contents/worldcup') },
+              { href: `/${lang}/explore`, label: isEn ? 'Explore Spirits' : '주류 탐색', icon: getRelatedIconKey('explore', '/explore') },
             ]}
           />
 

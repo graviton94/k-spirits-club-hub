@@ -4,7 +4,8 @@ import { notFound } from 'next/navigation';
 import { getCanonicalUrl, getHreflangAlternates, toAbsoluteUrl } from '@/lib/utils/seo-url';
 import NewsContentPage from './news-client';
 import { dbAdminListNewsArticles } from '@/lib/db/data-connect-admin';
-import { RelatedContentLinks, getRelatedIconKey } from '@/components/common/related-content-links';
+import { RelatedContentLinks } from '@/components/common/related-content-links';
+import { getRelatedIconKey } from '@/components/common/related-content-icon-key';
 
 interface NewsPageProps {
   params: Promise<{ lang: string }>;
