@@ -9,7 +9,8 @@ import SpiritGuideLayout from '@/components/contents/SpiritGuideLayout'
 import { redirect } from 'next/navigation'
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url'
 import { selectFeaturedSpiritsForWiki } from '@/lib/utils/wiki-spirit-match'
-import { RelatedContentLinks, getRelatedIconKey } from '@/components/common/related-content-links'
+import { RelatedContentLinks } from '@/components/common/related-content-links'
+import { getRelatedIconKey } from '@/components/common/related-content-icon-key'
 
 const KO_TO_EN_MAP: Record<string, string> = {
     '소주-가이드': 'soju-guide',

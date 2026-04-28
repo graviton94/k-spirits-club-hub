@@ -2,7 +2,8 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url';
 import WorldCupSelectionPage from './worldcup-client';
-import { RelatedContentLinks, getRelatedIconKey } from '@/components/common/related-content-links';
+import { RelatedContentLinks } from '@/components/common/related-content-links';
+import { getRelatedIconKey } from '@/components/common/related-content-icon-key';
 
 interface WorldCupPageProps {
   params: Promise<{ lang: string }>;

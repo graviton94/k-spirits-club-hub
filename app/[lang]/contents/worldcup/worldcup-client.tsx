@@ -19,7 +19,7 @@ import { getSubcategoriesAction } from '@/app/[lang]/actions/spirits';
 const ROUND_OPTIONS = [8, 16, 32, 64];
 
 interface WorldCupSelectionPageProps {
-    initialCategories: { ko: string, en: string | null | undefined }[];
+    initialCategories: { ko: string, en?: string | null | undefined }[];
 }
 
 export default function WorldCupSelectionPage({ initialCategories }: WorldCupSelectionPageProps) {
