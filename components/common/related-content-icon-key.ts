@@ -6,7 +6,7 @@ export function getRelatedIconKey(label: string, href: string): string {
     if (h.includes('mbti')) return 'mbti';
     if (h.includes('worldcup')) return 'worldcup';
     if (h.includes('wiki') || l.includes('백과') || l.includes('가이드')) return 'wiki';
-    if (h.includes('contents') && !h.includes('/')) return 'hub';
+    if (h.endsWith('/contents')) return 'hub';
     if (h.includes('news')) return 'news';
     if (h.includes('reviews') || l.includes('리뷰')) return 'reviews';
     if (h.includes('explore') || l.includes('탐색')) return 'explore';
