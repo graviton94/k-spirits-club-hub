@@ -4,8 +4,8 @@ import { getEnv } from '@/lib/env';
 const MODEL_ID = "gemini-2.0-flash";
 
 function getApiKey(): string {
-    const key = getEnv('GEMINI_API_KEY');
-    if (!key) throw new Error("GEMINI_API_KEY is not set");
+    const key = getEnv('GEMINI_API_KEY') || getEnv('GOOGLE_GEMINI_API_KEY');
+    if (!key) throw new Error("Either GEMINI_API_KEY or GOOGLE_GEMINI_API_KEY must be set");
     return key;
 }
 

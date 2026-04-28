@@ -9,6 +9,7 @@ interface PreferenceExplorationProps {
     flavorAnalysis: any;
     spirits: Spirit[];
     profile: any;
+    user: any;
     loading: boolean;
     dict?: any;
 }
@@ -17,6 +18,7 @@ export default function PreferenceExploration({
     flavorAnalysis,
     spirits,
     profile,
+    user,
     loading,
     dict
 }: PreferenceExplorationProps) {
@@ -28,7 +30,8 @@ export default function PreferenceExploration({
             transition={{ duration: 0.3 }}
             className="relative"
         >
-            {!profile && !loading && (
+            {/* Only block access when the user is not authenticated at all */}
+            {!user && !loading && (
                 <GuestOverlay flavor />
             )}
 

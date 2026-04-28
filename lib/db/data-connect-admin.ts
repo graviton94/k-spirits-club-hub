@@ -161,10 +161,34 @@ export const dbAdminUpsertUser = async (vars: any) => {
 };
 
 export const dbAdminSearchSpiritsPublic = async (vars: {
-    search: string;
+    search?: string;
     limit?: number;
     offset?: number;
 }) => {
+    // When no search term is provided, fetch all published spirits (broad listing for AI context)
+    if (!vars.search) {
+        const query = `
+            query listSpiritsPublic($limit: Int, $offset: Int) {
+                spirits(
+                    limit: $limit,
+                    offset: $offset,
+                    where: { isPublished: { eq: true } }
+                ) {
+                    id
+                    name
+                    nameEn
+                    category
+                    imageUrl
+                    thumbnailUrl
+                    abv
+                    distillery
+                }
+            }
+        `;
+        const { data } = await executeGraphql('listSpiritsPublic', query, { limit: vars.limit, offset: vars.offset });
+        return data?.spirits || [];
+    }
+
     const query = `
         query searchSpiritsPublic($search: String, $limit: Int, $offset: Int) {
             spirits(
