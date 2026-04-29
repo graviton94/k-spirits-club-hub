@@ -318,6 +318,7 @@ export default function CabinetClient({ lang, dict }: CabinetClientProps) {
                         flavorAnalysis={flavorAnalysis}
                         spirits={spirits}
                         profile={profile}
+                        user={user}
                         loading={loading}
                         dict={dict}
                     />

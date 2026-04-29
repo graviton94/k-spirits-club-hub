@@ -161,10 +161,34 @@ export const dbAdminUpsertUser = async (vars: any) => {
 };
 
 export const dbAdminSearchSpiritsPublic = async (vars: {
-    search: string;
+    search?: string;
     limit?: number;
     offset?: number;
 }) => {
+    // When no search term is provided, fetch all published spirits (broad listing for AI context)
+    if (!vars.search) {
+        const query = `
+            query listSpiritsPublic($limit: Int, $offset: Int) {
+                spirits(
+                    limit: $limit,
+                    offset: $offset,
+                    where: { isPublished: { eq: true } }
+                ) {
+                    id
+                    name
+                    nameEn
+                    category
+                    imageUrl
+                    thumbnailUrl
+                    abv
+                    distillery
+                }
+            }
+        `;
+        const { data } = await executeGraphql('listSpiritsPublic', query, { limit: vars.limit, offset: vars.offset });
+        return data?.spirits || [];
+    }
+
     const query = `
         query searchSpiritsPublic($search: String, $limit: Int, $offset: Int) {
             spirits(
@@ -410,6 +434,270 @@ export const auditAllNews = async () => {
     return await executeGraphql('auditAllNews', query);
 };
 
+export const dbAdminGetSpirit = async (id: string) => {
+    const query = `
+        query getSpirit($id: String!) {
+            spirit(id: $id) {
+                id
+                name
+                nameEn
+                category
+                categoryEn
+                mainCategory
+                subcategory
+                distillery
+                bottler
+                abv
+                volume
+                country
+                region
+                imageUrl
+                thumbnailUrl
+                descriptionKo
+                descriptionEn
+                pairingGuideKo
+                pairingGuideEn
+                noseTags
+                palateTags
+                finishTags
+                tastingNote
+                status
+                isPublished
+                isReviewed
+                rating
+                reviewCount
+                metadata
+            }
+        }
+    `;
+    const { data } = await executeGraphql('getSpirit', query, { id });
+    return data?.spirit || null;
+};
+
+export const dbAdminListSpirits = async (vars: { category?: string; subcategory?: string; country?: string } = {}) => {
+    const andConditions: string[] = ['{ isPublished: { eq: true } }'];
+    const variables: Record<string, any> = {};
+    const paramDeclarations: string[] = [];
+
+    if (vars.category) {
+        andConditions.push('{ category: { eq: $category } }');
+        variables.category = vars.category;
+        paramDeclarations.push('$category: String');
+    }
+    if (vars.subcategory) {
+        andConditions.push('{ subcategory: { eq: $subcategory } }');
+        variables.subcategory = vars.subcategory;
+        paramDeclarations.push('$subcategory: String');
+    }
+    if (vars.country) {
+        andConditions.push('{ country: { eq: $country } }');
+        variables.country = vars.country;
+        paramDeclarations.push('$country: String');
+    }
+
+    const whereClause = `where: { _and: [${andConditions.join(', ')}] }`;
+    const params = paramDeclarations.length > 0 ? `(${paramDeclarations.join(', ')})` : '';
+
+    const query = `
+        query listSpirits${params} {
+            spirits(${whereClause}) {
+                id
+                name
+                nameEn
+                category
+                categoryEn
+                imageUrl
+                thumbnailUrl
+                isPublished
+                abv
+                distillery
+                rating
+                reviewCount
+            }
+        }
+    `;
+    const { data } = await executeGraphql('listSpirits', query, variables);
+    return data?.spirits || [];
+};
+
+export const dbAdminGetWorldCupResult = async (id: string) => {
+    const query = `
+        query getWorldCupResult($id: UUID!) {
+            worldCupResult(id: $id) {
+                id
+                winner {
+                    id
+                    name
+                    nameEn
+                    imageUrl
+                    thumbnailUrl
+                    category
+                    categoryEn
+                    subcategory
+                    distillery
+                    abv
+                    country
+                    region
+                    noseTags
+                    palateTags
+                    finishTags
+                }
+                category
+                subcategory
+                initialRound
+                timestamp
+            }
+        }
+    `;
+    const { data } = await executeGraphql('getWorldCupResult', query, { id });
+    return data?.worldCupResult || null;
+};
+
+export const dbAdminListSpiritReviews = async (limit: number, offset: number) => {
+    const query = `
+        query listSpiritReviews($limit: Int, $offset: Int) {
+            spiritReviews(
+                where: { isPublished: { eq: true } },
+                limit: $limit,
+                offset: $offset,
+                orderBy: [{ createdAt: DESC }]
+            ) {
+                id
+                rating
+                title
+                content
+                nose
+                palate
+                finish
+                imageUrls
+                createdAt
+                spirit {
+                    id
+                    name
+                    nameEn
+                    imageUrl
+                    distillery
+                }
+                user {
+                    id
+                    nickname
+                    profileImage
+                }
+            }
+        }
+    `;
+    const { data } = await executeGraphql('listSpiritReviews', query, { limit, offset });
+    return data?.spiritReviews || [];
+};
+
+export const dbAdminListNewsArticles = async (limit: number, offset: number) => {
+    const query = `
+        query listNewsArticles($limit: Int, $offset: Int) {
+            newsArticles(limit: $limit, offset: $offset, orderBy: [{ date: DESC }, { createdAt: DESC }]) {
+                id
+                title
+                content
+                imageUrl
+                category
+                source
+                link
+                date
+                translations
+                tags
+                createdAt
+            }
+        }
+    `;
+    const { data } = await executeGraphql('listNewsArticles', query, { limit, offset });
+    return data?.newsArticles || [];
+};
+
+export const dbAdminGetNewsCount = async () => {
+    const query = `
+        query auditAllNews {
+            newsArticles {
+                id
+            }
+        }
+    `;
+    const { data } = await executeGraphql('auditAllNews', query);
+    return (data?.newsArticles || []).length;
+};
+
+export const dbAdminGetReviewDetail = async (id: string) => {
+    const query = `
+        query getReviewDetail($id: UUID!) {
+            spiritReview(id: $id) {
+                id
+                rating
+                title
+                content
+                nose
+                palate
+                finish
+                likes
+                imageUrls
+                createdAt
+                spirit {
+                    id
+                    name
+                    nameEn
+                    imageUrl
+                    category
+                    distillery
+                    abv
+                }
+                user {
+                    id
+                    nickname
+                    profileImage
+                }
+            }
+        }
+    `;
+    const { data } = await executeGraphql('getReviewDetail', query, { id });
+    return data?.spiritReview || null;
+};
+
+export const dbAdminUpsertCabinet = async (vars: {
+    userId: string;
+    spiritId: string;
+    addedAt?: string;
+    notes?: string;
+    rating?: number;
+    isFavorite?: boolean;
+    isWishlist?: boolean;
+}) => {
+    const query = `
+        mutation upsertCabinet($userId: String!, $spiritId: String!, $addedAt: Timestamp, $notes: String, $rating: Int, $isFavorite: Boolean, $isWishlist: Boolean) {
+            userCabinet_upsert(data: {
+                userId: $userId,
+                spiritId: $spiritId,
+                addedAt: $addedAt,
+                notes: $notes,
+                rating: $rating,
+                isFavorite: $isFavorite,
+                isWishlist: $isWishlist
+            })
+        }
+    `;
+    const allowed = ['userId', 'spiritId', 'addedAt', 'notes', 'rating', 'isFavorite', 'isWishlist'];
+    const filtered: any = {};
+    allowed.forEach(key => { if (key in vars) filtered[key] = (vars as any)[key]; });
+    return await executeGraphql('upsertCabinet', query, filtered);
+};
+
+export const dbAdminDeleteCabinet = async (vars: { userId: string; spiritId: string }) => {
+    const query = `
+        mutation deleteCabinet($userId: String!, $spiritId: String!) {
+            userCabinet_delete(key: { userId: $userId, spiritId: $spiritId }) {
+                userId
+            }
+        }
+    `;
+    return await executeGraphql('deleteCabinet', query, vars);
+};
+
 export const dbAdminFindReview = async (vars: { userId: string; spiritId: string }) => {
     const query = `
         query findReview($userId: String!, $spiritId: String!) {
@@ -494,4 +782,93 @@ export const dbAdminIncrementUserReviews = async (userId: string) => {
         id: userId,
         reviewsWritten: (profile.reviewsWritten || 0) + 1
     });
+};
+
+export const dbAdminUpsertReviewLike = async (vars: { userId: string; reviewId: string }) => {
+    const query = `
+        mutation upsertReviewLike($userId: String!, $reviewId: UUID!) {
+            reviewLike_upsert(data: { userId: $userId, reviewId: $reviewId })
+        }
+    `;
+    return await executeGraphql('upsertReviewLike', query, vars);
+};
+
+export const dbAdminDeleteReviewLike = async (vars: { userId: string; reviewId: string }) => {
+    const query = `
+        mutation deleteReviewLike($userId: String!, $reviewId: UUID!) {
+            reviewLike_delete(key: { userId: $userId, reviewId: $reviewId }) {
+                userId
+            }
+        }
+    `;
+    return await executeGraphql('deleteReviewLike', query, vars);
+};
+
+export const dbAdminUpdateReviewLikesCount = async (vars: { id: string; likes: number }) => {
+    const query = `
+        mutation updateReviewLikesCount($id: UUID!, $likes: Int!) {
+            spiritReview_update(key: { id: $id }, data: { likes: $likes }) {
+                id
+            }
+        }
+    `;
+    return await executeGraphql('updateReviewLikesCount', query, vars);
+};
+
+export const dbAdminUpsertReviewComment = async (vars: { id: string; reviewId: string; userId: string; content: string; updatedAt?: string }) => {
+    const query = `
+        mutation upsertReviewComment($id: UUID!, $reviewId: UUID!, $userId: String!, $content: String!, $updatedAt: Timestamp) {
+            reviewComment_upsert(data: { id: $id, reviewId: $reviewId, userId: $userId, content: $content, updatedAt: $updatedAt })
+        }
+    `;
+    return await executeGraphql('upsertReviewComment', query, vars);
+};
+
+export const dbAdminDeleteReviewComment = async (id: string) => {
+    const query = `
+        mutation deleteReviewComment($id: UUID!) {
+            reviewComment_delete(key: { id: $id }) {
+                id
+            }
+        }
+    `;
+    return await executeGraphql('deleteReviewComment', query, { id });
+};
+
+export const dbAdminListAllCategories = async () => {
+    const query = `
+        query listAllCategories {
+            spirits(where: { isPublished: { eq: true } }) {
+                category
+                categoryEn
+            }
+        }
+    `;
+    const { data } = await executeGraphql('listAllCategories', query);
+    const unique = new Map<string, string | null | undefined>();
+    (data?.spirits || []).forEach((s: { category: string; categoryEn?: string | null }) => {
+        if (s.category && !unique.has(s.category)) {
+            unique.set(s.category, s.categoryEn);
+        }
+    });
+    return Array.from(unique.entries()).map(([ko, en]) => ({ ko, en }));
+};
+
+export const dbAdminListAllSubcategories = async (category?: string) => {
+    const whereClause = category
+        ? `where: { _and: [{ isPublished: { eq: true } }, { category: { eq: $category } }] }`
+        : `where: { isPublished: { eq: true } }`;
+    const paramDecl = category ? '($category: String)' : '';
+    const query = `
+        query listAllSubcategories${paramDecl} {
+            spirits(${whereClause}) {
+                subcategory
+            }
+        }
+    `;
+    const { data } = await executeGraphql('listAllSubcategories', query, category ? { category } : {});
+    const unique = new Set<string>(
+        (data?.spirits || []).map((s: { subcategory?: string | null }) => s.subcategory).filter(Boolean)
+    );
+    return Array.from(unique) as string[];
 };

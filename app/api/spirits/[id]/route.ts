@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import { dbAdminGetSpirit } from "@/lib/db/data-connect-admin";
 import { NextResponse } from "next/server";
 
 export const runtime = 'nodejs';
@@ -17,7 +17,7 @@ export async function GET(
         
         console.log(`[API] GET /api/spirits/${id} - Fetching spirit details...`);
 
-        const spirit = await db.getSpirit(id);
+        const spirit = await dbAdminGetSpirit(id);
 
         if (!spirit) {
             console.warn(`[API] Spirit not found: ${id}`);

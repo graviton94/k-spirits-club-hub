@@ -1,12 +1,12 @@
 "use server";
 
 import { 
-  dbListSpirits, 
-  dbGetSpirit, 
-  dbUpsertSpirit,
-  dbDeleteSpirit,
+  dbAdminListSpirits, 
+  dbAdminGetSpirit, 
+  dbAdminUpsertSpirit,
+  dbAdminDeleteSpirit,
   dbAdminListRawSpirits
-} from '@/lib/db/data-connect-client';
+} from '@/lib/db/data-connect-admin';
 import { enrichSpiritWithAI, calculateDynamicEditorRating } from '@/lib/services/gemini-translation';
 import { revalidatePath, revalidateTag } from 'next/cache';
 
@@ -17,7 +17,7 @@ import { revalidatePath, revalidateTag } from 'next/cache';
 export async function getSpiritsAction(filters: any = {}) {
   try {
     // Data Connect Query (isPublished 필터는 GQL 내재화됨)
-    const spirits = await dbListSpirits(filters.category);
+    const spirits = await dbAdminListSpirits(filters.category);
     return spirits;
   } catch (error) {
     console.error('[Action] getSpiritsAction Error:', error);
@@ -30,7 +30,7 @@ export async function getSpiritsAction(filters: any = {}) {
  */
 export async function getSpiritById(id: string) {
   try {
-    const spirit = await dbGetSpirit(id);
+    const spirit = await dbAdminGetSpirit(id);
     
     if (!spirit) return null;
 
@@ -47,7 +47,7 @@ export async function getSpiritById(id: string) {
 export async function getSpiritsSearchIndex() {
   try {
     // 공개된 데이터만 조회 (GQL 필터링됨)
-    const spirits = await dbListSpirits();
+    const spirits = await dbAdminListSpirits();
 
     if (!spirits || spirits.length === 0) return [];
 
@@ -134,7 +134,7 @@ export async function publishSpiritAction(id: string, manualUpdates?: any) {
   try {
     console.log(`[Admin] Surgery: Publishing & Grounding: ${id}`);
     
-    const current = await dbGetSpirit(id);
+    const current = await dbAdminGetSpirit(id);
     if (!current) throw new Error('Spirit not found');
 
     // 1. Merge manual updates first
@@ -154,7 +154,7 @@ export async function publishSpiritAction(id: string, manualUpdates?: any) {
 
     // 3. Final transformation and persistence
     const finalData = mapToSQLFields(baseData, { ...aiData, isPublished: true });
-    await dbUpsertSpirit(finalData);
+    await dbAdminUpsertSpirit(finalData);
 
     revalidatePath('/[lang]/contents/wiki', 'layout');
     revalidatePath('/[lang]/admin/spirits', 'page');
@@ -173,11 +173,11 @@ export async function publishSpiritAction(id: string, manualUpdates?: any) {
  */
 export async function updateSpiritAction(id: string, data: any) {
   try {
-    const current = await dbGetSpirit(id);
+    const current = await dbAdminGetSpirit(id);
     if (!current) throw new Error('Spirit not found');
 
     const updatedFields = mapToSQLFields(current, data);
-    await dbUpsertSpirit(updatedFields);
+    await dbAdminUpsertSpirit(updatedFields);
 
     revalidatePath('/[lang]/admin/spirits', 'page');
     revalidatePath('/[lang]/contents/wiki', 'layout');
@@ -208,7 +208,7 @@ export async function createSpiritAction(data: any, publish = false) {
       reviewedAt: publish ? (data.reviewedAt || new Date().toISOString()) : data.reviewedAt,
     };
 
-    await dbUpsertSpirit(payload);
+    await dbAdminUpsertSpirit(payload);
 
     revalidatePath('/[lang]/admin/spirits', 'page');
     revalidateTag('spirits');
@@ -221,7 +221,7 @@ export async function createSpiritAction(data: any, publish = false) {
 
 export async function deleteSpiritAction(id: string) {
   try {
-    await dbDeleteSpirit(id);
+    await dbAdminDeleteSpirit(id);
     revalidatePath('/[lang]/admin/spirits', 'page');
     revalidateTag('spirits');
     return { success: true };
@@ -236,8 +236,8 @@ export async function deleteSpiritAction(id: string) {
  */
 export async function getWorldCupCategoriesAction() {
   try {
-    const { dbListAllCategories } = await import('@/lib/db/data-connect-client');
-    return await dbListAllCategories();
+    const { dbAdminListAllCategories } = await import('@/lib/db/data-connect-admin');
+    return await dbAdminListAllCategories();
   } catch (error) {
     console.error('[Action] getWorldCupCategoriesAction Error:', error);
     return [];
@@ -249,8 +249,8 @@ export async function getWorldCupCategoriesAction() {
  */
 export async function getSubcategoriesAction(category?: string) {
   try {
-    const { dbListAllSubcategories } = await import('@/lib/db/data-connect-client');
-    return await dbListAllSubcategories(category === 'ALL' ? undefined : category);
+    const { dbAdminListAllSubcategories } = await import('@/lib/db/data-connect-admin');
+    return await dbAdminListAllSubcategories(category === 'ALL' ? undefined : category);
   } catch (error) {
     console.error('[Action] getSubcategoriesAction Error:', error);
     return [];

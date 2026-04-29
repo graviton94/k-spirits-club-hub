@@ -1,12 +1,12 @@
 'use server';
 
 import { 
-  dbUpsertReviewLike, 
-  dbDeleteReviewLike, 
-  dbUpdateReviewLikesCount,
-  dbUpsertReviewComment,
-  dbDeleteReviewComment 
-} from '@/lib/db/data-connect-client';
+  dbAdminUpsertReviewLike, 
+  dbAdminDeleteReviewLike, 
+  dbAdminUpdateReviewLikesCount,
+  dbAdminUpsertReviewComment,
+  dbAdminDeleteReviewComment 
+} from '@/lib/db/data-connect-admin';
 import { revalidatePath } from 'next/cache';
 
 /**
@@ -22,11 +22,11 @@ export async function toggleReviewLike(
 ) {
   try {
     if (isCurrentlyLiked) {
-      await dbDeleteReviewLike({ userId, reviewId });
-      await dbUpdateReviewLikesCount({ id: reviewId, likes: Math.max(0, currentLikes - 1) });
+      await dbAdminDeleteReviewLike({ userId, reviewId });
+      await dbAdminUpdateReviewLikesCount({ id: reviewId, likes: Math.max(0, currentLikes - 1) });
     } else {
-      await dbUpsertReviewLike({ userId, reviewId });
-      await dbUpdateReviewLikesCount({ id: reviewId, likes: currentLikes + 1 });
+      await dbAdminUpsertReviewLike({ userId, reviewId });
+      await dbAdminUpdateReviewLikesCount({ id: reviewId, likes: currentLikes + 1 });
     }
     
     revalidatePath('/[lang]/contents/reviews', 'page');
@@ -53,7 +53,7 @@ export async function addReviewComment(
 
   try {
     const commentId = crypto.randomUUID();
-    await dbUpsertReviewComment({
+    await dbAdminUpsertReviewComment({
       id: commentId,
       reviewId,
       userId,
@@ -74,7 +74,7 @@ export async function addReviewComment(
  */
 export async function removeReviewComment(commentId: string, reviewId: string) {
   try {
-    await dbDeleteReviewComment(commentId);
+    await dbAdminDeleteReviewComment(commentId);
     revalidatePath(`/[lang]/contents/reviews/${reviewId}`, 'page');
     return { success: true };
   } catch (error) {

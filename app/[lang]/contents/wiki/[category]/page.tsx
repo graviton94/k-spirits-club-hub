@@ -4,12 +4,13 @@ import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { resolveWikiCategory } from '@/lib/utils/wiki-resolver'
-import { dbListSpirits } from '@/lib/db/data-connect-client'
+import { dbAdminListSpirits } from '@/lib/db/data-connect-admin'
 import SpiritGuideLayout from '@/components/contents/SpiritGuideLayout'
 import { redirect } from 'next/navigation'
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url'
 import { selectFeaturedSpiritsForWiki } from '@/lib/utils/wiki-spirit-match'
-import { RelatedContentLinks, getRelatedIconKey } from '@/components/common/related-content-links'
+import { RelatedContentLinks } from '@/components/common/related-content-links'
+import { getRelatedIconKey } from '@/components/common/related-content-icon-key'
 
 const KO_TO_EN_MAP: Record<string, string> = {
     '소주-가이드': 'soju-guide',
@@ -176,7 +177,7 @@ export default async function SpiritWikiCategoryPage({ params }: CategoryPagePro
         try {
             // High-Performance Fetch: Use the Search Index with short keys
             // Priority: Fetch top-rated spirits from the primary category
-            const results = await dbListSpirits({ category: dbCategories[0] });
+            const results = await dbAdminListSpirits({ category: dbCategories[0] });
             const topResults = results.slice(0, 12);
             
             // Map direct Spirit schema fields (camelCase)

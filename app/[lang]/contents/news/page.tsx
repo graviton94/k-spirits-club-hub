@@ -3,8 +3,9 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getCanonicalUrl, getHreflangAlternates, toAbsoluteUrl } from '@/lib/utils/seo-url';
 import NewsContentPage from './news-client';
-import { dbListNewsArticles } from '@/lib/db/data-connect-client';
-import { RelatedContentLinks, getRelatedIconKey } from '@/components/common/related-content-links';
+import { dbAdminListNewsArticles } from '@/lib/db/data-connect-admin';
+import { RelatedContentLinks } from '@/components/common/related-content-links';
+import { getRelatedIconKey } from '@/components/common/related-content-icon-key';
 
 interface NewsPageProps {
   params: Promise<{ lang: string }>;
@@ -75,7 +76,7 @@ export default async function NewsPage({ params, searchParams }: NewsPageProps) 
 
   let initialNews: any[] = [];
   try {
-    initialNews = await dbListNewsArticles(PAGE_SIZE, (page - 1) * PAGE_SIZE);
+    initialNews = await dbAdminListNewsArticles(PAGE_SIZE, (page - 1) * PAGE_SIZE);
   } catch (err) {
     console.error('[NewsPage] Failed to fetch initial news:', err);
     // initialNews remains [] as fallback

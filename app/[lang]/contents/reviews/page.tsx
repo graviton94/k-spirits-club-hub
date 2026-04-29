@@ -3,8 +3,9 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getCanonicalUrl, getHreflangAlternates, toAbsoluteUrl } from '@/lib/utils/seo-url';
 import ReviewBoardPage from './reviews-client';
-import { dbListSpiritReviews } from '@/lib/db/data-connect-client';
-import { RelatedContentLinks, getRelatedIconKey } from '@/components/common/related-content-links';
+import { dbAdminListSpiritReviews } from '@/lib/db/data-connect-admin';
+import { RelatedContentLinks } from '@/components/common/related-content-links';
+import { getRelatedIconKey } from '@/components/common/related-content-icon-key';
 
 interface ReviewsPageProps {
   params: Promise<{ lang: string }>;
@@ -75,7 +76,7 @@ export default async function ReviewsPage({ params, searchParams }: ReviewsPageP
 
   const page = Math.max(1, parseInt(sp.page || '1', 10) || 1);
 
-  const initialReviews = await dbListSpiritReviews(PAGE_SIZE, (page - 1) * PAGE_SIZE).catch(() => []);
+  const initialReviews = await dbAdminListSpiritReviews(PAGE_SIZE, (page - 1) * PAGE_SIZE).catch(() => []);
 
   // Invalid page: no results for page > 1 → 404 to avoid thin empty pages
   if (page > 1 && initialReviews.length === 0) {

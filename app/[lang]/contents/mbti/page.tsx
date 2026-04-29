@@ -1,7 +1,8 @@
 import { Metadata } from 'next';
 import { MBTIClient } from './mbti-client';
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url';
-import { RelatedContentLinks, getRelatedIconKey } from '@/components/common/related-content-links';
+import { RelatedContentLinks } from '@/components/common/related-content-links';
+import { getRelatedIconKey } from '@/components/common/related-content-icon-key';
 
 interface MbtiPageProps {
   params: Promise<{ lang: string }>;

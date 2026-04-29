@@ -2,7 +2,7 @@
 
 "use server";
 
-import { dbGetSpirit, dbUpsertReview, dbUpsertSpirit, dbIncrementUserReviews } from '@/lib/db/data-connect-client';
+import { dbAdminGetSpirit, dbAdminUpsertReview, dbAdminUpsertSpirit, dbAdminIncrementUserReviews } from '@/lib/db/data-connect-admin';
 import { revalidatePath } from 'next/cache';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -19,7 +19,7 @@ export async function submitMicroReviewAction(
 ) {
   try {
     // 1. Fetch current spirit data to calculate new average
-    const spirit = await dbGetSpirit(spiritId);
+    const spirit = await dbAdminGetSpirit(spiritId);
     if (!spirit) {
       throw new Error(`Spirit not found: ${spiritId}`);
     }
@@ -37,7 +37,7 @@ export async function submitMicroReviewAction(
     
     const reviewId = uuidv4();
     
-    await dbUpsertReview({
+    await dbAdminUpsertReview({
       id: reviewId,
       spiritId,
       userId, // Use passed userId
@@ -53,7 +53,7 @@ export async function submitMicroReviewAction(
 
     // 4. Increment user stats
     try {
-      await dbIncrementUserReviews(userId);
+      await dbAdminIncrementUserReviews(userId);
     } catch (e) {
       console.error('Failed to increment user stats in action:', e);
     }
@@ -69,7 +69,7 @@ export async function submitMicroReviewAction(
       }
     };
 
-    await dbUpsertSpirit({
+    await dbAdminUpsertSpirit({
       id: spiritId,
       metadata: updatedMetadata
     });

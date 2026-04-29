@@ -1,7 +1,7 @@
 import { SpiritCategory } from './types'
 
 export const blendedWhisky: SpiritCategory = {
-    slug: 'whisky',
+    slug: 'blended-whisky',
     dbCategories: ['위스키'],
     emoji: '🥃',
     nameKo: '블랜디드 위스키 (Blended Whisky)',

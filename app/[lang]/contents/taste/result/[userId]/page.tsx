@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import TastePublicReport from '@/components/cabinet/TastePublicReport'
-import { dbGetUserProfile } from '@/lib/db/data-connect-client'
+import { dbAdminGetUserProfile } from '@/lib/db/data-connect-admin'
 import { getCanonicalUrl, getHreflangAlternates } from '@/lib/utils/seo-url'
 
 export const revalidate = 3600
@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: TasteResultPageProps): Promis
     const isEn = lang === 'en'
     
     // Fetch from User Profile JSONB field
-    const user = await dbGetUserProfile(userId)
+    const user = await dbAdminGetUserProfile(userId)
     const profile: any = user?.tasteProfile
 
     const canonicalUrl = getCanonicalUrl(`/${lang}/contents/taste/result/${userId}`)
@@ -76,7 +76,7 @@ export async function generateMetadata({ params }: TasteResultPageProps): Promis
 
 export default async function TasteResultPage({ params }: TasteResultPageProps) {
     const { userId } = await params
-    const user = await dbGetUserProfile(userId)
+    const user = await dbAdminGetUserProfile(userId)
     const profileData: any = user?.tasteProfile
 
     if (!profileData) {
