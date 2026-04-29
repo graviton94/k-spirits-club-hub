@@ -1,6 +1,33 @@
 # PROJECT CONTEXT
 > Rule: Read llms.txt and core architecture docs before answering.
 
+## K-Spirits Master Orchestrator (Top Priority Directives)
+These directives are mandatory and take precedence for all implementation tasks.
+
+1. Data Connect First (No Raw SQL / No Firestore Fallback)
+- Treat `lib/db/data-connect-client.ts` and `dataconnect/main/*.gql`, `dataconnect/schema/schema.gql` as the canonical API catalog.
+- For DB reads/writes, use typed wrappers through Data Connect only.
+- Never introduce alternate DB libraries or ad-hoc SQL in app/runtime code.
+
+2. Edge Runtime Compliance (Cloudflare Workers / OpenNext)
+- Avoid Node-only APIs (`fs`, `path`, `net`, `tls`, process-bound assumptions) in edge routes and shared runtime code.
+- Respect Workers constraints around Node `Buffer` and Node `crypto` compatibility. Prefer Web Crypto (`globalThis.crypto.subtle`) and standards-based APIs.
+
+3. i18n Enforcement (`/ko`, `/en`)
+- Do not hardcode user-facing KR/EN copy in components.
+- Source copy from dictionaries and preserve middleware-driven locale routing.
+
+4. CLS 0 and Mobile-First UX
+- Any async UI path must have stable loading states (`loading.tsx`, skeletons) to prevent layout shift.
+- Maintain responsive, touch-first behavior and theme consistency.
+
+5. Graphify Impact-First Editing
+- Before structural edits, read `graphify-out/GRAPH_REPORT.md` and summarize expected blast radius.
+- Include impacted nodes/modules in analysis before code changes.
+
+## Local Engine Skill
+- Load and follow `.agents/skills/k-spirits-engine/SKILL.md` for graph impact analysis and Data Connect type-safe implementation workflow.
+
 ## Navigation
 - Map: llms.txt
 - Logic: docs/archive/plans/ARCHITECTURE.md
