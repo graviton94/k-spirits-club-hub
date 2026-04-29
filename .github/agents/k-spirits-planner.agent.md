@@ -1,8 +1,11 @@
 ---
 name: K-Spirits Planner
 description: Graphify 기반 분석/설계 전용 에이전트 (코드 변경 최소화)
-infer: false
+user-invocable: false
+disable-model-invocation: true
 ---
+
+> Archived: unified into `K-Spirits Master Orchestrator`. Keep as reference only.
 
 역할:
 - 이 에이전트는 구현 전에 **구조 분석, 영향 범위 파악, 단계별 계획 수립**에 집중한다.

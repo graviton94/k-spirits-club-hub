@@ -1,18 +1,20 @@
 // app/api/cabinet/route.ts
 
 import { NextRequest, NextResponse } from 'next/server';
-import { dbListUserCabinet, dbUpsertCabinet, dbDeleteCabinet } from '@/lib/db/data-connect-client';
+import { dbAdminListUserCabinet, dbAdminUpsertCabinet, dbAdminDeleteCabinet } from '@/lib/db/data-connect-admin';
+import { verifyRequestToken } from '@/lib/auth/verifyToken';
 
 export const runtime = 'nodejs';
 
 export async function GET(req: NextRequest) {
-    const userId = req.headers.get('x-user-id');
-    if (!userId) {
-        return NextResponse.json({ error: 'Unauthorized: Missing User ID' }, { status: 401 });
+    const verified = await verifyRequestToken(req.headers.get('authorization'));
+    if (!verified) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+    const userId = verified.uid;
 
     try {
-        const cabinetItems = await dbListUserCabinet(userId);
+        const cabinetItems = await dbAdminListUserCabinet(userId);
         
         // Map to flat structure for backward compatibility
         const joined = cabinetItems.map((item: any) => ({
@@ -29,10 +31,11 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-    const userId = req.headers.get('x-user-id');
-    if (!userId) {
-        return NextResponse.json({ error: 'Unauthorized: Missing User ID' }, { status: 401 });
+    const verified = await verifyRequestToken(req.headers.get('authorization'));
+    if (!verified) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+    const userId = verified.uid;
 
     try {
         const body = await req.json();
@@ -42,9 +45,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: 'Missing Spirit ID' }, { status: 400 });
         }
 
-        // Logic check: if it's a wishlist item, rating is 0. 
-        // If it's a review, it has a rating.
-        await dbUpsertCabinet({
+        await dbAdminUpsertCabinet({
             userId,
             spiritId: id,
             notes: userReview?.comment || '',
@@ -62,10 +63,11 @@ export async function POST(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-    const userId = req.headers.get('x-user-id');
-    if (!userId) {
-        return NextResponse.json({ error: 'Unauthorized: Missing User ID' }, { status: 401 });
+    const verified = await verifyRequestToken(req.headers.get('authorization'));
+    if (!verified) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+    const userId = verified.uid;
 
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
@@ -75,7 +77,7 @@ export async function DELETE(req: NextRequest) {
     }
 
     try {
-        await dbDeleteCabinet({ userId, spiritId: id });
+        await dbAdminDeleteCabinet({ userId, spiritId: id });
         return NextResponse.json({ success: true });
     } catch (error) {
         console.error('Cabinet DELETE Error:', error);

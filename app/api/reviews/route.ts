@@ -8,6 +8,7 @@ import {
   dbAdminIncrementUserReviews,
   dbAdminListUserReviews
 } from '@/lib/db/data-connect-admin';
+import { verifyRequestToken } from '@/lib/auth/verifyToken';
 import { v4 as uuidv4 } from 'uuid';
 
 export const runtime = 'nodejs';
@@ -20,10 +21,11 @@ export const runtime = 'nodejs';
 // POST /api/reviews - Create or Update a review
 export async function POST(request: NextRequest) {
   try {
-    const userId = request.headers.get('x-user-id');
-    if (!userId) {
+    const verified = await verifyRequestToken(request.headers.get('authorization'));
+    if (!verified) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+    const userId = verified.uid;
 
     const body = await request.json();
     const { spiritId, rating, content, nose, palate, finish, imageUrls } = body;
@@ -135,17 +137,22 @@ export async function GET(request: NextRequest) {
 // DELETE /api/reviews - Remove a review (Owner or Admin)
 export async function DELETE(request: NextRequest) {
   try {
-    const requestUserId = request.headers.get('x-user-id');
+    const verified = await verifyRequestToken(request.headers.get('authorization'));
+    if (!verified) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+    const requestUserId = verified.uid;
+
     const { searchParams } = new URL(request.url);
     const spiritId = searchParams.get('spiritId');
     const targetUserId = searchParams.get('userId');
 
-    if (!requestUserId || !spiritId || !targetUserId) {
+    if (!spiritId || !targetUserId) {
       return NextResponse.json({ error: 'Missing parameters' }, { status: 400 });
     }
 
-    // Security: Only owner or logic-based admin can delete
-    if (requestUserId !== targetUserId) {
+    // Security: Only owner or admin can delete
+    if (requestUserId !== targetUserId && !verified.isAdmin) {
        return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 

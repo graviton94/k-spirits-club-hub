@@ -137,7 +137,7 @@ export default function ProfileClient({ lang, dict }: ProfileClientProps) {
     };
 
     return (
-        <div className="container mx-auto px-4 py-12 max-w-2xl min-h-[70vh]">
+        <div className="container mx-auto [padding-inline:var(--spacing-container)] py-12 max-w-2xl min-h-[70vh]">
             <div className="bg-card border border-border rounded-3xl p-8 shadow-xl">
                 <div className="flex flex-col items-center text-center">
                     <div className="w-24 h-24 rounded-full flex items-center justify-center text-4xl mb-4 overflow-hidden border-2 border-border shadow-lg">

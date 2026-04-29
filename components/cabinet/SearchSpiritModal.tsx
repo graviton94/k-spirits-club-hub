@@ -195,7 +195,7 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
                                                     <button
                                                         disabled={isProcessing}
                                                         onClick={() => handleAdd(item, false)}
-                                                        className="w-9 h-9 rounded-xl bg-amber-500 hover:bg-amber-600 text-white flex items-center justify-center transition-all shadow-lg shadow-amber-500/20 active:scale-90 disabled:opacity-50"
+                                                        className="w-9 h-9 rounded-xl bg-primary hover:brightness-110 text-primary-foreground flex items-center justify-center transition-all shadow-lg shadow-primary/20 active:scale-[0.93] disabled:opacity-50"
                                                         title={dict?.addCabinet || (isEn ? "Add to cabinet" : "술장에 추가")}
                                                     >
                                                         {isProcessing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-5 h-5" />}

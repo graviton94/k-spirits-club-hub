@@ -4,6 +4,7 @@ import { useAuth } from '@/app/[lang]/context/auth-context';
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import SuccessToast from '@/components/ui/SuccessToast';
+import { Button } from '@/components/ui/Button';
 import { Locale } from '@/i18n-config';
 
 interface LoginClientProps {
@@ -82,17 +83,19 @@ export default function LoginClient({ lang, dict }: LoginClientProps) {
                             ? "Google login might not work properly in KakaoTalk's in-app browser. Please copy the link below and open it in Chrome or Safari for the best experience!"
                             : "카카오톡 인앱 브라우저에서는 구글 로그인이 원활하지 않을 수 있습니다. 정상적인 이용을 위해 아래 링크를 복사하여 크롬(Chrome)이나 사파리(Safari) 브라우저로 접속해주세요!"}
                     </p>
-                    <button
+                    <Button
+                        variant="primary"
+                        size="sm"
+                        className="w-full"
                         onClick={() => {
                             const url = window.location.origin + `/${lang}`;
                             navigator.clipboard.writeText(url);
                             setToastMessage(isEn ? '🔗 Link copied! Please open in Chrome/Safari.' : '🔗주소가 복사되었습니다! 크롬/사파리로 접속해주세요!');
                             setShowToast(true);
                         }}
-                        className="w-full py-2 bg-amber-500 text-white text-xs font-bold rounded-lg hover:bg-amber-600 transition-colors"
                     >
                         {isEn ? "Copy Address" : "접속 주소 복사하기"}
-                    </button>
+                    </Button>
                 </div>
 
                 <div className="mt-8 pt-6 border-t border-border">

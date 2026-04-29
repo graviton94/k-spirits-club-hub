@@ -417,7 +417,7 @@ function ReviewCard({ review, isOwner, onEdit, onDelete, onToast, spiritId }: {
         <div className="flex flex-wrap items-center gap-2">
           {/* Author Capsule */}
           <div className="flex items-center gap-2 px-4 py-2 bg-secondary/50 border border-border rounded-full shadow-inner">
-            <div className="w-6 h-6 rounded-full bg-amber-500 flex items-center justify-center text-[10px] text-white font-black">
+            <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-[10px] text-primary-foreground font-black">
               {review.userName.substring(0, 1)}
             </div>
             <span className="text-xs font-black text-foreground">{review.userName}</span>

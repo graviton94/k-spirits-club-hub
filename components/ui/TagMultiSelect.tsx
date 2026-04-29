@@ -49,10 +49,10 @@ export function TagMultiSelect({ label, availableTags, selectedTags, onChange }:
 
     return (
         <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase text-gray-500 dark:text-gray-400 block mb-1">{label}</label>
+            <label className="text-[10px] font-black uppercase text-muted-foreground block mb-1">{label}</label>
 
             {/* Selected Tags Display */}
-            <div className="flex flex-wrap gap-2 min-h-[48px] p-3 bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-xl cursor-pointer hover:border-amber-400/50 transition-colors shadow-sm"
+            <div className="flex flex-wrap gap-2 min-h-[48px] p-3 bg-background border border-border rounded-xl cursor-pointer hover:border-primary/50 transition-colors shadow-sm"
                 onClick={() => setIsOpen(!isOpen)}>
                 {selectedTags.length > 0 ? (
                     selectedTags.map(tag => {
@@ -65,13 +65,13 @@ export function TagMultiSelect({ label, availableTags, selectedTags, onChange }:
                         );
                     })
                 ) : (
-                    <span className="text-xs text-gray-400 dark:text-gray-500 self-center px-1">태그를 선택하세요... (Click to expand)</span>
+                    <span className="text-xs text-muted-foreground self-center px-1">태그를 선택하세요... (Click to expand)</span>
                 )}
             </div>
 
             {/* Dropdown / Expandable Area */}
             {isOpen && (
-                <div className="mt-2 p-4 bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-xl space-y-6 shadow-xl animate-in fade-in slide-in-from-top-2">
+                <div className="mt-2 p-4 bg-background border border-border rounded-xl space-y-6 shadow-xl animate-in fade-in slide-in-from-top-2">
                     {Object.entries(availableTags).map(([categoryKey, data]) => {
                         const categoryColorClass = COLOR_MAP[data.color] || DEFAULT_COLOR;
                         // Strip border from header style to keep it clean, just use text color maybe?
@@ -79,7 +79,7 @@ export function TagMultiSelect({ label, availableTags, selectedTags, onChange }:
 
                         return (
                             <div key={categoryKey} className="space-y-2">
-                                <h4 className="text-[11px] font-black uppercase text-gray-500 dark:text-gray-400 border-b border-gray-100 dark:border-zinc-800 pb-1 mb-2">
+                                <h4 className="text-[11px] font-black uppercase text-muted-foreground border-b border-border pb-1 mb-2">
                                     {categoryKey.replace(/_/g, ' ')}
                                 </h4>
                                 <div className="flex flex-wrap gap-2">
@@ -106,7 +106,7 @@ export function TagMultiSelect({ label, availableTags, selectedTags, onChange }:
                                                 onClick={() => toggleTag(tag)}
                                                 className={`px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all border ${isSelected
                                                     ? `${baseColor} ring-2 ring-offset-1 ring-offset-white dark:ring-offset-black ring-black/10 dark:ring-white/20`
-                                                    : `bg-gray-50 dark:bg-zinc-900/50 text-gray-600 dark:text-gray-400 border-gray-200 dark:border-zinc-800 hover:bg-gray-100 dark:hover:bg-zinc-800`
+                                                    : `bg-muted/50 text-muted-foreground border-border hover:bg-muted`
                                                     }`}
                                             >
                                                 {tag.split(' (')[0]}

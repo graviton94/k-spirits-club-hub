@@ -23,10 +23,10 @@ export async function generateMetadata({ params }: MyPageProps): Promise<Metadat
 function MeSkeleton() {
     return (
         <div className="container mx-auto px-4 py-8 animate-pulse">
-            <div className="h-8 w-48 bg-gray-200 rounded mb-8"></div>
+            <div className="h-8 w-48 bg-muted rounded mb-8"></div>
             <div className="grid gap-6">
-                <div className="h-64 bg-gray-100 rounded-xl"></div>
-                <div className="h-64 bg-gray-100 rounded-xl"></div>
+                <div className="h-64 bg-muted/50 rounded-xl"></div>
+                <div className="h-64 bg-muted/50 rounded-xl"></div>
             </div>
         </div>
     );

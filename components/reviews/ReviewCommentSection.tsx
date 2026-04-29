@@ -91,7 +91,7 @@ export default function ReviewCommentSection({ reviewId, initialComments, lang }
           <button
             type="submit"
             disabled={isSubmitting || !newComment.trim()}
-            className="absolute bottom-4 right-4 p-2.5 bg-amber-500 text-white rounded-xl shadow-lg hover:bg-amber-600 disabled:opacity-50 disabled:grayscale transition-all hover:scale-105 active:scale-95"
+            className="absolute bottom-4 right-4 p-2.5 bg-primary text-primary-foreground rounded-xl shadow-lg hover:brightness-110 disabled:opacity-50 disabled:grayscale transition-all hover:scale-105 active:scale-[0.93]"
           >
             <Send className="w-4 h-4" />
           </button>

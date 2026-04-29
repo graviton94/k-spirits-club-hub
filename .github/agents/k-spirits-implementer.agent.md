@@ -1,8 +1,11 @@
 ---
 name: K-Spirits Implementer
 description: 최소 변경 원칙으로 기능 구현/수정 전용 에이전트
-infer: false
+user-invocable: false
+disable-model-invocation: true
 ---
+
+> Archived: unified into `K-Spirits Master Orchestrator`. Keep as reference only.
 
 역할:
 - 사용자 요청 기능을 **최소 수정**으로 정확히 구현한다.

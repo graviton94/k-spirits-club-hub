@@ -11,6 +11,22 @@
 
 @layer base {
   :root {
+    /* ─── WOW Aesthetic Bible Tokens ───────────────────────────── */
+    /* Mapped to brand light mode; --color-surface used for glass overlays */
+    --color-primary: 230 40% 10%;          /* Night Shadow (overlay/modal bg) */
+    --color-secondary: 45 80% 45%;         /* Soul Gold (accent highlights) */
+    --color-surface: 230 25% 20%;          /* Glassmorphic surface base */
+    --color-surface-alpha: 0.6;            /* Glass opacity */
+    --color-text: 215 20% 92%;             /* Moonlight text (on dark surfaces) */
+
+    /* ─── Fluid Spacing & Typography ───────────────────────────── */
+    --spacing-container: clamp(1rem, 4vw, 2rem);   /* 16px mobile → 32px desktop */
+    --fs-display: clamp(2rem, 5vw, 3.5rem);         /* 32px mobile → 56px desktop */
+    --fs-section: clamp(1.25rem, 3vw, 2rem);        /* section title fluid */
+
+    /* ─── Micro-Interaction Easing ──────────────────────────────── */
+    --ease-wow: cubic-bezier(0.4, 0, 0.2, 1);
+
     /* Premium Cream/Beige Base */
     --background: 36 60% 98%; /* #fdfbf7 */
     --foreground: 24 20% 15%; /* #2d241e - Deep Brown */
@@ -47,6 +63,13 @@
   }
 
   .dark {
+    /* ─── WOW Tokens (dark mode — Night Shadow active) ──────────── */
+    --color-primary: 230 40% 10%;
+    --color-secondary: 45 80% 45%;
+    --color-surface: 230 25% 18%;
+    --color-surface-alpha: 0.65;
+    --color-text: 215 20% 92%;
+
     /* Deep Brown Base */
     --background: 24 15% 8%; /* #1a1614 */
     --foreground: 36 60% 98%; /* #fdfbf7 - Cream */
@@ -120,6 +143,30 @@
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  /* ─── WOW Fluid Utilities ──────────────────────────────────────── */
+  .wow-display {
+    font-size: var(--fs-display);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .wow-section-title {
+    font-size: var(--fs-section);
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+  }
+
+  .wow-container {
+    padding: var(--spacing-container);
+  }
+
+  .glass-wow {
+    background-color: hsla(var(--color-surface) / var(--color-surface-alpha));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid hsla(0, 0%, 100%, 0.1);
   }
 
   .mobile-safe-x {

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Button } from '@/components/ui/Button';
 
 interface SaveButtonProps {
   spiritId: string;
@@ -20,15 +21,13 @@ export default function SaveButton({ spiritId }: SaveButtonProps) {
   };
 
   return (
-    <button
+    <Button
+      variant={isSaved ? 'primary' : 'secondary'}
       onClick={handleSave}
       disabled={isLoading}
-      className={`w-full py-3 px-6 rounded-lg font-semibold transition-colors ${isSaved
-          ? 'bg-primary text-primary-foreground'
-          : 'border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground'
-        } disabled:opacity-50 disabled:cursor-not-allowed`}
+      className="w-full py-3"
     >
       {isLoading ? '...' : isSaved ? '✓ 캐비닛에 저장됨' : '+ 캐비닛에 저장'}
-    </button>
+    </Button>
   );
 }

@@ -1,8 +1,11 @@
 ---
 name: K-Spirits Antigravity Core
 description: 단일 에이전트 운영 (Plan -> Task -> Walkthrough -> Session Review)
-infer: true
+user-invocable: false
+disable-model-invocation: true
 ---
+
+> Archived: unified into `K-Spirits Master Orchestrator`. Keep as reference only.
 
 역할:
 - 이 에이전트 하나로 기획/구현/검증/회고까지 수행한다.

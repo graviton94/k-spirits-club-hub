@@ -57,20 +57,25 @@ import { getEnv } from '@/lib/env';
 let _dc: DataConnect | null = null;
 
 export function getDC(): DataConnect {
-  if (!_dc) {
-    if (!getApps().length) {
-      initializeApp({
-        apiKey: getEnv('NEXT_PUBLIC_FIREBASE_API_KEY'),
-        authDomain: getEnv('NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN'),
-        projectId: getEnv('NEXT_PUBLIC_FIREBASE_PROJECT_ID'),
-        storageBucket: getEnv('NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET'),
-        messagingSenderId: getEnv('NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID'),
-        appId: getEnv('NEXT_PUBLIC_FIREBASE_APP_ID'),
-      });
+  try {
+    if (!_dc) {
+      if (!getApps().length) {
+        initializeApp({
+          apiKey: getEnv('NEXT_PUBLIC_FIREBASE_API_KEY'),
+          authDomain: getEnv('NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN'),
+          projectId: getEnv('NEXT_PUBLIC_FIREBASE_PROJECT_ID'),
+          storageBucket: getEnv('NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET'),
+          messagingSenderId: getEnv('NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID'),
+          appId: getEnv('NEXT_PUBLIC_FIREBASE_APP_ID'),
+        });
+      }
+      _dc = getDataConnect(connectorConfig);
     }
-    _dc = getDataConnect(connectorConfig);
+    return _dc;
+  } catch (err: any) {
+    console.error('[getDC] Firebase Data Connect initialization failed:', err.message);
+    throw new Error(`[getDC] Initialization failed: ${err.message}`);
   }
-  return _dc;
 }
 
 /**

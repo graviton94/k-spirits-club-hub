@@ -2,65 +2,19 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Spirit } from '../db/schema';
 import metadataFn from '../constants/spirits-metadata.json';
 import { inferHierarchy } from '../constants/categories';
-import fs from 'fs/promises';
-import path from 'path';
 import { getEnv } from '@/lib/env';
 
 const MODEL_ID = "gemini-2.0-flash";
-
-// We read this for initial prompt context, but for updates we'll read 'fs' to be safe against caching issues
-const METADATA_PATH = path.join(process.cwd(), 'lib/constants/spirits-metadata.json');
 
 function getCategoryPrompt(category: string): string {
     // Provide full category context for better matching
     return `전체 카테고리 구조: ${JSON.stringify(metadataFn.categories, null, 2)}`;
 }
 
-/**
- * Updates the spirits-metadata.json file if a new subcategory is discovered.
- */
-async function updateMetadataFile(category: string, mainCategory: string | null, subcategory: string) {
-    if (!subcategory) return;
-
-    try {
-        const fileContent = await fs.readFile(METADATA_PATH, 'utf-8');
-        const metadata = JSON.parse(fileContent);
-        const categories = metadata.categories;
-
-        let updated = false;
-
-        // Locate the array to insert into
-        if (categories[category]) {
-            const catData = categories[category];
-
-            // Nested Structure (e.g. Whisky -> Scotch -> [])
-            if (mainCategory && typeof catData === 'object' && !Array.isArray(catData)) {
-                if (catData[mainCategory] && Array.isArray(catData[mainCategory])) {
-                    if (!catData[mainCategory].includes(subcategory)) {
-                        console.log(`[Metadata] Adding new subcategory '${subcategory}' to ${category} > ${mainCategory}`);
-                        catData[mainCategory].push(subcategory);
-                        updated = true;
-                    }
-                }
-                // If mainCategory missing but valid? (Handling edge case: user might need to add mainCategory logic too? for now assuming mainCategory exists)
-            }
-            // Flat Structure (e.g. Gin -> [])
-            else if (Array.isArray(catData)) {
-                if (!catData.includes(subcategory)) {
-                    console.log(`[Metadata] Adding new subcategory '${subcategory}' to ${category}`);
-                    catData.push(subcategory);
-                    updated = true;
-                }
-            }
-        }
-
-        if (updated) {
-            await fs.writeFile(METADATA_PATH, JSON.stringify(metadata, null, 4), 'utf-8');
-        }
-    } catch (error) {
-        console.error("Failed to auto-update spirits-metadata.json:", error);
-        // Non-blocking error, we still return the enriched data
-    }
+// updateMetadataFile is a no-op on Edge Runtime (Cloudflare Workers has a read-only FS)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+async function updateMetadataFile(_category: string, _mainCategory: string | null, _subcategory: string) {
+    return;
 }
 
 export async function enrichSpiritMetadata(spirit: Spirit): Promise<Partial<Spirit>> {

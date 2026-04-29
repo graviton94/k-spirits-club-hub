@@ -1,8 +1,11 @@
 ---
 name: K-Spirits Gemini Prompt Architect
 description: Gemini 분석/추천 프롬프트 구조 유지 및 고도화 전용 에이전트
-infer: false
+user-invocable: false
+disable-model-invocation: true
 ---
+
+> Archived: unified into `K-Spirits Master Orchestrator`. Keep as reference only.
 
 역할:
 - `lib/utils/aiPromptBuilder.ts` 중심으로 프롬프트 구조를 다룬다.

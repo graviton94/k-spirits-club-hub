@@ -110,7 +110,7 @@ export default function TastePublicReport({ profile, isPublic = false }: TastePu
 
                                 <Link
                                     href={`/${isEn ? 'en' : 'ko'}/explore?q=${encodeURIComponent(profile.recommendation.name)}`}
-                                    className="w-full mt-4 bg-foreground text-background py-4 rounded-2xl font-black text-xs uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-amber-500 hover:text-black transition-all active:scale-[0.98] shadow-xl"
+                                    className="w-full mt-4 bg-foreground text-background py-4 rounded-2xl font-black text-xs uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-primary hover:text-primary-foreground transition-all active:scale-[0.93] shadow-xl"
                                 >
                                     {isEn ? 'Examine Bottle' : '제품 상세 정보 확인'}
                                     <ExternalLink className="w-4 h-4" />
@@ -144,7 +144,7 @@ export default function TastePublicReport({ profile, isPublic = false }: TastePu
 
                     <Link
                         href={`/${isEn ? 'en' : 'ko'}`}
-                        className="inline-flex items-center gap-3 px-12 py-5 bg-foreground text-background font-black rounded-2xl transition-all shadow-2xl hover:bg-amber-500 hover:text-black active:scale-95 uppercase tracking-tight text-sm"
+                        className="inline-flex items-center gap-3 px-12 py-5 bg-foreground text-background font-black rounded-2xl transition-all shadow-2xl hover:bg-primary hover:text-primary-foreground active:scale-[0.93] uppercase tracking-tight text-sm"
                     >
                         {isEn ? 'Start My DNA Map' : '나도 분석하러 가기'} <Sparkles className="w-5 h-5" />
                     </Link>

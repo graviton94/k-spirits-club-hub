@@ -76,22 +76,99 @@ Display Taste DNA Report (Radar Chart)
 
 ---
 
-## 4️⃣ Data Pipeline (Worker → PostgreSQL)
+## 4️⃣ Data Pipeline (JSON → PostgreSQL via Data Connect)
 
-### **Pipeline Execution**
+> ⚠️ **SSOT Principle**: 모든 DB 쓰기는 반드시 `dbAdminUpsertSpirit()` (`lib/db/data-connect-admin.ts`) 를 통해서만 이루어진다. Firestore SDK 직접 호출, Raw SQL, 외부 Python 업로더는 **엄격히 금지**된다.
+
+### **파이프라인 진입점**
 ```
-npm run pipe
+scripts/pipeline/normalize-and-enrich.ts  (TypeScript CLI — 단일 오케스트레이터)
+```
+
+### **3단계 처리 흐름**
+```
+npx ts-node --project tsconfig.scripts.json \
+  scripts/pipeline/normalize-and-enrich.ts \
+  --source data/spirits_위스키.json \
+  --stage all --batch-size 4 --limit 50
     ↓
-scripts/run_pipeline.py
-    ├─→ Load source JSON
-    ├─→ For each batch:
-    │   ├─→ Call Gemini AI for enrichment (nameEn, sensory, pairing)
-    │   ├─→ Google Image Search for official asset
-    │   └─→ Upload to PostgreSQL via Data Connect
+[Stage 1: Audit]  scripts/pipeline/lib/auditor.ts
+    ├─→ 필수 필드(id, name, category, imageUrl) 완성도 검사
+    ├─→ isReviewed=true && status='ENRICHED' → SKIP (--force-reenrich 없으면)
+    └─→ READY / SKIP 파티셔닝
+    ↓
+[Stage 2: Sensory]  scripts/pipeline/lib/sensory.ts
+    ├─→ Gemini 2.0 Flash 호출 (noseTags, palateTags, finishTags, tastingNote)
+    ├─→ mainCategory, subcategory, region, distillery, abv, descriptionKo 생성
+    └─→ 순차(for...of) 처리 — 동시성 ≤ batch-size (Gemini 429 방지)
+    ↓
+[Stage 3: Pairing]  scripts/pipeline/lib/pairing.ts
+    ├─→ Gemini 2.0 Flash 호출 (pairingGuideKo, pairingGuideEn, nameEn, descriptionEn)
+    └─→ 순차 처리
+    ↓
+[Upsert]  dbAdminUpsertSpirit() ← lib/db/data-connect-admin.ts
+    ├─→ Service Account OAuth2 토큰으로 Firebase Data Connect REST API 호출
+    ├─→ PostgreSQL 'Spirit' 테이블 upsert (단일 트랜잭션)
+    └─→ isPublished = false (Admin Dashboard에서 최종 승인 필요)
     ↓
 Admin Dashboard
-    ├─→ Review enriched spirits (isPublished = false)
-    └─→ Final Approval & Publish (isPublished = true)
+    ├─→ 보강된 술 검토 (isPublished = false)
+    └─→ 최종 승인 & 발행 (isPublished = true)
+```
+
+### **핵심 CLI 플래그**
+
+| 플래그 | 설명 | 예시 |
+|---|---|---|
+| `--source <file>` | 처리할 JSON 소스 파일 경로 (필수) | `data/spirits_위스키.json` |
+| `--stage` | 실행 단계: `all` \| `normalize` \| `audit` \| `sensory` \| `pairing` | `--stage all` |
+| `--batch-size` | 배치당 최대 처리 수 (기본: 4, Gemini 429 방지) | `--batch-size 4` |
+| `--limit` | 총 처리 개수 제한 | `--limit 50` |
+| `--dry-run` | DB 쓰기 없이 payload만 콘솔 출력 (검증용) | `--dry-run` |
+| `--force-reenrich` | ENRICHED 상태 스킵 무시, 강제 재처리 | `--force-reenrich` |
+
+### **예시 명령어**
+
+```bash
+# 1. 검증 실행 (DB 쓰기 없음 — 반드시 먼저 실행)
+npx ts-node --project tsconfig.scripts.json \
+  scripts/pipeline/normalize-and-enrich.ts \
+  --source data/spirits_위스키.json --stage all --batch-size 4 --limit 10 --dry-run
+
+# 2. 소량 실제 실행 (50개)
+npx ts-node --project tsconfig.scripts.json \
+  scripts/pipeline/normalize-and-enrich.ts \
+  --source data/spirits_위스키.json --stage all --batch-size 4 --limit 50
+
+# 3. 특정 단계만 재실행 (sensory 단계만)
+npx ts-node --project tsconfig.scripts.json \
+  scripts/pipeline/normalize-and-enrich.ts \
+  --source data/spirits_위스키.json --stage sensory --limit 20
+
+# 4. 강제 재보강 (이미 ENRICHED 상태인 항목 포함)
+npx ts-node --project tsconfig.scripts.json \
+  scripts/pipeline/normalize-and-enrich.ts \
+  --source data/spirits_위스키.json --stage all --force-reenrich --limit 10 --dry-run
+```
+
+### **부분 실패 격리 (Partial Failure Isolation)**
+```
+각 spirit 처리는 독립적인 try/catch로 감쌈
+    ↓
+실패 시 → data/temp_pipeline/failed_batch_log_<timestamp>.json 기록
+    └─→ { id, name, stage, error, timestamp }
+    ↓
+성공 항목은 계속 진행 (전체 파이프라인 중단 없음)
+    ↓
+배치 간 1500ms pause (Gemini API rate limit 대응)
+```
+
+### **환경 변수 (필수)**
+```
+FIREBASE_PROJECT_ID     # Firebase 프로젝트 ID
+FIREBASE_CLIENT_EMAIL   # 서비스 계정 이메일
+FIREBASE_PRIVATE_KEY    # 서비스 계정 Private Key (-----BEGIN PRIVATE KEY-----)
+GEMINI_API_KEY          # Google AI Studio API Key
 ```
 
 ---
@@ -120,5 +197,5 @@ Browser loads image
 
 ---
 
-**Last Updated**: 2026-04-21  
-**Version**: 1.1.0 (Relational Infrastructure Optimized)
+**Last Updated**: 2026-04-30  
+**Version**: 1.2.0 (Unified TS Pipeline — Legacy Python Scripts Removed)

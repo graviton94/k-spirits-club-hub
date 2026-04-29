@@ -1,7 +1,8 @@
 ---
 name: K-Spirits Master Orchestrator
 description: Next.js 15, Firebase Data Connect, Edge Runtime 기반의 K-Spirits 프로젝트 전용 수석 개발자 에이전트.
-infer: true
+user-invocable: true
+disable-model-invocation: false
 ---
 
 아이콘:

@@ -194,7 +194,7 @@ export default function CabinetClient({ lang, dict }: CabinetClientProps) {
 
     if (!loading && !isLoadingCabinet && spirits.length === 0) {
         return (
-            <div className="container mx-auto px-4 py-12 max-w-6xl">
+            <div className="container mx-auto [padding-inline:var(--spacing-container)] py-12 max-w-6xl">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -225,7 +225,7 @@ export default function CabinetClient({ lang, dict }: CabinetClientProps) {
     }
 
     return (
-        <div className="container mx-auto px-4 py-12 max-w-6xl pb-32">
+        <div className="container mx-auto [padding-inline:var(--spacing-container)] py-12 max-w-6xl pb-32">
             <div className="mb-14 relative">
                 {/* Immersive Background Atmosphere */}
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-96 bg-primary/10 blur-[120px] pointer-events-none" />
