@@ -8,6 +8,7 @@ import { generateRandomNickname } from '@/lib/utils/nickname-generator';
 import { getUserCabinet } from '@/app/[lang]/actions/cabinet';
 import { CabinetItem } from '@/lib/utils/spirit-adapters';
 import AvatarSelector, { DEFAULT_AVATAR } from '@/components/profile/AvatarSelector';
+import { GlassCard } from '@/components/ui/GlassCard';
 import SuccessToast from '@/components/ui/SuccessToast';
 import { Locale } from '@/i18n-config';
 
@@ -138,7 +139,7 @@ export default function ProfileClient({ lang, dict }: ProfileClientProps) {
 
     return (
         <div className="container mx-auto [padding-inline:var(--spacing-container)] py-12 max-w-2xl min-h-[70vh]">
-            <div className="bg-card border border-border rounded-3xl p-8 shadow-xl">
+            <GlassCard className="shadow-xl">
                 <div className="flex flex-col items-center text-center">
                     <div className="w-24 h-24 rounded-full flex items-center justify-center text-4xl mb-4 overflow-hidden border-2 border-border shadow-lg">
                         {user && (editForm.profileImage || DEFAULT_AVATAR) ? (
@@ -255,7 +256,7 @@ export default function ProfileClient({ lang, dict }: ProfileClientProps) {
                     )}
 
                 </div>
-            </div>
+            </GlassCard>
 
             <SuccessToast
                 isVisible={showToast}

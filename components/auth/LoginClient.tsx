@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import SuccessToast from '@/components/ui/SuccessToast';
 import { Button } from '@/components/ui/Button';
+import { GlassCard } from '@/components/ui/GlassCard';
 import { Locale } from '@/i18n-config';
 
 interface LoginClientProps {
@@ -43,7 +44,7 @@ export default function LoginClient({ lang, dict }: LoginClientProps) {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-background px-4">
-            <div className="max-w-md w-full bg-card border border-border rounded-3xl p-8 shadow-2xl text-center">
+            <GlassCard className="max-w-md w-full text-center shadow-2xl">
                 <h1 className="text-3xl font-black mb-2 text-primary">🥃 K-Spirits Club</h1>
                 <p className="text-muted-foreground mb-8">{dict.welcome || (isEn ? "Welcome to K-Spirits Club." : "대한민국 No.1 주류 커뮤니티")}</p>
 
@@ -103,7 +104,7 @@ export default function LoginClient({ lang, dict }: LoginClientProps) {
                         {dict.policy || (isEn ? "By continuing, you agree to our Terms and Privacy Policy." : "로그인 시 서비스 이용약관 및 개인정보 처리방침에 동의하게 됩니다.")}
                     </p>
                 </div>
-            </div>
+            </GlassCard>
             <SuccessToast
                 isVisible={showToast}
                 message={toastMessage}

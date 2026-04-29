@@ -12,6 +12,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '@/lib/db/firebase';
 import imageCompression from 'browser-image-compression';
 import MicroReviewModal from '@/components/ui/MicroReviewModal';
+import { GlassCard } from '@/components/ui/GlassCard';
 import { toggleReviewLike } from '@/app/[lang]/actions/social';
 import Link from 'next/link';
 import NextImage from 'next/image';
@@ -182,12 +183,12 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
 
       {/* Average Summary Card */}
       {liveReviews.length > 0 && (
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8 p-4 sm:p-6 bg-card border border-border rounded-3xl shadow-sm">
+        <GlassCard noPad className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8 p-4 sm:p-6 shadow-sm">
           <RatingSummaryItem label="OVERALL" value={avgOverall} icon={<Quote className="w-4 h-4" />} />
           <RatingSummaryItem label="NOSE" value={avgNose} icon={<Wind className="w-4 h-4" />} color="text-primary" />
           <RatingSummaryItem label="PALATE" value={avgPalate} icon={<Utensils className="w-4 h-4" />} color="text-accent" />
           <RatingSummaryItem label="FINISH" value={avgFinish} icon={<Zap className="w-4 h-4" />} color="text-purple-500" />
-        </div>
+        </GlassCard>
       )}
 
       {showForm && (

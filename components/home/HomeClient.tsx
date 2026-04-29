@@ -107,7 +107,7 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialRevi
             </section>
 
             {/* ✨ 2. New Arrivals (Curated Exhibit) */}
-            <section className="max-w-7xl mx-auto px-4 md:px-6 -mt-10 md:-mt-24 relative z-30 mb-16 md:mb-32">
+            <section className="max-w-7xl mx-auto [padding-inline:var(--spacing-container)] -mt-10 md:-mt-24 relative z-30 mb-16 md:mb-32">
                 <div className="flex items-center justify-between mb-6 pb-3 border-b border-border/50">
                     <div className="flex items-center gap-2 md:gap-3">
                         <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg md:rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20 text-primary">
@@ -165,12 +165,12 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialRevi
             </section>
 
             {/* 🗞️ 3. Global News Feed (Replaces Trending) */}
-            <div className="max-w-7xl mx-auto px-4 md:px-6 mb-16 md:mb-32">
+            <div className="max-w-7xl mx-auto [padding-inline:var(--spacing-container)] mb-16 md:mb-32">
                 {children}
             </div>
 
             {/* 💬 4. Live Reviews (Social Proof) */}
-            <section className="max-w-7xl mx-auto px-4 md:px-6 mb-16 md:mb-32">
+            <section className="max-w-7xl mx-auto [padding-inline:var(--spacing-container)] mb-16 md:mb-32">
                 <div className="flex items-center justify-between mb-6 pb-3 border-b border-border/50">
                     <div className="flex items-center gap-2 md:gap-3">
                         <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg md:rounded-xl bg-accent/10 flex items-center justify-center border border-accent/20 text-accent">
@@ -193,7 +193,7 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialRevi
 
             {/* 📖 5. Institutional FAQ / Wiki */}
             <section className="bg-background py-16 md:py-32 border-t border-border/40">
-                <div className="max-w-7xl mx-auto px-4 md:px-6">
+                <div className="max-w-7xl mx-auto [padding-inline:var(--spacing-container)]">
                     <WikiSnippetSection lang={lang} initialSnippet={dailySnippet} />
                 </div>
             </section>
