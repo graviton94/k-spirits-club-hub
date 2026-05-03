@@ -46,7 +46,6 @@ export default function ExploreContent({ dict }: { dict?: any }) {
   useEffect(() => {
     const fetchMeta = async () => {
       try {
-        const res = await fetch('/api/spirits?mode=meta');
         const res = await fetch('/api/spirits?mode=meta', { cache: 'no-store' });
         const data = await res.json();
         if (data.categories) setDbCategories(data.categories);
