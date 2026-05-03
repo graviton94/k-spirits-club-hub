@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { dbAdminUpsertSpirit, dbAdminUpsertNewArrival } from '@/lib/db/data-connect-admin';
+import { dbAdminUpsertSpirit } from '@/lib/db/data-connect-admin';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -20,15 +20,6 @@ export async function POST(req: NextRequest) {
     }
 
     await dbAdminUpsertSpirit(body);
-
-    if (body.isPublished === true) {
-      await dbAdminUpsertNewArrival({
-        id: body.id,
-        spiritId: body.id,
-        displayOrder: Math.floor(Date.now() / 1000),
-        tags: body.category ? [String(body.category)] : undefined,
-      });
-    }
 
     return NextResponse.json({
       success: true,

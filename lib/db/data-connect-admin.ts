@@ -413,6 +413,46 @@ export const dbAdminUpsertNewArrival = async (vars: {
     return await executeGraphql('upsertNewArrival', query, vars);
 };
 
+export const dbAdminUpsertAiDiscoveryLog = async (vars: {
+    id: string;
+    userId?: string | null;
+    analysis?: string;
+    recommendations?: any;
+    messageHistory?: any;
+}) => {
+    const query = `
+        mutation upsertAiDiscoveryLog($id: String!, $userId: String, $analysis: String, $recommendations: Any, $messageHistory: Any) {
+            aiDiscoveryLog_upsert(data: {
+                id: $id,
+                userId: $userId,
+                analysis: $analysis,
+                recommendations: $recommendations,
+                messageHistory: $messageHistory
+            }) {
+                id
+            }
+        }
+    `;
+    return await executeGraphql('upsertAiDiscoveryLog', query, vars);
+};
+
+export const dbAdminListAiDiscoveryLogs = async (limit: number) => {
+    const query = `
+        query listAiDiscoveryLogs($limit: Int!) {
+            aiDiscoveryLogs(limit: $limit, orderBy: [{ createdAt: DESC }]) {
+                id
+                userId
+                analysis
+                recommendations
+                messageHistory
+                createdAt
+            }
+        }
+    `;
+    const { data } = await executeGraphql('listAiDiscoveryLogs', query, { limit });
+    return data?.aiDiscoveryLogs || [];
+};
+
 export const dbAdminListNewArrivals = async (limit: number) => {
     const query = `
         query listNewArrivalsFromCuration($limit: Int) {

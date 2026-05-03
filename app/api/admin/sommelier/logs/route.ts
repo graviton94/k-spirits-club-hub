@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { dbListAiDiscoveryLogs } from '@/lib/db/data-connect-client';
+import { dbAdminListAiDiscoveryLogs } from '@/lib/db/data-connect-admin';
 
 export const runtime = 'nodejs';
 
@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
         const { searchParams } = new URL(req.url);
         const limit = Number(searchParams.get('limit')) || 100;
 
-        const logs = await dbListAiDiscoveryLogs(limit);
+        const logs = await dbAdminListAiDiscoveryLogs(limit);
         return NextResponse.json(logs);
     } catch (error: any) {
         console.error('[Admin SQL Logs API Error]', error);

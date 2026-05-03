@@ -182,6 +182,14 @@ function toAbsoluteSeoImageUrl(url: string | null | undefined, baseUrl: string):
   return `${normalizedBase}${normalizedPath}`;
 }
 
+function safeJsonLd(value: unknown): string {
+  // Prevent accidental </script> or HTML token injection from dynamic content.
+  return JSON.stringify(value)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026');
+}
+
 function getSpiritSeoImageCandidates(spirit: Spirit, baseUrl: string): string[] {
   const primaryUrl = spirit.imageUrl || spirit.thumbnailUrl;
   if (!primaryUrl) return [];
@@ -331,8 +339,8 @@ export default async function SpiritDetailPage({ params }: { params: Promise<{ i
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbLd) }} />
       <SpiritDetailClient spirit={spirit} reviews={reviews} relatedSpirits={relatedSpirits} lang={lang as Locale} dict={dictionary.detail} />
       {wikiMetadata && wikiGuide && (
         <div className="container mx-auto px-4 max-w-4xl">

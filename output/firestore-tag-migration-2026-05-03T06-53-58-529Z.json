@@ -1,0 +1,22 @@
+{
+  "mode": "DRY_RUN",
+  "overwriteDifferent": false,
+  "startedAt": "2026-05-03T06:53:58.529Z",
+  "finishedAt": "2026-05-03T06:54:22.443Z",
+  "firestoreRows": 13732,
+  "dataConnectRows": 13733,
+  "processedRows": 13733,
+  "targetId": null,
+  "idsFile": null,
+  "idsFileCount": null,
+  "window": {
+    "offset": 0,
+    "limit": null
+  },
+  "missingInFirestore": 1,
+  "alreadySynced": 13732,
+  "candidateCount": 0,
+  "fixedCount": 0,
+  "failedCount": 0,
+  "changes": []
+}

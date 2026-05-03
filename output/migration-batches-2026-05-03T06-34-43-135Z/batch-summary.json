@@ -1,0 +1,84 @@
+{
+  "reportPath": "output/firestore-tag-migration-2026-05-03T06-34-13-726Z.json",
+  "totalCandidates": 11646,
+  "batchSize": 1000,
+  "totalBatches": 12,
+  "startedAt": "2026-05-03T06:34:43.137Z",
+  "batches": [
+    {
+      "batchNo": 1,
+      "size": 1000,
+      "idsFile": "output\\migration-batches-2026-05-03T06-34-43-135Z\\ids-batch-001.json",
+      "exitCode": 0
+    },
+    {
+      "batchNo": 2,
+      "size": 1000,
+      "idsFile": "output\\migration-batches-2026-05-03T06-34-43-135Z\\ids-batch-002.json",
+      "exitCode": 0
+    },
+    {
+      "batchNo": 3,
+      "size": 1000,
+      "idsFile": "output\\migration-batches-2026-05-03T06-34-43-135Z\\ids-batch-003.json",
+      "exitCode": 0
+    },
+    {
+      "batchNo": 4,
+      "size": 1000,
+      "idsFile": "output\\migration-batches-2026-05-03T06-34-43-135Z\\ids-batch-004.json",
+      "exitCode": 0
+    },
+    {
+      "batchNo": 5,
+      "size": 1000,
+      "idsFile": "output\\migration-batches-2026-05-03T06-34-43-135Z\\ids-batch-005.json",
+      "exitCode": 0
+    },
+    {
+      "batchNo": 6,
+      "size": 1000,
+      "idsFile": "output\\migration-batches-2026-05-03T06-34-43-135Z\\ids-batch-006.json",
+      "exitCode": 0
+    },
+    {
+      "batchNo": 7,
+      "size": 1000,
+      "idsFile": "output\\migration-batches-2026-05-03T06-34-43-135Z\\ids-batch-007.json",
+      "exitCode": 0
+    },
+    {
+      "batchNo": 8,
+      "size": 1000,
+      "idsFile": "output\\migration-batches-2026-05-03T06-34-43-135Z\\ids-batch-008.json",
+      "exitCode": 0
+    },
+    {
+      "batchNo": 9,
+      "size": 1000,
+      "idsFile": "output\\migration-batches-2026-05-03T06-34-43-135Z\\ids-batch-009.json",
+      "exitCode": 0
+    },
+    {
+      "batchNo": 10,
+      "size": 1000,
+      "idsFile": "output\\migration-batches-2026-05-03T06-34-43-135Z\\ids-batch-010.json",
+      "exitCode": 0
+    },
+    {
+      "batchNo": 11,
+      "size": 1000,
+      "idsFile": "output\\migration-batches-2026-05-03T06-34-43-135Z\\ids-batch-011.json",
+      "exitCode": 0
+    },
+    {
+      "batchNo": 12,
+      "size": 646,
+      "idsFile": "output\\migration-batches-2026-05-03T06-34-43-135Z\\ids-batch-012.json",
+      "exitCode": 0
+    }
+  ],
+  "finishedAt": "2026-05-03T06:53:44.450Z",
+  "succeededBatches": 12,
+  "failedBatches": 0
+}

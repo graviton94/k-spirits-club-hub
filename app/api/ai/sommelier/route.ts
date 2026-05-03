@@ -3,7 +3,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { 
-    dbAdminSearchSpiritsPublic
+    dbAdminSearchSpiritsPublic,
+    dbAdminUpsertAiDiscoveryLog
 } from '@/lib/db/data-connect-admin';
 import { runWithGeminiModelFallback, getGeminiModelCandidates } from '@/lib/services/gemini-model-fallback';
 
@@ -244,11 +245,31 @@ export async function POST(req: NextRequest) {
                 });
             }
 
-            // TODO: Re-implement AI discovery logging using dbAdminUpsertAiDiscoveryLog
-            // once an admin-level mutation for aiDiscoveryLog is added to data-connect-admin.ts.
-            // Currently skipped as it's non-critical and the operation requires server-auth context.
             if (parsed.nextStep === 6) {
-                // AI discovery logging intentionally skipped (non-critical)
+                try {
+                    const logId = `aidl_${Date.now()}_${traceId.slice(0, 8)}`;
+                    const logRecommendations = parsed.recommendations.slice(0, 10).map((rec: any) => ({
+                        id: rec?.id || null,
+                        name: rec?.name || null,
+                        reason: rec?.reason || null,
+                        matchRate: typeof rec?.matchRate === 'number' ? rec.matchRate : null,
+                        inDb: rec?.inDb === true,
+                    }));
+                    const logHistory = messages.slice(-20).map((m: any) => ({
+                        role: m?.role === 'assistant' ? 'assistant' : 'user',
+                        content: String(m?.content || '').slice(0, 2000),
+                    }));
+
+                    await dbAdminUpsertAiDiscoveryLog({
+                        id: logId,
+                        userId: userId && userId !== 'guest' ? String(userId) : null,
+                        analysis: typeof parsed.analysis === 'string' ? parsed.analysis : '',
+                        recommendations: logRecommendations,
+                        messageHistory: logHistory,
+                    });
+                } catch (logError: any) {
+                    console.error(`[Sommelier API][${traceId}] AI log write failed:`, logError?.message || logError);
+                }
             }
         }
 

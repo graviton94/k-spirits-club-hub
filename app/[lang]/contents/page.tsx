@@ -12,6 +12,7 @@ import {
   BookOpen
 } from "lucide-react";
 import { getCanonicalUrl, getHreflangAlternates } from "@/lib/utils/seo-url";
+import { SPIRIT_CATEGORIES } from "@/lib/constants/spirits-guide-data";
 import { ContentsHeaderAnimated, ContentsCardAnimated } from "./contents-animated";
 
 interface ContentsPageProps {
@@ -49,6 +50,10 @@ export default async function ContentsPage({ params }: ContentsPageProps) {
   const resolvedParams = await params.catch(() => ({ lang: 'ko' }));
   const lang = resolvedParams?.lang || 'ko';
   const isEn = lang === 'en';
+  const wikiQuickSlugs = ['soju-guide', 'makgeolli-guide', 'korean-whisky', 'single-malt', 'bourbon', 'gin', 'tequila', 'sake', 'rum', 'cognac', 'vodka'];
+  const wikiQuickLinks = wikiQuickSlugs
+    .map((slug) => SPIRIT_CATEGORIES.find((category) => category.slug === slug))
+    .filter((category): category is NonNullable<typeof category> => Boolean(category));
 
   const contents = [
     {
@@ -183,8 +188,8 @@ export default async function ContentsPage({ params }: ContentsPageProps) {
           <div className="max-w-4xl mx-auto space-y-12">
             <div className="text-center space-y-4">
               <h2 className="text-3xl md:text-5xl font-black text-foreground italic uppercase tracking-tighter">
-                {isEn ? "The Global" : "글로벌"}<br />
-                <span className="bg-brand-gradient bg-clip-text text-transparent italic">Spirits Encyclopedia</span>
+                {isEn ? "Spirits" : "주류"}<br />
+                <span className="bg-brand-gradient bg-clip-text text-transparent italic">Wiki</span>
               </h2>
               <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto font-medium leading-relaxed">
                 {isEn
@@ -194,25 +199,13 @@ export default async function ContentsPage({ params }: ContentsPageProps) {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-               {[
-                 { href: 'soju-guide', title: isEn ? 'Soju Guide' : '소주 가이드' },
-                 { href: 'makgeolli-guide', title: isEn ? 'Makgeolli' : '막걸리 가이드' },
-                 { href: 'korean-whisky', title: isEn ? 'K-Whisky' : '한국 위스키' },
-                 { href: 'single-malt', title: isEn ? 'Single Malt' : '싱글 몰트' },
-                 { href: 'bourbon', title: isEn ? 'Bourbon' : '버번 가이드' },
-                 { href: 'gin', title: isEn ? 'Gin Guide' : '진 백과사전' },
-                 { href: 'tequila', title: isEn ? 'Tequila' : '데킬라 가이드' },
-                 { href: 'sake', title: isEn ? 'Sake Guide' : '사케 양조' },
-                 { href: 'rum', title: isEn ? 'Rum Guide' : '럼 대사전' },
-                 { href: 'cognac', title: isEn ? 'Cognac' : '코냑 가이드' },
-                 { href: 'vodka', title: isEn ? 'Vodka' : '보드카 가이드' },
-               ].map((wiki, i) => (
+               {wikiQuickLinks.map((wiki, i) => (
                  <Link 
                    key={i}
-                   href={`/${lang}/contents/wiki/${wiki.href}`} 
+                   href={`/${lang}/contents/wiki/${wiki.slug}`} 
                    className="p-4 bg-muted/10 border border-white/5 rounded-2xl text-[11px] font-black text-center uppercase tracking-tighter hover:bg-primary/10 hover:border-primary/30 hover:text-primary transition-all active:scale-95 whitespace-nowrap"
                  >
-                   {wiki.title}
+                   {isEn ? wiki.nameEn : wiki.nameKo}
                  </Link>
                ))}
                <Link 

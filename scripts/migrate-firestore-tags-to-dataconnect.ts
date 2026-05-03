@@ -95,10 +95,12 @@ const OVERWRITE_DIFFERENT = args.includes('--overwrite-different');
 const LIMIT_ARG = args.find((a) => a.startsWith('--limit='));
 const OFFSET_ARG = args.find((a) => a.startsWith('--offset='));
 const TARGET_ID_ARG = args.find((a) => a.startsWith('--id='));
+const IDS_FILE_ARG = args.find((a) => a.startsWith('--ids-file='));
 
 const WINDOW_LIMIT = LIMIT_ARG ? Number(LIMIT_ARG.split('=')[1]) : null;
 const WINDOW_OFFSET = OFFSET_ARG ? Number(OFFSET_ARG.split('=')[1]) : 0;
 const TARGET_ID = TARGET_ID_ARG ? TARGET_ID_ARG.split('=')[1] : null;
+const IDS_FILE = IDS_FILE_ARG ? IDS_FILE_ARG.split('=')[1] : null;
 
 const LOCATION = process.env.DATA_CONNECT_LOCATION || 'asia-northeast3';
 const SERVICE_ID = process.env.DATA_CONNECT_SERVICE_ID || 'k-spirits-club-hub';
@@ -108,6 +110,46 @@ let cachedToken: { token: string; expiry: number } | null = null;
 const LIST_SPIRITS_PAGE = `
   query listSpiritsPage($limit: Int, $offset: Int) {
     spirits(limit: $limit, offset: $offset, orderBy: [{ updatedAt: DESC }]) {
+      id
+      name
+      nameEn
+      category
+      categoryEn
+      mainCategory
+      subcategory
+      distillery
+      bottler
+      abv
+      volume
+      country
+      region
+      imageUrl
+      thumbnailUrl
+      descriptionKo
+      descriptionEn
+      pairingGuideKo
+      pairingGuideEn
+      noseTags
+      palateTags
+      finishTags
+      tastingNote
+      status
+      isPublished
+      isReviewed
+      reviewedBy
+      reviewedAt
+      rating
+      reviewCount
+      metadata
+      importer
+      rawCategory
+    }
+  }
+`;
+
+const LIST_SPIRITS_BY_IDS = `
+  query listSpiritsByIds($ids: [String!]) {
+    spirits(where: { id: { in: $ids } }, limit: 1000) {
       id
       name
       nameEn
@@ -403,7 +445,20 @@ async function listAllDataConnectSpirits(): Promise<SpiritRow[]> {
   return all;
 }
 
-async function loadFirestoreTagMap() {
+async function listDataConnectSpiritsByIds(ids: string[]): Promise<SpiritRow[]> {
+  if (!ids.length) return [];
+
+  const chunkSize = 200;
+  const out: SpiritRow[] = [];
+  for (let i = 0; i < ids.length; i += chunkSize) {
+    const slice = ids.slice(i, i + chunkSize);
+    const data = await executeGraphql('listSpiritsByIds', LIST_SPIRITS_BY_IDS, { ids: slice });
+    out.push(...((data?.spirits || []) as SpiritRow[]));
+  }
+  return out;
+}
+
+async function loadFirestoreTagMap(ids?: string[]) {
   if (!admin.apps.length) {
     admin.initializeApp({
       credential: admin.credential.cert({
@@ -414,12 +469,22 @@ async function loadFirestoreTagMap() {
     });
   }
 
-  const snapshot = await admin.firestore().collection('spirits').get();
   const map = new Map<string, FirestoreSpirit>();
 
-  snapshot.forEach((doc) => {
-    map.set(doc.id, { id: doc.id, ...(doc.data() as FirestoreSpirit) });
-  });
+  if (ids && ids.length) {
+    const refs = ids.map((id) => admin.firestore().collection('spirits').doc(id));
+    const docs = await admin.firestore().getAll(...refs);
+    docs.forEach((doc) => {
+      if (doc.exists) {
+        map.set(doc.id, { id: doc.id, ...(doc.data() as FirestoreSpirit) });
+      }
+    });
+  } else {
+    const snapshot = await admin.firestore().collection('spirits').get();
+    snapshot.forEach((doc) => {
+      map.set(doc.id, { id: doc.id, ...(doc.data() as FirestoreSpirit) });
+    });
+  }
 
   return map;
 }
@@ -508,13 +573,31 @@ async function main() {
   const outDir = path.join(process.cwd(), 'output');
   await fs.mkdir(outDir, { recursive: true });
 
+  let fixedIdsFromFile: Set<string> | null = null;
+  if (IDS_FILE) {
+    const idsRaw = await fs.readFile(path.resolve(process.cwd(), IDS_FILE), 'utf8');
+    const parsed = JSON.parse(idsRaw) as any;
+    const ids = Array.isArray(parsed)
+      ? parsed
+      : Array.isArray(parsed?.ids)
+        ? parsed.ids
+        : Array.isArray(parsed?.changes)
+          ? parsed.changes.map((c: any) => c?.id)
+          : [];
+    fixedIdsFromFile = new Set(ids.filter((v: unknown) => typeof v === 'string'));
+  }
+
+  const scopedIds = fixedIdsFromFile ? Array.from(fixedIdsFromFile) : undefined;
+
   console.log(`[tag-migration] mode=${APPLY ? 'APPLY' : 'DRY_RUN'} overwriteDifferent=${OVERWRITE_DIFFERENT}`);
   console.log('[tag-migration] Loading Firestore source data...');
-  const firestoreTagMap = await loadFirestoreTagMap();
+  const firestoreTagMap = await loadFirestoreTagMap(scopedIds);
   console.log(`[tag-migration] Firestore spirits loaded: ${firestoreTagMap.size}`);
 
   console.log('[tag-migration] Loading Data Connect spirits...');
-  const dcSpirits = await listAllDataConnectSpirits();
+  const dcSpirits = scopedIds?.length
+    ? await listDataConnectSpiritsByIds(scopedIds)
+    : await listAllDataConnectSpirits();
   console.log(`[tag-migration] Data Connect spirits loaded: ${dcSpirits.length}`);
 
   const backup: Array<{
@@ -532,6 +615,11 @@ async function main() {
   let alreadySynced = 0;
 
   let rows = dcSpirits;
+
+  if (fixedIdsFromFile) {
+    rows = rows.filter((r) => fixedIdsFromFile?.has(r.id));
+  }
+
   if (TARGET_ID) {
     rows = rows.filter((r) => r.id === TARGET_ID);
   }
@@ -613,6 +701,8 @@ async function main() {
         dataConnectRows: dcSpirits.length,
         processedRows: rows.length,
         targetId: TARGET_ID,
+        idsFile: IDS_FILE,
+        idsFileCount: fixedIdsFromFile ? fixedIdsFromFile.size : null,
         window: { offset: WINDOW_OFFSET, limit: WINDOW_LIMIT },
         missingInFirestore,
         alreadySynced,

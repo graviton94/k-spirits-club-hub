@@ -1,0 +1,6842 @@
+{
+  "startedAt": "2026-05-03T12:59:57.945Z",
+  "finishedAt": "2026-05-03T13:01:18.665Z",
+  "inspected": 13733,
+  "updated": 759,
+  "unchanged": 12974,
+  "withPairingKo": 7335,
+  "withoutPairingKo": 6398,
+  "changedRows": [
+    {
+      "id": "fsk-199500150131",
+      "name": "인제막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-1995001501317",
+      "name": "인제오미자막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-1995001501319",
+      "name": "인제곰배령곰취막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-1995001501322",
+      "name": "곰배령곰취막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-1995001501323",
+      "name": "굽이생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-1995001501326",
+      "name": "밀당막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-199500150133",
+      "name": "한계령더덕막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-199500150138",
+      "name": "한계령 1972 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200100152631",
+      "name": "홍천생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200100152633",
+      "name": "홍천잣막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200300150361",
+      "name": "설생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2003001523639",
+      "name": "대통주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2004001514711",
+      "name": "다복이",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200400151472",
+      "name": "노트",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2006001502016",
+      "name": "국순당 생막걸리 우국생",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2006001502018",
+      "name": "대박",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2006001502027",
+      "name": "강장백세주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2006001502045",
+      "name": "국순당 청감주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200600150209",
+      "name": "국순당 이화주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2006001502096",
+      "name": "옛날 막걸리 古",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2006001502097",
+      "name": "1000억 유산균 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200600150451",
+      "name": "파주 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200600150452",
+      "name": "우리쌀 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200600150453",
+      "name": "메밀 생 탁주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200600150454",
+      "name": "장단콩 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200600150459",
+      "name": "파주쌀 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2008001520810",
+      "name": "옥수수동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200800152083",
+      "name": "치악산막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200800152086",
+      "name": "삿갓주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2008001526010",
+      "name": "비탈주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200800152602",
+      "name": "봉평참메밀술",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200800152606",
+      "name": "홍천생쌀막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200800152644",
+      "name": "주교주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200900150633",
+      "name": "옥수수生막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200900150636",
+      "name": "봉평프리미엄메밀막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200900150637",
+      "name": "한빛",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200900151802",
+      "name": "서울생살균막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2010001502218",
+      "name": "지장수더덕생동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201000150222",
+      "name": "까메오 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2010001502220",
+      "name": "지장수오렌지생동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2010001502223",
+      "name": "약천골지장수옥수수생동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2010001502224",
+      "name": "약천골지장수호박생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2010001502225",
+      "name": "약천골지장수생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2010001502232",
+      "name": "약천골지장수오미자생동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2010001502234",
+      "name": "지장수낙천찹쌀막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2010001502237",
+      "name": "약천골지장수막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2010001502241",
+      "name": "약천골지장수생동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2010001502242",
+      "name": "할매막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2010001502246",
+      "name": "지장수오막하세",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2010001502252",
+      "name": "우리동네막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2010001502253",
+      "name": "지장수 햇비",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201000150229",
+      "name": "지장수 호박생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201000150773",
+      "name": "달홀주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201000151941",
+      "name": "십칠주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201000151943",
+      "name": "막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201000151944",
+      "name": "이화주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201000151949",
+      "name": "사계절",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201100150011",
+      "name": "송정동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201100151033",
+      "name": "이백",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201100151035",
+      "name": "이백",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201100151036",
+      "name": "이백 석탄주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201100151731",
+      "name": "감로주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-20110015205102",
+      "name": "크러스트",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-20110015205104",
+      "name": "맥시칸 맥주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520521",
+      "name": "강서 마일드 에일",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520529",
+      "name": "세븐브로이 곰표 썸머에일",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520531",
+      "name": "세븐브로이 라거",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520535",
+      "name": "데이 라거",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520536",
+      "name": "김복남한강에일",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520537",
+      "name": "부산 바다 맥주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520538",
+      "name": "더굿바이브맥주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520539",
+      "name": "대표 밀맥주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520540",
+      "name": "세븐브로이 대표 라거",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520543",
+      "name": "세븐브로이 대표 로제",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520545",
+      "name": "세븐브로이 국민맥주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520546",
+      "name": "국민생맥주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520549",
+      "name": "맥주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520581",
+      "name": "베어스 라거",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520582",
+      "name": "베어스 에일",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520587",
+      "name": "한강",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200150515",
+      "name": "미인 탁주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001507221",
+      "name": "속초생동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200151381",
+      "name": "헤페바이젠",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513811",
+      "name": "코스모스 IPA",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513812",
+      "name": "더테이블 IPA",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513815",
+      "name": "라이 고제",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513823",
+      "name": "S.H 유자 에일",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513827",
+      "name": "블랙 펄 스타우트",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513828",
+      "name": "골든 비치",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513829",
+      "name": "라이스 라거",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200151383",
+      "name": "뮤닉둔켈",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513842",
+      "name": "독립문영천맥주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513843",
+      "name": "슬로우라이프",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513844",
+      "name": "모노크롬",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513846",
+      "name": "파인필스너",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200151385",
+      "name": "스타우트",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513851",
+      "name": "서울 1988",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513854",
+      "name": "랩핑타이거",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513855",
+      "name": "크래이지 크래인",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513858",
+      "name": "애스컴",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513861",
+      "name": "그로지스키",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200151387",
+      "name": "허니브라운",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200152801",
+      "name": "춘천 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200152803",
+      "name": "춘천 오미자 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200152805",
+      "name": "춘천생동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300150573",
+      "name": "백자주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001507416",
+      "name": "초가철원막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300150743",
+      "name": "초가울금",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001507430",
+      "name": "둘다",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001507431",
+      "name": "한청",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300150744",
+      "name": "초가검은콩",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300150745",
+      "name": "백화미인",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300150831",
+      "name": "백운산 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001508310",
+      "name": "잣막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001508311",
+      "name": "잣막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001508319",
+      "name": "복분자 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300150838",
+      "name": "복분자막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-20130015085158",
+      "name": "느린마을 막걸리 한번더",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300150858",
+      "name": "느린마을 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001508610",
+      "name": "포천명가프리미엄생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001508615",
+      "name": "테스형막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300150865",
+      "name": "팔도막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001515428",
+      "name": "포천일동쌀막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001515431",
+      "name": "포천일동더덕막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160071",
+      "name": "금정산성막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160073",
+      "name": "금정산성막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160074",
+      "name": "프리미엄 금정산성막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160166",
+      "name": "스모크비어",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160167",
+      "name": "피치트리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160182",
+      "name": "둔켈",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160184",
+      "name": "바이젠",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160302",
+      "name": "흑미 청주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-20130016053101",
+      "name": "밀양사과막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-20130016053111",
+      "name": "밀양대추막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001605399",
+      "name": "스톰탁주 인 밀양 17",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160625",
+      "name": "두메산골 생탁배기",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160643",
+      "name": "지리산생동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001607412",
+      "name": "포터",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001607413",
+      "name": "울산 맥주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160811",
+      "name": "부곡생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160823",
+      "name": "부산 산성 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160824",
+      "name": "기찰 생탁주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160831",
+      "name": "생탁",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160834",
+      "name": "마일드생탁",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160842",
+      "name": "우리햅쌀 생탁",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160882",
+      "name": "산청팔도주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160885",
+      "name": "생산청막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160896",
+      "name": "지리산 생탁주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160941",
+      "name": "상리 생 탁배기",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160951",
+      "name": "생초생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160981",
+      "name": "행운생유자동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160983",
+      "name": "팔공산미나리막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160984",
+      "name": "행운동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160985",
+      "name": "행운",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160991",
+      "name": "수곡 生 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160992",
+      "name": "수곡생동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161021",
+      "name": "신원생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161043",
+      "name": "악양막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161044",
+      "name": "정감",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161071",
+      "name": "가지산 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161101",
+      "name": "송림성 하얀술",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161161",
+      "name": "북면온천생탁주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001611927",
+      "name": "미청",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001611931",
+      "name": "맑은내일 요리청주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001611937",
+      "name": "초심",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001611980",
+      "name": "만다꼬",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161222",
+      "name": "웅촌명주우리쌀막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161261",
+      "name": "1592",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161271",
+      "name": "유어쌀막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161414",
+      "name": "골든블루 더 사피루스",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161416",
+      "name": "골든블루 더 다이아몬드",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161421",
+      "name": "토마토생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161427",
+      "name": "동백 우리쌀 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161428",
+      "name": "흑미막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161531",
+      "name": "지수도가 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161581",
+      "name": "천성산막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161631",
+      "name": "조선막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161671",
+      "name": "하이생탁",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161721",
+      "name": "함양막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161741",
+      "name": "화개장터 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161742",
+      "name": "하동 녹차 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161745",
+      "name": "별천지",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001702810",
+      "name": "부자 8°",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001702817",
+      "name": "우곡주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001702818",
+      "name": "부자 10°",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001702828",
+      "name": "송산포도 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001702829",
+      "name": "배혜정 호랑이 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001702831",
+      "name": "호랑이생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001702833",
+      "name": "진로막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001702834",
+      "name": "춘천닭갈비엔 이막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001702835",
+      "name": "원료용 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001702836",
+      "name": "우곡생주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001702838",
+      "name": "호랑이 유자 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170284",
+      "name": "유기농 쌀막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170285",
+      "name": "우리쌀 쌀막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170408",
+      "name": "요리조리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170409",
+      "name": "김포 차례주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704219",
+      "name": "홍삼쌀맥주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704221",
+      "name": "에너진 골든에일",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704254",
+      "name": "서울로",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704264",
+      "name": "사랑으로",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704268",
+      "name": "페인킬러",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704270",
+      "name": "브리티시락",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001705013",
+      "name": "붉은원숭이",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001705014",
+      "name": "술취한원숭이",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170503",
+      "name": "술샘 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001705032",
+      "name": "아임프리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001705055",
+      "name": "핑크닉막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170521",
+      "name": "천비향 생주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001705214",
+      "name": "택이8",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001705220",
+      "name": "술예쁘다 10.9",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001705228",
+      "name": "택이",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001705229",
+      "name": "천비향생주 12",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170528",
+      "name": "천비향 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170605",
+      "name": "호랑이배꼽 에피소드",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001708119",
+      "name": "카스 레드",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170813",
+      "name": "카스 프레시",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001708133",
+      "name": "오비 라거",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170814",
+      "name": "카스 프레시 페트",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170821",
+      "name": "이천 복숭아 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001708210",
+      "name": "황기막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001708211",
+      "name": "인삼막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170823",
+      "name": "이천에서 빚은 쌀 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170824",
+      "name": "이천생천연막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170825",
+      "name": "이천 생 산수유막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170827",
+      "name": "이천 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170901",
+      "name": "이화 생 쌀 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170903",
+      "name": "이화 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170913",
+      "name": "인천소성주플러스",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170914",
+      "name": "소성주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170915",
+      "name": "소성주플러스",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170919",
+      "name": "1938소성주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170942",
+      "name": "한국민속촌 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170998",
+      "name": "화요 프리미엄 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170999",
+      "name": "화요 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300171032",
+      "name": "청운막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300171071",
+      "name": "한길주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300171072",
+      "name": "한길주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001710817",
+      "name": "안성 배막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001710821",
+      "name": "톡걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001710825",
+      "name": "안성배막걸리 살균",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300171083",
+      "name": "안성생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001710883",
+      "name": "덕장막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300171091",
+      "name": "화성탁주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300171381",
+      "name": "용인 처인성 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300171382",
+      "name": "싱글 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180151",
+      "name": "순동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001801516",
+      "name": "벗",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180153",
+      "name": "옹해야",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180159",
+      "name": "전통누룩 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180196",
+      "name": "대나무술",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180198",
+      "name": "가람 가시오가피주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180302",
+      "name": "산동생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001806212",
+      "name": "아리스토 페일에일",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180622",
+      "name": "조선생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180626",
+      "name": "청도맥주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001806262",
+      "name": "아리스토 바이젠",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001806265",
+      "name": "비밀에일",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001806266",
+      "name": "브라운에일",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001806267",
+      "name": "아리스토 아이피에이",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180632",
+      "name": "불로 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180634",
+      "name": "불로동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180637",
+      "name": "불로막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180638",
+      "name": "불로생동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180661",
+      "name": "동곡막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180662",
+      "name": "동곡생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180701",
+      "name": "영일만친구",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001807010",
+      "name": "보경사탁주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001807013",
+      "name": "북극곰탁주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001807014",
+      "name": "울릉도에 넝쿨째 들어온 호박막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001807017",
+      "name": "포항옛막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001807018",
+      "name": "영일만친구 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180707",
+      "name": "연오랑탁주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180708",
+      "name": "세오녀탁주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180781",
+      "name": "문경 오미자 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180783",
+      "name": "문희 오미자 탁주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180784",
+      "name": "문희 탁주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180787",
+      "name": "홍승희 탁주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180811",
+      "name": "필스너",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180841",
+      "name": "청량주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180842",
+      "name": "정말주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180871",
+      "name": "봉양 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180891",
+      "name": "봉화생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181051",
+      "name": "성주생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181061",
+      "name": "솔솔생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181062",
+      "name": "솔솔동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181121",
+      "name": "영주 선비주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181131",
+      "name": "신경주 쌀 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181133",
+      "name": "토담골 쌀 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181184",
+      "name": "경주 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181221",
+      "name": "운문산맥",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181322",
+      "name": "영주생탁주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181327",
+      "name": "인삼품은 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181411",
+      "name": "용궁생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181447",
+      "name": "울릉도 호박생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181451",
+      "name": "원천 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181503",
+      "name": "안동 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181504",
+      "name": "임하 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181574",
+      "name": "갓바위 동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181575",
+      "name": "연막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181683",
+      "name": "청송 얼음골 동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181684",
+      "name": "강남시그니처막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181752",
+      "name": "속에천불 청송 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181761",
+      "name": "포항 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181762",
+      "name": "영일만 친구",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181812",
+      "name": "예천 풍양생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190102",
+      "name": "비아쌀막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001901411",
+      "name": "맛있는푸드 모주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190145",
+      "name": "전주 모주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190146",
+      "name": "옛촌 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190147",
+      "name": "전주왱이모주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190148",
+      "name": "전주유자막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190227",
+      "name": "장보고의꿈비파20",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190333",
+      "name": "동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190351",
+      "name": "광양쌀생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-20130019035108",
+      "name": "야황",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-20130019035109",
+      "name": "야황생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-20130019035110",
+      "name": "바른 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-20130019035112",
+      "name": "바른 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-20130019035113",
+      "name": "흑마늘생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-20130019035114",
+      "name": "라도흑마늘생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-20130019035115",
+      "name": "라도생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-20130019035116",
+      "name": "라도매실생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190355",
+      "name": "골드생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190357",
+      "name": "매화꽃피는마을",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190358",
+      "name": "광양생막걸리 클래식",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190359",
+      "name": "광양생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001911761",
+      "name": "청하",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300200744",
+      "name": "세종 쌀 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007440",
+      "name": "가덕 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007442",
+      "name": "세종청주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007444",
+      "name": "이도청주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007445",
+      "name": "세종청주생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007451",
+      "name": "이천쌀생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007458",
+      "name": "주포천막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007459",
+      "name": "세종찹쌀동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007460",
+      "name": "세종생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007463",
+      "name": "세종알밤막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007464",
+      "name": "세종쌀막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007469",
+      "name": "세종유기농생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007470",
+      "name": "세종유기농막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007471",
+      "name": "막걸리데이",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007472",
+      "name": "청주생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007473",
+      "name": "세종생막걸리1700",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007475",
+      "name": "세종 유기농 쌀 막걸리12",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007476",
+      "name": "세종 유기농 생 쌀막걸리12",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007479",
+      "name": "세종 유기농 쌀 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300200769",
+      "name": "담은쌀막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300200851",
+      "name": "탁선생 별 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002008518",
+      "name": "탁선생 39 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002009813",
+      "name": "편장군막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300200983",
+      "name": "소백산막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "mfds-202600034231",
+      "name": "블랙애더 쉐리 스네이크",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "mfds-202600035601",
+      "name": "일라이저 크레이그 배럴 프루프",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "mfds-202600052027",
+      "name": "글렌모렌지 디 오리지널 12년 / 1106499, L2562108",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "mfds-202600054092",
+      "name": "조니워커 레드",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "mfds-202600055132",
+      "name": "미켈레 사타 피아스타리아 볼게리 수페리오레",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "mfds-202600055278",
+      "name": "부르고뉴 루지",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "mfds-202600055526",
+      "name": "발렌타인 21년",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "mfds-202600055648",
+      "name": "부쉬밀 16년",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "mfds-202600055689",
+      "name": "발 디 수가 브루넬로 디 몬탈치노",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "mfds-202600055708",
+      "name": "샤또 드 샹베르 까오르 그랑뱅",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "mfds-202600055777",
+      "name": "콜레 프리미에 크뤼 몽떼 드 토네르",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "mfds-202600055806",
+      "name": "듀어스 화이트 라벨/ 4117012190,  L25309",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "mfds-202600056836",
+      "name": "킬호만 마키어베이 캐스크 스트랭스",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "mfds-202600056872",
+      "name": "보우모어 18년",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "mfds-202600056935",
+      "name": "에로에 엑스트라 브뤼 - 발도비아데네 프로세코 수페리오레 디오씨지 디 리베 파라 디 솔리고",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "mfds-202600057049",
+      "name": "우드포드 리저브 더블오크",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300200833",
+      "name": "한시울블루베리생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300200761",
+      "name": "능수쌀막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007495",
+      "name": "임금님표 이천쌀 막걸리6",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007453",
+      "name": "대전부르스 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300200932",
+      "name": "대영 쌀막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300201024",
+      "name": "괴산생쌀막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300200835",
+      "name": "대왕산삼생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007491",
+      "name": "대전부르스골드",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002008511",
+      "name": "유성별 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300200852",
+      "name": "칠갑산 알밤 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300201232",
+      "name": "보령미산생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007477",
+      "name": "세종유기농 생쌀막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300200931",
+      "name": "서충주 이류 쌀 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007490",
+      "name": "안양시장 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007452",
+      "name": "이천쌀생동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300200838",
+      "name": "클럽디생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007494",
+      "name": "가덕 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181433",
+      "name": "속리산 밀막걸리 청담",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190302",
+      "name": "꾸지뽕 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190181",
+      "name": "겸면 생쌀막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181751",
+      "name": "속에천불 청송 얼음동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190101",
+      "name": "비아생쌀막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001815416",
+      "name": "경주봉생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190411",
+      "name": "우리생쌀막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001906113",
+      "name": "선운산의 아침 아로니아 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001904887",
+      "name": "眞생동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190472",
+      "name": "지평선울금막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190471",
+      "name": "지평선 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190481",
+      "name": "정고집생참막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190657",
+      "name": "부안강산생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190341",
+      "name": "광양동부생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190303",
+      "name": "곡성합동쌀동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190191",
+      "name": "다향생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190193",
+      "name": "오대가유자생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190149",
+      "name": "전주주조 전주비사벌생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181434",
+      "name": "일등 시골집 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181432",
+      "name": "속리산 생 동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181832",
+      "name": "강쇠 동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181871",
+      "name": "비슬산 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001817510",
+      "name": "영천생탁",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181736",
+      "name": "어깨춤 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181685",
+      "name": "강남시그니처막걸리 남해유자",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181732",
+      "name": "칠보산 아리랑 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181731",
+      "name": "칠보산 한방 칠보주 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181721",
+      "name": "신동 生 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181712",
+      "name": "태백산 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181576",
+      "name": "산삼막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001815718",
+      "name": "울릉술생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001815425",
+      "name": "탁월 더 블랙",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001815422",
+      "name": "초월생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001815413",
+      "name": "빙고빙탁",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181502",
+      "name": "오매불마 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181443",
+      "name": "독도사랑 울릉도 生호박 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181431",
+      "name": "속리산 생 탁주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181711",
+      "name": "태백산 쌀막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001817512",
+      "name": "속에천불 불로생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181759",
+      "name": "속에천불청송얼음막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001901412",
+      "name": "삼백집 모주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190194",
+      "name": "보성흑마늘생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190321",
+      "name": "사선막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190354",
+      "name": "햇쌀 유자 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001904812",
+      "name": "시크헤라",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300190444",
+      "name": "거금도생유탁유자동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001902210",
+      "name": "고금유자텐",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181681",
+      "name": "생탁 주산지",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181641",
+      "name": "참마 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180741",
+      "name": "순곡 무릉 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001804015",
+      "name": "도영 생쌀막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181321",
+      "name": "영주소백주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180479",
+      "name": "나보로 6",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001807015",
+      "name": "청와옥막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001805256",
+      "name": "천혜향 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181181",
+      "name": "강강술래 쌀 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001708145",
+      "name": "핸드앤몰트 폭포 페일 에일",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160899",
+      "name": "산청 한방촌 동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161241",
+      "name": "월천생탁주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001702826",
+      "name": "福 달마막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170531",
+      "name": "세종대왕 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170286",
+      "name": "데워먹는 부자생강 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170287",
+      "name": "배혜정 매화마름 호랑이 막걸리7°",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001801510",
+      "name": "내연산 동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161141",
+      "name": "옥종명주 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161142",
+      "name": "옥종명주 생 맑은동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161074",
+      "name": "죽이주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001702827",
+      "name": "부자 송산포도 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161031",
+      "name": "진짜탁주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161042",
+      "name": "정감생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161351",
+      "name": "저구막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001705053",
+      "name": "까망토끼",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160942",
+      "name": "상리 생 반전주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160912",
+      "name": "지리산 동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001801514",
+      "name": "장기 산딸기막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001702832",
+      "name": "부자유자생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161583",
+      "name": "생참막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160897",
+      "name": "촉석루",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001705035",
+      "name": "교동전선생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161601",
+      "name": "청암 生 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001705036",
+      "name": "교동전선생막걸리-오미자",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704232",
+      "name": "모모페일에일",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001801518",
+      "name": "신포항 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170331",
+      "name": "쌀로빚은인삼생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161174",
+      "name": "유담",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180152",
+      "name": "옹해야전통누룩막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180154",
+      "name": "옹헤야 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160898",
+      "name": "홍화막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180157",
+      "name": "옹해야 동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300171093",
+      "name": "남양탁주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001702819",
+      "name": "부자 亞里䕞",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161676",
+      "name": "하이생반전주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170486",
+      "name": "진이",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001801911",
+      "name": "좁쌀막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001709110",
+      "name": "탁올12",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170281",
+      "name": "生 옥수수동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180215",
+      "name": "성취",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001614116",
+      "name": "골든블루 더블샷 하이볼",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001611953",
+      "name": "와막 와구리막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180197",
+      "name": "풍악생동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170283",
+      "name": "부자 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170312",
+      "name": "향가 생 동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170288",
+      "name": "부자 자색고구마 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170315",
+      "name": "소래산 7˚막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180195",
+      "name": "풍악생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001703114",
+      "name": "서민막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001703116",
+      "name": "비타민나무열매 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170313",
+      "name": "늠내주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170362",
+      "name": "수어정 남한산성 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001703110",
+      "name": "더덕막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001703111",
+      "name": "검은콩막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180155",
+      "name": "풍년가",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161172",
+      "name": "외포얼쑤생막걸리7.5",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180158",
+      "name": "죽장 가시오가피 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001703113",
+      "name": "소래산",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170532",
+      "name": "여천주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180522",
+      "name": "정 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180477",
+      "name": "나보로 4.5",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001805290",
+      "name": "신라의달밤",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001805294",
+      "name": "영덕복숭아생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-20130016119110",
+      "name": "와구리 막걸리 세미스위트",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001703115",
+      "name": "연꽃 이야기",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170297",
+      "name": "단군의후예",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180503",
+      "name": "생뚱딴지동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180478",
+      "name": "나보로 9",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161584",
+      "name": "울금표노랑막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161571",
+      "name": "창녕 화왕산 쌀 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180901",
+      "name": "왕피천을 품은 미소 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161561",
+      "name": "진해군항주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001804018",
+      "name": "얼음골 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181101",
+      "name": "소천부강막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181183",
+      "name": "강강술래 찹쌀동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180582",
+      "name": "얼음골 쌀 생 동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180581",
+      "name": "얼음골 쌀 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180407",
+      "name": "남천생쌀막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180635",
+      "name": "불로썸생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001703112",
+      "name": "조껍데기막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001805268",
+      "name": "이사금 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001804017",
+      "name": "진또배기 쌀 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001804011",
+      "name": "산 너머 생 탁주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001804013",
+      "name": "가고파 생 쌀 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180523",
+      "name": "울금 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001807016",
+      "name": "거차니마일월",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300161181",
+      "name": "용덕 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180721",
+      "name": "영주y막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180722",
+      "name": "백년친구 풍기 홍삼 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180502",
+      "name": "생뚱딴지막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180476",
+      "name": "나보로 12",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180742",
+      "name": "무릉 순곡 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160987",
+      "name": "성포 생 탁주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180843",
+      "name": "버저이청량주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181323",
+      "name": "영주생탁소백주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181033",
+      "name": "좁쌀 생 막걸리 석포",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181032",
+      "name": "석포생탁",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001801913",
+      "name": "제주 한라봉 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180216",
+      "name": "성참외주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180191",
+      "name": "풍악쌀막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181222",
+      "name": "운문산동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001806211",
+      "name": "조선생대추막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170943",
+      "name": "한국민속촌 흑미막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180709",
+      "name": "탁주블라썸",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170777",
+      "name": "태화산 쌀 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180902",
+      "name": "미소생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001805236",
+      "name": "소백산 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001805255",
+      "name": "우도땅콩막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180521",
+      "name": "소월미주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200150728",
+      "name": "양양생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2010001514414",
+      "name": "강남도가 생막걸리 2",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2010001514413",
+      "name": "강남도가 생막걸리 1",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160291",
+      "name": "공룡나라고성생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2003001503638",
+      "name": "출렁다리출렁주 흑마늘막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200900150566",
+      "name": "정선명주 생막걸리 곤드레",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200800152643",
+      "name": "배다리막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200200151358",
+      "name": "아우라지 꿀 生 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300150836",
+      "name": "누룽지동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2003001523655",
+      "name": "남이섬 잣생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300150741",
+      "name": "햅쌀막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201000151445",
+      "name": "고세이 순막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200150721",
+      "name": "참 딸기 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001507210",
+      "name": "설악옥수수동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001524113",
+      "name": "운악산찹쌀생동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200900150567",
+      "name": "정선명주 생막걸리 곤드레",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160311",
+      "name": "광도탁주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200600150457",
+      "name": "장단콩 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300150837",
+      "name": "조껍데기술",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2009001505610",
+      "name": "정선명주 생막걸리 메밀",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200150321",
+      "name": "산천어생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200200151354",
+      "name": "정선 아우라지 옥수수 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200800152641",
+      "name": "배다리막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200150329",
+      "name": "산천어생막걸리아이스",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200150501",
+      "name": "갯방풍생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200150323",
+      "name": "화천용화산",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001503210",
+      "name": "화천사과생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200150519",
+      "name": "미인장단콩탁주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001507217",
+      "name": "설악좁쌀 생동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200150324",
+      "name": "옥수수생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001507220",
+      "name": "솔향옥수수동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200150723",
+      "name": "아바이 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513819",
+      "name": "사우디",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200152942",
+      "name": "소양강 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200152943",
+      "name": "찹쌀 생 동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200152944",
+      "name": "소양강생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513856",
+      "name": "원베일리 맥주 리버사이드 필스너",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200151551",
+      "name": "원주치악산생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200151552",
+      "name": "원주치악산찹쌀동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001524112",
+      "name": "가평잣막걸리 블랙",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200152615",
+      "name": "솔동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200152613",
+      "name": "찹쌀동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200152806",
+      "name": "대룡해맞이생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200152941",
+      "name": "소양강 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520551",
+      "name": "1414 남대문 에일",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520550",
+      "name": "케플비",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300150793",
+      "name": "山막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300150794",
+      "name": "내촌찹쌀생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300150832",
+      "name": "백운산 쌀막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001508316",
+      "name": "천수쌀막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300150839",
+      "name": "백운산더덕술",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520530",
+      "name": "HO&BEER",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001508616",
+      "name": "철원오대쌀 햅쌀 누보 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001515432",
+      "name": "포천일동검은콩막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-20130016053218",
+      "name": "의열1919탁주_D클래스",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001515430",
+      "name": "포천일동좁쌀동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520573",
+      "name": "금강 프리미엄몰트",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160231",
+      "name": "거류산생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160271",
+      "name": "거창생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160296",
+      "name": "자두퐁탁",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160872",
+      "name": "산양생동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160782",
+      "name": "병곡애주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2010001519410",
+      "name": "먹골배막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2010001514415",
+      "name": "강남도가 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2010001514420",
+      "name": "샤토 맑",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201000150772",
+      "name": "해양심층수 설악옥수수 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201000150771",
+      "name": "해양심층수 설악생 쌀막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200900150565",
+      "name": "정선명주 현미생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200800152645",
+      "name": "천녀초막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200800152601",
+      "name": "홍천생쌀동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200800152605",
+      "name": "청결쌀생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160381",
+      "name": "금양",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200600150458",
+      "name": "고래 인삼 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2003001523681",
+      "name": "포나5",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2001001523240",
+      "name": "아콘",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200200151351",
+      "name": "정선 아우라지 황기 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200200151359",
+      "name": "율무막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200400153211",
+      "name": "팔봉산 생 막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2003001503642",
+      "name": "발왕산막걸리1458솔잎",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2003001523685",
+      "name": "마쿠쌀",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200900150562",
+      "name": "정선명주 생막걸리 오가자",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200900150569",
+      "name": "정선명주 현미생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001507218",
+      "name": "속초생탁",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001508320",
+      "name": "뉴국민생기 생막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2001001523222",
+      "name": "CAROLUS XII",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001515427",
+      "name": "1932포천일동찹쌀동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-20130016053312",
+      "name": "예쎄쑈막걸리 12",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2003001503620",
+      "name": "버디막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-20030015236157",
+      "name": "댕유자동동",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200150729",
+      "name": "설악산더덕 생동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201000150774",
+      "name": "생생 옥동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200150381",
+      "name": "월출산누룩막걸리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001517168",
+      "name": "CROWN",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001517147",
+      "name": "Max OKTOBERFEST SPECIAL HOP",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513841",
+      "name": "페어웨이",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513818",
+      "name": "화이티스아이피에이",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513816",
+      "name": "햄프씨드에일",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513817",
+      "name": "컴뱃존아이피에이",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513840",
+      "name": "플레이볼",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513826",
+      "name": "하바나 브룻 아이피에이",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513849",
+      "name": "버번봉봉",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513862",
+      "name": "백야",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513820",
+      "name": "호박아이피에이",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513813",
+      "name": "벨지안 화이트",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001513822",
+      "name": "서울 트레인 더블 아이 피 에이",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001708184",
+      "name": "핸드앤몰트 화수분 골든에일",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001708120",
+      "name": "카스 레드 페트",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001708143",
+      "name": "핸드앤몰트 쉑 마이스터 에일",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001708141",
+      "name": "핸드앤몰트 슬로우 아이피에이",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001708139",
+      "name": "핸드앤몰트 구름 위트 에일",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001708110",
+      "name": "카프리",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001708176",
+      "name": "핸드앤몰트 을지맥옥 글렌체크 엠버라거",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520575",
+      "name": "LAB360",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520572",
+      "name": "광부골든에일",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520528",
+      "name": "뚱랑이맥주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520564",
+      "name": "리키",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520553",
+      "name": "맥주에 빠진 레몬",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520574",
+      "name": "비어 프레미아",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520544",
+      "name": "사공이호 위트에일",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520552",
+      "name": "1414 남대문 라거",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2011001520565",
+      "name": "나로 IPA",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200400151478",
+      "name": "쥬시홉밤IPA",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2004001514710",
+      "name": "KSDB",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200400151477",
+      "name": "도담도담 비어락희",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200400151479",
+      "name": "콜미",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200400151471",
+      "name": "프레아",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180812",
+      "name": "둥글레스",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200400151475",
+      "name": "장미에일 서울로7017",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2004001514712",
+      "name": "현천",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2002001517015",
+      "name": "옥토버훼스트바이젠",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200200151709",
+      "name": "크라운라거",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200200151702",
+      "name": "바이스비어",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2002001517012",
+      "name": "호펜바이스",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-200200151706",
+      "name": "생활맥주저먼클래식바이젠",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180628",
+      "name": "안동탈맥",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001806268",
+      "name": "아리스토 스타우트",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001806269",
+      "name": "밀딸양기",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300180627",
+      "name": "청도읍성수제맥주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160459",
+      "name": "밤 맥주 스타우트",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704223",
+      "name": "에너진 벨지안윗비어",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704222",
+      "name": "에너진 버거비라거",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704240",
+      "name": "뉴질랜드 필스너",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704252",
+      "name": "빈투바초콜릿스타우트",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704227",
+      "name": "모던라거",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704229",
+      "name": "트로피컬 샤워",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704228",
+      "name": "당귤달귤",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704217",
+      "name": "PT헬레스",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704255",
+      "name": "드링크투게더",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704220",
+      "name": "에너진 버거비피터팻",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704259",
+      "name": "굿올드메이트",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704241",
+      "name": "콘티넨탈 라거",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704224",
+      "name": "에너진 스토커페일에일",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704260",
+      "name": "라즈베리퐁당",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704269",
+      "name": "맘마미아",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704261",
+      "name": "붉은노을",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704271",
+      "name": "흥얼흥얼",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704236",
+      "name": "퍼블릭 스타우트",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704243",
+      "name": "비 카인드 IPA",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704218",
+      "name": "PT블론드에일",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170424",
+      "name": "벨지안윗비어",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704262",
+      "name": "보헤미안라거",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704238",
+      "name": "웨스트코스트 필스너",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160169",
+      "name": "아로니아팜에일",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704263",
+      "name": "비엔나라거",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160165",
+      "name": "포비든프룻",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160164",
+      "name": "야미미",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001704237",
+      "name": "트로피컬하우스",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001601611",
+      "name": "송파순수령",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160183",
+      "name": "라우흐",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001508521",
+      "name": "배상면주가 맛술",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300191176",
+      "name": "수복순미주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001507433",
+      "name": "한청 15.2",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-20130016119163",
+      "name": "비사벌주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2003001503641",
+      "name": "출렁다리출렁주 맑은술",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201200152611",
+      "name": "호곡황금주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300150841",
+      "name": "아나주 RoyalSpring 왕춘",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-20130015085144",
+      "name": "백하",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001508545",
+      "name": "들국화술",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170941",
+      "name": "한국민속촌 찹쌀 동동주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170826",
+      "name": "이천오성약주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300181091",
+      "name": "찰옥수수엿술",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2012001507213",
+      "name": "2018국주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160893",
+      "name": "가시오가피술",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160895",
+      "name": "생맥산양삼",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300150574",
+      "name": "호모루덴스",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001805271",
+      "name": "소월미주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001805245",
+      "name": "부산 낮술",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001805223",
+      "name": "해파랑",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007616",
+      "name": "담은 홍삼주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007618",
+      "name": "담은상황버섯주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007625",
+      "name": "담은 도가연주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007628",
+      "name": "담은 담백주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007619",
+      "name": "담은 옻누리주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001801517",
+      "name": "나봄",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001801513",
+      "name": "월월청청",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007622",
+      "name": "담은 가시오가피주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007623",
+      "name": "신토종가시오가피주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007626",
+      "name": "담은 폐백주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007621",
+      "name": "담은 연분홍",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001801520",
+      "name": "경주일삼",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013001705016",
+      "name": "우리쌀 차례주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-2013002007441",
+      "name": "덕산약주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-20230004892102",
+      "name": "누리 미즈나라 싱글 캐스크 No. 330",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170482",
+      "name": "비",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170393",
+      "name": "토속 약주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300160293",
+      "name": "깔끔하주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "fsk-201300170311",
+      "name": "맑은술 차례주",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    },
+    {
+      "id": "mfds-202600033755",
+      "name": "준마이 히메",
+      "previousStatus": "PUBLISHED",
+      "previousIsPublished": true,
+      "pairingGuideKo": null,
+      "targetStatus": "DRAFT",
+      "targetIsPublished": false
+    }
+  ]
+}

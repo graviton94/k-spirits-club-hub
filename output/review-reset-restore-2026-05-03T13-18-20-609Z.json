@@ -1,0 +1,20 @@
+{
+  "startedAt": "2026-05-03T13:18:20.609Z",
+  "finishedAt": "2026-05-03T13:20:57.215Z",
+  "appId": "k-spirits-club-hub",
+  "wipe": {
+    "deletedLikes": 0,
+    "deletedComments": 0,
+    "deletedReviews": 1686
+  },
+  "restore": {
+    "sourceFirestoreDocs": 24,
+    "mappedForRestore": 24,
+    "restored": 24,
+    "failed": [],
+    "targetUser": {
+      "id": "fiO8qf1PjLZAPBNcJmvy1cpqrY52",
+      "nickname": "묵직한 아드벡#8969"
+    }
+  }
+}

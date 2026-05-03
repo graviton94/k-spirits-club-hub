@@ -1,7 +1,7 @@
 export const revalidate = 60;
 
 import { dbListNewArrivals, dbListSpiritReviews } from "@/lib/db/data-connect-client";
-import { dbAdminListNewArrivals } from "@/lib/db/data-connect-admin";
+import { dbAdminListRawSpirits } from "@/lib/db/data-connect-admin";
 import HomeClient from "@/components/home/HomeClient";
 import NewsSection from "@/components/home/NewsSection";
 import { Locale } from "@/i18n-config";
@@ -18,15 +18,18 @@ export default async function HomePage({ params }: PageProps) {
   const dictionary = await getDictionary(lang);
 
   const [rawNewArrivals, rawReviews] = await Promise.all([
-    dbAdminListNewArrivals(12).catch(() => dbListNewArrivals(12).catch(() => [])),
+    dbAdminListRawSpirits({ limit: 10, offset: 0, isPublished: true })
+      .catch(() => dbListNewArrivals(10).catch(() => [])),
     dbListSpiritReviews(5, 0).catch(() => [])
   ]);
 
-  const newArrivals = rawNewArrivals.map((s: any) => ({
-    ...s,
+  const newArrivals = rawNewArrivals.slice(0, 10).map((s: any) => ({
+    id: s.id,
+    name: s.name,
+    nameEn: s.nameEn,
+    imageUrl: s.imageUrl,
+    thumbnailUrl: s.thumbnailUrl,
     name_en: s.nameEn,
-    description_ko: s.descriptionKo,
-    description_en: s.descriptionEn,
   }));
 
   const recentReviews = rawReviews.map((r: any) => ({
