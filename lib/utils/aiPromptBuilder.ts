@@ -54,11 +54,8 @@ export function buildTasteAnalysisPrompt(
     const langSuffix = isEn ? "English" : "Korean";
     const toneSuffix = isEn ? "enlightening & professional" : "warm & professional";
 
-    // 1. 마신 술만 필터링 (위시리스트 제외)
-    const consumedSpirits = items.filter(s => !s.isWishlist);
-
-    // 2. 최신 활동 날짜 기준으로 정렬 (최신 활동이 위로 오도록)
-    const sortedSpirits = [...consumedSpirits].sort((a, b) => {
+    // 1. 전체 술장 기준으로 분석 (위시리스트는 탐색 의향 신호로 반영)
+    const sortedSpirits = [...items].sort((a, b) => {
         const timeA = new Date(a.lastActivityAt || a.addedAt || 0).getTime();
         const timeB = new Date(b.lastActivityAt || b.addedAt || 0).getTime();
         return timeB - timeA;
@@ -72,6 +69,8 @@ export function buildTasteAnalysisPrompt(
             name: item.name,
             type: item.category || 'Unknown',
         };
+
+        entry.collectionIntent = item.isWishlist ? 'Wishlist (aspirational)' : 'Owned (experienced)';
 
         // [Newness Check] 최근 7일 이내 활동이 있으면 마킹
         const sevenDaysAgo = Date.now() - (7 * 24 * 60 * 60 * 1000);

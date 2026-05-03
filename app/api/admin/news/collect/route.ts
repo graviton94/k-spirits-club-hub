@@ -52,6 +52,8 @@ export async function POST(request: Request) {
                 id: docId,
                 title: item.translations?.ko?.title || item.translations?.en?.title || item.originalTitle || '',
                 content: item.translations?.ko?.content || item.translations?.ko?.snippet || item.translations?.en?.content || '',
+                imageUrl: item.imageUrl || null,
+                category: item.category || null,
                 link: item.link,
                 source: item.source,
                 date: item.date,

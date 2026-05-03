@@ -6,7 +6,6 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Spirit, SpiritStatus, ModificationRequest } from '@/lib/db/schema';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import metadata from '@/lib/constants/spirits-metadata.json';
 import { TagMultiSelect } from '@/components/ui/TagMultiSelect';
 import { getOptimizedImageUrl } from '@/lib/utils/image-optimization';
 import DiscoveryLogsTable from '@/components/admin/DiscoveryLogsTable';
@@ -113,9 +112,27 @@ export default function AdminDashboard() {
         };
     }, [editingId]);
 
-    // Metadata
-    const categoryOptions = Object.keys(metadata.categories);
-    const distilleryOptions = (metadata as any).distilleries || [];
+    // Dynamic filter options (loaded from DB)
+    const [dbCategories, setDbCategories] = useState<string[]>([]);
+    const [dbDistilleries, setDbDistilleries] = useState<string[]>([]);
+
+    useEffect(() => {
+        fetch('/api/spirits?mode=meta')
+            .then(r => r.json())
+            .then(d => { if (d.categories) setDbCategories(d.categories.map((c: any) => c.ko)); })
+            .catch(() => {});
+    }, []);
+
+    useEffect(() => {
+        if (!localCategoryFilter || localCategoryFilter === 'ALL') {
+            setDbDistilleries([]);
+            return;
+        }
+        fetch(`/api/spirits?mode=meta&distilleryMode=1&category=${encodeURIComponent(localCategoryFilter)}`)
+            .then(r => r.json())
+            .then(d => { setDbDistilleries(Array.isArray(d.distilleries) ? d.distilleries : []); })
+            .catch(() => {});
+    }, [localCategoryFilter]);
 
     // Load Spirits
     const loadSpirits = useCallback(async () => {
@@ -645,7 +662,7 @@ export default function AdminDashboard() {
                                         onChange={e => setLocalCategoryFilter(e.target.value)}
                                     >
                                         <option value="ALL">📂 전체 카테고리</option>
-                                        {categoryOptions.map(c => <option key={c} value={c}>{c}</option>)}
+                                        {dbCategories.map(c => <option key={c} value={c}>{c}</option>)}
                                     </select>
 
                                     <select
@@ -654,7 +671,7 @@ export default function AdminDashboard() {
                                         onChange={e => setLocalDistilleryFilter(e.target.value)}
                                     >
                                         <option value="ALL">🏭 전체 증류소</option>
-                                        {distilleryOptions.slice(0, 200).map((d: string) => <option key={d} value={d}>{d}</option>)}
+                                        {dbDistilleries.map((d: string) => <option key={d} value={d}>{d}</option>)}
                                     </select>
 
                                     <select

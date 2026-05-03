@@ -38,19 +38,62 @@ function parseRSSFeed(xmlText: string): any[] {
         const descMatch = /<description>([\s\S]*?)<\/description>/.exec(itemXml);
         const pubDateMatch = /<pubDate>([\s\S]*?)<\/pubDate>/.exec(itemXml);
         const sourceMatch = /<source[^>]*>([\s\S]*?)<\/source>/.exec(itemXml);
+        const mediaImageMatch = /<media:content[^>]*url=["']([^"']+)["']/i.exec(itemXml);
+        const enclosureImageMatch = /<enclosure[^>]*url=["']([^"']+)["']/i.exec(itemXml);
+
+        const rawDescription = descMatch ? descMatch[1].trim() : '';
+        const descriptionImageMatch = /<img[^>]*src=["']([^"']+)["']/i.exec(rawDescription);
+        const imageUrl = mediaImageMatch?.[1] || enclosureImageMatch?.[1] || descriptionImageMatch?.[1] || null;
 
         if (titleMatch && linkMatch) {
             items.push({
                 title: decodeHTMLEntities(titleMatch[1].trim()),
                 link: linkMatch[1].trim(),
-                description: descMatch ? decodeHTMLEntities(descMatch[1].trim()) : '',
+                description: descMatch ? decodeHTMLEntities(rawDescription) : '',
                 pubDate: pubDateMatch ? pubDateMatch[1].trim() : '',
-                source: sourceMatch ? decodeHTMLEntities(sourceMatch[1].trim()) : 'Curated News'
+                source: sourceMatch ? decodeHTMLEntities(sourceMatch[1].trim()) : 'Curated News',
+                imageUrl
             });
         }
     }
 
     return items;
+}
+
+function normalizeTranslationBlock(
+    input: any,
+    fallbackTitle: string,
+    fallbackSnippet: string
+): { title: string; snippet: string; content: string } {
+    const title = String(input?.title || fallbackTitle || '').trim();
+    const snippet = String(input?.snippet || fallbackSnippet || '').trim();
+    const content = String(input?.content || snippet || fallbackSnippet || '').trim();
+    return { title, snippet, content };
+}
+
+function normalizeTagArray(input: any, fallback: string[]): string[] {
+    if (Array.isArray(input)) {
+        const cleaned = input
+            .map((v) => String(v || '').trim())
+            .filter(Boolean);
+        if (cleaned.length > 0) return cleaned;
+    }
+
+    if (typeof input === 'string') {
+        const cleaned = input
+            .split(',')
+            .map((v) => v.trim())
+            .filter(Boolean);
+        if (cleaned.length > 0) return cleaned;
+    }
+
+    return fallback;
+}
+
+function normalizeCategory(input: any): string | null {
+    if (typeof input !== 'string') return null;
+    const trimmed = input.trim();
+    return trimmed.length > 0 ? trimmed : null;
 }
 
 // Helper to decode HTML entities
@@ -169,6 +212,7 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
                 snippet: item.description ? (item.description.substring(0, 200) + '...') : '',
                 source: item.source || 'Curated News',
                 pubDate: item.pubDate,
+                imageUrl: item.imageUrl || null,
             };
         });
 
@@ -302,7 +346,9 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
                 "en": { "title": "...", "snippet": "...", "content": "..." },
                 "ko": { "title": "...", "snippet": "...", "content": "..." },
                 "tags_en": ["#Tag1", "#Tag2"],
-                "tags_ko": ["#태그1", "#태그2"]
+                                "tags_ko": ["#태그1", "#태그2"],
+                                "category_en": "Whisky | Soju | Makgeolli | Sake | Wine | Beer | Brandy | Liqueur | Rum | Gin | Tequila | Other",
+                                "category_ko": "위스키 | 소주 | 막걸리 | 사케 | 와인 | 맥주 | 브랜디 | 리큐르 | 럼 | 진 | 데킬라 | 기타"
               }
             ]
             `;
@@ -376,18 +422,26 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
 
                 // Normal Case: AI analysis succeeded
                 if (proc) {
+                    const normalizedEn = normalizeTranslationBlock(proc.en, item.title, item.snippet);
+                    const normalizedKo = normalizeTranslationBlock(proc.ko, item.title, item.snippet);
+                    const normalizedTagsEn = normalizeTagArray(proc.tags_en, ['#Spirits', '#News']);
+                    const normalizedTagsKo = normalizeTagArray(proc.tags_ko, ['#주류', '#뉴스']);
+                    const normalizedCategory = normalizeCategory(proc.category_ko) || normalizeCategory(proc.category_en);
+
                     return {
                         link: item.link,
                         source: item.source,
                         date: item.pubDate ? new Date(item.pubDate).toISOString() : new Date().toISOString(),
                         originalTitle: item.title,
+                        imageUrl: item.imageUrl || null,
+                        category: normalizedCategory,
                         translations: {
-                            en: proc.en || { title: item.title, snippet: item.snippet, content: item.snippet },
-                            ko: proc.ko || { title: item.title, snippet: item.snippet, content: item.snippet }
+                            en: normalizedEn,
+                            ko: normalizedKo
                         },
                         tags: {
-                            en: proc.tags_en || ['#Spirits'],
-                            ko: proc.tags_ko || ['#주류']
+                            en: normalizedTagsEn,
+                            ko: normalizedTagsKo
                         }
                     };
                 }
@@ -399,6 +453,8 @@ export async function fetchNewsForCollection(existingLinks?: Set<string>): Promi
                     source: item.source,
                     date: item.pubDate ? new Date(item.pubDate).toISOString() : new Date().toISOString(),
                     originalTitle: item.title,
+                    imageUrl: item.imageUrl || null,
+                    category: null,
                     translations: {
                         en: { title: item.title, snippet: item.snippet, content: item.snippet },
                         ko: { title: item.title, snippet: item.snippet, content: item.snippet }

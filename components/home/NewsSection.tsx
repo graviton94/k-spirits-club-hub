@@ -4,18 +4,22 @@ import Link from 'next/link';
 import { dbListNewsArticles } from '@/lib/db/data-connect-client';
 
 export default async function NewsSection({ lang }: { lang: string }) {
+    const isEn = lang === 'en';
+
     // Fetch latest 3 news articles from PostgreSQL
     const rawNews = await dbListNewsArticles(3, 0);
 
     if (!rawNews || rawNews.length === 0) return null;
 
     const news = rawNews.map((item: any) => {
-        const t = item.translations?.[lang] || item.translations?.['en'] || {};
-        const tags = item.newsTags?.[lang] || item.newsTags?.['en'] || [];
+        const t = item.translations?.[lang] || item.translations?.['en'] || item.translations?.['ko'] || {};
+        const tagsRaw = item.tags?.[lang] || item.tags?.['en'] || item.tags?.['ko'] || [];
+        const fallbackTags = isEn ? ['#Spirits', '#News'] : ['#주류', '#뉴스'];
+        const tags = Array.isArray(tagsRaw) && tagsRaw.length > 0 ? tagsRaw : fallbackTags;
         return {
             title: t.title || item.title,
             link: item.link,
-            snippet: t.snippet || (item.content ? item.content.substring(0, 100) : ''),
+            snippet: t.snippet || t.content || (item.content ? item.content.substring(0, 100) : ''),
             source: item.source,
             date: item.date,
             tags: Array.isArray(tags) ? tags.slice(0, 2) : []
@@ -67,7 +71,11 @@ export default async function NewsSection({ lang }: { lang: string }) {
 
                             {/* Date (Right Aligned) */}
                             <span className="ml-auto text-xs text-muted-foreground font-medium whitespace-nowrap flex-shrink-0">
-                                {item.date ? new Date(item.date).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\.$/, '') : ''}
+                                {item.date
+                                    ? new Date(item.date)
+                                        .toLocaleDateString(isEn ? 'en-US' : 'ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' })
+                                        .replace(/\.$/, '')
+                                    : ''}
                             </span>
                         </div>
 

@@ -130,6 +130,11 @@ export async function POST(req: NextRequest) {
             if (!item) return null;
             const spirit = item.spirit || {};
             const review = userReviews.find((r: any) => r.spiritId === (spirit.id || item.spiritId));
+            const cabinetNote = typeof item.notes === 'string' ? item.notes.trim() : '';
+            const reviewContent = typeof review?.content === 'string' ? review.content.trim() : '';
+            const mergedComment = [reviewContent, cabinetNote].filter(Boolean).join('\n\n');
+            const fallbackRating = typeof item.rating === 'number' ? Number(item.rating) : 0;
+            const reviewRating = typeof review?.rating === 'number' ? Number(review.rating) : fallbackRating;
             
             // Map REAL SCHEMA (CamelCase) to AI Expected (Snake_Case)
             return {
@@ -138,23 +143,30 @@ export async function POST(req: NextRequest) {
                 category: spirit.category,
                 distillery: spirit.distillery,
                 abv: spirit.abv,
-                isWishlist: item.isWishlist || (!item.isFavorite && !(item.rating > 0)),
+                isWishlist: Boolean(item.isWishlist),
                 addedAt: item.addedAt,
+                lastActivityAt: review?.createdAt || item.addedAt,
                 noseTags: spirit.noseTags || [],
                 palateTags: spirit.palateTags || [],
                 finishTags: spirit.finishTags || [],
                 tastingNote: spirit.tastingNote,
                 userReview: review ? {
-                    ratingOverall: Number(review.rating) || 0,
+                    ratingOverall: reviewRating,
                     tagsN: typeof review.nose === 'string' ? review.nose.split(',') : [],
                     tagsP: typeof review.palate === 'string' ? review.palate.split(',') : [],
                     tagsF: typeof review.finish === 'string' ? review.finish.split(',') : [],
-                    comment: review.content
-                } : null
+                    comment: mergedComment,
+                    createdAt: review.createdAt,
+                } : (cabinetNote || fallbackRating > 0 ? {
+                    ratingOverall: fallbackRating,
+                    tagsN: [],
+                    tagsP: [],
+                    tagsF: [],
+                    comment: mergedComment,
+                    createdAt: item.addedAt,
+                } : null)
             };
         }).filter(Boolean);
-
-        const promptData = buildTasteAnalysisPrompt(spiritsForAnalysis, isEn, []);
 
         if (!apiKey) {
             const fallbackProfile = {
@@ -186,13 +198,13 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ success: true, profile: fallbackProfile, traceId });
         }
         
-        const systemInstruction = `
+        const buildSystemInstruction = (forEn: boolean) => `
         You are 'The K-Spirits Master Sommelier' - a refined, world-class AI authority on global spirits, specializing in Korean Traditional Liquors, Whiskies, and Artisanal Spirits.
         
         IDENTITY & TONE:
         - Professional, sophisticated, yet deeply passionate.
         - Speak like a top-tier luxury hotel sommelier.
-        - Language: Strict Professional Korean (Honorifics/존댓말) for Korean users, Elegant British English for International users.
+        - Language: ${forEn ? 'Elegant British English exclusively.' : 'Strict Professional Korean (Honorifics/존댓말) exclusively.'}
         
         GOAL:
         1. Deep Analysis: Based on the user's current 'Cellar' (Cabinet) and 'Tasting Memoirs' (Reviews), construct a precise 6D Flavor Vector.
@@ -200,12 +212,12 @@ export async function POST(req: NextRequest) {
         3. Strategic Recommendations: Propose 3 spirits that balance 'Match Accuracy' (what they like) and 'Discovery Potential' (what they haven't tried).
         
         FLAVOR PHYSICS (6D VECTOR):
-        - sweet (달콤함): 0-100
-        - fruity (과일향): 0-100
-        - floral (꽃향기): 0-100
-        - spicy (스파이시/알싸함): 0-100
-        - woody (오크/나무향): 0-100
-        - peaty (피트/스모키): 0-100
+        - sweet: 0-100
+        - fruity: 0-100
+        - floral: 0-100
+        - spicy: 0-100
+        - woody: 0-100
+        - peaty: 0-100
         
         CONSTRAINTS:
         - Logic: Recommendations must be spirits, NEVER cocktails or food pairings.
@@ -215,9 +227,9 @@ export async function POST(req: NextRequest) {
         {
           "stats": { "sweet": 85, "fruity": 40, "floral": 10, "spicy": 60, "woody": 90, "peaty": 15 },
           "persona": { 
-            "title": "Evocative Title (e.g., '고독한 오크의 수호자')", 
+            "title": "Evocative Title", 
             "description": "Deep multi-paragraph analysis of their palate trend.", 
-            "keywords": ["#우디", "#묵직한", "#탐험가"] 
+            "keywords": ["#keyword1", "#keyword2", "#keyword3"] 
           },
           "recommendations": [
             {
@@ -232,63 +244,96 @@ export async function POST(req: NextRequest) {
         }
         `;
 
+        const parseAnalysisResult = (rawText: string) => {
+            const cleanText = rawText.replace(/```json|```/g, '').trim();
+            const jsonMatch = cleanText.match(/\{[\s\S]*\}/);
+            return JSON.parse(jsonMatch ? jsonMatch[0] : cleanText);
+        };
+
+        const enrichRecs = async (rawRecs: any[]) => {
+            const results = [];
+            for (const rec of rawRecs.slice(0, 3)) {
+                const dbMatch = await tryFindSpiritInDb(rec.name);
+                if (dbMatch) {
+                    results.push({ ...dbMatch, id: dbMatch.id, score: (rec.matchRate || 0) / 100, analysisReason: rec.reason, isAiDiscovery: false });
+                } else {
+                    results.push({ ...rec, isAiDiscovery: true, externalSearchUrl: `https://www.google.com/search?q=${encodeURIComponent(rec.name + ' spirits')}` });
+                }
+            }
+            return results;
+        };
+
         const genAI = new GoogleGenerativeAI(apiKey);
-        const result = await runWithGeminiModelFallback({
+
+        // Sequential bilingual analysis: KO first, then EN
+        const promptKo = buildTasteAnalysisPrompt(spiritsForAnalysis, false, []);
+        const resultKoRaw = await runWithGeminiModelFallback({
             genAI,
             modelIds: getGeminiModelCandidates(),
             createModel: (client, modelId) => client.getGenerativeModel({
                 model: modelId,
-                systemInstruction,
-                generationConfig: {
-                    responseMimeType: "application/json",
-                    temperature: 0.7,
-                    topP: 0.95
-                }
+                systemInstruction: buildSystemInstruction(false),
+                generationConfig: { responseMimeType: "application/json", temperature: 0.7, topP: 0.95 }
             }),
-            run: (model) => model.generateContent(promptData),
-            onModelSelected: (modelId) => {
-                console.log(`[analyze-taste][${traceId}] Using Gemini model: ${modelId}`);
-            }
+            run: (model) => model.generateContent(promptKo),
+            onModelSelected: (modelId) => { console.log(`[analyze-taste][${traceId}] KO model: ${modelId}`); }
         });
-        const rawText = result.response.text();
-        let analysisResult;
+
+        const promptEn = buildTasteAnalysisPrompt(spiritsForAnalysis, true, []);
+        const resultEnRaw = await runWithGeminiModelFallback({
+            genAI,
+            modelIds: getGeminiModelCandidates(),
+            createModel: (client, modelId) => client.getGenerativeModel({
+                model: modelId,
+                systemInstruction: buildSystemInstruction(true),
+                generationConfig: { responseMimeType: "application/json", temperature: 0.7, topP: 0.95 }
+            }),
+            run: (model) => model.generateContent(promptEn),
+            onModelSelected: (modelId) => { console.log(`[analyze-taste][${traceId}] EN model: ${modelId}`); }
+        });
+
+        let analysisKo: any, analysisEn: any;
         try {
-            const cleanText = rawText.replace(/```json|```/g, '').trim();
-            const jsonMatch = cleanText.match(/\{[\s\S]*\}/);
-            analysisResult = JSON.parse(jsonMatch ? jsonMatch[0] : cleanText);
+            analysisKo = parseAnalysisResult(resultKoRaw.response.text());
         } catch (e) {
-            console.error('[Analyze Taste] Parse Error:', e, rawText);
-            throw new Error('AI 분석 결과 형식이 올바르지 않습니다.');
+            console.error('[Analyze Taste] KO Parse Error:', e);
+            throw new Error('AI 분석 결과 형식이 올바르지 않습니다. (KO)');
+        }
+        try {
+            analysisEn = parseAnalysisResult(resultEnRaw.response.text());
+        } catch (e) {
+            console.error('[Analyze Taste] EN Parse Error:', e);
+            throw new Error('AI analysis result format is invalid. (EN)');
         }
 
-        // Process Recommendations
-        const rawRecommendations = Array.isArray(analysisResult.recommendations)
-            ? analysisResult.recommendations
-            : (analysisResult.recommendation ? [analysisResult.recommendation] : []);
+        const getRecs = (analysis: any) => Array.isArray(analysis.recommendations)
+            ? analysis.recommendations
+            : (analysis.recommendation ? [analysis.recommendation] : []);
 
-        const enrichedRecs = await Promise.all(rawRecommendations.slice(0, 3).map(async (rec: any) => {
-            const dbMatch = await tryFindSpiritInDb(rec.name);
-            if (dbMatch) {
-                return {
-                    ...dbMatch,
-                    id: dbMatch.id,
-                    score: (rec.matchRate || 0) / 100,
-                    analysisReason: rec.reason,
-                    isAiDiscovery: false
-                };
-            }
-            return {
-                ...rec,
-                isAiDiscovery: true,
-                externalSearchUrl: `https://www.google.com/search?q=${encodeURIComponent(rec.name + ' spirits')}`
-            };
-        }));
+        const [enrichedRecsKo, enrichedRecsEn] = [
+            await enrichRecs(getRecs(analysisKo)),
+            await enrichRecs(getRecs(analysisEn)),
+        ];
+
+        const personaKo = analysisKo?.persona || { title: '취향 프로필', description: '최근 술장 활동 기반 프로필입니다.', keywords: ['#취향DNA'] };
+        const personaEn = analysisEn?.persona || { title: 'Taste Profile', description: 'Profile generated from your recent cabinet activity.', keywords: ['#TasteDNA'] };
+        const resolvedPersona = isEn ? personaEn : personaKo;
+
+        const personaLocalized = { ko: personaKo, en: personaEn };
+        const recommendationEntriesLocalized = { ko: enrichedRecsKo, en: enrichedRecsEn };
+        const enrichedRecs = isEn ? enrichedRecsEn : enrichedRecsKo;
 
         const profile = {
+            ...existingProfile,
             analyzedAt: new Date().toISOString(),
-            stats: analysisResult.stats,
-            persona: analysisResult.persona,
+            stats: analysisKo.stats || existingProfile.stats || {
+                sweet: 50, fruity: 50, floral: 50, spicy: 50, woody: 50, peaty: 50,
+            },
+            persona: resolvedPersona,
+            personaLocalized,
             recommendationEntries: enrichedRecs,
+            recommendationEntriesLocalized,
+            localeLastAnalyzed: isEn ? 'en' : 'ko',
             usage: { date: today, count: currentCount + 1 }
         };
 
@@ -298,7 +343,12 @@ export async function POST(req: NextRequest) {
             tasteProfile: profile
         });
 
-        return NextResponse.json({ success: true, profile, traceId });
+        return NextResponse.json({
+            success: true,
+            profile,
+            usage: { date: today, count: currentCount + 1, remaining: Math.max(0, 2 - currentCount) },
+            traceId,
+        });
     } catch (error: any) {
         console.error(`[analyze-taste][${traceId}] Error during taste analysis:`, error);
         return NextResponse.json({

@@ -1,0 +1,5086 @@
+{
+  "startedAt": "2026-05-03T14:09:04.964Z",
+  "finishedAt": "2026-05-03T14:09:20.664Z",
+  "mode": "DRY_RUN",
+  "threshold": 70,
+  "window": {
+    "offset": 0,
+    "limit": 200
+  },
+  "inspected": 200,
+  "passCount": 0,
+  "failCount": 200,
+  "toBeUpdated": 200,
+  "updated": 0,
+  "unchanged": 0,
+  "changedRows": [
+    {
+      "id": "fsk-202400123704",
+      "name": "새날애 12",
+      "score": 71,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (46 < 150)",
+        "pairingGuideKo too short (21 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 13,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 12,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400123703",
+      "name": "자연을담다 9",
+      "score": 66,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (42 < 150)",
+        "pairingGuideKo too short (21 < 100)",
+        "score below threshold (66 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 11,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 9,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400057611",
+      "name": "육오공",
+      "score": 70,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (41 < 150)",
+        "pairingGuideKo too short (29 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 11,
+        "descriptionEn": 24,
+        "pairingGuideKo": 6,
+        "pairingGuideEn": 12,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400057612",
+      "name": "탄탄대로",
+      "score": 71,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (45 < 150)",
+        "pairingGuideKo too short (28 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 12,
+        "descriptionEn": 24,
+        "pairingGuideKo": 6,
+        "pairingGuideEn": 12,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400057613",
+      "name": "들꽃막걸리",
+      "score": 69,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (43 < 150)",
+        "pairingGuideKo too short (27 < 100)",
+        "score below threshold (69 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 11,
+        "descriptionEn": 24,
+        "pairingGuideKo": 6,
+        "pairingGuideEn": 11,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400060452",
+      "name": "터줏",
+      "score": 67,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (59 < 150)",
+        "pairingGuideKo too short (17 < 100)",
+        "score below threshold (67 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 16,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 15,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400060453",
+      "name": "삼신",
+      "score": 67,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (59 < 150)",
+        "pairingGuideKo too short (17 < 100)",
+        "score below threshold (67 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 16,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 15,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400266357",
+      "name": "수울섬올벼탁주",
+      "score": 73,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (69 < 150)",
+        "pairingGuideKo too short (25 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 20,
+        "descriptionEn": 24,
+        "pairingGuideKo": 6,
+        "pairingGuideEn": 11,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400266358",
+      "name": "수울섬홍차탁주",
+      "score": 70,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (62 < 150)",
+        "pairingGuideKo too short (21 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 18,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 9,
+        "noseTags": 7,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-2024002663517",
+      "name": "수울섬 강하주",
+      "score": 74,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (67 < 150)",
+        "pairingGuideKo too short (20 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 19,
+        "descriptionEn": 24,
+        "pairingGuideKo": 4,
+        "pairingGuideEn": 15,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400266355",
+      "name": "수울섬오디탁주",
+      "score": 68,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (60 < 150)",
+        "pairingGuideKo too short (20 < 100)",
+        "score below threshold (68 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 17,
+        "descriptionEn": 24,
+        "pairingGuideKo": 4,
+        "pairingGuideEn": 9,
+        "noseTags": 7,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-2024002663516",
+      "name": "수울섬대마탁주",
+      "score": 77,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (64 < 150)",
+        "pairingGuideKo too short (32 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 19,
+        "descriptionEn": 24,
+        "pairingGuideKo": 7,
+        "pairingGuideEn": 13,
+        "noseTags": 7,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400266351",
+      "name": "수울섬탁주16",
+      "score": 74,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (68 < 150)",
+        "pairingGuideKo too short (20 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 19,
+        "descriptionEn": 24,
+        "pairingGuideKo": 4,
+        "pairingGuideEn": 15,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400266356",
+      "name": "수울섬다래탁주",
+      "score": 71,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (62 < 150)",
+        "pairingGuideKo too short (26 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 18,
+        "descriptionEn": 24,
+        "pairingGuideKo": 6,
+        "pairingGuideEn": 11,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400266354",
+      "name": "수울섬탁주7",
+      "score": 74,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (67 < 150)",
+        "pairingGuideKo too short (20 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 19,
+        "descriptionEn": 24,
+        "pairingGuideKo": 4,
+        "pairingGuideEn": 15,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400061573",
+      "name": "미술양조장 누룽지이양주",
+      "score": 70,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (49 < 150)",
+        "pairingGuideKo too short (28 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 13,
+        "descriptionEn": 24,
+        "pairingGuideKo": 6,
+        "pairingGuideEn": 15,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400061574",
+      "name": "미술양조장 멥찹이양주",
+      "score": 62,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (47 < 150)",
+        "pairingGuideKo too short (20 < 100)",
+        "score below threshold (62 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 13,
+        "descriptionEn": 24,
+        "pairingGuideKo": 4,
+        "pairingGuideEn": 10,
+        "noseTags": 4,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400247491",
+      "name": "새로운 느낌",
+      "score": 59,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (39 < 150)",
+        "pairingGuideKo too short (20 < 100)",
+        "score below threshold (59 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 11,
+        "descriptionEn": 24,
+        "pairingGuideKo": 4,
+        "pairingGuideEn": 8,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400061575",
+      "name": "미술양조장 멥쌀꿀이양주",
+      "score": 60,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (48 < 150)",
+        "pairingGuideKo too short (20 < 100)",
+        "score below threshold (60 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 13,
+        "descriptionEn": 24,
+        "pairingGuideKo": 4,
+        "pairingGuideEn": 7,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400061572",
+      "name": "미술양조장 찹쌀이양주",
+      "score": 57,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (49 < 150)",
+        "pairingGuideKo too short (15 < 100)",
+        "score below threshold (57 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 13,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 8,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400061571",
+      "name": "미술양조장 멥쌀이양주",
+      "score": 61,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (43 < 150)",
+        "pairingGuideKo too short (23 < 100)",
+        "score below threshold (61 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 11,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 10,
+        "noseTags": 4,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400290512",
+      "name": "파동",
+      "score": 54,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (43 < 150)",
+        "pairingGuideKo too short (19 < 100)",
+        "score below threshold (54 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 11,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 8,
+        "noseTags": 4,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400062383",
+      "name": "지평탁주 석탄",
+      "score": 71,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (71 < 150)",
+        "pairingGuideKo too short (20 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 20,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 10,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400062382",
+      "name": "지평탁주",
+      "score": 72,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (55 < 150)",
+        "pairingGuideKo too short (23 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 15,
+        "descriptionEn": 24,
+        "pairingGuideKo": 6,
+        "pairingGuideEn": 16,
+        "noseTags": 4,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400266911",
+      "name": "진막걸리 달콤",
+      "score": 68,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (38 < 150)",
+        "pairingGuideKo too short (32 < 100)",
+        "score below threshold (68 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 10,
+        "descriptionEn": 24,
+        "pairingGuideKo": 7,
+        "pairingGuideEn": 16,
+        "noseTags": 4,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400266914",
+      "name": "진막걸리 적미달콤",
+      "score": 73,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (51 < 150)",
+        "pairingGuideKo too short (24 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 14,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 13,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400266916",
+      "name": "진막걸리 녹미달콤",
+      "score": 69,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (49 < 150)",
+        "pairingGuideKo too short (22 < 100)",
+        "score below threshold (69 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 13,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 10,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400266915",
+      "name": "진막걸리 흑미달콤",
+      "score": 73,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (50 < 150)",
+        "pairingGuideKo too short (22 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 14,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 13,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400266913",
+      "name": "진막걸리 유산균",
+      "score": 68,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (39 < 150)",
+        "pairingGuideKo too short (25 < 100)",
+        "score below threshold (68 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 10,
+        "descriptionEn": 24,
+        "pairingGuideKo": 6,
+        "pairingGuideEn": 11,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400266912",
+      "name": "진막걸리",
+      "score": 61,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (39 < 150)",
+        "pairingGuideKo too short (17 < 100)",
+        "score below threshold (61 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 10,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 10,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400290911",
+      "name": "제천물들인",
+      "score": 74,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (52 < 150)",
+        "pairingGuideKo too short (23 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 14,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 14,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400290913",
+      "name": "제천물들인2",
+      "score": 74,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (52 < 150)",
+        "pairingGuideKo too short (23 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 14,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 14,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400290914",
+      "name": "제천물들인3",
+      "score": 74,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (52 < 150)",
+        "pairingGuideKo too short (23 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 14,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 14,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400290912",
+      "name": "제천물들인1",
+      "score": 74,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (52 < 150)",
+        "pairingGuideKo too short (23 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 14,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 14,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400063595",
+      "name": "출렁다리출렁주 손막걸리",
+      "score": 71,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (45 < 150)",
+        "pairingGuideKo too short (20 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 12,
+        "descriptionEn": 24,
+        "pairingGuideKo": 4,
+        "pairingGuideEn": 14,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-2024000648210",
+      "name": "군계일학 거문도 해풍쑥 탁주",
+      "score": 67,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (56 < 150)",
+        "pairingGuideKo too short (20 < 100)",
+        "score below threshold (67 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 15,
+        "descriptionEn": 24,
+        "pairingGuideKo": 4,
+        "pairingGuideEn": 12,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400063596",
+      "name": "출렁다리출렁주 쌀막걸리",
+      "score": 72,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (72 < 150)",
+        "pairingGuideKo too short (19 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 20,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 16,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-2024001258972",
+      "name": "가랑가랑 막걸리",
+      "score": 70,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (65 < 150)",
+        "pairingGuideKo too short (19 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 18,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 16,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-2024001258999",
+      "name": "BERRY VERY MUCH",
+      "score": 69,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (68 < 150)",
+        "pairingGuideKo too short (24 < 100)",
+        "score below threshold (69 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 18,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 10,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-2024001258915",
+      "name": "가랑가랑 막걸리",
+      "score": 72,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (69 < 150)",
+        "pairingGuideKo too short (25 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 19,
+        "descriptionEn": 24,
+        "pairingGuideKo": 6,
+        "pairingGuideEn": 11,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-2024001258927",
+      "name": "카랑카랑",
+      "score": 66,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (55 < 150)",
+        "pairingGuideKo too short (19 < 100)",
+        "score below threshold (66 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 15,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 15,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-2024000648211",
+      "name": "동재기 막걸리",
+      "score": 69,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (64 < 150)",
+        "pairingGuideKo too short (19 < 100)",
+        "score below threshold (69 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 18,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 16,
+        "noseTags": 4,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-2024000648212",
+      "name": "동재기 탁주",
+      "score": 68,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (62 < 150)",
+        "pairingGuideKo too short (19 < 100)",
+        "score below threshold (68 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 17,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 16,
+        "noseTags": 4,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400064829",
+      "name": "매일마실",
+      "score": 55,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (44 < 150)",
+        "pairingGuideKo too short (19 < 100)",
+        "score below threshold (55 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 12,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 8,
+        "noseTags": 4,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400064826",
+      "name": "국감",
+      "score": 58,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (44 < 150)",
+        "pairingGuideKo too short (18 < 100)",
+        "score below threshold (58 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 12,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 11,
+        "noseTags": 4,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400267375",
+      "name": "메밀보감",
+      "score": 86,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (68 < 150)",
+        "pairingGuideKo too short (48 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 18,
+        "descriptionEn": 24,
+        "pairingGuideKo": 11,
+        "pairingGuideEn": 16,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400248304",
+      "name": "이그레타",
+      "score": 91,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (82 < 150)",
+        "pairingGuideKo too short (55 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 22,
+        "descriptionEn": 24,
+        "pairingGuideKo": 12,
+        "pairingGuideEn": 16,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400248303",
+      "name": "이그레타",
+      "score": 84,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (57 < 150)",
+        "pairingGuideKo too short (50 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 15,
+        "descriptionEn": 24,
+        "pairingGuideKo": 12,
+        "pairingGuideEn": 16,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400064824",
+      "name": "감사",
+      "score": 85,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (66 < 150)",
+        "pairingGuideKo too short (46 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 17,
+        "descriptionEn": 24,
+        "pairingGuideKo": 11,
+        "pairingGuideEn": 16,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400064825",
+      "name": "문래방아",
+      "score": 89,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (75 < 150)",
+        "pairingGuideKo too short (50 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 20,
+        "descriptionEn": 24,
+        "pairingGuideKo": 12,
+        "pairingGuideEn": 16,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400064828",
+      "name": "21세기 탁주",
+      "score": 85,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (61 < 150)",
+        "pairingGuideKo too short (50 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 16,
+        "descriptionEn": 24,
+        "pairingGuideKo": 12,
+        "pairingGuideEn": 16,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400064827",
+      "name": "복복복",
+      "score": 83,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (59 < 150)",
+        "pairingGuideKo too short (45 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 16,
+        "descriptionEn": 24,
+        "pairingGuideKo": 10,
+        "pairingGuideEn": 16,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400248301",
+      "name": "여름으로 가는 길",
+      "score": 85,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (60 < 150)",
+        "pairingGuideKo too short (51 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 16,
+        "descriptionEn": 24,
+        "pairingGuideKo": 12,
+        "pairingGuideEn": 16,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400248302",
+      "name": "여름으로 가는 길",
+      "score": 94,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (85 < 150)",
+        "pairingGuideKo too short (56 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 24,
+        "descriptionEn": 24,
+        "pairingGuideKo": 13,
+        "pairingGuideEn": 16,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400267374",
+      "name": "하마하마 오메기",
+      "score": 87,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (73 < 150)",
+        "pairingGuideKo too short (46 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 20,
+        "descriptionEn": 24,
+        "pairingGuideKo": 10,
+        "pairingGuideEn": 16,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400267371",
+      "name": "하마하마 너티",
+      "score": 74,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (64 < 150)",
+        "pairingGuideKo too short (24 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 18,
+        "descriptionEn": 24,
+        "pairingGuideKo": 6,
+        "pairingGuideEn": 9,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400267402",
+      "name": "보라막걸리",
+      "score": 72,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (61 < 150)",
+        "pairingGuideKo too short (25 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 16,
+        "descriptionEn": 24,
+        "pairingGuideKo": 6,
+        "pairingGuideEn": 9,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400291282",
+      "name": "백걸리",
+      "score": 66,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (56 < 150)",
+        "pairingGuideKo too short (17 < 100)",
+        "score below threshold (66 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 15,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 10,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400291281",
+      "name": "예산도가 막걸리",
+      "score": 66,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (60 < 150)",
+        "pairingGuideKo too short (17 < 100)",
+        "score below threshold (66 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 17,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 8,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400291283",
+      "name": "백걸리 블루",
+      "score": 64,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (59 < 150)",
+        "pairingGuideKo too short (17 < 100)",
+        "score below threshold (64 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 16,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 7,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400126952",
+      "name": "파인애플 막걸리",
+      "score": 74,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (54 < 150)",
+        "pairingGuideKo too short (25 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 15,
+        "descriptionEn": 24,
+        "pairingGuideKo": 6,
+        "pairingGuideEn": 12,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400126954",
+      "name": "짭짜리 토마토 막걸리",
+      "score": 64,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (58 < 150)",
+        "pairingGuideKo too short (18 < 100)",
+        "score below threshold (64 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 16,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 7,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400126957",
+      "name": "대저 순곡주",
+      "score": 67,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (55 < 150)",
+        "pairingGuideKo too short (17 < 100)",
+        "score below threshold (67 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 16,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 10,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400126956",
+      "name": "대저 쌀막걸리",
+      "score": 67,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (52 < 150)",
+        "pairingGuideKo too short (17 < 100)",
+        "score below threshold (67 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 15,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 11,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400212491",
+      "name": "HELLO N°06 수수보리",
+      "score": 70,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (65 < 150)",
+        "pairingGuideKo too short (19 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 18,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 11,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400212493",
+      "name": "HELLO N°06 밀",
+      "score": 62,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (48 < 150)",
+        "pairingGuideKo too short (21 < 100)",
+        "score below threshold (62 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 13,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 10,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400212492",
+      "name": "HELLO N°06 보리",
+      "score": 65,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (51 < 150)",
+        "pairingGuideKo too short (24 < 100)",
+        "score below threshold (65 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 14,
+        "descriptionEn": 24,
+        "pairingGuideKo": 6,
+        "pairingGuideEn": 11,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400212494",
+      "name": "HELLO N°06쌀",
+      "score": 63,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (48 < 150)",
+        "pairingGuideKo too short (21 < 100)",
+        "score below threshold (63 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 13,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 11,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400068275",
+      "name": "초월 DEEP",
+      "score": 62,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (51 < 150)",
+        "pairingGuideKo too short (20 < 100)",
+        "score below threshold (62 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 14,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 9,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400068276",
+      "name": "초월 딥 다운 DEEP Down",
+      "score": 64,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (56 < 150)",
+        "pairingGuideKo too short (20 < 100)",
+        "score below threshold (64 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 16,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 9,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400068272",
+      "name": "초월 6.9",
+      "score": 58,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (40 < 150)",
+        "pairingGuideKo too short (20 < 100)",
+        "score below threshold (58 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 11,
+        "descriptionEn": 24,
+        "pairingGuideKo": 4,
+        "pairingGuideEn": 9,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400068273",
+      "name": "초월 6.9",
+      "score": 60,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (48 < 150)",
+        "pairingGuideKo too short (20 < 100)",
+        "score below threshold (60 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 13,
+        "descriptionEn": 24,
+        "pairingGuideKo": 4,
+        "pairingGuideEn": 9,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400267771",
+      "name": "죽마고우",
+      "score": 58,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (49 < 150)",
+        "pairingGuideKo too short (17 < 100)",
+        "score below threshold (58 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 13,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 11,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400248882",
+      "name": "참참",
+      "score": 56,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (34 < 150)",
+        "pairingGuideKo too short (20 < 100)",
+        "score below threshold (56 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 9,
+        "descriptionEn": 24,
+        "pairingGuideKo": 4,
+        "pairingGuideEn": 9,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400248881",
+      "name": "사말 12",
+      "score": 59,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (41 < 150)",
+        "pairingGuideKo too short (21 < 100)",
+        "score below threshold (59 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 11,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 9,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400249091",
+      "name": "양막",
+      "score": 52,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (38 < 150)",
+        "pairingGuideKo too short (16 < 100)",
+        "score below threshold (52 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 10,
+        "descriptionEn": 22,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 8,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400267884",
+      "name": "오감도 막걸리",
+      "score": 79,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (77 < 150)",
+        "pairingGuideKo too short (29 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 21,
+        "descriptionEn": 24,
+        "pairingGuideKo": 7,
+        "pairingGuideEn": 15,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-2024002918189",
+      "name": "쌀눈 생 막걸리 온궁",
+      "score": 63,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (42 < 150)",
+        "pairingGuideKo too short (24 < 100)",
+        "score below threshold (63 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 12,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 10,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-2024002918188",
+      "name": "몽듀막걸리",
+      "score": 73,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (62 < 150)",
+        "pairingGuideKo too short (27 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 16,
+        "descriptionEn": 24,
+        "pairingGuideKo": 6,
+        "pairingGuideEn": 15,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-2024002918190",
+      "name": "쌀눈 생 막걸리 진정한 술꾼",
+      "score": 70,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (46 < 150)",
+        "pairingGuideKo too short (22 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 13,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 16,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-20240006864102",
+      "name": "미수곡주 탁주",
+      "score": 74,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (63 < 150)",
+        "pairingGuideKo too short (23 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 17,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 16,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-20240006864100",
+      "name": "미수곡주 탁주",
+      "score": 70,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (65 < 150)",
+        "pairingGuideKo too short (20 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 19,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 10,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400291811",
+      "name": "온양 쌀눈 생막걸리",
+      "score": 75,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (64 < 150)",
+        "pairingGuideKo too short (32 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 18,
+        "descriptionEn": 24,
+        "pairingGuideKo": 7,
+        "pairingGuideEn": 14,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400267883",
+      "name": "오감도주가",
+      "score": 48,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (45 < 150)",
+        "pairingGuideKo too short (15 < 100)",
+        "score below threshold (48 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 12,
+        "descriptionEn": 17,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 7,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400267881",
+      "name": "단미",
+      "score": 48,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (43 < 150)",
+        "pairingGuideKo too short (14 < 100)",
+        "score below threshold (48 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 11,
+        "descriptionEn": 18,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 7,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400127674",
+      "name": "고매리",
+      "score": 67,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (57 < 150)",
+        "pairingGuideKo too short (22 < 100)",
+        "score below threshold (67 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 15,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 11,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500110264",
+      "name": "가야백향 17",
+      "score": 68,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (73 < 150)",
+        "pairingGuideKo too short (18 < 100)",
+        "score below threshold (68 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 20,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 12,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500260125",
+      "name": "햇찹쌀이 하늘수 수제",
+      "score": 69,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (66 < 150)",
+        "pairingGuideKo too short (18 < 100)",
+        "score below threshold (69 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 19,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 14,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500260124",
+      "name": "복덩이",
+      "score": 71,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (67 < 150)",
+        "pairingGuideKo too short (22 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 19,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 11,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500110262",
+      "name": "가야백향",
+      "score": 67,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (56 < 150)",
+        "pairingGuideKo too short (22 < 100)",
+        "score below threshold (67 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 15,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 11,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400127673",
+      "name": "역전리",
+      "score": 67,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (57 < 150)",
+        "pairingGuideKo too short (22 < 100)",
+        "score below threshold (67 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 15,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 11,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400070571",
+      "name": "해일막걸리",
+      "score": 66,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (52 < 150)",
+        "pairingGuideKo too short (22 < 100)",
+        "score below threshold (66 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 14,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 11,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400070573",
+      "name": "해막청아",
+      "score": 67,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (57 < 150)",
+        "pairingGuideKo too short (22 < 100)",
+        "score below threshold (67 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 15,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 11,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400070572",
+      "name": "해막홍실",
+      "score": 67,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (57 < 150)",
+        "pairingGuideKo too short (22 < 100)",
+        "score below threshold (67 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 15,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 11,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202400070574",
+      "name": "해막굴참",
+      "score": 67,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (57 < 150)",
+        "pairingGuideKo too short (22 < 100)",
+        "score below threshold (67 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 15,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 11,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500110403",
+      "name": "까삐땅 막걸리",
+      "score": 59,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (54 < 150)",
+        "pairingGuideKo too short (19 < 100)",
+        "score below threshold (59 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 14,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 11,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-2025002805888",
+      "name": "천안삼거리막걸리",
+      "score": 58,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (58 < 150)",
+        "pairingGuideKo too short (16 < 100)",
+        "score below threshold (58 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 15,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 9,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500161773",
+      "name": "홀씨10 방토",
+      "score": 59,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (50 < 150)",
+        "pairingGuideKo too short (17 < 100)",
+        "score below threshold (59 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 14,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 11,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500161771",
+      "name": "홀씨6",
+      "score": 55,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (46 < 150)",
+        "pairingGuideKo too short (17 < 100)",
+        "score below threshold (55 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 12,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 9,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500162546",
+      "name": "박봉담 옛날막걸리 古",
+      "score": 59,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (59 < 150)",
+        "pairingGuideKo too short (16 < 100)",
+        "score below threshold (59 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 16,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 9,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500162548",
+      "name": "박봉담 미담 12",
+      "score": 65,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (55 < 150)",
+        "pairingGuideKo too short (20 < 100)",
+        "score below threshold (65 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 15,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 9,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500161772",
+      "name": "홀씨12",
+      "score": 58,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (48 < 150)",
+        "pairingGuideKo too short (16 < 100)",
+        "score below threshold (58 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 13,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 11,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500162542",
+      "name": "박봉담 쌀쌀 막걸리",
+      "score": 58,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (58 < 150)",
+        "pairingGuideKo too short (16 < 100)",
+        "score below threshold (58 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 15,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 9,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-2025002805844",
+      "name": "천안호두막걸리",
+      "score": 59,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (62 < 150)",
+        "pairingGuideKo too short (19 < 100)",
+        "score below threshold (59 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 17,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 7,
+        "noseTags": 5,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500162541",
+      "name": "박봉담 막걸리",
+      "score": 58,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (56 < 150)",
+        "pairingGuideKo too short (16 < 100)",
+        "score below threshold (58 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 15,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 9,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500162545",
+      "name": "달빛가든",
+      "score": 58,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (45 < 150)",
+        "pairingGuideKo too short (19 < 100)",
+        "score below threshold (58 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 12,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 12,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500240404",
+      "name": "수풍정 현경태 막걸리 11",
+      "score": 55,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (50 < 150)",
+        "pairingGuideKo too short (15 < 100)",
+        "score below threshold (55 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 14,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 7,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500281081",
+      "name": "옥천 지용 생막걸리",
+      "score": 61,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (41 < 150)",
+        "pairingGuideKo too short (20 < 100)",
+        "score below threshold (61 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 11,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 11,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500240401",
+      "name": "수풍정 현경태 막걸리 15",
+      "score": 68,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (56 < 150)",
+        "pairingGuideKo too short (22 < 100)",
+        "score below threshold (68 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 16,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 12,
+        "noseTags": 4,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500240402",
+      "name": "수풍정 현경태 막걸리 13",
+      "score": 69,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (56 < 150)",
+        "pairingGuideKo too short (24 < 100)",
+        "score below threshold (69 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 16,
+        "descriptionEn": 24,
+        "pairingGuideKo": 6,
+        "pairingGuideEn": 12,
+        "noseTags": 4,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-2025001110333",
+      "name": "만수무강 막걸리 진하다",
+      "score": 61,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (40 < 150)",
+        "pairingGuideKo too short (22 < 100)",
+        "score below threshold (61 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 11,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 11,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-2025001110311",
+      "name": "만수무강 산양삼주",
+      "score": 63,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (45 < 150)",
+        "pairingGuideKo too short (21 < 100)",
+        "score below threshold (63 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 12,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 11,
+        "noseTags": 4,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-20250011103111",
+      "name": "만수무강 쌀막걸리",
+      "score": 52,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (39 < 150)",
+        "pairingGuideKo too short (19 < 100)",
+        "score below threshold (52 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 10,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 8,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500280861",
+      "name": "골든웨일 와이키키 피치막걸리",
+      "score": 63,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (55 < 150)",
+        "pairingGuideKo too short (24 < 100)",
+        "score below threshold (63 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 15,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 9,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500280862",
+      "name": "골든웨일 수안보 피치막걸리",
+      "score": 64,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (54 < 150)",
+        "pairingGuideKo too short (24 < 100)",
+        "score below threshold (64 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 15,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 10,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500111891",
+      "name": "강주햇살생막걸리",
+      "score": 54,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (32 < 150)",
+        "pairingGuideKo too short (19 < 100)",
+        "score below threshold (54 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 8,
+        "descriptionEn": 22,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 14,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500165112",
+      "name": "모악주 하얀나비",
+      "score": 62,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (33 < 150)",
+        "pairingGuideKo too short (24 < 100)",
+        "score below threshold (62 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 9,
+        "descriptionEn": 23,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 15,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500113511",
+      "name": "쉼표한잔 탁주",
+      "score": 53,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (40 < 150)",
+        "pairingGuideKo too short (14 < 100)",
+        "score below threshold (53 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 11,
+        "descriptionEn": 20,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 12,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500111892",
+      "name": "강주햇살연잎막걸리",
+      "score": 61,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (41 < 150)",
+        "pairingGuideKo too short (18 < 100)",
+        "score below threshold (61 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 11,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 16,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500281084",
+      "name": "옥천 칠성 생막걸리",
+      "score": 60,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (31 < 150)",
+        "pairingGuideKo too short (21 < 100)",
+        "score below threshold (60 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 8,
+        "descriptionEn": 21,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 16,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500165111",
+      "name": "모악주 하얀나비",
+      "score": 64,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (40 < 150)",
+        "pairingGuideKo too short (22 < 100)",
+        "score below threshold (64 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 11,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 14,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500281087",
+      "name": "순수미술",
+      "score": 52,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (35 < 150)",
+        "pairingGuideKo too short (18 < 100)",
+        "score below threshold (52 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 9,
+        "descriptionEn": 23,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 10,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500261173",
+      "name": "코리안화이트",
+      "score": 60,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (40 < 150)",
+        "pairingGuideKo too short (23 < 100)",
+        "score below threshold (60 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 11,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 10,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500112541",
+      "name": "준조탁주",
+      "score": 52,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (36 < 150)",
+        "pairingGuideKo too short (14 < 100)",
+        "score below threshold (52 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 10,
+        "descriptionEn": 20,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 12,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500241081",
+      "name": "청송도가",
+      "score": 56,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (38 < 150)",
+        "pairingGuideKo too short (20 < 100)",
+        "score below threshold (56 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 10,
+        "descriptionEn": 24,
+        "pairingGuideKo": 4,
+        "pairingGuideEn": 8,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500113501",
+      "name": "올탁",
+      "score": 69,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (59 < 150)",
+        "pairingGuideKo too short (20 < 100)",
+        "score below threshold (69 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 16,
+        "descriptionEn": 24,
+        "pairingGuideKo": 4,
+        "pairingGuideEn": 13,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500173704",
+      "name": "영종도탁주",
+      "score": 65,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (51 < 150)",
+        "pairingGuideKo too short (21 < 100)",
+        "score below threshold (65 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 14,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 10,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-2025002415588",
+      "name": "이랑9",
+      "score": 69,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (64 < 150)",
+        "pairingGuideKo too short (21 < 100)",
+        "score below threshold (69 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 18,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 10,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-2025002415577",
+      "name": "이랑13",
+      "score": 44,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (26 < 150)",
+        "pairingGuideKo too short (18 < 100)",
+        "score below threshold (44 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 7,
+        "descriptionEn": 17,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 8,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500173701",
+      "name": "조선미술",
+      "score": 58,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (55 < 150)",
+        "pairingGuideKo too short (17 < 100)",
+        "score below threshold (58 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 15,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 7,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500173702",
+      "name": "조선탁주",
+      "score": 66,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (49 < 150)",
+        "pairingGuideKo too short (20 < 100)",
+        "score below threshold (66 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 13,
+        "descriptionEn": 24,
+        "pairingGuideKo": 4,
+        "pairingGuideEn": 13,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500173705",
+      "name": "조선탁주 16",
+      "score": 55,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (42 < 150)",
+        "pairingGuideKo too short (18 < 100)",
+        "score below threshold (55 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 11,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 8,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500173712",
+      "name": "강화진주15",
+      "score": 63,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (38 < 150)",
+        "pairingGuideKo too short (23 < 100)",
+        "score below threshold (63 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 10,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 12,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500173711",
+      "name": "강화진주",
+      "score": 52,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (33 < 150)",
+        "pairingGuideKo too short (18 < 100)",
+        "score below threshold (52 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 9,
+        "descriptionEn": 21,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 10,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500114144",
+      "name": "매실이 배실배실",
+      "score": 62,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (44 < 150)",
+        "pairingGuideKo too short (21 < 100)",
+        "score below threshold (62 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 12,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 9,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500027752",
+      "name": "주태백이 오미자",
+      "score": 65,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (58 < 150)",
+        "pairingGuideKo too short (22 < 100)",
+        "score below threshold (65 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 15,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 9,
+        "noseTags": 4,
+        "palateTags": 5,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-2025001769112",
+      "name": "검단찹쌀동동주",
+      "score": 69,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (44 < 150)",
+        "pairingGuideKo too short (21 < 100)",
+        "score below threshold (69 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 12,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 16,
+        "noseTags": 4,
+        "palateTags": 5,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-20250002500121",
+      "name": "향유당 운향주 침향 탁주",
+      "score": 75,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (63 < 150)",
+        "pairingGuideKo too short (28 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 17,
+        "descriptionEn": 24,
+        "pairingGuideKo": 7,
+        "pairingGuideEn": 14,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500027751",
+      "name": "주태백이",
+      "score": 65,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (51 < 150)",
+        "pairingGuideKo too short (22 < 100)",
+        "score below threshold (65 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 14,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 11,
+        "noseTags": 4,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500027992",
+      "name": "포은",
+      "score": 63,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (49 < 150)",
+        "pairingGuideKo too short (21 < 100)",
+        "score below threshold (63 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 13,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 10,
+        "noseTags": 4,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500114142",
+      "name": "조내기 고구마 탁주",
+      "score": 76,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (66 < 150)",
+        "pairingGuideKo too short (28 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 18,
+        "descriptionEn": 24,
+        "pairingGuideKo": 6,
+        "pairingGuideEn": 15,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500114141",
+      "name": "쏨 탁주12",
+      "score": 67,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (57 < 150)",
+        "pairingGuideKo too short (23 < 100)",
+        "score below threshold (67 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 16,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 9,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 3
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-20250002500151",
+      "name": "긴수작",
+      "score": 65,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (60 < 150)",
+        "pairingGuideKo too short (18 < 100)",
+        "score below threshold (65 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 16,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 14,
+        "noseTags": 4,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-20250002500101",
+      "name": "한양막걸리",
+      "score": 69,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (51 < 150)",
+        "pairingGuideKo too short (22 < 100)",
+        "score below threshold (69 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 13,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 16,
+        "noseTags": 4,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500025561",
+      "name": "도도탁주 10",
+      "score": 73,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (61 < 150)",
+        "pairingGuideKo too short (21 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 17,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 16,
+        "noseTags": 4,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500242857",
+      "name": "스파클링 바질",
+      "score": 72,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (60 < 150)",
+        "pairingGuideKo too short (25 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 16,
+        "descriptionEn": 24,
+        "pairingGuideKo": 6,
+        "pairingGuideEn": 10,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500242855",
+      "name": "스위트바질",
+      "score": 68,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (59 < 150)",
+        "pairingGuideKo too short (21 < 100)",
+        "score below threshold (68 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 16,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 9,
+        "noseTags": 7,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500242856",
+      "name": "토마토 바질",
+      "score": 74,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (64 < 150)",
+        "pairingGuideKo too short (24 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 17,
+        "descriptionEn": 24,
+        "pairingGuideKo": 6,
+        "pairingGuideEn": 11,
+        "noseTags": 7,
+        "palateTags": 7,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500027991",
+      "name": "희우정",
+      "score": 77,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (70 < 150)",
+        "pairingGuideKo too short (20 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 19,
+        "descriptionEn": 24,
+        "pairingGuideKo": 4,
+        "pairingGuideEn": 16,
+        "noseTags": 5,
+        "palateTags": 7,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500180404",
+      "name": "결12",
+      "score": 67,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (59 < 150)",
+        "pairingGuideKo too short (20 < 100)",
+        "score below threshold (67 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 16,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 10,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500180405",
+      "name": "결9",
+      "score": 59,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (51 < 150)",
+        "pairingGuideKo too short (19 < 100)",
+        "score below threshold (59 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 14,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 9,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500116121",
+      "name": "수작",
+      "score": 64,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (47 < 150)",
+        "pairingGuideKo too short (22 < 100)",
+        "score below threshold (64 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 13,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 10,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500116125",
+      "name": "도원",
+      "score": 64,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (48 < 150)",
+        "pairingGuideKo too short (23 < 100)",
+        "score below threshold (64 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 13,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 10,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-2025001161213",
+      "name": "풋풋",
+      "score": 63,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (47 < 150)",
+        "pairingGuideKo too short (21 < 100)",
+        "score below threshold (63 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 12,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 10,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500116123",
+      "name": "가온",
+      "score": 61,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (47 < 150)",
+        "pairingGuideKo too short (20 < 100)",
+        "score below threshold (61 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 12,
+        "descriptionEn": 24,
+        "pairingGuideKo": 4,
+        "pairingGuideEn": 9,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500039871",
+      "name": "하양 한모금",
+      "score": 56,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (35 < 150)",
+        "pairingGuideKo too short (22 < 100)",
+        "score below threshold (56 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 9,
+        "descriptionEn": 20,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 10,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500263491",
+      "name": "낭도 승탁생막걸리",
+      "score": 63,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (41 < 150)",
+        "pairingGuideKo too short (20 < 100)",
+        "score below threshold (63 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 11,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 11,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500263971",
+      "name": "광월주",
+      "score": 51,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (41 < 150)",
+        "pairingGuideKo too short (17 < 100)",
+        "score below threshold (51 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 11,
+        "descriptionEn": 21,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 7,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500117551",
+      "name": "거제도가 생막걸리 숨 아홉",
+      "score": 55,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (41 < 150)",
+        "pairingGuideKo too short (16 < 100)",
+        "score below threshold (55 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 11,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 8,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500182002",
+      "name": "군포탁주 7",
+      "score": 59,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (41 < 150)",
+        "pairingGuideKo too short (18 < 100)",
+        "score below threshold (59 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 11,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 12,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500182003",
+      "name": "군포탁주 9",
+      "score": 68,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (40 < 150)",
+        "pairingGuideKo too short (22 < 100)",
+        "score below threshold (68 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 11,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 16,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500243251",
+      "name": "수박막걸리",
+      "score": 60,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (33 < 150)",
+        "pairingGuideKo too short (22 < 100)",
+        "score below threshold (60 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 9,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 10,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500117552",
+      "name": "거제도가 생막걸리 숨 여섯",
+      "score": 65,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (41 < 150)",
+        "pairingGuideKo too short (22 < 100)",
+        "score below threshold (65 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 11,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 13,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500285941",
+      "name": "월인가 국화주 탁주",
+      "score": 60,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (38 < 150)",
+        "pairingGuideKo too short (19 < 100)",
+        "score below threshold (60 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 10,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 14,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500263911",
+      "name": "무주생막걸리",
+      "score": 56,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (44 < 150)",
+        "pairingGuideKo too short (18 < 100)",
+        "score below threshold (56 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 12,
+        "descriptionEn": 20,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 12,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500286722",
+      "name": "담연12",
+      "score": 79,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (54 < 150)",
+        "pairingGuideKo too short (51 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 15,
+        "descriptionEn": 24,
+        "pairingGuideKo": 12,
+        "pairingGuideEn": 16,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500120443",
+      "name": "남쪽에서 뜨는 달 막걸리 : 핑크박하탄산",
+      "score": 81,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (67 < 150)",
+        "pairingGuideKo too short (47 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 18,
+        "descriptionEn": 24,
+        "pairingGuideKo": 11,
+        "pairingGuideEn": 16,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500264521",
+      "name": "단양주단백막걸리",
+      "score": 77,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (57 < 150)",
+        "pairingGuideKo too short (46 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 15,
+        "descriptionEn": 24,
+        "pairingGuideKo": 10,
+        "pairingGuideEn": 16,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500194951",
+      "name": "진록수",
+      "score": 76,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (51 < 150)",
+        "pairingGuideKo too short (45 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 14,
+        "descriptionEn": 24,
+        "pairingGuideKo": 10,
+        "pairingGuideEn": 16,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500120442",
+      "name": "남쪽에서 뜨는 달 막걸리 : 바질탄산",
+      "score": 82,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (65 < 150)",
+        "pairingGuideKo too short (50 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 18,
+        "descriptionEn": 24,
+        "pairingGuideKo": 12,
+        "pairingGuideEn": 16,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500286725",
+      "name": "비앙11",
+      "score": 77,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (51 < 150)",
+        "pairingGuideKo too short (47 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 14,
+        "descriptionEn": 24,
+        "pairingGuideKo": 11,
+        "pairingGuideEn": 16,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500197116",
+      "name": "서리연 레드",
+      "score": 76,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (55 < 150)",
+        "pairingGuideKo too short (40 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 15,
+        "descriptionEn": 24,
+        "pairingGuideKo": 9,
+        "pairingGuideEn": 16,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500197111",
+      "name": "서리연 블루",
+      "score": 75,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (47 < 150)",
+        "pairingGuideKo too short (42 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 13,
+        "descriptionEn": 24,
+        "pairingGuideKo": 10,
+        "pairingGuideEn": 16,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500197117",
+      "name": "서리연 그린",
+      "score": 77,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (52 < 150)",
+        "pairingGuideKo too short (50 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 14,
+        "descriptionEn": 24,
+        "pairingGuideKo": 11,
+        "pairingGuideEn": 16,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500120441",
+      "name": "남쪽에서 뜨는 달 막걸리 : 오리지널",
+      "score": 80,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (64 < 150)",
+        "pairingGuideKo too short (45 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 18,
+        "descriptionEn": 24,
+        "pairingGuideKo": 10,
+        "pairingGuideEn": 16,
+        "noseTags": 5,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500287351",
+      "name": "세종 1260",
+      "score": 87,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (83 < 150)",
+        "pairingGuideKo too short (42 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 23,
+        "descriptionEn": 24,
+        "pairingGuideKo": 10,
+        "pairingGuideEn": 16,
+        "noseTags": 7,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-2025000518212",
+      "name": "올케",
+      "score": 81,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (67 < 150)",
+        "pairingGuideKo too short (38 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 18,
+        "descriptionEn": 24,
+        "pairingGuideKo": 9,
+        "pairingGuideEn": 16,
+        "noseTags": 7,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500049693",
+      "name": "느슨한마음",
+      "score": 83,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (74 < 150)",
+        "pairingGuideKo too short (39 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 20,
+        "descriptionEn": 24,
+        "pairingGuideKo": 9,
+        "pairingGuideEn": 16,
+        "noseTags": 7,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500049691",
+      "name": "동대문막걸리프라자",
+      "score": 84,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (80 < 150)",
+        "pairingGuideKo too short (41 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 21,
+        "descriptionEn": 24,
+        "pairingGuideKo": 9,
+        "pairingGuideEn": 16,
+        "noseTags": 7,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500049696",
+      "name": "냉장고 속 눈사람",
+      "score": 82,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (71 < 150)",
+        "pairingGuideKo too short (40 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 19,
+        "descriptionEn": 24,
+        "pairingGuideKo": 9,
+        "pairingGuideEn": 16,
+        "noseTags": 7,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500049695",
+      "name": "우정이 모락모락",
+      "score": 84,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (72 < 150)",
+        "pairingGuideKo too short (45 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 20,
+        "descriptionEn": 24,
+        "pairingGuideKo": 10,
+        "pairingGuideEn": 16,
+        "noseTags": 7,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500049697",
+      "name": "싸우지막",
+      "score": 82,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (69 < 150)",
+        "pairingGuideKo too short (41 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 19,
+        "descriptionEn": 24,
+        "pairingGuideKo": 9,
+        "pairingGuideEn": 16,
+        "noseTags": 7,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500049694",
+      "name": "좋은술은여행하지않는다",
+      "score": 84,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (73 < 150)",
+        "pairingGuideKo too short (42 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 20,
+        "descriptionEn": 24,
+        "pairingGuideKo": 10,
+        "pairingGuideEn": 16,
+        "noseTags": 7,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500049692",
+      "name": "아주느슨한마음",
+      "score": 81,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (69 < 150)",
+        "pairingGuideKo too short (38 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 18,
+        "descriptionEn": 24,
+        "pairingGuideKo": 9,
+        "pairingGuideEn": 16,
+        "noseTags": 7,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500287481",
+      "name": "동일산삼막걸리",
+      "score": 83,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (75 < 150)",
+        "pairingGuideKo too short (41 < 100)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 20,
+        "descriptionEn": 24,
+        "pairingGuideKo": 9,
+        "pairingGuideEn": 16,
+        "noseTags": 7,
+        "palateTags": 5,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500287711",
+      "name": "오늘이주",
+      "score": 52,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (31 < 150)",
+        "pairingGuideKo too short (16 < 100)",
+        "score below threshold (52 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 8,
+        "descriptionEn": 23,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 11,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500265136",
+      "name": "곰소 샘골",
+      "score": 50,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (28 < 150)",
+        "pairingGuideKo too short (19 < 100)",
+        "score below threshold (50 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 8,
+        "descriptionEn": 16,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 16,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500054531",
+      "name": "느랏주",
+      "score": 48,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (30 < 150)",
+        "pairingGuideKo too short (19 < 100)",
+        "score below threshold (48 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 8,
+        "descriptionEn": 20,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 10,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500265137",
+      "name": "곰소",
+      "score": 61,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (38 < 150)",
+        "pairingGuideKo too short (20 < 100)",
+        "score below threshold (61 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 10,
+        "descriptionEn": 23,
+        "pairingGuideKo": 4,
+        "pairingGuideEn": 14,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500265138",
+      "name": "곰소 우리밀동동주",
+      "score": 56,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (35 < 150)",
+        "pairingGuideKo too short (21 < 100)",
+        "score below threshold (56 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 10,
+        "descriptionEn": 19,
+        "pairingGuideKo": 4,
+        "pairingGuideEn": 13,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500245682",
+      "name": "윤슬주 해 막걸리",
+      "score": 56,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (29 < 150)",
+        "pairingGuideKo too short (23 < 100)",
+        "score below threshold (56 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 8,
+        "descriptionEn": 19,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 14,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500245681",
+      "name": "윤슬주 달 막걸리",
+      "score": 44,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (29 < 150)",
+        "pairingGuideKo too short (17 < 100)",
+        "score below threshold (44 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 8,
+        "descriptionEn": 18,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 8,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500053631",
+      "name": "춘천 감자 막걸리",
+      "score": 61,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (32 < 150)",
+        "pairingGuideKo too short (21 < 100)",
+        "score below threshold (61 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 9,
+        "descriptionEn": 24,
+        "pairingGuideKo": 5,
+        "pairingGuideEn": 13,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500055622",
+      "name": "해랑 12",
+      "score": 54,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (37 < 150)",
+        "pairingGuideKo too short (19 < 100)",
+        "score below threshold (54 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 10,
+        "descriptionEn": 24,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 10,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500055621",
+      "name": "해랑 9",
+      "score": 48,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (32 < 150)",
+        "pairingGuideKo too short (17 < 100)",
+        "score below threshold (48 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 9,
+        "descriptionEn": 21,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 8,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500123081",
+      "name": "영남 알프스양조",
+      "score": 50,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (31 < 150)",
+        "pairingGuideKo too short (14 < 100)",
+        "score below threshold (50 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 9,
+        "descriptionEn": 22,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 9,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500122733",
+      "name": "누루품은 한백",
+      "score": 43,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "imageUrl is blank or placeholder",
+        "descriptionKo too short (29 < 150)",
+        "pairingGuideKo too short (19 < 100)",
+        "score below threshold (43 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 8,
+        "descriptionEn": 17,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 8,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500122732",
+      "name": "누룩품은 진주",
+      "score": 42,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (28 < 150)",
+        "pairingGuideKo too short (14 < 100)",
+        "score below threshold (42 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 8,
+        "descriptionEn": 15,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 9,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-2025002658612",
+      "name": "화순적벽생막걸리",
+      "score": 50,
+      "pass": false,
+      "reasons": [
+        "pairingGuideKo low value",
+        "nameEn missing or low value",
+        "descriptionKo too short (34 < 150)",
+        "pairingGuideKo too short (19 < 100)",
+        "score below threshold (50 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 9,
+        "descriptionEn": 21,
+        "pairingGuideKo": 0,
+        "pairingGuideEn": 10,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    },
+    {
+      "id": "fsk-202500265868",
+      "name": "화순적벽생막걸리",
+      "score": 54,
+      "pass": false,
+      "reasons": [
+        "nameEn missing or low value",
+        "descriptionKo too short (34 < 150)",
+        "pairingGuideKo too short (20 < 100)",
+        "score below threshold (54 < 70)"
+      ],
+      "fieldScores": {
+        "descriptionKo": 9,
+        "descriptionEn": 22,
+        "pairingGuideKo": 4,
+        "pairingGuideEn": 9,
+        "noseTags": 4,
+        "palateTags": 4,
+        "finishTags": 2
+      },
+      "beforeStatus": "PUBLISHED",
+      "beforeIsPublished": true,
+      "afterStatus": "DRAFT",
+      "afterIsPublished": false
+    }
+  ]
+}

@@ -25,6 +25,7 @@ export const db = {
       limit,
       offset,
       category: filter.category !== 'ALL' ? filter.category : undefined,
+      distillery: filter.distillery,
       isPublished: filter.isPublished,
       search: filter.searchTerm
     });

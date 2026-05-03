@@ -1,7 +1,7 @@
 // app/api/spirits/route.ts
 
 import { NextRequest, NextResponse } from 'next/server';
-import { dbAdminSearchSpiritsPublic, dbAdminListAllCategories, dbAdminListAllSubcategories } from '@/lib/db/data-connect-admin';
+import { dbAdminSearchSpiritsPublic, dbAdminListAllCategories, dbAdminListAllSubcategories, dbAdminListAllDistilleries } from '@/lib/db/data-connect-admin';
 
 export const runtime = 'nodejs';
 
@@ -51,9 +51,17 @@ export async function GET(request: NextRequest) {
     // 1. Handle Metadata Mode (Dynamic Dropdowns)
     if (mode === 'meta') {
       const category = searchParams.get('category') || undefined;
+      const categoryEn = searchParams.get('categoryEn') || undefined;
+      const subcategory = searchParams.get('subcategory') || undefined;
+      const distilleryMode = searchParams.get('distilleryMode') === '1';
+
+      if (distilleryMode) {
+        const distilleries = await dbAdminListAllDistilleries({ category, categoryEn, subcategory });
+        return NextResponse.json({ distilleries }, { status: 200 });
+      }
       
-      if (category) {
-        const subcategories = await dbAdminListAllSubcategories(category);
+      if (category || categoryEn) {
+        const subcategories = await dbAdminListAllSubcategories(category, categoryEn);
         return NextResponse.json({ subcategories }, { status: 200 });
       }
 
@@ -63,14 +71,18 @@ export async function GET(request: NextRequest) {
 
     // 2. Handle Search Mode (Paginated Search)
     const category = searchParams.get('category') || undefined;
+    const categoryEn = searchParams.get('categoryEn') || undefined;
     const subcategory = searchParams.get('subcategory') || undefined;
+    const distillery = searchParams.get('distillery') || undefined;
     const searchTerm = searchParams.get('searchTerm') || searchParams.get('q') || undefined;
     const limit = parseInt(searchParams.get('limit') || '24');
     const offset = parseInt(searchParams.get('offset') || '0');
 
     const spirits = await dbAdminSearchSpiritsPublic({
       category: category === 'ALL' || !category || category === '' ? undefined : category,
+      categoryEn: !categoryEn || categoryEn === '' ? undefined : categoryEn,
       subcategory: !subcategory || subcategory === '' ? undefined : subcategory,
+      distillery: !distillery || distillery === '' ? undefined : distillery,
       search: searchTerm,
       limit,
       offset
@@ -101,12 +113,20 @@ export async function GET(request: NextRequest) {
       b: s.bottler || null,
       co: s.country || null,
       re: s.region || null,
+      nt: s.noseTags || [],
+      pt: s.palateTags || [],
+      ft: s.finishTags || [],
       tn: s.tastingNote || null,
       r: s.rating || 0,
       rc: s.reviewCount || 0,
       m: s.metadata || {},
       mc: s.mainCategory || null,
-      h: s.metadata?.hasTastingNotes ?? Boolean(s.tastingNote),
+      h: Boolean(
+        (s.tastingNote && s.tastingNote.trim()) ||
+        (s.noseTags?.filter(Boolean)?.length || 0) > 0 ||
+        (s.palateTags?.filter(Boolean)?.length || 0) > 0 ||
+        (s.finishTags?.filter(Boolean)?.length || 0) > 0
+      ),
       cre: s.createdAt,
     }));
 

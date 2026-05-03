@@ -181,11 +181,22 @@ function ExploreCardComponent({
     if (spirit.tastingNote) {
       return spirit.tastingNote.split(/[,\s#]+/).filter(Boolean).slice(0, 2);
     }
-    if (spirit.noseTags && spirit.noseTags.length > 0) {
-      return spirit.noseTags.slice(0, 2);
+    const mergedTags = [
+      ...(spirit.noseTags || []),
+      ...(spirit.palateTags || []),
+      ...(spirit.finishTags || []),
+    ].filter(Boolean);
+    if (mergedTags.length > 0) {
+      return mergedTags.slice(0, 2);
     }
     return [];
-  }, [spirit.tastingNote, spirit.noseTags]);
+  }, [spirit.tastingNote, spirit.noseTags, spirit.palateTags, spirit.finishTags]);
+
+  const tastingPreview = useMemo(() => {
+    if (spirit.tastingNote && spirit.tastingNote.trim().length > 0) return spirit.tastingNote;
+    if (tastingTags.length > 0) return tastingTags.map((tag) => `#${tag}`).join(' ');
+    return '';
+  }, [spirit.tastingNote, tastingTags]);
 
   const content = (
     <motion.div
@@ -251,9 +262,9 @@ function ExploreCardComponent({
           </p>
         )}
 
-        {spirit.tastingNote && (
+        {tastingPreview && (
           <p className="text-xs text-foreground/55 line-clamp-1 italic">
-            {spirit.tastingNote}
+            {tastingPreview}
           </p>
         )}
 
@@ -270,7 +281,7 @@ function ExploreCardComponent({
           )}
           {spirit.hasTastingNotes && (
              <div className="capsule-premium">
-                NOTES
+               {isEn ? 'NOTES' : '노트'}
              </div>
           )}
         </div>

@@ -6,19 +6,9 @@ import { useAuth } from '@/app/[lang]/context/auth-context';
 import { getCabinetStatusInfo } from '@/app/[lang]/actions/cabinet';
 import { ExploreCard } from './ExploreCard';
 import { ExploreGridSkeleton } from './ExploreSkeleton';
-import { Search, Loader2, ChevronDown, ArrowRight } from 'lucide-react';
+import { Search, Loader2, ChevronDown } from 'lucide-react';
 import GoogleAd from '@/components/ui/GoogleAd';
 import metadata from '@/lib/constants/spirits-metadata.json';
-
-const QUICK_CATEGORY_KEYS = ['위스키', '소주', '청주', '약주', '과실주'] as const;
-
-const QUICK_CATEGORY_LABELS: Record<(typeof QUICK_CATEGORY_KEYS)[number], { ko: string; en: string }> = {
-  '위스키': { ko: '위스키', en: 'Whisky' },
-  '소주': { ko: '소주', en: 'Soju' },
-  '청주': { ko: '청주', en: 'Cheongju' },
-  '약주': { ko: '약주', en: 'Yakju' },
-  '과실주': { ko: '과실주', en: 'Wine & Fruit Wine' },
-};
 
 const PAGE_SIZE = 24;
 
@@ -41,10 +31,12 @@ export default function ExploreContent({ dict }: { dict?: any }) {
   const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || '');
   const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || '');
   const [selectedSubCategory, setSelectedSubCategory] = useState('');
+  const [selectedDistillery, setSelectedDistillery] = useState('');
 
   // Dynamic Metadata States
   const [dbCategories, setDbCategories] = useState<{ ko: string, en: string | null | undefined }[]>([]);
   const [dbSubCategories, setDbSubCategories] = useState<string[]>([]);
+  const [dbDistilleries, setDbDistilleries] = useState<string[]>([]);
 
   const [cabinetStatus, setCabinetStatus] = useState<{ ownedIds: Set<string>, wishlistIds: Set<string> }>({
     ownedIds: new Set(),
@@ -70,10 +62,12 @@ export default function ExploreContent({ dict }: { dict?: any }) {
     const fetchSubMeta = async () => {
       if (!selectedCategory || selectedCategory === 'ALL') {
         setDbSubCategories([]);
+        setSelectedSubCategory('');
         return;
       }
       try {
-        const res = await fetch(`/api/spirits?mode=meta&category=${encodeURIComponent(selectedCategory)}`);
+        const param = isEn ? 'categoryEn' : 'category';
+        const res = await fetch(`/api/spirits?mode=meta&${param}=${encodeURIComponent(selectedCategory)}`);
         const data = await res.json();
         if (data.subcategories) setDbSubCategories(data.subcategories);
       } catch (err) {
@@ -81,8 +75,35 @@ export default function ExploreContent({ dict }: { dict?: any }) {
       }
     };
     fetchSubMeta();
-    setSelectedSubCategory(''); // Reset subcategory when category changes
   }, [selectedCategory]);
+
+  useEffect(() => {
+    const fetchDistilleryMeta = async () => {
+      if (!selectedCategory || selectedCategory === 'ALL') {
+        setDbDistilleries([]);
+        setSelectedDistillery('');
+        return;
+      }
+
+      try {
+        const catParam = isEn ? 'categoryEn' : 'category';
+        const params = new URLSearchParams({
+          mode: 'meta',
+          distilleryMode: '1',
+          [catParam]: selectedCategory,
+        });
+        if (selectedSubCategory) params.append('subcategory', selectedSubCategory);
+        const res = await fetch(`/api/spirits?${params.toString()}`);
+        const data = await res.json();
+        setDbDistilleries(Array.isArray(data.distilleries) ? data.distilleries : []);
+      } catch (err) {
+        console.error('Failed to fetch distilleries', err);
+        setDbDistilleries([]);
+      }
+    };
+
+    fetchDistilleryMeta();
+  }, [selectedCategory, selectedSubCategory]);
 
   // 3. Fetch cabinet status
   useEffect(() => {
@@ -125,9 +146,11 @@ export default function ExploreContent({ dict }: { dict?: any }) {
         offset: currentOffset.toString(),
       });
 
+      const catParam = isEn ? 'categoryEn' : 'category';
       if (searchTerm) params.append('searchTerm', searchTerm);
-      if (selectedCategory && selectedCategory !== 'ALL') params.append('category', selectedCategory);
+      if (selectedCategory && selectedCategory !== 'ALL') params.append(catParam, selectedCategory);
       if (selectedSubCategory) params.append('subcategory', selectedSubCategory);
+      if (selectedDistillery) params.append('distillery', selectedDistillery);
 
       const response = await fetch(`/api/spirits?${params.toString()}`);
       const data = await response.json();
@@ -147,27 +170,14 @@ export default function ExploreContent({ dict }: { dict?: any }) {
     } finally {
       setIsSearching(false);
     }
-  }, [searchTerm, selectedCategory, selectedSubCategory, offset]);
-
-  const applyQuickCategory = useCallback((category: string) => {
-    setSearchTerm('');
-    setSelectedCategory(category);
-    setSelectedSubCategory('');
-    // Auto-trigger search after slight delay to allow state to settle
-    // Alternatively, just let user click search. But for quick categories, auto is better.
-  }, []);
-
-  // Effect to auto-search on quick category change
-  useEffect(() => {
-    if (selectedCategory && !selectedSubCategory && !searchTerm) {
-        performSearch();
-    }
-  }, [selectedCategory]);
+  }, [searchTerm, selectedCategory, selectedSubCategory, selectedDistillery, offset]);
 
   const resetFilters = useCallback(() => {
     setSearchTerm('');
     setSelectedCategory('');
     setSelectedSubCategory('');
+    setSelectedDistillery('');
+    setDbDistilleries([]);
     setSearchResults([]);
     setHasSearched(false);
     setOffset(0);
@@ -239,7 +249,7 @@ export default function ExploreContent({ dict }: { dict?: any }) {
 
                 {/* Main Category */}
                 <div className="space-y-4">
-                    <label className="text-xs font-black text-foreground/40 uppercase tracking-widest pl-1">Primary Classification</label>
+                  <label className="text-xs font-black text-foreground/40 uppercase tracking-widest pl-1">{isEn ? 'Category' : '카테고리'}</label>
                     <div className="relative">
                         <select
                             value={selectedCategory}
@@ -248,7 +258,7 @@ export default function ExploreContent({ dict }: { dict?: any }) {
                         >
                             <option value="">{dict?.filters?.all || (isEn ? "EVERYTHING" : "모든 주종")}</option>
                             {dbCategories.map((cat) => (
-                                <option key={cat.ko} value={cat.ko}>
+                                <option key={cat.ko} value={isEn ? (cat.en || cat.ko) : cat.ko}>
                                     {isEn ? (cat.en || cat.ko) : cat.ko}
                                 </option>
                             ))}
@@ -263,7 +273,10 @@ export default function ExploreContent({ dict }: { dict?: any }) {
                     <div className="relative">
                         <select
                             value={selectedSubCategory}
-                            onChange={(e) => setSelectedSubCategory(e.target.value)}
+                            onChange={(e) => {
+                              setSelectedSubCategory(e.target.value);
+                              setSelectedDistillery('');
+                            }}
                             disabled={!selectedCategory || dbSubCategories.length === 0}
                             className="w-full pl-5 pr-10 py-4 rounded-2xl bg-background border border-border/50 outline-none focus:border-primary/50 appearance-none cursor-pointer font-black text-sm uppercase tracking-tighter disabled:opacity-20"
                         >
@@ -277,31 +290,34 @@ export default function ExploreContent({ dict }: { dict?: any }) {
                         <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-foreground/20" size={18} />
                     </div>
                 </div>
-            </div>
 
-            {/* Quick Exhibit Filters */}
-            <div className="p-8 pb-4">
-                <p className="text-xs font-black text-foreground/30 uppercase tracking-[0.2em] mb-6">CURATED EXHIBITS</p>
-                <div className="flex flex-col gap-2">
-                    {QUICK_CATEGORY_KEYS.map((categoryKey) => {
-                        const isActive = selectedCategory === categoryKey;
-                        const label = isEn ? QUICK_CATEGORY_LABELS[categoryKey].en : QUICK_CATEGORY_LABELS[categoryKey].ko;
-
-                        return (
-                            <button
-                                key={categoryKey}
-                                onClick={() => applyQuickCategory(categoryKey)}
-                                className={`group flex items-center justify-between p-4 rounded-2xl transition-all font-black text-sm uppercase tracking-tighter border
-                                    ${isActive 
-                                        ? 'bg-primary text-primary-foreground border-primary shadow-xl shadow-primary/10 scale-[1.02]' 
-                                        : 'bg-muted/30 text-foreground/60 border-transparent hover:bg-muted/50 hover:border-border'}`}
-                            >
-                                <span>{label}</span>
-                                <ArrowRight className={`w-4 h-4 transition-transform ${isActive ? 'translate-x-0' : '-translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100'}`} />
-                            </button>
-                        );
-                    })}
+                <div className="space-y-4">
+                  <label className="text-xs font-black text-foreground/40 uppercase tracking-widest pl-1">{isEn ? 'Distillery' : '증류소'}</label>
+                  <div className="relative">
+                    <select
+                      value={selectedDistillery}
+                      onChange={(e) => setSelectedDistillery(e.target.value)}
+                      disabled={!selectedCategory || dbDistilleries.length === 0}
+                      className="w-full pl-5 pr-10 py-4 rounded-2xl bg-background border border-border/50 outline-none focus:border-primary/50 appearance-none cursor-pointer font-black text-sm tracking-tighter disabled:opacity-20"
+                    >
+                      <option value="">{isEn ? 'ALL DISTILLERIES' : '모든 증류소'}</option>
+                      {dbDistilleries.map((distillery) => (
+                        <option key={distillery} value={distillery}>
+                          {distillery}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-foreground/20" size={18} />
+                  </div>
                 </div>
+
+                <button
+                  onClick={() => performSearch()}
+                  disabled={isSearching}
+                  className="w-full btn-premium py-4"
+                >
+                  {isSearching ? (isEn ? 'SEARCHING...' : '검색 중...') : (isEn ? 'SEARCH' : '검색')}
+                </button>
             </div>
         </aside>
 
@@ -338,6 +354,9 @@ export default function ExploreContent({ dict }: { dict?: any }) {
                         reviewedAt: null,
                         name_en: item.en || null,
                         metadata: item.m || {},
+                        noseTags: item.nt || [],
+                        palateTags: item.pt || [],
+                        finishTags: item.ft || [],
                         tastingNote: item.tn || null,
                         aggregateRating: {
                             ratingValue: item.r,

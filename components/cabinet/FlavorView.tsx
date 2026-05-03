@@ -25,7 +25,27 @@ export default function FlavorView({
 
     const pathname = usePathname() || "";
     const isEn = pathname.split('/')[1] === 'en';
+    const localeKey = isEn ? 'en' : 'ko';
     const { user } = useAuth();
+
+    const localizedPersona = useMemo(() => {
+        if (!profile) return null;
+        return profile?.personaLocalized?.[localeKey] || profile?.persona || null;
+    }, [profile, localeKey]);
+
+    const localizedRecommendations = useMemo(() => {
+        if (!profile) return [];
+        if (Array.isArray(profile?.recommendationEntriesLocalized?.[localeKey])) {
+            return profile.recommendationEntriesLocalized[localeKey];
+        }
+        if (Array.isArray(profile?.recommendationEntries)) {
+            return profile.recommendationEntries;
+        }
+        if (profile?.recommendation) {
+            return [profile.recommendation];
+        }
+        return [];
+    }, [profile, localeKey]);
 
     const radarData = useMemo(() => {
         if (!profile?.stats) return [];
@@ -139,10 +159,10 @@ export default function FlavorView({
                         <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary dark:text-primary text-xs font-black rounded-full mb-8 uppercase tracking-widest border border-primary/20/20 w-fit">
                             <Info className="w-3" /> {isEn ? "Active Palate DNA" : "활성 미각 DNA"}
                         </div>
-                        <h3 className="text-4xl lg:text-5xl font-black text-foreground mb-8 tracking-tighter italic leading-tight">{profile?.persona?.title || (isEn ? "Palate Analysis..." : "미각 분석 중...")}</h3>
-                        <p className="text-muted-foreground text-base lg:text-lg leading-relaxed font-medium mb-10">{profile?.persona?.description || (isEn ? "We are mapping your flavor DNA based on your cellar and reviews." : "술장과 리뷰를 바탕으로 당신의 풍미 DNA를 지도로 만들고 있습니다.")}</p>
+                        <h3 className="text-4xl lg:text-5xl font-black text-foreground mb-8 tracking-tighter italic leading-tight">{localizedPersona?.title || (isEn ? "Palate Analysis..." : "미각 분석 중...")}</h3>
+                        <p className="text-muted-foreground text-base lg:text-lg leading-relaxed font-medium mb-10">{localizedPersona?.description || (isEn ? "We are mapping your flavor DNA based on your cellar and reviews." : "술장과 리뷰를 바탕으로 당신의 풍미 DNA를 지도로 만들고 있습니다.")}</p>
                         <div className="flex flex-wrap gap-2">
-                            {profile?.persona?.keywords?.map((kw: string, i: number) => (
+                            {localizedPersona?.keywords?.map((kw: string, i: number) => (
                                 <span key={i} className="text-xs font-black text-primary dark:text-primary/80 bg-primary/5 px-4 py-2 rounded-xl border border-primary/20/10 uppercase tracking-widest">{kw}</span>
                             )) || null}
                         </div>
@@ -154,7 +174,7 @@ export default function FlavorView({
             </div>
 
             <div className="pt-12 border-t border-border">
-                <TasteRecommendationSection recommendations={profile?.recommendationEntries || []} dict={dict} />
+                <TasteRecommendationSection recommendations={localizedRecommendations} dict={dict} />
             </div>
 
             <SuccessToast isVisible={showToast} message={toastMessage} variant={toastVariant} onClose={() => setShowToast(false)} />

@@ -162,58 +162,36 @@ export const dbAdminUpsertUser = async (vars: any) => {
 
 export const dbAdminSearchSpiritsPublic = async (vars: {
     search?: string;
+    category?: string;
+    categoryEn?: string;
+    subcategory?: string;
+    distillery?: string;
     limit?: number;
     offset?: number;
 }) => {
-    // When no search term is provided, fetch all published spirits (broad listing for AI context)
-    if (!vars.search) {
-        const query = `
-            query listSpiritsPublic($limit: Int, $offset: Int) {
-                spirits(
-                    limit: $limit,
-                    offset: $offset,
-                    where: { isPublished: { eq: true } }
-                ) {
-                    id
-                    name
-                    nameEn
-                    category
-                    categoryEn
-                    mainCategory
-                    subcategory
-                    imageUrl
-                    thumbnailUrl
-                    abv
-                    volume
-                    distillery
-                    bottler
-                    country
-                    region
-                    tastingNote
-                }
-            }
-        `;
-        const { data } = await executeGraphql('listSpiritsPublic', query, { limit: vars.limit, offset: vars.offset });
-        return data?.spirits || [];
+    const andConditions: string[] = ['{ isPublished: { eq: true } }'];
+
+    if (vars.category) andConditions.push('{ category: { eq: $category } }');
+    if (vars.categoryEn) andConditions.push('{ categoryEn: { eq: $categoryEn } }');
+    if (vars.subcategory) andConditions.push('{ subcategory: { eq: $subcategory } }');
+    if (vars.distillery) andConditions.push('{ distillery: { eq: $distillery } }');
+
+    if (vars.search) {
+        andConditions.push(`{
+            _or: [
+                { name: { contains: $search } },
+                { nameEn: { contains: $search } },
+                { distillery: { contains: $search } }
+            ]
+        }`);
     }
 
     const query = `
-        query searchSpiritsPublic($search: String, $limit: Int, $offset: Int) {
+        query searchSpiritsPublic($search: String, $category: String, $categoryEn: String, $subcategory: String, $distillery: String, $limit: Int, $offset: Int) {
             spirits(
                 limit: $limit,
                 offset: $offset,
-                where: {
-                    _and: [
-                        { isPublished: { eq: true } },
-                        {
-                            _or: [
-                                { name: { contains: $search } },
-                                { nameEn: { contains: $search } },
-                                { distillery: { contains: $search } }
-                            ]
-                        }
-                    ]
-                }
+                where: { _and: [${andConditions.join(',')}] }
             ) {
                 id
                 name
@@ -230,11 +208,22 @@ export const dbAdminSearchSpiritsPublic = async (vars: {
                 bottler
                 country
                 region
+                noseTags
+                palateTags
+                finishTags
                 tastingNote
             }
         }
     `;
-    const { data } = await executeGraphql('searchSpiritsPublic', query, vars);
+    const { data } = await executeGraphql('searchSpiritsPublic', query, {
+        search: vars.search,
+        category: vars.category,
+        categoryEn: vars.categoryEn,
+        subcategory: vars.subcategory,
+        distillery: vars.distillery,
+        limit: vars.limit,
+        offset: vars.offset,
+    });
     return data?.spirits || [];
 };
 
@@ -242,6 +231,7 @@ export const dbAdminListRawSpirits = async (vars: {
     limit?: number;
     offset?: number;
     category?: string;
+    distillery?: string;
     isPublished?: boolean;
     search?: string;
 }) => {
@@ -255,6 +245,10 @@ export const dbAdminListRawSpirits = async (vars: {
     if (vars.category !== undefined) {
         andConditions.push('{ category: { eq: $category } }');
         variables.category = vars.category;
+    }
+    if (vars.distillery !== undefined) {
+        andConditions.push('{ distillery: { eq: $distillery } }');
+        variables.distillery = vars.distillery;
     }
     if (vars.isPublished !== undefined) {
         andConditions.push('{ isPublished: { eq: $isPublished } }');
@@ -272,6 +266,7 @@ export const dbAdminListRawSpirits = async (vars: {
     const paramDeclarations = [
         '$limit: Int', '$offset: Int',
         vars.category !== undefined ? '$category: String' : null,
+        vars.distillery !== undefined ? '$distillery: String' : null,
         vars.isPublished !== undefined ? '$isPublished: Boolean' : null,
         vars.search ? '$search: String' : null,
     ].filter(Boolean).join(', ');
@@ -514,11 +509,13 @@ export const dbAdminListNewsLinks = async () => {
 
 export const dbAdminUpsertNews = async (vars: any) => {
     const query = `
-        mutation upsertNews($id: String!, $title: String!, $content: String!, $link: String, $source: String, $date: String, $translations: Any, $tags: Any) {
+        mutation upsertNews($id: String!, $title: String!, $content: String!, $imageUrl: String, $category: String, $link: String, $source: String, $date: String, $translations: Any, $tags: Any) {
             newsArticle_upsert(data: {
                 id: $id,
                 title: $title,
                 content: $content,
+                imageUrl: $imageUrl,
+                category: $category,
                 link: $link,
                 source: $source,
                 date: $date,
@@ -966,21 +963,50 @@ export const dbAdminListAllCategories = async () => {
     return Array.from(unique.entries()).map(([ko, en]) => ({ ko, en }));
 };
 
-export const dbAdminListAllSubcategories = async (category?: string) => {
-    const whereClause = category
-        ? `where: { _and: [{ isPublished: { eq: true } }, { category: { eq: $category } }] }`
-        : `where: { isPublished: { eq: true } }`;
-    const paramDecl = category ? '($category: String)' : '';
+export const dbAdminListAllSubcategories = async (category?: string, categoryEn?: string) => {
+    const andConds: string[] = ['{ isPublished: { eq: true } }'];
+    const vars: any = {};
+    if (category) { andConds.push('{ category: { eq: $category } }'); vars.category = category; }
+    if (categoryEn) { andConds.push('{ categoryEn: { eq: $categoryEn } }'); vars.categoryEn = categoryEn; }
+    const paramParts = [
+        category ? '$category: String' : null,
+        categoryEn ? '$categoryEn: String' : null,
+    ].filter(Boolean).join(', ');
+    const paramDecl = paramParts ? `(${paramParts})` : '';
     const query = `
         query listAllSubcategories${paramDecl} {
-            spirits(${whereClause}) {
+            spirits(where: { _and: [${andConds.join(',')}] }) {
                 subcategory
             }
         }
     `;
-    const { data } = await executeGraphql('listAllSubcategories', query, category ? { category } : {});
+    const { data } = await executeGraphql('listAllSubcategories', query, vars);
     const unique = new Set<string>(
         (data?.spirits || []).map((s: { subcategory?: string | null }) => s.subcategory).filter(Boolean)
+    );
+    return Array.from(unique) as string[];
+};
+
+export const dbAdminListAllDistilleries = async (vars?: { category?: string; categoryEn?: string; subcategory?: string }) => {
+    const andConditions: string[] = ['{ isPublished: { eq: true } }'];
+    if (vars?.category) andConditions.push('{ category: { eq: $category } }');
+    if (vars?.categoryEn) andConditions.push('{ categoryEn: { eq: $categoryEn } }');
+    if (vars?.subcategory) andConditions.push('{ subcategory: { eq: $subcategory } }');
+
+    const query = `
+        query listAllDistilleries($category: String, $categoryEn: String, $subcategory: String) {
+            spirits(where: { _and: [${andConditions.join(',')}] }) {
+                distillery
+            }
+        }
+    `;
+    const { data } = await executeGraphql('listAllDistilleries', query, {
+        category: vars?.category,
+        categoryEn: vars?.categoryEn,
+        subcategory: vars?.subcategory,
+    });
+    const unique = new Set<string>(
+        (data?.spirits || []).map((s: { distillery?: string | null }) => s.distillery).filter(Boolean)
     );
     return Array.from(unique) as string[];
 };
