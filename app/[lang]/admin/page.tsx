@@ -23,10 +23,12 @@ import { useModal } from '@/app/[lang]/context/modal-context';
 
 interface EditFormState {
     name: string;
+    mainCategory: string;
     abv: number | string;
     imageUrl: string;
     nameEn: string;
     category: string;
+    categoryEn: string;
     subcategory: string;
     country: string;
     region: string;
@@ -79,7 +81,7 @@ export default function AdminDashboard() {
     const [isCreating, setIsCreating] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false);
     const [editForm, setEditForm] = useState<EditFormState>({
-        name: '', abv: 0, imageUrl: '', nameEn: '', category: '', subcategory: '',
+        name: '', mainCategory: '', abv: 0, imageUrl: '', nameEn: '', category: '', categoryEn: '', subcategory: '',
         country: '', region: '', distillery: '', bottler: '', volume: 700,
         tastingNote: '', descriptionKo: '', descriptionEn: '', pairingGuideKo: '', pairingGuideEn: '',
         noseTags: '', palateTags: '', finishTags: ''
@@ -257,11 +259,13 @@ export default function AdminDashboard() {
             setEditingId(freshSpirit.id);
             setEditForm({
                 name: freshSpirit.name,
+                mainCategory: freshSpirit.mainCategory || '',
                 abv: freshSpirit.abv ?? 0,
 
                 imageUrl: freshSpirit.imageUrl || '',
                 nameEn: freshSpirit.nameEn || '',
                 category: freshSpirit.category || '',
+                categoryEn: freshSpirit.categoryEn || '',
                 subcategory: freshSpirit.subcategory || '',
                 country: freshSpirit.country || '',
                 region: freshSpirit.region || '',
@@ -289,7 +293,7 @@ export default function AdminDashboard() {
         setIsCreating(true);
         setEditingId('__new__');
         setEditForm({
-            name: '', abv: 0, imageUrl: '', nameEn: '', category: '', subcategory: '',
+            name: '', mainCategory: '', abv: 0, imageUrl: '', nameEn: '', category: '', categoryEn: '', subcategory: '',
             country: '', region: '', distillery: '', bottler: '', volume: 700,
             tastingNote: '', descriptionKo: '', descriptionEn: '', pairingGuideKo: '', pairingGuideEn: '',
             noseTags: '', palateTags: '', finishTags: ''
@@ -305,9 +309,11 @@ export default function AdminDashboard() {
         try {
             const payload: any = {
                 name: editForm.name,
+                mainCategory: editForm.mainCategory,
                 abv: parseFloat(String(editForm.abv)) || 0,
                 imageUrl: editForm.imageUrl,
                 category: editForm.category,
+                categoryEn: editForm.categoryEn,
                 subcategory: editForm.subcategory,
                 country: editForm.country,
                 region: editForm.region,
@@ -371,10 +377,12 @@ export default function AdminDashboard() {
         try {
             const payload: any = {
                 name: editForm.name,
+                mainCategory: editForm.mainCategory,
                 abv: parseFloat(String(editForm.abv)) || 0,
                 imageUrl: editForm.imageUrl,
                 thumbnailUrl: editForm.imageUrl,
                 category: editForm.category,
+                categoryEn: editForm.categoryEn,
                 subcategory: editForm.subcategory,
                 country: editForm.country,
                 region: editForm.region,
@@ -969,7 +977,7 @@ export default function AdminDashboard() {
                                     </div>
                                 </div>
 
-                                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                                     <div>
                                         <label className="text-[10px] font-black uppercase text-gray-400">카테고리</label>
                                         <select
@@ -990,6 +998,22 @@ export default function AdminDashboard() {
                                         />
                                     </div>
                                     <div>
+                                        <label className="text-[10px] font-black uppercase text-gray-400">메인 카테고리</label>
+                                        <input
+                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-white dark:bg-black font-bold text-sm"
+                                            value={editForm.mainCategory}
+                                            onChange={e => setEditForm({ ...editForm, mainCategory: e.target.value })}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="text-[10px] font-black uppercase text-gray-400">카테고리 (EN)</label>
+                                        <input
+                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-white dark:bg-black font-bold text-sm"
+                                            value={editForm.categoryEn}
+                                            onChange={e => setEditForm({ ...editForm, categoryEn: e.target.value })}
+                                        />
+                                    </div>
+                                    <div>
                                         <label className="text-[10px] font-black uppercase text-gray-400">도수 (%)</label>
                                         <input
                                             type="number"
@@ -997,6 +1021,15 @@ export default function AdminDashboard() {
                                             className="w-full mt-1 px-3 py-2 border rounded-xl bg-white dark:bg-black font-bold text-sm"
                                             value={editForm.abv}
                                             onChange={e => setEditForm({ ...editForm, abv: e.target.value })}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="text-[10px] font-black uppercase text-gray-400">용량 (ml)</label>
+                                        <input
+                                            type="number"
+                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-white dark:bg-black font-bold text-sm"
+                                            value={editForm.volume}
+                                            onChange={e => setEditForm({ ...editForm, volume: Number(e.target.value) || 0 })}
                                         />
                                     </div>
                                 </div>
@@ -1068,6 +1101,15 @@ export default function AdminDashboard() {
                             {/* Tags */}
                             <section className="space-y-3 pt-4 border-t">
                                 <h3 className="text-sm font-bold bg-gray-100 dark:bg-gray-900 px-3 py-1 rounded-lg inline-block">향미 태그</h3>
+                                <div>
+                                    <label className="text-[10px] font-black uppercase text-gray-400">테이스팅 노트</label>
+                                    <textarea
+                                        rows={2}
+                                        className="w-full mt-1 px-3 py-2 border rounded-xl bg-gray-50 dark:bg-gray-950 text-sm"
+                                        value={editForm.tastingNote}
+                                        onChange={e => setEditForm({ ...editForm, tastingNote: e.target.value })}
+                                    />
+                                </div>
                                 <div>
                                     <label className="text-[10px] font-black uppercase text-gray-400">Nose (,로 구분)</label>
                                     <input

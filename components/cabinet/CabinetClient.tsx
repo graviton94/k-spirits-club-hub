@@ -134,9 +134,10 @@ export default function CabinetClient({ lang, dict }: CabinetClientProps) {
 
         setIsLoadingStats(true);
         try {
+            const idToken = await user.getIdToken();
             const response = await fetch('/api/users/stats', {
                 headers: {
-                    'x-user-id': user.uid
+                    'authorization': `Bearer ${idToken}`
                 }
             });
 

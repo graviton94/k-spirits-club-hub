@@ -4,6 +4,7 @@ import {
   dbAdminListSpirits, 
   dbAdminGetSpirit, 
   dbAdminUpsertSpirit,
+  dbAdminUpsertNewArrival,
   dbAdminDeleteSpirit,
   dbAdminListRawSpirits
 } from '@/lib/db/data-connect-admin';
@@ -155,6 +156,12 @@ export async function publishSpiritAction(id: string, manualUpdates?: any) {
     // 3. Final transformation and persistence
     const finalData = mapToSQLFields(baseData, { ...aiData, isPublished: true });
     await dbAdminUpsertSpirit(finalData);
+    await dbAdminUpsertNewArrival({
+      id,
+      spiritId: id,
+      displayOrder: Math.floor(Date.now() / 1000),
+      tags: finalData.category ? [String(finalData.category)] : undefined,
+    });
 
     revalidatePath('/[lang]/contents/wiki', 'layout');
     revalidatePath('/[lang]/admin/spirits', 'page');

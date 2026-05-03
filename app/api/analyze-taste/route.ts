@@ -11,6 +11,7 @@ import {
 import { buildTasteAnalysisPrompt } from '@/lib/utils/aiPromptBuilder';
 import { verifyRequestToken } from '@/lib/auth/verifyToken';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { runWithGeminiModelFallback, getGeminiModelCandidates } from '@/lib/services/gemini-model-fallback';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -232,17 +233,23 @@ export async function POST(req: NextRequest) {
         `;
 
         const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({ 
-            model: "gemini-2.0-flash", 
-            systemInstruction, 
-            generationConfig: { 
-                responseMimeType: "application/json",
-                temperature: 0.7,
-                topP: 0.95
-            } 
+        const result = await runWithGeminiModelFallback({
+            genAI,
+            modelIds: getGeminiModelCandidates(),
+            createModel: (client, modelId) => client.getGenerativeModel({
+                model: modelId,
+                systemInstruction,
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    temperature: 0.7,
+                    topP: 0.95
+                }
+            }),
+            run: (model) => model.generateContent(promptData),
+            onModelSelected: (modelId) => {
+                console.log(`[analyze-taste][${traceId}] Using Gemini model: ${modelId}`);
+            }
         });
-
-        const result = await model.generateContent(promptData);
         const rawText = result.response.text();
         let analysisResult;
         try {

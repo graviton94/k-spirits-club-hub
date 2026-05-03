@@ -1,7 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getEnv } from '@/lib/env';
-
-const MODEL_ID = "gemini-2.0-flash";
+import { runWithGeminiModelFallback, getGeminiModelCandidates } from './gemini-model-fallback';
 
 function getApiKey(): string {
     const key = getEnv('GEMINI_API_KEY') || getEnv('GOOGLE_GEMINI_API_KEY');
@@ -170,7 +169,6 @@ function extractAndParseJSON(text: string): any {
  */
 export async function translateSpiritName(name: string, category: string, distillery?: string): Promise<{ nameEn: string }> {
     const genAI = new GoogleGenerativeAI(getApiKey());
-    const model = genAI.getGenerativeModel({ model: MODEL_ID });
 
     const prompt = `
     Translate the following Korean traditional spirit name to a clean, merchant-friendly English name.
@@ -182,7 +180,12 @@ export async function translateSpiritName(name: string, category: string, distil
     `;
 
     try {
-        const result = await model.generateContent(prompt);
+        const result = await runWithGeminiModelFallback({
+            genAI,
+            modelIds: getGeminiModelCandidates(),
+            createModel: (client, modelId) => client.getGenerativeModel({ model: modelId }),
+            run: (model) => model.generateContent(prompt)
+        });
         const data = extractAndParseJSON(result.response.text());
         return { nameEn: data.nameEn || data.name_en || name };
     } catch (e) {
@@ -195,11 +198,6 @@ export async function translateSpiritName(name: string, category: string, distil
  */
 export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<EnrichmentAuditResult> {
     const genAI = new GoogleGenerativeAI(getApiKey());
-    const model = genAI.getGenerativeModel({ 
-        model: MODEL_ID, 
-        tools: [{ googleSearch: {} }] as any,
-        generationConfig: { temperature: 0.1 } 
-    });
 
     const categoryKey = spirit.category;
     const validSubcategories = CATEGORY_SUBCATEGORIES[categoryKey] || [];
@@ -238,7 +236,16 @@ export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<En
     `;
 
     try {
-        const result = await model.generateContent(prompt);
+        const result = await runWithGeminiModelFallback({
+            genAI,
+            modelIds: getGeminiModelCandidates(),
+            createModel: (client, modelId) => client.getGenerativeModel({
+                model: modelId,
+                tools: [{ googleSearch: {} }] as any,
+                generationConfig: { temperature: 0.1 }
+            }),
+            run: (model) => model.generateContent(prompt)
+        });
         const data = extractAndParseJSON(result.response.text());
         data.category = spirit.category; 
         return data;
@@ -262,11 +269,6 @@ export async function auditSpiritInfo(spirit: SpiritEnrichmentInput): Promise<En
  */
 export async function generateSensoryProfile(spirit: SpiritEnrichmentInput): Promise<EnrichmentSensoryResult> {
     const genAI = new GoogleGenerativeAI(getApiKey());
-    const model = genAI.getGenerativeModel({ 
-        model: MODEL_ID, 
-        tools: [{ googleSearch: {} }] as any,
-        generationConfig: { temperature: 0.5 } 
-    });
 
     const prompt = `
     🔍 **MISSION: COMMUNITY SENSORY DISCOVERY**
@@ -290,7 +292,16 @@ export async function generateSensoryProfile(spirit: SpiritEnrichmentInput): Pro
     `;
 
     try {
-        const result = await model.generateContent(prompt);
+        const result = await runWithGeminiModelFallback({
+            genAI,
+            modelIds: getGeminiModelCandidates(),
+            createModel: (client, modelId) => client.getGenerativeModel({
+                model: modelId,
+                tools: [{ googleSearch: {} }] as any,
+                generationConfig: { temperature: 0.5 }
+            }),
+            run: (model) => model.generateContent(prompt)
+        });
         const data = extractAndParseJSON(result.response.text());
         return data;
     } catch (e: any) {
@@ -313,11 +324,6 @@ export async function generateSensoryProfile(spirit: SpiritEnrichmentInput): Pro
  */
 export async function generatePairingGuide(spirit: SpiritEnrichmentInput): Promise<EnrichmentPairingResult> {
     const genAI = new GoogleGenerativeAI(getApiKey());
-    const model = genAI.getGenerativeModel({ 
-        model: MODEL_ID, 
-        tools: [{ googleSearch: {} }] as any,
-        generationConfig: { temperature: 0.8 } 
-    });
 
     const prompt = `
     🔍 **MISSION: CONTEXTUAL PAIRING DISCOVERY**
@@ -331,7 +337,16 @@ export async function generatePairingGuide(spirit: SpiritEnrichmentInput): Promi
     `;
 
     try {
-        const result = await model.generateContent(prompt);
+        const result = await runWithGeminiModelFallback({
+            genAI,
+            modelIds: getGeminiModelCandidates(),
+            createModel: (client, modelId) => client.getGenerativeModel({
+                model: modelId,
+                tools: [{ googleSearch: {} }] as any,
+                generationConfig: { temperature: 0.8 }
+            }),
+            run: (model) => model.generateContent(prompt)
+        });
         const data = extractAndParseJSON(result.response.text());
         return data;
     } catch (e: any) {
@@ -388,7 +403,6 @@ export async function enrichSpiritWithAI(spirit: SpiritEnrichmentInput): Promise
  */
 export async function generateDescriptionOnly(spiritData: any): Promise<{ descriptionKo: string; descriptionEn: string }> {
     const genAI = new GoogleGenerativeAI(getApiKey());
-    const model = genAI.getGenerativeModel({ model: MODEL_ID });
 
     const prompt = `
     Based on the following facts and sensory tags for this spirit, wrap them into a professional, engaging description in both Korean and English (about 3-4 sentences each).
@@ -409,7 +423,12 @@ export async function generateDescriptionOnly(spiritData: any): Promise<{ descri
     `;
 
     try {
-        const result = await model.generateContent(prompt);
+        const result = await runWithGeminiModelFallback({
+            genAI,
+            modelIds: getGeminiModelCandidates(),
+            createModel: (client, modelId) => client.getGenerativeModel({ model: modelId }),
+            run: (model) => model.generateContent(prompt)
+        });
         const data = extractAndParseJSON(result.response.text());
         return {
             descriptionKo: data.descriptionKo || spiritData.name,

@@ -130,9 +130,10 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
         if (!deleteTarget || !user) return;
         setIsDeleting(true);
         try {
+                const idToken = await user.getIdToken();
             const response = await fetch(`/api/reviews?spiritId=${deleteTarget.spiritId}&userId=${deleteTarget.userId}`, {
                 method: 'DELETE',
-                headers: { 'x-user-id': user.uid }
+                    headers: { 'authorization': `Bearer ${idToken}` }
             });
             if (response.ok) {
                 setToastMessage(t.deleteSuccess);

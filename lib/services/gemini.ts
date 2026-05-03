@@ -3,8 +3,7 @@ import { Spirit } from '../db/schema';
 import metadataFn from '../constants/spirits-metadata.json';
 import { inferHierarchy } from '../constants/categories';
 import { getEnv } from '@/lib/env';
-
-const MODEL_ID = "gemini-2.0-flash";
+import { runWithGeminiModelFallback, getGeminiModelCandidates } from './gemini-model-fallback';
 
 function getCategoryPrompt(category: string): string {
     // Provide full category context for better matching
@@ -24,7 +23,6 @@ export async function enrichSpiritMetadata(spirit: Spirit): Promise<Partial<Spir
     }
 
     const genAI = new GoogleGenerativeAI(API_KEY);
-    const model = genAI.getGenerativeModel({ model: MODEL_ID });
 
     const categoryStructure = getCategoryPrompt(spirit.category);
     const tagIndex = (metadataFn as any).tag_index;
@@ -86,7 +84,12 @@ ${categoryStructure}
 `;
 
     try {
-        const result = await model.generateContent(prompt);
+        const result = await runWithGeminiModelFallback({
+            genAI,
+            modelIds: getGeminiModelCandidates(),
+            createModel: (client, modelId) => client.getGenerativeModel({ model: modelId }),
+            run: (model) => model.generateContent(prompt)
+        });
         const response = await result.response;
         let text = response.text().trim();
 

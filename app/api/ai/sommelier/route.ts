@@ -5,11 +5,10 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { 
     dbAdminSearchSpiritsPublic
 } from '@/lib/db/data-connect-admin';
+import { runWithGeminiModelFallback, getGeminiModelCandidates } from '@/lib/services/gemini-model-fallback';
 
 
 export const runtime = 'nodejs';
-
-const MODEL_ID = "gemini-2.0-flash";
 
 /**
  * AI Sommelier Q&A Bot API
@@ -164,22 +163,28 @@ export async function POST(req: NextRequest) {
 
         console.log(`[Sommelier API][${traceId}] Calling Gemini with step: ${currentStep}, knowledgeBase length: ${knowledgeBase.length}`);
 
-        const directGenAI = new GoogleGenerativeAI(apiKey);
-        const model = directGenAI.getGenerativeModel({
-            model: MODEL_ID,
-            systemInstruction: systemInstruction.trim()
-        });
-
         const conversationMessages = messages.map((m: any) => ({
             role: m.role === 'user' ? 'user' : 'model',
             parts: [{ text: m.content }]
         }));
 
-        const result = await model.generateContent({
-            contents: conversationMessages,
-            generationConfig: {
-                responseMimeType: "application/json",
-                temperature: 0.7,
+        const directGenAI = new GoogleGenerativeAI(apiKey);
+        const result = await runWithGeminiModelFallback({
+            genAI: directGenAI,
+            modelIds: getGeminiModelCandidates(),
+            createModel: (client, modelId) => client.getGenerativeModel({
+                model: modelId,
+                systemInstruction: systemInstruction.trim()
+            }),
+            run: (model) => model.generateContent({
+                contents: conversationMessages,
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    temperature: 0.7,
+                }
+            }),
+            onModelSelected: (modelId) => {
+                console.log(`[Sommelier API][${traceId}] Using Gemini model: ${modelId}`);
             }
         });
 

@@ -59,6 +59,13 @@ function ExploreCardComponent({
     ? (spirit.metadata?.distillery_en || spirit.distillery)
     : spirit.distillery;
 
+  const originLabel = [spirit.country, spirit.region].filter(Boolean).join(' · ');
+  const profileFacts = [
+    spirit.volume ? `${spirit.volume}ml` : null,
+    originLabel || null,
+    spirit.bottler || null,
+  ].filter(Boolean) as string[];
+
   const { user } = useAuth();
   const [isInCabinet, setIsInCabinet] = useState(isOwned);
   const [isWishlist, setIsWishlist] = useState(isWishlisted);
@@ -237,6 +244,18 @@ function ExploreCardComponent({
                 </>
             )}
         </div>
+
+        {profileFacts.length > 0 && (
+          <p className="text-[11px] font-bold text-foreground/35 truncate">
+            {profileFacts.join(' · ')}
+          </p>
+        )}
+
+        {spirit.tastingNote && (
+          <p className="text-xs text-foreground/55 line-clamp-1 italic">
+            {spirit.tastingNote}
+          </p>
+        )}
 
         {/* 🛡️ Expert Rating & Badges */}
         <div className="flex items-center gap-3">

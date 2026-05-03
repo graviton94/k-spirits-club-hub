@@ -71,6 +71,10 @@ export async function submitMicroReviewAction(
 
     await dbAdminUpsertSpirit({
       id: spiritId,
+      name: spirit.name,
+      category: spirit.category,
+      imageUrl: spirit.imageUrl || spirit.thumbnailUrl || '/mys-4.webp',
+      thumbnailUrl: spirit.thumbnailUrl || spirit.imageUrl || '/mys-4.webp',
       metadata: updatedMetadata
     });
 

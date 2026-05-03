@@ -48,10 +48,11 @@ export default async function MbtiPage({ params }: MbtiPageProps) {
       <MBTIClient lang={lang} />
 
       {/* Landing Description Section - Below the fold for better UX */}
-      <section className="bg-background border-t border-border/40 py-12 md:py-20 px-4">
+      <section className="relative overflow-hidden border-t border-border/40 py-12 md:py-20 px-4 bg-[radial-gradient(circle_at_10%_20%,hsl(var(--primary)/0.08),transparent_38%),radial-gradient(circle_at_90%_10%,hsl(var(--accent)/0.10),transparent_36%),hsl(var(--background))]">
+        <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(180deg,transparent,hsla(0,0%,100%,0.02))]" />
         <div className="container mx-auto max-w-2xl space-y-8 md:space-y-12">
           
-          <div className="space-y-6">
+          <div className="space-y-6 relative z-10 bg-card/70 border border-border/40 rounded-[2rem] p-6 md:p-8 backdrop-blur-md shadow-lg">
             <h2 className="text-3xl font-black italic uppercase tracking-tighter text-foreground">
               {isEn ? 'The Spirit Within' : '주류 MBTI 테스트 소개'}
             </h2>
@@ -69,7 +70,7 @@ export default async function MbtiPage({ params }: MbtiPageProps) {
             </div>
           </div>
 
-          <div className="space-y-6 border-t border-border/10 pt-10">
+          <div className="space-y-6 relative z-10 bg-card/70 border border-border/40 rounded-[2rem] p-6 md:p-8 backdrop-blur-md shadow-lg">
             <h3 className="text-xl font-bold uppercase tracking-widest text-primary italic">
               {isEn ? 'Why Take This Test?' : '테스트를 해야 하는 이유'}
             </h3>

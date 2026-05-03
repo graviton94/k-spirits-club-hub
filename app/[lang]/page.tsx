@@ -1,6 +1,7 @@
 export const revalidate = 60;
 
 import { dbListNewArrivals, dbListSpiritReviews } from "@/lib/db/data-connect-client";
+import { dbAdminListNewArrivals } from "@/lib/db/data-connect-admin";
 import HomeClient from "@/components/home/HomeClient";
 import NewsSection from "@/components/home/NewsSection";
 import { Locale } from "@/i18n-config";
@@ -17,7 +18,7 @@ export default async function HomePage({ params }: PageProps) {
   const dictionary = await getDictionary(lang);
 
   const [rawNewArrivals, rawReviews] = await Promise.all([
-    dbListNewArrivals(12).catch(() => []),
+    dbAdminListNewArrivals(12).catch(() => dbListNewArrivals(12).catch(() => [])),
     dbListSpiritReviews(5, 0).catch(() => [])
   ]);
 

@@ -41,10 +41,15 @@ export interface SpiritSearchIndex {
   n: string;           // name
   en: string | null;   // name_en (English name)
   c: string;           // category
+  ce?: string | null;  // categoryEn
   sc: string | null;   // subcategory
   t: string | null;    // thumbnailUrl
   a: number;           // abv
+  v?: number | null;   // volume
   d: string | null;    // distillery
+  b?: string | null;   // bottler
+  co?: string | null;  // country
+  re?: string | null;  // region
   tn: string | null;   // tasting_note (Root)
   mc?: string | null;  // mainCategory (Optional in index)
   m?: any;             // metadata snippet

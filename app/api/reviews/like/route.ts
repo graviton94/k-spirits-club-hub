@@ -12,15 +12,22 @@ import {
     dbGetReview,
     dbIncrementUserHeartsReceived
 } from '@/lib/db/data-connect-client';
+import { verifyRequestToken } from '@/lib/auth/verifyToken';
 
 export const runtime = 'nodejs';
 
 export async function POST(request: NextRequest) {
     try {
-        const body = await request.json();
-        const { spiritId, reviewUserId, likerUserId, reviewId: explicitReviewId } = body;
+        const verified = await verifyRequestToken(request.headers.get('authorization'));
+        if (!verified) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
 
-        if (!likerUserId || (!explicitReviewId && (!spiritId || !reviewUserId))) {
+        const body = await request.json();
+        const { spiritId, reviewUserId, reviewId: explicitReviewId } = body;
+        const likerUserId = verified.uid;
+
+        if (!explicitReviewId && (!spiritId || !reviewUserId)) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
         }
 

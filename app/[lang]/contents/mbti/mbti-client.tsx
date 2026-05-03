@@ -14,7 +14,6 @@ import GoogleAd from '@/components/ui/GoogleAd';
 type GameStep = 'intro' | 'quiz' | 'loading' | 'result';
 
 const SPIRIT_EMOJIS = ['🥃', '🍷', '🍺', '🍸', '🧉', '🍶', '🍹', '🥂'];
-const GRAPH_COLORS = ['#475569', '#944d5e', '#a68b5e', '#5a6b5d'];
 
 export function MBTIClient({ lang }: { lang: string }) {
     const [step, setStep] = useState<GameStep>('intro');
@@ -158,12 +157,12 @@ export function MBTIClient({ lang }: { lang: string }) {
     return (
         <div className="max-w-2xl mx-auto px-4 py-12 md:py-16 min-h-[85vh] flex flex-col items-center relative overflow-hidden">
             {/* Background Atmosphere */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[600px] bg-primary/5 blur-[120px] pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,hsl(var(--primary)/0.22),transparent_40%),radial-gradient(circle_at_82%_12%,hsl(var(--accent)/0.16),transparent_36%),radial-gradient(circle_at_50%_78%,hsl(var(--secondary)/0.22),transparent_45%)] pointer-events-none" />
 
             {/* Back Button */}
             <button
                 onClick={() => router.back()}
-                className="absolute top-8 left-6 p-2 bg-card/20 backdrop-blur-xl border border-white/5 rounded-2xl hover:bg-muted transition-all group z-50 shadow-2xl"
+                className="absolute top-8 left-6 p-2.5 bg-card/80 backdrop-blur-xl border border-border/60 rounded-2xl hover:bg-card transition-all group z-50 shadow-xl"
             >
                 <ArrowLeft className="w-5 h-5 text-foreground group-hover:-translate-x-1 transition-transform" />
             </button>
@@ -194,7 +193,7 @@ export function MBTIClient({ lang }: { lang: string }) {
 
                         <div className="relative w-80 h-72 mx-auto flex items-center justify-center">
                             <div className="absolute w-56 h-56 bg-primary/20 rounded-full blur-[80px] animate-pulse" />
-                            <div className="relative z-10 w-40 h-40 flex items-center justify-center bg-card/10 backdrop-blur-2xl border border-white/10 rounded-[3rem] shadow-2xl">
+                            <div className="relative z-10 w-40 h-40 flex items-center justify-center bg-card/80 backdrop-blur-2xl border border-border/50 rounded-[3rem] shadow-xl">
                                 <AnimatePresence mode="wait">
                                     <motion.span
                                         key={introEmojiIdx}
@@ -216,7 +215,7 @@ export function MBTIClient({ lang }: { lang: string }) {
 
                         <button
                             onClick={startQuiz}
-                            className="px-16 py-6 bg-primary text-primary-foreground rounded-[2.5rem] font-black text-xl shadow-[0_25px_50px_-12px_rgba(var(--primary-rgb),0.5)] hover:scale-105 transition-all active:scale-95 italic uppercase tracking-tighter"
+                            className="px-16 py-6 bg-primary text-primary-foreground rounded-[2.5rem] font-black text-xl shadow-[0_20px_45px_-14px_rgba(var(--primary-rgb),0.5)] hover:scale-105 transition-all active:scale-95 italic uppercase tracking-tighter"
                         >
                             {t.startBtn}
                         </button>
@@ -226,7 +225,7 @@ export function MBTIClient({ lang }: { lang: string }) {
                                 client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
                                 slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || ''}
                                 format="horizontal"
-                                className="rounded-3xl border border-white/5 opacity-80"
+                                className="rounded-3xl border border-border/40 bg-card/70"
                             />
                         </div>
                     </motion.div>
@@ -253,7 +252,7 @@ export function MBTIClient({ lang }: { lang: string }) {
                                     {currentIdx + 1} / {MBTI_QUESTIONS.length}
                                 </span>
                             </div>
-                            <div className="h-2.5 w-full bg-card/20 border border-white/5 rounded-full overflow-hidden shadow-inner">
+                            <div className="h-2.5 w-full bg-card/70 border border-border/40 rounded-full overflow-hidden shadow-inner">
                                 <motion.div
                                     className="h-full bg-brand-gradient shadow-[0_0_25px_rgba(var(--primary-rgb),0.5)]"
                                     initial={{ width: 0 }}
@@ -264,11 +263,11 @@ export function MBTIClient({ lang }: { lang: string }) {
                         </div>
 
                         {/* Question Card */}
-                        <div className="bg-card/20 backdrop-blur-3xl border border-white/10 p-6 md:p-10 rounded-[3rem] shadow-2xl space-y-8 relative overflow-hidden group">
+                        <div className="bg-card/80 backdrop-blur-3xl border border-border/50 p-6 md:p-10 rounded-[3rem] shadow-xl space-y-8 relative overflow-hidden group">
                             <div className="absolute -top-24 -right-24 w-64 h-64 bg-primary/10 blur-[80px] rounded-full pointer-events-none group-hover:bg-primary/20 transition-colors" />
 
                             {MBTI_QUESTIONS[currentIdx].imagePath && (
-                                <div className="relative w-full aspect-video rounded-[2rem] overflow-hidden shadow-2xl border border-white/5">
+                                <div className="relative w-full aspect-video rounded-[2rem] overflow-hidden shadow-xl border border-border/40">
                                     <Image
                                         src={MBTI_QUESTIONS[currentIdx].imagePath}
                                         alt="Question"
@@ -289,7 +288,7 @@ export function MBTIClient({ lang }: { lang: string }) {
                                     <button
                                         key={i}
                                         onClick={() => handleAnswer(ans.value)}
-                                        className="w-full p-6 text-lg md:text-xl font-black bg-card/30 border border-white/5 hover:border-primary/50 hover:bg-primary/5 rounded-3xl transition-all active:scale-[0.98] text-center leading-snug shadow-xl group/btn relative overflow-hidden"
+                                        className="w-full p-6 text-lg md:text-xl font-black bg-background/80 border border-border/50 hover:border-primary/50 hover:bg-primary/5 rounded-3xl transition-all active:scale-[0.98] text-center leading-snug shadow-lg group/btn relative overflow-hidden"
                                     >
                                         <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
                                         <span className="relative z-10 italic uppercase tracking-tight">{isEn ? ans.text_en : ans.text_ko}</span>
@@ -308,7 +307,7 @@ export function MBTIClient({ lang }: { lang: string }) {
                         exit={{ opacity: 0 }}
                         className="flex flex-col items-center justify-center space-y-10 mt-[15vh] md:mt-[20vh] relative z-10"
                     >
-                        <div className="relative p-10 bg-card/20 backdrop-blur-3xl border border-white/10 rounded-[3rem] shadow-2xl">
+                        <div className="relative p-10 bg-card/85 backdrop-blur-3xl border border-border/50 rounded-[3rem] shadow-xl">
                             <Loader2 className="w-24 h-24 text-primary animate-spin" />
                             <span className="absolute inset-0 flex items-center justify-center text-4xl animate-bounce">🥃</span>
                         </div>
@@ -330,10 +329,10 @@ export function MBTIClient({ lang }: { lang: string }) {
                     >
                         <div
                             ref={resultRef}
-                            className="bg-card p-4 md:p-8 rounded-[3rem] border border-white/10 space-y-10 shadow-2xl relative overflow-hidden"
+                            className="bg-card p-4 md:p-8 rounded-[3rem] border border-border/50 space-y-10 shadow-xl relative overflow-hidden"
                         >
                             {/* Texture Overlay */}
-                            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')] opacity-20 pointer-events-none" />
+                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_12%,hsl(var(--primary)/0.10),transparent_35%),radial-gradient(circle_at_86%_18%,hsl(var(--accent)/0.10),transparent_32%)] pointer-events-none" />
 
                             <div className="text-center space-y-6 relative z-10">
                                 <div className="space-y-1">
@@ -343,17 +342,17 @@ export function MBTIClient({ lang }: { lang: string }) {
                                     </h2>
                                 </div>
 
-                                <div className="relative w-full aspect-video rounded-[2.5rem] overflow-hidden bg-neutral-900 shadow-2xl border border-white/10">
+                                <div className="relative w-full aspect-video rounded-[2.5rem] overflow-hidden bg-muted/40 shadow-xl border border-border/50">
                                     <Image
                                         src={MBTI_RESULTS[resultType].imagePath}
                                         alt={resultType}
                                         fill
                                         className="object-cover"
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
                                 </div>
 
-                                <div className="bg-muted/5 p-6 md:p-8 rounded-[2rem] border border-white/5 backdrop-blur-md">
+                                <div className="bg-background/80 p-6 md:p-8 rounded-[2rem] border border-border/40 backdrop-blur-md">
                                     <p className="text-base md:text-lg leading-relaxed text-foreground/90 font-medium whitespace-pre-line text-center">
                                         {isEn ? MBTI_RESULTS[resultType].description_en : MBTI_RESULTS[resultType].description_ko}
                                     </p>
@@ -365,7 +364,7 @@ export function MBTIClient({ lang }: { lang: string }) {
                                         return (
                                             <span
                                                 key={i}
-                                                className="px-5 py-2 rounded-full text-[12px] font-black border border-white/5 bg-secondary/30 backdrop-blur-xl text-foreground/80 uppercase tracking-tighter"
+                                                className="px-5 py-2 rounded-full text-[12px] font-black border border-border/40 bg-background/80 backdrop-blur-xl text-foreground/80 uppercase tracking-tighter"
                                             >
                                                 # {tag}
                                             </span>
@@ -400,14 +399,14 @@ export function MBTIClient({ lang }: { lang: string }) {
                             <div className="grid grid-cols-2 gap-4">
                                 <button
                                     onClick={saveImage}
-                                    className="py-5 bg-card/40 backdrop-blur-2xl hover:bg-card/60 text-foreground rounded-3xl font-black text-sm md:text-base flex items-center justify-center gap-3 transition-all active:scale-95 border border-white/10 shadow-2xl group"
+                                    className="py-5 bg-card/85 backdrop-blur-2xl hover:bg-card text-foreground rounded-3xl font-black text-sm md:text-base flex items-center justify-center gap-3 transition-all active:scale-95 border border-border/50 shadow-lg group"
                                 >
                                     <Download size={20} className="text-primary group-hover:scale-110 transition-transform" /> {isEn ? "EXPORT IMAGE" : "이미지 저장"}
                                 </button>
 
                                 <button
                                     onClick={copyLink}
-                                    className="py-5 bg-card/40 backdrop-blur-2xl hover:bg-card/60 text-foreground rounded-3xl font-black text-sm md:text-base flex items-center justify-center gap-3 transition-all active:scale-95 border border-white/10 shadow-2xl group"
+                                    className="py-5 bg-card/85 backdrop-blur-2xl hover:bg-card text-foreground rounded-3xl font-black text-sm md:text-base flex items-center justify-center gap-3 transition-all active:scale-95 border border-border/50 shadow-lg group"
                                 >
                                     <Share2 size={20} className="text-primary group-hover:scale-110 transition-transform" /> {isEn ? "SHARE URL" : "결과 공유"}
                                 </button>
@@ -426,7 +425,7 @@ export function MBTIClient({ lang }: { lang: string }) {
                                 client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || ''}
                                 slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT || ''}
                                 format="horizontal"
-                                className="rounded-3xl border border-white/5"
+                                className="rounded-3xl border border-border/40 bg-card/70"
                             />
                         </div>
                     </motion.div>

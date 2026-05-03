@@ -83,10 +83,11 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
 
     setIsDeleting(true);
     try {
+      const idToken = await user.getIdToken();
       const response = await fetch(`/api/reviews?spiritId=${spiritId}&userId=${deleteTarget.userId}`, {
         method: 'DELETE',
         headers: {
-          'x-user-id': user.uid
+          'authorization': `Bearer ${idToken}`
         }
       });
 
@@ -386,14 +387,17 @@ function ReviewCard({ review, isOwner, onEdit, onDelete, onToast, spiritId }: {
     
     // Call API route
     try {
+      const idToken = await user.getIdToken();
       const response = await fetch('/api/reviews/like', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': `Bearer ${idToken}`
+        },
         body: JSON.stringify({
           reviewId: review.id,
           spiritId: review.spiritId || spiritId, // Fallback to prop spiritId
-          reviewUserId: review.userId,
-          likerUserId: user.uid
+          reviewUserId: review.userId
         })
       });
 
@@ -659,11 +663,13 @@ function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitte
         userName: profile?.nickname || user.email?.split('@')[0] || 'Anonymous'
       };
 
+      const idToken = await user.getIdToken();
+
       const response = await fetch('/api/reviews', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-user-id': user.uid
+          'authorization': `Bearer ${idToken}`
         },
         body: JSON.stringify(reviewPayload)
       });

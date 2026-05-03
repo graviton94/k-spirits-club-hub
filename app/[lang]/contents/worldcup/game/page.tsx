@@ -597,42 +597,46 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
                 </div>
             </div>
 
-            {/* VS Badge — Centralized for both layouts */}
-            <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 pointer-events-none mt-12 md:mt-24">
-                <motion.div 
-                    initial={{ scale: 0.5, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ type: 'spring', bounce: 0.6, duration: 1 }}
-                    className="w-16 h-16 md:w-40 md:h-40 glass-premium border-2 border-primary/40 rounded-full flex items-center justify-center shadow-[0_0_100px_rgba(var(--primary-rgb),0.3)] relative"
-                >
-                    <div className="absolute inset-0 border border-primary/20 rounded-full animate-ping opacity-20" />
-                    <span className="text-2xl md:text-6xl font-black italic text-primary drop-shadow-[0_0_15px_rgba(var(--primary-rgb),0.8)] tracking-tighter">VS</span>
-                </motion.div>
-            </div>
+            {/* Choice Arena — Mobile keeps horizontal duel layout */}
+            <div className="flex-1 flex items-start justify-center pt-56 md:pt-72 pb-12 px-3 md:px-12 max-w-[2400px] mx-auto w-full relative z-20">
+                <div className="w-full overflow-x-auto pb-2">
+                    <div className="min-w-[860px] md:min-w-0 w-full grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] gap-3 md:gap-10 items-stretch">
+                        <AnimatePresence mode="wait">
+                            <motion.div 
+                                key={leftItem.id}
+                                initial={{ opacity: 0, scale: 0.95, x: -20 }}
+                                animate={{ opacity: 1, scale: 1, x: 0 }}
+                                exit={{ opacity: 0, scale: 1.05, x: -20 }}
+                                className="flex"
+                            >
+                                <ChoiceCard item={leftItem} onClick={() => selectWinner(leftItem)} pos="left" isEn={isEn} />
+                            </motion.div>
 
-            {/* Choice Arena — Dynamic Layout */}
-            <div className="flex-1 flex flex-col md:flex-row items-stretch justify-center pt-56 md:pt-72 pb-12 px-3 md:px-12 gap-3 md:gap-12 max-w-[2400px] mx-auto w-full relative z-20">
-                <AnimatePresence mode="wait">
-                    <motion.div 
-                        key={leftItem.id}
-                        initial={{ opacity: 0, scale: 0.95, x: -20 }}
-                        animate={{ opacity: 1, scale: 1, x: 0 }}
-                        exit={{ opacity: 0, scale: 1.05, x: -20 }}
-                        className="flex-1 flex"
-                    >
-                        <ChoiceCard item={leftItem} onClick={() => selectWinner(leftItem)} pos="left" isEn={isEn} />
-                    </motion.div>
+                            <div className="self-center justify-self-center pointer-events-none">
+                                <motion.div 
+                                    key={`${leftItem.id}-${rightItem.id}-vs`}
+                                    initial={{ scale: 0.5, opacity: 0 }}
+                                    animate={{ scale: 1, opacity: 1 }}
+                                    transition={{ type: 'spring', bounce: 0.6, duration: 1 }}
+                                    className="w-16 h-16 md:w-32 md:h-32 glass-premium border-2 border-primary/40 rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(var(--primary-rgb),0.28)] relative"
+                                >
+                                    <div className="absolute inset-0 border border-primary/20 rounded-full animate-ping opacity-20" />
+                                    <span className="text-2xl md:text-5xl font-black italic text-primary drop-shadow-[0_0_12px_rgba(var(--primary-rgb),0.8)] tracking-tighter">VS</span>
+                                </motion.div>
+                            </div>
 
-                    <motion.div 
-                        key={rightItem.id}
-                        initial={{ opacity: 0, scale: 0.95, x: 20 }}
-                        animate={{ opacity: 1, scale: 1, x: 0 }}
-                        exit={{ opacity: 0, scale: 1.05, x: 20 }}
-                        className="flex-1 flex"
-                    >
-                        <ChoiceCard item={rightItem} onClick={() => selectWinner(rightItem)} pos="right" isEn={isEn} />
-                    </motion.div>
-                </AnimatePresence>
+                            <motion.div 
+                                key={rightItem.id}
+                                initial={{ opacity: 0, scale: 0.95, x: 20 }}
+                                animate={{ opacity: 1, scale: 1, x: 0 }}
+                                exit={{ opacity: 0, scale: 1.05, x: 20 }}
+                                className="flex"
+                            >
+                                <ChoiceCard item={rightItem} onClick={() => selectWinner(rightItem)} pos="right" isEn={isEn} />
+                            </motion.div>
+                        </AnimatePresence>
+                    </div>
+                </div>
             </div>
         </div>
     );

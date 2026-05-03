@@ -105,11 +105,12 @@ export default function ReviewsPage() {
 
     setIsDeleting(true);
     try {
+      const idToken = await user.getIdToken();
       // Use the review API endpoint to delete the review properly
       const response = await fetch(`/api/reviews?spiritId=${deleteTarget.id}&userId=${user.uid}`, {
         method: 'DELETE',
         headers: {
-          'x-user-id': user.uid
+          'authorization': `Bearer ${idToken}`
         }
       });
 

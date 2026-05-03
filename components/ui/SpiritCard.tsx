@@ -47,6 +47,12 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
   const localizedDistillery = isEn ? (spirit.metadata?.distilleryEn || spirit.distillery) : spirit.distillery;
   const localizedCategory = isEn ? ((metadata as any).display_names_en?.[spirit.category] || spirit.category) : spirit.category;
   const matchReason = spirit.analysisReason || spirit.reason;
+  const originLabel = [spirit.country, spirit.region].filter(Boolean).join(' · ');
+  const profileFacts = [
+    spirit.volume ? `${spirit.volume}ml` : null,
+    originLabel || null,
+    spirit.bottler || null,
+  ].filter(Boolean) as string[];
   
   const [imgSrc, setImgSrc] = useState(
     spirit.imageUrl ? getOptimizedImageUrl(spirit.imageUrl, 200) : getCategoryFallbackImage(spirit.category)
@@ -198,6 +204,12 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
             </p>
           )}
 
+          {profileFacts.length > 0 && (
+            <p className="text-[11px] font-bold text-foreground/40 mb-4 truncate">
+              {profileFacts.join(' · ')}
+            </p>
+          )}
+
           {/* 🛡️ Performance / Rating */}
           <div className="flex items-center gap-3 mb-6">
             {spirit.aggregateRating && spirit.aggregateRating.ratingValue > 0 && (
@@ -226,6 +238,12 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
                     "{matchReason}"
                 </p>
               </div>
+          )}
+
+          {!matchReason && spirit.tastingNote && (
+            <p className="text-[13px] text-foreground/70 leading-relaxed font-medium italic line-clamp-2">
+              "{spirit.tastingNote}"
+            </p>
           )}
         </div>
 

@@ -63,9 +63,10 @@ export default function ProfileClient({ lang, dict }: ProfileClientProps) {
             const ownedSpirits = cabinetData.filter((item) => !item.isWishlist);
             setCabinetCount(ownedSpirits.length);
 
+            const idToken = await user.getIdToken();
             const response = await fetch('/api/users/stats', {
                 headers: {
-                    'x-user-id': user.uid
+                    'authorization': `Bearer ${idToken}`
                 }
             });
 

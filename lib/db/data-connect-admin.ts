@@ -178,10 +178,18 @@ export const dbAdminSearchSpiritsPublic = async (vars: {
                     name
                     nameEn
                     category
+                    categoryEn
+                    mainCategory
+                    subcategory
                     imageUrl
                     thumbnailUrl
                     abv
+                    volume
                     distillery
+                    bottler
+                    country
+                    region
+                    tastingNote
                 }
             }
         `;
@@ -211,10 +219,18 @@ export const dbAdminSearchSpiritsPublic = async (vars: {
                 name
                 nameEn
                 category
+                categoryEn
+                mainCategory
+                subcategory
                 imageUrl
                 thumbnailUrl
                 abv
+                volume
                 distillery
+                bottler
+                country
+                region
+                tastingNote
             }
         }
     `;
@@ -374,6 +390,62 @@ export const dbAdminUpsertSpirit = async (vars: any) => {
     allowed.forEach(key => { if (key in vars) filtered[key] = vars[key]; });
     
     return await executeGraphql('upsertSpirit', query, filtered);
+};
+
+export const dbAdminUpsertNewArrival = async (vars: {
+    id: string;
+    spiritId: string;
+    displayOrder?: number;
+    tags?: string[];
+}) => {
+    const query = `
+        mutation upsertNewArrival($id: String!, $spiritId: String!, $displayOrder: Int, $tags: [String!]) {
+            newArrival_upsert(data: {
+                id: $id,
+                spiritId: $spiritId,
+                displayOrder: $displayOrder,
+                tags: $tags
+            }) {
+                id
+            }
+        }
+    `;
+    return await executeGraphql('upsertNewArrival', query, vars);
+};
+
+export const dbAdminListNewArrivals = async (limit: number) => {
+    const query = `
+        query listNewArrivalsFromCuration($limit: Int) {
+            newArrivals(
+                limit: $limit,
+                orderBy: [{ displayOrder: DESC }, { createdAt: DESC }]
+            ) {
+                id
+                spirit {
+                    id
+                    name
+                    nameEn
+                    category
+                    categoryEn
+                    imageUrl
+                    thumbnailUrl
+                    country
+                    abv
+                    distillery
+                    descriptionKo
+                    descriptionEn
+                    isPublished
+                    createdAt
+                    updatedAt
+                }
+            }
+        }
+    `;
+    const { data } = await executeGraphql('listNewArrivalsFromCuration', query, { limit });
+    const rows = data?.newArrivals || [];
+    return rows
+        .map((row: any) => row.spirit)
+        .filter((spirit: any) => spirit && spirit.isPublished);
 };
 
 export const dbAdminDeleteSpirit = async (id: string) => {
