@@ -6,7 +6,6 @@ import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google'; 
 import { notFound } from "next/navigation";
 import "./globals.css";
 import { AuthProvider } from './context/auth-context';
-import { SpiritsCacheProvider } from './context/spirits-cache-context';
 import OnboardingModal from '../components/auth/onboarding-modal';
 import { i18n, type Locale } from '@/i18n-config';
 import { Header } from '@/components/layout/Header';
@@ -145,21 +144,19 @@ export default async function RootLayout({
         */}
 
         <AuthProvider>
-          <SpiritsCacheProvider>
-            <ModalProvider>
-              <PwaProvider>
-                <Header lang={lang} dict={dictionary.nav} />
-                <ScrollToTop />
-                <PwaInstallPrompt />
-                <OnboardingModal dict={dictionary.onboarding} />
-                <main className="relative min-h-screen overflow-x-hidden pb-20 md:pb-0">
-                  {children}
-                </main>
-                <BottomNav lang={lang} dict={dictionary.nav} />
-                <ChatSommelier lang={lang} />
-              </PwaProvider>
-            </ModalProvider>
-          </SpiritsCacheProvider>
+          <ModalProvider>
+            <PwaProvider>
+              <Header lang={lang} dict={dictionary.nav} />
+              <ScrollToTop />
+              <PwaInstallPrompt />
+              <OnboardingModal dict={dictionary.onboarding} />
+              <main className="relative min-h-screen overflow-x-hidden pb-20 md:pb-0">
+                {children}
+              </main>
+              <BottomNav lang={lang} dict={dictionary.nav} />
+              <ChatSommelier lang={lang} />
+            </PwaProvider>
+          </ModalProvider>
         </AuthProvider>
 
         {/* Static Footer Ad Banner (Replaces Sticky Footer Ad) */}

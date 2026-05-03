@@ -10,7 +10,7 @@ import styles from "@/app/[lang]/page.module.css";
 import { RandomBackground } from "@/components/ui/RandomBackground";
 import { useState, useEffect } from "react";
 import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
-import { Spirit } from "@/lib/db/schema";
+import { Spirit, SpiritSearchIndex } from "@/lib/db/schema";
 import WikiSnippetSection from "@/components/home/WikiSnippetSection";
 import { surfaces, typography, chips } from "@/lib/design/patterns";
 
@@ -20,6 +20,8 @@ interface HomeClientProps {
     initialNewArrivals: Spirit[];
     initialTrending: any[];
     initialReviews: any[];
+    initialSearchIndex: SpiritSearchIndex[];
+    initialDiscovery: SpiritSearchIndex | null;
     dailySnippet: import('@/lib/utils/wiki-snippet').WikiSnippet | null;
     children?: React.ReactNode;
 }
@@ -41,7 +43,7 @@ const UI_TEXT = {
     }
 };
 
-export default function HomeClient({ lang, dict, initialNewArrivals, initialReviews, dailySnippet, children }: HomeClientProps) {
+export default function HomeClient({ lang, dict, initialNewArrivals, initialReviews, initialSearchIndex, initialDiscovery, dailySnippet, children }: HomeClientProps) {
     // const { publishedSpirits, isLoading: isCacheLoading } = useSpiritsCache(); // Cache might still be used for other things or removed if only for trending
     // Actually, let's keep it simple. Remove trending logic.
 
@@ -94,10 +96,10 @@ export default function HomeClient({ lang, dict, initialNewArrivals, initialRevi
 
                     <div className="w-full max-w-2xl mx-auto animate-fade-in-up delay-200 relative z-30 space-y-4">
                         <div>
-                             <SearchBar isHero={true} dict={dict} />
+                             <SearchBar isHero={true} dict={dict} initialIndex={initialSearchIndex} />
                         </div>
                         <div className="flex justify-center">
-                            <DailyPick lang={lang} />
+                            <DailyPick lang={lang} initialSpirit={initialDiscovery} />
                         </div>
                     </div>
                 </div>

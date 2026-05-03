@@ -4,22 +4,23 @@ import { Search, Plus, Bookmark, Sparkles } from "lucide-react";
 import { useState, KeyboardEvent, useMemo, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter, usePathname } from "next/navigation";
-import { useSpiritsCache } from "@/app/[lang]/context/spirits-cache-context";
 import SuccessToast from "@/components/ui/SuccessToast";
 import { useAuth } from "@/app/[lang]/context/auth-context";
 import { addToCabinet } from "@/app/[lang]/actions/cabinet";
 import Link from "next/link";
 import { surfaces, interactive } from "@/lib/design/patterns";
+import type { SpiritSearchIndex } from "@/lib/db/schema";
 
 const BLUR_DELAY_MS = 200; // Delay to allow clicking dropdown results before blur
 
-export function SearchBar({ isHero = false, dict }: { isHero?: boolean, dict?: any }) {
+export function SearchBar({ isHero = false, dict, initialIndex = [] }: { isHero?: boolean, dict?: any, initialIndex?: SpiritSearchIndex[] }) {
   const [isFocused, setIsFocused] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+  const [instantResults, setInstantResults] = useState<any[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
   const router = useRouter();
   const pathname = usePathname() || "";
   const lang = pathname.split('/')[1] === 'en' ? 'en' : 'ko';
-  const { searchSpirits, isLoading } = useSpiritsCache();
   const { user } = useAuth();
   const blurTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [showToast, setShowToast] = useState(false);
@@ -35,21 +36,70 @@ export function SearchBar({ isHero = false, dict }: { isHero?: boolean, dict?: a
     return () => clearTimeout(timer);
   }, [searchValue]);
 
-  // Get instant search results using search index (lightweight)
-  const instantResults = useMemo(() => {
-    if (!debouncedSearchValue.trim() || isLoading) {
+  const localSeedResults = useMemo(() => {
+    const query = searchValue.trim().toLowerCase();
+
+    if (!query || !initialIndex.length) {
       return [];
     }
 
-    const startTime = performance.now();
-    const results = searchSpirits(debouncedSearchValue).slice(0, 5); // Show top 5 results
-    const endTime = performance.now();
+    return initialIndex
+      .filter((item) => {
+        const name = item.n.toLowerCase();
+        const englishName = item.en?.toLowerCase() || "";
+        const distillery = item.d?.toLowerCase() || "";
 
-    if (process.env.NODE_ENV === 'development') {
-      console.log(`[SearchBar] Search completed in ${(endTime - startTime).toFixed(2)}ms`);
+        return name.includes(query) || englishName.includes(query) || distillery.includes(query);
+      })
+      .slice(0, 5);
+  }, [initialIndex, searchValue]);
+
+  useEffect(() => {
+    if (!searchValue.trim()) {
+      setInstantResults([]);
+      return;
     }
-    return results;
-  }, [debouncedSearchValue, searchSpirits, isLoading]);
+
+    if (localSeedResults.length > 0) {
+      setInstantResults(localSeedResults);
+    }
+  }, [localSeedResults, searchValue]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const fetchResults = async () => {
+      if (!debouncedSearchValue.trim()) {
+        setInstantResults([]);
+        setIsSearching(false);
+        return;
+      }
+
+      setIsSearching(true);
+      try {
+        const response = await fetch(
+          `/api/spirits?mode=search&searchTerm=${encodeURIComponent(debouncedSearchValue.trim())}&limit=5&offset=0`,
+          { cache: 'no-store' }
+        );
+        const data = await response.json();
+        if (!cancelled) {
+          setInstantResults(Array.isArray(data.spirits) ? data.spirits : []);
+        }
+      } catch (error) {
+        if (!cancelled) {
+          console.error('[SearchBar] Live search failed:', error);
+          setInstantResults([]);
+        }
+      } finally {
+        if (!cancelled) setIsSearching(false);
+      }
+    };
+
+    fetchResults();
+    return () => {
+      cancelled = true;
+    };
+  }, [debouncedSearchValue]);
 
   const handleSearch = () => {
     if (searchValue.trim()) {
@@ -114,7 +164,7 @@ export function SearchBar({ isHero = false, dict }: { isHero?: boolean, dict?: a
 
       {/* Instant search results dropdown */}
       <AnimatePresence>
-        {isFocused && searchValue.trim() && !isLoading && (
+        {isFocused && searchValue.trim() && (!isSearching || instantResults.length > 0) && (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -124,6 +174,11 @@ export function SearchBar({ isHero = false, dict }: { isHero?: boolean, dict?: a
           >
             {instantResults.length > 0 ? (
               <div className="max-h-80 overflow-y-auto">
+                {isSearching && (
+                  <div className={`px-3 py-2 text-[11px] font-semibold ${isHero ? 'text-primary/70' : 'text-primary/70'}`}>
+                    Refreshing live catalogue...
+                  </div>
+                )}
                 {instantResults.map((item) => (
                   <div
                     key={item.i}
@@ -235,6 +290,16 @@ export function SearchBar({ isHero = false, dict }: { isHero?: boolean, dict?: a
                 No results found for &quot;{searchValue}&quot;
               </div>
             )}
+          </motion.div>
+        )}
+        {isFocused && searchValue.trim() && isSearching && instantResults.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            className={`absolute top-full left-0 right-0 mt-3 p-4 backdrop-blur-md border-2 rounded-2xl shadow-2xl overflow-hidden ${isHero ? `${surfaces.panel} text-foreground` : 'bg-popover border-border'}`}
+          >
+            <div className="text-sm text-muted-foreground text-center">Searching live catalogue...</div>
           </motion.div>
         )}
         {isFocused && !searchValue.trim() && (

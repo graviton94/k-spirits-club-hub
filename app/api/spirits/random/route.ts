@@ -1,12 +1,11 @@
 import { NextResponse } from 'next/server';
-import { dbListSpirits } from '@/lib/db/data-connect-client';
+import { dbAdminSearchSpiritsPublic } from '@/lib/db/data-connect-admin';
 
 export const runtime = 'nodejs';
 
 export async function GET() {
     try {
-        // 1. Fetch a batch of published spirits
-        const spirits = await dbListSpirits();
+        const spirits = await dbAdminSearchSpiritsPublic({ limit: 60 });
 
         if (!spirits || spirits.length === 0) {
             return NextResponse.json({ error: 'No spirits found' }, { status: 404 });

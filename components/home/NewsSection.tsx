@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 import { dbListNewsArticles } from '@/lib/db/data-connect-client';
+import { ArrowRight } from 'lucide-react';
+import { typography } from '@/lib/design/patterns';
 
 export default async function NewsSection({ lang }: { lang: string }) {
     const isEn = lang === 'en';
@@ -29,18 +31,20 @@ export default async function NewsSection({ lang }: { lang: string }) {
     const title = lang === 'ko' ? '글로벌 주류 트렌드' : 'Global Spirits Trends';
 
     return (
-        <section className="container max-w-4xl mx-auto px-4 mb-12 lg:mb-16">
-            <div className="flex items-center justify-between mb-4 border-b border-border pb-3">
-                <div className="flex items-center gap-2">
-                    <span className="text-xl">📰</span>
-                    <h2 className="text-lg font-black tracking-tight text-foreground">{title}</h2>
+        <section className="w-full">
+            <div className="flex items-center justify-between mb-6 pb-3 border-b border-border/50">
+                <div className="flex items-center gap-2 md:gap-3">
+                    <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg md:rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20 text-primary text-sm md:text-base">
+                        <span>📰</span>
+                    </div>
+                    <h2 className={typography.sectionTitle}>{title}</h2>
                 </div>
                 <Link
                     href={`/${lang}/contents/news`}
-                    className="text-xs font-black text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 group/link uppercase tracking-wider"
+                    className={`${typography.sectionMeta} hover:text-primary transition-all flex items-center gap-1.5 group`}
                 >
                     {lang === 'ko' ? '전체 보러가기' : 'View All'}
-                    <span className="group-hover/link:translate-x-1 transition-transform">→</span>
+                    <ArrowRight className="w-2.5 h-2.5 md:w-3 md:h-3 group-hover:translate-x-1 transition-transform" />
                 </Link>
             </div>
 

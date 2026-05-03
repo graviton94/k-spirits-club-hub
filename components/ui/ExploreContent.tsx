@@ -8,7 +8,6 @@ import { ExploreCard } from './ExploreCard';
 import { ExploreGridSkeleton } from './ExploreSkeleton';
 import { Search, Loader2, ChevronDown } from 'lucide-react';
 import GoogleAd from '@/components/ui/GoogleAd';
-import metadata from '@/lib/constants/spirits-metadata.json';
 
 const PAGE_SIZE = 24;
 
@@ -48,6 +47,7 @@ export default function ExploreContent({ dict }: { dict?: any }) {
     const fetchMeta = async () => {
       try {
         const res = await fetch('/api/spirits?mode=meta');
+        const res = await fetch('/api/spirits?mode=meta', { cache: 'no-store' });
         const data = await res.json();
         if (data.categories) setDbCategories(data.categories);
       } catch (err) {
@@ -67,7 +67,7 @@ export default function ExploreContent({ dict }: { dict?: any }) {
       }
       try {
         const param = isEn ? 'categoryEn' : 'category';
-        const res = await fetch(`/api/spirits?mode=meta&${param}=${encodeURIComponent(selectedCategory)}`);
+        const res = await fetch(`/api/spirits?mode=meta&${param}=${encodeURIComponent(selectedCategory)}`, { cache: 'no-store' });
         const data = await res.json();
         if (data.subcategories) setDbSubCategories(data.subcategories);
       } catch (err) {
@@ -93,7 +93,7 @@ export default function ExploreContent({ dict }: { dict?: any }) {
           [catParam]: selectedCategory,
         });
         if (selectedSubCategory) params.append('subcategory', selectedSubCategory);
-        const res = await fetch(`/api/spirits?${params.toString()}`);
+        const res = await fetch(`/api/spirits?${params.toString()}`, { cache: 'no-store' });
         const data = await res.json();
         setDbDistilleries(Array.isArray(data.distilleries) ? data.distilleries : []);
       } catch (err) {
@@ -152,7 +152,7 @@ export default function ExploreContent({ dict }: { dict?: any }) {
       if (selectedSubCategory) params.append('subcategory', selectedSubCategory);
       if (selectedDistillery) params.append('distillery', selectedDistillery);
 
-      const response = await fetch(`/api/spirits?${params.toString()}`);
+      const response = await fetch(`/api/spirits?${params.toString()}`, { cache: 'no-store' });
       const data = await response.json();
 
       if (data.spirits) {

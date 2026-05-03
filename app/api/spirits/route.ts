@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { dbAdminSearchSpiritsPublic, dbAdminListAllCategories, dbAdminListAllSubcategories, dbAdminListAllDistilleries } from '@/lib/db/data-connect-admin';
 
 export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 /**
  * GET /api/spirits
@@ -57,16 +58,25 @@ export async function GET(request: NextRequest) {
 
       if (distilleryMode) {
         const distilleries = await dbAdminListAllDistilleries({ category, categoryEn, subcategory });
-        return NextResponse.json({ distilleries }, { status: 200 });
+        return NextResponse.json({ distilleries }, {
+          status: 200,
+          headers: { 'Cache-Control': 'no-store, max-age=0' }
+        });
       }
       
       if (category || categoryEn) {
         const subcategories = await dbAdminListAllSubcategories(category, categoryEn);
-        return NextResponse.json({ subcategories }, { status: 200 });
+        return NextResponse.json({ subcategories }, {
+          status: 200,
+          headers: { 'Cache-Control': 'no-store, max-age=0' }
+        });
       }
 
       const categories = await dbAdminListAllCategories();
-      return NextResponse.json({ categories }, { status: 200 });
+      return NextResponse.json({ categories }, {
+        status: 200,
+        headers: { 'Cache-Control': 'no-store, max-age=0' }
+      });
     }
 
     // 2. Handle Search Mode (Paginated Search)
@@ -138,7 +148,7 @@ export async function GET(request: NextRequest) {
     }, {
       status: 200,
       headers: {
-        'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=120',
+        'Cache-Control': 'no-store, max-age=0',
       }
     });
 

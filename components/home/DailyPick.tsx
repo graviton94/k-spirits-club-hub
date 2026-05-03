@@ -8,12 +8,24 @@ import { usePathname } from 'next/navigation';
 import { CATEGORY_NAME_MAP } from '@/lib/constants/categories';
 import metadata from '@/lib/constants/spirits-metadata.json';
 import { chips, surfaces, typography } from '@/lib/design/patterns';
+import type { SpiritSearchIndex } from '@/lib/db/schema';
 
 interface RandomSpirit {
     id: string;
     name: string;
     nameEn?: string;
     category: string;
+}
+
+function mapIndexToRandomSpirit(item: SpiritSearchIndex | null | undefined): RandomSpirit | null {
+    if (!item) return null;
+
+    return {
+        id: item.i,
+        name: item.n,
+        nameEn: item.en || undefined,
+        category: item.c,
+    };
 }
 
 
@@ -30,12 +42,12 @@ const UI_TEXT = {
     }
 };
 
-export default function DailyPick({ lang: propLang }: { lang?: string }) {
+export default function DailyPick({ lang: propLang, initialSpirit }: { lang?: string; initialSpirit?: SpiritSearchIndex | null }) {
     const pathname = usePathname() || "";
     const lang = propLang || (pathname.split('/')[1] === 'en' ? 'en' : 'ko');
 
-    const [spirit, setSpirit] = useState<RandomSpirit | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [spirit, setSpirit] = useState<RandomSpirit | null>(() => mapIndexToRandomSpirit(initialSpirit));
+    const [loading, setLoading] = useState(!initialSpirit);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [refreshKey, setRefreshKey] = useState(0);
 
@@ -56,19 +68,28 @@ export default function DailyPick({ lang: propLang }: { lang?: string }) {
     };
 
     useEffect(() => {
-        fetchRandomSpirit();
-    }, []);
+        if (!initialSpirit) {
+            fetchRandomSpirit();
+        }
+    }, [initialSpirit]);
 
     const t = UI_TEXT[lang === 'en' ? 'en' : 'ko'];
 
     return (
         <div className="mt-10 w-full flex flex-col items-center animate-fade-in">
-            {/* 1. Label: 은은한 메탈 실버 톤 */}
-            <div className={`flex items-center gap-2 ${typography.eyebrow} mb-4 opacity-80`}>
-                <Sparkles className="w-3 h-3 text-primary/70" /> {t.label}
-            </div>
+            <div className="relative group w-full max-w-md pt-6">
+                <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-1/2">
+                    <div className={`flex items-center gap-2 rounded-full px-3 py-1.5 shadow-xl backdrop-blur-xl ${surfaces.hero}`}>
+                        <span className={`${chips.primarySm} !rounded-full !px-2.5 !py-1 flex items-center gap-1.5 whitespace-nowrap`}>
+                            <Sparkles className="w-3 h-3" />
+                            {t.label}
+                        </span>
+                        <span className={`${typography.eyebrow} !text-foreground/80 whitespace-nowrap`}>
+                            {lang === 'en' ? 'Find your palate.' : '당신의 취향을 찾아보세요.'}
+                        </span>
+                    </div>
+                </div>
 
-            <div className="relative group w-full max-w-md">
                 {/* 2. Glow Effect: 핑크 대신 차가운 화이트/실버의 미묘한 빛 번짐 */}
                 <div className="absolute -inset-0.5 bg-linear-to-r from-primary/20 via-accent/15 to-primary/20 rounded-full blur-md opacity-0 group-hover:opacity-40 transition duration-700 ease-out"></div>
 

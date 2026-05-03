@@ -2,6 +2,7 @@ import { getDictionary } from "@/lib/get-dictionary";
 import { Locale } from "@/i18n-config";
 import CabinetClient from "@/components/cabinet/CabinetClient";
 import { getCanonicalUrl, getHreflangAlternates } from "@/lib/utils/seo-url";
+import { SpiritsCacheProvider } from "../context/spirits-cache-context";
 
 
 interface CabinetPageProps {
@@ -32,5 +33,9 @@ export default async function CabinetPage({ params }: CabinetPageProps) {
   const { lang } = await params;
   const dictionary = await getDictionary(lang as Locale);
 
-  return <CabinetClient lang={lang as Locale} dict={dictionary.cabinet} />;
+  return (
+    <SpiritsCacheProvider>
+      <CabinetClient lang={lang as Locale} dict={dictionary.cabinet} />
+    </SpiritsCacheProvider>
+  );
 }

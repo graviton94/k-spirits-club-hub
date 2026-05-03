@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Spirit } from "@/lib/db/schema";
 import { getCategoryFallbackImage } from "@/lib/utils/image-fallback";
 import { getOptimizedImageUrl } from "@/lib/utils/image-optimization";
-import { useSpiritsCache } from "@/app/[lang]/context/spirits-cache-context";
 import { useAuth } from "@/app/[lang]/context/auth-context";
 import { addToCabinet } from "@/app/[lang]/actions/cabinet";
 import { Plus, Bookmark, Loader2 } from "lucide-react";
@@ -22,9 +21,10 @@ interface SearchSpiritModalProps {
 
 export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existingIds, dict, lang }: SearchSpiritModalProps) {
     const [query, setQuery] = useState("");
+    const [results, setResults] = useState<any[]>([]);
+    const [isSearching, setIsSearching] = useState(false);
     const pathname = usePathname() || "";
     const isEn = pathname.split('/')[1] === 'en';
-    const { searchSpirits, isLoading } = useSpiritsCache();
     const { user } = useAuth();
     const [processingId, setProcessingId] = useState<string | null>(null);
     const [showToast, setShowToast] = useState(false);
@@ -50,8 +50,42 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
         return displayNames[cat] || cat;
     };
 
-    // Get results from cache
-    const results = query.trim() ? searchSpirits(query) : [];
+    useEffect(() => {
+        let cancelled = false;
+
+        const fetchResults = async () => {
+            if (!query.trim()) {
+                setResults([]);
+                setIsSearching(false);
+                return;
+            }
+
+            setIsSearching(true);
+            try {
+                const response = await fetch(
+                    `/api/spirits?mode=search&searchTerm=${encodeURIComponent(query.trim())}&limit=24&offset=0`,
+                    { cache: 'no-store' }
+                );
+                const data = await response.json();
+                if (!cancelled) {
+                    setResults(Array.isArray(data.spirits) ? data.spirits : []);
+                }
+            } catch (error) {
+                if (!cancelled) {
+                    console.error('[SearchSpiritModal] Live search failed:', error);
+                    setResults([]);
+                }
+            } finally {
+                if (!cancelled) setIsSearching(false);
+            }
+        };
+
+        const timer = setTimeout(fetchResults, 250);
+        return () => {
+            cancelled = true;
+            clearTimeout(timer);
+        };
+    }, [query]);
 
     const handleAdd = async (item: any, isWishlist: boolean) => {
         if (!user) {
@@ -136,19 +170,19 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
                     </div>
 
                     <div className="flex-1 overflow-y-auto custom-scrollbar p-4 sm:p-6 space-y-2 relative z-10 min-h-[300px]">
-                        {isLoading && (
+                        {isSearching && (
                             <div className="flex flex-col items-center justify-center py-20 text-muted-foreground gap-4">
                                 <Loader2 className="w-10 h-10 animate-spin text-primary" />
                                 <p className="font-bold text-sm">{isEn ? "Loading data..." : "데이터를 불러오는 중입니다..."}</p>
                             </div>
                         )}
-                        {!isLoading && results.length === 0 && query && (
+                        {!isSearching && results.length === 0 && query && (
                             <div className="flex flex-col items-center justify-center py-20 text-muted-foreground opacity-50">
                                 <p className="text-4xl mb-4">🔍</p>
                                 <p className="font-bold">{isEn ? "No search results found." : "검색 결과가 없습니다."}</p>
                             </div>
                         )}
-                        {!isLoading && !query && (
+                        {!isSearching && !query && (
                             <div className="flex flex-col items-center justify-center py-20 text-muted-foreground opacity-50">
                                 <p className="text-4xl mb-4">🥃</p>
                                 <p className="font-bold">{isEn ? "Try searching for a spirit name." : "제품명을 정확하게 입력해보세요."}</p>
