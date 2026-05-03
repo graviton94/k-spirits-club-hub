@@ -25,12 +25,12 @@ export default function StickyFooterAd({ client, slot }: StickyFooterAdProps) {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed left-0 right-0 z-40 bg-neutral-900/95 backdrop-blur-lg border-t border-white/10 shadow-2xl" style={{ bottom: '96px' }}>
+    <div className="fixed left-0 right-0 z-40 bg-muted/95 backdrop-blur-lg border-t border-white/10 shadow-2xl" style={{ bottom: '96px' }}>
       <div className="relative container mx-auto max-w-4xl px-2 py-1">
         {/* Close Button */}
         <button
           onClick={() => setIsVisible(false)}
-          className="absolute -top-3 -right-1 p-1 text-gray-400 hover:text-white transition-colors z-[100] bg-neutral-800 rounded-full border border-white/20 shadow-lg"
+          className="absolute -top-3 -right-1 p-1 text-muted-foreground hover:text-white transition-colors z-[100] bg-muted rounded-full border border-white/20 shadow-lg"
           aria-label="Close ad"
         >
           <X className="w-4 h-4" />

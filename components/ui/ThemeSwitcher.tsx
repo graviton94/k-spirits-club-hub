@@ -17,7 +17,7 @@ export function ThemeSwitcher({ className = "", showLabel = false }: ThemeSwitch
             <div className="flex bg-secondary/50 p-1 rounded-2xl border border-border w-fit min-w-[200px] relative">
                 {/* Visual Indicator Background */}
                 <motion.div
-                    className={`absolute inset-1 rounded-xl shadow-sm z-0 ${theme === 'light' ? 'bg-[#FFF9C4]' : 'bg-[#262626]'
+                    className={`absolute inset-1 rounded-xl shadow-sm z-0 ${theme === 'light' ? 'bg-secondary' : 'bg-card'
                         }`}
                     layoutId="activeTheme"
                     animate={{
@@ -38,7 +38,7 @@ export function ThemeSwitcher({ className = "", showLabel = false }: ThemeSwitch
 
                 <button
                     onClick={() => setTheme('dark')}
-                    className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-bold transition-all relative z-10 ${theme === 'dark' ? 'text-white' : 'text-muted-foreground hover:text-foreground'
+                    className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-bold transition-all relative z-10 ${theme === 'dark' ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
                         }`}
                 >
                     <span className="text-lg">🌙</span>

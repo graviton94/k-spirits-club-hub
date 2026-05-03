@@ -91,13 +91,13 @@ export default async function TasteResultPage({ params }: TasteResultPageProps) 
     return (
         <div className="min-h-screen bg-black flex flex-col items-center p-4 md:p-8 relative overflow-hidden">
             <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-pink-600/10 blur-[150px] rounded-full pointer-events-none" />
-            <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-purple-600/10 blur-[150px] rounded-full pointer-events-none" />
+            <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-accent/10 blur-[150px] rounded-full pointer-events-none" />
 
             <div className="w-full max-w-5xl relative z-10 pt-10 md:pt-20">
                 <TastePublicReport profile={profile} isPublic={true} />
 
                 <div className="mt-20 text-center opacity-30">
-                    <p className="text-[10px] text-neutral-500 font-bold tracking-[0.4em] uppercase">
+                    <p className="text-xs text-muted-foreground font-bold tracking-[0.4em] uppercase">
                         k-spirits.club | Advanced AI Taste Analysis
                     </p>
                 </div>

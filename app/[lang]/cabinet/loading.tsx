@@ -7,8 +7,8 @@ const SPIRIT_EMOJIS = ['🍶', '🥃', '🍺', '🍷', '🍾', '🥂', '🍹'];
 // Skeleton card that matches CabinetSpiritCard dimensions exactly
 function CabinetSpiritCardSkeleton() {
     return (
-        <div className="relative aspect-[2/3] rounded-2xl overflow-hidden bg-white dark:bg-slate-800/50 p-px shadow-sm animate-pulse">
-            <div className="relative h-full rounded-xl overflow-hidden bg-slate-50 dark:bg-slate-900">
+        <div className="relative aspect-[2/3] rounded-2xl overflow-hidden bg-background dark:bg-card/50 p-px shadow-sm animate-pulse">
+            <div className="relative h-full rounded-xl overflow-hidden bg-muted dark:bg-card">
                 {/* Image placeholder with same aspect ratio */}
                 <div className="absolute inset-0 bg-muted/30" />
                 
@@ -59,7 +59,7 @@ export default function CabinetLoading() {
 
             {/* Grid of skeleton cards matching cabinet layout */}
             <section className="mb-16">
-                <div className="relative bg-[#0f172a] rounded-[2.5rem] px-3 py-6 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/5">
+                <div className="relative bg-card/40 backdrop-blur-md rounded-[2.5rem] px-3 py-6 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-border/50">
                     <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2 sm:gap-3">
                         {Array.from({ length: 12 }).map((_, i) => (
                             <CabinetSpiritCardSkeleton key={i} />
@@ -78,9 +78,9 @@ export default function CabinetLoading() {
 
                     {/* Loading Dots */}
                     <div className="flex gap-2">
-                        <div className="w-3 h-3 bg-amber-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                        <div className="w-3 h-3 bg-amber-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                        <div className="w-3 h-3 bg-amber-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                        <div className="w-3 h-3 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                        <div className="w-3 h-3 bg-primary rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                        <div className="w-3 h-3 bg-primary rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                     </div>
                 </div>
             </div>

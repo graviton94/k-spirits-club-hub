@@ -171,7 +171,7 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                     <div className="p-2 bg-card/40 rounded-xl border border-white/5 group-hover:scale-110 transition-transform">
                         <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                     </div>
-                    <span className="text-[10px] font-black uppercase tracking-widest">{isEn ? 'Back' : '뒤로가기'}</span>
+                    <span className="text-xs font-black uppercase tracking-widest">{isEn ? 'Back' : '뒤로가기'}</span>
                 </button>
 
                 {/* Header */}
@@ -213,7 +213,7 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                 {loading ? (
                     <div className="flex flex-col items-center justify-center py-32 gap-8">
                         <Loader2 className="w-12 h-12 text-primary animate-spin" />
-                        <p className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-[0.5em] animate-pulse">{t.loading}</p>
+                        <p className="text-xs font-black text-muted-foreground/60 uppercase tracking-[0.5em] animate-pulse">{t.loading}</p>
                     </div>
                 ) : filteredReviews.length === 0 ? (
                     <div className="text-center py-40 bg-card/10 backdrop-blur-xl rounded-[4rem] border border-white/5 border-dashed text-muted-foreground">
@@ -237,7 +237,7 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                                         <div className="px-10 py-8 border-b border-white/5 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-muted/5">
                                             <div className="flex-1 min-w-0 space-y-1">
                                                 <div className="flex items-center gap-2">
-                                                    <span className="text-[10px] font-black text-primary/80 uppercase tracking-[0.3em] font-mono">
+                                                    <span className="text-xs font-black text-primary/80 uppercase tracking-[0.3em] font-mono">
                                                         {review.spirit?.distillery || "Artisanal Producer"}
                                                     </span>
                                                 </div>
@@ -258,7 +258,7 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                                                         )}
                                                         <span className="text-[11px] font-black tracking-tight">{review.user?.nickname || t.anonymous}</span>
                                                     </div>
-                                                    <span className="text-[10px] text-muted-foreground/40 font-black uppercase tracking-widest">{new Date(review.createdAt).toLocaleDateString()}</span>
+                                                    <span className="text-xs text-muted-foreground/40 font-black uppercase tracking-widest">{new Date(review.createdAt).toLocaleDateString()}</span>
                                                 </div>
                                                 
                                                 <div className="flex flex-col items-center justify-center w-20 h-20 bg-primary shadow-2xl shadow-primary/20 rounded-[2rem] text-primary-foreground transform group-hover:scale-105 transition-transform">
@@ -280,7 +280,7 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                                                     />
                                                     <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-40" />
                                                     {review.imageUrls && review.imageUrls.length > 1 && (
-                                                        <div className="absolute bottom-6 right-6 px-3 py-1.5 bg-white/10 backdrop-blur-xl border border-white/10 rounded-xl text-[10px] text-white font-black tracking-widest uppercase shadow-2xl">
+                                                        <div className="absolute bottom-6 right-6 px-3 py-1.5 bg-background/10 backdrop-blur-xl border border-white/10 rounded-xl text-xs text-white font-black tracking-widest uppercase shadow-2xl">
                                                             +{review.imageUrls.length - 1} Shutter
                                                         </div>
                                                     )}
@@ -299,7 +299,7 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                                                 <div className="flex flex-wrap items-end justify-between gap-6 pt-10 border-t border-white/5 mt-auto">
                                                     <div className="flex flex-wrap gap-2.5 flex-1 max-w-md">
                                                         {review.tags?.slice(0, 8).map((tag: string, i: number) => (
-                                                            <span key={i} className="text-[10px] px-4 py-1.5 rounded-xl bg-card border border-white/5 text-muted-foreground/60 font-black uppercase tracking-tight group-hover:text-primary group-hover:border-primary/20 transition-all">
+                                                            <span key={i} className="text-xs px-4 py-1.5 rounded-xl bg-card border border-white/5 text-muted-foreground/60 font-black uppercase tracking-tight group-hover:text-primary group-hover:border-primary/20 transition-all">
                                                                 #{tag}
                                                             </span>
                                                         ))}
@@ -308,7 +308,7 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                                                     <div className="flex items-center gap-4">
                                                          <Link 
                                                             href={`/${lang}/spirits/${review.spiritId}`}
-                                                            className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-primary hover:translate-x-1 transition-transform"
+                                                            className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-primary hover:translate-x-1 transition-transform"
                                                         >
                                                             {isEn ? 'View Bottle' : '제품 상세'} <ChevronRight className="w-3 h-3" />
                                                         </Link>
@@ -410,10 +410,10 @@ export default function ReviewBoardPage({ initialReviews, initialPage = 1 }: { i
                                     {t.deleteConfirm}
                                 </p>
                                 <div className="flex gap-4 w-full">
-                                    <button onClick={() => setDeleteTarget(null)} disabled={isDeleting} className="flex-1 py-4 bg-muted/20 text-foreground font-black rounded-2xl border border-white/5 uppercase text-[10px] tracking-widest">
+                                    <button onClick={() => setDeleteTarget(null)} disabled={isDeleting} className="flex-1 py-4 bg-muted/20 text-foreground font-black rounded-2xl border border-white/5 uppercase text-xs tracking-widest">
                                         {t.cancel}
                                     </button>
-                                    <button onClick={handleDeleteReview} disabled={isDeleting} className="flex-1 py-4 bg-rose-600 text-white font-black rounded-2xl shadow-xl shadow-rose-600/20 uppercase text-[10px] tracking-widest">
+                                    <button onClick={handleDeleteReview} disabled={isDeleting} className="flex-1 py-4 bg-rose-600 text-white font-black rounded-2xl shadow-xl shadow-rose-600/20 uppercase text-xs tracking-widest">
                                         {isDeleting ? <Loader2 className="w-5 h-5 animate-spin mx-auto" /> : t.delete}
                                     </button>
                                 </div>

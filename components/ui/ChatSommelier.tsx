@@ -36,7 +36,7 @@ const AiProfile = () => (
 
 // Large Header Sommelier Profile
 const AiHeaderProfile = () => (
-  <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 bg-white/20 border border-white/30 flex items-center justify-center relative">
+  <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 bg-background/20 border border-white/30 flex items-center justify-center relative">
     <NextImage
       src="/icons/user/user-3.webp"
       alt="Sommelier"
@@ -210,21 +210,21 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
               initial={{ opacity: 0, y: 10, scale: 0.8 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.8 }}
-              className="bg-amber-500 px-4 py-2 rounded-2xl rounded-br-none shadow-[0_8px_30px_rgba(245,158,11,0.3)] text-[11px] font-black text-white whitespace-nowrap mb-1 relative group pointer-events-none flex items-center gap-2"
+              className="bg-primary px-4 py-2 rounded-2xl rounded-br-none shadow-[0_8px_30px_rgba(245,158,11,0.3)] text-[11px] font-black text-white whitespace-nowrap mb-1 relative group pointer-events-none flex items-center gap-2"
             >
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-background opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-background"></span>
               </span>
               {isEn ? "Get Recommendation" : "제품추천 받기"}
-              <div className="absolute -bottom-1 right-3 w-2.5 h-2.5 bg-amber-500 rotate-45" />
-              <div className="absolute inset-0 rounded-2xl bg-amber-400 animate-pulse -z-10 opacity-50" />
+              <div className="absolute -bottom-1 right-3 w-2.5 h-2.5 bg-primary rotate-45" />
+              <div className="absolute inset-0 rounded-2xl bg-primary/40 animate-pulse -z-10 opacity-50" />
             </motion.div>
           )}
         </AnimatePresence>
 
         <motion.button
-          className="relative w-16 h-16 rounded-full bg-primary text-white shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all group overflow-hidden border-4 border-white dark:border-slate-950"
+          className="relative w-16 h-16 rounded-full bg-primary text-white shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all group overflow-hidden border-4 border-white dark:border-border"
           whileHover={{ y: -4 }}
           onClick={() => setIsOpen(!isOpen)}
         >
@@ -265,7 +265,7 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
             >
               {/* Header */}
               <div className="p-6 bg-primary text-white shrink-0 relative">
-                <div className="w-12 h-1.5 bg-white/20 rounded-full mx-auto mb-4 md:hidden" />
+                <div className="w-12 h-1.5 bg-background/20 rounded-full mx-auto mb-4 md:hidden" />
 
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
@@ -284,11 +284,11 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
                 </div>
 
                 <div className="space-y-1.5">
-                  <div className="flex justify-between text-[10px] uppercase font-black tracking-widest text-white/60">
+                  <div className="flex justify-between text-xs uppercase font-black tracking-widest text-white/60">
                     <span>Master Taste DNA</span>
                     <span>{dnaProgress}%</span>
                   </div>
-                  <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
+                  <div className="h-2 w-full bg-background/10 rounded-full overflow-hidden">
                     <motion.div
                       className="h-full bg-linear-to-r from-amber-300 to-amber-500"
                       initial={{ width: 0 }}
@@ -322,7 +322,7 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
                         </div>
 
                         {message.analysis && (
-                          <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 px-3 py-1.5 rounded-full text-[11px] font-bold text-amber-600 dark:text-amber-400">
+                          <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20/20 px-3 py-1.5 rounded-full text-[11px] font-bold text-primary dark:text-primary">
                             <Sparkles size={12} />
                             {message.analysis}
                           </div>
@@ -345,7 +345,7 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
                                     />
                                     {!user && (
                                       <div className="absolute inset-0 bg-background/20 backdrop-blur-[1px] rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer" onClick={() => handleRecommendClick(rec.id)}>
-                                        <div className="bg-primary text-white text-[10px] font-black px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1">
+                                        <div className="bg-primary text-white text-xs font-black px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1">
                                           {isEn ? 'Sign up to unlock details' : '상세 정보 보러가기'}
                                           <ChevronRight size={12} />
                                         </div>
@@ -353,15 +353,15 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
                                     )}
                                   </>
                                 ) : (
-                                  <div className="p-4 bg-amber-50/50 border border-amber-200 rounded-2xl shadow-sm">
+                                  <div className="p-4 bg-primary/10/50 border border-primary/20 rounded-2xl shadow-sm">
                                     <div className="flex items-start justify-between mb-3">
                                       <div className="flex items-center gap-2">
-                                        <div className="p-1.5 bg-amber-100 rounded-lg">
-                                          <Search size={14} className="text-amber-600" />
+                                        <div className="p-1.5 bg-primary/10 rounded-lg">
+                                          <Search size={14} className="text-primary" />
                                         </div>
                                         <div>
-                                          <h4 className="text-xs font-bold text-amber-900">{rec?.name || (isEn ? 'External recommendation' : '외부 추천')}</h4>
-                                          <span className="text-[10px] text-amber-600 font-medium">Coming Soon / External</span>
+                                          <h4 className="text-xs font-bold text-foreground">{rec?.name || (isEn ? 'External recommendation' : '외부 추천')}</h4>
+                                          <span className="text-xs text-primary font-medium">Coming Soon / External</span>
                                         </div>
                                       </div>
                                     </div>
@@ -370,7 +370,7 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
                                         href={rec?.googleSearchLink || `https://www.google.com/search?q=${encodeURIComponent(rec?.name || '')}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-white border border-border rounded-xl text-[10px] font-bold hover:bg-muted transition-colors"
+                                        className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-background border border-border rounded-xl text-xs font-bold hover:bg-muted transition-colors"
                                       >
                                         <Search size={10} /> Google
                                       </a>
@@ -378,7 +378,7 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
                                         href={rec?.naverSearchLink || `https://search.naver.com/search.naver?query=${encodeURIComponent(rec?.name || '')}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-[#03C75A] text-white rounded-xl text-[10px] font-bold hover:opacity-90 transition-opacity"
+                                        className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-[#03C75A] text-white rounded-xl text-xs font-bold hover:opacity-90 transition-opacity"
                                       >
                                         Naver
                                       </a>
@@ -444,7 +444,7 @@ export default function ChatSommelier({ lang }: ChatSommelierProps) {
                     </button>
                   </div>
                 )}
-                <p className="text-[10px] text-center text-muted-foreground mt-3">
+                <p className="text-xs text-center text-muted-foreground mt-3">
                   {isEn ? 'K-Sommelier analyzes curated spirits based on MFDS factual data.' : 'K-소메리에는 식약처 공인 팩트 데이터를 기반으로 분석합니다.'}
                 </p>
               </div>

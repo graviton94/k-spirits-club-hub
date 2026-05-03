@@ -19,7 +19,7 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: Lo
                 <nav className="mb-8">
                     <Link
                         href={`/${lang}`}
-                        className="inline-flex items-center gap-2 text-sm text-amber-500 hover:text-amber-400 transition"
+                        className="inline-flex items-center gap-2 text-sm text-primary hover:text-primary transition"
                     >
                         <ArrowLeft className="w-4 h-4" />
                         {isEn ? 'Home' : '홈으로'}
@@ -29,8 +29,8 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: Lo
                 {/* Header */}
                 <header className="mb-12 px-4">
                     <div className="flex items-center gap-4 mb-4">
-                        <div className="p-3 sm:p-4 bg-green-500/10 rounded-2xl border border-green-500/20">
-                            <FileText className="w-6 h-6 sm:w-8 sm:h-8 text-green-500" />
+                        <div className="p-3 sm:p-4 bg-primary/10 rounded-2xl border border-primary/20/20">
+                            <FileText className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
                         </div>
                         <h1 className="text-2xl sm:text-4xl font-black">
                             {isEn ? 'Terms of Service' : '이용약관'}
@@ -46,10 +46,10 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: Lo
                     {isEn ? (
                         <>
                             {/* English Version */}
-                            <section className="mb-12 bg-red-500/5 border-2 border-red-500/20 rounded-2xl p-6 sm:p-8">
+                            <section className="mb-12 bg-destructive/5 border-2 border-destructive/20/20 rounded-2xl p-6 sm:p-8">
                                 <div className="flex items-center gap-3 mb-6">
-                                    <AlertCircle className="w-5 h-5 sm:w-6 sm:h-6 text-red-500" />
-                                    <h2 className="text-lg sm:text-xl font-black my-0 text-red-600 dark:text-red-400">Age Restriction</h2>
+                                    <AlertCircle className="w-5 h-5 sm:w-6 sm:h-6 text-destructive" />
+                                    <h2 className="text-lg sm:text-xl font-black my-0 text-destructive dark:text-destructive">Age Restriction</h2>
                                 </div>
                                 <p className="font-semibold">K-Spirits Club is strictly restricted to users aged <strong>19 years or older</strong> (or the legal drinking age in your jurisdiction).</p>
                                 <p>By using this service, you confirm that you are of legal drinking age. We reserve the right to terminate accounts that violate this policy.</p>
@@ -57,7 +57,7 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: Lo
 
                             <section className="mb-12 bg-card border border-border rounded-2xl p-6 sm:p-8">
                                 <div className="flex items-center gap-3 mb-6">
-                                    <Scale className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500" />
+                                    <Scale className="w-5 h-5 sm:w-6 sm:h-6 text-accent" />
                                     <h2 className="text-lg sm:text-xl font-black my-0">Acceptable Use</h2>
                                 </div>
                                 <p>You agree to use K-Spirits Club only for lawful purposes. You must not:</p>
@@ -81,8 +81,8 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: Lo
                                 </ul>
                             </section>
 
-                            <section className="mb-12 bg-amber-500/5 border-2 border-amber-500/20 rounded-2xl p-6 sm:p-8">
-                                <h2 className="text-lg sm:text-xl font-black text-amber-600 dark:text-amber-400">Data Accuracy Disclaimer</h2>
+                            <section className="mb-12 bg-primary/5 border-2 border-primary/20/20 rounded-2xl p-6 sm:p-8">
+                                <h2 className="text-lg sm:text-xl font-black text-primary dark:text-primary">Data Accuracy Disclaimer</h2>
                                 <p>K-Spirits Club aggregates data from public sources, manufacturers, and user submissions. While we strive for accuracy:</p>
                                 <ul>
                                     <li>We do not guarantee 100% accuracy of all product information</li>
@@ -90,7 +90,7 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: Lo
                                     <li>Users should verify critical information (e.g., alcohol content, ingredients) with the manufacturer</li>
                                     <li>We are not liable for decisions made based on our data</li>
                                 </ul>
-                                <p className="font-semibold">If you find incorrect information, please <Link href={`/${lang}/contents/contact`} className="text-amber-500 hover:text-amber-400">report it</Link> so we can correct it.</p>
+                                <p className="font-semibold">If you find incorrect information, please <Link href={`/${lang}/contents/contact`} className="text-primary hover:text-primary">report it</Link> so we can correct it.</p>
                             </section>
 
                             <section className="mb-12 bg-card border border-border rounded-2xl p-6 sm:p-8">
@@ -131,17 +131,17 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: Lo
                                 <h2 className="text-lg sm:text-xl font-black">Contact</h2>
                                 <p>For questions about these Terms, contact:</p>
                                 <p className="font-semibold">
-                                    Email: <a href="mailto:ruahn49@gmail.com" className="text-amber-500 hover:text-amber-400">ruahn49@gmail.com</a>
+                                    Email: <a href="mailto:ruahn49@gmail.com" className="text-primary hover:text-primary">ruahn49@gmail.com</a>
                                 </p>
                             </section>
                         </>
                     ) : (
                         <>
                             {/* Korean Version */}
-                            <section className="mb-12 bg-red-500/5 border-2 border-red-500/20 rounded-2xl p-6 sm:p-8">
+                            <section className="mb-12 bg-destructive/5 border-2 border-destructive/20/20 rounded-2xl p-6 sm:p-8">
                                 <div className="flex items-center gap-3 mb-6">
-                                    <AlertCircle className="w-5 h-5 sm:w-6 sm:h-6 text-red-500" />
-                                    <h2 className="text-lg sm:text-xl font-black my-0 text-red-600 dark:text-red-400">연령 제한</h2>
+                                    <AlertCircle className="w-5 h-5 sm:w-6 sm:h-6 text-destructive" />
+                                    <h2 className="text-lg sm:text-xl font-black my-0 text-destructive dark:text-destructive">연령 제한</h2>
                                 </div>
                                 <p className="font-semibold">K-Spirits Club은 <strong>만 19세 이상</strong>(또는 귀하의 관할 지역의 법적 음주 가능 연령) 사용자만 이용할 수 있습니다.</p>
                                 <p>본 서비스를 이용함으로써, 귀하는 법적 음주 가능 연령임을 확인합니다. 이 정책을 위반하는 계정은 삭제될 수 있습니다.</p>
@@ -149,7 +149,7 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: Lo
 
                             <section className="mb-12 bg-card border border-border rounded-2xl p-6 sm:p-8">
                                 <div className="flex items-center gap-3 mb-6">
-                                    <Scale className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500" />
+                                    <Scale className="w-5 h-5 sm:w-6 sm:h-6 text-accent" />
                                     <h2 className="text-lg sm:text-xl font-black my-0">허용되는 사용</h2>
                                 </div>
                                 <p>K-Spirits Club은 합법적인 목적으로만 사용해야 합니다. 다음 행위는 금지됩니다:</p>
@@ -173,8 +173,8 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: Lo
                                 </ul>
                             </section>
 
-                            <section className="mb-12 bg-amber-500/5 border-2 border-amber-500/20 rounded-2xl p-6 sm:p-8">
-                                <h2 className="text-lg sm:text-xl font-black text-amber-600 dark:text-amber-400">데이터 정확성 면책</h2>
+                            <section className="mb-12 bg-primary/5 border-2 border-primary/20/20 rounded-2xl p-6 sm:p-8">
+                                <h2 className="text-lg sm:text-xl font-black text-primary dark:text-primary">데이터 정확성 면책</h2>
                                 <p>K-Spirits Club은 공공 데이터, 제조사 정보, 사용자 제출 데이터를 수집합니다. 정확성을 위해 노력하지만:</p>
                                 <ul>
                                     <li>모든 제품 정보가 100% 정확함을 보장하지 않습니다</li>
@@ -182,7 +182,7 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: Lo
                                     <li>중요한 정보(알코올 도수, 성분 등)는 제조사에서 직접 확인하시기 바랍니다</li>
                                     <li>본 데이터를 기반으로 한 결정에 대해 책임지지 않습니다</li>
                                 </ul>
-                                <p className="font-semibold">잘못된 정보를 발견하면 <Link href={`/${lang}/contents/contact`} className="text-amber-500 hover:text-amber-400">제보</Link>해주시면 수정하겠습니다.</p>
+                                <p className="font-semibold">잘못된 정보를 발견하면 <Link href={`/${lang}/contents/contact`} className="text-primary hover:text-primary">제보</Link>해주시면 수정하겠습니다.</p>
                             </section>
 
                             <section className="mb-12 bg-card border border-border rounded-2xl p-6 sm:p-8">
@@ -223,7 +223,7 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: Lo
                                 <h2 className="text-lg sm:text-xl font-black">문의하기</h2>
                                 <p>본 약관에 관한 문의사항:</p>
                                 <p className="font-semibold">
-                                    이메일: <a href="mailto:ruahn49@gmail.com" className="text-amber-500 hover:text-amber-400">ruahn49@gmail.com</a>
+                                    이메일: <a href="mailto:ruahn49@gmail.com" className="text-primary hover:text-primary">ruahn49@gmail.com</a>
                                 </p>
                             </section>
                         </>

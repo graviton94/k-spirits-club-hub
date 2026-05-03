@@ -129,7 +129,7 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div>
           <h2 className="text-2xl font-black flex items-center gap-2">
-            {dict?.reviews || (isEn ? "Reviews" : "리뷰")} <span className="text-amber-500">{liveReviews.length}</span>
+            {dict?.reviews || (isEn ? "Reviews" : "리뷰")} <span className="text-primary">{liveReviews.length}</span>
           </h2>
           <p className="text-sm text-muted-foreground">{isEn ? "Share your tasting experience" : "시음 경험을 공유해주세요"}</p>
         </div>
@@ -166,9 +166,9 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
               }
               setShowMicroModal(true);
             }}
-            className="flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold bg-neutral-900 border border-white/10 text-white hover:bg-neutral-800 transition-all shadow-lg"
+            className="flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold bg-muted border border-white/10 text-white hover:bg-muted transition-all shadow-lg"
           >
-            <Zap className="w-4 h-4 text-amber-500" />
+            <Zap className="w-4 h-4 text-primary" />
             {isEn ? 'Quick Rate' : '빠른 평가'}
           </button>
         )}
@@ -188,7 +188,7 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
           <RatingSummaryItem label="OVERALL" value={avgOverall} icon={<Quote className="w-4 h-4" />} />
           <RatingSummaryItem label="NOSE" value={avgNose} icon={<Wind className="w-4 h-4" />} color="text-primary" />
           <RatingSummaryItem label="PALATE" value={avgPalate} icon={<Utensils className="w-4 h-4" />} color="text-accent" />
-          <RatingSummaryItem label="FINISH" value={avgFinish} icon={<Zap className="w-4 h-4" />} color="text-purple-500" />
+          <RatingSummaryItem label="FINISH" value={avgFinish} icon={<Zap className="w-4 h-4" />} color="text-accent" />
         </GlassCard>
       )}
 
@@ -211,10 +211,10 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
 
       {/* Non-Logged In User CTA Banner */}
       {!user && !showForm && (
-        <div className="mb-8 p-6 sm:p-8 bg-linear-to-r from-amber-500/10 to-orange-600/10 border border-amber-500/20 rounded-3xl flex flex-col sm:flex-row items-center justify-between gap-6 shadow-inner">
+        <div className="mb-8 p-6 sm:p-8 bg-linear-to-r from-amber-500/10 to-orange-600/10 border border-primary/20/20 rounded-3xl flex flex-col sm:flex-row items-center justify-between gap-6 shadow-inner">
           <div>
             <h3 className="text-lg sm:text-xl font-black text-foreground mb-2 flex items-center gap-2">
-              <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
+              <Star className="w-5 h-5 text-primary fill-amber-500" />
               {isEn ? "Want to share your rating?" : "이 스피릿을 평가하고 싶으신가요?"}
             </h3>
             <p className="text-sm text-foreground/70 font-medium">
@@ -333,10 +333,10 @@ export default function ReviewSection({ spiritId, spiritName, spiritImageUrl, re
   );
 }
 
-function RatingSummaryItem({ label, value, icon, color = "text-amber-500" }: { label: string; value: string; icon: React.ReactNode; color?: string }) {
+function RatingSummaryItem({ label, value, icon, color = "text-primary" }: { label: string; value: string; icon: React.ReactNode; color?: string }) {
   return (
     <div className="text-center">
-      <div className={`flex items-center justify-center gap-1.5 text-[10px] font-black ${color} mb-1 tracking-tighter`}>
+      <div className={`flex items-center justify-center gap-1.5 text-xs font-black ${color} mb-1 tracking-tighter`}>
         {icon} {label}
       </div>
       <div className="text-2xl font-black text-foreground">{value}</div>
@@ -347,10 +347,10 @@ function RatingSummaryItem({ label, value, icon, color = "text-amber-500" }: { l
           const isHalf = i + 0.5 <= rating && i + 1 > rating;
           return (
             <div key={i} className="relative">
-              <Star className={`w-6 h-6 ${isFull ? 'fill-amber-500 text-amber-500' : isHalf ? 'text-amber-500' : 'text-muted-foreground/20'}`} />
+              <Star className={`w-6 h-6 ${isFull ? 'fill-amber-500 text-primary' : isHalf ? 'text-primary' : 'text-muted-foreground/20'}`} />
               {isHalf && (
                 <div className="absolute inset-0 overflow-hidden w-[50%]">
-                  <Star className="w-6 h-6 fill-amber-500 text-amber-500" />
+                  <Star className="w-6 h-6 fill-amber-500 text-primary" />
                 </div>
               )}
             </div>
@@ -416,13 +416,13 @@ function ReviewCard({ review, isOwner, onEdit, onDelete, onToast, spiritId }: {
   };
 
   return (
-    <div className="relative group/card bg-card border border-border rounded-[2.5rem] p-5 sm:p-7 transition-all hover:border-amber-500/30 hover:shadow-xl">
+    <div className="relative group/card bg-card border border-border rounded-[2.5rem] p-5 sm:p-7 transition-all hover:border-primary/20/30 hover:shadow-xl">
       {/* Row 1 & 2: Author & Meta Capsules */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <div className="flex flex-wrap items-center gap-2">
           {/* Author Capsule */}
           <div className="flex items-center gap-2 px-4 py-2 bg-secondary/50 border border-border rounded-full shadow-inner">
-            <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-[10px] text-primary-foreground font-black">
+            <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-xs text-primary-foreground font-black">
               {review.userName.substring(0, 1)}
             </div>
             <span className="text-xs font-black text-foreground">{review.userName}</span>
@@ -439,14 +439,14 @@ function ReviewCard({ review, isOwner, onEdit, onDelete, onToast, spiritId }: {
           })()}
 
           {/* Date Capsule */}
-          <div className="px-4 py-2 bg-slate-500/10 border border-slate-500/20 rounded-full text-[10px] font-black text-muted-foreground">
+          <div className="px-4 py-2 bg-muted/10 border border-border/20 rounded-full text-xs font-black text-muted-foreground">
             {new Date(review.createdAt).toLocaleDateString()}
           </div>
 
           {/* Like Capsule */}
           <button
             onClick={handleLike}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full text-[10px] font-black transition-all ${isLiked ? 'bg-rose-500/10 text-rose-500 border border-rose-500/20' : 'bg-slate-500/5 text-muted-foreground border border-transparent hover:border-rose-500/20 hover:text-rose-500'}`}
+            className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-black transition-all ${isLiked ? 'bg-rose-500/10 text-rose-500 border border-rose-500/20' : 'bg-muted/5 text-muted-foreground border border-transparent hover:border-rose-500/20 hover:text-rose-500'}`}
           >
             <Heart className={`w-3 h-3 ${isLiked ? 'fill-rose-500' : ''}`} />
             <span>{likes}</span>
@@ -455,7 +455,7 @@ function ReviewCard({ review, isOwner, onEdit, onDelete, onToast, spiritId }: {
           {/* Comment Counter & Link */}
           <Link
             href={`/${(review as any).lang || 'ko'}/contents/reviews/${review.id}`}
-            className="flex items-center gap-2 px-4 py-2 bg-slate-500/5 text-muted-foreground border border-transparent hover:border-primary/20 hover:text-primary rounded-full text-[10px] font-black transition-all"
+            className="flex items-center gap-2 px-4 py-2 bg-muted/5 text-muted-foreground border border-transparent hover:border-primary/20 hover:text-primary rounded-full text-xs font-black transition-all"
           >
             <MessageSquare className="w-3 h-3" />
             <span>{(review as any).commentCount || 0}</span>
@@ -466,14 +466,14 @@ function ReviewCard({ review, isOwner, onEdit, onDelete, onToast, spiritId }: {
           <div className="flex gap-2">
             <button
               onClick={onEdit}
-              className="p-2 rounded-full bg-secondary/50 text-muted-foreground hover:text-amber-600 hover:bg-amber-500/10 transition-all border border-border/50"
+              className="p-2 rounded-full bg-secondary/50 text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all border border-border/50"
               title="수정하기"
             >
               <Edit2 className="w-3.5 h-3.5" />
             </button>
             <button
               onClick={onDelete}
-              className="p-2 rounded-full bg-secondary/50 text-muted-foreground hover:text-red-600 hover:bg-red-500/10 transition-all border border-border/50"
+              className="p-2 rounded-full bg-secondary/50 text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-all border border-border/50"
               title="삭제하기"
             >
               <Trash2 className="w-3.5 h-3.5" />
@@ -484,7 +484,7 @@ function ReviewCard({ review, isOwner, onEdit, onDelete, onToast, spiritId }: {
 
       {/* Row 4: Review Content */}
       <div className="relative mb-6">
-        <Quote className="absolute -top-3 -left-3 w-8 h-8 text-amber-500/10" />
+        <Quote className="absolute -top-3 -left-3 w-8 h-8 text-primary/10" />
         <p className="text-sm sm:text-base text-foreground leading-relaxed font-medium italic relative z-10 pl-2">
           "{review.content}"
         </p>
@@ -539,7 +539,7 @@ function ReviewMetricsItem({ title, rating, tags, icon, color }: { title: string
   const colors: Record<string, string> = {
     blue: "text-primary bg-primary/10 border-primary/20",
     orange: "text-accent bg-accent/10 border-accent/20",
-    purple: "text-purple-500 bg-purple-500/10 border-purple-500/20"
+    purple: "text-accent bg-accent/10 border-accent/20/20"
   };
 
   return (
@@ -560,12 +560,12 @@ function ReviewMetricsItem({ title, rating, tags, icon, color }: { title: string
           const colors = [
             'bg-primary/10 text-primary border-primary/20',
             'bg-accent/10 text-accent border-accent/20',
-            'bg-purple-500/10 text-purple-600 border-purple-500/20',
+            'bg-accent/10 text-accent border-accent/20/20',
             'bg-emerald-500/10 text-emerald-600 border-emerald-500/20',
             'bg-rose-500/10 text-rose-600 border-rose-500/20'
           ];
           return (
-            <span key={idx} className={`text-[9px] px-2 py-0.5 rounded-full border font-black uppercase tracking-tight ${colors[idx % colors.length]}`}>
+            <span key={idx} className={`text-xs px-2 py-0.5 rounded-full border font-black uppercase tracking-tight ${colors[idx % colors.length]}`}>
               #{cleanTag}
             </span>
           );
@@ -795,10 +795,10 @@ function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitte
                   const isHalf = s - 0.5 === visualRating;
                   return (
                     <div key={i} className="relative">
-                      <Star className={`w-8 h-8 ${isFull ? 'fill-amber-500 text-amber-500' : isHalf ? 'text-amber-500' : 'text-muted-foreground/30'}`} />
+                      <Star className={`w-8 h-8 ${isFull ? 'fill-amber-500 text-primary' : isHalf ? 'text-primary' : 'text-muted-foreground/30'}`} />
                       {isHalf && (
                         <div className="absolute inset-0 overflow-hidden w-[50%]">
-                          <Star className="w-8 h-8 fill-amber-500 text-amber-500" />
+                          <Star className="w-8 h-8 fill-amber-500 text-primary" />
                         </div>
                       )}
                     </div>
@@ -850,7 +850,7 @@ function ReviewForm({ spiritId, spiritName, spiritImageUrl, onCancel, onSubmitte
                   className="w-24 h-24 rounded-xl border-2 border-dashed border-border flex flex-col items-center justify-center text-muted-foreground hover:border-primary/50 hover:text-primary transition-colors bg-secondary/20 shrink-0"
                 >
                   <Camera className="w-6 h-6 mb-1" />
-                  <span className="text-[10px] font-bold">{isEn ? "Add Photo" : "사진 첨부"}</span>
+                  <span className="text-xs font-bold">{isEn ? "Add Photo" : "사진 첨부"}</span>
                 </button>
               )}
             </div>
@@ -920,7 +920,7 @@ function RatingSection({ label, shortLabel, rating, tags, onRatingChange, onTags
   const containerRef = useRef<HTMLDivElement>(null);
   const activeRating = hoverRating !== null ? hoverRating : rating;
 
-  const starColor = color === 'blue' ? 'fill-blue-500 text-blue-500' : color === 'orange' ? 'fill-orange-500 text-orange-500' : 'fill-purple-500 text-purple-500';
+  const starColor = color === 'blue' ? 'fill-blue-500 text-accent' : color === 'orange' ? 'fill-orange-500 text-orange-500' : 'fill-purple-500 text-accent';
 
   const handlePointer = (e: React.PointerEvent) => {
     if (!containerRef.current) return;
@@ -1102,7 +1102,7 @@ function TagInput({ tags, onTagsChange, color, metadataKey, placeholder }: { tag
               key={rec}
               type="button"
               onMouseDown={(e) => { e.preventDefault(); addTag(rec); }}
-              className="px-2.5 py-1 rounded-lg bg-secondary/50 hover:bg-primary/10 hover:text-primary border border-border text-[10px] font-bold transition-colors"
+              className="px-2.5 py-1 rounded-lg bg-secondary/50 hover:bg-primary/10 hover:text-primary border border-border text-xs font-bold transition-colors"
             >
               {rec}
             </button>

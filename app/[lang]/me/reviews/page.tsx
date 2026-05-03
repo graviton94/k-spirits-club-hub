@@ -206,7 +206,7 @@ export default function ReviewsPage() {
               initial={{ opacity: 0, scale: 0.98, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ delay: idx * 0.05 }}
-              className="group relative bg-card border border-border rounded-[2.5rem] p-5 sm:p-7 hover:border-amber-500/30 hover:shadow-xl transition-all mb-6"
+              className="group relative bg-card border border-border rounded-[2.5rem] p-5 sm:p-7 hover:border-primary/20/30 hover:shadow-xl transition-all mb-6"
             >
               {/* Row 1 & 2: Image + Meta */}
               <div className="flex gap-4 sm:gap-6 mb-5">
@@ -225,24 +225,24 @@ export default function ReviewsPage() {
                 <div className="flex-1 flex flex-col justify-center min-w-0">
                   <Link
                     href={`/${lang}/spirits/${spirit.id}`}
-                    className="text-xl sm:text-2xl font-black hover:text-amber-600 transition-colors truncate mb-3"
+                    className="text-xl sm:text-2xl font-black hover:text-primary transition-colors truncate mb-3"
                   >
                     {spirit.name}
                   </Link>
 
                   <div className="flex flex-wrap items-center gap-2">
                     {/* Category Capsule */}
-                    <div className="px-3 py-1.5 bg-secondary/80 border border-border rounded-full text-[10px] font-black text-muted-foreground uppercase tracking-widest">
+                    <div className="px-3 py-1.5 bg-secondary/80 border border-border rounded-full text-xs font-black text-muted-foreground uppercase tracking-widest">
                       {spirit.category}
                     </div>
 
                     {/* Rating Capsule */}
-                    <div className="px-3 py-1.5 bg-amber-500/10 border border-amber-500/20 rounded-full text-[10px] font-black text-amber-600 dark:text-amber-400">
+                    <div className="px-3 py-1.5 bg-primary/10 border border-primary/20/20 rounded-full text-xs font-black text-primary dark:text-primary">
                       ★ {spirit.userReview?.ratingOverall.toFixed(1)}
                     </div>
 
                     {/* Date Capsule */}
-                    <div className="px-3 py-1.5 bg-slate-500/10 border border-slate-500/20 rounded-full text-[10px] font-black text-muted-foreground whitespace-nowrap">
+                    <div className="px-3 py-1.5 bg-muted/10 border border-border/20 rounded-full text-xs font-black text-muted-foreground whitespace-nowrap">
                       {spirit.userReview?.createdAt ? new Date(spirit.userReview.createdAt).toLocaleDateString() : ''}
                     </div>
                   </div>
@@ -254,15 +254,15 @@ export default function ReviewsPage() {
                 <div className="flex flex-wrap gap-2 mb-5 pt-4 border-t border-border/50">
                   {(spirit.userReview as any).tags.slice(0, 6).map((tag: string, i: number) => {
                     const colors = [
-                      'bg-blue-500/10 text-blue-600 border-blue-500/20',
+                      'bg-accent/10 text-accent border-accent/20/20',
                       'bg-orange-500/10 text-orange-600 border-orange-500/20',
-                      'bg-purple-500/10 text-purple-600 border-purple-500/20',
+                      'bg-accent/10 text-accent border-accent/20/20',
                       'bg-emerald-500/10 text-emerald-600 border-emerald-500/20',
                       'bg-rose-500/10 text-rose-600 border-rose-500/20',
                       'bg-indigo-500/10 text-indigo-600 border-indigo-500/20'
                     ];
                     return (
-                      <span key={i} className={`text-[9px] sm:text-[10px] px-3 py-1 rounded-full border font-black uppercase tracking-tight ${colors[i % colors.length]}`}>
+                      <span key={i} className={`text-xs sm:text-xs px-3 py-1 rounded-full border font-black uppercase tracking-tight ${colors[i % colors.length]}`}>
                         #{tag}
                       </span>
                     );
@@ -306,7 +306,7 @@ export default function ReviewsPage() {
               initial={{ scale: 0.95, opacity: 0, y: 10 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.95, opacity: 0, y: 10 }}
-              className="bg-white dark:bg-zinc-900 w-full max-w-sm rounded-[2rem] shadow-2xl overflow-hidden relative"
+              className="bg-background dark:bg-card w-full max-w-sm rounded-[2rem] shadow-2xl overflow-hidden relative"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Decorative Header Background */}
@@ -318,12 +318,12 @@ export default function ReviewsPage() {
                   <Trash2 className="w-10 h-10 text-rose-500" />
                 </div>
 
-                <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2">
+                <h2 className="text-2xl font-black text-muted-foreground dark:text-white mb-2">
                   {t.deleteTitle}
                 </h2>
 
-                <p className="text-slate-500 dark:text-slate-400 mb-8 text-sm leading-relaxed">
-                  <span className="font-bold text-slate-900 dark:text-white block text-base mb-1">
+                <p className="text-muted-foreground dark:text-muted-foreground mb-8 text-sm leading-relaxed">
+                  <span className="font-bold text-muted-foreground dark:text-white block text-base mb-1">
                     "{deleteTarget.name}"
                   </span>
                   {t.deleteConfirm}
@@ -333,7 +333,7 @@ export default function ReviewsPage() {
                   <button
                     onClick={() => setDeleteTarget(null)}
                     disabled={isDeleting}
-                    className="flex-1 py-3.5 px-4 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-2xl transition-all active:scale-[0.98]"
+                    className="flex-1 py-3.5 px-4 bg-muted hover:bg-muted dark:bg-card dark:hover:bg-muted text-muted-foreground dark:text-muted-foreground font-bold rounded-2xl transition-all active:scale-[0.98]"
                   >
                     {t.cancel}
                   </button>

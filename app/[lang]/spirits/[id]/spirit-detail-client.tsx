@@ -348,7 +348,7 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                         </p>
                     )}
                     <div className="flex flex-col gap-1 mb-6">
-                        <p className="text-amber-500 font-bold tracking-wider">{displayDistillery}</p>
+                        <p className="text-primary font-bold tracking-wider">{displayDistillery}</p>
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
                             <span className="px-2 py-0.5 bg-secondary rounded-md border border-border">
                                 {spirit.abv}% ABV
@@ -380,7 +380,7 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                                 {spirit.subcategory && (
                                     <div className="flex justify-between items-center text-sm">
                                         <dt className="text-muted-foreground">{t.sub}</dt>
-                                        <dd className="font-bold text-amber-500">{formatSpiritFieldValue('subcategory', spirit.subcategory, lang)}</dd>
+                                        <dd className="font-bold text-primary">{formatSpiritFieldValue('subcategory', spirit.subcategory, lang)}</dd>
                                     </div>
                                 )}
                             </dl>
@@ -476,7 +476,7 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
             {(spirit.pairingGuideEn || spirit.pairingGuideKo) && (
                 <div className="mb-10 p-6 rounded-3xl bg-secondary/20 border border-border shadow-sm">
                     <div className="flex items-center gap-2 mb-4">
-                        <span className="text-xs font-black text-amber-500 uppercase tracking-widest flex items-center gap-1">
+                        <span className="text-xs font-black text-primary uppercase tracking-widest flex items-center gap-1">
                             ✨ {dict?.pairing || (isEn ? 'Pairing Guide' : '페어링 추천')}
                         </span>
                         <div className="h-px flex-1 bg-border"></div>
@@ -496,7 +496,7 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                     disabled={isToggling || isLoadingStatus}
                     className={`flex-1 py-4 px-6 font-black rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed
                         ${isInCabinet
-                            ? 'bg-red-500 hover:bg-red-600 text-white shadow-red-500/20'
+                            ? 'bg-destructive hover:bg-destructive text-white shadow-red-500/20'
                             : 'bg-linear-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white shadow-amber-500/20 hover:scale-[1.02] active:scale-[0.98]'
                         }`}
                 >
@@ -508,8 +508,8 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                     disabled={isToggling || isLoadingStatus}
                     className={`flex-1 py-4 px-6 font-black rounded-2xl border-2 shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed
                         ${isWishlist
-                            ? 'bg-red-50 bg-opacity-20 hover:bg-red-100 text-red-600 border-red-200 shadow-red-500/10'
-                            : 'bg-background hover:bg-secondary text-foreground hover:border-amber-600 border-primary shadow-lg hover:scale-[1.02] active:scale-[0.98]'
+                            ? 'bg-destructive/10 bg-opacity-20 hover:bg-destructive/10 text-destructive border-destructive/20 shadow-red-500/10'
+                            : 'bg-background hover:bg-secondary text-foreground hover:border-primary/20 border-primary shadow-lg hover:scale-[1.02] active:scale-[0.98]'
                         }`}
                 >
                     <span>{isWishlist ? '🗑️' : '🔖'}</span>
@@ -518,8 +518,8 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
             </div>
 
             {/* Price Search / Buying Guide (회생 대책 - 수익성 연결고리) */}
-            <div className="mb-12 p-6 rounded-3xl border border-amber-200/50 dark:border-amber-500/20 shadow-sm">
-                <h3 className="text-sm font-black text-amber-600 dark:text-amber-500 uppercase tracking-widest mb-2 flex items-center gap-2">
+            <div className="mb-12 p-6 rounded-3xl border border-primary/20/50 dark:border-primary/20/20 shadow-sm">
+                <h3 className="text-sm font-black text-primary dark:text-primary uppercase tracking-widest mb-2 flex items-center gap-2">
                     <ShoppingBag className="w-4 h-4" />
                     {t.whereToBuy}
                 </h3>
@@ -542,9 +542,9 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                         target="_blank"
                         rel="nofollow noopener noreferrer"
                         onClick={() => handleOutboundClick('dailyshot')}
-                        className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-transparent border border-border hover:border-purple-500 transition-colors text-xs font-bold"
+                        className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-transparent border border-border hover:border-accent/20 transition-colors text-xs font-bold"
                     >
-                        <Activity className="w-3.5 h-3.5 text-purple-500" />
+                        <Activity className="w-3.5 h-3.5 text-accent" />
                         {t.searchDailyshot}
                     </a>
                     <a
@@ -552,9 +552,9 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                         target="_blank"
                         rel="nofollow noopener noreferrer"
                         onClick={() => handleOutboundClick('wine-searcher')}
-                        className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-transparent border border-border hover:border-amber-500 transition-colors text-xs font-bold"
+                        className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-transparent border border-border hover:border-primary/20 transition-colors text-xs font-bold"
                     >
-                        <span className="text-amber-500 font-black">W</span>
+                        <span className="text-primary font-black">W</span>
                         {t.searchWineSearcher}
                     </a>
                 </div>
@@ -564,7 +564,7 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
             {relatedSpirits && relatedSpirits.length > 0 && (
                 <div className="mb-12">
                     <h2 className="text-xl font-black mb-6 flex items-center gap-2 text-foreground">
-                        <span className="w-2 h-6 bg-amber-500 rounded-full"></span>
+                        <span className="w-2 h-6 bg-primary rounded-full"></span>
                         {t.relatedSpirits}
                     </h2>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -576,7 +576,7 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                                 <Link
                                     href={`/${lang}/spirits/${item.id}`}
                                     key={item.id}
-                                    className="group block p-3 bg-card border border-border hover:border-amber-500 rounded-2xl transition-all hover:-translate-y-1 shadow-sm"
+                                    className="group block p-3 bg-card border border-border hover:border-primary/20 rounded-2xl transition-all hover:-translate-y-1 shadow-sm"
                                 >
                                     <div className="aspect-square bg-secondary rounded-xl mb-3 overflow-hidden flex items-center justify-center relative">
                                         {item.imageUrl ? (
@@ -594,16 +594,16 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
                                             <img src={fallbackImage} className="w-1/2 h-1/2 object-contain opacity-20 grayscale" alt="placeholder" />
                                         )}
                                         {item.abv !== null && item.abv !== undefined && (
-                                            <div className="absolute top-2 right-2 bg-black/60 backdrop-blur-sm text-white text-[10px] font-bold px-1.5 py-0.5 rounded-md">
+                                            <div className="absolute top-2 right-2 bg-black/60 backdrop-blur-sm text-white text-xs font-bold px-1.5 py-0.5 rounded-md">
                                                 {item.abv}%
                                             </div>
                                         )}
                                     </div>
                                     <div className="px-1">
-                                        <div className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold mb-1 truncate">
+                                        <div className="text-xs text-muted-foreground uppercase tracking-widest font-bold mb-1 truncate">
                                             {formatSpiritFieldValue('subcategory', item.subcategory || item.category, lang)}
                                         </div>
-                                        <h3 className="font-bold text-sm text-foreground line-clamp-1 group-hover:text-amber-500 transition-colors">
+                                        <h3 className="font-bold text-sm text-foreground line-clamp-1 group-hover:text-primary transition-colors">
                                             {itemName}
                                         </h3>
                                         {item.distillery && (
@@ -667,7 +667,7 @@ export default function SpiritDetailClient({ spirit, reviews, relatedSpirits = [
             {/* Scroll Top Button */}
             <button
                 onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                className="fixed bottom-10 right-10 z-100 w-12 h-12 bg-amber-500 text-white rounded-full shadow-2xl shadow-amber-500/40 flex items-center justify-center hover:scale-110 active:scale-95 transition-all opacity-0 pointer-events-none group-[.scrolled]:opacity-100 group-[.scrolled]:pointer-events-auto"
+                className="fixed bottom-10 right-10 z-100 w-12 h-12 bg-primary text-white rounded-full shadow-2xl shadow-amber-500/40 flex items-center justify-center hover:scale-110 active:scale-95 transition-all opacity-0 pointer-events-none group-[.scrolled]:opacity-100 group-[.scrolled]:pointer-events-auto"
             >
                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
@@ -763,7 +763,7 @@ function ExpandableImage({ imageUrl, name, category }: { imageUrl: string | null
                     >
                         {/* Close Button */}
                         <button
-                            className="absolute top-8 right-8 p-3 text-white/40 hover:text-white transition-all bg-white/5 hover:bg-white/10 rounded-full z-110"
+                            className="absolute top-8 right-8 p-3 text-white/40 hover:text-white transition-all bg-background/5 hover:bg-background/10 rounded-full z-110"
                             onClick={() => setIsExpanded(false)}
                         >
                             <X className="w-8 h-8" />
@@ -784,7 +784,7 @@ function ExpandableImage({ imageUrl, name, category }: { imageUrl: string | null
                                     className="w-auto h-auto max-h-[75vh] max-w-[85vw] md:max-w-3xl object-contain rounded-xl shadow-2xl pointer-events-auto border border-white/5"
                                 />
                             ) : (
-                                <div className="w-96 h-96 flex items-center justify-center text-9xl bg-neutral-800 rounded-2xl">
+                                <div className="w-96 h-96 flex items-center justify-center text-9xl bg-muted rounded-2xl">
                                     🥃
                                 </div>
                             )}
@@ -798,7 +798,7 @@ function ExpandableImage({ imageUrl, name, category }: { imageUrl: string | null
 
 // Helper component to format basic markdown-style text 
 // (e.g., **bold** and handles typoes like *&bold**)
-function FormattedText({ text, highlightClass = "text-amber-600 dark:text-amber-500" }: { text?: string | null, highlightClass?: string }) {
+function FormattedText({ text, highlightClass = "text-primary dark:text-primary" }: { text?: string | null, highlightClass?: string }) {
     if (!text) return null;
 
     // Split by **bold** or *&bold** (typo tolerance)

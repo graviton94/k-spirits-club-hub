@@ -19,7 +19,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
                 <nav className="mb-8">
                     <Link
                         href={`/${lang}`}
-                        className="inline-flex items-center gap-2 text-sm text-amber-500 hover:text-amber-400 transition"
+                        className="inline-flex items-center gap-2 text-sm text-primary hover:text-primary transition"
                     >
                         <ArrowLeft className="w-4 h-4" />
                         {isEn ? 'Home' : '홈으로'}
@@ -29,8 +29,8 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
                 {/* Header */}
                 <header className="mb-12 text-center px-4">
                     <div className="flex justify-center mb-6">
-                        <div className="p-3 sm:p-4 bg-amber-500/10 rounded-2xl border border-amber-500/20">
-                            <Mail className="w-6 h-6 sm:w-8 sm:h-8 text-amber-500" />
+                        <div className="p-3 sm:p-4 bg-primary/10 rounded-2xl border border-primary/20/20">
+                            <Mail className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
                         </div>
                     </div>
                     <h1 className="text-2xl sm:text-4xl font-black mb-4">
@@ -48,7 +48,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
                     {/* Email Contact */}
                     <section className="bg-card border border-border rounded-2xl p-6 sm:p-8">
                         <div className="flex items-center gap-3 mb-6">
-                            <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500" />
+                            <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                             <h2 className="text-lg sm:text-xl font-black">{isEn ? 'Email Inquiries' : '이메일 문의'}</h2>
                         </div>
                         <p className="text-sm sm:text-base text-muted-foreground m-0">
@@ -81,7 +81,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
                     {/* Report Inappropriate Content */}
                     <section className="bg-card border border-border rounded-2xl p-6 sm:p-8">
                         <div className="flex items-center gap-3 mb-6">
-                            <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500" />
+                            <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6 text-accent" />
                             <h2 className="text-lg sm:text-xl font-black">{isEn ? 'Report Inappropriate Content' : '부적절한 콘텐츠 신고'}</h2>
                         </div>
                         <div className="prose prose-sm sm:prose-base dark:prose-invert max-w-none">
@@ -141,7 +141,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
                             href={isEn
                                 ? "mailto:ruahn49@gmail.com?subject=K-Spirits Club Inquiry"
                                 : "mailto:ruahn49@gmail.com?subject=K-Spirits Club 문의"}
-                            className="inline-flex items-center justify-center gap-3 w-full sm:w-auto px-12 py-4 bg-amber-500 hover:bg-amber-600 text-white font-black rounded-2xl transition shadow-lg hover:shadow-xl text-lg group"
+                            className="inline-flex items-center justify-center gap-3 w-full sm:w-auto px-12 py-4 bg-primary hover:bg-primary text-white font-black rounded-2xl transition shadow-lg hover:shadow-xl text-lg group"
                         >
                             <Mail className="w-6 h-6 group-hover:scale-110 transition" />
                             {isEn ? 'Contact Us via Email' : '이메일로 문의하기'}

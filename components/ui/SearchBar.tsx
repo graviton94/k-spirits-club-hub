@@ -245,7 +245,7 @@ export function SearchBar({ isHero = false, dict }: { isHero?: boolean, dict?: a
             className={`absolute top-full left-0 right-0 mt-3 p-2 backdrop-blur-md border-2 rounded-2xl shadow-2xl overflow-hidden ${isHero ? `${surfaces.panel} text-foreground` : 'bg-popover border-border'
               }`}
           >
-            <div className="flex items-center gap-2 text-[10px] font-black text-primary/50 mb-4 uppercase tracking-[0.25em]">
+            <div className="flex items-center gap-2 text-xs font-black text-primary/50 mb-4 uppercase tracking-[0.25em]">
                 <Sparkles className="w-3 h-3 text-primary/40" /> Search
             </div>
           </motion.div>

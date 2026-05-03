@@ -240,17 +240,17 @@ export default async function RootLayout({
             <div className="border-t border-border pt-8 text-center">
               {/* 19+ Warning Badge */}
               <div className="flex justify-center mb-6">
-                <div className="border-2 border-red-600 rounded-full w-12 h-12 flex items-center justify-center">
-                  <span className="text-red-600 font-black text-lg">19+</span>
+                <div className="border-2 border-destructive/20 rounded-full w-12 h-12 flex items-center justify-center">
+                  <span className="text-destructive font-black text-lg">19+</span>
                 </div>
               </div>
 
               {/* Legal Warnings */}
               <div className="space-y-3 mb-8">
-                <p className="text-muted-foreground text-[10px] leading-relaxed break-keep">
+                <p className="text-muted-foreground text-xs leading-relaxed break-keep">
                   <strong className="text-foreground">경고:</strong> 지나친 음주는 뇌졸중, 기억력 손상이나 치매를 유발합니다. 임신 중 음주는 기형아 출생 위험을 높입니다.
                 </p>
-                <p className="text-muted-foreground/80 text-[10px] leading-relaxed italic">
+                <p className="text-muted-foreground/80 text-xs leading-relaxed italic">
                   <strong className="text-foreground/90">WARNING:</strong> Excessive drinking can cause stroke, memory loss, or dementia. Drinking during pregnancy increases the risk of birth defects.
                 </p>
               </div>

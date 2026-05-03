@@ -154,12 +154,12 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
           <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2.5 flex-wrap">
                   {matchRate > 0 && (
-                      <span className="px-3 py-1 bg-primary text-primary-foreground text-[10px] font-black rounded-full shadow-lg shadow-primary/20 uppercase tracking-widest">
+                      <span className="px-3 py-1 bg-primary text-primary-foreground text-xs font-black rounded-full shadow-lg shadow-primary/20 uppercase tracking-widest">
                           {matchRate}% MATCH
                       </span>
                   )}
                   {isAiDiscovery && (
-                      <span className="px-3 py-1 bg-accent text-accent-foreground text-[10px] font-black rounded-full flex items-center gap-1.5 shadow-lg shadow-accent/20 uppercase tracking-widest">
+                      <span className="px-3 py-1 bg-accent text-accent-foreground text-xs font-black rounded-full flex items-center gap-1.5 shadow-lg shadow-accent/20 uppercase tracking-widest">
                         <Sparkles className="w-3 h-3" /> DISCOVERY
                       </span>
                   )}
@@ -187,11 +187,11 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
           </h3>
 
           <div className="flex items-center gap-2 mb-4">
-            <span className="px-2.5 py-1 bg-muted rounded-lg text-[10px] font-black text-foreground/40 uppercase tracking-widest border border-border/50">
+            <span className="px-2.5 py-1 bg-muted rounded-lg text-xs font-black text-foreground/40 uppercase tracking-widest border border-border/50">
                {localizedCategory}
             </span>
             {spirit.subcategory && (
-               <span className="text-[10px] font-bold text-foreground/60 uppercase tracking-tighter italic">
+               <span className="text-xs font-bold text-foreground/60 uppercase tracking-tighter italic">
                  {isEn ? ((metadata as any).display_names_en?.[spirit.subcategory] || spirit.subcategory) : spirit.subcategory}
                </span>
             )}
@@ -219,7 +219,7 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
               >
                 <ShieldCheck className="w-4 h-4" />
                 <span className="text-sm font-black">{Number(spirit.aggregateRating.ratingValue).toFixed(1)}</span>
-                <span className="opacity-40 font-bold text-[10px]">
+                <span className="opacity-40 font-bold text-xs">
                   / 5.0
                 </span>
               </div>
@@ -252,7 +252,7 @@ export function SpiritCard({ spirit, onClick, onCabinetChange, index = 10, size 
           <div className="flex flex-wrap gap-2 mt-8 border-t border-border/50 pt-6">
             {tastingTags.map((tag: string, i: number) => {
               return (
-                <span key={i} className="text-[10px] px-3 py-1.5 rounded-xl font-black bg-muted/50 text-foreground/60 border border-border/30 hover:border-primary/40 hover:text-primary transition-all uppercase tracking-tighter">
+                <span key={i} className="text-xs px-3 py-1.5 rounded-xl font-black bg-muted/50 text-foreground/60 border border-border/30 hover:border-primary/40 hover:text-primary transition-all uppercase tracking-tighter">
                   #{tag}
                 </span>
               );

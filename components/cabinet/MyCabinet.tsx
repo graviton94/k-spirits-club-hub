@@ -51,19 +51,19 @@ export default function MyCabinet({
                 <div className="inline-flex p-1.5 bg-muted/20 backdrop-blur-xl rounded-2xl border border-white/5 shadow-2xl">
                     <button
                         onClick={() => setFilter('all')}
-                        className={`px-6 py-2 rounded-xl text-xs font-black transition-all duration-300 ${filter === 'all' ? 'bg-primary text-primary-foreground shadow-[0_5px_15px_-3px_rgba(var(--primary-rgb),0.3)]' : 'text-muted-foreground hover:text-foreground hover:bg-white/5'}`}
+                        className={`px-6 py-2 rounded-xl text-xs font-black transition-all duration-300 ${filter === 'all' ? 'bg-primary text-primary-foreground shadow-[0_5px_15px_-3px_rgba(var(--primary-rgb),0.3)]' : 'text-muted-foreground hover:text-foreground hover:bg-background/5'}`}
                     >
                         {dict?.all || "전체"}
                     </button>
                     <button
                         onClick={() => setFilter('owned')}
-                        className={`px-6 py-2 rounded-xl text-xs font-black transition-all duration-300 ${filter === 'owned' ? 'bg-primary text-primary-foreground shadow-[0_5px_15px_-3px_rgba(var(--primary-rgb),0.3)]' : 'text-muted-foreground hover:text-foreground hover:bg-white/5'}`}
+                        className={`px-6 py-2 rounded-xl text-xs font-black transition-all duration-300 ${filter === 'owned' ? 'bg-primary text-primary-foreground shadow-[0_5px_15px_-3px_rgba(var(--primary-rgb),0.3)]' : 'text-muted-foreground hover:text-foreground hover:bg-background/5'}`}
                     >
                         {dict?.cabinet || "보유 중"}
                     </button>
                     <button
                         onClick={() => setFilter('wish')}
-                        className={`px-6 py-2 rounded-xl text-xs font-black transition-all duration-300 ${filter === 'wish' ? 'bg-primary text-primary-foreground shadow-[0_5px_15px_-3px_rgba(var(--primary-rgb),0.3)]' : 'text-muted-foreground hover:text-foreground hover:bg-white/5'}`}
+                        className={`px-6 py-2 rounded-xl text-xs font-black transition-all duration-300 ${filter === 'wish' ? 'bg-primary text-primary-foreground shadow-[0_5px_15px_-3px_rgba(var(--primary-rgb),0.3)]' : 'text-muted-foreground hover:text-foreground hover:bg-background/5'}`}
                     >
                         {dict?.wishlist || "위시리스트"}
                     </button>

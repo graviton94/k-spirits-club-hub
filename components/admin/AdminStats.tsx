@@ -29,25 +29,25 @@ export default function AdminStats() {
         title="전체 주류"
         value={stats.totalSpirits.toLocaleString()}
         icon="🥃"
-        color="bg-blue-50 dark:bg-blue-950"
+        color="bg-accent/10"
       />
       <StatCard
         title="발행됨"
         value={stats.published.toLocaleString()}
         icon="✓"
-        color="bg-green-50 dark:bg-green-950"
+        color="bg-primary/10"
       />
       <StatCard
         title="검수 대기"
         value={stats.pendingReview.toLocaleString()}
         icon="⏳"
-        color="bg-yellow-50 dark:bg-yellow-950"
+        color="bg-muted"
       />
       <StatCard
         title="데이터 소스"
         value="3"
         icon="📊"
-        color="bg-purple-50 dark:bg-purple-950"
+        color="bg-accent/10"
       />
     </div>
   );

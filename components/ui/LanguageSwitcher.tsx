@@ -27,11 +27,11 @@ export function LanguageSwitcher() {
             onClick={toggleLanguage}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="group flex shrink-0 items-center gap-1 rounded-full border border-border/50 bg-secondary/50 px-2 py-1.5 transition-all hover:border-amber-500/30 hover:bg-secondary min-[380px]:gap-2 min-[380px]:px-3"
+            className="group flex shrink-0 items-center gap-1 rounded-full border border-border/50 bg-secondary/50 px-2 py-1.5 transition-all hover:border-primary/20/30 hover:bg-secondary min-[380px]:gap-2 min-[380px]:px-3"
             aria-label={isEn ? 'Switch language to Korean' : 'Switch language to English'}
         >
-            <Languages className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-amber-500" />
-            <span className="hidden text-[10px] font-black uppercase tracking-widest text-muted-foreground transition-colors group-hover:text-foreground min-[380px]:inline">
+            <Languages className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-primary" />
+            <span className="hidden text-xs font-black uppercase tracking-widest text-muted-foreground transition-colors group-hover:text-foreground min-[380px]:inline">
                 {isEn ? 'KOR' : 'ENG'}
             </span>
             <span className="text-xs min-[380px]:text-sm">

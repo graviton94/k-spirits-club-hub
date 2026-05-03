@@ -124,16 +124,16 @@ export default async function WorldCupResultPage({
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-amber-500/10 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/10 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="relative z-10 w-full max-w-lg mx-auto text-center">
         <div className="absolute -top-12 left-0 right-0 flex justify-between items-center px-4">
           <WorldCupBackButton />
         </div>
 
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-amber-500/10 border border-amber-500/20 rounded-full mb-6">
-          <Trophy className="w-4 h-4 text-amber-500" />
-          <span className="text-amber-500 text-xs font-black uppercase tracking-widest">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 border border-primary/20 rounded-full mb-6">
+          <Trophy className="w-4 h-4 text-primary" />
+          <span className="text-primary text-xs font-black uppercase tracking-widest">
             World Cup Result
           </span>
         </div>
@@ -142,22 +142,22 @@ export default async function WorldCupResultPage({
           {isEn ? 'Your Champion Pick!' : '나의 최고의 선택!'}
         </h2>
 
-        <div className="bg-white p-8 rounded-[32px] mb-10 mx-auto w-fit shadow-xl border border-neutral-100">
+        <div className="bg-background p-8 rounded-[32px] mb-10 mx-auto w-fit shadow-xl border border-border">
           <div className="flex flex-col items-center gap-4">
             <div className="flex flex-col items-center gap-1 mb-2">
-              <span className="text-amber-600 text-[10px] font-black uppercase tracking-[0.3em]">
+              <span className="text-primary text-xs font-black uppercase tracking-[0.3em]">
                 K-Spirits World Cup
               </span>
               <div className="flex items-center gap-2">
-                <Trophy className="w-5 h-5 text-amber-500 fill-amber-500/20" />
-                <h4 className="text-xl font-black text-[#1a1a1a] tracking-tighter italic">
+                <Trophy className="w-5 h-5 text-primary fill-amber-500/20" />
+                <h4 className="text-xl font-black text-foreground tracking-tighter italic">
                   CHAMPION
                 </h4>
               </div>
             </div>
 
-            <div className="w-64 bg-white border border-[#e5e5e5] rounded-[24px] overflow-hidden shadow-lg relative">
-              <div className="aspect-square relative p-6 bg-[#f8f8f8] border-b border-[#e5e5e5]">
+            <div className="w-64 bg-card border border-border rounded-[24px] overflow-hidden shadow-lg relative">
+              <div className="aspect-square relative p-6 bg-muted border-b border-border">
                 <Image
                   src={getOptimizedImageUrl(winner.imageUrl || winner.thumbnailUrl || '', 600)}
                   alt={winner.name}
@@ -168,13 +168,13 @@ export default async function WorldCupResultPage({
                 />
               </div>
 
-              <div className="p-5 flex flex-col gap-3 text-center bg-white items-center text-[#1a1a1a]">
+              <div className="p-5 flex flex-col gap-3 text-center bg-card items-center text-foreground">
                 <div className="flex flex-wrap justify-center gap-1.5">
-                  <span className="px-2 py-0.5 bg-amber-500 text-white text-[10px] font-black rounded-full uppercase tracking-wider">
+                  <span className="px-2 py-0.5 bg-primary text-white text-xs font-black rounded-full uppercase tracking-wider">
                     {winner.category}
                   </span>
                   {winner.subcategory && (
-                    <span className="px-2 py-0.5 bg-slate-100 text-slate-500 text-[10px] font-bold rounded-full uppercase tracking-tighter">
+                    <span className="px-2 py-0.5 bg-muted text-muted-foreground text-xs font-bold rounded-full uppercase tracking-tighter">
                       {winner.subcategory}
                     </span>
                   )}
@@ -186,12 +186,12 @@ export default async function WorldCupResultPage({
 
                 <div className="flex flex-wrap justify-center gap-1.5">
                   {winner.country && (
-                    <span className="px-2 py-0.5 bg-blue-600 text-white text-[10px] font-bold rounded-full uppercase">
+                    <span className="px-2 py-0.5 bg-accent text-white text-xs font-bold rounded-full uppercase">
                       {winner.country}
                     </span>
                   )}
                   {winner.region && (
-                    <span className="px-2 py-0.5 bg-indigo-600 text-white text-[10px] font-medium rounded-full uppercase">
+                    <span className="px-2 py-0.5 bg-secondary text-secondary-foreground text-xs font-medium rounded-full uppercase">
                       {winner.region}
                     </span>
                   )}
@@ -199,12 +199,12 @@ export default async function WorldCupResultPage({
 
                 <div className="flex flex-wrap justify-center gap-1.5">
                   {winner.abv !== undefined && winner.abv !== null && (
-                    <span className="px-2 py-0.5 bg-rose-600 text-white text-[10px] font-black rounded-full">
+                    <span className="px-2 py-0.5 bg-rose-600 text-white text-xs font-black rounded-full">
                       {winner.abv}%
                     </span>
                   )}
                   {winner.distillery && (
-                    <span className="px-2 py-0.5 bg-gray-500 text-white text-[10px] font-medium rounded-full">
+                    <span className="px-2 py-0.5 bg-muted text-muted-foreground text-xs font-medium rounded-full">
                       {winner.distillery}
                     </span>
                   )}
@@ -215,7 +215,7 @@ export default async function WorldCupResultPage({
                     {tags.slice(0, 3).map((tag) => (
                       <span
                         key={tag}
-                        className="px-2 py-0.5 bg-amber-50 border border-amber-100 rounded-full text-[9px] text-amber-600 font-bold whitespace-nowrap"
+                        className="px-2 py-0.5 bg-primary/10 border border-primary/20 rounded-full text-xs text-primary font-bold whitespace-nowrap"
                       >
                         #{tag}
                       </span>
@@ -226,7 +226,7 @@ export default async function WorldCupResultPage({
             </div>
 
             <div className="mt-2 opacity-30">
-              <span className="text-[8px] text-[#1a1a1a] font-bold tracking-widest uppercase">
+                <span className="text-xs text-muted-foreground font-bold tracking-widest uppercase">
                 k-spirits.club
               </span>
             </div>
@@ -236,7 +236,7 @@ export default async function WorldCupResultPage({
         <div className="flex flex-col gap-3 w-72 mx-auto">
           <Link
             href={`/${lang}/contents/worldcup`}
-            className="w-full py-4 bg-amber-500 hover:bg-amber-400 text-white font-black rounded-2xl flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg shadow-amber-500/20"
+            className="w-full py-4 bg-primary hover:brightness-110 text-primary-foreground font-black rounded-2xl flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg shadow-primary/20"
           >
             <Gamepad2 className="w-5 h-5" />
             {isEn ? 'Start Your Own Tournament' : '나도 월드컵 하러 가기'}

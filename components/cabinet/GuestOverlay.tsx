@@ -9,13 +9,13 @@ interface GuestOverlayProps {
 export default function GuestOverlay({ flavor = false }: GuestOverlayProps) {
     return (
         <div className="absolute inset-0 z-40 flex items-center justify-center">
-            <div className="absolute inset-0 bg-white/60 dark:bg-black/60 backdrop-blur-xl rounded-3xl" />
+            <div className="absolute inset-0 bg-background/60 dark:bg-background/60 backdrop-blur-xl rounded-3xl" />
 
             <motion.div
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.2 }}
-                className="relative z-50 bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 rounded-3xl p-10 shadow-2xl border border-slate-200 dark:border-slate-700 max-w-md mx-4"
+                className="relative z-50 bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 rounded-3xl p-10 shadow-2xl border border-border dark:border-border max-w-md mx-4"
             >
                 <div className="text-center space-y-6">
                     <motion.div
@@ -30,7 +30,7 @@ export default function GuestOverlay({ flavor = false }: GuestOverlayProps) {
                         {flavor ? '취향 탐색 잠금' : '회원 전용 공간'}
                     </h2>
 
-                    <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed">
+                    <p className="text-muted-foreground dark:text-muted-foreground text-lg leading-relaxed">
                         {flavor ? '나만의 취향 분석을' : '나만의 술장을 만들고'}<br />
                         {flavor ? '시작 해보세요!' : '기록 해보세요!'}
                     </p>
@@ -46,7 +46,7 @@ export default function GuestOverlay({ flavor = false }: GuestOverlayProps) {
                     </button>
 
                     {!flavor && (
-                        <p className="text-xs text-gray-500 dark:text-gray-500">
+                        <p className="text-xs text-muted-foreground dark:text-muted-foreground">
                             이미 회원이신가요? 로그인하세요
                         </p>
                     )}

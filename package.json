@@ -31,6 +31,7 @@
     "@formatjs/intl-localematcher": "^0.8.1",
     "@google/generative-ai": "^0.24.1",
     "@next/third-parties": "^15.1.4",
+    "@opennextjs/cloudflare": "^1.19.4",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/node": "^25.0.10",
     "@types/react": "^19.2.9",
@@ -42,6 +43,7 @@
     "canvas-confetti": "^1.9.4",
     "date-fns": "^4.1.0",
     "firebase": "^12.12.0",
+    "firebase-admin": "^13.8.0",
     "framer-motion": "^12.29.0",
     "fuse.js": "^7.1.0",
     "html-to-image": "^1.11.13",
@@ -55,8 +57,7 @@
     "recharts": "^3.7.0",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3",
-    "uuid": "^13.0.0",
-    "@opennextjs/cloudflare": "^1.19.4"
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@types/canvas-confetti": "^1.9.0",

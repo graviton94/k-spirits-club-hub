@@ -46,7 +46,7 @@ export const TAG_COLORS: Record<TagColorVariant, { bg: string, text: string, bor
     lime: { bg: 'bg-lime-100 dark:bg-lime-900/40', text: 'text-lime-700 dark:text-lime-300', border: 'border-lime-200 dark:border-lime-700', hex: '#84cc16' },
     yellow: { bg: 'bg-yellow-100 dark:bg-yellow-900/40', text: 'text-yellow-700 dark:text-yellow-300', border: 'border-yellow-200 dark:border-yellow-700', hex: '#eab308' },
     stone: { bg: 'bg-stone-100 dark:bg-stone-800', text: 'text-stone-700 dark:text-stone-300', border: 'border-stone-200 dark:border-stone-600', hex: '#78716c' },
-    slate: { bg: 'bg-slate-100 dark:bg-slate-800', text: 'text-slate-700 dark:text-slate-300', border: 'border-slate-200 dark:border-slate-600', hex: '#64748b' },
+    slate: { bg: 'bg-muted dark:bg-card', text: 'text-muted-foreground dark:text-muted-foreground', border: 'border-border dark:border-border', hex: '#64748b' },
 };
 
 /**

@@ -87,10 +87,10 @@ export default function FlavorView({
     if (!profile && !isAnalyzing) {
         return (
             <div className="flex flex-col items-center justify-center py-24 text-center">
-                <div className="w-20 h-20 bg-card rounded-3xl flex items-center justify-center mb-8 shadow-2xl border border-border"><Sparkles className="w-8 h-8 text-amber-500" /></div>
+                <div className="w-20 h-20 bg-card rounded-3xl flex items-center justify-center mb-8 shadow-2xl border border-border"><Sparkles className="w-8 h-8 text-primary" /></div>
                 <h2 className="text-3xl font-black mb-4 tracking-tighter text-foreground">{isEn ? "Decode Your Spirits DNA" : "당신의 미각 DNA를 해독하세요"}</h2>
                 <p className="text-muted-foreground max-w-sm mb-12 text-sm font-medium">{isEn ? "Analyze your cellar and build a 6D flavor vector." : "술장을 분석해 6차원 풍미 지도를 만듭니다."}</p>
-                <button onClick={handleAnalyze} className="h-16 px-12 bg-foreground text-background rounded-2xl font-black hover:bg-amber-500 hover:text-black transition-all shadow-xl flex items-center gap-3 uppercase tracking-tight text-sm"><Sparkles className="w-5 h-5" /> {isEn ? "Generate Analysis" : "분석 시작"}</button>
+                <button onClick={handleAnalyze} className="h-16 px-12 bg-foreground text-background rounded-2xl font-black hover:bg-primary hover:text-black transition-all shadow-xl flex items-center gap-3 uppercase tracking-tight text-sm"><Sparkles className="w-5 h-5" /> {isEn ? "Generate Analysis" : "분석 시작"}</button>
             </div>
         );
     }
@@ -98,7 +98,7 @@ export default function FlavorView({
     if (isAnalyzing) {
         return (
             <div className="flex flex-col items-center justify-center py-32 space-y-10">
-                <div className="relative"><motion.div animate={{ rotate: 360 }} transition={{ duration: 4, repeat: Infinity, ease: "linear" }} className="w-24 h-24 rounded-full border-t-2 border-amber-500 p-2"><div className="w-full h-full rounded-full border-b-2 border-foreground/10" /></motion.div><div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl">🧬</div></div>
+                <div className="relative"><motion.div animate={{ rotate: 360 }} transition={{ duration: 4, repeat: Infinity, ease: "linear" }} className="w-24 h-24 rounded-full border-t-2 border-primary/20 p-2"><div className="w-full h-full rounded-full border-b-2 border-foreground/10" /></motion.div><div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl">🧬</div></div>
                 <div className="text-center font-black tracking-widest text-foreground uppercase animate-pulse">{isEn ? "Synergizing Vectors..." : "풍미 벡터 분석 중..."}</div>
             </div>
         );
@@ -119,7 +119,7 @@ export default function FlavorView({
                             className={`flex-1 h-full rounded-2xl font-black text-[11px] uppercase tracking-widest border transition-all flex items-center justify-center gap-2 
                                 ${isLimitReached
                                     ? 'bg-muted text-muted-foreground cursor-not-allowed grayscale'
-                                    : 'bg-amber-500 hover:bg-amber-600 text-black border-none shadow-lg shadow-amber-500/20'}`}
+                                    : 'bg-primary hover:bg-primary text-black border-none shadow-lg shadow-amber-500/20'}`}
                         >
                             {isLimitReached ? <Lock className="w-3.5 h-3.5" /> : <RefreshCw className="w-3.5 h-3.5" />}
                             {isLimitReached
@@ -135,19 +135,19 @@ export default function FlavorView({
                 {/* Persona Grid */}
                 <div className="lg:col-span-7 flex flex-col gap-6">
                     <div className="flex-1 bg-card/40 p-12 rounded-[40px] border border-border backdrop-blur-md relative overflow-hidden flex flex-col justify-center">
-                        <div className="absolute -top-10 -right-10 w-60 h-60 bg-amber-500/5 blur-[100px]" />
-                        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-500/10 text-amber-600 dark:text-amber-500 text-[10px] font-black rounded-full mb-8 uppercase tracking-widest border border-amber-500/20 w-fit">
+                        <div className="absolute -top-10 -right-10 w-60 h-60 bg-primary/5 blur-[100px]" />
+                        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary dark:text-primary text-xs font-black rounded-full mb-8 uppercase tracking-widest border border-primary/20/20 w-fit">
                             <Info className="w-3" /> {isEn ? "Active Palate DNA" : "활성 미각 DNA"}
                         </div>
                         <h3 className="text-4xl lg:text-5xl font-black text-foreground mb-8 tracking-tighter italic leading-tight">{profile?.persona?.title || (isEn ? "Palate Analysis..." : "미각 분석 중...")}</h3>
                         <p className="text-muted-foreground text-base lg:text-lg leading-relaxed font-medium mb-10">{profile?.persona?.description || (isEn ? "We are mapping your flavor DNA based on your cellar and reviews." : "술장과 리뷰를 바탕으로 당신의 풍미 DNA를 지도로 만들고 있습니다.")}</p>
                         <div className="flex flex-wrap gap-2">
                             {profile?.persona?.keywords?.map((kw: string, i: number) => (
-                                <span key={i} className="text-[10px] font-black text-amber-600 dark:text-amber-500/80 bg-amber-500/5 px-4 py-2 rounded-xl border border-amber-500/10 uppercase tracking-widest">{kw}</span>
+                                <span key={i} className="text-xs font-black text-primary dark:text-primary/80 bg-primary/5 px-4 py-2 rounded-xl border border-primary/20/10 uppercase tracking-widest">{kw}</span>
                             )) || null}
                         </div>
                     </div>
-                    <button className="h-14 w-full bg-foreground text-background hover:bg-amber-500 hover:text-black font-black rounded-2xl shadow-xl transition-all flex items-center justify-center gap-3 uppercase text-[11px] tracking-widest">
+                    <button className="h-14 w-full bg-foreground text-background hover:bg-primary hover:text-black font-black rounded-2xl shadow-xl transition-all flex items-center justify-center gap-3 uppercase text-[11px] tracking-widest">
                         <Share2 className="w-4 h-4" /> {isEn ? "Broadcast DNA" : "나의 DNA 공유하기"}
                     </button>
                 </div>

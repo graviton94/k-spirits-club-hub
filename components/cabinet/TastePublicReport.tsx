@@ -48,7 +48,7 @@ export default function TastePublicReport({ profile, isPublic = false }: TastePu
 
             <div className="bg-card/80 backdrop-blur-xl border border-border rounded-[40px] p-8 md:p-12 relative overflow-hidden group shadow-2xl">
                 {/* Visual Flair */}
-                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-500/5 blur-[140px] rounded-full pointer-events-none" />
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 blur-[140px] rounded-full pointer-events-none" />
                 <div className="absolute -bottom-40 -left-40 w-[400px] h-[400px] bg-foreground/5 blur-[120px] rounded-full pointer-events-none" />
 
                 <div className="grid lg:grid-cols-2 gap-12 items-center relative z-10">
@@ -57,7 +57,7 @@ export default function TastePublicReport({ profile, isPublic = false }: TastePu
                         <div className="w-full max-w-[360px]">
                            <TasteRadar data={chartData} />
                         </div>
-                        <div className="mt-8 text-[10px] text-muted-foreground font-black tracking-[0.3em] uppercase bg-foreground/5 px-4 py-1.5 rounded-full border border-border">
+                        <div className="mt-8 text-xs text-muted-foreground font-black tracking-[0.3em] uppercase bg-foreground/5 px-4 py-1.5 rounded-full border border-border">
                             Updated: {analyzedAt.toLocaleDateString()}
                         </div>
                     </div>
@@ -66,7 +66,7 @@ export default function TastePublicReport({ profile, isPublic = false }: TastePu
                     <div className="space-y-10">
                         <div>
                             <div className="flex items-center gap-3 mb-6">
-                                <span className="px-3 py-1 bg-amber-500/10 border border-amber-500/20 rounded-full text-[10px] font-black text-amber-500 tracking-widest uppercase">
+                                <span className="px-3 py-1 bg-primary/10 border border-primary/20/20 rounded-full text-xs font-black text-primary tracking-widest uppercase">
                                     Scoring Scope: 6D Vector
                                 </span>
                             </div>
@@ -87,24 +87,24 @@ export default function TastePublicReport({ profile, isPublic = false }: TastePu
 
                         {/* Direct Recommendation Highlight */}
                         {profile.recommendation && (
-                            <div className="p-8 bg-background/50 backdrop-blur-md rounded-[32px] border border-border hover:border-amber-500/30 transition-all group/ad shadow-2xl relative overflow-hidden">
-                                <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 blur-3xl" />
+                            <div className="p-8 bg-background/50 backdrop-blur-md rounded-[32px] border border-border hover:border-primary/20/30 transition-all group/ad shadow-2xl relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-3xl" />
                                 
                                 <div className="flex justify-between items-start mb-6 relative z-10">
                                     <div className="flex flex-col">
-                                        <span className="text-[10px] text-amber-500 font-black mb-2 flex items-center gap-2 uppercase tracking-widest">
+                                        <span className="text-xs text-primary font-black mb-2 flex items-center gap-2 uppercase tracking-widest">
                                             <Sparkles className="w-3" /> Recommended Bottle
                                         </span>
-                                        <h3 className="text-2xl font-black text-foreground group-hover/ad:text-amber-500 transition-colors tracking-tight italic">
+                                        <h3 className="text-2xl font-black text-foreground group-hover/ad:text-primary transition-colors tracking-tight italic">
                                             {profile.recommendation.name}
                                         </h3>
                                     </div>
                                     <div className="text-right">
                                         <div className="text-4xl font-black text-foreground flex items-baseline gap-0.5 tracking-tighter">
                                             {profile.recommendation.matchRate}
-                                            <span className="text-sm font-black text-amber-500">%</span>
+                                            <span className="text-sm font-black text-primary">%</span>
                                         </div>
-                                        <div className="text-[10px] text-muted-foreground font-black uppercase tracking-tighter opacity-70">DNA Match</div>
+                                        <div className="text-xs text-muted-foreground font-black uppercase tracking-tighter opacity-70">DNA Match</div>
                                     </div>
                                 </div>
 
@@ -131,7 +131,7 @@ export default function TastePublicReport({ profile, isPublic = false }: TastePu
 
             {isPublic && (
                 <div className="text-center space-y-8 pt-8 relative">
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-amber-500/5 blur-[120px] pointer-events-none" />
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-primary/5 blur-[120px] pointer-events-none" />
                     
                     <div className="flex flex-col items-center gap-3">
                         <p className="text-muted-foreground text-sm font-black uppercase tracking-[0.2em]">

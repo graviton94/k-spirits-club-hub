@@ -211,7 +211,7 @@ export default function CabinetClient({ lang, dict }: CabinetClientProps) {
                     <h2 className="text-3xl font-black mb-4 bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">
                         {dict.empty || (isEn ? "Your cabinet is empty." : "술장이 비어있습니다.")}
                     </h2>
-                    <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg">
+                    <p className="text-muted-foreground dark:text-muted-foreground mb-8 text-lg">
                         {dict.emptySubtitle || (isEn ? "Let's fill it up with your favorite spirits!" : "좋아하는 술들로 채워볼까요?")}
                     </p>
                     <Link
@@ -239,7 +239,7 @@ export default function CabinetClient({ lang, dict }: CabinetClientProps) {
                         <h1 className="text-5xl md:text-7xl font-black mb-4 tracking-tighter bg-brand-gradient bg-clip-text text-transparent italic uppercase drop-shadow-2xl leading-none">
                             {dict.title || (isEn ? "My Cabinet" : "내 술장")}
                         </h1>
-                        <p className="text-[10px] md:text-xs font-black text-muted-foreground/40 tracking-[0.6em] uppercase flex items-center justify-center gap-3">
+                        <p className="text-xs md:text-xs font-black text-muted-foreground/40 tracking-[0.6em] uppercase flex items-center justify-center gap-3">
                             <span className="w-10 h-px bg-primary/20" />
                             {dict.subtitle || "Curated Spirits & Tasting Journey"}
                             <span className="w-10 h-px bg-primary/20" />
@@ -251,21 +251,21 @@ export default function CabinetClient({ lang, dict }: CabinetClientProps) {
                     <div className="bg-card/20 backdrop-blur-3xl border border-white/5 rounded-[2.5rem] p-6 md:p-10 text-center shadow-2xl hover:border-primary/30 transition-all duration-700 group relative overflow-hidden">
                         <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                         <p className="text-4xl md:text-5xl font-black text-foreground group-hover:scale-110 transition-transform duration-700 leading-none mb-2 italic">{spirits.length}</p>
-                        <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest opacity-30">
+                        <p className="text-xs font-black text-muted-foreground uppercase tracking-widest opacity-30">
                             {dict.stats?.bottles || "Bottles"}
                         </p>
                     </div>
                     <div className="bg-card/20 backdrop-blur-3xl border border-white/5 rounded-[2.5rem] p-6 md:p-10 text-center shadow-2xl hover:border-primary/30 transition-all duration-700 group relative overflow-hidden">
                         <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                         <p className="text-4xl md:text-5xl font-black text-foreground group-hover:scale-110 transition-transform duration-700 leading-none mb-2 italic">{isLoadingStats ? '...' : reviewCount}</p>
-                        <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest opacity-30">
+                        <p className="text-xs font-black text-muted-foreground uppercase tracking-widest opacity-30">
                             {dict.stats?.reviews || "Reviews"}
                         </p>
                     </div>
                     <div className="bg-card/20 backdrop-blur-3xl border border-white/5 rounded-[2.5rem] p-6 md:p-10 text-center shadow-2xl hover:border-rose-500/30 transition-all duration-700 group relative overflow-hidden">
                         <div className="absolute inset-0 bg-rose-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                         <p className="text-4xl md:text-5xl font-black text-rose-500 group-hover:scale-110 transition-transform duration-700 leading-none mb-2 italic">{isLoadingStats ? '...' : likesReceived}</p>
-                        <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest opacity-30">
+                        <p className="text-xs font-black text-muted-foreground uppercase tracking-widest opacity-30">
                             {dict.stats?.hearts || "Hearts"}
                         </p>
                     </div>
@@ -279,7 +279,7 @@ export default function CabinetClient({ lang, dict }: CabinetClientProps) {
                                 flex items-center gap-2.5 px-8 py-3 rounded-[1.5rem] text-sm font-black transition-all duration-500
                                 ${viewMode === 'cellar'
                                     ? 'bg-primary text-primary-foreground shadow-[0_10px_30px_-5px_rgba(var(--primary-rgb),0.5)] scale-105'
-                                    : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
+                                    : 'text-muted-foreground hover:text-foreground hover:bg-background/5'
                                 }
                             `}
                         >
@@ -291,7 +291,7 @@ export default function CabinetClient({ lang, dict }: CabinetClientProps) {
                                 flex items-center gap-2.5 px-8 py-3 rounded-[1.5rem] text-sm font-black transition-all duration-500
                                 ${viewMode === 'flavor'
                                     ? 'bg-primary text-primary-foreground shadow-[0_10px_30px_-5px_rgba(var(--primary-rgb),0.5)] scale-105'
-                                    : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
+                                    : 'text-muted-foreground hover:text-foreground hover:bg-background/5'
                                 }
                             `}
                         >
@@ -366,7 +366,7 @@ export default function CabinetClient({ lang, dict }: CabinetClientProps) {
 
             {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT && (
                 <div className="mt-12 mb-6">
-                    <div className="text-xs text-gray-500 text-center mb-2">Advertisement</div>
+                    <div className="text-xs text-muted-foreground text-center mb-2">Advertisement</div>
                     <GoogleAd
                         client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT}
                         slot={process.env.NEXT_PUBLIC_ADSENSE_CONTENT_SLOT}

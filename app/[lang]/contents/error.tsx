@@ -35,7 +35,7 @@ export default function ContentsError({
                 다시 시도 / Retry
             </button>
             {error.digest && (
-                <p className="mt-4 text-[10px] text-muted-foreground/40 font-mono">
+                <p className="mt-4 text-xs text-muted-foreground/40 font-mono">
                     Digest: {error.digest}
                 </p>
             )}

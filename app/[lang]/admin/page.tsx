@@ -635,12 +635,12 @@ export default function AdminDashboard() {
                 {activeTab === 'spirits' ? (
                     <>
                         {/* Filters */}
-                        <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-2xl p-4 md:p-6 shadow-xl mb-6">
+                        <div className="bg-background dark:bg-background border border-border dark:border-border rounded-2xl p-4 md:p-6 shadow-xl mb-6">
                             <div className="space-y-4">
                                 {/* Filter Controls */}
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                                     <select
-                                        className="px-3 py-2 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-800 bg-white dark:bg-black"
+                                        className="px-3 py-2 rounded-lg text-xs font-bold border border-border dark:border-border bg-background dark:bg-background"
                                         value={localCategoryFilter}
                                         onChange={e => setLocalCategoryFilter(e.target.value)}
                                     >
@@ -649,7 +649,7 @@ export default function AdminDashboard() {
                                     </select>
 
                                     <select
-                                        className="px-3 py-2 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-800 bg-white dark:bg-black"
+                                        className="px-3 py-2 rounded-lg text-xs font-bold border border-border dark:border-border bg-background dark:bg-background"
                                         value={localDistilleryFilter}
                                         onChange={e => setLocalDistilleryFilter(e.target.value)}
                                     >
@@ -658,7 +658,7 @@ export default function AdminDashboard() {
                                     </select>
 
                                     <select
-                                        className="px-3 py-2 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-800 bg-white dark:bg-black"
+                                        className="px-3 py-2 rounded-lg text-xs font-bold border border-border dark:border-border bg-background dark:bg-background"
                                         value={localIsPublishedFilter}
                                         onChange={e => setLocalIsPublishedFilter(e.target.value)}
                                     >
@@ -741,7 +741,7 @@ export default function AdminDashboard() {
                                 </div>
 
                                 {/* Count */}
-                                <div className="text-[10px] font-black text-foreground/40 pt-4 border-t border-border flex items-baseline gap-1.5 uppercase tracking-widest">
+                                <div className="text-xs font-black text-foreground/40 pt-4 border-t border-border flex items-baseline gap-1.5 uppercase tracking-widest">
                                     {isEn ? 'Total' : '총'} <span className="text-primary text-base font-black">{totalCount.toLocaleString()}</span> {isEn ? 'Items' : '건'}
                                     <span className="opacity-50">({isEn ? 'Current Page' : '현재 페이지'}: {spirits.length})</span>
                                 </div>
@@ -754,10 +754,10 @@ export default function AdminDashboard() {
                                 <table className="w-full text-left text-sm border-collapse min-w-[600px]">
                                     <thead className="bg-muted text-muted-foreground border-b border-border">
                                         <tr>
-                                            <th className="p-3 md:p-4 font-black uppercase tracking-wider text-[10px]">{lang === 'en' ? 'Product' : '주류 정보'}</th>
-                                            <th className="p-3 md:p-4 font-black uppercase tracking-wider text-[10px]">{lang === 'en' ? 'Status' : '상태'}</th>
-                                            <th className="p-3 md:p-4 hidden sm:table-cell font-black uppercase tracking-wider text-[10px]">{lang === 'en' ? 'Image' : '이미지'}</th>
-                                            <th className="p-3 md:p-4 font-black uppercase tracking-wider text-[10px]">{lang === 'en' ? 'Actions' : '작업'}</th>
+                                            <th className="p-3 md:p-4 font-black uppercase tracking-wider text-xs">{lang === 'en' ? 'Product' : '주류 정보'}</th>
+                                            <th className="p-3 md:p-4 font-black uppercase tracking-wider text-xs">{lang === 'en' ? 'Status' : '상태'}</th>
+                                            <th className="p-3 md:p-4 hidden sm:table-cell font-black uppercase tracking-wider text-xs">{lang === 'en' ? 'Image' : '이미지'}</th>
+                                            <th className="p-3 md:p-4 font-black uppercase tracking-wider text-xs">{lang === 'en' ? 'Actions' : '작업'}</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-border">
@@ -767,12 +767,12 @@ export default function AdminDashboard() {
                                                     <div className="font-black text-sm md:text-base max-w-[200px] md:max-w-[300px] truncate group-hover:text-primary transition-colors">
                                                         {spirit.name}
                                                     </div>
-                                                    <div className="text-[10px] md:text-[11px] text-muted-foreground font-bold">
+                                                    <div className="text-xs md:text-[11px] text-muted-foreground font-bold">
                                                         {spirit.distillery || '-'} | {spirit.abv}% | {spirit.category}
                                                     </div>
                                                 </td>
                                                 <td className="p-3 md:p-4">
-                                                    <span className={`px-2 py-1 rounded text-[9px] md:text-[10px] font-black uppercase tracking-tighter ${spirit.isPublished
+                                                    <span className={`px-2 py-1 rounded text-xs md:text-xs font-black uppercase tracking-tighter ${spirit.isPublished
                                                         ? 'bg-primary/10 text-primary border border-primary/20'
                                                         : 'bg-muted text-muted-foreground border border-border'
                                                         }`}>
@@ -782,7 +782,7 @@ export default function AdminDashboard() {
                                                 <td className="p-3 md:p-4 hidden sm:table-cell">
                                                     {spirit.imageUrl ? (
                                                         <img src={getOptimizedImageUrl(spirit.imageUrl, 80)}
-                                                            className="w-8 h-8 md:w-10 md:h-10 object-contain bg-white rounded-lg border border-border shadow-sm group-hover:scale-110 transition-transform"
+                                                            className="w-8 h-8 md:w-10 md:h-10 object-contain bg-background rounded-lg border border-border shadow-sm group-hover:scale-110 transition-transform"
                                                             alt="Bottle" />
                                                     ) : (
                                                         <div className="w-8 h-8 md:w-10 md:h-10 bg-muted rounded-lg border border-dashed border-border" />
@@ -792,21 +792,21 @@ export default function AdminDashboard() {
                                                     <div className="flex gap-1 md:gap-2">
                                                         <button
                                                             onClick={() => startEdit(spirit)}
-                                                            className="px-2 md:px-3 py-1 md:py-1.5 bg-white dark:bg-black border text-[10px] md:text-xs font-bold rounded-lg hover:bg-gray-100 dark:hover:bg-gray-900"
+                                                            className="px-2 md:px-3 py-1 md:py-1.5 bg-background dark:bg-background border text-xs md:text-xs font-bold rounded-lg hover:bg-muted dark:hover:bg-muted"
                                                         >
                                                             편집
                                                         </button>
                                                         {!spirit.isPublished && (
                                                             <button
                                                                 onClick={() => publishSpirit(spirit.id)}
-                                                                className="px-2 md:px-3 py-1 md:py-1.5 bg-green-500/10 border border-green-500/20 text-green-600 text-[10px] md:text-xs font-bold rounded-lg"
+                                                                className="px-2 md:px-3 py-1 md:py-1.5 bg-primary/10 border border-primary/20/20 text-primary text-xs md:text-xs font-bold rounded-lg"
                                                             >
                                                                 발행
                                                             </button>
                                                         )}
                                                         <button
                                                             onClick={() => deleteSpirit(spirit.id)}
-                                                            className="px-2 md:px-3 py-1 md:py-1.5 bg-red-500/10 border border-red-500/20 text-red-600 text-[10px] md:text-xs font-bold rounded-lg"
+                                                            className="px-2 md:px-3 py-1 md:py-1.5 bg-destructive/10 border border-destructive/20/20 text-destructive text-xs md:text-xs font-bold rounded-lg"
                                                         >
                                                             삭제
                                                         </button>
@@ -815,31 +815,31 @@ export default function AdminDashboard() {
                                             </tr>
                                         ))}
                                         {spirits.length === 0 && !loading && (
-                                            <tr><td colSpan={4} className="p-12 text-center text-gray-500">조건에 맞는 데이터가 없습니다.</td></tr>
+                                            <tr><td colSpan={4} className="p-12 text-center text-muted-foreground">조건에 맞는 데이터가 없습니다.</td></tr>
                                         )}
                                         {loading && (
-                                            <tr><td colSpan={4} className="p-12 text-center text-amber-500 animate-pulse font-bold">로딩 중...</td></tr>
+                                            <tr><td colSpan={4} className="p-12 text-center text-primary animate-pulse font-bold">로딩 중...</td></tr>
                                         )}
                                     </tbody>
                                 </table>
                             </div>
 
                             {/* Pagination */}
-                            <div className="p-4 border-t border-gray-200 dark:border-gray-800 flex justify-center items-center gap-4">
+                            <div className="p-4 border-t border-border dark:border-border flex justify-center items-center gap-4">
                                 <button
                                     disabled={page === 1}
                                     onClick={() => setPage(p => p - 1)}
-                                    className="px-3 md:px-4 py-2 rounded-lg border hover:bg-gray-50 dark:hover:bg-gray-900 disabled:opacity-30 font-bold text-xs md:text-sm"
+                                    className="px-3 md:px-4 py-2 rounded-lg border hover:bg-muted dark:hover:bg-muted disabled:opacity-30 font-bold text-xs md:text-sm"
                                 >
                                     이전
                                 </button>
-                                <div className="text-xs md:text-sm font-bold text-gray-500">
+                                <div className="text-xs md:text-sm font-bold text-muted-foreground">
                                     Page <span className="text-black dark:text-white">{page}</span> of {Math.max(1, totalPages)}
                                 </div>
                                 <button
                                     disabled={page >= totalPages}
                                     onClick={() => setPage(p => p + 1)}
-                                    className="px-3 md:px-4 py-2 rounded-lg border hover:bg-gray-50 dark:hover:bg-gray-900 disabled:opacity-30 font-bold text-xs md:text-sm"
+                                    className="px-3 md:px-4 py-2 rounded-lg border hover:bg-muted dark:hover:bg-muted disabled:opacity-30 font-bold text-xs md:text-sm"
                                 >
                                     다음
                                 </button>
@@ -859,7 +859,7 @@ export default function AdminDashboard() {
                         </div>
                         <div className="overflow-x-auto">
                             <table className="w-full text-left">
-                                <thead className="text-foreground/40 text-[10px] font-black uppercase tracking-[0.3em] border-b border-border">
+                                <thead className="text-foreground/40 text-xs font-black uppercase tracking-[0.3em] border-b border-border">
                                     <tr>
                                         <th className="p-4 md:p-6">{isEn ? 'SPIRIT' : '대상 주류'}</th>
                                         <th className="p-4 md:p-6">{isEn ? 'CONTENT' : '요청 내용'}</th>
@@ -873,9 +873,9 @@ export default function AdminDashboard() {
                                                 <div className="flex flex-col gap-1">
                                                     <a href={`/${lang}/spirits/${req.spiritId}`} target="_blank" className="font-black text-sm text-foreground hover:text-primary transition-colors flex items-center gap-2">
                                                         {req.spiritName}
-                                                        <span className="text-[10px] opacity-0 group-hover:opacity-100 transition-opacity">↗</span>
+                                                        <span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity">↗</span>
                                                     </a>
-                                                    <span className="text-[10px] text-foreground/30 font-black tracking-tighter">{req.createdAt ? new Date(req.createdAt).toLocaleDateString() : '-'}</span>
+                                                    <span className="text-xs text-foreground/30 font-black tracking-tighter">{req.createdAt ? new Date(req.createdAt).toLocaleDateString() : '-'}</span>
                                                 </div>
                                             </td>
                                             <td className="p-4 md:p-6 align-top max-w-md">
@@ -886,15 +886,15 @@ export default function AdminDashboard() {
                                                 <div className="flex flex-col gap-2 min-w-[120px]">
                                                     <button
                                                         onClick={() => updateRequestStatus(req.id, 'pending')}
-                                                        className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${req.status === 'pending' ? 'bg-amber-500 text-black border-amber-600 shadow-lg shadow-amber-500/20' : 'bg-transparent text-foreground/40 border-border hover:border-border-hover'}`}
+                                                        className={`px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest border transition-all ${req.status === 'pending' ? 'bg-primary text-black border-primary/20 shadow-lg shadow-amber-500/20' : 'bg-transparent text-foreground/40 border-border hover:border-border-hover'}`}
                                                     >{isEn ? 'Pending' : '대기중'}</button>
                                                     <button
                                                         onClick={() => updateRequestStatus(req.id, 'checked')}
-                                                        className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${req.status === 'checked' ? 'bg-secondary text-secondary-foreground border-secondary shadow-lg shadow-secondary/20' : 'bg-transparent text-foreground/40 border-border hover:border-border-hover'}`}
+                                                        className={`px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest border transition-all ${req.status === 'checked' ? 'bg-secondary text-secondary-foreground border-secondary shadow-lg shadow-secondary/20' : 'bg-transparent text-foreground/40 border-border hover:border-border-hover'}`}
                                                     >{isEn ? 'Checked' : '확인됨'}</button>
                                                     <button
                                                         onClick={() => updateRequestStatus(req.id, 'resolved')}
-                                                        className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${req.status === 'resolved' ? 'bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20' : 'bg-transparent text-foreground/40 border-border hover:border-border-hover'}`}
+                                                        className={`px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest border transition-all ${req.status === 'resolved' ? 'bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20' : 'bg-transparent text-foreground/40 border-border hover:border-border-hover'}`}
                                                     >{isEn ? 'Resolved' : '완료'}</button>
                                                 </div>
                                             </td>
@@ -925,7 +925,7 @@ export default function AdminDashboard() {
             {/* Edit / Create Modal */}
             {editingId && (
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-start justify-center p-2 md:p-4 overflow-y-auto">
-                    <div className="bg-white dark:bg-black w-full max-w-4xl rounded-2xl md:rounded-3xl shadow-2xl border p-4 md:p-8 my-4 md:my-8">
+                    <div className="bg-background dark:bg-background w-full max-w-4xl rounded-2xl md:rounded-3xl shadow-2xl border p-4 md:p-8 my-4 md:my-8">
                         {/* Header */}
                         <div className="flex justify-between items-center mb-8 pb-6 border-b border-border">
                             <div>
@@ -957,20 +957,20 @@ export default function AdminDashboard() {
                         <div className="space-y-6 max-h-[60vh] overflow-y-auto pr-2">
                             {/* Basic Info */}
                             <section className="space-y-3">
-                                <h3 className="text-sm font-bold bg-gray-100 dark:bg-gray-900 px-3 py-1 rounded-lg inline-block">기본 정보</h3>
+                                <h3 className="text-sm font-bold bg-muted dark:bg-card px-3 py-1 rounded-lg inline-block">기본 정보</h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                     <div>
-                                        <label className="text-[10px] font-black uppercase text-gray-400">제품명 (KO)</label>
+                                        <label className="text-xs font-black uppercase text-muted-foreground">제품명 (KO)</label>
                                         <input
-                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-gray-50 dark:bg-gray-950 font-bold text-sm focus:ring-2 focus:ring-amber-500/50 outline-none"
+                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-muted dark:bg-card font-bold text-sm focus:ring-2 focus:ring-amber-500/50 outline-none"
                                             value={editForm.name}
                                             onChange={e => setEditForm({ ...editForm, name: e.target.value })}
                                         />
                                     </div>
                                     <div>
-                                        <label className="text-[10px] font-black uppercase text-gray-400">영문 명칭</label>
+                                        <label className="text-xs font-black uppercase text-muted-foreground">영문 명칭</label>
                                         <input
-                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-gray-50 dark:bg-gray-950 font-bold text-sm focus:ring-2 focus:ring-amber-500/50 outline-none"
+                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-muted dark:bg-card font-bold text-sm focus:ring-2 focus:ring-amber-500/50 outline-none"
                                             value={editForm.nameEn}
                                             onChange={e => setEditForm({ ...editForm, nameEn: e.target.value })}
                                         />
@@ -979,9 +979,9 @@ export default function AdminDashboard() {
 
                                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                                     <div>
-                                        <label className="text-[10px] font-black uppercase text-gray-400">카테고리</label>
+                                        <label className="text-xs font-black uppercase text-muted-foreground">카테고리</label>
                                         <select
-                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-white dark:bg-black font-bold text-sm"
+                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-background dark:bg-background font-bold text-sm"
                                             value={editForm.category}
                                             onChange={e => setEditForm({ ...editForm, category: e.target.value, subcategory: '' })}
                                         >
@@ -990,44 +990,44 @@ export default function AdminDashboard() {
                                         </select>
                                     </div>
                                     <div>
-                                        <label className="text-[10px] font-black uppercase text-gray-400">세부종류</label>
+                                        <label className="text-xs font-black uppercase text-muted-foreground">세부종류</label>
                                         <input
-                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-white dark:bg-black font-bold text-sm"
+                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-background dark:bg-background font-bold text-sm"
                                             value={editForm.subcategory}
                                             onChange={e => setEditForm({ ...editForm, subcategory: e.target.value })}
                                         />
                                     </div>
                                     <div>
-                                        <label className="text-[10px] font-black uppercase text-gray-400">메인 카테고리</label>
+                                        <label className="text-xs font-black uppercase text-muted-foreground">메인 카테고리</label>
                                         <input
-                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-white dark:bg-black font-bold text-sm"
+                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-background dark:bg-background font-bold text-sm"
                                             value={editForm.mainCategory}
                                             onChange={e => setEditForm({ ...editForm, mainCategory: e.target.value })}
                                         />
                                     </div>
                                     <div>
-                                        <label className="text-[10px] font-black uppercase text-gray-400">카테고리 (EN)</label>
+                                        <label className="text-xs font-black uppercase text-muted-foreground">카테고리 (EN)</label>
                                         <input
-                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-white dark:bg-black font-bold text-sm"
+                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-background dark:bg-background font-bold text-sm"
                                             value={editForm.categoryEn}
                                             onChange={e => setEditForm({ ...editForm, categoryEn: e.target.value })}
                                         />
                                     </div>
                                     <div>
-                                        <label className="text-[10px] font-black uppercase text-gray-400">도수 (%)</label>
+                                        <label className="text-xs font-black uppercase text-muted-foreground">도수 (%)</label>
                                         <input
                                             type="number"
                                             step="0.1"
-                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-white dark:bg-black font-bold text-sm"
+                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-background dark:bg-background font-bold text-sm"
                                             value={editForm.abv}
                                             onChange={e => setEditForm({ ...editForm, abv: e.target.value })}
                                         />
                                     </div>
                                     <div>
-                                        <label className="text-[10px] font-black uppercase text-gray-400">용량 (ml)</label>
+                                        <label className="text-xs font-black uppercase text-muted-foreground">용량 (ml)</label>
                                         <input
                                             type="number"
-                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-white dark:bg-black font-bold text-sm"
+                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-background dark:bg-background font-bold text-sm"
                                             value={editForm.volume}
                                             onChange={e => setEditForm({ ...editForm, volume: Number(e.target.value) || 0 })}
                                         />
@@ -1037,36 +1037,36 @@ export default function AdminDashboard() {
 
                             {/* Origin */}
                             <section className="space-y-3 pt-4 border-t">
-                                <h3 className="text-sm font-bold bg-gray-100 dark:bg-gray-900 px-3 py-1 rounded-lg inline-block">제조 정보</h3>
+                                <h3 className="text-sm font-bold bg-muted dark:bg-card px-3 py-1 rounded-lg inline-block">제조 정보</h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                     <div>
-                                        <label className="text-[10px] font-black uppercase text-gray-400">증류소</label>
+                                        <label className="text-xs font-black uppercase text-muted-foreground">증류소</label>
                                         <input
-                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-gray-50 dark:bg-gray-950 font-bold text-sm"
+                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-muted dark:bg-card font-bold text-sm"
                                             value={editForm.distillery}
                                             onChange={e => setEditForm({ ...editForm, distillery: e.target.value })}
                                         />
                                     </div>
                                     <div>
-                                        <label className="text-[10px] font-black uppercase text-gray-400">보틀러</label>
+                                        <label className="text-xs font-black uppercase text-muted-foreground">보틀러</label>
                                         <input
-                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-gray-50 dark:bg-gray-950 font-bold text-sm"
+                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-muted dark:bg-card font-bold text-sm"
                                             value={editForm.bottler}
                                             onChange={e => setEditForm({ ...editForm, bottler: e.target.value })}
                                         />
                                     </div>
                                     <div>
-                                        <label className="text-[10px] font-black uppercase text-gray-400">국가</label>
+                                        <label className="text-xs font-black uppercase text-muted-foreground">국가</label>
                                         <input
-                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-gray-50 dark:bg-gray-950 font-bold text-sm"
+                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-muted dark:bg-card font-bold text-sm"
                                             value={editForm.country}
                                             onChange={e => setEditForm({ ...editForm, country: e.target.value })}
                                         />
                                     </div>
                                     <div>
-                                        <label className="text-[10px] font-black uppercase text-gray-400">지역</label>
+                                        <label className="text-xs font-black uppercase text-muted-foreground">지역</label>
                                         <input
-                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-gray-50 dark:bg-gray-950 font-bold text-sm"
+                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-muted dark:bg-card font-bold text-sm"
                                             value={editForm.region}
                                             onChange={e => setEditForm({ ...editForm, region: e.target.value })}
                                         />
@@ -1076,60 +1076,60 @@ export default function AdminDashboard() {
 
                             {/* Image */}
                             <section className="space-y-3 pt-4 border-t">
-                                <h3 className="text-sm font-bold bg-gray-100 dark:bg-gray-900 px-3 py-1 rounded-lg inline-block">이미지</h3>
+                                <h3 className="text-sm font-bold bg-muted dark:bg-card px-3 py-1 rounded-lg inline-block">이미지</h3>
                                 <div className="flex gap-3 items-end">
                                     <div className="flex-1">
-                                        <label className="text-[10px] font-black uppercase text-gray-400">이미지 URL</label>
+                                        <label className="text-xs font-black uppercase text-muted-foreground">이미지 URL</label>
                                         <input
-                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-gray-50 dark:bg-gray-950 font-bold text-sm"
+                                            className="w-full mt-1 px-3 py-2 border rounded-xl bg-muted dark:bg-card font-bold text-sm"
                                             value={editForm.imageUrl}
                                             onChange={e => setEditForm({ ...editForm, imageUrl: e.target.value })}
                                         />
                                     </div>
                                     <button
                                         onClick={() => setEditForm({ ...editForm, imageUrl: '' })}
-                                        className="px-3 py-2 bg-red-500/10 border border-red-500/20 text-red-600 text-xs font-bold rounded-lg"
+                                        className="px-3 py-2 bg-destructive/10 border border-destructive/20/20 text-destructive text-xs font-bold rounded-lg"
                                     >
                                         이미지 제거
                                     </button>
                                 </div>
                                 {editForm.imageUrl && (
-                                    <img src={editForm.imageUrl} className="w-20 h-20 object-contain bg-white rounded-lg border" alt="Preview" />
+                                    <img src={editForm.imageUrl} className="w-20 h-20 object-contain bg-background rounded-lg border" alt="Preview" />
                                 )}
                             </section>
 
                             {/* Tags */}
                             <section className="space-y-3 pt-4 border-t">
-                                <h3 className="text-sm font-bold bg-gray-100 dark:bg-gray-900 px-3 py-1 rounded-lg inline-block">향미 태그</h3>
+                                <h3 className="text-sm font-bold bg-muted dark:bg-card px-3 py-1 rounded-lg inline-block">향미 태그</h3>
                                 <div>
-                                    <label className="text-[10px] font-black uppercase text-gray-400">테이스팅 노트</label>
+                                    <label className="text-xs font-black uppercase text-muted-foreground">테이스팅 노트</label>
                                     <textarea
                                         rows={2}
-                                        className="w-full mt-1 px-3 py-2 border rounded-xl bg-gray-50 dark:bg-gray-950 text-sm"
+                                        className="w-full mt-1 px-3 py-2 border rounded-xl bg-muted dark:bg-card text-sm"
                                         value={editForm.tastingNote}
                                         onChange={e => setEditForm({ ...editForm, tastingNote: e.target.value })}
                                     />
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-black uppercase text-gray-400">Nose (,로 구분)</label>
+                                    <label className="text-xs font-black uppercase text-muted-foreground">Nose (,로 구분)</label>
                                     <input
-                                        className="w-full mt-1 px-3 py-2 border rounded-xl bg-gray-50 dark:bg-gray-950 text-sm"
+                                        className="w-full mt-1 px-3 py-2 border rounded-xl bg-muted dark:bg-card text-sm"
                                         value={editForm.noseTags}
                                         onChange={e => setEditForm({ ...editForm, noseTags: e.target.value })}
                                     />
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-black uppercase text-gray-400">Palate (,로 구분)</label>
+                                    <label className="text-xs font-black uppercase text-muted-foreground">Palate (,로 구분)</label>
                                     <input
-                                        className="w-full mt-1 px-3 py-2 border rounded-xl bg-gray-50 dark:bg-gray-950 text-sm"
+                                        className="w-full mt-1 px-3 py-2 border rounded-xl bg-muted dark:bg-card text-sm"
                                         value={editForm.palateTags}
                                         onChange={e => setEditForm({ ...editForm, palateTags: e.target.value })}
                                     />
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-black uppercase text-gray-400">Finish (,로 구분)</label>
+                                    <label className="text-xs font-black uppercase text-muted-foreground">Finish (,로 구분)</label>
                                     <input
-                                        className="w-full mt-1 px-3 py-2 border rounded-xl bg-gray-50 dark:bg-gray-950 text-sm"
+                                        className="w-full mt-1 px-3 py-2 border rounded-xl bg-muted dark:bg-card text-sm"
                                         value={editForm.finishTags}
                                         onChange={e => setEditForm({ ...editForm, finishTags: e.target.value })}
                                     />
@@ -1139,29 +1139,29 @@ export default function AdminDashboard() {
                             {/* Descriptions */}
                             <section className="space-y-3 pt-4 border-t">
                                 <div className="flex justify-between items-center">
-                                    <h3 className="text-sm font-bold bg-gray-100 dark:bg-gray-900 px-3 py-1 rounded-lg inline-block">설명</h3>
+                                    <h3 className="text-sm font-bold bg-muted dark:bg-card px-3 py-1 rounded-lg inline-block">설명</h3>
                                     <button
                                         disabled={isProcessing}
                                         onClick={generateDescriptionOnly}
-                                        className="text-[10px] font-black bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-500 disabled:opacity-30"
+                                        className="text-xs font-black bg-accent text-white px-3 py-1 rounded-lg hover:bg-accent disabled:opacity-30"
                                     >
                                         ✨ 설명만 생성 (현재 정보 기반)
                                     </button>
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-black uppercase text-gray-400">한글 설명</label>
+                                    <label className="text-xs font-black uppercase text-muted-foreground">한글 설명</label>
                                     <textarea
                                         rows={3}
-                                        className="w-full mt-1 px-3 py-2 border rounded-xl bg-gray-50 dark:bg-gray-950 text-sm"
+                                        className="w-full mt-1 px-3 py-2 border rounded-xl bg-muted dark:bg-card text-sm"
                                         value={editForm.descriptionKo}
                                         onChange={e => setEditForm({ ...editForm, descriptionKo: e.target.value })}
                                     />
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-black uppercase text-gray-400">영문 설명</label>
+                                    <label className="text-xs font-black uppercase text-muted-foreground">영문 설명</label>
                                     <textarea
                                         rows={3}
-                                        className="w-full mt-1 px-3 py-2 border rounded-xl bg-gray-50 dark:bg-gray-950 text-sm"
+                                        className="w-full mt-1 px-3 py-2 border rounded-xl bg-muted dark:bg-card text-sm"
                                         value={editForm.descriptionEn}
                                         onChange={e => setEditForm({ ...editForm, descriptionEn: e.target.value })}
                                     />
@@ -1171,29 +1171,29 @@ export default function AdminDashboard() {
                             {/* Pairing Guide */}
                             <section className="space-y-3 pt-4 border-t">
                                 <div className="flex justify-between items-center">
-                                    <h3 className="text-sm font-bold bg-gray-100 dark:bg-gray-900 px-3 py-1 rounded-lg inline-block">페어링 가이드</h3>
+                                    <h3 className="text-sm font-bold bg-muted dark:bg-card px-3 py-1 rounded-lg inline-block">페어링 가이드</h3>
                                     <button
                                         disabled={isProcessing}
                                         onClick={generatePairingOnly}
-                                        className="text-[10px] font-black bg-purple-600 text-white px-3 py-1 rounded-lg hover:bg-purple-500 disabled:opacity-30"
+                                        className="text-xs font-black bg-accent text-white px-3 py-1 rounded-lg hover:bg-accent disabled:opacity-30"
                                     >
                                         ✨ 페어링만 생성 (현재 정보 기반)
                                     </button>
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-black uppercase text-gray-400">한글</label>
+                                    <label className="text-xs font-black uppercase text-muted-foreground">한글</label>
                                     <textarea
                                         rows={3}
-                                        className="w-full mt-1 px-3 py-2 border rounded-xl bg-gray-50 dark:bg-gray-950 text-sm"
+                                        className="w-full mt-1 px-3 py-2 border rounded-xl bg-muted dark:bg-card text-sm"
                                         value={editForm.pairingGuideKo}
                                         onChange={e => setEditForm({ ...editForm, pairingGuideKo: e.target.value })}
                                     />
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-black uppercase text-gray-400">영문</label>
+                                    <label className="text-xs font-black uppercase text-muted-foreground">영문</label>
                                     <textarea
                                         rows={3}
-                                        className="w-full mt-1 px-3 py-2 border rounded-xl bg-gray-50 dark:bg-gray-950 text-sm"
+                                        className="w-full mt-1 px-3 py-2 border rounded-xl bg-muted dark:bg-card text-sm"
                                         value={editForm.pairingGuideEn}
                                         onChange={e => setEditForm({ ...editForm, pairingGuideEn: e.target.value })}
                                     />

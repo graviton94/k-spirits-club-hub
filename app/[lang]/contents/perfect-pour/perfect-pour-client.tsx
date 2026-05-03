@@ -258,7 +258,7 @@ export default function PerfectPourPage() {
                     <h1 className="text-3xl font-black italic uppercase tracking-tighter bg-brand-gradient bg-clip-text text-transparent">
                         {isEn ? "Perfect Pour" : "퍼펙트 푸어"}
                     </h1>
-                    <p className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-widest">{isEn ? "Somaek Mastery" : "소맥 마스터리"}</p>
+                    <p className="text-xs font-black text-muted-foreground/50 uppercase tracking-widest">{isEn ? "Somaek Mastery" : "소맥 마스터리"}</p>
                 </div>
             </div>
 
@@ -272,17 +272,17 @@ export default function PerfectPourPage() {
                         {isEn ? "Master of Proportion" : "황금 비율의 연금술사"}
                     </h2>
                     <div className="inline-flex gap-2 p-1.5 bg-muted/20 backdrop-blur-xl border border-white/5 rounded-2xl">
-                        <span className="text-[10px] font-black uppercase text-muted-foreground/60 px-3 py-1">
+                        <span className="text-xs font-black uppercase text-muted-foreground/60 px-3 py-1">
                             {isEn ? "Goal: 90% Volume" : "목표: 총량 90%"}
                         </span>
-                        <div className="w-px h-full bg-white/5" />
-                        <span className="text-[10px] font-black uppercase text-primary px-3 py-1">
+                        <div className="w-px h-full bg-background/5" />
+                        <span className="text-xs font-black uppercase text-primary px-3 py-1">
                             {isEn ? "30% Soju Ratio" : "소주 비율 30%"}
                         </span>
                     </div>
                 </motion.div>
 
-                <div className="relative w-44 h-80 bg-white/5 border-[5px] border-white/10 rounded-b-[3rem] rounded-t-xl backdrop-blur-md overflow-hidden mb-16 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)]">
+                <div className="relative w-44 h-80 bg-background/5 border-[5px] border-white/10 rounded-b-[3rem] rounded-t-xl backdrop-blur-md overflow-hidden mb-16 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)]">
                     <div
                         className="absolute w-full transition-all duration-100 ease-linear"
                         style={{
@@ -292,7 +292,7 @@ export default function PerfectPourPage() {
                             zIndex: 10
                         }}
                     >
-                        <div className="absolute top-0 w-full h-2 bg-white/40 blur-[2px] animate-pulse" />
+                        <div className="absolute top-0 w-full h-2 bg-background/40 blur-[2px] animate-pulse" />
                         {gameState === 'POURING_BEER' && (
                             <div className="absolute inset-0 overflow-hidden">
                                 {Array.from({ length: 15 }).map((_, i) => (
@@ -305,7 +305,7 @@ export default function PerfectPourPage() {
                                             repeat: Infinity, 
                                             delay: Math.random() * 2 
                                         }}
-                                        className="absolute w-1 h-1 bg-white/30 rounded-full"
+                                        className="absolute w-1 h-1 bg-background/30 rounded-full"
                                         style={{ left: `${Math.random() * 100}%` }}
                                     />
                                 ))}
@@ -375,7 +375,7 @@ export default function PerfectPourPage() {
                                         <div className="text-7xl group-hover:scale-110 transition-transform duration-700 block">
                                             {score === 100 ? '👑' : score && score >= 90 ? '🥃' : score && score >= 60 ? '👌' : '💀'}
                                         </div>
-                                        <div className="text-[10px] font-black text-primary uppercase tracking-[0.4em]">{isEn ? "Appraisal Verdict" : "정밀 감정 결과"}</div>
+                                        <div className="text-xs font-black text-primary uppercase tracking-[0.4em]">{isEn ? "Appraisal Verdict" : "정밀 감정 결과"}</div>
                                     </div>
 
                                     <div className="relative inline-block">
@@ -393,13 +393,13 @@ export default function PerfectPourPage() {
 
                                     <div className="grid grid-cols-2 gap-4">
                                         <div className="p-6 bg-card/40 rounded-3xl border border-white/5 hover:border-primary/30 transition-all">
-                                            <p className="text-[10px] font-black text-muted-foreground uppercase mb-2 tracking-widest">{isEn ? "Volume" : "총량"}</p>
+                                            <p className="text-xs font-black text-muted-foreground uppercase mb-2 tracking-widest">{isEn ? "Volume" : "총량"}</p>
                                             <p className={`text-xl font-black italic ${Math.abs(displayTotal - 90) < 5 ? "text-primary" : "text-foreground"}`}>
                                                 {displayTotal.toFixed(1)}%
                                             </p>
                                         </div>
                                         <div className="p-6 bg-card/40 rounded-3xl border border-white/5 hover:border-primary/30 transition-all">
-                                            <p className="text-[10px] font-black text-muted-foreground uppercase mb-2 tracking-widest">{isEn ? "Ratio" : "비율"}</p>
+                                            <p className="text-xs font-black text-muted-foreground uppercase mb-2 tracking-widest">{isEn ? "Ratio" : "비율"}</p>
                                             <p className={`text-xl font-black italic ${Math.abs(displaySojuPercent - 30) < 3 ? "text-primary" : "text-foreground"}`}>
                                                 {displaySojuPercent.toFixed(1)}%
                                             </p>

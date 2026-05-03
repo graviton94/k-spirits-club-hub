@@ -118,7 +118,7 @@ export default async function ContentsPage({ params }: ContentsPageProps) {
         <ContentsHeaderAnimated>
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-card/40 backdrop-blur-xl border border-white/5 rounded-full mb-4 shadow-xl">
             <Sparkles className="w-3.5 h-3.5 text-primary animate-pulse" />
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground/80">
+            <span className="text-xs font-black uppercase tracking-[0.3em] text-muted-foreground/80">
               {isEn ? 'Experience Playground' : '익스피리언스 플레이그라운드'}
             </span>
           </div>
@@ -152,7 +152,7 @@ export default async function ContentsPage({ params }: ContentsPageProps) {
                   <div className="p-4 bg-background/50 backdrop-blur-xl rounded-2xl border border-white/5 shadow-2xl group-hover:scale-110 transition-transform duration-500 group-hover:shadow-primary/10">
                     {item.icon}
                   </div>
-                  <span className="text-[10px] font-black px-3 py-1 bg-primary text-primary-foreground rounded-full shadow-lg shadow-primary/20 translate-y-1 group-hover:-translate-y-1 transition-transform">
+                  <span className="text-xs font-black px-3 py-1 bg-primary text-primary-foreground rounded-full shadow-lg shadow-primary/20 translate-y-1 group-hover:-translate-y-1 transition-transform">
                     {item.status}
                   </span>
                 </div>
@@ -166,7 +166,7 @@ export default async function ContentsPage({ params }: ContentsPageProps) {
                   </p>
                 </div>
 
-                <div className="mt-auto pt-4 flex items-center gap-2 text-[10px] font-black text-primary uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-x-4 group-hover:translate-x-0 transition-all duration-500">
+                <div className="mt-auto pt-4 flex items-center gap-2 text-xs font-black text-primary uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-x-4 group-hover:translate-x-0 transition-all duration-500">
                   {isEn ? 'Proceed' : '입장하기'} <ChevronRight className="w-3 h-3" />
                 </div>
               </div>
@@ -227,7 +227,7 @@ export default async function ContentsPage({ params }: ContentsPageProps) {
 
         {/* Footer Ambience */}
         <div className="text-center">
-          <p className="text-muted-foreground/30 text-[10px] font-black uppercase tracking-[0.4em] animate-pulse italic">
+          <p className="text-muted-foreground/30 text-xs font-black uppercase tracking-[0.4em] animate-pulse italic">
             Expanding the Liquor Universe
           </p>
         </div>

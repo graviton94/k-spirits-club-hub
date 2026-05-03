@@ -1,0 +1,757 @@
+{
+  "mode": "DRY_RUN",
+  "overwriteDifferent": false,
+  "startedAt": "2026-05-03T06:25:24.360Z",
+  "finishedAt": "2026-05-03T06:25:46.679Z",
+  "firestoreRows": 13732,
+  "dataConnectRows": 13733,
+  "processedRows": 20,
+  "targetId": null,
+  "window": {
+    "offset": 0,
+    "limit": 20
+  },
+  "missingInFirestore": 0,
+  "alreadySynced": 0,
+  "candidateCount": 20,
+  "fixedCount": 0,
+  "failedCount": 0,
+  "changes": [
+    {
+      "id": "fsk-201500060964",
+      "name": "산양삼생막걸리",
+      "before": {
+        "noseTags": [],
+        "palateTags": [],
+        "finishTags": []
+      },
+      "after": {
+        "noseTags": [
+          "#허브잎",
+          "#인삼",
+          "#곡물의단맛",
+          "#흙내음"
+        ],
+        "palateTags": [
+          "#미디엄바디",
+          "#달콤한",
+          "#부드러운",
+          "#탄산감"
+        ],
+        "finishTags": [
+          "#중간",
+          "#깔끔한",
+          "#허브잎"
+        ]
+      },
+      "reason": [
+        "fill:noseTags,palateTags,finishTags",
+        "overwrite:status,metadata",
+        "selected:noseTags,palateTags,finishTags"
+      ]
+    },
+    {
+      "id": "fsk-201500060965",
+      "name": "산양삼막걸리",
+      "before": {
+        "noseTags": [],
+        "palateTags": [],
+        "finishTags": []
+      },
+      "after": {
+        "noseTags": [
+          "#허브잎",
+          "#인삼",
+          "#곡물의단맛",
+          "#흙내음"
+        ],
+        "palateTags": [
+          "#미디엄바디",
+          "#달콤한",
+          "#부드러운",
+          "#탄산감"
+        ],
+        "finishTags": [
+          "#중간",
+          "#깔끔한",
+          "#허브잎"
+        ]
+      },
+      "reason": [
+        "fill:noseTags,palateTags,finishTags",
+        "overwrite:status,metadata",
+        "selected:noseTags,palateTags,finishTags"
+      ]
+    },
+    {
+      "id": "fsk-201500060966",
+      "name": "백암생막걸리",
+      "before": {
+        "noseTags": [],
+        "palateTags": [],
+        "finishTags": []
+      },
+      "after": {
+        "noseTags": [
+          "#곡물의단맛",
+          "#쌀",
+          "#요거트",
+          "#발효"
+        ],
+        "palateTags": [
+          "#미디엄바디",
+          "#달콤한",
+          "#부드러운",
+          "#탄산감"
+        ],
+        "finishTags": [
+          "#중간",
+          "#깔끔한",
+          "#곡물의단맛"
+        ]
+      },
+      "reason": [
+        "fill:noseTags,palateTags,finishTags",
+        "overwrite:status,metadata",
+        "selected:noseTags,palateTags,finishTags"
+      ]
+    },
+    {
+      "id": "fsk-201500060967",
+      "name": "경기생막걸리",
+      "before": {
+        "noseTags": [],
+        "palateTags": [],
+        "finishTags": []
+      },
+      "after": {
+        "noseTags": [
+          "#곡물의단맛",
+          "#쌀",
+          "#발효",
+          "#누룽지"
+        ],
+        "palateTags": [
+          "#미디엄바디",
+          "#달콤한",
+          "#부드러운",
+          "#탄산감"
+        ],
+        "finishTags": [
+          "#중간",
+          "#깔끔한",
+          "#곡물의단맛"
+        ]
+      },
+      "reason": [
+        "fill:noseTags,palateTags,finishTags",
+        "overwrite:status,metadata",
+        "selected:noseTags,palateTags,finishTags"
+      ]
+    },
+    {
+      "id": "fsk-2015000609712",
+      "name": "히비스커스향 유자향 하이볼",
+      "before": {
+        "thumbnailUrl": null,
+        "noseTags": [],
+        "palateTags": [],
+        "finishTags": []
+      },
+      "after": {
+        "thumbnailUrl": "https://placehold.co/400",
+        "noseTags": [
+          "#히비스커스",
+          "#유자",
+          "#감귤",
+          "#꽃"
+        ],
+        "palateTags": [
+          "#탄산감",
+          "#상큼한",
+          "#미디엄스윗"
+        ],
+        "finishTags": [
+          "#짧은",
+          "#깔끔한",
+          "#상쾌한"
+        ]
+      },
+      "reason": [
+        "fill:thumbnailUrl,noseTags,palateTags,finishTags",
+        "overwrite:status,metadata",
+        "selected:thumbnailUrl,noseTags,palateTags,finishTags"
+      ]
+    },
+    {
+      "id": "fsk-2015000609713",
+      "name": "레드 하이볼",
+      "before": {
+        "thumbnailUrl": null,
+        "noseTags": [],
+        "palateTags": [],
+        "finishTags": []
+      },
+      "after": {
+        "thumbnailUrl": "https://placehold.co/400",
+        "noseTags": [
+          "#과일_베리_열대과일",
+          "#향신료",
+          "#달콤한"
+        ],
+        "palateTags": [
+          "#탄산감",
+          "#상큼한",
+          "#미디엄스윗",
+          "#달콤한"
+        ],
+        "finishTags": [
+          "#짧은",
+          "#달콤한여운",
+          "#스파이시한"
+        ]
+      },
+      "reason": [
+        "fill:thumbnailUrl,noseTags,palateTags,finishTags",
+        "overwrite:status,metadata",
+        "selected:thumbnailUrl,noseTags,palateTags,finishTags"
+      ]
+    },
+    {
+      "id": "fsk-2015000609714",
+      "name": "스우파 블로썸 피즈 하이볼",
+      "before": {
+        "thumbnailUrl": null,
+        "noseTags": [],
+        "palateTags": [],
+        "finishTags": []
+      },
+      "after": {
+        "thumbnailUrl": "https://placehold.co/400",
+        "noseTags": [
+          "#꽃",
+          "#상큼한",
+          "#과일_베리_열대과일"
+        ],
+        "palateTags": [
+          "#탄산감",
+          "#상큼한",
+          "#미디엄스윗",
+          "#청량한"
+        ],
+        "finishTags": [
+          "#짧은",
+          "#깔끔한",
+          "#달콤한여운"
+        ]
+      },
+      "reason": [
+        "fill:thumbnailUrl,noseTags,palateTags,finishTags",
+        "overwrite:status,metadata",
+        "selected:thumbnailUrl,noseTags,palateTags,finishTags"
+      ]
+    },
+    {
+      "id": "fsk-2015000609715",
+      "name": "스우파 하이볼",
+      "before": {
+        "thumbnailUrl": null,
+        "noseTags": [],
+        "palateTags": [],
+        "finishTags": []
+      },
+      "after": {
+        "thumbnailUrl": "https://placehold.co/400",
+        "noseTags": [
+          "#과일_시트러스",
+          "#허브_식물_채소",
+          "#상큼한"
+        ],
+        "palateTags": [
+          "#탄산감",
+          "#상큼한",
+          "#미디엄스윗",
+          "#청량한"
+        ],
+        "finishTags": [
+          "#짧은",
+          "#깔끔한",
+          "#드라이한마무리"
+        ]
+      },
+      "reason": [
+        "fill:thumbnailUrl,noseTags,palateTags,finishTags",
+        "overwrite:status,metadata",
+        "selected:thumbnailUrl,noseTags,palateTags,finishTags"
+      ]
+    },
+    {
+      "id": "fsk-2015000609716",
+      "name": "스우파 오리지널 하이볼",
+      "before": {
+        "thumbnailUrl": null,
+        "noseTags": [],
+        "palateTags": [],
+        "finishTags": []
+      },
+      "after": {
+        "thumbnailUrl": "https://placehold.co/400",
+        "noseTags": [
+          "#과일_시트러스",
+          "#허브_식물_채소",
+          "#상큼한"
+        ],
+        "palateTags": [
+          "#탄산감",
+          "#상큼한",
+          "#미디엄스윗",
+          "#청량한"
+        ],
+        "finishTags": [
+          "#짧은",
+          "#깔끔한",
+          "#드라이한마무리"
+        ]
+      },
+      "reason": [
+        "fill:thumbnailUrl,noseTags,palateTags,finishTags",
+        "overwrite:status,metadata",
+        "selected:thumbnailUrl,noseTags,palateTags,finishTags"
+      ]
+    },
+    {
+      "id": "fsk-2015000609717",
+      "name": "블로썸 피즈",
+      "before": {
+        "thumbnailUrl": null,
+        "noseTags": [],
+        "palateTags": [],
+        "finishTags": []
+      },
+      "after": {
+        "thumbnailUrl": "https://placehold.co/400",
+        "noseTags": [
+          "#꽃",
+          "#상큼한",
+          "#과일_베리_열대과일"
+        ],
+        "palateTags": [
+          "#탄산감",
+          "#상큼한",
+          "#미디엄스윗",
+          "#청량한"
+        ],
+        "finishTags": [
+          "#짧은",
+          "#깔끔한",
+          "#달콤한여운"
+        ]
+      },
+      "reason": [
+        "fill:thumbnailUrl,noseTags,palateTags,finishTags",
+        "overwrite:status,metadata",
+        "selected:thumbnailUrl,noseTags,palateTags,finishTags"
+      ]
+    },
+    {
+      "id": "fsk-2015000609718",
+      "name": "OMG 오리지널 하이볼",
+      "before": {
+        "thumbnailUrl": null,
+        "noseTags": [],
+        "palateTags": [],
+        "finishTags": []
+      },
+      "after": {
+        "thumbnailUrl": "https://placehold.co/400",
+        "noseTags": [
+          "#과일_시트러스",
+          "#허브_식물_채소",
+          "#상큼한"
+        ],
+        "palateTags": [
+          "#탄산감",
+          "#상큼한",
+          "#미디엄스윗",
+          "#청량한"
+        ],
+        "finishTags": [
+          "#짧은",
+          "#깔끔한",
+          "#드라이한마무리"
+        ]
+      },
+      "reason": [
+        "fill:thumbnailUrl,noseTags,palateTags,finishTags",
+        "overwrite:status,metadata",
+        "selected:thumbnailUrl,noseTags,palateTags,finishTags"
+      ]
+    },
+    {
+      "id": "fsk-2015000609719",
+      "name": "골드 하이볼",
+      "before": {
+        "thumbnailUrl": null,
+        "noseTags": [],
+        "palateTags": [],
+        "finishTags": []
+      },
+      "after": {
+        "thumbnailUrl": "https://placehold.co/400",
+        "noseTags": [
+          "#달콤함_과자_유제품",
+          "#고소함_곡물_로스팅",
+          "#향신료"
+        ],
+        "palateTags": [
+          "#탄산감",
+          "#달콤한",
+          "#미디엄스윗",
+          "#부드러운"
+        ],
+        "finishTags": [
+          "#짧은",
+          "#달콤한여운",
+          "#깔끔한"
+        ]
+      },
+      "reason": [
+        "fill:thumbnailUrl,noseTags,palateTags,finishTags",
+        "overwrite:status,metadata",
+        "selected:thumbnailUrl,noseTags,palateTags,finishTags"
+      ]
+    },
+    {
+      "id": "fsk-2015000609720",
+      "name": "블루벨 하이볼",
+      "before": {
+        "thumbnailUrl": null,
+        "noseTags": [],
+        "palateTags": [],
+        "finishTags": []
+      },
+      "after": {
+        "thumbnailUrl": "https://placehold.co/400",
+        "noseTags": [
+          "#꽃",
+          "#달콤함_과자_유제품",
+          "#상큼한"
+        ],
+        "palateTags": [
+          "#탄산감",
+          "#상큼한",
+          "#미디엄스윗",
+          "#청량한"
+        ],
+        "finishTags": [
+          "#짧은",
+          "#깔끔한",
+          "#달콤한여운"
+        ]
+      },
+      "reason": [
+        "fill:thumbnailUrl,noseTags,palateTags,finishTags",
+        "overwrite:status,metadata",
+        "selected:thumbnailUrl,noseTags,palateTags,finishTags"
+      ]
+    },
+    {
+      "id": "fsk-2015000609721",
+      "name": "이비자 하이볼",
+      "before": {
+        "thumbnailUrl": null,
+        "noseTags": [],
+        "palateTags": [],
+        "finishTags": []
+      },
+      "after": {
+        "thumbnailUrl": "https://placehold.co/400",
+        "noseTags": [
+          "#과일_시트러스",
+          "#상큼한",
+          "#탄산감",
+          "#열대과일"
+        ],
+        "palateTags": [
+          "#탄산감",
+          "#상큼한",
+          "#달콤한",
+          "#미디엄스윗"
+        ],
+        "finishTags": [
+          "#짧은",
+          "#깔끔한",
+          "#달콤한여운"
+        ]
+      },
+      "reason": [
+        "fill:thumbnailUrl,noseTags,palateTags,finishTags",
+        "overwrite:status,metadata",
+        "selected:thumbnailUrl,noseTags,palateTags,finishTags"
+      ]
+    },
+    {
+      "id": "fsk-2015000609722",
+      "name": "몰디브 하이볼",
+      "before": {
+        "thumbnailUrl": null,
+        "noseTags": [],
+        "palateTags": [],
+        "finishTags": []
+      },
+      "after": {
+        "thumbnailUrl": "https://placehold.co/400",
+        "noseTags": [
+          "#열대과일",
+          "#상큼한",
+          "#달콤한"
+        ],
+        "palateTags": [
+          "#탄산감",
+          "#상큼한",
+          "#달콤한",
+          "#미디엄스윗"
+        ],
+        "finishTags": [
+          "#짧은",
+          "#깔끔한",
+          "#달콤한여운"
+        ]
+      },
+      "reason": [
+        "fill:thumbnailUrl,noseTags,palateTags,finishTags",
+        "overwrite:status,metadata",
+        "selected:thumbnailUrl,noseTags,palateTags,finishTags"
+      ]
+    },
+    {
+      "id": "fsk-201500080082",
+      "name": "금강송주40",
+      "before": {
+        "descriptionKo": null,
+        "descriptionEn": null,
+        "pairingGuideKo": null,
+        "pairingGuideEn": null,
+        "noseTags": [],
+        "palateTags": [],
+        "finishTags": []
+      },
+      "after": {
+        "descriptionKo": "금강송주40은 울진군산림조합에서 생산하는 증류주입니다. 금강송의 솔잎 향이 특징입니다.",
+        "descriptionEn": "Geumgangsongju 40 is a distilled spirit produced by Uljin-gun Forestry Cooperatives. It features the pine needle aroma of Geumgangsong.",
+        "pairingGuideKo": "육류 요리나, 한식과 잘 어울립니다.",
+        "pairingGuideEn": "Pairs well with meat dishes or Korean cuisine.",
+        "noseTags": [
+          "#솔잎",
+          "#우디",
+          "#허브잎",
+          "#상쾌한",
+          "#약간의단맛"
+        ],
+        "palateTags": [
+          "#미디엄바디",
+          "#균형잡힌",
+          "#부드러운",
+          "#허브",
+          "#따뜻한"
+        ],
+        "finishTags": [
+          "#중간",
+          "#솔잎",
+          "#우디",
+          "#드라이한마무리",
+          "#깔끔한"
+        ]
+      },
+      "reason": [
+        "fill:descriptionKo,descriptionEn,pairingGuideKo,pairingGuideEn,noseTags,palateTags,finishTags",
+        "overwrite:status,metadata",
+        "selected:descriptionKo,descriptionEn,pairingGuideKo,pairingGuideEn,noseTags,palateTags,finishTags"
+      ]
+    },
+    {
+      "id": "fsk-201500080083",
+      "name": "금강송18.8",
+      "before": {
+        "descriptionKo": null,
+        "descriptionEn": null,
+        "pairingGuideKo": null,
+        "pairingGuideEn": null,
+        "noseTags": [],
+        "palateTags": [],
+        "finishTags": []
+      },
+      "after": {
+        "descriptionKo": "금강송18.8은 울진군산림조합에서 생산하는 증류주입니다. 금강송의 솔잎 향이 은은하게 느껴집니다.",
+        "descriptionEn": "Geumgangsong 18.8 is a distilled spirit produced by Uljin-gun Forestry Cooperatives. It features a subtle pine needle aroma of Geumgangsong.",
+        "pairingGuideKo": "가벼운 음식이나, 샐러드와 잘 어울립니다.",
+        "pairingGuideEn": "Pairs well with light foods or salads.",
+        "noseTags": [
+          "#솔잎",
+          "#허브잎",
+          "#상쾌한",
+          "#은은한",
+          "#우디"
+        ],
+        "palateTags": [
+          "#라이트바디",
+          "#깔끔한",
+          "#청량한",
+          "#허브",
+          "#부드러운"
+        ],
+        "finishTags": [
+          "#짧은",
+          "#솔잎",
+          "#상쾌한",
+          "#깔끔한",
+          "#드라이한마무리"
+        ]
+      },
+      "reason": [
+        "fill:descriptionKo,descriptionEn,pairingGuideKo,pairingGuideEn,noseTags,palateTags,finishTags",
+        "overwrite:status,metadata",
+        "selected:descriptionKo,descriptionEn,pairingGuideKo,pairingGuideEn,noseTags,palateTags,finishTags"
+      ]
+    },
+    {
+      "id": "fsk-201500080084",
+      "name": "금강송주30",
+      "before": {
+        "descriptionKo": null,
+        "descriptionEn": null,
+        "pairingGuideKo": null,
+        "pairingGuideEn": null,
+        "noseTags": [],
+        "palateTags": [],
+        "finishTags": []
+      },
+      "after": {
+        "descriptionKo": "금강송주30은 울진군산림조합에서 생산하는 증류주입니다. 금강송의 솔잎 향이 특징입니다.",
+        "descriptionEn": "Geumgangsongju 30 is a distilled spirit produced by Uljin-gun Forestry Cooperatives. It features the pine needle aroma of Geumgangsong.",
+        "pairingGuideKo": "기름진 음식이나, 한식과 잘 어울립니다.",
+        "pairingGuideEn": "Pairs well with oily foods or Korean cuisine.",
+        "noseTags": [
+          "#솔잎",
+          "#허브잎",
+          "#상쾌한",
+          "#숲",
+          "#우디"
+        ],
+        "palateTags": [
+          "#미디엄바디",
+          "#깔끔한",
+          "#허브",
+          "#청량한",
+          "#부드러운"
+        ],
+        "finishTags": [
+          "#중간",
+          "#솔잎",
+          "#상쾌한",
+          "#허브",
+          "#드라이한마무리"
+        ]
+      },
+      "reason": [
+        "fill:descriptionKo,descriptionEn,pairingGuideKo,pairingGuideEn,noseTags,palateTags,finishTags",
+        "overwrite:status,metadata",
+        "selected:descriptionKo,descriptionEn,pairingGuideKo,pairingGuideEn,noseTags,palateTags,finishTags"
+      ]
+    },
+    {
+      "id": "fsk-201500080086",
+      "name": "I'M PINESOJU",
+      "before": {
+        "thumbnailUrl": null,
+        "descriptionKo": null,
+        "descriptionEn": null,
+        "pairingGuideKo": null,
+        "pairingGuideEn": null,
+        "noseTags": [],
+        "palateTags": [],
+        "finishTags": []
+      },
+      "after": {
+        "thumbnailUrl": "https://placehold.co/400",
+        "descriptionKo": "아임파인소주는 울진군산림조합에서 생산하는 파인애플 소주입니다. 파인애플의 달콤함과 상큼함이 특징입니다.",
+        "descriptionEn": "I'M PINESOJU is a pineapple soju produced by Uljin-gun Forestry Cooperatives. It features the sweetness and freshness of pineapple.",
+        "pairingGuideKo": "가벼운 안주나, 과일과 함께 즐기면 좋습니다.",
+        "pairingGuideEn": "It is good to enjoy with light snacks or fruits.",
+        "noseTags": [
+          "#파인애플",
+          "#열대과일",
+          "#달콤한",
+          "#은은한",
+          "#가벼운"
+        ],
+        "palateTags": [
+          "#라이트바디",
+          "#달콤한",
+          "#상큼한",
+          "#부드러운",
+          "#청량한"
+        ],
+        "finishTags": [
+          "#짧은",
+          "#파인애플",
+          "#달콤한여운",
+          "#깔끔한",
+          "#열대과일"
+        ]
+      },
+      "reason": [
+        "fill:thumbnailUrl,descriptionKo,descriptionEn,pairingGuideKo,pairingGuideEn,noseTags,palateTags,finishTags",
+        "overwrite:status,metadata",
+        "selected:thumbnailUrl,descriptionKo,descriptionEn,pairingGuideKo,pairingGuideEn,noseTags,palateTags,finishTags"
+      ]
+    },
+    {
+      "id": "fsk-201500080087",
+      "name": "I'M PINE30",
+      "before": {
+        "thumbnailUrl": null,
+        "descriptionKo": null,
+        "descriptionEn": null,
+        "pairingGuideKo": null,
+        "pairingGuideEn": null,
+        "noseTags": [],
+        "palateTags": [],
+        "finishTags": []
+      },
+      "after": {
+        "thumbnailUrl": "https://placehold.co/400",
+        "descriptionKo": "아임파인30은 울진군산림조합에서 생산하는 파인애플 증류주입니다. 파인애플의 달콤함과 상큼함이 특징입니다.",
+        "descriptionEn": "I'M PINE30 is a pineapple distilled spirit produced by Uljin-gun Forestry Cooperatives. It features the sweetness and freshness of pineapple.",
+        "pairingGuideKo": "달콤한 디저트나, 열대 과일과 함께 즐기면 좋습니다.",
+        "pairingGuideEn": "It is good to enjoy with sweet desserts or tropical fruits.",
+        "noseTags": [
+          "#파인애플",
+          "#열대과일",
+          "#달콤한",
+          "#상큼한",
+          "#과육"
+        ],
+        "palateTags": [
+          "#미디엄바디",
+          "#상큼한",
+          "#달콤한",
+          "#과일",
+          "#부드러운"
+        ],
+        "finishTags": [
+          "#중간",
+          "#파인애플",
+          "#상쾌한",
+          "#달콤한여운",
+          "#열대과일"
+        ]
+      },
+      "reason": [
+        "fill:thumbnailUrl,descriptionKo,descriptionEn,pairingGuideKo,pairingGuideEn,noseTags,palateTags,finishTags",
+        "overwrite:status,metadata",
+        "selected:thumbnailUrl,descriptionKo,descriptionEn,pairingGuideKo,pairingGuideEn,noseTags,palateTags,finishTags"
+      ]
+    }
+  ]
+}

@@ -177,3 +177,17 @@
 1. 페이즈별 Jira/Linear 티켓 템플릿
 2. 컴포넌트별 마이그레이션 체크리스트
 3. 화면별 Before/After QA 시나리오
+
+---
+
+## Week 1 Execution Output (2026-05-03)
+아래 문서는 Week 1 (Phase 0-1) 실제 산출물입니다.
+1. `docs/plans/week1/WEEK1_PHASE0_BASELINE_REPORT.md`
+2. `docs/plans/week1/WEEK1_PHASE0_TOKEN_VIOLATION_LIST.md`
+3. `docs/plans/week1/WEEK1_PHASE0_SCREEN_PRIORITY_MATRIX.md`
+4. `docs/plans/week1/WEEK1_PHASE1_TOKEN_SPEC_V2.md`
+5. `docs/plans/week1/WEEK1_PHASE1_COLOR_MAPPING_TABLE.md`
+6. `docs/plans/week1/WEEK1_PHASE1_RULEBOOK.md`
+
+## Phase 2-5 Execution Output (2026-05-03)
+1. `docs/plans/week2/PHASE2_TO_5_GLOBAL_DESIGN_MIGRATION_REPORT.md`

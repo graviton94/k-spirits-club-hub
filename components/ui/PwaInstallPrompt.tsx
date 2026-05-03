@@ -72,11 +72,11 @@ export function PwaInstallPrompt() {
                 className="fixed bottom-20 md:bottom-24 left-4 right-4 md:left-auto md:right-8 md:w-96 z-100 p-4 rounded-3xl bg-background/80 backdrop-blur-2xl border border-white/20 dark:border-white/10 shadow-2xl overflow-hidden"
             >
                 {/* Subtle Glow Background */}
-                <div className="absolute -top-24 -right-24 w-48 h-48 bg-amber-500/20 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
 
                 <button
                     onClick={handleDismiss}
-                    className="absolute top-3 right-3 p-2 rounded-full bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 transition-colors"
+                    className="absolute top-3 right-3 p-2 rounded-full bg-black/5 hover:bg-black/10 dark:bg-background/5 dark:hover:bg-background/10 transition-colors"
                 >
                     <X className="w-5 h-5 text-muted-foreground" />
                 </button>
@@ -99,12 +99,12 @@ export function PwaInstallPrompt() {
                         </p>
 
                         <div className="flex items-center gap-1 mt-2.5">
-                            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-500" />
-                            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-500" />
-                            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-500" />
-                            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-500" />
-                            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-500" />
-                            <span className="text-[10px] text-muted-foreground ml-1 font-medium">5.0</span>
+                            <Star className="w-3.5 h-3.5 fill-amber-400 text-primary" />
+                            <Star className="w-3.5 h-3.5 fill-amber-400 text-primary" />
+                            <Star className="w-3.5 h-3.5 fill-amber-400 text-primary" />
+                            <Star className="w-3.5 h-3.5 fill-amber-400 text-primary" />
+                            <Star className="w-3.5 h-3.5 fill-amber-400 text-primary" />
+                            <span className="text-xs text-muted-foreground ml-1 font-medium">5.0</span>
                         </div>
                     </div>
                 </div>

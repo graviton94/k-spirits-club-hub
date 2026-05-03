@@ -244,7 +244,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                     onClick={(e) => e.stopPropagation()}
                 >
                     {/* 🏰 1. Product Image Section - Clean White Background */}
-                    <div className="relative h-[42vw] max-h-[280px] w-full bg-white shrink-0 overflow-hidden">
+                    <div className="relative h-[42vw] max-h-[280px] w-full bg-background shrink-0 overflow-hidden">
                         {/* Close Button */}
                         <button
                             onClick={onClose}
@@ -256,17 +256,17 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                         {/* Capsule badges: Category | Subcategory | ABV */}
                         <div className="absolute bottom-3 left-4 z-20 flex flex-wrap gap-1.5">
                             {localSpirit.category && (
-                                <span className="px-2.5 py-1 rounded-full text-[10px] font-black bg-primary text-primary-foreground shadow-sm">
+                                <span className="px-2.5 py-1 rounded-full text-xs font-black bg-primary text-primary-foreground shadow-sm">
                                     {getLocalizedCategory(localSpirit.category)}
                                 </span>
                             )}
                             {(localSpirit as any).subcategory && (
-                                <span className="px-2.5 py-1 rounded-full text-[10px] font-black bg-black/60 text-white shadow-sm">
+                                <span className="px-2.5 py-1 rounded-full text-xs font-black bg-black/60 text-white shadow-sm">
                                     {(localSpirit as any).subcategory}
                                 </span>
                             )}
                             {localSpirit.abv && (
-                                <span className="px-2.5 py-1 rounded-full text-[10px] font-black bg-black/60 text-white shadow-sm">
+                                <span className="px-2.5 py-1 rounded-full text-xs font-black bg-black/60 text-white shadow-sm">
                                     {localSpirit.abv}%
                                 </span>
                             )}
@@ -315,7 +315,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                     <button
                                         disabled={isProcessing}
                                         onClick={() => handleRemove(false)}
-                                        className="btn-premium-outline flex-1 py-4 text-sm border-red-500/30 text-red-500 hover:bg-red-500/10 hover:border-red-500"
+                                        className="btn-premium-outline flex-1 py-4 text-sm border-destructive/20/30 text-destructive hover:bg-destructive/10 hover:border-destructive/20"
                                     >
                                         {isProcessing ? <Loader2 className="w-5 h-5 animate-spin" /> : <Trash2 className="w-5 h-5" />}
                                         <span>{t.remove_cabinet}</span>
@@ -342,7 +342,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                                     <button
                                         disabled={isProcessing}
                                         onClick={() => handleRemove(true)}
-                                        className="btn-premium-outline flex-1 py-4 text-sm border-red-500/30 text-red-500 hover:bg-red-500/10 hover:border-red-500"
+                                        className="btn-premium-outline flex-1 py-4 text-sm border-destructive/20/30 text-destructive hover:bg-destructive/10 hover:border-destructive/20"
                                     >
                                         {isProcessing ? <Loader2 className="w-5 h-5 animate-spin" /> : <BookmarkX className="w-5 h-5" />}
                                         <span>{t.remove_wishlist}</span>
@@ -374,17 +374,17 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                         {/* Flavor Tag Sections — Nose / Palate / Finish */}
                         {(localSpirit.noseTags?.length || localSpirit.palateTags?.length || localSpirit.finishTags?.length) && (
                             <div className="mb-6 p-4 rounded-2xl bg-muted/20 border border-border/20 space-y-4">
-                                <p className="text-[9px] font-black text-foreground/30 uppercase tracking-[0.2em]">{isEn ? 'FLAVOR PROFILE' : '플레이버 프로필'}</p>
+                                <p className="text-xs font-black text-foreground/30 uppercase tracking-[0.2em]">{isEn ? 'FLAVOR PROFILE' : '플레이버 프로필'}</p>
                                 {[
                                     { label: t.aroma, tags: localSpirit.noseTags, colorCls: 'bg-primary/10 text-primary border-primary/20' },
                                     { label: t.palate, tags: localSpirit.palateTags, colorCls: 'bg-accent/10 text-accent border-accent/20' },
                                     { label: t.finish, tags: localSpirit.finishTags, colorCls: 'bg-primary/10 text-primary border-primary/20' },
                                 ].map((section, idx) => section.tags?.length ? (
                                     <div key={idx}>
-                                        <p className="text-[10px] font-black text-foreground/50 uppercase tracking-wider mb-2">{section.label}</p>
+                                        <p className="text-xs font-black text-foreground/50 uppercase tracking-wider mb-2">{section.label}</p>
                                         <div className="flex flex-wrap gap-1.5">
                                             {section.tags.map((tag: string, i: number) => (
-                                                <span key={i} className={`px-2.5 py-1 rounded-xl text-[10px] font-bold border ${section.colorCls}`}>
+                                                <span key={i} className={`px-2.5 py-1 rounded-xl text-xs font-bold border ${section.colorCls}`}>
                                                     #{tag}
                                                 </span>
                                             ))}
@@ -397,7 +397,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                         {/* Tasting Note */}
                         {localSpirit.tastingNote && (
                             <div className="mb-6 p-4 rounded-2xl bg-muted/20 border border-border/20">
-                                <p className="text-[9px] font-black text-foreground/30 uppercase tracking-[0.2em] mb-2">{isEn ? 'TASTING NOTE' : '테이스팅 노트'}</p>
+                                <p className="text-xs font-black text-foreground/30 uppercase tracking-[0.2em] mb-2">{isEn ? 'TASTING NOTE' : '테이스팅 노트'}</p>
                                 <p className="text-sm leading-relaxed text-foreground/80 font-medium">{localSpirit.tastingNote}</p>
                             </div>
                         )}
@@ -405,7 +405,7 @@ export default function SpiritDetailModal({ spirit, isOpen, onClose, onStatusCha
                         {/* Description Block */}
                         {(isEn ? (localSpirit.descriptionEn || localSpirit.descriptionKo) : (localSpirit.descriptionKo || localSpirit.descriptionEn)) && (
                             <div className="mb-6 relative p-6 rounded-2xl bg-foreground text-background">
-                                <h3 className="text-[10px] font-black opacity-40 uppercase tracking-[0.25em] mb-3">{t.description}</h3>
+                                <h3 className="text-xs font-black opacity-40 uppercase tracking-[0.25em] mb-3">{t.description}</h3>
                                 <p className="text-sm leading-relaxed font-medium">
                                     {isEn ? (localSpirit.descriptionEn || localSpirit.descriptionKo) : (localSpirit.descriptionKo || localSpirit.descriptionEn)}
                                 </p>

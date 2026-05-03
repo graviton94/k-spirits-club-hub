@@ -41,17 +41,17 @@ export async function generateMetadata({ params }: WikiHubPageProps): Promise<Me
 }
 
 const COLOR_CARD_MAP: Record<string, { gradient: string; text: string; border: string }> = {
-    amber: { gradient: 'from-amber-500/20 to-orange-600/20', text: 'text-amber-400', border: 'group-hover:border-amber-500/50' },
+    amber: { gradient: 'from-amber-500/20 to-orange-600/20', text: 'text-primary', border: 'group-hover:border-primary/20/50' },
     rose: { gradient: 'from-rose-500/20 to-pink-600/20', text: 'text-rose-400', border: 'group-hover:border-rose-500/50' },
     sky: { gradient: 'from-sky-500/20 to-cyan-600/20', text: 'text-sky-400', border: 'group-hover:border-sky-500/50' },
     cyan: { gradient: 'from-cyan-500/20 to-teal-600/20', text: 'text-cyan-400', border: 'group-hover:border-cyan-500/50' },
     emerald: { gradient: 'from-emerald-500/20 to-green-600/20', text: 'text-emerald-400', border: 'group-hover:border-emerald-500/50' },
     orange: { gradient: 'from-orange-500/20 to-amber-600/20', text: 'text-orange-400', border: 'group-hover:border-orange-500/50' },
-    blue: { gradient: 'from-blue-500/20 to-indigo-600/20', text: 'text-blue-400', border: 'group-hover:border-blue-500/50' },
+    blue: { gradient: 'from-blue-500/20 to-indigo-600/20', text: 'text-accent', border: 'group-hover:border-accent/20/50' },
     lime: { gradient: 'from-lime-500/20 to-green-600/20', text: 'text-lime-400', border: 'group-hover:border-lime-500/50' },
-    purple: { gradient: 'from-purple-500/20 to-violet-600/20', text: 'text-purple-400', border: 'group-hover:border-purple-500/50' },
+    purple: { gradient: 'from-purple-500/20 to-violet-600/20', text: 'text-accent', border: 'group-hover:border-accent/20/50' },
     yellow: { gradient: 'from-yellow-500/20 to-amber-600/20', text: 'text-yellow-400', border: 'group-hover:border-yellow-500/50' },
-    red: { gradient: 'from-red-500/20 to-rose-600/20', text: 'text-red-400', border: 'group-hover:border-red-500/50' },
+    red: { gradient: 'from-red-500/20 to-rose-600/20', text: 'text-destructive', border: 'group-hover:border-destructive/20/50' },
 }
 
 const COMPARISON_SLUGS = ['yakju-vs-cheongju', 'cheongju-vs-sake', 'single-malt-vs-blended']
@@ -82,7 +82,7 @@ export default async function WikiHubPage({ params }: WikiHubPageProps) {
                         <h1 className="text-5xl md:text-7xl font-black tracking-tighter bg-brand-gradient bg-clip-text text-transparent uppercase italic leading-none">
                             {isEn ? 'Spirits Wiki' : '주류 백과사전'}
                         </h1>
-                        <p className="text-[10px] md:text-sm font-black text-muted-foreground/40 tracking-[0.5em] uppercase flex items-center justify-center gap-3">
+                        <p className="text-xs md:text-sm font-black text-muted-foreground/40 tracking-[0.5em] uppercase flex items-center justify-center gap-3">
                             <span className="w-12 h-px bg-primary/20" />
                             {isEn ? 'Universal Spirits Compendium' : '글로벌 주류 지식의 모든 것'}
                             <span className="w-12 h-px bg-primary/20" />
@@ -151,10 +151,10 @@ export default async function WikiHubPage({ params }: WikiHubPageProps) {
                                         {isEn ? cat.nameEn : cat.nameKo}
                                     </h3>
                                     {!isEn && (
-                                        <p className="text-[10px] font-black text-muted-foreground/30 uppercase tracking-widest leading-none">{cat.nameEn}</p>
+                                        <p className="text-xs font-black text-muted-foreground/30 uppercase tracking-widest leading-none">{cat.nameEn}</p>
                                     )}
                                 </div>
-                                <p className="text-[10px] md:text-xs text-muted-foreground/50 group-hover:text-foreground/70 transition-colors line-clamp-3 leading-relaxed font-medium">
+                                <p className="text-xs md:text-xs text-muted-foreground/50 group-hover:text-foreground/70 transition-colors line-clamp-3 leading-relaxed font-medium">
                                     {isEn ? cat.taglineEn : cat.taglineKo}
                                 </p>
                             </div>
@@ -170,7 +170,7 @@ export default async function WikiHubPage({ params }: WikiHubPageProps) {
 
             {/* Footer */}
             <div className="mt-12 text-center relative z-10">
-                <p className="text-muted-foreground/40 text-[10px] font-medium uppercase tracking-widest">
+                <p className="text-muted-foreground/40 text-xs font-medium uppercase tracking-widest">
                     {isEn ? 'More categories coming soon' : '더 많은 카테고리가 추가될 예정입니다'}
                 </p>
             </div>

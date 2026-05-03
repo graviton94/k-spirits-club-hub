@@ -187,7 +187,7 @@ export default function ExploreContent({ dict }: { dict?: any }) {
         <div className="flex flex-col gap-2">
            <div className="flex items-center gap-3 mb-2">
               <span className="capsule-premium">INTELLIGENCE</span>
-              <span className="text-[10px] font-black text-foreground/30 uppercase tracking-widest italic">REAL-TIME DB</span>
+              <span className="text-xs font-black text-foreground/30 uppercase tracking-widest italic">REAL-TIME DB</span>
            </div>
           <h1 className="text-4xl md:text-6xl font-black text-foreground tracking-tighter leading-[0.9]">
             {dict?.title || (isEn ? "Explore spirits" : "전체 둘러보기")}
@@ -231,7 +231,7 @@ export default function ExploreContent({ dict }: { dict?: any }) {
                     <h3 className="text-xs font-black text-foreground uppercase tracking-[0.2em] italic">Parameters</h3>
                     <button
                         onClick={resetFilters}
-                        className="text-[10px] font-black text-foreground/30 hover:text-primary transition-colors underline decoration-dotted"
+                        className="text-xs font-black text-foreground/30 hover:text-primary transition-colors underline decoration-dotted"
                     >
                         RESET
                     </button>
@@ -239,7 +239,7 @@ export default function ExploreContent({ dict }: { dict?: any }) {
 
                 {/* Main Category */}
                 <div className="space-y-4">
-                    <label className="text-[10px] font-black text-foreground/40 uppercase tracking-widest pl-1">Primary Classification</label>
+                    <label className="text-xs font-black text-foreground/40 uppercase tracking-widest pl-1">Primary Classification</label>
                     <div className="relative">
                         <select
                             value={selectedCategory}
@@ -259,7 +259,7 @@ export default function ExploreContent({ dict }: { dict?: any }) {
 
                 {/* Sub Category */}
                 <div className="space-y-4">
-                    <label className="text-[10px] font-black text-foreground/40 uppercase tracking-widest pl-1">Sub Classification</label>
+                    <label className="text-xs font-black text-foreground/40 uppercase tracking-widest pl-1">Sub Classification</label>
                     <div className="relative">
                         <select
                             value={selectedSubCategory}
@@ -281,7 +281,7 @@ export default function ExploreContent({ dict }: { dict?: any }) {
 
             {/* Quick Exhibit Filters */}
             <div className="p-8 pb-4">
-                <p className="text-[10px] font-black text-foreground/30 uppercase tracking-[0.2em] mb-6">CURATED EXHIBITS</p>
+                <p className="text-xs font-black text-foreground/30 uppercase tracking-[0.2em] mb-6">CURATED EXHIBITS</p>
                 <div className="flex flex-col gap-2">
                     {QUICK_CATEGORY_KEYS.map((categoryKey) => {
                         const isActive = selectedCategory === categoryKey;

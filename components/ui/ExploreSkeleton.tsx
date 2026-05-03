@@ -2,7 +2,7 @@
 
 export function ExploreSkeleton() {
     return (
-        <div className="flex gap-3 p-3 rounded-2xl bg-white/60 dark:bg-slate-900/40 backdrop-blur-md border border-white/40 dark:border-white/10 animate-pulse">
+        <div className="flex gap-3 p-3 rounded-2xl bg-background/60 dark:bg-card/40 backdrop-blur-md border border-white/40 dark:border-white/10 animate-pulse">
             {/* Image area skeleton */}
             <div className="shrink-0 w-20 h-20 rounded-lg bg-muted border border-border" />
 

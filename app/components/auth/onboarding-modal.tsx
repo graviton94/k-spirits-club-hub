@@ -137,7 +137,7 @@ export default function OnboardingModal({ dict }: OnboardingModalProps) {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="fixed inset-0 z-9999 flex items-center justify-center bg-slate-900/40 backdrop-blur-md p-4"
+                    className="fixed inset-0 z-9999 flex items-center justify-center bg-muted/40 backdrop-blur-md p-4"
                 >
                     <motion.div
                         key="onboarding-content"
@@ -145,7 +145,7 @@ export default function OnboardingModal({ dict }: OnboardingModalProps) {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.95 }}
                         transition={{ duration: 0.3, delay: 0.1 }}
-                        className="bg-white w-full max-w-sm rounded-[2.5rem] p-10 shadow-2xl relative overflow-hidden"
+                        className="bg-background w-full max-w-sm rounded-[2.5rem] p-10 shadow-2xl relative overflow-hidden"
                     >
                         {/* Subtle background glow */}
                         <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-amber-500/20 to-transparent" />
@@ -153,7 +153,7 @@ export default function OnboardingModal({ dict }: OnboardingModalProps) {
                         <div className="relative z-10">
                             {/* Header */}
                             <div className="text-center mb-10">
-                                <div className="inline-block p-1 bg-slate-50 rounded-full mb-6 border border-slate-100 shadow-sm">
+                                <div className="inline-block p-1 bg-muted rounded-full mb-6 border border-border shadow-sm">
                                     <div className="w-20 h-20 relative rounded-full overflow-hidden">
                                         <Image 
                                             src="/icons/icon-192.png" 
@@ -163,8 +163,8 @@ export default function OnboardingModal({ dict }: OnboardingModalProps) {
                                         />
                                     </div>
                                 </div>
-                                <h2 className="text-xl font-bold text-slate-900 mb-3 tracking-tight">{dict.title}</h2>
-                                <p className="text-sm text-slate-500 leading-relaxed whitespace-pre-line">
+                                <h2 className="text-xl font-bold text-muted-foreground mb-3 tracking-tight">{dict.title}</h2>
+                                <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
                                     {dict.subtitle}
                                 </p>
                             </div>
@@ -172,7 +172,7 @@ export default function OnboardingModal({ dict }: OnboardingModalProps) {
                             {/* Birth Date Inputs */}
                             <div className="space-y-6 mb-8">
                                 <div>
-                                    <label className="block text-xs font-bold text-slate-400 mb-3 ml-1 uppercase tracking-wider">
+                                    <label className="block text-xs font-bold text-muted-foreground mb-3 ml-1 uppercase tracking-wider">
                                         {dict.birthDateLabel}
                                     </label>
                                     <div className="grid grid-cols-3 gap-3">
@@ -188,9 +188,9 @@ export default function OnboardingModal({ dict }: OnboardingModalProps) {
                                                 }}
                                                 min="1900"
                                                 max={new Date().getFullYear()}
-                                                className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-3 py-4 text-center font-black text-slate-900 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                                className="w-full bg-muted border-2 border-border rounded-2xl px-3 py-4 text-center font-black text-muted-foreground placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-primary/20 transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                             />
-                                            <p className="text-[10px] font-bold text-slate-400 text-center mt-2">{dict.year}</p>
+                                            <p className="text-xs font-bold text-muted-foreground text-center mt-2">{dict.year}</p>
                                         </div>
                                         {/* Month */}
                                         <div>
@@ -204,9 +204,9 @@ export default function OnboardingModal({ dict }: OnboardingModalProps) {
                                                 }}
                                                 min="1"
                                                 max="12"
-                                                className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-3 py-4 text-center font-black text-slate-900 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                                className="w-full bg-muted border-2 border-border rounded-2xl px-3 py-4 text-center font-black text-muted-foreground placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-primary/20 transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                             />
-                                            <p className="text-[10px] font-bold text-slate-400 text-center mt-2">{dict.month}</p>
+                                            <p className="text-xs font-bold text-muted-foreground text-center mt-2">{dict.month}</p>
                                         </div>
                                         {/* Day */}
                                         <div>
@@ -220,9 +220,9 @@ export default function OnboardingModal({ dict }: OnboardingModalProps) {
                                                 }}
                                                 min="1"
                                                 max="31"
-                                                className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-3 py-4 text-center font-black text-slate-900 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                                className="w-full bg-muted border-2 border-border rounded-2xl px-3 py-4 text-center font-black text-muted-foreground placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-primary/20 transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                             />
-                                            <p className="text-[10px] font-bold text-slate-400 text-center mt-2">{dict.day}</p>
+                                            <p className="text-xs font-bold text-muted-foreground text-center mt-2">{dict.day}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -232,21 +232,21 @@ export default function OnboardingModal({ dict }: OnboardingModalProps) {
                             <div className="space-y-3">
                                 <button
                                     onClick={handleEnter}
-                                    className="w-full py-4.5 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-2xl transition-all shadow-xl shadow-slate-200 active:scale-[0.98]"
+                                    className="w-full py-4.5 bg-muted hover:bg-muted text-white font-bold rounded-2xl transition-all shadow-xl shadow-slate-200 active:scale-[0.98]"
                                 >
                                     {dict.enter}
                                 </button>
 
                                 <button
                                     onClick={handleExit}
-                                    className="w-full py-3.5 bg-transparent hover:bg-slate-50 text-slate-400 hover:text-slate-600 font-semibold rounded-2xl transition-all border border-slate-100 active:scale-[0.98]"
+                                    className="w-full py-3.5 bg-transparent hover:bg-muted text-muted-foreground hover:text-muted-foreground font-semibold rounded-2xl transition-all border border-border active:scale-[0.98]"
                                 >
                                     {dict.exit}
                                 </button>
                             </div>
 
                             {/* Footer notice */}
-                            <p className="text-[11px] text-slate-400 text-center mt-8 leading-relaxed px-4">
+                            <p className="text-[11px] text-muted-foreground text-center mt-8 leading-relaxed px-4">
                                 {dict.footer}
                             </p>
                         </div>

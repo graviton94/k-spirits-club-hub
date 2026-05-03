@@ -42,8 +42,8 @@ function CabinetSpiritCardComponent({
             onClick={(e) => onInfoClick(e, spirit)}
         >
             {spirit.userReview && (
-                <div className="absolute -top-2 -right-2 z-30 bg-primary text-primary-foreground text-[8px] sm:text-[10px] font-black px-2.5 py-1 rounded-full shadow-[0_10px_20px_-5px_rgba(var(--primary-rgb),0.4)] flex items-center gap-1 border border-white/20">
-                    <span className="text-[10px]">★</span> {spirit.userReview.ratingOverall.toFixed(1)}
+                <div className="absolute -top-2 -right-2 z-30 bg-primary text-primary-foreground text-xs sm:text-xs font-black px-2.5 py-1 rounded-full shadow-[0_10px_20px_-5px_rgba(var(--primary-rgb),0.4)] flex items-center gap-1 border border-white/20">
+                    <span className="text-xs">★</span> {spirit.userReview.ratingOverall.toFixed(1)}
                 </div>
             )}
 
@@ -66,11 +66,11 @@ function CabinetSpiritCardComponent({
                     <div className="absolute inset-0 z-10 flex flex-col justify-end p-3 sm:p-5 bg-linear-to-t from-black/90 via-black/20 to-transparent">
                         <div className="flex flex-col items-start gap-1.5 sm:gap-2">
                             {/* Badge */}
-                            <span className={`inline-flex px-2 py-0.5 text-[8px] sm:text-[10px] font-black text-white rounded-lg uppercase shadow-xl backdrop-blur-3xl border border-white/10 ${spirit.isWishlist ? 'bg-rose-600/60' : 'bg-emerald-600/60'}`}>
+                            <span className={`inline-flex px-2 py-0.5 text-xs sm:text-xs font-black text-white rounded-lg uppercase shadow-xl backdrop-blur-3xl border border-white/10 ${spirit.isWishlist ? 'bg-rose-600/60' : 'bg-emerald-600/60'}`}>
                                 {spirit.isWishlist ? '🔖' : '✅️'}
                             </span>
                             {/* Name */}
-                            <p className="text-[10px] sm:text-xs font-black text-white/90 text-left leading-tight line-clamp-2 italic uppercase tracking-tight">
+                            <p className="text-xs sm:text-xs font-black text-white/90 text-left leading-tight line-clamp-2 italic uppercase tracking-tight">
                                 {spirit.nameEn && isEn ? spirit.nameEn : spirit.name}
                             </p>
                         </div>

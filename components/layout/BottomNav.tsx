@@ -56,7 +56,7 @@ export function BottomNav({ lang, dict }: { lang: Locale, dict: any }) {
                                 {active && (
                                     <motion.div 
                                         layoutId="bottom-nav-active"
-                                        className="absolute -bottom-1 w-1 h-1 rounded-full bg-white shadow-xl"
+                                        className="absolute -bottom-1 w-1 h-1 rounded-full bg-background shadow-xl"
                                     />
                                 )}
                             </Link>

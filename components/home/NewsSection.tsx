@@ -51,14 +51,14 @@ export default async function NewsSection({ lang }: { lang: string }) {
                     >
                         {/* Top Row: Badges (NEW + Tags) + Date */}
                         <div className="flex items-center gap-2 mb-1.5 h-5 w-full">
-                            <span className="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-sm shadow-sm animate-pulse flex-shrink-0">
+                            <span className="bg-destructive text-white text-xs font-bold px-1.5 py-0.5 rounded-sm shadow-sm animate-pulse flex-shrink-0">
                                 NEW
                             </span>
 
                             {item.tags && item.tags.length > 0 && (
                                 <div className="flex items-center gap-1.5 overflow-hidden">
                                     {item.tags.map((tag: string, i: number) => (
-                                        <span key={i} className="capsule-premium border-none shadow-none text-[9px] px-1.5 py-0.5">
+                                        <span key={i} className="capsule-premium border-none shadow-none text-xs px-1.5 py-0.5">
                                             {tag}
                                         </span>
                                     ))}
@@ -66,7 +66,7 @@ export default async function NewsSection({ lang }: { lang: string }) {
                             )}
 
                             {/* Date (Right Aligned) */}
-                            <span className="ml-auto text-[10px] text-muted-foreground font-medium whitespace-nowrap flex-shrink-0">
+                            <span className="ml-auto text-xs text-muted-foreground font-medium whitespace-nowrap flex-shrink-0">
                                 {item.date ? new Date(item.date).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\.$/, '') : ''}
                             </span>
                         </div>
@@ -90,7 +90,7 @@ export default async function NewsSection({ lang }: { lang: string }) {
             </div>
 
             <div className="mt-2 text-right">
-                <p className="text-[10px] text-muted-foreground/50 tracking-tight">
+                <p className="text-xs text-muted-foreground/50 tracking-tight">
                     {lang === 'ko'
                         ? '* 자동 번역 및 요약으로 실제 기사 내용과 차이가 있을 수 있습니다.'
                         : '* Automatically translated and summarized content may differ from the original article.'}

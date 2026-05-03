@@ -100,7 +100,7 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
                     initial={{ opacity: 0, scale: 0.95, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                    className="bg-slate-950 border border-white/10 w-full max-w-xl rounded-3xl shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col max-h-[85vh] relative"
+                    className="bg-muted border border-white/10 w-full max-w-xl rounded-3xl shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col max-h-[85vh] relative"
                     onClick={e => e.stopPropagation()}
                 >
                     {/* Header bg glow */}
@@ -114,7 +114,7 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
                             </div>
                             <button
                                 onClick={onClose}
-                                className="w-10 h-10 rounded-full flex items-center justify-center bg-white/5 hover:bg-white/10 text-white transition-all border border-white/5"
+                                className="w-10 h-10 rounded-full flex items-center justify-center bg-background/5 hover:bg-background/10 text-white transition-all border border-white/5"
                             >
                                 ✕
                             </button>
@@ -123,7 +123,7 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
                             <input
                                 autoFocus
                                 placeholder={isEn ? "What are you looking for?" : "어떤 술을 찾고 계신가요?"}
-                                className="w-full pl-12 pr-4 py-4 rounded-2xl border border-white/10 bg-white/5 text-white placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 transition-all font-medium text-lg"
+                                className="w-full pl-12 pr-4 py-4 rounded-2xl border border-white/10 bg-background/5 text-white placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-primary/20 transition-all font-medium text-lg"
                                 value={query}
                                 onChange={e => setQuery(e.target.value)}
                             />
@@ -138,7 +138,7 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
                     <div className="flex-1 overflow-y-auto custom-scrollbar p-4 sm:p-6 space-y-2 relative z-10 min-h-[300px]">
                         {isLoading && (
                             <div className="flex flex-col items-center justify-center py-20 text-muted-foreground gap-4">
-                                <Loader2 className="w-10 h-10 animate-spin text-amber-500" />
+                                <Loader2 className="w-10 h-10 animate-spin text-primary" />
                                 <p className="font-bold text-sm">{isEn ? "Loading data..." : "데이터를 불러오는 중입니다..."}</p>
                             </div>
                         )}
@@ -165,9 +165,9 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
                                     <motion.div
                                         layout
                                         key={item.i}
-                                        className="flex items-center gap-3 p-2.5 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/5 transition-all group"
+                                        className="flex items-center gap-3 p-2.5 bg-background/5 hover:bg-background/10 rounded-2xl border border-white/5 transition-all group"
                                     >
-                                        <div className="w-12 h-12 rounded-xl overflow-hidden bg-slate-900 shrink-0 border border-white/10">
+                                        <div className="w-12 h-12 rounded-xl overflow-hidden bg-muted shrink-0 border border-white/10">
                                             <img
                                                 src={getOptimizedImageUrl((item.t && item.t.trim()) ? item.t : getCategoryFallbackImage(item.c), 120)}
                                                 alt={displayName}
@@ -180,7 +180,7 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
                                         </div>
                                         <div className="flex-1 min-w-0 flex flex-col justify-center">
                                             <div className="font-black text-sm text-white leading-tight line-clamp-2 whitespace-normal">{displayName}</div>
-                                            <div className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest opacity-60 whitespace-normal mt-0.5">
+                                            <div className="text-xs font-bold text-muted-foreground uppercase tracking-widest opacity-60 whitespace-normal mt-0.5">
                                                 {getLocalizedCategory(item.c)} {item.d ? `| ${item.d}` : ''}
                                             </div>
                                         </div>
@@ -188,7 +188,7 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
                                         <div className="flex items-center gap-1.5">
                                             {isAdded ? (
                                                 <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
-                                                    <span className="text-[9px] font-black uppercase tracking-tighter">In</span>
+                                                    <span className="text-xs font-black uppercase tracking-tighter">In</span>
                                                 </div>
                                             ) : (
                                                 <>
@@ -203,7 +203,7 @@ export default function SearchSpiritModal({ isOpen, onClose, onSuccess, existing
                                                     <button
                                                         disabled={isProcessing}
                                                         onClick={() => handleAdd(item, true)}
-                                                        className="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center transition-all border border-white/10 active:scale-90 disabled:opacity-50"
+                                                        className="w-9 h-9 rounded-xl bg-muted hover:bg-muted text-white flex items-center justify-center transition-all border border-white/10 active:scale-90 disabled:opacity-50"
                                                         title={dict?.addWishlist || (isEn ? "Add to wishlist" : "위시리스트")}
                                                     >
                                                         {isProcessing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Bookmark className="w-4 h-4" />}

@@ -39,7 +39,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: Lo
                 <nav className="mb-8">
                     <Link
                         href={`/${lang}`}
-                        className="inline-flex items-center gap-2 text-sm text-amber-500 hover:text-amber-400 transition"
+                        className="inline-flex items-center gap-2 text-sm text-primary hover:text-primary transition"
                     >
                         <ArrowLeft className="w-4 h-4" />
                         {isEn ? 'Home' : '홈으로'}
@@ -63,8 +63,8 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: Lo
                     {/* Vision Section */}
                     <section className="mb-12 bg-card border border-border rounded-2xl p-6 sm:p-8">
                         <div className="flex items-center gap-3 mb-6">
-                            <div className="p-3 bg-amber-500/10 rounded-xl border border-amber-500/20">
-                                <Target className="w-6 h-6 text-amber-500" />
+                            <div className="p-3 bg-primary/10 rounded-xl border border-primary/20/20">
+                                <Target className="w-6 h-6 text-primary" />
                             </div>
                             <h2 className="text-lg sm:text-xl font-black my-0">{sections.vision}</h2>
                         </div>
@@ -76,8 +76,8 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: Lo
                     {/* Data Section */}
                     <section className="mb-12 bg-card border border-border rounded-2xl p-6 sm:p-8">
                         <div className="flex items-center gap-3 mb-6">
-                            <div className="p-3 bg-blue-500/10 rounded-xl border border-blue-500/20">
-                                <Database className="w-6 h-6 text-blue-500" />
+                            <div className="p-3 bg-accent/10 rounded-xl border border-accent/20/20">
+                                <Database className="w-6 h-6 text-accent" />
                             </div>
                             <h2 className="text-lg sm:text-xl font-black my-0">{sections.data}</h2>
                         </div>
@@ -89,8 +89,8 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: Lo
                     {/* AI Section */}
                     <section className="mb-12 bg-card border border-border rounded-2xl p-6 sm:p-8">
                         <div className="flex items-center gap-3 mb-6">
-                            <div className="p-3 bg-purple-500/10 rounded-xl border border-purple-500/20">
-                                <Brain className="w-6 h-6 text-purple-500" />
+                            <div className="p-3 bg-accent/10 rounded-xl border border-accent/20/20">
+                                <Brain className="w-6 h-6 text-accent" />
                             </div>
                             <h2 className="text-lg sm:text-xl font-black my-0">{sections.ai}</h2>
                         </div>
@@ -118,7 +118,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: Lo
                             {isEn
                                 ? 'Have questions or suggestions? Feel free to '
                                 : '궁금하신 점이나 제안이 있으신가요? '}
-                            <Link href={`/${lang}/contents/contact`} className="text-amber-500 hover:text-amber-400 font-bold no-underline">
+                            <Link href={`/${lang}/contents/contact`} className="text-primary hover:text-primary font-bold no-underline">
                                 {isEn ? 'contact us' : '문의하기'}
                             </Link>
                         </p>

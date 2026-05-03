@@ -203,7 +203,7 @@ function TabButton({ icon, label, active, onClick, badge }: {
       {icon}
       <span className="text-sm">{label}</span>
       {badge !== undefined && (
-        <span className="absolute top-2 right-2 flex h-5 w-5 items-center justify-center rounded-full bg-rose-500 text-[10px] font-black text-white shadow-sm animate-in zoom-in duration-300">
+        <span className="absolute top-2 right-2 flex h-5 w-5 items-center justify-center rounded-full bg-rose-500 text-xs font-black text-white shadow-sm animate-in zoom-in duration-300">
           {badge > 99 ? '99+' : badge}
         </span>
       )}
@@ -223,8 +223,8 @@ function FilterButtonSmall({ label, value, current, onClick }: {
       onClick={() => onClick(value)}
       className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
         isActive
-          ? "bg-white text-primary shadow-sm"
-          : "text-muted-foreground hover:text-foreground hover:bg-white/50"
+          ? "bg-background text-primary shadow-sm"
+          : "text-muted-foreground hover:text-foreground hover:bg-background/50"
       }`}
     >
       {label}

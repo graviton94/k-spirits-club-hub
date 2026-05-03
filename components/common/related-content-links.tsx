@@ -49,7 +49,7 @@ export function RelatedContentLinks({ title, links }: RelatedContentLinksProps) 
             
             <div className="flex items-center gap-4">
                 <div className="h-px w-8 bg-brand-gradient opacity-40 shrink-0" />
-                <h2 className="text-[10px] md:text-xs font-black text-muted-foreground uppercase tracking-[0.4em] italic whitespace-nowrap">
+                <h2 className="text-xs md:text-xs font-black text-muted-foreground uppercase tracking-[0.4em] italic whitespace-nowrap">
                     {title}
                 </h2>
                 <div className="h-px flex-1 bg-gradient-to-r from-border/40 via-border/10 to-transparent" />

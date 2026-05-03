@@ -243,12 +243,12 @@ export function MBTIClient({ lang }: { lang: string }) {
                         <div className="space-y-4">
                             <div className="flex justify-between items-end">
                                 <div className="space-y-1">
-                                    <p className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-[0.3em]">{t.progress}</p>
+                                    <p className="text-xs font-black text-muted-foreground/50 uppercase tracking-[0.3em]">{t.progress}</p>
                                     <h3 className="text-3xl font-black text-primary italic tracking-tighter">
                                         {Math.round(((currentIdx + 1) / MBTI_QUESTIONS.length) * 100)}%
                                     </h3>
                                 </div>
-                                <span className="text-[10px] font-bold text-muted-foreground opacity-40 italic">
+                                <span className="text-xs font-bold text-muted-foreground opacity-40 italic">
                                     {currentIdx + 1} / {MBTI_QUESTIONS.length}
                                 </span>
                             </div>
@@ -376,7 +376,7 @@ export function MBTIClient({ lang }: { lang: string }) {
                             {/* Harmony Section */}
                             <div className="grid grid-cols-2 gap-4 relative z-10">
                                 <div className="bg-primary/5 p-6 rounded-[2rem] border border-primary/20 backdrop-blur-3xl flex flex-col items-center justify-center min-h-[120px] shadow-xl group/buddy">
-                                    <p className="text-[10px] text-primary font-black mb-3 uppercase tracking-widest">{t.bestFriend}</p>
+                                    <p className="text-xs text-primary font-black mb-3 uppercase tracking-widest">{t.bestFriend}</p>
                                     <p className="font-black text-sm md:text-base leading-tight whitespace-pre-line text-foreground italic text-center transition-transform group-hover/buddy:scale-105">
                                         {MBTI_RESULTS[resultType].compatible.map(type =>
                                             isEn ? MBTI_RESULTS[type].title_en : MBTI_RESULTS[type].title_ko
@@ -384,7 +384,7 @@ export function MBTIClient({ lang }: { lang: string }) {
                                     </p>
                                 </div>
                                 <div className="bg-rose-500/5 p-6 rounded-[2rem] border border-rose-500/20 backdrop-blur-3xl flex flex-col items-center justify-center min-h-[120px] shadow-xl group/nobuddy">
-                                    <p className="text-[10px] text-rose-500 font-black mb-3 uppercase tracking-widest">{t.worstFriend}</p>
+                                    <p className="text-xs text-rose-500 font-black mb-3 uppercase tracking-widest">{t.worstFriend}</p>
                                     <p className="font-black text-sm md:text-base leading-tight whitespace-pre-line text-foreground italic text-center transition-transform group-hover/nobuddy:scale-105">
                                         {MBTI_RESULTS[resultType].incompatible.map(type =>
                                             isEn ? MBTI_RESULTS[type].title_en : MBTI_RESULTS[type].title_ko

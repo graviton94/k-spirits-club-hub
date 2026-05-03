@@ -10,21 +10,21 @@ interface TagMultiSelectProps {
 }
 
 const COLOR_MAP: Record<string, string> = {
-    purple: 'bg-purple-100 text-purple-700 border-purple-200 dark:bg-purple-900/40 dark:text-purple-300 dark:border-purple-800',
-    green: 'bg-green-100 text-green-700 border-green-200 dark:bg-green-900/40 dark:text-green-300 dark:border-green-800',
-    red: 'bg-red-100 text-red-700 border-red-200 dark:bg-red-900/40 dark:text-red-300 dark:border-red-800',
-    yellow: 'bg-yellow-100 text-yellow-800 border-yellow-200 dark:bg-yellow-900/40 dark:text-yellow-300 dark:border-yellow-800',
-    stone: 'bg-stone-100 text-stone-700 border-stone-200 dark:bg-stone-800 dark:text-stone-300 dark:border-stone-700',
-    slate: 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700',
-    lime: 'bg-lime-100 text-lime-800 border-lime-200 dark:bg-lime-900/40 dark:text-lime-300 dark:border-lime-800',
-    blue: 'bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-900/40 dark:text-blue-300 dark:border-blue-800',
-    cyan: 'bg-cyan-100 text-cyan-800 border-cyan-200 dark:bg-cyan-900/40 dark:text-cyan-300 dark:border-cyan-800',
-    teal: 'bg-teal-100 text-teal-800 border-teal-200 dark:bg-teal-900/40 dark:text-teal-300 dark:border-teal-800',
-    orange: 'bg-orange-100 text-orange-800 border-orange-200 dark:bg-orange-900/40 dark:text-orange-300 dark:border-orange-800',
-    pink: 'bg-pink-100 text-pink-700 border-pink-200 dark:bg-pink-900/40 dark:text-pink-300 dark:border-pink-800',
+    purple: 'bg-accent/10 text-accent border-accent/20',
+    green: 'bg-primary/10 text-primary border-primary/20',
+    red: 'bg-destructive/10 text-destructive border-destructive/20',
+    yellow: 'bg-primary/10 text-primary border-primary/20',
+    stone: 'bg-muted text-muted-foreground border-border',
+    slate: 'bg-muted text-muted-foreground border-border',
+    lime: 'bg-primary/10 text-primary border-primary/20',
+    blue: 'bg-accent/10 text-accent border-accent/20',
+    cyan: 'bg-accent/10 text-accent border-accent/20',
+    teal: 'bg-accent/10 text-accent border-accent/20',
+    orange: 'bg-primary/10 text-primary border-primary/20',
+    pink: 'bg-accent/10 text-accent border-accent/20',
 };
 
-const DEFAULT_COLOR = 'bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-800';
+const DEFAULT_COLOR = 'bg-muted dark:bg-card text-muted-foreground dark:text-muted-foreground border-border dark:border-border';
 
 export function TagMultiSelect({ label, availableTags, selectedTags, onChange }: TagMultiSelectProps) {
     const [isOpen, setIsOpen] = useState(false);
@@ -49,7 +49,7 @@ export function TagMultiSelect({ label, availableTags, selectedTags, onChange }:
 
     return (
         <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase text-muted-foreground block mb-1">{label}</label>
+            <label className="text-xs font-black uppercase text-muted-foreground block mb-1">{label}</label>
 
             {/* Selected Tags Display */}
             <div className="flex flex-wrap gap-2 min-h-[48px] p-3 bg-background border border-border rounded-xl cursor-pointer hover:border-primary/50 transition-colors shadow-sm"

@@ -12,21 +12,21 @@ export const surfaces = {
 export const typography = {
   sectionTitle: 'text-xl md:text-3xl font-black tracking-tight text-foreground',
   sectionTitleSoft: 'text-lg md:text-2xl font-extrabold tracking-tight text-foreground/90',
-  eyebrow: 'text-[10px] md:text-xs font-black text-foreground/60 uppercase tracking-[0.14em]',
+  eyebrow: 'text-xs md:text-xs font-black text-foreground/60 uppercase tracking-[0.14em]',
   metric: 'text-xs md:text-sm font-black text-foreground/75 tracking-wide',
-  sectionMeta: 'text-[10px] md:text-xs font-black text-foreground/60 uppercase tracking-widest',
+  sectionMeta: 'text-xs md:text-xs font-black text-foreground/60 uppercase tracking-widest',
   body: 'text-[13px] md:text-sm text-muted-foreground leading-relaxed',
 };
 
 export const chips = {
-  primary: 'px-2 py-0.5 md:px-3 md:py-1 rounded-lg md:rounded-xl bg-primary/15 text-primary text-[10px] md:text-xs font-black border border-primary/30 uppercase tracking-[0.08em]',
-  primarySm: 'px-1.5 py-0 md:px-2 md:py-0.5 rounded-md md:rounded-lg bg-primary/12 text-primary text-[9px] md:text-xs font-bold border border-primary/25 uppercase tracking-[0.08em]',
+  primary: 'px-2 py-0.5 md:px-3 md:py-1 rounded-lg md:rounded-xl bg-primary/15 text-primary text-xs md:text-xs font-black border border-primary/30 uppercase tracking-[0.08em]',
+  primarySm: 'px-1.5 py-0 md:px-2 md:py-0.5 rounded-md md:rounded-lg bg-primary/12 text-primary text-xs md:text-xs font-bold border border-primary/25 uppercase tracking-[0.08em]',
   primaryMd: 'px-2 py-0.5 md:px-3 md:py-1 rounded-lg md:rounded-xl bg-primary/20 text-primary text-xs md:text-sm font-black border border-primary/35 uppercase tracking-[0.08em]',
-  accent: 'px-2 py-0.5 md:px-3 md:py-1 rounded-lg md:rounded-xl bg-accent/15 text-accent text-[10px] md:text-xs font-black border border-accent/30 uppercase tracking-[0.08em]',
-  accentSm: 'px-1.5 py-0 md:px-2 md:py-0.5 rounded-md md:rounded-lg bg-accent/12 text-accent text-[9px] md:text-xs font-bold border border-accent/25 uppercase tracking-[0.08em]',
+  accent: 'px-2 py-0.5 md:px-3 md:py-1 rounded-lg md:rounded-xl bg-accent/15 text-accent text-xs md:text-xs font-black border border-accent/30 uppercase tracking-[0.08em]',
+  accentSm: 'px-1.5 py-0 md:px-2 md:py-0.5 rounded-md md:rounded-lg bg-accent/12 text-accent text-xs md:text-xs font-bold border border-accent/25 uppercase tracking-[0.08em]',
   accentMd: 'px-2 py-0.5 md:px-3 md:py-1 rounded-lg md:rounded-xl bg-accent/20 text-accent text-xs md:text-sm font-black border border-accent/35 uppercase tracking-[0.08em]',
-  subtle: 'px-2 py-0.5 md:px-3 md:py-1 rounded-lg md:rounded-xl bg-muted/70 text-foreground/75 text-[10px] md:text-xs font-bold border border-border/60 uppercase tracking-[0.08em]',
-  subtleSm: 'px-1.5 py-0 md:px-2 md:py-0.5 rounded-md md:rounded-lg bg-muted/60 text-foreground/70 text-[9px] md:text-xs font-semibold border border-border/55 uppercase tracking-[0.08em]',
+  subtle: 'px-2 py-0.5 md:px-3 md:py-1 rounded-lg md:rounded-xl bg-muted/70 text-foreground/75 text-xs md:text-xs font-bold border border-border/60 uppercase tracking-[0.08em]',
+  subtleSm: 'px-1.5 py-0 md:px-2 md:py-0.5 rounded-md md:rounded-lg bg-muted/60 text-foreground/70 text-xs md:text-xs font-semibold border border-border/55 uppercase tracking-[0.08em]',
   subtleMd: 'px-2 py-0.5 md:px-3 md:py-1 rounded-lg md:rounded-xl bg-muted/80 text-foreground/80 text-xs md:text-sm font-bold border border-border/60 uppercase tracking-[0.08em]',
 };
 

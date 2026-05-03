@@ -43,8 +43,8 @@ export function ThemeToggle() {
         <button
             onClick={toggleTheme}
             className={`p-2 rounded-xl transition-all duration-300 w-10 h-10 flex items-center justify-center shadow-sm ${theme === 'light'
-                    ? 'bg-[#FFF9C4] text-black hover:scale-105 active:scale-95'
-                    : 'bg-[#262626] text-white hover:scale-105 active:scale-95'
+                    ? 'bg-secondary text-foreground hover:scale-105 active:scale-95'
+                    : 'bg-card text-foreground hover:scale-105 active:scale-95'
                 }`}
             aria-label="Toggle theme"
         >

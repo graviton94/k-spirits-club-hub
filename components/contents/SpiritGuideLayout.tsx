@@ -134,7 +134,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                         {isEn ? category.nameEn : category.nameKo}
                     </h1>
                     {!isEn && (
-                        <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-500 mb-3">{category.nameEn}</p>
+                        <p className="text-sm font-semibold text-muted-foreground dark:text-muted-foreground mb-3">{category.nameEn}</p>
                     )}
                     <p className="text-foreground text-sm leading-relaxed max-w-md mx-auto font-medium">
                         {isEn ? category.taglineEn : category.taglineKo}
@@ -146,29 +146,29 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                             <a
                                 href={`https://search.shopping.naver.com/search/all?query=${encodeURIComponent((isEn ? category.nameEn : category.nameKo))}`}
                                 target="_blank" rel="noopener noreferrer"
-                                className="px-3 py-1.5 rounded-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 text-[10px] font-bold text-emerald-600 dark:text-emerald-400 hover:border-emerald-500 transition-colors flex items-center gap-1.5 shadow-sm"
+                                className="px-3 py-1.5 rounded-full bg-background dark:bg-background border border-border dark:border-border text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:border-emerald-500 transition-colors flex items-center gap-1.5 shadow-sm"
                             >
                                 <span className="font-black">N</span> {isEn ? 'Naver Shopping' : '네이버 쇼핑'}
                             </a>
                             <a
                                 href={`https://www.google.com/search?q=${encodeURIComponent((isEn ? category.nameEn : category.nameKo))}&tbm=shop`}
                                 target="_blank" rel="noopener noreferrer"
-                                className="px-3 py-1.5 rounded-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 text-[10px] font-bold text-blue-600 dark:text-blue-400 hover:border-blue-500 transition-colors flex items-center gap-1.5 shadow-sm"
+                                className="px-3 py-1.5 rounded-full bg-background dark:bg-background border border-border dark:border-border text-xs font-bold text-accent dark:text-accent hover:border-accent/20 transition-colors flex items-center gap-1.5 shadow-sm"
                             >
-                                <Search className="w-3 h-3 text-blue-500" /> {isEn ? 'Google Shopping' : '구글 쇼핑'}
+                                <Search className="w-3 h-3 text-accent" /> {isEn ? 'Google Shopping' : '구글 쇼핑'}
                             </a>
                             <a
                                 href={`https://dailyshot.co/m/search/result?q=${encodeURIComponent((isEn ? category.nameEn : category.nameKo))}`}
                                 target="_blank" rel="noopener noreferrer"
-                                className="px-3 py-1.5 rounded-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 text-[10px] font-bold text-purple-600 dark:text-purple-400 hover:border-purple-500 transition-colors flex items-center gap-1.5 shadow-sm"
+                                className="px-3 py-1.5 rounded-full bg-background dark:bg-background border border-border dark:border-border text-xs font-bold text-accent dark:text-accent hover:border-accent/20 transition-colors flex items-center gap-1.5 shadow-sm"
                             >
-                                <Activity className="w-3 h-3 text-purple-500" /> {isEn ? 'Dailyshot' : '데일리샷 검색'}
+                                <Activity className="w-3 h-3 text-accent" /> {isEn ? 'Dailyshot' : '데일리샷 검색'}
                             </a>
                         </div>
                     )}
                     {/* breadcrumb */}
-                    <nav className="mt-4 text-xs text-zinc-500 dark:text-zinc-500 flex justify-center gap-1">
-                        <Link href={`/${lang}/contents/wiki`} className="hover:text-zinc-800 dark:hover:text-zinc-300 transition-colors">
+                    <nav className="mt-4 text-xs text-muted-foreground dark:text-muted-foreground flex justify-center gap-1">
+                        <Link href={`/${lang}/contents/wiki`} className="hover:text-muted-foreground dark:hover:text-muted-foreground transition-colors">
                             {isEn ? 'Spirits Wiki' : '주류 백과사전'}
                         </Link>
                         <span>/</span>
@@ -210,7 +210,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                                     <h3 className="font-black text-foreground text-sm uppercase tracking-tight">
                                         {isEn ? `What is ${cls.name}?` : `${cls.name}(이)란?`}
                                     </h3>
-                                    <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{cls.criteria}</span>
+                                    <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">{cls.criteria}</span>
                                 </dt>
                                 <dd className="border-t border-border/10 pt-3">
                                     <p className="text-foreground text-xs leading-relaxed mb-3 font-medium">{cls.description}</p>
@@ -218,7 +218,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                                     {cls.flavorTags && cls.flavorTags.length > 0 && (
                                         <div className="flex flex-wrap gap-1.5 mt-2">
                                             {cls.flavorTags.map((tag) => (
-                                                <span key={tag.label} className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${tag.color}`}>
+                                                <span key={tag.label} className={`px-2 py-0.5 rounded-full text-xs font-bold ${tag.color}`}>
                                                     {tag.label}
                                                 </span>
                                             ))}
@@ -240,7 +240,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                                 <dd>
                                     <p className="text-foreground/90 text-xs leading-relaxed font-medium">{sub.description}</p>
                                     {sub.examples && sub.examples.length > 0 && (
-                                        <p className="mt-2 text-[10px] font-bold text-muted-foreground">예: {sub.examples.join(', ')}</p>
+                                        <p className="mt-2 text-xs font-bold text-muted-foreground">예: {sub.examples.join(', ')}</p>
                                     )}
                                 </dd>
                             </div>
@@ -262,7 +262,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                                     <span className={`text-2xl font-black ${c.text} leading-none tracking-tighter`}>{metric.value}</span>
                                 </dt>
                                 <dd className="border-t border-border/10 pt-3">
-                                    <h3 className={`text-[10px] font-bold text-muted-foreground block mb-1 uppercase tracking-wider`}>
+                                    <h3 className={`text-xs font-bold text-muted-foreground block mb-1 uppercase tracking-wider`}>
                                         {isEn ? `What is ${metric.metric}?` : `${metric.metric}(이)란?`}
                                     </h3>
                                     <p className="text-xs text-foreground font-medium leading-relaxed">{metric.description}</p>
@@ -327,7 +327,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                     <div className="grid grid-cols-1 gap-4">
                         {s?.coreIngredients?.map((ing) => (
                             <div key={ing.name} className="flex flex-col gap-1 p-5 rounded-xl border border-border/20 bg-background/20">
-                                <div className={`self-start px-2 py-0.5 rounded text-[10px] font-black ${c.badge} mb-1`}>
+                                <div className={`self-start px-2 py-0.5 rounded text-xs font-black ${c.badge} mb-1`}>
                                     {ing.type}
                                 </div>
                                 <p className="font-black text-foreground text-sm">{ing.name}</p>
@@ -354,7 +354,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                                 </div>
                                 <div className="pb-2 pt-1">
                                     <div className="flex items-center gap-2 mb-1.5">
-                                        <span className={`text-[10px] font-black ${c.text} uppercase tracking-widest`}>{proc.step}</span>
+                                        <span className={`text-xs font-black ${c.text} uppercase tracking-widest`}>{proc.step}</span>
                                         <p className="font-black text-foreground text-sm">{proc.name}</p>
                                     </div>
                                     <p className="text-xs text-foreground/90 font-medium leading-relaxed">{proc.description}</p>
@@ -376,13 +376,13 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                         <div className="grid grid-cols-1 gap-4">
                             {s.servingGuidelines.recommendedGlass && (
                                 <div className="flex flex-col gap-1">
-                                    <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">{isEn ? 'Recommended Glass:' : '추천 글라스:'}</span>
+                                    <span className="text-xs font-black text-muted-foreground uppercase tracking-widest">{isEn ? 'Recommended Glass:' : '추천 글라스:'}</span>
                                     <span className="text-foreground font-semibold text-sm">{s.servingGuidelines.recommendedGlass}</span>
                                 </div>
                             )}
                             {s.servingGuidelines.decantingNeeded !== undefined && (
                                 <div className="flex flex-col gap-1">
-                                    <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">{isEn ? 'Decanting:' : '디캔팅 여부:'}</span>
+                                    <span className="text-xs font-black text-muted-foreground uppercase tracking-widest">{isEn ? 'Decanting:' : '디캔팅 여부:'}</span>
                                     <span className="text-foreground font-semibold text-sm">
                                         {s.servingGuidelines.decantingNeeded
                                             ? (isEn ? 'Recommended' : '권장함')
@@ -398,7 +398,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                                 <div className="space-y-3">
                                     {s.servingGuidelines.optimalTemperatures.map((t, idx) => (
                                         <div key={idx} className="flex flex-col gap-2 rounded-2xl border border-white/20 bg-transparent p-4">
-                                            <div className={`self-start flex items-center px-2 py-1 rounded-full text-[10px] font-black ${c.badge}`}>
+                                            <div className={`self-start flex items-center px-2 py-1 rounded-full text-xs font-black ${c.badge}`}>
                                                 <Thermometer className="w-3.5 h-3.5 mr-1" />
                                                 {t.temp}
                                             </div>
@@ -415,7 +415,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                                 <div className="space-y-3">
                                     {s.servingGuidelines.methods.map((m, idx) => (
                                         <div key={idx} className="flex flex-col gap-2 rounded-2xl border border-white/20 bg-transparent p-4">
-                                            <div className={`self-start flex items-center px-2 py-1 rounded-full text-[10px] font-black ${c.badge}`}>
+                                            <div className={`self-start flex items-center px-2 py-1 rounded-full text-xs font-black ${c.badge}`}>
                                                 <Droplets className="w-3.5 h-3.5 mr-1" />
                                                 {m.name}
                                             </div>
@@ -463,7 +463,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                     </div>
                     {/* 텍스트 */}
                     <div className="flex-1 min-w-0">
-                        <p className={`text-[10px] font-black uppercase tracking-widest ${c.text} mb-0.5`}>
+                        <p className={`text-xs font-black uppercase tracking-widest ${c.text} mb-0.5`}>
                             {category.slug.endsWith('regions') ? (isEn ? 'Return to Base Spirit' : '기존 백과로 돌아가기') : (isEn ? '🗺️ Regional Deep Dive' : '🗺️ 산지별 심층 가이드')}
                         </p>
                         <p className="font-black text-foreground text-sm group-hover:underline leading-snug">
@@ -529,15 +529,15 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                                         alt={isEn ? (spirit.nameEn || spirit.name) : spirit.name}
                                         className={`w-full aspect-square object-contain mb-2 rounded-lg ${!spirit.imageUrl ? 'opacity-30 grayscale' : ''}`}
                                     />
-                                    <p className="text-xs font-semibold text-foreground group-hover:text-amber-500 transition-colors line-clamp-1">
+                                    <p className="text-xs font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-1">
                                         {isEn ? (spirit.nameEn || spirit.name) : spirit.name}
                                     </p>
                                     <div className="mt-1 space-y-0.5">
-                                        <p className="text-[10px] text-muted-foreground">
+                                        <p className="text-xs text-muted-foreground">
                                             {formatSpiritFieldValue('category', spirit.category, lang)}
                                         </p>
                                         {spirit.subcategory && (
-                                            <p className="text-[10px] text-muted-foreground/80 line-clamp-1">
+                                            <p className="text-xs text-muted-foreground/80 line-clamp-1">
                                                 {formatSpiritFieldValue('subcategory', spirit.subcategory, lang)}
                                             </p>
                                         )}
@@ -551,13 +551,13 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                                                 className="p-1 hover:text-emerald-500 transition-colors"
                                                 title="Naver Search"
                                             >
-                                                <span className="text-[8px] font-black">N</span>
+                                                <span className="text-xs font-black">N</span>
                                             </a>
                                             <a
                                                 href={`https://www.google.com/search?q=${encodeURIComponent(spirit.name)}&tbm=shop`}
                                                 target="_blank" rel="noopener noreferrer"
                                                 onClick={(e) => e.stopPropagation()}
-                                                className="p-1 hover:text-blue-500 transition-colors"
+                                                className="p-1 hover:text-accent transition-colors"
                                                 title="Google Search"
                                             >
                                                 <Search className="w-2.5 h-2.5" />
@@ -569,7 +569,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                         </div>
                     ) : (
                         <div className="flex flex-col items-center justify-center py-10 rounded-xl border border-dashed border-border/40 gap-2">
-                            <p className="text-zinc-900 dark:text-zinc-500 text-sm font-medium">
+                            <p className="text-muted-foreground dark:text-muted-foreground text-sm font-medium">
                                 {isEn ? 'No products registered yet' : '조건에 맞는 주류를 검색해보세요!'}
                             </p>
                             <Link href={`/${lang}/explore`} className={`text-xs font-semibold ${c.text} hover:underline`}>
@@ -587,7 +587,7 @@ export default function SpiritGuideLayout({ category, lang, featuredSpirits = []
                     onClick={() => setMapModalOpen(false)}
                 >
                     <div
-                        className="relative max-w-6xl w-full max-h-[92vh] bg-neutral-900 rounded-3xl overflow-hidden p-2 ring-1 ring-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] animate-in zoom-in-95 duration-300"
+                        className="relative max-w-6xl w-full max-h-[92vh] bg-muted rounded-3xl overflow-hidden p-2 ring-1 ring-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] animate-in zoom-in-95 duration-300"
                         onClick={e => e.stopPropagation()}
                     >
                         <button

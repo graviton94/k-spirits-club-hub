@@ -374,7 +374,7 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
     if (error) {
         return (
             <div className="min-h-screen flex flex-col items-center justify-center p-6 text-center bg-background">
-                <AlertCircle className="w-16 h-16 text-red-500 mb-6" />
+                <AlertCircle className="w-16 h-16 text-destructive mb-6" />
                 <h2 className="text-xl font-bold text-foreground mb-2">{error}</h2>
                 <button
                     onClick={() => router.back()}
@@ -417,7 +417,7 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
                         <div className="flex flex-col items-center gap-6 relative z-10">
                             {/* Capture Header */}
                             <div className="flex flex-col items-center gap-1.5 mb-2">
-                                <span className="text-primary text-[10px] font-black uppercase tracking-[0.4em] opacity-60">
+                                <span className="text-primary text-xs font-black uppercase tracking-[0.4em] opacity-60">
                                     K-Spirits World Cup
                                 </span>
                                 <div className="flex items-center gap-3">
@@ -443,11 +443,11 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
                                 {/* 2. Info Blocks */}
                                 <div className="p-8 flex flex-col gap-4 text-center bg-card items-center">
                                     <div className="flex flex-wrap justify-center gap-2">
-                                        <span className="px-3 py-1 bg-primary text-primary-foreground text-[10px] font-black rounded-lg uppercase tracking-widest shadow-lg shadow-primary/20">
+                                        <span className="px-3 py-1 bg-primary text-primary-foreground text-xs font-black rounded-lg uppercase tracking-widest shadow-lg shadow-primary/20">
                                             {(isEn && winner.category_en) ? winner.category_en : winner.category}
                                         </span>
                                         {winner.subcategory && (
-                                            <span className="px-3 py-1 bg-secondary text-secondary-foreground text-[10px] font-bold rounded-lg uppercase tracking-tighter border border-border">
+                                            <span className="px-3 py-1 bg-secondary text-secondary-foreground text-xs font-bold rounded-lg uppercase tracking-tighter border border-border">
                                                 {winner.subcategory}
                                             </span>
                                         )}
@@ -471,7 +471,7 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
                             {/* Capture Footer */}
                             <div className="mt-4 flex items-center gap-2 opacity-30">
                                 <Image src="/logo.png" width={16} height={16} alt="" className="grayscale dark:invert" />
-                                <span className="text-[10px] text-foreground font-black tracking-[0.3em] uppercase">
+                                <span className="text-xs text-foreground font-black tracking-[0.3em] uppercase">
                                     k-spirits.club
                                 </span>
                             </div>
@@ -505,7 +505,7 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
 
                         <button
                             onClick={() => window.location.reload()}
-                            className="mt-2 py-2 text-foreground/40 text-[10px] font-black hover:text-foreground transition-colors flex items-center justify-center gap-2 uppercase tracking-[0.2em]"
+                            className="mt-2 py-2 text-foreground/40 text-xs font-black hover:text-foreground transition-colors flex items-center justify-center gap-2 uppercase tracking-[0.2em]"
                         >
                             <RotateCcw className="w-3.5 h-3.5" /> {isEn ? "Rematch with same settings" : "이 설정으로 다시 대결"}
                         </button>
@@ -538,7 +538,7 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
                             exit={{ scale: 1.1, opacity: 0 }}
                             className="text-center"
                         >
-                            <div className="text-primary text-[10px] md:text-xs font-black uppercase tracking-[0.5em] mb-4 opacity-100">{isEn ? 'Tournament' : '토너먼트'}</div>
+                            <div className="text-primary text-xs md:text-xs font-black uppercase tracking-[0.5em] mb-4 opacity-100">{isEn ? 'Tournament' : '토너먼트'}</div>
                             <h2 className="text-7xl md:text-9xl font-black text-foreground tracking-tighter italic uppercase drop-shadow-[0_0_50px_rgba(var(--primary),0.3)]">
                                 {totalRound / 2 === 1 ? (dict?.worldcup?.final || 'FINAL') : (dict?.worldcup?.round?.replace('{round}', (totalRound / 2).toString()) || `${totalRound / 2} ROUND`)}
                             </h2>
@@ -570,14 +570,14 @@ function WorldCupGamePageContent({ params }: { params: Promise<{ lang: string }>
                             animate={{ y: 0, opacity: 1 }}
                             className="px-6 md:px-12 py-2 md:py-3 bg-primary text-primary-foreground rounded-2xl shadow-2xl shadow-primary/30 mb-2 transition-all hover:scale-105 cursor-default relative overflow-hidden group"
                         >
-                            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="absolute inset-0 bg-background/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                             <h2 className="text-xs md:text-xl font-black tracking-[0.2em] md:tracking-[0.3em] italic uppercase relative z-10">
                                 {totalRound === 2 ? (dict?.worldcup?.final || 'FINAL') : (dict?.worldcup?.round?.replace('{round}', totalRound.toString()) || `${totalRound} ROUND`)}
                             </h2>
                         </motion.div>
                         <div className="flex items-center gap-2">
                             <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
-                            <p className="text-[10px] md:text-xs text-foreground/50 font-black uppercase tracking-[0.3em] md:tracking-[0.4em]">
+                            <p className="text-xs md:text-xs text-foreground/50 font-black uppercase tracking-[0.3em] md:tracking-[0.4em]">
                                 MATCH {Math.floor(currentIndex / 2) + 1} / {currentRoundItems.length / 2}
                             </p>
                         </div>
@@ -665,7 +665,7 @@ function ChoiceCard({ item, onClick, pos, isEn }: { item: Spirit, onClick: () =>
                 
                 {/* Floating Meta */}
                 <div className="hidden md:flex absolute top-6 left-6 flex-col gap-2 pointer-events-none">
-                    <span className="px-3 py-1 bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-[0.2em] rounded-lg shadow-lg">
+                    <span className="px-3 py-1 bg-primary text-primary-foreground text-xs font-black uppercase tracking-[0.2em] rounded-lg shadow-lg">
                         {(isEn && item.category_en) ? item.category_en : item.category}
                     </span>
                 </div>
@@ -676,7 +676,7 @@ function ChoiceCard({ item, onClick, pos, isEn }: { item: Spirit, onClick: () =>
                 <div className="space-y-1.5 md:space-y-4">
                     {/* Producer/Distillery Info */}
                     <div className="flex items-center md:justify-center gap-2 opacity-60 group-hover:opacity-100 transition-opacity">
-                         <span className="text-[9px] md:text-sm font-black text-primary uppercase tracking-[0.2em] italic">
+                         <span className="text-xs md:text-sm font-black text-primary uppercase tracking-[0.2em] italic">
                             {item.distillery || "Artisanal Producer"}
                         </span>
                     </div>
@@ -694,7 +694,7 @@ function ChoiceCard({ item, onClick, pos, isEn }: { item: Spirit, onClick: () =>
                         {topTags.map((tag, idx) => (
                             <span 
                                 key={idx} 
-                                className="px-2.5 md:px-4 py-1 bg-muted/50 backdrop-blur-sm rounded-full border border-border/40 text-[8px] md:text-xs font-bold text-foreground/70 group-hover:text-primary group-hover:border-primary/30 transition-all"
+                                className="px-2.5 md:px-4 py-1 bg-muted/50 backdrop-blur-sm rounded-full border border-border/40 text-xs md:text-xs font-bold text-foreground/70 group-hover:text-primary group-hover:border-primary/30 transition-all"
                             >
                                 #{tag}
                             </span>
@@ -703,13 +703,13 @@ function ChoiceCard({ item, onClick, pos, isEn }: { item: Spirit, onClick: () =>
 
                     {/* Technical Specs */}
                     <div className="flex items-center md:justify-center gap-3 pt-3 md:pt-6 border-t border-border/10">
-                        <span className="text-[9px] md:text-xs font-black text-foreground/40 uppercase tracking-[0.3em]">
+                        <span className="text-xs md:text-xs font-black text-foreground/40 uppercase tracking-[0.3em]">
                             {item.country || "Global Origin"}
                         </span>
                         {item.abv !== null && (
                             <>
                                 <div className="w-1 h-1 bg-border/40 rounded-full" />
-                                <span className="text-[9px] md:text-xs font-black text-primary/80 uppercase tracking-widest leading-none">
+                                <span className="text-xs md:text-xs font-black text-primary/80 uppercase tracking-widest leading-none">
                                     {item.abv}% ABV
                                 </span>
                             </>

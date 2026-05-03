@@ -62,13 +62,13 @@ export default function ModificationRequestsTable() {
     switch (status) {
       case 'pending':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700 border border-amber-200">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary/10 text-primary border border-primary/20">
             <Clock size={12} /> 대기 중
           </span>
         );
       case 'checked':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-100 text-blue-700 border border-blue-200">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-accent/10 text-accent border border-accent/20">
             <AlertCircle size={12} /> 확인 중
           </span>
         );
@@ -132,7 +132,7 @@ export default function ModificationRequestsTable() {
                     <User size={12} />
                     <span>{request.userId || '익명 사용자'}</span>
                   </div>
-                  <div className="text-[10px] text-muted-foreground/60">
+                  <div className="text-xs text-muted-foreground/60">
                     {format(new Date(request.createdAt), 'yyyy. MM. dd. HH:mm', { locale: ko })}
                   </div>
                 </div>
@@ -154,20 +154,20 @@ export default function ModificationRequestsTable() {
                     <MoreHorizontal size={18} />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-40">
-                    <div className="px-2 py-1.5 text-[10px] font-black text-muted-foreground uppercase tracking-widest border-b border-border/50 mb-1">
+                    <div className="px-2 py-1.5 text-xs font-black text-muted-foreground uppercase tracking-widest border-b border-border/50 mb-1">
                       상태 변경
                     </div>
                     <DropdownMenuItem 
                       onClick={() => handleStatusUpdate(request, 'pending')}
                       className="text-xs font-medium flex items-center gap-2"
                     >
-                      <Clock size={14} className="text-amber-500" /> 대기 중
+                      <Clock size={14} className="text-primary" /> 대기 중
                     </DropdownMenuItem>
                     <DropdownMenuItem 
                       onClick={() => handleStatusUpdate(request, 'checked')}
                       className="text-xs font-medium flex items-center gap-2"
                     >
-                      <AlertCircle size={14} className="text-blue-500" /> 확인 중
+                      <AlertCircle size={14} className="text-accent" /> 확인 중
                     </DropdownMenuItem>
                     <DropdownMenuItem 
                       onClick={() => handleStatusUpdate(request, 'resolved')}

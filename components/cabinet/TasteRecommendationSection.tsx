@@ -23,7 +23,7 @@ export default function TasteRecommendationSection({
                         Tailored Matches from Your Flavor Profile
                     </p>
                 </div>
-                <div className="hidden sm:block text-[10px] font-black py-1 px-3 bg-secondary border border-border rounded-full text-muted-foreground uppercase opacity-60">
+                <div className="hidden sm:block text-xs font-black py-1 px-3 bg-secondary border border-border rounded-full text-muted-foreground uppercase opacity-60">
                     {recommendations.length} MATCHES FOUND
                 </div>
             </div>
@@ -41,7 +41,7 @@ export default function TasteRecommendationSection({
                             <SpiritCard spirit={spirit} />
                             
                             {/* Backdrop Glow - Theme Aware */}
-                            <div className="absolute inset-x-2 inset-y-4 bg-amber-500/0 group-hover:bg-amber-500/5 transition-colors duration-500 rounded-[32px] -z-10 blur-2xl" />
+                            <div className="absolute inset-x-2 inset-y-4 bg-primary/0 group-hover:bg-primary/5 transition-colors duration-500 rounded-[32px] -z-10 blur-2xl" />
                         </motion.div>
                     ))}
                 </div>

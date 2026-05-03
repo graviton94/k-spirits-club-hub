@@ -52,7 +52,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         return (
             <div className="min-h-screen flex items-center justify-center bg-background">
                 <div className="animate-pulse flex flex-col items-center">
-                    <div className="h-12 w-12 bg-gray-200 rounded-full mb-4"></div>
+                    <div className="h-12 w-12 bg-muted rounded-full mb-4"></div>
                     <div className="text-muted-foreground font-bold">인증 정보 확인 중...</div>
                 </div>
             </div>

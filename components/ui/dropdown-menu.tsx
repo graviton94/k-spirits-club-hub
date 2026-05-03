@@ -21,7 +21,7 @@ export const DropdownMenuContent = ({ children, align = 'end', className = '' }:
     // This is a simplified implementation. In a full shadcn/radix setup, this would be a portal.
     // For now, we'll use a simple absolute positioned div that shows on parent hover or focused trigger.
     return (
-        <div className={`absolute ${align === 'end' ? 'right-0' : 'left-0'} z-50 mt-2 w-48 origin-top-right rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none p-1 border border-border group-hover:block hidden ${className}`}>
+        <div className={`absolute ${align === 'end' ? 'right-0' : 'left-0'} z-50 mt-2 w-48 origin-top-right rounded-xl bg-background shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none p-1 border border-border group-hover:block hidden ${className}`}>
             {children}
         </div>
     );

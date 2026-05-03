@@ -108,7 +108,7 @@ export default function WorldCupSelectionPage({ initialCategories }: WorldCupSel
                 <div className="flex flex-col gap-3">
                     <div className="flex items-center gap-3 mb-2">
                         <span className="capsule-premium">TOURNAMENT</span>
-                        <span className="text-[10px] font-black text-foreground/30 uppercase tracking-[0.2em] italic">Configuration Mode</span>
+                        <span className="text-xs font-black text-foreground/30 uppercase tracking-[0.2em] italic">Configuration Mode</span>
                     </div>
                     <h1 className="text-4xl md:text-6xl font-black text-foreground tracking-tighter leading-[0.9]">
                         {isEn ? "Spirit World Cup" : "주류 취향 월드컵"}
@@ -154,7 +154,7 @@ export default function WorldCupSelectionPage({ initialCategories }: WorldCupSel
                                 {selectedCategory === cat.id && (
                                      <motion.div 
                                         layoutId="activeCategory"
-                                        className="absolute inset-x-0 bottom-0 h-1 bg-white/30" 
+                                        className="absolute inset-x-0 bottom-0 h-1 bg-background/30" 
                                      />
                                 )}
                             </button>
@@ -226,7 +226,7 @@ export default function WorldCupSelectionPage({ initialCategories }: WorldCupSel
                                     }`}
                             >
                                 <span className="text-3xl font-black italic -tracking-[0.1em]">{round}</span>
-                                <span className="text-[9px] font-black uppercase tracking-[0.2em] opacity-40">Round</span>
+                                <span className="text-xs font-black uppercase tracking-[0.2em] opacity-40">Round</span>
                                 {selectedRound === round && (
                                      <div className="absolute top-0 left-0 w-full h-1 bg-brand-gradient" />
                                 )}

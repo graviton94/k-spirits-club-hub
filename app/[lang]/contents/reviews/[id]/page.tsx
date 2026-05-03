@@ -53,11 +53,11 @@ export default async function ReviewDetailPage({ params }: PageProps) {
           <div className="lg:col-span-8 space-y-8">
             <div className="bg-card border border-border rounded-[3rem] p-8 sm:p-12 shadow-2xl relative overflow-hidden">
               {/* Decorative Quote Mark */}
-              <Quote className="absolute -top-6 -left-6 w-32 h-32 text-amber-500/5 rotate-12" />
+              <Quote className="absolute -top-6 -left-6 w-32 h-32 text-primary/5 rotate-12" />
               
               <div className="relative z-10">
                 <div className="flex items-center gap-4 mb-8">
-                  <div className="w-12 h-12 rounded-full bg-amber-500 flex items-center justify-center text-white font-black text-xl shadow-lg">
+                  <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-black text-xl shadow-lg">
                     {review.user.nickname?.substring(0, 1) || 'U'}
                   </div>
                   <div>
@@ -73,7 +73,7 @@ export default async function ReviewDetailPage({ params }: PageProps) {
                     ★ {review.rating.toFixed(1)}
                   </div>
                   <div className="h-10 w-[1px] bg-border mx-2" />
-                  <div className="flex gap-1 text-amber-500">
+                  <div className="flex gap-1 text-primary">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <Star key={i} className={`w-5 h-5 ${i + 1 <= review.rating ? 'fill-current' : 'opacity-20'}`} />
                     ))}
@@ -90,7 +90,7 @@ export default async function ReviewDetailPage({ params }: PageProps) {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-10 border-t border-border/50">
                   <FlavorItem title="NOSE" tags={review.nose ?? null} icon={<Wind className="w-4 h-4" />} color="text-primary" />
                   <FlavorItem title="PALATE" tags={review.palate ?? null} icon={<Utensils className="w-4 h-4" />} color="text-accent" />
-                  <FlavorItem title="FINISH" tags={review.finish ?? null} icon={<Zap className="w-4 h-4" />} color="text-purple-500" />
+                  <FlavorItem title="FINISH" tags={review.finish ?? null} icon={<Zap className="w-4 h-4" />} color="text-accent" />
                 </div>
               </div>
             </div>
@@ -138,15 +138,15 @@ export default async function ReviewDetailPage({ params }: PageProps) {
                      </div>
                      <div>
                         <div className="text-xl font-black text-foreground">{review.likes ?? 0}</div>
-                        <div className="text-[10px] font-black text-muted-foreground uppercase tracking-widest italic">{isEn ? 'CHEERS' : '좋아요'}</div>
+                        <div className="text-xs font-black text-muted-foreground uppercase tracking-widest italic">{isEn ? 'CHEERS' : '좋아요'}</div>
                      </div>
                   </div>
                   <div className="flex items-center gap-4 text-right">
                      <div>
                         <div className="text-xl font-black text-foreground">{review.comments?.length || 0}</div>
-                        <div className="text-[10px] font-black text-muted-foreground uppercase tracking-widest italic">{isEn ? 'TALK' : '댓글'}</div>
+                        <div className="text-xs font-black text-muted-foreground uppercase tracking-widest italic">{isEn ? 'TALK' : '댓글'}</div>
                      </div>
-                     <div className="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-500">
+                     <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center text-accent">
                         <MessageSquare />
                      </div>
                   </div>
@@ -167,12 +167,12 @@ function FlavorItem({ title, tags, icon, color }: { title: string, tags: string 
   if (!tags) return null;
   return (
     <div className="space-y-3">
-      <div className={`flex items-center gap-2 text-[10px] font-black ${color} tracking-widest uppercase`}>
+      <div className={`flex items-center gap-2 text-xs font-black ${color} tracking-widest uppercase`}>
         {icon} {title}
       </div>
       <div className="flex flex-wrap gap-2">
         {tags.split(',').map((tag, idx) => (
-          <span key={idx} className="px-3 py-1 bg-secondary/50 border border-border rounded-full text-[10px] font-black text-foreground/80 hover:border-amber-500/30 transition-colors">
+          <span key={idx} className="px-3 py-1 bg-secondary/50 border border-border rounded-full text-xs font-black text-foreground/80 hover:border-primary/20/30 transition-colors">
             #{tag.trim()}
           </span>
         ))}

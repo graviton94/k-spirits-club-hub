@@ -121,7 +121,7 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
                     <div className="p-1 md:p-2 bg-card/40 rounded-lg md:rounded-xl border border-white/5 group-hover:scale-110 transition-transform">
                         <ArrowLeft className="w-3.5 h-3.5 md:w-4 md:h-4 group-hover:-translate-x-1 transition-transform" />
                     </div>
-                    <span className="text-[9px] md:text-[10px] font-black uppercase tracking-widest">{isEn ? 'Back' : '뒤로가기'}</span>
+                    <span className="text-xs md:text-xs font-black uppercase tracking-widest">{isEn ? 'Back' : '뒤로가기'}</span>
                 </button>
 
                 {/* Header */}
@@ -163,7 +163,7 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
                 {loading ? (
                     <div className="flex flex-col items-center justify-center py-32 gap-8">
                         <Loader2 className="w-12 h-12 text-primary animate-spin" />
-                        <p className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-[0.5em] animate-pulse">{t.loading}</p>
+                        <p className="text-xs font-black text-muted-foreground/60 uppercase tracking-[0.5em] animate-pulse">{t.loading}</p>
                     </div>
                 ) : filteredNews.length === 0 ? (
                     <div className="text-center py-40 bg-card/10 backdrop-blur-xl rounded-[4rem] border border-white/5 border-dashed text-muted-foreground">
@@ -211,11 +211,11 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
                                             )}
 
                                             <div className="flex items-center gap-3 mb-8">
-                                                <div className="px-4 py-1.5 bg-primary/10 border border-primary/20 text-primary text-[10px] font-black rounded-full uppercase tracking-[0.2em]">
+                                                <div className="px-4 py-1.5 bg-primary/10 border border-primary/20 text-primary text-xs font-black rounded-full uppercase tracking-[0.2em]">
                                                     {typeof item.source === 'object' ? (item.source?.['#text'] || 'Industry') : (item.source || 'Industry')}
                                                 </div>
                                                 <div className="h-1 w-1 rounded-full bg-border/40" />
-                                                <span className="text-[10px] font-black text-muted-foreground/40 tracking-widest uppercase">
+                                                <span className="text-xs font-black text-muted-foreground/40 tracking-widest uppercase">
                                                     {new Date(item.date || item.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
                                                 </span>
                                             </div>
@@ -233,7 +233,7 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
                                             <div className="flex flex-wrap items-center justify-between gap-4 md:gap-6 mt-auto pt-6 md:pt-8 border-t border-white/5">
                                                 <div className="flex flex-wrap gap-1.5 md:gap-2.5">
                                                     {(Array.isArray(item.tags?.[lang]) ? item.tags?.[lang] : Array.isArray(item.tags?.['ko']) ? item.tags?.['ko'] : Array.isArray(item.tags) ? item.tags : [])?.slice(0, 4).map((tag: string, i: number) => (
-                                                        <span key={i} className="text-[8px] md:text-[9px] font-black px-3 py-1 md:px-4 md:py-1.5 rounded-lg md:rounded-xl bg-card border border-white/5 text-muted-foreground/40 uppercase tracking-tight group-hover:text-primary transition-colors">
+                                                        <span key={i} className="text-xs md:text-xs font-black px-3 py-1 md:px-4 md:py-1.5 rounded-lg md:rounded-xl bg-card border border-white/5 text-muted-foreground/40 uppercase tracking-tight group-hover:text-primary transition-colors">
                                                             #{tag.replace('#', '')}
                                                         </span>
                                                     ))}
@@ -241,7 +241,7 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
                                                 <Link 
                                                     href={item.link} 
                                                     target="_blank" 
-                                                    className="inline-flex items-center gap-2 px-6 py-2.5 md:px-8 md:py-3 rounded-xl md:rounded-2xl bg-primary text-primary-foreground text-[9px] md:text-[10px] font-black hover:brightness-110 transition-all shadow-xl shadow-primary/20 uppercase tracking-[0.2em]"
+                                                    className="inline-flex items-center gap-2 px-6 py-2.5 md:px-8 md:py-3 rounded-xl md:rounded-2xl bg-primary text-primary-foreground text-xs md:text-xs font-black hover:brightness-110 transition-all shadow-xl shadow-primary/20 uppercase tracking-[0.2em]"
                                                 >
                                                     {t.viewOriginal}
                                                 </Link>
@@ -327,7 +327,7 @@ export default function NewsContentPage({ initialNews, initialPage = 1 }: { init
                                     </Link>
                                 </div>
 
-                                <p className="text-[10px] sm:text-xs text-muted-foreground/30 font-black uppercase tracking-[0.4em] text-center italic">
+                                <p className="text-xs sm:text-xs text-muted-foreground/30 font-black uppercase tracking-[0.4em] text-center italic">
                                     {isEn
                                         ? "※ News summaries are generated by AI and may contain inaccuracies."
                                         : "※ AI가 원문 뉴스를 요약 및 번역한 정보로, 실제 내용과 차이가 있을 수 있습니다."}

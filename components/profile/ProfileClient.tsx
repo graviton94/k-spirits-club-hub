@@ -184,16 +184,16 @@ export default function ProfileClient({ lang, dict }: ProfileClientProps) {
                                     {roleBadge}
                                 </div>
                                 {formattedDate && (
-                                    <p className="text-[10px] text-muted-foreground">
+                                    <p className="text-xs text-muted-foreground">
                                         {dict?.joined || (isEn ? "Joined" : "가입일")}: {formattedDate}
                                     </p>
                                 )}
                             </div>
 
                             {personaBadge && (
-                                <div className="mb-6 flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/10 to-amber-600/10 border border-amber-500/20">
+                                <div className="mb-6 flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/10 to-amber-600/10 border border-primary/20/20">
                                     <span className="text-lg">{personaBadge.emoji}</span>
-                                    <span className="text-xs font-semibold text-amber-200">{personaBadge.title}</span>
+                                    <span className="text-xs font-semibold text-primary">{personaBadge.title}</span>
                                 </div>
                             )}
 
@@ -217,7 +217,7 @@ export default function ProfileClient({ lang, dict }: ProfileClientProps) {
                                 </div>
 
                                 {!user && (
-                                    <div className="absolute inset-0 backdrop-blur-md bg-white/10 rounded-2xl flex items-center justify-center border border-white/20">
+                                    <div className="absolute inset-0 backdrop-blur-md bg-background/10 rounded-2xl flex items-center justify-center border border-white/20">
                                         <Link
                                             href={`/${lang}/login`}
                                             className="px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold rounded-full hover:shadow-2xl hover:scale-105 transition-all shadow-lg"

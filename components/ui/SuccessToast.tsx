@@ -33,7 +33,7 @@ export default function SuccessToast({
   }, [isVisible, duration, onClose]);
 
   const Icon = variant === 'success' ? CheckCircle : AlertCircle;
-  const iconColor = variant === 'success' ? 'text-green-500' : 'text-red-500';
+  const iconColor = variant === 'success' ? 'text-primary' : 'text-destructive';
 
   return (
     <AnimatePresence>

@@ -72,7 +72,7 @@ export default function ReviewCommentSection({ reviewId, initialComments, lang }
   return (
     <div className="mt-12 space-y-8">
       <div className="flex items-center gap-3">
-        <MessageCircle className="w-5 h-5 text-amber-500" />
+        <MessageCircle className="w-5 h-5 text-primary" />
         <h3 className="text-xl font-black">{isEn ? 'Discussion' : '댓글 토론'}</h3>
         <span className="bg-secondary px-2.5 py-0.5 rounded-full text-xs font-black text-muted-foreground">
           {comments.length}
@@ -125,7 +125,7 @@ export default function ReviewCommentSection({ reviewId, initialComments, lang }
                <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <span className="text-sm font-black text-foreground">{comment.user.nickname || 'Unknown'}</span>
-                    <span className="text-[10px] font-bold text-muted-foreground">
+                    <span className="text-xs font-bold text-muted-foreground">
                       {formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true, locale: dateLocale })}
                     </span>
                   </div>

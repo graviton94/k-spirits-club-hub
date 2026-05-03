@@ -227,11 +227,11 @@
   }
 
   .capsule-premium {
-    @apply px-3 py-1 rounded-xl bg-primary/10 text-primary text-[10px] font-black border border-primary/20 uppercase tracking-widest;
+    @apply px-3 py-1 rounded-xl bg-primary/10 text-primary text-xs font-black border border-primary/20 uppercase tracking-widest;
   }
 
   .capsule-accent {
-    @apply px-3 py-1 rounded-xl bg-accent/10 text-accent text-[10px] font-black border border-accent/20 uppercase tracking-widest;
+    @apply px-3 py-1 rounded-xl bg-accent/10 text-accent text-xs font-black border border-accent/20 uppercase tracking-widest;
   }
 
   .glow-amber {

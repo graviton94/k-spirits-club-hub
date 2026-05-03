@@ -49,7 +49,7 @@ export default function MindMap({ analysis, profileImage }: MindMapProps) {
           >
             🌌
           </motion.div>
-          <p className="text-gray-400 text-lg">
+          <p className="text-muted-foreground text-lg">
             술을 수집하면 취향 탐색 메뉴가 생성됩니다
           </p>
         </div>
@@ -187,7 +187,7 @@ export default function MindMap({ analysis, profileImage }: MindMapProps) {
             className={`relative px-3 py-2 rounded-lg bg-gradient-to-r ${getCategoryColor(node.category)} text-white font-bold text-xs shadow-lg`}
           >
             <div className="text-center whitespace-nowrap">{node.label}</div>
-            <div className="text-[10px] text-center opacity-70">{node.category}</div>
+            <div className="text-xs text-center opacity-70">{node.category}</div>
           </motion.div>
         </motion.div>
       );
@@ -219,7 +219,7 @@ export default function MindMap({ analysis, profileImage }: MindMapProps) {
           <motion.div
             whileHover={{ scale: 1.05 }}
             style={{ x: '-50%', y: '-50%' }} // Center the div on its coordinate
-            className="relative px-2 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-[10px] font-medium shadow-sm"
+            className="relative px-2 py-1 rounded-full bg-background/10 backdrop-blur-sm border border-white/20 text-white text-xs font-medium shadow-sm"
           >
             {node.label}
           </motion.div>
@@ -233,13 +233,13 @@ export default function MindMap({ analysis, profileImage }: MindMapProps) {
   return (
     <div className="flex flex-col w-full">
       {/* 1. Mind Map Visualization Area */}
-      <div className="relative w-full min-h-[50vh] bg-gradient-to-b from-gray-50 via-white to-gray-50 dark:from-black dark:via-gray-900 dark:to-black rounded-t-3xl overflow-hidden border-b border-gray-200 dark:border-gray-800">
+      <div className="relative w-full min-h-[50vh] bg-gradient-to-b from-gray-50 via-white to-gray-50 dark:from-black dark:via-gray-900 dark:to-black rounded-t-3xl overflow-hidden border-b border-border dark:border-border">
         {/* Starfield background */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {stars.map((star, i) => (
             <motion.div
               key={i}
-              className="absolute w-1 h-1 bg-white rounded-full"
+              className="absolute w-1 h-1 bg-background rounded-full"
               style={{
                 left: `${star.left}%`,
                 top: `${star.top}%`,
@@ -307,20 +307,20 @@ export default function MindMap({ analysis, profileImage }: MindMapProps) {
 
         {/* Info text overlay */}
         <div className="absolute top-4 left-0 right-0 text-center px-4 pointer-events-none">
-          <p className="text-gray-500 text-xs sm:text-sm">
+          <p className="text-muted-foreground text-xs sm:text-sm">
             💡 제품을 클릭하여 연결된 태그를 확인하세요
           </p>
         </div>
       </div>
 
       {/* 2. Persona & Stats Section */}
-      <div className="bg-white dark:bg-gray-900 rounded-b-3xl p-6 border-x border-b border-gray-200 dark:border-gray-800 shadow-xl space-y-8">
+      <div className="bg-background dark:bg-card rounded-b-3xl p-6 border-x border-b border-border dark:border-border shadow-xl space-y-8">
 
         {/* Persona Section */}
         <div className="text-center">
-          <h3 className="text-xs font-bold text-amber-500 tracking-widest uppercase mb-2">My Spirit Persona</h3>
+          <h3 className="text-xs font-bold text-primary tracking-widest uppercase mb-2">My Spirit Persona</h3>
           <div className="inline-block p-1 rounded-2xl bg-gradient-to-r from-amber-200 via-orange-300 to-amber-200 dark:from-amber-700 dark:via-orange-600 dark:to-amber-700">
-            <div className="px-8 py-4 bg-white dark:bg-gray-900 rounded-xl">
+            <div className="px-8 py-4 bg-background dark:bg-card rounded-xl">
               <p className="text-2xl sm:text-3xl font-black bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
                 " {analysis.persona} "
               </p>
@@ -330,14 +330,14 @@ export default function MindMap({ analysis, profileImage }: MindMapProps) {
 
         {/* Category Distribution Section */}
         <div>
-          <h3 className="text-xs font-bold text-gray-400 dark:text-gray-500 text-center uppercase tracking-widest mb-4">
+          <h3 className="text-xs font-bold text-muted-foreground dark:text-muted-foreground text-center uppercase tracking-widest mb-4">
             Collection Analysis
           </h3>
           <div className="flex flex-wrap gap-4 justify-center items-end">
             {analysis.categoryDistribution.map((cat: { category: string; percentage: number }, index: number) => (
               <div key={cat.category} className="flex flex-col items-center gap-2 group cursor-default">
                 {/* Bar visual */}
-                <div className="relative w-8 bg-gray-100 dark:bg-gray-800 rounded-t-lg overflow-hidden group-hover:scale-110 transition-transform">
+                <div className="relative w-8 bg-muted dark:bg-card rounded-t-lg overflow-hidden group-hover:scale-110 transition-transform">
                   <motion.div
                     initial={{ height: 0 }}
                     animate={{ height: `${Math.max(cat.percentage, 10) * 1.5}px` }}
@@ -350,10 +350,10 @@ export default function MindMap({ analysis, profileImage }: MindMapProps) {
 
                 {/* Label */}
                 <div className="text-center">
-                  <span className="block text-sm font-bold text-gray-800 dark:text-gray-200">
+                  <span className="block text-sm font-bold text-muted-foreground dark:text-muted-foreground">
                     {cat.percentage}%
                   </span>
-                  <span className="text-[10px] text-gray-500 dark:text-gray-400 font-medium">
+                  <span className="text-xs text-muted-foreground dark:text-muted-foreground font-medium">
                     {cat.category}
                   </span>
                 </div>

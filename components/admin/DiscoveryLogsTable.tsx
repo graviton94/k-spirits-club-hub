@@ -77,7 +77,7 @@ export default function DiscoveryLogsTable() {
                   <td className="p-4">
                     <div className="flex flex-wrap gap-1">
                       {log.analysis?.split(' ').map((tag: string, i: number) => (
-                        <span key={i} className="px-2 py-0.5 bg-primary/10 text-primary rounded-full text-[10px] font-medium">
+                        <span key={i} className="px-2 py-0.5 bg-primary/10 text-primary rounded-full text-xs font-medium">
                           {tag}
                         </span>
                       ))}
@@ -90,12 +90,12 @@ export default function DiscoveryLogsTable() {
                           {rec.inDb ? (
                             <Database size={12} className="text-emerald-500" />
                           ) : (
-                            <Search size={12} className="text-amber-500" />
+                            <Search size={12} className="text-primary" />
                           )}
-                          <span className={`text-xs ${rec.inDb ? 'font-medium' : 'text-amber-700'}`}>
+                          <span className={`text-xs ${rec.inDb ? 'font-medium' : 'text-primary'}`}>
                             {rec.name}
                           </span>
-                          {!rec.inDb && <span className="text-[10px] bg-amber-100 text-amber-700 px-1 rounded">Out-of-DB</span>}
+                          {!rec.inDb && <span className="text-xs bg-primary/10 text-primary px-1 rounded">Out-of-DB</span>}
                         </div>
                       ))}
                     </div>

@@ -7,7 +7,7 @@ const SPIRIT_EMOJIS = ['🍶', '🥃', '🍺', '🍷', '🍾', '🥂', '🍹'];
 // Skeleton card that matches ExploreCard height exactly
 function ExploreCardSkeleton() {
   return (
-    <div className="flex gap-3 p-3 rounded-2xl bg-white/60 dark:bg-slate-900/40 backdrop-blur-md border border-white/40 dark:border-white/10 animate-pulse">
+    <div className="flex gap-3 p-3 rounded-2xl bg-background/60 dark:bg-card/40 backdrop-blur-md border border-white/40 dark:border-white/10 animate-pulse">
       {/* Image skeleton - exact match to ExploreCard */}
       <div className="shrink-0 w-20 h-20 rounded-lg bg-muted/50" />
       
@@ -66,9 +66,9 @@ export default function ExploreLoading() {
 
                         {/* Loading Dots */}
                         <div className="flex gap-2">
-                            <div className="w-3 h-3 bg-amber-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                            <div className="w-3 h-3 bg-amber-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                            <div className="w-3 h-3 bg-amber-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                            <div className="w-3 h-3 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                            <div className="w-3 h-3 bg-primary rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                            <div className="w-3 h-3 bg-primary rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                         </div>
                     </div>
                 </div>

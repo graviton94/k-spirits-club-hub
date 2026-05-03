@@ -51,7 +51,7 @@ export default function LoginClient({ lang, dict }: LoginClientProps) {
                 <div className="space-y-4">
                     <button
                         onClick={handleLogin}
-                        className="w-full py-5 bg-white text-black border border-neutral-200 font-bold rounded-2xl flex items-center justify-center gap-3 hover:bg-neutral-50 transition-all shadow-sm text-lg"
+                        className="w-full py-5 bg-background text-black border border-border font-bold rounded-2xl flex items-center justify-center gap-3 hover:bg-muted transition-all shadow-sm text-lg"
                     >
                         <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="w-6 h-6" alt="Google" />
                         {dict.google || (isEn ? "Continue with Google" : "Google 계정으로 시작하기")}
@@ -75,8 +75,8 @@ export default function LoginClient({ lang, dict }: LoginClientProps) {
                 </div>
 
                 {/* Kakao In-app Browser Warning */}
-                <div className="mt-10 p-4 bg-amber-500/10 border border-amber-500/20 rounded-2xl text-left">
-                    <p className="text-xs text-amber-600 dark:text-amber-400 font-bold mb-2 flex items-center gap-1">
+                <div className="mt-10 p-4 bg-primary/10 border border-primary/20/20 rounded-2xl text-left">
+                    <p className="text-xs text-primary dark:text-primary font-bold mb-2 flex items-center gap-1">
                         ⚠️ {isEn ? "Using KakaoTalk?" : "카카오톡으로 접속하셨나요?"}
                     </p>
                     <p className="text-[11px] text-muted-foreground leading-relaxed mb-3">
@@ -100,7 +100,7 @@ export default function LoginClient({ lang, dict }: LoginClientProps) {
                 </div>
 
                 <div className="mt-8 pt-6 border-t border-border">
-                    <p className="text-[10px] text-muted-foreground">
+                    <p className="text-xs text-muted-foreground">
                         {dict.policy || (isEn ? "By continuing, you agree to our Terms and Privacy Policy." : "로그인 시 서비스 이용약관 및 개인정보 처리방침에 동의하게 됩니다.")}
                     </p>
                 </div>

@@ -311,17 +311,17 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
             <div className="flex items-center gap-2">
               <h3 className="font-semibold text-lg truncate">{spirit.name}</h3>
               {adminStatus === 'NEEDS_REVIEW' && (
-                <span className="px-1.5 py-0.5 bg-red-100 text-red-700 text-[10px] font-black rounded border border-red-200 animate-pulse">
+                <span className="px-1.5 py-0.5 bg-destructive/10 text-destructive text-xs font-black rounded border border-destructive/20 animate-pulse">
                   ⚠️ NEEDS REVIEW
                 </span>
               )}
               {confidence > 0 && (
-                <span className={`px-1.5 py-0.5 text-[10px] font-black rounded border ${confidence > 0.8 ? 'bg-green-100 text-green-700 border-green-200' : 'bg-amber-100 text-amber-700 border-amber-200'}`}>
+                <span className={`px-1.5 py-0.5 text-xs font-black rounded border ${confidence > 0.8 ? 'bg-primary/10 text-primary border-primary/20' : 'bg-primary/10 text-primary border-primary/20'}`}>
                   {(confidence * 100).toFixed(0)}% CONFIDENT
                 </span>
               )}
             </div>
-            <span className="text-[10px] font-bold px-2 py-0.5 bg-secondary rounded uppercase tracking-widest">{spirit.category}</span>
+            <span className="text-xs font-bold px-2 py-0.5 bg-secondary rounded uppercase tracking-widest">{spirit.category}</span>
           </div>
 
           <div className="flex flex-wrap gap-2 text-sm mb-3">
@@ -331,7 +331,7 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold text-muted-foreground uppercase">English Name</label>
+                  <label className="text-xs font-bold text-muted-foreground uppercase">English Name</label>
                   <input
                     type="text"
                     value={nameEn}
@@ -341,7 +341,7 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold text-muted-foreground uppercase">Price ({currency}) & Purchase URL</label>
+                  <label className="text-xs font-bold text-muted-foreground uppercase">Price ({currency}) & Purchase URL</label>
                   <div className="flex gap-2">
                     <input
                       type="number"
@@ -365,7 +365,7 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
             <div className="mt-0 space-y-4">
 
               <div className="space-y-1">
-                <label className="text-[10px] font-bold text-muted-foreground uppercase">Description (KO / EN)</label>
+                <label className="text-xs font-bold text-muted-foreground uppercase">Description (KO / EN)</label>
                 <div className="grid grid-cols-2 gap-2">
                   <textarea
                     value={descKo}
@@ -385,7 +385,7 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
                 <button
                   onClick={handleGenerateDescription}
                   disabled={isGeneratingDescription || isTranslating || isLoading}
-                  className="w-full py-2 bg-blue-600 shadow-md shadow-blue-500/20 text-white rounded-lg text-xs font-bold hover:bg-blue-700 disabled:opacity-50 flex items-center justify-center gap-2 transition-all active:scale-95"
+                  className="w-full py-2 bg-accent shadow-md shadow-blue-500/20 text-white rounded-lg text-xs font-bold hover:bg-accent disabled:opacity-50 flex items-center justify-center gap-2 transition-all active:scale-95"
                 >
                   {isGeneratingDescription ? (
                     <>
@@ -399,27 +399,27 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
               {/* Tags Section */}
               <div className="grid grid-cols-3 gap-2">
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase text-pink-500">Nose Tags</label>
-                  <div className="text-[10px] bg-secondary/50 p-2 rounded min-h-[40px] border border-border/50">
+                  <label className="text-xs font-bold uppercase text-pink-500">Nose Tags</label>
+                  <div className="text-xs bg-secondary/50 p-2 rounded min-h-[40px] border border-border/50">
                     {noseTags.join(', ') || 'No tags'}
                   </div>
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase text-amber-500">Palate Tags</label>
-                  <div className="text-[10px] bg-secondary/50 p-2 rounded min-h-[40px] border border-border/50">
+                  <label className="text-xs font-bold uppercase text-primary">Palate Tags</label>
+                  <div className="text-xs bg-secondary/50 p-2 rounded min-h-[40px] border border-border/50">
                     {palateTags.join(', ') || 'No tags'}
                   </div>
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase text-blue-500">Finish Tags</label>
-                  <div className="text-[10px] bg-secondary/50 p-2 rounded min-h-[40px] border border-border/50">
+                  <label className="text-xs font-bold uppercase text-accent">Finish Tags</label>
+                  <div className="text-xs bg-secondary/50 p-2 rounded min-h-[40px] border border-border/50">
                     {finishTags.join(', ') || 'No tags'}
                   </div>
                 </div>
               </div>
 
               <div className="space-y-1">
-                <label className="text-[10px] font-bold text-muted-foreground uppercase">Pairing Guide (KO / EN)</label>
+                <label className="text-xs font-bold text-muted-foreground uppercase">Pairing Guide (KO / EN)</label>
                 <div className="grid grid-cols-2 gap-2">
                   <textarea
                     value={pairingKo}
@@ -439,15 +439,15 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
               </div>
 
               <div className="flex flex-col gap-2">
-                <div className="flex justify-between text-[10px] font-black uppercase tracking-tighter">
-                  <span className={enrichStep === 'audit' ? 'text-purple-500 scale-110' : 'opacity-30'}>1. Audit</span>
-                  <span className={enrichStep === 'sensory' ? 'text-purple-500 scale-110' : 'opacity-30'}>2. Sensory</span>
-                  <span className={enrichStep === 'pairing' ? 'text-purple-500 scale-110' : 'opacity-30'}>3. Pairing</span>
+                <div className="flex justify-between text-xs font-black uppercase tracking-tighter">
+                  <span className={enrichStep === 'audit' ? 'text-accent scale-110' : 'opacity-30'}>1. Audit</span>
+                  <span className={enrichStep === 'sensory' ? 'text-accent scale-110' : 'opacity-30'}>2. Sensory</span>
+                  <span className={enrichStep === 'pairing' ? 'text-accent scale-110' : 'opacity-30'}>3. Pairing</span>
                 </div>
                 <button
                   onClick={handleEnrich}
                   disabled={isTranslating || isLoading}
-                  className="w-full py-3 bg-purple-600 shadow-lg shadow-purple-500/20 text-white rounded-xl text-sm font-black hover:bg-purple-700 disabled:opacity-50 flex items-center justify-center gap-2 transition-all active:scale-95"
+                  className="w-full py-3 bg-accent shadow-lg shadow-purple-500/20 text-white rounded-xl text-sm font-black hover:bg-accent disabled:opacity-50 flex items-center justify-center gap-2 transition-all active:scale-95"
                 >
                   {isTranslating ? (
                     <>
@@ -460,7 +460,7 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
 
               {sources.length > 0 && (
                 <div className="bg-secondary/30 rounded-lg p-3 border border-border/50">
-                  <label className="text-[10px] font-black uppercase text-muted-foreground block mb-2">Research Sources Found ({sources.length})</label>
+                  <label className="text-xs font-black uppercase text-muted-foreground block mb-2">Research Sources Found ({sources.length})</label>
                   <div className="flex flex-wrap gap-2">
                     {sources.map((src, idx) => (
                       <a 
@@ -468,7 +468,7 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
                         href={src} 
                         target="_blank" 
                         rel="noopener noreferrer" 
-                        className="text-[10px] text-blue-500 hover:underline truncate max-w-[200px]"
+                        className="text-xs text-accent hover:underline truncate max-w-[200px]"
                       >
                         🔗 {new URL(src).hostname}
                       </a>
@@ -478,7 +478,7 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
               )}
 
               {errorMessage && (
-                <div className="text-xs text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 px-2 py-1 rounded">
+                <div className="text-xs text-destructive dark:text-destructive bg-destructive/10 dark:bg-destructive/20 px-2 py-1 rounded">
                   ⚠️ {errorMessage}
                 </div>
               )}
@@ -498,7 +498,7 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
               <button
                 onClick={handlePublish}
                 disabled={isLoading}
-                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50 text-sm font-bold min-w-[120px] transition-all"
+                className="px-4 py-2 bg-primary text-white rounded hover:bg-primary disabled:opacity-50 text-sm font-bold min-w-[120px] transition-all"
               >
                 {isLoading ? (
                   <div className="flex items-center gap-2">
@@ -518,20 +518,20 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
           )}
           {status === 'published' && (
             <>
-              <span className="px-4 py-2 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded text-sm text-center">
+              <span className="px-4 py-2 bg-primary/10 text-primary rounded text-sm text-center">
                 발행됨
               </span>
               <button
                 onClick={handleUpdate}
                 disabled={isLoading}
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50 text-sm font-bold"
+                className="px-4 py-2 bg-accent text-accent-foreground rounded hover:brightness-110 disabled:opacity-50 text-sm font-bold"
               >
                 정보 업데이트
               </button>
               <button
                 onClick={handlePublish}
                 disabled={isLoading}
-                className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 disabled:opacity-50 text-sm font-bold flex items-center justify-center gap-2"
+                className="px-4 py-2 bg-accent text-accent-foreground rounded hover:brightness-110 disabled:opacity-50 text-sm font-bold flex items-center justify-center gap-2"
               >
                 {isLoading ? <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : '✨ AI 정보 재생성'}
               </button>
@@ -539,20 +539,20 @@ export default function AdminSpiritCard({ spirit, onRefresh }: AdminSpiritCardPr
           )}
           {status === 'rejected' && (
             <>
-              <span className="px-4 py-2 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded text-sm text-center">
+              <span className="px-4 py-2 bg-destructive/10 text-destructive rounded text-sm text-center">
                 거절됨
               </span>
               <button
                 onClick={handleUpdate}
                 disabled={isLoading}
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50 text-sm font-bold"
+                className="px-4 py-2 bg-accent text-accent-foreground rounded hover:brightness-110 disabled:opacity-50 text-sm font-bold"
               >
                 정보 업데이트
               </button>
               <button
                 onClick={handlePublish}
                 disabled={isLoading}
-                className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 disabled:opacity-50 text-sm font-bold flex items-center justify-center gap-2"
+                className="px-4 py-2 bg-accent text-accent-foreground rounded hover:brightness-110 disabled:opacity-50 text-sm font-bold flex items-center justify-center gap-2"
               >
                 {isLoading ? <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : '✨ AI 정보 재생성'}
               </button>

@@ -128,7 +128,7 @@ export default function ReviewModal({ spirit, isOpen, onClose, onSubmit, dict, l
                                     key={tag}
                                     onClick={() => toggleTag(tag)}
                                                                         className={`
-                                        text-[10px] sm:text-xs px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border transition-all
+                                        text-xs sm:text-xs px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border transition-all
                                         ${isSelected
                                             ? `${colors.bg} ${colors.text} ${colors.border} ring-2 ring-offset-1 ring-primary/50 font-bold`
                                             : 'bg-card text-muted-foreground border-border hover:bg-secondary'

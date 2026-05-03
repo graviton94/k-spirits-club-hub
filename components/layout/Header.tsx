@@ -46,7 +46,7 @@ export function Header({ lang, dict }: { lang: Locale, dict: any }) {
                             className={`flex min-w-0 items-center gap-3 rounded-2xl py-1.5 pl-3 pr-2 transition-all ${interactive.hoverSurface} border border-transparent ${interactive.hoverBorder} group`}
                         >
                             <div className="whitespace-nowrap text-right">
-                                <p className="text-[9px] md:text-[11px] font-black text-foreground/30 uppercase tracking-widest hidden xs:block">
+                                <p className="text-xs md:text-[11px] font-black text-foreground/30 uppercase tracking-widest hidden xs:block">
                                     Member
                                 </p>
                                 <p className="text-xs md:text-sm font-black text-foreground group-hover:text-primary transition-colors uppercase tracking-tighter max-w-[60px] md:max-w-none truncate">

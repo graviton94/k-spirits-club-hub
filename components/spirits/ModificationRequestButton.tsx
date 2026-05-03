@@ -50,9 +50,9 @@ export default function ModificationRequestButton({ spiritId, spiritName }: Modi
         <>
             <button
                 onClick={() => setIsOpen(true)}
-                className="flex items-center gap-2 px-3 py-1.5 bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-300 dark:border-neutral-700 rounded-lg transition-all text-xs font-bold shadow-sm"
+                className="flex items-center gap-2 px-3 py-1.5 bg-muted dark:bg-card text-muted-foreground dark:text-muted-foreground hover:bg-muted dark:hover:bg-muted border border-border dark:border-border rounded-lg transition-all text-xs font-bold shadow-sm"
             >
-                <AlertCircle className="w-3.5 h-3.5 text-amber-500" />
+                <AlertCircle className="w-3.5 h-3.5 text-primary" />
                 정보 오류 신고 / 수정 요청
             </button>
 
@@ -71,69 +71,69 @@ export default function ModificationRequestButton({ spiritId, spiritName }: Modi
                             initial={{ opacity: 0, scale: 0.95, y: 20 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                            className="relative w-full max-w-md bg-[#171717] border border-neutral-800 rounded-2xl shadow-2xl overflow-hidden text-white"
+                            className="relative w-full max-w-md bg-card border border-border rounded-2xl shadow-2xl overflow-hidden text-foreground"
                         >
                             {isSuccess ? (
                                 <div className="p-12 flex flex-col items-center text-center space-y-4">
-                                    <div className="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center mb-2">
-                                        <CheckCircle2 className="w-10 h-10 text-green-500" />
+                                    <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-2">
+                                        <CheckCircle2 className="w-10 h-10 text-primary" />
                                     </div>
-                                    <h3 className="text-xl font-bold text-white">소중한 의견 감사합니다🙇</h3>
-                                    <p className="text-neutral-400 text-sm">신속히 검토 후 반영하겠습니다!</p>
+                                    <h3 className="text-xl font-bold text-foreground">소중한 의견 감사합니다🙇</h3>
+                                    <p className="text-muted-foreground text-sm">신속히 검토 후 반영하겠습니다!</p>
                                 </div>
                             ) : (
                                 <form onSubmit={handleSubmit} className="p-7 space-y-6">
                                     <div className="flex justify-between items-center mb-2">
                                         <div className="flex items-center gap-2">
-                                            <AlertCircle className="w-5 h-5 text-amber-500" />
-                                            <h3 className="font-bold text-xl text-white">정보 수정 요청</h3>
+                                            <AlertCircle className="w-5 h-5 text-primary" />
+                                            <h3 className="font-bold text-xl text-foreground">정보 수정 요청</h3>
                                         </div>
                                         <button
                                             type="button"
                                             onClick={() => setIsOpen(false)}
-                                            className="p-1.5 hover:bg-neutral-800 rounded-full transition-colors"
+                                            className="p-1.5 hover:bg-muted rounded-full transition-colors"
                                         >
-                                            <X className="w-5 h-5 text-neutral-500" />
+                                            <X className="w-5 h-5 text-muted-foreground" />
                                         </button>
                                     </div>
 
-                                    <div className="bg-neutral-800/50 p-4 rounded-xl border border-neutral-800">
-                                        <span className="text-[10px] text-neutral-500 font-bold uppercase tracking-widest block mb-1">대상 품목</span>
-                                        <span className="text-sm font-bold text-white">{spiritName}</span>
+                                    <div className="bg-muted/50 p-4 rounded-xl border border-border">
+                                        <span className="text-xs text-muted-foreground font-bold uppercase tracking-widest block mb-1">대상 품목</span>
+                                        <span className="text-sm font-bold text-foreground">{spiritName}</span>
                                     </div>
 
                                     <div className="space-y-4">
                                         <div className="space-y-2">
-                                            <label className="text-xs font-bold text-neutral-400 ml-1">문의 제목</label>
+                                            <label className="text-xs font-bold text-muted-foreground ml-1">문의 제목</label>
                                             <input
                                                 autoFocus
                                                 required
                                                 value={title}
                                                 onChange={(e) => setTitle(e.target.value)}
                                                 placeholder="예: 도수 표기가 잘못되었습니다."
-                                                className="w-full bg-[#1e1e1e] border-neutral-800 rounded-xl px-4 py-3 text-sm text-white placeholder:text-neutral-600 focus:ring-1 focus:ring-amber-500/50 outline-none transition-all"
+                                                className="w-full bg-input border-border rounded-xl px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:ring-1 focus:ring-primary/50 outline-none transition-all"
                                             />
                                         </div>
 
                                         <div className="space-y-2">
-                                            <label className="text-xs font-bold text-neutral-400 ml-1">상세 내용</label>
+                                            <label className="text-xs font-bold text-muted-foreground ml-1">상세 내용</label>
                                             <textarea
                                                 required
                                                 rows={5}
                                                 value={content}
                                                 onChange={(e) => setContent(e.target.value)}
                                                 placeholder="잘못된 정보와 올바른 정보(출처 등)를 적어주세요."
-                                                className="w-full bg-[#1e1e1e] border-neutral-800 rounded-xl px-4 py-3 text-sm text-white placeholder:text-neutral-600 focus:ring-1 focus:ring-amber-500/50 outline-none transition-all resize-none"
+                                                className="w-full bg-input border-border rounded-xl px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:ring-1 focus:ring-primary/50 outline-none transition-all resize-none"
                                             />
                                         </div>
                                     </div>
 
                                     <button
                                         disabled={isSubmitting || !title.trim() || !content.trim()}
-                                        className="w-full h-13 bg-white hover:bg-neutral-200 disabled:opacity-50 disabled:hover:bg-white text-black font-black rounded-xl transition-all flex items-center justify-center gap-2 mt-2 py-3.5"
+                                        className="w-full h-13 bg-primary hover:brightness-110 disabled:opacity-50 disabled:hover:bg-primary text-primary-foreground font-black rounded-xl transition-all flex items-center justify-center gap-2 mt-2 py-3.5"
                                     >
                                         {isSubmitting ? (
-                                            <span className="w-5 h-5 border-2 border-black/20 border-t-black rounded-full animate-spin" />
+                                            <span className="w-5 h-5 border-2 border-primary-foreground/20 border-t-primary-foreground rounded-full animate-spin" />
                                         ) : (
                                             <>
                                                 <Send className="w-4 h-4" /> 제보하기
