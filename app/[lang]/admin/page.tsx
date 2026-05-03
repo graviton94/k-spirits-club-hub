@@ -1003,7 +1003,7 @@ export default function AdminDashboard() {
                                             onChange={e => setEditForm({ ...editForm, category: e.target.value, subcategory: '' })}
                                         >
                                             <option value="">선택</option>
-                                            {categoryOptions.map(c => <option key={c} value={c}>{c}</option>)}
+                                            {dbCategories.map(c => <option key={c} value={c}>{c}</option>)}
                                         </select>
                                     </div>
                                     <div>
