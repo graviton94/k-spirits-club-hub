@@ -183,7 +183,7 @@ export default async function ContentsPage({ params }: ContentsPageProps) {
       {/* SEO & Wiki Section Elevation */}
       <div className="mt-32 space-y-24 relative z-10">
         <div className="p-10 md:p-16 bg-card/10 backdrop-blur-2xl border border-white/5 rounded-[4rem] shadow-2xl overflow-hidden group">
-          <div className="absolute inset-0 bg-brand-gradient opacity-0 group-hover:opacity-[0.02] transition-opacity" />
+          <div className="absolute inset-0 bg-brand-gradient opacity-0 group-hover:opacity-[0.02] transition-opacity pointer-events-none" />
           
           <div className="max-w-4xl mx-auto space-y-12">
             <div className="text-center space-y-4">
