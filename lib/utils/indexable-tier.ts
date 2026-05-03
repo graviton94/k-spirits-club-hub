@@ -35,15 +35,17 @@ export function isIndexableSpirit(spirit: Spirit | null | undefined): boolean {
   const hasImage = !!(spirit.imageUrl || spirit.thumbnailUrl);
 
   // Check content richness across multiple fields.
-  const descKo = spirit.metadata?.description_ko || spirit.description_ko || '';
-  const descEn = spirit.metadata?.description_en || spirit.description_en || '';
-  const pairingKo = spirit.metadata?.pairing_guide_ko || spirit.pairing_guide_ko || '';
-  const pairingEn = spirit.metadata?.pairing_guide_en || spirit.pairing_guide_en || '';
-  const tastingNote = spirit.tasting_note || spirit.metadata?.tasting_note || '';
+  // Note: App uses camelCase (descriptionKo, pairingGuideKo, noseTags, etc.)
+  // Fallback to snake_case and metadata for legacy/alternate storage formats
+  const descKo = (spirit as any).descriptionKo || (spirit as any).description_ko || spirit.metadata?.description_ko || '';
+  const descEn = (spirit as any).descriptionEn || (spirit as any).description_en || spirit.metadata?.description_en || '';
+  const pairingKo = (spirit as any).pairingGuideKo || (spirit as any).pairing_guide_ko || spirit.metadata?.pairing_guide_ko || '';
+  const pairingEn = (spirit as any).pairingGuideEn || (spirit as any).pairing_guide_en || spirit.metadata?.pairing_guide_en || '';
+  const tastingNote = (spirit as any).tastingNote || (spirit as any).tasting_note || spirit.metadata?.tasting_note || '';
   const sensoryTagCount = [
-    ...(spirit.nose_tags || spirit.metadata?.nose_tags || []),
-    ...(spirit.palate_tags || spirit.metadata?.palate_tags || []),
-    ...(spirit.finish_tags || spirit.metadata?.finish_tags || []),
+    ...((spirit as any).noseTags || (spirit as any).nose_tags || spirit.metadata?.nose_tags || []),
+    ...((spirit as any).palateTags || (spirit as any).palate_tags || spirit.metadata?.palate_tags || []),
+    ...((spirit as any).finishTags || (spirit as any).finish_tags || spirit.metadata?.finish_tags || []),
   ].filter(Boolean).length;
 
   const qualitySignalCount = [
@@ -72,6 +74,19 @@ export function isIndexableSpirit(spirit: Spirit | null | undefined): boolean {
  */
 export function getSpiritRobotsMeta(spirit: Spirit | null | undefined): { index: boolean; follow: boolean } | null {
   const indexable = isIndexableSpirit(spirit);
+
+  if (process.env.NODE_ENV === 'development' && spirit?.id) {
+    // Debug logging for field mapping verification
+    const descKo = (spirit as any).descriptionKo || (spirit as any).description_ko || spirit.metadata?.description_ko || '';
+    const descEn = (spirit as any).descriptionEn || (spirit as any).description_en || spirit.metadata?.description_en || '';
+    const sensoryTagCount = [
+      ...((spirit as any).noseTags || (spirit as any).nose_tags || spirit.metadata?.nose_tags || []),
+      ...((spirit as any).palateTags || (spirit as any).palate_tags || spirit.metadata?.palate_tags || []),
+      ...((spirit as any).finishTags || (spirit as any).finish_tags || spirit.metadata?.finish_tags || []),
+    ].filter(Boolean).length;
+    
+    console.debug(`[SpiritRobots] id=${spirit.id} indexable=${indexable} descKoLen=${descKo.length} sensoryTags=${sensoryTagCount}`);
+  }
 
   if (indexable) {
     // Tier A: Allow indexing (default behavior, can return null)

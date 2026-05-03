@@ -41,14 +41,19 @@ function isIndexableSpiritMeta(spirit: {
   if (!hasName || !hasCategory) return false;
 
   const hasImage = !!(spirit.imageUrl || spirit.thumbnailUrl);
-  const qualitySignalCount = [
+  const descLength = Math.max((spirit.descriptionKo?.length || 0), (spirit.descriptionEn?.length || 0));
+  const pairingLength = Math.max((spirit.pairingGuideKo?.length || 0), (spirit.pairingGuideEn?.length || 0));
+  const tastingLength = (spirit.tastingNote?.length || 0);
+  const sensoryCount = (spirit.noseTags?.length || 0) + (spirit.palateTags?.length || 0) + (spirit.finishTags?.length || 0);
+  
+  const qualitySignals = [
     hasImage,
-    (spirit.descriptionKo?.length || 0) >= 160 || (spirit.descriptionEn?.length || 0) >= 160,
-    (spirit.pairingGuideKo?.length || 0) >= 120 || (spirit.pairingGuideEn?.length || 0) >= 120,
-    (spirit.tastingNote?.length || 0) >= 24 || ((spirit.noseTags?.length || 0) + (spirit.palateTags?.length || 0) + (spirit.finishTags?.length || 0)) >= 4,
+    descLength >= 160,
+    pairingLength >= 120,
+    tastingLength >= 24 || sensoryCount >= 4,
   ].filter(Boolean).length;
 
-  return qualitySignalCount >= 2;
+  return qualitySignals >= 2;
 }
 
 /**
