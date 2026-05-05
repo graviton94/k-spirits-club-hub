@@ -7,132 +7,6 @@ const connectorConfig = {
 };
 exports.connectorConfig = connectorConfig;
 
-function upsertUser(dcOrVarsOrOptions, varsOrOptions, options) {
-  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
-  dcInstance.useGen(true);
-  return dcInstance.executeMutation('upsertUser', inputVars, inputOpts);
-}
-exports.upsertUser = upsertUser;
-
-function upsertSpirit(dcOrVarsOrOptions, varsOrOptions, options) {
-  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
-  dcInstance.useGen(true);
-  return dcInstance.executeMutation('upsertSpirit', inputVars, inputOpts);
-}
-exports.upsertSpirit = upsertSpirit;
-
-function upsertNewArrival(dcOrVarsOrOptions, varsOrOptions, options) {
-  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
-  dcInstance.useGen(true);
-  return dcInstance.executeMutation('upsertNewArrival', inputVars, inputOpts);
-}
-exports.upsertNewArrival = upsertNewArrival;
-
-function upsertReview(dcOrVarsOrOptions, varsOrOptions, options) {
-  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
-  dcInstance.useGen(true);
-  return dcInstance.executeMutation('upsertReview', inputVars, inputOpts);
-}
-exports.upsertReview = upsertReview;
-
-function updateReviewLikesCount(dcOrVarsOrOptions, varsOrOptions, options) {
-  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
-  dcInstance.useGen(true);
-  return dcInstance.executeMutation('updateReviewLikesCount', inputVars, inputOpts);
-}
-exports.updateReviewLikesCount = updateReviewLikesCount;
-
-function upsertReviewLike(dcOrVarsOrOptions, varsOrOptions, options) {
-  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
-  dcInstance.useGen(true);
-  return dcInstance.executeMutation('upsertReviewLike', inputVars, inputOpts);
-}
-exports.upsertReviewLike = upsertReviewLike;
-
-function deleteReviewLike(dcOrVarsOrOptions, varsOrOptions, options) {
-  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
-  dcInstance.useGen(true);
-  return dcInstance.executeMutation('deleteReviewLike', inputVars, inputOpts);
-}
-exports.deleteReviewLike = deleteReviewLike;
-
-function upsertReviewComment(dcOrVarsOrOptions, varsOrOptions, options) {
-  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
-  dcInstance.useGen(true);
-  return dcInstance.executeMutation('upsertReviewComment', inputVars, inputOpts);
-}
-exports.upsertReviewComment = upsertReviewComment;
-
-function deleteReviewComment(dcOrVarsOrOptions, varsOrOptions, options) {
-  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
-  dcInstance.useGen(true);
-  return dcInstance.executeMutation('deleteReviewComment', inputVars, inputOpts);
-}
-exports.deleteReviewComment = deleteReviewComment;
-
-function upsertNews(dcOrVarsOrOptions, varsOrOptions, options) {
-  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
-  dcInstance.useGen(true);
-  return dcInstance.executeMutation('upsertNews', inputVars, inputOpts);
-}
-exports.upsertNews = upsertNews;
-
-function deleteNews(dcOrVarsOrOptions, varsOrOptions, options) {
-  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
-  dcInstance.useGen(true);
-  return dcInstance.executeMutation('deleteNews', inputVars, inputOpts);
-}
-exports.deleteNews = deleteNews;
-
-function upsertCabinet(dcOrVarsOrOptions, varsOrOptions, options) {
-  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
-  dcInstance.useGen(true);
-  return dcInstance.executeMutation('upsertCabinet', inputVars, inputOpts);
-}
-exports.upsertCabinet = upsertCabinet;
-
-function deleteCabinet(dcOrVarsOrOptions, varsOrOptions, options) {
-  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
-  dcInstance.useGen(true);
-  return dcInstance.executeMutation('deleteCabinet', inputVars, inputOpts);
-}
-exports.deleteCabinet = deleteCabinet;
-
-function upsertModificationRequest(dcOrVarsOrOptions, varsOrOptions, options) {
-  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
-  dcInstance.useGen(true);
-  return dcInstance.executeMutation('upsertModificationRequest', inputVars, inputOpts);
-}
-exports.upsertModificationRequest = upsertModificationRequest;
-
-function upsertWorldCupResult(dcOrVarsOrOptions, varsOrOptions, options) {
-  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
-  dcInstance.useGen(true);
-  return dcInstance.executeMutation('upsertWorldCupResult', inputVars, inputOpts);
-}
-exports.upsertWorldCupResult = upsertWorldCupResult;
-
-function deleteSpirit(dcOrVarsOrOptions, varsOrOptions, options) {
-  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
-  dcInstance.useGen(true);
-  return dcInstance.executeMutation('deleteSpirit', inputVars, inputOpts);
-}
-exports.deleteSpirit = deleteSpirit;
-
-function upsertAiDiscoveryLog(dcOrVarsOrOptions, varsOrOptions, options) {
-  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
-  dcInstance.useGen(true);
-  return dcInstance.executeMutation('upsertAiDiscoveryLog', inputVars, inputOpts);
-}
-exports.upsertAiDiscoveryLog = upsertAiDiscoveryLog;
-
-function deleteReview(dcOrVarsOrOptions, varsOrOptions, options) {
-  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
-  dcInstance.useGen(true);
-  return dcInstance.executeMutation('deleteReview', inputVars, inputOpts);
-}
-exports.deleteReview = deleteReview;
-
 function listSpirits(dcOrVarsOrOptions, varsOrOptions, options) {
   const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, false);
   dcInstance.useGen(true);
@@ -349,4 +223,130 @@ function listReviewLikes(dcOrVarsOrOptions, varsOrOptions, options) {
   return dcInstance.executeQuery('listReviewLikes', inputVars, inputOpts);
 }
 exports.listReviewLikes = listReviewLikes;
+
+function upsertUser(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
+  dcInstance.useGen(true);
+  return dcInstance.executeMutation('upsertUser', inputVars, inputOpts);
+}
+exports.upsertUser = upsertUser;
+
+function upsertSpirit(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
+  dcInstance.useGen(true);
+  return dcInstance.executeMutation('upsertSpirit', inputVars, inputOpts);
+}
+exports.upsertSpirit = upsertSpirit;
+
+function upsertNewArrival(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
+  dcInstance.useGen(true);
+  return dcInstance.executeMutation('upsertNewArrival', inputVars, inputOpts);
+}
+exports.upsertNewArrival = upsertNewArrival;
+
+function upsertReview(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
+  dcInstance.useGen(true);
+  return dcInstance.executeMutation('upsertReview', inputVars, inputOpts);
+}
+exports.upsertReview = upsertReview;
+
+function updateReviewLikesCount(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
+  dcInstance.useGen(true);
+  return dcInstance.executeMutation('updateReviewLikesCount', inputVars, inputOpts);
+}
+exports.updateReviewLikesCount = updateReviewLikesCount;
+
+function upsertReviewLike(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
+  dcInstance.useGen(true);
+  return dcInstance.executeMutation('upsertReviewLike', inputVars, inputOpts);
+}
+exports.upsertReviewLike = upsertReviewLike;
+
+function deleteReviewLike(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
+  dcInstance.useGen(true);
+  return dcInstance.executeMutation('deleteReviewLike', inputVars, inputOpts);
+}
+exports.deleteReviewLike = deleteReviewLike;
+
+function upsertReviewComment(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
+  dcInstance.useGen(true);
+  return dcInstance.executeMutation('upsertReviewComment', inputVars, inputOpts);
+}
+exports.upsertReviewComment = upsertReviewComment;
+
+function deleteReviewComment(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
+  dcInstance.useGen(true);
+  return dcInstance.executeMutation('deleteReviewComment', inputVars, inputOpts);
+}
+exports.deleteReviewComment = deleteReviewComment;
+
+function upsertNews(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
+  dcInstance.useGen(true);
+  return dcInstance.executeMutation('upsertNews', inputVars, inputOpts);
+}
+exports.upsertNews = upsertNews;
+
+function deleteNews(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
+  dcInstance.useGen(true);
+  return dcInstance.executeMutation('deleteNews', inputVars, inputOpts);
+}
+exports.deleteNews = deleteNews;
+
+function upsertCabinet(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
+  dcInstance.useGen(true);
+  return dcInstance.executeMutation('upsertCabinet', inputVars, inputOpts);
+}
+exports.upsertCabinet = upsertCabinet;
+
+function deleteCabinet(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
+  dcInstance.useGen(true);
+  return dcInstance.executeMutation('deleteCabinet', inputVars, inputOpts);
+}
+exports.deleteCabinet = deleteCabinet;
+
+function upsertModificationRequest(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
+  dcInstance.useGen(true);
+  return dcInstance.executeMutation('upsertModificationRequest', inputVars, inputOpts);
+}
+exports.upsertModificationRequest = upsertModificationRequest;
+
+function upsertWorldCupResult(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
+  dcInstance.useGen(true);
+  return dcInstance.executeMutation('upsertWorldCupResult', inputVars, inputOpts);
+}
+exports.upsertWorldCupResult = upsertWorldCupResult;
+
+function deleteSpirit(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
+  dcInstance.useGen(true);
+  return dcInstance.executeMutation('deleteSpirit', inputVars, inputOpts);
+}
+exports.deleteSpirit = deleteSpirit;
+
+function upsertAiDiscoveryLog(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
+  dcInstance.useGen(true);
+  return dcInstance.executeMutation('upsertAiDiscoveryLog', inputVars, inputOpts);
+}
+exports.upsertAiDiscoveryLog = upsertAiDiscoveryLog;
+
+function deleteReview(dcOrVarsOrOptions, varsOrOptions, options) {
+  const { dc: dcInstance, vars: inputVars, options: inputOpts} = validateAdminArgs(connectorConfig, dcOrVarsOrOptions, varsOrOptions, options, true, true);
+  dcInstance.useGen(true);
+  return dcInstance.executeMutation('deleteReview', inputVars, inputOpts);
+}
+exports.deleteReview = deleteReview;
 

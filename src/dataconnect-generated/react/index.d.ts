@@ -1,63 +1,9 @@
-import { UpsertUserData, UpsertUserVariables, UpsertSpiritData, UpsertSpiritVariables, UpsertNewArrivalData, UpsertNewArrivalVariables, UpsertReviewData, UpsertReviewVariables, UpdateReviewLikesCountData, UpdateReviewLikesCountVariables, UpsertReviewLikeData, UpsertReviewLikeVariables, DeleteReviewLikeData, DeleteReviewLikeVariables, UpsertReviewCommentData, UpsertReviewCommentVariables, DeleteReviewCommentData, DeleteReviewCommentVariables, UpsertNewsData, UpsertNewsVariables, DeleteNewsData, DeleteNewsVariables, UpsertCabinetData, UpsertCabinetVariables, DeleteCabinetData, DeleteCabinetVariables, UpsertModificationRequestData, UpsertModificationRequestVariables, UpsertWorldCupResultData, UpsertWorldCupResultVariables, DeleteSpiritData, DeleteSpiritVariables, UpsertAiDiscoveryLogData, UpsertAiDiscoveryLogVariables, DeleteReviewData, DeleteReviewVariables, ListSpiritsData, ListSpiritsVariables, SearchSpiritsPublicData, SearchSpiritsPublicVariables, ListAllCategoriesData, ListAllSubcategoriesData, ListAllSubcategoriesVariables, ListTrendingSpiritsData, ListTrendingSpiritsVariables, ListNewArrivalsData, ListNewArrivalsVariables, GetSpiritData, GetSpiritVariables, AdminListRawSpiritsData, AdminListRawSpiritsVariables, GetUserProfileData, GetUserProfileVariables, ListNewsArticlesData, ListNewsArticlesVariables, GetNewsArticleData, GetNewsArticleVariables, AuditAllUsersData, AuditAllNewsData, AuditAllSpiritsData, AuditAllReviewsData, ListSpiritReviewsData, ListSpiritReviewsVariables, GetSpiritReviewsCountData, FindReviewData, FindReviewVariables, GetReviewDetailData, GetReviewDetailVariables, ListReviewCommentsData, ListReviewCommentsVariables, ListSpiritsForSitemapData, GetWorldCupResultData, GetWorldCupResultVariables, ListSpiritsForWorldCupData, ListSpiritsForWorldCupVariables, ListAllSpiritsForWorldCupData, ListSpiritsByCategoryForWorldCupData, ListSpiritsByCategoryForWorldCupVariables, ListAiDiscoveryLogsData, ListAiDiscoveryLogsVariables, ListModificationRequestsData, ListUserCabinetData, ListUserCabinetVariables, ListUserReviewsData, ListUserReviewsVariables, GetReviewLikeData, GetReviewLikeVariables, ListReviewLikesData, ListReviewLikesVariables } from '../';
+import { ListSpiritsData, ListSpiritsVariables, SearchSpiritsPublicData, SearchSpiritsPublicVariables, ListAllCategoriesData, ListAllSubcategoriesData, ListAllSubcategoriesVariables, ListTrendingSpiritsData, ListTrendingSpiritsVariables, ListNewArrivalsData, ListNewArrivalsVariables, GetSpiritData, GetSpiritVariables, AdminListRawSpiritsData, AdminListRawSpiritsVariables, GetUserProfileData, GetUserProfileVariables, ListNewsArticlesData, ListNewsArticlesVariables, GetNewsArticleData, GetNewsArticleVariables, AuditAllUsersData, AuditAllNewsData, AuditAllSpiritsData, AuditAllReviewsData, ListSpiritReviewsData, ListSpiritReviewsVariables, GetSpiritReviewsCountData, FindReviewData, FindReviewVariables, GetReviewDetailData, GetReviewDetailVariables, ListReviewCommentsData, ListReviewCommentsVariables, ListSpiritsForSitemapData, GetWorldCupResultData, GetWorldCupResultVariables, ListSpiritsForWorldCupData, ListSpiritsForWorldCupVariables, ListAllSpiritsForWorldCupData, ListSpiritsByCategoryForWorldCupData, ListSpiritsByCategoryForWorldCupVariables, ListAiDiscoveryLogsData, ListAiDiscoveryLogsVariables, ListModificationRequestsData, ListUserCabinetData, ListUserCabinetVariables, ListUserReviewsData, ListUserReviewsVariables, GetReviewLikeData, GetReviewLikeVariables, ListReviewLikesData, ListReviewLikesVariables, UpsertUserData, UpsertUserVariables, UpsertSpiritData, UpsertSpiritVariables, UpsertNewArrivalData, UpsertNewArrivalVariables, UpsertReviewData, UpsertReviewVariables, UpdateReviewLikesCountData, UpdateReviewLikesCountVariables, UpsertReviewLikeData, UpsertReviewLikeVariables, DeleteReviewLikeData, DeleteReviewLikeVariables, UpsertReviewCommentData, UpsertReviewCommentVariables, DeleteReviewCommentData, DeleteReviewCommentVariables, UpsertNewsData, UpsertNewsVariables, DeleteNewsData, DeleteNewsVariables, UpsertCabinetData, UpsertCabinetVariables, DeleteCabinetData, DeleteCabinetVariables, UpsertModificationRequestData, UpsertModificationRequestVariables, UpsertWorldCupResultData, UpsertWorldCupResultVariables, DeleteSpiritData, DeleteSpiritVariables, UpsertAiDiscoveryLogData, UpsertAiDiscoveryLogVariables, DeleteReviewData, DeleteReviewVariables } from '../';
 import { UseDataConnectQueryResult, useDataConnectQueryOptions, UseDataConnectMutationResult, useDataConnectMutationOptions} from '@tanstack-query-firebase/react/data-connect';
 import { UseQueryResult, UseMutationResult} from '@tanstack/react-query';
 import { DataConnect } from 'firebase/data-connect';
 import { FirebaseError } from 'firebase/app';
 
-
-export function useUpsertUser(options?: useDataConnectMutationOptions<UpsertUserData, FirebaseError, UpsertUserVariables>): UseDataConnectMutationResult<UpsertUserData, UpsertUserVariables>;
-export function useUpsertUser(dc: DataConnect, options?: useDataConnectMutationOptions<UpsertUserData, FirebaseError, UpsertUserVariables>): UseDataConnectMutationResult<UpsertUserData, UpsertUserVariables>;
-
-export function useUpsertSpirit(options?: useDataConnectMutationOptions<UpsertSpiritData, FirebaseError, UpsertSpiritVariables>): UseDataConnectMutationResult<UpsertSpiritData, UpsertSpiritVariables>;
-export function useUpsertSpirit(dc: DataConnect, options?: useDataConnectMutationOptions<UpsertSpiritData, FirebaseError, UpsertSpiritVariables>): UseDataConnectMutationResult<UpsertSpiritData, UpsertSpiritVariables>;
-
-export function useUpsertNewArrival(options?: useDataConnectMutationOptions<UpsertNewArrivalData, FirebaseError, UpsertNewArrivalVariables>): UseDataConnectMutationResult<UpsertNewArrivalData, UpsertNewArrivalVariables>;
-export function useUpsertNewArrival(dc: DataConnect, options?: useDataConnectMutationOptions<UpsertNewArrivalData, FirebaseError, UpsertNewArrivalVariables>): UseDataConnectMutationResult<UpsertNewArrivalData, UpsertNewArrivalVariables>;
-
-export function useUpsertReview(options?: useDataConnectMutationOptions<UpsertReviewData, FirebaseError, UpsertReviewVariables>): UseDataConnectMutationResult<UpsertReviewData, UpsertReviewVariables>;
-export function useUpsertReview(dc: DataConnect, options?: useDataConnectMutationOptions<UpsertReviewData, FirebaseError, UpsertReviewVariables>): UseDataConnectMutationResult<UpsertReviewData, UpsertReviewVariables>;
-
-export function useUpdateReviewLikesCount(options?: useDataConnectMutationOptions<UpdateReviewLikesCountData, FirebaseError, UpdateReviewLikesCountVariables>): UseDataConnectMutationResult<UpdateReviewLikesCountData, UpdateReviewLikesCountVariables>;
-export function useUpdateReviewLikesCount(dc: DataConnect, options?: useDataConnectMutationOptions<UpdateReviewLikesCountData, FirebaseError, UpdateReviewLikesCountVariables>): UseDataConnectMutationResult<UpdateReviewLikesCountData, UpdateReviewLikesCountVariables>;
-
-export function useUpsertReviewLike(options?: useDataConnectMutationOptions<UpsertReviewLikeData, FirebaseError, UpsertReviewLikeVariables>): UseDataConnectMutationResult<UpsertReviewLikeData, UpsertReviewLikeVariables>;
-export function useUpsertReviewLike(dc: DataConnect, options?: useDataConnectMutationOptions<UpsertReviewLikeData, FirebaseError, UpsertReviewLikeVariables>): UseDataConnectMutationResult<UpsertReviewLikeData, UpsertReviewLikeVariables>;
-
-export function useDeleteReviewLike(options?: useDataConnectMutationOptions<DeleteReviewLikeData, FirebaseError, DeleteReviewLikeVariables>): UseDataConnectMutationResult<DeleteReviewLikeData, DeleteReviewLikeVariables>;
-export function useDeleteReviewLike(dc: DataConnect, options?: useDataConnectMutationOptions<DeleteReviewLikeData, FirebaseError, DeleteReviewLikeVariables>): UseDataConnectMutationResult<DeleteReviewLikeData, DeleteReviewLikeVariables>;
-
-export function useUpsertReviewComment(options?: useDataConnectMutationOptions<UpsertReviewCommentData, FirebaseError, UpsertReviewCommentVariables>): UseDataConnectMutationResult<UpsertReviewCommentData, UpsertReviewCommentVariables>;
-export function useUpsertReviewComment(dc: DataConnect, options?: useDataConnectMutationOptions<UpsertReviewCommentData, FirebaseError, UpsertReviewCommentVariables>): UseDataConnectMutationResult<UpsertReviewCommentData, UpsertReviewCommentVariables>;
-
-export function useDeleteReviewComment(options?: useDataConnectMutationOptions<DeleteReviewCommentData, FirebaseError, DeleteReviewCommentVariables>): UseDataConnectMutationResult<DeleteReviewCommentData, DeleteReviewCommentVariables>;
-export function useDeleteReviewComment(dc: DataConnect, options?: useDataConnectMutationOptions<DeleteReviewCommentData, FirebaseError, DeleteReviewCommentVariables>): UseDataConnectMutationResult<DeleteReviewCommentData, DeleteReviewCommentVariables>;
-
-export function useUpsertNews(options?: useDataConnectMutationOptions<UpsertNewsData, FirebaseError, UpsertNewsVariables>): UseDataConnectMutationResult<UpsertNewsData, UpsertNewsVariables>;
-export function useUpsertNews(dc: DataConnect, options?: useDataConnectMutationOptions<UpsertNewsData, FirebaseError, UpsertNewsVariables>): UseDataConnectMutationResult<UpsertNewsData, UpsertNewsVariables>;
-
-export function useDeleteNews(options?: useDataConnectMutationOptions<DeleteNewsData, FirebaseError, DeleteNewsVariables>): UseDataConnectMutationResult<DeleteNewsData, DeleteNewsVariables>;
-export function useDeleteNews(dc: DataConnect, options?: useDataConnectMutationOptions<DeleteNewsData, FirebaseError, DeleteNewsVariables>): UseDataConnectMutationResult<DeleteNewsData, DeleteNewsVariables>;
-
-export function useUpsertCabinet(options?: useDataConnectMutationOptions<UpsertCabinetData, FirebaseError, UpsertCabinetVariables>): UseDataConnectMutationResult<UpsertCabinetData, UpsertCabinetVariables>;
-export function useUpsertCabinet(dc: DataConnect, options?: useDataConnectMutationOptions<UpsertCabinetData, FirebaseError, UpsertCabinetVariables>): UseDataConnectMutationResult<UpsertCabinetData, UpsertCabinetVariables>;
-
-export function useDeleteCabinet(options?: useDataConnectMutationOptions<DeleteCabinetData, FirebaseError, DeleteCabinetVariables>): UseDataConnectMutationResult<DeleteCabinetData, DeleteCabinetVariables>;
-export function useDeleteCabinet(dc: DataConnect, options?: useDataConnectMutationOptions<DeleteCabinetData, FirebaseError, DeleteCabinetVariables>): UseDataConnectMutationResult<DeleteCabinetData, DeleteCabinetVariables>;
-
-export function useUpsertModificationRequest(options?: useDataConnectMutationOptions<UpsertModificationRequestData, FirebaseError, UpsertModificationRequestVariables>): UseDataConnectMutationResult<UpsertModificationRequestData, UpsertModificationRequestVariables>;
-export function useUpsertModificationRequest(dc: DataConnect, options?: useDataConnectMutationOptions<UpsertModificationRequestData, FirebaseError, UpsertModificationRequestVariables>): UseDataConnectMutationResult<UpsertModificationRequestData, UpsertModificationRequestVariables>;
-
-export function useUpsertWorldCupResult(options?: useDataConnectMutationOptions<UpsertWorldCupResultData, FirebaseError, UpsertWorldCupResultVariables>): UseDataConnectMutationResult<UpsertWorldCupResultData, UpsertWorldCupResultVariables>;
-export function useUpsertWorldCupResult(dc: DataConnect, options?: useDataConnectMutationOptions<UpsertWorldCupResultData, FirebaseError, UpsertWorldCupResultVariables>): UseDataConnectMutationResult<UpsertWorldCupResultData, UpsertWorldCupResultVariables>;
-
-export function useDeleteSpirit(options?: useDataConnectMutationOptions<DeleteSpiritData, FirebaseError, DeleteSpiritVariables>): UseDataConnectMutationResult<DeleteSpiritData, DeleteSpiritVariables>;
-export function useDeleteSpirit(dc: DataConnect, options?: useDataConnectMutationOptions<DeleteSpiritData, FirebaseError, DeleteSpiritVariables>): UseDataConnectMutationResult<DeleteSpiritData, DeleteSpiritVariables>;
-
-export function useUpsertAiDiscoveryLog(options?: useDataConnectMutationOptions<UpsertAiDiscoveryLogData, FirebaseError, UpsertAiDiscoveryLogVariables>): UseDataConnectMutationResult<UpsertAiDiscoveryLogData, UpsertAiDiscoveryLogVariables>;
-export function useUpsertAiDiscoveryLog(dc: DataConnect, options?: useDataConnectMutationOptions<UpsertAiDiscoveryLogData, FirebaseError, UpsertAiDiscoveryLogVariables>): UseDataConnectMutationResult<UpsertAiDiscoveryLogData, UpsertAiDiscoveryLogVariables>;
-
-export function useDeleteReview(options?: useDataConnectMutationOptions<DeleteReviewData, FirebaseError, DeleteReviewVariables>): UseDataConnectMutationResult<DeleteReviewData, DeleteReviewVariables>;
-export function useDeleteReview(dc: DataConnect, options?: useDataConnectMutationOptions<DeleteReviewData, FirebaseError, DeleteReviewVariables>): UseDataConnectMutationResult<DeleteReviewData, DeleteReviewVariables>;
 
 export function useListSpirits(vars?: ListSpiritsVariables, options?: useDataConnectQueryOptions<ListSpiritsData>): UseDataConnectQueryResult<ListSpiritsData, ListSpiritsVariables>;
 export function useListSpirits(dc: DataConnect, vars?: ListSpiritsVariables, options?: useDataConnectQueryOptions<ListSpiritsData>): UseDataConnectQueryResult<ListSpiritsData, ListSpiritsVariables>;
@@ -151,3 +97,57 @@ export function useGetReviewLike(dc: DataConnect, vars: GetReviewLikeVariables, 
 
 export function useListReviewLikes(vars: ListReviewLikesVariables, options?: useDataConnectQueryOptions<ListReviewLikesData>): UseDataConnectQueryResult<ListReviewLikesData, ListReviewLikesVariables>;
 export function useListReviewLikes(dc: DataConnect, vars: ListReviewLikesVariables, options?: useDataConnectQueryOptions<ListReviewLikesData>): UseDataConnectQueryResult<ListReviewLikesData, ListReviewLikesVariables>;
+
+export function useUpsertUser(options?: useDataConnectMutationOptions<UpsertUserData, FirebaseError, UpsertUserVariables>): UseDataConnectMutationResult<UpsertUserData, UpsertUserVariables>;
+export function useUpsertUser(dc: DataConnect, options?: useDataConnectMutationOptions<UpsertUserData, FirebaseError, UpsertUserVariables>): UseDataConnectMutationResult<UpsertUserData, UpsertUserVariables>;
+
+export function useUpsertSpirit(options?: useDataConnectMutationOptions<UpsertSpiritData, FirebaseError, UpsertSpiritVariables>): UseDataConnectMutationResult<UpsertSpiritData, UpsertSpiritVariables>;
+export function useUpsertSpirit(dc: DataConnect, options?: useDataConnectMutationOptions<UpsertSpiritData, FirebaseError, UpsertSpiritVariables>): UseDataConnectMutationResult<UpsertSpiritData, UpsertSpiritVariables>;
+
+export function useUpsertNewArrival(options?: useDataConnectMutationOptions<UpsertNewArrivalData, FirebaseError, UpsertNewArrivalVariables>): UseDataConnectMutationResult<UpsertNewArrivalData, UpsertNewArrivalVariables>;
+export function useUpsertNewArrival(dc: DataConnect, options?: useDataConnectMutationOptions<UpsertNewArrivalData, FirebaseError, UpsertNewArrivalVariables>): UseDataConnectMutationResult<UpsertNewArrivalData, UpsertNewArrivalVariables>;
+
+export function useUpsertReview(options?: useDataConnectMutationOptions<UpsertReviewData, FirebaseError, UpsertReviewVariables>): UseDataConnectMutationResult<UpsertReviewData, UpsertReviewVariables>;
+export function useUpsertReview(dc: DataConnect, options?: useDataConnectMutationOptions<UpsertReviewData, FirebaseError, UpsertReviewVariables>): UseDataConnectMutationResult<UpsertReviewData, UpsertReviewVariables>;
+
+export function useUpdateReviewLikesCount(options?: useDataConnectMutationOptions<UpdateReviewLikesCountData, FirebaseError, UpdateReviewLikesCountVariables>): UseDataConnectMutationResult<UpdateReviewLikesCountData, UpdateReviewLikesCountVariables>;
+export function useUpdateReviewLikesCount(dc: DataConnect, options?: useDataConnectMutationOptions<UpdateReviewLikesCountData, FirebaseError, UpdateReviewLikesCountVariables>): UseDataConnectMutationResult<UpdateReviewLikesCountData, UpdateReviewLikesCountVariables>;
+
+export function useUpsertReviewLike(options?: useDataConnectMutationOptions<UpsertReviewLikeData, FirebaseError, UpsertReviewLikeVariables>): UseDataConnectMutationResult<UpsertReviewLikeData, UpsertReviewLikeVariables>;
+export function useUpsertReviewLike(dc: DataConnect, options?: useDataConnectMutationOptions<UpsertReviewLikeData, FirebaseError, UpsertReviewLikeVariables>): UseDataConnectMutationResult<UpsertReviewLikeData, UpsertReviewLikeVariables>;
+
+export function useDeleteReviewLike(options?: useDataConnectMutationOptions<DeleteReviewLikeData, FirebaseError, DeleteReviewLikeVariables>): UseDataConnectMutationResult<DeleteReviewLikeData, DeleteReviewLikeVariables>;
+export function useDeleteReviewLike(dc: DataConnect, options?: useDataConnectMutationOptions<DeleteReviewLikeData, FirebaseError, DeleteReviewLikeVariables>): UseDataConnectMutationResult<DeleteReviewLikeData, DeleteReviewLikeVariables>;
+
+export function useUpsertReviewComment(options?: useDataConnectMutationOptions<UpsertReviewCommentData, FirebaseError, UpsertReviewCommentVariables>): UseDataConnectMutationResult<UpsertReviewCommentData, UpsertReviewCommentVariables>;
+export function useUpsertReviewComment(dc: DataConnect, options?: useDataConnectMutationOptions<UpsertReviewCommentData, FirebaseError, UpsertReviewCommentVariables>): UseDataConnectMutationResult<UpsertReviewCommentData, UpsertReviewCommentVariables>;
+
+export function useDeleteReviewComment(options?: useDataConnectMutationOptions<DeleteReviewCommentData, FirebaseError, DeleteReviewCommentVariables>): UseDataConnectMutationResult<DeleteReviewCommentData, DeleteReviewCommentVariables>;
+export function useDeleteReviewComment(dc: DataConnect, options?: useDataConnectMutationOptions<DeleteReviewCommentData, FirebaseError, DeleteReviewCommentVariables>): UseDataConnectMutationResult<DeleteReviewCommentData, DeleteReviewCommentVariables>;
+
+export function useUpsertNews(options?: useDataConnectMutationOptions<UpsertNewsData, FirebaseError, UpsertNewsVariables>): UseDataConnectMutationResult<UpsertNewsData, UpsertNewsVariables>;
+export function useUpsertNews(dc: DataConnect, options?: useDataConnectMutationOptions<UpsertNewsData, FirebaseError, UpsertNewsVariables>): UseDataConnectMutationResult<UpsertNewsData, UpsertNewsVariables>;
+
+export function useDeleteNews(options?: useDataConnectMutationOptions<DeleteNewsData, FirebaseError, DeleteNewsVariables>): UseDataConnectMutationResult<DeleteNewsData, DeleteNewsVariables>;
+export function useDeleteNews(dc: DataConnect, options?: useDataConnectMutationOptions<DeleteNewsData, FirebaseError, DeleteNewsVariables>): UseDataConnectMutationResult<DeleteNewsData, DeleteNewsVariables>;
+
+export function useUpsertCabinet(options?: useDataConnectMutationOptions<UpsertCabinetData, FirebaseError, UpsertCabinetVariables>): UseDataConnectMutationResult<UpsertCabinetData, UpsertCabinetVariables>;
+export function useUpsertCabinet(dc: DataConnect, options?: useDataConnectMutationOptions<UpsertCabinetData, FirebaseError, UpsertCabinetVariables>): UseDataConnectMutationResult<UpsertCabinetData, UpsertCabinetVariables>;
+
+export function useDeleteCabinet(options?: useDataConnectMutationOptions<DeleteCabinetData, FirebaseError, DeleteCabinetVariables>): UseDataConnectMutationResult<DeleteCabinetData, DeleteCabinetVariables>;
+export function useDeleteCabinet(dc: DataConnect, options?: useDataConnectMutationOptions<DeleteCabinetData, FirebaseError, DeleteCabinetVariables>): UseDataConnectMutationResult<DeleteCabinetData, DeleteCabinetVariables>;
+
+export function useUpsertModificationRequest(options?: useDataConnectMutationOptions<UpsertModificationRequestData, FirebaseError, UpsertModificationRequestVariables>): UseDataConnectMutationResult<UpsertModificationRequestData, UpsertModificationRequestVariables>;
+export function useUpsertModificationRequest(dc: DataConnect, options?: useDataConnectMutationOptions<UpsertModificationRequestData, FirebaseError, UpsertModificationRequestVariables>): UseDataConnectMutationResult<UpsertModificationRequestData, UpsertModificationRequestVariables>;
+
+export function useUpsertWorldCupResult(options?: useDataConnectMutationOptions<UpsertWorldCupResultData, FirebaseError, UpsertWorldCupResultVariables>): UseDataConnectMutationResult<UpsertWorldCupResultData, UpsertWorldCupResultVariables>;
+export function useUpsertWorldCupResult(dc: DataConnect, options?: useDataConnectMutationOptions<UpsertWorldCupResultData, FirebaseError, UpsertWorldCupResultVariables>): UseDataConnectMutationResult<UpsertWorldCupResultData, UpsertWorldCupResultVariables>;
+
+export function useDeleteSpirit(options?: useDataConnectMutationOptions<DeleteSpiritData, FirebaseError, DeleteSpiritVariables>): UseDataConnectMutationResult<DeleteSpiritData, DeleteSpiritVariables>;
+export function useDeleteSpirit(dc: DataConnect, options?: useDataConnectMutationOptions<DeleteSpiritData, FirebaseError, DeleteSpiritVariables>): UseDataConnectMutationResult<DeleteSpiritData, DeleteSpiritVariables>;
+
+export function useUpsertAiDiscoveryLog(options?: useDataConnectMutationOptions<UpsertAiDiscoveryLogData, FirebaseError, UpsertAiDiscoveryLogVariables>): UseDataConnectMutationResult<UpsertAiDiscoveryLogData, UpsertAiDiscoveryLogVariables>;
+export function useUpsertAiDiscoveryLog(dc: DataConnect, options?: useDataConnectMutationOptions<UpsertAiDiscoveryLogData, FirebaseError, UpsertAiDiscoveryLogVariables>): UseDataConnectMutationResult<UpsertAiDiscoveryLogData, UpsertAiDiscoveryLogVariables>;
+
+export function useDeleteReview(options?: useDataConnectMutationOptions<DeleteReviewData, FirebaseError, DeleteReviewVariables>): UseDataConnectMutationResult<DeleteReviewData, DeleteReviewVariables>;
+export function useDeleteReview(dc: DataConnect, options?: useDataConnectMutationOptions<DeleteReviewData, FirebaseError, DeleteReviewVariables>): UseDataConnectMutationResult<DeleteReviewData, DeleteReviewVariables>;
